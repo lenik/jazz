@@ -1,133 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by CPU007 (STUPYNOMAGIC) -->
-
-<xs:schema targetNamespace="http://www.bodz.net/xml/draft/xaa/section-support" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xaa="http://www.bodz.net/xml/draft/xaa/section-support" elementFormDefault="qualified" attributeFormDefault="unqualified">
-
-	<xs:complexType name="section-extendable-base">
-
-		<xs:complexContent>
-
-			<xs:extension base="xaa:section-properties">
-
-				<xs:choice minOccurs="0" maxOccurs="unbounded">
-
-					<xs:element ref="xaa:section-import"/>
-
-				</xs:choice>
-
-				<xs:attribute name="extends" type="xs:string" use="optional"/>
-
-			</xs:extension>
-
-		</xs:complexContent>
-
-	</xs:complexType>
-
-	<xs:complexType name="section-properties">
-
-		<xs:choice minOccurs="0" maxOccurs="unbounded">
-
-			<xs:element ref="xaa:section-embed"/>
-
-			<xs:element ref="xaa:section-property"/>
-
-		</xs:choice>
-
-	</xs:complexType>
-
-	<xs:element name="section-embed">
-
-		<xs:annotation>
-
-			<xs:documentation>Fragments appended to this document. predefined fragment as follows: head, tail, declare, define, custom. </xs:documentation>
-
-		</xs:annotation>
-
-		<xs:complexType>
-
-			<xs:simpleContent>
-
-				<xs:extension base="xs:anySimpleType">
-
-					<xs:attribute name="location" type="xs:string" use="optional" default="declare"/>
-
-				</xs:extension>
-
-			</xs:simpleContent>
-
-		</xs:complexType>
-
-	</xs:element>
-
-	<xs:element name="section-property">
-
-		<xs:annotation>
-
-			<xs:documentation>Properties of this section, for example, gdml - a parser generater define use property for: 
+<xs:schema targetNamespace="http://www.bodz.net/xml/draft/xsf/section-support" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsf="http://www.bodz.net/xml/draft/xsf/section-support" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:complexType name="section-extendable-base">
+        <xs:complexContent>
+            <xs:extension base="xsf:section-properties">
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element ref="xsf:section-import"/>
+                </xs:choice>
+                <xs:attribute name="extends" type="xs:string" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="section-properties">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element ref="xsf:section-embed"/>
+            <xs:element ref="xsf:section-property"/>
+        </xs:choice>
+    </xs:complexType>
+    <xs:element name="section-embed">
+        <xs:annotation>
+            <xs:documentation>Fragments appended to this document. predefined fragment as follows: head, tail, declare, define, custom. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:simpleContent>
+                <xs:extension base="xs:anySimpleType">
+                    <xs:attribute name="location" type="xs:string" use="optional" default="declare"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="section-property">
+        <xs:annotation>
+            <xs:documentation>Properties of this section, for example, gdml - a parser generater define use property for: 
 
 - programming language of the implementation
 
 - the algorithm used
 
 etc. </xs:documentation>
-
-		</xs:annotation>
-
-		<xs:complexType>
-
-			<xs:simpleContent>
-
-				<xs:extension base="xs:anySimpleType">
-
-					<xs:attribute name="name" type="xs:string" use="required"/>
-
-				</xs:extension>
-
-			</xs:simpleContent>
-
-		</xs:complexType>
-
-	</xs:element>
-
-	<xs:element name="section-import">
-
-		<xs:annotation>
-
-			<xs:documentation>Import resources. </xs:documentation>
-
-		</xs:annotation>
-
-		<xs:complexType>
-
-			<xs:sequence>
-
-				<xs:element ref="xaa:section-parameter" minOccurs="0" maxOccurs="unbounded"/>
-
-			</xs:sequence>
-
-			<xs:attribute name="url" type="xs:string" use="required"/>
-
-		</xs:complexType>
-
-	</xs:element>
-
-	<xs:element name="section-parameter">
-
-		<xs:complexType>
-
-			<xs:simpleContent>
-
-				<xs:extension base="xs:string">
-
-					<xs:attribute name="name" type="xs:string" use="required"/>
-
-				</xs:extension>
-
-			</xs:simpleContent>
-
-		</xs:complexType>
-
-	</xs:element>
-
+        </xs:annotation>
+        <xs:complexType>
+            <xs:simpleContent>
+                <xs:extension base="xs:anySimpleType">
+                    <xs:attribute name="name" type="xs:string" use="required"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="section-import">
+        <xs:annotation>
+            <xs:documentation>Import resources. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="xsf:section-parameter" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute name="url" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="section-parameter">
+        <xs:complexType>
+            <xs:simpleContent>
+                <xs:extension base="xs:string">
+                    <xs:attribute name="name" type="xs:string" use="required"/>
+                </xs:extension>
+            </xs:simpleContent>
+        </xs:complexType>
+    </xs:element>
 </xs:schema>
