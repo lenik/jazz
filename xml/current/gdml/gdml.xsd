@@ -1,22 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by CPU007 (STUPYNOMAGIC) -->
-
-<xs:schema targetNamespace="http://www.bodz.net/xml/draft/gdml" xmlns:xaa="http://www.bodz.net/xml/draft/xaa/section-support" xmlns:g="http://www.bodz.net/xml/draft/gdml" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
-
-	<xs:import namespace="http://www.bodz.net/xml/draft/xaa/section-support" schemaLocation="http://www.bodz.net/xml/draft/xaa/section-support.xsd"/>
-
-	<xs:annotation>
-
-		<xs:documentation>-- SCRIPT --</xs:documentation>
-
-	</xs:annotation>
-
-	<xs:element name="grammer">
-
-		<xs:annotation>
-
-			<xs:documentation>Grammer section
+<xs:schema targetNamespace="http://www.bodz.net/xml/draft/gdml" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:g="http://www.bodz.net/xml/draft/gdml" xmlns:xaa="http://www.bodz.net/xml/draft/xaa/section-support" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:import namespace="http://www.bodz.net/xml/draft/xaa/section-support" schemaLocation="http://www.bodz.net/xml/draft/xaa/section-support.xsd"/>
+    <xs:annotation>
+        <xs:documentation>-- SCRIPT --</xs:documentation>
+    </xs:annotation>
+    <xs:element name="grammer">
+        <xs:annotation>
+            <xs:documentation>Grammer section
 
 
 
@@ -31,420 +22,222 @@ GDI-target-ns: target namespace
 GDI-target-path: where the generated GDI should be placed
 
 </xs:documentation>
-
-		</xs:annotation>
-
-		<xs:complexType>
-
-			<xs:complexContent>
-
-				<xs:extension base="xaa:section-extendable-base">
-
-					<xs:sequence>
-
-						<xs:group ref="g:elementsGroup"/>
-
-						<xs:element name="resumers" minOccurs="0">
-
-							<xs:annotation>
-
-								<xs:documentation>When error occurs, the parser can't continue, then the resumer is used to pass to the next symbols. 
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="xaa:section-extendable-base">
+                    <xs:sequence>
+                        <xs:group ref="g:elementsGroup"/>
+                        <xs:element name="resumers" minOccurs="0">
+                            <xs:annotation>
+                                <xs:documentation>When error occurs, the parser can't continue, then the resumer is used to pass to the next symbols. 
 
 In ambiguous context, the resumers always have lowest prior. </xs:documentation>
-
-							</xs:annotation>
-
-							<xs:complexType>
-
-								<xs:sequence>
-
-									<xs:element name="resumer" type="g:elementType" maxOccurs="unbounded"/>
-
-								</xs:sequence>
-
-							</xs:complexType>
-
-						</xs:element>
-
-						<xs:element name="defininitions" minOccurs="0" maxOccurs="unbounded">
-
-							<xs:annotation>
-
-								<xs:documentation>For classify specific properties for elements. 
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="resumer" type="g:elementType" maxOccurs="unbounded"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="defininitions" minOccurs="0" maxOccurs="unbounded">
+                            <xs:annotation>
+                                <xs:documentation>For classify specific properties for elements. 
 
 The attribute key could be apply, reduced, shifted, etc.
 
 The attribute key, target could be overloaded by element 'element'. </xs:documentation>
-
-							</xs:annotation>
-
-							<xs:complexType>
-
-								<xs:sequence>
-
-									<xs:element name="for-element" minOccurs="0" maxOccurs="unbounded">
-
-										<xs:complexType>
-
-											<xs:simpleContent>
-
-												<xs:extension base="xs:anySimpleType">
-
-													<xs:attribute name="id" type="xs:IDREF" use="required"/>
-
-													<xs:attribute name="key" use="required">
-
-														<xs:simpleType>
-
-															<xs:restriction base="xs:string">
-
-																<xs:pattern value=".*"/>
-
-																<xs:enumeration value="apply"/>
-
-																<xs:enumeration value="reduced"/>
-
-																<xs:enumeration value="shifted"/>
-
-															</xs:restriction>
-
-														</xs:simpleType>
-
-													</xs:attribute>
-
-													<xs:attribute name="target" type="xs:string" use="required"/>
-
-													<xs:attribute name="info" type="xs:string" use="optional"/>
-
-												</xs:extension>
-
-											</xs:simpleContent>
-
-										</xs:complexType>
-
-									</xs:element>
-
-								</xs:sequence>
-
-								<xs:attribute name="key" type="xs:string" use="optional"/>
-
-								<xs:attribute name="target" type="xs:string" use="optional"/>
-
-								<xs:attribute name="info" type="xs:string" use="optional"/>
-
-							</xs:complexType>
-
-						</xs:element>
-
-					</xs:sequence>
-
-					<xs:attribute name="root" type="xs:IDREF" use="required"/>
-
-					<xs:attribute name="info" type="xs:string" use="optional"/>
-
-					<xs:attributeGroup ref="g:syntax-common-properties"/>
-
-				</xs:extension>
-
-			</xs:complexContent>
-
-		</xs:complexType>
-
-	</xs:element>
-
-	<xs:complexType name="groupType">
-
-		<xs:annotation>
-
-			<xs:documentation>For orgnizing elements. </xs:documentation>
-
-		</xs:annotation>
-
-		<xs:group ref="g:elementsGroup"/>
-
-		<xs:attribute name="info" type="xs:string" use="optional"/>
-
-		<xs:attributeGroup ref="g:syntax-common-properties"/>
-
-	</xs:complexType>
-
-	<xs:group name="elementsGroup">
-
-		<xs:choice minOccurs="0" maxOccurs="unbounded">
-
-			<xs:element name="element">
-
-				<xs:annotation>
-
-					<xs:documentation>Terminals and Non-terminals. 
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="for-element" minOccurs="0" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                            <xs:simpleContent>
+                                                <xs:extension base="xs:anySimpleType">
+                                                    <xs:attribute name="id" type="xs:IDREF" use="required"/>
+                                                    <xs:attribute name="key" use="required">
+                                                        <xs:simpleType>
+                                                            <xs:restriction base="xs:string">
+                                                                <xs:pattern value=".*"/>
+                                                                <xs:enumeration value="apply"/>
+                                                                <xs:enumeration value="reduced"/>
+                                                                <xs:enumeration value="shifted"/>
+                                                            </xs:restriction>
+                                                        </xs:simpleType>
+                                                    </xs:attribute>
+                                                    <xs:attribute name="target" type="xs:string" use="required"/>
+                                                    <xs:attribute name="info" type="xs:string" use="optional"/>
+                                                </xs:extension>
+                                            </xs:simpleContent>
+                                        </xs:complexType>
+                                    </xs:element>
+                                </xs:sequence>
+                                <xs:attribute name="key" type="xs:string" use="optional"/>
+                                <xs:attribute name="target" type="xs:string" use="optional"/>
+                                <xs:attribute name="info" type="xs:string" use="optional"/>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:attribute name="root" type="xs:IDREF" use="required"/>
+                    <xs:attribute name="info" type="xs:string" use="optional"/>
+                    <xs:attributeGroup ref="g:syntax-common-properties"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="groupType">
+        <xs:annotation>
+            <xs:documentation>For orgnizing elements. </xs:documentation>
+        </xs:annotation>
+        <xs:group ref="g:elementsGroup"/>
+        <xs:attribute name="info" type="xs:string" use="optional"/>
+        <xs:attributeGroup ref="g:syntax-common-properties"/>
+    </xs:complexType>
+    <xs:group name="elementsGroup">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="element">
+                <xs:annotation>
+                    <xs:documentation>Terminals and Non-terminals. 
 
 
 
 The extends attribute make this element derived from existing one. </xs:documentation>
-
-				</xs:annotation>
-
-				<xs:complexType>
-
-					<xs:complexContent>
-
-						<xs:extension base="g:elementType"/>
-
-					</xs:complexContent>
-
-				</xs:complexType>
-
-			</xs:element>
-
-			<xs:element name="automata" type="g:automataType">
-
-				<xs:annotation>
-
-					<xs:documentation>Only used in context of determinized syntax. </xs:documentation>
-
-				</xs:annotation>
-
-			</xs:element>
-
-			<xs:element name="group">
-
-				<xs:annotation>
-
-					<xs:documentation>Formally grouping</xs:documentation>
-
-				</xs:annotation>
-
-				<xs:complexType>
-
-					<xs:complexContent>
-
-						<xs:extension base="g:groupType"/>
-
-					</xs:complexContent>
-
-				</xs:complexType>
-
-			</xs:element>
-
-		</xs:choice>
-
-	</xs:group>
-
-	<xs:complexType name="elementType">
-
-		<xs:annotation>
-
-			<xs:documentation>Represents an Non-terminator, constructed by several syntaxs. </xs:documentation>
-
-		</xs:annotation>
-
-		<xs:sequence>
-
-			<xs:element name="syntax" maxOccurs="unbounded">
-
-				<xs:annotation>
-
-					<xs:documentation>The default name is $1~$n, for scalars, @1~@n, for seq/repeats. 
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="g:elementType"/>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="automata" type="g:automataType">
+                <xs:annotation>
+                    <xs:documentation>Only used in context of determinized syntax. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="group">
+                <xs:annotation>
+                    <xs:documentation>Formally grouping</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="g:groupType"/>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+    </xs:group>
+    <xs:complexType name="elementType">
+        <xs:annotation>
+            <xs:documentation>Represents an Non-terminator, constructed by several syntaxs. </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="syntax" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>The default name is $1~$n, for scalars, @1~@n, for seq/repeats. 
 
 
 
 The behavior attribute specify the behaviour when this syntax is selected. </xs:documentation>
-
-				</xs:annotation>
-
-				<xs:complexType>
-
-					<xs:complexContent>
-
-						<xs:extension base="g:syntax-definition">
-
-							<xs:choice minOccurs="0" maxOccurs="unbounded">
-
-								<xs:annotation>
-
-									<xs:documentation>Multiple apply/re-insert(s) are evalated sequenctially. </xs:documentation>
-
-								</xs:annotation>
-
-								<xs:element name="apply">
-
-									<xs:annotation>
-
-										<xs:documentation>The syntax is choosed, and the script is evaluated. </xs:documentation>
-
-									</xs:annotation>
-
-									<xs:complexType>
-
-										<xs:simpleContent>
-
-											<xs:extension base="g:scriptType"/>
-
-										</xs:simpleContent>
-
-									</xs:complexType>
-
-								</xs:element>
-
-								<xs:element name="re-insert">
-
-									<xs:annotation>
-
-										<xs:documentation>Re-insert (write-back) data into parser-stream
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="g:syntax-definition">
+                            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                                <xs:annotation>
+                                    <xs:documentation>Multiple apply/re-insert(s) are evalated sequenctially. </xs:documentation>
+                                </xs:annotation>
+                                <xs:element name="apply">
+                                    <xs:annotation>
+                                        <xs:documentation>The syntax is choosed, and the script is evaluated. </xs:documentation>
+                                    </xs:annotation>
+                                    <xs:complexType>
+                                        <xs:simpleContent>
+                                            <xs:extension base="g:scriptType"/>
+                                        </xs:simpleContent>
+                                    </xs:complexType>
+                                </xs:element>
+                                <xs:element name="re-insert">
+                                    <xs:annotation>
+                                        <xs:documentation>Re-insert (write-back) data into parser-stream
 
 
 
 Recommend to use re-insert only once. </xs:documentation>
-
-									</xs:annotation>
-
-									<xs:complexType>
-
-										<xs:choice maxOccurs="unbounded">
-
-											<xs:element name="as-text">
-
-												<xs:complexType>
-
-													<xs:simpleContent>
-
-														<xs:extension base="xs:string"/>
-
-													</xs:simpleContent>
-
-												</xs:complexType>
-
-											</xs:element>
-
-											<xs:element name="as-binary">
-
-												<xs:complexType>
-
-													<xs:simpleContent>
-
-														<xs:extension base="xs:string"/>
-
-													</xs:simpleContent>
-
-												</xs:complexType>
-
-											</xs:element>
-
-											<xs:element name="as-item">
-
-												<xs:complexType>
-
-													<xs:attribute name="id" type="xs:string" use="required"/>
-
-												</xs:complexType>
-
-											</xs:element>
-
-										</xs:choice>
-
-										<xs:attribute name="class" type="xs:string" use="optional" default="output"/>
-
-										<xs:attribute name="info" type="xs:string" use="optional"/>
-
-									</xs:complexType>
-
-								</xs:element>
-
-								<xs:element name="comment" type="xs:string"/>
-
-							</xs:choice>
-
-							<xs:attribute name="id" type="xs:string" use="optional"/>
-
-							<xs:attribute name="behavior" use="optional" default="normal">
-
-								<xs:simpleType>
-
-									<xs:restriction base="xs:token">
-
-										<xs:enumeration value="normal"/>
-
-										<xs:enumeration value="illegal"/>
-
-										<xs:enumeration value="ambiguous-ext"/>
-
-									</xs:restriction>
-
-								</xs:simpleType>
-
-							</xs:attribute>
-
-						</xs:extension>
-
-					</xs:complexContent>
-
-				</xs:complexType>
-
-			</xs:element>
-
-			<xs:element name="create" minOccurs="0">
-
-				<xs:annotation>
-
-					<xs:documentation>After syntax is applied,  the items is reduced from scanner-stack, and the element is created. </xs:documentation>
-
-				</xs:annotation>
-
-				<xs:complexType>
-
-					<xs:simpleContent>
-
-						<xs:extension base="g:scriptType"/>
-
-					</xs:simpleContent>
-
-				</xs:complexType>
-
-			</xs:element>
-
-		</xs:sequence>
-
-		<xs:attribute name="id" type="xs:ID" use="required"/>
-
-		<xs:attribute name="extends" type="xs:IDREF" use="optional"/>
-
-		<xs:attribute name="type" type="g:script-text" use="optional"/>
-
-		<xs:attribute name="info" type="xs:string" use="optional"/>
-
-		<xs:attribute name="assoc" use="optional" default="left">
-
-			<xs:simpleType>
-
-				<xs:restriction base="xs:token">
-
-					<xs:enumeration value="left"/>
-
-					<xs:enumeration value="right"/>
-
-					<xs:enumeration value="none"/>
-
-				</xs:restriction>
-
-			</xs:simpleType>
-
-		</xs:attribute>
-
-		<xs:attribute name="prior" type="xs:string" use="optional"/>
-
-	</xs:complexType>
-
-	<xs:annotation>
-
-		<xs:documentation>-- ELEMENT SYNTAX --</xs:documentation>
-
-	</xs:annotation>
-
-	<xs:complexType name="syntax-definition">
-
-		<xs:annotation>
-
-			<xs:documentation>The syntax-definition itself is a seq- type. 
+                                    </xs:annotation>
+                                    <xs:complexType>
+                                        <xs:choice maxOccurs="unbounded">
+                                            <xs:element name="as-text">
+                                                <xs:complexType>
+                                                    <xs:simpleContent>
+                                                        <xs:extension base="xs:string"/>
+                                                    </xs:simpleContent>
+                                                </xs:complexType>
+                                            </xs:element>
+                                            <xs:element name="as-binary">
+                                                <xs:complexType>
+                                                    <xs:simpleContent>
+                                                        <xs:extension base="xs:string"/>
+                                                    </xs:simpleContent>
+                                                </xs:complexType>
+                                            </xs:element>
+                                            <xs:element name="as-item">
+                                                <xs:complexType>
+                                                    <xs:attribute name="id" type="xs:string" use="required"/>
+                                                </xs:complexType>
+                                            </xs:element>
+                                        </xs:choice>
+                                        <xs:attribute name="class" type="xs:string" use="optional" default="output"/>
+                                        <xs:attribute name="info" type="xs:string" use="optional"/>
+                                    </xs:complexType>
+                                </xs:element>
+                                <xs:element name="comment" type="xs:string"/>
+                            </xs:choice>
+                            <xs:attribute name="id" type="xs:string" use="optional"/>
+                            <xs:attribute name="behavior" use="optional" default="normal">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:token">
+                                        <xs:enumeration value="normal"/>
+                                        <xs:enumeration value="illegal"/>
+                                        <xs:enumeration value="ambiguous-ext"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:attribute>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="create" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>After syntax is applied,  the items is reduced from scanner-stack, and the element is created. </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="g:scriptType"/>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="id" type="xs:ID" use="required"/>
+        <xs:attribute name="extends" type="xs:IDREF" use="optional"/>
+        <xs:attribute name="type" type="g:script-text" use="optional"/>
+        <xs:attribute name="info" type="xs:string" use="optional"/>
+        <xs:attribute name="assoc" use="optional" default="left">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="left"/>
+                    <xs:enumeration value="right"/>
+                    <xs:enumeration value="none"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="prior" type="xs:string" use="optional"/>
+    </xs:complexType>
+    <xs:annotation>
+        <xs:documentation>-- ELEMENT SYNTAX --</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="syntax-definition">
+        <xs:annotation>
+            <xs:documentation>The syntax-definition itself is a seq- type. 
 
 
 
@@ -453,582 +246,305 @@ In derived context (when base attribute of element tag is specified), the syntax
 
 
 Attribute validity specify whether the syntax if corrent(0), error(-1), or warned(positive number). </xs:documentation>
-
-		</xs:annotation>
-
-		<xs:choice>
-
-			<xs:group ref="g:syntax-serials"/>
-
-			<xs:element ref="g:none"/>
-
-			<xs:element name="void" type="g:voidType">
-
-				<xs:annotation>
-
-					<xs:documentation>Never matched</xs:documentation>
-
-				</xs:annotation>
-
-			</xs:element>
-
-		</xs:choice>
-
-		<xs:attribute name="info" type="xs:string" use="optional"/>
-
-		<xs:attribute name="validity" type="xs:integer" use="optional" default="0"/>
-
-	</xs:complexType>
-
-	<xs:group name="syntax-serials">
-
-		<xs:annotation>
-
-			<xs:documentation>Syntax shall not be empty, otherwise use element none instead. </xs:documentation>
-
-		</xs:annotation>
-
-		<xs:sequence>
-
-			<xs:element name="look-before" minOccurs="0">
-
-				<xs:complexType>
-
-					<xs:group ref="g:syntax-item"/>
-
-				</xs:complexType>
-
-			</xs:element>
-
-			<xs:choice minOccurs="0" maxOccurs="unbounded">
-
-				<xs:group ref="g:syntax-item"/>
-
-				<xs:element ref="g:control">
-
-					<xs:annotation>
-
-						<xs:documentation>Control the behavior of the parser. </xs:documentation>
-
-					</xs:annotation>
-
-				</xs:element>
-
-			</xs:choice>
-
-			<xs:sequence minOccurs="0">
-
-				<xs:annotation>
-
-					<xs:documentation>Determinized Syntax</xs:documentation>
-
-				</xs:annotation>
-
-				<xs:element name="syntax-determinizer">
-
-					<xs:annotation>
-
-						<xs:documentation>The above syntax is determinized. </xs:documentation>
-
-					</xs:annotation>
-
-				</xs:element>
-
-				<xs:element name="context" minOccurs="0">
-
-					<xs:complexType>
-
-						<xs:complexContent>
-
-							<xs:extension base="g:contextType">
-
-								<xs:attribute name="info" type="xs:string" use="optional"/>
-
-							</xs:extension>
-
-						</xs:complexContent>
-
-					</xs:complexType>
-
-				</xs:element>
-
-				<xs:choice maxOccurs="unbounded">
-
-					<xs:element name="syntax-synchronizer">
-
-						<xs:annotation>
-
-							<xs:documentation>Keep resuming till here. (So the next token match the immediately item below this synchronizer. </xs:documentation>
-
-						</xs:annotation>
-
-					</xs:element>
-
-					<xs:group ref="g:syntax-item"/>
-
-					<xs:element ref="g:control"/>
-
-				</xs:choice>
-
-			</xs:sequence>
-
-			<xs:element name="look-ahead" minOccurs="0">
-
-				<xs:complexType>
-
-					<xs:group ref="g:syntax-item"/>
-
-				</xs:complexType>
-
-			</xs:element>
-
-		</xs:sequence>
-
-	</xs:group>
-
-	<xs:group name="syntax-item">
-
-		<xs:annotation>
-
-			<xs:documentation>Simple syntax-item</xs:documentation>
-
-		</xs:annotation>
-
-		<xs:choice>
-
-			<xs:element name="refer">
-
-				<xs:annotation>
-
-					<xs:documentation>Element reference, Refer to an defined element</xs:documentation>
-
-				</xs:annotation>
-
-				<xs:complexType>
-
-					<xs:simpleContent>
-
-						<xs:extension base="xs:IDREF">
-
-							<xs:attribute name="info" type="xs:string" use="optional"/>
-
-							<xs:attributeGroup ref="g:syntax-item-attributes"/>
-
-						</xs:extension>
-
-					</xs:simpleContent>
-
-				</xs:complexType>
-
-			</xs:element>
-
-			<xs:choice>
-
-				<xs:annotation>
-
-					<xs:documentation>Lexical Entities</xs:documentation>
-
-				</xs:annotation>
-
-				<xs:choice>
-
-					<xs:annotation>
-
-						<xs:documentation>Character Stream</xs:documentation>
-
-					</xs:annotation>
-
-					<xs:element name="text">
-
-						<xs:annotation>
-
-							<xs:documentation>(Terminator) Plain text. 
+        </xs:annotation>
+        <xs:choice>
+            <xs:group ref="g:syntax-serials"/>
+            <xs:element ref="g:none"/>
+            <xs:element name="void" type="g:voidType">
+                <xs:annotation>
+                    <xs:documentation>Never matched</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:choice>
+        <xs:attribute name="info" type="xs:string" use="optional"/>
+        <xs:attribute name="validity" type="xs:integer" use="optional" default="0"/>
+    </xs:complexType>
+    <xs:group name="syntax-serials">
+        <xs:annotation>
+            <xs:documentation>Syntax shall not be empty, otherwise use element none instead. </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="look-before" minOccurs="0">
+                <xs:complexType>
+                    <xs:group ref="g:syntax-item"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Explicitly Syntax</xs:documentation>
+                </xs:annotation>
+                <xs:group ref="g:syntax-item"/>
+                <xs:element ref="g:control">
+                    <xs:annotation>
+                        <xs:documentation>Control the behavior of the parser. </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:choice>
+            <xs:sequence minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Fuzzy Syntax
+(Dynamic Determinized)</xs:documentation>
+                </xs:annotation>
+                <xs:element name="syntax-determinizer">
+                    <xs:annotation>
+                        <xs:documentation>The above syntax is determinized. </xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="context" minOccurs="0">
+                    <xs:complexType>
+                        <xs:complexContent>
+                            <xs:extension base="g:contextType">
+                                <xs:attribute name="info" type="xs:string" use="optional"/>
+                            </xs:extension>
+                        </xs:complexContent>
+                    </xs:complexType>
+                </xs:element>
+                <xs:choice maxOccurs="unbounded">
+                    <xs:element name="syntax-synchronizer">
+                        <xs:annotation>
+                            <xs:documentation>Keep resuming till here. (So the next token match the immediately item below this synchronizer. </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:group ref="g:syntax-item"/>
+                    <xs:element ref="g:control"/>
+                </xs:choice>
+            </xs:sequence>
+            <xs:element name="look-ahead" minOccurs="0">
+                <xs:complexType>
+                    <xs:group ref="g:syntax-item"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:group>
+    <xs:group name="syntax-item">
+        <xs:annotation>
+            <xs:documentation>Simple syntax-item</xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:element name="refer">
+                <xs:annotation>
+                    <xs:documentation>Element reference, Refer to an defined element</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:IDREF">
+                            <xs:attribute name="info" type="xs:string" use="optional"/>
+                            <xs:attributeGroup ref="g:syntax-item-attributes"/>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:choice>
+                <xs:annotation>
+                    <xs:documentation>Lexical Entities</xs:documentation>
+                </xs:annotation>
+                <xs:choice>
+                    <xs:annotation>
+                        <xs:documentation>Character Stream</xs:documentation>
+                    </xs:annotation>
+                    <xs:element name="text">
+                        <xs:annotation>
+                            <xs:documentation>(Terminator) Plain text. 
 
 The boundary is helpful to represent a word, it maybe also defined in syntax-properties. </xs:documentation>
-
-						</xs:annotation>
-
-						<xs:complexType>
-
-							<xs:simpleContent>
-
-								<xs:extension base="g:plain-text">
-
-									<xs:attribute name="case-sensitive" type="xs:boolean" use="optional" default="true"/>
-
-									<xs:attribute name="info" type="xs:string" use="optional"/>
-
-									<xs:attribute name="boundary" type="xs:string" use="optional" default="(?:[[:space:][:punct:]])"/>
-
-									<xs:attributeGroup ref="g:syntax-item-attributes"/>
-
-								</xs:extension>
-
-							</xs:simpleContent>
-
-						</xs:complexType>
-
-					</xs:element>
-
-					<xs:element name="regex">
-
-						<xs:annotation>
-
-							<xs:documentation>(Terminator) Regular expression</xs:documentation>
-
-						</xs:annotation>
-
-						<xs:complexType>
-
-							<xs:simpleContent>
-
-								<xs:extension base="g:plain-text">
-
-									<xs:attribute name="case-sensitive" type="xs:boolean" use="optional" default="true"/>
-
-									<xs:attribute name="info" type="xs:string" use="optional"/>
-
-									<xs:attributeGroup ref="g:syntax-item-attributes"/>
-
-								</xs:extension>
-
-							</xs:simpleContent>
-
-						</xs:complexType>
-
-					</xs:element>
-
-				</xs:choice>
-
-				<xs:choice>
-
-					<xs:annotation>
-
-						<xs:documentation>Binary Stream</xs:documentation>
-
-					</xs:annotation>
-
-					<xs:element name="binary">
-
-						<xs:annotation>
-
-							<xs:documentation>(Terminator) Plain binary, syntax as ([0-9a-f]+\s+)*</xs:documentation>
-
-						</xs:annotation>
-
-						<xs:complexType>
-
-							<xs:simpleContent>
-
-								<xs:extension base="g:plain-text">
-
-									<xs:attribute name="info" type="xs:string" use="optional"/>
-
-									<xs:attributeGroup ref="g:syntax-item-attributes"/>
-
-								</xs:extension>
-
-							</xs:simpleContent>
-
-						</xs:complexType>
-
-					</xs:element>
-
-				</xs:choice>
-
-				<xs:choice>
-
-					<xs:annotation>
-
-						<xs:documentation>Object Stream</xs:documentation>
-
-					</xs:annotation>
-
-					<xs:element name="object">
-
-						<xs:annotation>
-
-							<xs:documentation>Comparable Object</xs:documentation>
-
-						</xs:annotation>
-
-						<xs:complexType/>
-
-					</xs:element>
-
-					<xs:element name="object-stream">
-
-						<xs:annotation>
-
-							<xs:documentation>Stream-comparable Object. 
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="g:plain-text">
+                                    <xs:attribute name="case-sensitive" type="xs:boolean" use="optional" default="true"/>
+                                    <xs:attribute name="info" type="xs:string" use="optional"/>
+                                    <xs:attribute name="boundary" type="xs:string" use="optional" default="(?:[[:space:][:punct:]])"/>
+                                    <xs:attributeGroup ref="g:syntax-item-attributes"/>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="regex">
+                        <xs:annotation>
+                            <xs:documentation>(Terminator) Regular expression</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="g:plain-text">
+                                    <xs:attribute name="case-sensitive" type="xs:boolean" use="optional" default="true"/>
+                                    <xs:attribute name="info" type="xs:string" use="optional"/>
+                                    <xs:attributeGroup ref="g:syntax-item-attributes"/>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:choice>
+                <xs:choice>
+                    <xs:annotation>
+                        <xs:documentation>Binary Stream</xs:documentation>
+                    </xs:annotation>
+                    <xs:element name="binary">
+                        <xs:annotation>
+                            <xs:documentation>(Terminator) Plain binary, syntax as ([0-9a-f]+\s+)*</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="g:plain-text">
+                                    <xs:attribute name="info" type="xs:string" use="optional"/>
+                                    <xs:attributeGroup ref="g:syntax-item-attributes"/>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:choice>
+                <xs:choice>
+                    <xs:annotation>
+                        <xs:documentation>Object Stream</xs:documentation>
+                    </xs:annotation>
+                    <xs:element name="object">
+                        <xs:annotation>
+                            <xs:documentation>Comparable Object</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType/>
+                    </xs:element>
+                    <xs:element name="object-stream">
+                        <xs:annotation>
+                            <xs:documentation>Stream-comparable Object. 
 
 In impelmentation, the text, regex, and binary should be of object-stream. </xs:documentation>
-
-						</xs:annotation>
-
-					</xs:element>
-
-				</xs:choice>
-
-			</xs:choice>
-
-			<xs:choice>
-
-				<xs:annotation>
-
-					<xs:documentation>Structures</xs:documentation>
-
-				</xs:annotation>
-
-				<xs:element name="seq">
-
-					<xs:annotation>
-
-						<xs:documentation>sequence</xs:documentation>
-
-					</xs:annotation>
-
-					<xs:complexType>
-
-						<xs:sequence>
-
-							<xs:group ref="g:syntax-serials"/>
-
-						</xs:sequence>
-
-						<xs:attribute name="info" type="xs:string" use="optional"/>
-
-						<xs:attributeGroup ref="g:syntax-item-attributes"/>
-
-					</xs:complexType>
-
-				</xs:element>
-
-				<xs:element name="anyof">
-
-					<xs:annotation>
-
-						<xs:documentation>choice</xs:documentation>
-
-					</xs:annotation>
-
-					<xs:complexType>
-
-						<xs:sequence>
-
-							<xs:element ref="g:none" minOccurs="0">
-
-								<xs:annotation>
-
-									<xs:documentation>To distinguish with:
+                        </xs:annotation>
+                    </xs:element>
+                </xs:choice>
+            </xs:choice>
+            <xs:choice>
+                <xs:annotation>
+                    <xs:documentation>Structures</xs:documentation>
+                </xs:annotation>
+                <xs:element name="seq">
+                    <xs:annotation>
+                        <xs:documentation>sequence</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:group ref="g:syntax-serials"/>
+                        </xs:sequence>
+                        <xs:attribute name="info" type="xs:string" use="optional"/>
+                        <xs:attributeGroup ref="g:syntax-item-attributes"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="anyof">
+                    <xs:annotation>
+                        <xs:documentation>choice</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="g:none" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>To distinguish with:
 
 - the nothing syntax
 
 - the empty syntax-item. </xs:documentation>
-
-								</xs:annotation>
-
-							</xs:element>
-
-							<xs:group ref="g:syntax-serials"/>
-
-						</xs:sequence>
-
-						<xs:attribute name="info" type="xs:string" use="optional"/>
-
-						<xs:attributeGroup ref="g:syntax-item-attributes"/>
-
-					</xs:complexType>
-
-				</xs:element>
-
-				<xs:element name="optional">
-
-					<xs:annotation>
-
-						<xs:documentation>single or none</xs:documentation>
-
-					</xs:annotation>
-
-					<xs:complexType>
-
-						<xs:group ref="g:syntax-serials"/>
-
-						<xs:attribute name="info" type="xs:string" use="optional"/>
-
-						<xs:attributeGroup ref="g:syntax-item-attributes"/>
-
-					</xs:complexType>
-
-				</xs:element>
-
-				<xs:element name="repeat">
-
-					<xs:annotation>
-
-						<xs:documentation>default min=0
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:group ref="g:syntax-serials"/>
+                        </xs:sequence>
+                        <xs:attribute name="info" type="xs:string" use="optional"/>
+                        <xs:attributeGroup ref="g:syntax-item-attributes"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="optional">
+                    <xs:annotation>
+                        <xs:documentation>single or none</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:group ref="g:syntax-serials"/>
+                        <xs:attribute name="info" type="xs:string" use="optional"/>
+                        <xs:attributeGroup ref="g:syntax-item-attributes"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="repeat">
+                    <xs:annotation>
+                        <xs:documentation>default min=0
 
 default max=+inf</xs:documentation>
-
-					</xs:annotation>
-
-					<xs:complexType>
-
-						<xs:sequence>
-
-							<xs:group ref="g:syntax-serials"/>
-
-							<xs:element name="delimiter" minOccurs="0">
-
-								<xs:annotation>
-
-									<xs:documentation>None if not specified. </xs:documentation>
-
-								</xs:annotation>
-
-								<xs:complexType>
-
-									<xs:complexContent>
-
-										<xs:extension base="g:syntax-definition">
-
-											<xs:attributeGroup ref="g:syntax-item-attributes"/>
-
-										</xs:extension>
-
-									</xs:complexContent>
-
-								</xs:complexType>
-
-							</xs:element>
-
-						</xs:sequence>
-
-						<xs:attribute name="min" type="xs:int" use="optional"/>
-
-						<xs:attribute name="max" type="xs:int" use="optional"/>
-
-						<xs:attribute name="prefer" use="optional" default="greedy">
-
-							<xs:simpleType>
-
-								<xs:restriction base="xs:token">
-
-									<xs:enumeration value="greedy"/>
-
-									<xs:enumeration value="lazy"/>
-
-								</xs:restriction>
-
-							</xs:simpleType>
-
-						</xs:attribute>
-
-						<xs:attribute name="info" type="xs:string" use="optional"/>
-
-						<xs:attributeGroup ref="g:syntax-item-attributes"/>
-
-					</xs:complexType>
-
-				</xs:element>
-
-			</xs:choice>
-
-		</xs:choice>
-
-	</xs:group>
-
-	<xs:attributeGroup name="syntax-item-attributes">
-
-		<xs:annotation>
-
-			<xs:documentation>For production items</xs:documentation>
-
-		</xs:annotation>
-
-		<xs:attribute name="name" use="optional">
-
-			<xs:simpleType>
-
-				<xs:restriction base="xs:string"/>
-
-			</xs:simpleType>
-
-		</xs:attribute>
-
-		<xs:attribute name="re-prior" type="xs:string" use="optional"/>
-
-		<xs:attribute name="source" type="xs:string" use="optional">
-
-			<xs:annotation>
-
-				<xs:documentation>specify the lexical-source which syntax-item take data from</xs:documentation>
-
-			</xs:annotation>
-
-		</xs:attribute>
-
-	</xs:attributeGroup>
-
-	<xs:attributeGroup name="syntax-common-properties">
-
-		<xs:annotation>
-
-			<xs:documentation>Common properties of syntax</xs:documentation>
-
-		</xs:annotation>
-
-		<xs:attribute name="word-boundary" type="xs:string" use="optional"/>
-
-		<xs:attribute name="case-sensitive" type="xs:boolean" use="optional"/>
-
-	</xs:attributeGroup>
-
-	<xs:annotation>
-
-		<xs:documentation>-- DETERMINIZED SYNTAX --</xs:documentation>
-
-	</xs:annotation>
-
-	<xs:complexType name="contextType">
-
-		<xs:annotation>
-
-			<xs:documentation>Provide lexical-preprocess, hidden-item support for determinized syntax. </xs:documentation>
-
-		</xs:annotation>
-
-		<xs:sequence>
-
-			<xs:element name="preprocess" type="g:automataType" minOccurs="0" maxOccurs="unbounded"/>
-
-			<xs:element name="hidden-element" type="g:elementType" minOccurs="0" maxOccurs="unbounded"/>
-
-		</xs:sequence>
-
-	</xs:complexType>
-
-	<xs:complexType name="automataType">
-
-		<xs:annotation>
-
-			<xs:documentation>Only used in context of determinized syntax. 
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:group ref="g:syntax-serials"/>
+                            <xs:element name="delimiter" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:documentation>None if not specified. </xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:complexContent>
+                                        <xs:extension base="g:syntax-definition">
+                                            <xs:attributeGroup ref="g:syntax-item-attributes"/>
+                                        </xs:extension>
+                                    </xs:complexContent>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="min" type="xs:int" use="optional"/>
+                        <xs:attribute name="max" type="xs:int" use="optional"/>
+                        <xs:attribute name="prefer" use="optional" default="greedy">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:token">
+                                    <xs:enumeration value="greedy"/>
+                                    <xs:enumeration value="lazy"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:attribute>
+                        <xs:attribute name="info" type="xs:string" use="optional"/>
+                        <xs:attributeGroup ref="g:syntax-item-attributes"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:choice>
+        </xs:choice>
+    </xs:group>
+    <xs:attributeGroup name="syntax-item-attributes">
+        <xs:annotation>
+            <xs:documentation>For production items</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="name" use="optional">
+            <xs:simpleType>
+                <xs:restriction base="xs:string"/>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="re-prior" type="xs:string" use="optional"/>
+        <xs:attribute name="source" type="xs:string" use="optional">
+            <xs:annotation>
+                <xs:documentation>specify the lexical-source which syntax-item take data from</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:attributeGroup name="syntax-common-properties">
+        <xs:annotation>
+            <xs:documentation>Common properties of syntax</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="word-boundary" type="xs:string" use="optional"/>
+        <xs:attribute name="case-sensitive" type="xs:boolean" use="optional"/>
+    </xs:attributeGroup>
+    <xs:annotation>
+        <xs:documentation>-- DETERMINIZED SYNTAX --</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="contextType">
+        <xs:annotation>
+            <xs:documentation>Provide lexical-preprocess, hidden-item support for determinized syntax. </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="preprocess" type="g:automataType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="hidden-element" type="g:elementType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="automataType">
+        <xs:annotation>
+            <xs:documentation>Only used in context of determinized syntax. 
 
 
 
 The start attribute specify which state the automata starts from. </xs:documentation>
-
-		</xs:annotation>
-
-		<xs:choice maxOccurs="unbounded">
-
-			<xs:element ref="xaa:section-embed"/>
-
-			<xs:element name="state">
-
-				<xs:annotation>
-
-					<xs:documentation>state-type: 
+        </xs:annotation>
+        <xs:choice maxOccurs="unbounded">
+            <xs:element ref="xaa:section-embed"/>
+            <xs:element name="state">
+                <xs:annotation>
+                    <xs:documentation>state-type: 
 
 
 
@@ -1037,293 +553,153 @@ inclusive N\...: items in N may be matched
 
 
 ...\exclusive X: only items in X may be matched. </xs:documentation>
-
-				</xs:annotation>
-
-				<xs:complexType>
-
-					<xs:choice maxOccurs="unbounded">
-
-						<xs:element name="for-input">
-
-							<xs:complexType>
-
-								<xs:sequence>
-
-									<xs:group ref="g:syntax-item"/>
-
-									<xs:element name="action">
-
-										<xs:complexType mixed="false">
-
-											<xs:choice minOccurs="0" maxOccurs="unbounded">
-
-												<xs:element name="evaluate" type="g:scriptType">
-
-													<xs:annotation>
-
-														<xs:documentation>Do evaluation for the matched items. 
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:choice maxOccurs="unbounded">
+                        <xs:element name="for-input">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:group ref="g:syntax-item"/>
+                                    <xs:element name="action">
+                                        <xs:complexType mixed="false">
+                                            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                                                <xs:element name="evaluate" type="g:scriptType">
+                                                    <xs:annotation>
+                                                        <xs:documentation>Do evaluation for the matched items. 
 
 The default result is the input text. </xs:documentation>
-
-													</xs:annotation>
-
-												</xs:element>
-
-												<xs:element name="output-text">
-
-													<xs:annotation>
-
-														<xs:documentation>Convert the evaluated result to string and output as text. </xs:documentation>
-
-													</xs:annotation>
-
-													<xs:complexType>
-
-														<xs:simpleContent>
-
-															<xs:extension base="g:scriptType">
-
-																<xs:attribute name="source" type="xs:string" use="optional"/>
-
-															</xs:extension>
-
-														</xs:simpleContent>
-
-													</xs:complexType>
-
-												</xs:element>
-
-												<xs:element name="output-element">
-
-													<xs:annotation>
-
-														<xs:documentation>Use the evaluated result as output element, whose create-element won't be evaluated. </xs:documentation>
-
-													</xs:annotation>
-
-													<xs:complexType>
-
-														<xs:simpleContent>
-
-															<xs:extension base="g:scriptType">
-
-																<xs:attribute name="id" type="xs:IDREF" use="required"/>
-
-																<xs:attribute name="target" type="xs:string" use="optional">
-
-																	<xs:annotation>
-
-																		<xs:documentation>specify the target parser-tree, which the new element is created on. </xs:documentation>
-
-																	</xs:annotation>
-
-																</xs:attribute>
-
-															</xs:extension>
-
-														</xs:simpleContent>
-
-													</xs:complexType>
-
-												</xs:element>
-
-												<xs:element name="goto">
-
-													<xs:annotation>
-
-														<xs:documentation>Default is keep last state. 
+                                                    </xs:annotation>
+                                                </xs:element>
+                                                <xs:element name="output-text">
+                                                    <xs:annotation>
+                                                        <xs:documentation>Convert the evaluated result to string and output as text. </xs:documentation>
+                                                    </xs:annotation>
+                                                    <xs:complexType>
+                                                        <xs:simpleContent>
+                                                            <xs:extension base="g:scriptType">
+                                                                <xs:attribute name="source" type="xs:string" use="optional"/>
+                                                            </xs:extension>
+                                                        </xs:simpleContent>
+                                                    </xs:complexType>
+                                                </xs:element>
+                                                <xs:element name="output-element">
+                                                    <xs:annotation>
+                                                        <xs:documentation>Use the evaluated result as output element, whose create-element won't be evaluated. </xs:documentation>
+                                                    </xs:annotation>
+                                                    <xs:complexType>
+                                                        <xs:simpleContent>
+                                                            <xs:extension base="g:scriptType">
+                                                                <xs:attribute name="id" type="xs:IDREF" use="required"/>
+                                                                <xs:attribute name="target" type="xs:string" use="optional">
+                                                                    <xs:annotation>
+                                                                        <xs:documentation>specify the target parser-tree, which the new element is created on. </xs:documentation>
+                                                                    </xs:annotation>
+                                                                </xs:attribute>
+                                                            </xs:extension>
+                                                        </xs:simpleContent>
+                                                    </xs:complexType>
+                                                </xs:element>
+                                                <xs:element name="goto">
+                                                    <xs:annotation>
+                                                        <xs:documentation>Default is keep last state. 
 
 
 
 If the target state is determined in runtime, use the corresponding script goto method of parser model. </xs:documentation>
-
-													</xs:annotation>
-
-													<xs:complexType>
-
-														<xs:attribute name="state" type="xs:string" use="required"/>
-
-													</xs:complexType>
-
-												</xs:element>
-
-												<xs:element name="reject">
-
-													<xs:annotation>
-
-														<xs:documentation>If replace isn't specified, the input text is rejected. 
+                                                    </xs:annotation>
+                                                    <xs:complexType>
+                                                        <xs:attribute name="state" type="xs:string" use="required"/>
+                                                    </xs:complexType>
+                                                </xs:element>
+                                                <xs:element name="reject">
+                                                    <xs:annotation>
+                                                        <xs:documentation>If replace isn't specified, the input text is rejected. 
 
 
 
 The rejected text won't match this for-input, so as not to be recursive. </xs:documentation>
-
-													</xs:annotation>
-
-													<xs:complexType>
-
-														<xs:attribute name="replace" type="xs:string" use="optional"/>
-
-													</xs:complexType>
-
-												</xs:element>
-
-											</xs:choice>
-
-											<xs:attribute name="info" type="xs:string" use="optional"/>
-
-										</xs:complexType>
-
-									</xs:element>
-
-								</xs:sequence>
-
-								<xs:attribute name="info" type="xs:string" use="optional"/>
-
-							</xs:complexType>
-
-						</xs:element>
-
-					</xs:choice>
-
-					<xs:attribute name="name" type="xs:string" use="required"/>
-
-					<xs:attribute name="info" type="xs:string" use="optional"/>
-
-					<xs:attribute name="type" use="optional" default="normal">
-
-						<xs:simpleType>
-
-							<xs:restriction base="xs:token">
-
-								<xs:enumeration value="normal"/>
-
-								<xs:enumeration value="inclusive"/>
-
-								<xs:enumeration value="exclusive"/>
-
-							</xs:restriction>
-
-						</xs:simpleType>
-
-					</xs:attribute>
-
-				</xs:complexType>
-
-			</xs:element>
-
-		</xs:choice>
-
-		<xs:attribute name="id" type="xs:string" use="required"/>
-
-		<xs:attribute name="info" type="xs:string" use="optional"/>
-
-		<xs:attribute name="start" type="xs:string" use="required"/>
-
-	</xs:complexType>
-
-	<xs:annotation>
-
-		<xs:documentation>-- ITEM TYPES --</xs:documentation>
-
-	</xs:annotation>
-
-	<xs:element name="control">
-
-		<xs:annotation>
-
-			<xs:documentation>Control the behavior of the parser. </xs:documentation>
-
-		</xs:annotation>
-
-		<xs:complexType>
-
-			<xs:attribute name="command" type="xs:string" use="required"/>
-
-		</xs:complexType>
-
-	</xs:element>
-
-	<xs:element name="none" type="g:noneType" nillable="true">
-
-		<xs:annotation>
-
-			<xs:documentation>Element represents nothing/empty</xs:documentation>
-
-		</xs:annotation>
-
-	</xs:element>
-
-	<xs:complexType name="noneType">
-
-		<xs:annotation>
-
-			<xs:documentation>Syntax match nothing</xs:documentation>
-
-		</xs:annotation>
-
-		<xs:attribute name="info" type="xs:string" use="optional"/>
-
-	</xs:complexType>
-
-	<xs:complexType name="voidType">
-
-		<xs:annotation>
-
-			<xs:documentation>Syntax never matched</xs:documentation>
-
-		</xs:annotation>
-
-		<xs:attribute name="info" type="xs:string" use="optional"/>
-
-	</xs:complexType>
-
-	<xs:simpleType name="plain-text">
-
-		<xs:annotation>
-
-			<xs:documentation>Text of plain-text/reg-ex</xs:documentation>
-
-		</xs:annotation>
-
-		<xs:restriction base="xs:string"/>
-
-	</xs:simpleType>
-
-	<xs:annotation>
-
-		<xs:documentation>-- IMPLEMENTAION TARGET --</xs:documentation>
-
-	</xs:annotation>
-
-	<xs:complexType name="scriptType">
-
-		<xs:simpleContent>
-
-			<xs:extension base="g:script-text">
-
-				<xs:attribute name="language" type="xs:string" use="optional"/>
-
-				<xs:attribute name="category" type="xs:string" use="optional"/>
-
-				<xs:attribute name="info" type="xs:string" use="optional"/>
-
-			</xs:extension>
-
-		</xs:simpleContent>
-
-	</xs:complexType>
-
-	<xs:simpleType name="script-text">
-
-		<xs:annotation>
-
-			<xs:documentation>Type-names for implementations</xs:documentation>
-
-		</xs:annotation>
-
-		<xs:restriction base="xs:string"/>
-
-	</xs:simpleType>
-
+                                                    </xs:annotation>
+                                                    <xs:complexType>
+                                                        <xs:attribute name="replace" type="xs:string" use="optional"/>
+                                                    </xs:complexType>
+                                                </xs:element>
+                                            </xs:choice>
+                                            <xs:attribute name="info" type="xs:string" use="optional"/>
+                                        </xs:complexType>
+                                    </xs:element>
+                                </xs:sequence>
+                                <xs:attribute name="info" type="xs:string" use="optional"/>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:choice>
+                    <xs:attribute name="name" type="xs:string" use="required"/>
+                    <xs:attribute name="info" type="xs:string" use="optional"/>
+                    <xs:attribute name="type" use="optional" default="normal">
+                        <xs:simpleType>
+                            <xs:restriction base="xs:token">
+                                <xs:enumeration value="normal"/>
+                                <xs:enumeration value="inclusive"/>
+                                <xs:enumeration value="exclusive"/>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:attribute>
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+        <xs:attribute name="id" type="xs:string" use="required"/>
+        <xs:attribute name="info" type="xs:string" use="optional"/>
+        <xs:attribute name="start" type="xs:string" use="required"/>
+    </xs:complexType>
+    <xs:annotation>
+        <xs:documentation>-- ITEM TYPES --</xs:documentation>
+    </xs:annotation>
+    <xs:element name="control">
+        <xs:annotation>
+            <xs:documentation>Control the behavior of the parser. </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:attribute name="command" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="none" type="g:noneType" nillable="true">
+        <xs:annotation>
+            <xs:documentation>Element represents nothing/empty</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:complexType name="noneType">
+        <xs:annotation>
+            <xs:documentation>Syntax match nothing</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="info" type="xs:string" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="voidType">
+        <xs:annotation>
+            <xs:documentation>Syntax never matched</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="info" type="xs:string" use="optional"/>
+    </xs:complexType>
+    <xs:simpleType name="plain-text">
+        <xs:annotation>
+            <xs:documentation>Text of plain-text/reg-ex</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:annotation>
+        <xs:documentation>-- IMPLEMENTAION TARGET --</xs:documentation>
+    </xs:annotation>
+    <xs:complexType name="scriptType">
+        <xs:simpleContent>
+            <xs:extension base="g:script-text">
+                <xs:attribute name="language" type="xs:string" use="optional"/>
+                <xs:attribute name="category" type="xs:string" use="optional"/>
+                <xs:attribute name="info" type="xs:string" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="script-text">
+        <xs:annotation>
+            <xs:documentation>Type-names for implementations</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
 </xs:schema>
