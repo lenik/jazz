@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by Snima Denik (Bytes of Danci.Z) -->
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by CPU007 (STUPYNOMAGIC) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsf="http://www.bodz.net/xml/current/xsf" targetNamespace="http://www.bodz.net/xml/current/xsf" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:include schemaLocation="base.xsd"/>
+    <xs:include schemaLocation="structure.xsd"/>
+    <xs:include schemaLocation="content.xsd"/>
+    <xs:include schemaLocation="data.xsd"/>
+    <xs:include schemaLocation="media.xsd"/>
+    <xs:include schemaLocation="script.xsd"/>
+    <xs:group name="site-group">
+        <xs:choice>
+            <xs:group ref="xsf:base-group"/>
+            <xs:group ref="xsf:structure-group"/>
+            <xs:group ref="xsf:content-group"/>
+            <xs:group ref="xsf:data-group"/>
+            <xs:group ref="xsf:media-group"/>
+            <xs:group ref="xsf:script-group"/>
+        </xs:choice>
+    </xs:group>
+    <xs:element name="site-compose">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="xsf:structure-composition"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="site-tree">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="xsf:structure-tree"/>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by Snima Denik (Bytes of Danci.Z) -->
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by CPU007 (STUPYNOMAGIC) -->
+<xs:schema xmlns:xsf="http://www.bodz.net/xml/current/xsf" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.bodz.net/xml/current/xsf" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:include schemaLocation="base.xsd"/>
+    <xs:group name="data-group">
+        <xs:choice>
+            <xs:element name="file"/>
+            <xs:element name="query"/>
+            <xs:element name="execute"/>
+        </xs:choice>
+    </xs:group>
+</xs:schema>

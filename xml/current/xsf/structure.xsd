@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by Snima Denik (Bytes of Danci.Z) -->
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by CPU007 (STUPYNOMAGIC) -->
+<xs:schema xmlns:xsf="http://www.bodz.net/xml/current/xsf" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.bodz.net/xml/current/xsf" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:include schemaLocation="base.xsd"/>
+    <xs:group name="structure-group">
+        <xs:choice>
+            <xs:element name="structure-composition" type="xsf:structure-composition"/>
+            <xs:element name="structure-tree" type="xsf:structure-tree"/>
+        </xs:choice>
+    </xs:group>
+    <xs:complexType name="structure-composition">
+        <xs:complexContent>
+            <xs:extension base="xsf:base-structure">
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element name="embed">
+                        <xs:annotation>
+                            <xs:documentation>Fragments appended to this document. predefined fragment as follows: head, tail, declare, define, custom. </xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:complexContent>
+                                <xs:extension base="xsf:base-structure">
+                                    <xs:attribute name="position" type="xs:string" use="optional"/>
+                                </xs:extension>
+                            </xs:complexContent>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="include">
+                        <xs:annotation>
+                            <xs:documentation>Different type(type-uri) of include may be processed differently. 
+e.g. xml will be included with version-header stripped. </xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:attribute name="href" type="xs:string" use="required"/>
+                            <xs:attribute name="type" type="xs:string" use="optional"/>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="import">
+                        <xs:annotation>
+                            <xs:documentation>Import is more run-time </xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                                <xs:element name="parameter">
+                                    <xs:complexType>
+                                        <xs:simpleContent>
+                                            <xs:extension base="xs:string">
+                                                <xs:attribute name="name" type="xs:string" use="required"/>
+                                                <xs:attribute name="value" type="xs:string" use="optional"/>
+                                            </xs:extension>
+                                        </xs:simpleContent>
+                                    </xs:complexType>
+                                </xs:element>
+                            </xs:choice>
+                            <xs:attribute name="href" type="xs:string" use="required"/>
+                            <xs:attribute name="type" type="xs:string" use="optional"/>
+                        </xs:complexType>
+                    </xs:element>
+                    <!--
+                    Cuz base-structure is anyType, so let properties go. 
+                    <xs:element name="property">
+                        <xs:annotation>
+                            <xs:documentation>Properties of this section, for example, gdml - a parser generater define use property for: 
+- programming language of the implementation
+- the algorithm used
+etc. </xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                    <xs:attribute name="name" type="xs:string" use="required"/>
+                                    <xs:attribute name="select" type="xs:string" use="optional"/>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                    -->
+                </xs:choice>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="structure-tree">
+        <xs:complexContent>
+            <xs:extension base="xsf:base-structure">
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element name="node">
+                        <xs:complexType>
+                            <xs:complexContent>
+                                <xs:extension base="xsf:structure-tree">
+                                    <xs:choice minOccurs="0" maxOccurs="unbounded">
+                                        <xs:element name="attribute">
+                                            <xs:complexType mixed="true">
+                                                <xs:attribute name="name" type="xs:string" use="required"/>
+                                                <xs:attribute name="value" type="xs:string" use="required"/>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:choice>
+                                    <xs:attributeGroup ref="xsf:structure-node-attrs"/>
+                                </xs:extension>
+                            </xs:complexContent>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:choice>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:attributeGroup name="structure-node-attrs">
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="value" type="xs:string" use="optional"/>
+        <xs:attribute name="facet" type="xs:string" use="optional"/>
+        <xs:attribute name="type" type="xs:string" use="optional"/>
+    </xs:attributeGroup>
+</xs:schema>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by Snima Denik (Bytes of Danci.Z) -->
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by CPU007 (STUPYNOMAGIC) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsf="http://www.bodz.net/xml/current/xsf" targetNamespace="http://www.bodz.net/xml/current/xsf" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:include schemaLocation="base.xsd"/>
+    <xs:group name="media-group">
+        <xs:annotation>
+            <xs:documentation>Media terminals</xs:documentation>
+        </xs:annotation>
+        <xs:choice>
+            <xs:choice>
+                <xs:annotation>
+                    <xs:documentation>Static components</xs:documentation>
+                </xs:annotation>
+                <xs:element name="media-image" type="xsf:base-media"/>
+                <xs:element name="media-audio" type="xsf:base-media"/>
+                <xs:element name="media-movie" type="xsf:base-media"/>
+            </xs:choice>
+            <xs:choice>
+                <xs:annotation>
+                    <xs:documentation>Interactive components</xs:documentation>
+                </xs:annotation>
+                <xs:element name="media-control" type="xsf:base-media"/>
+                <xs:element name="media-flash" type="xsf:base-media"/>
+                <xs:element name="media-activex" type="xsf:base-media"/>
+                <xs:element name="media-applet" type="xsf:base-media"/>
+            </xs:choice>
+        </xs:choice>
+    </xs:group>
+</xs:schema>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by CPU007 (STUPYNOMAGIC) -->
-<xs:schema targetNamespace="http://www.bodz.net/xml/draft/xsf/section-support" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsf="http://www.bodz.net/xml/draft/xsf/section-support" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:schema targetNamespace="http://www.bodz.net/xml/current/xsf/section-support" xmlns:xsf="http://www.bodz.net/xml/current/xsf/section-support" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="qualified">
     <xs:complexType name="section-extendable-base">
         <xs:complexContent>
             <xs:extension base="xsf:section-properties">

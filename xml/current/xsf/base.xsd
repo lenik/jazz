@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by Snima Denik (Bytes of Danci.Z) -->
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by CPU007 (STUPYNOMAGIC) -->
+<xs:schema xmlns:xsf="http://www.bodz.net/xml/current/xsf" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.bodz.net/xml/current/xsf" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:group name="base-group">
+        <xs:choice>
+            <xs:element name="base-structure" type="xsf:base-structure"/>
+            <xs:element name="base-content" type="xsf:base-content"/>
+            <xs:element name="base-media" type="xsf:base-media"/>
+            <xs:element name="base-declarator" type="xsf:base-declarator"/>
+            <xs:element name="base-executable" type="xsf:base-executable"/>
+            <xs:element name="base-pragma" type="xsf:base-pragma"/>
+        </xs:choice>
+    </xs:group>
+    <xs:complexType name="base-structure">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:any namespace="##other" processContents="lax"/>
+        </xs:choice>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="base-content">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:any namespace="##other" processContents="lax"/>
+        </xs:choice>
+        <xs:anyAttribute namespace="##other" processContents="lax"/>
+    </xs:complexType>
+    <xs:complexType name="base-media">
+        <xs:complexContent>
+            <xs:extension base="xsf:base-content"/>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="base-declarator"/>
+    <xs:complexType name="base-executable"/>
+    <xs:complexType name="base-pragma"/>
+</xs:schema>

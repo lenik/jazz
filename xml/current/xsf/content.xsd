@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by Snima Denik (Bytes of Danci.Z) -->
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by CPU007 (STUPYNOMAGIC) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsf="http://www.bodz.net/xml/current/xsf" targetNamespace="http://www.bodz.net/xml/current/xsf" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:include schemaLocation="base.xsd"/>
+    <xs:group name="content-group">
+        <xs:choice>
+            <xs:element name="content-text"/>
+            <xs:element name="content-string"/>
+            <xs:element name="content-number"/>
+            <xs:element name="content-date"/>
+        </xs:choice>
+    </xs:group>
+</xs:schema>
