@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by CPU007 (STUPYNOMAGIC) -->
-<xs:schema targetNamespace="http://www.bodz.net/xml/draft/lang/tix" xmlns:xaa="http://www.bodz.net/xml/draft/xaa/section-support" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ti="http://www.bodz.net/xml/draft/lang/tix" elementFormDefault="qualified" attributeFormDefault="unqualified">
-    <xs:import namespace="http://www.bodz.net/xml/draft/xaa/section-support" schemaLocation="http://www.bodz.net/xml/draft/xaa/section-support.xsd"/>
+<xs:schema targetNamespace="http://www.bodz.net/xml/current/latix" xmlns:xsf="http://www.bodz.net/xml/current/xsf/section-support" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ltx="http://www.bodz.net/xml/current/latix" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:import namespace="http://www.bodz.net/xml/current/xsf/section-support" schemaLocation="http://www.bodz.net/xml/current/xsf/section-support.xsd"/>
     <!--========== FACADE ==========-->
     <xs:element name="latix">
         <xs:annotation>
@@ -9,9 +9,9 @@
         </xs:annotation>
         <xs:complexType>
             <xs:complexContent>
-                <xs:extension base="xaa:section-extendable-base">
+                <xs:extension base="xsf:section-extendable-base">
                     <xs:choice minOccurs="0" maxOccurs="unbounded">
-                        <xs:element name="namespace" type="ti:st-namespace"/>
+                        <xs:element name="global" type="ltx:st-namespace"/>
                     </xs:choice>
                 </xs:extension>
             </xs:complexContent>
@@ -26,7 +26,7 @@
             <xs:documentation>Execution elements have rtl attribute. </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base="ti:base-code-unit">
+            <xs:extension base="ltx:base-code-unit">
                 <xs:attribute name="rtl" type="xs:integer" use="optional" default="0"/>
             </xs:extension>
         </xs:complexContent>
@@ -36,9 +36,9 @@
             <xs:documentation>Expression elements carry meaningful value. </xs:documentation>
         </xs:annotation>
         <xs:choice>
-            <xs:group ref="ti:grp-value"/>
-            <xs:group ref="ti:grp-operator"/>
-            <xs:group ref="ti:grp-function"/>
+            <xs:group ref="ltx:grp-value"/>
+            <xs:group ref="ltx:grp-operator"/>
+            <xs:group ref="ltx:grp-function"/>
         </xs:choice>
         <xs:attribute name="id" type="xs:string" use="optional"/>
     </xs:complexType>
@@ -52,7 +52,7 @@ If the (mixed-) content isn't empty, then it will be splited by space into opera
 The operand subelement can overload the operands of mixed-contents. </xs:documentation>
         </xs:annotation>
         <xs:complexContent mixed="true">
-            <xs:extension base="ti:base-execution"/>
+            <xs:extension base="ltx:base-execution"/>
         </xs:complexContent>
     </xs:complexType>
     <xs:complexType name="base-operator-unary">
@@ -60,9 +60,9 @@ The operand subelement can overload the operands of mixed-contents. </xs:documen
             <xs:documentation>Unary operator</xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base="ti:base-operator">
+            <xs:extension base="ltx:base-operator">
                 <xs:sequence minOccurs="0">
-                    <xs:element ref="ti:operand"/>
+                    <xs:element ref="ltx:operand"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -72,9 +72,9 @@ The operand subelement can overload the operands of mixed-contents. </xs:documen
             <xs:documentation>Binary operator with left-association</xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base="ti:base-operator">
+            <xs:extension base="ltx:base-operator">
                 <xs:sequence minOccurs="0">
-                    <xs:element ref="ti:operand" minOccurs="2" maxOccurs="unbounded"/>
+                    <xs:element ref="ltx:operand" minOccurs="2" maxOccurs="unbounded"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -84,9 +84,9 @@ The operand subelement can overload the operands of mixed-contents. </xs:documen
             <xs:documentation>Binary operator with right-association</xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base="ti:base-operator">
+            <xs:extension base="ltx:base-operator">
                 <xs:sequence minOccurs="0">
-                    <xs:element ref="ti:operand" minOccurs="2" maxOccurs="unbounded"/>
+                    <xs:element ref="ltx:operand" minOccurs="2" maxOccurs="unbounded"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -96,9 +96,9 @@ The operand subelement can overload the operands of mixed-contents. </xs:documen
             <xs:documentation>Ternary operator</xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base="ti:base-operator">
+            <xs:extension base="ltx:base-operator">
                 <xs:sequence minOccurs="0">
-                    <xs:element ref="ti:operand" minOccurs="3" maxOccurs="3"/>
+                    <xs:element ref="ltx:operand" minOccurs="3" maxOccurs="3"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -108,9 +108,9 @@ The operand subelement can overload the operands of mixed-contents. </xs:documen
             <xs:documentation>Variable-argument operator</xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base="ti:base-operator">
+            <xs:extension base="ltx:base-operator">
                 <xs:sequence minOccurs="0">
-                    <xs:element ref="ti:operand" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element ref="ltx:operand" minOccurs="0" maxOccurs="unbounded"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -120,11 +120,11 @@ The operand subelement can overload the operands of mixed-contents. </xs:documen
             <xs:documentation>Bit operators</xs:documentation>
         </xs:annotation>
         <xs:choice>
-            <xs:element name="bit-not" type="ti:base-operator-unary"/>
-            <xs:element name="bit-neg" type="ti:base-operator-unary"/>
-            <xs:element name="bit-and" type="ti:base-operator-binary-left"/>
-            <xs:element name="bit-or" type="ti:base-operator-binary-left"/>
-            <xs:element name="bit-xor" type="ti:base-operator-binary-left"/>
+            <xs:element name="bit-not" type="ltx:base-operator-unary"/>
+            <xs:element name="bit-neg" type="ltx:base-operator-unary"/>
+            <xs:element name="bit-and" type="ltx:base-operator-binary-left"/>
+            <xs:element name="bit-or" type="ltx:base-operator-binary-left"/>
+            <xs:element name="bit-xor" type="ltx:base-operator-binary-left"/>
             <xs:element name="bit-shift">
                 <xs:annotation>
                     <xs:documentation>shift: number of levels to shift, positive for right, negtive for left. 
@@ -135,7 +135,7 @@ signed: don't shift MSB</xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:complexContent>
-                        <xs:extension base="ti:base-operator-binary-left">
+                        <xs:extension base="ltx:base-operator-binary-left">
                             <xs:attribute name="looped" type="xs:boolean" use="optional" default="false"/>
                             <xs:attribute name="signed" type="xs:boolean" use="optional" default="false"/>
                         </xs:extension>
@@ -148,7 +148,7 @@ signed: don't shift MSB</xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:complexContent>
-                        <xs:extension base="ti:base-operator-unary">
+                        <xs:extension base="ltx:base-operator-unary">
                             <xs:attribute name="character" type="xs:string" use="optional" default="1"/>
                         </xs:extension>
                     </xs:complexContent>
@@ -162,7 +162,7 @@ from: [left], right</xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:complexContent>
-                        <xs:extension base="ti:base-operator-unary">
+                        <xs:extension base="ltx:base-operator-unary">
                             <xs:attribute name="character" type="xs:string" use="optional" default="1"/>
                             <xs:attribute name="from" type="xs:string" use="optional" default="left"/>
                         </xs:extension>
@@ -176,13 +176,13 @@ from: [left], right</xs:documentation>
             <xs:documentation>Arithmatic operators</xs:documentation>
         </xs:annotation>
         <xs:choice>
-            <xs:element name="add" type="ti:base-operator-binary-left"/>
-            <xs:element name="subtract" type="ti:base-operator-binary-left"/>
-            <xs:element name="multiply" type="ti:base-operator-binary-left"/>
-            <xs:element name="divide" type="ti:base-operator-binary-left"/>
-            <xs:element name="power" type="ti:base-operator-binary-right"/>
-            <xs:element name="increase" type="ti:base-operator-unary"/>
-            <xs:element name="decrease" type="ti:base-operator-unary"/>
+            <xs:element name="add" type="ltx:base-operator-binary-left"/>
+            <xs:element name="subtract" type="ltx:base-operator-binary-left"/>
+            <xs:element name="multiply" type="ltx:base-operator-binary-left"/>
+            <xs:element name="divide" type="ltx:base-operator-binary-left"/>
+            <xs:element name="power" type="ltx:base-operator-binary-right"/>
+            <xs:element name="increase" type="ltx:base-operator-unary"/>
+            <xs:element name="decrease" type="ltx:base-operator-unary"/>
         </xs:choice>
     </xs:group>
     <xs:attributeGroup name="atg-operator-logic">
@@ -200,8 +200,8 @@ from: [left], right</xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:complexContent>
-                        <xs:extension base="ti:base-operator-variable">
-                            <xs:attributeGroup ref="ti:atg-operator-logic"/>
+                        <xs:extension base="ltx:base-operator-variable">
+                            <xs:attributeGroup ref="ltx:atg-operator-logic"/>
                         </xs:extension>
                     </xs:complexContent>
                 </xs:complexType>
@@ -212,8 +212,8 @@ from: [left], right</xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:complexContent>
-                        <xs:extension base="ti:base-operator-variable">
-                            <xs:attributeGroup ref="ti:atg-operator-logic"/>
+                        <xs:extension base="ltx:base-operator-variable">
+                            <xs:attributeGroup ref="ltx:atg-operator-logic"/>
                         </xs:extension>
                     </xs:complexContent>
                 </xs:complexType>
@@ -224,8 +224,8 @@ from: [left], right</xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:complexContent>
-                        <xs:extension base="ti:base-operator-variable">
-                            <xs:attributeGroup ref="ti:atg-operator-logic"/>
+                        <xs:extension base="ltx:base-operator-variable">
+                            <xs:attributeGroup ref="ltx:atg-operator-logic"/>
                         </xs:extension>
                     </xs:complexContent>
                 </xs:complexType>
@@ -236,8 +236,8 @@ from: [left], right</xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:complexContent>
-                        <xs:extension base="ti:base-operator-unary">
-                            <xs:attributeGroup ref="ti:atg-operator-logic"/>
+                        <xs:extension base="ltx:base-operator-unary">
+                            <xs:attributeGroup ref="ltx:atg-operator-logic"/>
                         </xs:extension>
                     </xs:complexContent>
                 </xs:complexType>
@@ -248,8 +248,8 @@ from: [left], right</xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:complexContent>
-                        <xs:extension base="ti:base-operator-unary">
-                            <xs:attributeGroup ref="ti:atg-operator-logic"/>
+                        <xs:extension base="ltx:base-operator-unary">
+                            <xs:attributeGroup ref="ltx:atg-operator-logic"/>
                         </xs:extension>
                     </xs:complexContent>
                 </xs:complexType>
@@ -257,8 +257,8 @@ from: [left], right</xs:documentation>
             <xs:element name="is-equal">
                 <xs:complexType>
                     <xs:complexContent>
-                        <xs:extension base="ti:base-operator-binary-left">
-                            <xs:attributeGroup ref="ti:atg-operator-logic"/>
+                        <xs:extension base="ltx:base-operator-binary-left">
+                            <xs:attributeGroup ref="ltx:atg-operator-logic"/>
                         </xs:extension>
                     </xs:complexContent>
                 </xs:complexType>
@@ -266,8 +266,8 @@ from: [left], right</xs:documentation>
             <xs:element name="is-greater">
                 <xs:complexType>
                     <xs:complexContent>
-                        <xs:extension base="ti:base-operator-binary-left">
-                            <xs:attributeGroup ref="ti:atg-operator-logic"/>
+                        <xs:extension base="ltx:base-operator-binary-left">
+                            <xs:attributeGroup ref="ltx:atg-operator-logic"/>
                         </xs:extension>
                     </xs:complexContent>
                 </xs:complexType>
@@ -275,8 +275,8 @@ from: [left], right</xs:documentation>
             <xs:element name="is-less">
                 <xs:complexType>
                     <xs:complexContent>
-                        <xs:extension base="ti:base-operator-binary-left">
-                            <xs:attributeGroup ref="ti:atg-operator-logic"/>
+                        <xs:extension base="ltx:base-operator-binary-left">
+                            <xs:attributeGroup ref="ltx:atg-operator-logic"/>
                         </xs:extension>
                     </xs:complexContent>
                 </xs:complexType>
@@ -288,21 +288,21 @@ from: [left], right</xs:documentation>
             <xs:documentation>Data-type related operators</xs:documentation>
         </xs:annotation>
         <xs:choice>
-            <xs:element name="size-of" type="ti:base-operator-unary"/>
-            <xs:element name="address-of" type="ti:base-operator-unary"/>
-            <xs:element name="value-at" type="ti:base-operator-unary"/>
+            <xs:element name="size-of" type="ltx:base-operator-unary"/>
+            <xs:element name="address-of" type="ltx:base-operator-unary"/>
+            <xs:element name="value-at" type="ltx:base-operator-unary"/>
             <xs:element name="member-of">
                 <xs:complexType>
                     <xs:complexContent>
-                        <xs:extension base="ti:base-operator-unary">
+                        <xs:extension base="ltx:base-operator-unary">
                             <xs:attribute name="select" type="xs:string" use="optional"/>
                         </xs:extension>
                     </xs:complexContent>
                 </xs:complexType>
             </xs:element>
-            <xs:element name="reinterpret-cast" type="ti:base-operator-unary"/>
-            <xs:element name="static-cast" type="ti:base-operator-unary"/>
-            <xs:element name="dynamic-cast" type="ti:base-operator-unary"/>
+            <xs:element name="reinterpret-cast" type="ltx:base-operator-unary"/>
+            <xs:element name="static-cast" type="ltx:base-operator-unary"/>
+            <xs:element name="dynamic-cast" type="ltx:base-operator-unary"/>
         </xs:choice>
     </xs:group>
     <xs:group name="grp-operator-misc">
@@ -310,7 +310,7 @@ from: [left], right</xs:documentation>
             <xs:documentation>Other operators</xs:documentation>
         </xs:annotation>
         <xs:choice>
-            <xs:element name="iif" type="ti:base-operator-ternary"/>
+            <xs:element name="iif" type="ltx:base-operator-ternary"/>
         </xs:choice>
     </xs:group>
     <xs:group name="grp-operator">
@@ -318,11 +318,11 @@ from: [left], right</xs:documentation>
             <xs:documentation>arithmatic, type-cast, ref/deref, etc.</xs:documentation>
         </xs:annotation>
         <xs:choice>
-            <xs:group ref="ti:grp-operator-bit"/>
-            <xs:group ref="ti:grp-operator-arithmatic"/>
-            <xs:group ref="ti:grp-operator-logic"/>
-            <xs:group ref="ti:grp-operator-datatype"/>
-            <xs:group ref="ti:grp-operator-misc"/>
+            <xs:group ref="ltx:grp-operator-bit"/>
+            <xs:group ref="ltx:grp-operator-arithmatic"/>
+            <xs:group ref="ltx:grp-operator-logic"/>
+            <xs:group ref="ltx:grp-operator-datatype"/>
+            <xs:group ref="ltx:grp-operator-misc"/>
         </xs:choice>
     </xs:group>
     <xs:complexType name="base-operand">
@@ -330,29 +330,29 @@ from: [left], right</xs:documentation>
             <xs:documentation>An operand is lv-enabled expression. </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base="ti:base-expression">
+            <xs:extension base="ltx:base-expression">
                 <xs:attribute name="left-value" type="xs:boolean" use="optional" default="false"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:element name="operand" type="ti:base-operand">
+    <xs:element name="operand" type="ltx:base-operand">
         <xs:annotation>
             <xs:documentation>Expression Operand</xs:documentation>
         </xs:annotation>
     </xs:element>
-    <!--STATEMENT - FUNCTION-->
+    <!--========== FUNCTION ==========-->
     <xs:group name="grp-function">
         <xs:annotation>
             <xs:documentation>assignment, function-call</xs:documentation>
         </xs:annotation>
         <xs:choice>
-            <xs:element name="call-function" type="ti:base-operator"/>
+            <xs:element name="call-function" type="ltx:base-operator"/>
             <xs:element name="lv-assign"/>
             <xs:element name="throw"/>
         </xs:choice>
     </xs:group>
     <xs:complexType name="base-function-impl">
-        <xs:group ref="ti:grp-any"/>
+        <xs:group ref="ltx:grp-any"/>
         <xs:attribute name="layer" type="xs:string" use="optional" default="main"/>
         <xs:attribute name="extends-at" use="optional" default="after">
             <xs:simpleType>
@@ -368,12 +368,17 @@ from: [left], right</xs:documentation>
             <xs:documentation>The storage-traits of a function is specified uncommonly. </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base="ti:base-code-unit">
+            <xs:extension base="ltx:base-code-unit">
                 <xs:sequence>
-                    <xs:element name="in" type="ti:base-element" minOccurs="0"/>
-                    <xs:element name="out" type="ti:base-element" minOccurs="0"/>
-                    <xs:element name="throws" type="ti:base-type-use" minOccurs="0" maxOccurs="unbounded"/>
-                    <xs:element name="implement" type="ti:base-function-impl" minOccurs="0" maxOccurs="unbounded">
+                    <xs:element name="in" type="ltx:base-typedef" minOccurs="0"/>
+                    <xs:element name="out" type="ltx:base-typedef" minOccurs="0"/>
+                    <xs:element name="throws" type="ltx:base-type-use" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="assemble" type="ltx:base-typedef" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Assemble the layers of a function, so some may be executed sequencely, some may be dynamics-choiced. </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="implement" type="ltx:base-function-impl" minOccurs="0" maxOccurs="unbounded">
                         <xs:annotation>
                             <xs:documentation>The order of implement layers is important. 
 
@@ -405,12 +410,14 @@ If no implement is declared, then the default main-implement is used. </xs:docum
                         </xs:restriction>
                     </xs:simpleType>
                 </xs:attribute>
-                <xs:attributeGroup ref="ti:atg-symbol"/>
-                <xs:attributeGroup ref="ti:atg-storage-traits"/>
+                <xs:attribute name="virtual" type="xs:boolean" use="optional" default="false"/>
+                <xs:attribute name="inline" type="xs:boolean" use="optional" default="false"/>
+                <xs:attributeGroup ref="ltx:atg-symbol"/>
+                <xs:attributeGroup ref="ltx:atg-storage-traits"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:element name="function" type="ti:base-function">
+    <xs:element name="function" type="ltx:base-function">
         <xs:annotation>
             <xs:documentation>Declare a function</xs:documentation>
         </xs:annotation>
@@ -421,7 +428,7 @@ If no implement is declared, then the default main-implement is used. </xs:docum
         </xs:annotation>
         <xs:complexType>
             <xs:complexContent>
-                <xs:extension base="ti:base-function-impl">
+                <xs:extension base="ltx:base-function-impl">
                     <xs:attribute name="name" type="xs:string" use="required"/>
                 </xs:extension>
             </xs:complexContent>
@@ -482,17 +489,29 @@ If no implement is declared, then the default main-implement is used. </xs:docum
         <xs:attribute name="managed" type="xs:boolean" use="optional" default="false"/>
     </xs:attributeGroup>
     <xs:complexType name="base-type-use">
-        <xs:choice minOccurs="0" maxOccurs="unbounded">
-            <xs:element name="specialize" type="ti:base-element"/>
-            <xs:element name="construct" type="ti:base-operand"/>
-        </xs:choice>
-        <xs:attribute name="on" type="xs:string" use="required"/>
-    </xs:complexType>
-    <xs:complexType name="base-type-def">
+        <xs:annotation>
+            <xs:documentation>Not for creating new types</xs:documentation>
+        </xs:annotation>
         <xs:complexContent>
-            <xs:extension base="ti:base-code-unit">
-                <xs:sequence>
-                    <xs:element name="specializer" minOccurs="0">
+            <xs:extension base="ltx:base-code-unit">
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element name="specialize" type="ltx:base-typedef"/>
+                    <xs:element name="construct" type="ltx:base-operand"/>
+                </xs:choice>
+                <xs:attribute name="base" type="xs:string" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="base-typedef" mixed="true">
+        <xs:annotation>
+            <xs:documentation>For creating new data types or instances. 
+
+The mixed-text do the value-construct. </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent mixed="true">
+            <xs:extension base="ltx:base-type-use">
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element name="specializer">
                         <xs:annotation>
                             <xs:documentation>Entity element can't have any template parameters.</xs:documentation>
                         </xs:annotation>
@@ -503,40 +522,7 @@ If no implement is declared, then the default main-implement is used. </xs:docum
                             </xs:choice>
                         </xs:complexType>
                     </xs:element>
-                    <xs:choice>
-                        <xs:annotation>
-                            <xs:documentation>Type Model</xs:documentation>
-                        </xs:annotation>
-                        <xs:element ref="ti:type"/>
-                        <xs:element name="base">
-                            <xs:complexType>
-                                <xs:complexContent>
-                                    <xs:extension base="ti:base-type-use">
-                                        <xs:choice minOccurs="0" maxOccurs="unbounded">
-                                            <xs:element name="extends" type="ti:base-type-use">
-                                                <xs:annotation>
-                                                    <xs:documentation>parent::@base is just for copy (with public access and all private-elements kept), and extends are for inherit, multiple extends is allowed. </xs:documentation>
-                                                </xs:annotation>
-                                            </xs:element>
-                                            <xs:element ref="ti:element"/>
-                                            <xs:element name="union">
-                                                <xs:complexType>
-                                                    <xs:sequence>
-                                                        <xs:element ref="ti:element" maxOccurs="unbounded"/>
-                                                    </xs:sequence>
-                                                </xs:complexType>
-                                            </xs:element>
-                                            <xs:element ref="ti:function"/>
-                                        </xs:choice>
-                                    </xs:extension>
-                                </xs:complexContent>
-                            </xs:complexType>
-                        </xs:element>
-                        <xs:element name="point-to" type="ti:base-type-def"/>
-                        <xs:element name="refer-to" type="ti:base-type-def"/>
-                        <xs:element name="array-of" type="ti:base-type-def"/>
-                    </xs:choice>
-                    <xs:element name="constructor" minOccurs="0" maxOccurs="unbounded">
+                    <xs:element name="constructor">
                         <xs:annotation>
                             <xs:documentation>Specify how the type or element can be constructed. 
 For element, type-construct is done before element-constructor. </xs:documentation>
@@ -548,59 +534,85 @@ For element, type-construct is done before element-constructor. </xs:documentati
                             </xs:sequence>
                         </xs:complexType>
                     </xs:element>
-                    <xs:element name="trait" minOccurs="0" maxOccurs="unbounded">
+                    <xs:element name="extends" type="ltx:base-type-use">
+                        <xs:annotation>
+                            <xs:documentation>parent::@base is just for copy (with public access and all private-elements kept), and extends are for inherit, multiple extends is allowed. </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:group ref="ltx:grp-define"/>
+                    <xs:element ref="ltx:function"/>
+                    <xs:element name="trait">
                         <xs:complexType>
                             <xs:attribute name="name" type="xs:string" use="required"/>
                         </xs:complexType>
                     </xs:element>
-                </xs:sequence>
+                </xs:choice>
                 <xs:attribute name="name" type="xs:string" use="optional"/>
-                <xs:attribute name="size" type="xs:integer" use="optional"/>
                 <xs:attribute name="align" type="xs:integer" use="optional" default="1"/>
-                <xs:attributeGroup ref="ti:atg-symbol"/>
-                <xs:attributeGroup ref="ti:atg-storage-traits"/>
+                <xs:attribute name="bytes" type="xs:integer" use="optional"/>
+                <xs:attribute name="final" type="xs:boolean" use="optional" default="false"/>
+                <xs:attributeGroup ref="ltx:atg-symbol"/>
+                <xs:attributeGroup ref="ltx:atg-storage-traits"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="base-element">
-        <xs:complexContent>
-            <xs:extension base="ti:base-type-def"/>
-        </xs:complexContent>
-    </xs:complexType>
-    <xs:element name="type">
-        <xs:annotation>
-            <xs:documentation>Inner type</xs:documentation>
-        </xs:annotation>
-        <xs:complexType>
-            <xs:complexContent>
-                <xs:extension base="ti:base-type-def"/>
-            </xs:complexContent>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="element">
-        <xs:complexType>
-            <xs:complexContent>
-                <xs:extension base="ti:base-element"/>
-            </xs:complexContent>
-        </xs:complexType>
-    </xs:element>
-    <xs:group name="grp-declare">
-        <xs:annotation>
-            <xs:documentation>typedef, function-proto</xs:documentation>
-        </xs:annotation>
-        <xs:choice>
-            <xs:element ref="ti:function"/>
-            <xs:element ref="ti:type"/>
-        </xs:choice>
-    </xs:group>
     <xs:group name="grp-define">
-        <xs:annotation>
-            <xs:documentation>variable-def, function-def</xs:documentation>
-        </xs:annotation>
         <xs:choice>
-            <xs:element ref="ti:element"/>
+            <xs:element ref="ltx:type"/>
+            <xs:element ref="ltx:element"/>
+            <xs:element ref="ltx:union"/>
+            <xs:element ref="ltx:pointer"/>
+            <xs:element ref="ltx:reference"/>
+            <xs:element ref="ltx:array"/>
         </xs:choice>
     </xs:group>
+    <xs:element name="type" type="ltx:base-typedef">
+        <xs:annotation>
+            <xs:documentation>Just another element, but for semantics.</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="element" type="ltx:base-typedef">
+        <xs:annotation>
+            <xs:documentation>Entity element</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="array">
+        <xs:annotation>
+            <xs:documentation>Array</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="ltx:base-typedef">
+                    <xs:attribute name="index-base" type="xs:integer" use="optional" default="0"/>
+                    <xs:attribute name="size" type="xs:integer" use="required"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="reference" type="ltx:base-typedef">
+        <xs:annotation>
+            <xs:documentation>Reference</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="pointer" type="ltx:base-typedef">
+        <xs:annotation>
+            <xs:documentation>Pointer</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="union">
+        <xs:annotation>
+            <xs:documentation>Union</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="ltx:base-typedef">
+                    <xs:choice minOccurs="0" maxOccurs="unbounded">
+                        <xs:element name="selector"/>
+                    </xs:choice>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
     <!--========== DATA VALUE ==========-->
     <xs:group name="grp-value">
         <xs:annotation>
@@ -638,7 +650,7 @@ For element, type-construct is done before element-constructor. </xs:documentati
             </xs:element>
             <xs:element name="pointer"/>
             <xs:element name="reference"/>
-            <xs:element name="expression" type="ti:base-expression"/>
+            <xs:element name="expression" type="ltx:base-expression"/>
             <xs:element name="array">
                 <xs:complexType/>
             </xs:element>
@@ -658,37 +670,37 @@ A do-structure has:
 label-attribute in control-symbol refers to target-label. </xs:documentation>
         </xs:annotation>
         <xs:choice>
-            <xs:element name="control-goto" type="ti:base-code-unit">
+            <xs:element name="control-goto" type="ltx:base-code-unit">
                 <xs:annotation>
                     <xs:documentation>unconditionally goto. </xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="control-break" type="ti:base-code-unit">
+            <xs:element name="control-break" type="ltx:base-code-unit">
                 <xs:annotation>
                     <xs:documentation>break the do-structure</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="control-next" type="ti:base-code-unit">
+            <xs:element name="control-next" type="ltx:base-code-unit">
                 <xs:annotation>
                     <xs:documentation>do the next-step, with C</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="control-previous" type="ti:base-code-unit">
+            <xs:element name="control-previous" type="ltx:base-code-unit">
                 <xs:annotation>
                     <xs:documentation>do the previous-step, with C</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="control-redo" type="ti:base-code-unit">
+            <xs:element name="control-redo" type="ltx:base-code-unit">
                 <xs:annotation>
                     <xs:documentation>re-do the current step, without C</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="control-reset" type="ti:base-code-unit">
+            <xs:element name="control-reset" type="ltx:base-code-unit">
                 <xs:annotation>
                     <xs:documentation>re-do the do-structure, with I-C</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="control-yield" type="ti:base-code-unit">
+            <xs:element name="control-yield" type="ltx:base-code-unit">
                 <xs:annotation>
                     <xs:documentation>yield the current do-structure, with a returned yield-handle. </xs:documentation>
                 </xs:annotation>
@@ -697,9 +709,9 @@ label-attribute in control-symbol refers to target-label. </xs:documentation>
     </xs:group>
     <xs:complexType name="base-control">
         <xs:complexContent>
-            <xs:extension base="ti:base-code-unit">
+            <xs:extension base="ltx:base-code-unit">
                 <xs:choice minOccurs="0" maxOccurs="unbounded">
-                    <xs:group ref="ti:grp-control-symbol"/>
+                    <xs:group ref="ltx:grp-control-symbol"/>
                 </xs:choice>
             </xs:extension>
         </xs:complexContent>
@@ -712,7 +724,7 @@ label-attribute in control-symbol refers to target-label. </xs:documentation>
             <xs:element name="iterate">
                 <xs:complexType>
                     <xs:complexContent>
-                        <xs:extension base="ti:base-control">
+                        <xs:extension base="ltx:base-control">
                             <xs:attribute name="iterator" type="xs:string" use="optional"/>
                             <xs:attribute name="range" type="xs:string" use="optional"/>
                         </xs:extension>
@@ -722,9 +734,9 @@ label-attribute in control-symbol refers to target-label. </xs:documentation>
             <xs:element name="branch">
                 <xs:complexType>
                     <xs:complexContent>
-                        <xs:extension base="ti:base-control">
+                        <xs:extension base="ltx:base-control">
                             <xs:sequence>
-                                <xs:element name="on" type="ti:base-expression" minOccurs="0"/>
+                                <xs:element name="on" type="ltx:base-expression" minOccurs="0"/>
                                 <xs:element name="do"/>
                             </xs:sequence>
                             <xs:attribute name="on" type="xs:string" use="optional"/>
@@ -735,7 +747,7 @@ label-attribute in control-symbol refers to target-label. </xs:documentation>
             <xs:element name="branches">
                 <xs:complexType>
                     <xs:complexContent>
-                        <xs:extension base="ti:base-control">
+                        <xs:extension base="ltx:base-control">
                             <xs:choice>
                                 <xs:element name="branch"/>
                             </xs:choice>
@@ -750,11 +762,11 @@ label-attribute in control-symbol refers to target-label. </xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:complexContent>
-                        <xs:extension base="ti:base-control">
+                        <xs:extension base="ltx:base-control">
                             <xs:sequence>
                                 <xs:choice minOccurs="0">
-                                    <xs:element name="while" type="ti:base-expression"/>
-                                    <xs:element name="until" type="ti:base-expression"/>
+                                    <xs:element name="while" type="ltx:base-expression"/>
+                                    <xs:element name="until" type="ltx:base-expression"/>
                                 </xs:choice>
                                 <xs:element name="do"/>
                             </xs:sequence>
@@ -764,14 +776,14 @@ label-attribute in control-symbol refers to target-label. </xs:documentation>
                     </xs:complexContent>
                 </xs:complexType>
             </xs:element>
-            <xs:element name="fork" type="ti:base-control"/>
-            <xs:element ref="ti:do"/>
+            <xs:element name="fork" type="ltx:base-control"/>
+            <xs:element ref="ltx:do"/>
         </xs:choice>
     </xs:group>
     <xs:element name="do">
         <xs:complexType>
             <xs:complexContent>
-                <xs:extension base="ti:base-control">
+                <xs:extension base="ltx:base-control">
                     <xs:choice>
                         <xs:element name="initialize"/>
                         <xs:element name="previous"/>
@@ -789,13 +801,12 @@ label-attribute in control-symbol refers to target-label. </xs:documentation>
     <!--========== STATEMENT GROUPS ==========-->
     <xs:group name="grp-any">
         <xs:choice>
-            <xs:group ref="ti:grp-lexical"/>
-            <xs:group ref="ti:grp-control"/>
-            <xs:group ref="ti:grp-operator"/>
-            <xs:group ref="ti:grp-function"/>
-            <xs:group ref="ti:grp-declare"/>
-            <xs:group ref="ti:grp-define"/>
-            <xs:group ref="ti:grp-general"/>
+            <xs:group ref="ltx:grp-lexical"/>
+            <xs:group ref="ltx:grp-control"/>
+            <xs:group ref="ltx:grp-operator"/>
+            <xs:group ref="ltx:grp-function"/>
+            <xs:group ref="ltx:grp-define"/>
+            <xs:group ref="ltx:grp-general"/>
         </xs:choice>
     </xs:group>
     <xs:group name="grp-lexical">
@@ -803,7 +814,7 @@ label-attribute in control-symbol refers to target-label. </xs:documentation>
             <xs:documentation>namespace</xs:documentation>
         </xs:annotation>
         <xs:choice>
-            <xs:element name="namespace" type="ti:st-namespace"/>
+            <xs:element name="namespace" type="ltx:st-namespace"/>
             <xs:element name="namespace-using" type="xs:string"/>
         </xs:choice>
     </xs:group>
@@ -816,7 +827,7 @@ label-attribute in control-symbol refers to target-label. </xs:documentation>
     <!--STATEMENT - LEXICAL-->
     <xs:complexType name="st-namespace">
         <xs:choice minOccurs="0" maxOccurs="unbounded">
-            <xs:group ref="ti:grp-any"/>
+            <xs:group ref="ltx:grp-any"/>
         </xs:choice>
         <xs:attribute name="name" type="xs:string" use="optional" default="global"/>
     </xs:complexType>
