@@ -1,359 +1,168 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by danzci (cpu007) -->
-
-<grammer root="program" xmlns="http://www.boDz.net/XML/draft/GDML" xmlns:xaa="http://www.boDz.net/XML/draft/X@A/Sections" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.boDz.net/XML/draft/GDML
-
-http://www.boDz.net/XML/draft/GDML/GDML.xsd">
-
-	<xaa:property name="GDI-target-ns">http://www.boDz.net/XML/draft/GG</xaa:property>
-
-	<xaa:property name="GDI-target-path">http://www.boDz.net/XML/draft/GG/</xaa:property>
-
-	<!-- DD - Descriptive Design -->
-
-		<group info="program document">
-
-			<element id="program">
-
-				<syntax>
-
-					<repeat min="0">
-
-						<refer>program-unit</refer>
-
-					</repeat>
-
-				</syntax>
-
-			</element>
-
-		</group>
-
-		<group info="basic">
-
-			<element id="program-unit">
-
-				<syntax id="DECLARATION">
-
-					<none />
-
-				</syntax>
-
-				<syntax id="STATEMENT">
-
-					<refer>statement</refer>
-
-				</syntax>
-
-			</element>
-
-			<element id="expression">
-
-				<syntax id="STMT-EXP" info="trace the value last evaluated. ">
-
-					<text>_last_val</text>
-
-					<refer name="stLastTraced">statement</refer>
-
-				</syntax>
-
-			</element>
-
-			<element id="statements">
-
-				<syntax>
-
-					<repeat min="0">
-
-						<refer>statement</refer>
-
-					</repeat>
-
-				</syntax>
-
-			</element>
-
-			<element id="statement">
-
-				<syntax id="ST-BLOCK">
-
-					<text>{</text>
-
-					<refer>statements</refer>
-
-					<text>}</text>
-
-				</syntax>
-
-				<syntax id="ST-SINGLE">
-
-					<refer>single-statement</refer>
-
-					<text>;</text>
-
-				</syntax>
-
-				<syntax id="ST-FOR">
-
-					<refer>for-statement</refer>
-
-				</syntax>
-
-				<syntax id="ST-WHILE">
-
-					<refer>while-statement</refer>
-
-				</syntax>
-
-				<syntax id="ST-IF">
-
-					<refer>if-statement</refer>
-
-				</syntax>
-
-			</element>
-
-			<element id="single-statement">
-
-				<syntax id="ST-EXP">
-
-					<refer>expression</refer>
-
-				</syntax>
-
-				<syntax id="ST-RETURN">
-
-					<text>return</text>
-
-					<refer name="retval">expression</refer>
-
-				</syntax>
-
-			</element>
-
-			<element id="left-value">
-
-				<syntax>
-
-					<text/>
-
-				</syntax>
-
-			</element>
-
-		</group>
-
-		<group info="flow control">
-
-			<element id="for-statement">
-
-				<syntax id="FOR-C">
-
-					<text>for</text>
-
-					<text>(</text>
-
-					<optional>
-
-						<refer name="stInit">single-statement</refer>
-
-					</optional>
-
-					<text>;</text>
-
-					<optional>
-
-						<refer name="expCond">expression</refer>
-
-					</optional>
-
-					<text>;</text>
-
-					<optional>
-
-						<refer name="stLoop">single-statement</refer>
-
-					</optional>
-
-					<text>)</text>
-
-					<refer name="body">statement</refer>
-
-				</syntax>
-
-				<syntax id="FOR-EACH">
-
-					<text>foreach</text>
-
-					<text>(</text>
-
-					<refer name="lvIterator">left-value</refer>
-
-					<text>in</text>
-
-					<refer name="agg">expression</refer>
-
-					<text>)</text>
-
-					<refer name="body">statement</refer>
-
-				</syntax>
-
-			</element>
-
-			<element id="while-statement">
-
-				<syntax id="WHILE">
-
-					<optional>
-
-						<text>do</text>
-
-					</optional>
-
-					<text>while</text>
-
-					<text>(</text>
-
-					<refer name="expCond">expression</refer>
-
-					<text>)</text>
-
-					<refer name="body">statement</refer>
-
-				</syntax>
-
-				<syntax id="DO-WHILE">
-
-					<text>do</text>
-
-					<refer name="body">statement</refer>
-
-					<text>while</text>
-
-					<text>(</text>
-
-					<refer name="expCond">expression</refer>
-
-					<text>)</text>
-
-				</syntax>
-
-			</element>
-
-			<element id="if-statement">
-
-				<syntax id="IF-ELSE">
-
-					<text>if</text>
-
-					<text>(</text>
-
-					<refer name="expCond">expression</refer>
-
-					<text>)</text>
-
-					<refer name="stTruePart">statement</refer>
-
-					<optional>
-
-						<text>else</text>
-
-						<refer name="stFalsePart">statement</refer>
-
-					</optional>
-
-				</syntax>
-
-			</element>
-
-			<element id="switch-statement">
-
-				<syntax id="SWITCH-CASE">
-
-					<text>switch</text>
-
-					<text>(</text>
-
-					<refer name="baseValue">expression</refer>
-
-					<text>)</text>
-
-					<text>{</text>
-
-					<repeat min="0">
-
-						<anyof>
-
-							<seq>
-
-								<text>case</text>
-
-								<refer name="expCase">expression</refer>
-
-								<text>:</text>
-
-								<refer>statements</refer>
-
-							</seq>
-
-							<seq>
-
-								<text>default</text>
-
-								<text>:</text>
-
-								<refer>statements</refer>
-
-							</seq>
-
-						</anyof>
-
-					</repeat>
-
-					<text>}</text>
-
-				</syntax>
-
-			</element>
-
-		</group>
-
-		<group info="parellel control">
-
-		</group>
-
-		<group info="data types">
-
-		</group>
-
-		<group info="literal constant values">
-
-			<element id="string-constant">
-
-				<syntax id="STRING-UNICODE">
-
-					<anyof>
-
-						<regex>"[^"]*"</regex>
-
-						<regex>L"[^"]*"</regex>
-
-					</anyof>
-
-				</syntax>
-
-			</element>
-
-		</group>
-
-		<group info="memory management">
-
-		</group>
-
-		<group info="support">
-
-		</group>
-
-</grammer>
+<g:language xmlns:xsf="http://www.bodz.net/xml/current/xsf" xmlns:g="http://www.bodz.net/xml/current/gdml" xmlns:t="http://www.bodz.net/xml/current/gdml/translate" xmlns:dd="http://www.bodz.net/xml/current/gdml/instance/dd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.bodz.net/xml/current/gdml
+http://www.bodz.net/xml/current/gdml/gdml.xsd" root="program" uri="http://www.bodz.net/xml/current/gdml/instance/dd" name="DD" info="Descriptive Design">
+	<!-- program document-->
+	<g:symbol name="program">
+		<g:syntax>
+			<g:repeat min="0">
+				<g:refer symbol="program-unit"/>
+			</g:repeat>
+		</g:syntax>
+	</g:symbol>
+	<!-- basic -->
+	<g:symbol name="program-unit">
+		<g:syntax name="DECLARATION">
+			<g:none/>
+		</g:syntax>
+		<g:syntax name="STATEMENT">
+			<g:refer>statement</g:refer>
+		</g:syntax>
+	</g:symbol>
+	<g:symbol name="expression">
+		<g:syntax name="STMT-EXP" info="trace the value last evaluated. ">
+			<g:text>_last_val</g:text>
+			<g:refer name="stLastTraced" symbol="statement"/>
+		</g:syntax>
+	</g:symbol>
+	<g:symbol name="statements">
+		<g:syntax>
+			<g:repeat min="0">
+				<g:refer>statement</g:refer>
+			</g:repeat>
+		</g:syntax>
+	</g:symbol>
+	<g:symbol name="statement">
+		<g:syntax name="ST-BLOCK">
+			<g:text>{</g:text>
+			<g:refer symbol="statements"/>
+			<g:text>}</g:text>
+		</g:syntax>
+		<g:syntax name="ST-SINGLE">
+			<g:refer symbol="single-statement"/>
+			<g:text>;</g:text>
+		</g:syntax>
+		<g:syntax name="ST-FOR">
+			<g:refer symbol="for-statement"/>
+		</g:syntax>
+		<g:syntax name="ST-WHILE">
+			<g:refer symbol="while-statement"/>
+		</g:syntax>
+		<g:syntax name="ST-IF">
+			<g:refer symbol="if-statement"/>
+		</g:syntax>
+	</g:symbol>
+	<g:symbol name="single-statement">
+		<g:syntax name="ST-EXP">
+			<g:refer symbol="expression"/>
+		</g:syntax>
+		<g:syntax name="ST-RETURN">
+			<g:text>return</g:text>
+			<g:refer name="retval" symbol="expression"/>
+		</g:syntax>
+	</g:symbol>
+	<g:symbol name="left-value">
+		<g:syntax>
+			<g:text/>
+		</g:syntax>
+	</g:symbol>
+	<!-- flow control -->
+	<g:symbol name="for-statement">
+		<g:syntax name="FOR-C">
+			<g:text>for</g:text>
+			<g:text>(</g:text>
+			<g:optional>
+				<g:refer name="stInit" symbol="single-statement"/>
+			</g:optional>
+			<g:text>;</g:text>
+			<g:optional>
+				<g:refer name="expCond" symbol="expression"/>
+			</g:optional>
+			<g:text>;</g:text>
+			<g:optional>
+				<g:refer name="stLoop" symbol="single-statement"/>
+			</g:optional>
+			<g:text>)</g:text>
+			<g:refer name="body" symbol="statement"/>
+		</g:syntax>
+		<g:syntax name="FOR-EACH">
+			<g:text>foreach</g:text>
+			<g:text>(</g:text>
+			<g:refer name="lvIterator" symbol="left-value"/>
+			<g:text>in</g:text>
+			<g:refer name="agg" symbol="expression"/>
+			<g:text>)</g:text>
+			<g:refer name="body" symbol="statement"/>
+		</g:syntax>
+	</g:symbol>
+	<g:symbol name="while-statement">
+		<g:syntax name="WHILE">
+			<g:optional>
+				<g:text>do</g:text>
+			</g:optional>
+			<g:text>while</g:text>
+			<g:text>(</g:text>
+			<g:refer name="expCond">expression</g:refer>
+			<g:text>)</g:text>
+			<g:refer name="body">statement</g:refer>
+		</g:syntax>
+		<g:syntax name="DO-WHILE">
+			<g:text>do</g:text>
+			<g:refer name="body" symbol="statement"/>
+			<g:text>while</g:text>
+			<g:text>(</g:text>
+			<g:refer name="expCond" symbol="expression"/>
+			<g:text>)</g:text>
+		</g:syntax>
+	</g:symbol>
+	<g:symbol name="if-statement">
+		<g:syntax name="IF-ELSE">
+			<g:text>if</g:text>
+			<g:text>(</g:text>
+			<g:refer name="expCond" symbol="expression"/>
+			<g:text>)</g:text>
+			<g:refer name="stTruePart" symbol="statement"/>
+			<g:optional>
+				<g:text>else</g:text>
+				<g:refer name="stFalsePart" symbol="statement"/>
+			</g:optional>
+		</g:syntax>
+	</g:symbol>
+	<g:symbol name="switch-statement">
+		<g:syntax name="SWITCH-CASE">
+			<g:text>switch</g:text>
+			<g:text>(</g:text>
+			<g:refer name="baseValue" symbol="expression"/>
+			<g:text>)</g:text>
+			<g:text>{</g:text>
+			<g:repeat min="0">
+				<g:anyof>
+					<g:seq>
+						<g:text>case</g:text>
+						<g:refer name="expCase" symbol="expression"/>
+						<g:text>:</g:text>
+						<g:refer symbol="statements"/>
+					</g:seq>
+					<g:seq>
+						<g:text>default</g:text>
+						<g:text>:</g:text>
+						<g:refer symbol="statements"/>
+					</g:seq>
+				</g:anyof>
+			</g:repeat>
+			<g:text>}</g:text>
+		</g:syntax>
+	</g:symbol>
+	<!-- parellel control -->
+	<!-- data types -->
+	<!-- literal constant values -->
+	<g:symbol name="string-constant">
+		<g:syntax name="STRING-UNICODE">
+			<g:anyof>
+				<g:regex>"[^"]*"</g:regex>
+				<g:regex>L"[^"]*"</g:regex>
+			</g:anyof>
+		</g:syntax>
+	</g:symbol>
+	<!-- memory management -->
+	<!-- support -->
+</g:language>
