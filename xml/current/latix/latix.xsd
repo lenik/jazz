@@ -46,8 +46,10 @@
     <xs:complexType name="base-operator" mixed="true">
         <xs:annotation>
             <xs:documentation>Execution unit
-If the (mixed-) content isn't empty, then it will be splited by space into operands. 
-The operand subelement can overload the operands of mixed-contents. </xs:documentation>
+
+If the (mixed-) content isn't empty, then it will be splited by space into operands. 
+
+The operand subelement can overload the operands of mixed-contents. </xs:documentation>
         </xs:annotation>
         <xs:complexContent mixed="true">
             <xs:extension base="ti:base-execution"/>
@@ -126,8 +128,10 @@
             <xs:element name="bit-shift">
                 <xs:annotation>
                     <xs:documentation>shift: number of levels to shift, positive for right, negtive for left. 
-looped: looped-shift
-signed: don't shift MSB</xs:documentation>
+
+looped: looped-shift
+
+signed: don't shift MSB</xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:complexContent>
@@ -153,7 +157,8 @@
             <xs:element name="bit-count-prefix">
                 <xs:annotation>
                     <xs:documentation>character: 0, 1
-from: [left], right</xs:documentation>
+
+from: [left], right</xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:complexContent>
@@ -346,16 +351,44 @@
             <xs:element name="throw"/>
         </xs:choice>
     </xs:group>
+    <xs:complexType name="base-function-impl">
+        <xs:group ref="ti:grp-any"/>
+        <xs:attribute name="layer" type="xs:string" use="optional" default="main"/>
+        <xs:attribute name="extends-at" use="optional" default="after">
+            <xs:simpleType>
+                <xs:restriction base="xs:token">
+                    <xs:enumeration value="before"/>
+                    <xs:enumeration value="after"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
     <xs:complexType name="base-function">
+        <xs:annotation>
+            <xs:documentation>The storage-traits of a function is specified uncommonly. </xs:documentation>
+        </xs:annotation>
         <xs:complexContent>
             <xs:extension base="ti:base-code-unit">
                 <xs:sequence>
                     <xs:element name="in" type="ti:base-element" minOccurs="0"/>
                     <xs:element name="out" type="ti:base-element" minOccurs="0"/>
                     <xs:element name="throws" type="ti:base-type-use" minOccurs="0" maxOccurs="unbounded"/>
-                    <xs:element name="define" minOccurs="0">
+                    <xs:element name="implement" type="ti:base-function-impl" minOccurs="0" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>The order of implement layers is important. 
+
+If no implement is declared, then the default main-implement is used. </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="extends" minOccurs="0" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>The order of multiple extends is important. </xs:documentation>
+                        </xs:annotation>
                         <xs:complexType>
-                            <xs:group ref="ti:grp-any" minOccurs="0" maxOccurs="unbounded"/>
+                            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                                <xs:element name="argument-transfer"/>
+                            </xs:choice>
+                            <xs:attribute name="on" type="xs:string" use="required"/>
                         </xs:complexType>
                     </xs:element>
                 </xs:sequence>
@@ -373,10 +406,27 @@
                     </xs:simpleType>
                 </xs:attribute>
                 <xs:attributeGroup ref="ti:atg-symbol"/>
+                <xs:attributeGroup ref="ti:atg-storage-traits"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:element name="function" type="ti:base-function"/>
+    <xs:element name="function" type="ti:base-function">
+        <xs:annotation>
+            <xs:documentation>Declare a function</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="implement">
+        <xs:annotation>
+            <xs:documentation>Implement a layer of a function</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="ti:base-function-impl">
+                    <xs:attribute name="name" type="xs:string" use="required"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
     <!--========== DATA TYPE ==========-->
     <xs:attributeGroup name="atg-symbol">
         <xs:attribute name="access" use="optional" default="local">
@@ -604,7 +654,8 @@ A do-structure has:
     I initialize
     S step
     C condition
-label-attribute in control-symbol refers to target-label. </xs:documentation>
+
+label-attribute in control-symbol refers to target-label. </xs:documentation>
         </xs:annotation>
         <xs:choice>
             <xs:element name="control-goto" type="ti:base-code-unit">
