@@ -1,1 +1,76 @@
-<?xml version="1.0" encoding="UTF-8"?><!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by danzci (cpu007) --><grammer xmlns="http://www.bodz.net/xml/draft/gdml" xmlns:xaa="http://www.bodz.net/xml/draft/xaa/section-support" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.bodz.net/xml/draft/gdmlhttp://www.bodz.net/xml/draft/gdml/gdml.xsd" root="DOCUMENT" info="GDL (ProGrammer) to GDML">	<group info="GDL-document">		<element id="DOCUMENT">			<syntax>				<syntax-determinizer/>				<context info="Remove comments and space">					<preprocess id="XX" start="BEGIN">						<state name="BEGIN">							<for-input info="comment-start">								<text>/*</text>								<action>									<goto state="COMMENT"/>								</action>							</for-input>							<for-input info="space">								<regex>[ \t\n\r]*</regex>								<action/>							</for-input>							<for-input info="otherwise">								<regex>.</regex>								<action>									<output-text/>								</action>							</for-input>						</state>						<state name="COMMENT">							<for-input info="comment-body">								<regex>([^*]|(\*[^/]))*</regex>								<action/>							</for-input>							<for-input info="comment-end">								<text>*/</text>								<action>									<goto state="BEGIN"/>								</action>							</for-input>						</state>					</preprocess>				</context>				<repeat>					<refer>GRAMMER-DEF</refer>				</repeat>			</syntax>		</element>		<element id="GRAMMER-DEF">			<syntax>				<text>grammer</text>			</syntax>		</element>	</group>	<group>		<element id="COMMENT">			<syntax info="single-line">				<regex>//.*$</regex>			</syntax>			<syntax info="multiple-line">				<text>/*</text>				<regex>([^\*]|(\*[^\/]))*</regex>				<text>*/</text>			</syntax>		</element>		<element id="SPACE">			<syntax>				<regex>[ \t\n\r]+</regex>			</syntax>		</element>		<element id="FILE-INCLUDE">			<syntax>				<regex>[ \t\n\r]+</regex>			</syntax>		</element>	</group></grammer>
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by danzci (cpu007) -->
+<grammer xmlns="http://www.bodz.net/xml/draft/gdml" xmlns:xaa="http://www.bodz.net/xml/draft/xaa/section-support" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.bodz.net/xml/draft/gdml
+http://www.bodz.net/xml/draft/gdml/gdml.xsd" root="DOCUMENT" info="GDL (ProGrammer) to GDML">
+	<group info="GDL-document">
+		<element id="DOCUMENT">
+			<syntax>
+				<syntax-determinizer/>
+				<context info="Remove comments and space">
+					<preprocess id="XX" start="BEGIN">
+						<state name="BEGIN">
+							<for-input info="comment-start">
+								<text>/*</text>
+								<action>
+									<goto state="COMMENT"/>
+								</action>
+							</for-input>
+							<for-input info="space">
+								<regex>[ \t\n\r]*</regex>
+								<action/>
+							</for-input>
+							<for-input info="otherwise">
+								<regex>.</regex>
+								<action>
+									<output-text/>
+								</action>
+							</for-input>
+						</state>
+						<state name="COMMENT">
+							<for-input info="comment-body">
+								<regex>([^*]|(\*[^/]))*</regex>
+								<action/>
+							</for-input>
+							<for-input info="comment-end">
+								<text>*/</text>
+								<action>
+									<goto state="BEGIN"/>
+								</action>
+							</for-input>
+						</state>
+					</preprocess>
+				</context>
+				<repeat>
+					<refer>GRAMMER-DEF</refer>
+				</repeat>
+			</syntax>
+		</element>
+		<element id="GRAMMER-DEF">
+			<syntax>
+				<text>grammer</text>
+			</syntax>
+		</element>
+	</group>
+	<group>
+		<element id="COMMENT">
+			<syntax info="single-line">
+				<regex>//.*$</regex>
+			</syntax>
+			<syntax info="multiple-line">
+				<text>/*</text>
+				<regex>([^\*]|(\*[^\/]))*</regex>
+				<text>*/</text>
+			</syntax>
+		</element>
+		<element id="SPACE">
+			<syntax>
+				<regex>[ \t\n\r]+</regex>
+			</syntax>
+		</element>
+		<element id="FILE-INCLUDE">
+			<syntax>
+				<regex>[ \t\n\r]+</regex>
+			</syntax>
+		</element>
+	</group>
+</grammer>
