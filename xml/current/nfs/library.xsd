@@ -2,7 +2,7 @@
 <!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by Snima Denik (Bytes of Danci.Z) -->
 <xs:schema xmlns:nl="http://www.bodz.net/xml/current/nfs/library" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsf="http://www.bodz.net/xml/current/xsf" targetNamespace="http://www.bodz.net/xml/current/nfs/library" elementFormDefault="qualified" attributeFormDefault="unqualified">
     <xs:import namespace="http://www.bodz.net/xml/current/xsf" schemaLocation="http://www.bodz.net/xml/current/xsf/structure.xsd"/>
-    <!--========== NFS :: Library ==========-->
+    <!--========== NFS :: Library  ($Id: library.xsd,v 1.2 2004-12-09 05:36:03 dansei Exp $) ==========-->
     <xs:element name="library">
         <xs:complexType>
             <xs:complexContent>
@@ -11,7 +11,7 @@
                         <xs:group ref="nl:document-group"/>
                         <xs:group ref="nl:component-group"/>
                     </xs:choice>
-                    <xs:attribute name="uri">
+                    <xs:attribute name="uri" type="xs:string">
                         <xs:annotation>
                             <xs:documentation>currently only used in java-package</xs:documentation>
                         </xs:annotation>
@@ -74,12 +74,12 @@
                 <xs:complexType>
                     <xs:complexContent>
                         <xs:extension base="nl:document">
-                            <xs:attribute name="name">
+                            <xs:attribute name="name" type="xs:string">
                                 <xs:annotation>
                                     <xs:documentation>component-name in this library</xs:documentation>
                                 </xs:annotation>
                             </xs:attribute>
-                            <xs:attribute name="href">
+                            <xs:attribute name="href" type="xs:string">
                                 <xs:annotation>
                                     <xs:documentation>if name defined, the href default is to that component. 
 if both name and href isn't defined, then this is not a link. </xs:documentation>
@@ -112,6 +112,125 @@ if both name and href isn't defined, then this is not a link. </xs:documentation
         </xs:choice>
         <xs:attributeGroup ref="nl:component-attrs"/>
         <xs:attributeGroup ref="nl:common-attrs"/>
+    </xs:complexType>
+    <xs:complexType name="class">
+        <xs:complexContent>
+            <xs:extension base="nl:component">
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element name="interface" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>implements interface</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="property">
+                        <xs:complexType>
+                            <xs:complexContent>
+                                <xs:extension base="nl:typedef">
+                                    <xs:attributeGroup ref="nl:member-attrs"/>
+                                </xs:extension>
+                            </xs:complexContent>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="method">
+                        <xs:complexType>
+                            <xs:complexContent>
+                                <xs:extension base="nl:function">
+                                    <xs:attributeGroup ref="nl:member-attrs"/>
+                                </xs:extension>
+                            </xs:complexContent>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:choice>
+                <xs:attribute name="base" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>extends base</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="typedef">
+        <xs:complexContent>
+            <xs:extension base="nl:component">
+                <xs:attribute name="type" type="xs:string"/>
+                <xs:attribute name="value" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>for type, this is default value. 
+for instance, this is concrete valute. 
+for function, this is the default value of optional argument. </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="function">
+        <xs:complexContent>
+            <xs:extension base="nl:component">
+                <xs:choice>
+                    <xs:element name="return" type="nl:typedef"/>
+                    <xs:element name="argument">
+                        <xs:complexType>
+                            <xs:complexContent>
+                                <xs:extension base="nl:typedef">
+                                    <xs:attribute name="byref" type="xs:boolean">
+                                        <xs:annotation>
+                                            <xs:documentation>for some language like foxpro or basic, there is a mechanism to transfer argument byval or byref. </xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                </xs:extension>
+                            </xs:complexContent>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="exception" type="nl:typedef"/>
+                    <xs:element name="implement">
+                        <xs:complexType>
+                            <xs:choice>
+                                <xs:any namespace="##other"/>
+                            </xs:choice>
+                            <xs:attribute name="layer">
+                                <xs:annotation>
+                                    <xs:documentation>default main</xs:documentation>
+                                </xs:annotation>
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="main"/>
+                                        <xs:enumeration value="check-in"/>
+                                        <xs:enumeration value="check-out"/>
+                                        <xs:enumeration value="data-access"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:attribute>
+                            <xs:anyAttribute namespace="##other"/>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="test">
+                        <xs:annotation>
+                            <xs:documentation>generally, only implement and return of function is needed in test element, and the value of return specifies the assert-result. </xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:complexContent>
+                                <xs:extension base="nl:function">
+                                    <xs:attribute name="assert" type="xs:string">
+                                        <xs:annotation>
+                                            <xs:documentation>assert-method, default equal</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                </xs:extension>
+                            </xs:complexContent>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:choice>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="package">
+        <xs:complexContent>
+            <xs:extension base="nl:component">
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:group ref="nl:component-group"/>
+                </xs:choice>
+            </xs:extension>
+        </xs:complexContent>
     </xs:complexType>
     <xs:attributeGroup name="common-attrs">
         <xs:attribute name="info" type="xs:string" use="optional">
@@ -222,119 +341,4 @@ if both name and href isn't defined, then this is not a link. </xs:documentation
         </xs:attribute>
         <xs:attribute name="managed" type="xs:boolean" use="optional" default="false"/>
     </xs:attributeGroup>
-    <xs:complexType name="class">
-        <xs:complexContent>
-            <xs:extension base="nl:component">
-                <xs:choice minOccurs="0" maxOccurs="unbounded">
-                    <xs:element name="interface" type="xs:string">
-                        <xs:annotation>
-                            <xs:documentation>implements interface</xs:documentation>
-                        </xs:annotation>
-                    </xs:element>
-                    <xs:element name="property">
-                        <xs:complexType>
-                            <xs:complexContent>
-                                <xs:extension base="nl:typedef">
-                                    <xs:attributeGroup ref="nl:member-attrs"/>
-                                </xs:extension>
-                            </xs:complexContent>
-                        </xs:complexType>
-                    </xs:element>
-                    <xs:element name="method">
-                        <xs:complexType>
-                            <xs:complexContent>
-                                <xs:extension base="nl:function">
-                                    <xs:attributeGroup ref="nl:member-attrs"/>
-                                </xs:extension>
-                            </xs:complexContent>
-                        </xs:complexType>
-                    </xs:element>
-                </xs:choice>
-                <xs:attribute name="extends"/>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-    <xs:complexType name="typedef">
-        <xs:complexContent>
-            <xs:extension base="nl:component">
-                <xs:attribute name="type" type="xs:string"/>
-                <xs:attribute name="value" type="xs:string">
-                    <xs:annotation>
-                        <xs:documentation>for type, this is default value. 
-for instance, this is concrete valute. 
-for function, this is the default value of optional argument. </xs:documentation>
-                    </xs:annotation>
-                </xs:attribute>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-    <xs:complexType name="function">
-        <xs:complexContent>
-            <xs:extension base="nl:component">
-                <xs:choice>
-                    <xs:element name="return" type="nl:typedef"/>
-                    <xs:element name="argument">
-                        <xs:complexType>
-                            <xs:complexContent>
-                                <xs:extension base="nl:typedef">
-                                    <xs:attribute name="byref" type="xs:boolean">
-                                        <xs:annotation>
-                                            <xs:documentation>for some language like foxpro or basic, there is a mechanism to transfer argument byval or byref. </xs:documentation>
-                                        </xs:annotation>
-                                    </xs:attribute>
-                                </xs:extension>
-                            </xs:complexContent>
-                        </xs:complexType>
-                    </xs:element>
-                    <xs:element name="exception" type="nl:typedef"/>
-                    <xs:element name="implement">
-                        <xs:complexType>
-                            <xs:choice>
-                                <xs:any namespace="##other"/>
-                            </xs:choice>
-                            <xs:attribute name="layer">
-                                <xs:annotation>
-                                    <xs:documentation>default main</xs:documentation>
-                                </xs:annotation>
-                                <xs:simpleType>
-                                    <xs:restriction base="xs:string">
-                                        <xs:enumeration value="main"/>
-                                        <xs:enumeration value="check-in"/>
-                                        <xs:enumeration value="check-out"/>
-                                        <xs:enumeration value="data-access"/>
-                                    </xs:restriction>
-                                </xs:simpleType>
-                            </xs:attribute>
-                            <xs:anyAttribute namespace="##other"/>
-                        </xs:complexType>
-                    </xs:element>
-                    <xs:element name="test">
-                        <xs:annotation>
-                            <xs:documentation>generally, only implement and return of function is needed in test element, and the value of return specifies the assert-result. </xs:documentation>
-                        </xs:annotation>
-                        <xs:complexType>
-                            <xs:complexContent>
-                                <xs:extension base="nl:function">
-                                    <xs:attribute name="assert" type="xs:string">
-                                        <xs:annotation>
-                                            <xs:documentation>assert-method, default equal</xs:documentation>
-                                        </xs:annotation>
-                                    </xs:attribute>
-                                </xs:extension>
-                            </xs:complexContent>
-                        </xs:complexType>
-                    </xs:element>
-                </xs:choice>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-    <xs:complexType name="package">
-        <xs:complexContent>
-            <xs:extension base="nl:component">
-                <xs:choice minOccurs="0" maxOccurs="unbounded">
-                    <xs:group ref="nl:component-group"/>
-                </xs:choice>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
 </xs:schema>
