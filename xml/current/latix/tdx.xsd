@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by danzci (cpu007) -->
-<xs:schema targetNamespace="http://www.boDz.net/XML/2004/POS/TDX" xmlns:xaa="http://www.boDz.net/XML/2004/X@A/Sections" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tdx="http://www.boDz.net/XML/2004/POS/TDX" elementFormDefault="qualified" attributeFormDefault="unqualified">
-	<xs:import namespace="http://www.boDz.net/XML/2004/X@A/Sections" schemaLocation="http://www.boDz.net/XML/2004/X@A/Sections.xsd"/>
+<xs:schema targetNamespace="http://www.bodz.net/xml/2004/pos/tdx" xmlns:tdx="http://www.bodz.net/xml/2004/pos/tdx" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xaa="http://www.bodz.net/xml/2004/xaa/section-support" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://www.bodz.net/xml/2004/xaa/section-support" schemaLocation="http://www.bodz.net/xml/2004/xaa/section-support.xsd"/>
 	<xs:element name="typedef">
 		<xs:annotation>
 			<xs:documentation>Comment describing your root element</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:complexContent>
-				<xs:extension base="xaa:extends">
+				<xs:extension base="xaa:section-extendable-base">
 					<xs:sequence>
 						<xs:element name="global" type="tdx:types-context">
 							<xs:annotation>

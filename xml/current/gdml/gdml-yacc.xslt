@@ -12,8 +12,8 @@ extension-element-prefixes="xslapi redirect"
 	
 	<xsl:template match="/grammer" xml:space="preserve">
 	
-<xsl:copy-of select="append[@position='head']"/>
-<xsl:copy-of select="append[@position='declare']"/>
+<xsl:copy-of select="append[@location='head']"/>
+<xsl:copy-of select="append[@location='declare']"/>
 
 <xsl:call-template name="t_union_type"/>
 <xsl:call-template name="t_tokens"/>
@@ -24,8 +24,8 @@ extension-element-prefixes="xslapi redirect"
 		
 %%
 
-<xsl:copy-of select="append[@position='define']"/>
-<xsl:copy-of select="append[@position='tail']"/>
+<xsl:copy-of select="append[@location='define']"/>
+<xsl:copy-of select="append[@location='tail']"/>
 
 	</xsl:template>
 	

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by danzci (cpu007) -->
-<xs:schema targetNamespace="http://www.boDz.net/XML/2004/GDML" xmlns:xaa="http://www.boDz.net/XML/2004/X@A/Sections" xmlns:g="http://www.boDz.net/XML/2004/GDML" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
-	<xs:import namespace="http://www.boDz.net/XML/2004/X@A/Sections" schemaLocation="http://www.boDz.net/XML/2004/X@A/Sections.xsd"/>
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by CPU007 (STUPYNOMAGIC) -->
+<xs:schema targetNamespace="http://www.bodz.net/xml/2004/gdml" xmlns:xaa="http://www.bodz.net/xml/2004/xaa/section-support" xmlns:g="http://www.bodz.net/xml/2004/gdml" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://www.bodz.net/xml/2004/xaa/section-support" schemaLocation="http://www.bodz.net/xml/2004/xaa/section-support.xsd"/>
 	<xs:annotation>
 		<xs:documentation>-- SCRIPT --</xs:documentation>
 	</xs:annotation>
@@ -18,7 +18,7 @@ GDI-target-path: where the generated GDI should be placed
 		</xs:annotation>
 		<xs:complexType>
 			<xs:complexContent>
-				<xs:extension base="xaa:extends">
+				<xs:extension base="xaa:section-extendable-base">
 					<xs:sequence>
 						<xs:group ref="g:elementsGroup"/>
 						<xs:element name="resumers" minOccurs="0">
@@ -510,7 +510,7 @@ default max=+inf</xs:documentation>
 The start attribute specify which state the automata starts from. </xs:documentation>
 		</xs:annotation>
 		<xs:choice maxOccurs="unbounded">
-			<xs:element ref="xaa:append"/>
+			<xs:element ref="xaa:section-embed"/>
 			<xs:element name="state">
 				<xs:annotation>
 					<xs:documentation>state-type: 

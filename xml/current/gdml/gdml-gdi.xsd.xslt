@@ -3,7 +3,7 @@
 version="1.0"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 xmlns:fo="http://www.w3.org/1999/XSL/Format"
-xmlns:g="http://www.boDz.net/XML/2004/GDML"
+xmlns:g="http://www.bodz.net/xml/2004/gdml"
 xmlns:xalan="http://xml.apache.org/xalan"
 xmlns:xslapi="xalan://freejava.xml.xsl.SimpleXsltApi"
 xmlns:redirect="http://xml.apache.org/xalan/redirect"
