@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by XML (XML) -->
+<!-- Namespace: "vps://Ci.boot.1.fj/DoaLight 1.02/TR"-->
+<!--
+	TODO: 
+		More accessor's properties: 
+			RuntimeSupport
+			ClientClass
+			ClientURI
+		More lang elements: 
+-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xs:element name="load">
+		<xs:annotation>
+			<xs:documentation>Light Object Accessor for Data (or Database)
+
+XSLT References: 
+Load-Java, 
+Load-SQL, 
+Load-xml schema, see also Lxsi, LxsiRun, and Lxsi-to-SQL</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="accessor" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>The name results in source code. </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="accessorType"/>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="version" type="xs:string" use="optional" default="1.02"/>
+			<xs:attribute name="lang" type="xs:string" use="optional" default="java"/>
+			<xs:attribute name="toolkit" type="xs:string" use="optional" default="vps://Ci.boot.1.fj/DoaLight 1.02/DRS"/>
+			<xs:attributeGroup ref="authorInformation"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="accessorType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="table" type="sqlstringType"/>
+				<xs:element name="query" type="sqlstringType"/>
+			</xs:choice>
+			<xs:element name="tip" type="xs:string" minOccurs="0"/>
+			<xs:element name="header" type="sourceType" minOccurs="0"/>
+			<xs:element name="operate" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:choice>
+							<xs:element name="create" type="sqlstringType">
+								<xs:annotation>
+									<xs:documentation>Customizable creation of the data object. </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="destroy" type="sqlstringType">
+								<xs:annotation>
+									<xs:documentation>Customizable destroying of the data object.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:choice>
+						<xs:element name="lang" minOccurs="0">
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="sourceType">
+										<xs:attributeGroup ref="langItemAttributes"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="comment" type="commentType" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="field" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="fieldType"/>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="definition" type="sourceType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="footer" type="sourceType" minOccurs="0"/>
+			<xs:element name="ex" type="exType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="comment" type="commentType" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="extension" type="xs:string" use="optional" default=".java"/>
+		<xs:attribute name="package" type="xs:string" use="optional" default="freejava.data.doa.domain.mydomain"/>
+		<xs:attribute name="inherits" type="xs:string" use="optional" default="freejava.data.doa.DoaAccessor"/>
+		<xs:attribute name="readonly" type="xs:boolean" use="optional"/>
+		<xs:attribute name="doasp" type="xs:string" use="optional" default="freejava.data.doa.stdsql.StandardDoaServiceProvider"/>
+		<xs:attribute name="clientClass" type="xs:anyURI" use="optional"/>
+		<xs:attribute name="client" type="xs:anyURI" use="optional"/>
+		<xs:attribute name="sequenced" type="xs:boolean" use="optional" default="false"/>
+		<xs:attributeGroup ref="authorInformation"/>
+	</xs:complexType>
+	<xs:complexType name="fieldType">
+		<xs:sequence>
+			<xs:element name="name" type="sqlstringType"/>
+			<xs:element name="tip" type="xs:string" minOccurs="0"/>
+			<xs:element name="type" type="sqlstringType"/>
+			<xs:element name="props" type="sqlstringType" minOccurs="0"/>
+			<xs:element name="index" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="primary" type="xs:boolean" use="optional" default="false"/>
+					<xs:attribute name="index" type="xs:boolean" use="optional" default="false"/>
+					<xs:attribute name="unique" type="xs:boolean" use="optional" default="false"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="default" type="sqlstringType" minOccurs="0"/>
+			<xs:element name="constraint" type="sqlstringType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="trigger" type="sqlstringType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="lang" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="name" type="sourceType" minOccurs="0"/>
+						<xs:element name="type" type="sourceType" minOccurs="0"/>
+						<xs:element name="default" type="sourceType" minOccurs="0"/>
+						<xs:element name="constraint" type="sourceType" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element name="trigger" type="sourceType" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+					<xs:attribute name="readonly" type="xs:boolean" use="optional" default="false"/>
+					<xs:attributeGroup ref="langItemAttributes"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ex" type="exType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="comment" type="commentType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="exType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="class" type="xs:string" use="optional"/>
+				<xs:attribute name="key" type="xs:string" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:simpleType name="sourceType">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="commentType">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="sqlstringType">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:attributeGroup name="authorInformation">
+		<xs:attribute name="description" type="sourceType" use="optional"/>
+		<xs:attribute name="docversion" type="sourceType" use="optional"/>
+		<xs:attribute name="author" type="sourceType" use="optional" default="generated by doac"/>
+		<xs:attribute name="company" type="sourceType" use="optional"/>
+		<xs:attribute name="email" type="sourceType" use="optional"/>
+		<xs:attribute name="copyright" type="sourceType" use="optional" default="(C)Copyright"/>
+	</xs:attributeGroup>
+	<xs:simpleType name="visibilityType">
+		<xs:restriction base="xs:NMTOKENS">
+			<xs:enumeration value="public"/>
+			<xs:enumeration value="protected"/>
+			<xs:enumeration value="private"/>
+			<xs:enumeration value="not-specified"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:attributeGroup name="langItemAttributes">
+		<xs:attribute name="visibility" type="visibilityType" use="optional" default="public"/>
+	</xs:attributeGroup>
+</xs:schema>

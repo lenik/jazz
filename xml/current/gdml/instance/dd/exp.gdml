@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by danzci (cpu007) -->
+
+<grammer root="expression" xmlns="http://www.boDz.net/XML/draft/GDML" xmlns:xaa="http://www.boDz.net/XML/draft/X@A/Sections" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.boDz.net/XML/draft/GDML
+
+http://www.boDz.net/XML/draft/GDML/GDML.xsd" info="Simple Expression">
+
+	<xaa:property name="class">org.danz.example.gdml.exp</xaa:property>
+
+	<xaa:append position="head">import java.math.*; 
+
+import java.util.*; 
+
+import java.io.*; </xaa:append>
+
+	<xaa:append position="declare">double result; </xaa:append>
+
+	<element id="expression" type="double">
+
+		<syntax id="CONST-EXP">
+
+			<refer name="Arg0">constant</refer>
+
+			<apply>$$ = $Arg0; 
+
+			</apply>
+
+		</syntax>
+
+		<syntax id="ADDITION">
+
+			<refer name="lhs">expression</refer>
+
+			<text> + </text>
+
+			<refer name="rhs">expression</refer>
+
+			<apply>$$ = $lhs + $rhs; </apply>
+
+		</syntax>
+
+		<syntax id="SUBSTRACTION">
+
+			<refer name="lhs">expression</refer>
+
+			<text> - </text>
+
+			<refer name="rhs">expression</refer>
+
+			<apply>$$ = $lhs - $rhs; </apply>
+
+		</syntax>
+
+		<syntax id="MULTIPLICATION">
+
+			<refer name="lhs">expression</refer>
+
+			<text> * </text>
+
+			<refer name="rhs">expression</refer>
+
+			<apply>$$ = $lhs * $rhs; </apply>
+
+		</syntax>
+
+		<syntax id="DIVISION">
+
+			<refer name="lhs">expression</refer>
+
+			<text> / </text>
+
+			<refer name="rhs">expression</refer>
+
+			<apply>$$ = $lhs / $rhs; </apply>
+
+		</syntax>
+
+	</element>
+
+	<element id="constant" type="double">
+
+		<syntax>
+
+			<refer>NUMBER</refer>
+
+			<apply>$$=$1; </apply>
+
+		</syntax>
+
+		<syntax>
+
+			<refer>STRING</refer>
+
+			<apply>$$=$1; </apply>
+
+		</syntax>
+
+	</element>
+
+	<element id="NUMBER" type="double">
+
+		<reduced>$$ = Number.valueOf($text).doubleValue();</reduced>
+
+		<syntax id="NUM-INTEGER">
+
+			<regex>[1-9][0-9]*</regex>
+
+		</syntax>
+
+		<syntax id="NUM-OCT">
+
+			<regex>0[0-7]+</regex>
+
+		</syntax>
+
+		<syntax id="NUM-HEX">
+
+			<regex>0x[0-9a-fA-F]+</regex>
+
+		</syntax>
+
+		<syntax id="NUM-DECIMAL">
+
+			<anyof info="decimal">
+
+				<regex>0\.[0-9]*</regex>
+
+				<regex>[1-9][0-9]*\.[0-9]*</regex>
+
+				<regex>\.[0-9]+</regex>
+
+			</anyof>
+
+			<optional info="10E-number">
+
+				<regex>e[+\-][1-9][0-9]*</regex>
+
+			</optional>
+
+		</syntax>
+
+	</element>
+
+	<element id="STRING" type="String">
+
+		<syntax>
+
+			<regex/>
+
+		</syntax>
+
+	</element>
+
+</grammer>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MIML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../MIML.xsd">
+	<View>
+		<Node name="/">
+			<Value/>
+			<Node name="Title">
+				<Value>
+					内部邮件交换 列表 (中间数据)
+				</Value>
+			</Node>
+			<Node name="data">
+				<Value>
+					<Query SQL="SELECT * FROM mailex">
+						<Connection path="${DatabasePath}/${DatabaseMaster}"/>
+					</Query>
+				</Value>
+			</Node>
+		</Node>
+	</View>
+	<Update scheme="edit">
+		<for id="">
+			<range/>
+			<skiplist>
+				<Text/>
+			</skiplist>
+			<Action>
+				<SQLInsert/>
+			</Action>
+		</for>
+	</Update>
+	
+	<Operate scheme="init">
+		<Text>
+			CREATE TABLE mailex(
+				id LONG PRIMARY KEY, 
+				fromAddr VARCHAR(200), 
+				toAddr VARCHAR(200), 
+				subject VARCHAR(200), 
+				contents TEXT, 
+				attachFileId LONG, 
+				flags LONG
+			)
+		</Text>
+	</Operate>
+	
+	<Operate scheme="upgrade-from-1.2">
+		<Text>...</Text>
+	</Operate>
+</MIML>

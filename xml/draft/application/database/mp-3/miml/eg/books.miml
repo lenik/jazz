@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<miml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:noNamespaceSchemaLocation="X:\java\xml\miml\MIML.xsd" >
+	<model id="书店模型">
+		<values></values>
+	</model>
+</miml>

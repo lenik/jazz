@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<piml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="X:\java\xml\piml\piml.xsd">
+	<process>
+		<state id="-1">
+			<onEnter>
+				<jump>退回</jump>
+			</onEnter>
+		</state>
+	
+		<action id="采购">
+			<exp/>
+		</action>
+		
+		<action id="核算">
+			<exp></exp>
+		</action>
+		
+		<action id="验收">
+			<exp></exp>
+		</action>
+		
+		<action id="退回">
+			<exp></exp>
+		</action>
+		
+		<chain from="采购" to="核算"></chain>
+		
+		<chain from="核算" to="验收">
+			<condition>
+				<exp>核算成功</exp>
+			</condition>
+		</chain>
+		
+		<chain from="核算" to="-1">
+			<condition>
+				<exp>核算失败</exp>
+			</condition>
+		</chain>
+		
+		<chain from="验收" to="1"></chain>
+		
+		<chain from="采购" to="-1">
+			<condition>
+				<timeout>300</timeout>
+			</condition>
+		</chain>
+		
+	</process>
+</piml>

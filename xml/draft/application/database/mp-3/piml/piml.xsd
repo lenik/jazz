@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by CORE 2K (CORE 2K) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="piml">
+		<xs:annotation>
+			<xs:documentation>Process Information</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="process" type="processType" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>unnamed process is the default. </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="dispatch" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="processType">
+		<xs:sequence>
+			<xs:element name="state" type="stateType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Built-in status: 
+0 Initialize
+1 Normal exit
+-1 Abnormal exit</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="action" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="actionType">
+							<xs:sequence>
+								<xs:element name="layout" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>May be the rectangle's end-points</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+							<xs:attribute name="id" type="xs:string" use="required"/>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="chain" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="chainType">
+							<xs:sequence>
+								<xs:element name="layout" type="xs:string" minOccurs="0">
+									<xs:annotation>
+										<xs:documentation>May be a B-curve's control points.</xs:documentation>
+									</xs:annotation>
+								</xs:element>
+							</xs:sequence>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:string" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="stateType">
+		<xs:sequence>
+			<xs:element name="onEnter" type="actionType" minOccurs="0"/>
+			<xs:element name="onLeave" type="actionType" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="actionType">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="exp"/>
+				<xs:element name="sql">
+					<xs:complexType/>
+				</xs:element>
+				<xs:element name="jump" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>Jump to the target id (path).</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:sequence>
+				<xs:element name="description" type="xs:string" minOccurs="0"/>
+				<xs:element name="iconSmall" minOccurs="0"/>
+				<xs:element name="iconBig" minOccurs="0"/>
+			</xs:sequence>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="chainType">
+		<xs:sequence>
+			<xs:element name="automatic" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="condition" minOccurs="0">
+				<xs:complexType>
+					<xs:choice>
+						<xs:element name="timeout">
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="xs:double">
+										<xs:attribute name="unit" type="xs:string" use="optional" default="ms"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="exp">
+							<xs:annotation>
+								<xs:documentation>when expression is true.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:string" use="optional"/>
+		<xs:attribute name="from" type="xs:string" use="required"/>
+		<xs:attribute name="to" type="xs:string" use="required"/>
+	</xs:complexType>
+</xs:schema>

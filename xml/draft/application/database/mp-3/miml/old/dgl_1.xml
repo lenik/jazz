@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DGL xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="X:\java\xml\miml\DGL.xsd">
+	<Generator dtp="/">
+		<Exp>
+			<query>
+				<dbpath>
+					<path>jdbc:mysql://localhost:3066/dbtest</path>
+					<driver>org.gjt.mm.mysql.Driver</driver>
+					<username>root</username>
+					<password></password>
+				</dbpath>
+				<sql>
+					SELECT * FROM Table1
+				</sql>
+			</query>
+		</Exp>
+	</Generator>
+</DGL>

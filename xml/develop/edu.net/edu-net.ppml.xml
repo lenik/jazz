@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pre-project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="X:\java\xml\labja\pre-project.xsd" id="edu.net platform">
+	<summary>
+		<name>网络教育平台</name>
+		<subject>通用的网络教育平台，包括监控、网络管理、办公管理、教育目录服务、API平台功能等。</subject>
+		<inspiration>面向工程，$，找点事做，低难度。</inspiration>
+		<introduce>N/A</introduce>
+		<goal>N/A</goal>
+	</summary>
+	<allocate>
+		<use-case-set>
+			<use-case name="网络管理">
+				<detail/>
+				<sub-use-case name="">
+					<detail/>
+				</sub-use-case>
+			</use-case>
+		</use-case-set>
+		<technology-set>
+			<technology name=""/>
+		</technology-set>
+		<resource-set name="">
+			<resource/>
+		</resource-set>
+		<team name="">
+			<member name="" role="">
+				<skill/>
+			</member>
+		</team>
+	</allocate>
+	<project-analyse>
+		<previous id="">
+			<name/>
+			<subject/>
+			<inspiration/>
+			<introduce/>
+			<goal/>
+			<evaluation type="merit"/>
+		</previous>
+		<background>
+			<participant name="default"></participant>
+		</background>
+		<reference>
+			<terms>
+				<term abb=""></term>
+			</terms>
+		</reference>
+		<requisition>
+			<goal/>
+			<structure/>
+			<performance/>
+		</requisition>
+	</project-analyse>
+	<execute>
+		<schedule>
+			<task name="">
+				<step/>
+			</task>
+		</schedule>
+		<output>
+			<object/>
+		</output>
+	</execute>
+</pre-project>

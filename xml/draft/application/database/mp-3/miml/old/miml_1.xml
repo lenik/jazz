@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Shit (Shit) -->
+<MIML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="X:\java\xml\miml\MIML.xsd">
+	<Map>
+		<Data URI="dgl_1.xml"/>
+		<Field/>
+	</Map>
+	<Map-Ex/>
+</MIML>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by CORE 2K (CORE 2K) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="Lab">
+		<xs:annotation>
+			<xs:documentation>Comment describing your root element</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="person">
+		<xs:sequence>
+			<xs:element name="firstName"/>
+			<xs:element name="lastName"/>
+			<xs:element name="honors"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="stupidPerson">
+		<xs:complexContent>
+			<xs:restriction base="person">
+				<xs:sequence>
+					<xs:element name="firstName"/>
+					<xs:element name="lastName"/>
+				</xs:sequence>
+			</xs:restriction>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="veryStupidPerson">
+		<xs:complexContent>
+			<xs:extension base="stupidPerson">
+				<xs:sequence>
+					<xs:element name="stupidHonors"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

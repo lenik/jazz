@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by CORE 2K (CORE 2K) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import schemaLocation="X:\java\xml\miml\mimlbase.xsd"/>
+	<xs:complexType name="PDFType">
+		<xs:sequence>
+			<xs:element name="Paper">
+				<xs:complexType>
+					<xs:attribute name="size" type="xs:string" use="optional" default="A4"/>
+					<xs:attribute name="marginLeft" type="xs:double" use="optional"/>
+					<xs:attribute name="marginRight" type="xs:double" use="optional"/>
+					<xs:attribute name="marginTop" type="xs:double" use="optional"/>
+					<xs:attribute name="marginBottom" type="xs:double" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Head" type="PaneType"/>
+			<xs:element name="Body" type="PaneType"/>
+			<xs:element name="Foot" type="PaneType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PaneType">
+		<xs:sequence>
+			<xs:choice maxOccurs="unbounded">
+				<xs:element name="for" type="selector" maxOccurs="unbounded"/>
+				<xs:element name="Control">
+					<xs:complexType>
+						<xs:choice>
+							<xs:element name="NewPage"/>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="marginTop" type="xs:double" use="optional"/>
+		<xs:attribute name="marginBottom" type="xs:double" use="optional"/>
+		<xs:attribute name="marginLeft" type="xs:double" use="optional"/>
+		<xs:attribute name="marginRight" type="xs:double" use="optional"/>
+	</xs:complexType>
+</xs:schema>

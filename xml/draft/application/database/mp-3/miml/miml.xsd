@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by XML (XML) -->
+<xs:schema targetNamespace="-//danz.org/2003/MIML" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="-//danz.org/2003/MIML" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.0">
+	<xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="http://www.w3.org/2001/03/xml.xsd"/>
+	<xs:element name="miml">
+		<xs:annotation>
+			<xs:documentation>Model Information</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="model" type="node">
+					<xs:annotation>
+						<xs:documentation>The model.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="view" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>A view to the model.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType mixed="true">
+						<xs:sequence>
+							<xs:element name="for" type="viewElement" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>This "for" can do value-break thru iterate attribute, so you haven't to use break attribute here. And, if you used break, the iterate will be going inside each sub-values which produced by break-operation. so it be not something what you want.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="MIME" type="MIMEType" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Not MIME always useful, but if the View is translating on the HTTP-connection, this may be useful.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="scheme" type="xs:string" use="required"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="operation" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="for" type="opElement" maxOccurs="unbounded"/>
+						</xs:sequence>
+						<xs:attribute name="scheme" type="xs:string" use="required"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="management" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Log" type="vtext" minOccurs="0"/>
+							<xs:element name="Backup" type="vtext" minOccurs="0"/>
+							<xs:element name="Notification" type="vtext" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="data" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="vtext">
+								<xs:attribute name="id" type="xs:string" use="required"/>
+								<xs:attribute name="space" use="optional">
+									<xs:simpleType>
+										<xs:restriction base="xs:string">
+											<xs:enumeration value="preserved"/>
+											<xs:enumeration value="default"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="version" type="xs:string" use="optional" default="1.0"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:annotation>
+		<xs:documentation>----------- Base types -------------</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="vtext" mixed="true">
+		<xs:annotation>
+			<xs:documentation>Which can do properties-substutation, and Can have string text and complex elements. 
+use 'usebraces' attribute to include &lt;&gt; braces in context thru '[]' chars.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="get" nillable="true">
+					<xs:complexType mixed="false">
+						<xs:attribute name="key" type="xs:string" use="required"/>
+						<xs:attribute name="typed" type="xs:boolean" use="optional" default="false"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="set" nillable="true">
+					<xs:complexType mixed="false">
+						<xs:attribute name="key" type="xs:string" use="required"/>
+						<xs:attribute name="value" type="xs:string" use="required"/>
+						<xs:attribute name="class" use="optional" default="java.lang.String">
+							<xs:simpleType>
+								<xs:restriction base="xs:string"/>
+							</xs:simpleType>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="rem">
+					<xs:complexType mixed="true"/>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="inlinevars" type="xs:boolean" use="optional" default="true"/>
+		<xs:attribute name="usebraces" type="xs:boolean" use="optional" default="false"/>
+		<!-- xs:complexContent mixed="true">
+			<xs:extension base="xs:anyType"-->
+		<!-- </xs:extension>
+		</xs:complexContent>-->
+	</xs:complexType>
+	<xs:complexType name="vtexts">
+		<xs:sequence>
+			<xs:element name="text" type="vtext" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="selector">
+		<xs:annotation>
+			<xs:documentation>select values (or nodes) by "id" from the model. sometimes you can make the selection just makes by set id to ''. 
+For complex values, break make them always iteratable(even the value is a scalar). However, when viewing model, "element" tag can handle the complex values, so you needn't using break attribute in the view.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="id" type="xs:string" use="required"/>
+		<xs:attribute name="break" type="xs:boolean" use="optional" default="false"/>
+	</xs:complexType>
+	<xs:complexType name="connection">
+		<xs:attribute name="path" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="driver" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="username" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="password" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="MIMEType">
+		<xs:sequence>
+			<xs:element name="contentType" type="vtext"/>
+			<xs:element name="contentLength" type="vtext" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>---------- Model --------------------</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="node">
+		<xs:annotation>
+			<xs:documentation>Node has a default value. </xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="value">
+				<xs:sequence>
+					<xs:element name="value" type="value" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="node" type="node" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="value">
+		<xs:sequence>
+			<xs:choice minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Simply, you can type simple text in the (mixed) node element. But be sure not use any of elements such like simple, query; they will overwrite this texts.</xs:documentation>
+				</xs:annotation>
+				<xs:element name="simple">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="vtext"/>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="ref" nillable="true">
+					<xs:annotation>
+						<xs:documentation>return: as target value.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="target" type="xs:string" use="required"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="list">
+					<xs:annotation>
+						<xs:documentation>return: java.lang.List</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="item" type="value" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="query">
+					<xs:annotation>
+						<xs:documentation>return: Query</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="query"/>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="exp">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="expression"/>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="plain">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string"/>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="file">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="vtext"/>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="url" nillable="false">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="vtext"/>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="serobj">
+					<xs:annotation>
+						<xs:documentation>serialized object. 
+managed object will be notified on init, exit, etc.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attribute name="managed" type="xs:boolean" use="optional" default="false"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="cast" type="cast" minOccurs="0"/>
+			<xs:element name="modifier" type="modifier" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attributeGroup ref="valueAttrs"/>
+	</xs:complexType>
+	<xs:attributeGroup name="valueAttrs">
+		<xs:attribute name="id" type="xs:string" use="required"/>
+		<xs:attribute name="volatile" type="xs:boolean" use="optional" default="false"/>
+		<xs:attribute name="readonly" type="xs:boolean" use="optional" default="false"/>
+		<xs:attribute name="hidden" type="xs:boolean" use="optional" default="false"/>
+		<xs:attribute name="inheritable" type="xs:boolean" use="optional" default="true"/>
+		<xs:attribute name="rawtrace" type="xs:boolean" use="optional" default="false"/>
+	</xs:attributeGroup>
+	<xs:complexType name="cast">
+		<xs:annotation>
+			<xs:documentation>like "view-as", cast can change the internal form of specified value, and do some validation test. </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="default" nillable="true"/>
+				<xs:element name="integer">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Range" minOccurs="0">
+								<xs:complexType>
+									<xs:attribute name="min" type="xs:int" use="required"/>
+									<xs:attribute name="max" type="xs:int" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="width" type="xs:int" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="real">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Range" minOccurs="0">
+								<xs:complexType>
+									<xs:attribute name="min" type="xs:double" use="required"/>
+									<xs:attribute name="max" type="xs:double" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="width" type="xs:int" use="optional"/>
+						<xs:attribute name="format" type="xs:int" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="string">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="MaxLength" type="xs:int" minOccurs="0"/>
+						</xs:sequence>
+						<xs:attribute name="width" type="xs:int" use="optional"/>
+						<xs:attribute name="case" type="xs:string" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="date">
+					<xs:complexType>
+						<xs:attribute name="formatFrom" type="xs:string" use="optional" default="$FORMAT_DATE"/>
+						<xs:attribute name="formatTo" type="xs:string" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="time">
+					<xs:complexType>
+						<xs:attribute name="formatFrom" type="xs:string" use="optional" default="${FORMAT_TIME}"/>
+						<xs:attribute name="formatTo" type="xs:string" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="image">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Editable" type="xs:boolean" minOccurs="0"/>
+							<xs:element name="EditorClass" type="xs:string" default="EditorApplet" minOccurs="0"/>
+							<xs:element name="MustBeCertified" type="xs:boolean" minOccurs="0"/>
+						</xs:sequence>
+						<xs:attribute name="fixedWidth" type="xs:int" use="optional"/>
+						<xs:attribute name="fixedHeight" type="xs:int" use="optional"/>
+						<xs:attribute name="showAsType" type="xs:string" use="optional"/>
+						<xs:attribute name="maxFileSize" type="xs:int" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="selection" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="expression">
+		<xs:choice>
+			<xs:element name="java">
+				<xs:annotation>
+					<xs:documentation>enable sessionGuard to protected session vars away from the Jexp script.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="vtext">
+							<xs:attribute name="precompile" type="xs:boolean" use="optional" default="false"/>
+							<xs:attribute name="sessionGuard" type="xs:boolean" use="optional" default="false"/>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="jndi" type="vtext">
+				<xs:annotation>
+					<xs:documentation>use JNDI-path to retrieve an object persisted in anywhere.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="soap" type="vtext">
+				<xs:annotation>
+					<xs:documentation>use this to include SOAP fragments.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="native" type="vtext">
+				<xs:annotation>
+					<xs:documentation>Reserved for future use.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="modifier">
+		<xs:sequence>
+			<xs:element name="encrypting" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="class" type="xs:string" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="query">
+		<xs:complexContent>
+			<xs:extension base="vtext">
+				<xs:sequence>
+					<xs:element name="connection" type="connection" minOccurs="0"/>
+					<xs:element name="field" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Use field element to process fields or create new fields(createNew option). </xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="createValue" type="value" minOccurs="0"/>
+							</xs:sequence>
+							<xs:attribute name="name" type="xs:string" use="required"/>
+							<xs:attribute name="createNew" type="xs:boolean" use="optional" default="false"/>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="fieldMap" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>Use fieldMap to rename a field. this is useful for SQLs such as "SELECT *,... FROM table", where it isn't convienient to extends '*'.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:attribute name="from" type="xs:string" use="required"/>
+							<xs:attribute name="to" type="xs:string" use="required"/>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="pagination" type="pagination" minOccurs="0"/>
+				</xs:sequence>
+				<xs:attribute name="cache" type="xs:boolean" use="optional" default="false"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="pagination">
+		<xs:attribute name="pageSize" type="xs:int" use="optional"/>
+		<xs:attribute name="marginUp" type="xs:int" use="optional" default="0"/>
+		<xs:attribute name="marginDown" type="xs:int" use="optional" default="0"/>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>---------- View --------------------</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="contentType">
+		<xs:complexContent>
+			<xs:extension base="vtext">
+				<xs:choice minOccurs="0">
+					<xs:element name="PDF">
+						<xs:annotation>
+							<xs:documentation>PDF is a printable view type, which can control the printing in a precise way.</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="Text">
+						<xs:annotation>
+							<xs:documentation>All text is echoed to output, and JSTL-style tags are enabled thru tags-properties. </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+				</xs:choice>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="viewElement">
+		<xs:annotation>
+			<xs:documentation>There're 4 main types: Scalar, Linear, Tree, Net. use iterate attribute to iterate all over the complex element. 
+For linear iteration, loop gives 'sep' after last element. 
+For tree and net, maxLevel limited the depth the iterator going inside.</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="selector">
+				<xs:sequence>
+					<xs:element name="body">
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="contentType">
+									<xs:attribute name="levels" use="optional">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:pattern value="\p{Nd}+,\p{Nd}+"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="sep" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The levels specified which levels this 'sep' applied for, by default is -1:0 (all levels). Level -1 is the body, and Level-0 is the whole tree. (Level-1 is the root, you may use 1:3 to make sep visible on root, sub, subsub nodes, etc.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="contentType">
+									<xs:attribute name="levels" use="optional">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:pattern value="\p{Nd}+,\p{Nd}+"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="in" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>The repeat option is used to repeat contents by given times. so you may get '\t\t\t' on the level-3 subnode by enable this repeat.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="contentType">
+									<xs:attribute name="levels" use="optional">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:pattern value="\p{Nd}+,\p{Nd}+"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="repeat" type="xs:boolean" use="optional" default="false"/>
+									<xs:attribute name="repeatMax" type="xs:int" use="optional"/>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="out" minOccurs="0">
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="contentType">
+									<xs:attribute name="levels" use="optional">
+										<xs:simpleType>
+											<xs:restriction base="xs:string">
+												<xs:pattern value="\p{Nd}+,\p{Nd}+"/>
+											</xs:restriction>
+										</xs:simpleType>
+									</xs:attribute>
+									<xs:attribute name="repeat" type="xs:boolean" use="optional" default="false"/>
+									<xs:attribute name="repeatMax" type="xs:int" use="optional"/>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="iterate" use="optional">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:enumeration value="linear"/>
+							<xs:enumeration value="tree"/>
+							<xs:enumeration value="flattenTree"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="loop" type="xs:boolean" use="optional" default="false"/>
+				<xs:attribute name="maxLevel" type="xs:int" use="optional" default="0"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="opElement">
+		<xs:complexContent>
+			<xs:extension base="selector">
+				<xs:sequence>
+					<xs:element name="range" minOccurs="0">
+						<xs:complexType>
+							<xs:simpleContent>
+								<xs:extension base="xs:string">
+									<xs:attribute name="recursive" type="xs:boolean" use="optional" default="false"/>
+								</xs:extension>
+							</xs:simpleContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="skiplist" type="vtexts" minOccurs="0"/>
+					<xs:element name="action" type="action" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>---------- Operation --------------------</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="action">
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="SQL" type="vtext"/>
+				<xs:element name="exp" type="expression"/>
+			</xs:choice>
+			<xs:element name="return" type="return" minOccurs="0"/>
+			<xs:element name="error" type="return" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="refresh" nillable="true" minOccurs="0"/>
+			<xs:element name="update" nillable="true" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:string" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="submitTarget">
+		<xs:complexContent>
+			<xs:extension base="vtext"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="return">
+		<xs:annotation>
+			<xs:documentation>declare the type of returned value, (action/exp can have return value) and the next-step's url and target. the returned value can be accessed thru session variables.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice>
+				<xs:element name="cast" type="cast"/>
+				<xs:element name="url" type="vtext"/>
+				<xs:element name="target" type="submitTarget" minOccurs="0"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project>
+	<Folder FolderName="XML Files" ExtStr="xml;cml;math;mtx;rdf;smil;svg;wml">
+		<File FilePath=".\eg\books.miml" HomeFolder="Yes"/>
+		<File FilePath=".\eg\m1.miml" HomeFolder="Yes"/>
+		<File FilePath=".\eg\mail-ex.xml" HomeFolder="Yes"/>
+		<File FilePath=".\eg\person.miml" HomeFolder="Yes"/>
+		<File FilePath=".\eg\users.miml" HomeFolder="Yes"/>
+	</Folder>
+	<Folder FolderName="XSL Files" ExtStr="xsl;xslt">
+		<File FilePath="X:\java\proj\FreeJava\src\freejava\data\doa\.outg\rep01.xml" HomeFolder="Yes"/>
+		<File FilePath="X:\java\proj\FreeJava\src\freejava\data\doa\.outg\rep02.xml" HomeFolder="Yes"/>
+		<File FilePath="X:\java\proj\FreeJava\src\freejava\data\doa\.outg\xa-t1.xsl" HomeFolder="Yes"/>
+		<File FilePath="X:\java\proj\FreeJava\src\freejava\data\doa\.outg\xa-t1x.xml" HomeFolder="Yes"/>
+		<File FilePath="X:\java\proj\FreeJava\src\freejava\data\doa\.outg\xa-t2.xsl" HomeFolder="Yes"/>
+		<File FilePath="X:\java\proj\FreeJava\src\freejava\data\doa\.outg\xxt1.xsl" HomeFolder="Yes"/>
+	</Folder>
+	<Folder FolderName="DTD/Schemas" ExtStr="dtd;dcd;xdr;biz;xsd">
+		<File FilePath=".\itext.dtd" HomeFolder="Yes"/>
+		<File FilePath=".\miml.xsd" HomeFolder="Yes"/>
+		<File FilePath=".\mimlbase.xsd" HomeFolder="Yes"/>
+		<File FilePath=".\PDFView.xsd" HomeFolder="Yes"/>
+		<File FilePath="X:\java\xml\piml\piml.xsd" HomeFolder="Yes"/>
+	</Folder>
+	<Folder FolderName="Entities" ExtStr="ent"/>
+	<Folder FolderName="Jistam-dbs">
+		<Folder FolderName="JXTB">
+			<File FilePath="X:\java\proj\FreeJava\src\freejava\data\doa\eg\DT.doa" HomeFolder="Yes"/>
+			<File FilePath="X:\java\proj\J2eeGarbage\Jistam\source\files\tables\DT.tdef" HomeFolder="Yes"/>
+			<File FilePath="X:\java\proj\FreeJava\src\freejava\data\doa\eg\ET.doa" HomeFolder="Yes"/>
+			<File FilePath="X:\java\proj\J2eeGarbage\Jistam\source\files\tables\ET.tdef" HomeFolder="Yes"/>
+			<File FilePath="X:\java\proj\J2eeGarbage\Jistam\source\files\tables\FT0101.tdef" HomeFolder="Yes"/>
+			<File FilePath="X:\java\proj\J2eeGarbage\Jistam\source\files\tables\JXTB.tdef" HomeFolder="Yes"/>
+		</Folder>
+		<Folder FolderName="eg.">
+			<File FilePath="X:\java\proj\FreeJava\src\freejava\data\doa\eg\basicInfo.doa" HomeFolder="Yes"/>
+			<File FilePath="X:\java\proj\FreeJava\src\freejava\data\doa\eg\basicInfo.tdef" HomeFolder="Yes"/>
+			<File FilePath="X:\java\proj\FreeJava\src\freejava\data\doa\eg\eg1.doa" HomeFolder="Yes"/>
+			<File FilePath="X:\java\proj\FreeJava\src\freejava\data\doa\eg\eg2.doa" HomeFolder="Yes"/>
+			<File FilePath="X:\java\proj\FreeJava\src\freejava\data\doa\eg\eg2.tdef" HomeFolder="Yes"/>
+		</Folder>
+		<Folder FolderName="BugTrace">
+			<File FilePath="X:\java\xml\danz-daily\bugtrace.tdef" HomeFolder="Yes"/>
+			<File FilePath="X:\java\xml\danz-daily\bugtrace.yas.xml" HomeFolder="Yes"/>
+		</Folder>
+		<File FilePath="X:\java\proj\FreeJava\src\freejava\data\doa\DoaLight.xsd" HomeFolder="Yes"/>
+		<File FilePath="X:\java\proj\FreeJava\src\freejava\data\doa\LoadJava.xslt" HomeFolder="Yes"/>
+		<File FilePath="X:\java\proj\FreeJava\src\freejava\data\doa\LoadSQL.xslt" HomeFolder="Yes"/>
+		<File FilePath="X:\java\proj\J2eeGarbage\Jistam\source\files\tables\TableDef.xsd" HomeFolder="Yes"/>
+		<File FilePath="X:\java\proj\J2eeGarbage\Jistam\source\files\tables\TableDef.xsl" HomeFolder="Yes"/>
+		<File FilePath="X:\java\proj\J2eeGarbage\Jistam\source\files\tables\TableDef2.xsl" HomeFolder="Yes"/>
+		<File FilePath="X:\java\proj\FreeJava\src\freejava\data\doa\eg\TdefSupport.xslt" HomeFolder="Yes"/>
+		<File FilePath="C:\s\w\XML\2004\Application\Database\SQL\YaSQL.xsd" HomeFolder="Yes"/>
+	</Folder>
+	<Folder FolderName="TSPi">
+		<File FilePath="X:\java\proj\FreeJava\src\freejava\data\doa\eg\tspi-general.xml" HomeFolder="Yes"/>
+	</Folder>
+	<Folder FolderName="DanzDaily">
+		<Folder FolderName="music">
+			<File FilePath="C:\s\w\zauj_lyrics\data\artists\avril_lavigne.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\s\w\zauj_lyrics\data\genres\chinafolk_1.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\s\w\zauj_lyrics\data\genres\chinamovie_1.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\s\w\zauj_lyrics\data\genres\chinapop_1.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\s\w\zauj_lyrics\data\genres\chinarock_1.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\s\w\zauj_lyrics\data\newage\deathmetal_1.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\s\w\zauj_lyrics\data\newage\enigma.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\s\w\zauj_lyrics\data\artists\linyilian.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\s\w\zauj_lyrics\data\artists\nayin.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\s\w\zauj_lyrics\data\genres\poprock_1.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\s\w\zauj_lyrics\data\genres\symphony_1.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\s\w\zauj_lyrics\data\symphony\vangelis.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\s\w\zauj_lyrics\data\rock\vengaboys.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\s\w\zauj_lyrics\data\genres\westpop_1.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\s\w\zauj_lyrics\data\artists\zhangxueyou.xml" HomeFolder="Yes"/>
+		</Folder>
+		<Folder FolderName="contact-book">
+			<File FilePath="X:\java\xml\danz-daily\contact-book\danz-93-3(5).xml" HomeFolder="Yes"/>
+		</Folder>
+		<Folder FolderName="Spyer">
+			<File FilePath="X:\java\xml\spyer\person.xsd" HomeFolder="Yes"/>
+		</Folder>
+		<File FilePath="X:\java\xml\labja\apparch-subsys.xsd" HomeFolder="Yes"/>
+		<File FilePath="C:\bea\weblogic81\workshop\help\doc\beatoc_chmindex.xslt" HomeFolder="Yes"/>
+		<File FilePath="C:\bea\weblogic81\workshop\help\doc\beatoc_chmtoc.xslt" HomeFolder="Yes"/>
+		<File FilePath="X:\java\xml\danz-daily\ConfigFile.xsd" HomeFolder="Yes"/>
+		<File FilePath="X:\java\xml\logicbook\logicbook.xsd" HomeFolder="Yes"/>
+		<File FilePath="X:\java\xml\danz-daily\main.xml" HomeFolder="Yes"/>
+		<File FilePath="X:\java\xml\danz-daily\MusicFile.xsd" HomeFolder="Yes"/>
+		<File FilePath="X:\java\xml\danz-daily\svd.xsd" HomeFolder="Yes"/>
+		<File FilePath="X:\java\xml\logicbook\xiu.xsd" HomeFolder="Yes"/>
+	</Folder>
+	<Folder FolderName="GDML">
+		<File FilePath="X:\java\xml\gdml\dd.gdml" HomeFolder="Yes"/>
+		<File FilePath="X:\java\xml\gdml\exp.gdml" HomeFolder="Yes"/>
+		<File FilePath="C:\s\w\XML\2004\GDML\Instances\Translate\GDL-GDML.gdml" HomeFolder="Yes"/>
+		<File FilePath="C:\s\w\XML\2004\GDML\GDML-GDI.xsd.xslt" HomeFolder="Yes"/>
+		<File FilePath="C:\s\w\XML\2004\GDML\GDML-Yacc.xslt" HomeFolder="Yes"/>
+		<File FilePath="C:\s\w\XML\2004\GDML\GDML.dtd" HomeFolder="Yes"/>
+		<File FilePath="C:\s\w\XML\2004\GDML\GDML.xsd" HomeFolder="Yes"/>
+		<File FilePath="C:\s\w\XML\2004\X@A\Sections.xsd" HomeFolder="Yes"/>
+		<File FilePath="C:\s\w\XML\2004\GDML\Instances\SQL\SQL-Base.gdml" HomeFolder="Yes"/>
+	</Folder>
+	<Folder FolderName="pos-def">
+		<File FilePath="C:\s\w\XML\2004\POS\POSML.xsd" HomeFolder="Yes"/>
+	</Folder>
+	<Folder FolderName="L.Eais">
+		<File FilePath="X:\java\xml\edu.net\edu-net.ppml.xml" HomeFolder="Yes"/>
+		<File FilePath="X:\java\xml\edu.net\exps.xsd" HomeFolder="Yes"/>
+	</Folder>
+	<Folder FolderName="BoDz">
+		<Folder FolderName="schemas">
+			<File FilePath="X:\java\proj\J2eeGarbage\Jistam.xml" HomeFolder="Yes"/>
+			<File FilePath="C:\s\w\XML\2004\Application\Project\project-shell.xsd" HomeFolder="Yes"/>
+			<File FilePath="C:\s\w\XML\2004\Application\XML\XML-Handler.dtd" HomeFolder="Yes"/>
+			<File FilePath="C:\s\w\XML\2004\Application\XML\XML-Handler.xsd" HomeFolder="Yes"/>
+		</Folder>
+		<Folder FolderName="root"/>
+		<Folder FolderName="documents"/>
+	</Folder>
+	<ExtMountFolder FolderName="C:\Program Files\Altova\XMLSPY2004\Schemas"/>
+</Project>

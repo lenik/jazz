@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by XML (XML) -->
+<m:miml xmlns:m="-//danz.org/2003/MIML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="-//danz.org/2003/MIML X:\java\xml\miml\miml.xsd">
+	<m:model id="UserList">
+		<m:value id="title">
+			<m:simple>User Information List </m:simple>
+		</m:value>
+		<m:value id="users">
+			<m:query>SELECT * FROM users</m:query>
+		</m:value>
+	</m:model>
+	<m:view scheme="HTML">
+		<![CDATA[
+			<HTML><HEAD></HEAD><BODY>
+		]]>
+		<m:for id="users" iterate="linear">
+			<m:body><![CDATA[
+				@i=@i+1;
+				<TR style="css-style-$i">
+				<TD>$$!id</TD>
+				<TD>$$!姓名</TD>
+				<TD>$$!地址</TD>
+				<TD>$$!电话</TD>
+				</TR>
+			]]></m:body>
+			<m:sep><![CDATA[<TR></TR>]]><m:get key=""/>
+			</m:sep>
+			<m:in>
+				<![CDATA[<img...>]]>
+				<m:get key="fa"/>
+				fadfdfdfdsfadsf<m:rem>fafsdf</m:rem>
+			</m:in>
+			<m:out>
+				<![CDATA[<img~~~>]]>
+			</m:out>
+		</m:for>
+		<![CDATA[</BODY></HTML>]]>
+		</m:view>
+</m:miml>

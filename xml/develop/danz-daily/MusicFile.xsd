@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by danci.z (labja) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import schemaLocation="X:\java\xml\xaa-base\xaa-sections.xsd"/>
+	<xs:element name="music-file">
+		<xs:annotation>
+			<xs:documentation>Comment describing your root element</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="ms-sections">
+					<xs:sequence>
+						<xs:element name="index" type="groupType"/>
+						<xs:element name="album" type="albumType" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+					<xs:attribute name="id" type="xs:string" use="optional"/>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="musicType">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="introuduce" type="xs:string"/>
+			<xs:element name="lyrics">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="version" type="xs:string" use="optional"/>
+							<xs:attribute name="lang" type="xs:language" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="author">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="part" use="required">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:enumeration value="lyrics"/>
+										<xs:enumeration value="music"/>
+										<xs:enumeration value="compose"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="player">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="part" use="required">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:enumeration value="director"/>
+										<xs:enumeration value="piano"/>
+										<xs:enumeration value="bass"/>
+										<xs:enumeration value="urheen"/>
+										<xs:enumeration value="guitar"/>
+										<xs:enumeration value="singer"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:attribute>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="comment" type="xs:string"/>
+		</xs:choice>
+		<xs:attribute name="id" type="xs:ID" use="required"/>
+		<xs:attribute name="title" type="xs:string" use="optional"/>
+		<xs:attribute name="artist" type="xs:string" use="optional"/>
+		<xs:attribute name="genre" type="xs:string" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="albumType">
+		<xs:sequence>
+			<xs:element name="sect" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="id" type="xs:IDREF" use="required"/>
+					<xs:attribute name="seq" type="xs:integer" use="optional"/>
+					<xs:attribute name="duration" type="xs:duration" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="title" type="xs:string" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="groupType">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="music">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="musicType"/>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="group">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="groupType"/>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:choice>
+		<xs:attribute name="name" type="xs:string" use="optional"/>
+		<xs:attribute name="info" type="xs:string" use="optional"/>
+	</xs:complexType>
+</xs:schema>

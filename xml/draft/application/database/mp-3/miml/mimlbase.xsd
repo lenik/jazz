@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by CORE 2K (CORE 2K) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:complexType name="vtext" mixed="true">
+		<xs:annotation>
+			<xs:documentation>Which can do properties-substutation, and Can have string text and complex elements</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="get" nillable="true">
+					<xs:complexType mixed="false">
+						<xs:attribute name="key" type="xs:string" use="required"/>
+						<xs:attribute name="typed" type="xs:boolean" use="optional" default="false"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="set" nillable="true">
+					<xs:complexType mixed="false">
+						<xs:attribute name="key" type="xs:string" use="required"/>
+						<xs:attribute name="value" type="xs:string" use="required"/>
+						<xs:attribute name="class" use="optional" default="java.lang.String">
+							<xs:simpleType>
+								<xs:restriction base="xs:string"/>
+							</xs:simpleType>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="rem">
+					<xs:complexType mixed="true"/>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+		<xs:attribute name="inlinevars" type="xs:boolean" use="optional" default="true"/>
+	</xs:complexType>
+	<xs:complexType name="vtexts">
+		<xs:sequence>
+			<xs:element name="text" type="vtext" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="selector">
+		<xs:annotation>
+			<xs:documentation>select values (or nodes) by "id" from the model. sometimes you can make the selection just makes by set id to ''. 
+For complex values, break make them always iteratable(even the value is a scalar). However, when viewing model, "element" tag can handle the complex values, so you needn't using break attribute in the view.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="id" type="xs:string" use="required"/>
+		<xs:attribute name="break" type="xs:boolean" use="optional" default="false"/>
+	</xs:complexType>
+	<xs:complexType name="connection">
+		<xs:attribute name="path" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="driver" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="username" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="password" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="MIMEType">
+		<xs:sequence>
+			<xs:element name="contentType" type="vtext"/>
+			<xs:element name="contentLength" type="vtext" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

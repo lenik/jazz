@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MIML xml:space="default">
+	<Model id="">
+		<Simple id="Title">
+			APPNAME = $APPNAME
+		</Simple>
+		<Simple id="Today">
+			<set key="now" value="" class="java.util.Date"/>
+			Now is <get key="now" typed="true"/>
+		</Simple>
+		<Query id="data1">
+			<set key="姓名" value="囡囡"/>
+			SELECT * FROM Person WHERE name=${姓名}
+			<!--			<Pagination pageSize="10"/> -->
+			AND age=<get key="age"/>
+		</Query>
+		<Query id="data2">
+			SELECT * FROM PersonDetail, 
+			<set key="xm" value="YYKK"/>
+			Person WHERE PersonDetail.id = Person.id AND Person.name=$xm
+		</Query>
+	</Model>
+	<Operation scheme="INIT">
+		<for id="">
+			<Action>
+				<SQL>
+					CREATE TABLE Person(id long PRIMARY KEY, name VARCHAR(30))
+				</SQL>
+			</Action>
+		</for>
+	</Operation>
+	<Operation scheme="DESTROY">
+		<for id="">
+			<Action>
+				<SQL>
+					DROP TABLE Person
+				</SQL>
+			</Action>
+		</for>
+	</Operation>
+	<Operation scheme="DELETE">
+		<for id="data1">
+			<Action>
+				<SQL>DELETE FROM Person FOR  name=${xm}
+				</SQL>
+			</Action>
+		</for>
+	</Operation>
+	<Operation scheme="UPDATE">
+		<for id="data1">
+			<Action>
+				<SQL>
+					UPDATE Person SET name='<get key="xm"/>' age=<get key="age"/> WHERE name='<get key="xm"/>'
+				</SQL>
+			</Action>
+		</for>
+	</Operation>
+</MIML>

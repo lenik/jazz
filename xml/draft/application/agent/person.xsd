@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by danci.z (labja) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="persons">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="person" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="personType"/>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="class" type="xs:string" use="required"/>
+			<xs:attribute name="URI" type="xs:string" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="personType">
+		<xs:all>
+			<xs:element name="basic" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="alias" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="xs:string">
+										<xs:attribute name="type" type="xs:string" use="required"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="ex" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>extendable basic-info</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="xs:string">
+										<xs:attribute name="class" type="xs:string" use="optional"/>
+										<xs:attribute name="type" type="xs:string" use="required"/>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="contact" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="sub" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="contactSubType">
+										<xs:attribute name="name" type="xs:string" use="required"/>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="own" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="sub" type="ownSubType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="org" minOccurs="0">
+				<xs:complexType>
+					<xs:choice maxOccurs="unbounded">
+						<xs:element name="school" type="jobType"/>
+						<xs:element name="company" type="jobType"/>
+						<xs:element name="association" type="jobType"/>
+						<xs:element name="ex">
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="jobType">
+										<xs:attribute name="class" type="xs:string" use="optional"/>
+										<xs:attribute name="type" type="xs:string" use="required"/>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="bio" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>blood, finger-print, etc.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="blood" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="social" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="friend">
+							<xs:complexType>
+								<xs:attribute name="person-id" type="xs:IDREF" use="required"/>
+								<xs:attribute name="relation" type="xs:string" use="required"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:all>
+		<xs:attribute name="id" type="xs:ID" use="optional"/>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="sex" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="male"/>
+					<xs:enumeration value="female"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="birthday" type="xs:date" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="jobType">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="event">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="summary" type="xs:string" use="optional"/>
+							<xs:attribute name="keyword" type="xs:string" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="prize">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="name" type="xs:string" use="required"/>
+							<xs:attribute name="level" type="xs:string" use="optional"/>
+							<xs:attribute name="about" type="xs:string" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ex">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="class" type="xs:string" use="optional"/>
+							<xs:attribute name="type" type="xs:string" use="required"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="work-item">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="type" type="xs:string" use="required"/>
+							<xs:attribute name="extern-id" type="xs:string" use="optional"/>
+							<xs:attribute name="keyword" type="xs:string" use="optional"/>
+							<xs:attribute name="summary" type="xs:string" use="optional"/>
+							<xs:attribute name="beginTime" type="xs:dateTime" use="optional"/>
+							<xs:attribute name="duration" type="xs:duration" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="eval">
+				<xs:annotation>
+					<xs:documentation>evaluation results: scores, test levels, etc.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="beginTime" type="xs:date" use="optional"/>
+		<xs:attribute name="duration" type="xs:duration" use="optional"/>
+		<xs:attribute name="job" type="xs:string" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="contactSubType">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="address">
+				<xs:complexType mixed="true">
+					<xs:attribute name="type" type="xs:string" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="phone">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="type" type="xs:string" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="email">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="type" type="xs:string" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="im">
+				<xs:annotation>
+					<xs:documentation>Imm messenger, QQ, MSN, etc.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="type" type="xs:string" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ex">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="class" type="xs:string" use="optional"/>
+							<xs:attribute name="type" type="xs:string" use="required"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="ownSubType">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="property">
+				<xs:complexType>
+					<xs:attribute name="class" type="xs:string" use="optional"/>
+					<xs:attribute name="type" type="xs:string" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="public">
+				<xs:annotation>
+					<xs:documentation>web-site address, magzine ISBN, etc.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="class" type="xs:string" use="optional"/>
+							<xs:attribute name="type" type="xs:string" use="required"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by danzci (cpu007) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="vortoj">
+		<xs:annotation>
+			<xs:documentation>simpla vorto difino</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="vorto" type="vortoType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="vortoType">
+		<xs:sequence>
+			<xs:element name="pron"/>
+			<xs:element name="difino"/>
+			<xs:element name="syntax"/>
+			<xs:element name="sex"/>
+			<xs:element name="ddd"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,769 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by danci.z (labja) -->
+<persons xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="X:\java\xml\spyer\person.xsd" class="93' 初三(5)班">
+	<person name="谢继雷" sex="male" birthday="1982-04-27">
+		<contact>
+			<sub name="单位">
+				<address>[314400] 海宁市科技大楼6楼</address>
+				<phone type="办公室">0573-7238429</phone>
+				<phone type="办公室">0573-7282510</phone>
+				<phone type="手机-杭州">13819471680</phone>
+				<phone type="手机-海宁">13567385103</phone>
+				<im type="QQ">83592583</im>
+				<im type="MSN">jljljjl@hotmail.com</im>
+				<im type="Yahoo!">jljljjl@yahoo.com</im>
+				<email>dansei@163.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="朱敏" sex="male" birthday="1982-05-19">
+		<contact>
+			<sub name="s-u">
+				<address>[311300] 浙江林学院225信箱</address>
+				<phone type="寝室">0571-63749468</phone>
+				<phone type="手机">13586157342</phone>
+				<im>48017619</im>
+				<email>langdiyouhuo@163.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="陈晶晶" sex="female" birthday="1982-04-28">
+		<contact>
+			<sub name="s-u">
+				<address>[310012] 浙江省杭州市文华路269号浙江财经学院006#</address>
+				<phone type="寝室">88922394</phone>
+				<phone type="移动">13515816911</phone>
+				<phone type="移动-新">13843011106</phone>
+				<phone type="单位？">0431-8993185</phone>
+				<im type="QQ">75549936</im>
+				<im type="搜Q">4306564</im>
+				<email>extra_or@163.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="池宇志" sex="male" birthday="1982-10-01">
+		<contact>
+			<sub name="单位">
+				<address>[317608] 玉环县芦浦镇漩门村</address>
+				<phone type="办公室">0576-7141938</phone>
+				<phone type="手机">13777607123</phone>
+				<im type="QQ">164786863</im>
+				<email>steven9931@sohu.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="吴江波" sex="male" birthday="1981-04-04">
+		<contact>
+			<sub name="单位">
+				<address>[314400] </address>
+				<phone type="办公室"/>
+				<phone type="手机">13058856563</phone>
+				<im type="QQ"/>
+				<email>56563@yuhuan.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="阮林烨" sex="male" birthday="1980-03-05">
+		<contact>
+			<sub name="单位">
+				<address>[310000] </address>
+				<phone type="办公室"> </phone>
+				<phone type="手机">13968412587</phone>
+				<im type="QQ">57690037</im>
+				<im type="搜Q">4161746</im>
+				<email>rly.8035@163.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="李良君" sex="male" birthday="1981-10-06">
+		<contact>
+			<sub name="单位">
+				<address type="工作">[317605]玉环坎门派出所</address>
+				<address type="居住">[317605]玉环县楚门镇筠岗新村</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">13600576517 </phone>
+				<im type="QQ">32533497</im>
+				<im type="搜Q">______</im>
+				<email>liliangjun1981@163.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="______" sex="male" birthday="1981-01-01">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>______</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="______" sex="male" birthday="1981-01-01">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>______</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="潘戬" sex="male" birthday="1980-05-15">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">13858090391 </phone>
+				<im type="QQ">920068</im>
+				<im type="搜Q">______</im>
+				<email>janathan111@163.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="王丹文" sex="female" birthday="1981-06-11">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">13757963651 </phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>wang_wang1234@163.net</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="陈苗根" sex="male" birthday="1981-09-15">
+		<contact>
+			<sub name="单位">
+				<address>[310000]浙大玉泉校区1152#</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">30220202</im>
+				<im type="搜Q">______</im>
+				<email>phycmg@tom.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="胡晨剑" sex="male" birthday="1981-01-01">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>cjhu228@163.net</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="mlis*Z" sex="female" birthday="1982-01-28">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">37573751</im>
+				<im type="搜Q">______</im>
+				<email>yezi2052@sina.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="王灵云" sex="female" birthday="1980-01-04">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">13858052393 </phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>wlingyunc@163.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="颜通撑" sex="male" birthday="1980-12-02">
+		<contact>
+			<sub name="单位">
+				<address>[310000]南京航空航天大学</address>
+				<phone type="办公室">025-4896169</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">58430579</im>
+				<im type="搜Q">3876287</im>
+				<email>yantongcheng11@163.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="陈剑" sex="male" birthday="1988-08-08">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">6003886</im>
+				<im type="搜Q">4870250</im>
+				<email>zhendeer@chinaren.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="孔云华" sex="male" birthday="1980-09-10">
+		<contact>
+			<sub name="中科院上海药物所">
+				<address>[310000]上海浦东张江高科园祖冲之路555号</address>
+				<phone type="办公室">021-50806600-2109</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">44989721</im>
+				<im type="搜Q">______</im>
+				<email>kongyunhua0576@163.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="杨华峰" sex="male" birthday="1981-12-20">
+		<contact>
+			<sub name="单位">
+				<address>[317605]沙门镇人民政府</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">13157625918 </phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">4007974</im>
+				<email>yang105915@163.net</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="陈志维" sex="male" birthday="1981-03-24">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>jiujiu992001@yahoo.com.cn</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="张连娇" sex="male" birthday="1981-07-20">
+		<contact>
+			<sub name="单位">
+				<address>[321004]浙江师范大学</address>
+				<phone type="办公室">0579-2288769</phone>
+				<phone type="办公室">0576-7448930</phone>
+				<im type="QQ">66658281</im>
+				<im type="ICQ">141367356</im>
+				<email>lianjiaozhang@hotmial.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="陈科魁" sex="male" birthday="1981-03-13">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">13968493872 </phone>
+				<im type="QQ">38475558</im>
+				<im type="搜Q">______</im>
+				<email>ckk522.-@163.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="张伟" sex="male" birthday="1981-01-01">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>zw811211@sohu.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="蒋朝晖" sex="male" birthday="1980-11-01">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">13586186120 </phone>
+				<im type="QQ">16388887</im>
+				<im type="搜Q">______</im>
+				<email>qnxxw@hotmail.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="蔡法清" sex="male" birthday="1980-10-16">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">55641576</im>
+				<im type="搜Q">______</im>
+				<email>caifq@sohu.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="许子传" sex="male" birthday="1981-11-05">
+		<contact>
+			<sub name="单位">
+				<address>[310027]浙大玉泉校区1008信箱</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">13858068149</phone>
+				<im type="QQ">64263033</im>
+				<im type="搜Q">4036934</im>
+				<email>tendy-xu@163.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="吴旭晨" sex="female" birthday="1981-10-15">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>skyless@mail.china.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="郑海峰" sex="male" birthday="1981-10-27">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">0571-85363583</phone>
+				<phone type="手机">13858004282</phone>
+				<im type="QQ">25560646</im>
+				<im type="MSN">zhenhaifeng@hotmail.com</im>
+				<email>lankeyi@sohu.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="张宇" sex="male" birthday="1981-09-17">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">66069688</im>
+				<im type="搜Q">______</im>
+				<email>zhangyulove1999@sohu.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="ctg1980@hotmail.com" sex="male" birthday="1980-12-20">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">0571-88811204</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">21786189</im>
+				<im type="搜Q">______</im>
+				<email>ctg1980@hotmail.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="张云剑" sex="male" birthday="1980-07-21">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">0576-7121075</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>zyj16871687@163.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="潘忠杰" sex="male" birthday="1982-02-26">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">13335883686 </phone>
+				<im type="QQ">113420257</im>
+				<im type="搜Q">______</im>
+				<email>panzj1982@sohu.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="张洁" sex="female" birthday="1983-04-06">
+		<contact>
+			<sub name="兰州大学中文系">
+				<address>[730020]兰州大学一分部404</address>
+				<address>[730020]兰州大学一分部5号楼202-3</address>
+				<phone type="办公室">0931-8667154</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">4671507</im>
+				<email>qianyilz@163.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="王映" sex="male" birthday="1981-09-11">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">13586934647 </phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>simeng8385@sina.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="曾薇薇 " sex="male" birthday="1981-01-01">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>zww0423@sina.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="林乃静" sex="female" birthday="1981-02-03">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">13967666531 </phone>
+				<im type="QQ">153662524</im>
+				<im type="搜Q">______</im>
+				<email>flower81@163.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="张杨" sex="male" birthday="1982-01-25">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">14970042</im>
+				<im type="搜Q">______</im>
+				<email>poplar8495624@263.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="郑威" sex="male" birthday="1982-03-24">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">0571-88495605</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>why_why@21cn.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="杨金聪" sex="male" birthday="1981-01-01">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>cong128@163.net</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="林丹红" sex="female" birthday="1981-09-24">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">13757614140 </phone>
+				<im type="QQ">6764281</im>
+				<im type="搜Q">______</im>
+				<email>bluesea-lin@163.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="黄凌峰" sex="male" birthday="1981-12-20">
+		<contact>
+			<sub name="学校">
+				<address>[310014]浙江工业大学</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">13306716975</phone>
+				<phone type="手机">13958154379</phone>
+				<im type="QQ">12783121</im>
+				<im type="搜Q">______</im>
+				<email>qnlf@hotmail.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="李学勤" sex="male" birthday="1981-07-03">
+		<contact>
+			<sub name="单位">
+				<address>[317608]浙江省玉环县芦浦镇新村</address>
+				<phone type="办公室">0576-7141507</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">105716594</im>
+				<im type="ICQ">164154555</im>
+				<im type="MSN">sialove@msn.com</im>
+				<im type="MSN">lixueqin911@hotmail.com </im>
+				<im type="网易泡泡">sialove@163.com </im>
+				<im type="新浪寻呼">sialove@sina.com</im>
+				<email>sialove@sohu.com</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="______" sex="male" birthday="1981-01-01">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>______</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="______" sex="male" birthday="1981-01-01">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>______</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="______" sex="male" birthday="1981-01-01">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>______</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="______" sex="male" birthday="1981-01-01">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>______</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="______" sex="male" birthday="1981-01-01">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>______</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="______" sex="male" birthday="1981-01-01">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>______</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="______" sex="male" birthday="1981-01-01">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>______</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="______" sex="male" birthday="1981-01-01">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>______</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="______" sex="male" birthday="1981-01-01">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>______</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="______" sex="male" birthday="1981-01-01">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>______</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="______" sex="male" birthday="1981-01-01">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>______</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="______" sex="male" birthday="1981-01-01">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>______</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="______" sex="male" birthday="1981-01-01">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>______</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="______" sex="male" birthday="1981-01-01">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>______</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="______" sex="male" birthday="1981-01-01">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>______</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="______" sex="male" birthday="1981-01-01">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>______</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="______" sex="male" birthday="1981-01-01">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>______</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="______" sex="male" birthday="1981-01-01">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>______</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="______" sex="male" birthday="1981-01-01">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>______</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="______" sex="male" birthday="1981-01-01">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>______</email>
+			</sub>
+		</contact>
+	</person>
+	<person name="______" sex="male" birthday="1981-01-01">
+		<contact>
+			<sub name="单位">
+				<address>[310000]______</address>
+				<phone type="办公室">______</phone>
+				<phone type="手机">______</phone>
+				<im type="QQ">______</im>
+				<im type="搜Q">______</im>
+				<email>______</email>
+			</sub>
+		</contact>
+	</person>
+</persons>

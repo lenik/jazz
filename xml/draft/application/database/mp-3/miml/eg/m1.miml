@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MIML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="X:\java\xml\miml\MIML.xsd">
+	<Model id="">
+		<Simple id="name">Zhang San</Simple>
+		<Simple id="age">
+			18
+			<Cast>
+				<Integer width="10"/>
+			</Cast>
+		</Simple>
+		<Plain id="签名">高山流水</Plain>
+		<Simple id="appname">$APPNAME</Simple>
+		<Exp id="doing">
+			<SOAPCall>
+			</SOAPCall>
+		</Exp>
+	</Model>
+</MIML>
