@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by danzci (cpu007) -->
+<xs:schema targetNamespace="http://www.boDz.net/XML/2004/X@A/Sections" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xaa="http://www.boDz.net/XML/2004/X@A/Sections" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:complexType name="extends">
+		<xs:complexContent>
+			<xs:extension base="xaa:file-scope">
+				<xs:choice minOccurs="0" maxOccurs="unbounded">
+					<xs:element ref="xaa:import"/>
+				</xs:choice>
+				<xs:attribute name="extends" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="file-scope">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element ref="xaa:append"/>
+			<xs:element ref="xaa:property"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:element name="append">
+		<xs:annotation>
+			<xs:documentation>Fragments appended to this document. predefined fragment as follows: head, tail, declare, define, custom. </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:anySimpleType">
+					<xs:attribute name="position" use="optional" default="declare">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="head"/>
+								<xs:enumeration value="tail"/>
+								<xs:enumeration value="declare"/>
+								<xs:enumeration value="define"/>
+								<xs:enumeration value="custom"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+					<xs:attribute name="custom" type="xs:string" use="optional"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="property">
+		<xs:annotation>
+			<xs:documentation>Properties of this section, for example, gdml - a parser generater define use property for: 
+- programming language of the implementation
+- the algorithm used
+etc. </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:anySimpleType">
+					<xs:attribute name="name" type="xs:string" use="required"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="import">
+		<xs:annotation>
+			<xs:documentation>Import resources. </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="parameter" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attribute name="name" type="xs:string" use="required"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="url" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by danci.z (labja) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="postype">
+		<xs:annotation>
+			<xs:documentation>Pos Type</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="postypeType">
+					<xs:attribute name="name" type="xs:ID" use="required"/>
+					<xs:attribute name="alignment" type="xs:integer" use="optional" default="4"/>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="postypeType">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="union">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="item" type="postypeType" maxOccurs="unbounded"/>
+					</xs:sequence>
+					<xs:attribute name="selector" type="xs:integer" use="optional" default="0"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:choice>
+				<xs:annotation>
+					<xs:documentation>Primary number</xs:documentation>
+				</xs:annotation>
+				<xs:element name="bit" type="fieldType"/>
+				<xs:element name="u1" type="fieldType"/>
+				<xs:element name="u2" type="fieldType"/>
+				<xs:element name="u4" type="fieldType"/>
+				<xs:element name="u8" type="fieldType"/>
+				<xs:element name="i1" type="fieldType"/>
+				<xs:element name="i2" type="fieldType"/>
+				<xs:element name="i4" type="fieldType"/>
+				<xs:element name="i8" type="fieldType"/>
+				<xs:element name="r2" type="fieldType"/>
+				<xs:element name="r4" type="fieldType"/>
+				<xs:element name="r8" type="fieldType"/>
+				<xs:element name="r16" type="fieldType"/>
+				<xs:element name="c2" type="fieldType"/>
+				<xs:element name="c4" type="fieldType"/>
+				<xs:element name="c8" type="fieldType"/>
+				<xs:element name="c16" type="fieldType"/>
+			</xs:choice>
+			<xs:choice>
+				<xs:annotation>
+					<xs:documentation>Primary text</xs:documentation>
+				</xs:annotation>
+				<xs:element name="asz" type="fieldType"/>
+				<xs:element name="usz" type="fieldType"/>
+				<xs:element name="usz8" type="fieldType"/>
+				<xs:element name="asc">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="fieldType">
+								<xs:attribute name="counter" type="xs:integer" use="optional" default="4"/>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="usc">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="fieldType">
+								<xs:attribute name="counter" type="xs:integer" use="optional" default="4"/>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="usc8">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="fieldType">
+								<xs:attribute name="counter" type="xs:integer" use="optional" default="4"/>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+			<xs:choice>
+				<xs:annotation>
+					<xs:documentation>Memory Blocks</xs:documentation>
+				</xs:annotation>
+			</xs:choice>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="fieldType">
+		<xs:sequence>
+			<xs:element name="default" type="xs:anySimpleType" minOccurs="0"/>
+			<xs:element name="comment" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="offset" type="xs:string" use="optional" default="follow"/>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by danzci (cpu007) -->
+<xs:schema targetNamespace="http://www.boDz.net/XML/2004/Applications/XML/XML-Handler" xmlns:xaa="http://www.boDz.net/XML/2004/X@A/Sections" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xmlh="http://www.boDz.net/XML/2004/Applications/XML/XML-Handler" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://www.boDz.net/XML/2004/X@A/Sections" schemaLocation="http://www.boDz.net/XML/2004/X@A/Sections.xsd"/>
+	<xs:element name="xml-handler">
+		<xs:annotation>
+			<xs:documentation>XML-Handler</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="xaa:extends">
+					<xs:sequence>
+						<xs:element name="root" type="xmlh:elementType"/>
+						<xs:element ref="xmlh:element" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="element">
+		<xs:annotation>
+			<xs:documentation>(Used for being applied)
+Attribute name here should be unique, and many not same as the actual element name. </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="xmlh:elementType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="elementType" mixed="true">
+		<xs:annotation>
+			<xs:documentation>Attribute attributes are seperated by space. 
+When elements of same name exist, class is used to identify. </xs:documentation>
+		</xs:annotation>
+		<xs:complexContent mixed="true">
+			<xs:extension base="xmlh:handler-code">
+				<xs:choice minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="apply">
+						<xs:annotation>
+							<xs:documentation>Apply element-name(defined at out-most) to this element</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="xmlh:handler-code">
+									<xs:attribute name="name" type="xs:string" use="required"/>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:element ref="xmlh:element"/>
+					<xs:element name="attribute">
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="xmlh:handler-code">
+									<xs:attribute name="name" type="xs:string" use="required"/>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="process-instruction" type="xmlh:handler-code"/>
+					<xs:element name="comment" type="xmlh:handler-code"/>
+				</xs:choice>
+				<xs:attribute name="name" type="xs:string" use="required"/>
+				<xs:attribute name="attributes" type="xs:string" use="optional"/>
+				<xs:attribute name="class" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="handler-code" mixed="true">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="scope">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="xmlh:handler-code">
+							<xs:attribute name="type" type="xs:string" use="required"/>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by danzci (cpu007) -->
+<xs:schema targetNamespace="http://www.boDz.net/XML/2004/Application/Project/project-shell" xmlns:ps="http://www.boDz.net/XML/2004/Application/Project/project-shell" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="project-shell">
+		<xs:annotation>
+			<xs:documentation>Comment describing your root element</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="types" minOccurs="0">
+					<xs:complexType>
+						<xs:choice minOccurs="0" maxOccurs="unbounded">
+							<xs:element name="extension-type">
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="xs:string">
+											<xs:attribute name="extension" type="xs:string" use="required"/>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="type-def">
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="xs:string">
+											<xs:attribute name="type" type="xs:string" use="required"/>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="variables" type="ps:variablesType" minOccurs="0"/>
+				<xs:element name="root">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="ps:nodeType">
+								<xs:sequence>
+									<xs:element name="start" type="ps:nodeType">
+										<xs:annotation>
+											<xs:documentation>In start-menu</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="system" minOccurs="0">
+										<xs:complexType>
+											<xs:complexContent>
+												<xs:extension base="ps:nodeType">
+													<xs:sequence>
+														<xs:element name="this" type="ps:nodeType" minOccurs="0">
+															<xs:annotation>
+																<xs:documentation>Basics of this project-shell xml self. </xs:documentation>
+															</xs:annotation>
+														</xs:element>
+														<xs:element name="plugins" minOccurs="0">
+															<xs:annotation>
+																<xs:documentation>Configured plugins</xs:documentation>
+															</xs:annotation>
+															<xs:complexType>
+																<xs:complexContent>
+																	<xs:extension base="ps:nodeType"/>
+																</xs:complexContent>
+															</xs:complexType>
+														</xs:element>
+													</xs:sequence>
+												</xs:extension>
+											</xs:complexContent>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="usage" type="ps:usageType" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="nodeType">
+		<xs:annotation>
+			<xs:documentation>Defined type as: 
+
+(Virtual) FILE URL DYNAMIC</xs:documentation>
+		</xs:annotation>
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="node">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="ps:nodeType"/>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="property">
+				<xs:annotation>
+					<xs:documentation>Both attirbute value and text of element are used. 
+Reserved properties as: 
+PATH ICON ICONSMALL ICONOPEN PLAYSOUND START-DIR SHORTCUT WINDOW-MODE OWNER etc.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="name" type="xs:string" use="required"/>
+							<xs:attribute name="value" type="xs:string" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:choice>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="display" type="xs:string" use="optional"/>
+		<xs:attribute name="type" type="xs:string" use="optional"/>
+		<xs:attribute name="enabled" type="xs:boolean" use="optional" default="true"/>
+		<xs:attribute name="visible" type="xs:boolean" use="optional" default="true"/>
+	</xs:complexType>
+	<xs:complexType name="variablesType">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="variable">
+				<xs:annotation>
+					<xs:documentation>Both attirbute value and text of element are used. </xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="name" type="xs:string" use="required"/>
+							<xs:attribute name="value" type="xs:string" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="sub-variables">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="ps:variablesType">
+							<xs:attribute name="info" type="xs:string" use="optional"/>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="usageType">
+		<xs:sequence>
+			<xs:element name="import-role-def" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="role-def-path" type="xs:string" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="merge-registry" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>If used, then nothing will be changed to this XML. This is useful for multi-user environment. </xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="registry-path" type="xs:string" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
