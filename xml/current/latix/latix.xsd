@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by CPU007 (STUPYNOMAGIC) -->
-<xs:schema targetNamespace="http://www.bodz.net/xml/current/latix" xmlns:xsf="http://www.bodz.net/xml/current/xsf/section-support" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ltx="http://www.bodz.net/xml/current/latix" elementFormDefault="qualified" attributeFormDefault="unqualified">
-    <xs:import namespace="http://www.bodz.net/xml/current/xsf/section-support" schemaLocation="http://www.bodz.net/xml/current/xsf/section-support.xsd"/>
+<!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by Snima Denik (Bytes of Danci.Z) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ltx="http://www.bodz.net/xml/current/latix" xmlns:xsf="http://www.bodz.net/xml/current/xsf" targetNamespace="http://www.bodz.net/xml/current/latix" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:import namespace="http://www.bodz.net/xml/current/xsf" schemaLocation="http://www.bodz.net/xml/current/xsf/structure.xsd"/>
     <!--========== FACADE ==========-->
     <xs:element name="latix">
         <xs:annotation>
@@ -9,7 +9,7 @@
         </xs:annotation>
         <xs:complexType>
             <xs:complexContent>
-                <xs:extension base="xsf:section-extendable-base">
+                <xs:extension base="xsf:structure-composition">
                     <xs:choice minOccurs="0" maxOccurs="unbounded">
                         <xs:element name="global" type="ltx:st-namespace"/>
                     </xs:choice>
@@ -37,13 +37,13 @@
         </xs:annotation>
         <xs:choice>
             <xs:group ref="ltx:grp-value"/>
-            <xs:group ref="ltx:grp-operator"/>
+            <xs:group ref="ltx:operator-group"/>
             <xs:group ref="ltx:grp-function"/>
         </xs:choice>
         <xs:attribute name="id" type="xs:string" use="optional"/>
     </xs:complexType>
     <!--========== OPERATOR ==========-->
-    <xs:complexType name="base-operator" mixed="true">
+    <xs:complexType name="operator" mixed="true">
         <xs:annotation>
             <xs:documentation>Execution unit
 
@@ -55,76 +55,76 @@ The operand subelement can overload the operands of mixed-contents. </xs:documen
             <xs:extension base="ltx:base-execution"/>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="base-operator-unary">
+    <xs:complexType name="operator-unary">
         <xs:annotation>
             <xs:documentation>Unary operator</xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base="ltx:base-operator">
+            <xs:extension base="ltx:operator">
                 <xs:sequence minOccurs="0">
                     <xs:element ref="ltx:operand"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="base-operator-binary-left">
+    <xs:complexType name="operator-binary-left">
         <xs:annotation>
             <xs:documentation>Binary operator with left-association</xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base="ltx:base-operator">
+            <xs:extension base="ltx:operator">
                 <xs:sequence minOccurs="0">
                     <xs:element ref="ltx:operand" minOccurs="2" maxOccurs="unbounded"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="base-operator-binary-right">
+    <xs:complexType name="operator-binary-right">
         <xs:annotation>
             <xs:documentation>Binary operator with right-association</xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base="ltx:base-operator">
+            <xs:extension base="ltx:operator">
                 <xs:sequence minOccurs="0">
                     <xs:element ref="ltx:operand" minOccurs="2" maxOccurs="unbounded"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="base-operator-ternary">
+    <xs:complexType name="operator-ternary">
         <xs:annotation>
             <xs:documentation>Ternary operator</xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base="ltx:base-operator">
+            <xs:extension base="ltx:operator">
                 <xs:sequence minOccurs="0">
                     <xs:element ref="ltx:operand" minOccurs="3" maxOccurs="3"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="base-operator-variable">
+    <xs:complexType name="operator-variable">
         <xs:annotation>
             <xs:documentation>Variable-argument operator</xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base="ltx:base-operator">
+            <xs:extension base="ltx:operator">
                 <xs:sequence minOccurs="0">
                     <xs:element ref="ltx:operand" minOccurs="0" maxOccurs="unbounded"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:group name="grp-operator-bit">
+    <xs:group name="operator-bit-group">
         <xs:annotation>
             <xs:documentation>Bit operators</xs:documentation>
         </xs:annotation>
         <xs:choice>
-            <xs:element name="bit-not" type="ltx:base-operator-unary"/>
-            <xs:element name="bit-neg" type="ltx:base-operator-unary"/>
-            <xs:element name="bit-and" type="ltx:base-operator-binary-left"/>
-            <xs:element name="bit-or" type="ltx:base-operator-binary-left"/>
-            <xs:element name="bit-xor" type="ltx:base-operator-binary-left"/>
+            <xs:element name="bit-not" type="ltx:operator-unary"/>
+            <xs:element name="bit-neg" type="ltx:operator-unary"/>
+            <xs:element name="bit-and" type="ltx:operator-binary-left"/>
+            <xs:element name="bit-or" type="ltx:operator-binary-left"/>
+            <xs:element name="bit-xor" type="ltx:operator-binary-left"/>
             <xs:element name="bit-shift">
                 <xs:annotation>
                     <xs:documentation>shift: number of levels to shift, positive for right, negtive for left. 
@@ -135,7 +135,7 @@ signed: don't shift MSB</xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:complexContent>
-                        <xs:extension base="ltx:base-operator-binary-left">
+                        <xs:extension base="ltx:operator-binary-left">
                             <xs:attribute name="looped" type="xs:boolean" use="optional" default="false"/>
                             <xs:attribute name="signed" type="xs:boolean" use="optional" default="false"/>
                         </xs:extension>
@@ -148,7 +148,7 @@ signed: don't shift MSB</xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:complexContent>
-                        <xs:extension base="ltx:base-operator-unary">
+                        <xs:extension base="ltx:operator-unary">
                             <xs:attribute name="character" type="xs:string" use="optional" default="1"/>
                         </xs:extension>
                     </xs:complexContent>
@@ -162,7 +162,7 @@ from: [left], right</xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:complexContent>
-                        <xs:extension base="ltx:base-operator-unary">
+                        <xs:extension base="ltx:operator-unary">
                             <xs:attribute name="character" type="xs:string" use="optional" default="1"/>
                             <xs:attribute name="from" type="xs:string" use="optional" default="left"/>
                         </xs:extension>
@@ -171,25 +171,25 @@ from: [left], right</xs:documentation>
             </xs:element>
         </xs:choice>
     </xs:group>
-    <xs:group name="grp-operator-arithmatic">
+    <xs:group name="operator-arithmatic-group">
         <xs:annotation>
             <xs:documentation>Arithmatic operators</xs:documentation>
         </xs:annotation>
         <xs:choice>
-            <xs:element name="add" type="ltx:base-operator-binary-left"/>
-            <xs:element name="subtract" type="ltx:base-operator-binary-left"/>
-            <xs:element name="multiply" type="ltx:base-operator-binary-left"/>
-            <xs:element name="divide" type="ltx:base-operator-binary-left"/>
-            <xs:element name="power" type="ltx:base-operator-binary-right"/>
-            <xs:element name="increase" type="ltx:base-operator-unary"/>
-            <xs:element name="decrease" type="ltx:base-operator-unary"/>
+            <xs:element name="add" type="ltx:operator-binary-left"/>
+            <xs:element name="subtract" type="ltx:operator-binary-left"/>
+            <xs:element name="multiply" type="ltx:operator-binary-left"/>
+            <xs:element name="divide" type="ltx:operator-binary-left"/>
+            <xs:element name="power" type="ltx:operator-binary-right"/>
+            <xs:element name="increase" type="ltx:operator-unary"/>
+            <xs:element name="decrease" type="ltx:operator-unary"/>
         </xs:choice>
     </xs:group>
-    <xs:attributeGroup name="atg-operator-logic">
+    <xs:attributeGroup name="operator-logic-attrs">
         <xs:attribute name="true" type="xs:integer" use="optional" default="1"/>
         <xs:attribute name="short" type="xs:boolean" use="optional" default="false"/>
     </xs:attributeGroup>
-    <xs:group name="grp-operator-logic">
+    <xs:group name="operator-logic-group">
         <xs:annotation>
             <xs:documentation>Logical operators</xs:documentation>
         </xs:annotation>
@@ -200,8 +200,8 @@ from: [left], right</xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:complexContent>
-                        <xs:extension base="ltx:base-operator-variable">
-                            <xs:attributeGroup ref="ltx:atg-operator-logic"/>
+                        <xs:extension base="ltx:operator-variable">
+                            <xs:attributeGroup ref="ltx:operator-logic-attrs"/>
                         </xs:extension>
                     </xs:complexContent>
                 </xs:complexType>
@@ -212,8 +212,8 @@ from: [left], right</xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:complexContent>
-                        <xs:extension base="ltx:base-operator-variable">
-                            <xs:attributeGroup ref="ltx:atg-operator-logic"/>
+                        <xs:extension base="ltx:operator-variable">
+                            <xs:attributeGroup ref="ltx:operator-logic-attrs"/>
                         </xs:extension>
                     </xs:complexContent>
                 </xs:complexType>
@@ -224,8 +224,8 @@ from: [left], right</xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:complexContent>
-                        <xs:extension base="ltx:base-operator-variable">
-                            <xs:attributeGroup ref="ltx:atg-operator-logic"/>
+                        <xs:extension base="ltx:operator-variable">
+                            <xs:attributeGroup ref="ltx:operator-logic-attrs"/>
                         </xs:extension>
                     </xs:complexContent>
                 </xs:complexType>
@@ -236,8 +236,8 @@ from: [left], right</xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:complexContent>
-                        <xs:extension base="ltx:base-operator-unary">
-                            <xs:attributeGroup ref="ltx:atg-operator-logic"/>
+                        <xs:extension base="ltx:operator-unary">
+                            <xs:attributeGroup ref="ltx:operator-logic-attrs"/>
                         </xs:extension>
                     </xs:complexContent>
                 </xs:complexType>
@@ -248,8 +248,8 @@ from: [left], right</xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:complexContent>
-                        <xs:extension base="ltx:base-operator-unary">
-                            <xs:attributeGroup ref="ltx:atg-operator-logic"/>
+                        <xs:extension base="ltx:operator-unary">
+                            <xs:attributeGroup ref="ltx:operator-logic-attrs"/>
                         </xs:extension>
                     </xs:complexContent>
                 </xs:complexType>
@@ -257,8 +257,8 @@ from: [left], right</xs:documentation>
             <xs:element name="is-equal">
                 <xs:complexType>
                     <xs:complexContent>
-                        <xs:extension base="ltx:base-operator-binary-left">
-                            <xs:attributeGroup ref="ltx:atg-operator-logic"/>
+                        <xs:extension base="ltx:operator-binary-left">
+                            <xs:attributeGroup ref="ltx:operator-logic-attrs"/>
                         </xs:extension>
                     </xs:complexContent>
                 </xs:complexType>
@@ -266,8 +266,8 @@ from: [left], right</xs:documentation>
             <xs:element name="is-greater">
                 <xs:complexType>
                     <xs:complexContent>
-                        <xs:extension base="ltx:base-operator-binary-left">
-                            <xs:attributeGroup ref="ltx:atg-operator-logic"/>
+                        <xs:extension base="ltx:operator-binary-left">
+                            <xs:attributeGroup ref="ltx:operator-logic-attrs"/>
                         </xs:extension>
                     </xs:complexContent>
                 </xs:complexType>
@@ -275,54 +275,54 @@ from: [left], right</xs:documentation>
             <xs:element name="is-less">
                 <xs:complexType>
                     <xs:complexContent>
-                        <xs:extension base="ltx:base-operator-binary-left">
-                            <xs:attributeGroup ref="ltx:atg-operator-logic"/>
+                        <xs:extension base="ltx:operator-binary-left">
+                            <xs:attributeGroup ref="ltx:operator-logic-attrs"/>
                         </xs:extension>
                     </xs:complexContent>
                 </xs:complexType>
             </xs:element>
         </xs:choice>
     </xs:group>
-    <xs:group name="grp-operator-datatype">
+    <xs:group name="operator-datatype-group">
         <xs:annotation>
             <xs:documentation>Data-type related operators</xs:documentation>
         </xs:annotation>
         <xs:choice>
-            <xs:element name="size-of" type="ltx:base-operator-unary"/>
-            <xs:element name="address-of" type="ltx:base-operator-unary"/>
-            <xs:element name="value-at" type="ltx:base-operator-unary"/>
+            <xs:element name="size-of" type="ltx:operator-unary"/>
+            <xs:element name="address-of" type="ltx:operator-unary"/>
+            <xs:element name="value-at" type="ltx:operator-unary"/>
             <xs:element name="member-of">
                 <xs:complexType>
                     <xs:complexContent>
-                        <xs:extension base="ltx:base-operator-unary">
+                        <xs:extension base="ltx:operator-unary">
                             <xs:attribute name="select" type="xs:string" use="optional"/>
                         </xs:extension>
                     </xs:complexContent>
                 </xs:complexType>
             </xs:element>
-            <xs:element name="reinterpret-cast" type="ltx:base-operator-unary"/>
-            <xs:element name="static-cast" type="ltx:base-operator-unary"/>
-            <xs:element name="dynamic-cast" type="ltx:base-operator-unary"/>
+            <xs:element name="reinterpret-cast" type="ltx:operator-unary"/>
+            <xs:element name="static-cast" type="ltx:operator-unary"/>
+            <xs:element name="dynamic-cast" type="ltx:operator-unary"/>
         </xs:choice>
     </xs:group>
-    <xs:group name="grp-operator-misc">
+    <xs:group name="operator-misc-group">
         <xs:annotation>
             <xs:documentation>Other operators</xs:documentation>
         </xs:annotation>
         <xs:choice>
-            <xs:element name="iif" type="ltx:base-operator-ternary"/>
+            <xs:element name="iif" type="ltx:operator-ternary"/>
         </xs:choice>
     </xs:group>
-    <xs:group name="grp-operator">
+    <xs:group name="operator-group">
         <xs:annotation>
             <xs:documentation>arithmatic, type-cast, ref/deref, etc.</xs:documentation>
         </xs:annotation>
         <xs:choice>
-            <xs:group ref="ltx:grp-operator-bit"/>
-            <xs:group ref="ltx:grp-operator-arithmatic"/>
-            <xs:group ref="ltx:grp-operator-logic"/>
-            <xs:group ref="ltx:grp-operator-datatype"/>
-            <xs:group ref="ltx:grp-operator-misc"/>
+            <xs:group ref="ltx:operator-bit-group"/>
+            <xs:group ref="ltx:operator-arithmatic-group"/>
+            <xs:group ref="ltx:operator-logic-group"/>
+            <xs:group ref="ltx:operator-datatype-group"/>
+            <xs:group ref="ltx:operator-misc-group"/>
         </xs:choice>
     </xs:group>
     <xs:complexType name="base-operand">
@@ -346,7 +346,7 @@ from: [left], right</xs:documentation>
             <xs:documentation>assignment, function-call</xs:documentation>
         </xs:annotation>
         <xs:choice>
-            <xs:element name="call-function" type="ltx:base-operator"/>
+            <xs:element name="call-function" type="ltx:operator"/>
             <xs:element name="lv-assign"/>
             <xs:element name="throw"/>
         </xs:choice>
@@ -803,7 +803,7 @@ label-attribute in control-symbol refers to target-label. </xs:documentation>
         <xs:choice>
             <xs:group ref="ltx:grp-lexical"/>
             <xs:group ref="ltx:grp-control"/>
-            <xs:group ref="ltx:grp-operator"/>
+            <xs:group ref="ltx:operator-group"/>
             <xs:group ref="ltx:grp-function"/>
             <xs:group ref="ltx:grp-define"/>
             <xs:group ref="ltx:grp-general"/>

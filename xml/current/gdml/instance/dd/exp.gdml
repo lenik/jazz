@@ -1,155 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!-- edited with XMLSPY v2004 rel. 3 U (http://www.xmlspy.com) by danzci (cpu007) -->
-
-<grammer root="expression" xmlns="http://www.boDz.net/XML/draft/GDML" xmlns:xaa="http://www.boDz.net/XML/draft/X@A/Sections" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.boDz.net/XML/draft/GDML
-
-http://www.boDz.net/XML/draft/GDML/GDML.xsd" info="Simple Expression">
-
-	<xaa:property name="class">org.danz.example.gdml.exp</xaa:property>
-
-	<xaa:append position="head">import java.math.*; 
-
+<!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by Snima Denik (Bytes of Danci.Z) -->
+<g:language xmlns:xsf="http://www.bodz.net/xml/current/xsf" xmlns:g="http://www.bodz.net/xml/current/gdml" xmlns:t="http://www.bodz.net/xml/current/gdml/translate" xmlns:exp="http://www.bodz.net/xml/current/gdml/instance/dd/exp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.bodz.net/xml/current/gdml
+http://www.bodz.net/xml/current/gdml/gdml.xsd" uri="http://www.bodz.net/xml/current/gdml/instance/dd/exp" root="expression" name="SmallExp" info="Small Expression Language">
+    <t:property name="class">org.danz.example.gdml.exp</t:property>
+    <xsf:embed position="head">
+        <t:script>import java.math.*; 
 import java.util.*; 
-
-import java.io.*; </xaa:append>
-
-	<xaa:append position="declare">double result; </xaa:append>
-
-	<element id="expression" type="double">
-
-		<syntax id="CONST-EXP">
-
-			<refer name="Arg0">constant</refer>
-
-			<apply>$$ = $Arg0; 
-
-			</apply>
-
-		</syntax>
-
-		<syntax id="ADDITION">
-
-			<refer name="lhs">expression</refer>
-
-			<text> + </text>
-
-			<refer name="rhs">expression</refer>
-
-			<apply>$$ = $lhs + $rhs; </apply>
-
-		</syntax>
-
-		<syntax id="SUBSTRACTION">
-
-			<refer name="lhs">expression</refer>
-
-			<text> - </text>
-
-			<refer name="rhs">expression</refer>
-
-			<apply>$$ = $lhs - $rhs; </apply>
-
-		</syntax>
-
-		<syntax id="MULTIPLICATION">
-
-			<refer name="lhs">expression</refer>
-
-			<text> * </text>
-
-			<refer name="rhs">expression</refer>
-
-			<apply>$$ = $lhs * $rhs; </apply>
-
-		</syntax>
-
-		<syntax id="DIVISION">
-
-			<refer name="lhs">expression</refer>
-
-			<text> / </text>
-
-			<refer name="rhs">expression</refer>
-
-			<apply>$$ = $lhs / $rhs; </apply>
-
-		</syntax>
-
-	</element>
-
-	<element id="constant" type="double">
-
-		<syntax>
-
-			<refer>NUMBER</refer>
-
-			<apply>$$=$1; </apply>
-
-		</syntax>
-
-		<syntax>
-
-			<refer>STRING</refer>
-
-			<apply>$$=$1; </apply>
-
-		</syntax>
-
-	</element>
-
-	<element id="NUMBER" type="double">
-
-		<reduced>$$ = Number.valueOf($text).doubleValue();</reduced>
-
-		<syntax id="NUM-INTEGER">
-
-			<regex>[1-9][0-9]*</regex>
-
-		</syntax>
-
-		<syntax id="NUM-OCT">
-
-			<regex>0[0-7]+</regex>
-
-		</syntax>
-
-		<syntax id="NUM-HEX">
-
-			<regex>0x[0-9a-fA-F]+</regex>
-
-		</syntax>
-
-		<syntax id="NUM-DECIMAL">
-
-			<anyof info="decimal">
-
-				<regex>0\.[0-9]*</regex>
-
-				<regex>[1-9][0-9]*\.[0-9]*</regex>
-
-				<regex>\.[0-9]+</regex>
-
-			</anyof>
-
-			<optional info="10E-number">
-
-				<regex>e[+\-][1-9][0-9]*</regex>
-
-			</optional>
-
-		</syntax>
-
-	</element>
-
-	<element id="STRING" type="String">
-
-		<syntax>
-
-			<regex/>
-
-		</syntax>
-
-	</element>
-
-</grammer>
+import java.io.*; </t:script>
+    </xsf:embed>
+    <xsf:embed position="declare">
+        <t:script>double result; </t:script>
+    </xsf:embed>
+    <g:symbol name="expression" type="double">
+        <g:syntax name="CONST-EXP">
+            <g:refer name="Arg0" symbol="constant"/>
+            <g:apply>
+                <t:script>$$ = $Arg0; </t:script>
+            </g:apply>
+        </g:syntax>
+        <g:syntax name="ADDITION">
+            <g:refer name="lhs" symbol="expression"/>
+            <g:text> + </g:text>
+            <g:refer name="rhs" symbol="expression"/>
+            <g:apply>
+                <t:script>$$ = $lhs + $rhs; </t:script>
+            </g:apply>
+        </g:syntax>
+        <g:syntax name="SUBSTRACTION">
+            <g:refer name="lhs" symbol="expression"/>
+            <g:text> - </g:text>
+            <g:refer name="rhs" symbol="expression"/>
+            <g:apply>
+                <t:script>$$ = $lhs - $rhs; </t:script>
+            </g:apply>
+        </g:syntax>
+        <g:syntax name="MULTIPLICATION">
+            <g:refer name="lhs" symbol="expression"/>
+            <g:text> * </g:text>
+            <g:refer name="rhs" symbol="expression"/>
+            <g:apply>
+                <t:script>$$ = $lhs * $rhs; </t:script>
+            </g:apply>
+        </g:syntax>
+        <g:syntax name="DIVISION">
+            <g:refer name="lhs" symbol="expression"/>
+            <g:text> / </g:text>
+            <g:refer name="rhs" symbol="expression"/>
+            <g:apply>
+                <t:script>$$ = $lhs / $rhs; </t:script>
+            </g:apply>
+        </g:syntax>
+    </g:symbol>
+    <g:symbol name="constant" type="double">
+        <g:syntax>
+            <g:refer symbol="NUMBER"/>
+            <g:apply>
+                <t:script>$$=$1; </t:script>
+            </g:apply>
+        </g:syntax>
+        <g:syntax>
+            <g:refer symbol="STRING"/>
+            <g:apply>
+                <t:script>$$=$1; </t:script>
+            </g:apply>
+        </g:syntax>
+    </g:symbol>
+    <g:symbol name="NUMBER" type="double">
+        <g:syntax name="NUM-INTEGER">
+            <g:regex>[1-9][0-9]*</g:regex>
+        </g:syntax>
+        <g:syntax name="NUM-OCT">
+            <g:regex>0[0-7]+</g:regex>
+        </g:syntax>
+        <g:syntax name="NUM-HEX">
+            <g:regex>0x[0-9a-fA-F]+</g:regex>
+        </g:syntax>
+        <g:syntax name="NUM-DECIMAL">
+            <g:anyof info="decimal">
+                <g:regex>0\.[0-9]*</g:regex>
+                <g:regex>[1-9][0-9]*\.[0-9]*</g:regex>
+                <g:regex>\.[0-9]+</g:regex>
+            </g:anyof>
+            <g:optional info="10E-number">
+                <g:regex>e[+\-][1-9][0-9]*</g:regex>
+            </g:optional>
+        </g:syntax>
+        <g:created>
+            <t:script>$$ = Number.valueOf($text).doubleValue();</t:script>
+        </g:created>
+    </g:symbol>
+    <g:symbol name="STRING" type="String">
+        <g:syntax>
+            <g:regex/>
+        </g:syntax>
+    </g:symbol>
+</g:language>
