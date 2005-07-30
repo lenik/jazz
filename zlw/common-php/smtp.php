@@ -3,8 +3,11 @@
  *
  * SMTP Class
  * 
- * $Id: smtp.php,v 1.1 2005-07-30 05:20:10 dansei Exp $
+ * $Id: smtp.php,v 1.2 2005-07-30 12:11:59 dansei Exp $
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2005/07/30 05:20:10  dansei
+ * initial
+ *
  */
 require("ext/phpmailer.php"); 
 
