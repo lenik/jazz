@@ -7,13 +7,13 @@ for %%i in (*.m4) do (
 )
 
 echo configure smtp api ...
-smtp.m4 > smtp.php
+    smtp.m4 > smtp.php
 
 echo configure string utilities ...
-string.m4 > string.php
+    string.m4 > string.php
 
 echo configure default DBI connection ...
-dbi.m4 > dbi.php
+    dbi.m4 > dbi.php
 
 for %%i in (*.m4) do (
     if exist "%%~dpni.php" attrib +r "%%~dpni.php"

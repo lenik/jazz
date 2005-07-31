@@ -2,8 +2,9 @@
     require "../../dbi.php"; 
     
     $dbi = new DBI; 
+    $dbi->_debug = true; 
     
-    echo "password: ", $dbi->password, "\n"; 
+    echo "password: ", $dbi->_password, "\n"; 
     
     $dbi->connect(); 
     $dbi->select_db('test'); 
@@ -16,7 +17,7 @@
     
     $dbi->query('drop table hello'); 
 
-    $dbi->disconnect(); 
+    $dbi->close(); 
     
     echo "name: $name\n"; 
 ?>
