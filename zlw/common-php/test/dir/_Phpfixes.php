@@ -3,7 +3,6 @@
  * PHP Bug Fixes
  * 
  * Copy this fixes file to the same directory of which do includes.
- *
  */
 if (! function_exists('_Require')) {
 
