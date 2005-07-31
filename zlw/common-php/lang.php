@@ -3,7 +3,7 @@
  *
  * String Utilities
  * 
- * $Id: lang.php,v 1.3 2005-07-31 02:31:45 dansei Exp $
+ * $Id: lang.php,v 1.4 2005-07-31 04:32:48 dansei Exp $
  * $Log: not supported by cvs2svn $
  * Revision 1.2  2005/07/31 02:30:34  dansei
  * includes fix and dev. pack
@@ -35,7 +35,7 @@ function time_of_0($str_0) {
 
 function parse_id($id = '') {
     if ($id == '')
-        $id = '$Id: lang.php,v 1.3 2005-07-31 02:31:45 dansei Exp $'; 
+        $id = '$Id: lang.php,v 1.4 2005-07-31 04:32:48 dansei Exp $'; 
     preg_match(
                '/^ \$ [I][d][:] \s (.*?) \s ([0-9.]+) \s ([0-9\/\\\-]+) \s 
                  ([0-9:]+) \s (.*?) \s (\w+) \s \$ $/x', 

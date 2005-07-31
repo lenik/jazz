@@ -3,17 +3,20 @@
  *
  * Database Access Interface
  * 
- * $Id: base.php,v 1.2 2005-07-31 02:30:35 dansei Exp $
+ * $Id: base.php,v 1.3 2005-07-31 04:32:49 dansei Exp $
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2005/07/31 02:30:35  dansei
+ * includes fix and dev. pack
+ *
  * Revision 1.1  2005/07/30 12:10:23  dansei
  * initial
  *
  */
 class DBI_base {
-    var $server = 'localhost'; 
-    var $user = 'root'; 
-    var $password; 
-    var $dialect; 
+    var $_server = 'localhost'; 
+    var $_user = 'root'; 
+    var $_password; 
+    var $_dialect; 
     
     function row($sql) {
         $result = array(); /* for test if any exist record */
