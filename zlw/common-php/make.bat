@@ -6,8 +6,8 @@ for %%i in (*.m4) do (
     if exist "%%~dpni.php" attrib -r "%%~dpni.php"
 )
 
-echo configure smtp api ...
-    smtp.m4 > smtp.php
+echo configure mail api ...
+    mail.m4 > mail.php
 
 echo configure string utilities ...
     string.m4 > string.php

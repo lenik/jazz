@@ -11,6 +11,9 @@
 // License: LGPL, see LICENSE
 ////////////////////////////////////////////////////
 
+require '_Phpfixes.php'; 
+_IncludeOnce("smtp.php"); 
+
 /**
  * PHPMailer - PHP email transport class
  * @package PHPMailer
@@ -457,7 +460,6 @@ class PHPMailer
      * @return bool
      */
     function SmtpSend($header, $body) {
-        include_once($this->PluginDir . "class.smtp.php");
         $error = "";
         $bad_rcpt = array();
 
@@ -595,14 +597,14 @@ class PHPMailer
      */
     function SetLanguage($lang_type, $lang_path = "language/") {
         if(file_exists($lang_path.'phpmailer.lang-'.$lang_type.'.php'))
-            include($lang_path.'phpmailer.lang-'.$lang_type.'.php');
+            _Include($lang_path.'phpmailer.lang-'.$lang_type.'.php');
         else if(file_exists($lang_path.'phpmailer.lang-en.php'))
-            include($lang_path.'phpmailer.lang-en.php');
+            _Include($lang_path.'phpmailer.lang-en.php');
         else
-        {
-            $this->SetError("Could not load language file");
+        #{
+        #    $this->SetError("Could not load language file");
             return false;
-        }
+        #}
         $this->language = $PHPMAILER_LANG;
     
         return true;
