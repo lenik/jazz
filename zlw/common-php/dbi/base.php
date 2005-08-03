@@ -3,8 +3,11 @@
  *
  * Database Access Interface
  * 
- * $Id: base.php,v 1.4 2005-07-31 10:52:27 dansei Exp $
+ * $Id: base.php,v 1.5 2005-08-03 14:42:18 dansei Exp $
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2005/07/31 10:52:27  dansei
+ * moved sql-related string operations from string.php to here.
+ *
  * Revision 1.3  2005/07/31 04:32:49  dansei
  * iter.1-1
  *
@@ -15,11 +18,15 @@
  * initial
  *
  */
+require '_Phpfixes.php'; 
+_RequireOnce('../string.php'); 
+
 class DBI_base {
     var $_server = 'localhost'; 
     var $_user = 'root'; 
     var $_password; 
     var $_dialect; 
+    var $_debug = false; 
     
     function row($sql) {
         $result = array(); /* for test if any exist record */
@@ -41,25 +48,13 @@ class DBI_base {
     
     function evaluate($sql) {
         $result = false; 
-        if ($rs = $this->query($sql)) {
-            if ($row = $this->fetch_row($rs)) {
-                $result = $row[0]; 
-            }
-            $this->free_result($rs); 
-        }
+        $ret = $this->query($sql); 
+        if (is_bool($ret))
+            return $ret; 
+        if ($row = $this->fetch_row($ret))
+            $result = $row[0]; 
+        $this->free_result($ret); 
         return $result; 
-    }
-    
-    /* import_assoc(this, fetch_assoc()) */
-    function import($assoc, $ignores = NULL) {
-        if ($assoc) {
-            foreach ($assoc as $member=>$value) {
-                if (is_null($value)) continue; 
-                if ($ignores)
-                    if ($ignores[$member]) continue; 
-                $this->$member = $value; 
-            }
-        }
     }
     
     function build_sql_value($val) {
@@ -84,7 +79,7 @@ class DBI_base {
     }
     
     function build_debug_info($assoc, $ignores = NULL) {
-        return build_pairs($assoc, $ignores, "\n", " = "); 
+        return $this->build_pairs($assoc, $ignores, "\n", " = "); 
     }
     
     /* (key, key, ...) values (value, value, ...) */

@@ -3,8 +3,11 @@
  *
  * Database Access
  * 
- * $Id: mysql.php,v 1.2 2005-07-31 04:32:49 dansei Exp $
+ * $Id: mysql.php,v 1.3 2005-08-03 14:42:18 dansei Exp $
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2005/07/31 04:32:49  dansei
+ * iter.1-1
+ *
  * Revision 1.1  2005/07/30 12:10:23  dansei
  * initial
  *
@@ -47,14 +50,23 @@ class DBI_mysql extends DBI_base {
                 break; 
             }
         }
-        if ($this->_persist) {
-            $this->_link = call_user_func_array('mysql_pconnect', $passargs); 
-        } else {
-            $this->_link = call_user_func_array('mysql_connect', $passargs); 
-        }
+        
+        $funcname = $this->_persist ? 'mysql_pconnect' : 'mysql_connect'; 
+            $this->_debug && logger('Connect: ', join('|', $passargs)); 
+        $this->_link = call_user_func_array($funcname, $passargs); 
+            $this->_debug && logger('Connect-Return: ', $this->_link ? "succeeded, $this->_link" : 'failed'); 
+        
+        # set connection character set.
+        if ($this->_link)
+            mysql_query("set names 'utf8'", $this->_link); 
+            
         return $this->_link; 
     }
     
+    function close() {
+        $this->_debug && logger('Connect-Close: ', $this->_link); 
+        mysql_close($this->_link); 
+    }
     
     function affected_rows()        { $args = func_get_args(); $args[] = $this->_link; 
                                       return call_user_func_array('mysql_affected_rows',        $args); }
@@ -62,8 +74,6 @@ class DBI_mysql extends DBI_base {
                                       return call_user_func_array('mysql_change_user',          $args); }
     function client_encoding()      { $args = func_get_args(); $args[] = $this->_link; 
                                       return call_user_func_array('mysql_client_encoding',      $args); }
-    function close()                { $args = func_get_args(); $args[] = $this->_link; 
-                                      return call_user_func_array('mysql_close',                $args); }
     function create_db()            { $args = func_get_args(); $args[] = $this->_link;  #1
                                       return call_user_func_array('mysql_create_db',            $args); }
     function data_seek()            { $args = func_get_args(); 
