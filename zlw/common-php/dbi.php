@@ -7,8 +7,11 @@
  *
  * Database Access Interface
  * 
- * $Id: dbi.php,v 1.5 2005-08-05 06:03:31 dansei Exp $
+ * $Id: dbi.php,v 1.6 2005-08-05 14:34:10 dansei Exp $
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2005/08/05 06:03:31  dansei
+ * dev pack.
+ *
  * Revision 1.3  2005/08/03 14:42:17  dansei
  * dev pack.
  *
@@ -29,13 +32,13 @@ class DBI extends DBI_mysql {
     var $_user = 'root'; 
     var $_password = 'l.'; 
     
-    function query($sql) {
+    function _Query($sql) {
         $this->_debug && logger("SQL: $sql", false); 
-        $ret = parent::query($sql); 
+        $ret = parent::_Query($sql); 
         
         if ($this->_debug) {
             if ($ret) logger_end(" => succeeded, $ret"); 
-            else logger_end(" => failed, ", $this->error()); 
+            else logger_end(" => failed, ", $this->_Error()); 
         }
         return $ret; 
     }

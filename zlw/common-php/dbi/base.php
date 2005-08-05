@@ -3,8 +3,11 @@
  *
  * Database Access Interface
  * 
- * $Id: base.php,v 1.5 2005-08-03 14:42:18 dansei Exp $
+ * $Id: base.php,v 1.6 2005-08-05 14:34:10 dansei Exp $
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2005/08/03 14:42:18  dansei
+ * dev pack.
+ *
  * Revision 1.4  2005/07/31 10:52:27  dansei
  * moved sql-related string operations from string.php to here.
  *
@@ -28,77 +31,33 @@ class DBI_base {
     var $_dialect; 
     var $_debug = false; 
     
-    function row($sql) {
+    function _Row($sql) {
         $result = array(); /* for test if any exist record */
-        if ($rs = $this->query($sql)) {
-            $result = $this->fetch_row($rs); 
-            $this->free_result($rs); 
+        if ($rs = $this->_Query($sql)) {
+            $result = $this->_FetchRow($rs); 
+            $this->_FreeResult($rs); 
         }
         return $result; 
     }
     
-    function assoc($sql) {
+    function _Assoc($sql) {
         $result = array(); /* for test if any exist record */
-        if ($rs = $this->query($sql)) {
-            $result = $this->fetch_assoc($rs); 
-            $this->free_result($rs); 
+        if ($rs = $this->_Query($sql)) {
+            $result = $this->_RetchAssoc($rs); 
+            $this->_FreeResult($rs); 
         }
         return $result; 
     }
     
-    function evaluate($sql) {
+    function _Evaluate($sql) {
         $result = false; 
-        $ret = $this->query($sql); 
+        $ret = $this->_Query($sql); 
         if (is_bool($ret))
             return $ret; 
-        if ($row = $this->fetch_row($ret))
+        if ($row = $this->_FetchRow($ret))
             $result = $row[0]; 
-        $this->free_result($ret); 
+        $this->_FreeResult($ret); 
         return $result; 
-    }
-    
-    function build_sql_value($val) {
-        if (is_string($val))
-            return Q($this->escape_string($val)); 
-        return $val; 
-    }
-    
-    /* key=value, key=value, ... */
-    function build_pairs($assoc, $ignores = NULL, $separator = ', ', $delim = '=') {
-        $pairs = ''; 
-        foreach ($assoc as $k=>$v) {
-            if (substr($k, 0, 1) == '_') continue; 
-            if (is_null($v)) continue; 
-            if ($ignores)
-                if ($ignores[$k]) continue; 
-            if ($pairs)
-                $pairs .= $separator; 
-            $pairs .= "$k$delim".$this->build_sql_value($v); 
-        }
-        return $pairs; 
-    }
-    
-    function build_debug_info($assoc, $ignores = NULL) {
-        return $this->build_pairs($assoc, $ignores, "\n", " = "); 
-    }
-    
-    /* (key, key, ...) values (value, value, ...) */
-    function build_insert_values($assoc, $ignores = NULL) {
-        $keys = ''; 
-        $values = ''; 
-        foreach ($assoc as $k=>$v) {
-            if (substr($k, 0, 1) == '_') continue; 
-            if (is_null($v)) continue; 
-            if ($ignores)
-                if ($ignores[$k]) continue; 
-            if ($keys) {
-                $keys .= ', '; 
-                $values .= ', '; 
-            }
-            $keys .= $k; 
-            $values .= $this->build_sql_value($v); 
-        }
-        return "($keys) values($values)"; 
     }
 }
 ?>

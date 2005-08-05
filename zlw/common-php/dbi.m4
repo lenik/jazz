@@ -9,8 +9,11 @@ defu(`DB_DIALECT', `mysql')dnl
  *
  * Database Access Interface
  * 
- * $Id: dbi.m4,v 1.4 2005-08-05 06:03:31 dansei Exp $
+ * $Id: dbi.m4,v 1.5 2005-08-05 14:34:10 dansei Exp $
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2005/08/05 06:03:31  dansei
+ * dev pack.
+ *
  * Revision 1.3  2005/08/03 14:42:17  dansei
  * dev pack.
  *
@@ -30,14 +33,22 @@ class DBI extends `DBI_'DB_DIALECT {
     var $_server = 'DB_SERVER'; 
     var $_user = 'DB_USER'; 
     var $_password = 'DB_PASSWORD'; 
+    var $_link = NULL; 
     
-    function query($sql) {
+    function _Reuse($dbi) {
+    	$this->_link = $dbi->_link; 
+    }
+    
+    function _Query($sql) {
+        if (is_null($this->_link))
+            $this->_Connect(); 
+            
         $this->_debug && logger("SQL: $sql", false); 
-        $ret = parent::query($sql); 
+        $ret = parent::_Query($sql); 
         
         if ($this->_debug) {
             if ($ret) logger_end(" => succeeded, $ret"); 
-            else logger_end(" => failed, ", $this->error()); 
+            else logger_end(" => failed, ", $this->_Error()); 
         }
         return $ret; 
     }
