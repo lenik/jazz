@@ -3,8 +3,11 @@
  *
  * Database Access
  * 
- * $Id: mysql.php,v 1.3 2005-08-03 14:42:18 dansei Exp $
+ * $Id: mysql.php,v 1.4 2005-08-05 14:34:10 dansei Exp $
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2005/08/03 14:42:18  dansei
+ * dev pack.
+ *
  * Revision 1.2  2005/07/31 04:32:49  dansei
  * iter.1-1
  *
@@ -17,9 +20,8 @@ require 'base.php';
 class DBI_mysql extends DBI_base {
     var $_dialect = 'mysql'; 
     var $_persist = FALSE; 
-    var $_link = NULL; 
     
-    function connect() {
+    function _Connect() {
         if ($this->_link)
             error_log("Already connected ($link)"); 
             
@@ -38,7 +40,7 @@ class DBI_mysql extends DBI_base {
         case 1: 
             $server = $args[0]; 
         case 0: 
-            while (TRUE) {
+            while (true) {
                 if (! $server) break; 
                     $passargs[] = $server; 
                 if (!$user) break; 
@@ -63,100 +65,103 @@ class DBI_mysql extends DBI_base {
         return $this->_link; 
     }
     
-    function close() {
+    function _Close() {
+        if (is_null($this->_link))
+            error_log("Already closed"); 
         $this->_debug && logger('Connect-Close: ', $this->_link); 
         mysql_close($this->_link); 
+        $this->_link = NULL; 
     }
     
-    function affected_rows()        { $args = func_get_args(); $args[] = $this->_link; 
+    function _AffectedRows()    	{ $args = func_get_args(); $args[] = $this->_link; 
                                       return call_user_func_array('mysql_affected_rows',        $args); }
-    function change_user()          { $args = func_get_args(); if (func_num_args() == 3) $args[] = $this->_link; 
+    function _ChangeUser()          { $args = func_get_args(); if (func_num_args() == 3) $args[] = $this->_link; 
                                       return call_user_func_array('mysql_change_user',          $args); }
-    function client_encoding()      { $args = func_get_args(); $args[] = $this->_link; 
+    function _ClientEncoding()      { $args = func_get_args(); $args[] = $this->_link; 
                                       return call_user_func_array('mysql_client_encoding',      $args); }
-    function create_db()            { $args = func_get_args(); $args[] = $this->_link;  #1
+    function _CreateDb()            { $args = func_get_args(); $args[] = $this->_link;  #1
                                       return call_user_func_array('mysql_create_db',            $args); }
-    function data_seek()            { $args = func_get_args(); 
+    function _DataSeek()            { $args = func_get_args(); 
                                       return call_user_func_array('mysql_data_seek',            $args); }
-    function db_name()              { $args = func_get_args(); 
+    function _DbName()              { $args = func_get_args(); 
                                       return call_user_func_array('mysql_db_name',              $args); }
-    function db_query()             { $args = func_get_args(); if (func_num_args() == 2) $args[] = $this->_link; 
+    function _DbQuery()             { $args = func_get_args(); if (func_num_args() == 2) $args[] = $this->_link; 
                                       return call_user_func_array('mysql_db_query',             $args); }
-    function drop_db()              { $args = func_get_args(); $args[] = $this->_link;  #1
+    function _DropDb()              { $args = func_get_args(); $args[] = $this->_link;  #1
                                       return call_user_func_array('mysql_drop_db',              $args); }
-    function errno()                { $args = func_get_args(); $args[] = $this->_link; 
+    function _Errno()               { $args = func_get_args(); $args[] = $this->_link; 
                                       return call_user_func_array('mysql_errno',                $args); }
-    function error()                { $args = func_get_args(); $args[] = $this->_link; 
+    function _Error()               { $args = func_get_args(); $args[] = $this->_link; 
                                       return call_user_func_array('mysql_error',                $args); }
-    function escape_string()        { $args = func_get_args(); 
+    function _EscapeString()        { $args = func_get_args(); 
                                       return call_user_func_array('mysql_escape_string',        $args); }
-    function fetch_array()          { $args = func_get_args(); 
+    function _FetchArray()          { $args = func_get_args(); 
                                       return call_user_func_array('mysql_fetch_array',          $args); }
-    function fetch_assoc()          { $args = func_get_args(); 
+    function _FetchAssoc()          { $args = func_get_args(); 
                                       return call_user_func_array('mysql_fetch_assoc',          $args); }
-    function fetch_field()          { $args = func_get_args(); 
+    function _FetchField()          { $args = func_get_args(); 
                                       return call_user_func_array('mysql_fetch_field',          $args); }
-    function fetch_lengths()        { $args = func_get_args(); 
+    function _FetchLengths()        { $args = func_get_args(); 
                                       return call_user_func_array('mysql_fetch_lengths',        $args); }
-    function fetch_object()         { $args = func_get_args(); 
+    function _FetchObject()         { $args = func_get_args(); 
                                       return call_user_func_array('mysql_fetch_object',         $args); }
-    function fetch_row()            { $args = func_get_args(); 
+    function _FetchRow()            { $args = func_get_args(); 
                                       return call_user_func_array('mysql_fetch_row',            $args); }
-    function field_flags()          { $args = func_get_args(); 
+    function _FieldFlags()          { $args = func_get_args(); 
                                       return call_user_func_array('mysql_field_flags',          $args); }
-    function field_len()            { $args = func_get_args(); 
+    function _FieldLen()            { $args = func_get_args(); 
                                       return call_user_func_array('mysql_field_len',            $args); }
-    function field_name()           { $args = func_get_args(); 
+    function _FieldName()           { $args = func_get_args(); 
                                       return call_user_func_array('mysql_field_name',           $args); }
-    function field_seek()           { $args = func_get_args(); 
+    function _FieldSeek()           { $args = func_get_args(); 
                                       return call_user_func_array('mysql_field_seek',           $args); }
-    function field_table()          { $args = func_get_args(); 
+    function _FieldTable()          { $args = func_get_args(); 
                                       return call_user_func_array('mysql_field_table',          $args); }
-    function field_type()           { $args = func_get_args(); 
+    function _FieldType()           { $args = func_get_args(); 
                                       return call_user_func_array('mysql_field_type',           $args); }
-    function free_result()          { $args = func_get_args(); 
+    function _FreeResult()          { $args = func_get_args(); 
                                       return call_user_func_array('mysql_free_result',          $args); }
-    function get_client_info()      { $args = func_get_args(); 
+    function _GetClientInfo()       { $args = func_get_args(); 
                                       return call_user_func_array('mysql_get_client_info',      $args); }
-    function get_host_info()        { $args = func_get_args(); $args[] = $this->_link; 
+    function _GetHostInfo()         { $args = func_get_args(); $args[] = $this->_link; 
                                       return call_user_func_array('mysql_get_host_info',        $args); }
-    function get_proto_info()       { $args = func_get_args(); $args[] = $this->_link; 
+    function _GetProtoInfo()        { $args = func_get_args(); $args[] = $this->_link; 
                                       return call_user_func_array('mysql_get_proto_info',       $args); }
-    function get_server_info()      { $args = func_get_args(); $args[] = $this->_link; 
+    function _GetServerInfo()       { $args = func_get_args(); $args[] = $this->_link; 
                                       return call_user_func_array('mysql_get_server_info',      $args); }
-    function info()                 { $args = func_get_args(); $args[] = $this->_link; 
+    function _Info()                { $args = func_get_args(); $args[] = $this->_link; 
                                       return call_user_func_array('mysql_info',                 $args); }
-    function insert_id()            { $args = func_get_args(); $args[] = $this->_link; 
+    function _InsertId()            { $args = func_get_args(); $args[] = $this->_link; 
                                       return call_user_func_array('mysql_insert_id',            $args); }
-    function list_dbs()             { $args = func_get_args(); $args[] = $this->_link; 
+    function _ListDbs()             { $args = func_get_args(); $args[] = $this->_link; 
                                       return call_user_func_array('mysql_list_dbs',             $args); }
-    function list_fields()          { $args = func_get_args(); $args[] = $this->_link;  #2
+    function _ListFields()          { $args = func_get_args(); $args[] = $this->_link;  #2
                                       return call_user_func_array('mysql_list_fields',          $args); }
-    function list_processes()       { $args = func_get_args(); $args[] = $this->_link; 
+    function _ListProcesses()       { $args = func_get_args(); $args[] = $this->_link; 
                                       return call_user_func_array('mysql_list_processes',       $args); }
-    function list_tables()          { $args = func_get_args(); $args[] = $this->_link;  #1
+    function _ListTables()          { $args = func_get_args(); $args[] = $this->_link;  #1
                                       return call_user_func_array('mysql_list_tables',          $args); }
-    function num_fields()           { $args = func_get_args(); 
+    function _NumFields()           { $args = func_get_args(); 
                                       return call_user_func_array('mysql_num_fields',           $args); }
-    function num_rows()             { $args = func_get_args(); 
+    function _NumRows()             { $args = func_get_args(); 
                                       return call_user_func_array('mysql_num_rows',             $args); }
-    function ping()                 { $args = func_get_args(); $args[] = $this->_link; 
+    function _Ping()                { $args = func_get_args(); $args[] = $this->_link; 
                                       return call_user_func_array('mysql_ping',                 $args); }
-    function query()                { $args = func_get_args(); $args[] = $this->_link;  #1
+    function _Query()               { $args = func_get_args(); $args[] = $this->_link;  #1
                                       return call_user_func_array('mysql_query',                $args); }
-    function real_escape_string()   { $args = func_get_args(); $args[] = $this->_link;  #1
+    function _RealEscapeString()    { $args = func_get_args(); $args[] = $this->_link;  #1
                                       return call_user_func_array('mysql_real_escape_string',   $args); }
-    function result()               { $args = func_get_args(); 
+    function _Result()              { $args = func_get_args(); 
                                       return call_user_func_array('mysql_result',               $args); }
-    function select_db()            { $args = func_get_args(); $args[] = $this->_link;  #1
+    function _SelectDb()            { $args = func_get_args(); $args[] = $this->_link;  #1
                                       return call_user_func_array('mysql_select_db',            $args); }
-    function stat()                 { $args = func_get_args(); $args[] = $this->_link; 
+    function _Stat()                { $args = func_get_args(); $args[] = $this->_link; 
                                       return call_user_func_array('mysql_stat',                 $args); }
-    function tablename()            { $args = func_get_args(); 
+    function _Tablename()           { $args = func_get_args(); 
                                       return call_user_func_array('mysql_tablename',            $args); }
-    function thread_id()            { $args = func_get_args(); $args[] = $this->_link; 
+    function _ThreadId()            { $args = func_get_args(); $args[] = $this->_link; 
                                       return call_user_func_array('mysql_thread_id',            $args); }
-    function unbuffered_query()     { $args = func_get_args(); $args[] = $this->_link;  #1
+    function _UnbufferedQuery()     { $args = func_get_args(); $args[] = $this->_link;  #1
                                       return call_user_func_array('mysql_unbuffered_query',     $args); }
 }
 ?>
