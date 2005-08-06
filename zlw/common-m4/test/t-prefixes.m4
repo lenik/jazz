@@ -1,4 +1,4 @@
-include(`../pdo-member.m4')dnl
+include(`pdo-member.m4')dnl
 
 Test0 = "ADD_PREFIXES(`my_')"
 Test1 = "ADD_PREFIXES(`my_', arg1)"
