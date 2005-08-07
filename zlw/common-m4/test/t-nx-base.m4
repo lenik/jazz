@@ -17,6 +17,28 @@ Start:
         arg2)"
     "m4x_concat(`2-names: ', name, name)"
 
+`m4x_join test' = 
+    "m4x_join(` | ')"
+    "m4x_join(` | ', arg1)"
+    "m4x_join(` | ', arg1, arg2)"
+    "m4x_join(` | ', arg1, arg2, arg3)"
+
+`m4x_stripnulls test' = 
+    "m4x_stripnulls()"
+    "m4x_stripnulls(1, 2, 3)"
+    "m4x_stripnulls(1, , 2, , , 3, , )"
+    "m4x_stripnulls(, , , )"
+    "m4x_stripnulls(, , 1, , 2, , 3)"
+    "m4x_stripnulls(`', `', 1)"
+    
+`m4x_path_normalize test' = 
+    "m4x_path_normalize()"
+    "m4x_path_normalize(a, b, c, , d)"
+    "m4x_path_normalize(, , a, ., b, .., c, ., d, , )"
+    "m4x_path_normalize(`dirwith . adot', `somelevels/inner')"
+    "m4x_path_normalize(c:, `program files', `software', `example')"
+    "m4x_path_normalize(`', , , )"
+    
 `dumpdef: m4x_for' = 
     "m4_dumpdef(`m4x_for')"
 

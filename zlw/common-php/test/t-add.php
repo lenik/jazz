@@ -9,7 +9,7 @@
         $a = $_REQUEST['a']; 
         $b = $_REQUEST['b']; 
     }
-    $args = httpcall_input(); 
+    $args = phpx_httpcall_input(); 
     
     if (! is_null($args)) {
         # being called
@@ -20,7 +20,7 @@
     $ret = $a + $b; 
     
     if (! is_null($args)) {
-        httpcall_return($ret); 
+        phpx_httpcall_return($ret); 
     }
 ?>
 <html>

@@ -7,6 +7,6 @@ if ($_GET['abc'] == '1') {
     <html><body>hello! Successful redirected!</body></html>
     <?
 } else {
-    redirect_relative('t-http.php?abc=1', array('def'=>2) ); 
+    phpx_redirect_relative('t-http.php?abc=1', array('def'=>2) ); 
 }
 ?>

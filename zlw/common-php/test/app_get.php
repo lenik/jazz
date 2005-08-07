@@ -1,9 +1,11 @@
 <?
-    require "application.php"; 
+    require '_Phpfixes.php'; 
+    _RequireOnce('../application.php'); 
     
-    application_start(); 
+    phpx_application_start(); 
     
-    echo $_APP["hello"]; 
+    global $PHPX_APP; 
+    echo $PHPX_APP['hello']; 
     
-    application_end(); 
+    phpx_application_end(); 
 ?>

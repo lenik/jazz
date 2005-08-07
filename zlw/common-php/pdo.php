@@ -9,6 +9,7 @@ define("PDT_GET", 0x100);
 define("PDT_PUT", 0x200); 
 define("PDT_NOTNULL", 0x2000); 
 define("PDT_VERIFY", 0x4000); 
+
 /*
  * Members::
  *  pdt_<name>          REQUIRED  declare field options
@@ -22,9 +23,9 @@ define("PDT_VERIFY", 0x4000);
  *  get($name)
  *  put($name, $val)
  */
-class PhpDataObject extends DBI {
+class phpx_data_object extends phpx_dbi {
     
-    function PhpDataObject($dbi = NULL) {
+    function phpx_data_object($dbi = NULL) {
         if (! is_null($dbi))
             $this->_Reuse($dbi); 
     }

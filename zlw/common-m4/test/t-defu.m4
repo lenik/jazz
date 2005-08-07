@@ -1,8 +1,10 @@
-include(`m4-ext.m4')dnl
-include(`m4-ext.m4')dnl
-define(`a', `good')dnl
-defu(`a', `bad-u')dnl
-defu(`b', `good-u')dnl
-defu(`b', `bad-u')dnl
+m4_include(`m4x-base.m4')
+m4_include(`m4x-base.m4')
+M4X_BEGIN()
+m4_define(`a', `good')
+m4x_lazydef(`a', `bad-u')
+m4x_lazydef(`b', `good-u')
+m4x_lazydef(`b', `bad-u')
+M4X_END()
 `a': a
 `b': b

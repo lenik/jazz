@@ -5,8 +5,11 @@ m4_divert(-1)
 #
 # M4 Language Extension
 #
-# $Id: m4x-base.m4,v 1.4 2005-08-06 14:08:48 dansei Exp $
+# $Id: m4x-base.m4,v 1.5 2005-08-07 12:14:28 dansei Exp $
 # $Log: not supported by cvs2svn $
+# Revision 1.4  2005/08/06 14:08:48  dansei
+# moved some common macros from m4x-util
+#
 # Revision 1.3  2005/08/06 10:33:44  dansei
 # nearly rewrite.
 #
@@ -23,9 +26,34 @@ m4_define(`m4x_once_m4_ext', 1)
 # re-quote
 m4_define(`m4x_quote', ``$@'')
 
+m4_define(`m4x_nl', `
+')
+
 m4_define(`m4x_concat', 
     `m4_ifelse($#, 0, , $#, 1, ``$1'', 
         ``$1'm4x_concat(m4_shift($@))')')
+
+m4_define(`m4x_join', 
+    `m4_ifelse($#, 0, , $#, 1, , $#, 2, ``$2'', 
+        ``$2'`$1'm4x_join(`$1', m4_shift(m4_shift($@)))')')
+
+m4_define(`m4x_stripnulls', 
+    `m4_ifelse($#, 0, , $#, 1, ``$1'', 
+        `m4_ifelse(`$1', `', `m4x_stripnulls(m4_shift($@))', 
+            `m4_ifelse(m4x_quote(m4x_stripnulls(m4_shift($@))), ``'', `$1', 
+                ``$1', m4x_stripnulls(m4_shift($@))')')')')
+
+m4_define(`m4x_path_normalize', 
+    `m4_ifelse($#, 0, , $#, 1, 
+        `m4_ifelse(`$1', `', , `$1', ., , `$1/')', 
+        `m4_ifelse(`$1', `', , `$1', ., , `$1/')m4x_path_normalize(m4_shift($@))')')
+
+# path fix: m4x_include(file, [dir])
+m4_define(`M4X_CWD', `')
+m4_define(`m4x_include', m4x_concat(
+    `m4_pushdef(`M4X_CWD', m4x_quote(M4X_CWD, `$2'))', 
+    `m4_include(m4x_path_normalize(M4X_CWD)$1)', 
+    `m4_popdef(`M4X_CWD')'))
 
 # diverting for space
 m4_define(`M4X_BEGIN', m4x_concat(

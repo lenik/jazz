@@ -7,24 +7,24 @@
  * unlike $_SESSION, $_APP should be imported by global ($_APP) in procedures. 
  */
 
-class cached_object {
+class phpx_cached_object {
     var $name; 
     var $save_path; 
     
-    function cached_object($name) {
+    function phpx_cached_object($name) {
         $this->name = $name; 
         $this->save_path = session_save_path() . "/$name.cache"; 
     }
     
-    function import($object) {
-        foreach($object as $member=>$value) {
+    function import($assoc) {
+        foreach($assoc as $member=>$value) {
             $this->$member = $value; 
         }
     }
     
-    function export(&$object) {
+    function export(&$assoc) {
         foreach($this as $member=>$value) {
-            $object->$member = $value; 
+            $assoc[$member] = $value; 
         }
     }
     
@@ -53,36 +53,45 @@ class cached_object {
     }
 }
 
-$_APP = NULL; 
-
-function application_start() {
-    global $_APP; 
-    $_APP = new cached_object("default"); 
-    $_APP->load(); 
-}
-
-function application_end() {
-    $_APP->save(); 
-    $_APP = NULL; 
-}
-
-function application_destroy() {
-    if ($_APP) {
-        $_APP->remove(); 
-        unset($_APP); 
-    }
-}
-
-function cached_get($name, $object) {
-    $cached = new cached_object($name); 
+function phpx_cached_get($name) {
+    $cached = new phpx_cached_object($name); 
     $cached->load(); 
-    return $cached; 
+    $assoc = array(); 
+    $cached->export($assoc); 
+    return $assoc; 
 }
 
-function cached_set($name, $object) {
-    $cached = new cached_object($name); 
-    $cached->import($object); 
+function phpx_cached_set($name, $assoc) {
+    $cached = new phpx_cached_object($name); 
+    $cached->import($assoc); 
     $cached->save(); 
+}
+
+global $PHPX_APP; 
+global $PHPX_APPNAME; 
+
+function phpx_application_start($name = 'default') {
+    global $PHPX_APP; 
+    global $PHPX_APPNAME; 
+    $PHPX_APP = phpx_cached_get($name); 
+    $PHPX_APPNAME = $name; 
+}
+
+function phpx_application_end() {
+    global $PHPX_APP; 
+    global $PHPX_APPNAME; 
+    phpx_cached_set($PHPX_APPNAME, $PHPX_APP); 
+    $PHPX_APP = NULL; 
+    $PHPX_APPNAME = NULL; 
+}
+
+function phpx_application_destroy() {
+    global $PHPX_APP; 
+    global $PHPX_APPNAME; 
+    if ($PHPX_APP) {
+        $PHPX_APP->remove(); 
+        unset($PHPX_APP); 
+    }
 }
 
 ?>

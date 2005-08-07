@@ -8,8 +8,8 @@
         'a' => $a, 
         'b' => $b); 
     
-    httpcall_stack(); 
-    $ret = httpcall(url_relative("t-add.php"), $args); 
+    phpx_httpcall_stack(); 
+    $ret = phpx_httpcall(phpx_url_relative("t-add.php"), $args); 
     #echo "<pre>T:", var_dump($ret); exit;
 ?>
 <html>

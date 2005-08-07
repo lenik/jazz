@@ -3,8 +3,11 @@
  *
  * Database Access
  * 
- * $Id: mysql.php,v 1.4 2005-08-05 14:34:10 dansei Exp $
+ * $Id: mysql.php,v 1.5 2005-08-07 13:02:48 dansei Exp $
  * $Log: not supported by cvs2svn $
+ * Revision 1.4  2005/08/05 14:34:10  dansei
+ * devpack: change to  php-data-object framework
+ *
  * Revision 1.3  2005/08/03 14:42:18  dansei
  * dev pack.
  *
@@ -17,7 +20,7 @@
  */
 require 'base.php'; 
 
-class DBI_mysql extends DBI_base {
+class phpx_dbi_mysql extends phpx_dbi_base {
     var $_dialect = 'mysql'; 
     var $_persist = FALSE; 
     
