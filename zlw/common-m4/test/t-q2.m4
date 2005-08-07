@@ -1,7 +1,7 @@
-define(`REVERSE', 
-    `ifelse($#, 0, , $#, 1, $1, N)')dnl
-dumpdef(`REVERSE')
+m4_define(`REVERSE', 
+    `m4_ifelse($#, 0, , $#, 1, $1, N)')m4_dnl
+m4_dumpdef(`REVERSE')
 
-define(`ECHO', `$@')dnl
+m4_define(`ECHO', `$@')m4_dnl
 
 ECHO(hello, world!, 4)

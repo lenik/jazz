@@ -3,8 +3,11 @@
  *
  * Database Access Interface
  * 
- * $Id: base.php,v 1.6 2005-08-05 14:34:10 dansei Exp $
+ * $Id: base.php,v 1.7 2005-08-07 13:02:48 dansei Exp $
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2005/08/05 14:34:10  dansei
+ * devpack: change to  php-data-object framework
+ *
  * Revision 1.5  2005/08/03 14:42:18  dansei
  * dev pack.
  *
@@ -24,7 +27,7 @@
 require '_Phpfixes.php'; 
 _RequireOnce('../string.php'); 
 
-class DBI_base {
+class phpx_dbi_base {
     var $_server = 'localhost'; 
     var $_user = 'root'; 
     var $_password; 

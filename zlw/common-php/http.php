@@ -1,12 +1,12 @@
 <?
 
-function noslashes($url) {
+function phpx_noslashes($url) {
     if (get_magic_quotes_gpc())
         $url = stripslashes($url); 
     return $url; 
 }
 
-function url_relative($url, $https = NULL) {
+function phpx_url_relative($url, $https = NULL) {
     if (is_null($https)) {
         $ret = 'http'; 
         if ($_SERVER['HTTPS'] == 'on')
@@ -31,7 +31,7 @@ function url_relative($url, $https = NULL) {
     return "$ret$url"; 
 }
 
-function url_full($url, $https = NULL) {
+function phpx_url_full($url, $https = NULL) {
     # url-absolute
     if ($right = strstr($url, '://')) {
         if (is_null($https))
@@ -57,7 +57,7 @@ function url_full($url, $https = NULL) {
     return "$ret$url"; 
 }
 
-function url_add_arguments($url, $args) {
+function phpx_url_arguments($url, $args) {
     if ($args == NULL)
         return $url; 
     
@@ -76,86 +76,86 @@ function url_add_arguments($url, $args) {
     return "$url?$trail"; 
 }
 
-function redirect_relative($url, $args = NULL, $https = NULL) {
-    $url = url_relative($url, $https); 
-    header("Location: ".url_add_arguments($url, $args)); 
+function phpx_redirect_relative($url, $args = NULL, $https = NULL) {
+    $url = phpx_url_relative($url, $https); 
+    header("Location: ".phpx_url_arguments($url, $args)); 
     exit; 
 }
 
-function redirect($url, $args = NULL, $https = NULL) {
-    $url = url_full($url, $https); 
-    header("Location: ".url_add_arguments($url, $args)); 
+function phpx_redirect($url, $args = NULL, $https = NULL) {
+    $url = phpx_url_full($url, $https); 
+    header("Location: ".phpx_url_arguments($url, $args)); 
     exit; 
 }
 
-function using_https($https = true) {
+function phpx_using_https($https = true) {
     $current = $_SERVER['HTTPS'] == 'on' ? true : false; 
     if ($current == $https)
         return; 
-    redirect(url_full($_SERVER['REQUEST_URI'], $https)); 
+    phpx_redirect(phpx_url_full($_SERVER['REQUEST_URI'], $https)); 
 }
 
-function httpcall_stack() {
-    global $_CALLSTACK; 
-    if (! isset($_CALLSTACK)) {
-        if (isset($_REQUEST['httpcall_hold']))
-            $_CALLSTACK = unserialize(noslashes($_REQUEST['httpcall_hold'])); 
+function phpx_httpcall_stack() {
+    global $PHPX_CALLSTACK; 
+    if (! isset($PHPX_CALLSTACK)) {
+        if (isset($_REQUEST['phpx_httpcall_hold']))
+            $PHPX_CALLSTACK = unserialize(phpx_noslashes($_REQUEST['phpx_httpcall_hold'])); 
         else
-            $_CALLSTACK = array(); 
+            $PHPX_CALLSTACK = array(); 
     }
-    return $_CALLSTACK; 
+    return $PHPX_CALLSTACK; 
 }
 
-function httpcall_input() {
-    global $_CALLSTACK; 
-    httpcall_stack(); 
-    if ($_CALLSTACK)
-        return end($_CALLSTACK);
+function phpx_httpcall_input() {
+    global $PHPX_CALLSTACK; 
+    phpx_httpcall_stack(); 
+    if ($PHPX_CALLSTACK)
+        return end($PHPX_CALLSTACK);
     return NULL;                # not being called
 }
 
-function httpcall_hold() {
-    global $_CALLSTACK; 
-    httpcall_stack(); 
-    return serialize($_CALLSTACK); 
+function phpx_httpcall_hold() {
+    global $PHPX_CALLSTACK; 
+    phpx_httpcall_stack(); 
+    return serialize($PHPX_CALLSTACK); 
 }
 
-function httpcall_return($retval) {
-    global $_CALLSTACK; 
-    httpcall_stack(); 
-    if ($_CALLSTACK) {
-        $top = count($_CALLSTACK) - 1; 
-        $_CALLSTACK[$top]['VAL'] = $retval; 
-        $ret = $_CALLSTACK[$top]['RET']; 
-        unset($_CALLSTACK[$top]['RET']); 
-        redirect($ret, array('httpcall_hold' => serialize($_CALLSTACK))); 
+function phpx_httpcall_return($retval) {
+    global $PHPX_CALLSTACK; 
+    phpx_httpcall_stack(); 
+    if ($PHPX_CALLSTACK) {
+        $top = count($PHPX_CALLSTACK) - 1; 
+        $PHPX_CALLSTACK[$top]['VAL'] = $retval; 
+        $ret = $PHPX_CALLSTACK[$top]['RET']; 
+        unset($PHPX_CALLSTACK[$top]['RET']); 
+        phpx_redirect($ret, array('phpx_httpcall_hold' => serialize($PHPX_CALLSTACK))); 
     }
     # if not being called, then don't return anything.
 }
 
-function httpcall_error($errval) {
-    global $_CALLSTACK; 
-    httpcall_stack(); 
-    if ($_CALLSTACK) {
-        $top = count($_CALLSTACK) - 1; 
-        $_CALLSTACK[$top]['ERR'] = $errval; 
-        $ret = $_CALLSTACK[$top]['RET']; 
-        unset($_CALLSTACK[$top]['RET']); 
-        redirect($ret, array('httpcall_hold' => serialize($_CALLSTACK))); 
+function phpx_httpcall_error($errval) {
+    global $PHPX_CALLSTACK; 
+    phpx_httpcall_stack(); 
+    if ($PHPX_CALLSTACK) {
+        $top = count($PHPX_CALLSTACK) - 1; 
+        $PHPX_CALLSTACK[$top]['ERR'] = $errval; 
+        $ret = $PHPX_CALLSTACK[$top]['RET']; 
+        unset($PHPX_CALLSTACK[$top]['RET']); 
+        phpx_redirect($ret, array('phpx_httpcall_hold' => serialize($PHPX_CALLSTACK))); 
     }
     # if not being called, then don't return anything.
 }
 
-function httpcall($call_uri, $args = NULL) {
-    global $_CALLSTACK; 
-    httpcall_stack(); 
+function phpx_httpcall($call_uri, $args = NULL) {
+    global $PHPX_CALLSTACK; 
+    phpx_httpcall_stack(); 
     
     $addr = $_SERVER['PHP_SELF']; 
-    if ($_CALLSTACK) {
-        $top = end($_CALLSTACK); 
+    if ($PHPX_CALLSTACK) {
+        $top = end($PHPX_CALLSTACK); 
         if (! isset($top['RET'])) {
             # return-back
-            array_pop($_CALLSTACK); 
+            array_pop($PHPX_CALLSTACK); 
             return $top; 
         }
     }
@@ -163,10 +163,10 @@ function httpcall($call_uri, $args = NULL) {
     $frame = $args; 
     if (is_null($frame))
         $frame = array(); 
-    $frame['RET'] = url_full($addr); 
-    array_push($_CALLSTACK, $frame); 
+    $frame['RET'] = phpx_url_full($addr); 
+    array_push($PHPX_CALLSTACK, $frame); 
     
-    redirect($call_uri, array('httpcall_hold' => serialize($_CALLSTACK))); 
+    phpx_redirect($call_uri, array('phpx_httpcall_hold' => serialize($PHPX_CALLSTACK))); 
 }
 
 ?>

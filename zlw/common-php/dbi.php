@@ -7,9 +7,12 @@
  *
  * Database Access Interface
  * 
- * $Id: dbi.php,v 1.6 2005-08-05 14:34:10 dansei Exp $
+ * $Id: dbi.php,v 1.7 2005-08-07 13:02:46 dansei Exp $
  * $Log: not supported by cvs2svn $
- * Revision 1.5  2005/08/05 06:03:31  dansei
+ * Revision 1.5  2005/08/05 14:34:10  dansei
+ * devpack: change to  php-data-object framework
+ *
+ * Revision 1.4  2005/08/05 06:03:31  dansei
  * dev pack.
  *
  * Revision 1.3  2005/08/03 14:42:17  dansei
@@ -25,14 +28,21 @@
 require '_Phpfixes.php'; 
 _RequireOnce('string.php'); 
 _RequireOnce('dbi/mysql.php'); 
-_RequireOnce('dbi/data_object.php'); 
 
-class DBI extends DBI_mysql {
+class phpx_dbi extends phpx_dbi_mysql {
     var $_server = 'localhost'; 
     var $_user = 'root'; 
     var $_password = 'l.'; 
+    var $_link = NULL; 
+    
+    function _Reuse($dbi) {
+    	$this->_link = $dbi->_link; 
+    }
     
     function _Query($sql) {
+        if (is_null($this->_link))
+            $this->_Connect(); 
+            
         $this->_debug && logger("SQL: $sql", false); 
         $ret = parent::_Query($sql); 
         

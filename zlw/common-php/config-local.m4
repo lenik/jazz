@@ -1,8 +1,9 @@
-defu(`SMTP_SERVER', `61.152.93.15')dnl
-defu(`SMTP_LOGIN', `mlv@vsdn.net')dnl
-defu(`SMTP_PASSWORD', `nothing')dnl
-defu(`SMTP_AUTH', `true')dnl
-defu(`MAIL_FROM', `mlv@pfpf.net')dnl
-defu(`MAIL_NAME', `MLV Support')dnl
-defu(`MAIL_CHARSET', `UTF-8')dnl
-defu(`MAIL_REPLY', `lenik@bodz.net')dnl
+
+m4x_lazydef(`SMTP_SERVER', `61.152.93.15')
+m4x_lazydef(`SMTP_LOGIN', `mlv@vsdn.net')
+m4x_lazydef(`SMTP_PASSWORD', `nothing')
+m4x_lazydef(`SMTP_AUTH', `true')
+m4x_lazydef(`MAIL_FROM', `mlv@pfpf.net')
+m4x_lazydef(`MAIL_NAME', `MLV Support')
+m4x_lazydef(`MAIL_CHARSET', `UTF-8')
+m4x_lazydef(`MAIL_REPLY', `lenik@bodz.net')

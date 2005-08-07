@@ -1,16 +1,21 @@
+m4_include(`config-database.m4')
+M4X_BEGIN()
+m4x_lazydef(`DB_DIALECT', `mysql')
+M4X_END()
 <?
-include(`../config/config-database.m4')dnl
-defu(`DB_DIALECT', `mysql')dnl
 /*
- * __ORIGINAL_FILE__
+ * M4X___ORIGINAL_FILE__
  */
 
 /* Common-PHP
  *
  * Database Access Interface
  * 
- * $Id: dbi.m4,v 1.5 2005-08-05 14:34:10 dansei Exp $
+ * $Id: dbi.m4,v 1.6 2005-08-07 13:02:46 dansei Exp $
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2005/08/05 14:34:10  dansei
+ * devpack: change to  php-data-object framework
+ *
  * Revision 1.4  2005/08/05 06:03:31  dansei
  * dev pack.
  *
@@ -27,9 +32,8 @@ defu(`DB_DIALECT', `mysql')dnl
 require '_Phpfixes.php'; 
 _RequireOnce('string.php'); 
 _RequireOnce('dbi/DB_DIALECT.php'); 
-_RequireOnce('dbi/data_object.php'); 
 
-class DBI extends `DBI_'DB_DIALECT {
+class phpx_dbi extends `phpx_dbi_'DB_DIALECT {
     var $_server = 'DB_SERVER'; 
     var $_user = 'DB_USER'; 
     var $_password = 'DB_PASSWORD'; 

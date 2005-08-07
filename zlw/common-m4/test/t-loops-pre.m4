@@ -1,10 +1,10 @@
 
-define(add_pre, Prefix_$1)dnl
+m4_define(add_pre, Prefix_$1)dnl
 See the prefix: add_pre(hello)
 
-define(make_pre, 
-    `ifelse($#, 0, NONE!, $#, 1, `add_pre(`$1')', 
-            `add_pre(`$1'), make_pre(shift($@))')')dnl
+m4_define(make_pre, 
+    `m4_ifelse($#, 0, NONE!, $#, 1, `add_pre(`$1')', 
+            `add_pre(`$1'), make_pre(m4_shift($@))')')dnl
 See the prefixes: make_pre(arg1, arg2, arg3)
 
 What happened if no arguments? 

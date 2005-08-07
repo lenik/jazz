@@ -7,8 +7,11 @@
  *
  * SMTP Class
  * 
- * $Id: mail.php,v 1.1 2005-08-05 06:03:32 dansei Exp $
+ * $Id: mail.php,v 1.2 2005-08-07 13:02:47 dansei Exp $
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2005/08/05 06:03:32  dansei
+ * dev pack.
+ *
  * Revision 1.1  2005/07/30 05:20:10  dansei
  * initial
  *
@@ -16,7 +19,7 @@
 require '_Phpfixes.php'; 
 _RequireOnce("ext/phpmailer.php"); 
 
-class Mail extends PHPMailer {
+class phpx_mail extends PHPMailer {
     var $Mailer     = 'smtp'; 
     var $Host       = '61.152.93.15'; 
     var $Username   = 'mlv@vsdn.net'; 

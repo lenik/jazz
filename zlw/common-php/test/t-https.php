@@ -1,7 +1,7 @@
 <?
 require '_Phpfixes.php'; 
 _Require('../http.php');
-using_https(true); 
+phpx_using_https(true); 
 ?>
 <html>
 <body>
