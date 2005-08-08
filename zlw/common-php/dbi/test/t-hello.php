@@ -7,18 +7,18 @@
     
     echo "password: ", $d->_password, "\n"; 
     
-    $d->_Connect(); 
-    $d->_SelectDb('test'); 
-    $d->_Query('create table hello(name char(100))'); 
+    $d->_connect(); 
+    $d->_select_db('test'); 
+    $d->_query('create table hello(name char(100))'); 
     
     $val = "world " . rand(1, 100); 
-    $d->_Query("insert into hello values('$val')"); 
+    $d->_query("insert into hello values('$val')"); 
     
-    $name = $d->_Evaluate('select * from hello'); 
+    $name = $d->_evaluate('select * from hello'); 
     
-    $d->_Query('drop table hello'); 
+    $d->_query('drop table hello'); 
 
-    $d->_Close(); 
+    $d->_close(); 
     
     echo "name: $name\n"; 
 ?>

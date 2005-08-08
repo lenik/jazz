@@ -7,8 +7,11 @@
  *
  * Database Access Interface
  * 
- * $Id: dbi.php,v 1.7 2005-08-07 13:02:46 dansei Exp $
+ * $Id: dbi.php,v 1.8 2005-08-08 08:05:40 dansei Exp $
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2005/08/07 13:02:46  dansei
+ * refactor complete.
+ *
  * Revision 1.5  2005/08/05 14:34:10  dansei
  * devpack: change to  php-data-object framework
  *
@@ -35,20 +38,20 @@ class phpx_dbi extends phpx_dbi_mysql {
     var $_password = 'l.'; 
     var $_link = NULL; 
     
-    function _Reuse($dbi) {
+    function _reuse($dbi) {
     	$this->_link = $dbi->_link; 
     }
     
-    function _Query($sql) {
+    function _query($sql) {
         if (is_null($this->_link))
-            $this->_Connect(); 
+            $this->_connect(); 
             
         $this->_debug && logger("SQL: $sql", false); 
-        $ret = parent::_Query($sql); 
+        $ret = parent::_query($sql); 
         
         if ($this->_debug) {
             if ($ret) logger_end(" => succeeded, $ret"); 
-            else logger_end(" => failed, ", $this->_Error()); 
+            else logger_end(" => failed, ", $this->_error()); 
         }
         return $ret; 
     }
