@@ -5,8 +5,11 @@ m4_divert(-1)
 #
 # M4 Language Extension
 #
-# $Id: m4x-base.m4,v 1.5 2005-08-07 12:14:28 dansei Exp $
+# $Id: m4x-base.m4,v 1.6 2005-08-08 08:04:25 dansei Exp $
 # $Log: not supported by cvs2svn $
+# Revision 1.5  2005/08/07 12:14:28  dansei
+# refactor complete.
+#
 # Revision 1.4  2005/08/06 14:08:48  dansei
 # moved some common macros from m4x-util
 #
@@ -24,6 +27,8 @@ m4_ifdef(`m4x_once_m4_ext', , `
 m4_define(`m4x_once_m4_ext', 1)
 
 # re-quote
+m4_define(`m4x_expand', `$*')
+
 m4_define(`m4x_quote', ``$@'')
 
 m4_define(`m4x_nl', `
