@@ -2,13 +2,14 @@
 require '_Phpfixes.php'; 
 _RequireOnce('dbi.php'); 
 
-define("PDT_RAW", 1); 
-define("PDT_CDATA", 2); 
-define("PDT_PCDATA", 4); 
-define("PDT_GET", 0x100); 
-define("PDT_PUT", 0x200); 
-define("PDT_NOTNULL", 0x2000); 
-define("PDT_VERIFY", 0x4000); 
+define("PDT_RAW",       1); 
+define("PDT_CDATA",     2); 
+define("PDT_PCDATA",    4); 
+define("PDT_GET",       256); 
+define("PDT_PUT",       512); 
+define("PDT_NOTNULL",   8192); 
+define("PDT_VERIFY",    16384); 
+define("PDT_PRIMARY",   32768); 
 
 /*
  * Members::
@@ -23,64 +24,74 @@ define("PDT_VERIFY", 0x4000);
  *  get($name)
  *  put($name, $val)
  */
-class phpx_data_object extends phpx_dbi {
+abstract class phpx_data_object extends phpx_dbi {
     
     function phpx_data_object($dbi = NULL) {
         if (! is_null($dbi))
             $this->_Reuse($dbi); 
     }
     
-    function get_type($name) {
-        $pdt = $this->{"pdt_$name"}; 
-        assert(! is_null($pdt)); 
-        return $pdt; 
+    function getvt($name) {
+        $vt = $this->{"pdt_$name"}; 
+        assert(! is_null($vt)); 
+        return $vt; 
     }
     
     function get($name, $def = NULL) {
-        $pdt = $this->get_type($name); 
-        if ($pdt & PDT_GET)
+        $vt = $this->getvt($name); 
+        if ($vt & PDT_GET)
             $val = $this->{"get_$name"}(); 
         else
             $val = $this->{"pdv_$name"}; 
         if (is_null($val) && ! is_null($def))
             return $def; 
-        return $def; 
+        return $val; 
     }
     
+    # get sql-escaped value
     function getx($name, $def = NULL) {
-        $pdt = $this->get_type($name); 
         $val = $this->get($name, $def); 
-        if ($pdt & PDT_RAW)
+        if (is_null($val))
+            return 'null'; 
+        $vt = $this->getvt($name); 
+        if ($vt & PDT_RAW)
             return strval($val); 
-        if ($pdt & PDT_CDATA)
-            return Q($this->_EscapeString($val)); 
+        if ($vt & PDT_CDATA)
+            return Q($this->_escape_string($val)); 
         return Q($val); 
     }
     
     function put($name, $value, $force = false) {
-        $pdt = $this->get_type($name); 
-        $vrf = ($pdt & PDT_VERIFY) && !$force; 
-        if ($vrf)
-            $old_val = $this->get($name); 
-        if ($pdt & PDT_PUT)
+        $vt = $this->getvt($name); 
+        if (($vt & PDT_NOTNULL) && is_null($value) && !$force) {
+            error_log("NOT-NULL: $name"); 
+        }
+        if (($vt & PDT_VERIFY) && !$force) {
+            $err = $this->{"vrf_$name"}($value); 
+            if (! is_null($err)) {
+                error_log($err); 
+                return; 
+            }
+        }
+        if ($vt & PDT_PUT)
             $this->{"put_$name"}($value); 
         else
             $this->{"pdv_$name"} = $value; 
     }
     
-    function _Verify($ignores = NULL) {
+    function _verify($ignores = NULL) {
         foreach ($this as $memberf=>$value) {
             if (is_null($value)) continue; 
             if (substr($memberf, 0, 4) != 'pdt_') continue; 
             $member = substr($member, 4); 
             if ($ignores)
                 if ($ignores[$member]) continue; 
-            $pdt = $this->$memberf; 
-            if ($pdt & PDT_NOTNULL) {
+            $vt = $this->$memberf; 
+            if ($vt & PDT_NOTNULL) {
                 if (is_null($this->get($member)))
                     return "NOT-NULL: $member"; 
             }
-            if ($pdt & PDT_VERIFY) {
+            if ($vt & PDT_VERIFY) {
                 if (! $this->{"vrf_$member"}($this->get($member)))
                     return "NOT-VERIFY: $member"; 
             }
@@ -88,7 +99,7 @@ class phpx_data_object extends phpx_dbi {
         return NULL; 
     }
     
-    function _Import($assoc, $nulls = false) {
+    function _import($assoc, $nulls = false) {
         if ($assoc) {
             foreach ($assoc as $member=>$value) {
                 if (is_null($value) && ! $nulls) continue; 
@@ -97,7 +108,7 @@ class phpx_data_object extends phpx_dbi {
         }
     }
     
-    function _Export(&$ret_assoc, $nulls = false) {
+    function _export(&$ret_assoc, $nulls = false) {
         foreach ($this as $memberf=>$value) {
             if (substr($memberf, 0, 4) != 'pdt_') continue; 
             $member = substr($memberf, 4); 
@@ -108,7 +119,7 @@ class phpx_data_object extends phpx_dbi {
     }
     
     /* key=value, key=value, ... */
-    function _Format($eq = '=', $sep = ', ', $nulls = false) {
+    function _format($eq = '=', $sep = ', ', $nulls = false) {
         $buffer = ''; 
         foreach ($this as $memberf=>$value) {
             if (is_null($value) && ! $nulls) continue; 
@@ -116,17 +127,17 @@ class phpx_data_object extends phpx_dbi {
             $member = substr($memberf, 4); 
             if ($buffer)
                 $buffer .= $sep; 
-            $buffer .= "$member$eq".$this->get_escaped($member); 
+            $buffer .= "$member$eq".$this->getx($member); 
         }
         return $buffer; 
     }
     
-    function _FormatDebug() {
-        return $this->_Format(" = ", "\n", true); 
+    function _format_debug() {
+        return $this->_format(" = ", "\n", true); 
     }
     
     /* (key, key, ...) values (value, value, ...) */
-    function _FormatValues() {
+    function _format_values() {
         $keys = ''; 
         $values = ''; 
         foreach ($assoc as $k=>$v) {
@@ -139,9 +150,14 @@ class phpx_data_object extends phpx_dbi {
                 $values .= ', '; 
             }
             $keys .= $k; 
-            $values .= $this->_BuildSqlValue($v); 
+            $values .= $this->getx($v); 
         }
         return "($keys) values($values)"; 
     }
+    
+    function _format_updates() {
+        return _format('=', ',', true); 
+    }
+    
 }
 ?>

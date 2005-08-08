@@ -3,8 +3,11 @@
  *
  * Database Access Interface
  * 
- * $Id: base.php,v 1.7 2005-08-07 13:02:48 dansei Exp $
+ * $Id: base.php,v 1.8 2005-08-08 08:05:40 dansei Exp $
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2005/08/07 13:02:48  dansei
+ * refactor complete.
+ *
  * Revision 1.6  2005/08/05 14:34:10  dansei
  * devpack: change to  php-data-object framework
  *
@@ -27,39 +30,39 @@
 require '_Phpfixes.php'; 
 _RequireOnce('../string.php'); 
 
-class phpx_dbi_base {
+abstract class phpx_dbi_base {
     var $_server = 'localhost'; 
     var $_user = 'root'; 
     var $_password; 
     var $_dialect; 
     var $_debug = false; 
     
-    function _Row($sql) {
+    function _row($sql) {
         $result = array(); /* for test if any exist record */
-        if ($rs = $this->_Query($sql)) {
-            $result = $this->_FetchRow($rs); 
-            $this->_FreeResult($rs); 
+        if ($rs = $this->_query($sql)) {
+            $result = $this->_fetch_row($rs); 
+            $this->_free_result($rs); 
         }
         return $result; 
     }
     
-    function _Assoc($sql) {
+    function _assoc($sql) {
         $result = array(); /* for test if any exist record */
-        if ($rs = $this->_Query($sql)) {
-            $result = $this->_RetchAssoc($rs); 
-            $this->_FreeResult($rs); 
+        if ($rs = $this->_query($sql)) {
+            $result = $this->_fetch_assoc($rs); 
+            $this->_free_result($rs); 
         }
         return $result; 
     }
     
-    function _Evaluate($sql) {
+    function _evaluate($sql) {
         $result = false; 
-        $ret = $this->_Query($sql); 
+        $ret = $this->_query($sql); 
         if (is_bool($ret))
             return $ret; 
-        if ($row = $this->_FetchRow($ret))
+        if ($row = $this->_fetch_row($ret))
             $result = $row[0]; 
-        $this->_FreeResult($ret); 
+        $this->_free_result($ret); 
         return $result; 
     }
 }

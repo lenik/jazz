@@ -8,11 +8,16 @@ require '_Phpfixes.php';
 _RequireOnce('../pdo.php'); 
 
 class person extends phpx_data_object {
-    pdo_member(`name', NOTNULL, STRING, GET); 
-    pdo_member(`age', NUMBER, VERIFY); 
+    pdo_member(`name', NOTNULL, CDATA, GET, PRIMARY); 
+    # pdo_primary_key(`name'); 
+    
+    pdo_member(`age', RAW, VERIFY); 
+    pdo_default(`age', 0); 
+    
+    pdo_member(`address', CDATA); 
     
     function get_name() {
-        return 'I am always TOMMY!'; 
+        return 'I am always Jim\'TOMMY!'; 
     }
     
     function vrf_age() {
@@ -25,8 +30,14 @@ class person extends phpx_data_object {
     function dump() {
         return 'Person(name='.$this->get('name').', age='.$this->get('age').')'; 
     }
+    
 }
 
-var $p = new person; 
+$p = new person; 
+echo 'name: ', $p->get('name'), "\n"; 
+$p->put('name', NULL);
+
+echo "--------------------- format: \n";
+echo $p->_format_debug(); 
 
 ?>

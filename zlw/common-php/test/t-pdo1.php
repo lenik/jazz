@@ -7,11 +7,16 @@ require '_Phpfixes.php';
 _RequireOnce('../pdo.php'); 
 
 class person extends phpx_data_object {
-    var $pdt_name = PDT_NOTNULL | PDT_STRING | PDT_GET; 
-    var $pdt_age = PDT_NUMBER | PDT_VERIFY; 
+    var $pdt_name = 41218 /*NOTNULL,CDATA,GET,PRIMARY*/; 
+    # pdo_primary_key(`name'); 
+    
+    var $pdt_age = 16385 /*RAW,VERIFY*/; 
+    var $pdv_age = 0; 
+    
+    var $pdt_address = 2 /*CDATA*/; 
     
     function get_name() {
-        return 'I am always TOMMY!'; 
+        return 'I am always Jim\'TOMMY!'; 
     }
     
     function vrf_age() {
@@ -24,6 +29,14 @@ class person extends phpx_data_object {
     function dump() {
         return 'Person(name='.$this->get('name').', age='.$this->get('age').')'; 
     }
+    
 }
+
+$p = new person; 
+echo 'name: ', $p->get('name'), "\n"; 
+$p->put('name', NULL);
+
+echo "--------------------- format: \n";
+echo $p->_format_debug(); 
 
 ?>
