@@ -5,8 +5,11 @@ M4X_BEGIN()
 #
 # DDL Helper - MySQL Dialects
 #
-# $Id: ddl-mysql.m4,v 1.4 2005-08-06 14:10:01 dansei Exp $
+# $Id: ddl-mysql.m4,v 1.5 2005-08-09 01:21:39 dansei Exp $
 # $Log: not supported by cvs2svn $
+# Revision 1.4  2005/08/06 14:10:01  dansei
+# apply new M4X framework
+#
 # Revision 1.3  2005/08/05 06:03:30  dansei
 # dev pack.
 #
@@ -32,7 +35,7 @@ m4_define(`MSTR', `m4_ifelse($1, `', `varchar(255)', `char($1)')')
 m4_define(`DWORD', `int')
 m4_define(`UTIME', `int')
 
-m4_define(`EMAIL', `char(35)')
+m4_define(`EMAIL', `char(50)')
 m4_define(`SHA1', `char(40)')
 
 M4X_END()
