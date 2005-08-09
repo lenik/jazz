@@ -12,7 +12,7 @@
 ////////////////////////////////////////////////////
 
 require '_Phpfixes.php'; 
-_IncludeOnce("smtp.php"); 
+_IncludeOnce('smtp.php'); 
 
 /**
  * PHPMailer - PHP email transport class
@@ -128,7 +128,7 @@ class PHPMailer
      *  Holds PHPMailer version.
      *  @var string
      */
-    var $Version           = "1.72";
+    var $Version           = "1.73";
 
     /**
      * Sets the email address that a reading confirmation will be sent.
@@ -460,6 +460,7 @@ class PHPMailer
      * @return bool
      */
     function SmtpSend($header, $body) {
+        # include_once($this->PluginDir . "class.smtp.php");
         $error = "";
         $bad_rcpt = array();
 
@@ -595,16 +596,18 @@ class PHPMailer
      * @access public
      * @return bool
      */
-    function SetLanguage($lang_type, $lang_path = "language/") {
+    function SetLanguage($lang_type, $lang_path = NULL) {
+        if (is_null($lang_path))
+            $lang_path = dirname(__FILE__) . "/language/"; 
         if(file_exists($lang_path.'phpmailer.lang-'.$lang_type.'.php'))
-            _Include($lang_path.'phpmailer.lang-'.$lang_type.'.php');
+            include($lang_path.'phpmailer.lang-'.$lang_type.'.php');
         else if(file_exists($lang_path.'phpmailer.lang-en.php'))
-            _Include($lang_path.'phpmailer.lang-en.php');
+            include($lang_path.'phpmailer.lang-en.php');
         else
-        #{
-        #    $this->SetError("Could not load language file");
+        {
+            $this->SetError("Could not load language file");
             return false;
-        #}
+        }
         $this->language = $PHPMAILER_LANG;
     
         return true;
@@ -742,7 +745,7 @@ class PHPMailer
         {
            case "alt":
               // fall through
-           case "alt_attachment":
+           case "alt_attachments":
               $this->AltBody = $this->WrapText($this->AltBody, $this->WordWrap);
               break;
            default:
@@ -1089,9 +1092,12 @@ class PHPMailer
             $this->SetError($this->Lang("file_open") . $path);
             return "";
         }
+        $magic_quotes = get_magic_quotes_runtime();
+        set_magic_quotes_runtime(0);
         $file_buffer = fread($fd, filesize($path));
         $file_buffer = $this->EncodeString($file_buffer, $encoding);
         fclose($fd);
+        set_magic_quotes_runtime($magic_quotes);
 
         return $file_buffer;
     }
