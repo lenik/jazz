@@ -11,8 +11,11 @@ M4X_END()
  *
  * Database Access Interface
  * 
- * $Id: dbi.m4,v 1.7 2005-08-08 08:05:40 dansei Exp $
+ * $Id: dbi.m4,v 1.8 2005-08-09 01:23:30 dansei Exp $
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2005/08/08 08:05:40  dansei
+ * back to _php_name_style and using Makefile instead of make.bat
+ *
  * Revision 1.6  2005/08/07 13:02:46  dansei
  * refactor complete.
  *
@@ -43,7 +46,10 @@ class phpx_dbi extends `phpx_dbi_'DB_DIALECT {
     var $_link = NULL; 
     
     function _reuse($dbi) {
-    	$this->_link = $dbi->_link; 
+        if (! is_null($dbi)) {
+        	$this->_link = $dbi->_link; 
+        	$this->_debug = $dbi->_debug; 
+        }
     }
     
     function _query($sql) {
