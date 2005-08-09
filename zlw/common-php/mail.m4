@@ -8,8 +8,11 @@ m4_include(`config.m4')
  *
  * SMTP Class
  * 
- * $Id: mail.m4,v 1.2 2005-08-07 13:02:47 dansei Exp $
+ * $Id: mail.m4,v 1.3 2005-08-09 01:23:49 dansei Exp $
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2005/08/07 13:02:47  dansei
+ * refactor complete.
+ *
  * Revision 1.1  2005/08/05 06:03:32  dansei
  * dev pack.
  *
@@ -30,6 +33,10 @@ class phpx_mail extends PHPMailer {
     var $FromName   = 'MAIL_NAME'; 
     var $CharSet    = 'MAIL_CHARSET'; 
     var $ReplyTo    = array('MAIL_REPLY'); 
+    
+    function phpx_mail() {
+        $this->SetLanguage('zh'); 
+    }
 }
 
 ?>
