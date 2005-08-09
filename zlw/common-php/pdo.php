@@ -120,6 +120,11 @@ abstract class phpx_data_object extends phpx_dbi {
     
     /* key=value, key=value, ... */
     function _format($eq = '=', $sep = ', ', $nulls = false) {
+        $nargs = func_num_args(); 
+        if ($nargs > 3) {
+            $ignores = func_get_args(); 
+            array_splice($ignores, 3); 
+        }
         $buffer = ''; 
         foreach ($this as $memberf=>$value) {
             if (is_null($value) && ! $nulls) continue; 
@@ -127,7 +132,7 @@ abstract class phpx_data_object extends phpx_dbi {
             $member = substr($memberf, 4); 
             if ($buffer)
                 $buffer .= $sep; 
-            $buffer .= "$member$eq".$this->getx($member); 
+            $buffer .= "`$member`$eq".$this->getx($member); 
         }
         return $buffer; 
     }
@@ -140,23 +145,22 @@ abstract class phpx_data_object extends phpx_dbi {
     function _format_values() {
         $keys = ''; 
         $values = ''; 
-        foreach ($assoc as $k=>$v) {
-            if (substr($k, 0, 1) == '_') continue; 
-            if (is_null($v)) continue; 
-            if ($ignores)
-                if ($ignores[$k]) continue; 
+        foreach ($this as $memberf=>$value) {
+            if (is_null($value)) continue; 
+            if (substr($memberf, 0, 4) != 'pdt_') continue; 
+            $member = substr($memberf, 4); 
             if ($keys) {
                 $keys .= ', '; 
                 $values .= ', '; 
             }
-            $keys .= $k; 
-            $values .= $this->getx($v); 
+            $keys .= "`$member`"; 
+            $values .= $this->getx($member); 
         }
         return "($keys) values($values)"; 
     }
     
-    function _format_updates() {
-        return _format('=', ',', true); 
+    function _format_updates($ignores = NULL, $nulls = false) {
+        return _format('=', ',', $nulls, $ignores); 
     }
     
 }
