@@ -8,8 +8,11 @@ m4_include(`config.m4')
  *
  * String Utilities
  * 
- * $Id: string.m4,v 1.6 2005-08-07 13:02:47 dansei Exp $
+ * $Id: string.m4,v 1.7 2005-08-09 01:24:59 dansei Exp $
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2005/08/07 13:02:47  dansei
+ * refactor complete.
+ *
  * Revision 1.5  2005/08/05 06:03:31  dansei
  * dev pack.
  *
@@ -38,18 +41,24 @@ function &num_of(&$mix) {
     return $mix; 
 }
 
+global $PHPX_TIMEOFDAY; 
+global $PHPX_TIMEZONE; 
+$PHPX_TIMEOFDAY = gettimeofday(); 
+$PHPX_TIMEZONE = -60 * $PHPX_TIMEOFDAY['minuteswest']; # +28800 for +8:00
+
+function time_0()               { global $PHPX_TIMEZONE; 
+                                  return time() - $PHPX_TIMEZONE; }
+function time_0_format($time)   { global $PHPX_TIMEZONE; 
+                                  return date(TIME_FORMAT, $time + $PHPX_TIMEZONE); }
 function time_format($time)     { return date(TIME_FORMAT, $time); }
 function time_format_0($time)   { return gmdate(TIME_FORMAT, $time); }
 function time_of($str)          { return strtotime($str); }
-function time_of_0($str_0) {
-    $timeofday = gettimeofday(); 
-    $gmtadj = -60 * $timeofday['minuteswest']; 
-    return strtotime($str) + $gmtadj; 
-}
+function time_of_0($str_0)      { global $PHPX_TIMEZONE; 
+                                  return strtotime($str) + $PHPX_TIMEZONE; }
 
 function parse_id($id = '') {
     if ($id == '')
-        $id = '$Id: string.m4,v 1.6 2005-08-07 13:02:47 dansei Exp $'; 
+        $id = '$Id: string.m4,v 1.7 2005-08-09 01:24:59 dansei Exp $'; 
     preg_match(
                '/^ \$ [I][d][:] \s (.*?) \s ([0-9.]+) \s ([0-9\/\\\-]+) \s 
                  ([0-9:]+) \s (.*?) \s (\w+) \s \$ $/x', 
