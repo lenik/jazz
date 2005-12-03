@@ -5,23 +5,6 @@ m4_divert(-1)
 #
 # M4 Language Extension
 #
-# $Id: m4x-base.m4,v 1.6 2005-08-08 08:04:25 dansei Exp $
-# $Log: not supported by cvs2svn $
-# Revision 1.5  2005/08/07 12:14:28  dansei
-# refactor complete.
-#
-# Revision 1.4  2005/08/06 14:08:48  dansei
-# moved some common macros from m4x-util
-#
-# Revision 1.3  2005/08/06 10:33:44  dansei
-# nearly rewrite.
-#
-# Revision 1.2  2005/08/05 06:03:30  dansei
-# dev pack.
-#
-# Revision 1.1  2005/07/29 14:21:45  dansei
-# initial
-#
 
 m4_ifdef(`m4x_once_m4_ext', , `
 m4_define(`m4x_once_m4_ext', 1)
