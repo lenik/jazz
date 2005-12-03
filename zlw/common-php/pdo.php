@@ -160,7 +160,7 @@ abstract class phpx_data_object extends phpx_dbi {
     }
     
     function _format_updates($ignores = NULL, $nulls = false) {
-        return _format('=', ',', $nulls, $ignores); 
+        return $this->_format('=', ',', $nulls, $ignores); 
     }
     
 }
