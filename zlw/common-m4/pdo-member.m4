@@ -5,17 +5,6 @@ M4X_BEGIN()
 #
 # PDO Implement Helper
 #
-# $Id: pdo-member.m4,v 1.4 2005-08-08 08:04:45 dansei Exp $
-# $Log: not supported by cvs2svn $
-# Revision 1.3  2005/08/07 12:14:28  dansei
-# refactor complete.
-#
-# Revision 1.2  2005/08/06 14:09:40  dansei
-# reinitial using new M4X-framework
-#
-# Revision 1.1  2005/08/05 14:34:11  dansei
-# devpack: change to  php-data-object framework
-#
 
 m4_define(`PDT_RAW',        1)
 m4_define(`PDT_CDATA',      2)
