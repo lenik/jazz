@@ -1,4 +1,4 @@
-<?
+<?php
 define('DBI_DIALECT', 'mysql'); 
 define('DBI_HOST', 'localhost'); 
 define('DBI_USER', 'root'); 

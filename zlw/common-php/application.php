@@ -1,6 +1,7 @@
-<?
-
-/* $_APPLICATION support in PHP
+<?php
+/* Common-PHP
+ *
+ * $_APPLICATION support in PHP
  *
  * session.save_path is used to save serialized application data
  *

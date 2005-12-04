@@ -1,4 +1,4 @@
-<?
+<?php
 
     function dtc_time($time)        { return date("Y-m-d H:i:s", $time); }
     function dtc_gmtime($time)      { return gmdate("Y-m-d H:i:s", $time); }

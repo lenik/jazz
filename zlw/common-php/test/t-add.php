@@ -1,4 +1,4 @@
-<?
+<?php
     require '_Phpfixes.php'; 
     _RequireOnce('../http.php'); 
     
@@ -28,9 +28,9 @@
 
 <h1> Add Function </h1>
 
-A = <?=$a?> <br>
-B = <?=$b?> <br>
-A + B = <?=$ret?> <br>
+A = <?php echo $a?> <br>
+B = <?php echo $b?> <br>
+A + B = <?php echo $ret?> <br>
 
 <form method='get'>
     A = <input type=text name=a value=100> <br>
