@@ -13,7 +13,7 @@ class phpx_dbi {
     var $_debug = false; 
     var $_link; 
     
-	function phpx_dbi_mysql($host, $user, $password, $database, 
+	function phpx_dbi($host, $user, $password, $database, 
 	        $connect = true, $persist = true, $debug = false) {
         $this->_host = $host; 
         $this->_user = $user; 
