@@ -36,8 +36,6 @@ function time_of_0($str_0)      { global $PHPX_TIMEZONE;
                                   return strtotime($str) + $PHPX_TIMEZONE; }
 
 function parse_id($id = '') {
-    if ($id == '')
-        $id = '$Id: string.m4,v 1.7.4.2 2005-12-04 04:21:50 dansei Exp $'; 
     preg_match(
                '/^ \$ [I][d][:] \s (.*?) \s ([0-9.]+) \s ([0-9\/\\\-]+) \s 
                  ([0-9:]+) \s (.*?) \s (\w+) \s \$ $/x', 
