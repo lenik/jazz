@@ -63,11 +63,6 @@ function C($str)                { return "$str,"; }
 function QQC($str)              { return "\"$str\","; }
 function QC($str)               { return "'$str',"; }
 
-function _PI($pi) {
-    echo '<?' . str_replace('>', '&gt;', 
-                str_replace('<', '&lt;', $pi)) . '?>'; 
-}
-
 function logger() {
     $args = func_get_args(); 
     $cont = false; 
