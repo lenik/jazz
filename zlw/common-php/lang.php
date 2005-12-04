@@ -36,7 +36,7 @@ function time_of_0($str_0)      { global $PHPX_TIMEZONE;
 
 function parse_id($id = '') {
     if ($id == '')
-        $id = '$Id: lang.php,v 1.9.4.1 2005-12-04 02:37:03 dansei Exp $'; 
+        $id = '$Id: lang.php,v 1.9.4.2 2005-12-04 04:21:50 dansei Exp $'; 
     preg_match(
                '/^ \$ [I][d][:] \s (.*?) \s ([0-9.]+) \s ([0-9\/\\\-]+) \s 
                  ([0-9:]+) \s (.*?) \s (\w+) \s \$ $/x', 
@@ -63,6 +63,10 @@ function Q($str)                { return "'$str'"; }
 function C($str)                { return "$str,"; }
 function QQC($str)              { return "\"$str\","; }
 function QC($str)               { return "'$str',"; }
+
+function xml_header($version = '1.0', $encoding = 'utf-8', $suffix = "\n") {
+    echo "<?xml version='$version' encoding='$encoding'?>$suffix"; 
+}
 
 function logger() {
     $args = func_get_args(); 

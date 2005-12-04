@@ -13,12 +13,14 @@ class phpx_dbi {
     var $_debug = false; 
     var $_link; 
     
-	function phpx_dbi_mysql($host, $user, $password, $database, $connect = true, $persist = true) {
+	function phpx_dbi_mysql($host, $user, $password, $database, 
+	        $connect = true, $persist = true, $debug = false) {
         $this->_host = $host; 
         $this->_user = $user; 
         $this->_password = $password; 
         $this->_database = $database; 
         $this->_persist = $persist; 
+        $this->_debug = $debug; 
         if ($connect)
             $this->_connect(); 
     }
