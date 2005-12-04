@@ -4,8 +4,11 @@
 #
 # Copy this fixes file to the same directory of which do includes.
 #
-# (Id: phpfixes.php,v 1.2 2005/08/03 14:42:17 dansei Exp )
+# (Id: phpfixes.php,v 1.2.4.1 2005/12/04 02:37:03 dansei Exp )
 # (Log: phpfixes.php,v )
+# Revision 1.2.4.1  2005/12/04 02:37:03  dansei
+# updated for vbank project
+#
 # Revision 1.2  2005/08/03 14:42:17  dansei
 # dev pack.
 #
