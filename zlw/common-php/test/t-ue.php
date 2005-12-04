@@ -1,7 +1,7 @@
 <html>
 <body>
 
-string: <?=$_REQUEST['string']?>
+string: <?php echo $_REQUEST['string']?>
 <hr>
 
 <form method='get'>

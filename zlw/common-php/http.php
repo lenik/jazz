@@ -1,5 +1,9 @@
-<?
-
+<?php
+/* Common-PHP
+ *
+ * HTTP Functions
+ */
+ 
 function phpx_noslashes($url) {
     if (get_magic_quotes_gpc())
         $url = stripslashes($url); 

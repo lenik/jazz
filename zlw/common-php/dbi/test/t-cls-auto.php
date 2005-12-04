@@ -1,4 +1,4 @@
-<?
+<?php
 
 class C {
     var $c1 = 'C::c1 default'; 

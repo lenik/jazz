@@ -1,4 +1,4 @@
-<?
+<?php
     require '_Phpfixes.php'; 
     _RequireOnce('../http.php'); 
     
@@ -17,7 +17,7 @@
 
 <h1>Caller</h1>
 
-<?=$a?> + <?=$b?> = <?=$ret['VAL']?>
+<?php echo $a?> + <?php echo $b?> = <?php echo $ret['VAL']?>
 
 </body>
 </html>

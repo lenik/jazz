@@ -1,4 +1,4 @@
-<?
+<?php
 require '_Phpfixes.php'; 
 _Require('../http.php');
 phpx_using_https(true); 

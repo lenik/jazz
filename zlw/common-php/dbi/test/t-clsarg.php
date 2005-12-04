@@ -1,4 +1,4 @@
-<?
+<?php
 
 function f1($a, $b = "B-Default") {
     echo "f1: a=$a, b=$b\n"; 

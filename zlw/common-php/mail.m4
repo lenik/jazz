@@ -1,5 +1,5 @@
 m4_include(`config.m4')
-<?
+<?php
 /*
  * M4X___ORIGINAL_FILE__
  */

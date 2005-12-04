@@ -1,4 +1,4 @@
-<?
+<?php
 require_once '_Phpfixes.php'; 
 echo "<PRE>";
 echo "Dirname: ", dirname('dir/inc.php'), "\n"; 

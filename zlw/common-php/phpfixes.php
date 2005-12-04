@@ -1,18 +1,22 @@
-<?
-#
-# PHP Bug Fixes
-#
-# Copy this fixes file to the same directory of which do includes.
-#
-# $Id: phpfixes.php,v 1.2.4.1 2005-12-04 02:37:03 dansei Exp $
-# $Log: not supported by cvs2svn $
-# Revision 1.2  2005/08/03 14:42:17  dansei
-# dev pack.
-#
-# Revision 1.1  2005/07/31 02:19:37  dansei
-# this become the major version of phpfixes instead of _Phpfixes.
-# (now the _Phpfixes.php is for dispatch, and without version header)
-#
+<?php
+/* Common-PHP
+ *
+ * PHP Bug Fixes
+ *
+ * Copy this fixes file to the same directory of which do includes.
+ *
+ * $Id: phpfixes.php,v 1.2.4.2 2005-12-04 07:38:16 dansei Exp $
+ * $Log: not supported by cvs2svn $
+ * Revision 1.2.4.1  2005/12/04 02:37:03  dansei
+ * updated for vbank project
+ *
+ * Revision 1.2  2005/08/03 14:42:17  dansei
+ * dev pack.
+ *
+ * Revision 1.1  2005/07/31 02:19:37  dansei
+ * this become the major version of phpfixes instead of _Phpfixes.
+ * (now the _Phpfixes.php is for dispatch, and without version header)
+ */
 if (! function_exists('_Require')) {
 
 $_PARAMSTACK = array(); 

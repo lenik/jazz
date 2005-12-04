@@ -1,4 +1,4 @@
-<?
+<?php
     require '_Phpfixes.php'; 
     _RequireOnce('../string.php'); 
     

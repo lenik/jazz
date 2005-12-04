@@ -1,4 +1,4 @@
-<?
+<?php
     require '_Phpfixes.php'; 
     _RequireOnce('t-config.php'); 
     _RequireOnce('../../dbi.php'); 

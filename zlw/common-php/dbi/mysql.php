@@ -1,7 +1,7 @@
-<?
+<?php
 /* Common-PHP
  *
- * Database Access
+ * Database Access - MySQL Dialect
  */
 class phpx_dbi {
     var $_dialect = 'mysql'; 

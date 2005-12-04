@@ -1,4 +1,4 @@
-<?
+<?php
 /* Common-PHP
  *
  * PHP Data Object
