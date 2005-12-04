@@ -2,36 +2,42 @@
 /* Common-PHP
  *
  * Database Access
- * 
- * $Id: mysql.php,v 1.6 2005-08-08 08:05:40 dansei Exp $
- * $Log: not supported by cvs2svn $
- * Revision 1.5  2005/08/07 13:02:48  dansei
- * refactor complete.
- *
- * Revision 1.4  2005/08/05 14:34:10  dansei
- * devpack: change to  php-data-object framework
- *
- * Revision 1.3  2005/08/03 14:42:18  dansei
- * dev pack.
- *
- * Revision 1.2  2005/07/31 04:32:49  dansei
- * iter.1-1
- *
- * Revision 1.1  2005/07/30 12:10:23  dansei
- * initial
- *
  */
-require 'base.php'; 
-
-abstract class phpx_dbi_mysql extends phpx_dbi_base {
+class phpx_dbi {
     var $_dialect = 'mysql'; 
-    var $_persist = FALSE; 
+    var $_host; 
+    var $_user; 
+    var $_password; 
+    var $_database; 
+    var $_persist; 
+    var $_debug = false; 
+    var $_link; 
     
-    function _connect() {
+	function phpx_dbi_mysql($host, $user, $password, $database, $connect = true, $persist = true) {
+        $this->_host = $host; 
+        $this->_user = $user; 
+        $this->_password = $password; 
+        $this->_database = $database; 
+        $this->_persist = $persist; 
+        if ($connect)
+            $this->_connect(); 
+    }
+    
+    function _reuse($dbi) {
+        if (! is_null($dbi)) {
+        	$this->_link = $dbi->_link; 
+        	$this->_debug = $dbi->_debug; 
+        }
+    }
+    
+    function _connect($persist = NULL) {
         if ($this->_link)
             error_log("Already connected ($link)"); 
-            
-        $server = $this->_server; 
+        
+        if (is_null($persist))
+            $persist = $this->_persist; 
+        
+        $host = $this->_host; 
         $user = $this->_user; 
         $password = $this->_password; 
         
@@ -44,11 +50,11 @@ abstract class phpx_dbi_mysql extends phpx_dbi_base {
         case 2: 
             $user = $args[1]; 
         case 1: 
-            $server = $args[0]; 
+            $host = $args[0]; 
         case 0: 
             while (true) {
-                if (! $server) break; 
-                    $passargs[] = $server; 
+                if (! $host) break; 
+                    $passargs[] = $host; 
                 if (!$user) break; 
                     $passargs[] = $user; 
                 if (!$password) break; 
@@ -59,14 +65,17 @@ abstract class phpx_dbi_mysql extends phpx_dbi_base {
             }
         }
         
-        $funcname = $this->_persist ? 'mysql_pconnect' : 'mysql_connect'; 
-            $this->_debug && logger('Connect: ', join('|', $passargs)); 
+        $funcname = $persist ? 'mysql_pconnect' : 'mysql_connect'; 
+        $this->_debug && logger('Connect: ', join('|', $passargs)); 
         $this->_link = call_user_func_array($funcname, $passargs); 
-            $this->_debug && logger('Connect-Return: ', $this->_link ? "succeeded, $this->_link" : 'failed'); 
+        $this->_debug && logger('Connect-Return: ', $this->_link ? "succeeded, $this->_link" : 'failed'); 
         
         # set connection character set.
         if ($this->_link)
             mysql_query("set names 'utf8'", $this->_link); 
+        
+        if ($this->_database)
+            mysql_select_db($this->_database); 
             
         return $this->_link; 
     }
@@ -153,8 +162,6 @@ abstract class phpx_dbi_mysql extends phpx_dbi_base {
                                       return call_user_func_array('mysql_num_rows',             $args); }
     function _ping()                { $args = func_get_args(); $args[] = $this->_link; 
                                       return call_user_func_array('mysql_ping',                 $args); }
-    function _query()               { $args = func_get_args(); $args[] = $this->_link;  #1
-                                      return call_user_func_array('mysql_query',                $args); }
     function _real_escape_string()  { $args = func_get_args(); $args[] = $this->_link;  #1
                                       return call_user_func_array('mysql_real_escape_string',   $args); }
     function _result()              { $args = func_get_args(); 
@@ -169,5 +176,44 @@ abstract class phpx_dbi_mysql extends phpx_dbi_base {
                                       return call_user_func_array('mysql_thread_id',            $args); }
     function _unbuffered_query()    { $args = func_get_args(); $args[] = $this->_link;  #1
                                       return call_user_func_array('mysql_unbuffered_query',     $args); }
+    
+    function _query($sql) {
+        $this->_debug && logger("SQL: $sql", false); 
+        $ret = mysql_query($sql, $this->_link); 
+        if ($this->_debug) {
+            if ($ret) logger_end(" => succeeded, $ret"); 
+            else logger_end(" => failed, ", $this->_error()); 
+        }
+        return $ret; 
+    }
+    
+    function _row($sql) {
+        $result = array(); /* for test if any exist record */
+        if ($rs = $this->_query($sql)) {
+            $result = $this->_fetch_row($rs); 
+            $this->_free_result($rs); 
+        }
+        return $result; 
+    }
+    
+    function _assoc($sql) {
+        $result = array(); /* for test if any exist record */
+        if ($rs = $this->_query($sql)) {
+            $result = $this->_fetch_assoc($rs); 
+            $this->_free_result($rs); 
+        }
+        return $result; 
+    }
+    
+    function _evaluate($sql) {
+        $result = false; 
+        $ret = $this->_query($sql); 
+        if (is_bool($ret))
+            return $ret; 
+        if ($row = $this->_fetch_row($ret))
+            $result = $row[0]; 
+        $this->_free_result($ret); 
+        return $result; 
+    }
 }
 ?>

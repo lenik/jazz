@@ -1,4 +1,8 @@
 <?
+/* Common-PHP
+ *
+ * PHP Data Object
+ */
 require '_Phpfixes.php'; 
 _RequireOnce('dbi.php'); 
 
@@ -24,7 +28,7 @@ define("PDT_PRIMARY",   32768);
  *  get($name)
  *  put($name, $val)
  */
-abstract class phpx_data_object extends phpx_dbi {
+class phpx_data_object extends phpx_dbi {
     
     function phpx_data_object($dbi = NULL) {
         if (! is_null($dbi))

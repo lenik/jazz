@@ -1,13 +1,13 @@
 <?
     require '_Phpfixes.php'; 
+    _RequireOnce('t-config.php'); 
     _RequireOnce('../../dbi.php'); 
     
-    $d = new phpx_dbi; 
+    $d = sql_connect('mysql', 'localhost', 'root', 'l.', 'test'); 
     $d->_debug = true; 
     
     echo "password: ", $d->_password, "\n"; 
     
-    $d->_connect(); 
     $d->_select_db('test'); 
     $d->_query('create table hello(name char(100))'); 
     

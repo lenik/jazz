@@ -5,6 +5,7 @@ m4_include(`pdo-member.m4')
  */
 
 require '_Phpfixes.php'; 
+_RequireOnce('t-config.php'); 
 _RequireOnce('../pdo.php'); 
 
 class person extends phpx_data_object {
