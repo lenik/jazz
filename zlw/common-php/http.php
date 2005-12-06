@@ -3,22 +3,41 @@
  *
  * HTTP Functions
  */
- 
+
+# remove slashes only if magic-quotes is enabled
 function phpx_noslashes($url) {
     if (get_magic_quotes_gpc())
         $url = stripslashes($url); 
     return $url; 
 }
 
-function phpx_url_relative($url, $https = NULL) {
+function phpx_this_host($https = NULL) {
     if (is_null($https)) {
-        $ret = 'http'; 
+        $proto = 'http'; 
         if ($_SERVER['HTTPS'] == 'on')
-            $ret .= 's'; 
+            $proto .= 's'; 
     } else {
-        $ret = $https ? 'https' : 'http'; 
+        $proto = $https ? 'https' : 'http'; 
     }
-    $ret .= "://$_SERVER[HTTP_HOST]";
+    return "$proto://$_SERVER[HTTP_HOST]";
+}
+
+function phpx_this_url($https = NULL) {
+    $url = $_SERVER['REQUEST_URL']; 
+    if (strstr($url, '://')) {
+        return $url; 
+    }
+    
+    $host = phpx_this_host($https); 
+    if (substr($url, 0, 1) != '/') {
+        $url = "/$url"; 
+    }
+    return "$host$usl"; 
+}
+
+# concat this-url with specfied relative-url
+function phpx_url_relative($url, $https = NULL) {
+    $ret = phpx_this_host($https); 
     
     # http://server/dir
     $dir = dirname($_SERVER['PHP_SELF']); 
@@ -35,6 +54,7 @@ function phpx_url_relative($url, $https = NULL) {
     return "$ret$url"; 
 }
 
+# concat this-url with specfied full-url
 function phpx_url_full($url, $https = NULL) {
     # url-absolute
     if ($right = strstr($url, '://')) {
@@ -45,14 +65,7 @@ function phpx_url_full($url, $https = NULL) {
     }
     
     # url-full
-    if (is_null($https)) {
-        $ret = 'http'; 
-        if ($_SERVER['HTTPS'] == 'on')
-            $ret .= 's'; 
-    } else {
-        $ret = $https ? 'https' : 'http'; 
-    }
-    $ret .= "://$_SERVER[HTTP_HOST]";
+    $ret = phpx_this_host($https); 
     
     # http://host/url
     if (substr($url, 0, 1) != '/')
