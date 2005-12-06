@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../html-view.xsl"?>
+<af:abstract-form xmlns:af="http://www.bodz.net/xml/zlw/abstract-form" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.bodz.net/xml/zlw/abstract-form
+../abstract-form.xsd">
+	<af:section name=".page">
+		<af:scalar name="title">Abstract Form Sample</af:scalar>
+		<af:map name="meta">
+			<af:entry key="Key1">
+				<af:scalar>Value1</af:scalar>
+			</af:entry>
+			<af:entry key="Key2">
+				<af:scalar>Value2</af:scalar>
+			</af:entry>
+		</af:map>
+	</af:section>
+	<af:section name="Start">
+		<af:scalar name="Scalar" type="number">5344553</af:scalar>
+		<af:list name="List" sort="true" sort-order="descending" type="integer">
+			<af:method name="Add"/>
+			<af:method name="Remove"/>
+			<af:item>
+				<af:scalar>98</af:scalar>
+			</af:item>
+			<af:item>
+				<af:scalar>12</af:scalar>
+			</af:item>
+			<af:item>
+				<af:scalar>4444</af:scalar>
+			</af:item>
+			<af:item>
+				<af:scalar>33</af:scalar>
+			</af:item>
+			<af:item>
+				<af:scalar>0</af:scalar>
+			</af:item>
+			<af:item>
+				<af:scalar>321</af:scalar>
+			</af:item>
+		</af:list>
+		<af:form>
+			<af:input name="name" type="string" init="Lenik"/>
+			<af:input name="age" type="number" init="34"/>
+			<af:input name="comment" type="string" init="No comments" multiline="true"/>
+			<af:selector name="sel" multiple="false">
+				<af:list-ref>List</af:list-ref>
+			</af:selector>
+			<af:method name="ActionA"/>
+			<af:method name="ActionB"/>
+		</af:form>
+	</af:section>
+	<af:section name="Second">
+		<af:map name="BigApple">
+			<af:entry key="color">
+				<af:scalar>red</af:scalar>
+			</af:entry>
+			<af:entry key="size">
+				<af:scalar>big</af:scalar>
+			</af:entry>
+			<af:entry key="weight">
+				<af:scalar>12kg</af:scalar>
+			</af:entry>
+			<af:entry key="length">
+				<af:scalar>22cm</af:scalar>
+			</af:entry>
+		</af:map>
+		<af:table name="table1">
+			<af:method name="Cat"/>
+			<af:method name="Dog"/>
+			<af:column name="Name" primary-key="true"/>
+			<af:column name="Age" sort-priority="1"/>
+			<af:row>
+				<Name>Lenik</Name>
+				<Age>24</Age>
+			</af:row>
+			<af:row>
+				<Name>Lewei</Name>
+				<Age>26</Age>
+			</af:row>
+			<af:row>
+				<Name>Christmas</Name>
+				<Age>12</Age>
+			</af:row>
+		</af:table>
+		<af:user name="Test">
+			<af:method name="Insert"/>
+			<af:method name="Delete"/>
+			<af:method name="Modify"/>
+			<Person name="123" age="456">
+				<Home>
+					<Country>China</Country>
+					<Address>1224</Address>
+					<Post Major="123" Minor="456"/>
+				</Home>
+				<Son>fjsklj</Son>
+				<Daughter>jfkljv</Daughter>
+			</Person>
+		</af:user>
+		<af:form>
+			<af:selector name="WhyYouLikeThisApple" multiple="true">
+				<af:map-ref>BigApple</af:map-ref>
+			</af:selector>
+			<af:method name="Submit"/>
+			<af:method name="Google" hint="http://www.google.com"/>
+		</af:form>
+	</af:section>
+</af:abstract-form>
