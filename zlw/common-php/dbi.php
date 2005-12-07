@@ -73,8 +73,8 @@ class phpx_dbi extends phpx_dbi_base {
         $this->_debug && logger('Connect-Return: ', $this->_link ? "succeeded, $this->_link" : 'failed'); 
         
         # set connection character set.
-        # if ($this->_link)
-        #     parent::_query("set names 'utf8'", $this->_link); 
+        if ($this->_link)
+            parent::_query("set names 'utf8'"); 
         
         if ($this->_database)
             parent::_select_db($this->_database); 
@@ -147,8 +147,10 @@ class phpx_dbi extends phpx_dbi_base {
             return false; 
         }
         $nfields = $this->_num_fields($result); 
+        $fields = array(); 
         for ($i = 0; $i < $nfields; $i++) {
             $field = $this->_field_name($result, $i); 
+            $fields[] = $field; 
             if (array_key_exists($field, $map)) {
                 $type = $this->_field_type($result, $i); 
                 switch ($type) {
@@ -169,9 +171,20 @@ class phpx_dbi extends phpx_dbi_base {
         # the criteria is needed for auto-choose and update
         if ($method != 'insert') {
             foreach ($keys as $pk) {
-                if ($criteria != '')
-                    $criteria .= ' and '; 
-                $criteria .= "$pk=" . $map[$pk]; 
+                if (array_key_exists($pk, $map)) {
+                    if ($criteria != '')
+                        $criteria .= ' and '; 
+                    $criteria .= "$pk=" . $map[$pk]; 
+                }
+            }
+            if ($criteria == '') {
+                if ($method == 'update') {
+                    error_log("Range is not specified."); 
+                    return false; 
+                } else {
+                    # always insert when range is not specified. 
+                    $method = 'insert'; 
+                }
             }
         }
         
@@ -183,7 +196,9 @@ class phpx_dbi extends phpx_dbi_base {
         
         if ($method == 'update') {
             $sets = ''; 
-            foreach ($map as $k=>$v) {
+            foreach ($fields as $k) {
+                if (in_array($k, $keys)) continue; 
+                $v = $map[$k]; 
                 if (is_null($v)) continue; 
                 if ($sets != '') {
                     $sets .= ', '; 
@@ -199,22 +214,23 @@ class phpx_dbi extends phpx_dbi_base {
                 return false; 
             }
         } else if ($method == 'insert') {
-            $fields = ''; 
+            $names = ''; 
             $values = ''; 
-            foreach ($map as $k=>$v) {
+            foreach ($fields as $k) {
+                $v = $map[$k]; 
                 if (is_null($v)) continue; 
-                if ($fields != '') {
-                    $fields .= ','; 
+                if ($names != '') {
+                    $names .= ','; 
                     $values .= ','; 
                 }
-                $fields .= $k; 
+                $names .= $k; 
                 $values .= $v; 
             }
-            if ($fields == '') {
+            if ($names == '') {
                 error_log("the fields list to insert is empty (table $table_name)"); 
                 return false; 
             }
-            if (! $this->_query("insert into $table_name($fields) values($values)")) {
+            if (! $this->_query("insert into $table_name($names) values($values)")) {
                 error_log("failed to do table-insert on $table_name: " . $this->_error()); 
                 return false; 
             }
