@@ -5,10 +5,22 @@
  */
 
 # remove slashes only if magic-quotes is enabled
-function phpx_noslashes($url) {
-    if (get_magic_quotes_gpc())
-        $url = stripslashes($url); 
-    return $url; 
+function phpx_noslashes($value) {
+    if (get_magic_quotes_gpc()) {
+        switch (gettype($value)) {
+        case 'string': 
+            $value = stripslashes($value); 
+            break; 
+        case 'array': 
+            $newv = array(); 
+            foreach ($value as $k=>$v) {
+                $newv[$k] = phpx_noslashes($v); 
+            }
+            $value = $newv; 
+            break; 
+        }
+    }
+    return $value; 
 }
 
 function phpx_this_host($https = NULL) {

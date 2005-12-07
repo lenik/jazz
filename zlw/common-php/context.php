@@ -1,4 +1,7 @@
 <?php
+    require 'phpfixes.php'; 
+    _RequireOnce('http.php'); 
+    
     @session_start(); 
     
     function dump_section($name, $map, $sep = '') {
@@ -61,6 +64,8 @@
     <?php
         dump_section('$_GET', $_GET); 
         dump_section('$_POST', $_POST); 
+        dump_section('$_REQUEST', $_REQUEST); 
+        dump_section('$_REQUEST (noslashes)', phpx_noslashes($_REQUEST)); 
         dump_section('$_SESSION', $_SESSION); 
         dump_section('$_SERVER', $_SERVER);
         dump_section('$_ENV', $_ENV);
