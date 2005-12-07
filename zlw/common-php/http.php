@@ -48,11 +48,16 @@ function phpx_this_url($https = NULL) {
 }
 
 # concat this-url with specfied relative-url
-function phpx_url_relative($url, $https = NULL) {
+function phpx_url_relative($url = '', $https = NULL) {
     $ret = phpx_this_host($https); 
     
+    # http://server/dir/this [?...]
+    $self = $_SERVER['PHP_SELF']; 
+    if ($url == '' || substr($url, 0, 1) == '?')
+        return "$ret$self$url"; 
+    
     # http://server/dir
-    $dir = dirname($_SERVER['PHP_SELF']); 
+    $dir = dirname($self); 
     if (substr($dir, 0, 1) != '/')
         $dir = "/$dir"; 
     if (substr($dir, -1) == '/')
@@ -105,7 +110,7 @@ function phpx_url_arguments($url, $args) {
     return "$url?$trail"; 
 }
 
-function phpx_redirect_relative($url, $args = NULL, $https = NULL) {
+function phpx_redirect_relative($url = '', $args = NULL, $https = NULL) {
     $url = phpx_url_relative($url, $https); 
     header("Location: ".phpx_url_arguments($url, $args)); 
     exit; 
