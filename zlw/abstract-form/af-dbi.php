@@ -47,7 +47,7 @@ function phpx_af_query_as_input($dbi, $sql, $readonly_fields = '',
     $row = $dbi->_fetch_row($result); 
     for ($i = 0; $i < $nfields; $i++) {
         $field = $dbi->_field_name($result, $i); 
-        $value = htmlspecialchars($row[$i]); 
+        $value = $row[$i]; 
         echo "<af:input name=\"$field\" init=\"" . htmlspecialchars($value) . "\""; 
         if (in_array($field, $readonly_fields))
             echo " read-only=\"1\""; 
