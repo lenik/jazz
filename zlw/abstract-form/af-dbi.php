@@ -23,8 +23,8 @@ function phpx_af_special_hints($hint) {
     return $hint; 
 }
 
-function phpx_af_query_as_input($dbi, $sql, $readonly_fields = '', 
-                                $update_method = 'update', $name = '', $hint = '') {
+function phpx_af_query_edit($dbi, $sql, $key_fields = '', $values = array(), 
+                            $update_method = 'update', $name = '', $hint = '') {
     $result = $dbi->_query($sql); 
     if (! $result) {
         $code = $dbi->_errno(); 
@@ -34,7 +34,7 @@ function phpx_af_query_as_input($dbi, $sql, $readonly_fields = '',
     }
     
     $hint = phpx_af_special_hints($hint); 
-    $readonly_fields = explode(':', $readonly_fields); 
+    $key_fields = explode(':', $key_fields); 
     
     echo "<af:form"; 
     if ($name)
@@ -47,11 +47,24 @@ function phpx_af_query_as_input($dbi, $sql, $readonly_fields = '',
     $row = $dbi->_fetch_row($result); 
     for ($i = 0; $i < $nfields; $i++) {
         $field = $dbi->_field_name($result, $i); 
-        $value = $row[$i]; 
-        echo "<af:input name=\"$field\" init=\"" . htmlspecialchars($value) . "\""; 
-        if (in_array($field, $readonly_fields))
-            echo " read-only=\"1\""; 
-        echo "/>\n"; 
+        if (array_key_exists($field, $values))
+            $value = $values[$field]; 
+        else if ($row)
+            $value = $row[$i]; 
+        else
+            $value = NULL; 
+        
+        $flags = explode(' ', $dbi->_field_flags($result, $i)); 
+        if ((! $row) && in_array('auto_increment', $flags)) {
+            # insert new, skip this input
+        } else {
+            echo "<af:input name=\"$field\""; 
+            if (! is_null($value))
+                echo " init=\"" . htmlspecialchars($value) . "\""; 
+            if (in_array($field, $key_fields))
+                echo " read-only=\"1\""; 
+            echo "/>\n"; 
+        }
     }
     echo "<af:method name=\"" . htmlspecialchars($update_method) . "\"/>\n"; 
     echo "</af:form>\n"; 
@@ -59,9 +72,9 @@ function phpx_af_query_as_input($dbi, $sql, $readonly_fields = '',
     return true; 
 }
 
-function phpx_af_query_as_table($dbi, $sql, $primary_key = 'id', 
-                                $methods = 'delete:modify', $name = '', $hint = '', 
-                                $page_size = -1, $page = 0) {
+function phpx_af_query_view($dbi, $sql, $primary_key = 'id', 
+                            $methods = 'delete:modify', $name = '', $hint = '', 
+                            $page_size = -1, $page = 0) {
     $result = $dbi->_query($sql); 
     if (! $result) {
         $code = $dbi->_errno(); 
