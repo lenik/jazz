@@ -7,6 +7,16 @@ require '_Phpfixes.php';
 _RequireOnce('string.php'); 
 _RequireOnce('dbi/' . DBI_DIALECT . '.php'); 
 
+$_CONNECTED_DBI = array(); 
+function phpx_dbi_cleanup() {
+    global $_CONNECTED_DBI; 
+    foreach ($_CONNECTED_DBI as $dbi) {
+        if ($dbi->_link) $dbi->_close(); 
+    }
+    $_CONNECTED_DBI = array(); 
+}
+register_shutdown_function('phpx_dbi_cleanup'); 
+
 class phpx_dbi extends phpx_dbi_base {
     var $_host; 
     var $_user; 
@@ -64,13 +74,19 @@ class phpx_dbi extends phpx_dbi_base {
             }
         }
         
-        $this->_debug && logger('Connect: ', join('|', $passargs)); 
-        if ($persist) {
+        $this->_debug && error_log('Connect: ' . join('|', $passargs)); 
+        if ($persist)
             $this->_link = parent::_connect($host, $user, $password); 
-        } else {
+        else
             $this->_link = parent::_pconnect($host, $user, $password); 
+        
+        if ($this->_link) {
+            global $_CONNECTED_DBI; 
+            $_CONNECTED_DBI[] = $this; 
+            $this->_debug && error_log("Connect to $host succeeded: $this->_link"); 
+        } else {
+            $this->_debug && error_log("Connect to $host failed: " . $this->_error()); 
         }
-        $this->_debug && logger('Connect-Return: ', $this->_link ? "succeeded, $this->_link" : 'failed'); 
         
         # set connection character set.
         if ($this->_link)
@@ -85,9 +101,13 @@ class phpx_dbi extends phpx_dbi_base {
     function _close() {
         if (is_null($this->_link))
             error_log("Already closed"); 
-        $this->_debug && logger('Connect-Close: ', $this->_link); 
+        $this->_debug && error_log('Connect-Close: ' . $this->_link); 
         parent::_close($this->_link); 
         $this->_link = NULL; 
+        global $_CONNECTED_DBI; 
+        $index = array_search($this, $_CONNECTED_DBI); 
+        if ($index !== false)
+            array_splice($_CONNECTED_DBI, $index, 1); 
     }
     
     function _reuse($dbi) {
