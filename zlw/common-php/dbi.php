@@ -123,7 +123,7 @@ class phpx_dbi extends phpx_dbi_base {
             $PHPX_CONNECTED_DBI[] = $this; 
             $this->_log("Connect to $host succeeded: $this->_link"); 
         } else {
-            $this->_warning("Connect to $host failed: " . $this->_error()); 
+            $this->_warning("Connect to $host => failed: " . $this->_error()); 
             return false; 
         }
         
@@ -183,7 +183,7 @@ class phpx_dbi extends phpx_dbi_base {
         $this->_log("SQL: $sql"); 
         $ret = parent::_query($sql); 
         if (! $ret)
-            $this->_warning("SQL: $sql => failed", $this->_error()); 
+            $this->_warning("SQL: $sql => failed: ", $this->_error()); 
         return $ret; 
     }
     
