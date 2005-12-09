@@ -105,5 +105,23 @@ class phpx_dbi_base {
                                       return call_user_func_array('mysql_thread_id',            $args); }
     function _unbuffered_query()    { $args = func_get_args(); $args[] = $this->_link;  #1
                                       return call_user_func_array('mysql_unbuffered_query',     $args); }
+    
+    function _begin($link = NULL) {
+        if (is_null($link)) 
+            $link = $this->_link; 
+        return mysql_query('begin', $link); 
+    }
+    
+    function _commit($link = NULL) {
+        if (is_null($link)) 
+            $link = $this->_link; 
+        return mysql_query('commit', $link); 
+    }
+    
+    function _rollback($link = NULL) {
+        if (is_null($link)) 
+            $link = $this->_link; 
+        return mysql_query('rollback', $link); 
+    }
 }
 ?>
