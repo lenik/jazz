@@ -1,24 +1,25 @@
 <?php
-require '_Phpfixes.php'; 
-_RequireOnce('xml.php'); 
-_RequireOnce('http.php'); 
 
-function phpx_af_base($user = NULL) {
-    $home = dirname(__FILE__); 
-    
+# Require Common-PHP::
+#   http.php
+#   xml.php
+#   dbi.php
+
+function phpx_af_base($req = NULL) {
+    $inc = dirname(__FILE__); 
+    $inc = str_replace('\\', '/', $inc); 
     # URL-include, always using absolute url. 
-    if (strpos($home, '//') !== false)
-        return $home;                   # see t-dirname
-    
-    if (is_null($user))
-        $user = realpath($_SERVER['PHP_SELF']); 
-    $user = dirname($user); 
-    $user_len = strlen($user); 
-    
+    if (strpos($inc, '//') !== false)
+        return $inc;                   # see t-dirname
+    if (is_null($req))
+        $req = realpath($_SERVER['SCRIPT_FILENAME']); 
+    $req = str_replace('\\', '/', $req); 
+    $req = dirname($req); 
+    $req_len = strlen($req); 
     # starts-with ? 
-    if (substr($home, 0, $user_len) == $user)
-        return '.' . substr($home, $user_len); 
-    return $home; 
+    if (substr($inc, 0, $req_len) == $req)
+        return '.' . substr($inc, $req_len); 
+    return $inc; 
 }
 global $PHPX_AF_BASE; 
 $PHPX_AF_BASE = phpx_af_base(); 
@@ -30,7 +31,7 @@ function phpx_af_logger($dbi, $level, $message) {
     if (! is_null($dbi)) {
         $source = 'AF-DBI'; 
         $code = $dbi->_errno(); 
-        $message .= "\nDBI Status (The status may be not reflect the current state): \n"
+        $message .= "<hr />DBI Status (The status may be not reflect the current state): <br />\n"
             . $dbi->_error(); 
     }
     global $PHPX_XML_BEGIN; 
@@ -45,18 +46,9 @@ function phpx_af_logger($dbi, $level, $message) {
 global $PHPX_DBI_LOGGER; 
 $PHPX_DBI_LOGGER = phpx_af_logger; 
 
-function phpx_af_xml($af_dir, $content, $title = 'Abstract Form', $term = false) {
-    phpx_xml_header(); 
-    echo "<?xml-stylesheet type=\"text/xsl\" href=\"$af_dir/html-view.xsl\"?>\n"; 
-    echo "<af:abstract-form"
-       . " xmlns=\"http://www.w3.org/1999/xhtml\""
-       . " xmlns:af=\"http://www.bodz.net/xml/zlw/abstract-form\""
-       . " xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\""
-       . " xsi:schemaLocation=\"http://www.bodz.net/xml/zlw/abstract-form"
-       . "   $af_dir/abstract-form.xsd\">\n"; 
-    echo "<af:section name=\".page\">\n"; 
-    echo "<af:scalar name=\"title\">$title</af:scalar>\n"; 
-    echo "</af:section>\n"; 
+function phpx_af_xml($content, $title = 'Abstract Form', $term = false) {
+    phpx_af_xml_start($title); 
+    
     echo "<af:section>\n"; 
     if (substr($content, 0, 1) == '&') {
         $func = substr($content, 1); 
@@ -70,9 +62,31 @@ function phpx_af_xml($af_dir, $content, $title = 'Abstract Form', $term = false)
         echo $content; 
     }
     echo "</af:section>\n"; 
+    
+    phpx_af_xml_end(); 
+    
+    if ($term) exit; 
+}
+
+function phpx_af_xml_start($title = 'Abstract Form') {
+    global $PHPX_AF_BASE; 
+    
+    phpx_xml_header(); 
+    echo "<?xml-stylesheet type=\"text/xsl\" href=\"$PHPX_AF_BASE/html-view.xsl\"?>\n"; 
+    echo "<af:abstract-form"
+       . " xmlns=\"http://www.w3.org/1999/xhtml\""
+       . " xmlns:af=\"http://www.bodz.net/xml/zlw/abstract-form\""
+       . " xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\""
+       . " xsi:schemaLocation=\"http://www.bodz.net/xml/zlw/abstract-form"
+       . "   $PHPX_AF_BASE/abstract-form.xsd\">\n"; 
+    echo "<af:section name=\".page\">\n"; 
+    echo "<af:scalar name=\"title\">$title</af:scalar>\n"; 
+    echo "<af:scalar name=\"af-base\">$PHPX_AF_BASE</af:scalar>\n"; 
+    echo "</af:section>\n"; 
+}
+
+function phpx_af_xml_end() {
     echo "</af:abstract-form>\n"; 
-    if ($term)
-        exit; 
 }
 
 function phpx_af_special_hints($hint) {
@@ -103,7 +117,7 @@ function phpx_af_error($err, $code = NULL, $source = NULL) {
     if (is_null($err))
         $xml .= 'Unnamed error'; 
     else
-        $xml .= htmlspecialchars($err); 
+        $xml .= $err;                   # may contain html or others. 
     $xml .= "</af:error>\n"; 
     return $xml; 
 }
