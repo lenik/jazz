@@ -41,7 +41,11 @@ abstract-form</xs:documentation>
 			</xs:element>
 		</xs:choice>
 		<xs:attribute name="name" type="xs:string" use="required"/>
-		<xs:attribute name="hint-base" type="xs:string"/>
+		<xs:attribute name="hint" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>hint-base</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
 	</xs:complexType>
 	<xs:element name="scalar">
 		<xs:complexType mixed="true">
@@ -57,8 +61,10 @@ abstract-form</xs:documentation>
 			<xs:sequence>
 				<xs:element ref="af:method" minOccurs="0" maxOccurs="unbounded"/>
 				<xs:element name="item" minOccurs="0" maxOccurs="unbounded">
-					<xs:complexType>
-						<xs:group ref="af:data-group"/>
+					<xs:complexType mixed="true">
+						<xs:sequence>
+							<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>
@@ -80,8 +86,10 @@ abstract-form</xs:documentation>
 			<xs:sequence>
 				<xs:element ref="af:method" minOccurs="0" maxOccurs="unbounded"/>
 				<xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
-					<xs:complexType>
-						<xs:group ref="af:data-group"/>
+					<xs:complexType mixed="true">
+						<xs:sequence>
+							<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
 						<xs:attribute name="key" type="xs:string" use="required"/>
 					</xs:complexType>
 				</xs:element>
@@ -184,9 +192,12 @@ abstract-form</xs:documentation>
 					<xs:documentation>constraints are not available yet. </xs:documentation>
 				</xs:annotation>
 				<xs:choice>
+					<xs:element name="list-ref" type="xs:string"/>
 					<xs:element name="map-ref" type="xs:string"/>
 					<xs:element name="table-ref" type="xs:string"/>
-					<xs:element name="list-ref" type="xs:string"/>
+					<xs:element ref="af:list"/>
+					<xs:element ref="af:map"/>
+					<xs:element ref="af:table"/>
 				</xs:choice>
 			</xs:sequence>
 			<xs:attributeGroup ref="af:data-attribute-group"/>
