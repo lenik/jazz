@@ -106,7 +106,7 @@
 				<!--Constraints-->
 				<xsl:element name="script">
 					<xsl:attribute name="language">javascript</xsl:attribute>
-					<xsl:attribute name="src"><xsl:value-of select="concat($af-base, '/abstract-form.js')"/></xsl:attribute>
+					<xsl:attribute name="src"><xsl:value-of select="concat($af-base, '/html-view.js')"/></xsl:attribute>
 				</xsl:element>
 				<!--xsl:if test="$check-constraint">
 					<script language="javascript" src="abstract-form/constraints.js"/>
@@ -129,7 +129,7 @@
 				<!--<HR/>-->
 				<cite>Powered by ZLW::Abstract-Form</cite>
 				<br/>
-				<cite>$Id: html-view.xsl,v 1.6.2.1 2005-12-09 07:59:32 dansei Exp $</cite>
+				<cite>$Id: html-view.xsl,v 1.6.2.2 2005-12-09 09:10:40 dansei Exp $</cite>
 			</xsl:with-param>
 		</xsl:call-template>
 	</xsl:template>
@@ -566,10 +566,7 @@
 			</tr>
 			<tr>
 				<td>
-					<xsl:call-template name="t-dump">
-						<xsl:with-param name="path" select="@name"/>
-						<xsl:with-param name="owner" select="."/>
-					</xsl:call-template>
+					<xsl:copy-of select="node()"/>
 				</td>
 			</tr>
 		</table>
