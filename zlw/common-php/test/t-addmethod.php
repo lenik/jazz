@@ -11,5 +11,5 @@ $a = new A;
 echo "a.name: " . $a->name . "\n"; 
 $a->about(); 
 
-# $a->newfunc = create_function
+$a->newfunc = create_function
 ?>

@@ -54,7 +54,8 @@ class phpx_dbi extends phpx_dbi_base {
     function _log() {
         if (! $_debug) 
             return true; 
-        $message = join('', func_get_args()); 
+        $args = func_get_args(); 
+        $message = join('', $args); 
         $logger = $this->_logger; 
         $logger($this, E_NOTICE, $message); 
         return true; 
@@ -69,7 +70,8 @@ class phpx_dbi extends phpx_dbi_base {
     }
     
     function _fatal() {
-        $message = join('', func_get_args()); 
+        $args = func_get_args(); 
+        $message = join('', $args); 
         $logger = $this->_logger; 
         $logger($this, E_ERROR, $message); 
         return false; 
@@ -217,7 +219,7 @@ class phpx_dbi extends phpx_dbi_base {
     }
     
     function _begin() {
-        if ($_transacting) {
+        if ($this->_transacting) {
             $this->_fatal('transaction has already begun'); 
             return false; 
         }
@@ -226,24 +228,24 @@ class phpx_dbi extends phpx_dbi_base {
             return false; 
         }
         if (parent::_begin($this->$_link)) {
-            $_transacting = true; 
+            $this->_transacting = true; 
             return true; 
         }
         return false; 
     }
     
     function _commit($auto_rollback = false) {
-        if (! $_transacting) {
+        if (! $this->_transacting) {
             $this->_fatal('transaction has not begun, yet'); 
             return false; 
         }
         if (parent::_commit($this->$_link)) {
-            $_transacting = false; 
+            $this->_transacting = false; 
             return true; 
         }
         if ($auto_rollback) {
             if (parent::_rollback($this->$_link)) {
-                $_transacting = false; 
+                $this->_transacting = false; 
                 return 'rollback'; 
             }
         }
@@ -251,19 +253,23 @@ class phpx_dbi extends phpx_dbi_base {
     }
     
     function _rollback() {
-        if (! $_transacting) {
+        if (! $this->_transacting) {
             $this->_fatal('transaction has not begun, yet'); 
             return false; 
         }
         if (parent::_rollback($this->$_link)) {
-            $_transacting = false; 
+            $this->_transacting = false; 
             return true; 
         }
         return false; 
     }
     
-    function _update_table($table_name, $map, $primary_key = 'id', $method = NULL) {
-        $keys = explode(':', $primary_key); 
+    function _update_table($table_name, $map, $primary_key = NULL, $method = NULL) {
+        if (! is_null($primary_key)) {
+            $keys = explode(':', $primary_key); 
+        } else {
+            $keys = array(); 
+        }
         $criteria = ''; 
         
         #  - retrieve the table meta info
@@ -289,6 +295,11 @@ class phpx_dbi extends phpx_dbi_base {
                 case 'string': 
                     $map[$field] = "'" . $this->_escape_string($map[$field]) . "'"; 
                     break; 
+                }
+                if (is_null($primary_key)) {
+                    $flags = $this->_field_flags($result, $i); 
+                    if (strpos($flags, 'primary_key') !== false)
+                        $keys[] = $field; 
                 }
             }
         }

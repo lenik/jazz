@@ -38,9 +38,9 @@ function phpx_af_logger($dbi, $level, $message) {
     if ($PHPX_XML_BEGIN) {
         echo phpx_af_error($message, $code, $source); 
     } else {
-        global $PHPX_AF_BASE; 
-        phpx_af_xml($PHPX_AF_BASE, '&phpx_af_error', 'Error', true, 
+        phpx_af_xml('&phpx_af_error', 'Fatal Error', true, 
             $message, $code, $source); 
+        exit; 
     }
 }
 global $PHPX_DBI_LOGGER; 
@@ -54,7 +54,7 @@ function phpx_af_xml($content, $title = 'Abstract Form', $term = false) {
         $func = substr($content, 1); 
         if (function_exists($func)) {
             $args = func_get_args(); 
-            echo call_user_func_array($func, array_slice($args, 4)); 
+            echo call_user_func_array($func, array_slice($args, 3)); 
         } else {
             echo $content; 
         }
