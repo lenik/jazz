@@ -5,37 +5,27 @@
 	<af:section name=".page">
 		<af:scalar name="title">Abstract Form Sample</af:scalar>
 		<af:map name="meta">
-			<af:entry key="Key1">
-				<af:scalar>Value1</af:scalar>
-			</af:entry>
-			<af:entry key="Key2">
-				<af:scalar>Value2</af:scalar>
-			</af:entry>
+			<af:entry key="Key1">Value1</af:entry>
+			<af:entry key="Key2">Value2</af:entry>
 		</af:map>
+		<af:scalar name="data-type">visible</af:scalar>
+		<af:user name="copyright2">
+			<strong>My<u>Very</u>Copyright!</strong>
+		</af:user>
+		<af:scalar name="check-constratins"/>
 	</af:section>
 	<af:section name="Start">
-		<af:scalar name="Scalar" type="number">5344553</af:scalar>
-		<af:list name="List" sort="true" sort-order="descending" type="integer">
+		<af:scalar name="Name" type="string" hold="true">Lenik</af:scalar>
+		<af:scalar name="Age" type="number">11</af:scalar>
+		<af:scalar name="Session" type="number" hold="true">7878</af:scalar>
+		<af:list name="ShopCart" sort="true" sort-order="descending" type="integer" hold="true">
 			<af:method name="Add"/>
 			<af:method name="Remove"/>
-			<af:item>
-				<af:scalar>98</af:scalar>
-			</af:item>
-			<af:item>
-				<af:scalar>12</af:scalar>
-			</af:item>
-			<af:item>
-				<af:scalar>4444</af:scalar>
-			</af:item>
-			<af:item>
-				<af:scalar>33</af:scalar>
-			</af:item>
-			<af:item>
-				<af:scalar>0</af:scalar>
-			</af:item>
-			<af:item>
-				<af:scalar>321</af:scalar>
-			</af:item>
+			<af:item>cat</af:item>
+			<af:item>dog</af:item>
+			<af:item/>
+			<af:item>pear</af:item>
+			<af:item>coca cola</af:item>
 		</af:list>
 		<af:form>
 			<af:input name="name" type="string" init="Lenik"/>
@@ -50,18 +40,10 @@
 	</af:section>
 	<af:section name="Second">
 		<af:map name="BigApple">
-			<af:entry key="color">
-				<af:scalar>red</af:scalar>
-			</af:entry>
-			<af:entry key="size">
-				<af:scalar>big</af:scalar>
-			</af:entry>
-			<af:entry key="weight">
-				<af:scalar>12kg</af:scalar>
-			</af:entry>
-			<af:entry key="length">
-				<af:scalar>22cm</af:scalar>
-			</af:entry>
+			<af:entry key="color">red</af:entry>
+			<af:entry key="size">big</af:entry>
+			<af:entry key="weight">12kg</af:entry>
+			<af:entry key="length">22cm</af:entry>
 		</af:map>
 		<af:table name="table1">
 			<af:method name="Cat"/>
