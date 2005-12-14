@@ -208,12 +208,24 @@ class phpx_dbi extends phpx_dbi_base {
     }
     
     function _evaluate($sql) {
-        $result = false; 
         $ret = $this->_query($sql); 
-        if (is_bool($ret))
-            return $ret; 
+        if ($ret === false)
+            return false; 
         if ($row = $this->_fetch_row($ret))
             $result = $row[0]; 
+        else
+            $result = false; 
+        $this->_free_result($ret); 
+        return $result; 
+    }
+    
+    function _evaluates($sql) {
+        $ret = $this->_query($sql); 
+        if ($ret === false)
+            return false; 
+        $result = array(); 
+        while ($row = $this->_fetch_row($ret))
+            $result[] = $row[0]; 
         $this->_free_result($ret); 
         return $result; 
     }
