@@ -4,6 +4,10 @@
  * HTTP Functions
  */
 
+function phpx_transient() {
+    header('Cache-Control: no-cache'); 
+}
+
 # remove slashes only if magic-quotes is enabled
 function phpx_noslashes($value) {
     if (get_magic_quotes_gpc()) {

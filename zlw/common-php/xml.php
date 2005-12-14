@@ -4,10 +4,6 @@
  *
  * Dynamic XML Support
  */
- 
-function phpx_transient() {
-    header('Cache-Control: no-cache'); 
-}
 
 function phpx_xml_header($encoding = 'utf-8', $version = '1.0') {
     global $PHPX_XML_BEGIN; 
