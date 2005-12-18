@@ -15,7 +15,7 @@ abstract-form</xs:documentation>
 	<xs:element name="section" type="af:section-type"/>
 	<xs:complexType name="section-type">
 		<xs:choice minOccurs="0" maxOccurs="unbounded">
-			<xs:group ref="af:data-group"/>
+			<xs:group ref="af:output-group"/>
 			<xs:element ref="af:error"/>
 			<xs:element name="form" minOccurs="0" maxOccurs="unbounded">
 				<xs:complexType>
@@ -34,7 +34,7 @@ abstract-form</xs:documentation>
 					</xs:attribute>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="_section" type="af:section-type">
+			<xs:element name="sub-section" type="af:section-type">
 				<xs:annotation>
 					<xs:documentation>RECURSIVE SECTIONS ARE NOT SUPPORTED YET. </xs:documentation>
 				</xs:annotation>
@@ -46,20 +46,22 @@ abstract-form</xs:documentation>
 				<xs:documentation>hint-base</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
+		<xs:attribute name="hidden" type="xs:boolean"/>
 	</xs:complexType>
+	<!--OUTPUT-->
 	<xs:element name="scalar">
 		<xs:complexType mixed="true">
 			<xs:sequence>
-				<xs:element ref="af:method" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:group ref="af:data-commons"/>
 				<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 			</xs:sequence>
-			<xs:attributeGroup ref="af:data-attribute-group"/>
+			<xs:attributeGroup ref="af:output-attributes"/>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="list">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="af:method" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:group ref="af:data-commons"/>
 				<xs:element name="item" minOccurs="0" maxOccurs="unbounded">
 					<xs:complexType mixed="true">
 						<xs:sequence>
@@ -68,7 +70,7 @@ abstract-form</xs:documentation>
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>
-			<xs:attributeGroup ref="af:data-attribute-group"/>
+			<xs:attributeGroup ref="af:output-attributes"/>
 			<xs:attribute name="sort" type="xs:boolean"/>
 			<xs:attribute name="sort-order" default="ascending">
 				<xs:simpleType>
@@ -84,7 +86,7 @@ abstract-form</xs:documentation>
 	<xs:element name="map">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="af:method" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:group ref="af:data-commons"/>
 				<xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
 					<xs:complexType mixed="true">
 						<xs:sequence>
@@ -94,7 +96,7 @@ abstract-form</xs:documentation>
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>
-			<xs:attributeGroup ref="af:data-attribute-group"/>
+			<xs:attributeGroup ref="af:output-attributes"/>
 			<xs:attribute name="sort">
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
@@ -118,12 +120,21 @@ abstract-form</xs:documentation>
 	<xs:element name="table">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="af:method" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:group ref="af:data-commons"/>
 				<xs:element name="column" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>column name is used as tag-name in row(s). </xs:documentation>
+					</xs:annotation>
 					<xs:complexType>
-						<xs:attribute name="name" type="xs:NMTOKEN" use="required">
+						<xs:group ref="af:data-commons"/>
+						<xs:attribute name="name" type="xs:string">
 							<xs:annotation>
-								<xs:documentation>tag-name</xs:documentation>
+								<xs:documentation>Tag Name</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="type" type="xs:boolean">
+							<xs:annotation>
+								<xs:documentation>Override table/@type</xs:documentation>
 							</xs:annotation>
 						</xs:attribute>
 						<xs:attribute name="primary-key" type="xs:boolean"/>
@@ -147,16 +158,16 @@ abstract-form</xs:documentation>
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>
-			<xs:attributeGroup ref="af:data-attribute-group"/>
+			<xs:attributeGroup ref="af:output-attributes"/>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="user">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element ref="af:method" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:group ref="af:data-commons"/>
 				<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 			</xs:sequence>
-			<xs:attributeGroup ref="af:data-attribute-group"/>
+			<xs:attributeGroup ref="af:output-attributes"/>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="error">
@@ -165,56 +176,21 @@ abstract-form</xs:documentation>
 				<xs:element ref="af:method" minOccurs="0" maxOccurs="unbounded"/>
 				<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 			</xs:sequence>
-			<xs:attributeGroup ref="af:data-attribute-group"/>
+			<xs:attribute name="name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Error name is meaningless. </xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="type" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Maybe Java-Exception-Class</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
 			<xs:attribute name="source" type="xs:string"/>
 			<xs:attribute name="code" type="xs:string"/>
 		</xs:complexType>
 	</xs:element>
-	<xs:element name="input">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:group ref="af:constraint-group" minOccurs="0" maxOccurs="unbounded"/>
-			</xs:sequence>
-			<xs:attributeGroup ref="af:data-attribute-group"/>
-			<xs:attribute name="init" type="xs:string"/>
-			<xs:attribute name="multiline" type="xs:boolean"/>
-			<xs:attribute name="read-only" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>hidden input. </xs:documentation>
-				</xs:annotation>
-			</xs:attribute>
-		</xs:complexType>
-	</xs:element>
-	<xs:element name="selector">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:annotation>
-					<xs:documentation>constraints are not available yet. </xs:documentation>
-				</xs:annotation>
-				<xs:choice>
-					<xs:element name="list-ref" type="xs:string"/>
-					<xs:element name="map-ref" type="xs:string"/>
-					<xs:element name="table-ref" type="xs:string"/>
-					<xs:element ref="af:list"/>
-					<xs:element ref="af:map"/>
-					<xs:element ref="af:table"/>
-				</xs:choice>
-			</xs:sequence>
-			<xs:attributeGroup ref="af:data-attribute-group"/>
-			<xs:attribute name="multiple" type="xs:boolean"/>
-		</xs:complexType>
-	</xs:element>
-	<xs:element name="method">
-		<xs:complexType>
-			<xs:attributeGroup ref="af:data-attribute-group"/>
-			<xs:attribute name="hint" type="xs:string">
-				<xs:annotation>
-					<xs:documentation>For web-app, hint may be an href.</xs:documentation>
-				</xs:annotation>
-			</xs:attribute>
-		</xs:complexType>
-	</xs:element>
-	<xs:group name="data-group">
+	<xs:group name="output-group">
 		<xs:choice>
 			<xs:element ref="af:scalar"/>
 			<xs:element ref="af:list"/>
@@ -223,7 +199,7 @@ abstract-form</xs:documentation>
 			<xs:element ref="af:user"/>
 		</xs:choice>
 	</xs:group>
-	<xs:attributeGroup name="data-attribute-group">
+	<xs:attributeGroup name="output-attributes">
 		<xs:attribute name="name" type="xs:string" use="optional"/>
 		<xs:attribute name="type" type="xs:string" use="optional">
 			<xs:annotation>
@@ -239,7 +215,70 @@ for output-group, type-specific render will applied on the data. </xs:documentat
 				<xs:documentation>control the lifetime of data, default local</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
+		<xs:attribute name="hidden" type="xs:boolean" use="optional"/>
 	</xs:attributeGroup>
+	<!--INPUT-->
+	<xs:element name="input">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:group ref="af:input-commons"/>
+				<xs:group ref="af:constraint-group" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="af:input-attributes"/>
+			<xs:attribute name="init" type="xs:string"/>
+			<xs:attribute name="multiline" type="xs:boolean"/>
+			<xs:attribute name="read-only" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>hidden input. </xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="selector">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:annotation>
+					<xs:documentation>constraints are not available yet. </xs:documentation>
+				</xs:annotation>
+				<xs:group ref="af:input-commons"/>
+				<xs:element name="init" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>union @init attribute.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:choice>
+					<xs:element name="list-ref" type="xs:string"/>
+					<xs:element name="map-ref" type="xs:string"/>
+					<xs:element name="table-ref" type="xs:string"/>
+					<xs:element ref="af:list"/>
+					<xs:element ref="af:map"/>
+					<xs:element ref="af:table"/>
+				</xs:choice>
+			</xs:sequence>
+			<xs:attributeGroup ref="af:input-attributes"/>
+			<xs:attribute name="init" type="xs:string"/>
+			<xs:attribute name="multiple" type="xs:boolean"/>
+			<xs:attribute name="read-only" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>hidden input. </xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="method">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:group ref="af:input-commons"/>
+				<xs:element name="method-parameter" type="af:parameter" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attributeGroup ref="af:input-attributes"/>
+			<xs:attribute name="hint" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>For web-app, hint may be an href.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
 	<xs:group name="input-group">
 		<xs:choice>
 			<xs:element ref="af:input"/>
@@ -250,11 +289,45 @@ for output-group, type-specific render will applied on the data. </xs:documentat
 					<xs:documentation>NOT USED.</xs:documentation>
 				</xs:annotation>
 				<xs:complexType>
+					<xs:sequence>
+						<xs:group ref="af:input-commons"/>
+					</xs:sequence>
 					<xs:attribute name="xpointer" type="xs:string" use="required"/>
 				</xs:complexType>
 			</xs:element>
 		</xs:choice>
 	</xs:group>
+	<xs:group name="input-commons">
+		<xs:sequence>
+			<xs:element name="type-parameter" type="af:parameter" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:attributeGroup name="input-attributes">
+		<xs:attribute name="name" type="xs:string" use="optional"/>
+		<xs:attribute name="type" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>applicable type, default text
+
+for input-group, type-constraint will applied on request values; 
+
+for output-group, type-specific render will applied on the data. </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<!--BASE-->
+	<xs:group name="data-commons">
+		<xs:sequence>
+			<xs:element name="type-parameter" type="af:parameter" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="af:method" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:complexType name="parameter">
+		<xs:sequence>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="value" type="xs:string"/>
+	</xs:complexType>
 	<xs:group name="constraint-group">
 		<xs:choice>
 			<xs:element name="and">
