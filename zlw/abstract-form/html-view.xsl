@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml" xmlns:af="http://www.bodz.net/xml/zlw/abstract-form" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 	<xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes"/>
-	<xsl:variable name="encoding">
-		<xsl:call-template name="t-param-text">
-			<xsl:with-param name="name" select="'encoding'"/>
-			<xsl:with-param name="default" select="'utf-8'"/>
-		</xsl:call-template>
-	</xsl:variable>
-	<xsl:variable name="af-base">
-		<xsl:call-template name="t-param-text">
-			<xsl:with-param name="name" select="'af-base'"/>
-			<xsl:with-param name="default" select="'.'"/>
-		</xsl:call-template>
-	</xsl:variable>
 	<xsl:template name="t-param">
 		<xsl:param name="name"/>
 		<xsl:param name="default"/>
@@ -44,84 +32,29 @@
 			</xsl:when>
 		</xsl:choose>
 	</xsl:template>
-	<!--HTML-->
+	<xsl:param name="encoding">
+		<xsl:call-template name="t-param-text">
+			<xsl:with-param name="name" select="'encoding'"/>
+			<xsl:with-param name="default" select="'utf-8'"/>
+		</xsl:call-template>
+	</xsl:param>
+	<xsl:param name="af-base">
+		<xsl:call-template name="t-param-text">
+			<xsl:with-param name="name" select="'af-base'"/>
+			<xsl:with-param name="default" select="'.'"/>
+		</xsl:call-template>
+	</xsl:param>
+	<xsl:param name="af-uri" select="'http://www.bodz.net/xml/zlw/abstract-form'"/>
+	<xsl:param name="show-type">
+		<xsl:call-template name="t-param-text">
+			<xsl:with-param name="name" select="'show-type'"/>
+			<xsl:with-param name="default" select="'hidden'"/>
+		</xsl:call-template>
+	</xsl:param>
 	<xsl:template match="/af:abstract-form">
-		<!---->
-		<!--Encoding-->
-		<xsl:variable name="encoding">
-			<xsl:call-template name="t-param-text">
-				<xsl:with-param name="name" select="'encoding'"/>
-				<xsl:with-param name="default" select="'utf-8'"/>
-			</xsl:call-template>
-		</xsl:variable>
-		<xsl:variable name="title">
-			<xsl:call-template name="t-param-text">
-				<xsl:with-param name="name" select="'title'"/>
-				<xsl:with-param name="default" select="'Abstract Form (Unnamed)'"/>
-			</xsl:call-template>
-		</xsl:variable>
-		<html>
-			<head>
-				<!---->
-				<!--Title-->
-				<title>
-					<xsl:value-of select="$title"/>
-				</title>
-				<!---->
-				<!--Meta *any*-->
-				<xsl:variable name="meta" select="//af:section[@name='.page']/af:map[@name='meta']"/>
-				<xsl:if test="$meta">
-					<xsl:for-each select="$meta/af:entry">
-						<xsl:element name="meta">
-							<xsl:attribute name="http-equiv"><xsl:value-of select="@key"/></xsl:attribute>
-							<xsl:attribute name="content"><xsl:call-template name="t-all-text"/></xsl:attribute>
-						</xsl:element>
-					</xsl:for-each>
-				</xsl:if>
-				<!---->
-				<!--CSS Stylesheet of this Html-View-->
-				<style type="text/css">
-					<xsl:call-template name="t-param-text">
-						<xsl:with-param name="name" select="'css'"/>
-						<xsl:with-param name="default">.indent { }
-.data-type { font-weight: bold }
-.data-name { text-decoration: underline }
-.data-separator { 
-	height: 1px; 
-	bottom-border: 1px solid gray 
-}
-.scalar { font-family: courier, helvetica, sans-serif, arial }
-.list { }
-.map { }
-.table { }
-.user { }
-.error { border: red 3px solid; color: red }
-.error-message { font-style: italic; color: magenta }
-.input { }
-.selector { }
-.event { }</xsl:with-param>
-					</xsl:call-template>
-				</style>
-				<!---->
-				<!--Constraints-->
-				<xsl:element name="script">
-					<xsl:attribute name="language">javascript</xsl:attribute>
-					<xsl:attribute name="src"><xsl:value-of select="concat($af-base, '/html-view.js')"/></xsl:attribute>
-				</xsl:element>
-				<!--xsl:if test="$check-constraint">
-					<script language="javascript" src="abstract-form/constraints.js"/>
-				</xsl:if-->
-			</head>
-			<body>
-				<h1>
-					<xsl:value-of select="$title"/>
-				</h1>
-				<hr/>
-				<xsl:call-template name="t-sections"/>
-				<xsl:call-template name="t-copyright"/>
-			</body>
-		</html>
+		<xsl:call-template name="t-abstract-form"/>
 	</xsl:template>
+	<!--HTML-->
 	<xsl:template name="t-copyright">
 		<xsl:call-template name="t-param">
 			<xsl:with-param name="name" select="'copyright'"/>
@@ -129,7 +62,7 @@
 				<!--<HR/>-->
 				<cite>Powered by ZLW::Abstract-Form</cite>
 				<br/>
-				<cite>$Id: html-view.xsl,v 1.6.2.2 2005-12-09 09:10:40 dansei Exp $</cite>
+				<cite>$Id: html-view.xsl,v 1.6.2.3 2005-12-18 14:53:00 dansei Exp $</cite>
 			</xsl:with-param>
 		</xsl:call-template>
 	</xsl:template>
@@ -142,15 +75,7 @@
 	<xsl:template name="t-name">
 		<span class="data-name">
 			<xsl:value-of select="@name"/>
-			<xsl:if test="@hold='true'">
-				<xsl:variable name="data-type">
-					<xsl:call-template name="t-param-text">
-						<xsl:with-param name="name" select="'data-type'"/>
-						<xsl:with-param name="default" select="'hidden'"/>
-					</xsl:call-template>
-				</xsl:variable>
-				<xsl:if test="$data-type='visible'">(HOLD)</xsl:if>
-			</xsl:if>
+			<xsl:if test="@hold='true' and $show-type='true'">(HOLD)</xsl:if>
 		</span>
 	</xsl:template>
 	<xsl:template name="t-all-text">
@@ -206,11 +131,88 @@
 	<xsl:template name="t-serialize">
 		<xsl:value-of select="text()"/>
 	</xsl:template>
-	<!--STRUCTURE ELEMENTS-->
+	<!--TOP LEVELS-->
+	<xsl:template name="t-abstract-form">
+		<!---->
+		<!--Encoding-->
+		<xsl:variable name="encoding">
+			<xsl:call-template name="t-param-text">
+				<xsl:with-param name="name" select="'encoding'"/>
+				<xsl:with-param name="default" select="'utf-8'"/>
+			</xsl:call-template>
+		</xsl:variable>
+		<xsl:variable name="title">
+			<xsl:call-template name="t-param-text">
+				<xsl:with-param name="name" select="'title'"/>
+				<xsl:with-param name="default" select="'Abstract Form (Unnamed)'"/>
+			</xsl:call-template>
+		</xsl:variable>
+		<html>
+			<head>
+				<!---->
+				<!--Title-->
+				<title>
+					<xsl:value-of select="$title"/>
+				</title>
+				<!---->
+				<!--Meta *any*-->
+				<xsl:variable name="meta" select="//af:section[@name='.page']/af:map[@name='meta']"/>
+				<xsl:if test="$meta">
+					<xsl:for-each select="$meta/af:entry">
+						<xsl:element name="meta">
+							<xsl:attribute name="http-equiv"><xsl:value-of select="@key"/></xsl:attribute>
+							<xsl:attribute name="content"><xsl:call-template name="t-all-text"/></xsl:attribute>
+						</xsl:element>
+					</xsl:for-each>
+				</xsl:if>
+				<!---->
+				<!--CSS Stylesheet of this Html-View-->
+				<style type="text/css">
+					<xsl:call-template name="t-param-text">
+						<xsl:with-param name="name" select="'css'"/>
+						<xsl:with-param name="default">.indent { }
+.data-type { font-weight: bold }
+.data-name { text-decoration: underline }
+.data-separator { 
+	height: 1px; 
+	bottom-border: 1px solid gray 
+}
+.scalar { font-family: courier, helvetica, sans-serif, arial }
+.list { }
+.map { }
+.table { }
+.user { }
+.error { border: red 3px solid; color: red }
+.error-message { font-style: italic; color: magenta }
+.input { }
+.selector { }
+.event { }
+.vt-test { border: green 1px dash; color: green }</xsl:with-param>
+					</xsl:call-template>
+				</style>
+				<!---->
+				<!--Constraints-->
+				<xsl:element name="script">
+					<xsl:attribute name="language">javascript</xsl:attribute>
+					<xsl:attribute name="src"><xsl:value-of select="concat($af-base, '/html-view.js')"/></xsl:attribute>
+					<!--BUGFIX: IE SCRIPT require end-tag. -->
+					<xsl:value-of select="' '"/>
+				</xsl:element>
+			</head>
+			<body>
+				<h1>
+					<xsl:value-of select="$title"/>
+				</h1>
+				<hr/>
+				<xsl:call-template name="t-sections"/>
+				<xsl:call-template name="t-copyright"/>
+			</body>
+		</html>
+	</xsl:template>
 	<xsl:template name="t-sections">
 		<xsl:for-each select="af:section">
 			<xsl:choose>
-				<xsl:when test="substring(@name, 1, 1) != '.'">
+				<xsl:when test="not(@hidden) and substring(@name, 1, 1) != '.'">
 					<xsl:call-template name="t-section"/>
 				</xsl:when>
 				<xsl:otherwise>
@@ -221,12 +223,6 @@
 	</xsl:template>
 	<xsl:template name="t-section">
 		<!--Anchor #@section-name-->
-		<xsl:variable name="data-type">
-			<xsl:call-template name="t-param-text">
-				<xsl:with-param name="name" select="'data-type'"/>
-				<xsl:with-param name="default" select="'hidden'"/>
-			</xsl:call-template>
-		</xsl:variable>
 		<xsl:element name="a">
 			<xsl:attribute name="name"><xsl:value-of select="@name"/></xsl:attribute>
 		</xsl:element>
@@ -235,13 +231,16 @@
 		</h2>
 		<table>
 			<xsl:for-each select="./*">
-				<xsl:variable name="tag" select="local-name(.)"/>
+				<xsl:variable name="tag" select="local-name()"/>
 				<!--by tag names-->
 				<xsl:choose>
+					<xsl:when test="@hidden = 'true'">
+						<!--Ignore-->
+					</xsl:when>
 					<xsl:when test="$tag = 'scalar'">
 						<tr>
 							<td colspan="2">
-								<xsl:if test="$data-type='visible'">
+								<xsl:if test="$show-type='true'">
 									<span class="data-type">Scalar </span>
 								</xsl:if>
 								<xsl:call-template name="t-name"/>
@@ -257,7 +256,7 @@
 					<xsl:when test="$tag = 'list'">
 						<tr>
 							<td colspan="2">
-								<xsl:if test="$data-type='visible'">
+								<xsl:if test="$show-type='true'">
 									<span class="data-type">List </span>
 								</xsl:if>
 								<xsl:call-template name="t-name"/>
@@ -273,7 +272,7 @@
 					<xsl:when test="$tag = 'map'">
 						<tr>
 							<td colspan="2">
-								<xsl:if test="$data-type='visible'">
+								<xsl:if test="$show-type='true'">
 									<span class="data-type">Map </span>
 								</xsl:if>
 								<xsl:call-template name="t-name"/>
@@ -289,7 +288,7 @@
 					<xsl:when test="$tag = 'table'">
 						<tr>
 							<td colspan="2">
-								<xsl:if test="$data-type='visible'">
+								<xsl:if test="$show-type='true'">
 									<span class="data-type">Table </span>
 								</xsl:if>
 								<xsl:call-template name="t-name"/>
@@ -305,7 +304,7 @@
 					<xsl:when test="$tag = 'user'">
 						<tr>
 							<td colspan="2">
-								<xsl:if test="$data-type='visible'">
+								<xsl:if test="$show-type='true'">
 									<span class="data-type">User </span>
 								</xsl:if>
 								<xsl:call-template name="t-name"/>
@@ -321,7 +320,7 @@
 					<xsl:when test="$tag = 'error'">
 						<tr>
 							<td colspan="2">
-								<xsl:if test="$data-type='visible'">
+								<xsl:if test="$show-type='true'">
 									<span class="data-type">Error</span>
 								</xsl:if>
 								<xsl:call-template name="t-name"/>
@@ -337,7 +336,7 @@
 					<xsl:when test="$tag = 'form'">
 						<tr>
 							<td colspan="2">
-								<xsl:if test="$data-type='visible'">
+								<xsl:if test="$show-type='true'">
 									<span class="data-type">Form </span>
 								</xsl:if>
 								<xsl:call-template name="t-name"/>
@@ -372,10 +371,51 @@
 		<hr/>
 	</xsl:template>
 	<!--DATA ELEMENTS-->
+	<xsl:template name="t-value">
+		<xsl:param name="type"/>
+		<xsl:choose>
+			<xsl:when test="$type='link'">
+				<xsl:element name="a">
+					<xsl:attribute name="href"><xsl:value-of select="text()"/></xsl:attribute>
+					<xsl:value-of select="text()"/>
+				</xsl:element>
+			</xsl:when>
+			<xsl:when test="$type='image'">
+				<xsl:element name="img">
+					<xsl:attribute name="src"><xsl:value-of select="text()"/></xsl:attribute>
+				</xsl:element>
+			</xsl:when>
+			<xsl:when test="$type='sound'">
+				<xsl:element name="sound">
+					<xsl:attribute name="src"><xsl:value-of select="text()"/></xsl:attribute>
+				</xsl:element>
+			</xsl:when>
+			<xsl:when test="$type='test'">
+				<xsl:element name="span">
+					<xsl:attribute name="class">vt-test</xsl:attribute>
+					<xsl:value-of select="text()"/>
+				</xsl:element>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="text()"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
 	<xsl:template name="t-scalar">
 		<span>
-			<xsl:call-template name="t-all-text"/>
+			<xsl:call-template name="t-value">
+				<xsl:with-param name="type" select="@type"/>
+			</xsl:call-template>
 		</span>
+		<xsl:for-each select="af:method">
+			<span class="method">
+				<xsl:element name="a">
+					<xsl:attribute name="href"><xsl:call-template name="t-href-concat"><xsl:with-param name="lhs"><xsl:call-template name="t-hint-with-hold"/></xsl:with-param><xsl:with-param name="rhs"><xsl:value-of select="concat('.method=', @name)"/><xsl:for-each select="af:method-parameter"><xsl:value-of select="concat('&amp;', @name, '=', @value)"/></xsl:for-each></xsl:with-param></xsl:call-template></xsl:attribute>
+					<xsl:value-of select="@name"/>
+				</xsl:element>
+			</span>
+			<xsl:value-of select="' '"/>
+		</xsl:for-each>
 	</xsl:template>
 	<xsl:template name="t-list">
 		<table>
@@ -386,14 +426,16 @@
 						<xsl:value-of select="$index"/>. </td>
 					<td>
 						<span class="list">
-							<xsl:call-template name="t-all-text"/>
+							<xsl:call-template name="t-value">
+								<xsl:with-param name="type" select="../@type"/>
+							</xsl:call-template>
 						</span>
 					</td>
 					<td>
-						<xsl:for-each select="../../af:method">
+						<xsl:for-each select="../af:method">
 							<span class="method">
 								<xsl:element name="a">
-									<xsl:attribute name="href"><xsl:call-template name="t-href-concat"><xsl:with-param name="lhs"><xsl:call-template name="t-hint-with-hold"/></xsl:with-param><xsl:with-param name="rhs" select="concat('.method=', @name, '&amp;.index=', $index)"/></xsl:call-template></xsl:attribute>
+									<xsl:attribute name="href"><xsl:call-template name="t-href-concat"><xsl:with-param name="lhs"><xsl:call-template name="t-hint-with-hold"/></xsl:with-param><xsl:with-param name="rhs"><xsl:value-of select="concat('.method=', @name, '&amp;.index=', $index)"/><xsl:for-each select="af:method-parameter"><xsl:value-of select="concat('&amp;', @name, '=', @value)"/></xsl:for-each></xsl:with-param></xsl:call-template></xsl:attribute>
 									<xsl:value-of select="@name"/>
 								</xsl:element>
 							</span>
@@ -427,14 +469,16 @@
 						</td>
 						<td>
 							<span class="map">
-								<xsl:call-template name="t-all-text"/>
+								<xsl:call-template name="t-value">
+									<xsl:with-param name="type" select="../@type"/>
+								</xsl:call-template>
 							</span>
 						</td>
 						<xsl:for-each select="../af:method">
 							<td>
 								<span class="method">
 									<xsl:element name="a">
-										<xsl:attribute name="href"><xsl:call-template name="t-href-concat"><xsl:with-param name="lhs"><xsl:call-template name="t-hint-with-hold"/></xsl:with-param><xsl:with-param name="rhs" select="concat('.method=', @name, '&amp;.key=', $key)"/></xsl:call-template></xsl:attribute>
+										<xsl:attribute name="href"><xsl:call-template name="t-href-concat"><xsl:with-param name="lhs"><xsl:call-template name="t-hint-with-hold"/></xsl:with-param><xsl:with-param name="rhs"><xsl:value-of select="concat('.method=', @name, '&amp;.key=', $key)"/><xsl:for-each select="af:method-parameter"><xsl:value-of select="concat('&amp;', @name, '=', @value)"/></xsl:for-each></xsl:with-param></xsl:call-template></xsl:attribute>
 										<xsl:value-of select="@name"/>
 									</xsl:element>
 								</span>
@@ -471,17 +515,17 @@
 				<xsl:for-each select="af:row">
 					<xsl:variable name="row" select="."/>
 					<xsl:variable name="pk">
-						<xsl:for-each select="../af:column">
-							<xsl:if test="@primary-key">&amp;<xsl:variable name="name" select="@name"/>
-								<xsl:value-of select="@name"/>=<xsl:value-of select="$row/*[local-name()=$name]/text()"/>
-							</xsl:if>
+						<xsl:for-each select="../af:column[@primary-key = 'true']">&amp;<xsl:value-of select="@name"/>=<xsl:value-of select="$row/*[local-name()=current()/@name]/text()"/>
 						</xsl:for-each>
 					</xsl:variable>
 					<tr>
 						<xsl:for-each select="*">
+							<xsl:variable name="column" select="../../af:column[@name=local-name(current())]"/>
 							<td>
 								<span class="table">
-									<xsl:value-of select="text()"/>
+									<xsl:call-template name="t-value">
+										<xsl:with-param name="type" select="$column/@type"/>
+									</xsl:call-template>
 								</span>
 							</td>
 						</xsl:for-each>
@@ -489,7 +533,7 @@
 							<td>
 								<span class="method">
 									<xsl:element name="a">
-										<xsl:attribute name="href"><xsl:call-template name="t-href-concat"><xsl:with-param name="lhs"><xsl:call-template name="t-hint-with-hold"/></xsl:with-param><xsl:with-param name="rhs" select="concat('.method=', @name, $pk)"/></xsl:call-template></xsl:attribute>
+										<xsl:attribute name="href"><xsl:call-template name="t-href-concat"><xsl:with-param name="lhs"><xsl:call-template name="t-hint-with-hold"/></xsl:with-param><xsl:with-param name="rhs"><xsl:value-of select="concat('.method=', @name, $pk)"/><xsl:for-each select="af:method-parameter"><xsl:value-of select="concat('&amp;', @name, '=', @value)"/></xsl:for-each></xsl:with-param></xsl:call-template></xsl:attribute>
 										<xsl:value-of select="@name"/>
 									</xsl:element>
 								</span>
@@ -509,16 +553,16 @@
 			<xsl:for-each select="$owner/af:method">
 				<span class="method">
 					<xsl:element name="a">
-						<xsl:attribute name="href"><xsl:call-template name="t-href-concat"><xsl:with-param name="lhs"><xsl:call-template name="t-hint-with-hold"/></xsl:with-param><xsl:with-param name="rhs"><xsl:value-of select="concat('.method=', @name, '&amp;.path=', $path)"/></xsl:with-param></xsl:call-template></xsl:attribute>
+						<xsl:attribute name="href"><xsl:call-template name="t-href-concat"><xsl:with-param name="lhs"><xsl:call-template name="t-hint-with-hold"/></xsl:with-param><xsl:with-param name="rhs"><xsl:value-of select="concat('.method=', @name, '&amp;.path=', $path)"/><xsl:for-each select="af:method-parameter"><xsl:value-of select="concat('&amp;', @name, '=', @value)"/></xsl:for-each></xsl:with-param></xsl:call-template></xsl:attribute>
 						<xsl:value-of select="@name"/>
 					</xsl:element>
 				</span>
 				<xsl:value-of select="' '"/>
 			</xsl:for-each>
 		</div>
-		<xsl:if test="*[namespace-uri() != 'http://www.bodz.net/xml/zlw/abstract-form']">
+		<xsl:if test="*[namespace-uri() != $af-uri]">
 			<table>
-				<xsl:for-each select="*[namespace-uri() != 'http://www.bodz.net/xml/zlw/abstract-form']">
+				<xsl:for-each select="*[namespace-uri() != $af-uri]">
 					<tr valign="baseline">
 						<td>
 							<xsl:value-of select="position()"/>. </td>
@@ -598,7 +642,7 @@
 				<xsl:attribute name="value"><xsl:value-of select="$form-name"/></xsl:attribute>
 			</xsl:element>
 			<xsl:for-each select="*">
-				<xsl:variable name="tag" select="local-name(.)"/>
+				<xsl:variable name="tag" select="local-name()"/>
 				<xsl:choose>
 					<xsl:when test="$tag = 'input'">
 						<xsl:call-template name="t-input"/>
@@ -619,15 +663,75 @@
 				</xsl:choose>
 			</xsl:for-each>
 		</xsl:element>
+		<!--For Type-Checking and Constraint-Checking: -->
+		<xsl:if test="*/@type or */af:constraint">
+			<xsl:element name="script">
+				<xsl:attribute name="language">javascript</xsl:attribute>
+				<!--1, Init form object-->
+				<xsl:value-of select="concat('var form = document.getElementById(&quot;', $form-id, '&quot;)', '; &#10;')"/>
+				<xsl:value-of select="concat('var constraints; &#10;')"/>
+				<!--2, Add information for checking-->
+				<xsl:for-each select="*">
+					<xsl:variable name="input-name">
+						<xsl:choose>
+							<xsl:when test="@name">
+								<xsl:value-of select="@name"/>
+							</xsl:when>
+							<xsl:otherwise>
+								<xsl:value-of select="concat('input_', position())"/>
+							</xsl:otherwise>
+						</xsl:choose>
+					</xsl:variable>
+					<!--2.1, Bind af-type-->
+					<xsl:if test="@type">
+						<xsl:value-of select="concat('form[&quot;', $input-name, '&quot;].af_type = &quot;', @type, '&quot;', '; &#10;')"/>
+					</xsl:if>
+					<!--2.2, Build constraints tree-->
+					<xsl:if test="af:constraint/*">
+						<xsl:value-of select="concat('constraint = new Object(); &#10; '); "/>
+						<xsl:for-each select="af:constraints/*">
+							<xsl:call-template name="t-constraint">
+								<xsl:with-param name="retval" select="'constraint'"/>
+							</xsl:call-template>
+						</xsl:for-each>
+						<xsl:value-of select="concat('form[&quot;', $input-name, '&quot;].af_constraints = constraints; &#10; ')"/>
+					</xsl:if>
+				</xsl:for-each>
+			</xsl:element>
+		</xsl:if>
+	</xsl:template>
+	<xsl:template name="t-constraint">
+		<xsl:variable name="ctype" select="local-name()">
+			<xsl:choose>
+				<xsl:when test="$ctype = 'range'">
+					<xsl:variable name=""/>$retval_</xsl:when>
+				<xsl:when test="$ctype = 'pattern'"/>
+				<xsl:when test="$ctype = 'and'"/>
+				<xsl:when test="$ctype = 'or'"/>
+				<xsl:when test="$ctype = 'not'"/>
+				<xsl:when test="$ctype = 'xor'"/>
+				<xsl:otherwise/>
+			</xsl:choose>
+		</xsl:variable>
 	</xsl:template>
 	<xsl:template name="t-input">
+		<xsl:variable name="input-name">
+			<xsl:choose>
+				<xsl:when test="@name">
+					<xsl:value-of select="@name"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="concat('input_', position())"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
 		<div>
 			<xsl:call-template name="t-name"/>: <xsl:choose>
 				<xsl:when test="@multilne">
 					<xsl:element name="textarea">
-						<xsl:attribute name="name"><xsl:value-of select="@name"/></xsl:attribute>
+						<xsl:attribute name="name"><xsl:value-of select="$input-name"/></xsl:attribute>
 						<xsl:if test="@read-only">
-							<xsl:attribute name="readonly"/>
+							<xsl:attribute name="readonly">readonly</xsl:attribute>
 						</xsl:if>
 						<xsl:if test="@init">
 							<xsl:value-of select="@init"/>
@@ -637,9 +741,9 @@
 				<xsl:otherwise>
 					<xsl:element name="input">
 						<xsl:attribute name="type">text</xsl:attribute>
-						<xsl:attribute name="name"><xsl:value-of select="@name"/></xsl:attribute>
+						<xsl:attribute name="name"><xsl:value-of select="$input-name"/></xsl:attribute>
 						<xsl:if test="@read-only">
-							<xsl:attribute name="readonly"/>
+							<xsl:attribute name="readonly">readonly</xsl:attribute>
 						</xsl:if>
 						<xsl:if test="@init">
 							<xsl:attribute name="value"><xsl:value-of select="@init"/></xsl:attribute>
@@ -704,8 +808,20 @@
 	</xsl:template>
 	<xsl:template name="t-selector-list">
 		<xsl:param name="list"/>
+		<xsl:variable name="input-name">
+			<xsl:choose>
+				<xsl:when test="@name">
+					<xsl:value-of select="@name"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="concat('input_', position())"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="read-only" select="@read-only"/>
+		<xsl:variable name="init" select="@init|af:init"/>
 		<xsl:element name="select">
-			<xsl:attribute name="name"><xsl:value-of select="@name"/></xsl:attribute>
+			<xsl:attribute name="name"><xsl:value-of select="$input-name"/></xsl:attribute>
 			<xsl:choose>
 				<xsl:when test="@multiple = 'true'">
 					<xsl:attribute name="multiple">multiple</xsl:attribute>
@@ -715,17 +831,34 @@
 				</xsl:otherwise>
 			</xsl:choose>
 			<xsl:for-each select="$list/af:item">
-				<xsl:element name="option">
-					<xsl:attribute name="value"><xsl:value-of select="position()"/></xsl:attribute>
-					<xsl:call-template name="t-all-text"/>
-				</xsl:element>
+				<xsl:if test="not($read-only and $init[.!=position()])">
+					<xsl:element name="option">
+						<xsl:attribute name="value"><xsl:value-of select="position()"/></xsl:attribute>
+						<xsl:if test="$init=position()">
+							<xsl:attribute name="selected">selected</xsl:attribute>
+						</xsl:if>
+						<xsl:call-template name="t-all-text"/>
+					</xsl:element>
+				</xsl:if>
 			</xsl:for-each>
 		</xsl:element>
 	</xsl:template>
 	<xsl:template name="t-selector-map">
 		<xsl:param name="map"/>
+		<xsl:variable name="input-name">
+			<xsl:choose>
+				<xsl:when test="@name">
+					<xsl:value-of select="@name"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="concat('input_', position())"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="read-only" select="@read-only"/>
+		<xsl:variable name="init" select="@init|af:init"/>
 		<xsl:element name="select">
-			<xsl:attribute name="name"><xsl:value-of select="@name"/></xsl:attribute>
+			<xsl:attribute name="name"><xsl:value-of select="$input-name"/></xsl:attribute>
 			<xsl:choose>
 				<xsl:when test="@multiple = 'true'">
 					<xsl:attribute name="multiple">multiple</xsl:attribute>
@@ -735,10 +868,15 @@
 				</xsl:otherwise>
 			</xsl:choose>
 			<xsl:for-each select="$map/af:entry">
-				<xsl:element name="option">
-					<xsl:attribute name="value"><xsl:value-of select="@key"/></xsl:attribute>
-					<xsl:value-of select="@key"/>: <xsl:call-template name="t-all-text"/>
-				</xsl:element>
+				<xsl:if test="not($read-only and $init[.!=current()/@key])">
+					<xsl:element name="option">
+						<xsl:attribute name="value"><xsl:value-of select="@key"/></xsl:attribute>
+						<xsl:if test="$init=@key">
+							<xsl:attribute name="selected">selected</xsl:attribute>
+						</xsl:if>
+						<xsl:value-of select="@key"/>: <xsl:call-template name="t-all-text"/>
+					</xsl:element>
+				</xsl:if>
 			</xsl:for-each>
 		</xsl:element>
 	</xsl:template>
@@ -748,9 +886,9 @@
 			<xsl:attribute name="type">submit</xsl:attribute>
 			<xsl:attribute name="name">.method</xsl:attribute>
 			<xsl:attribute name="value"><xsl:value-of select="@name"/></xsl:attribute>
-			<xsl:if test="@hint">
+			<xsl:if test="@hint or af:method-parameter">
 				<!--Out-going??-->
-				<xsl:attribute name="onclick">javascript: var form = document.getElementById('<xsl:value-of select="$form-id"/>'); form.action = '<xsl:call-template name="t-hint-with-hold"/>'; form.submit(); </xsl:attribute>
+				<xsl:attribute name="onclick">javascript: var form = document.getElementById('<xsl:value-of select="$form-id"/>'); form.action = '<xsl:call-template name="t-href-concat"><xsl:with-param name="lhs"><xsl:call-template name="t-hint-with-hold"/></xsl:with-param><xsl:with-param name="rhs"><xsl:for-each select="af:method-parameter"><xsl:value-of select="concat('&amp;', @name, '=', @value)"/></xsl:for-each></xsl:with-param></xsl:call-template>'; form.submit(); </xsl:attribute>
 			</xsl:if>
 		</xsl:element>
 	</xsl:template>
