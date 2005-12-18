@@ -160,6 +160,14 @@ function phpx_af_selector($name, $content, $value = NULL, $readonly = false, $hi
     return $xml; 
 }
 
+function phpx_af_method($name, $hint = NULL) {
+    $xml = "<af:method name=\"" . htmlspecialchars($name) . "\""; 
+    if (! is_null($hint))
+        $xml .= " hint=\"" . htmlspecialchars($hint) . "\""; 
+    $xml .= "/>\n"; 
+    return $xml; 
+}
+
 function phpx_af_query_edit($dbi, $sql, $key_fields = '', $values = array(), 
                             $name = '', $update_method = 'update', $hint = '') {
     $result = $dbi->_query($sql); 
@@ -171,13 +179,17 @@ function phpx_af_query_edit($dbi, $sql, $key_fields = '', $values = array(),
     
     $hint = phpx_af_special_hints($hint); 
     $key_fields = explode(':', $key_fields); 
+    $form = $update_method; 
     
-    $xml = "<af:form"; 
-    if ($name)
-        $xml .= " name=\"" . htmlspecialchars($name) . "\""; 
-    if ($hint)
-        $xml .= " hint=\"" . htmlspecialchars($hint) . "\""; 
-    $xml .= ">\n"; 
+    $xml = ''; 
+    if ($form) {
+        $xml .= "<af:form"; 
+        if ($name)
+            $xml .= " name=\"" . htmlspecialchars($name) . "\""; 
+        if ($hint)
+            $xml .= " hint=\"" . htmlspecialchars($hint) . "\""; 
+        $xml .= ">\n"; 
+    }
     
     $nfields = $dbi->_num_fields($result); 
     $row = $dbi->_fetch_row($result); 
@@ -202,8 +214,11 @@ function phpx_af_query_edit($dbi, $sql, $key_fields = '', $values = array(),
             $xml .= "/>\n"; 
         }
     }
-    $xml .= "<af:method name=\"" . htmlspecialchars($update_method) . "\"/>\n"; 
-    $xml .= "</af:form>\n"; 
+    
+    if ($form) {
+        $xml .= "<af:method name=\"" . htmlspecialchars($update_method) . "\"/>\n"; 
+        $xml .= "</af:form>\n"; 
+    }
     $dbi->_free_result($result); 
     return $xml; 
 }
