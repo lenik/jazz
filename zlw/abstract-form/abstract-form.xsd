@@ -21,28 +21,13 @@ abstract-form</xs:documentation>
 		<xs:choice minOccurs="0" maxOccurs="unbounded">
 			<xs:group ref="af:output-group"/>
 			<xs:element ref="af:error"/>
-			<xs:element name="form" minOccurs="0" maxOccurs="unbounded">
-				<xs:complexType>
-					<xs:choice maxOccurs="unbounded">
-						<xs:group ref="af:input-group"/>
-						<xs:any namespace="##other" processContents="lax">
-							<xs:annotation>
-								<xs:documentation>display elements in different applications</xs:documentation>
-							</xs:annotation>
-						</xs:any>
-					</xs:choice>
-					<xs:attribute name="form-method" type="xs:string">
-						<xs:annotation>
-							<xs:documentation>preferred-method, default post for html-view</xs:documentation>
-						</xs:annotation>
-					</xs:attribute>
-				</xs:complexType>
-			</xs:element>
+			<xs:element ref="af:form" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="sub-section" type="af:section-type">
 				<xs:annotation>
 					<xs:documentation>RECURSIVE SECTIONS ARE NOT SUPPORTED YET. </xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:any namespace="##other"/>
 		</xs:choice>
 		<xs:attribute name="name" type="xs:string" use="required"/>
 		<xs:attribute name="hint" type="xs:string">
@@ -228,6 +213,23 @@ for output-group, type-specific render will applied on the data. </xs:documentat
 		</xs:sequence>
 	</xs:group>
 	<!--INPUT-->
+	<xs:element name="form">
+		<xs:complexType>
+			<xs:choice maxOccurs="unbounded">
+				<xs:group ref="af:input-group"/>
+				<xs:any namespace="##other" processContents="lax">
+					<xs:annotation>
+						<xs:documentation>display elements in different applications</xs:documentation>
+					</xs:annotation>
+				</xs:any>
+			</xs:choice>
+			<xs:attribute name="form-method" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>preferred-method, default post for html-view</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
 	<xs:element name="input">
 		<xs:complexType>
 			<xs:sequence>
@@ -353,14 +355,9 @@ the @type attribute is for type-checking</xs:documentation>
 for text, range constraints the text-length. </xs:documentation>
 				</xs:annotation>
 				<xs:complexType>
-					<xs:attribute name="max-excluded" type="xs:boolean">
+					<xs:attribute name="min" type="xs:decimal">
 						<xs:annotation>
-							<xs:documentation>exclude the max boundary</xs:documentation>
-						</xs:annotation>
-					</xs:attribute>
-					<xs:attribute name="max" type="xs:decimal">
-						<xs:annotation>
-							<xs:documentation>+Inf if not specified</xs:documentation>
+							<xs:documentation>-Inf if not specified</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
 					<xs:attribute name="min-excluded" type="xs:boolean">
@@ -368,18 +365,29 @@ for text, range constraints the text-length. </xs:documentation>
 							<xs:documentation>exclude the min boundary</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
-					<xs:attribute name="min" type="xs:decimal">
+					<xs:attribute name="max" type="xs:decimal">
 						<xs:annotation>
-							<xs:documentation>-Inf if not specified</xs:documentation>
+							<xs:documentation>+Inf if not specified</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="max-excluded" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>exclude the max boundary</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="pattern">
 				<xs:complexType>
-					<xs:attribute name="comment" type="xs:boolean">
+					<xs:attribute name="regex" type="xs:string" use="required">
 						<xs:annotation>
-							<xs:documentation>space are ignored</xs:documentation>
+							<xs:documentation>standard regular-expression</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="case-insensitive" type="xs:boolean"/>
+					<xs:attribute name="dot-all" type="xs:boolean">
+						<xs:annotation>
+							<xs:documentation>\n, \r are matched by dot(.)</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
 					<xs:attribute name="multiline" type="xs:boolean">
@@ -387,47 +395,17 @@ for text, range constraints the text-length. </xs:documentation>
 							<xs:documentation>^ $ match each lines. </xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
-					<xs:attribute name="dot-all" type="xs:boolean">
+					<xs:attribute name="comment" type="xs:boolean">
 						<xs:annotation>
-							<xs:documentation>\n, \r are matched by dot(.)</xs:documentation>
-						</xs:annotation>
-					</xs:attribute>
-					<xs:attribute name="case-insensitive" type="xs:boolean"/>
-					<xs:attribute name="regex" type="xs:string" use="required">
-						<xs:annotation>
-							<xs:documentation>standard regular-expression</xs:documentation>
+							<xs:documentation>space are ignored</xs:documentation>
 						</xs:annotation>
 					</xs:attribute>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="or">
-				<xs:complexType>
-					<xs:choice maxOccurs="unbounded">
-						<xs:group ref="af:constraint-group"/>
-					</xs:choice>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="not">
-				<xs:complexType>
-					<xs:choice>
-						<xs:group ref="af:constraint-group"/>
-					</xs:choice>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="and">
-				<xs:complexType>
-					<xs:choice maxOccurs="unbounded">
-						<xs:group ref="af:constraint-group"/>
-					</xs:choice>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="xor">
-				<xs:complexType>
-					<xs:choice maxOccurs="unbounded">
-						<xs:group ref="af:constraint-group"/>
-					</xs:choice>
-				</xs:complexType>
-			</xs:element>
+			<xs:element ref="af:or"/>
+			<xs:element ref="af:not"/>
+			<xs:element ref="af:and"/>
+			<xs:element ref="af:xor"/>
 		</xs:choice>
 	</xs:group>
 	<xs:attributeGroup name="constraint-attributes">
@@ -455,4 +433,32 @@ why this constraint. </xs:documentation>
 			</xs:simpleType>
 		</xs:attribute>
 	</xs:attributeGroup>
+	<xs:element name="or">
+		<xs:complexType>
+			<xs:choice maxOccurs="unbounded">
+				<xs:group ref="af:constraint-group"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="not">
+		<xs:complexType>
+			<xs:choice>
+				<xs:group ref="af:constraint-group"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="and">
+		<xs:complexType>
+			<xs:choice maxOccurs="unbounded">
+				<xs:group ref="af:constraint-group"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="xor">
+		<xs:complexType>
+			<xs:choice maxOccurs="unbounded">
+				<xs:group ref="af:constraint-group"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
 </xs:schema>
