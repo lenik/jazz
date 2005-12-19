@@ -62,7 +62,7 @@
 				<!--<HR/>-->
 				<cite>Powered by ZLW::Abstract-Form</cite>
 				<br/>
-				<cite>$Id: html-view.xsl,v 1.6.2.3 2005-12-18 14:53:00 dansei Exp $</cite>
+				<cite>$Id: html-view.xsl,v 1.6.2.4 2005-12-19 12:53:28 dansei Exp $</cite>
 			</xsl:with-param>
 		</xsl:call-template>
 	</xsl:template>
@@ -131,6 +131,54 @@
 	<xsl:template name="t-serialize">
 		<xsl:value-of select="text()"/>
 	</xsl:template>
+	<xsl:template name="t-replace-all">
+		<xsl:param name="text" select="text()"/>
+		<xsl:param name="pattern"/>
+		<xsl:param name="replacement"/>
+		<xsl:choose>
+			<xsl:when test="not($pattern)">
+				<xsl:value-of select="$text"/>
+			</xsl:when>
+			<xsl:when test="contains($text, $pattern)">
+				<xsl:value-of select="concat(substring-before($text, $pattern), $replacement)"/>
+				<xsl:call-template name="t-replace-all">
+					<xsl:with-param name="text" select="substring-after($text, $pattern)"/>
+					<xsl:with-param name="pattern" select="$pattern"/>
+					<xsl:with-param name="replacement" select="$replacement"/>
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:value-of select="$text"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+	<xsl:template name="t-import-attributes">
+		<xsl:param name="select" select="@*"/>
+		<xsl:param name="retvar"/>
+		<xsl:for-each select="$select">
+			<xsl:variable name="identifier" select="translate(local-name(), '-.', '__')"/>
+			<xsl:variable name="value">
+				<xsl:call-template name="t-replace-all">
+					<xsl:with-param name="text">
+						<xsl:call-template name="t-replace-all">
+							<xsl:with-param name="text">
+								<xsl:call-template name="t-replace-all">
+									<xsl:with-param name="text" select="."/>
+									<xsl:with-param name="pattern" select="'\\'"/>
+									<xsl:with-param name="replacement" select="'\\\\'"/>
+								</xsl:call-template>
+							</xsl:with-param>
+							<xsl:with-param name="pattern" select="'\n'"/>
+							<xsl:with-param name="replacement" select="'\\n'"/>
+						</xsl:call-template>
+					</xsl:with-param>
+					<xsl:with-param name="pattern" select="'&quot;'"/>
+					<xsl:with-param name="replacement" select="'\\&quot;'"/>
+				</xsl:call-template>
+			</xsl:variable>
+			<xsl:value-of select="concat($retvar, '.', $identifier, ' = &quot;', $value, '&quot;', '; &#10;')"/>
+		</xsl:for-each>
+	</xsl:template>
 	<!--TOP LEVELS-->
 	<xsl:template name="t-abstract-form">
 		<!---->
@@ -164,6 +212,14 @@
 							<xsl:attribute name="content"><xsl:call-template name="t-all-text"/></xsl:attribute>
 						</xsl:element>
 					</xsl:for-each>
+				</xsl:if>
+				<!---->
+				<!--Meta Content-Type-->
+				<xsl:if test="not($meta/af:entry[@key = 'Content-Type'])">
+					<xsl:element name="meta">
+						<xsl:attribute name="http-equiv">Content-Type</xsl:attribute>
+						<xsl:attribute name="content"><xsl:value-of select="concat('text/html; charset=', $encoding)"/></xsl:attribute>
+					</xsl:element>
 				</xsl:if>
 				<!---->
 				<!--CSS Stylesheet of this Html-View-->
@@ -230,142 +286,153 @@
 			<xsl:value-of select="@name"/>
 		</h2>
 		<table>
-			<xsl:for-each select="./*">
-				<xsl:variable name="tag" select="local-name()"/>
-				<!--by tag names-->
+			<xsl:for-each select="*">
 				<xsl:choose>
-					<xsl:when test="@hidden = 'true'">
-						<!--Ignore-->
-					</xsl:when>
-					<xsl:when test="$tag = 'scalar'">
+					<xsl:when test="namespace-uri() = $af-uri">
+						<xsl:variable name="tag" select="local-name()"/>
+						<!--by tag names-->
+						<xsl:choose>
+							<xsl:when test="@hidden = 'true'">
+								<!--Ignore-->
+							</xsl:when>
+							<xsl:when test="$tag = 'scalar'">
+								<tr>
+									<td colspan="2">
+										<xsl:if test="$show-type='true'">
+											<span class="data-type">Scalar </span>
+										</xsl:if>
+										<xsl:call-template name="t-name"/>
+									</td>
+								</tr>
+								<tr>
+									<td class="indent"/>
+									<td>
+										<xsl:call-template name="t-scalar"/>
+									</td>
+								</tr>
+							</xsl:when>
+							<xsl:when test="$tag = 'list'">
+								<tr>
+									<td colspan="2">
+										<xsl:if test="$show-type='true'">
+											<span class="data-type">List </span>
+										</xsl:if>
+										<xsl:call-template name="t-name"/>
+									</td>
+								</tr>
+								<tr>
+									<td class="indent"/>
+									<td>
+										<xsl:call-template name="t-list"/>
+									</td>
+								</tr>
+							</xsl:when>
+							<xsl:when test="$tag = 'map'">
+								<tr>
+									<td colspan="2">
+										<xsl:if test="$show-type='true'">
+											<span class="data-type">Map </span>
+										</xsl:if>
+										<xsl:call-template name="t-name"/>
+									</td>
+								</tr>
+								<tr>
+									<td class="indent"/>
+									<td>
+										<xsl:call-template name="t-map"/>
+									</td>
+								</tr>
+							</xsl:when>
+							<xsl:when test="$tag = 'table'">
+								<tr>
+									<td colspan="2">
+										<xsl:if test="$show-type='true'">
+											<span class="data-type">Table </span>
+										</xsl:if>
+										<xsl:call-template name="t-name"/>
+									</td>
+								</tr>
+								<tr>
+									<td class="indent"/>
+									<td>
+										<xsl:call-template name="t-table"/>
+									</td>
+								</tr>
+							</xsl:when>
+							<xsl:when test="$tag = 'user'">
+								<tr>
+									<td colspan="2">
+										<xsl:if test="$show-type='true'">
+											<span class="data-type">User </span>
+										</xsl:if>
+										<xsl:call-template name="t-name"/>
+									</td>
+								</tr>
+								<tr>
+									<td class="indent"/>
+									<td>
+										<xsl:call-template name="t-user"/>
+									</td>
+								</tr>
+							</xsl:when>
+							<xsl:when test="$tag = 'error'">
+								<tr>
+									<td colspan="2">
+										<xsl:if test="$show-type='true'">
+											<span class="data-type">Error</span>
+										</xsl:if>
+										<xsl:call-template name="t-name"/>
+									</td>
+								</tr>
+								<tr>
+									<td class="indent"/>
+									<td>
+										<xsl:call-template name="t-error"/>
+									</td>
+								</tr>
+							</xsl:when>
+							<xsl:when test="$tag = 'form'">
+								<tr>
+									<td colspan="2">
+										<xsl:if test="$show-type='true'">
+											<span class="data-type">Form </span>
+										</xsl:if>
+										<xsl:call-template name="t-name"/>
+									</td>
+								</tr>
+								<tr>
+									<td class="indent"/>
+									<td>
+										<xsl:call-template name="t-form"/>
+									</td>
+								</tr>
+							</xsl:when>
+							<xsl:otherwise>
+								<tr>
+									<td colspan="2">Error</td>
+								</tr>
+								<tr>
+									<td class="indent"/>
+									<td>
+										<xsl:call-template name="t-error-message">
+											<xsl:with-param name="message" select="concat('unexpected section element of meta-type: ', $tag)"/>
+										</xsl:call-template>
+									</td>
+								</tr>
+							</xsl:otherwise>
+						</xsl:choose>
 						<tr>
-							<td colspan="2">
-								<xsl:if test="$show-type='true'">
-									<span class="data-type">Scalar </span>
-								</xsl:if>
-								<xsl:call-template name="t-name"/>
-							</td>
-						</tr>
-						<tr>
-							<td class="indent"/>
-							<td>
-								<xsl:call-template name="t-scalar"/>
-							</td>
-						</tr>
-					</xsl:when>
-					<xsl:when test="$tag = 'list'">
-						<tr>
-							<td colspan="2">
-								<xsl:if test="$show-type='true'">
-									<span class="data-type">List </span>
-								</xsl:if>
-								<xsl:call-template name="t-name"/>
-							</td>
-						</tr>
-						<tr>
-							<td class="indent"/>
-							<td>
-								<xsl:call-template name="t-list"/>
-							</td>
-						</tr>
-					</xsl:when>
-					<xsl:when test="$tag = 'map'">
-						<tr>
-							<td colspan="2">
-								<xsl:if test="$show-type='true'">
-									<span class="data-type">Map </span>
-								</xsl:if>
-								<xsl:call-template name="t-name"/>
-							</td>
-						</tr>
-						<tr>
-							<td class="indent"/>
-							<td>
-								<xsl:call-template name="t-map"/>
-							</td>
-						</tr>
-					</xsl:when>
-					<xsl:when test="$tag = 'table'">
-						<tr>
-							<td colspan="2">
-								<xsl:if test="$show-type='true'">
-									<span class="data-type">Table </span>
-								</xsl:if>
-								<xsl:call-template name="t-name"/>
-							</td>
-						</tr>
-						<tr>
-							<td class="indent"/>
-							<td>
-								<xsl:call-template name="t-table"/>
-							</td>
-						</tr>
-					</xsl:when>
-					<xsl:when test="$tag = 'user'">
-						<tr>
-							<td colspan="2">
-								<xsl:if test="$show-type='true'">
-									<span class="data-type">User </span>
-								</xsl:if>
-								<xsl:call-template name="t-name"/>
-							</td>
-						</tr>
-						<tr>
-							<td class="indent"/>
-							<td>
-								<xsl:call-template name="t-user"/>
-							</td>
-						</tr>
-					</xsl:when>
-					<xsl:when test="$tag = 'error'">
-						<tr>
-							<td colspan="2">
-								<xsl:if test="$show-type='true'">
-									<span class="data-type">Error</span>
-								</xsl:if>
-								<xsl:call-template name="t-name"/>
-							</td>
-						</tr>
-						<tr>
-							<td class="indent"/>
-							<td>
-								<xsl:call-template name="t-error"/>
-							</td>
-						</tr>
-					</xsl:when>
-					<xsl:when test="$tag = 'form'">
-						<tr>
-							<td colspan="2">
-								<xsl:if test="$show-type='true'">
-									<span class="data-type">Form </span>
-								</xsl:if>
-								<xsl:call-template name="t-name"/>
-							</td>
-						</tr>
-						<tr>
-							<td class="indent"/>
-							<td>
-								<xsl:call-template name="t-form"/>
-							</td>
+							<td colspan="2" style="data-separator"/>
 						</tr>
 					</xsl:when>
 					<xsl:otherwise>
 						<tr>
-							<td colspan="2">Error</td>
-						</tr>
-						<tr>
-							<td class="indent"/>
-							<td>
-								<xsl:call-template name="t-error-message">
-									<xsl:with-param name="message" select="concat('unexpected section element of meta-type: ', $tag)"/>
-								</xsl:call-template>
+							<td colspan="2">
+								<xsl:copy-of select="."/>
 							</td>
 						</tr>
 					</xsl:otherwise>
 				</xsl:choose>
-				<tr>
-					<td colspan="2" style="data-separator"/>
-				</tr>
 			</xsl:for-each>
 		</table>
 		<hr/>
@@ -628,91 +695,173 @@
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
-		<xsl:element name="form">
-			<xsl:attribute name="id"><xsl:value-of select="$form-id"/></xsl:attribute>
-			<xsl:attribute name="action"><xsl:call-template name="t-hint-inherit"/></xsl:attribute>
-			<xsl:attribute name="onsubmit">javascript: return zlw_af_form_onsubmit(); </xsl:attribute>
-			<xsl:if test="@form-method">
-				<xsl:attribute name="method"><xsl:value-of select="@form-method"/></xsl:attribute>
+		<fieldset>
+			<xsl:if test="@name">
+				<legend>
+					<xsl:value-of select="@name"/>
+				</legend>
 			</xsl:if>
-			<!--INPUT .form-->
-			<xsl:element name="input">
-				<xsl:attribute name="type">hidden</xsl:attribute>
-				<xsl:attribute name="name">.form</xsl:attribute>
-				<xsl:attribute name="value"><xsl:value-of select="$form-name"/></xsl:attribute>
+			<xsl:element name="form">
+				<xsl:attribute name="id"><xsl:value-of select="$form-id"/></xsl:attribute>
+				<xsl:attribute name="action"><xsl:call-template name="t-hint-inherit"/></xsl:attribute>
+				<xsl:attribute name="onsubmit">javascript: return zlw_af_form_submit(event); </xsl:attribute>
+				<xsl:if test="@form-method">
+					<xsl:attribute name="method"><xsl:value-of select="@form-method"/></xsl:attribute>
+				</xsl:if>
+				<!--INPUT .form-->
+				<xsl:element name="input">
+					<xsl:attribute name="type">hidden</xsl:attribute>
+					<xsl:attribute name="name">.form</xsl:attribute>
+					<xsl:attribute name="value"><xsl:value-of select="$form-name"/></xsl:attribute>
+				</xsl:element>
+				<table border="0">
+					<xsl:for-each select="*">
+						<xsl:choose>
+							<xsl:when test="namespace-uri() = $af-uri">
+								<xsl:variable name="tag" select="local-name()"/>
+								<xsl:choose>
+									<xsl:when test="$tag = 'input'">
+										<tr>
+											<td>
+												<xsl:call-template name="t-name"/>
+											</td>
+											<td>
+												<xsl:call-template name="t-input"/>
+											</td>
+										</tr>
+									</xsl:when>
+									<xsl:when test="$tag = 'selector'">
+										<tr>
+											<td>
+												<xsl:call-template name="t-name"/>
+											</td>
+											<td>
+												<xsl:call-template name="t-selector"/>
+											</td>
+										</tr>
+									</xsl:when>
+									<xsl:when test="$tag = 'method'">
+										<xsl:choose>
+											<xsl:when test="local-name(preceding-sibling::*[1]) = 'method'">
+												<xsl:call-template name="t-method">
+													<xsl:with-param name="form-id" select="$form-id"/>
+												</xsl:call-template>
+											</xsl:when>
+											<xsl:otherwise>
+												<tr>
+													<td colspan="2">
+														<xsl:call-template name="t-method">
+															<xsl:with-param name="form-id" select="$form-id"/>
+														</xsl:call-template>
+													</td>
+												</tr>
+											</xsl:otherwise>
+										</xsl:choose>
+									</xsl:when>
+									<xsl:otherwise>
+										<tr>
+											<td colspan="2">
+												<xsl:call-template name="t-error-message">
+													<xsl:with-param name="message" select="concat('unexpected form input of meta-type: ', $tag)"/>
+												</xsl:call-template>
+											</td>
+										</tr>
+									</xsl:otherwise>
+								</xsl:choose>
+							</xsl:when>
+							<xsl:otherwise>
+								<tr>
+									<td colspan="2">
+										<xsl:copy-of select="."/>
+									</td>
+								</tr>
+							</xsl:otherwise>
+						</xsl:choose>
+					</xsl:for-each>
+				</table>
 			</xsl:element>
-			<xsl:for-each select="*">
-				<xsl:variable name="tag" select="local-name()"/>
-				<xsl:choose>
-					<xsl:when test="$tag = 'input'">
-						<xsl:call-template name="t-input"/>
-					</xsl:when>
-					<xsl:when test="$tag = 'selector'">
-						<xsl:call-template name="t-selector"/>
-					</xsl:when>
-					<xsl:when test="$tag = 'method'">
-						<xsl:call-template name="t-method">
-							<xsl:with-param name="form-id" select="$form-id"/>
-						</xsl:call-template>
-					</xsl:when>
-					<xsl:otherwise>
-						<xsl:call-template name="t-error-message">
-							<xsl:with-param name="message" select="concat('unexpected form input of meta-type: ', $tag)"/>
-						</xsl:call-template>
-					</xsl:otherwise>
-				</xsl:choose>
-			</xsl:for-each>
-		</xsl:element>
+		</fieldset>
 		<!--For Type-Checking and Constraint-Checking: -->
 		<xsl:if test="*/@type or */af:constraint">
 			<xsl:element name="script">
 				<xsl:attribute name="language">javascript</xsl:attribute>
 				<!--1, Init form object-->
 				<xsl:value-of select="concat('var form = document.getElementById(&quot;', $form-id, '&quot;)', '; &#10;')"/>
-				<xsl:value-of select="concat('var constraints; &#10;')"/>
+				<xsl:value-of select="concat('var c', '; &#10;')"/>
 				<!--2, Add information for checking-->
 				<xsl:for-each select="*">
-					<xsl:variable name="input-name">
-						<xsl:choose>
-							<xsl:when test="@name">
-								<xsl:value-of select="@name"/>
-							</xsl:when>
-							<xsl:otherwise>
-								<xsl:value-of select="concat('input_', position())"/>
-							</xsl:otherwise>
-						</xsl:choose>
-					</xsl:variable>
-					<!--2.1, Bind af-type-->
-					<xsl:if test="@type">
-						<xsl:value-of select="concat('form[&quot;', $input-name, '&quot;].af_type = &quot;', @type, '&quot;', '; &#10;')"/>
-					</xsl:if>
-					<!--2.2, Build constraints tree-->
-					<xsl:if test="af:constraint/*">
-						<xsl:value-of select="concat('constraint = new Object(); &#10; '); "/>
-						<xsl:for-each select="af:constraints/*">
-							<xsl:call-template name="t-constraint">
-								<xsl:with-param name="retval" select="'constraint'"/>
+					<xsl:if test="namespace-uri() = $af-uri">
+						<xsl:variable name="input-name">
+							<xsl:choose>
+								<xsl:when test="@name">
+									<xsl:value-of select="@name"/>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:value-of select="concat('input_', position())"/>
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:variable>
+						<!--2.1, Bind af-type-->
+						<xsl:if test="@type">
+							<xsl:value-of select="concat('form[&quot;', $input-name, '&quot;].af_type = &quot;', @type, '&quot;', '; &#10;')"/>
+						</xsl:if>
+						<!--2.2, Build constraints tree-->
+						<xsl:if test="af:constraint/*">
+							<xsl:call-template name="t-constraints">
+								<xsl:with-param name="select" select="af:constraint/*"/>
+								<xsl:with-param name="retvar" select="'c'"/>
 							</xsl:call-template>
-						</xsl:for-each>
-						<xsl:value-of select="concat('form[&quot;', $input-name, '&quot;].af_constraints = constraints; &#10; ')"/>
+							<xsl:value-of select="concat('form[&quot;', $input-name, '&quot;].af_constraints = c', '; &#10;')"/>
+						</xsl:if>
 					</xsl:if>
 				</xsl:for-each>
 			</xsl:element>
 		</xsl:if>
 	</xsl:template>
+	<xsl:template name="t-constraints">
+		<xsl:param name="select" select="*"/>
+		<xsl:param name="retvar"/>
+		<xsl:value-of select="concat($retvar, ' = new Array()', '; &#10;')"/>
+		<xsl:for-each select="$select">
+			<xsl:call-template name="t-constraint">
+				<xsl:with-param name="retvar" select="concat($retvar, '[', position() - 1, ']')"/>
+			</xsl:call-template>
+			<xsl:if test="local-name(..) = 'constraint'">
+				<xsl:call-template name="t-import-attributes">
+					<xsl:with-param name="select" select="../@*"/>
+					<xsl:with-param name="retvar" select="concat($retvar, '[', position() - 1, ']')"/>
+				</xsl:call-template>
+			</xsl:if>
+		</xsl:for-each>
+	</xsl:template>
 	<xsl:template name="t-constraint">
-		<xsl:variable name="ctype" select="local-name()">
-			<xsl:choose>
-				<xsl:when test="$ctype = 'range'">
-					<xsl:variable name=""/>$retval_</xsl:when>
-				<xsl:when test="$ctype = 'pattern'"/>
-				<xsl:when test="$ctype = 'and'"/>
-				<xsl:when test="$ctype = 'or'"/>
-				<xsl:when test="$ctype = 'not'"/>
-				<xsl:when test="$ctype = 'xor'"/>
-				<xsl:otherwise/>
-			</xsl:choose>
-		</xsl:variable>
+		<xsl:param name="retvar"/>
+		<xsl:variable name="model" select="local-name()"/>
+		<xsl:value-of select="concat(
+$retvar, ' = new Object()', '; &#10;', 
+$retvar, '.model = &quot;', $model, '&quot;', '; &#10;')"/>
+		<xsl:call-template name="t-import-attributes">
+			<xsl:with-param name="retvar" select="$retvar"/>
+		</xsl:call-template>
+		<xsl:choose>
+			<xsl:when test="$model = 'range'"/>
+			<xsl:when test="$model = 'pattern'"/>
+			<xsl:when test="$model = 'and' or $model = 'or' or $model = 'xor'">
+				<xsl:call-template name="t-constraints">
+					<xsl:with-param name="retvar" select="concat($retvar, '.item')"/>
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:when test="$model = 'not'">
+				<xsl:call-template name="t-constraint">
+					<xsl:with-param name="retvar" select="concat($retvar, '.regular')"/>
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:call-template name="t-error-message">
+					<xsl:with-param name="message" select="concat('unexpected contraint model: ', $model)"/>
+				</xsl:call-template>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 	<xsl:template name="t-input">
 		<xsl:variable name="input-name">
@@ -725,86 +874,82 @@
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
-		<div>
-			<xsl:call-template name="t-name"/>: <xsl:choose>
-				<xsl:when test="@multilne">
-					<xsl:element name="textarea">
-						<xsl:attribute name="name"><xsl:value-of select="$input-name"/></xsl:attribute>
-						<xsl:if test="@read-only">
-							<xsl:attribute name="readonly">readonly</xsl:attribute>
-						</xsl:if>
-						<xsl:if test="@init">
-							<xsl:value-of select="@init"/>
-						</xsl:if>
-					</xsl:element>
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:element name="input">
-						<xsl:attribute name="type">text</xsl:attribute>
-						<xsl:attribute name="name"><xsl:value-of select="$input-name"/></xsl:attribute>
-						<xsl:if test="@read-only">
-							<xsl:attribute name="readonly">readonly</xsl:attribute>
-						</xsl:if>
-						<xsl:if test="@init">
-							<xsl:attribute name="value"><xsl:value-of select="@init"/></xsl:attribute>
-						</xsl:if>
-					</xsl:element>
-				</xsl:otherwise>
-			</xsl:choose>
-		</div>
+		<xsl:choose>
+			<xsl:when test="@multilne">
+				<xsl:element name="textarea">
+					<xsl:attribute name="name"><xsl:value-of select="$input-name"/></xsl:attribute>
+					<xsl:if test="@read-only">
+						<xsl:attribute name="readonly">readonly</xsl:attribute>
+					</xsl:if>
+					<xsl:if test="@init">
+						<xsl:value-of select="@init"/>
+					</xsl:if>
+				</xsl:element>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:element name="input">
+					<xsl:attribute name="type">text</xsl:attribute>
+					<xsl:attribute name="name"><xsl:value-of select="$input-name"/></xsl:attribute>
+					<xsl:if test="@read-only">
+						<xsl:attribute name="readonly">readonly</xsl:attribute>
+					</xsl:if>
+					<xsl:if test="@init">
+						<xsl:attribute name="value"><xsl:value-of select="@init"/></xsl:attribute>
+					</xsl:if>
+				</xsl:element>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 	<xsl:template name="t-selector">
-		<div>
-			<xsl:call-template name="t-name"/>: <xsl:choose>
-				<xsl:when test="af:list">
-					<xsl:call-template name="t-selector-list">
-						<xsl:with-param name="list" select="af:list"/>
-					</xsl:call-template>
-				</xsl:when>
-				<xsl:when test="af:map">
-					<xsl:call-template name="t-selector-map">
-						<xsl:with-param name="map" select="af:map"/>
-					</xsl:call-template>
-				</xsl:when>
-				<xsl:when test="af:list-ref">
-					<xsl:variable name="name" select="af:list-ref/text()"/>
-					<xsl:variable name="list" select="ancestor::af:section/af:list[@name=$name]"/>
-					<xsl:choose>
-						<xsl:when test="$list">
-							<xsl:call-template name="t-selector-list">
-								<xsl:with-param name="list" select="$list"/>
-							</xsl:call-template>
-						</xsl:when>
-						<xsl:otherwise>
-							<xsl:call-template name="t-error-message">
-								<xsl:with-param name="message" select="concat('list(', $name, ') is not existed')"/>
-							</xsl:call-template>
-						</xsl:otherwise>
-					</xsl:choose>
-				</xsl:when>
-				<xsl:when test="af:map-ref">
-					<xsl:variable name="name" select="af:map-ref/text()"/>
-					<xsl:variable name="map" select="ancestor::af:section/af:map[@name=$name]"/>
-					<xsl:choose>
-						<xsl:when test="$map">
-							<xsl:call-template name="t-selector-map">
-								<xsl:with-param name="map" select="$map"/>
-							</xsl:call-template>
-						</xsl:when>
-						<xsl:otherwise>
-							<xsl:call-template name="t-error-message">
-								<xsl:with-param name="message" select="concat('map(', $name, ') is not existed')"/>
-							</xsl:call-template>
-						</xsl:otherwise>
-					</xsl:choose>
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:call-template name="t-error-message">
-						<xsl:with-param name="message" select="'the collection to be selected cannot be resolved. '"/>
-					</xsl:call-template>
-				</xsl:otherwise>
-			</xsl:choose>
-		</div>
+		<xsl:choose>
+			<xsl:when test="af:list">
+				<xsl:call-template name="t-selector-list">
+					<xsl:with-param name="list" select="af:list"/>
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:when test="af:map">
+				<xsl:call-template name="t-selector-map">
+					<xsl:with-param name="map" select="af:map"/>
+				</xsl:call-template>
+			</xsl:when>
+			<xsl:when test="af:list-ref">
+				<xsl:variable name="name" select="af:list-ref/text()"/>
+				<xsl:variable name="list" select="ancestor::af:section/af:list[@name=$name]"/>
+				<xsl:choose>
+					<xsl:when test="$list">
+						<xsl:call-template name="t-selector-list">
+							<xsl:with-param name="list" select="$list"/>
+						</xsl:call-template>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:call-template name="t-error-message">
+							<xsl:with-param name="message" select="concat('list(', $name, ') is not existed')"/>
+						</xsl:call-template>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:when test="af:map-ref">
+				<xsl:variable name="name" select="af:map-ref/text()"/>
+				<xsl:variable name="map" select="ancestor::af:section/af:map[@name=$name]"/>
+				<xsl:choose>
+					<xsl:when test="$map">
+						<xsl:call-template name="t-selector-map">
+							<xsl:with-param name="map" select="$map"/>
+						</xsl:call-template>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:call-template name="t-error-message">
+							<xsl:with-param name="message" select="concat('map(', $name, ') is not existed')"/>
+						</xsl:call-template>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:call-template name="t-error-message">
+					<xsl:with-param name="message" select="'the collection to be selected cannot be resolved. '"/>
+				</xsl:call-template>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 	<xsl:template name="t-selector-list">
 		<xsl:param name="list"/>
