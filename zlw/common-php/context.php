@@ -169,5 +169,9 @@
 		</table>
 	</form>
 	
+	<?php
+	    phpinfo(); 
+	?>
+	
   </body>
 </html>
