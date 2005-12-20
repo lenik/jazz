@@ -5,6 +5,11 @@
  */
 function zlw_af_form_submit(ev) {
     var form = ev.currentTarget; 
+    
+    // BUGFIX: IE
+    if (form == null) 
+        form = ev.srcElement; 
+    
     while (form != null) {
         // assert form.tagName; 
         if (form.tagName.toLowerCase() == "form")
@@ -12,8 +17,8 @@ function zlw_af_form_submit(ev) {
         form = form.parentElement; 
     }
     // assert form
-
-    for (var i in form.elements) {
+    
+    for (var i = 0; i < form.elements.length; i++) {
         var elm = form.elements[i]; 
         if (elm.af_type != null) {
             // type checking
@@ -41,7 +46,7 @@ function zlw_af_form_submit(ev) {
     }
     
     // disable all controls
-    for (var i in form.elements) {
+    for (var i = 0; i < form.elements.length; i++) {
         var elm = form.elements[i]; 
         elm.disabled = true; 
     }
@@ -114,6 +119,11 @@ function zlw_af_tc_email(typep, value) {
 function zlw_af_cc_list(constraints, variant, value) {
     for (var i = 0; i < constraints.length; i++) {
         var constraint = constraints[i]; 
+        
+        // Ignore the server-side-only constraints.
+        if (constraint.side == 'server')
+            continue; 
+        
         zlw_af_cc_item(constraint, variant, value); 
     }
     return true; 
@@ -146,10 +156,16 @@ function zlw_af_cc_range(constraint, variant, value) {
     var n; 
     if (value == null)
         n = 0; 
-    else if (variant.af_type == 'string')
-        n = value.length(); 
-    else
-        n = 1 * value; 
+    else {
+        switch (variant.af_type) {
+        case 'number': 
+        case 'int': 
+            n = 1 * value; 
+            break; 
+        default: 
+            n = value.length; 
+        }
+    }
     
     if (constraint.min != null)
         if (constraint.min_excluded) {
