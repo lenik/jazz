@@ -18,9 +18,16 @@ function phpx_xml_header($encoding = 'utf-8', $version = '1.0') {
     $PHPX_XML_BEGIN = true; 
 }
 
-function phpx_pi($pi) {
-    echo '<?' . str_replace('>', '&gt;', 
-                str_replace('<', '&lt;', $pi)) . '?>'; 
+function phpx_xml_pi($pi) {
+    echo '<?' . htmlspecialchars($pi) . '?>'; 
+}
+
+function phpx_xml_attr($attr) {
+    return '"' . htmlspecialchars($attr) . '"'; 
+}
+
+function phpx_xml_text($text) {
+    return htmlspecialchars($text, ENT_NOQUOTES); 
 }
 
 ?>
