@@ -223,10 +223,24 @@ for output-group, type-specific render will applied on the data. </xs:documentat
 					</xs:annotation>
 				</xs:any>
 			</xs:choice>
-			<xs:attribute name="form-method" type="xs:string">
+			<xs:attribute name="name" type="xs:string"/>
+			<xs:attribute name="type" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>NOT USED. </xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="hint" type="xs:string"/>
+			<xs:attribute name="form-method">
 				<xs:annotation>
 					<xs:documentation>preferred-method, default post for html-view</xs:documentation>
 				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:token">
+						<xs:enumeration value="get"/>
+						<xs:enumeration value="post"/>
+						<xs:enumeration value="put"/>
+					</xs:restriction>
+				</xs:simpleType>
 			</xs:attribute>
 		</xs:complexType>
 	</xs:element>
@@ -429,6 +443,19 @@ why this constraint. </xs:documentation>
 					<xs:enumeration value="default"/>
 					<xs:enumeration value="warning"/>
 					<xs:enumeration value="fatal"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="side">
+			<xs:annotation>
+				<xs:documentation>checking on which side(s), default is checking on both sides. </xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="default"/>
+					<xs:enumeration value="server"/>
+					<xs:enumeration value="client"/>
+					<xs:enumeration value="both"/>
 				</xs:restriction>
 			</xs:simpleType>
 		</xs:attribute>
