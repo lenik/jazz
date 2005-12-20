@@ -207,4 +207,30 @@ function phpx_httpcall($call_uri, $args = NULL) {
     phpx_redirect($call_uri, array('phpx_httpcall_hold' => serialize($PHPX_CALLSTACK))); 
 }
 
+class phpx_http_buffer {
+    var $_bufmode;
+    var $_buf; 
+    
+    function buffer_start() {
+        $this->_bufmode = true; 
+        $this->_buf = ''; 
+    }
+    
+    function buffer_end() {
+        if ($this->_bufmode) {
+            $this->_bufmode = false; 
+            return $this->_buf; 
+        }
+        return ''; 
+    }
+    
+    function output() {
+        $args = func_get_args(); 
+        if ($this->_bufmode)
+            $this->_buf = join('', $args); 
+        else
+            echo join('', $args); 
+    }
+}
+
 ?>
