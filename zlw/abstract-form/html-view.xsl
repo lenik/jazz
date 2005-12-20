@@ -62,7 +62,7 @@
 				<!--<HR/>-->
 				<cite>Powered by ZLW::Abstract-Form</cite>
 				<br/>
-				<cite>$Id: html-view.xsl,v 1.6.2.4 2005-12-19 12:53:28 dansei Exp $</cite>
+				<cite>$Id: html-view.xsl,v 1.6.2.5 2005-12-20 06:26:19 dansei Exp $</cite>
 			</xsl:with-param>
 		</xsl:call-template>
 	</xsl:template>
@@ -151,6 +151,15 @@
 				<xsl:value-of select="$text"/>
 			</xsl:otherwise>
 		</xsl:choose>
+	</xsl:template>
+	<xsl:template name="t-node-index">
+		<xsl:param name="select"/>
+		<xsl:param name="node"/>
+		<xsl:for-each select="$select">
+			<xsl:if test="generate-id(.) = generate-id($node)">
+				<xsl:value-of select="position()"/>
+			</xsl:if>
+		</xsl:for-each>
 	</xsl:template>
 	<xsl:template name="t-import-attributes">
 		<xsl:param name="select" select="@*"/>
@@ -279,12 +288,24 @@
 	</xsl:template>
 	<xsl:template name="t-section">
 		<!--Anchor #@section-name-->
+		<xsl:variable name="name">
+			<xsl:choose>
+				<xsl:when test="@name">
+					<xsl:value-of select="@name"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="concat('section_', position())"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
 		<xsl:element name="a">
-			<xsl:attribute name="name"><xsl:value-of select="@name"/></xsl:attribute>
+			<xsl:attribute name="name"><xsl:value-of select="$name"/></xsl:attribute>
 		</xsl:element>
-		<h2>
-			<xsl:value-of select="@name"/>
-		</h2>
+		<xsl:if test="@name">
+			<h2>
+				<xsl:value-of select="@name"/>
+			</h2>
+		</xsl:if>
 		<table>
 			<xsl:for-each select="*">
 				<xsl:choose>
@@ -684,17 +705,13 @@
 	</xsl:template>
 	<!--FORM ELEMENTS-->
 	<xsl:template name="t-form">
-		<xsl:variable name="form-id" select="concat('form_', position())"/>
-		<xsl:variable name="form-name">
-			<xsl:choose>
-				<xsl:when test="@name">
-					<xsl:value-of select="@name"/>
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:value-of select="position()"/>
-				</xsl:otherwise>
-			</xsl:choose>
+		<xsl:variable name="form-index">
+			<xsl:call-template name="t-node-index">
+				<xsl:with-param name="select" select="//af:form"/>
+				<xsl:with-param name="node" select="."/>
+			</xsl:call-template>
 		</xsl:variable>
+		<xsl:variable name="form-id" select="concat('form_', $form-index)"/>
 		<fieldset>
 			<xsl:if test="@name">
 				<legend>
@@ -712,7 +729,7 @@
 				<xsl:element name="input">
 					<xsl:attribute name="type">hidden</xsl:attribute>
 					<xsl:attribute name="name">.form</xsl:attribute>
-					<xsl:attribute name="value"><xsl:value-of select="$form-name"/></xsl:attribute>
+					<xsl:attribute name="value"><xsl:value-of select="$form-id"/></xsl:attribute>
 				</xsl:element>
 				<table border="0">
 					<xsl:for-each select="*">
