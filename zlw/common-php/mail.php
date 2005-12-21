@@ -5,8 +5,7 @@
  * SMTP Class
  */
  
-require '_Phpfixes.php'; 
-_RequireOnce("ext/phpmailer.php"); 
+require_once dirname(__FILE__) . '/ext/phpmailer.php'; 
 
 if (! defined('SMTP_SERVER'))
     define('SMTP_SERVER', 'localhost'); 

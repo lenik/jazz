@@ -1,6 +1,6 @@
 <?php
-    require '_Phpfixes.php'; 
-    _RequireOnce('../http.php'); 
+
+    require_once dirname(__FILE__) . '/../http.php'; 
     
     $a = 0; 
     $b = 0; 

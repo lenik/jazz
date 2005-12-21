@@ -1,10 +1,11 @@
 <?php
+
 /* Common-PHP
  *
  * PHP Data Object
  */
-require '_Phpfixes.php'; 
-_RequireOnce('dbi.php'); 
+
+require_once dirname(__FILE__) . '/dbi.php'; 
 
 define("PDT_RAW",       1); 
 define("PDT_CDATA",     2); 

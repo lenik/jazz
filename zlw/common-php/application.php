@@ -1,4 +1,5 @@
 <?php
+
 /* Common-PHP
  *
  * $_APPLICATION support in PHP

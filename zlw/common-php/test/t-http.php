@@ -1,6 +1,6 @@
 <?php
-require '_Phpfixes.php'; 
-_Require('../http.php');
+
+require_once dirname(__FILE__) . '/../http.php';
 
 if ($_GET['abc'] == '1') {
     ?>
