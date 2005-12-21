@@ -1,11 +1,12 @@
 <?php
+
 /* Common-PHP
  *
  * Database Access Interface
  */
-require '_Phpfixes.php'; 
-_RequireOnce('string.php'); 
-_RequireOnce('dbi/' . DBI_DIALECT . '.php'); 
+
+require_once dirname(__FILE__) . '/string.php'; 
+require_once dirname(__FILE__) . '/dbi/' . DBI_DIALECT . '.php'; 
 
 function phpx_dbi_cleanup() {
     global $PHPX_CONNECTED_DBI; 

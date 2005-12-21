@@ -1,6 +1,7 @@
 <?php
-require '_Phpfixes.php'; 
-_Require('../http.php');
+
+require_once dirname(__FILE__) . '/../http.php';
+
 phpx_using_https(true); 
 ?>
 <html>

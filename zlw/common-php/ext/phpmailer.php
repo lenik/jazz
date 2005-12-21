@@ -11,8 +11,7 @@
 // License: LGPL, see LICENSE
 ////////////////////////////////////////////////////
 
-require '_Phpfixes.php'; 
-_IncludeOnce('smtp.php'); 
+require_once dirname(__FILE__) . '/smtp.php'; 
 
 /**
  * PHPMailer - PHP email transport class

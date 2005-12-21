@@ -1,6 +1,6 @@
 <?php
-	require '_Phpfixes.php'; 
-	_RequireOnce('../mail.php'); 
+
+	require_once dirname(__FILE__) . '/../mail.php'; 
 
 	$mail = new phpx_mail; 
 	$mail->Subject = 't-mail test program'; 

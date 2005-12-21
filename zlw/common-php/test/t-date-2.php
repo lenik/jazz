@@ -1,6 +1,6 @@
 <?php
-    require '_Phpfixes.php'; 
-    _RequireOnce('../string.php'); 
+
+    require_once dirname(__FILE__) . '/../string.php'; 
     
     $t = time(); 
     $t0 = time_0(); 

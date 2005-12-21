@@ -1,6 +1,6 @@
 <?php
-    require 'phpfixes.php'; 
-    _RequireOnce('http.php'); 
+
+    require_once dirname(__FILE__) . '/http.php'; 
     
     @session_start(); 
     
