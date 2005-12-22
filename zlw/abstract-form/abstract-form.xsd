@@ -37,6 +37,14 @@ abstract-form</xs:documentation>
 			<xs:attribute name="hidden" type="xs:boolean"/>
 		</xs:complexType>
 	</xs:element>
+	<xs:element name="doc">
+		<xs:complexType mixed="true">
+			<xs:sequence>
+				<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="doctype" type="xs:anyURI"/>
+		</xs:complexType>
+	</xs:element>
 	<!--OUTPUT-->
 	<xs:element name="scalar">
 		<xs:complexType mixed="true">
@@ -166,7 +174,7 @@ abstract-form</xs:documentation>
 					<xs:annotation>
 						<xs:documentation>Causal</xs:documentation>
 					</xs:annotation>
-					<xs:element name="error-source" minOccurs="0">
+					<xs:element name="source" minOccurs="0">
 						<xs:complexType>
 							<xs:attribute name="name" type="xs:string"/>
 							<xs:attribute name="status" type="xs:string"/>
@@ -499,14 +507,6 @@ why this constraint. </xs:documentation>
 			<xs:choice maxOccurs="unbounded">
 				<xs:group ref="af:constraint-group"/>
 			</xs:choice>
-		</xs:complexType>
-	</xs:element>
-	<xs:element name="doc">
-		<xs:complexType mixed="true">
-			<xs:sequence>
-				<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
-			</xs:sequence>
-			<xs:attribute name="doctype" type="xs:anyURI"/>
 		</xs:complexType>
 	</xs:element>
 </xs:schema>
