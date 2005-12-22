@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../html-view.xsl"?>
+<f:abstract-form xmlns:f="http://www.bodz.net/xml/zlw/abstract-form" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.bodz.net/xml/zlw/abstract-form
+../abstract-form.xsd">
+	<f:section name=".page">
+		<f:scalar name="title">Constraints Test</f:scalar>
+		<f:scalar name="data-type">visible</f:scalar>
+		<f:scalar name="af-base">..</f:scalar>
+		<f:scalar name="check-constratins"/>
+	</f:section>
+	<f:section name="Start">
+		<f:scalar name="Test Scalar"/>
+		<f:list name="Test List">
+			<f:item>Item 1</f:item>
+			<f:item>Item 2</f:item>
+			<f:item>Item 3</f:item>
+		</f:list>
+		<f:map name="Test Map">
+			<f:entry key="Key 1">Value 1</f:entry>
+			<f:entry key="Key 2">Value 2</f:entry>
+			<f:entry key="Key 3">Value 3</f:entry>
+		</f:map>
+		<f:form>
+			<f:input name="Range_1" type="number">
+				<f:constraint name="RG1" reason="大致范围">
+					<f:range min="-10000" max="10000" max-excluded="true"/>
+				</f:constraint>
+				<f:constraint name="RG2" reason="精确范围">
+					<f:or>
+						<f:range min="-300" max="-100"/>
+						<f:range min="100" max="300"/>
+					</f:or>
+				</f:constraint>
+			</f:input>
+			<div class="error">The length of e-mail should between 5-20 characters. </div>
+			<f:input name="Email" type="email">
+				<f:constraint name="LEN" reason="长度限制">
+					<f:range min="5" max="20"/>
+				</f:constraint>
+				<f:constraint name="FMT" reason="正确的Email格式">
+					<f:and>
+						<f:pattern regex="\@"/>
+						<f:or>
+							<f:pattern regex="\.com$" case-insensitive="true"/>
+							<f:pattern regex="\.net$" case-insensitive="true"/>
+							<f:pattern regex="\.edu$" case-insensitive="true"/>
+							<f:pattern regex="\.org$" case-insensitive="true"/>
+							<f:pattern regex="\.biz$" case-insensitive="true"/>
+							<f:pattern regex="\.cn$" case-insensitive="true"/>
+							<f:pattern regex="\.en$" case-insensitive="true"/>
+						</f:or>
+					</f:and>
+				</f:constraint>
+			</f:input>
+			<f:method name="Action 1"/>
+		</f:form>
+	</f:section>
+</f:abstract-form>
