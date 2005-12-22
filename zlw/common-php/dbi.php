@@ -6,6 +6,7 @@
  */
 
 require_once dirname(__FILE__) . '/string.php'; 
+require_once dirname(__FILE__) . '/error.php'; 
 require_once dirname(__FILE__) . '/dbi/' . DBI_DIALECT . '.php'; 
 
 function phpx_dbi_cleanup() {
@@ -24,9 +25,7 @@ class phpx_dbi_em extends phpx_error_manager {
         # this will register self
         $this->phpx_error_manager($provider); 
     }
-    
-    function process() {
-    }
+    # function handler(&$error)
 }
 
 global $PHPX_DBI_EM; 
@@ -56,8 +55,7 @@ class phpx_dbi extends phpx_dbi_base {
         global $PHPX_DBI_EM; 
         $this->_em = &$PHPX_DBI_EM; 
         
-        if ($connect)
-            $this->_connect(); 
+        if ($connect) $this->_connect(); 
     }
     
     function _summary_addtype($type, $args) {
@@ -78,61 +76,48 @@ class phpx_dbi extends phpx_dbi_base {
         return $type . $text; 
     }
     
-    function _log() {
-        if (! $_debug) return true; 
+    function _info() {
+        if (! $this->_debug) return true; 
         $args = func_get_args(); 
         $summary = $this->_summary_addtype('INFO', $args); 
         return $this->_em->process($summary, $this); 
     }
     
-    function _warning() {
+    function _warn() {
         $args = func_get_args(); 
         $summary = $this->_summary_addtype('WARN', $args); 
         return $this->_em->process($summary, $this); 
     }
     
-    function _fatal() {
+    function _err() {
         $args = func_get_args(); 
         $summary = $this->_summary_addtype('ERR', $args); 
         return $this->_em->process($summary, $this); 
     }
     
-    function _connect($persist = NULL) {
+    # @override provider-object.source_status
+    function source_status() {
+        if (is_null($this->_link))
+            return "Disconnected"; 
+        return 'DBI Status [' . $this->_dialect . '/' . $this->_errno() . '] '
+            . $this->_error(); 
+    }
+    
+    function _connect($persist = NULL, $host = NULL, $user = NULL, $password = NULL) {
         if ($this->_link)
-            $this->_warning("Already connected ($link)"); 
+            $this->_warn("[CONN] Already connected: $this->_link"); 
         
         if (is_null($persist))
             $persist = $this->_persist; 
         
-        $host = $this->_host; 
-        $user = $this->_user; 
-        $password = $this->_password; 
+        if ($host == NULL)
+            $host = $this->_host; 
+        if ($user == NULL)
+            $user = $this->_user; 
+        if ($password == NULL)
+            $password = $this->_password; 
         
-        $args = func_get_args(); 
-        $passargs = array(); 
-        switch (func_num_args()) {
-        default: 
-        case 3: 
-            $password = $args[2]; 
-        case 2: 
-            $user = $args[1]; 
-        case 1: 
-            $host = $args[0]; 
-        case 0: 
-            while (true) {
-                if (! $host) break; 
-                    $passargs[] = $host; 
-                if (!$user) break; 
-                    $passargs[] = $user; 
-                if (!$password) break; 
-                    $passargs[] = $password; 
-                if (!func_num_args() > 3)
-                    $passargs[] = array_slice($args, 3); 
-                break; 
-            }
-        }
-        
-        $this->_log('Connect: ' . join('|', $passargs)); 
+        $this->_info("[CONN] Connecting: host $host, user $user, password $password"); 
         if ($persist)
             $this->_link = parent::_connect($host, $user, $password); 
         else
@@ -143,15 +128,15 @@ class phpx_dbi extends phpx_dbi_base {
             if (is_null($PHPX_CONNECTED_DBI))
                 $PHPX_CONNECTED_DBI = array(); 
             $PHPX_CONNECTED_DBI[] = $this; 
-            $this->_log("Connect to $host succeeded: $this->_link"); 
+            $this->_info("[CONN] Connect succeeded: $this->_link"); 
         } else {
-            $this->_warning("Connect to $host => failed: " . $this->_error()); 
+            $this->_err("[CONN] Connect failed: " . $this->_error()); 
             return false; 
         }
         
         if ($this->_database) {
             if (! parent::_select_db($this->_database)) {
-                $this->_fatal("Cannot select db " . $this->_database); 
+                $this->_err("[CONN] Cannot select db: $this->_database"); 
                 $this->_close(); 
                 return false; 
             }
@@ -159,7 +144,7 @@ class phpx_dbi extends phpx_dbi_base {
         
         # set connection character set.
         if (! parent::_query("set names 'utf8'")) {
-            $this->_fatal("Cannot set encoding to utf-8"); 
+            $this->_err("[CONN] Cannot set encoding to utf-8"); 
             $this->_close(); 
             return false; 
         }
@@ -169,10 +154,10 @@ class phpx_dbi extends phpx_dbi_base {
     
     function _close() {
         if (is_null($this->_link))
-            $this->_warning("Already closed"); 
+            $this->_warn("[CONN] Already closed"); 
         if ($this->_transacting)
             $this->_commit(true); 
-        $this->_log('Connect-Close: ' . $this->_link); 
+        $this->_info('[CONN] Disconnecting: ' . $this->_link); 
         parent::_close($this->_link); 
         $this->_link = NULL; 
         global $PHPX_CONNECTED_DBI; 
@@ -183,15 +168,15 @@ class phpx_dbi extends phpx_dbi_base {
     
     function _reuse($dbi) {
         if (! is_null($dbi)) {
-            $this->_fatal("Cannot re-use null DBI. "); 
+            $this->_err("[DBI] Cannot reuse null DBI"); 
             return false; 
         }
         if ($this->_transacting) {
-            $this->_fatal("This DBI was still in transaction. "); 
+            $this->_err("[DBI] This DBI was still in transaction. "); 
             return false; 
         }
         if ($dbi->_transacting) {
-            $this->_fatal("The target DBI to re-use was still in transaction. "); 
+            $this->_err("[DBI] The target DBI to re-use was still in transaction. "); 
             return false; 
         }
     	$this->_link = $dbi->_link; 
@@ -202,10 +187,10 @@ class phpx_dbi extends phpx_dbi_base {
     }
     
     function _query($sql) {
-        $this->_log("SQL: $sql"); 
+        $this->_info("[SQL] query: $sql"); 
         $ret = parent::_query($sql); 
         if (! $ret)
-            $this->_warning("SQL: $sql => failed: ", $this->_error()); 
+            $this->_warn("[SQL] query failed: ", $this->_error()); 
         return $ret; 
     }
     
@@ -252,11 +237,11 @@ class phpx_dbi extends phpx_dbi_base {
     
     function _begin() {
         if ($this->_transacting) {
-            $this->_fatal('transaction has already begun'); 
+            $this->_err('[TRAN] Transaction has already begun'); 
             return false; 
         }
         if ($_persist) {
-            $this->_fatal('transacting in persistency connection is not allowed. '); 
+            $this->_err('[TRAN] Transacting in persistency connection is not allowed'); 
             return false; 
         }
         if (parent::_begin($this->$_link)) {
@@ -268,7 +253,7 @@ class phpx_dbi extends phpx_dbi_base {
     
     function _commit($auto_rollback = false) {
         if (! $this->_transacting) {
-            $this->_fatal('transaction has not begun, yet'); 
+            $this->_err('[TRAN] Transaction has not begun, yet'); 
             return false; 
         }
         if (parent::_commit($this->$_link)) {
@@ -286,7 +271,7 @@ class phpx_dbi extends phpx_dbi_base {
     
     function _rollback() {
         if (! $this->_transacting) {
-            $this->_fatal('transaction has not begun, yet'); 
+            $this->_err('[TRAN] Transaction has not begun, yet'); 
             return false; 
         }
         if (parent::_rollback($this->$_link)) {
@@ -307,7 +292,7 @@ class phpx_dbi extends phpx_dbi_base {
         #  - retrieve the table meta info
         $result = $this->_query("select * from $table_name where 1=2"); 
         if (! $result) {
-            $this->_fatal("failed to query table $table_name"); 
+            $this->_err("[UTBL] Failed to query table: $table_name"); 
             return false; 
         }
         $nfields = $this->_num_fields($result); 
@@ -348,7 +333,7 @@ class phpx_dbi extends phpx_dbi_base {
             }
             if ($criteria == '') {
                 if ($method == 'update') {
-                    $this->_fatal("Range is not specified."); 
+                    $this->_err("[UTBL] Range has not been specified"); 
                     return false; 
                 } else {
                     # always insert when range is not specified. 
@@ -375,11 +360,11 @@ class phpx_dbi extends phpx_dbi_base {
                 $sets .= "$k=$v"; 
             }
             if ($sets == '') {
-                $this->_fatal("the fields list to update is empty (table $table_name)"); 
+                $this->_err("[UTBL] The fields list to update is empty: table $table_name"); 
                 return false; 
             }
             if (! $this->_query("update $table_name set $sets where $criteria")) {
-                $this->_warning("failed to do table-update on $table_name"); 
+                $this->_warn("[UTBL] Failed to update table: table $table_name"); 
                 return false; 
             }
         } else if ($method == 'insert') {
@@ -396,15 +381,15 @@ class phpx_dbi extends phpx_dbi_base {
                 $values .= $v; 
             }
             if ($names == '') {
-                $this->_fatal("the fields list to insert is empty (table $table_name)"); 
+                $this->_err("[UTBL] The fields list to insert is empty: table $table_name"); 
                 return false; 
             }
             if (! $this->_query("insert into $table_name($names) values($values)")) {
-                $this->_warning("failed to do table-insert on $table_name"); 
+                $this->_warn("[UTBL] failed to insert into table: table $table_name"); 
                 return false; 
             }
         } else {
-            $this->_fatal("Unexpected update method: $method"); 
+            $this->_err("[UTBL] Unexpected update method: $method"); 
             return false; 
         }
         return true; 
