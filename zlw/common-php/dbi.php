@@ -19,14 +19,18 @@ function phpx_dbi_cleanup() {
 }
 register_shutdown_function('phpx_dbi_cleanup'); 
 
-function phpx_dbi_logger_def($dbi, $type, $message) {
-    # Hookable Logger
-    global $PHPX_DBI_LOGGER; 
-    if (is_null($PHPX_DBI_LOGGER))
-        error_log($message); 
-    else
-        $PHPX_DBI_LOGGER($dbi, $type, $message); 
+class phpx_dbi_em extends phpx_error_manager {
+    function phpx_dbi_em($provider = 'DBI') {
+        # this will register self
+        $this->phpx_error_manager($provider); 
+    }
+    
+    function process() {
+    }
 }
+
+global $PHPX_DBI_EM; 
+$PHPX_DBI_EM = new phpx_dbi_em(); 
 
 class phpx_dbi extends phpx_dbi_base {
     var $_host; 
@@ -37,7 +41,7 @@ class phpx_dbi extends phpx_dbi_base {
     var $_link; 
     var $_transacting = false; 
     var $_debug = false; 
-    var $_logger = phpx_dbi_logger_def; 
+    var $_em; 
     
 	function phpx_dbi($host, $user, $password, $database, 
 	        $connect = true, $persist = true, $debug = false) {
@@ -48,34 +52,49 @@ class phpx_dbi extends phpx_dbi_base {
         $this->_database = $database; 
         $this->_persist = $persist; 
         $this->_debug = $debug; 
+        
+        global $PHPX_DBI_EM; 
+        $this->_em = &$PHPX_DBI_EM; 
+        
         if ($connect)
             $this->_connect(); 
     }
     
+    function _summary_addtype($type, $args) {
+        global $PHPX_ERROR_FORMAT; 
+        $str = join('', $args); 
+        if (! preg_match($PHPX_ERROR_FORMAT, $str, $matches))
+            die("Illegal summary syntax: $str"); 
+        if ($name = $matches[1]) {
+            if ($matches[2])
+                $name .= '.' . $matches[2]; 
+            $type .= '.' . $name; 
+        }
+        if ($type)
+            $type = "[$type] "; 
+        $text = $matches[3]; 
+        if ($detail = $matches[4])
+            $text .= ': ' . $detail; 
+        return $type . $text; 
+    }
+    
     function _log() {
-        if (! $_debug) 
-            return true; 
+        if (! $_debug) return true; 
         $args = func_get_args(); 
-        $message = join('', $args); 
-        $logger = $this->_logger; 
-        $logger($this, E_NOTICE, $message); 
-        return true; 
+        $summary = $this->_summary_addtype('INFO', $args); 
+        return $this->_em->process($summary, $this); 
     }
     
     function _warning() {
         $args = func_get_args(); 
-        $message = join('', $args); 
-        $logger = $this->_logger; 
-        $logger($this, E_WARNING, $message); 
-        return 0; 
+        $summary = $this->_summary_addtype('WARN', $args); 
+        return $this->_em->process($summary, $this); 
     }
     
     function _fatal() {
         $args = func_get_args(); 
-        $message = join('', $args); 
-        $logger = $this->_logger; 
-        $logger($this, E_ERROR, $message); 
-        return false; 
+        $summary = $this->_summary_addtype('ERR', $args); 
+        return $this->_em->process($summary, $this); 
     }
     
     function _connect($persist = NULL) {
