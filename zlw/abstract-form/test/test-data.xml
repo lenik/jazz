@@ -7,8 +7,10 @@
 		<af:map name="meta">
 			<af:entry key="Key1">Value1</af:entry>
 			<af:entry key="Key2">Value2</af:entry>
+			<af:entry key="(Content-Type)">test</af:entry>
 		</af:map>
 		<af:scalar name="data-type">visible</af:scalar>
+		<af:scalar name="af-base">..</af:scalar>
 		<af:user name="copyright2">
 			<strong>My<u>Very</u>Copyright!</strong>
 		</af:user>
@@ -18,6 +20,10 @@
 		<af:scalar name="Name" type="string" hold="true">Lenik</af:scalar>
 		<af:scalar name="Age" type="number">11</af:scalar>
 		<af:scalar name="Session" type="number" hold="true">7878</af:scalar>
+		<af:map name="Links" type="link">
+			<af:entry key="Google">http://www.google.com</af:entry>
+			<af:entry key="Test2">test2.xml</af:entry>
+		</af:map>
 		<af:list name="ShopCart" sort="true" sort-order="descending" type="integer" hold="true">
 			<af:method name="Add"/>
 			<af:method name="Remove"/>
@@ -27,12 +33,28 @@
 			<af:item>pear</af:item>
 			<af:item>coca cola</af:item>
 		</af:list>
+		<af:list name="HiddenPeople" hidden="true">
+			<af:item>Lenik</af:item>
+			<af:item>Lewei</af:item>
+		</af:list>
 		<af:form>
 			<af:input name="name" type="string" init="Lenik"/>
 			<af:input name="age" type="number" init="34"/>
 			<af:input name="comment" type="string" init="No comments" multiline="true"/>
+			<af:input type="string" init="Input without name..."/>
 			<af:selector name="sel" multiple="false">
-				<af:list-ref>List</af:list-ref>
+				<af:list-ref>ShopCart</af:list-ref>
+			</af:selector>
+			<af:selector name="sel_init" multiple="false" init="2">
+				<af:list-ref>ShopCart</af:list-ref>
+			</af:selector>
+			<af:selector name="sel_inits" multiple="true" init="3">
+				<af:init>1</af:init>
+				<af:init>4</af:init>
+				<af:list-ref>ShopCart</af:list-ref>
+			</af:selector>
+			<af:selector name="sel_hidden">
+				<af:list-ref>HiddenPeople</af:list-ref>
 			</af:selector>
 			<af:method name="ActionA"/>
 			<af:method name="ActionB"/>
@@ -84,5 +106,8 @@
 			<af:method name="Submit"/>
 			<af:method name="Google" hint="http://www.google.com"/>
 		</af:form>
+	</af:section>
+	<af:section name="The-Hidden" hidden="true">
+		<af:scalar name="HiddenScalar">The Hidden Scalar. </af:scalar>
 	</af:section>
 </af:abstract-form>
