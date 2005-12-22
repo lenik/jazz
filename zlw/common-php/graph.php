@@ -6,7 +6,7 @@ class phpx_node {
 }
 
 class phpx_graph {
-    var $nodes; 
+    var $nodes = array(); 
     var $def = NULL; 
     
     function add(&$node) {
