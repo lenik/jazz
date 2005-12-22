@@ -6,7 +6,7 @@ require_once dirname(__FILE__) . '/graph.php';
 # [type [.name] ] user-friendly [: detail...]
 # name is used for internationalization. 
 global $PHPX_ERROR_FORMAT; 
-$PHPX_ERROR_FORMAT = '/^\s*(?:\[(\w+)(?:\.(\w+))\]\s*)?(.+?)(?::\s+(.+))?$/'; 
+$PHPX_ERROR_FORMAT = '/^\s*(?:\[(\w+)(?:\.(\w+))?\]\s*)?(.+?)(?::\s+(.+))?$/'; 
 
 class phpx_error {
     var $time; 
@@ -16,9 +16,25 @@ class phpx_error {
     var $text; 
     var $detail; 
     var $source; 
+    var $source_status; 
     var $cause; 
     
-    function phpx_error($provider, $cause = NULL) {
+    function phpx_error($summary, $provider = NULL, $cause = NULL) {
+        global $PHPX_ERROR_FORMAT; 
+        assert($summary != NULL); 
+        
+        if (! preg_match($PHPX_ERROR_FORMAT, $summary, $matches))
+            die("Illegal error-summary syntax: $summary"); 
+        $type = $matches[1]; 
+        $name = $matches[2]; 
+        $text = $matches[3]; 
+        $detail = $matches[4]; 
+        
+        $this->text = $text; 
+        if ($type) $this->type = $type; 
+        if ($name) $this->name = $name; 
+        if ($detail) $this->detail = $detail; 
+        
         $this->time = time(); 
         $this->provider = $provider; 
         if ($cause != NULL) {
@@ -49,30 +65,26 @@ class phpx_error_manager extends phpx_node {
         if ($provider == NULL)
             $provider = 'EM/' . $PHPX_EM_NEXT++; 
         $this->name = $provider; 
-        phpx_em_register($this); 
+        phpx_error_manager_register($this); 
     }
     
+    # @final
     function process($summary, $source = NULL, $cause = NULL) {
-        global $PHPX_ERROR_FORMAT; 
-        assert($summary != NULL); 
-        if (! preg_match($PHPX_ERROR_FORMAT, $summary, $matches))
-            die("Illegal error-summary syntax: $summary"); 
-        $type = $matches[1]; 
-        $name = $matches[2]; 
-        $text = $matches[3]; 
-        $detail = $matches[4]; 
+        $e = new phpx_error($summary, $this->name, $cause); 
+        if ($e->source = $source)
+            if (method_exists($source, 'source_status'))
+                $e->source_status = $source->source_status(); 
+                
+        $this->errors[] = &$e; 
         
-        $e = new phpx_error($this->name, $cause); 
-        $e->source = $source; 
-        $e->text = $text; 
-        if ($type)) $e->type = $type; 
-        if ($name)) $e->name = $name; 
-        if ($detail)) $e->detail = $detail; 
-        
-        $errors[] = &$e; 
-        return handler($e); 
+        $next = $this; 
+        while ($next != NULL) {
+            $next->handler($e); 
+            $next = $next->next; 
+        }
     }
     
+    # @override
     function handler(&$error) {
         # Default Handler. 
         error_log($error->summary(true)); 
