@@ -16,27 +16,27 @@ abstract-form</xs:documentation>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	<xs:element name="section" type="af:section-type"/>
-	<xs:complexType name="section-type">
-		<xs:choice minOccurs="0" maxOccurs="unbounded">
-			<xs:group ref="af:output-group"/>
-			<xs:element ref="af:error"/>
-			<xs:element ref="af:form" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="sub-section" type="af:section-type">
+	<xs:element name="section">
+		<xs:annotation>
+			<xs:documentation>sub-section hasn't been supported, yet. </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:group ref="af:output-group"/>
+				<xs:element ref="af:form"/>
+				<xs:element ref="af:error"/>
+				<xs:element ref="af:doc"/>
+				<xs:element ref="af:section"/>
+			</xs:choice>
+			<xs:attribute name="name" type="xs:string"/>
+			<xs:attribute name="hint" type="xs:string">
 				<xs:annotation>
-					<xs:documentation>RECURSIVE SECTIONS ARE NOT SUPPORTED YET. </xs:documentation>
+					<xs:documentation>hint-base</xs:documentation>
 				</xs:annotation>
-			</xs:element>
-			<xs:any namespace="##other"/>
-		</xs:choice>
-		<xs:attribute name="name" type="xs:string" use="required"/>
-		<xs:attribute name="hint" type="xs:string">
-			<xs:annotation>
-				<xs:documentation>hint-base</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-		<xs:attribute name="hidden" type="xs:boolean"/>
-	</xs:complexType>
+			</xs:attribute>
+			<xs:attribute name="hidden" type="xs:boolean"/>
+		</xs:complexType>
+	</xs:element>
 	<!--OUTPUT-->
 	<xs:element name="scalar">
 		<xs:complexType mixed="true">
@@ -160,23 +160,38 @@ abstract-form</xs:documentation>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="error">
-		<xs:complexType mixed="true">
+		<xs:complexType>
 			<xs:sequence>
+				<xs:sequence minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Causal</xs:documentation>
+					</xs:annotation>
+					<xs:element name="error-source" minOccurs="0">
+						<xs:complexType>
+							<xs:attribute name="name" type="xs:string"/>
+							<xs:attribute name="status" type="xs:string"/>
+						</xs:complexType>
+					</xs:element>
+					<xs:element ref="af:error" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+				<xs:element ref="af:doc" minOccurs="0"/>
 				<xs:element ref="af:method" minOccurs="0" maxOccurs="unbounded"/>
-				<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
 			</xs:sequence>
-			<xs:attribute name="name" type="xs:string">
-				<xs:annotation>
-					<xs:documentation>Error name is meaningless. </xs:documentation>
-				</xs:annotation>
-			</xs:attribute>
+			<xs:attribute name="time" type="xs:time"/>
+			<xs:attribute name="provider" type="xs:string"/>
 			<xs:attribute name="type" type="xs:string">
 				<xs:annotation>
 					<xs:documentation>Maybe Java-Exception-Class</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
-			<xs:attribute name="source" type="xs:string"/>
-			<xs:attribute name="code" type="xs:string"/>
+			<xs:attribute name="name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Error name is meaningless. </xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="text" type="xs:string"/>
+			<xs:attribute name="detail" type="xs:string"/>
+			<xs:attribute name="hint" type="xs:string"/>
 		</xs:complexType>
 	</xs:element>
 	<xs:group name="output-group">
@@ -217,11 +232,7 @@ for output-group, type-specific render will applied on the data. </xs:documentat
 		<xs:complexType>
 			<xs:choice maxOccurs="unbounded">
 				<xs:group ref="af:input-group"/>
-				<xs:any namespace="##other" processContents="lax">
-					<xs:annotation>
-						<xs:documentation>display elements in different applications</xs:documentation>
-					</xs:annotation>
-				</xs:any>
+				<xs:element ref="af:doc"/>
 			</xs:choice>
 			<xs:attribute name="name" type="xs:string"/>
 			<xs:attribute name="type" type="xs:string">
@@ -264,11 +275,8 @@ the @type attribute is for type-checking</xs:documentation>
 			</xs:attribute>
 			<xs:attribute name="init" type="xs:string"/>
 			<xs:attribute name="multiline" type="xs:boolean"/>
-			<xs:attribute name="read-only" type="xs:boolean">
-				<xs:annotation>
-					<xs:documentation>hidden input. </xs:documentation>
-				</xs:annotation>
-			</xs:attribute>
+			<xs:attribute name="read-only" type="xs:boolean"/>
+			<xs:attribute name="max-length" type="xs:integer"/>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="selector">
@@ -322,6 +330,11 @@ the @type attribute is for type-checking</xs:documentation>
 			<xs:attribute name="hint" type="xs:string">
 				<xs:annotation>
 					<xs:documentation>For web-app, hint may be an href.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="const" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>a constant method doesn't affect the environment. </xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
 		</xs:complexType>
@@ -486,6 +499,14 @@ why this constraint. </xs:documentation>
 			<xs:choice maxOccurs="unbounded">
 				<xs:group ref="af:constraint-group"/>
 			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="doc">
+		<xs:complexType mixed="true">
+			<xs:sequence>
+				<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute name="doctype" type="xs:anyURI"/>
 		</xs:complexType>
 	</xs:element>
 </xs:schema>
