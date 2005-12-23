@@ -26,15 +26,44 @@ global $PHPX_TIMEZONE;
 $PHPX_TIMEOFDAY = gettimeofday(); 
 $PHPX_TIMEZONE = -60 * $PHPX_TIMEOFDAY['minuteswest']; # +28800 for +8:00
 
-function time_0()               { global $PHPX_TIMEZONE; 
-                                  return time() - $PHPX_TIMEZONE; }
-function time_0_format($time)   { global $PHPX_TIMEZONE; 
-                                  return date(TIME_FORMAT, $time + $PHPX_TIMEZONE); }
-function time_format($time)     { return date(TIME_FORMAT, $time); }
-function time_format_0($time)   { return gmdate(TIME_FORMAT, $time); }
-function time_of($str)          { return strtotime($str); }
-function time_of_0($str_0)      { global $PHPX_TIMEZONE; 
-                                  return strtotime($str) + $PHPX_TIMEZONE; }
+# timestamp@TZ
+function time_0() {
+    global $PHPX_TIMEZONE; 
+    return time() - $PHPX_TIMEZONE; 
+}
+
+# timestamp@TZ => timestr@Local
+function time_0_format($time, $format = TIME_FORMAT) {
+    global $PHPX_TIMEZONE; 
+    return date($format, $time + $PHPX_TIMEZONE); 
+}
+
+# timestamp@TZ => timestr@TZ
+function time_format($time, $format = TIME_FORMAT) {
+    return date($format, $time); 
+}
+
+# timestamp@Local => timestr@TZ
+function time_format_0($time, $format = TIME_FORMAT) {
+    return date($format, $time - $PHPX_TIMEZONE); 
+}
+
+# timestr@Local => timestamp@TZ
+function time_0_of($str) {
+    global $PHPX_TIMEZONE; 
+    return strtotime($str) - $PHPX_TIMEZONE; 
+}
+
+# timestr@TZ => timestamp@TZ
+function time_of($str) {
+    return strtotime($str); 
+}
+
+# timestr@TZ => timestamp@Local
+function time_of_0($str_0) {
+    global $PHPX_TIMEZONE; 
+    return strtotime($str) + $PHPX_TIMEZONE; 
+}
 
 function strand() {
     $args = func_get_args(); 
