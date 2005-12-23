@@ -56,11 +56,10 @@ class phpx_dbi extends phpx_dbi_base {
         if ($connect) $this->_connect(); 
     }
     
-    function _summary_addtype($type, $args) {
+    function _add_type($type, $summary) {
         global $PHPX_ERROR_FORMAT; 
-        $str = join('', $args); 
-        if (! preg_match($PHPX_ERROR_FORMAT, $str, $matches))
-            die("Illegal summary syntax: $str"); 
+        if (! preg_match($PHPX_ERROR_FORMAT, $summary, $matches))
+            die("Illegal summary syntax: $summary"); 
         if ($name = $matches[1]) {
             if ($matches[2])
                 $name .= '.' . $matches[2]; 
@@ -74,27 +73,24 @@ class phpx_dbi extends phpx_dbi_base {
         return $type . $text; 
     }
     
-    function _info() {
+    function _info($summary) {
         if (! $this->_debug) return true; 
-        $args = func_get_args(); 
-        $summary = $this->_summary_addtype('INFO', $args); 
+        $summary = $this->_add_type('INFO', $summary); 
         return $this->_em->process($summary, $this); 
     }
     
-    function _warn() {
-        $args = func_get_args(); 
-        $summary = $this->_summary_addtype('WARN', $args); 
+    function _warn($summary) {
+        $summary = $this->_add_type('WARN', $summary); 
         return $this->_em->process($summary, $this); 
     }
     
-    function _err() {
-        $args = func_get_args(); 
-        $summary = $this->_summary_addtype('ERR', $args); 
+    function _err($summary) {
+        $summary = $this->_add_type('ERR', $summary); 
         return $this->_em->process($summary, $this); 
     }
     
-    # @override provider-object.source_status
-    function source_status() {
+    # @override provider-object._source_status
+    function _source_status() {
         if (is_null($this->_link))
             return "Disconnected"; 
         return 'DBI Status [' . $this->_dialect . '/' . $this->_errno() . '] '
@@ -185,7 +181,7 @@ class phpx_dbi extends phpx_dbi_base {
         $this->_info("[SQL] query: $sql"); 
         $ret = parent::_query($sql); 
         if (! $ret)
-            $this->_warn("[SQL] query failed: ", $this->_error()); 
+            $this->_warn("[SQL] query failed: " . $this->_error()); 
         return $ret; 
     }
     
