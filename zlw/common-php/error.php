@@ -84,8 +84,8 @@ class phpx_error_manager extends phpx_node {
     function process($summary, $source = NULL, $cause = NULL) {
         $e = new phpx_error($summary, $this->name, $cause); 
         if ($e->source = $source)
-            if (method_exists($source, 'source_status'))
-                $e->source_status = $source->source_status(); 
+            if (method_exists($source, '_source_status'))
+                $e->source_status = $source->_source_status(); 
                 
         $this->errors[] = &$e; 
         
@@ -169,9 +169,55 @@ function phpx_error_manager_connect(&$from, &$to) {
 }
 
 function phpx_error($provider, $summary, $source = NULL, $cause = NULL) {
-    $em = phpx_error_manager_get($provider); 
+    $em = &phpx_error_manager_get($provider); 
     assert($em != NULL); 
     return $em->process($summary, $source, $cause); 
+}
+
+class phpx_error_support {
+    var $_debug; 
+    var $_em; 
+    
+    function phpx_error_support(&$provider) {
+        if (gettype($provider) == 'string')
+            $this->_em = &phpx_error_manager_get($provider); 
+        else
+            $this->_em = &$provider; 
+        assert($this->_em != NULL); 
+    }
+    
+    function _add_type($type, $summary) {
+        global $PHPX_ERROR_FORMAT; 
+        if (! preg_match($PHPX_ERROR_FORMAT, $summary, $matches))
+            die("Illegal summary syntax: $summary"); 
+        if ($name = $matches[1]) {
+            if ($matches[2])
+                $name .= '.' . $matches[2]; 
+            $type .= '.' . $name; 
+        }
+        if ($type)
+            $type = "[$type] "; 
+        $text = $matches[3]; 
+        if ($detail = $matches[4])
+            $text .= ': ' . $detail; 
+        return $type . $text; 
+    }
+    
+    function _info($summary) {
+        if (! $this->_debug) return true; 
+        $summary = $this->_add_type('INFO', $summary); 
+        return $this->_em->process($summary, $this); 
+    }
+    
+    function _warn($summary) {
+        $summary = $this->_add_type('WARN', $summary); 
+        return $this->_em->process($summary, $this); 
+    }
+    
+    function _err($summary) {
+        $summary = $this->_add_type('ERR', $summary); 
+        return $this->_em->process($summary, $this); 
+    }
 }
 
 ?>
