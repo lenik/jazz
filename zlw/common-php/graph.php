@@ -63,24 +63,6 @@ class phpx_graph {
         return $set; 
     }
     
-    function connect_leaves(&$term) {
-        assert($term != NULL); 
-        
-        # the term may be or may not be in the graph. 
-        $this->add($term); 
-        
-        foreach ($this->nodes as $name=>$node) {
-            if ($node->next == NULL) {
-                # Leaf. 
-                # Avoid loopping. 
-                $connected = $this->connected($node); 
-                if (! array_key_exists($term->name, $connected))
-                    $this->nodes[$name]->next = &$term; 
-            }
-        }
-        return true; 
-    }
-    
     function connect(&$from, &$to) {
         assert($from != NULL); 
         assert(array_key_exists($from->name, $this->nodes)); 
