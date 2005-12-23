@@ -12,7 +12,7 @@ require_once dirname(__FILE__) . '/dbi/' . DBI_DIALECT . '.php';
 function phpx_dbi_cleanup() {
     global $PHPX_CONNECTED_DBI; 
     if (! is_null($PHPX_CONNECTED_DBI)) {
-        foreach ($PHPX_CONNECTED_DBI as $dbi) {
+        foreach ($PHPX_CONNECTED_DBI as $id=>$dbi) {
             if ($dbi->_link) $dbi->_close(); 
         }
         $PHPX_CONNECTED_DBI = NULL; 
@@ -30,8 +30,10 @@ class phpx_dbi_em extends phpx_error_manager {
 
 global $PHPX_DBI_EM; 
 $PHPX_DBI_EM = new phpx_dbi_em(); 
+$PHPX_DBI_EM->register(); 
 
 class phpx_dbi extends phpx_dbi_base {
+    var $_dbi_id; 
     var $_host; 
     var $_user; 
     var $_password; 
@@ -45,6 +47,10 @@ class phpx_dbi extends phpx_dbi_base {
 	function phpx_dbi($host, $user, $password, $database, 
 	        $connect = true, $persist = true, $debug = false) {
         $this->phpx_dbi_base(); 
+        
+        global $PHPX_DBI_NEXT_ID; 
+        $this->_dbi_id = $PHPX_DBI_NEXT_ID++; 
+        
         $this->_host = $host; 
         $this->_user = $user; 
         $this->_password = $password; 
@@ -125,9 +131,7 @@ class phpx_dbi extends phpx_dbi_base {
         
         if ($this->_link) {
             global $PHPX_CONNECTED_DBI; 
-            if (is_null($PHPX_CONNECTED_DBI))
-                $PHPX_CONNECTED_DBI = array(); 
-            $PHPX_CONNECTED_DBI[] = $this; 
+            $PHPX_CONNECTED_DBI[$this->_dbi_id] = &$this; 
             $this->_info("[CONN] Connect succeeded: $this->_link"); 
         } else {
             $this->_err("[CONN] Connect failed: " . $this->_error()); 
@@ -160,10 +164,9 @@ class phpx_dbi extends phpx_dbi_base {
         $this->_info('[CONN] Disconnecting: ' . $this->_link); 
         parent::_close($this->_link); 
         $this->_link = NULL; 
+        
         global $PHPX_CONNECTED_DBI; 
-        $index = array_search($this, $PHPX_CONNECTED_DBI); 
-        if ($index !== false)
-            array_splice($PHPX_CONNECTED_DBI, $index, 1); 
+        unset($PHPX_CONNECTED_DBI[$this->_dbi_id]); 
     }
     
     function _reuse($dbi) {

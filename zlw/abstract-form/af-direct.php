@@ -43,6 +43,7 @@ class phpx_af_em extends phpx_error_manager {
 
 global $PHPX_AF_EM; 
 $PHPX_AF_EM = new phpx_af_em(); 
+$PHPX_AF_EM->register(); 
 phpx_error_manager_connect_leaves($PHPX_AF_EM); 
 
 function phpx_af_xml($content, $title = 'Abstract Form', $term = false) {
@@ -124,7 +125,11 @@ function phpx_af_error($error_or_summary, $methods = NULL, $hint = '') {
     $xml .= ">\n"; 
     
     if (! is_null($error->source)) {
-        $xml .= "<af:error-source name=" . phpx_xml_attr($error->source); 
+        if (is_object($error->source))
+            $source_name = get_class($error->source); 
+        else
+            $source_name = "$error->source"; 
+        $xml .= "<af:error-source name=" . phpx_xml_attr($source_name); 
         if (method_exists($error->source, 'source_status')) {
             $status = $error->source->source_status(); 
             $xml .= " status=" . phpx_xml_attr($status); 

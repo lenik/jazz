@@ -3,6 +3,10 @@
 class phpx_node {
     var $name; 
     var $next; 
+    
+    function phpx_node($name = NULL) {
+        $this->name = $name; 
+    }
 }
 
 class phpx_graph {
@@ -13,7 +17,7 @@ class phpx_graph {
         assert($node != NULL); 
         if (array_key_exists($node->name, $this->nodes))
             return false; 
-        $nodes[$node->name] = &$node; 
+        $this->nodes[$node->name] = &$node; 
         return true; 
     }
     
@@ -45,50 +49,54 @@ class phpx_graph {
         return $def; 
     }
     
-    function connected(&$node) {
-        assert($node != NULL); 
+    function connected($start) {
+        assert($start != NULL); 
         
         $set = array(); 
+        $node = $start; 
         while ($node != NULL) {
-            assert(array_key_exists($node, $this->nodes)); 
-            assert(! array_key_exists($node, $set)); 
-            $set[$node->name] = &$node; 
-            $node = &$node->next; 
+            assert(array_key_exists($node->name, $this->nodes)); 
+            assert(! array_key_exists($node->name, $set)); 
+            $set[$node->name] = true; # &$node; 
+            $node = $node->next; 
         }
         return $set; 
     }
     
-    function connect_leaves($term) {
+    function connect_leaves(&$term) {
         assert($term != NULL); 
         
-        if (! $this->add($term))
-            return false; 
-            
+        # the term may be or may not be in the graph. 
+        $this->add($term); 
+        
         foreach ($this->nodes as $name=>$node) {
             if ($node->next == NULL) {
                 # Leaf. 
                 # Avoid loopping. 
                 $connected = $this->connected($node); 
                 if (! array_key_exists($term->name, $connected))
-                    $node->next = $term; 
+                    $this->nodes[$name]->next = &$term; 
             }
         }
         return true; 
     }
     
-    function connect($from, $to) {
+    function connect(&$from, &$to) {
         assert($from != NULL); 
         assert(array_key_exists($from->name, $this->nodes)); 
         
         if ($to != NULL) {
-            assert(array_key_exists($to->name, $this->nodes)); 
+            # add if not existed. 
+            if (! array_key_exists($to->name, $this->nodes))
+                $this->add($to); 
+                
             # recursive check.
             $connected = $this->connected($from); 
-            if (array_key_exists($to, $connected))
+            if (array_key_exists($to->name, $connected))
                 return false; 
         }
         
-        $from->next = $to; 
+        $from->next = &$to; 
         return true; 
     }
 }
