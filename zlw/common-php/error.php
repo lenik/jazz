@@ -8,6 +8,8 @@ require_once dirname(__FILE__) . '/graph.php';
 global $PHPX_ERROR_FORMAT; 
 $PHPX_ERROR_FORMAT = '/^\s*(?:\[(\w+)(?:\.(\w+))?\]\s*)?(.+?)(?::\s+(.+))?$/'; 
 
+define('PHPX_EM_TERM', 1); 
+
 class phpx_error {
     var $time; 
     var $provider; 
@@ -57,14 +59,16 @@ class phpx_error {
 }
 
 class phpx_error_manager extends phpx_node {
+    var $pref = NULL; 
     var $errors; 
     var $mark; 
     
-    function phpx_error_manager($provider = NULL) {
+    function phpx_error_manager($provider = NULL, $pref = NULL) {
         global $PHPX_EM_NEXT; 
         if ($provider == NULL)
             $provider = 'EM/' . $PHPX_EM_NEXT++; 
         $this->name = $provider; 
+        $this->pref = $pref; 
     }
     
     function register() {
@@ -125,9 +129,28 @@ class phpx_error_manager extends phpx_node {
 global $PHPX_EM_REGISTRY; 
 $PHPX_EM_REGISTRY = new phpx_graph(); 
 
-function phpx_error_manager_register(&$manager) {
+function phpx_error_manager_register(&$em) {
     global $PHPX_EM_REGISTRY; 
-    return $PHPX_EM_REGISTRY->add($manager); 
+    global $PHPX_EM_LAST_TERM; 
+    
+    if (! $PHPX_EM_REGISTRY->add($em))
+        die("Failed to register error-manager $em->name"); 
+    
+    if ($em->next == NULL && $PHPX_EM_LAST_TERM != NULL)
+        $em->next = &$PHPX_EM_LAST_TERM; 
+        
+    if ($em->pref & PHPX_EM_TERM) {
+        # connect leaves if exist (except the term self. )
+        foreach ($PHPX_EM_REGISTRY->nodes as $name=>$node) {
+            if ($node->next == NULL) {
+                # Leaf, Avoid loopping. 
+                $connected = $PHPX_EM_REGISTRY->connected($node); 
+                if (! array_key_exists($em->name, $connected))
+                    $node->next = &$em; 
+            }
+        }
+        $PHPX_EM_LAST_TERM = &$em; 
+    }
 }
 
 function phpx_error_manager_unregister(&$manager) {
@@ -140,25 +163,15 @@ function &phpx_error_manager_get($provider) {
     return $PHPX_EM_REGISTRY->get($provider); 
 }
 
-function phpx_error_manager_connect_leaves(&$term_manager) {
-    global $PHPX_EM_REGISTRY; 
-    return $PHPX_EM_REGISTRY->connect_leaves($term_manager); 
-}
-
 function phpx_error_manager_connect(&$from, &$to) {
     global $PHPX_EM_REGISTRY; 
     return $PHPX_EM_REGISTRY->connect($from, $to); 
 }
 
-function phpx_error_dispatch($provider, $name = NULL, $type = 'error', $text = NULL, 
-        $source = NULL, $next = NULL) {
-    $next = $provider; 
-    while ($next != NULL) {
-        $em = phpx_error_manager_get($provider); 
-        $error = new phpx_error(); 
-        $em->add($error); 
-        $next = phpx_error_manager_connect($next); 
-    }
+function phpx_error($provider, $summary, $source = NULL, $cause = NULL) {
+    $em = phpx_error_manager_get($provider); 
+    assert($em != NULL); 
+    return $em->process($summary, $source, $cause); 
 }
 
 ?>
