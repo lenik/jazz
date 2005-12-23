@@ -20,16 +20,8 @@ function phpx_dbi_cleanup() {
 }
 register_shutdown_function('phpx_dbi_cleanup'); 
 
-class phpx_dbi_em extends phpx_error_manager {
-    function phpx_dbi_em($provider = 'DBI') {
-        # this will register self
-        $this->phpx_error_manager($provider); 
-    }
-    # function handler(&$error)
-}
-
 global $PHPX_DBI_EM; 
-$PHPX_DBI_EM = new phpx_dbi_em(); 
+$PHPX_DBI_EM = new phpx_error_manager(PHPX_DBI); 
 $PHPX_DBI_EM->register(); 
 
 class phpx_dbi extends phpx_dbi_base {
