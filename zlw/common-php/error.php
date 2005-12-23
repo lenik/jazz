@@ -65,7 +65,15 @@ class phpx_error_manager extends phpx_node {
         if ($provider == NULL)
             $provider = 'EM/' . $PHPX_EM_NEXT++; 
         $this->name = $provider; 
+    }
+    
+    function register() {
+        # BUGFIX: PHP $this unusable in constructor. 
         phpx_error_manager_register($this); 
+    }
+    
+    function unregister() {
+        phpx_error_manager_unregister($this); 
     }
     
     # @final
@@ -117,12 +125,12 @@ class phpx_error_manager extends phpx_node {
 global $PHPX_EM_REGISTRY; 
 $PHPX_EM_REGISTRY = new phpx_graph(); 
 
-function phpx_error_manager_register($manager) {
+function phpx_error_manager_register(&$manager) {
     global $PHPX_EM_REGISTRY; 
     return $PHPX_EM_REGISTRY->add($manager); 
 }
 
-function phpx_error_manager_unregister($manager) {
+function phpx_error_manager_unregister(&$manager) {
     global $PHPX_EM_REGISTRY; 
     return $PHPX_EM_REGISTRY->remove($manager); 
 }
@@ -132,12 +140,12 @@ function &phpx_error_manager_get($provider) {
     return $PHPX_EM_REGISTRY->get($provider); 
 }
 
-function phpx_error_manager_connect_leaves($term_manager) {
+function phpx_error_manager_connect_leaves(&$term_manager) {
     global $PHPX_EM_REGISTRY; 
     return $PHPX_EM_REGISTRY->connect_leaves($term_manager); 
 }
 
-function phpx_error_manager_connect($from, $to) {
+function phpx_error_manager_connect(&$from, &$to) {
     global $PHPX_EM_REGISTRY; 
     return $PHPX_EM_REGISTRY->connect($from, $to); 
 }
