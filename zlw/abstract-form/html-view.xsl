@@ -1,6 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml" xmlns:af="http://www.bodz.net/xml/zlw/abstract-form" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:af="http://www.bodz.net/xml/zlw/abstract-form">
 	<xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes"/>
+	<xsl:param name="af-base">
+		<xsl:call-template name="t-param-text">
+			<xsl:with-param name="name" select="'af-base'"/>
+			<xsl:with-param name="default" select="'.'"/>
+		</xsl:call-template>
+	</xsl:param>
+	<xsl:param name="af-uri" select="'http://www.bodz.net/xml/zlw/abstract-form'"/>
+	<xsl:param name="encoding">
+		<xsl:call-template name="t-param-text">
+			<xsl:with-param name="name" select="'encoding'"/>
+			<xsl:with-param name="default" select="'utf-8'"/>
+		</xsl:call-template>
+	</xsl:param>
+	<xsl:param name="title">
+		<xsl:call-template name="t-param-text">
+			<xsl:with-param name="name" select="'title'"/>
+			<xsl:with-param name="default" select="'Abstract Form (Unnamed)'"/>
+		</xsl:call-template>
+	</xsl:param>
+	<xsl:param name="show-type">
+		<xsl:call-template name="t-param-text">
+			<xsl:with-param name="name" select="'show-type'"/>
+			<xsl:with-param name="default" select="'hidden'"/>
+		</xsl:call-template>
+	</xsl:param>
+	<!--HTML-->
+	<xsl:template name="t-copyright">
+		<xsl:call-template name="t-param">
+			<xsl:with-param name="name" select="'copyright'"/>
+			<xsl:with-param name="default">
+				<!--<HR/>-->
+				<cite>Powered by ZLW::Abstract-Form</cite>
+				<br/>
+				<cite>$Id: html-view.xsl,v 1.6.2.8 2005-12-26 06:22:40 dansei Exp $</cite>
+			</xsl:with-param>
+		</xsl:call-template>
+	</xsl:template>
+	<xsl:template name="t-error-xml">
+		<xsl:param name="text" select="'General Error'"/>
+		<div class="error-xml">
+			<xsl:value-of select="$text"/>
+		</div>
+	</xsl:template>
+	<xsl:template name="t-name">
+		<span class="data-name">
+			<xsl:value-of select="@name"/>
+			<xsl:if test="@hold='true' and $show-type='true'">(HOLD)</xsl:if>
+		</span>
+	</xsl:template>
+	<xsl:template name="t-all-text">
+		<xsl:value-of select="text()"/>
+		<xsl:for-each select="*">
+			<xsl:call-template name="t-all-text"/>
+		</xsl:for-each>
+	</xsl:template>
 	<xsl:template name="t-param">
 		<xsl:param name="name"/>
 		<xsl:param name="default"/>
@@ -31,66 +86,6 @@
 				<xsl:value-of select="$default"/>
 			</xsl:when>
 		</xsl:choose>
-	</xsl:template>
-	<xsl:param name="encoding">
-		<xsl:call-template name="t-param-text">
-			<xsl:with-param name="name" select="'encoding'"/>
-			<xsl:with-param name="default" select="'utf-8'"/>
-		</xsl:call-template>
-	</xsl:param>
-	<xsl:param name="af-base">
-		<xsl:call-template name="t-param-text">
-			<xsl:with-param name="name" select="'af-base'"/>
-			<xsl:with-param name="default" select="'.'"/>
-		</xsl:call-template>
-	</xsl:param>
-	<xsl:param name="af-uri" select="'http://www.bodz.net/xml/zlw/abstract-form'"/>
-	<xsl:param name="show-type">
-		<xsl:call-template name="t-param-text">
-			<xsl:with-param name="name" select="'show-type'"/>
-			<xsl:with-param name="default" select="'hidden'"/>
-		</xsl:call-template>
-	</xsl:param>
-	<xsl:template match="/af:abstract-form">
-		<xsl:call-template name="t-abstract-form"/>
-	</xsl:template>
-	<!--HTML-->
-	<xsl:template name="t-copyright">
-		<xsl:call-template name="t-param">
-			<xsl:with-param name="name" select="'copyright'"/>
-			<xsl:with-param name="default">
-				<!--<HR/>-->
-				<cite>Powered by ZLW::Abstract-Form</cite>
-				<br/>
-				<cite>$Id: html-view.xsl,v 1.6.2.7 2005-12-26 04:53:26 dansei Exp $</cite>
-			</xsl:with-param>
-		</xsl:call-template>
-	</xsl:template>
-	<xsl:template name="t-error-xml">
-		<xsl:param name="text" select="'General Error'"/>
-		<div class="error-xml">
-			<xsl:value-of select="$text"/>
-		</div>
-	</xsl:template>
-	<xsl:template name="t-name">
-		<span class="data-name">
-			<xsl:value-of select="@name"/>
-			<xsl:if test="@hold='true' and $show-type='true'">(HOLD)</xsl:if>
-		</span>
-	</xsl:template>
-	<xsl:template name="t-doc">
-		<xsl:choose>
-			<xsl:when test="@doctype = 'spec'"/>
-			<xsl:otherwise>
-				<xsl:copy-of select="node()"/>
-			</xsl:otherwise>
-		</xsl:choose>
-	</xsl:template>
-	<xsl:template name="t-all-text">
-		<xsl:value-of select="text()"/>
-		<xsl:for-each select="*">
-			<xsl:call-template name="t-all-text"/>
-		</xsl:for-each>
 	</xsl:template>
 	<xsl:template name="t-href-concat">
 		<xsl:param name="lhs"/>
@@ -197,21 +192,9 @@
 		</xsl:for-each>
 	</xsl:template>
 	<!--TOP LEVELS-->
-	<xsl:template name="t-abstract-form">
+	<xsl:template name="t-abstract-form" match="/af:abstract-form" priority="-1">
 		<!---->
 		<!--Encoding-->
-		<xsl:variable name="encoding">
-			<xsl:call-template name="t-param-text">
-				<xsl:with-param name="name" select="'encoding'"/>
-				<xsl:with-param name="default" select="'utf-8'"/>
-			</xsl:call-template>
-		</xsl:variable>
-		<xsl:variable name="title">
-			<xsl:call-template name="t-param-text">
-				<xsl:with-param name="name" select="'title'"/>
-				<xsl:with-param name="default" select="'Abstract Form (Unnamed)'"/>
-			</xsl:call-template>
-		</xsl:variable>
 		<html>
 			<head>
 				<!---->
@@ -295,6 +278,14 @@
 			</body>
 		</html>
 	</xsl:template>
+	<xsl:template name="t-doc" match="af:doc" priority="-1">
+		<xsl:choose>
+			<xsl:when test="@doctype = 'spec'"/>
+			<xsl:otherwise>
+				<xsl:copy-of select="node()"/>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
 	<xsl:template name="t-sections">
 		<xsl:for-each select="af:section">
 			<xsl:choose>
@@ -313,7 +304,7 @@
 			</xsl:choose>
 		</xsl:for-each>
 	</xsl:template>
-	<xsl:template name="t-section">
+	<xsl:template name="t-section" match="af:section" priority="-1">
 		<!--Anchor #@section-name-->
 		<xsl:variable name="name">
 			<xsl:choose>
@@ -519,7 +510,7 @@
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
-	<xsl:template name="t-scalar">
+	<xsl:template name="t-scalar" match="af:scalar" priority="-1">
 		<span>
 			<xsl:call-template name="t-value">
 				<xsl:with-param name="type" select="@type"/>
@@ -530,7 +521,7 @@
 			<xsl:value-of select="' '"/>
 		</xsl:for-each>
 	</xsl:template>
-	<xsl:template name="t-list">
+	<xsl:template name="t-list" match="af:list" priority="-1">
 		<table>
 			<xsl:for-each select="af:item">
 				<xsl:variable name="index" select="position()"/>
@@ -556,7 +547,7 @@
 			</xsl:for-each>
 		</table>
 	</xsl:template>
-	<xsl:template name="t-map">
+	<xsl:template name="t-map" match="af:map" priority="-1">
 		<table>
 			<thead>
 				<tr>
@@ -600,7 +591,7 @@
 			</tbody>
 		</table>
 	</xsl:template>
-	<xsl:template name="t-table">
+	<xsl:template name="t-table" match="af:table" priority="-1">
 		<table>
 			<thead>
 				<tr>
@@ -688,7 +679,7 @@
 			</table>
 		</xsl:if>
 	</xsl:template>
-	<xsl:template name="t-user">
+	<xsl:template name="t-user" match="af:user" priority="-1">
 		<div class="user">
 			<xsl:call-template name="t-dump">
 				<xsl:with-param name="path" select="@name"/>
@@ -696,7 +687,7 @@
 			</xsl:call-template>
 		</div>
 	</xsl:template>
-	<xsl:template name="t-error">
+	<xsl:template name="t-error" match="af:error" priority="-1">
 		<xsl:param name="inside" select="false()"/>
 		<xsl:choose>
 			<xsl:when test="$inside">
@@ -828,7 +819,7 @@
 		</xsl:choose>
 	</xsl:template>
 	<!--FORM ELEMENTS-->
-	<xsl:template name="t-form">
+	<xsl:template name="t-form" match="af:form" priority="-1">
 		<xsl:variable name="form-index">
 			<xsl:call-template name="t-node-index">
 				<xsl:with-param name="select" select="//af:form"/>
@@ -1003,7 +994,7 @@ $retvar, '.model = &quot;', $model, '&quot;', '; &#10;')"/>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
-	<xsl:template name="t-input">
+	<xsl:template name="t-input" match="af:input" priority="-1">
 		<xsl:variable name="input-name">
 			<xsl:choose>
 				<xsl:when test="@name">
@@ -1048,7 +1039,7 @@ $retvar, '.model = &quot;', $model, '&quot;', '; &#10;')"/>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
-	<xsl:template name="t-selector">
+	<xsl:template name="t-selector" match="af:selector" priority="-1">
 		<xsl:choose>
 			<xsl:when test="af:list">
 				<xsl:call-template name="t-selector-list">
@@ -1173,7 +1164,7 @@ $retvar, '.model = &quot;', $model, '&quot;', '; &#10;')"/>
 			</xsl:for-each>
 		</xsl:element>
 	</xsl:template>
-	<xsl:template name="t-method">
+	<xsl:template name="t-method" match="af:method[local-name(..)='form']" priority="-1">
 		<xsl:param name="form-id"/>
 		<xsl:element name="input">
 			<xsl:attribute name="type">submit</xsl:attribute>
@@ -1185,7 +1176,7 @@ $retvar, '.model = &quot;', $model, '&quot;', '; &#10;')"/>
 			</xsl:if>
 		</xsl:element>
 	</xsl:template>
-	<xsl:template name="t-method-a">
+	<xsl:template name="t-method-a" match="af:method[local-name(..)!='form']" priority="-1">
 		<xsl:param name="params" select="''"/>
 		<span class="method">
 			<xsl:element name="a">
