@@ -62,14 +62,14 @@
 				<!--<HR/>-->
 				<cite>Powered by ZLW::Abstract-Form</cite>
 				<br/>
-				<cite>$Id: html-view.xsl,v 1.6.2.6 2005-12-22 14:02:13 dansei Exp $</cite>
+				<cite>$Id: html-view.xsl,v 1.6.2.7 2005-12-26 04:53:26 dansei Exp $</cite>
 			</xsl:with-param>
 		</xsl:call-template>
 	</xsl:template>
-	<xsl:template name="t-error-message">
-		<xsl:param name="message" select="'General Error'"/>
-		<div class="error-message">
-			<xsl:value-of select="$message"/>
+	<xsl:template name="t-error-xml">
+		<xsl:param name="text" select="'General Error'"/>
+		<div class="error-xml">
+			<xsl:value-of select="$text"/>
 		</div>
 	</xsl:template>
 	<xsl:template name="t-name">
@@ -246,26 +246,34 @@
 						<xsl:with-param name="default">.indent { }
 .data-type { font-weight: bold }
 .data-name { text-decoration: underline }
-.data-separator { 
-	height: 1px; 
-	bottom-border: 1px solid gray 
-}
-.scalar { font-family: courier, helvetica, sans-serif, arial }
+.data-separator { height: 1px; bottom-border: 1px solid gray
+; }
+.error-xml { font-style: italic; color: magenta; }
+.scalar { font-family: courier, helvetica, sans-serif, arial; }
 .list { }
 .map { }
 .table { }
 .user { }
-.error { border: red 3px solid; color: red }
-.error-message { font-style: italic; color: magenta }
-.input { }
-.selector { }
-.event { }
-.vt-test { border: green 1px dash; color: green }<!--HTML Style-->input[type=text] {
+.error { border: 3px solid red; color: red; }
+.errorfield-name { 
+    font-weight: bold; 
+    word-wrap: normal; 
+    }
+.errorfield-value {
+    word-wrap: break-word; 
+    border-bottom: 1px dashed gray; 
+    }
+.input {
     border-left: none; 
     border-right: none; 
     border-top: none; 
-    border-bottom: solid 1px black; 
-}</xsl:with-param>
+    border-bottom: 1px dashed black; 
+    }
+.input-m { border: 1px dashed black; }
+.selector { }
+.event { }
+.vt-test { border: 1px dashed green; color: green }
+</xsl:with-param>
 					</xsl:call-template>
 				</style>
 				<!---->
@@ -290,11 +298,17 @@
 	<xsl:template name="t-sections">
 		<xsl:for-each select="af:section">
 			<xsl:choose>
-				<xsl:when test="not(@hidden) and substring(@name, 1, 1) != '.'">
+				<xsl:when test="@hidden='true'">
+					<!--Hidden sections are not displayed.-->
+				</xsl:when>
+				<xsl:when test="@hidden='false'">
+					<xsl:call-template name="t-section"/>
+				</xsl:when>
+				<xsl:when test="substring(@name, 1, 1) != '.'">
 					<xsl:call-template name="t-section"/>
 				</xsl:when>
 				<xsl:otherwise>
-					<!--Hidden sections are not displayed.-->
+					<!--.(dot-prefix) default hidden sections are not displayed.-->
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:for-each>
@@ -455,8 +469,8 @@
 								<tr>
 									<td class="indent"/>
 									<td>
-										<xsl:call-template name="t-error-message">
-											<xsl:with-param name="message" select="concat('unexpected section element of meta-type: ', $tag)"/>
+										<xsl:call-template name="t-error-xml">
+											<xsl:with-param name="text" select="concat('unexpected section element of meta-type: ', $tag)"/>
 										</xsl:call-template>
 									</td>
 								</tr>
@@ -688,48 +702,66 @@
 			<xsl:when test="$inside">
 				<xsl:if test="@time">
 					<tr>
-						<td>Error Time</td>
-						<td>
+						<td colspan="2" class="errorfield-name">Error Time</td>
+					</tr>
+					<tr>
+						<td class="indent"/>
+						<td class="errorfield-value">
 							<xsl:value-of select="@time"/>
 						</td>
 					</tr>
 				</xsl:if>
 				<xsl:if test="@provider">
 					<tr>
-						<td>Error Provider</td>
-						<td>
+						<td colspan="2" class="errorfield-name">Error Provider</td>
+					</tr>
+					<tr>
+						<td class="indent"/>
+						<td class="errorfield-value">
 							<xsl:value-of select="@provider"/>
 						</td>
 					</tr>
 				</xsl:if>
 				<xsl:if test="@type">
 					<tr>
-						<td>Error Type</td>
-						<td>
+						<td colspan="2" class="errorfield-name">Error Type</td>
+					</tr>
+					<tr>
+						<td class="indent"/>
+						<td class="errorfield-value">
 							<xsl:value-of select="@type"/>
 						</td>
 					</tr>
 				</xsl:if>
 				<xsl:if test="@name">
 					<tr>
-						<td>Error Name</td>
-						<td>
+						<td colspan="2" class="errorfield-name">Error Name</td>
+					</tr>
+					<tr>
+						<td class="indent"/>
+						<td class="errorfield-value">
 							<xsl:value-of select="@name"/>
 						</td>
 					</tr>
 				</xsl:if>
 				<xsl:if test="@text">
 					<tr>
-						<td>Error Overview</td>
-						<td>
+						<td colspan="2" class="errorfield-name">Error Overview</td>
+					</tr>
+					<tr>
+						<td class="indent"/>
+						<td class="errorfield-value">
 							<xsl:value-of select="@text"/>
 						</td>
 					</tr>
 				</xsl:if>
 				<xsl:if test="@detail">
 					<tr>
-						<td>Error Detail</td>
-						<td>
+						<td colspan="2" class="errorfield-name">Error Detail</td>
+					</tr>
+					<tr>
+						<td class="indent"/>
+						<td class="errorfield-value">
 							<xsl:value-of select="@detail"/>
 						</td>
 					</tr>
@@ -737,14 +769,17 @@
 				<xsl:if test="af:error-source">
 					<xsl:for-each select="af:error-source">
 						<tr>
-							<td>Error Source</td>
-							<td>
+							<td colspan="2" class="errorfield-name">Error Source</td>
+						</tr>
+						<tr>
+							<td class="indent"/>
+							<td class="errorfield-value">
 								<xsl:value-of select="@name"/>
 								<xsl:if test="@status">
 									<br/>
-									<pre>
+									<code>
 										<xsl:value-of select="@status"/>
-									</pre>
+									</code>
 								</xsl:if>
 							</td>
 						</tr>
@@ -870,8 +905,8 @@
 									<xsl:otherwise>
 										<tr>
 											<td colspan="2">
-												<xsl:call-template name="t-error-message">
-													<xsl:with-param name="message" select="concat('unexpected form input of meta-type: ', $tag)"/>
+												<xsl:call-template name="t-error-xml">
+													<xsl:with-param name="text" select="concat('unexpected form input of meta-type: ', $tag)"/>
 												</xsl:call-template>
 											</td>
 										</tr>
@@ -962,8 +997,8 @@ $retvar, '.model = &quot;', $model, '&quot;', '; &#10;')"/>
 				</xsl:call-template>
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:call-template name="t-error-message">
-					<xsl:with-param name="message" select="concat('unexpected contraint model: ', $model)"/>
+				<xsl:call-template name="t-error-xml">
+					<xsl:with-param name="text" select="concat('unexpected contraint model: ', $model)"/>
 				</xsl:call-template>
 			</xsl:otherwise>
 		</xsl:choose>
@@ -980,8 +1015,9 @@ $retvar, '.model = &quot;', $model, '&quot;', '; &#10;')"/>
 			</xsl:choose>
 		</xsl:variable>
 		<xsl:choose>
-			<xsl:when test="@multilne">
+			<xsl:when test="@multiline">
 				<xsl:element name="textarea">
+					<xsl:attribute name="class">input-m</xsl:attribute>
 					<xsl:attribute name="name"><xsl:value-of select="$input-name"/></xsl:attribute>
 					<xsl:if test="@read-only">
 						<xsl:attribute name="readonly">readonly</xsl:attribute>
@@ -997,6 +1033,7 @@ $retvar, '.model = &quot;', $model, '&quot;', '; &#10;')"/>
 			<xsl:otherwise>
 				<xsl:element name="input">
 					<xsl:attribute name="type">text</xsl:attribute>
+					<xsl:attribute name="class">input</xsl:attribute>
 					<xsl:attribute name="name"><xsl:value-of select="$input-name"/></xsl:attribute>
 					<xsl:if test="@read-only">
 						<xsl:attribute name="readonly">readonly</xsl:attribute>
@@ -1033,8 +1070,8 @@ $retvar, '.model = &quot;', $model, '&quot;', '; &#10;')"/>
 						</xsl:call-template>
 					</xsl:when>
 					<xsl:otherwise>
-						<xsl:call-template name="t-error-message">
-							<xsl:with-param name="message" select="concat('list(', $name, ') is not existed')"/>
+						<xsl:call-template name="t-error-xml">
+							<xsl:with-param name="text" select="concat('list(', $name, ') is not existed')"/>
 						</xsl:call-template>
 					</xsl:otherwise>
 				</xsl:choose>
@@ -1049,15 +1086,15 @@ $retvar, '.model = &quot;', $model, '&quot;', '; &#10;')"/>
 						</xsl:call-template>
 					</xsl:when>
 					<xsl:otherwise>
-						<xsl:call-template name="t-error-message">
-							<xsl:with-param name="message" select="concat('map(', $name, ') is not existed')"/>
+						<xsl:call-template name="t-error-xml">
+							<xsl:with-param name="text" select="concat('map(', $name, ') is not existed')"/>
 						</xsl:call-template>
 					</xsl:otherwise>
 				</xsl:choose>
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:call-template name="t-error-message">
-					<xsl:with-param name="message" select="'the collection to be selected cannot be resolved. '"/>
+				<xsl:call-template name="t-error-xml">
+					<xsl:with-param name="text" select="'the collection to be selected cannot be resolved. '"/>
 				</xsl:call-template>
 			</xsl:otherwise>
 		</xsl:choose>
