@@ -66,6 +66,45 @@ function phpx_time_of_0($str_0) {
 
 # .section. simple serialization
 
+function phpx_list_format($list) {
+    if ($list)
+        foreach ($list as $item) {
+            if ($string != '')
+                $string .= ':'; 
+            $escaped = str_replace("\n", '\n', addslashes($item)); 
+            if (strpos($item, ':') !== false)
+                $string .= '"' . $escaped . '"'; 
+            else
+                $string .= $escaped; 
+        }
+    return $string; 
+}
+
+function &phpx_list_parse($string) {
+    # string: item:item:...
+    # item: ... "..."
+    $segs = explode(':', $string); 
+    $nsegs = sizeof($segs); 
+    
+    $item = ''; 
+    # "A : B" : C  ==>  "A:B" : C
+    for ($i = 0; $i < $nsegs; $i++) {
+        $item .= $segs[$i]; 
+        if (substr($item, 0, 1) == '"') {
+            if (substr($item, -1) != '"' || substr($item, -2) == '\"') {
+                $item .= ':'; 
+                continue;   # concat($i, $i+1)
+            }
+            $item = eval('return ' . $item . ';'); 
+        } else {
+            $item = eval('return "' . $item . '";'); 
+        }
+        $item = ''; 
+        $list[] = $item; 
+    }
+    return $list; 
+}
+
 function phpx_map_format($map) {
     if ($map)
         foreach ($map as $name=>$value) {
@@ -80,7 +119,7 @@ function phpx_map_format($map) {
     return $string; 
 }
 
-function phpx_map_parse($string) {
+function &phpx_map_parse($string) {
     # string: name=value;...
     # value: ... "..."
     $segs = explode(';', $string); 
@@ -96,9 +135,9 @@ function phpx_map_parse($string) {
                 $value .= ';'; 
                 continue;   # concat($i, $i+1)
             }
-            $value = eval('return ' . $value . '; '); 
+            $value = eval('return ' . $value . ';'); 
         } else {
-            $value = eval('return "' . $value . '"; '); 
+            $value = eval('return "' . $value . '";'); 
         }
         $entry = ''; 
         $map[$name] = $value; 
