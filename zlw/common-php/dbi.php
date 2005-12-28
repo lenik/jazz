@@ -5,7 +5,7 @@
  * Database Access Interface
  */
 
-require_once dirname(__FILE__) . '/string.php'; 
+require_once dirname(__FILE__) . '/lang.php'; 
 require_once dirname(__FILE__) . '/error.php'; 
 require_once dirname(__FILE__) . '/dbi/' . DBI_DIALECT . '.php'; 
 
