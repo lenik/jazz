@@ -1,25 +1,24 @@
 <?php
 
-/* Common-PHP
- *
- * String Utilities
- */
+# .section. number format
 
-if (! defined('NUM_FORMAT'))
-    define('NUM_FORMAT', '%1.3f'); 
-if (! defined('TIME_FORMAT'))
-    define('TIME_FORMAT', 'Y-m-d H:i:s'); 
+if (! defined('PHPX_NUM_FORMAT'))
+    define('PHPX_NUM_FORMAT', '%1.3f'); 
+if (! defined('PHPX_TIME_FORMAT'))
+    define('PHPX_TIME_FORMAT', 'Y-m-d H:i:s'); 
 
-function num_format($num) {
+function phpx_num_format($num) {
     if ($num == (int)$num) return $num; 
-    else return sprintf(NUMBER_FORMAT, $num); 
+    else return sprintf(PHPX_NUMBER_FORMAT, $num); 
 }
 
-function &num_of(&$mix) {
+function &phpx_num_of(&$mix) {
     if (! isset($mix)) return 0; 
     if (empty($mix)) return 0; 
     return $mix; 
 }
+
+# .section. date/time utilities
 
 global $PHPX_TIMEOFDAY; 
 global $PHPX_TIMEZONE; 
@@ -27,43 +26,87 @@ $PHPX_TIMEOFDAY = gettimeofday();
 $PHPX_TIMEZONE = -60 * $PHPX_TIMEOFDAY['minuteswest']; # +28800 for +8:00
 
 # timestamp@TZ
-function time_0() {
+function phpx_time_0() {
     global $PHPX_TIMEZONE; 
     return time() - $PHPX_TIMEZONE; 
 }
 
 # timestamp@TZ => timestr@Local
-function time_0_format($time, $format = TIME_FORMAT) {
+function phpx_time_0_format($time, $format = PHPX_TIME_FORMAT) {
     global $PHPX_TIMEZONE; 
     return date($format, $time + $PHPX_TIMEZONE); 
 }
 
 # timestamp@TZ => timestr@TZ
-function time_format($time, $format = TIME_FORMAT) {
+function phpx_time_format($time, $format = PHPX_TIME_FORMAT) {
     return date($format, $time); 
 }
 
 # timestamp@Local => timestr@TZ
-function time_format_0($time, $format = TIME_FORMAT) {
+function phpx_time_format_0($time, $format = TIME_FORMAT) {
     return date($format, $time - $PHPX_TIMEZONE); 
 }
 
 # timestr@Local => timestamp@TZ
-function time_0_of($str) {
+function phpx_time_0_of($str) {
     global $PHPX_TIMEZONE; 
     return strtotime($str) - $PHPX_TIMEZONE; 
 }
 
 # timestr@TZ => timestamp@TZ
-function time_of($str) {
+function phpx_time_of($str) {
     return strtotime($str); 
 }
 
 # timestr@TZ => timestamp@Local
-function time_of_0($str_0) {
+function phpx_time_of_0($str_0) {
     global $PHPX_TIMEZONE; 
     return strtotime($str) + $PHPX_TIMEZONE; 
 }
+
+# .section. simple serialization
+
+function phpx_map_format($map) {
+    if ($map)
+        foreach ($map as $name=>$value) {
+            if ($string != '')
+                $string .= ';'; 
+            $escaped = str_replace("\n", '\n', addslashes($value)); 
+            if (strpos($value, ';') !== false)
+                $string .= "$name=\"$escaped\""; 
+            else
+                $string .= "$name=$escaped"; 
+        }
+    return $string; 
+}
+
+function phpx_map_parse($string) {
+    # string: name=value;...
+    # value: ... "..."
+    $segs = explode(';', $string); 
+    $nsegs = sizeof($segs); 
+    
+    $entry = ''; 
+    # A="B ; C" ; D  ==>  A="B;C" ; D
+    for ($i = 0; $i < $nsegs; $i++) {
+        $entry .= $segs[$i]; 
+        list($name, $value) = explode('=', $entry, 2); 
+        if (substr($value, 0, 1) == '"') {
+            if (substr($value, -1) != '"' || substr($value, -2) == '\"') {
+                $value .= ';'; 
+                continue;   # concat($i, $i+1)
+            }
+            $value = eval('return ' . $value . '; '); 
+        } else {
+            $value = eval('return "' . $value . '"; '); 
+        }
+        $entry = ''; 
+        $map[$name] = $value; 
+    }
+    return $map; 
+}
+
+# .section. logic string operators
 
 function strand() {
     $args = func_get_args(); 
@@ -145,4 +188,39 @@ function strpass($str) {
     }
     return $args[$n - 1]; 
 }
+
+# .section. object reflect helper
+
+# BUG  $rv maybe contains recursive references. 
+function phpx_or(&$lv, &$rv) {
+    if ($lv == NULL)
+        return $lv = $rv; 
+    if ($rv == NULL)
+        return $lv; 
+    $lt = gettype($lv); 
+    $rt = gettype($rv); 
+    if ($lt != $rt)
+        return $lv; 
+    switch ($lt) {
+    case 'object': 
+        foreach ($rv as $k=>$v) {
+            if ($lv->$k === NULL)
+                $lv->$k = $rv->$k; 
+            else if ($lv->$k !== $rv->$k)
+                phpx_or($lv->$k, $rv->$k); 
+        }
+        break; 
+    case 'array': 
+        $rs = sizeof($rv); 
+        for ($i = 0; $i < $rs; $i++) {
+            if ($lv[$i] === NULL)
+                $lv[$i] = $rv[$i]; 
+            else if ($lv[$i] != $rv[$i])
+                phpx_or($lv[$i], $rv[$i]); 
+        }
+        break; 
+    }
+    return $lv; 
+}
+
 ?>
