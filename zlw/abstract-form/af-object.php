@@ -26,7 +26,8 @@ class zlw_af_data extends phpx_error_support {
 class zlw_af_scalar extends zlw_af_data {
     var $value;         # Xvalue
     
-    function zlw_af_scalar($name, $value, $typestr = 'string', $hold = false, $hidden = false, $methods = NULL) {
+    function zlw_af_scalar($name, $value, $typestr = 'string', 
+            $hold = false, $hidden = false, $methods = NULL) {
         $this->zlw_af_data($name, $hold, $hidden, $methods); 
         $this->xval = $value; 
         $this->typestr = $typestr; 
@@ -50,8 +51,15 @@ class zlw_af_list extends zlw_af_data {
     var $sort_order; 
     var $items; 
     
-    function zlw_af_list($name, $hold = false, $hidden = false, $methods = NULL) {
+    function zlw_af_list($name, $items, $hold = false, $hidden = false, $methods = NULL, 
+            $sort = NULL, $sort_order = NULL) {
         $this->zlw_af_data($name, $hold, $hidden, $methods); 
+        if (is_array($items))
+            $this->items = $items; 
+        else if (is_string($items))
+            $this->items = explode(':', $items); 
+        $this->sort = $sort; 
+        $this->sort_order = $sort_order; 
     }
     
     function xml_items($ns = '') {
@@ -84,8 +92,15 @@ class zlw_af_map extends zlw_af_data {
     var $sort_order; 
     var $entries; 
     
-    function zlw_af_map($name, $hold = false, $hidden = false, $methods = NULL) {
+    function zlw_af_map($name, $entries, $hold = false, $hidden = false, $methods = NULL, 
+            $sort = NULL, $sort_order = NULL) {
         $this->zlw_af_data($name, $hold, $hidden, $methods); 
+        if (is_array($entries) || is_object($entries))
+            $this->entries = $entries; 
+        else if (is_string($entries))
+            $this->entries = phpx_map_parse($entries); 
+        $this->sort = $sort; 
+        $this->sort_order = $sort_order; 
     }
     
     function xml_entries($ns = '') {
