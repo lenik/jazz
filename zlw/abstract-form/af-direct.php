@@ -1,203 +1,107 @@
 <?php
 
-require_once dirname(__FILE__) . "/../common-php/http.php"; 
-require_once dirname(__FILE__) . "/../common-php/xml.php"; 
-require_once dirname(__FILE__) . "/../common-php/error.php"; 
+require_once dirname(__FILE__) . "/af-base.php"; 
 
-function phpx_af_base($req = NULL) {
-    $inc = dirname(__FILE__); 
-    $inc = str_replace('\\', '/', $inc); 
-    # URL-include, always using absolute url. 
-    if (strpos($inc, '//') !== false)
-        return $inc;                   # see t-dirname
-    if (is_null($req))
-        $req = realpath($_SERVER['SCRIPT_FILENAME']); 
-    $req = str_replace('\\', '/', $req); 
-    $req = dirname($req); 
-    $req_len = strlen($req); 
-    # starts-with ? 
-    if (substr($inc, 0, $req_len) == $req)
-        return '.' . substr($inc, $req_len); 
-    return $inc; 
+# .section. API Interface
+
+global $ZLW_AF_XMLNS; 
+
+function zlw_af_set_xmlns($xmlns = '') {
+    global $ZLW_AF_XMLNS; 
+    $ZLW_AF_XMLNS = $xmlns; 
 }
 
-global $PHPX_AF_BASE; 
-$PHPX_AF_BASE = phpx_af_base(); 
-
-class phpx_af_em extends phpx_error_manager {
-    function phpx_af_em($provider = 'ZLW-AF') {
-        # this will register self
-        $this->phpx_error_manager($provider); 
-    }
-    function handler(&$error) {
-        global $PHPX_XML_BEGIN; 
-        if ($PHPX_XML_BEGIN) {
-            echo phpx_af_error($error); 
-        } else {
-            # Early Error.
-            phpx_af_xml('&phpx_af_error', 'Fatal Error', true, $error); 
-            exit; 
-        }
-    }
+function zlw_af_get_xmlns() {
+    global $ZLW_AF_XMLNS; 
+    return $ZLW_AF_XMLNS; 
 }
 
-global $PHPX_AF_EM; 
-$PHPX_AF_EM = new phpx_af_em(); 
-$PHPX_AF_EM->register(); 
-phpx_error_manager_connect_leaves($PHPX_AF_EM); 
-
-function phpx_af_xml($content, $title = 'Abstract Form', $term = false) {
-    phpx_af_xml_start($title); 
-    
-    echo "<af:section>\n"; 
-    if (substr($content, 0, 1) == '&') {
-        $func = substr($content, 1); 
-        if (function_exists($func)) {
-            $args = func_get_args(); 
-            echo call_user_func_array($func, array_slice($args, 3)); 
-        } else {
-            echo $content; 
-        }
-    } else {
-        echo $content; 
-    }
-    echo "</af:section>\n"; 
-    
-    phpx_af_xml_end(); 
-    
-    if ($term) exit; 
+function zlw_af_scalar($name, $value, $typestr = 'string', $hold = false, 
+        $hidden = false, $methods = NULL) {
+    global $ZLW_AF_XMLNS; 
+    $o = new zlw_af_scalar($name, $value, $typestr, $hold, $hidden, $methods); 
+    return $o->xml($ZLW_AF_XMLNS); 
 }
 
-function phpx_af_xml_start($title = 'Abstract Form') {
-    global $PHPX_AF_BASE; 
-    
-    phpx_xml_header(); 
-    echo "<?xml-stylesheet type=\"text/xsl\" href=\"$PHPX_AF_BASE/html-view.xsl\"?>\n"; 
-    echo "<af:abstract-form"
-       . " xmlns=\"http://www.w3.org/1999/xhtml\""
-       . " xmlns:af=\"http://www.bodz.net/xml/zlw/abstract-form\""
-       . " xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\""
-       . " xsi:schemaLocation=\"http://www.bodz.net/xml/zlw/abstract-form"
-       . "   $PHPX_AF_BASE/abstract-form.xsd\">\n"; 
-    echo "<af:section name=\".page\">\n"; 
-    echo "<af:scalar name=\"title\">$title</af:scalar>\n"; 
-    echo "<af:scalar name=\"af-base\">$PHPX_AF_BASE</af:scalar>\n"; 
-    echo "</af:section>\n"; 
+function zlw_af_list() {
 }
 
-function phpx_af_xml_end() {
-    echo "</af:abstract-form>\n"; 
+function zlw_af_map() {
 }
 
-function phpx_af_special_hints($hint) {
-    if ($hint == '*this*') {
-        $hint = phpx_this_url(); 
-        if ($pos = strpos($hint, '?')) {
-            $hint = substr($hint, 0, $pos); 
-        }
-    }
-    return $hint; 
+function zlw_af_table() {
 }
 
-function phpx_af_error($error_or_summary, $methods = NULL, $hint = '') {
-    if (gettype($error_or_summary) == 'object')
-        $error = $error_or_summary; 
-    else
-        $error = new phpx_error($error_or_summary); 
+function zlw_af_user() {
+}
+
+function zlw_af_input() {
+}
+
+function zlw_af_method() {
+}
+
+function zlw_af_form() {
+}
+
+function zlw_af_section() {
+}
+
+# .section. XML Document
+
+class zlw_af_xml {
+    var $title = 'Abstract Form'; 
+    var $af_base; 
+    var $sections; 
     
-    $hint = phpx_af_special_hints($hint); 
-    
-    $xml = "<af:error"; 
-    if (! is_null($error->time))
-        $xml .= " time=" . phpx_xml_attr($error->time); 
-    if (! is_null($error->provider))
-        $xml .= " provider=" . phpx_xml_attr($error->provider); 
-    if (! is_null($error->type))
-        $xml .= " type=" . phpx_xml_attr($error->type); 
-    if (! is_null($error->name))
-        $xml .= " name=" . phpx_xml_attr($error->name); 
-    if (! is_null($error->text))
-        $xml .= " text=" . phpx_xml_attr($error->text); 
-    if (! is_null($error->detail))
-        $xml .= " detail=" . phpx_xml_attr($error->detail); 
-    if ($hint)
-        $xml .= " hint=" . phpx_xml_attr($hint); 
-    $xml .= ">\n"; 
-    
-    if (! is_null($error->source)) {
-        if (is_object($error->source))
-            $source_name = get_class($error->source); 
-        else
-            $source_name = "$error->source"; 
-        $xml .= "<af:error-source name=" . phpx_xml_attr($source_name); 
-        if (method_exists($error->source, 'source_status')) {
-            $status = $error->source->source_status(); 
-            $xml .= " status=" . phpx_xml_attr($status); 
-        }
-        $xml .= "/>\n"; 
+    function zlw_af_xml() {
+        global $ZLW_AF_BASE; 
+        $this->af_base = $ZLW_AF_BASE; 
     }
     
-    if (! is_null($error->cause)) {
-        # XXX: may loop. 
-        $xml .= phpx_af_error($error->cause); 
+    function xml_start($ns = '') {
+        global $ZLW_AF_BASE; 
+        
+        phpx_xml_header(); 
+        echo "<?xml-stylesheet type=\"text/xsl\" href=\"$ZLW_AF_BASE/html-view.xsl\"?>\n"; 
+        
+        $uri = 'http://www.bodz.net/xml/zlw/abstract-form'; 
+        if (strpos($ns, '=') !== false)
+            list($ns, $uri) = explode('=', $ns, 2); 
+        
+        phpx_xml_start_tag('abstract-form' . phpx_xml_attrs(array(
+            'xmlns' . ($ns ? ":$ns" : '') => $uri, 
+            'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance', 
+            'xsi:schemaLocation' => "http://www.bodz.net/xml/zlw/abstract-form $ZLW_AF_BASE/abstract-form.xsd", 
+            )), $ns); 
+        return $xml; 
     }
     
-    if (! is_null($methods)) {
-        foreach (explode(':', $methods) as $method) {
-            if ($method == '') continue; 
-            $xml .= "<af:method name=" . phpx_xml_attr($method); 
-            $xml .= "/>\n"; 
-        }
+    function xml_end($ns = '') {
+        return phpx_xml_end_tag('abstract-form', $ns); 
     }
     
-    $xml .= "</af:error>\n"; 
-    return $xml; 
-}
-
-function phpx_af_input($name, $value = NULL, $readonly = false, $hint = NULL) {
-    $xml = "<af:input name=" . phpx_xml_attr($name); 
-    if (! is_null($value))
-        $xml .= " init=" . phpx_xml_attr($value); 
-    if ($readonly)
-        $xml .= " read-only=\"1\""; 
-    if (! is_null($hint))
-        $xml .= " hint=" . phpx_xml_attr($hint); 
-    $xml .= "/>\n"; 
-    return $xml; 
-}
-
-function phpx_af_selector($name, $content, $value = NULL, $readonly = false, $hint = NULL) {
-    $xml = "<af:selector name=" . phpx_xml_attr($name); 
-    if (! is_null($value))
-        $xml .= " init=" . phpx_xml_attr($value); 
-    if ($readonly)
-        $xml .= " read-only=\"1\""; 
-    if (! is_null($hint))
-        $xml .= " hint=" . phpx_xml_attr($hint); 
-    $xml .= ">"; 
-    
-    if (substr($content, 0, 1) == '<') {
-           $xml .= $content; 
-    } else {
-        $ref_type = 'list-ref'; 
-        if (($pos = strpos($content, ':')) !== false) {
-            $ref_type = substr($content, 0, $pos) . '-ref'; 
-            $ref_name = substr($content, $pos + 1); 
-        } else {
-            $ref_name = $content; 
-        }
-        $xml .= "<af:$ref_type>$ref_name</af:$ref_type>"; 
+    function xml_page($ns = '') {
+        $xml = phpx_xml_start_tag('section name=' . phpx_xml_attr('.page'), $ns); 
+        $xml .= zlw_af_xml_scalar('title', $this->title); 
+        $xml .= zlw_af_xml_scalar('af-base', $this->af_base); 
+        $xml .= phpx_xml_end_tag('section', $ns); 
+        return $xml; 
     }
-    $xml .= "</af:selector>\n"; 
-    return $xml; 
-}
-
-function phpx_af_method($name, $hint = NULL) {
-    $xml = "<af:method name=" . phpx_xml_attr($name); 
-    if (! is_null($hint))
-        $xml .= " hint=" . phpx_xml_attr($hint); 
-    $xml .= "/>\n"; 
-    return $xml; 
+    
+    function xml_sections($ns = '') {
+        if ($this->sections)
+            foreach ($this->sections as $section)
+                $xml .= phpx_xml_xvalue($section, $ns); 
+        return $xml; 
+    }
+    
+    function xml($ns = '') {
+        return $this->xml_start($ns)
+            . $this->xml_page($ns)
+            . $this->xml_sections($ns)
+            . $this->xml_end($ns); 
+    }
 }
 
 ?>

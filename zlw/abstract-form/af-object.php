@@ -1,164 +1,266 @@
 <?php
 
-require_once dirname(__FILE__) . "/af-xml.php"; 
+require_once dirname(__FILE__) . "/af-type.php"; 
+require_once dirname(__FILE__) . "/af-constraint.php"; 
 
-class zlw_af_input {
-    var $type; 
-    var $typep; 
-    var $constraints; 
-    var $value; 
-    var $ref; 
-    var $read_only; 
+# .section. output
+
+class zlw_af_data extends phpx_error_support {
+    var $name; 
+    var $type;      # typep
+    var $hold; 
     var $hidden; 
+    var $methods; 
     
-    function constrain($constraint, $name = NULL, $level = NULL, $reason = NULL, $side = NULL) {
-        if ($constraints == NULL)
-            $constraints = array(); 
-        $constraint->name = $name; 
-        $constraint->level = $level; 
-        $constraint->reason = $reason; 
-        $constraint->side = $side; 
-        $constraints[] = $constraint; 
-        (new zlw_af_c_range); 
+    function zlw_af_data($name = NULL, $hold = false, $hidden = false, $methods = NULL) {
+        $this->phpx_error_support(ZLW_AF); 
+        $this->name = $name; 
     }
     
-    function check_constraints() {
-        if ($constraints == NULL)
-            return true; 
-        foreach ($constraints as $constraint) {
-            # skip client-side-only constraints.
-            if ($constraint->side == 'client')
-                continue; 
-            if (! $constraint->check($this)) {
-                # checking failure
-                # Logger??
-                if ($constraint->level == 'warning') {
-                    error_logger; 
-                } else {
-                    die; 
-                }
-            }
-        }
-        return true; 
+    function xml($ns = '') {
+        $this->_err("[DOUT] Not implemented. "); 
+        return NULL; 
     }
 }
 
-class zlw_af_cc {
-    var $model = 'base'; 
-    var $err_summary; 
-    var $err_detail; 
-    var $err_source; 
+class zlw_af_scalar extends zlw_af_data {
+    var $value;         # Xvalue
     
-    function check() {
-        return check_failure('Unexpected', 
-            'The check() function of the constraint base should not be called'); 
+    function zlw_af_scalar($name, $value, $typestr = 'string', $hold = false, $hidden = false, $methods = NULL) {
+        $this->zlw_af_data($name, $hold, $hidden, $methods); 
+        $this->xval = $value; 
+        $this->typestr = $typestr; 
     }
     
-    function check_failure($summary, $detail) {
-        $this->err_summary = $summary; 
-        $this->err_detail = $detail; 
-        $this->err_source = $this->model; 
-        return false; 
-    }
-}
-
-class zlw_af_cc_range extends zlw_af_cc {
-    # min min-exclusive max max-exclusive
-    var $model = 'range'; 
-    var $min; 
-    var $max; 
-    var $min_excluded; 
-    var $max_excluded; 
-    
-    function zlw_af_cc_range($min, $max, $min_excluded = NULL, $max_excluded = NULL) {
-        $this->min = $min; 
-        $this->max = $max; 
-        $this->min_excluded = $min_excluded; 
-        $this->max_excluded = $max_excluded; 
-    }
-    
-    function check($input) {
-        assert($input != NULL); 
-        switch ($input->type) {
-        case 'number': 
-        case 'int': 
-            $n = 1 * $input->value; 
-            break; 
-        default: 
-            $n = strlen($input->value); 
-        }
-        if ($min != NULL)
-            if ($min_excluded) {
-                if ($n <= $min)
-                    return check_failure("Too small", "Less than (or equal to) $min"); 
-            } else {
-                if ($n < $min)
-                    return check_failure("Too small", "Less than $min"); 
-            }
-        if ($max != NULL)
-            if ($max_excluded) {
-                if ($n >= $max)
-                    return check_failure("Too large", "Greater than (or equal to) $max"); 
-            } else {
-                if ($n > $max)
-                    return check_failure("Too large", "Greater than $max"); 
-            }
-        return true; 
+    function xml($ns = '') {
+        $xml = phpx_xml_start_tag('scalar' . phpx_xml_attrs(array(
+            'name' => $this->name, 
+            'type' => $this->type, 
+            'hold' => $this->hold, 
+            'hidden' => $this->hidden, 
+            )), $ns); 
+        $xml .= phpx_xml_xvalue($this->var); 
+        $xml .= phpx_xml_end_tag('scalar', $ns); 
+        return $xml; 
     }
 }
 
-class zlw_af_cc_pattern extends zlw_af_cc {
-    # regex case-insensitive dot-all multiline comment
-    var $model = 'pattern'; 
-    var $regex; 
-    var $case_insensitive; 
-    var $dot_all; 
-    var $multiline; 
-    var $comment; 
-    
-    function zlw_af_cc_pattern($regex, $case_insensitive = NULL, $dot_all = NULL, 
-            $multiline = NULL, $comment = NULL) {
-        $this->regex = $regex; 
-        $this->case_insensitive = $case_insensitive; 
-        $this->dot_all = $dot_all; 
-        $this->multiline = $multiline; 
-        $this->comment = $comment; 
-    }
-    
-    function check($input) {
-        assert($input != NULL); 
-        $s = $input->value; 
-        $pattern = $regex; 
-        $flags = ''; 
-        if ($case_insensitive) $flags .= 'i'; 
-        if ($dot_all) $flags .= 's'; 
-        if ($multiline) $flags .= 'm'; 
-        if ($comment) $flags .= 'x'; 
-        if (preg_match("/$regex/$flags", $s) == 0)
-            # not matched. 
-            return $this->check_failure("Illegal Syntax", "Not matched to the pattern $regex"); 
-        return true; 
-    }
-}
-
-class zlw_af_cc_and extends zlw_af_cc {
+class zlw_af_list extends zlw_af_data {
+    var $sort; 
+    var $sort_order; 
     var $items; 
     
-    function zlw_af_cc_and() {
-        $args = func_get_args(); 
-        $items = $args; 
+    function zlw_af_list($name, $hold = false, $hidden = false, $methods = NULL) {
+        $this->zlw_af_data($name, $hold, $hidden, $methods); 
     }
     
-    function check($input) {
-        foreach ($items as $item) {
-            if ($item->side == 'client')
-                continue; 
-            if (! $item->check($input))
-                ; #$this->
+    function xml_items($ns = '') {
+        if ($this->items)
+            foreach ($this->items as $item) {
+                $xml .= phpx_xml_start_tag('item', $ns); 
+                $xml .= phpx_xml_xvalue($item); 
+                $xml .= phpx_xml_end_tag('item', $ns); 
+            }
+        return $xml; 
+    }
+    
+    function xml($ns = '') {
+        $xml = phpx_xml_start_tag('list' . phpx_xml_attrs(array(
+            'name' => $this->name, 
+            'type' => $this->type, 
+            'hold' => $this->hold, 
+            'hidden' => $this->hidden, 
+            'sort' => $this->sort, 
+            'sort-order' => $this->sort_order, 
+            )), $ns); 
+        $xml .= $this->xml_items($ns); 
+        $xml .= phpx_xml_end_tag('list', $ns); 
+        return $xml; 
+    }
+}
+
+class zlw_af_map extends zlw_af_data {
+    var $sort; 
+    var $sort_order; 
+    var $entries; 
+    
+    function zlw_af_map($name, $hold = false, $hidden = false, $methods = NULL) {
+        $this->zlw_af_data($name, $hold, $hidden, $methods); 
+    }
+    
+    function xml_entries($ns = '') {
+        if ($this->entries)
+            foreach ($this->entries as $key=>$value) {
+                $xml .= phpx_xml_start_tag('entry key=' . phpx_xml_attr($key), $ns); 
+                $xml .= phpx_xml_xvalue($value);
+                $xml .= phpx_xml_end_tag('entry', $ns); 
+            }
+        return $xml; 
+    }
+    
+    function xml($ns = '') {
+        $xml = phpx_xml_start_tag('map' . phpx_xml_attrs(array(
+            'name' => $this->name, 
+            'type' => $this->type, 
+            'hold' => $this->hold, 
+            'hidden' => $this->hidden, 
+            'sort' => $this->sort, 
+            'sort-order' => $this->sort_order, 
+            )), $ns); 
+        $xml .= phpx_xml_end_tag('map', $ns); 
+        return $xml; 
+    }
+}
+
+class zlw_af_table extends zlw_af_data {
+    var $columns; 
+    var $rows; 
+    
+    function zlw_af_table($name, $hold = false, $hidden = false, $methods = NULL) {
+        $this->zlw_af_data($name, $hold, $hidden, $methods); 
+    }
+    
+    function xml_columns($ns = '') {
+        assert($this->columns); 
+        foreach ($this->columns as $column) {
+            $xml .= phpx_xml_start_tag('column' . phpx_xml_attrs(array(
+                'name' => $column->name, 
+                'type' => $column->type, 
+                'primary-key' => $column->primary_key, 
+                'sort-priority' => $column->sort_priority, 
+                'sort-order' => $column->sort_order, 
+                )), $ns); 
+            $xml .= phpx_xml_end_tag('column', $ns); 
         }
+        return $xml; 
+    }
+    
+    function xml_rows($ns = '', $rns = '') {
+        if ($this->rows)
+            foreach ($this->rows as $row) {
+                $xml .= phpx_xml_start_tag('row', $ns); 
+                foreach ($this->columns as $column) {
+                    $field = $column->name; 
+                    $xml .= phpx_xml_start_tag($field, $rns = ''); 
+                    $xml .= phpx_xml_xvalue($row->$field, $rns = ''); 
+                    $xml .= phpx_xml_end_tag($field, $rns = ''); 
+                }
+                $xml .= phpx_xml_end_tag('row'); 
+            }
+        return $xml; 
+    }
+    
+    function xml($ns = '', $rns = '') {
+        $xml = phpx_xml_start_tag('table' . phpx_xml_attrs(array(
+            'name' => $this->name, 
+            'type' => $this->type, 
+            'hold' => $this->hold, 
+            'hidden' => $this->hidden, 
+            )), $ns); 
+        $xml .= $this->xml_columns($ns); 
+        $xml .= $this->xml_rows($ns, $rns); 
+        $xml .= phpx_xml_end_tag('table', $ns); 
+        return $xml; 
+    }
+}
+
+class zlw_af_user extends zlw_af_data {
+    var $user; 
+    
+    function zlw_af_user($name, $hold = false, $hidden = false, $methods = NULL) {
+        $this->zlw_af_data($name, $hold, $hidden, $methods); 
+    }
+    
+    function xml($ns = '') {
+        $xml = phpx_xml_start_tag('user' . phpx_xml_attrs(array(
+            'name' => $this->name, 
+            'type' => $this->type, 
+            'hold' => $this->hold, 
+            'hidden' => $this->hidden, 
+            )), $ns); 
+        $xml .= phpx_xml_xvalue($this->user, $ns); 
+        $xml .= phpx_xml_end_tag('user', $ns); 
+        return $xml; 
+    }
+}
+
+# .section. input
+
+class zlw_af_input extends phpx_error_support {
+    var $name; 
+    var $var; 
+    
+    var $multiline; 
+    var $read_only; 
+    var $max_length; 
+    
+    var $constraints; 
+    
+    var $ref; 
+    
+    function zlw_af_input() {
+        $this->phpx_error_support(ZLW_AF); 
+    }
+    
+    function xml($ns = '') {
+        $type = $this->var->get_type(); 
+        if (! is_null($this->var->value))
+            $init = $this->var->format(); 
+        $xml = phpx_xml_start_tag('input' . phpx_xml_attrs(array(
+            'name' => $this->name, 
+            'type' => $type, 
+            'init' => $init, 
+            'multiline' => $this->multiline, 
+            'read-only' => $this->read_only, 
+            'max-length' => $this->max_length, 
+            )), $ns); 
+        $xml .= $this->var->typep_xml($ns); 
+        if ($this->constraints)
+            $xml .= $this->constraints->xml(); 
+        $xml .= phpx_xml_end_tag('input', $ns); 
+        return $xml; 
+    }
+    
+    function check() {
+        if ($this->constraints)
+            if (! $this->constraints->check($this->var))
+                return false;           # ERR.
         return true; 
     }
 }
+
+class zlw_af_method {
+    var $name; 
+    var $type;      # Reserved.
+    var $hint; 
+    var $const; 
+    var $param; 
+    
+    function zlw_af_method($name, $hint = '', $const = false) {
+        $this->name = $name; 
+        $this->hint = zlw_af_hint_prep($hint); 
+        $this->const = $const; 
+    }
+    
+    function xml($ns = '') {
+        if (! is_null($this->type)) {
+            $type = $this->type->get_type(); 
+            $typep = $this->type->typep_xml($ns); 
+        }
+        $xml = phpx_xml_start_tag('method' . phpx_xml_attrs(array(
+            'name' => $this->name, 
+            'type' => $type, 
+            'hint' => $this->hint, 
+            'const' => $this->const, 
+            )), $ns); 
+        $xml .= $typep; 
+        $xml .= zlw_af_parameters($this->param, 'method-parameter', $ns); 
+        $xml .= phpx_xml_end_tag('method', $ns); 
+        return $xml; 
+    }
+}
+
+# .section. form
 
 global $ZLW_AF_TICKETS; 
 
@@ -166,12 +268,11 @@ class zlw_af_ticket {
     var $next; 
 }
 
-class zlw_af_form extends phpx_http_buffer {
+class zlw_af_form {
     var $ticket; 
     var $inputs; 
     var $methods; 
     
-    var $xmlns; 
     var $name; 
     var $type; 
     var $hint; 
@@ -186,31 +287,82 @@ class zlw_af_form extends phpx_http_buffer {
         return true; 
     }
     
-    function dump($buffer = false, $outer = true) {
-        if ($buffer)
-            $this->buffer_start(); 
-        if ($outer) {
-            $this->output("<$xmlns:form"); 
-            if ($this->name)
-                $this->output(" name=" . phpx_xml_attr($this->name)); 
-            if ($this->type)
-                $this->output(" type=" . phpx_xml_attr($this->type)); 
-            if ($this->hint)
-                $this->output(" hint=" . phpx_xml_attr($this->hint)); 
-            if ($this->form_method)
-                $this->output(" form-method=" . phpx_xml_attr($this->form_method)); 
-            $this->output(">\n"); 
-        }
-        foreach ($this->inputs as $input) {
-            $this->output($input->build_xml() . "\n"); 
-        }
-        foreach ($this->methods as $method) {
-            $this->output($method->build_xml() . "\n"); 
-        }
-        if ($outer) {
-            $this->output("</$xmlns:form>\n"); 
-        }
-        return $this->buffer_end(); 
+    function xml_start($ns = '') {
+        return phpx_xml_start_tag('form' . phpx_xml_attrs(array(
+            'name' => $this->name, 
+            'type' => $this->type, 
+            'hint' => $this->hint, 
+            'form-method' => $this->form_method, 
+            )), $ns); 
+    }
+    
+    function xml_end($ns = '') {
+        return phpx_xml_end_tag('form', $ns); 
+    }
+    
+    function xml_inputs($ns = '') {
+        if ($this->inputs)
+            foreach ($this->inputs as $input)
+                $xml .= $input->xml($ns); 
+        return $xml; 
+    }
+    
+    function xml_methods($ns = '') {
+        if ($this->methods)
+            foreach ($this->methods as $method)
+                $xml .= $method->xml($ns); 
+        return $xml; 
+    }
+    
+    function xml($ns = '', $outer = true) {
+        if ($outer) $xml .= $this->xml_start($ns); 
+        $xml .= $this->xml_inputs($ns); 
+        $xml .= $this->xml_methods($ns); 
+        if ($outer) $xml .= $this->xml_end($ns); 
+        return $xml; 
+    }
+}
+
+# .section. section
+
+class zlw_af_section {
+    var $name; 
+    var $hint; 
+    var $hidden; 
+    var $data; 
+    var $forms; 
+    
+    function xml_start($ns = '') {
+        phpx_xml_start_tag('section', phpx_xml_attrs(array(
+            'name' => $this->name, 
+            'hint' => $this->hint, 
+            'hidden' => $this->hidden, 
+            )), $ns); 
+    }
+    
+    function xml_end($ns = '') {
+        return phpx_xml_end_tag('section', $ns); 
+    }
+    
+    function xml_data($ns = '') {
+        if ($this->data)
+            foreach ($this->data as $data)
+                $xml .= $data->xml($ns); 
+        return $xml; 
+    }
+    
+    function xml_forms($ns = '') {
+        if ($this->forms)
+            foreach ($this->forms as $form)
+                $xml .= $form->xml($ns); 
+        return $xml; 
+    }
+    
+    function xml($ns = '') {
+        return $this->xml_start($ns)
+            . $this->xml_data($ns)
+            . $this->xml_forms($ns)
+            . $this->xml_end($ns); 
     }
 }
 
