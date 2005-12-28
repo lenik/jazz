@@ -21,24 +21,30 @@ class phpx_error {
     var $source_status; 
     var $cause; 
     
-    function phpx_error($summary, $provider = NULL, $cause = NULL) {
+    function phpx_error($provider, $summary, $source = NULL, $cause = NULL) {
         global $PHPX_ERROR_FORMAT; 
-        assert($summary != NULL); 
-        
-        if (! preg_match($PHPX_ERROR_FORMAT, $summary, $matches))
-            die("Illegal error-summary syntax: $summary"); 
-        $type = $matches[1]; 
-        $name = $matches[2]; 
-        $text = $matches[3]; 
-        $detail = $matches[4]; 
-        
-        $this->text = $text; 
-        if ($type) $this->type = $type; 
-        if ($name) $this->name = $name; 
-        if ($detail) $this->detail = $detail; 
         
         $this->time = time(); 
         $this->provider = $provider; 
+        
+        if (! is_null($summary)) {
+            if (! preg_match($PHPX_ERROR_FORMAT, $summary, $matches))
+                die("Illegal error-summary syntax: $summary"); 
+            $type = $matches[1]; 
+            $name = $matches[2]; 
+            $text = $matches[3]; 
+            $detail = $matches[4]; 
+            
+            $this->text = $text; 
+            if ($type) $this->type = $type; 
+            if ($name) $this->name = $name; 
+            if ($detail) $this->detail = $detail; 
+        }
+        
+        if ($this->source = $source)
+            if (method_exists($source, '_source_status'))
+                $this->source_status = $source->_source_status(); 
+        
         if ($cause != NULL) {
             $this->cause = $cause; 
             phpx_or($this, $cause); 
@@ -77,16 +83,12 @@ class phpx_error_manager extends phpx_node {
     }
     
     function unregister() {
-        phpx_error_manager_unregister($this); 
+        phpx_error_manager_unregister($this->name); 
     }
     
     # @final
     function process($summary, $source = NULL, $cause = NULL) {
-        $e = new phpx_error($summary, $this->name, $cause); 
-        if ($e->source = $source)
-            if (method_exists($source, '_source_status'))
-                $e->source_status = $source->_source_status(); 
-                
+        $e = new phpx_error($this->name, $summary, $source, $cause); 
         $this->errors[] = &$e; 
         
         $next = $this; 
@@ -153,9 +155,9 @@ function phpx_error_manager_register(&$em) {
     }
 }
 
-function phpx_error_manager_unregister(&$manager) {
+function phpx_error_manager_unregister($manager_name) {
     global $PHPX_EM_REGISTRY; 
-    return $PHPX_EM_REGISTRY->remove($manager); 
+    return $PHPX_EM_REGISTRY->remove($manager_name); 
 }
 
 function &phpx_error_manager_get($provider) {
@@ -179,11 +181,16 @@ class phpx_error_support {
     var $_em; 
     
     function phpx_error_support(&$provider) {
-        if (gettype($provider) == 'string')
+        assert($provider != NULL); 
+        if (gettype($provider) == 'string') {
             $this->_em = &phpx_error_manager_get($provider); 
-        else
+            if (is_null($this->_em)) {
+                $this->_em = new phpx_error_manager($provider); 
+                $this->_em->register(); 
+            }
+        } else {
             $this->_em = &$provider; 
-        assert($this->_em != NULL); 
+        }
     }
     
     function _add_type($type, $summary) {
