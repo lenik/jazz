@@ -41,11 +41,11 @@
 <table border="0" width="100%" height="70%">
 <tr><td width="50%">
       <input type="hidden" name="view" value="output" />
-      <textarea name="src" cols="40" rows="10" class="autosize">&lt;?php
+      <textarea name="src" cols="40" rows="10" class="autosize">&lt;pre&gt;&lt;?php
 
 
 
-?&gt;</textarea>
+?&gt;&lt;/pre&gt;</textarea>
 </td>
 <td width="50%">
 <iframe name="result" class="autosize">
