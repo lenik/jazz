@@ -34,7 +34,7 @@
 				<!--<HR/>-->
 				<cite>Powered by ZLW::Abstract-Form</cite>
 				<br/>
-				<cite>$Id: html-view.xsl,v 1.6.2.8 2005-12-26 06:22:40 dansei Exp $</cite>
+				<cite>$Id: html-view.xsl,v 1.6.2.9 2005-12-28 13:30:39 dansei Exp $</cite>
 			</xsl:with-param>
 		</xsl:call-template>
 	</xsl:template>
@@ -873,22 +873,7 @@
 										</tr>
 									</xsl:when>
 									<xsl:when test="$tag = 'method'">
-										<xsl:choose>
-											<xsl:when test="local-name(preceding-sibling::*[1]) = 'method'">
-												<xsl:call-template name="t-method">
-													<xsl:with-param name="form-id" select="$form-id"/>
-												</xsl:call-template>
-											</xsl:when>
-											<xsl:otherwise>
-												<tr>
-													<td colspan="2">
-														<xsl:call-template name="t-method">
-															<xsl:with-param name="form-id" select="$form-id"/>
-														</xsl:call-template>
-													</td>
-												</tr>
-											</xsl:otherwise>
-										</xsl:choose>
+										<!--Merged at bottom. -->
 									</xsl:when>
 									<xsl:when test="$tag = 'doc'">
 										<xsl:call-template name="t-doc"/>
@@ -909,6 +894,19 @@
 							</xsl:otherwise>
 						</xsl:choose>
 					</xsl:for-each>
+					<tr>
+						<td colspan="2">
+							<xsl:if test="../af:input | ../af:selector">
+								<input type="reset" value="Reset"/>
+							</xsl:if>
+							<xsl:for-each select="af:method">
+								<xsl:value-of select="' '"/>
+								<xsl:call-template name="t-method">
+									<xsl:with-param name="form-id" select="$form-id"/>
+								</xsl:call-template>
+							</xsl:for-each>
+						</td>
+					</tr>
 				</table>
 			</xsl:element>
 		</fieldset>
