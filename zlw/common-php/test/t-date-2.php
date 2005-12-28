@@ -1,6 +1,6 @@
 <?php
 
-    require_once dirname(__FILE__) . '/../string.php'; 
+    require_once dirname(__FILE__) . '/../lang.php'; 
     
     $t = time(); 
     $t0 = time_0(); 

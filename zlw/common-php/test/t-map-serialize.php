@@ -1,6 +1,6 @@
 <?php
 
-require '../string.php'; 
+require '../lang.php'; 
 
 
 $m = array(
