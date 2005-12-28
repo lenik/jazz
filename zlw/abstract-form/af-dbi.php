@@ -1,15 +1,14 @@
 <?php
 
-require_once dirname(__FILE__) . "/af-xml.php"; 
-require_once dirname(__FILE__) . "/af-model.php"; 
 require_once dirname(__FILE__) . "/../common-php/dbi.php"; 
+require_once dirname(__FILE__) . "/af-model.php"; 
 
-function phpx_af_query_edit($dbi, $sql, $key_fields = '', $values = array(), 
-                            $name = '', $update_method = 'update', $hint = '') {
+function zlw_af_query_edit($dbi, $sql, $key_fields = '', $values = array(), 
+                           $name = '', $update_method = 'update', $hint = '') {
     $result = $dbi->_query($sql); 
     if (! $result) return false; 
     
-    $hint = phpx_af_special_hints($hint); 
+    $hint = zlw_af_special_hints($hint); 
     $key_fields = explode(':', $key_fields); 
     $form = $update_method; 
     
@@ -55,12 +54,12 @@ function phpx_af_query_edit($dbi, $sql, $key_fields = '', $values = array(),
     return $xml; 
 }
 
-function phpx_af_query_list($dbi, $sql, $field = 0, 
-                            $name = '', $methods = 'delete:modify', $hint = '') {
+function zlw_af_query_list($dbi, $sql, $field = 0, 
+                           $name = '', $methods = 'delete:modify', $hint = '') {
     $result = $dbi->_query($sql); 
     if (! $result) return false; 
     
-    $hint = phpx_af_special_hints($hint); 
+    $hint = zlw_af_special_hints($hint); 
     
     $xml = "<af:list"; 
     if ($name)
@@ -86,12 +85,12 @@ function phpx_af_query_list($dbi, $sql, $field = 0,
     return $xml; 
 }
 
-function phpx_af_query_map($dbi, $sql, $key_field = 0, $value_format = ':', 
-                           $name = '', $methods = 'delete:modify', $hint = '') {
+function zlw_af_query_map($dbi, $sql, $key_field = 0, $value_format = ':', 
+                          $name = '', $methods = 'delete:modify', $hint = '') {
     $result = $dbi->_query($sql); 
     if (! $result) return false; 
     
-    $hint = phpx_af_special_hints($hint); 
+    $hint = zlw_af_special_hints($hint); 
     
     $xml = "<af:map"; 
     if ($name)
@@ -118,13 +117,13 @@ function phpx_af_query_map($dbi, $sql, $key_field = 0, $value_format = ':',
     return $xml; 
 }
 
-function phpx_af_query_table($dbi, $sql, $primary_key = 'id', 
-                             $name = '', $methods = 'delete:modify', $hint = '', 
-                             $page_size = -1, $page = 0) {
+function zlw_af_query_table($dbi, $sql, $primary_key = 'id', 
+                            $name = '', $methods = 'delete:modify', $hint = '', 
+                            $page_size = -1, $page = 0) {
     $result = $dbi->_query($sql); 
     if (! $result) return false; 
     
-    $hint = phpx_af_special_hints($hint); 
+    $hint = zlw_af_special_hints($hint); 
     $keys = explode(':', $primary_key); 
     
     $xml = "<af:table"; 
