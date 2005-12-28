@@ -21,13 +21,8 @@ class phpx_graph {
         return true; 
     }
     
-    function remove($node) {
-        assert ($node != NULL); 
-        
-        if (gettype($node) == 'object')
-            $name = $node->name; 
-        else
-            $name = $node; 
+    function remove($name) {
+        assert ($name != NULL); 
         
         if (! array_key_exists($name, $this->nodes))
             return false; 
