@@ -12,6 +12,8 @@
 <!ENTITY % abstract-form "%af_prefix;abstract-form">
 <!ENTITY % versioning "%af_prefix;versioning">
 <!ENTITY % section "%af_prefix;section">
+<!ENTITY % error "%af_prefix;error">
+<!ENTITY % source "%af_prefix;source">
 <!ENTITY % doc "%af_prefix;doc">
 <!ENTITY % scalar "%af_prefix;scalar">
 <!ENTITY % list "%af_prefix;list">
@@ -22,9 +24,8 @@
 <!ENTITY % column "%af_prefix;column">
 <!ENTITY % row "%af_prefix;row">
 <!ENTITY % user "%af_prefix;user">
-<!ENTITY % error "%af_prefix;error">
-<!ENTITY % source "%af_prefix;source">
 <!ENTITY % form "%af_prefix;form">
+<!ENTITY % callback "%af_prefix;callback">
 <!ENTITY % input "%af_prefix;input">
 <!ENTITY % constraint "%af_prefix;constraint">
 <!ENTITY % selector "%af_prefix;selector">
@@ -34,14 +35,13 @@
 <!ENTITY % table-ref "%af_prefix;table-ref">
 <!ENTITY % method "%af_prefix;method">
 <!ENTITY % method-parameter "%af_prefix;method-parameter">
-<!ENTITY % callback "%af_prefix;callback">
 <!ENTITY % type-parameter "%af_prefix;type-parameter">
-<!ENTITY % range "%af_prefix;range">
-<!ENTITY % pattern "%af_prefix;pattern">
 <!ENTITY % or "%af_prefix;or">
 <!ENTITY % not "%af_prefix;not">
 <!ENTITY % and "%af_prefix;and">
 <!ENTITY % xor "%af_prefix;xor">
+<!ENTITY % pattern "%af_prefix;pattern">
+<!ENTITY % range "%af_prefix;range">
 <!--element and attribute declarations-->
 <!--ZLW::
 abstract-form-->
@@ -58,6 +58,22 @@ abstract-form-->
 	hint CDATA #IMPLIED
 	hidden NMTOKEN #IMPLIED
 	%documentElementAttributes; 
+>
+<!ELEMENT %error; ((%method;)*, (%doc;)?, ((%source;)?, (%error;)*)?)>
+<!ATTLIST %error;
+	time NMTOKEN #IMPLIED
+	provider CDATA #IMPLIED
+	type CDATA #IMPLIED
+	name CDATA #IMPLIED
+	text CDATA #IMPLIED
+	detail CDATA #IMPLIED
+	hint CDATA #IMPLIED
+	%documentElementAttributes; 
+>
+<!ELEMENT %source; EMPTY>
+<!ATTLIST %source;
+	name CDATA #IMPLIED
+	status CDATA #IMPLIED
 >
 <!ELEMENT %doc; (#PCDATA)>
 <!ATTLIST %doc;
@@ -123,22 +139,6 @@ abstract-form-->
 	hidden NMTOKEN #IMPLIED
 	%documentElementAttributes; 
 >
-<!ELEMENT %error; (((%source;)?, (%error;)*)?, (%doc;)?, (%method;)*)>
-<!ATTLIST %error;
-	time NMTOKEN #IMPLIED
-	provider CDATA #IMPLIED
-	type CDATA #IMPLIED
-	name CDATA #IMPLIED
-	text CDATA #IMPLIED
-	detail CDATA #IMPLIED
-	hint CDATA #IMPLIED
-	%documentElementAttributes; 
->
-<!ELEMENT %source; EMPTY>
-<!ATTLIST %source;
-	name CDATA #IMPLIED
-	status CDATA #IMPLIED
->
 <!ELEMENT %form; ((%input; | %selector; | %method; | %callback;) | %doc;)+>
 <!ATTLIST %form;
 	name CDATA #IMPLIED
@@ -146,6 +146,11 @@ abstract-form-->
 	hint CDATA #IMPLIED
 	form-method (get | post | put) #IMPLIED
 	%documentElementAttributes; 
+>
+<!--NOT USED.-->
+<!ELEMENT %callback; (((%type-parameter;)*))>
+<!ATTLIST %callback;
+	xpointer CDATA #REQUIRED
 >
 <!ELEMENT %input; (((%type-parameter;)*), (%constraint;)*)>
 <!ATTLIST %input;
@@ -189,35 +194,10 @@ abstract-form-->
 <!ELEMENT %method-parameter; (#PCDATA)>
 <!ATTLIST %method-parameter;
 	name CDATA #REQUIRED
-	value CDATA #IMPLIED
->
-<!--NOT USED.-->
-<!ELEMENT %callback; (((%type-parameter;)*))>
-<!ATTLIST %callback;
-	xpointer CDATA #REQUIRED
 >
 <!ELEMENT %type-parameter; (#PCDATA)>
 <!ATTLIST %type-parameter;
 	name CDATA #REQUIRED
-	value CDATA #IMPLIED
->
-<!--for number, range constraints the the value boundary; 
-
-for text, range constraints the text-length. -->
-<!ELEMENT %range; EMPTY>
-<!ATTLIST %range;
-	min NMTOKEN #IMPLIED
-	min-excluded NMTOKEN #IMPLIED
-	max NMTOKEN #IMPLIED
-	max-excluded NMTOKEN #IMPLIED
->
-<!ELEMENT %pattern; EMPTY>
-<!ATTLIST %pattern;
-	regex CDATA #REQUIRED
-	case-insensitive NMTOKEN #IMPLIED
-	dot-all NMTOKEN #IMPLIED
-	multiline NMTOKEN #IMPLIED
-	comment NMTOKEN #IMPLIED
 >
 <!ELEMENT %or; ((%range; | %pattern; | %or; | %not; | %and; | %xor;))+>
 <!ATTLIST %or;
@@ -233,5 +213,25 @@ for text, range constraints the text-length. -->
 >
 <!ELEMENT %xor; ((%range; | %pattern; | %or; | %not; | %and; | %xor;))+>
 <!ATTLIST %xor;
+	%documentElementAttributes; 
+>
+<!ELEMENT %pattern; EMPTY>
+<!ATTLIST %pattern;
+	regex CDATA #REQUIRED
+	case-insensitive NMTOKEN #IMPLIED
+	dot-all NMTOKEN #IMPLIED
+	multiline NMTOKEN #IMPLIED
+	comment NMTOKEN #IMPLIED
+	%documentElementAttributes; 
+>
+<!--for number, range constraints the the value boundary; 
+
+for text, range constraints the text-length. -->
+<!ELEMENT %range; EMPTY>
+<!ATTLIST %range;
+	min NMTOKEN #IMPLIED
+	min-excluded NMTOKEN #IMPLIED
+	max NMTOKEN #IMPLIED
+	max-excluded NMTOKEN #IMPLIED
 	%documentElementAttributes; 
 >
