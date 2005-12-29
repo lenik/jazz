@@ -109,9 +109,9 @@ function phpx_map_format($map) {
     if ($map)
         foreach ($map as $name=>$value) {
             if ($string != '')
-                $string .= ';'; 
+                $string .= ':'; 
             $escaped = str_replace("\n", '\n', addslashes($value)); 
-            if (strpos($value, ';') !== false)
+            if (strpos($value, ':') !== false)
                 $string .= "$name=\"$escaped\""; 
             else
                 $string .= "$name=$escaped"; 
@@ -120,19 +120,19 @@ function phpx_map_format($map) {
 }
 
 function &phpx_map_parse($string) {
-    # string: name=value;...
+    # string: name=value:...
     # value: ... "..."
-    $segs = explode(';', $string); 
+    $segs = explode(':', $string); 
     $nsegs = sizeof($segs); 
     
     $entry = ''; 
-    # A="B ; C" ; D  ==>  A="B;C" ; D
+    # A="B : C" : D  ==>  A="B:C" : D
     for ($i = 0; $i < $nsegs; $i++) {
         $entry .= $segs[$i]; 
         list($name, $value) = explode('=', $entry, 2); 
         if (substr($value, 0, 1) == '"') {
             if (substr($value, -1) != '"' || substr($value, -2) == '\"') {
-                $value .= ';'; 
+                $value .= ':'; 
                 continue;   # concat($i, $i+1)
             }
             $value = eval('return ' . $value . ';'); 
