@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:af="http://www.bodz.net/xml/zlw/abstract-form">
-	<xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes"/>
+	<xsl:output version="1.0" method="xml" encoding="UTF-8" doctype-public="-//W3C//DTD HTML 4.0 Transitional//EN" indent="yes"/>
 	<xsl:param name="af-base">
 		<xsl:call-template name="t-param-text">
 			<xsl:with-param name="name" select="'af-base'"/>
@@ -34,7 +34,7 @@
 				<!--<HR/>-->
 				<cite>Powered by ZLW::Abstract-Form</cite>
 				<br/>
-				<cite>$Id: html-view.xsl,v 1.6.2.9 2005-12-28 13:30:39 dansei Exp $</cite>
+				<cite>$Id: html-view.xsl,v 1.6.2.10 2005-12-29 13:25:29 dansei Exp $</cite>
 			</xsl:with-param>
 		</xsl:call-template>
 	</xsl:template>
@@ -209,7 +209,7 @@
 					<xsl:for-each select="$meta/af:entry">
 						<xsl:element name="meta">
 							<xsl:attribute name="http-equiv"><xsl:value-of select="@key"/></xsl:attribute>
-							<xsl:attribute name="content"><xsl:call-template name="t-all-text"/></xsl:attribute>
+							<xsl:attribute name="content"><xsl:value-of select="."/></xsl:attribute>
 						</xsl:element>
 					</xsl:for-each>
 				</xsl:if>
@@ -481,7 +481,7 @@
 	</xsl:template>
 	<!--DATA ELEMENTS-->
 	<xsl:template name="t-value">
-		<xsl:param name="type"/>
+		<xsl:param name="type" select="@type"/>
 		<xsl:choose>
 			<xsl:when test="$type='link'">
 				<xsl:element name="a">
@@ -512,13 +512,11 @@
 	</xsl:template>
 	<xsl:template name="t-scalar" match="af:scalar" priority="-1">
 		<span>
-			<xsl:call-template name="t-value">
-				<xsl:with-param name="type" select="@type"/>
-			</xsl:call-template>
+			<xsl:call-template name="t-value"/>
 		</span>
 		<xsl:for-each select="af:method">
-			<xsl:call-template name="t-method-a"/>
 			<xsl:value-of select="' '"/>
+			<xsl:call-template name="t-method-a"/>
 		</xsl:for-each>
 	</xsl:template>
 	<xsl:template name="t-list" match="af:list" priority="-1">
@@ -537,10 +535,10 @@
 					</td>
 					<td>
 						<xsl:for-each select="../af:method">
+							<xsl:value-of select="' '"/>
 							<xsl:call-template name="t-method-a">
 								<xsl:with-param name="params" select="concat('&amp;.index=', $index)"/>
 							</xsl:call-template>
-							<xsl:value-of select="' '"/>
 						</xsl:for-each>
 					</td>
 				</tr>
@@ -580,10 +578,10 @@
 						</td>
 						<xsl:for-each select="../af:method">
 							<td>
+								<xsl:value-of select="' '"/>
 								<xsl:call-template name="t-method-a">
 									<xsl:with-param name="params" select="concat('&amp;.key=', $key)"/>
 								</xsl:call-template>
-								<xsl:value-of select="' '"/>
 							</td>
 						</xsl:for-each>
 					</tr>
@@ -632,10 +630,10 @@
 						</xsl:for-each>
 						<xsl:for-each select="../af:method">
 							<td>
+								<xsl:value-of select="' '"/>
 								<xsl:call-template name="t-method-a">
 									<xsl:with-param name="params" select="$pk"/>
 								</xsl:call-template>
-								<xsl:value-of select="' '"/>
 							</td>
 						</xsl:for-each>
 					</tr>
@@ -649,10 +647,10 @@
 		<div>
 			<xsl:value-of select="text()"/>
 			<xsl:for-each select="$owner/af:method">
+				<xsl:value-of select="' '"/>
 				<xsl:call-template name="t-method-a">
 					<xsl:with-param name="params" select="concat('&amp;.path=', $path)"/>
 				</xsl:call-template>
-				<xsl:value-of select="' '"/>
 			</xsl:for-each>
 		</div>
 		<xsl:if test="*[namespace-uri() != $af-uri]">
@@ -1040,22 +1038,25 @@ $retvar, '.model = &quot;', $model, '&quot;', '; &#10;')"/>
 	<xsl:template name="t-selector" match="af:selector" priority="-1">
 		<xsl:choose>
 			<xsl:when test="af:list">
-				<xsl:call-template name="t-selector-list">
-					<xsl:with-param name="list" select="af:list"/>
+				<xsl:call-template name="t-selector-2">
+					<xsl:with-param name="type" select="'list'"/>
+					<xsl:with-param name="select" select="af:list"/>
 				</xsl:call-template>
 			</xsl:when>
 			<xsl:when test="af:map">
-				<xsl:call-template name="t-selector-map">
-					<xsl:with-param name="map" select="af:map"/>
+				<xsl:call-template name="t-selector-2">
+					<xsl:with-param name="type" select="'map'"/>
+					<xsl:with-param name="select" select="af:map"/>
 				</xsl:call-template>
 			</xsl:when>
 			<xsl:when test="af:list-ref">
 				<xsl:variable name="name" select="af:list-ref/text()"/>
-				<xsl:variable name="list" select="ancestor::af:section/af:list[@name=$name]"/>
+				<xsl:variable name="select" select="ancestor::af:section/af:list[@name=$name]"/>
 				<xsl:choose>
-					<xsl:when test="$list">
-						<xsl:call-template name="t-selector-list">
-							<xsl:with-param name="list" select="$list"/>
+					<xsl:when test="$select">
+						<xsl:call-template name="t-selector-2">
+							<xsl:with-param name="type" select="'list'"/>
+							<xsl:with-param name="select" select="$select"/>
 						</xsl:call-template>
 					</xsl:when>
 					<xsl:otherwise>
@@ -1067,11 +1068,12 @@ $retvar, '.model = &quot;', $model, '&quot;', '; &#10;')"/>
 			</xsl:when>
 			<xsl:when test="af:map-ref">
 				<xsl:variable name="name" select="af:map-ref/text()"/>
-				<xsl:variable name="map" select="ancestor::af:section/af:map[@name=$name]"/>
+				<xsl:variable name="select" select="ancestor::af:section/af:map[@name=$name]"/>
 				<xsl:choose>
-					<xsl:when test="$map">
-						<xsl:call-template name="t-selector-map">
-							<xsl:with-param name="map" select="$map"/>
+					<xsl:when test="$select">
+						<xsl:call-template name="t-selector-2">
+							<xsl:with-param name="type" select="'map'"/>
+							<xsl:with-param name="select" select="$select"/>
 						</xsl:call-template>
 					</xsl:when>
 					<xsl:otherwise>
@@ -1088,8 +1090,10 @@ $retvar, '.model = &quot;', $model, '&quot;', '; &#10;')"/>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
-	<xsl:template name="t-selector-list">
-		<xsl:param name="list"/>
+	<xsl:template name="t-selector-2">
+		<xsl:param name="type"/>
+		<xsl:param name="select"/>
+		<xsl:param name="content" select="$select/*[local-name() = 'item' or local-name() = 'entry' or local-name() = 'row']"/>
 		<xsl:variable name="input-name">
 			<xsl:choose>
 				<xsl:when test="@name">
@@ -1102,65 +1106,88 @@ $retvar, '.model = &quot;', $model, '&quot;', '; &#10;')"/>
 		</xsl:variable>
 		<xsl:variable name="read-only" select="@read-only"/>
 		<xsl:variable name="init" select="@init|af:init"/>
-		<xsl:element name="select">
-			<xsl:attribute name="name"><xsl:value-of select="$input-name"/></xsl:attribute>
-			<xsl:choose>
-				<xsl:when test="@multiple = 'true'">
-					<xsl:attribute name="multiple">multiple</xsl:attribute>
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:attribute name="size">1</xsl:attribute>
-				</xsl:otherwise>
-			</xsl:choose>
-			<xsl:for-each select="$list/af:item">
-				<xsl:if test="not($read-only and $init[.!=position()])">
-					<xsl:element name="option">
-						<xsl:attribute name="value"><xsl:value-of select="position()"/></xsl:attribute>
-						<xsl:if test="$init=position()">
-							<xsl:attribute name="selected">selected</xsl:attribute>
+		<xsl:choose>
+			<xsl:when test="contains('||string|number|', concat('|', $select/@type, '|'))">
+				<xsl:element name="select">
+					<xsl:attribute name="name"><xsl:value-of select="$input-name"/></xsl:attribute>
+					<xsl:choose>
+						<xsl:when test="@multiple = 'true'">
+							<xsl:attribute name="multiple">multiple</xsl:attribute>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:attribute name="size">1</xsl:attribute>
+						</xsl:otherwise>
+					</xsl:choose>
+					<xsl:for-each select="$content">
+						<xsl:variable name="key">
+							<xsl:choose>
+								<xsl:when test="$type='list'">
+									<xsl:value-of select="position()"/>
+								</xsl:when>
+								<xsl:when test="$type='map'">
+									<xsl:value-of select="@key"/>
+								</xsl:when>
+							</xsl:choose>
+						</xsl:variable>
+						<!--Skip non-init items in read-only mode. -->
+						<xsl:if test="not($read-only and $init[.!=$key])">
+							<xsl:element name="option">
+								<xsl:attribute name="value"><xsl:value-of select="$key"/></xsl:attribute>
+								<xsl:if test="$init[.=$key]">
+									<xsl:attribute name="selected">selected</xsl:attribute>
+								</xsl:if>
+								<xsl:choose>
+									<xsl:when test="$type = 'list'">
+										<xsl:call-template name="t-all-text"/>
+									</xsl:when>
+									<xsl:when test="$type = 'map'">
+										<xsl:value-of select="@key"/>: <xsl:call-template name="t-all-text"/>
+									</xsl:when>
+								</xsl:choose>
+							</xsl:element>
 						</xsl:if>
-						<xsl:call-template name="t-all-text"/>
-					</xsl:element>
-				</xsl:if>
-			</xsl:for-each>
-		</xsl:element>
-	</xsl:template>
-	<xsl:template name="t-selector-map">
-		<xsl:param name="map"/>
-		<xsl:variable name="input-name">
-			<xsl:choose>
-				<xsl:when test="@name">
-					<xsl:value-of select="@name"/>
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:value-of select="concat('input_', position())"/>
-				</xsl:otherwise>
-			</xsl:choose>
-		</xsl:variable>
-		<xsl:variable name="read-only" select="@read-only"/>
-		<xsl:variable name="init" select="@init|af:init"/>
-		<xsl:element name="select">
-			<xsl:attribute name="name"><xsl:value-of select="$input-name"/></xsl:attribute>
-			<xsl:choose>
-				<xsl:when test="@multiple = 'true'">
-					<xsl:attribute name="multiple">multiple</xsl:attribute>
-				</xsl:when>
-				<xsl:otherwise>
-					<xsl:attribute name="size">1</xsl:attribute>
-				</xsl:otherwise>
-			</xsl:choose>
-			<xsl:for-each select="$map/af:entry">
-				<xsl:if test="not($read-only and $init[.!=current()/@key])">
-					<xsl:element name="option">
-						<xsl:attribute name="value"><xsl:value-of select="@key"/></xsl:attribute>
-						<xsl:if test="$init=@key">
-							<xsl:attribute name="selected">selected</xsl:attribute>
-						</xsl:if>
-						<xsl:value-of select="@key"/>: <xsl:call-template name="t-all-text"/>
-					</xsl:element>
-				</xsl:if>
-			</xsl:for-each>
-		</xsl:element>
+					</xsl:for-each>
+				</xsl:element>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:variable name="input-type">
+					<xsl:choose>
+						<xsl:when test="@multiple = 'true'">checkbox</xsl:when>
+						<xsl:otherwise>radio</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
+				<ol>
+					<xsl:for-each select="$content">
+						<xsl:variable name="key">
+							<xsl:choose>
+								<xsl:when test="$type='list'">
+									<xsl:value-of select="position()"/>
+								</xsl:when>
+								<xsl:when test="$type='map'">
+									<xsl:value-of select="@key"/>
+								</xsl:when>
+							</xsl:choose>
+						</xsl:variable>
+						<li>
+							<xsl:element name="input">
+								<xsl:attribute name="name"><xsl:value-of select="$input-name"/></xsl:attribute>
+								<xsl:attribute name="type"><xsl:value-of select="$input-type"/></xsl:attribute>
+								<xsl:attribute name="value"><xsl:value-of select="$key"/></xsl:attribute>
+								<xsl:if test="$read-only">
+									<xsl:attribute name="readonly">readonly</xsl:attribute>
+								</xsl:if>
+								<xsl:if test="$init[.=$key]">
+									<xsl:attribute name="checked">checked</xsl:attribute>
+								</xsl:if>
+							</xsl:element>
+							<xsl:call-template name="t-value">
+								<xsl:with-param name="type" select="$select/@type"/>
+							</xsl:call-template>
+						</li>
+					</xsl:for-each>
+				</ol>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 	<xsl:template name="t-method" match="af:method[local-name(..)='form']" priority="-1">
 		<xsl:param name="form-id"/>
@@ -1170,7 +1197,7 @@ $retvar, '.model = &quot;', $model, '&quot;', '; &#10;')"/>
 			<xsl:attribute name="value"><xsl:value-of select="@name"/></xsl:attribute>
 			<xsl:if test="@hint or af:method-parameter">
 				<!--Out-going??-->
-				<xsl:attribute name="onclick">javascript: var form = document.getElementById('<xsl:value-of select="$form-id"/>'); form.action = '<xsl:call-template name="t-href-concat"><xsl:with-param name="lhs"><xsl:call-template name="t-hint-with-hold"/></xsl:with-param><xsl:with-param name="rhs"><xsl:for-each select="af:method-parameter"><xsl:value-of select="concat('&amp;', @name, '=', @value)"/></xsl:for-each></xsl:with-param></xsl:call-template>'; form.submit(); </xsl:attribute>
+				<xsl:attribute name="onclick">javascript: var form = document.getElementById('<xsl:value-of select="$form-id"/>'); form.action = '<xsl:call-template name="t-href-concat"><xsl:with-param name="lhs"><xsl:call-template name="t-hint-with-hold"/></xsl:with-param><xsl:with-param name="rhs"><xsl:for-each select="af:method-parameter"><xsl:value-of select="concat('&amp;', @name, '=', text())"/></xsl:for-each></xsl:with-param></xsl:call-template>'; form.submit(); </xsl:attribute>
 			</xsl:if>
 		</xsl:element>
 	</xsl:template>
@@ -1178,7 +1205,7 @@ $retvar, '.model = &quot;', $model, '&quot;', '; &#10;')"/>
 		<xsl:param name="params" select="''"/>
 		<span class="method">
 			<xsl:element name="a">
-				<xsl:attribute name="href"><xsl:call-template name="t-href-concat"><xsl:with-param name="lhs"><xsl:call-template name="t-hint-with-hold"/></xsl:with-param><xsl:with-param name="rhs"><xsl:value-of select="concat('.method=', @name, $params)"/><xsl:for-each select="af:method-parameter"><xsl:value-of select="concat('&amp;', @name, '=', @value)"/></xsl:for-each></xsl:with-param></xsl:call-template></xsl:attribute>
+				<xsl:attribute name="href"><xsl:call-template name="t-href-concat"><xsl:with-param name="lhs"><xsl:call-template name="t-hint-with-hold"/></xsl:with-param><xsl:with-param name="rhs"><xsl:value-of select="concat('.method=', @name, $params)"/><xsl:for-each select="af:method-parameter"><xsl:value-of select="concat('&amp;', @name, '=', text())"/></xsl:for-each></xsl:with-param></xsl:call-template></xsl:attribute>
 				<xsl:value-of select="@name"/>
 			</xsl:element>
 		</span>
