@@ -18,10 +18,10 @@ function phpx_xml_header($encoding = 'utf-8', $version = '1.0') {
     $PHPX_XML_BEGIN = true; 
 }
 
-function phpx_xml_start_tag($tagname_and_attrs, $xmlns = '', $close = false, 
-        $newline = true, $indented = true) {
-    if (strpos($xmlns, '=') !== false)
-        list($xmlns, $uri) = explode('=', $xmlns, 2); 
+function phpx_xml_start_tag($tagmore, $ns = '', $close = false, $newline = true,
+                            $indented = true) {
+    if (strpos($ns, '=') !== false)
+        list($ns, $uri) = explode('=', $ns, 2); 
     if ($indented) {
         global $PHPX_XML_INDENT; 
         $xml = $PHPX_XML_INDENT; 
@@ -29,11 +29,11 @@ function phpx_xml_start_tag($tagname_and_attrs, $xmlns = '', $close = false,
             $PHPX_XML_INDENT .= '    '; 
     }
     $xml .= '<'; 
-    if ($xmlns) $xml .= $xmlns . ':'; 
-    $xml .= $tagname_and_attrs; 
+    if ($ns) $xml .= $ns . ':'; 
+    $xml .= $tagmore; 
     if ($uri) {
         $xml .= " xmlns"; 
-        if ($xmlns) $xml .= ":$xmlns"; 
+        if ($ns) $xml .= ":$ns"; 
         $xml .= '=' . phpx_xml_attr($uri); 
     }
     if ($close) $xml .= '/'; 
@@ -42,25 +42,48 @@ function phpx_xml_start_tag($tagname_and_attrs, $xmlns = '', $close = false,
     return $xml; 
 }
 
-function phpx_xml_end_tag($tagname, $xmlns = '', $newline = true, $indented = true) {
-    if (strpos($xmlns, '=') !== false)
-        list($xmlns, $uri) = explode('=', $xmlns, 2); 
+function phpx_xml_end_tag($tagname, $ns = '', $newline = true, $indented = true) {
+    if (strpos($ns, '=') !== false)
+        list($ns, $uri) = explode('=', $ns, 2); 
     if ($indented) {
         global $PHPX_XML_INDENT; 
         $PHPX_XML_INDENT = substr($PHPX_XML_INDENT, 4); 
         $xml .= $PHPX_XML_INDENT; 
     }
-    $xml = $xmlns ? "</$xmlns:$tagname>" : "</$tagname>"; 
+    $xml = $ns ? "</$ns:$tagname>" : "</$tagname>"; 
     if ($newline) $xml .= "\n"; 
     return $xml; 
+}
+
+function phpx_xml_tag($tagname, $attrs = NULL, $content = NULL, $ns = '',
+                      $newline = true, $indented = true) {
+    $tagmore = $tagname;
+    if (is_null($attrs))
+        $tagmore .= phpx_xml_attrs($attrs); 
+    if ($content == '')
+        return phpx_xml_start_tag($tagmore, $ns, true, $newline, $indented);
+    return phpx_xml_start_tag($tagmore, $ns, false, false, $indented)
+        . phpx_xml_value($content, $ns)
+        . phpx_xml_end_tag($tagname, $ns, $newline, false);
+    return $xml; 
+}
+
+function phpx_xml_value($value, $ns = '') {
+    if (method_exists($value, 'xml'))
+        return $value->xml($ns); 
+    return htmlspecialchars($value); 
 }
 
 function phpx_xml_pi($pi) {
     echo '<?' . htmlspecialchars($pi) . '?>'; 
 }
 
-function phpx_xml_text($text) {
-    return htmlspecialchars($text, ENT_NOQUOTES); 
+function phpx_xml_text($text, $indented = false) {
+    if ($indented) {
+        global $PHPX_XML_INDENT;
+        $xml = $PHPX_XML_INDENT; 
+    }
+    return $xml . htmlspecialchars($text, ENT_NOQUOTES); 
 }
 
 function phpx_xml_attr($attr) {
@@ -115,13 +138,6 @@ function phpx_xml_attrs() {
         }
     }
     return $xml; 
-}
-
-function phpx_xml_xvalue($xvalue, $ns = '') {
-    if (method_exists($xvalue, 'xml')) {
-        return $xvalue->xml($ns); 
-    }
-    return '' . $xvalue; 
 }
 
 ?>
