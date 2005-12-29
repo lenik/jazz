@@ -6,23 +6,27 @@ function &zlw_af_type($typestr) {
     global $ZLW_AF_TYPE; 
     $type = &$ZLW_AF_TYPE[$typestr]; 
     if (is_null($type)) {
-        list($name, $typep) = explode(':', $typestr); 
-        $type = eval("return new zlw_af_type_$name(\$typep)"); 
+        list($name, $param) = explode(':', $typestr);
+        $typecls = 'zlw_af_type_' . $name; 
+        if (class_exists($typecls))
+            $type = eval("return new $typecls(\$param)");
+        else
+            $type = new zlw_af_type($name, $param); 
     }
     return $type; 
 }
 
 class zlw_af_type extends phpx_error_support {
     var $name = '(type-base)'; 
-    var $typep; 
+    var $param; 
     
-    function zlw_af_type($typep = NULL) {
-        $this->phpx_error_support(ZLW_AF); 
-        if (is_array($typep)) {
-            $this->typep = $typep; 
-        } else {
-            $this->typep = phpx_map_parse($typep); 
-        }
+    function zlw_af_type($name, $param = NULL) {
+        $this->phpx_error_support(ZLW_AF);
+        $this->name = $name; 
+        if (is_array($param))
+            $this->param = $param; 
+        else
+            $this->param = phpx_map_parse($param); 
     }
     
     # <internal> => <string>
@@ -38,9 +42,14 @@ class zlw_af_type extends phpx_error_support {
         return NULL; 
     }
     
-    function typep_xml($ns = '') {
-        return zlw_af_parameters($this->typep, 'type-parameter', $ns); 
+    function xml_param($ns = '') {
+        return zlw_af_parameters($this->param, 'type-parameter', $ns); 
     }
+}
+
+class zlw_af_type_def  extends zlw_af_type {
+    var $name = NULL;
+    # @inherit
 }
 
 class zlw_af_type_string extends zlw_af_type {
@@ -197,10 +206,11 @@ class zlw_af_type_time extends zlw_af_type_date_time {
 }
 
 class zlw_af_variant {
-    var $type; 
+    var $type;                          # zlw_af_type, never be null.
     var $value; 
     
     function zlw_af_variant($init, $typestr = 'string', $parse = true) {
+        assert(! is_null($typestr)); 
         if (is_string($typestr)) {
             if (! ($type = &zlw_af_type($typestr)))
                 die("Invalid type: $typestr"); 
@@ -215,21 +225,27 @@ class zlw_af_variant {
     }
     
     function format() {
+        assert(! is_null($this->type)); 
         return $this->type->format($this->value); 
     }
     
     function parse($string) {
+        assert(! is_null($this->type)); 
         return $this->value = $this->type->parse($string); 
     }
     
-    function get_type() {
-        if (is_null($this->type))
-            $this->type = gettype($this->value); 
-        return $this->type->name; 
+    function is_init() {
+        assert(! is_null($this->type));
+        return is_null($this->value); 
+    }
+    
+    function uninit() {
+        unset($this->value); 
     }
     
     function typeof($base) {
-        return zlw_af_type_of($this->get_type(), $base); 
+        assert(! is_null($this->type)); 
+        return zlw_af_type_of($this->type->name, $base); 
     }
 }
 
