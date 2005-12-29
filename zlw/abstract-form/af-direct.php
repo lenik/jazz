@@ -1,107 +1,83 @@
 <?php
 
-require_once dirname(__FILE__) . "/af-base.php"; 
+require_once dirname(__FILE__) . "/af-model.php";
 
 # .section. API Interface
 
-global $ZLW_AF_XMLNS; 
+global $ZLW_AFX_XMLNS; 
 
-function zlw_af_set_xmlns($xmlns = '') {
-    global $ZLW_AF_XMLNS; 
-    $ZLW_AF_XMLNS = $xmlns; 
+function zlw_afx_get_xmlns() {
+    global $ZLW_AFX_XMLNS; 
+    return $ZLW_AFX_XMLNS; 
 }
 
-function zlw_af_get_xmlns() {
-    global $ZLW_AF_XMLNS; 
-    return $ZLW_AF_XMLNS; 
+function zlw_afx_set_xmlns($xmlns = '') {
+    global $ZLW_AFX_XMLNS; 
+    $ZLW_AFX_XMLNS = $xmlns; 
 }
 
-function zlw_af_scalar($name, $value, $typestr = 'string', $hold = false, 
-        $hidden = false, $methods = NULL) {
-    global $ZLW_AF_XMLNS; 
-    $o = new zlw_af_scalar($name, $value, $typestr, $hold, $hidden, $methods); 
-    return $o->xml($ZLW_AF_XMLNS); 
+function zlw_afx_value($o) {
+    global $ZLW_AFX_XMLNS; 
+    return $o->xml($ZLW_AFX_XMLNS);
 }
 
-function zlw_af_list() {
+function zlw_afx_scalar($name, $value, $typestr = 'string', $hold = false, 
+                       $hidden = false, $methods = NULL) {
+    return zlw_afx_value(new zlw_af_scalar(
+        $name, $value, $typestr, $hold, $hidden, $methods)); 
 }
 
-function zlw_af_map() {
+function zlw_afx_list($name, $items, $typestr = 'string', $hold = false, 
+                     $hidden = false, $sort = NULL, $sort_order = NULL,
+                     $methods = NULL) {
+    return zlw_afx_value(new zlw_af_list(
+        $name, $items, $typestr, $hold, $hidden, $sort, $sort_order, $methods)); 
 }
 
-function zlw_af_table() {
+function zlw_afx_map($name, $entries, $typestr = 'string', $hold = false, 
+                    $hidden = false, $sort = NULL, $sort_order = NULL,
+                    $methods = NULL) {
+    return zlw_afx_value(new zlw_af_map(
+        $name, $entries, $typestr, $hold, $hidden, $sort, $sort_order, $methods)); 
 }
 
-function zlw_af_user() {
+function zlw_afx_table($name, $rows, $columns = NULL, $typestr = 'string',
+                      $hold = false, $hidden = false, $methods = NULL) {
+    return zlw_afx_value(new zlw_af_table(
+        $name, $rows, $columns, $typestr, $hold, $hidden, $methods)); 
 }
 
-function zlw_af_input() {
+function zlw_afx_user($name, $user, $typestr = NULL, $hold = false,
+                     $hidden = false, $methods = NULL) {
+    return zlw_afx_value(new zlw_af_user(
+        $name, $user, $typestr, $hold, $hidden, $methods)); 
 }
 
-function zlw_af_method() {
+function zlw_afx_input($name, $typestr = 'string', $value = NULL, 
+                      $multiline = false, $read_only = false,
+                      $ref = NULL, $max_length = NULL, $constraints = NULL) {
+    return zlw_afx_value(new zlw_af_input(
+        $name, $typestr, $value, $multiline, $read_only, $ref, $max_length, $constraints));
 }
 
-function zlw_af_form() {
+function zlw_afx_method($name, $typestr = 'default', $hint = '', $param = NULL,
+                       $const = false) {
+    return zlw_afx_value(new zlw_af_method($name, $typestr, $hint, $param, $const)); 
 }
 
-function zlw_af_section() {
+function zlw_afx_form() {
+    return zlw_afx_value(new zlw_af_form(
+        )); 
 }
 
-# .section. XML Document
+function zlw_afx_section() {
+    return zlw_afx_value(new zlw_af_section(
+        )); 
+}
 
-class zlw_af_xml {
-    var $title = 'Abstract Form'; 
-    var $af_base; 
-    var $sections; 
-    
-    function zlw_af_xml() {
-        global $ZLW_AF_BASE; 
-        $this->af_base = $ZLW_AF_BASE; 
-    }
-    
-    function xml_start($ns = '') {
-        global $ZLW_AF_BASE; 
-        
-        phpx_xml_header(); 
-        echo "<?xml-stylesheet type=\"text/xsl\" href=\"$ZLW_AF_BASE/html-view.xsl\"?>\n"; 
-        
-        $uri = 'http://www.bodz.net/xml/zlw/abstract-form'; 
-        if (strpos($ns, '=') !== false)
-            list($ns, $uri) = explode('=', $ns, 2); 
-        
-        phpx_xml_start_tag('abstract-form' . phpx_xml_attrs(array(
-            'xmlns' . ($ns ? ":$ns" : '') => $uri, 
-            'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance', 
-            'xsi:schemaLocation' => "http://www.bodz.net/xml/zlw/abstract-form $ZLW_AF_BASE/abstract-form.xsd", 
-            )), $ns); 
-        return $xml; 
-    }
-    
-    function xml_end($ns = '') {
-        return phpx_xml_end_tag('abstract-form', $ns); 
-    }
-    
-    function xml_page($ns = '') {
-        $xml = phpx_xml_start_tag('section name=' . phpx_xml_attr('.page'), $ns); 
-        $xml .= zlw_af_xml_scalar('title', $this->title); 
-        $xml .= zlw_af_xml_scalar('af-base', $this->af_base); 
-        $xml .= phpx_xml_end_tag('section', $ns); 
-        return $xml; 
-    }
-    
-    function xml_sections($ns = '') {
-        if ($this->sections)
-            foreach ($this->sections as $section)
-                $xml .= phpx_xml_xvalue($section, $ns); 
-        return $xml; 
-    }
-    
-    function xml($ns = '') {
-        return $this->xml_start($ns)
-            . $this->xml_page($ns)
-            . $this->xml_sections($ns)
-            . $this->xml_end($ns); 
-    }
+function zlw_afx_xml($title = 'Abstract Form', $sections = NULL,
+                    $page_params = NULL) {
+    return zlw_afx_value(new zlw_af_xml($title, $sections, $page_params)); 
 }
 
 ?>
