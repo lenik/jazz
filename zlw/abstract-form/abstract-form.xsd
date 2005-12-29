@@ -37,6 +37,41 @@ abstract-form</xs:documentation>
 			<xs:attribute name="hidden" type="xs:boolean"/>
 		</xs:complexType>
 	</xs:element>
+	<xs:element name="error">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="af:method" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="af:doc" minOccurs="0"/>
+				<xs:sequence minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Causal</xs:documentation>
+					</xs:annotation>
+					<xs:element name="source" minOccurs="0">
+						<xs:complexType>
+							<xs:attribute name="name" type="xs:string"/>
+							<xs:attribute name="status" type="xs:string"/>
+						</xs:complexType>
+					</xs:element>
+					<xs:element ref="af:error" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:sequence>
+			<xs:attribute name="time" type="xs:time"/>
+			<xs:attribute name="provider" type="xs:string"/>
+			<xs:attribute name="type" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Maybe Java-Exception-Class</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Error name is meaningless. </xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="text" type="xs:string"/>
+			<xs:attribute name="detail" type="xs:string"/>
+			<xs:attribute name="hint" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
 	<xs:element name="doc">
 		<xs:complexType mixed="true">
 			<xs:sequence>
@@ -46,6 +81,39 @@ abstract-form</xs:documentation>
 		</xs:complexType>
 	</xs:element>
 	<!--OUTPUT-->
+	<xs:group name="output-group">
+		<xs:choice>
+			<xs:element ref="af:scalar"/>
+			<xs:element ref="af:list"/>
+			<xs:element ref="af:map"/>
+			<xs:element ref="af:table"/>
+			<xs:element ref="af:user"/>
+		</xs:choice>
+	</xs:group>
+	<xs:attributeGroup name="output-attributes">
+		<xs:attribute name="name" type="xs:string" use="optional"/>
+		<xs:attribute name="type" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>applicable type, default text
+
+for input-group, type-constraint will applied on request values; 
+
+for output-group, type-specific render will applied on the data. </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="hold" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>control the lifetime of data, default local</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="hidden" type="xs:boolean" use="optional"/>
+	</xs:attributeGroup>
+	<xs:group name="output-commons">
+		<xs:sequence>
+			<xs:group ref="af:parameterization"/>
+			<xs:element ref="af:method" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:group>
 	<xs:element name="scalar">
 		<xs:complexType mixed="true">
 			<xs:sequence>
@@ -167,74 +235,6 @@ abstract-form</xs:documentation>
 			<xs:attributeGroup ref="af:output-attributes"/>
 		</xs:complexType>
 	</xs:element>
-	<xs:element name="error">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:sequence minOccurs="0">
-					<xs:annotation>
-						<xs:documentation>Causal</xs:documentation>
-					</xs:annotation>
-					<xs:element name="source" minOccurs="0">
-						<xs:complexType>
-							<xs:attribute name="name" type="xs:string"/>
-							<xs:attribute name="status" type="xs:string"/>
-						</xs:complexType>
-					</xs:element>
-					<xs:element ref="af:error" minOccurs="0" maxOccurs="unbounded"/>
-				</xs:sequence>
-				<xs:element ref="af:doc" minOccurs="0"/>
-				<xs:element ref="af:method" minOccurs="0" maxOccurs="unbounded"/>
-			</xs:sequence>
-			<xs:attribute name="time" type="xs:time"/>
-			<xs:attribute name="provider" type="xs:string"/>
-			<xs:attribute name="type" type="xs:string">
-				<xs:annotation>
-					<xs:documentation>Maybe Java-Exception-Class</xs:documentation>
-				</xs:annotation>
-			</xs:attribute>
-			<xs:attribute name="name" type="xs:string">
-				<xs:annotation>
-					<xs:documentation>Error name is meaningless. </xs:documentation>
-				</xs:annotation>
-			</xs:attribute>
-			<xs:attribute name="text" type="xs:string"/>
-			<xs:attribute name="detail" type="xs:string"/>
-			<xs:attribute name="hint" type="xs:string"/>
-		</xs:complexType>
-	</xs:element>
-	<xs:group name="output-group">
-		<xs:choice>
-			<xs:element ref="af:scalar"/>
-			<xs:element ref="af:list"/>
-			<xs:element ref="af:map"/>
-			<xs:element ref="af:table"/>
-			<xs:element ref="af:user"/>
-		</xs:choice>
-	</xs:group>
-	<xs:attributeGroup name="output-attributes">
-		<xs:attribute name="name" type="xs:string" use="optional"/>
-		<xs:attribute name="type" type="xs:string" use="optional">
-			<xs:annotation>
-				<xs:documentation>applicable type, default text
-
-for input-group, type-constraint will applied on request values; 
-
-for output-group, type-specific render will applied on the data. </xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-		<xs:attribute name="hold" type="xs:boolean" use="optional">
-			<xs:annotation>
-				<xs:documentation>control the lifetime of data, default local</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-		<xs:attribute name="hidden" type="xs:boolean" use="optional"/>
-	</xs:attributeGroup>
-	<xs:group name="output-commons">
-		<xs:sequence>
-			<xs:group ref="af:parameterization"/>
-			<xs:element ref="af:method" minOccurs="0" maxOccurs="unbounded"/>
-		</xs:sequence>
-	</xs:group>
 	<!--INPUT-->
 	<xs:element name="form">
 		<xs:complexType>
@@ -263,6 +263,27 @@ for output-group, type-specific render will applied on the data. </xs:documentat
 			</xs:attribute>
 		</xs:complexType>
 	</xs:element>
+	<xs:group name="input-group">
+		<xs:choice>
+			<xs:element ref="af:input"/>
+			<xs:element ref="af:selector"/>
+			<xs:element ref="af:method"/>
+			<xs:element name="callback">
+				<xs:annotation>
+					<xs:documentation>NOT USED.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:group ref="af:parameterization"/>
+					</xs:sequence>
+					<xs:attribute name="xpointer" type="xs:string" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:choice>
+	</xs:group>
+	<xs:attributeGroup name="input-attributes">
+		<xs:attribute name="name" type="xs:string" use="optional"/>
+	</xs:attributeGroup>
 	<xs:element name="input">
 		<xs:complexType>
 			<xs:sequence>
@@ -347,31 +368,12 @@ the @type attribute is for type-checking</xs:documentation>
 			</xs:attribute>
 		</xs:complexType>
 	</xs:element>
-	<xs:group name="input-group">
-		<xs:choice>
-			<xs:element ref="af:input"/>
-			<xs:element ref="af:selector"/>
-			<xs:element ref="af:method"/>
-			<xs:element name="callback">
-				<xs:annotation>
-					<xs:documentation>NOT USED.</xs:documentation>
-				</xs:annotation>
-				<xs:complexType>
-					<xs:sequence>
-						<xs:group ref="af:parameterization"/>
-					</xs:sequence>
-					<xs:attribute name="xpointer" type="xs:string" use="required"/>
-				</xs:complexType>
-			</xs:element>
-		</xs:choice>
-	</xs:group>
-	<xs:attributeGroup name="input-attributes">
-		<xs:attribute name="name" type="xs:string" use="optional"/>
-	</xs:attributeGroup>
 	<!--BASE-->
-	<xs:complexType name="parameter-type">
+	<xs:complexType name="parameter-type" mixed="true">
+		<xs:sequence>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
 		<xs:attribute name="name" type="xs:string" use="required"/>
-		<xs:attribute name="value" type="xs:string" use="required"/>
 	</xs:complexType>
 	<xs:group name="parameterization">
 		<xs:sequence>
@@ -380,60 +382,8 @@ the @type attribute is for type-checking</xs:documentation>
 	</xs:group>
 	<xs:group name="constraint-group">
 		<xs:choice>
-			<xs:element name="range">
-				<xs:annotation>
-					<xs:documentation>for number, range constraints the the value boundary; 
-
-for text, range constraints the text-length. </xs:documentation>
-				</xs:annotation>
-				<xs:complexType>
-					<xs:attribute name="min" type="xs:decimal">
-						<xs:annotation>
-							<xs:documentation>-Inf if not specified</xs:documentation>
-						</xs:annotation>
-					</xs:attribute>
-					<xs:attribute name="min-excluded" type="xs:boolean">
-						<xs:annotation>
-							<xs:documentation>exclude the min boundary</xs:documentation>
-						</xs:annotation>
-					</xs:attribute>
-					<xs:attribute name="max" type="xs:decimal">
-						<xs:annotation>
-							<xs:documentation>+Inf if not specified</xs:documentation>
-						</xs:annotation>
-					</xs:attribute>
-					<xs:attribute name="max-excluded" type="xs:boolean">
-						<xs:annotation>
-							<xs:documentation>exclude the max boundary</xs:documentation>
-						</xs:annotation>
-					</xs:attribute>
-				</xs:complexType>
-			</xs:element>
-			<xs:element name="pattern">
-				<xs:complexType>
-					<xs:attribute name="regex" type="xs:string" use="required">
-						<xs:annotation>
-							<xs:documentation>standard regular-expression</xs:documentation>
-						</xs:annotation>
-					</xs:attribute>
-					<xs:attribute name="case-insensitive" type="xs:boolean"/>
-					<xs:attribute name="dot-all" type="xs:boolean">
-						<xs:annotation>
-							<xs:documentation>\n, \r are matched by dot(.)</xs:documentation>
-						</xs:annotation>
-					</xs:attribute>
-					<xs:attribute name="multiline" type="xs:boolean">
-						<xs:annotation>
-							<xs:documentation>^ $ match each lines. </xs:documentation>
-						</xs:annotation>
-					</xs:attribute>
-					<xs:attribute name="comment" type="xs:boolean">
-						<xs:annotation>
-							<xs:documentation>space are ignored</xs:documentation>
-						</xs:annotation>
-					</xs:attribute>
-				</xs:complexType>
-			</xs:element>
+			<xs:element ref="af:range"/>
+			<xs:element ref="af:pattern"/>
 			<xs:element ref="af:or"/>
 			<xs:element ref="af:not"/>
 			<xs:element ref="af:and"/>
@@ -504,6 +454,60 @@ why this constraint. </xs:documentation>
 			<xs:choice maxOccurs="unbounded">
 				<xs:group ref="af:constraint-group"/>
 			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="pattern">
+		<xs:complexType>
+			<xs:attribute name="regex" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>standard regular-expression</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="case-insensitive" type="xs:boolean"/>
+			<xs:attribute name="dot-all" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>\n, \r are matched by dot(.)</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="multiline" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>^ $ match each lines. </xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="comment" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>space are ignored</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="range">
+		<xs:annotation>
+			<xs:documentation>for number, range constraints the the value boundary; 
+
+for text, range constraints the text-length. </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="min" type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>-Inf if not specified</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="min-excluded" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>exclude the min boundary</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="max" type="xs:decimal">
+				<xs:annotation>
+					<xs:documentation>+Inf if not specified</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="max-excluded" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>exclude the max boundary</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
 		</xs:complexType>
 	</xs:element>
 </xs:schema>
