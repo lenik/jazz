@@ -90,12 +90,10 @@ function phpx_xml_attr($attr) {
     return '"' . htmlspecialchars($attr) . '"'; 
 }
 
-function phpx_xml_attrs() {
-    $n = func_num_args(); 
-    if ($n == 0) return ''; 
+function phpx_xml_attrs($first) {
+    if (is_null($first)) return NULL; 
     
-    $args = func_get_args(); 
-    $first = &$args[0]; 
+    $n = func_num_args(); 
     $first_type = gettype($first); 
     
     if ($n == 1) {
@@ -109,11 +107,13 @@ function phpx_xml_attrs() {
             }
             return $xml; 
         default: 
-            return ''; 
+            die("Invalid argument type: $first"); 
         }
     }
     
+    $args = func_get_args(); 
     if ($first_type == 'array') {
+        # array, field, field, ...
         for ($i = 1; $i < $n; $i++) {
             if (is_null($args[$i])) continue; 
             foreach (explode(':', $args) as $name) {
@@ -122,6 +122,7 @@ function phpx_xml_attrs() {
             }
         }
     } else if ($first_type == 'object') {
+        # object, member, member, ...
         for ($i = 1; $i < $n; $i++) {
             if (is_null($args[$i])) continue; 
             foreach (explode(':', $args) as $name) {
@@ -130,6 +131,7 @@ function phpx_xml_attrs() {
             }
         }
     } else {
+        # name, value, name, value, ...
         for ($i = 0; $i < $n; $i += 2) {
             $name = $args[$i]; 
             $value = $args[$i + 1]; 
