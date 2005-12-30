@@ -85,6 +85,7 @@ function &phpx_list_parse($string) {
     # item: ... "..."
     $segs = explode(':', $string); 
     $nsegs = sizeof($segs); 
+    if ($nsegs == 1 && $segs[0] == '') return NULL;
     
     $item = ''; 
     # "A : B" : C  ==>  "A:B" : C
