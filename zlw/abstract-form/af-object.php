@@ -56,6 +56,19 @@ class zlw_af_section {
     var $data; 
     var $forms; 
     
+    function zlw_af_section($name, $hint = NULL, $hidden = NULL,
+                            $data = NULL, $forms = NULL) {
+        $this->name = $name;
+        $this->hint = zlw_af_hint_prep($hint);
+        $this->hidden = $hidden;
+        $this->data = $data; 
+        $this->forms = $forms; 
+    }
+    
+    function add(&$element) {
+        $this->data[] = &$element;
+    }
+    
     function xml_start($ns = '') {
         phpx_xml_start_tag('section', phpx_xml_attrs(array(
             'name' => $this->name, 
@@ -111,16 +124,19 @@ class zlw_af_data extends phpx_error_support {
     var $name; 
     var $type;      # typep
     var $hold; 
-    var $hidden; 
+    var $hidden;
+    var $hint; 
     var $methods; 
+    var $dumped; 
     
-    function zlw_af_data($name = NULL, $typestr = 'string', $hold = false,
-                         $hidden = false, $methods = NULL) {
+    function zlw_af_data($name = NULL, $typestr = 'string', $hold = NULL,
+                         $hidden = NULL, $methods = NULL, $hint = NULL) {
         $this->phpx_error_support(ZLW_AF); 
         $this->name = $name;
         $this->type = &zlw_af_type($typestr); 
         $this->hold = $hold;
         $this->hidden = $hidden;
+        $this->hint = zlw_af_hint_prep($hint); 
         $this->methods = $methods;
     }
     
@@ -137,9 +153,9 @@ class zlw_af_data extends phpx_error_support {
 class zlw_af_scalar extends zlw_af_data {
     var $value;         # value
     
-    function zlw_af_scalar($name, $value, $typestr = 'string', $hold = false, 
-                           $hidden = false, $methods = NULL) {
-        $this->zlw_af_data($name, $typestr, $hold, $hidden, $methods); 
+    function zlw_af_scalar($name, $value, $typestr = 'string', $hold = NULL, 
+                           $hidden = NULL, $methods = NULL, $hint = NULL) {
+        $this->zlw_af_data($name, $typestr, $hold, $hidden, $methods, $hint); 
         $this->value = $value; 
     }
     
@@ -148,25 +164,27 @@ class zlw_af_scalar extends zlw_af_data {
             'name' => $this->name, 
             'type' => $this->type->name, 
             'hold' => $this->hold, 
-            'hidden' => $this->hidden, 
+            'hidden' => $this->hidden,
+            'hint' => $this->hint, 
             )), $ns);
         $xml .= $this->type->xml_param($ns); 
         $xml .= $this->xml_methods($ns); 
         $xml .= phpx_xml_value($this->var);
-        $xml .= phpx_xml_end_tag('scalar', $ns); 
+        $xml .= phpx_xml_end_tag('scalar', $ns);
+        $this->dumped = true; 
         return $xml; 
     }
 }
 
 class zlw_af_list extends zlw_af_data {
+    var $items; 
     var $sort; 
     var $sort_order; 
-    var $items; 
     
-    function zlw_af_list($name, $items, $typestr = 'string', $hold = false, 
-                         $hidden = false, $sort = NULL, $sort_order = NULL,
-                         $methods = NULL) {
-        $this->zlw_af_data($name, $typestr, $hold, $hidden, $methods); 
+    function zlw_af_list($name, $items = NULL, $typestr = 'string',
+                         $hold = NULL, $hidden = NULL, $methods = NULL,
+                         $hint = NULL, $sort = NULL, $sort_order = NULL) {
+        $this->zlw_af_data($name, $typestr, $hold, $hidden, $methods, $hint); 
         if (is_array($items))
             $this->items = $items; 
         else if (is_string($items))
@@ -174,14 +192,19 @@ class zlw_af_list extends zlw_af_data {
         $this->sort = $sort; 
         $this->sort_order = $sort_order; 
     }
+
+    function add($item) {
+        $this->items[] = $item;
+    }
     
     function xml_items($ns = '') {
-        if ($this->items)
-            foreach ($this->items as $item) {
-                $xml .= phpx_xml_start_tag('item', $ns); 
-                $xml .= phpx_xml_value($item); 
-                $xml .= phpx_xml_end_tag('item', $ns); 
-            }
+        if (is_null($this->items))
+            return NULL; 
+        foreach ($this->items as $item) {
+            $xml .= phpx_xml_start_tag('item', $ns); 
+            $xml .= phpx_xml_value($item); 
+            $xml .= phpx_xml_end_tag('item', $ns); 
+        }
         return $xml; 
     }
     
@@ -191,6 +214,7 @@ class zlw_af_list extends zlw_af_data {
             'type' => $this->type->name, 
             'hold' => $this->hold, 
             'hidden' => $this->hidden, 
+            'hint' => $this->hint, 
             'sort' => $this->sort, 
             'sort-order' => $this->sort_order, 
             )), $ns);
@@ -198,25 +222,30 @@ class zlw_af_list extends zlw_af_data {
         $xml .= $this->xml_methods($ns); 
         $xml .= $this->xml_items($ns); 
         $xml .= phpx_xml_end_tag('list', $ns); 
+        $this->dumped = true; 
         return $xml; 
     }
 }
 
 class zlw_af_map extends zlw_af_data {
+    var $entries; 
     var $sort; 
     var $sort_order; 
-    var $entries; 
     
-    function zlw_af_map($name, $entries, $typestr = 'string', $hold = false, 
-                        $hidden = false, $sort = NULL, $sort_order = NULL,
-                        $methods = NULL) {
-        $this->zlw_af_data($name, $typestr, $hold, $hidden, $methods); 
+    function zlw_af_map($name, $entries = NULL, $typestr = 'string',
+                        $hold = NULL, $hidden = NULL, $methods = NULL,
+                        $hint = NULL, $sort = NULL, $sort_order = NULL) {
+        $this->zlw_af_data($name, $typestr, $hold, $hidden, $methods, $hint); 
         if (is_array($entries) || is_object($entries))
             $this->entries = $entries; 
         else if (is_string($entries))
             $this->entries = phpx_map_parse($entries); 
         $this->sort = $sort; 
         $this->sort_order = $sort_order; 
+    }
+    
+    function add($key, $value) {
+        $this->entries[$key] = $value;
     }
     
     function xml_entries($ns = '') {
@@ -235,6 +264,7 @@ class zlw_af_map extends zlw_af_data {
             'type' => $this->type->name, 
             'hold' => $this->hold, 
             'hidden' => $this->hidden, 
+            'hint' => $this->hint, 
             'sort' => $this->sort, 
             'sort-order' => $this->sort_order, 
             )), $ns);
@@ -242,6 +272,7 @@ class zlw_af_map extends zlw_af_data {
         $xml .= $this->xml_methods($ns);
         $xml .= $this->xml_entries($ns); 
         $xml .= phpx_xml_end_tag('map', $ns); 
+        $this->dumped = true; 
         return $xml; 
     }
 }
@@ -250,13 +281,34 @@ class zlw_af_table extends zlw_af_data {
     var $columns; 
     var $rows; 
     
-    function zlw_af_table($name, $rows, $columns = NULL, $typestr = 'string',
-                          $hold = false, $hidden = false, $methods = NULL) {
-        $this->zlw_af_data($name, $typestr, $hold, $hidden, $methods);
+    function zlw_af_table($name, $rows = NULL, $columns = NULL,
+                          $typestr = 'string', $hold = NULL, $hidden = NULL,
+                          $methods = NULL, $hint = NULL) {
+        $this->zlw_af_data($name, $typestr, $hold, $hidden, $methods, $hint);
         $this->rows = $rows; 
         if (! is_null($columns)) {
             $this->columns = $columns;
+        } else if (sizeof($rows) > 0) {
+            foreach ($rows[0] as $name=>$value)
+                $this->add_column($name);
         }
+    }
+    
+    function add_column($name, $typestr = NULL, $primary_key = NULL,
+                        $sort_priority = NULL, $sort_order = NULL) {
+        $column->name = $name;
+        if (is_null($typestr))
+            $column->type = &$this->type;
+        else
+            $column->type = &zlw_af_type($typestr);
+        $column->primary_key = $primary_key;
+        $column->sort_priority = $sort_priority;
+        $column->sort_order = $sort_order;
+        $this->columns[] = &$column; 
+    }
+    
+    function add($row) {
+        $this->rows[] = $row;
     }
     
     function xml_columns($ns = '') {
@@ -296,12 +348,14 @@ class zlw_af_table extends zlw_af_data {
             'type' => $this->type->name, 
             'hold' => $this->hold, 
             'hidden' => $this->hidden, 
+            'hint' => $this->hint, 
             )), $ns);
         $xml .= $this->type->xml_param($ns); 
         $xml .= $this->xml_methods($ns); 
         $xml .= $this->xml_columns($ns); 
         $xml .= $this->xml_rows($ns, $rns); 
         $xml .= phpx_xml_end_tag('table', $ns); 
+        $this->dumped = true; 
         return $xml; 
     }
 }
@@ -309,9 +363,9 @@ class zlw_af_table extends zlw_af_data {
 class zlw_af_user extends zlw_af_data {
     var $user; 
     
-    function zlw_af_user($name, $user, $typestr = NULL, $hold = false,
-                         $hidden = false, $methods = NULL) {
-        $this->zlw_af_data($name, $typestr, $hold, $hidden, $methods);
+    function zlw_af_user($name, $user, $typestr = NULL, $hold = NULL,
+                         $hidden = NULL, $methods = NULL, $hint = NULL) {
+        $this->zlw_af_data($name, $typestr, $hold, $hidden, $methods, $hint);
         $this->user = $user; 
     }
     
@@ -321,11 +375,13 @@ class zlw_af_user extends zlw_af_data {
             'type' => $this->type->name, 
             'hold' => $this->hold, 
             'hidden' => $this->hidden, 
+            'hint' => $this->hint, 
             )), $ns);
         $xml .= $this->type->xml_param($ns); 
         $xml .= $this->xml_methods($ns);
         $xml .= phpx_xml_value($this->user, $ns); 
         $xml .= phpx_xml_end_tag('user', $ns); 
+        $this->dumped = true; 
         return $xml; 
     }
 }
@@ -339,32 +395,33 @@ class zlw_af_input extends phpx_error_support {
     var $read_only; 
     var $max_length; 
     var $constraints; 
-    var $ref; 
+    var $selection; 
     
     function zlw_af_input($name, $typestr = 'string', $value = NULL, 
                           $multiline = false, $read_only = false,
-                          $ref = NULL, $max_length = NULL, $constraints = NULL) {
+                          $max_length = NULL, $constraints = NULL, 
+                          &$selection = NULL) {
         $this->phpx_error_support(ZLW_AF);
         $this->name = $name;
-        if (is_subclass_of($value, 'zlw_af_variant'))
+        if (is_object($value) && is_subclass_of($value, 'zlw_af_variant'))
             $this->var = $value;        # ignore $typestr
         else
             $this->var = new zlw_af_variant($value, $typestr);
         $this->mutliline = $multiline;
-        $this->read_only = $read_only;
+        $this->read_only = $read_only; 
         $this->max_length = $max_length;
         $this->constraints = $constraints;
-        $this->ref = $ref; 
+        $this->selection = &$selection; 
     }
     
     function parse($string) {
         return $this->var->parse($string); 
     }
-
+    
     function is_init() {
         return $this->var->is_init();
     }
-
+    
     function uninit() {
         return $this->var->uninit();
     }
@@ -374,6 +431,36 @@ class zlw_af_input extends phpx_error_support {
             if (! $this->constraints->check($this->var))
                 return false;           # ERR.
         return true; 
+    }
+    
+    function xml_selection($ns = '') {
+        if (is_null($this->selection))
+            return NULL;
+        if (is_string($this->selection)) {
+            list($type, $name) = explode(':', $this->selection, 2);
+            return phpx_xml_tag($type . '-ref', NULL, $name, $ns);
+        }
+        assert(is_object($this->selection)); 
+        if ($this->selection->dumped) {
+            if (is_subclass_of($this->selection, 'zlw_af_list'))
+                $type = 'list';
+            else if (is_subclass_of($this->selection, 'zlw_af_map'))
+                $type = 'map';
+            else if (is_subclass_of($this->selection, 'zlw_af_table'))
+                $type = 'table';
+            else
+                die("Invalid selection type: " . get_class($this->selection));
+            $xml = phpx_xml_tag($type . '-ref', NULL, $this->selection->name, $ns);
+        } else {
+            $xml = $this->selection->xml($ns);
+        }
+        return $xml; 
+    }
+    
+    function xml_constraints($ns = '') {
+        if (is_null($this->constraints))
+            return NULL; 
+        return $this->constraints->xml(); 
     }
     
     function xml($ns = '') {
@@ -387,9 +474,9 @@ class zlw_af_input extends phpx_error_support {
             'read-only' => $this->read_only, 
             'max-length' => $this->max_length, 
             )), $ns); 
-        $xml .= $this->var->xml_typep($ns); 
-        if ($this->constraints)
-            $xml .= $this->constraints->xml(); 
+        $xml .= $this->var->xml_param($ns); 
+        $xml .= $this->xml_selection($ns); 
+        $xml .= $this->xml_constraints($ns);
         $xml .= phpx_xml_end_tag('input', $ns); 
         return $xml; 
     }
@@ -498,18 +585,19 @@ class zlw_af_form {
     var $type; 
     var $hint; 
     var $form_method; 
-    var $inputs; 
+    var $inputs;                        # name => input
     var $methods; 
     var $ticket; 
     
-    function zlw_af_form($name, $methods, $inputs = NULL, $typestr = 'default',
-                         $hint = NULL, $form_method = NULL) {
+    function zlw_af_form($name, $inputs = NULL, $typestr = 'default',
+                         $methods = NULL, $hint = NULL,
+                         $form_method = NULL) {
         $this->name = $name;
         $this->type = &zlw_af_type($typestr);
         $this->hint = zlw_af_hint_prep($hint);
         $this->form_method = $form_method;
-        $this->methods = $methods;
         $this->inputs = $inputs;
+        $this->methods = $methods;
     }
     
     function check() {
@@ -517,6 +605,22 @@ class zlw_af_form {
             if (! $input->check())
                 return false;           # ERR.
         return true; 
+    }
+    
+    function add_input(&$input) {
+        $name = $input->name;
+        $old = &$this->inputs[$name];
+        if (is_null($old)) {
+            $this->inputs[$name] = &$input;
+            return 1; 
+        }
+        if (! is_array($old)) {
+            $new = array(&$old); 
+            $this->inputs[$name] = &$new; 
+            $old = &$this->inputs[$name]; 
+        }
+        $old[] = &$input; 
+        return sizeof($old); 
     }
     
     function xml_start($ns = '') {
