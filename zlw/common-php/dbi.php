@@ -36,8 +36,8 @@ class phpx_dbi extends phpx_dbi_base {
     var $_debug = false; 
     var $_em; 
     
-	function phpx_dbi($host, $user, $password, $database, 
-	        $connect = true, $persist = true, $debug = false) {
+    function phpx_dbi($host, $user, $password, $database, 
+                      $connect = true, $persist = true, $debug = false) {
         $this->phpx_dbi_base(); 
         
         global $PHPX_DBI_NEXT_ID; 
@@ -272,116 +272,98 @@ class phpx_dbi extends phpx_dbi_base {
         return false; 
     }
     
-    function _update_table($table_name, $map, $primary_key = NULL, $method = NULL) {
-        if (! is_null($primary_key)) {
-            $keys = explode(':', $primary_key); 
-        } else {
-            $keys = array(); 
+    function _default_keys(&$result) {
+        $n = $this->_num_fields($result);
+        for ($i = 0; $i < $n; $i++) {
+            $flags = $this->_field_flags($result, $i);
+            if (strpos($flags, 'primary_key') !== false)
+                $keys[] = $this->_field_name($result, $i);
         }
-        $criteria = ''; 
+        if (is_null($keys))
+            $keys[] = $this->_field_name($result, 0);
+        return $keys;
+    }
+    
+    function _update_table($table, $values, $keys = NULL, $method = NULL) {
+        $result = $this->_query("select * from $table where 1=2"); 
+        if (! $result)                  # using error cause?
+            return $this->_err("[UTBL] Failed to query table: $table"); 
         
-        #  - retrieve the table meta info
-        $result = $this->_query("select * from $table_name where 1=2"); 
-        if (! $result) {
-            $this->_err("[UTBL] Failed to query table: $table_name"); 
-            return false; 
+        $n = $this->_num_fields($result);
+        for ($i = 0; $i < $n; $i++) {
+            $name = $this->_field_name($result, $i);
+            $type = $this->_field_type($result, $i);
+            $names[] = $name; 
+            # $types[$name] = $type;
+            if (! is_null($values[$name]))
+                $values[$name] = $this->_sql_encode($values[$name], $type); 
         }
-        $nfields = $this->_num_fields($result); 
-        $fields = array(); 
-        for ($i = 0; $i < $nfields; $i++) {
-            $field = $this->_field_name($result, $i); 
-            $fields[] = $field; 
-            if (array_key_exists($field, $map)) {
-                $type = $this->_field_type($result, $i); 
-                switch ($type) {
-                case 'int': 
-                    $map[$field] = (int)($map[$field]); 
-                    break; 
-                case 'real': 
-                    $map[$field] = (double)($map[$field]); 
-                    break; 
-                case 'string': 
-                    $map[$field] = "'" . $this->_escape_string($map[$field]) . "'"; 
-                    break; 
-                }
-                if (is_null($primary_key)) {
-                    $flags = $this->_field_flags($result, $i); 
-                    if (strpos($flags, 'primary_key') !== false)
-                        $keys[] = $field; 
-                }
-            }
-        }
+        
+        if (is_string($keys))
+            $keys = phpx_list_parse($keys); 
+        if (is_null($keys))
+            $keys = $this->_default_keys($result);
+        foreach ($keys as $key)
+            $is_key[$key] = true;
+        
         $this->_free_result($result); 
         
         # the criteria is needed for auto-choose and update
+        $criteria = '';
+        
         if ($method != 'insert') {
-            foreach ($keys as $pk) {
-                if (array_key_exists($pk, $map)) {
-                    if ($criteria != '')
-                        $criteria .= ' and '; 
-                    $criteria .= "$pk=" . $map[$pk]; 
+            # update or auto-detect
+            foreach ($keys as $key) {
+                if (array_key_exists($key, $values)) {
+                    if ($criteria != '') $criteria .= ' and ';
+                    $value = $values[$key]; 
+                    $criteria .= "$key=$value"; 
                 }
             }
             if ($criteria == '') {
-                if ($method == 'update') {
-                    $this->_err("[UTBL] Range has not been specified"); 
-                    return false; 
-                } else {
+                if ($method == 'update')
+                    return $this->_err("[UTBL] Range has not been specified"); 
+                else
                     # always insert when range is not specified. 
                     $method = 'insert'; 
-                }
             }
         }
         
-        # auto choose insert or update
         if (is_null($method)) {
-            $rows = $this->_evaluate("select count(*) from $table_name where $criteria"); 
+            # auto-detect
+            $rows = $this->_evaluate("select count(*) from $table where $criteria"); 
             $method = $rows ? 'update' : 'insert'; 
         }
         
         if ($method == 'update') {
-            $sets = ''; 
-            foreach ($fields as $k) {
-                if (in_array($k, $keys)) continue; 
-                $v = $map[$k]; 
-                if (is_null($v)) continue; 
-                if ($sets != '') {
-                    $sets .= ', '; 
-                }
-                $sets .= "$k=$v"; 
+            foreach ($names as $name) {
+                if (in_array($name, $keys)) continue; 
+                $value = $values[$name]; 
+                if (is_null($value)) continue; 
+                if ($S1 != '') $S1 .= ', '; 
+                $S1 .= "$name=$value"; 
             }
-            if ($sets == '') {
-                $this->_err("[UTBL] The fields list to update is empty: table $table_name"); 
-                return false; 
-            }
-            if (! $this->_query("update $table_name set $sets where $criteria")) {
-                $this->_warn("[UTBL] Failed to update table: table $table_name"); 
-                return false; 
-            }
+            if ($S1 == '')
+                return $this->_err("[UTBL] The fields list to update is empty: table $table"); 
+            if (! $this->_query("update $table set $S1 where $criteria"))
+                return $this->_warn("[UTBL] Failed to update table: table $table"); 
         } else if ($method == 'insert') {
-            $names = ''; 
-            $values = ''; 
-            foreach ($fields as $k) {
-                $v = $map[$k]; 
-                if (is_null($v)) continue; 
-                if ($names != '') {
-                    $names .= ','; 
-                    $values .= ','; 
+            foreach ($names as $name) {
+                $value = $values[$name]; 
+                if (is_null($value)) continue; 
+                if ($S2 != '') {
+                    $S2 .= ','; 
+                    $S3 .= ','; 
                 }
-                $names .= $k; 
-                $values .= $v; 
+                $S2 .= $name; 
+                $S3 .= $value; 
             }
-            if ($names == '') {
-                $this->_err("[UTBL] The fields list to insert is empty: table $table_name"); 
-                return false; 
-            }
-            if (! $this->_query("insert into $table_name($names) values($values)")) {
-                $this->_warn("[UTBL] failed to insert into table: table $table_name"); 
-                return false; 
-            }
+            if ($S2 == '')
+                return $this->_err("[UTBL] The fields list to insert is empty: table $table"); 
+            if (! $this->_query("insert into $table($S2) values($S3)"))
+                return $this->_warn("[UTBL] failed to insert into table: table $table"); 
         } else {
-            $this->_err("[UTBL] Unexpected update method: $method"); 
-            return false; 
+            return $this->_err("[UTBL] Unexpected update method: $method");
         }
         return true; 
     }
