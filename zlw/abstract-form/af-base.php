@@ -64,16 +64,15 @@ function zlw_af_xml_start($ns = '', $af_base = NULL) {
     if (strpos($ns, '=') !== false)
         list($ns, $uri) = explode('=', $ns, 2); 
     
-    phpx_xml_start_tag('abstract-form' . phpx_xml_attrs(array(
+    echo phpx_xml_start_tag('abstract-form' . phpx_xml_attrs(array(
         'xmlns' . ($ns ? ":$ns" : '') => $uri, 
         'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance', 
         'xsi:schemaLocation' => "http://www.bodz.net/xml/zlw/abstract-form $af_base/abstract-form.xsd", 
         )), $ns); 
-    return $xml; 
 }
 
 function zlw_af_xml_end($ns = '') {
-    return phpx_xml_end_tag('abstract-form', $ns); 
+    echo phpx_xml_end_tag('abstract-form', $ns); 
 }
 
 function zlw_af_xml_page($ns = '', $title = 'Abstract Form', $param = NULL) {
@@ -89,7 +88,7 @@ function zlw_af_xml_page($ns = '', $title = 'Abstract Form', $param = NULL) {
     foreach ($param as $name=>$value)
         $xml .= phpx_xml_tag('scalar', array('name' => $name), $value, $ns);
     $xml .= phpx_xml_end_tag('section', $ns);
-    return $xml; 
+    echo $xml; 
 }
 
 # .section. Error In XML
@@ -130,7 +129,7 @@ class zlw_af_error extends phpx_error {
                 ), NULL, $ns); 
         }
         
-        if (! is_null($this->cause)) {
+        if (is_object($this->cause)) {
             $cause_type = get_class($this->cause); 
             if (is_subclass_of($this->cause, 'zlw_af_error')) {
                 $xml .= $this->cause->xml($ns); 
@@ -155,12 +154,13 @@ class zlw_af_error extends phpx_error {
 }
 
 function &zlw_af_error(&$src, $source = NULL, $cause = NULL) {
-    if (gettype($src) == 'string')
+    if (is_string($src))
         return new zlw_af_error($src, $source, $cause); 
-    if (get_class($src) == 'zlw_af_error')
-        return $src; 
-    if (is_subclass_of($src, 'phpx_error')) {
-        return new zlw_af_error(NULL, $source, $src); 
+    if (is_object($src)) {
+        if (get_class($src) == 'zlw_af_error')
+            return $src; 
+        if (is_subclass_of($src, 'phpx_error'))
+            return new zlw_af_error(NULL, $source, $src); 
     }
     die("Invalid error-src to be converted into zlw_af_error: $src"); 
     return NULL; 
