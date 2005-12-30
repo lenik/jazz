@@ -180,16 +180,12 @@ class phpx_error_support {
     var $_debug; 
     var $_em; 
     
-    function phpx_error_support(&$provider) {
-        assert($provider != NULL); 
-        if (gettype($provider) == 'string') {
-            $this->_em = &phpx_error_manager_get($provider); 
-            if (is_null($this->_em)) {
-                $this->_em = new phpx_error_manager($provider); 
-                $this->_em->register(); 
-            }
-        } else {
-            $this->_em = &$provider; 
+    function phpx_error_support($provider) {
+        assert(is_string($provider)); 
+        $this->_em = &phpx_error_manager_get($provider); 
+        if (is_null($this->_em)) {
+            $this->_em = new phpx_error_manager($provider); 
+            $this->_em->register(); 
         }
     }
     
