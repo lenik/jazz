@@ -107,6 +107,7 @@ for output-group, type-specific render will applied on the data. </xs:documentat
 			</xs:annotation>
 		</xs:attribute>
 		<xs:attribute name="hidden" type="xs:boolean" use="optional"/>
+		<xs:attribute name="hint" type="xs:string" use="optional"/>
 	</xs:attributeGroup>
 	<xs:group name="output-commons">
 		<xs:sequence>
