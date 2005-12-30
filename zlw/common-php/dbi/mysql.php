@@ -6,7 +6,7 @@
 class phpx_dbi_base {
     var $_dialect = 'mysql'; 
     
-	function phpx_dbi_base() {
+    function phpx_dbi_base() {
     }
     
     function _affected_rows()       { $args = func_get_args(); $args[] = $this->_link; 
@@ -122,6 +122,19 @@ class phpx_dbi_base {
         if (is_null($link)) 
             $link = $this->_link; 
         return mysql_query('rollback', $link); 
+    }
+    
+    function _sql_encode($value, $type) {
+        switch ($type) {
+        case 'string': 
+        case 'text':
+        case 'longtext':
+            return "'" . $this->_escape_string($value) . "'"; 
+        case 'blob':
+        case 'longblob':
+            return false; 
+        }
+        return $value; 
     }
 }
 ?>
