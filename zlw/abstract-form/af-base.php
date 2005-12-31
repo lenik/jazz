@@ -18,7 +18,7 @@ function zlw_af_base($req = NULL) {
     $req = dirname($req); 
     $req_len = strlen($req); 
     # starts-with ? 
-    if (substr($inc, 0, $req_len) == $req)
+    if ($req_len > 0 && substr($inc, 0, $req_len) == $req)
         return '.' . substr($inc, $req_len); 
     return $inc; 
 }
@@ -79,7 +79,7 @@ function zlw_af_xml_page($ns = '', $title = 'Abstract Form', $param = NULL) {
     # default af-base
     if (is_null($param)) $param = array(); 
     if (! array_key_exists('af-base', $param)) {
-        global $ZLW_AF_BASE;
+        global $ZLW_AF_BASE; 
         $param['af-base'] = $ZLW_AF_BASE; 
     }
     
@@ -131,10 +131,11 @@ class zlw_af_error extends phpx_error {
         
         if (is_object($this->cause)) {
             $cause_type = get_class($this->cause); 
-            if (is_subclass_of($this->cause, 'zlw_af_error')) {
+            if (is_a($this->cause, 'zlw_af_error')) {
                 $xml .= $this->cause->xml($ns); 
-            } else if (is_subclassof($this->cause, 'phpx_error')) {
-                $zlw_wrapper = new zlw_af_error($this->cause); 
+            } else if (is_a($this->cause, 'phpx_error')) {
+                $zlw_wrapper = new zlw_af_error(NULL); 
+                phpx_or($zlw_wrapper, $this->cause); 
                 $xml .= $zlw_wrapper->xml($ns); 
             } else {
                 die("Invalid error object: $this->cause"); 
@@ -156,12 +157,10 @@ class zlw_af_error extends phpx_error {
 function &zlw_af_error(&$src, $source = NULL, $cause = NULL) {
     if (is_string($src))
         return new zlw_af_error($src, $source, $cause); 
-    if (is_object($src)) {
-        if (get_class($src) == 'zlw_af_error')
-            return $src; 
-        if (is_subclass_of($src, 'phpx_error'))
-            return new zlw_af_error(NULL, $source, $src); 
-    }
+    if (is_a($src, 'zlw_af_error'))
+        return $src; 
+    if (is_a($src, 'phpx_error'))
+        return new zlw_af_error(NULL, $source, $src); 
     die("Invalid error-src to be converted into zlw_af_error: $src"); 
     return NULL; 
 }
@@ -175,7 +174,13 @@ class zlw_af_xmlem extends phpx_error_manager {
     }
     function handler(&$error) {
         global $PHPX_XML_BEGIN; 
-        $cast = &zlw_af_error($error); 
+        if (get_class($error) == 'phpx_error') {
+            $cast = new zlw_af_error(NULL); 
+            foreach ($error as $k=>$v)
+                $cast->$k = $error->$k; 
+        } else {
+            $cast = &zlw_af_error($error); 
+        }
         if ($PHPX_XML_BEGIN) {
             echo $cast->xml($this->ns); 
         } else {

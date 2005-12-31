@@ -32,54 +32,54 @@ function zlw_af_list($name, $items, $typestr = 'string', $hold = NULL,
                      $hidden = NULL, $methods = NULL, $hint = NULL,
                      $sort = NULL, $sort_order = NULL) {
     return zlw_af_value(new zlw_af_list(
-        $name, $items, $typestr, $hold, $hidden, $methods, $hint, $sort, $sort_order)); 
+        $name, &$items, $typestr, $hold, $hidden, $methods, $hint, $sort, $sort_order)); 
 }
 
 function zlw_af_map($name, $entries, $typestr = 'string', $hold = NULL, 
                     $hidden = NULL, $methods = NULL, $hint = NULL,
                     $sort = NULL, $sort_order = NULL) {
     return zlw_af_value(new zlw_af_map(
-        $name, $entries, $typestr, $hold, $hidden, $methods, $hint, $sort, $sort_order)); 
+        $name, &$entries, $typestr, $hold, $hidden, $methods, $hint, $sort, $sort_order)); 
 }
 
 function zlw_af_table($name, $rows = NULL, $columns = NULL, 
                       $typestr = 'string', $hold = NULL, $hidden = NULL, 
                       $methods = NULL, $hint = NULL) {
     return zlw_af_value(new zlw_af_table(
-        $name, $rows, $columns, $typestr, $hold, $hidden, $methods, $hint)); 
+        $name, &$rows, &$columns, $typestr, $hold, $hidden, $methods, $hint)); 
 }
 
 function zlw_af_user($name, $user, $typestr = NULL, $hold = NULL,
                      $hidden = NULL, $methods = NULL, $hint = NULL) {
     return zlw_af_value(new zlw_af_user(
-        $name, $user, $typestr, $hold, $hidden, $methods, $hint)); 
+        $name, &$user, $typestr, $hold, $hidden, $methods, $hint)); 
 }
 
 function zlw_af_input($name, $typestr = 'string', $value = NULL, 
                       $multiline = false, $read_only = false,
                       $max_length = NULL, $constraints = NULL,
-                      &$selection) {
+                      $selection) {
     return zlw_af_value(new zlw_af_input(
         $name, $typestr, $value, $multiline, $read_only, $max_length, 
-        $constraints, $selection));
+        $constraints, &$selection));
 }
 
-function zlw_af_method($name, $typestr = 'default', $hint = '', $param = NULL,
-                       $const = false) {
+function zlw_af_method($name, $hint = NULL, $typestr = 'default', 
+                       $param = NULL, $const = false) {
     return zlw_af_value(new zlw_af_method(
-        $name, $typestr, $hint, $param, $const)); 
+        $name, $hint, $typestr, $param, $const)); 
 }
 
 function zlw_af_form($name, $inputs = NULL, $typestr = 'default',
                      $methods = NULL, $hint = NULL, $form_method = NULL) {
     return zlw_af_value(new zlw_af_form(
-        $name, $inputs, $typestr, $methods, $hint, $form_method)); 
+        $name, &$inputs, $typestr, $methods, $hint, $form_method)); 
 }
 
-function zlw_af_section($name, $hint = NULL, $hidden = NULL, $data = NULL,
-                        $forms = NULL) {
+function zlw_af_section($name = NULL, $hint = NULL, $hidden = NULL, 
+                        $data = NULL, $forms = NULL) {
     return zlw_af_value(new zlw_af_section(
-        $name, $hint, $hidden, $data, $forms)); 
+        $name, $hint, $hidden, &$data, &$forms)); 
 }
 
 function zlw_af_xml($title = 'Abstract Form', $sections = NULL,
@@ -120,7 +120,7 @@ function zlw_af_query_edit($dbi, $sql, $keys = NULL, $init = NULL,
     if (is_null($methods)) $methods = 'update'; 
     
     $form = new zlw_af_form($name, NULL, NULL, $methods, $hint);
-    $dbi->_query_edit($sql, $form, $keys, $init, $selection);
+    $dbi->_query_edit($sql, $form, $keys, $init, &$selection);
     return zlw_af_value($form);
 }
 

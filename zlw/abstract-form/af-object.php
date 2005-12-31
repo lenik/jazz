@@ -29,9 +29,8 @@ class zlw_af_xml {
     }
     
     function xml_page($ns = '') {
-        $this->page_params['title'] = $this->title; 
         $this->page_params['af-base'] = $this->af_base;
-        return zlw_af_xml_page($ns, $this->page_params); 
+        return zlw_af_xml_page($ns, $this->title, $this->page_params); 
     }
     
     function xml_sections($ns = '') {
@@ -56,13 +55,13 @@ class zlw_af_section {
     var $data; 
     var $forms; 
     
-    function zlw_af_section($name, $hint = NULL, $hidden = NULL,
+    function zlw_af_section($name = NULL, $hint = NULL, $hidden = NULL,
                             $data = NULL, $forms = NULL) {
         $this->name = $name;
         $this->hint = zlw_af_hint_prep($hint);
         $this->hidden = $hidden;
-        $this->data = $data; 
-        $this->forms = $forms; 
+        $this->data = &$data; 
+        $this->forms = &$forms; 
     }
     
     function add(&$element) {
@@ -70,7 +69,7 @@ class zlw_af_section {
     }
     
     function xml_start($ns = '') {
-        phpx_xml_start_tag('section', phpx_xml_attrs(array(
+        return phpx_xml_start_tag('section', phpx_xml_attrs(array(
             'name' => $this->name, 
             'hint' => $this->hint, 
             'hidden' => $this->hidden, 
@@ -111,9 +110,13 @@ function zlw_af_methods($methods, $ns = '') {
             $method = new zlw_af_method($name);
             $xml .= $method->xml($ns);
         }
-    } else {
+    } else if (is_array($methods)) {
         foreach ($methods as $method)
             $xml .= $method->xml($ns);
+    } else if (is_a($methods, 'zlw_af_method')) {
+        $xml = $methods->xml($ns); 
+    } else {
+        die("Invalid methods $methods"); 
     }
     return $xml; 
 }
@@ -167,7 +170,7 @@ class zlw_af_scalar extends zlw_af_data {
             'hidden' => $this->hidden,
             'hint' => $this->hint, 
             )), $ns);
-        $xml .= $this->type->xml_param($ns); 
+        $xml .= $this->type->xml($ns); 
         $xml .= $this->xml_methods($ns); 
         $xml .= phpx_xml_value($this->var);
         $xml .= phpx_xml_end_tag('scalar', $ns);
@@ -186,7 +189,7 @@ class zlw_af_list extends zlw_af_data {
                          $hint = NULL, $sort = NULL, $sort_order = NULL) {
         $this->zlw_af_data($name, $typestr, $hold, $hidden, $methods, $hint); 
         if (is_array($items))
-            $this->items = $items; 
+            $this->items = &$items; 
         else if (is_string($items))
             $this->items = explode(':', $items); 
         $this->sort = $sort; 
@@ -218,7 +221,7 @@ class zlw_af_list extends zlw_af_data {
             'sort' => $this->sort, 
             'sort-order' => $this->sort_order, 
             )), $ns);
-        $xml .= $this->type->xml_param($ns); 
+        $xml .= $this->type->xml($ns); 
         $xml .= $this->xml_methods($ns); 
         $xml .= $this->xml_items($ns); 
         $xml .= phpx_xml_end_tag('list', $ns); 
@@ -237,7 +240,7 @@ class zlw_af_map extends zlw_af_data {
                         $hint = NULL, $sort = NULL, $sort_order = NULL) {
         $this->zlw_af_data($name, $typestr, $hold, $hidden, $methods, $hint); 
         if (is_array($entries) || is_object($entries))
-            $this->entries = $entries; 
+            $this->entries = &$entries; 
         else if (is_string($entries))
             $this->entries = phpx_map_parse($entries); 
         $this->sort = $sort; 
@@ -268,7 +271,7 @@ class zlw_af_map extends zlw_af_data {
             'sort' => $this->sort, 
             'sort-order' => $this->sort_order, 
             )), $ns);
-        $xml .= $this->type->xml_param($ns); 
+        $xml .= $this->type->xml($ns); 
         $xml .= $this->xml_methods($ns);
         $xml .= $this->xml_entries($ns); 
         $xml .= phpx_xml_end_tag('map', $ns); 
@@ -285,9 +288,9 @@ class zlw_af_table extends zlw_af_data {
                           $typestr = 'string', $hold = NULL, $hidden = NULL,
                           $methods = NULL, $hint = NULL) {
         $this->zlw_af_data($name, $typestr, $hold, $hidden, $methods, $hint);
-        $this->rows = $rows; 
+        $this->rows = &$rows; 
         if (! is_null($columns)) {
-            $this->columns = $columns;
+            $this->columns = &$columns;
         } else if (sizeof($rows) > 0) {
             foreach ($rows[0] as $name=>$value)
                 $this->add_column($name);
@@ -308,37 +311,39 @@ class zlw_af_table extends zlw_af_data {
     }
     
     function add($row) {
-        $this->rows[] = $row;
+        $this->rows[] = &$row;
     }
     
     function xml_columns($ns = '') {
         assert($this->columns); 
         foreach ($this->columns as $column) {
-            $xml .= phpx_xml_start_tag('column' . phpx_xml_attrs(array(
+            $xml .= phpx_xml_tag('column', array(
                 'name' => $column->name, 
                 'type' => $column->type->name, 
                 'primary-key' => $column->primary_key, 
                 'sort-priority' => $column->sort_priority, 
                 'sort-order' => $column->sort_order, 
-                )), $ns);
-            $xml .= $column->type->xml_param($ns); 
-            $xml .= phpx_xml_end_tag('column', $ns); 
+                ), $column->type, $ns);
         }
         return $xml; 
     }
     
     function xml_rows($ns = '', $rns = '') {
-        if ($this->rows)
-            foreach ($this->rows as $row) {
-                $xml .= phpx_xml_start_tag('row', $ns); 
+        if ($this->rows == NULL) return NULL; 
+        foreach ($this->rows as $row) {
+            $xml .= phpx_xml_start_tag('row', $ns); 
+            if (is_array($row))
                 foreach ($this->columns as $column) {
-                    $field = $column->name; 
-                    $xml .= phpx_xml_start_tag($field, $rns = ''); 
-                    $xml .= phpx_xml_value($row->$field, $rns = ''); 
-                    $xml .= phpx_xml_end_tag($field, $rns = ''); 
+                    $name = $column->name; 
+                    $xml .= phpx_xml_tag($name, NULL, $row[$name], $ns); 
                 }
-                $xml .= phpx_xml_end_tag('row'); 
-            }
+            else if (is_object($row))
+                foreach ($this->columns as $column) {
+                    $name = $column->name; 
+                    $xml .= phpx_xml_tag($name, NULL, $row->$name, $ns); 
+                }
+            $xml .= phpx_xml_end_tag('row'); 
+        }
         return $xml; 
     }
     
@@ -350,7 +355,7 @@ class zlw_af_table extends zlw_af_data {
             'hidden' => $this->hidden, 
             'hint' => $this->hint, 
             )), $ns);
-        $xml .= $this->type->xml_param($ns); 
+        $xml .= $this->type->xml($ns); 
         $xml .= $this->xml_methods($ns); 
         $xml .= $this->xml_columns($ns); 
         $xml .= $this->xml_rows($ns, $rns); 
@@ -366,7 +371,7 @@ class zlw_af_user extends zlw_af_data {
     function zlw_af_user($name, $user, $typestr = NULL, $hold = NULL,
                          $hidden = NULL, $methods = NULL, $hint = NULL) {
         $this->zlw_af_data($name, $typestr, $hold, $hidden, $methods, $hint);
-        $this->user = $user; 
+        $this->user = &$user; 
     }
     
     function xml($ns = '') {
@@ -377,7 +382,7 @@ class zlw_af_user extends zlw_af_data {
             'hidden' => $this->hidden, 
             'hint' => $this->hint, 
             )), $ns);
-        $xml .= $this->type->xml_param($ns); 
+        $xml .= $this->type->xml($ns); 
         $xml .= $this->xml_methods($ns);
         $xml .= phpx_xml_value($this->user, $ns); 
         $xml .= phpx_xml_end_tag('user', $ns); 
@@ -400,15 +405,15 @@ class zlw_af_input extends phpx_error_support {
     function zlw_af_input($name, $typestr = 'string', $value = NULL, 
                           $multiline = false, $read_only = false,
                           $max_length = NULL, $constraints = NULL, 
-                          &$selection = NULL) {
+                          $selection = NULL) {
         $this->phpx_error_support(ZLW_AF);
         $this->name = $name;
-        if (is_object($value) && is_subclass_of($value, 'zlw_af_variant'))
+        if (is_a($value, 'zlw_af_variant'))
             $this->var = $value;        # ignore $typestr
         else
             $this->var = new zlw_af_variant($value, $typestr);
-        $this->mutliline = $multiline;
-        $this->read_only = $read_only; 
+        $this->multiline = $multiline;
+        $this->read_only = $read_only;
         $this->max_length = $max_length;
         $this->constraints = $constraints;
         $this->selection = &$selection; 
@@ -440,13 +445,12 @@ class zlw_af_input extends phpx_error_support {
             list($type, $name) = explode(':', $this->selection, 2);
             return phpx_xml_tag($type . '-ref', NULL, $name, $ns);
         }
-        assert(is_object($this->selection)); 
         if ($this->selection->dumped) {
-            if (is_subclass_of($this->selection, 'zlw_af_list'))
+            if (is_a($this->selection, 'zlw_af_list'))
                 $type = 'list';
-            else if (is_subclass_of($this->selection, 'zlw_af_map'))
+            else if (is_a($this->selection, 'zlw_af_map'))
                 $type = 'map';
-            else if (is_subclass_of($this->selection, 'zlw_af_table'))
+            else if (is_a($this->selection, 'zlw_af_table'))
                 $type = 'table';
             else
                 die("Invalid selection type: " . get_class($this->selection));
@@ -466,19 +470,22 @@ class zlw_af_input extends phpx_error_support {
     function xml($ns = '') {
         if (! is_null($this->var->value))
             $init = $this->var->format(); 
-        $xml = phpx_xml_start_tag('input' . phpx_xml_attrs(array(
+        $attrs = array(
             'name' => $this->name, 
             'type' => $this->var->type->name, 
             'init' => $init, 
             'multiline' => $this->multiline, 
             'read-only' => $this->read_only, 
             'max-length' => $this->max_length, 
-            )), $ns); 
-        $xml .= $this->var->xml_param($ns); 
+            ); 
+        $xml = $this->var->type->xml($ns); 
         $xml .= $this->xml_selection($ns); 
-        $xml .= $this->xml_constraints($ns);
-        $xml .= phpx_xml_end_tag('input', $ns); 
-        return $xml; 
+        $xml .= $this->xml_constraints($ns); 
+        if ($xml == NULL)
+            return phpx_xml_tag('input', $attrs, NULL, $ns); 
+        return phpx_xml_start_tag('input' . phpx_xml_attrs($attrs), $ns)
+            . $xml
+            . phpx_xml_end_tag('input', $ns); 
     }
 }
 
@@ -489,7 +496,7 @@ class zlw_af_method {
     var $param; 
     var $const; 
     
-    function zlw_af_method($name, $typestr = 'default', $hint = '',
+    function zlw_af_method($name, $hint = '', $typestr = 'default', 
                            $param = NULL, $const = false) {
         $this->name = $name; 
         $this->type = &zlw_af_type($typestr); 
@@ -502,15 +509,20 @@ class zlw_af_method {
     }
     
     function xml($ns = '') {
-        $xml = phpx_xml_start_tag('method' . phpx_xml_attrs(array(
+        $attrs = array(
             'name' => $this->name, 
             'type' => $this->type->name, 
             'hint' => $this->hint, 
             'const' => $this->const, 
-            )), $ns); 
-        $xml .= $this->type->xml_param($ns); 
-        $xml .= zlw_af_parameters($this->param, 'method-parameter', $ns); 
-        $xml .= phpx_xml_end_tag('method', $ns); 
+            ); 
+        if ($this->param) {
+            $xml = phpx_xml_start_tag('method' . phpx_xml_attrs($attrs), $ns); 
+            $xml .= $this->type->xml($ns); 
+            $xml .= zlw_af_parameters($this->param, 'method-parameter', $ns); 
+            $xml .= phpx_xml_end_tag('method', $ns); 
+        } else {
+            $xml = phpx_xml_tag('method', $attrs, $this->type, $ns); 
+        }
         return $xml; 
     }
 }
@@ -596,8 +608,8 @@ class zlw_af_form {
         $this->type = &zlw_af_type($typestr);
         $this->hint = zlw_af_hint_prep($hint);
         $this->form_method = $form_method;
-        $this->inputs = $inputs;
-        $this->methods = $methods;
+        $this->inputs = &$inputs;
+        $this->methods = &$methods;
     }
     
     function check() {
@@ -607,7 +619,7 @@ class zlw_af_form {
         return true; 
     }
     
-    function add_input(&$input) {
+    function add_input($input) {
         $name = $input->name;
         $old = &$this->inputs[$name];
         if (is_null($old)) {
@@ -644,10 +656,7 @@ class zlw_af_form {
     }
     
     function xml_methods($ns = '') {
-        if ($this->methods)
-            foreach ($this->methods as $method)
-                $xml .= $method->xml($ns); 
-        return $xml; 
+        return zlw_af_methods($this->methods, $ns); 
     }
     
     function xml($ns = '', $outer = true) {
