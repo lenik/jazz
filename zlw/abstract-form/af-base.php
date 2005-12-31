@@ -75,6 +75,19 @@ function zlw_af_xml_end($ns = '') {
     echo phpx_xml_end_tag('abstract-form', $ns); 
 }
 
+function zlw_af_section_start($ns = '', $name = NULL, $hint = NULL, 
+                              $hidden = NULL) {
+    echo phpx_xml_start_tag('section' . phpx_xml_attrs(array(
+        'name' => $name, 
+        'hint' => $hint, 
+        'hidden' => $hidden, 
+        )), $ns); 
+}
+
+function zlw_af_section_end($ns = '') {
+    echo phpx_xml_end_tag('section', $ns); 
+}
+
 function zlw_af_xml_page($ns = '', $title = 'Abstract Form', $param = NULL) {
     # default af-base
     if (is_null($param)) $param = array(); 
@@ -119,13 +132,13 @@ class zlw_af_error extends phpx_error {
                 $source_name = get_class($this->source); 
             else
                 $source_name = "$this->source"; 
-
+            
             if (method_exists($this->source, '_source_status'))
                 $status = $this->source->_source_status(); 
             
             $xml .= phpx_xml_tag('error-source', array(
                 'name' => $source_name, 
-                'status' => $source_status,
+                'status' => $status,
                 ), NULL, $ns); 
         }
         
@@ -185,9 +198,11 @@ class zlw_af_xmlem extends phpx_error_manager {
             echo $cast->xml($this->ns); 
         } else {
             # Early error (or warning, info..) is taken as 'parse error'
-            echo zlw_af_xml_start($this->ns);
+            echo zlw_af_xml_start($this->ns); 
             echo zlw_af_xml_page($this->ns, 'Fatal Error'); 
+            echo zlw_af_section_start($this->ns, 'error'); 
             echo $cast->xml($this->ns); 
+            echo zlw_af_section_end($this->ns); 
             echo zlw_af_xml_end($this->ns); 
             exit; 
         }
