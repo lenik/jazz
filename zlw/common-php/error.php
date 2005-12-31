@@ -148,7 +148,7 @@ function phpx_error_manager_register(&$em) {
                 # Leaf, Avoid loopping. 
                 $connected = $PHPX_EM_REGISTRY->connected($node); 
                 if (! array_key_exists($em->name, $connected))
-                    $node->next = &$em; 
+                    $PHPX_EM_REGISTRY->nodes[$name]->next = &$em; 
             }
         }
         $PHPX_EM_LAST_TERM = &$em; 
