@@ -23,7 +23,7 @@
 	<xsl:param name="show-type">
 		<xsl:call-template name="t-param-text">
 			<xsl:with-param name="name" select="'show-type'"/>
-			<xsl:with-param name="default" select="'hidden'"/>
+			<xsl:with-param name="default" select="false()"/>
 		</xsl:call-template>
 	</xsl:param>
 	<!--HTML-->
@@ -34,7 +34,7 @@
 				<!--<HR/>-->
 				<cite>Powered by ZLW::Abstract-Form</cite>
 				<br/>
-				<cite>$Id: html-view.xsl,v 1.6.2.10 2005-12-29 13:25:29 dansei Exp $</cite>
+				<cite>$Id: html-view.xsl,v 1.6.2.11 2005-12-31 04:29:35 dansei Exp $</cite>
 			</xsl:with-param>
 		</xsl:call-template>
 	</xsl:template>
@@ -47,7 +47,7 @@
 	<xsl:template name="t-name">
 		<span class="data-name">
 			<xsl:value-of select="@name"/>
-			<xsl:if test="@hold='true' and $show-type='true'">(HOLD)</xsl:if>
+			<xsl:if test="$show-type and (@hold='true' or @hold='1')">(HOLD)</xsl:if>
 		</span>
 	</xsl:template>
 	<xsl:template name="t-all-text">
@@ -91,10 +91,10 @@
 		<xsl:param name="lhs"/>
 		<xsl:param name="rhs"/>
 		<xsl:choose>
-			<xsl:when test="$rhs = ''">
+			<xsl:when test="$rhs=''">
 				<xsl:value-of select="$lhs"/>
 			</xsl:when>
-			<xsl:when test="substring($lhs, string-length($lhs)) = '?'">
+			<xsl:when test="substring($lhs, string-length($lhs))='?'">
 				<xsl:value-of select="concat($lhs, $rhs)"/>
 			</xsl:when>
 			<xsl:when test="contains($lhs, '?') or contains($lhs, '&amp;')">
@@ -124,7 +124,7 @@
 				<xsl:call-template name="t-hint-inherit"/>
 			</xsl:with-param>
 			<xsl:with-param name="rhs">
-				<xsl:for-each select="ancestor::af:section[1]/*[@hold='true']">
+				<xsl:for-each select="ancestor::af:section[1]/*[(@hold='true' or @hold='1')]">
 					<xsl:if test="position()>1">&amp;</xsl:if>
 					<xsl:value-of select="@name"/>=<xsl:call-template name="t-serialize"/>
 				</xsl:for-each>
@@ -159,7 +159,7 @@
 		<xsl:param name="select"/>
 		<xsl:param name="node"/>
 		<xsl:for-each select="$select">
-			<xsl:if test="generate-id(.) = generate-id($node)">
+			<xsl:if test="generate-id(.)=generate-id($node)">
 				<xsl:value-of select="position()"/>
 			</xsl:if>
 		</xsl:for-each>
@@ -215,7 +215,7 @@
 				</xsl:if>
 				<!---->
 				<!--Meta Content-Type-->
-				<xsl:if test="not($meta/af:entry[@key = 'Content-Type'])">
+				<xsl:if test="not($meta/af:entry[@key='Content-Type'])">
 					<xsl:element name="meta">
 						<xsl:attribute name="http-equiv">Content-Type</xsl:attribute>
 						<xsl:attribute name="content"><xsl:value-of select="concat('text/html; charset=', $encoding)"/></xsl:attribute>
@@ -280,7 +280,7 @@
 	</xsl:template>
 	<xsl:template name="t-doc" match="af:doc" priority="-1">
 		<xsl:choose>
-			<xsl:when test="@doctype = 'spec'"/>
+			<xsl:when test="@doctype='spec'"/>
 			<xsl:otherwise>
 				<xsl:copy-of select="node()"/>
 			</xsl:otherwise>
@@ -289,10 +289,10 @@
 	<xsl:template name="t-sections">
 		<xsl:for-each select="af:section">
 			<xsl:choose>
-				<xsl:when test="@hidden='true'">
+				<xsl:when test="(@hidden='true' or @hidden='1')">
 					<!--Hidden sections are not displayed.-->
 				</xsl:when>
-				<xsl:when test="@hidden='false'">
+				<xsl:when test="(@hidden='false' or @hidden='0')">
 					<xsl:call-template name="t-section"/>
 				</xsl:when>
 				<xsl:when test="substring(@name, 1, 1) != '.'">
@@ -327,17 +327,17 @@
 		<table>
 			<xsl:for-each select="*">
 				<xsl:choose>
-					<xsl:when test="namespace-uri() = $af-uri">
+					<xsl:when test="namespace-uri()=$af-uri">
 						<xsl:variable name="tag" select="local-name()"/>
 						<!--by tag names-->
 						<xsl:choose>
-							<xsl:when test="@hidden = 'true'">
+							<xsl:when test="(@hidden='true' or @hidden='1')">
 								<!--Ignore-->
 							</xsl:when>
-							<xsl:when test="$tag = 'scalar'">
+							<xsl:when test="$tag='scalar'">
 								<tr>
 									<td colspan="2">
-										<xsl:if test="$show-type='true'">
+										<xsl:if test="$show-type">
 											<span class="data-type">Scalar </span>
 										</xsl:if>
 										<xsl:call-template name="t-name"/>
@@ -350,10 +350,10 @@
 									</td>
 								</tr>
 							</xsl:when>
-							<xsl:when test="$tag = 'list'">
+							<xsl:when test="$tag='list'">
 								<tr>
 									<td colspan="2">
-										<xsl:if test="$show-type='true'">
+										<xsl:if test="$show-type">
 											<span class="data-type">List </span>
 										</xsl:if>
 										<xsl:call-template name="t-name"/>
@@ -366,10 +366,10 @@
 									</td>
 								</tr>
 							</xsl:when>
-							<xsl:when test="$tag = 'map'">
+							<xsl:when test="$tag='map'">
 								<tr>
 									<td colspan="2">
-										<xsl:if test="$show-type='true'">
+										<xsl:if test="$show-type">
 											<span class="data-type">Map </span>
 										</xsl:if>
 										<xsl:call-template name="t-name"/>
@@ -382,10 +382,10 @@
 									</td>
 								</tr>
 							</xsl:when>
-							<xsl:when test="$tag = 'table'">
+							<xsl:when test="$tag='table'">
 								<tr>
 									<td colspan="2">
-										<xsl:if test="$show-type='true'">
+										<xsl:if test="$show-type">
 											<span class="data-type">Table </span>
 										</xsl:if>
 										<xsl:call-template name="t-name"/>
@@ -398,10 +398,10 @@
 									</td>
 								</tr>
 							</xsl:when>
-							<xsl:when test="$tag = 'user'">
+							<xsl:when test="$tag='user'">
 								<tr>
 									<td colspan="2">
-										<xsl:if test="$show-type='true'">
+										<xsl:if test="$show-type">
 											<span class="data-type">User </span>
 										</xsl:if>
 										<xsl:call-template name="t-name"/>
@@ -414,10 +414,10 @@
 									</td>
 								</tr>
 							</xsl:when>
-							<xsl:when test="$tag = 'error'">
+							<xsl:when test="$tag='error'">
 								<tr>
 									<td colspan="2">
-										<xsl:if test="$show-type='true'">
+										<xsl:if test="$show-type">
 											<span class="data-type">Error</span>
 										</xsl:if>
 										<xsl:call-template name="t-name"/>
@@ -430,10 +430,10 @@
 									</td>
 								</tr>
 							</xsl:when>
-							<xsl:when test="$tag = 'form'">
+							<xsl:when test="$tag='form'">
 								<tr>
 									<td colspan="2">
-										<xsl:if test="$show-type='true'">
+										<xsl:if test="$show-type">
 											<span class="data-type">Form </span>
 										</xsl:if>
 										<xsl:call-template name="t-name"/>
@@ -446,7 +446,7 @@
 									</td>
 								</tr>
 							</xsl:when>
-							<xsl:when test="$tag = 'doc'">
+							<xsl:when test="$tag='doc'">
 								<tr>
 									<td colspan="2">
 										<xsl:call-template name="t-doc"/>
@@ -597,7 +597,7 @@
 					<xsl:for-each select="af:column">
 						<th>
 							<xsl:value-of select="@name"/>
-							<xsl:if test="@primary-key">(K)</xsl:if>
+							<xsl:if test="(@primary-key='true' or @primary-key='1')">(K)</xsl:if>
 							<xsl:if test="@sort-priority">
 								<!--Sorting...?-->
 							</xsl:if>
@@ -614,7 +614,7 @@
 				<xsl:for-each select="af:row">
 					<xsl:variable name="row" select="."/>
 					<xsl:variable name="pk">
-						<xsl:for-each select="../af:column[@primary-key = 'true']">&amp;<xsl:value-of select="@name"/>=<xsl:value-of select="$row/*[local-name()=current()/@name]/text()"/>
+						<xsl:for-each select="../af:column[(@primary-key='true' or @primary-key='1')]">&amp;<xsl:value-of select="@name"/>=<xsl:value-of select="$row/*[local-name()=current()/@name]/text()"/>
 						</xsl:for-each>
 					</xsl:variable>
 					<tr>
@@ -653,7 +653,7 @@
 				</xsl:call-template>
 			</xsl:for-each>
 		</div>
-		<xsl:if test="*[namespace-uri() != $af-uri]">
+		<xsl:if test="*[namespace-uri()!=$af-uri]">
 			<table>
 				<xsl:for-each select="*[namespace-uri() != $af-uri]">
 					<tr valign="baseline">
@@ -847,10 +847,10 @@
 				<table border="0">
 					<xsl:for-each select="*">
 						<xsl:choose>
-							<xsl:when test="namespace-uri() = $af-uri">
+							<xsl:when test="namespace-uri()=$af-uri">
 								<xsl:variable name="tag" select="local-name()"/>
 								<xsl:choose>
-									<xsl:when test="$tag = 'input'">
+									<xsl:when test="$tag='input'">
 										<tr>
 											<td>
 												<xsl:call-template name="t-name"/>
@@ -860,7 +860,7 @@
 											</td>
 										</tr>
 									</xsl:when>
-									<xsl:when test="$tag = 'selector'">
+									<xsl:when test="$tag='selector'">
 										<tr>
 											<td>
 												<xsl:call-template name="t-name"/>
@@ -870,10 +870,10 @@
 											</td>
 										</tr>
 									</xsl:when>
-									<xsl:when test="$tag = 'method'">
+									<xsl:when test="$tag='method'">
 										<!--Merged at bottom. -->
 									</xsl:when>
-									<xsl:when test="$tag = 'doc'">
+									<xsl:when test="$tag='doc'">
 										<xsl:call-template name="t-doc"/>
 									</xsl:when>
 									<xsl:otherwise>
@@ -917,7 +917,7 @@
 				<xsl:value-of select="concat('var c', '; &#10;')"/>
 				<!--2, Add information for checking-->
 				<xsl:for-each select="*">
-					<xsl:if test="namespace-uri() = $af-uri">
+					<xsl:if test="namespace-uri()=$af-uri">
 						<xsl:variable name="input-name">
 							<xsl:choose>
 								<xsl:when test="@name">
@@ -930,7 +930,7 @@
 						</xsl:variable>
 						<!--2.1, Bind af-type-->
 						<xsl:if test="@type">
-							<xsl:value-of select="concat('form[&quot;', $input-name, '&quot;].af_type = &quot;', @type, '&quot;', '; &#10;')"/>
+							<xsl:value-of select="concat('form[&quot;', $input-name, '&quot;].af_type = quot;', @type, '&quot;', '; &#10;')"/>
 						</xsl:if>
 						<!--2.2, Build constraints tree-->
 						<xsl:if test="af:constraint/*">
@@ -971,14 +971,14 @@ $retvar, '.model = &quot;', $model, '&quot;', '; &#10;')"/>
 			<xsl:with-param name="retvar" select="$retvar"/>
 		</xsl:call-template>
 		<xsl:choose>
-			<xsl:when test="$model = 'range'"/>
-			<xsl:when test="$model = 'pattern'"/>
-			<xsl:when test="$model = 'and' or $model = 'or' or $model = 'xor'">
+			<xsl:when test="$model='range'"/>
+			<xsl:when test="$model='pattern'"/>
+			<xsl:when test="$model='and' or $model='or' or $model='xor'">
 				<xsl:call-template name="t-constraints">
 					<xsl:with-param name="retvar" select="concat($retvar, '.item')"/>
 				</xsl:call-template>
 			</xsl:when>
-			<xsl:when test="$model = 'not'">
+			<xsl:when test="$model='not'">
 				<xsl:call-template name="t-constraint">
 					<xsl:with-param name="retvar" select="concat($retvar, '.regular')"/>
 				</xsl:call-template>
@@ -1002,11 +1002,11 @@ $retvar, '.model = &quot;', $model, '&quot;', '; &#10;')"/>
 			</xsl:choose>
 		</xsl:variable>
 		<xsl:choose>
-			<xsl:when test="@multiline">
+			<xsl:when test="@multiline='true'">
 				<xsl:element name="textarea">
 					<xsl:attribute name="class">input-m</xsl:attribute>
 					<xsl:attribute name="name"><xsl:value-of select="$input-name"/></xsl:attribute>
-					<xsl:if test="@read-only">
+					<xsl:if test="(@read-only='true' or @read-only='1')">
 						<xsl:attribute name="readonly">readonly</xsl:attribute>
 					</xsl:if>
 					<xsl:if test="@max-length">
@@ -1022,7 +1022,7 @@ $retvar, '.model = &quot;', $model, '&quot;', '; &#10;')"/>
 					<xsl:attribute name="type">text</xsl:attribute>
 					<xsl:attribute name="class">input</xsl:attribute>
 					<xsl:attribute name="name"><xsl:value-of select="$input-name"/></xsl:attribute>
-					<xsl:if test="@read-only">
+					<xsl:if test="(@read-only='true' or @read-only='1')">
 						<xsl:attribute name="readonly">readonly</xsl:attribute>
 					</xsl:if>
 					<xsl:if test="@max-length">
@@ -1093,7 +1093,7 @@ $retvar, '.model = &quot;', $model, '&quot;', '; &#10;')"/>
 	<xsl:template name="t-selector-2">
 		<xsl:param name="type"/>
 		<xsl:param name="select"/>
-		<xsl:param name="content" select="$select/*[local-name() = 'item' or local-name() = 'entry' or local-name() = 'row']"/>
+		<xsl:param name="content" select="$select/*[local-name()='item' or local-name()='entry' or local-name()='row']"/>
 		<xsl:variable name="input-name">
 			<xsl:choose>
 				<xsl:when test="@name">
@@ -1104,14 +1104,14 @@ $retvar, '.model = &quot;', $model, '&quot;', '; &#10;')"/>
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
-		<xsl:variable name="read-only" select="@read-only"/>
+		<xsl:variable name="read-only" select="(@read-only='true' or @read-only='1')"/>
 		<xsl:variable name="init" select="@init|af:init"/>
 		<xsl:choose>
 			<xsl:when test="contains('||string|number|', concat('|', $select/@type, '|'))">
 				<xsl:element name="select">
 					<xsl:attribute name="name"><xsl:value-of select="$input-name"/></xsl:attribute>
 					<xsl:choose>
-						<xsl:when test="@multiple = 'true'">
+						<xsl:when test="(@multiple='true' or @multiple='1')">
 							<xsl:attribute name="multiple">multiple</xsl:attribute>
 						</xsl:when>
 						<xsl:otherwise>
@@ -1137,10 +1137,10 @@ $retvar, '.model = &quot;', $model, '&quot;', '; &#10;')"/>
 									<xsl:attribute name="selected">selected</xsl:attribute>
 								</xsl:if>
 								<xsl:choose>
-									<xsl:when test="$type = 'list'">
+									<xsl:when test="$type='list'">
 										<xsl:call-template name="t-all-text"/>
 									</xsl:when>
-									<xsl:when test="$type = 'map'">
+									<xsl:when test="$type='map'">
 										<xsl:value-of select="@key"/>: <xsl:call-template name="t-all-text"/>
 									</xsl:when>
 								</xsl:choose>
@@ -1152,7 +1152,7 @@ $retvar, '.model = &quot;', $model, '&quot;', '; &#10;')"/>
 			<xsl:otherwise>
 				<xsl:variable name="input-type">
 					<xsl:choose>
-						<xsl:when test="@multiple = 'true'">checkbox</xsl:when>
+						<xsl:when test="(@multiple='true' or @multiple='1')">checkbox</xsl:when>
 						<xsl:otherwise>radio</xsl:otherwise>
 					</xsl:choose>
 				</xsl:variable>
