@@ -20,10 +20,16 @@
 			<xsl:with-param name="default" select="'Abstract Form (Unnamed)'"/>
 		</xsl:call-template>
 	</xsl:param>
-	<xsl:param name="show-type">
+	<xsl:param name="show-type_text">
 		<xsl:call-template name="t-param-text">
 			<xsl:with-param name="name" select="'show-type'"/>
-			<xsl:with-param name="default" select="false()"/>
+		</xsl:call-template>
+	</xsl:param>
+	<xsl:param name="show-type" select="($show-type_text='true' or $show-type_text='1')"/>
+	<xsl:param name="max-size">
+		<xsl:call-template name="t-param-text">
+			<xsl:with-param name="name" select="'max-size'"/>
+			<xsl:with-param name="default" select="'80'"/>
 		</xsl:call-template>
 	</xsl:param>
 	<!--HTML-->
@@ -34,7 +40,7 @@
 				<!--<HR/>-->
 				<cite>Powered by ZLW::Abstract-Form</cite>
 				<br/>
-				<cite>$Id: html-view.xsl,v 1.6.2.11 2005-12-31 04:29:35 dansei Exp $</cite>
+				<cite>$Id: html-view.xsl,v 1.6.2.12 2005-12-31 05:25:02 dansei Exp $</cite>
 			</xsl:with-param>
 		</xsl:call-template>
 	</xsl:template>
@@ -253,6 +259,7 @@
     border-bottom: 1px dashed black; 
     }
 .input-m { border: 1px dashed black; }
+.read-only { color: gray }
 .selector { }
 .event { }
 .vt-test { border: 1px dashed green; color: green }
@@ -1004,7 +1011,7 @@ $retvar, '.model = &quot;', $model, '&quot;', '; &#10;')"/>
 		<xsl:choose>
 			<xsl:when test="@multiline='true'">
 				<xsl:element name="textarea">
-					<xsl:attribute name="class">input-m</xsl:attribute>
+					<xsl:attribute name="class">input-m <xsl:if test="(@read-only='true' or @read-only='1')">read-only</xsl:if></xsl:attribute>
 					<xsl:attribute name="name"><xsl:value-of select="$input-name"/></xsl:attribute>
 					<xsl:if test="(@read-only='true' or @read-only='1')">
 						<xsl:attribute name="readonly">readonly</xsl:attribute>
@@ -1020,13 +1027,14 @@ $retvar, '.model = &quot;', $model, '&quot;', '; &#10;')"/>
 			<xsl:otherwise>
 				<xsl:element name="input">
 					<xsl:attribute name="type">text</xsl:attribute>
-					<xsl:attribute name="class">input</xsl:attribute>
+					<xsl:attribute name="class">input <xsl:if test="(@read-only='true' or @read-only='1')">read-only</xsl:if></xsl:attribute>
 					<xsl:attribute name="name"><xsl:value-of select="$input-name"/></xsl:attribute>
 					<xsl:if test="(@read-only='true' or @read-only='1')">
 						<xsl:attribute name="readonly">readonly</xsl:attribute>
 					</xsl:if>
 					<xsl:if test="@max-length">
 						<xsl:attribute name="maxlength"><xsl:value-of select="@max-length"/></xsl:attribute>
+						<xsl:attribute name="size"><xsl:choose><xsl:when test="number(@max-length) > number($max-size)"><xsl:value-of select="$max-size"/></xsl:when><xsl:otherwise><xsl:value-of select="@max-length"/></xsl:otherwise></xsl:choose></xsl:attribute>
 					</xsl:if>
 					<xsl:if test="@init">
 						<xsl:attribute name="value"><xsl:value-of select="@init"/></xsl:attribute>
@@ -1175,6 +1183,7 @@ $retvar, '.model = &quot;', $model, '&quot;', '; &#10;')"/>
 								<xsl:attribute name="value"><xsl:value-of select="$key"/></xsl:attribute>
 								<xsl:if test="$read-only">
 									<xsl:attribute name="readonly">readonly</xsl:attribute>
+									<xsl:attribute name="class">read-only</xsl:attribute>
 								</xsl:if>
 								<xsl:if test="$init[.=$key]">
 									<xsl:attribute name="checked">checked</xsl:attribute>
