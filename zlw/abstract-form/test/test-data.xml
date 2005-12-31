@@ -9,7 +9,7 @@
 			<af:entry key="Key2">Value2</af:entry>
 			<af:entry key="(Content-Type)">test</af:entry>
 		</af:map>
-		<af:scalar name="data-type">visible</af:scalar>
+		<af:scalar name="show-type">0</af:scalar>
 		<af:scalar name="af-base">..</af:scalar>
 		<af:user name="copyright2">
 			<strong>My<u>Very</u>Copyright!</strong>
@@ -20,11 +20,21 @@
 		<af:scalar name="Name" type="string" hold="true">Lenik</af:scalar>
 		<af:scalar name="Age" type="number">11</af:scalar>
 		<af:scalar name="Session" type="number" hold="true">7878</af:scalar>
+		<af:list name="Pictures" type="image" hidden="true">
+			<af:method name="Full Image"/>
+			<af:item>file:///C:/.radiko/miaj/sandbox/mydoc/My Pictures/blunt.gif</af:item>
+			<af:item>file:///C:/.radiko/miaj/sandbox/mydoc/My Pictures/p2.gif</af:item>
+			<af:item>file:///C:/.radiko/miaj/sandbox/mydoc/My Pictures/load_pic24.jpg</af:item>
+		</af:list>
 		<af:map name="Links" type="link">
+			<af:method name="Is this usable?"/>
 			<af:entry key="Google">http://www.google.com</af:entry>
-			<af:entry key="Test2">test2.xml</af:entry>
+			<af:entry key="T1">test-data.xml</af:entry>
+			<af:entry key="T2">test-constraints.xml</af:entry>
+			<af:entry key="Microsoft">http://www.microsoft.com</af:entry>
+			<af:entry key="IBM">http://www.ibm.com</af:entry>
 		</af:map>
-		<af:list name="ShopCart" sort="true" sort-order="descending" type="integer" hold="true">
+		<af:list name="ShopCart" sort="true" sort-order="descending" type="number" hold="true">
 			<af:method name="Add"/>
 			<af:method name="Remove"/>
 			<af:item>cat</af:item>
@@ -55,6 +65,14 @@
 			</af:selector>
 			<af:selector name="sel_hidden">
 				<af:list-ref>HiddenPeople</af:list-ref>
+			</af:selector>
+			<af:selector name="sel_type1" init="2">
+				<af:list-ref>Pictures</af:list-ref>
+			</af:selector>
+			<af:selector name="sel_typeN" multiple="true">
+				<af:init>T1</af:init>
+				<af:init>T2</af:init>
+				<af:map-ref>Links</af:map-ref>
 			</af:selector>
 			<af:method name="ActionA"/>
 			<af:method name="ActionB"/>
