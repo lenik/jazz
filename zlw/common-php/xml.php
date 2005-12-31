@@ -50,7 +50,7 @@ function phpx_xml_end_tag($tagname, $ns = '', $newline = true, $indented = true)
         $PHPX_XML_INDENT = substr($PHPX_XML_INDENT, 4); 
         $xml .= $PHPX_XML_INDENT; 
     }
-    $xml = $ns ? "</$ns:$tagname>" : "</$tagname>"; 
+    $xml .= $ns ? "</$ns:$tagname>" : "</$tagname>"; 
     if ($newline) $xml .= "\n"; 
     return $xml; 
 }
@@ -58,12 +58,17 @@ function phpx_xml_end_tag($tagname, $ns = '', $newline = true, $indented = true)
 function phpx_xml_tag($tagname, $attrs = NULL, $content = NULL, $ns = '',
                       $newline = true, $indented = true) {
     $tagmore = $tagname;
-    if (is_null($attrs))
+    if (! is_null($attrs))
         $tagmore .= phpx_xml_attrs($attrs); 
+    $content = phpx_xml_value($content, $ns); 
     if ($content == '')
         return phpx_xml_start_tag($tagmore, $ns, true, $newline, $indented);
-    return phpx_xml_start_tag($tagmore, $ns, false, false, $indented)
-        . phpx_xml_value($content, $ns)
+    if ($indented) {
+        global $PHPX_XML_INDENT; 
+        $xml = $PHPX_XML_INDENT; 
+    }
+    $xml .= phpx_xml_start_tag($tagmore, $ns, false, false, false)
+        . $content
         . phpx_xml_end_tag($tagname, $ns, $newline, false);
     return $xml; 
 }
@@ -103,6 +108,7 @@ function phpx_xml_attrs($first) {
         case 'array': 
         case 'object': 
             foreach ($first as $name=>$value) {
+                if ($value == NULL) continue; 
                 $xml .= " $name=" . phpx_xml_attr($value); 
             }
             return $xml; 
