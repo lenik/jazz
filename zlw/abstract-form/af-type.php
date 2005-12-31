@@ -6,10 +6,11 @@ function &zlw_af_type($typestr) {
     global $ZLW_AF_TYPE; 
     $type = &$ZLW_AF_TYPE[$typestr]; 
     if (is_null($type)) {
-        list($name, $param) = explode(':', $typestr);
+        list($name, $param) = explode(':', $typestr, 2);
+        if ($param == '') $param = NULL; 
         $typecls = 'zlw_af_type_' . $name; 
         if (class_exists($typecls))
-            $type = eval("return new $typecls(\$param)");
+            $type = eval("return new $typecls(\$param);");
         else
             $type = new zlw_af_type($name, $param); 
     }
@@ -42,7 +43,7 @@ class zlw_af_type extends phpx_error_support {
         return NULL; 
     }
     
-    function xml_param($ns = '') {
+    function xml($ns = '') {
         return zlw_af_parameters($this->param, 'type-parameter', $ns); 
     }
 }

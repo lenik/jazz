@@ -26,8 +26,9 @@ class zlw_af_cc_item extends zlw_af_cc {
     var $level; 
     var $side; 
     
-    function zlw_af_cc_item($cc, $name = NULL, $reason = NULL, $level = NULL, $side = NULL) {
-        $this->cc = $cc; 
+    function zlw_af_cc_item(&$cc, $name = NULL, $reason = NULL, $level = NULL, 
+                            $side = NULL) {
+        $this->cc = &$cc; 
         $this->name = $name; 
         $this->reason = $reason; 
         $this->level = $level; 
@@ -55,13 +56,12 @@ class zlw_af_cc_item extends zlw_af_cc {
     }
 }
 
-class zlw_af_cc_list {
+class zlw_af_cc_list extends zlw_af_cc {
     var $items; 
     
-    function zlw_af_cc_list() {
+    function zlw_af_cc_list(&$items) {
         parent::zlw_af_cc(); 
-        $args = func_get_args(); 
-        $items = $args; 
+        $this->items = &$items; 
     }
     
     function xml($ns = '') {
@@ -82,9 +82,9 @@ class zlw_af_cc_list {
 class zlw_af_cc_not extends zlw_af_cc {
     var $regular; 
     
-    function zlw_af_cc_not($regular) {
+    function zlw_af_cc_not(&$regular) {
         parent::zlw_af_cc(); 
-        $this->regular = $regular; 
+        $this->regular = &$regular; 
     }
     
     function xml($ns = '') {
@@ -102,10 +102,9 @@ class zlw_af_cc_not extends zlw_af_cc {
 class zlw_af_cc_and extends zlw_af_cc {
     var $items; 
     
-    function zlw_af_cc_and() {
+    function zlw_af_cc_and(&$items) {
         parent::zlw_af_cc(); 
-        $args = func_get_args(); 
-        $items = $args; 
+        $this->items = &$items; 
     }
     
     function xml($ns = '') {
@@ -128,10 +127,9 @@ class zlw_af_cc_and extends zlw_af_cc {
 class zlw_af_cc_or extends zlw_af_cc {
     var $items; 
     
-    function zlw_af_cc_or() {
+    function zlw_af_cc_or(&$items) {
         parent::zlw_af_cc(); 
-        $args = func_get_args(); 
-        $items = $args; 
+        $this->items = &$items; 
     }
     
     function xml($ns = '') {
@@ -154,10 +152,9 @@ class zlw_af_cc_or extends zlw_af_cc {
 class zlw_af_cc_xor extends zlw_af_cc {
     var $items; 
     
-    function zlw_af_cc_xor() {
+    function zlw_af_cc_xor(&$items) {
         parent::zlw_af_cc(); 
-        $args = func_get_args(); 
-        $items = $args; 
+        $this->items = &$items; 
     }
     
     function xml($ns = '') {

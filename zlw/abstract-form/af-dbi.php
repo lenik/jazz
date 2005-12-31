@@ -10,7 +10,7 @@ class zlw_af_dbi extends phpx_dbi {
         if (is_string($dbi_or_host)) {
             $this->phpx_dbi($dbi_or_host, $user, $password, $database, $connect,
                             $persist, $debug);
-        } else if (is_subclass_of($dbi_or_host, 'phpx_dbi')) {
+        } else if (is_a($dbi_or_host, 'phpx_dbi')) {
             phpx_or($this, $dbi_or_host);
         }
     }
@@ -94,17 +94,16 @@ class zlw_af_dbi extends phpx_dbi {
         $result = $this->_query($sql);
         if (! $result) return false;
         
-        assert(is_object($object)); 
-        if (is_subclass_of($object, 'zlw_af_list')) {
+        if (is_a($object, 'zlw_af_list')) {
             $type = 'list';
             if (! is_null($format)) {
                 $xml = $this->_dump_list($result, $object, $format);
                 $this->_free_result($result);
                 return $xml;
             }
-        } else if (is_subclass_of($object, 'zlw_af_map')) {
+        } else if (is_a($object, 'zlw_af_map')) {
             $type = 'map';
-        } else if (is_subclass_of($object, 'zlw_af_table')) {
+        } else if (is_a($object, 'zlw_af_table')) {
             $type = 'table';
         }
         
@@ -121,11 +120,11 @@ class zlw_af_dbi extends phpx_dbi {
         
         if ($type == 'list') {
             $xml = $this->_dump_list($result, $object, $format);
-        } else if (is_subclass_of($object, 'zlw_af_map')) {
+        } else if ($type == 'map') {
             if (is_null($format_k))     # format_k is always in std format
                 $format_k = $this->_concat_vars($keys); 
             $xml = $this->_dump_map($result, $object, $format_k, $format);
-        } else if (is_subclass_of($object, 'zlw_af_table')) {
+        } else if ($type == 'table') {
             $xml = $this->_dump_table($result, $object, $keys);
         } else {
             die("Invalid object type: " . get_class($object));
@@ -158,8 +157,8 @@ class zlw_af_dbi extends phpx_dbi {
                 $multiline = $this->_type_is_multiline($type); 
                 $read_only = $is_key[$i] || $is_key[$name];
                 $value = is_null($init[$name]) ? $row[$i] : $init[$name];
-                $input = new zlw_af_input($name, $this->_type_af($type),
-                                          $value, $multiline, $read_only, 
+                $value = new zlw_af_variant($value, $this->_type_af($type), false); 
+                $input = new zlw_af_input($name, NULL, $value, $multiline, $read_only, 
                                           $len, NULL, $selection[$name]); 
                 $form->add_input($input);
             }
@@ -175,8 +174,8 @@ class zlw_af_dbi extends phpx_dbi {
                 $type = $this->_field_type($result, $i);
                 $len = $this->_field_len($result, $i); 
                 $multiline = $this->_type_is_multiline($type); 
-                $input = new zlw_af_input($name, $this->_type_af($type),
-                                          $init[$name], $multiline, $read_only, 
+                $value = new zlw_af_variant($init[$name], $this->_type_af($type), false); 
+                $input = new zlw_af_input($name, NULL, $value, $multiline, $read_only, 
                                           $len, NULL, $selection[$name]); 
                 $form->add_input($input); 
             }
