@@ -100,8 +100,8 @@ function &phpx_list_parse($string) {
         } else {
             $item = eval('return "' . $item . '";'); 
         }
-        $item = ''; 
         $list[] = $item; 
+        $item = ''; 
     }
     return $list; 
 }
@@ -131,6 +131,7 @@ function &phpx_map_parse($string) {
     for ($i = 0; $i < $nsegs; $i++) {
         $entry .= $segs[$i]; 
         list($name, $value) = explode('=', $entry, 2); 
+        if ($name == '') continue; 
         if (substr($value, 0, 1) == '"') {
             if (substr($value, -1) != '"' || substr($value, -2) == '\"') {
                 $value .= ':'; 
@@ -261,6 +262,33 @@ function phpx_or(&$lv, &$rv) {
         break; 
     }
     return $lv; 
+}
+
+function phpx_list_args($args) {
+    if (sizeof($args) == 0)
+        return NULL; 
+    foreach ($args as $arg) {
+        if (is_array($arg))
+            foreach ($arg as $ar)
+                $list[] = $ar; 
+        else
+            $list[] = $arg; 
+    }
+    return $list; 
+}
+
+function phpx_map_args($args) {
+    if (($n = sizeof($args)) == 0)
+        return NULL; 
+    for ($i = 0; $i < $n; $i++)
+        if (is_array($args[$i]))
+            foreach ($args[$i] as $k=>$v)
+                $map[$k] = $v; 
+        else if ($i + 1 < $n)
+            $map[$args[$i]] = $args[$i + 1]; 
+        else
+            die("Invalid argument numbers"); 
+    return $map; 
 }
 
 ?>
