@@ -181,7 +181,7 @@ class phpx_dbi extends phpx_dbi_base {
         $this->_info("[SQL] query: $sql"); 
         $ret = parent::_query($sql); 
         if (! $ret)
-            $this->_warn("[SQL] query failed: " . $this->_error()); 
+            $this->_warn("[SQL] query failed: $sql"); 
         return $ret; 
     }
     
