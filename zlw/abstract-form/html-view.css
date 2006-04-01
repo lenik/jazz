@@ -1,0 +1,49 @@
+
+.indent { }
+
+.data-type { font-weight: bold }
+
+.data-name { text-decoration: underline }
+
+.data-separator { height: 1px; bottom-border: 1px solid gray; }
+
+.error-xml { font-style: italic; color: magenta; }
+
+.scalar { font-family: courier, helvetica, sans-serif, arial; }
+
+.list { }
+
+.map { }
+
+.table { }
+
+.user { }
+
+.error { border: 3px solid red; color: red; }
+
+.errorfield-name { 
+    font-weight: bold; 
+    word-wrap: normal; 
+    }
+
+.errorfield-value {
+    word-wrap: break-word; 
+    border-bottom: 1px dashed gray; 
+    }
+
+.input {
+    border-left: none; 
+    border-right: none; 
+    border-top: none; 
+    border-bottom: 1px dashed black; 
+    }
+
+.input-m { border: 1px dashed black; }
+
+.read-only { color: gray }
+
+.selector { }
+
+.event { }
+
+.vt-test { border: 1px dashed green; color: green }
