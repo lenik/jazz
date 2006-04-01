@@ -40,7 +40,7 @@
 				<!--<HR/>-->
 				<cite>Powered by ZLW::Abstract-Form</cite>
 				<br/>
-				<cite>$Id: html-view.xsl,v 1.6.2.12 2005-12-31 05:25:02 dansei Exp $</cite>
+				<cite>$Id: html-view.xsl,v 1.6.2.13 2006-04-01 14:10:33 dansei Exp $</cite>
 			</xsl:with-param>
 		</xsl:call-template>
 	</xsl:template>
@@ -275,14 +275,15 @@
 					<xsl:value-of select="' '"/>
 				</xsl:element>
 			</head>
-			<body>
+			<xsl:element name="body">
+				<xsl:attribute name="onunload"/>
 				<h1>
 					<xsl:value-of select="$title"/>
 				</h1>
 				<hr/>
 				<xsl:call-template name="t-sections"/>
 				<xsl:call-template name="t-copyright"/>
-			</body>
+			</xsl:element>
 		</html>
 	</xsl:template>
 	<xsl:template name="t-doc" match="af:doc" priority="-1">
@@ -937,7 +938,7 @@
 						</xsl:variable>
 						<!--2.1, Bind af-type-->
 						<xsl:if test="@type">
-							<xsl:value-of select="concat('form[&quot;', $input-name, '&quot;].af_type = quot;', @type, '&quot;', '; &#10;')"/>
+							<xsl:value-of select="concat('form[&quot;', $input-name, '&quot;].af_type = &quot;', @type, '&quot;', '; &#10;')"/>
 						</xsl:if>
 						<!--2.2, Build constraints tree-->
 						<xsl:if test="af:constraint/*">
