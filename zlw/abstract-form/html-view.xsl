@@ -1,37 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:af="http://www.bodz.net/xml/zlw/abstract-form">
 	<xsl:output version="1.0" method="xml" encoding="UTF-8" doctype-public="-//W3C//DTD HTML 4.0 Transitional//EN" indent="yes"/>
+	<!--The relative path to abstract-form/-->
 	<xsl:param name="af-base">
 		<xsl:call-template name="t-param-text">
 			<xsl:with-param name="name" select="'af-base'"/>
 			<xsl:with-param name="default" select="'.'"/>
 		</xsl:call-template>
 	</xsl:param>
+	<!--The namespace of zlw-af in the xsd-instances-->
 	<xsl:param name="af-uri" select="'http://www.bodz.net/xml/zlw/abstract-form'"/>
+	<!--Output encoding (not well impl.)-->
 	<xsl:param name="encoding">
 		<xsl:call-template name="t-param-text">
 			<xsl:with-param name="name" select="'encoding'"/>
 			<xsl:with-param name="default" select="'utf-8'"/>
 		</xsl:call-template>
 	</xsl:param>
+	<!--Page title-->
 	<xsl:param name="title">
 		<xsl:call-template name="t-param-text">
 			<xsl:with-param name="name" select="'title'"/>
 			<xsl:with-param name="default" select="'Abstract Form (Unnamed)'"/>
 		</xsl:call-template>
 	</xsl:param>
+	<!--Display type names for debugging purpose-->
 	<xsl:param name="show-type_text">
 		<xsl:call-template name="t-param-text">
 			<xsl:with-param name="name" select="'show-type'"/>
 		</xsl:call-template>
 	</xsl:param>
 	<xsl:param name="show-type" select="($show-type_text='true' or $show-type_text='1')"/>
+	<!--Max display size of input-box if @max-length is too large or is not specified. -->
 	<xsl:param name="max-size">
 		<xsl:call-template name="t-param-text">
 			<xsl:with-param name="name" select="'max-size'"/>
 			<xsl:with-param name="default" select="'80'"/>
 		</xsl:call-template>
 	</xsl:param>
+	<!---->
 	<!--HTML-->
 	<xsl:template name="t-copyright">
 		<xsl:call-template name="t-param">
@@ -40,7 +47,7 @@
 				<!--<HR/>-->
 				<cite>Powered by ZLW::Abstract-Form</cite>
 				<br/>
-				<cite>$Id: html-view.xsl,v 1.6.2.13 2006-04-01 14:10:33 dansei Exp $</cite>
+				<cite>$Id: html-view.xsl,v 1.6.2.14 2006-04-01 16:10:18 dansei Exp $</cite>
 			</xsl:with-param>
 		</xsl:call-template>
 	</xsl:template>
@@ -229,43 +236,11 @@
 				</xsl:if>
 				<!---->
 				<!--CSS Stylesheet of this Html-View-->
-				<style type="text/css">
-					<xsl:call-template name="t-param-text">
-						<xsl:with-param name="name" select="'css'"/>
-						<xsl:with-param name="default">.indent { }
-.data-type { font-weight: bold }
-.data-name { text-decoration: underline }
-.data-separator { height: 1px; bottom-border: 1px solid gray
-; }
-.error-xml { font-style: italic; color: magenta; }
-.scalar { font-family: courier, helvetica, sans-serif, arial; }
-.list { }
-.map { }
-.table { }
-.user { }
-.error { border: 3px solid red; color: red; }
-.errorfield-name { 
-    font-weight: bold; 
-    word-wrap: normal; 
-    }
-.errorfield-value {
-    word-wrap: break-word; 
-    border-bottom: 1px dashed gray; 
-    }
-.input {
-    border-left: none; 
-    border-right: none; 
-    border-top: none; 
-    border-bottom: 1px dashed black; 
-    }
-.input-m { border: 1px dashed black; }
-.read-only { color: gray }
-.selector { }
-.event { }
-.vt-test { border: 1px dashed green; color: green }
-</xsl:with-param>
-					</xsl:call-template>
-				</style>
+				<xsl:element name="link">
+					<xsl:attribute name="rel">stylesheet</xsl:attribute>
+					<xsl:attribute name="type">text/css</xsl:attribute>
+					<xsl:attribute name="href"><xsl:call-template name="t-param-text"><xsl:with-param name="name" select="'css'"/><xsl:with-param name="default" select="concat($af-base, '/html-view.css')"/></xsl:call-template></xsl:attribute>
+				</xsl:element>
 				<!---->
 				<!--Constraints-->
 				<xsl:element name="script">
@@ -274,15 +249,11 @@
 					<!--BUGFIX: IE SCRIPT require end-tag. -->
 					<xsl:value-of select="' '"/>
 				</xsl:element>
+				<xsl:call-template name="t-html-header"/>
 			</head>
 			<xsl:element name="body">
-				<xsl:attribute name="onunload"/>
-				<h1>
-					<xsl:value-of select="$title"/>
-				</h1>
-				<hr/>
-				<xsl:call-template name="t-sections"/>
-				<xsl:call-template name="t-copyright"/>
+				<xsl:attribute name="onunload"><!--BUGFIX: Don't keep control states while turn back to this page. --><!--That is, to completely unload, and re-load next time this page appeared, whatever 'Refresh' or 'Back'. --></xsl:attribute>
+				<xsl:call-template name="t-html-body"/>
 			</xsl:element>
 		</html>
 	</xsl:template>
@@ -294,16 +265,18 @@
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
-	<xsl:template name="t-sections">
+	<xsl:template name="t-sections" priority="-1">
 		<xsl:for-each select="af:section">
 			<xsl:choose>
 				<xsl:when test="(@hidden='true' or @hidden='1')">
 					<!--Hidden sections are not displayed.-->
 				</xsl:when>
 				<xsl:when test="(@hidden='false' or @hidden='0')">
+					<!--Force visible (explicitly specified)-->
 					<xsl:call-template name="t-section"/>
 				</xsl:when>
 				<xsl:when test="substring(@name, 1, 1) != '.'">
+					<!--Default mode, sections start with dot(.) are ignored-->
 					<xsl:call-template name="t-section"/>
 				</xsl:when>
 				<xsl:otherwise>
@@ -488,39 +461,40 @@
 		<hr/>
 	</xsl:template>
 	<!--DATA ELEMENTS-->
-	<xsl:template name="t-value">
+	<xsl:template name="t-typed-text">
 		<xsl:param name="type" select="@type"/>
+		<xsl:param name="text" select="text()"/>
 		<xsl:choose>
 			<xsl:when test="$type='link'">
 				<xsl:element name="a">
-					<xsl:attribute name="href"><xsl:value-of select="text()"/></xsl:attribute>
-					<xsl:value-of select="text()"/>
+					<xsl:attribute name="href"><xsl:value-of select="$text"/></xsl:attribute>
+					<xsl:value-of select="$text"/>
 				</xsl:element>
 			</xsl:when>
 			<xsl:when test="$type='image'">
 				<xsl:element name="img">
-					<xsl:attribute name="src"><xsl:value-of select="text()"/></xsl:attribute>
+					<xsl:attribute name="src"><xsl:value-of select="$text"/></xsl:attribute>
 				</xsl:element>
 			</xsl:when>
 			<xsl:when test="$type='sound'">
 				<xsl:element name="sound">
-					<xsl:attribute name="src"><xsl:value-of select="text()"/></xsl:attribute>
+					<xsl:attribute name="src"><xsl:value-of select="$text"/></xsl:attribute>
 				</xsl:element>
 			</xsl:when>
 			<xsl:when test="$type='test'">
 				<xsl:element name="span">
 					<xsl:attribute name="class">vt-test</xsl:attribute>
-					<xsl:value-of select="text()"/>
+					<xsl:value-of select="$text"/>
 				</xsl:element>
 			</xsl:when>
 			<xsl:otherwise>
-				<xsl:value-of select="text()"/>
+				<xsl:value-of select="$text"/>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
 	<xsl:template name="t-scalar" match="af:scalar" priority="-1">
 		<span>
-			<xsl:call-template name="t-value"/>
+			<xsl:call-template name="t-typed-text"/>
 		</span>
 		<xsl:for-each select="af:method">
 			<xsl:value-of select="' '"/>
@@ -536,7 +510,7 @@
 						<xsl:value-of select="$index"/>. </td>
 					<td>
 						<span class="list">
-							<xsl:call-template name="t-value">
+							<xsl:call-template name="t-typed-text">
 								<xsl:with-param name="type" select="../@type"/>
 							</xsl:call-template>
 						</span>
@@ -579,7 +553,7 @@
 						</td>
 						<td>
 							<span class="map">
-								<xsl:call-template name="t-value">
+								<xsl:call-template name="t-typed-text">
 									<xsl:with-param name="type" select="../@type"/>
 								</xsl:call-template>
 							</span>
@@ -630,7 +604,7 @@
 							<xsl:variable name="column" select="../../af:column[@name=local-name(current())]"/>
 							<td>
 								<span class="table">
-									<xsl:call-template name="t-value">
+									<xsl:call-template name="t-typed-text">
 										<xsl:with-param name="type" select="$column/@type"/>
 									</xsl:call-template>
 								</span>
@@ -920,7 +894,7 @@
 		<xsl:if test="*/@type or */af:constraint">
 			<xsl:element name="script">
 				<xsl:attribute name="language">javascript</xsl:attribute>
-				<!--1, Init form object-->
+				<!--1, Prepare variables-->
 				<xsl:value-of select="concat('var form = document.getElementById(&quot;', $form-id, '&quot;)', '; &#10;')"/>
 				<xsl:value-of select="concat('var c', '; &#10;')"/>
 				<!--2, Add information for checking-->
@@ -1190,7 +1164,7 @@ $retvar, '.model = &quot;', $model, '&quot;', '; &#10;')"/>
 									<xsl:attribute name="checked">checked</xsl:attribute>
 								</xsl:if>
 							</xsl:element>
-							<xsl:call-template name="t-value">
+							<xsl:call-template name="t-typed-text">
 								<xsl:with-param name="type" select="$select/@type"/>
 							</xsl:call-template>
 						</li>
@@ -1219,5 +1193,15 @@ $retvar, '.model = &quot;', $model, '&quot;', '; &#10;')"/>
 				<xsl:value-of select="@name"/>
 			</xsl:element>
 		</span>
+	</xsl:template>
+	<!--Extension-Points-->
+	<xsl:template name="t-html-header" priority="-1"/>
+	<xsl:template name="t-html-body" priority="-1">
+		<h1>
+			<xsl:value-of select="$title"/>
+		</h1>
+		<hr/>
+		<xsl:call-template name="t-sections"/>
+		<xsl:call-template name="t-copyright"/>
 	</xsl:template>
 </xsl:stylesheet>
