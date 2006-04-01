@@ -43,12 +43,21 @@ function zlw_af_form_submit(ev) {
                 return false; 
             }
         }
-    }
+   }
     
-    // disable all controls
+    // keep from repeat-submit
     for (var i = 0; i < form.elements.length; i++) {
         var elm = form.elements[i]; 
-        elm.disabled = true; 
+        elm.class += " submitted"; 
+        if (elm.readOnly != null)
+            elm.readOnly = true;
+        switch (elm.type) {
+        case "submit": 
+            form[".method"].value = elm.name;
+        case "button":
+            elm.disabled = true;
+            break; 
+        }
     }
     return true; 
 }
