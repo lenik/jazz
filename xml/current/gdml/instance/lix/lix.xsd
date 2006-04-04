@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by any (Ru-Board) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="seq">
+		<xs:annotation>
+			<xs:documentation>LISP in XML</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice maxOccurs="unbounded">
+				<xs:group ref="ALL"/>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+	<xs:group name="ALL">
+		<xs:choice>
+			<xs:group ref="PSEDUO"/>
+			<xs:group ref="FUNCTION"/>
+			<xs:group ref="SPECIAL"/>
+			<xs:group ref="VALUE"/>
+		</xs:choice>
+	</xs:group>
+	<xs:group name="PSEDUO">
+		<xs:choice>
+			<xs:element ref="seq"/>
+			<xs:element name="lambda"/>
+			<xs:element name="define"/>
+		</xs:choice>
+	</xs:group>
+	<xs:group name="FUNCTION">
+		<xs:choice>
+			<xs:choice>
+				<xs:annotation>
+					<xs:documentation>vector</xs:documentation>
+				</xs:annotation>
+				<xs:element name="car"/>
+				<xs:element name="cdr"/>
+				<xs:element name="caar"/>
+			</xs:choice>
+			<xs:choice>
+				<xs:annotation>
+					<xs:documentation>list</xs:documentation>
+				</xs:annotation>
+				<xs:element name="length"/>
+			</xs:choice>
+			<xs:choice>
+				<xs:annotation>
+					<xs:documentation>math</xs:documentation>
+				</xs:annotation>
+				<xs:element name="sin"/>
+				<xs:element name="sqrt"/>
+			</xs:choice>
+		</xs:choice>
+	</xs:group>
+	<xs:group name="SPECIAL">
+		<xs:choice/>
+	</xs:group>
+	<xs:group name="VALUE">
+		<xs:choice>
+			<xs:element name="symbol"/>
+			<xs:element name="number"/>
+			<xs:element name="rational"/>
+			<xs:element name="string"/>
+			<xs:element name="quote"/>
+			<xs:element name="list">
+				<xs:complexType>
+					<xs:choice minOccurs="0" maxOccurs="unbounded">
+						<xs:group ref="VALUE"/>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+		</xs:choice>
+	</xs:group>
+</xs:schema>
