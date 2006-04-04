@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xe="http://www.bodz.net/xml/current/nfs/xslt-evaluate" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsf="http://www.bodz.net/xml/current/xsf" targetNamespace="http://www.bodz.net/xml/current/nfs/xslt-evaluate" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:import namespace="http://www.bodz.net/xml/current/xsf" schemaLocation="http://www.bodz.net/xml/current/xsf/structure.xsd"/>
+    <xs:element name="xslt-evaluate" type="xe:evaluatable-node">
+        <xs:annotation>
+            <xs:documentation>Comment describing your root element</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:complexType name="evaluatable-node">
+        <xs:complexContent>
+            <xs:extension base="xsf:base-structure">
+                <xs:choice minOccurs="0" maxOccurs="unbounded">
+                    <xs:element name="evaluate">
+                        <xs:complexType>
+                            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                                <xs:any namespace="##any"/>
+                            </xs:choice>
+                            <xs:anyAttribute namespace="##other"/>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="user">
+                        <xs:complexType>
+                            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                                <xs:any namespace="##any"/>
+                            </xs:choice>
+                            <xs:anyAttribute namespace="##other"/>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:choice>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

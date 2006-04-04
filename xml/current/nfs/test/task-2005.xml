@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by Snima Denik (Bytes of Danci.Z) -->
+<nt:tasks xmlns:nt="http://www.bodz.net/xml/current/nfs/task" xmlns:xsf="http://www.bodz.net/xml/current/xsf" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.bodz.net/xml/current/nfs/task
+http://www.bodz.net/xml/current/nfs/task.xsd">
+	<xsf:group xsf:name="XJL" xsf:info="eXtendable JavaScript Library">
+		<nt:string name="XJL" title="eXtendable JavaScript Library">
+			<nt:stone ref=""/>
+			<nt:stone/>
+			<nt:stone/>
+			<nt:stone ref="GDML/Yacc"/>
+			<nt:stone ref="GDMLDom"/>
+			<nt:stone ref="XJM"/>
+			<nt:stone ref="BXP"/>
+			<nt:stone/>
+		</nt:string>
+		<nt:task/>
+		<nt:task name="XJL"/>
+		<nt:task/>
+		<nt:task name="ScriptDebugger"/>
+		<nt:task name="BAS">
+			<nt:task name="BSP"/>
+			<nt:task name="BSP-ScriptParser">
+				<nt:task name="GDML/Yacc">
+					<nt:task name="GDMLDom">
+						<nt:task name="XJM"/>
+					</nt:task>
+				</nt:task>
+			</nt:task>
+			<nt:task name="BSP-Basic"/>
+			<nt:task name="BSP-Patch"/>
+		</nt:task>
+		<nt:task/>
+		<nt:task name="XJM"/>
+		<nt:task name="BXP"/>
+		<nt:task/>
+		<nt:task/>
+		<nt:task/>
+	</xsf:group>
+</nt:tasks>

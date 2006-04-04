@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by Snima Denik (Bytes of Danci.Z) -->
+<xs:schema xmlns:fs="http://www.bodz.net/xml/current/nfs/filesystem" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsf="http://www.bodz.net/xml/current/xsf" targetNamespace="http://www.bodz.net/xml/current/nfs/filesystem" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://www.bodz.net/xml/current/xsf" schemaLocation="http://www.bodz.net/xml/current/xsf/base.xsd"/>
+	<xs:complexType name="storage-object">
+		<xs:complexContent>
+			<xs:extension base="xsf:structure-composition">
+				<xs:sequence>
+					<xs:element name="data" type="xsf:base-content" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>override storage-object/@value
+
+for file element, file/data is the default stream. </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="security" type="fs:storage-security" minOccurs="0"/>
+				</xs:sequence>
+				<xs:attribute name="name" type="xs:string" use="required">
+					<xs:annotation>
+						<xs:documentation>name of storage-object, like file-name, directory-name, etc.
+
+some special object such as volume-label and default-stream can be specified an empty name.</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="value" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>can be overrided by data element. </xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attributeGroup ref="fs:storage-object-attributes"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:attributeGroup name="storage-object-attributes">
+		<xs:attribute name="uuid" type="xs:string" use="optional"/>
+		<xs:attribute name="hidden" type="xs:boolean" use="optional" default="false"/>
+		<xs:attribute name="created" type="xs:dateTime" use="optional"/>
+		<xs:attribute name="last-modified" type="xs:dateTime" use="optional"/>
+		<xs:attribute name="last-accessed" type="xs:dateTime" use="optional"/>
+	</xs:attributeGroup>
+	<xs:complexType name="storage-security">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="access-control">
+				<xs:complexType>
+					<xs:attribute name="privilege" use="required">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="read"/>
+								<xs:enumeration value="write"/>
+								<xs:enumeration value="execute"/>
+								<xs:enumeration value="modify"/>
+								<xs:enumeration value="remove"/>
+								<xs:enumeration value="setuid"/>
+								<xs:enumeration value="setgid"/>
+								<xs:enumeration value="chmod"/>
+								<xs:enumeration value="chown"/>
+								<xs:enumeration value="chgrp"/>
+								<xs:enumeration value="chacl"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+					<xs:attribute name="method" default="allowed">
+						<xs:annotation>
+							<xs:documentation>default enabled</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="allowed"/>
+								<xs:enumeration value="forbidden"/>
+								<xs:enumeration value="audit"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+					<xs:attribute name="object" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>unique ID is used if available. otherwise namespace group, user, or other may be used. 
+default everyone</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="inheritable" type="xs:boolean" default="true">
+						<xs:annotation>
+							<xs:documentation>down-inheritance, true</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="inherits" type="xs:boolean" default="true">
+						<xs:annotation>
+							<xs:documentation>up-inheritance, default true</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="owner" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>unique ID is used if available. otherwise namespace group, user, or other may be used. 
+default everyone</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:element name="volume">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="fs:directory"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:group name="storage-group">
+		<xs:choice>
+			<xs:element ref="fs:directory"/>
+			<xs:element ref="fs:file"/>
+			<xs:element ref="fs:link"/>
+			<xs:element ref="fs:special"/>
+		</xs:choice>
+	</xs:group>
+	<xs:complexType name="file">
+		<xs:complexContent>
+			<xs:extension base="fs:storage-object">
+				<xs:choice minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="named-stream" type="fs:storage-object"/>
+				</xs:choice>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="file" type="fs:file">
+		<xs:annotation>
+			<xs:documentation>Normal file</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="directory">
+		<xs:complexContent>
+			<xs:extension base="fs:storage-object">
+				<xs:choice minOccurs="0" maxOccurs="unbounded">
+					<xs:group ref="fs:storage-group"/>
+				</xs:choice>
+				<xs:attribute name="mount" type="xs:string" use="optional">
+					<xs:annotation>
+						<xs:documentation>if mount is specified, then this directory is a "junction" or "mount-point", which may be skipped in some type of filesystem-scanner. 
+
+the value maybe drive-device or disk-image-file. </xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="directory" type="fs:directory"/>
+	<xs:element name="link">
+		<xs:annotation>
+			<xs:documentation>Link file (symbolic or hard)</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="fs:storage-object">
+					<xs:attribute name="type" use="optional" default="hard">
+						<xs:annotation>
+							<xs:documentation>symbolic-link or hard-link</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="symbolic"/>
+								<xs:enumeration value="hard"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+					<xs:attribute name="target" type="xs:string" use="required">
+						<xs:annotation>
+							<xs:documentation>specify the link's target file. 
+
+may be absolute-path or relative-path or uuid of the target file. 
+
+Notes: 
+the @value attribute or data element may contains bytes of target file. </xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="special">
+		<xs:annotation>
+			<xs:documentation>Special file like volume-label, volume-serial, etc. </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="fs:storage-object">
+					<xs:attribute name="type" use="required">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="volume-label"/>
+								<xs:enumeration value="volume-serial"/>
+								<xs:enumeration value="vex-entry"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

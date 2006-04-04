@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by any (Ru-Board) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="myorm">
+		<xs:annotation>
+			<xs:documentation>myorm object/relational mapping</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="app-parameters" minOccurs="0"/>
+				<xs:element ref="proglang" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="sqlctx" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="entity" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="app-parameters">
+		<xs:annotation>
+			<xs:documentation>these parameters are recommended to be specified  in runtime, however, the default values could be specified here. </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="proglang" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>default proglang</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="context" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>default context</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="proglang">
+		<xs:complexType>
+			<xs:sequence/>
+			<xs:attribute name="name" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>programming language which this progmodel will affects on. </xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="sqlctx">
+		<xs:annotation>
+			<xs:documentation>the database context</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="installation" minOccurs="0">
+					<xs:complexType>
+						<xs:attribute name="server-ip" type="xs:string"/>
+						<xs:attribute name="server-port" type="xs:integer"/>
+						<xs:attribute name="odbc-driver" type="xs:string"/>
+						<xs:attribute name="ado-driver" type="xs:string"/>
+						<xs:attribute name="login-user" type="xs:string"/>
+						<xs:attribute name="login-password" type="xs:string"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string" use="required"/>
+			<xs:attribute name="dialect" type="xs:string"/>
+			<xs:attribute name="sql-conformance">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="sql-92"/>
+						<xs:enumeration value="sql-95"/>
+						<xs:enumeration value="sql-2005"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="entity">
+		<xs:annotation>
+			<xs:documentation>o/r mapping</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="o-decl" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="trigger"/>
+						</xs:sequence>
+						<xs:attribute name="name" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>object name, override ../@name</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="base" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>base class, which this class will inherits from, default depends on the progmodel</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="r-decl" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="trigger"/>
+						</xs:sequence>
+						<xs:attribute name="name" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>sql name, override ../@name</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="type" default="table">
+							<xs:annotation>
+								<xs:documentation>table or view, this will affect how to generate DDL statements. </xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:enumeration value="table"/>
+									<xs:enumeration value="view"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="field" maxOccurs="unbounded"/>
+				<xs:element ref="prog-param"/>
+				<xs:element ref="sql-param"/>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>entity name</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="prog-param">
+		<xs:annotation>
+			<xs:documentation>keyword-only could be specified without @value and empty text()</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="pl" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>for specified proglang only</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="name" type="xs:string" use="required"/>
+					<xs:attribute name="value" type="xs:string"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="sql-param">
+		<xs:annotation>
+			<xs:documentation>keyword-only could be specified without @value and empty text()</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="sc" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>for specified sqlctx only</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="name" type="xs:string" use="required"/>
+			<xs:attribute name="value" type="xs:string"/>
+		</xs:complexType>
+	</xs:element>
+	<!--_-->
+	<xs:complexType name="paramType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="name" type="xs:string" use="required"/>
+				<xs:attribute name="value" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:element name="field">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="identity"/>
+				<xs:element name="o-decl" minOccurs="0"/>
+				<xs:element name="r-decl" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>field name</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="type" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>field type, in "standard" format</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="nullable" type="xs:boolean" default="false"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
