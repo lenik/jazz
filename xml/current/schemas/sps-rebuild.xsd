@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by Snima Denik (Bytes of Danci.Z) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:element name="structure">
+        <xs:annotation>
+            <xs:documentation>Altova StyleVision Stylesheet</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="nspair" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:attribute name="prefix" type="xs:string" use="required"/>
+                        <xs:attribute name="uri" type="xs:anyURI" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="template" type="templateType" maxOccurs="unbounded"/>
+                <xs:element name="pagelayout"/>
+            </xs:sequence>
+            <xs:attribute name="version" type="xs:string" default="2"/>
+            <xs:attribute name="schemafile" type="xs:string"/>
+            <xs:attribute name="workingxmlfile" type="xs:string"/>
+            <xs:attribute name="templatexmlfile" type="xs:string"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="templateType">
+        <xs:sequence>
+            <xs:element name="match">
+                <xs:complexType>
+                    <xs:attribute name="overwrittenxslmatch" type="xs:string"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="children">
+                <xs:complexType>
+                    <xs:choice>
+                        <xs:element name="template"/>
+                        <xs:element name="table">
+                            <xs:complexType>
+                                <xs:complexContent>
+                                    <xs:extension base="templateType">
+                                        <xs:choice>
+                                            <xs:element name="properties">
+                                                <xs:complexType>
+                                                    <xs:attribute name="border"/>
+                                                    <xs:attribute name="width"/>
+                                                    <xs:attribute name="border-collapse"/>
+                                                    <xs:attribute name="cellpadding"/>
+                                                    <xs:attribute name="cellspacing"/>
+                                                    <xs:attribute name="table-layout"/>
+                                                    <xs:attribute name="colspan"/>
+                                                </xs:complexType>
+                                            </xs:element>
+                                        </xs:choice>
+                                    </xs:extension>
+                                </xs:complexContent>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="tablebody"/>
+                        <xs:element name="tablerow"/>
+                        <xs:element name="tablecol">
+                            <xs:complexType>
+                                <xs:choice>
+                                    <xs:element name="styles">
+                                        <xs:complexType>
+                                            <xs:attribute name="border-bottom-color"/>
+                                            <xs:attribute name="border-bottom-style"/>
+                                            <xs:attribute name="border-bottom-width"/>
+                                        </xs:complexType>
+                                    </xs:element>
+                                </xs:choice>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="image">
+                            <xs:complexType>
+                                <xs:choice>
+                                    <xs:element name="imagesource">
+                                        <xs:complexType>
+                                            <xs:choice>
+                                                <xs:element name="fixtext">
+                                                    <xs:complexType>
+                                                        <xs:attribute name="value" type="xs:string"/>
+                                                    </xs:complexType>
+                                                </xs:element>
+                                            </xs:choice>
+                                        </xs:complexType>
+                                    </xs:element>
+                                </xs:choice>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:choice>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
