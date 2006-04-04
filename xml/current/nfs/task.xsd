@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by Snima Denik (Bytes of Danci.Z) -->
 <xs:schema xmlns:nt="http://www.bodz.net/xml/current/nfs/task" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsf="http://www.bodz.net/xml/current/xsf" targetNamespace="http://www.bodz.net/xml/current/nfs/task" elementFormDefault="qualified" attributeFormDefault="unqualified">
 	<xs:import namespace="http://www.bodz.net/xml/current/xsf" schemaLocation="http://www.bodz.net/xml/current/xsf/base.xsd"/>
 	<xs:element name="tasks">
