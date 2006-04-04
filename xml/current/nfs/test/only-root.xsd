@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by Snima Denik (Bytes of Danci.Z) -->
+<xs:schema xmlns:or="http://www.bodz.net/xml/current/nfs/test/only-root" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.bodz.net/xml/current/nfs/test/only-root" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:element name="root">
+        <xs:annotation>
+            <xs:documentation>Comment describing your root element</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+</xs:schema>
