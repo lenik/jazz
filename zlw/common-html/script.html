@@ -1,0 +1,171 @@
+<html id="html" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Script Test</title>
+<style type="text/css">
+	textarea { width: 100%; overflow: visible }
+	.error { color: red }
+	.duration { color: green }
+</style>
+
+<!-- Language Evaluator API -->
+    <script language="javascript">
+        function evaluate_javascript(src) {
+            return eval(src); 
+        }
+        function execute_javascript(src) {
+            eval(src); 
+        }
+    </script>
+    
+    <script language="jscript">
+        function evaluate_jscript(src) {
+            return eval(src); 
+        }
+        function execute_jscript(src) {
+            eval(src); 
+        }
+    </script>
+
+    <script language="perlscript">
+        sub evaluate_perlscript(src) {
+            return eval(src); 
+        }
+        sub execute_perlscript(src) {
+            execute(src); 
+        }
+    </script>
+    
+    <script language="vbscript">
+        function evaluate_vbscript(src)
+            evaluate_vbscript = Eval(src)
+        end function
+        function execute_vbscript(src)
+            Execute src
+        end function
+    </script>
+    
+<!-- Event Impl. -->
+    <script language="javascript">
+        function load_html_partial() {
+            var html = document.getElementById("html"); 
+            var frmScript = document.getElementById("frmScript"); 
+            var txtSrc = frmScript["src"]; 
+            txtSrc.value = html.innerHTML; 
+        }
+        
+        function htmlEscape(html) {
+            return html; 
+        }
+        
+        function run_script(evaluate_mode) {
+            var frmScript = document.getElementById("frmScript"); 
+            var selLanguage = frmScript["language"].value; 
+            var txtSrc = frmScript["src"];
+            var dhtml = document.getElementById("dhtml"); 
+            var spanCounter = document.getElementById("counter"); 
+            var counter = 1 * spanCounter.innerHTML; 
+            var divResult = document.getElementById("result"); 
+            var result = "Unknown language: " + selLanguage; 
+            var timeStart = new Date(); 
+            var src; 
+            if (window.getSelection)
+                src = window.getSelection();
+            else if (document.getSelection)
+                src = document.getSelection();
+            else if (document.selection)
+                src = document.selection.createRange().text;
+            if (typeof(src) != 'string' || src.length < 1)
+                src = txtSrc.value;
+            txtSrc.focus(); 
+            try {
+                if (evaluate_mode) {
+                    if (selLanguage == "javascript")
+                        result = evaluate_javascript(src); 
+                    else if (selLanguage == "jscript")
+                        result = evaluate_jscript(src); 
+                    else if (selLanguage == "perlscript")
+                        result = evaluate_perlscript(src); 
+                    else if (selLanguage == "vbscript")
+                        result = evaluate_vbscript(src); 
+                } else {
+                    if (selLanguage == "javascript")
+                        execute_javascript(src); 
+                    else if (selLanguage == "jscript")
+                        execute_jscript(src); 
+                    else if (selLanguage == "perlscript")
+                        execute_perlscript(src); 
+                    else if (selLanguage == "vbscript")
+                        execute_vbscript(src); 
+                    result = "Succeeded"; 
+                }
+            } catch (e) {
+                if (typeof(e) == "object") {
+                    result = "<table border='0' class='error'>"; 
+                    var field; 
+                    for (field in e) {
+                        result += "<tr><td>" + field + "</td>"
+                            + "<td>" + htmlEscape(e[field]) + "</td></tr>\n"; 
+                    }
+                    result += "</table>"; 
+                } else {
+                    result = "<div class='error'>" + htmlEscape(e) + "</div>"; 
+                }
+            } finally {
+                var timeStop = new Date(); 
+                var timeDiff = timeStop - timeStart; 
+                var d_msec = timeDiff % 1000; 
+                    timeDiff = Math.floor(timeDiff / 1000); 
+                var d_sec = timeDiff % 60; 
+                    timeDiff = Math.floor(timeDiff / 60); 
+                var d_min = timeDiff % 60; 
+                    timeDiff = Math.floor(timeDiff / 60); 
+                var d_hour = timeDiff; 
+                divResult.innerHTML = result + "<br />\n"
+                    + "<span class='duration'>Duration: " 
+                    + d_hour + ":" 
+                    + d_min + ":" 
+                    + d_sec + "." 
+                    + d_msec + "</span>\n"; 
+                spanCounter.innerHTML = ++counter; 
+            }
+        }
+    </script>
+
+</head>
+<body>
+<h1>Script Test </h1>
+<hr />
+<a name="scripts" />
+<form id="frmScript" method="post" action="">
+  <textarea id="frmScript_src" name="src" cols="40" rows="7">alert('Hello, World! '); </textarea>
+  <a name="commands" />
+  <div align="center">
+    <input type="reset" value="Reset" />
+    &nbsp;
+    <input type="button" value="HTML of Selection" onClick="load_html_partial()" />
+    &nbsp;
+    <select name="language">
+        <option value="javascript" selected>JavaScript</option>
+        <option value="jscript">JScript</option>
+        <option value="perlscript">PerlScript</option>
+        <option value="vbscript">VBScript</option>
+    </select>
+    <input type="button" value="(E)valuate" accesskey="E" onClick="run_script(true)"/>
+    &nbsp;
+    <input type="button" value="Execute (R)" accesskey="R" onClick="run_script(false)"/>
+  </div>
+</form>
+<a name="dhtml" />
+<fieldset>
+    <legend>DHTML (var: dhtml)</legend>
+    <div id="dhtml"></div>
+</fieldset>
+<a name="results" />
+<fieldset>
+    <legend>Result <span id="counter">0</span> </legend>
+    <div id="result"></div>
+</fieldset>
+<p>&nbsp;</p>
+</body>
+</html>
