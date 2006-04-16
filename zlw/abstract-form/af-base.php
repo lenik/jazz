@@ -186,7 +186,7 @@ class zlw_af_xmlem extends phpx_error_manager {
         $this->pref = PHPX_EM_TERM; 
     }
     function handler(&$error) {
-        global $PHPX_XML_BEGIN; 
+        global $PHPX_XML_BEGUN; 
         if (get_class($error) == 'phpx_error') {
             $cast = new zlw_af_error(NULL); 
             foreach ($error as $k=>$v)
@@ -194,7 +194,7 @@ class zlw_af_xmlem extends phpx_error_manager {
         } else {
             $cast = &zlw_af_error($error); 
         }
-        if ($PHPX_XML_BEGIN) {
+        if ($PHPX_XML_BEGUN) {
             echo $cast->xml($this->ns); 
         } else {
             # Early error (or warning, info..) is taken as 'parse error'
