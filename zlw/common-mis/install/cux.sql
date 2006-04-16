@@ -1,5 +1,5 @@
 
-/* com.user.ext (sample package) */
+/* .section.  com.user.ext (sample package) */
 
 set names 'gb2312';
 
@@ -79,11 +79,17 @@ create table com_uinfo(
     id          int not null auto_increment,
     first       varchar(30) not null,   /* first name */
     last        varchar(30) not null,   /* last name */
+    gender      char(1) null,       /* Male, Female */
     mc          int null,               /* main (active) contact */
+    rank        int null, 
     icon        int null,               /* icon image */
+    web         varchar(50) null, 
+    motto       varchar(200) null, 
     primary key pk(id),
     index       first(first),
     index       last(last),
+    index       gender(gender),
+    index       rank(rank), 
     foreign key mc(mc)
      references com_contact(id) on delete set null
     )
@@ -166,11 +172,11 @@ insert into com_contact(id, cn, sp, city, addr, post, tel, cell) values
     (2, 1, 'Zhejiang', 'Haining', '603 Room, 297 Changdai Rd.', '314400', null, '13567385103'),
     (3, 1, 'Tibet', 'Lhasa', '239 New bright Rd.', '249284', '23-983-3931', '13800571505'); 
 
-insert into com_uinfo(id, first, last, mc) values
-    (1, 'Xima', 'Lenik', 2),            /* root */
-    (2, 'Cao', 'Zuoyuan', null),        /* operator test */
-    (3, 'Yong', 'Huyi', null),          /* user test1 */
-    (4, 'Dier', 'Yonghu', 3);           /* user test2 */
+insert into com_uinfo(id, first, last, mc, rank) values
+    (1, 'Xima', 'Lenik', 2, null),      /* root */
+    (2, 'Cao', 'Zuoyuan', null, null),  /* operator test */
+    (3, 'Yong', 'Huyi', null, 1),       /* user test1, rank 1 */
+    (4, 'Dier', 'Yonghu', 3, 3);        /* user test2, rank 3 */
 
 insert into com_uinfo_contact(uinfo, contact) values
     (1, 1),                             /* root[0] */
