@@ -1,5 +1,5 @@
 
-/* com.dd.world */
+/* .section.  com.dd.world */
 /* (data dictrionary) */
 
 set names 'gb2312'; 

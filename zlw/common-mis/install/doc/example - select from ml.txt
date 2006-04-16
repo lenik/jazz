@@ -1,0 +1,18 @@
+
+set names gb2312;
+
+select c.id, m.name, m.capital, c.telp, c.size, m.lang, lp.pr
+  from com_country c, com_country_ml m left join com_lang_pref lp on m.lang=lp.lang
+ where c.id=m.cn 
+   and c.id=2
+ order by lp.pr
+;
+
+
+select *
+  from (select c.id, m.name, m.capital, c.telp, c.size, m.lang
+          from com_country c, com_country_ml m
+         where c.id=m.cn) a
+       left join com_lang_pref lp on a.lang=lp.lang
+ order by lp.pr
+;
