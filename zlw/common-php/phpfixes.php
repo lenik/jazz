@@ -5,8 +5,11 @@
  *
  * Copy this fixes file to the same directory of which do includes.
  *
- * $Id: phpfixes.php,v 1.2.4.2 2005-12-04 07:38:16 dansei Exp $
+ * $Id: phpfixes.php,v 1.2.4.3 2006-04-17 14:17:55 dansei Exp $
  * $Log: not supported by cvs2svn $
+ * Revision 1.2.4.2  2005/12/04 07:38:16  dansei
+ * using php long-open-tag to resolve xml-conflicts
+ *
  * Revision 1.2.4.1  2005/12/04 02:37:03  dansei
  * updated for vbank project
  *
@@ -18,6 +21,32 @@
  * (now the _Phpfixes.php is for dispatch, and without version header)
  */
 if (! function_exists('_Require')) {
+
+global $PHPX_DIR_SEP; 
+global $PHPX_PATH_SEP; 
+
+switch (PHP_OS) {
+    case 'WINNT': 
+        $PHPX_DIR_SEP = '\\'; 
+        $PHPX_PATH_SEP = ';'; 
+        break; 
+    default: 
+        $PHPX_DIR_SEP = '/'; 
+        $PHPX_PATH_SEP = ':'; 
+}
+
+function phpx_add_incpath($path, $preferred = false) {
+    $old = get_include_path(); 
+    if (strstr($old, $path) === false) {
+        global $PHPX_PATH_SEP; 
+        if ($preferred)
+            set_include_path($path . $PHPX_PATH_SEP . $old); 
+        else
+            set_include_path($old . $PHPX_PATH_SEP . $path); 
+    }
+}
+
+phpx_add_incpath(substr(__FILE__, 0, -28)); 
 
 $_PARAMSTACK = array(); 
 $_PARAM = NULL; 
