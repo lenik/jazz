@@ -30,6 +30,15 @@
     </style>
 <!-- Event Impl. -->
     <script language="javascript">
+        function run() {
+            var form = document.getElementById("frmScript"); 
+            var src = form["src"]; 
+        }
+        function done() {
+            var form = document.getElementById("frmScript"); 
+            var src = form["src"]; 
+            src.focus(); 
+        }
         function show_output() {
             // Not implemented. 
         }
@@ -44,10 +53,11 @@
         $remote = $_SERVER['REMOTE_ADDR']; 
 ?>
 <h1 title="Your address: <?php echo $remote?>">PHP Runner <?php echo phpversion(); ?> <span class="address">(<?php echo $server; ?>)</span></h1>
-<form id="frmScript" method="post" action="?" target="result">
+<form id="frmScript" method="post" action="?" target="result" onsubmit="javascript: run(); ">
 <table border="0" width="100%" height="90%">
 <tr><td width="50%">
       <input type="hidden" name="view" value="output" />
+      <input type="hidden" name="cursor" value="0" />
       <textarea name="src" cols="40" rows="10" class="autosize">&lt;pre&gt;&lt;?php
 
 
@@ -55,7 +65,7 @@
 ?&gt;&lt;/pre&gt;</textarea>
 </td>
 <td width="50%">
-<iframe name="result" class="autosize">
+<iframe name="result" class="autosize" onload="javascript: done();">
 </iframe>
 </td></tr>
 <tr>
