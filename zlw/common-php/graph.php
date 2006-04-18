@@ -1,8 +1,8 @@
 <?php
 
 class phpx_node {
-    var $name; 
-    var $next; 
+    public $name; 
+    public $next; 
     
     function phpx_node($name = NULL) {
         $this->name = $name; 
@@ -10,8 +10,8 @@ class phpx_node {
 }
 
 class phpx_graph {
-    var $nodes = array(); 
-    var $def = NULL; 
+    public $nodes = array(); 
+    private $def = NULL; 
     
     function add(&$node) {
         assert($node != NULL); 
@@ -41,7 +41,7 @@ class phpx_graph {
     function &get($name) {
         if (array_key_exists($name, $this->nodes))
             return $this->nodes[$name]; 
-        return $def; 
+        return $this->def; 
     }
     
     function connected($start) {
