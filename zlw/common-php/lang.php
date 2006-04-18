@@ -22,7 +22,7 @@ function &phpx_num_of(&$mix) {
 
 global $PHPX_TIMEOFDAY; 
 global $PHPX_TIMEZONE; 
-$PHPX_TIMEOFDAY = gettimeofday(); 
+$PHPX_TIMEOFDAY = eval('return gettimeofday(); '); 
 $PHPX_TIMEZONE = -60 * $PHPX_TIMEOFDAY['minuteswest']; # +28800 for +8:00
 
 # timestamp@TZ
@@ -44,6 +44,7 @@ function phpx_time_format($time, $format = PHPX_TIME_FORMAT) {
 
 # timestamp@Local => timestr@TZ
 function phpx_time_format_0($time, $format = TIME_FORMAT) {
+    global $PHPX_TIMEZONE; 
     return date($format, $time - $PHPX_TIMEZONE); 
 }
 
@@ -61,12 +62,13 @@ function phpx_time_of($str) {
 # timestr@TZ => timestamp@Local
 function phpx_time_of_0($str_0) {
     global $PHPX_TIMEZONE; 
-    return strtotime($str) + $PHPX_TIMEZONE; 
+    return strtotime($str_0) + $PHPX_TIMEZONE; 
 }
 
 # .section. simple serialization
 
 function phpx_list_format($list) {
+    $string = ''; 
     if ($list)
         foreach ($list as $item) {
             if ($string != '')
@@ -85,7 +87,7 @@ function &phpx_list_parse($string) {
     # item: ... "..."
     $segs = explode(':', $string); 
     $nsegs = sizeof($segs); 
-    if ($nsegs == 1 && $segs[0] == '') return NULL;
+    if ($nsegs == 1 && $segs[0] == '') return null;
     
     $item = ''; 
     # "A : B" : C  ==>  "A:B" : C
@@ -107,6 +109,7 @@ function &phpx_list_parse($string) {
 }
 
 function phpx_map_format($map) {
+    $string = ''; 
     if ($map)
         foreach ($map as $name=>$value) {
             if ($string != '')
@@ -213,7 +216,7 @@ function strlast() {
     $args = func_get_args(); 
     $n = func_num_args(); 
     for ($i = $n - 1; $i >= 0; $i--)
-        if ($arg = $args[$i])
+        if (($arg = $args[$i]) !== null)
             return $arg; 
     return false; 
 }
@@ -234,9 +237,9 @@ function strpass($str) {
 
 # BUG  $rv maybe contains recursive references. 
 function phpx_or(&$lv, &$rv) {
-    if ($lv == NULL)
+    if ($lv == null)
         return $lv = $rv; 
-    if ($rv == NULL)
+    if ($rv == null)
         return $lv; 
     $lt = gettype($lv); 
     $rt = gettype($rv); 
@@ -245,18 +248,18 @@ function phpx_or(&$lv, &$rv) {
     switch ($lt) {
     case 'object': 
         foreach ($rv as $k=>$v) {
-            if ($lv->$k === NULL)
-                $lv->$k = $rv->$k; 
-            else if ($lv->$k !== $rv->$k)
-                phpx_or($lv->$k, $rv->$k); 
+            if ($lv->$k === null)
+                $lv->$k = $v; 
+            elseif ($lv->$k !== $v)
+                phpx_or($lv->$k, $v); 
         }
         break; 
     case 'array': 
         $rs = sizeof($rv); 
         for ($i = 0; $i < $rs; $i++) {
-            if ($lv[$i] === NULL)
+            if ($lv[$i] === null)
                 $lv[$i] = $rv[$i]; 
-            else if ($lv[$i] != $rv[$i])
+            elseif ($lv[$i] != $rv[$i])
                 phpx_or($lv[$i], $rv[$i]); 
         }
         break; 
@@ -266,7 +269,7 @@ function phpx_or(&$lv, &$rv) {
 
 function phpx_list_args($args) {
     if (sizeof($args) == 0)
-        return NULL; 
+        return null; 
     foreach ($args as $arg) {
         if (is_array($arg))
             foreach ($arg as $ar)
@@ -279,12 +282,12 @@ function phpx_list_args($args) {
 
 function phpx_map_args($args) {
     if (($n = sizeof($args)) == 0)
-        return NULL; 
+        return null; 
     for ($i = 0; $i < $n; $i++)
         if (is_array($args[$i]))
             foreach ($args[$i] as $k=>$v)
                 $map[$k] = $v; 
-        else if ($i + 1 < $n)
+        elseif ($i + 1 < $n)
             $map[$args[$i]] = $args[$i + 1]; 
         else
             die("Invalid argument numbers"); 
