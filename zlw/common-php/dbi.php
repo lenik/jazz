@@ -15,7 +15,7 @@ function phpx_dbi_cleanup() {
         foreach ($PHPX_CONNECTED_DBI as $id=>$dbi) {
             if ($dbi->_link) $dbi->_close(); 
         }
-        $PHPX_CONNECTED_DBI = NULL; 
+        $PHPX_CONNECTED_DBI = null; 
     }
 }
 register_shutdown_function('phpx_dbi_cleanup'); 
@@ -97,18 +97,18 @@ class phpx_dbi extends phpx_dbi_base {
             . $this->_error(); 
     }
     
-    function _connect($persist = NULL, $host = NULL, $user = NULL, $password = NULL) {
+    function _connect($persist = null, $host = null, $user = null, $password = null) {
         if ($this->_link)
             $this->_warn("[CONN] Already connected: $this->_link"); 
         
         if (is_null($persist))
             $persist = $this->_persist; 
         
-        if ($host == NULL)
+        if ($host == null)
             $host = $this->_host; 
-        if ($user == NULL)
+        if ($user == null)
             $user = $this->_user; 
-        if ($password == NULL)
+        if ($password == null)
             $password = $this->_password; 
         
         $this->_info("[CONN] Connecting: host $host, user $user, password $password"); 
@@ -151,7 +151,7 @@ class phpx_dbi extends phpx_dbi_base {
             $this->_commit(true); 
         $this->_info('[CONN] Disconnecting: ' . $this->_link); 
         parent::_close($this->_link); 
-        $this->_link = NULL; 
+        $this->_link = null; 
         
         global $PHPX_CONNECTED_DBI; 
         unset($PHPX_CONNECTED_DBI[$this->_dbi_id]); 
@@ -172,7 +172,7 @@ class phpx_dbi extends phpx_dbi_base {
         }
     	$this->_link = $dbi->_link; 
     	$this->_debug = $dbi->_debug; 
-    	$dbi->_link = NULL; 
+    	$dbi->_link = null; 
     	$dbi->_transacting = false; 
     	return true; 
     }
@@ -284,7 +284,7 @@ class phpx_dbi extends phpx_dbi_base {
         return $keys;
     }
     
-    function _update_table($table, $values, $keys = NULL, $method = NULL) {
+    function _update_table($table, $values, $keys = null, $method = null) {
         $result = $this->_query("select * from $table where 1=2"); 
         if (! $result)                  # using error cause?
             return $this->_err("[UTBL] Failed to query table: $table"); 

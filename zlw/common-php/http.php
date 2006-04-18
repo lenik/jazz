@@ -27,7 +27,7 @@ function phpx_noslashes($value) {
     return $value; 
 }
 
-function phpx_this_host($https = NULL) {
+function phpx_this_host($https = null) {
     if (is_null($https)) {
         $proto = 'http'; 
         if ($_SERVER['HTTPS'] == 'on')
@@ -38,7 +38,7 @@ function phpx_this_host($https = NULL) {
     return "$proto://$_SERVER[HTTP_HOST]";
 }
 
-function phpx_this_url($https = NULL) {
+function phpx_this_url($https = null) {
     $url = $_SERVER['REQUEST_URL']; 
     if (strstr($url, '://')) {
         return $url; 
@@ -52,7 +52,7 @@ function phpx_this_url($https = NULL) {
 }
 
 # concat this-url with specfied relative-url
-function phpx_url_relative($url = '', $https = NULL) {
+function phpx_url_relative($url = '', $https = null) {
     $ret = phpx_this_host($https); 
     
     # http://server/dir/this [?...]
@@ -76,7 +76,7 @@ function phpx_url_relative($url = '', $https = NULL) {
 }
 
 # concat this-url with specfied full-url
-function phpx_url_full($url, $https = NULL) {
+function phpx_url_full($url, $https = null) {
     # url-absolute
     if ($right = strstr($url, '://')) {
         if (is_null($https))
@@ -96,7 +96,7 @@ function phpx_url_full($url, $https = NULL) {
 }
 
 function phpx_url_arguments($url, $args) {
-    if ($args == NULL)
+    if ($args == null)
         return $url; 
     
     $trail = ''; 
@@ -114,13 +114,13 @@ function phpx_url_arguments($url, $args) {
     return "$url?$trail"; 
 }
 
-function phpx_redirect_relative($url = '', $args = NULL, $https = NULL) {
+function phpx_redirect_relative($url = '', $args = null, $https = null) {
     $url = phpx_url_relative($url, $https); 
     header("Location: ".phpx_url_arguments($url, $args)); 
     exit; 
 }
 
-function phpx_redirect($url, $args = NULL, $https = NULL) {
+function phpx_redirect($url, $args = null, $https = null) {
     $url = phpx_url_full($url, $https); 
     header("Location: ".phpx_url_arguments($url, $args)); 
     exit; 
@@ -149,7 +149,7 @@ function phpx_httpcall_input() {
     phpx_httpcall_stack(); 
     if ($PHPX_CALLSTACK)
         return end($PHPX_CALLSTACK);
-    return NULL;                # not being called
+    return null;                # not being called
 }
 
 function phpx_httpcall_hold() {
@@ -184,7 +184,7 @@ function phpx_httpcall_error($errval) {
     # if not being called, then don't return anything.
 }
 
-function phpx_httpcall($call_uri, $args = NULL) {
+function phpx_httpcall($call_uri, $args = null) {
     global $PHPX_CALLSTACK; 
     phpx_httpcall_stack(); 
     

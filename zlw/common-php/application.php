@@ -83,8 +83,8 @@ function phpx_application_end() {
     global $PHPX_APP; 
     global $PHPX_APPNAME; 
     phpx_cached_set($PHPX_APPNAME, $PHPX_APP); 
-    $PHPX_APP = NULL; 
-    $PHPX_APPNAME = NULL; 
+    $PHPX_APP = null; 
+    $PHPX_APPNAME = null; 
 }
 
 function phpx_application_destroy() {

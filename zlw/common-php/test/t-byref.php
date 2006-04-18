@@ -8,7 +8,7 @@ $x = 'hello';
 func($x); 
 echo "$x\n"; 
 
-$y = NULL; 
+$y = null; 
 func($y); 
 echo "$y\n"; 
 

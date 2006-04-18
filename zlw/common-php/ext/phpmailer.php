@@ -211,7 +211,7 @@ class PHPMailer
     /**#@+
      * @access private
      */
-    var $smtp            = NULL;
+    var $smtp            = null;
     var $to              = array();
     var $cc              = array();
     var $bcc             = array();
@@ -526,7 +526,7 @@ class PHPMailer
      * @return bool
      */
     function SmtpConnect() {
-        if($this->smtp == NULL) { $this->smtp = new SMTP(); }
+        if($this->smtp == null) { $this->smtp = new SMTP(); }
 
         $this->smtp->do_debug = $this->SMTPDebug;
         $hosts = explode(";", $this->Host);
@@ -576,7 +576,7 @@ class PHPMailer
      * @return void
      */
     function SmtpClose() {
-        if($this->smtp != NULL)
+        if($this->smtp != null)
         {
             if($this->smtp->Connected())
             {
@@ -595,7 +595,7 @@ class PHPMailer
      * @access public
      * @return bool
      */
-    function SetLanguage($lang_type, $lang_path = NULL) {
+    function SetLanguage($lang_type, $lang_path = null) {
         if (is_null($lang_path))
             $lang_path = dirname(__FILE__) . "/language/"; 
         if(file_exists($lang_path.'phpmailer.lang-'.$lang_type.'.php'))

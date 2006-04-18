@@ -2,7 +2,7 @@
 
 class C {
     var $c1 = 'C::c1 default'; 
-    var $c2;            /* default NULL */
+    var $c2;            /* default null */
     function mtd1() {
         echo "C.c1 == $this->c1\n";
         echo "C.c2 type: ", gettype($this->c2), "\n"; 

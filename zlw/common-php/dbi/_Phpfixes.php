@@ -16,7 +16,7 @@
 if (! function_exists('_Require')) {
 
 function _EnterIfNecessary($target) {
-    $dir = NULL; 
+    $dir = null; 
     if (substr($target, 0, 1) == '/'
             || substr($target, 0, 2) == './'
             || substr($target, 0, 3) == '../') {

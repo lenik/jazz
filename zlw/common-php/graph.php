@@ -4,17 +4,17 @@ class phpx_node {
     public $name; 
     public $next; 
     
-    function phpx_node($name = NULL) {
+    function phpx_node($name = null) {
         $this->name = $name; 
     }
 }
 
 class phpx_graph {
     public $nodes = array(); 
-    private $def = NULL; 
+    private $def = null; 
     
     function add(&$node) {
-        assert($node != NULL); 
+        assert($node != null); 
         if (array_key_exists($node->name, $this->nodes))
             return false; 
         $this->nodes[$node->name] = &$node; 
@@ -22,7 +22,7 @@ class phpx_graph {
     }
     
     function remove($name) {
-        assert ($name != NULL); 
+        assert ($name != null); 
         
         if (! array_key_exists($name, $this->nodes))
             return false; 
@@ -45,11 +45,11 @@ class phpx_graph {
     }
     
     function connected($start) {
-        assert($start != NULL); 
+        assert($start != null); 
         
         $set = array(); 
         $node = $start; 
-        while ($node != NULL) {
+        while ($node != null) {
             assert(array_key_exists($node->name, $this->nodes)); 
             assert(! array_key_exists($node->name, $set)); 
             $set[$node->name] = true; # &$node; 
@@ -59,10 +59,10 @@ class phpx_graph {
     }
     
     function connect(&$from, &$to) {
-        assert($from != NULL); 
+        assert($from != null); 
         assert(array_key_exists($from->name, $this->nodes)); 
         
-        if ($to != NULL) {
+        if ($to != null) {
             # add if not existed. 
             if (! array_key_exists($to->name, $this->nodes))
                 $this->add($to); 

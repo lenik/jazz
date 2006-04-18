@@ -6,7 +6,7 @@ require '../lang.php';
 $m = array(
   'name' => "le;n\n\"i\k", 
   'age' => 13, 
-  'foo' => NULL, 
+  'foo' => null, 
 ); 
 
 echo $s = map_format($m), "\n";
