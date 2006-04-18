@@ -31,7 +31,7 @@ define("PDT_PRIMARY",   32768);
  */
 class phpx_data_object extends phpx_dbi {
     
-    function phpx_data_object($dbi = NULL) {
+    function phpx_data_object($dbi = null) {
         if (! is_null($dbi))
             $this->_Reuse($dbi); 
     }
@@ -42,7 +42,7 @@ class phpx_data_object extends phpx_dbi {
         return $vt; 
     }
     
-    function get($name, $def = NULL) {
+    function get($name, $def = null) {
         $vt = $this->getvt($name); 
         if ($vt & PDT_GET)
             $val = $this->{"get_$name"}(); 
@@ -54,7 +54,7 @@ class phpx_data_object extends phpx_dbi {
     }
     
     # get sql-escaped value
-    function getx($name, $def = NULL) {
+    function getx($name, $def = null) {
         $val = $this->get($name, $def); 
         if (is_null($val))
             return 'null'; 
@@ -69,7 +69,7 @@ class phpx_data_object extends phpx_dbi {
     function put($name, $value, $force = false) {
         $vt = $this->getvt($name); 
         if (($vt & PDT_NOTNULL) && is_null($value) && !$force) {
-            error_log("NOT-NULL: $name"); 
+            error_log("NOT-null: $name"); 
         }
         if (($vt & PDT_VERIFY) && !$force) {
             $err = $this->{"vrf_$name"}($value); 
@@ -84,7 +84,7 @@ class phpx_data_object extends phpx_dbi {
             $this->{"pdv_$name"} = $value; 
     }
     
-    function _verify($ignores = NULL) {
+    function _verify($ignores = null) {
         foreach ($this as $memberf=>$value) {
             if (is_null($value)) continue; 
             if (substr($memberf, 0, 4) != 'pdt_') continue; 
@@ -94,14 +94,14 @@ class phpx_data_object extends phpx_dbi {
             $vt = $this->$memberf; 
             if ($vt & PDT_NOTNULL) {
                 if (is_null($this->get($member)))
-                    return "NOT-NULL: $member"; 
+                    return "NOT-null: $member"; 
             }
             if ($vt & PDT_VERIFY) {
                 if (! $this->{"vrf_$member"}($this->get($member)))
                     return "NOT-VERIFY: $member"; 
             }
         }
-        return NULL; 
+        return null; 
     }
     
     function _import($assoc, $nulls = false) {
@@ -164,7 +164,7 @@ class phpx_data_object extends phpx_dbi {
         return "($keys) values($values)"; 
     }
     
-    function _format_updates($ignores = NULL, $nulls = false) {
+    function _format_updates($ignores = null, $nulls = false) {
         return $this->_format('=', ',', $nulls, $ignores); 
     }
     

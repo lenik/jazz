@@ -21,7 +21,7 @@ class phpx_error {
     public $source_status; 
     public $cause; 
     
-    function phpx_error($provider, $summary, $source = NULL, $cause = NULL) {
+    function phpx_error($provider, $summary, $source = null, $cause = null) {
         global $PHPX_ERROR_FORMAT; 
         
         $this->time = time(); 
@@ -45,7 +45,7 @@ class phpx_error {
             if (method_exists($source, '_source_status'))
                 $this->source_status = $source->_source_status(); 
         
-        if ($cause != NULL) {
+        if ($cause != null) {
             $this->cause = $cause; 
             phpx_or($this, $cause); 
         }
@@ -65,13 +65,13 @@ class phpx_error {
 }
 
 class phpx_error_manager extends phpx_node {
-    public $pref = NULL;               # preference
+    public $pref = null;               # preference
     private $errors; 
     private $mark;                     # for range select
     
-    function phpx_error_manager($provider = NULL, $pref = NULL) {
+    function phpx_error_manager($provider = null, $pref = null) {
         global $PHPX_EM_NEXT; 
-        if ($provider == NULL)
+        if ($provider == null)
             $provider = 'EM/' . $PHPX_EM_NEXT++; 
         $this->name = $provider; 
         $this->pref = $pref; 
@@ -87,12 +87,12 @@ class phpx_error_manager extends phpx_node {
     }
     
     # @final
-    function process($summary, $source = NULL, $cause = NULL) {
+    function process($summary, $source = null, $cause = null) {
         $e = new phpx_error($this->name, $summary, $source, $cause); 
         $this->errors[] = &$e; 
         
         $next = $this; 
-        while ($next != NULL) {
+        while ($next != null) {
             $next->handler($e); 
             $next = $next->next; 
         }
@@ -108,10 +108,10 @@ class phpx_error_manager extends phpx_node {
         return $this->mark = sizeof($this->errors); 
     }
     
-    function select($cut = false, $mark = NULL) {
-        if ($mark == NULL)
+    function select($cut = false, $mark = null) {
+        if ($mark == null)
             $mark = $this->mark; 
-        if ($mark == NULL) {
+        if ($mark == null) {
             $mark = sizeof($this->errors) - 1; 
             if ($mark < 0) $mark = 0; 
         }
@@ -138,13 +138,13 @@ function phpx_error_manager_register(&$em) {
     if (! $PHPX_EM_REGISTRY->add($em))
         die("Failed to register error-manager $em->name"); 
     
-    if ($em->next == NULL && $PHPX_EM_LAST_TERM != NULL)
+    if ($em->next == null && $PHPX_EM_LAST_TERM != null)
         $em->next = &$PHPX_EM_LAST_TERM; 
         
     if ($em->pref & PHPX_EM_TERM) {
         # connect leaves if exist (except the term self. )
         foreach ($PHPX_EM_REGISTRY->nodes as $name=>$node) {
-            if ($node->next == NULL) {
+            if ($node->next == null) {
                 # Leaf, Avoid loopping. 
                 $connected = $PHPX_EM_REGISTRY->connected($node); 
                 if (! array_key_exists($em->name, $connected))
@@ -170,9 +170,9 @@ function phpx_error_manager_connect(&$from, &$to) {
     return $PHPX_EM_REGISTRY->connect($from, $to); 
 }
 
-function phpx_error($provider, $summary, $source = NULL, $cause = NULL) {
+function phpx_error($provider, $summary, $source = null, $cause = null) {
     $em = &phpx_error_manager_get($provider); 
-    assert($em != NULL); 
+    assert($em != null); 
     return $em->process($summary, $source, $cause); 
 }
 

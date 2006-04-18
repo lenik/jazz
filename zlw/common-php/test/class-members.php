@@ -17,10 +17,10 @@ class C {
 class D {
     var $def; 
     function func() {
-        if ($def == NULL)
-            echo "def: == NULL\n"; 
-        if ($def === NULL)
-            echo "def: === NULL\n"; 
+        if ($def == null)
+            echo "def: == null\n"; 
+        if ($def === null)
+            echo "def: === null\n"; 
         if (! defined($def))
             echo "def: ! defined()\n"; 
         if (! $def)

@@ -5,8 +5,12 @@
  *
  * Copy this fixes file to the same directory of which do includes.
  *
- * $Id: phpfixes.php,v 1.2.4.3 2006-04-17 14:17:55 dansei Exp $
+ * $Id: phpfixes.php,v 1.2.4.4 2006-04-18 18:07:44 dansei Exp $
  * $Log: not supported by cvs2svn $
+ * Revision 1.2.4.3  2006/04/17 14:17:55  dansei
+ * now add site directory (zlw/..) to include path.
+ * ( using set_include_path or set_ini('include_path') )
+ *
  * Revision 1.2.4.2  2005/12/04 07:38:16  dansei
  * using php long-open-tag to resolve xml-conflicts
  *
@@ -49,10 +53,10 @@ function phpx_add_incpath($path, $preferred = false) {
 phpx_add_incpath(substr(__FILE__, 0, -28)); 
 
 $_PARAMSTACK = array(); 
-$_PARAM = NULL; 
+$_PARAM = null; 
 
 function _EnterIfNecessary($target) {
-    $dir = NULL; 
+    $dir = null; 
     
     # begin with / ./ ../
     if (substr($target, 0, 1) == '/'
@@ -76,7 +80,7 @@ function _EnterIfNecessary($target) {
     }
     
     if (is_null($dir))
-        return NULL; 
+        return null; 
 
     $cwd = getcwd(); 
     chdir($dir); 
@@ -93,7 +97,7 @@ function _IncludeError($target) {
         .", include-path: ".get_include_path()); 
 }
 
-function _Require($target, $must_exist = true, $param = NULL) {
+function _Require($target, $must_exist = true, $param = null) {
     global $_PARAMSTACK; 
     global $_PARAM; 
     $leave = _EnterIfNecessary($target); 
@@ -101,7 +105,7 @@ function _Require($target, $must_exist = true, $param = NULL) {
         if ($must_exist)
             _IncludeError($target); 
         else
-            return NULL; 
+            return null; 
     }
     # $path = array(getcwd(), basename($target)); 
     $_PARAMSTACK[] = $_PARAM = $param; 
@@ -112,7 +116,7 @@ function _Require($target, $must_exist = true, $param = NULL) {
     return true; 
 }
 
-function _RequireOnce($target, $must_exist = true, $param = NULL) {
+function _RequireOnce($target, $must_exist = true, $param = null) {
     global $_PARAMSTACK; 
     global $_PARAM; 
     $leave = _EnterIfNecessary($target); 
@@ -120,7 +124,7 @@ function _RequireOnce($target, $must_exist = true, $param = NULL) {
         if ($must_exist)
             _IncludeError($target); 
         else
-            return NULL; 
+            return null; 
     }
     # $path = array(getcwd(), basename($target)); 
     $_PARAMSTACK[] = $_PARAM = $param; 
@@ -131,7 +135,7 @@ function _RequireOnce($target, $must_exist = true, $param = NULL) {
     return true; 
 }
 
-function _Include($target, $must_exist = true, $param = NULL) {
+function _Include($target, $must_exist = true, $param = null) {
     global $_PARAMSTACK; 
     global $_PARAM; 
     $leave = _EnterIfNecessary($target); 
@@ -139,7 +143,7 @@ function _Include($target, $must_exist = true, $param = NULL) {
         if ($must_exist)
             _IncludeError($target); 
         else
-            return NULL; 
+            return null; 
     }
     # $path = array(getcwd(), basename($target)); 
     $_PARAMSTACK[] = $_PARAM = $param; 
@@ -150,7 +154,7 @@ function _Include($target, $must_exist = true, $param = NULL) {
     return true; 
 }
 
-function _IncludeOnce($target, $must_exist = true, $param = NULL) {
+function _IncludeOnce($target, $must_exist = true, $param = null) {
     global $_PARAMSTACK; 
     global $_PARAM; 
     $leave = _EnterIfNecessary($target); 
@@ -158,7 +162,7 @@ function _IncludeOnce($target, $must_exist = true, $param = NULL) {
         if ($must_exist)
             _IncludeError($target); 
         else
-            return NULL; 
+            return null; 
     }
     # $path = array(getcwd(), basename($target)); 
     $_PARAMSTACK[] = $_PARAM = $param; 

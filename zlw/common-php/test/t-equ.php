@@ -2,7 +2,7 @@
 <?php
 
 $n = array(
-    NULL, 
+    null, 
     false, 
     0, 
     0.0, 
@@ -13,7 +13,7 @@ $n = array(
     array(), 
     ); 
 $nn = array(
-    'NULL', 
+    'null', 
     'false', 
     '0', 
     '0.0', 

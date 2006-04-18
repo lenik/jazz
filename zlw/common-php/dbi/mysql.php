@@ -106,19 +106,19 @@ class phpx_dbi_base {
     function _unbuffered_query()    { $args = func_get_args(); $args[] = $this->_link;  #1
                                       return call_user_func_array('mysql_unbuffered_query',     $args); }
     
-    function _begin($link = NULL) {
+    function _begin($link = null) {
         if (is_null($link)) 
             $link = $this->_link; 
         return mysql_query('begin', $link); 
     }
     
-    function _commit($link = NULL) {
+    function _commit($link = null) {
         if (is_null($link)) 
             $link = $this->_link; 
         return mysql_query('commit', $link); 
     }
     
-    function _rollback($link = NULL) {
+    function _rollback($link = null) {
         if (is_null($link)) 
             $link = $this->_link; 
         return mysql_query('rollback', $link); 

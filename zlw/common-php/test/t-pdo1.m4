@@ -25,7 +25,7 @@ class person extends phpx_data_object {
         $age = $this->get('age'); 
         if ($age > 100)
             return "Age could not be greater than 1000!!"; 
-        return NULL; 
+        return null; 
     }
     
     function dump() {
@@ -36,7 +36,7 @@ class person extends phpx_data_object {
 
 $p = new person; 
 echo 'name: ', $p->get('name'), "\n"; 
-$p->put('name', NULL);
+$p->put('name', null);
 
 echo "--------------------- format: \n";
 echo $p->_format_debug(); 

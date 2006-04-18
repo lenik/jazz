@@ -1,6 +1,6 @@
 <?php
 
-function &phpx_isa_load($table, $dbi = NULL) {
+function &phpx_isa_load($table, $dbi = null) {
     if (is_resource($table))
         $result = $table; 
     else {
@@ -47,7 +47,7 @@ function isa_build_branches($all) {
     return $branches; 
 }
 
-function isa_dump($start, $indent = '', $names = NULL) {
+function isa_dump($start, $indent = '', $names = null) {
     foreach ($start['sub'] as $id => $sub) {
         $name = is_null($names) ? $id : $names[$id]; 
         echo $indent . $name . "\n"; 
@@ -55,7 +55,7 @@ function isa_dump($start, $indent = '', $names = NULL) {
     }
 }
 
-function isa_save_db($table, $subs, $sup_id = NULL, $sub_f = 'sub', $sup_f = 'sup', $dbi = NULL) {
+function isa_save_db($table, $subs, $sup_id = null, $sub_f = 'sub', $sup_f = 'sup', $dbi = null) {
     if (is_null($dbi))
         $dbi = phpx_connect_fast(); 
     foreach ($subs['sub'] as $id => $sub) {

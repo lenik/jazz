@@ -20,10 +20,10 @@
 if (! function_exists('_Require')) {
 
 $_PARAMSTACK = array(); 
-$_PARAM = NULL; 
+$_PARAM = null; 
 
 function _EnterIfNecessary($target) {
-    $dir = NULL; 
+    $dir = null; 
     
     # begin with / ./ ../
     if (substr($target, 0, 1) == '/'
@@ -47,7 +47,7 @@ function _EnterIfNecessary($target) {
     }
     
     if (is_null($dir))
-        return NULL; 
+        return null; 
 
     $cwd = getcwd(); 
     chdir($dir); 
@@ -64,7 +64,7 @@ function _IncludeError($target) {
         .", include-path: ".get_include_path()); 
 }
 
-function _Require($target, $must_exist = true, $param = NULL) {
+function _Require($target, $must_exist = true, $param = null) {
     global $_PARAMSTACK; 
     global $_PARAM; 
     $leave = _EnterIfNecessary($target); 
@@ -72,7 +72,7 @@ function _Require($target, $must_exist = true, $param = NULL) {
         if ($must_exist)
             _IncludeError($target); 
         else
-            return NULL; 
+            return null; 
     }
     # $path = array(getcwd(), basename($target)); 
     $_PARAMSTACK[] = $_PARAM = $param; 
@@ -83,7 +83,7 @@ function _Require($target, $must_exist = true, $param = NULL) {
     return true; 
 }
 
-function _RequireOnce($target, $must_exist = true, $param = NULL) {
+function _RequireOnce($target, $must_exist = true, $param = null) {
     global $_PARAMSTACK; 
     global $_PARAM; 
     $leave = _EnterIfNecessary($target); 
@@ -91,7 +91,7 @@ function _RequireOnce($target, $must_exist = true, $param = NULL) {
         if ($must_exist)
             _IncludeError($target); 
         else
-            return NULL; 
+            return null; 
     }
     # $path = array(getcwd(), basename($target)); 
     $_PARAMSTACK[] = $_PARAM = $param; 
@@ -102,7 +102,7 @@ function _RequireOnce($target, $must_exist = true, $param = NULL) {
     return true; 
 }
 
-function _Include($target, $must_exist = true, $param = NULL) {
+function _Include($target, $must_exist = true, $param = null) {
     global $_PARAMSTACK; 
     global $_PARAM; 
     $leave = _EnterIfNecessary($target); 
@@ -110,7 +110,7 @@ function _Include($target, $must_exist = true, $param = NULL) {
         if ($must_exist)
             _IncludeError($target); 
         else
-            return NULL; 
+            return null; 
     }
     # $path = array(getcwd(), basename($target)); 
     $_PARAMSTACK[] = $_PARAM = $param; 
@@ -121,7 +121,7 @@ function _Include($target, $must_exist = true, $param = NULL) {
     return true; 
 }
 
-function _IncludeOnce($target, $must_exist = true, $param = NULL) {
+function _IncludeOnce($target, $must_exist = true, $param = null) {
     global $_PARAMSTACK; 
     global $_PARAM; 
     $leave = _EnterIfNecessary($target); 
@@ -129,7 +129,7 @@ function _IncludeOnce($target, $must_exist = true, $param = NULL) {
         if ($must_exist)
             _IncludeError($target); 
         else
-            return NULL; 
+            return null; 
     }
     # $path = array(getcwd(), basename($target)); 
     $_PARAMSTACK[] = $_PARAM = $param; 
