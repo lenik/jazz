@@ -1,13 +1,13 @@
 <?php
 
-require_once dirname(__FILE__) . '/af-base.php'; 
+require_once dirname(__FILE__) . '/../common-php/error.php'; 
 
 function &zlw_af_type($typestr) {
     global $ZLW_AF_TYPE; 
     $type = &$ZLW_AF_TYPE[$typestr]; 
     if (is_null($type)) {
         list($name, $param) = explode(':', $typestr, 2);
-        if ($param == '') $param = NULL; 
+        if ($param == '') $param = null; 
         $typecls = 'zlw_af_type_' . $name; 
         if (class_exists($typecls))
             $type = eval("return new $typecls(\$param);");
@@ -18,10 +18,10 @@ function &zlw_af_type($typestr) {
 }
 
 class zlw_af_type extends phpx_error_support {
-    var $name = '(type-base)'; 
-    var $param; 
+    public $name = '(type-base)'; 
+    public $param; 
     
-    function zlw_af_type($name, $param = NULL) {
+    function zlw_af_type($name, $param = null) {
         $this->phpx_error_support(ZLW_AF);
         $this->name = $name; 
         if (is_array($param))
@@ -32,15 +32,17 @@ class zlw_af_type extends phpx_error_support {
     
     # <internal> => <string>
     function format($value) {
-        $this->_err('[TYPE] Not implemented'); 
-        return NULL; 
+        $value; 
+        $this->_err('[AF-TYPE] Not implemented'); 
+        return null; 
     }
     
     # <string> => <internal>
     # @throws ZLW_AF*
     function parse($string) {
-        $this->_err('[TYPE] Not implemented'); 
-        return NULL; 
+        $string; 
+        $this->_err('[AF-TYPE] Not implemented'); 
+        return null; 
     }
     
     function xml($ns = '') {
@@ -49,12 +51,12 @@ class zlw_af_type extends phpx_error_support {
 }
 
 class zlw_af_type_def  extends zlw_af_type {
-    var $name = NULL;
+    public $name = null;
     # @inherit
 }
 
 class zlw_af_type_string extends zlw_af_type {
-    var $name = 'string'; 
+    public $name = 'string'; 
     
     function format($value) {
         return "$value"; 
@@ -65,45 +67,45 @@ class zlw_af_type_string extends zlw_af_type {
 }
 
 class zlw_af_type_binary extends zlw_af_type {
-    var $name = 'binary'; 
+    public $name = 'binary'; 
     # @inherit
 }
 
 class zlw_af_type_number extends zlw_af_type {
-    var $name = 'number'; 
+    public $name = 'number'; 
     
     function format($value) {
         return "$value"; 
     }
     function parse($string) {
         if (! is_numeric($string)) {
-            $this->_err("[TYPE] Not a number: $string"); 
+            $this->_err("[AF-TYPE] Not a number: $string"); 
             return 0; 
         }
         $number = $string + 0; 
         if ("$string" != "$number")
-            $this->_warn("[TYPE] Numeric information lost: from $string, to $number"); 
+            $this->_warn("[AF-TYPE] Numeric information lost: from $string, to $number"); 
         return $number; 
     }
 }
 
 class zlw_af_type_float extends zlw_af_type_number {
-    var $name = 'float'; 
+    public $name = 'float'; 
     # @inherit
 }
 
 class zlw_af_type_double extends zlw_af_type_number {
-    var $name = 'double'; 
+    public $name = 'double'; 
     # @inherit
 }
 
 class zlw_af_type_decimal extends zlw_af_type_number {
-    var $name = 'decimal'; 
+    public $name = 'decimal'; 
     # @inherit
 }
 
 class zlw_af_type_integer extends zlw_af_type_decimal {
-    var $name = 'integer'; 
+    public $name = 'integer'; 
     
     function format($value) {
         return '' . floor($value); 
@@ -112,51 +114,51 @@ class zlw_af_type_integer extends zlw_af_type_decimal {
         $number = parent::parse($string); 
         $integer = $number >= 0 ? floor($number) : ceil($number); 
         if ($number != $integer) 
-            $this->_warn("[TYPE] Decimal fraction is truncated: from $number, to $integer"); 
+            $this->_warn("[AF-TYPE] Decimal fraction is truncated: from $number, to $integer"); 
         return $integer; 
     }
 }
 
 class zlw_af_type_long extends zlw_af_type_integer {
-    var $name = 'long'; 
+    public $name = 'long'; 
     
     function parse($string) {
         $integer = zlw_af_type_integer::parse($string); 
         if ($integer < -2147483647 || $integer > 2147483647)
-            $this->_warn("[TYPE] Overflow of long int type: $integer"); 
+            $this->_warn("[AF-TYPE] Overflow of long int type: $integer"); 
         return $integer; 
     }
 }
 
 class zlw_af_type_int extends zlw_af_type_long {
-    var $name = 'int'; 
+    public $name = 'int'; 
     # @inherit
 }
 
 class zlw_af_type_short extends zlw_af_type_int {
-    var $name = 'short'; 
+    public $name = 'short'; 
     
     function parse($string) {
         $integer = zlw_af_type_integer::parse($string); 
         if ($integer < -32768 || $integer > 32767)
-            $this->_warn("[TYPE] Overflow of short int type: $integer"); 
+            $this->_warn("[AF-TYPE] Overflow of short int type: $integer"); 
         return $integer; 
     }
 }
 
 class zlw_af_type_byte extends zlw_af_type_short {
-    var $name = 'byte'; 
+    public $name = 'byte'; 
     
     function parse($string) {
         $integer = zlw_af_type_integer::parse($string); 
         if ($integer < -128 || $integer > 127)
-            $this->_warn("[TYPE] Overflow of short int type: $integer"); 
+            $this->_warn("[AF-TYPE] Overflow of short int type: $integer"); 
         return $integer; 
     }
 }
 
 class zlw_af_type_boolean extends zlw_af_type {
-    var $name = 'boolean'; 
+    public $name = 'boolean'; 
     
     function format($value) {
         return $value ? 'true' : 'false'; 
@@ -169,8 +171,8 @@ class zlw_af_type_boolean extends zlw_af_type {
 }
 
 class zlw_af_type_date_time extends zlw_af_type {
-    var $name = 'date_time'; 
-    var $format = 'Y-m-d H:i:s'; 
+    public $name = 'date_time'; 
+    public $format = 'Y-m-d H:i:s'; 
     
     # <GMT-timestamp> => <locale-timestr>
     function format($value) {
@@ -183,8 +185,8 @@ class zlw_af_type_date_time extends zlw_af_type {
 }
 
 class zlw_af_type_date extends zlw_af_type_date_time {
-    var $name = 'date'; 
-    var $format = 'Y-m-d'; 
+    public $name = 'date'; 
+    public $format = 'Y-m-d'; 
     
     # function format($value)
     function parse($string) {
@@ -195,8 +197,8 @@ class zlw_af_type_date extends zlw_af_type_date_time {
 }
 
 class zlw_af_type_time extends zlw_af_type_date_time {
-    var $name = 'time'; 
-    var $format = 'H:i:s'; 
+    public $name = 'time'; 
+    public $format = 'H:i:s'; 
     
     # function format($value)
     function parse($string) {
@@ -207,8 +209,8 @@ class zlw_af_type_time extends zlw_af_type_date_time {
 }
 
 class zlw_af_variant {
-    var $type;                          # zlw_af_type, never be null.
-    var $value; 
+    public $type;                       # zlw_af_type, never be null.
+    public $value; 
     
     function zlw_af_variant($init, $typestr = 'string', $parse = true) {
         assert(! is_null($typestr)); 
@@ -251,6 +253,7 @@ class zlw_af_variant {
 }
 
 $ZLW_AF_TYPE_BASE = array(
+    # derived => base
     'float' => 'number', 
     'double' => 'number', 
     'decimal' => 'number', 
@@ -264,10 +267,10 @@ $ZLW_AF_TYPE_BASE = array(
     ); 
 
 function zlw_af_type_of($type, $base) {
-    global $ZLW_AF_TYPE_INHERITS; 
+    global $ZLW_AF_TYPE_BASE; 
     do {
         if ($type == $base) return true; 
-    } while ($type = $ZLW_AF_TYPE_BASE[$type]); 
+    } while (($type = $ZLW_AF_TYPE_BASE[$type])); 
     return false; 
 }
 

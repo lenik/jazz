@@ -9,25 +9,27 @@ class zlw_af_cc extends phpx_error_support {
     }
     
     function xml($ns = '') {
+        $ns; 
         $this->_err('[CONS] Not Implemented'); 
-        return NULL; 
+        return null; 
     }
     
     function check($var) {
+        $var; 
         $this->_err('[CONS] Not Implemented'); 
         return false; 
     }
 }
 
 class zlw_af_cc_item extends zlw_af_cc {
-    var $cc; 
-    var $name; 
-    var $reason; 
-    var $level; 
-    var $side; 
+    public $cc; 
+    public $name; 
+    public $reason; 
+    public $level; 
+    public $side; 
     
-    function zlw_af_cc_item(&$cc, $name = NULL, $reason = NULL, $level = NULL, 
-                            $side = NULL) {
+    function zlw_af_cc_item(&$cc, $name = null, $reason = null, $level = null, 
+                            $side = null) {
         $this->cc = &$cc; 
         $this->name = $name; 
         $this->reason = $reason; 
@@ -57,7 +59,7 @@ class zlw_af_cc_item extends zlw_af_cc {
 }
 
 class zlw_af_cc_list extends zlw_af_cc {
-    var $items; 
+    public $items; 
     
     function zlw_af_cc_list(&$items) {
         parent::zlw_af_cc(); 
@@ -80,7 +82,7 @@ class zlw_af_cc_list extends zlw_af_cc {
 }
 
 class zlw_af_cc_not extends zlw_af_cc {
-    var $regular; 
+    public $regular; 
     
     function zlw_af_cc_not(&$regular) {
         parent::zlw_af_cc(); 
@@ -100,7 +102,7 @@ class zlw_af_cc_not extends zlw_af_cc {
 }
 
 class zlw_af_cc_and extends zlw_af_cc {
-    var $items; 
+    public $items; 
     
     function zlw_af_cc_and(&$items) {
         parent::zlw_af_cc(); 
@@ -125,7 +127,7 @@ class zlw_af_cc_and extends zlw_af_cc {
 }
 
 class zlw_af_cc_or extends zlw_af_cc {
-    var $items; 
+    public $items; 
     
     function zlw_af_cc_or(&$items) {
         parent::zlw_af_cc(); 
@@ -150,7 +152,7 @@ class zlw_af_cc_or extends zlw_af_cc {
 }
 
 class zlw_af_cc_xor extends zlw_af_cc {
-    var $items; 
+    public $items; 
     
     function zlw_af_cc_xor(&$items) {
         parent::zlw_af_cc(); 
@@ -180,13 +182,13 @@ class zlw_af_cc_xor extends zlw_af_cc {
 
 class zlw_af_cc_range extends zlw_af_cc {
     # min min-exclusive max max-exclusive
-    var $model = 'range'; 
-    var $min; 
-    var $max; 
-    var $min_excluded; 
-    var $max_excluded; 
+    public $model = 'range'; 
+    public $min; 
+    public $max; 
+    public $min_excluded; 
+    public $max_excluded; 
     
-    function zlw_af_cc_range($min = NULL, $max = NULL, $min_excluded = NULL, $max_excluded = NULL) {
+    function zlw_af_cc_range($min = null, $max = null, $min_excluded = null, $max_excluded = null) {
         parent::zlw_af_cc(); 
         $this->min = $min; 
         $this->max = $max; 
@@ -204,26 +206,26 @@ class zlw_af_cc_range extends zlw_af_cc {
     }
     
     function check($var) {
-        assert($var != NULL); 
+        assert($var != null); 
         if ($var->typeof('number'))
             $n = 1 * $var->value; 
         else
             $n = strlen($var->value); 
-        if ($min != NULL)
-            if ($min_excluded) {
-                if ($n <= $min)
-                    return $this->_err("[CONS] Too small: At least $min (exclude)"); 
+        if ($this->min != null)
+            if ($this->min_excluded) {
+                if ($n <= $this->min)
+                    return $this->_err("[CONS] Too small: At least $this->min (exclude)"); 
             } else {
-                if ($n < $min)
-                    return $this->_err("[CONS] Too small: At least $min (include)"); 
+                if ($n < $this->min)
+                    return $this->_err("[CONS] Too small: At least $this->min (include)"); 
             }
-        if ($max != NULL)
-            if ($max_excluded) {
-                if ($n >= $max)
-                    return $this->_err("[CONS] Too large: At most $max (exclude)"); 
+        if ($this->max != null)
+            if ($this->max_excluded) {
+                if ($n >= $this->max)
+                    return $this->_err("[CONS] Too large: At most $this->max (exclude)"); 
             } else {
-                if ($n > $max)
-                    return $this->_err("[CONS] Too large: At most $max (include)"); 
+                if ($n > $this->max)
+                    return $this->_err("[CONS] Too large: At most $this->max (include)"); 
             }
         return true; 
     }
@@ -231,15 +233,15 @@ class zlw_af_cc_range extends zlw_af_cc {
 
 class zlw_af_cc_pattern extends zlw_af_cc {
     # regex case-insensitive dot-all multiline comment
-    var $model = 'pattern'; 
-    var $regex; 
-    var $case_insensitive; 
-    var $dot_all; 
-    var $multiline; 
-    var $comment; 
+    public $model = 'pattern'; 
+    public $regex; 
+    public $case_insensitive; 
+    public $dot_all; 
+    public $multiline; 
+    public $comment; 
     
-    function zlw_af_cc_pattern($regex, $case_insensitive = NULL, $dot_all = NULL, 
-            $multiline = NULL, $comment = NULL) {
+    function zlw_af_cc_pattern($regex, $case_insensitive = null, $dot_all = null, 
+            $multiline = null, $comment = null) {
         parent::zlw_af_cc(); 
         $this->regex = $regex; 
         $this->case_insensitive = $case_insensitive; 
@@ -259,18 +261,18 @@ class zlw_af_cc_pattern extends zlw_af_cc {
     }
     
     function check($var) {
-        assert($var != NULL); 
+        assert($var != null); 
         # $var->typeof('string')
         $s = '' . $var->value; 
-        $pattern = $regex; 
+        $pattern = $this->regex; 
         $flags = ''; 
-        if ($case_insensitive) $flags .= 'i'; 
-        if ($dot_all) $flags .= 's'; 
-        if ($multiline) $flags .= 'm'; 
-        if ($comment) $flags .= 'x'; 
-        if (preg_match("/$regex/$flags", $s) == 0)
+        if ($this->case_insensitive) $flags .= 'i'; 
+        if ($this->dot_all) $flags .= 's'; 
+        if ($this->multiline) $flags .= 'm'; 
+        if ($this->comment) $flags .= 'x'; 
+        if (preg_match("/$pattern/$flags", $s) == 0)
             # not matched. 
-            return $this->_err("[CONS] Illegal text format: Not matched to the pattern $regex"); 
+            return $this->_err("[CONS] Illegal text format: Not matched to the pattern $pattern"); 
         return true; 
     }
 }
