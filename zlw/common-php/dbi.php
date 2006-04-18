@@ -21,20 +21,20 @@ function phpx_dbi_cleanup() {
 register_shutdown_function('phpx_dbi_cleanup'); 
 
 global $PHPX_DBI_EM; 
-$PHPX_DBI_EM = new phpx_error_manager(PHPX_DBI); 
+$PHPX_DBI_EM = new phpx_error_manager('PHPX_DBI'); 
 $PHPX_DBI_EM->register(); 
 
 class phpx_dbi extends phpx_dbi_base {
-    var $_dbi_id; 
-    var $_host; 
-    var $_user; 
-    var $_password; 
-    var $_database; 
-    var $_persist; 
-    var $_link; 
-    var $_transacting = false; 
-    var $_debug = false; 
-    var $_em; 
+    private $_dbi_id; 
+    private $_host; 
+    private $_user; 
+    private $_password; 
+    private $_database; 
+    private $_persist; 
+    public $_link; 
+    private $_transacting = false; 
+    private $_debug = false; 
+    private $_em; 
     
     function phpx_dbi($host, $user, $password, $database, 
                       $connect = true, $persist = true, $debug = false) {

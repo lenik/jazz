@@ -4,7 +4,7 @@
  * Database Access - MySQL Dialect
  */
 class phpx_dbi_base {
-    var $_dialect = 'mysql'; 
+    public $_dialect = 'mysql'; 
     
     function phpx_dbi_base() {
     }

@@ -11,15 +11,15 @@ $PHPX_ERROR_FORMAT = '/^\s*(?:\[(\w+)(?:\.(\w+))?\]\s*)?(.+?)(?::\s+(.+))?$/';
 define('PHPX_EM_TERM', 1); 
 
 class phpx_error {
-    var $time; 
-    var $provider; 
-    var $type; 
-    var $name; 
-    var $text; 
-    var $detail; 
-    var $source; 
-    var $source_status; 
-    var $cause; 
+    public $time; 
+    public $provider; 
+    public $type; 
+    public $name; 
+    public $text; 
+    public $detail; 
+    public $source; 
+    public $source_status; 
+    public $cause; 
     
     function phpx_error($provider, $summary, $source = NULL, $cause = NULL) {
         global $PHPX_ERROR_FORMAT; 
@@ -65,9 +65,9 @@ class phpx_error {
 }
 
 class phpx_error_manager extends phpx_node {
-    var $pref = NULL; 
-    var $errors; 
-    var $mark; 
+    public $pref = NULL;               # preference
+    private $errors; 
+    private $mark;                     # for range select
     
     function phpx_error_manager($provider = NULL, $pref = NULL) {
         global $PHPX_EM_NEXT; 
@@ -177,8 +177,8 @@ function phpx_error($provider, $summary, $source = NULL, $cause = NULL) {
 }
 
 class phpx_error_support {
-    var $_debug; 
-    var $_em; 
+    private $_debug; 
+    private $_em; 
     
     function phpx_error_support($provider) {
         assert(is_string($provider)); 
@@ -208,17 +208,20 @@ class phpx_error_support {
     
     function _info($summary) {
         if (! $this->_debug) return true; 
-        $summary = $this->_add_type('INFO', $summary); 
-        return $this->_em->process($summary, $this); 
+        error_log($summary); 
     }
     
     function _warn($summary) {
-        $summary = $this->_add_type('WARN', $summary); 
-        return $this->_em->process($summary, $this); 
+        if ($this->_debug) {
+            # $summary = $this->_add_type('WARN', $summary); 
+            return $this->_em->process($summary, $this); 
+        } else {
+            error_log($summary); 
+        }
     }
     
     function _err($summary) {
-        $summary = $this->_add_type('ERR', $summary); 
+        # $summary = $this->_add_type('ERR', $summary); 
         return $this->_em->process($summary, $this); 
     }
 }
