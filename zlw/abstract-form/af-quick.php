@@ -1,20 +1,3 @@
-
-
-
-
-
-        if ($PHPX_XML_MODE) {
-            echo $cast->xml($this->ns); 
-        } else {
-            # Early error (or warning, info..) is taken as 'parse error'
-            echo zlw_af_xml_start($this->ns); 
-            echo zlw_af_xml_page($this->ns, 'Fatal Error'); 
-            echo zlw_af_section_start($this->ns, 'error'); 
-            echo $cast->xml($this->ns); 
-            echo zlw_af_section_end($this->ns); 
-            echo zlw_af_xml_end($this->ns); 
-            exit; 
-        }
 <?php
 
 require_once dirname(__FILE__) . '/../common-php/http.php'; 
