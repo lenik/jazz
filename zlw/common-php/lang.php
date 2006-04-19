@@ -22,7 +22,7 @@ function &phpx_num_of(&$mix) {
 
 global $PHPX_TIMEOFDAY; 
 global $PHPX_TIMEZONE; 
-$PHPX_TIMEOFDAY = eval('return gettimeofday(); '); 
+$PHPX_TIMEOFDAY = gettimeofday(); 
 $PHPX_TIMEZONE = -60 * $PHPX_TIMEOFDAY['minuteswest']; # +28800 for +8:00
 
 # timestamp@TZ
@@ -133,7 +133,12 @@ function &phpx_map_parse($string) {
     # A="B : C" : D  ==>  A="B:C" : D
     for ($i = 0; $i < $nsegs; $i++) {
         $entry .= $segs[$i]; 
-        list($name, $value) = explode('=', $entry, 2); 
+        if (strpos($entry, '=') !== false) {
+            list($name, $value) = explode('=', $entry, 2);
+        } else {
+            $name = $entry; 
+            $value =''; 
+        }
         if ($name == '') continue; 
         if (substr($value, 0, 1) == '"') {
             if (substr($value, -1) != '"' || substr($value, -2) == '\"') {
