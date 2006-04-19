@@ -75,13 +75,16 @@ class phpx_dbi extends phpx_dbi_base {
     
     function _info($summary) {
         if (! $this->_debug) return true; 
-        $summary = $this->_add_type('INFO', $summary); 
-        return $this->_em->process($summary, $this); 
+        error_log($summary); 
     }
     
     function _warn($summary) {
-        $summary = $this->_add_type('WARN', $summary); 
-        return $this->_em->process($summary, $this); 
+        if ($this->_debug) {
+            $summary = $this->_add_type('WARN', $summary); 
+            return $this->_em->process($summary, $this); 
+        } else {
+            error_log($summary); 
+        }
     }
     
     function _err($summary) {
