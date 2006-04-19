@@ -5,22 +5,42 @@ require_once dirname(__FILE__) . '/../common-php/http.php';
 global $ZLW_AF_NSURI; 
 $ZLW_AF_NSURI = 'http://www.bodz.net/xml/zlw/abstract-form'; 
 
-# x:/.../zlw/abstract-form
+# userdir: /commons/user/dir1       /../..
+# afdir:   /commons/dir2/zlw/af     /dir2/zlw/af
+# homedir: ../../dir2/zlw/af
 function zlw_af_homedir($req = null) {
-    $inc = dirname(__FILE__); 
-    $inc = str_replace('\\', '/', $inc); 
+    $afdir = dirname(__FILE__); 
+    $afdir = str_replace('\\', '/', $afdir); 
     # URL-include, always using absolute url. 
-    if (strpos($inc, '//') !== false)
-        return $inc;                   # see t-dirname
-    if (is_null($req))
-        $req = realpath($_SERVER['SCRIPT_FILENAME']); 
-    $req = str_replace('\\', '/', $req); 
-    $req = dirname($req); 
-    $req_len = strlen($req); 
-    # starts-with ? 
-    if ($req_len > 0 && substr($inc, 0, $req_len) == $req)
-        return '.' . substr($inc, $req_len); 
-    return $inc; 
+    if (strpos($afdir, '//') !== false)
+        return $afdir;                  # see t-dirname
+    $userdir = realpath($_SERVER['SCRIPT_FILENAME']); 
+    $userdir = str_replace('\\', '/', $userdir); 
+    $userdir = dirname($userdir); 
+    
+    $afsegs = explode('/', $afdir); 
+    $usersegs = explode('/', $userdir); 
+    $max = min(count($afsegs), count($usersegs)); 
+    while ($max--) {
+        if ($afsegs[0] != $usersegs[0])
+            break; 
+        array_shift($afsegs); 
+        array_shift($usersegs); 
+    }
+    
+    $rel = ''; 
+    while (count($usersegs)) {
+        array_shift($usersegs); 
+        $rel .= '../'; 
+    }
+    while (count($afsegs))
+        $rel .= array_shift($afsegs) . '/'; 
+    
+    if ($rel == '')
+        $rel = '.'; 
+    elseif (substr($rel, -1) == '/')
+        $rel = substr($rel, 0, -1); 
+    return $rel; 
 }
 
 global $ZLW_AF_HOME; 
