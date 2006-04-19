@@ -22,53 +22,71 @@ function phpx_xml_mode() {
     $PHPX_XML_MODE = true; 
 }
 
-function phpx_xml_header($encoding = 'utf-8', $version = '1.0') {
-    return phpx_xml_pi('xml', "version='$version' encoding='$encoding'") . "\n"; 
-}
-
-function phpx_xml_pi($cmd, $text = null) {
-    $xml = '<?' . $cmd; 
-    if (! is_null($text)) {
-        $xml .= ' ' . htmlspecialchars($text, ENT_NOQUOTES); 
-    }
-    return $xml . '?>'; 
-}
-
-function phpx_xml_stylesheet($href, $type = 'text/xsl') {
-    return phpx_xml_pi('xml-stylesheet', phpx_xml_attrs(
-                       'type', $type, 'href', $href)) . "\n"; 
-}
-
-function phpx_xml_text($text, $indented = false) {
+function phpx_xml_pi($cmd, $args = null, $newline = true, $indented = true) {
     if ($indented) {
         global $PHPX_XML_INDENT;
         $xml = $PHPX_XML_INDENT; 
     }
-    return $xml . htmlspecialchars($text, ENT_NOQUOTES); 
+    $xml = '<?' . $cmd; 
+    if (is_array($args))
+        $xml .= phpx_xml_attrs($args); 
+    else
+        $xml .= ' ' . htmlspecialchars($args, ENT_NOQUOTES); 
+    $xml .= '?>'; 
+    if ($newline)
+        $xml .= "\n"; 
+    return $xml; 
 }
 
-function phpx_xml_cdata($cdata, $indented = false) {
+function phpx_xml_header($encoding = 'utf-8', $version = '1.0') {
+    return phpx_xml_pi('xml', array(
+                       'version' => $version, 'encoding' => $encoding)); 
+}
+
+function phpx_xml_stylesheet($href, $type = 'text/xsl') {
+    return phpx_xml_pi('xml-stylesheet', array(
+                       'type' => $type, 'href' => $href)); 
+}
+
+function phpx_xml_text($text, $newline = true, $indented = true) {
+    $xml = ''; 
+    if ($indented) {
+        global $PHPX_XML_INDENT;
+        $xml = $PHPX_XML_INDENT; 
+    }
+    $xml .= htmlspecialchars($text, ENT_NOQUOTES); 
+    if ($newline)
+        $xml .= "\n"; 
+    return $xml; 
+}
+
+function phpx_xml_cdata($cdata, $newline = true, $indented = true) {
     if ($indented) {
         global $PHPX_XML_INDENT; 
         $xml = $PHPX_XML_INDENT;
     }
-    return $xml . '<![CDATA[' . $cdata . ']]>'; 
+    $xml .= '<![CDATA[' . $cdata . ']]>'; 
+    if ($newline)
+        $xml .= "\n"; 
+    return $xml; 
 }
 
-function phpx_xml_start_tag($tagmore, $ns = '', $close = false, $newline = true,
-                            $indented = true) {
+function phpx_xml_start_tag($tagmore, $ns = '', $close = false, $newline = true, 
+                            $indented = true, $indent_children = null) {
+    $xml = ''; 
     if (strpos($ns, '=') !== false)
         list($ns, $uri) = explode('=', $ns, 2); 
-    if ($indented) {
-        global $PHPX_XML_INDENT; 
+    global $PHPX_XML_INDENT; 
+    if ($indented)
         $xml = $PHPX_XML_INDENT; 
-        if (! $close)
-            $PHPX_XML_INDENT .= '    '; 
-    }
+    if (is_null($indent_children))
+        $indent_children = $newline; 
+    if ($indent_children && ! $close)
+        $PHPX_XML_INDENT .= '    '; 
     $xml .= '<'; 
     if ($ns) $xml .= $ns . ':'; 
     $xml .= $tagmore; 
-    if ($uri) {
+    if (isset($uri)) {
         $xml .= " xmlns"; 
         if ($ns) $xml .= ":$ns"; 
         $xml .= '=' . phpx_xml_attr($uri); 
@@ -79,16 +97,20 @@ function phpx_xml_start_tag($tagmore, $ns = '', $close = false, $newline = true,
     return $xml; 
 }
 
-function phpx_xml_end_tag($tagname, $ns = '', $newline = true, $indented = true) {
+function phpx_xml_end_tag($tagname, $ns = '', $newline = true, 
+                          $indented = true, $indent_children = null) {
     if (strpos($ns, '=') !== false) {
         list($ns, $uri) = explode('=', $ns, 2); 
         $uri;                           # uri is not used in eng-tag
     }
-    if ($indented) {
-        global $PHPX_XML_INDENT; 
+    $xml = ''; 
+    global $PHPX_XML_INDENT; 
+    if (is_null($indent_children))
+        $indent_children = $indented; 
+    if ($indent_children)
         $PHPX_XML_INDENT = substr($PHPX_XML_INDENT, 4); 
+    if ($indented)
         $xml .= $PHPX_XML_INDENT; 
-    }
     $xml .= $ns ? "</$ns:$tagname>" : "</$tagname>"; 
     if ($newline) $xml .= "\n"; 
     return $xml; 
@@ -124,7 +146,7 @@ function phpx_xml_attr($attr) {
 # phpx_xml_attrs(name, value, name, value, ...)
 function phpx_xml_attrs($first) {
     if (is_null($first)) return null; 
-    
+    $xml = ''; 
     $n = func_num_args(); 
     $first_type = gettype($first); 
     
