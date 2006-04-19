@@ -208,8 +208,8 @@ function phpx_httpcall($call_uri, $args = null) {
 }
 
 class phpx_http_buffer {
-    var $_bufmode;
-    var $_buf; 
+    private $_bufmode;
+    private $_buf; 
     
     function buffer_start() {
         $this->_bufmode = true; 
