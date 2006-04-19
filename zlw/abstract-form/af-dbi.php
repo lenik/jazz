@@ -79,7 +79,7 @@ class zlw_af_dbi extends phpx_dbi {
             $type = $this->_field_type($result, $i); 
             # $fields[] = $name;          # tag-ns? 
             $table->add_column($name, $this->_type_af($type),
-                               $is_key[$i] || $is_key[$name]); 
+                               isset($is_key[$i]) || isset($is_key[$name])); 
         }
         while (($row = $this->_fetch_array($result))) {
             $table->add($row); 
@@ -92,16 +92,16 @@ class zlw_af_dbi extends phpx_dbi {
             if ($sqlrc === false) return false;
         }
         
-        if (is_a($object, 'zlw_af_list')) {
+        if ($object instanceof zlw_af_list) {
             $type = 'list';
             if (! is_null($format)) {
                 $this->_dump_list($sqlrc, $object, $format);
                 $this->_free_result($sqlrc);
                 return true;
             }
-        } else if (is_a($object, 'zlw_af_map')) {
+        } else if ($object instanceof zlw_af_map) {
             $type = 'map';
-        } else if (is_a($object, 'zlw_af_table')) {
+        } else if ($object instanceof zlw_af_table) {
             $type = 'table';
         }
         
@@ -156,11 +156,11 @@ class zlw_af_dbi extends phpx_dbi {
                 $len = $this->_field_len($sqlrc, $i); 
                 $multiline = $this->_type_is_multiline($type); 
                 $read_only = $is_key[$i] || $is_key[$name];
-                $value = is_null($init[$name]) ? $row[$i] : $init[$name];
+                $value = isset($init[$name]) ? $row[$i] : $init[$name];
                 $value = new zlw_af_variant($value, $this->_type_af($type), false); 
                 $input = new zlw_af_input($name, null, $value, $multiline, $read_only, 
                                           $len, null, $selection[$name]); 
-                $form->add_input($input);
+                $form->add($input);
             }
             $count++; 
         }
@@ -175,9 +175,10 @@ class zlw_af_dbi extends phpx_dbi {
                 $len = $this->_field_len($sqlrc, $i); 
                 $multiline = $this->_type_is_multiline($type); 
                 $value = new zlw_af_variant($init[$name], $this->_type_af($type), false); 
+                $read_only = false; 
                 $input = new zlw_af_input($name, null, $value, $multiline, $read_only, 
                                           $len, null, $selection[$name]); 
-                $form->add_input($input); 
+                $form->add($input); 
             }
         }
         $this->_free_result($sqlrc); 
