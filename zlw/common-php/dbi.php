@@ -8,6 +8,7 @@
 require_once dirname(__FILE__) . '/lang.php'; 
 require_once dirname(__FILE__) . '/error.php'; 
 require_once dirname(__FILE__) . '/dbi/' . DBI_DIALECT . '.php'; 
+require_once dirname(__FILE__) . '/qmode.php';
 
 function phpx_dbi_cleanup() {
     global $PHPX_CONNECTED_DBI; 
@@ -181,8 +182,28 @@ class phpx_dbi extends phpx_dbi_base {
     }
     
     function _query($sql) {
+        $post = null;
+        
+        if (substr($sql, 0, 1) == '%') {
+            $segs = explode('%', $sql, 4);
+            $pre = $segs[1];            # pre
+            $post = $segs[2];           # post
+            $sql = $segs[3];            # body
+            if ($pre == '') {           # special mode
+                $post = trim($post); 
+                $mode = eval("return new phpx_querymode_$post; ");
+                $post = $mode->post(); 
+                eval($mode->pre()); 
+            } else {
+                eval($pre);
+            }
+        }
+        
         $this->_info("[SQL] query: $sql"); 
-        $ret = parent::_query($sql); 
+        $ret = parent::_query($sql);
+        
+        if (isset($post)) eval($post);
+        
         if (! $ret)
             $this->_warn("[SQL] query failed: $sql"); 
         return $ret; 
@@ -206,27 +227,59 @@ class phpx_dbi extends phpx_dbi_base {
         return $result; 
     }
     
-    function _evaluate($sql) {
-        $ret = $this->_query($sql); 
-        if ($ret === false)
+    # _evaluate(SQL)                    0 0
+    # _evaluate(SQL, null)              : :     [][]
+    # _evaluate(SQL, null, null)        : :     [][]
+    # _evaluate(SQL, null, row)         row :   []
+    # _evaluate(SQL, col, null)         : col   []
+    # _evaluate(SQL, 1, 1)              0 0
+    # _evaluate(SQL, 1, rows)           * 0     []
+    # _evaluate(SQL, cols, 1)           0 *     []
+    # _evaluate(SQL, cols, rows)        * *     [][]
+    function _evaluate($sql, $cols = false, $rows = false, $mat = false) {
+        if (($ret = $this->_query($sql)) === false)
             return false; 
-        if ($row = $this->_fetch_row($ret))
-            $result = $row[0]; 
-        else
-            $result = false; 
-        $this->_free_result($ret); 
-        return $result; 
-    }
-    
-    function _evaluates($sql) {
-        $ret = $this->_query($sql); 
-        if ($ret === false)
+        if (($row = $this->_fetch_row($ret)) === false)
             return false; 
-        $result = array(); 
-        while ($row = $this->_fetch_row($ret))
-            $result[] = $row[0]; 
+        
+        if ($cols === false) {          # 0 0
+            $v = $row[0]; 
+        } elseif ($cols === null) {
+            if ($rows === null || $rows === false) {
+                do {                    # : :
+                    $v[] = $row; 
+                } while ($row = $this->_fetch_row($ret));
+            } else {                    # row :
+                do {
+                    if (! $rows--) break; 
+                } while ($row = $this->_fetch_row($ret));
+                $v = $row; 
+            }
+        } elseif ($rows === null || $rows === false) {
+            do {                        # : col
+                $v[] = $row[$cols]; 
+            } while ($row = $this->_fetch_row($ret)); 
+        } elseif ($cols == 1 && ! $mat) {
+            if ($rows == 1)             # 0 0
+                $v = $row[0]; 
+            else                        # * 0
+                do {
+                    $v[] = $row[0]; 
+                    if (! --$rows) break; 
+                } while ($row = $this->_fetch_row($ret)); 
+        } elseif ($rows == 1 && ! $mat) { # 0 *
+            $v = array_splice($row, 0, $cols); 
+        } elseif ($cols > 0 && $rows > 0) {
+            do {
+                $v[] = array_splice($row, 0, $cols); 
+                if (! --$rows) break; 
+            } while ($row = $this->_fetch_row($ret)); 
+        } else {
+            $v = null; 
+        }
+        
         $this->_free_result($ret); 
-        return $result; 
+        return $v; 
     }
     
     function _begin() {
