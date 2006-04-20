@@ -1,5 +1,6 @@
 <?php
-    require_once dirname(__FILE__) . '/http.php'; 
+    require_once dirname(__FILE__) . '/phpfixes.php'; 
+    require_once 'zlw/common-php/http.php'; 
     
     $view = $_REQUEST['view']; 
     if ($view == 'output') {
@@ -59,8 +60,15 @@
       <input type="hidden" name="view" value="output" />
       <input type="hidden" name="cursor" value="0" />
       <textarea name="src" cols="40" rows="10" class="autosize">&lt;pre&gt;&lt;?php
+include_once 'lang.php';
+include_once 'test/t-config.php'; 
+include_once 'dbi.php'; 
 
+$db = phpx_connect_fast(); 
 
+echo $db->_evaluate("select 'Hello, World!'"); 
+
+$db->_close(); 
 
 ?&gt;&lt;/pre&gt;</textarea>
 </td>
