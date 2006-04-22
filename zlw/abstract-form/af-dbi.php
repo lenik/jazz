@@ -45,7 +45,8 @@ class zlw_af_dbi extends phpx_dbi {
         return phpx_list_format($vars);
     }
     
-    function _dump_list($result, &$list, $format) {
+    # format: '$name age($age)'
+    function _dump_list($result, $list, $format) {
         $format = 'return "' . addslashes($format) . '";'; 
         while (($row = $this->_fetch_array($result))) {
             extract($row);
@@ -54,7 +55,7 @@ class zlw_af_dbi extends phpx_dbi {
         }
     }
     
-    function _dump_map($result, &$map, $format_k = null, $format_v = null) {
+    function _dump_map($result, $map, $format_k = null, $format_v = null) {
         $format_k = 'return "' . addslashes($format_k) . '";';
         if (is_null($format_v))
             $format_v = $format_k;
@@ -68,7 +69,7 @@ class zlw_af_dbi extends phpx_dbi {
         }
     }
     
-    function _dump_table($result, &$table, $keys) {
+    function _dump_table($result, $table, $keys) {
         assert(! is_null($keys));
         foreach ($keys as $key)
             $is_key[$key] = true;
@@ -86,80 +87,131 @@ class zlw_af_dbi extends phpx_dbi {
         }
     }
     
-    function _query_view($sqlrc, $object, $keys = null, $format = null) {
+    function _query_list($list_name, $sqlrc, $format = null, 
+                         $methods = 'delete:modify', $hint = null, 
+                         $hidden = null) {
         if (is_string($sqlrc)) {
-            $sqlrc = $this->_query($sqlrc);
-            if ($sqlrc === false) return false;
-        }
-        
-        if ($object instanceof zlw_af_list) {
-            $type = 'list';
-            if (! is_null($format)) {
-                $this->_dump_list($sqlrc, $object, $format);
-                $this->_free_result($sqlrc);
-                return true;
-            }
-        } else if ($object instanceof zlw_af_map) {
-            $type = 'map';
-        } else if ($object instanceof zlw_af_table) {
-            $type = 'table';
-        }
-        
-        if (is_string($keys))
-            $keys = phpx_list_parse($keys); 
-        if (is_null($keys))
-            $keys = $this->_default_keys($sqlrc);
-        
-        # for list/map
-        if (is_null($format) && $type != 'table') {
+            if (($rs = $this->_query($sqlrc)) === false)
+                return null; 
+        } else
+            $rs = $sqlrc; 
+
+        if ($list_name instanceof zlw_af_list)
+            $list = $list_name; 
+        else
+            $list = new zlw_af_list($list_name, null, null, null, $hidden, 
+                                    $methods, $hint);
+
+        # default format = colname:colname:...:colname
+        if (is_null($format)) {
+            $keys = $this->_default_keys($rs);
             $format = $this->_concat_vars($keys);
-            $format_k = $format;        # format_k is always in std format
         }
         
-        if ($type == 'list') {
-            $this->_dump_list($sqlrc, $object, $format);
-        } elseif ($type == 'map') {
-            if (is_null($format_k))     # format_k is always in std format
-                $format_k = $this->_concat_vars($keys); 
-            $this->_dump_map($sqlrc, $object, $format_k, $format);
-        } elseif ($type == 'table') {
-            $this->_dump_table($sqlrc, $object, $keys);
-        } else {
-            die("Invalid object type: " . get_class($object));
-        }
+        $this->_dump_list($rs, $list, $format);
         
-        $this->_free_result($sqlrc); 
-        return true; 
+        if (is_string($sqlrc))
+            $this->_free_result($rs);
+        return $list; 
     }
     
-    function _query_edit($sqlrc, &$form, $keys = null, $init = null,
-                         $selection = null) {
+    function _query_map($map_name, $sqlrc, $keys = null, $format = null, 
+                        $methods = 'delete:modify', $hint = null, 
+                        $hidden = null) {
         if (is_string($sqlrc)) {
-            $sqlrc = $this->_query($sqlrc);
-            if ($sqlrc === false) return false;
-        }
+            if (($rs = $this->_query($sqlrc)) === false)
+                return null; 
+        } else
+            $rs = $sqlrc; 
+
+        if ($map_name instanceof zlw_af_map)
+            $map = $map_name; 
+        else
+            $map = new zlw_af_map($map_name, null, null, null, $hidden, 
+                                  $methods, $hint);
+
+        # find (primary-)keys if not specified
+        if (is_null($keys))
+            $keys = $this->_default_keys($rs);
+        elseif (is_string($keys))
+            $keys = phpx_list_parse($keys);
+
+        # format-k is in fixed format, and cannot be specified by caller.
+        $format_k = $this->_concat_vars($keys);
+        
+        if (is_null($format))
+            $format = $format_k; 
+        
+        $this->_dump_map($rs, $map, $format_k, $format);
+        
+        if (is_string($sqlrc))
+            $this->_free_result($rs);
+        return $map; 
+    }
+    
+    function _query_table($table_name, $sqlrc, $keys = null, 
+                          $methods = 'delete:modify', $hint = null, 
+                          $hidden = null) {
+        if (is_string($sqlrc)) {
+            if (($rs = $this->_query($sqlrc)) === false)
+                return null; 
+        } else
+            $rs = $sqlrc; 
+
+        if ($table_name instanceof zlw_af_table)
+            $table = $table_name;
+        else
+            $table = new zlw_af_table($table_name, null, null, null, null, 
+                                      $hidden, $methods, $hint);
+        
+        # find (primary-)keys if not specified
+        if (is_null($keys))
+            $keys = $this->_default_keys($rs);
+        elseif (is_string($keys))
+            $keys = phpx_list_parse($keys);
+        
+        $this->_dump_table($rs, $table, $keys); 
+        
+        if (is_string($sqlrc))
+            $this->_free_result($rs);
+        return $table; 
+    }
+    
+    function _query_edit($form_name, $sqlrc, $keys = null, $init = null,
+                         $selection = null, $methods = 'update', $hint = null) {
+        if (is_string($sqlrc)) {
+            if (($rs = $this->_query($sqlrc)) === false)
+                return null; 
+        } else
+            $rs = $sqlrc; 
+        
+        if ($form instanceof zlw_af_form)
+            $form = $form_name;
+        else
+            $form = new zlw_af_form($form_name, null, null, $methods, $hint);
         
         if (is_string($keys))
             $keys = phpx_list_parse($keys); 
         if (is_null($keys))
-            $keys = $this->_default_keys($sqlrc);
+            $keys = $this->_default_keys($rs);
         
         foreach ($keys as $key)
             $is_key[$key] = true;
         
-        $n = $this->_num_fields($sqlrc);
+        $n = $this->_num_fields($rs);
         $count = 0; 
-        while (($row = $this->_fetch_array($sqlrc))) {
+        while (($row = $this->_fetch_array($rs))) {
             for ($i = 0; $i < $n; $i++) {
-                $name = $this->_field_name($sqlrc, $i); 
-                $type = $this->_field_type($sqlrc, $i);
-                $len = $this->_field_len($sqlrc, $i); 
+                $name = $this->_field_name($rs, $i); 
+                $type = $this->_field_type($rs, $i);
+                $len = $this->_field_len($rs, $i); 
                 $multiline = $this->_type_is_multiline($type); 
                 $read_only = $is_key[$i] || $is_key[$name];
                 $value = isset($init[$name]) ? $row[$i] : $init[$name];
                 $value = new zlw_af_variant($value, $this->_type_af($type), false); 
+                $sel = isset($selection) ? $selection[$name] : null; 
                 $input = new zlw_af_input($name, null, $value, $multiline, $read_only, 
-                                          $len, null, $selection[$name]); 
+                                          $len, null, $sel); 
                 $form->add($input);
             }
             $count++; 
@@ -167,22 +219,25 @@ class zlw_af_dbi extends phpx_dbi {
         if ($count == 0) {
             # blank frame
             for ($i = 0; $i < $n; $i++) {
-                $flags = $this->_field_flags($sqlrc, $i);
+                $flags = $this->_field_flags($rs, $i);
                 if (strpos($flags, 'auto_increment') !== false)
                     continue;           # skip auto fields
-                $name = $this->_field_name($sqlrc, $i); 
-                $type = $this->_field_type($sqlrc, $i);
-                $len = $this->_field_len($sqlrc, $i); 
+                $name = $this->_field_name($rs, $i); 
+                $type = $this->_field_type($rs, $i);
+                $len = $this->_field_len($rs, $i); 
                 $multiline = $this->_type_is_multiline($type); 
                 $value = new zlw_af_variant($init[$name], $this->_type_af($type), false); 
                 $read_only = false; 
+                $sel = isset($selection) ? $selection[$name] : null; 
                 $input = new zlw_af_input($name, null, $value, $multiline, $read_only, 
-                                          $len, null, $selection[$name]); 
+                                          $len, null, $sel); 
                 $form->add($input); 
             }
         }
-        $this->_free_result($sqlrc); 
-        return true;
+        
+        if (is_string($sqlrc))
+            $this->_free_result($rs); 
+        return $form;
     }
 }
 
