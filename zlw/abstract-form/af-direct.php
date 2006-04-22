@@ -1,74 +1,61 @@
 <?php
 
-require_once dirname(__FILE__) . "/af-object.php";
-require_once dirname(__FILE__) . "/af-dbi.php";
 require_once dirname(__FILE__) . '/af-mode.php'; 
 
-class zlw_af_mode_echo extends zlw_af_mode_base {
+class zlw_af_mode_direct extends zlw_af_mode_base {
     private $xmlns;
     
-    function zlw_af_mode_echo($xmlns = 'af') {
+    function zlw_af_mode_direct($xmlns = 'af') {
         $this->xmlns = $xmlns;
+        phpx_xml_mode();
     }
     
-    function process($o) {
-        echo phpx_xml_value($o, $this->xmlns); 
-    }
-    
-    function error_handler(&$error) {
-        if (isset($this->document)) {
-            echo $this->process($error); 
-        } else {
-            $doc = new zlw_af_document('Error', null, new zlw_af_section(
-                    'first', null, null, $error));
-            echo $this->process($doc); 
-        }
+    function on_error(&$error) {
+        $this->output($error); 
         exit; 
     }
-
-    function form_start($name, $typestr = 'default', 
-                        $methods = null, $hint = null, $form_method = null) {
-        parent::form_start($name, $typestr, $methods, $hint, $form_method);
-        echo $this->form->xml_start($this->xmlns);
+    
+    function add_data($object) {
+        echo phpx_xml_value($object, $this->xmlns); 
+    }
+    
+    function add_input($object) {
+        echo phpx_xml_value($object, $this->xmlns); 
     }
 
-    function form_end() {
-        $form = parent::form_end();
+    function add_document($document) {
+        parent::add_document($document);
+        echo $document->xml_start($this->xmlns); 
+    }
+
+    function end_document() {
+        $document = parent::end_document();
+        echo $document->xml_sections($this->xmlns);
+        echo $document->xml_end($this->xmlns); 
+    }
+
+    function add_section($section) {
+        parent::add_section($section); 
+        echo $section->xml_start($this->xmlns); 
+    }
+
+    function end_section() {
+        $section = parent::end_section();
+        echo $section->xml_items($this->xmlns);
+        echo $section->xml_end($this->xmlns); 
+    }
+    
+    function add_form($form) {
+        parent::add_form($form); 
+        echo $form->xml_start($this->xmlns);
+    }
+
+    function end_form() {
+        $form = parent::end_form();
         echo $form->xml_items($this->xmlns);
         echo $form->xml_methods($this->xmlns);
         echo $form->xml_end($this->xmlns); 
     }
-
-    function section_start($name = null, $hint = null, $hidden = null) {
-        parent::section_start($name, $hint, $hidden);
-        echo $this->section->xml_start($this->xmlns); 
-    }
-
-    function section_end() {
-        $section = parent::section_end();
-        echo $section->xml_items($this->xmlns);
-        echo $section->xml_end($this->xmlns); 
-    }
-
-    function document_start($title = 'Abstract Form', $params = null,
-                            $sections = null, $af_base = null, $xsl = null,
-                            $encoding = null, $version = null) {
-        parent::document_start($title, $params, $sections, $af_base,
-                               $xsl, $encoding, $version);
-        echo $this->document->xml_start($this->xmlns); 
-    }
-
-    function document_end() {
-        $document = parent::document_end();
-        echo $document->xml_sections($this->xmlns);
-        echo $document->xml_end($this->xmlns); 
-    }
-}
-
-function zlw_af_seq_mode($xmlns = '') {
-    global $ZLW_AF_MODE; 
-    $ZLW_AF_MODE = new zlw_af_mode_echo($xmlns); 
-    phpx_xml_mode();
 }
 
 ?>
