@@ -47,7 +47,7 @@
 				<!--<HR/>-->
 				<cite>Powered by ZLW::Abstract-Form</cite>
 				<br/>
-				<cite>$Id: html-view.xsl,v 1.6.2.14 2006-04-01 16:10:18 dansei Exp $</cite>
+				<cite>$Id: html-view.xsl,v 1.6.2.15 2006-04-22 12:58:14 dansei Exp $</cite>
 			</xsl:with-param>
 		</xsl:call-template>
 	</xsl:template>
@@ -416,8 +416,9 @@
 									<td colspan="2">
 										<xsl:if test="$show-type">
 											<span class="data-type">Form </span>
+											<xsl:call-template name="t-name"/>
 										</xsl:if>
-										<xsl:call-template name="t-name"/>
+										<!--if $show-type isn't specified, the name will appeared in the legend of form-->
 									</td>
 								</tr>
 								<tr>
@@ -826,6 +827,12 @@
 					<xsl:attribute name="name">.form</xsl:attribute>
 					<xsl:attribute name="value"><xsl:value-of select="$form-id"/></xsl:attribute>
 				</xsl:element>
+				<!--INPUT .method-->
+				<xsl:element name="input">
+					<xsl:attribute name="type">hidden</xsl:attribute>
+					<xsl:attribute name="name">.method</xsl:attribute>
+					<xsl:attribute name="value"/>
+				</xsl:element>
 				<table border="0">
 					<xsl:for-each select="*">
 						<xsl:choose>
@@ -1175,14 +1182,12 @@ $retvar, '.model = &quot;', $model, '&quot;', '; &#10;')"/>
 	</xsl:template>
 	<xsl:template name="t-method" match="af:method[local-name(..)='form']" priority="-1">
 		<xsl:param name="form-id"/>
+		<xsl:param name="name" select="concat('.method_', position())"/>
 		<xsl:element name="input">
 			<xsl:attribute name="type">submit</xsl:attribute>
-			<xsl:attribute name="name">.method</xsl:attribute>
+			<xsl:attribute name="name"><xsl:value-of select="$name"/></xsl:attribute>
 			<xsl:attribute name="value"><xsl:value-of select="@name"/></xsl:attribute>
-			<xsl:if test="@hint or af:method-parameter">
-				<!--Out-going??-->
-				<xsl:attribute name="onclick">javascript: var form = document.getElementById('<xsl:value-of select="$form-id"/>'); form.action = '<xsl:call-template name="t-href-concat"><xsl:with-param name="lhs"><xsl:call-template name="t-hint-with-hold"/></xsl:with-param><xsl:with-param name="rhs"><xsl:for-each select="af:method-parameter"><xsl:value-of select="concat('&amp;', @name, '=', text())"/></xsl:for-each></xsl:with-param></xsl:call-template>'; form.submit(); </xsl:attribute>
-			</xsl:if>
+			<xsl:attribute name="onclick">javascript: var form = document.getElementById('<xsl:value-of select="$form-id"/>'); <xsl:if test="@hint or af:method-parameter"><!--Out-going??-->form.action = '<xsl:call-template name="t-href-concat"><xsl:with-param name="lhs"><xsl:call-template name="t-hint-with-hold"/></xsl:with-param><xsl:with-param name="rhs"><xsl:for-each select="af:method-parameter"><xsl:value-of select="concat('&amp;', @name, '=', text())"/></xsl:for-each></xsl:with-param></xsl:call-template>'; </xsl:if>form['.method'].value = form['<xsl:value-of select="$name"/>'].value; form.submit(); </xsl:attribute>
 		</xsl:element>
 	</xsl:template>
 	<xsl:template name="t-method-a" match="af:method[local-name(..)!='form']" priority="-1">
