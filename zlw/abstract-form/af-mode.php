@@ -30,7 +30,8 @@ class zlw_af_mode_em extends phpx_error_manager {
                 $cast->$k = $v; 
             $err = $cast; 
         }
-        else                            # maybe string-summary or something else.
+        else
+            # maybe string-summary or something else.
             $err = new zlw_af_error($err); 
         
         global $ZLW_AF_MODE; 
@@ -52,101 +53,111 @@ function zlw_af_disable_xml_error() {
     return phpx_error_manager_unregister('ZLW_AF_MODE'); 
 }
 
-# .section.  AF programming mode
+# .section.  simplifized mode
 
 class zlw_af_mode_base {
-    protected $document; 
-    protected $section; 
-    protected $form; 
+    public $document; 
+    public $section; 
+    public $form; 
+    protected $document_id = 0; 
+    protected $section_id = 0; 
+    protected $form_id = 0; 
     
-    function process($obj) {
-        return $obj; 
-    }
-    
-    function error_handler(&$error, $ns = '') {
+    function on_error(&$error, $ns = '') {
         die(zlw_af_errordoc($error, $ns)); 
     }
     
-    function endup() {
+    function on_shutdown() {
         if (isset($this->form))
-            $this->form_end();
+            $this->end_form();
         if (isset($this->section))
-            $this->section_end();
+            $this->end_section();
         if (isset($this->document))
-            $this->document_end(); 
+            $this->end_document(); 
     }
     
-    function scalar($name, $value, $typestr = 'string', $hold = null, 
-                    $hidden = null, $methods = null, $hint = null) {
-        $scalar = new zlw_af_scalar($name, $value, $typestr, $hold, $hidden,
-                                    $methods, $hint); 
-        return $this->process($scalar); 
+    function output($object) {
+        $name = get_class($object); 
+        if (substr($name, 0, 7) == 'zlw_af_') {
+            $mtd = 'add_' . substr($name, 7); 
+            $this->$mtd($object); 
+        }
     }
     
-    function list_($name, $items, $typestr = 'string', $hold = null, 
-                   $hidden = null, $methods = null, $hint = null,
-                   $sort = null, $sort_order = null) {
-        $list = new zlw_af_list($name, $items, $typestr, $hold, $hidden,
-                                $methods, $hint, $sort, $sort_order); 
-        return $this->process($list); 
+    function &form() {
+        if (! isset($this->form)) {
+            $form = new zlw_af_form('form_' . $this->form_id++); 
+            $this->output($form); 
+        }
+        return $this->form; 
     }
     
-    function map($name, $entries, $typestr = 'string', $hold = null, 
-                 $hidden = null, $methods = null, $hint = null,
-                 $sort = null, $sort_order = null) {
-        $map = new zlw_af_map($name, $entries, $typestr, $hold, $hidden,
-                              $methods, $hint, $sort, $sort_order); 
-        return $this->process($map); 
+    function &section() {
+        if (! isset($this->section)) {
+            $section = new zlw_af_section('section_' . $this->section_id++); 
+            $this->output($section); 
+        }
+        return $this->section; 
     }
     
-    function table($name, $rows = null, $columns = null, 
-                   $typestr = 'string', $hold = null, $hidden = null, 
-                   $methods = null, $hint = null) {
-        $table = new zlw_af_table($name, $rows, $columns, $typestr, $hold,
-                                  $hidden, $methods, $hint); 
-        return $this->process($table); 
+    function &document() {
+        if (! isset($this->document)) {
+            $document = new zlw_af_document(); 
+            $this->output($document); 
+        }
+        return $this->document; 
     }
     
-    function user($name, $user, $typestr = null, $hold = null,
-                  $hidden = null, $methods = null, $hint = null) {
-        $user = new zlw_af_user($name, $user, $typestr, $hold, $hidden,
-                                $methods, $hint); 
-        return $this->process($user);
-    }
-    
-    function input($name, $typestr = 'string', $value = null, 
-                   $multiline = false, $read_only = false,
-                   $max_length = null, $constraints = null,
-                   $selection) {
-        $input = new zlw_af_input($name, $typestr, $value, $multiline,
-                                  $read_only, $max_length, $constraints,
-                                  $selection);
-        return $this->process($input); 
-    }
-    
-    function method($name, $hint = null, $typestr = 'default', 
-                    $param = null, $const = false) {
-        return $this->process(new zlw_af_method(
-            $name, $hint, $typestr, $param, $const)); 
-    }
-    
-    function form($name, $items = null, $typestr = 'default',
-                  $methods = null, $hint = null, $form_method = null) {
-        $form = new zlw_af_form($name, $items, $typestr, $methods, $hint,
-                                $form_method); 
-        return $this->process($form); 
-    }
-    
-    function form_start($name, $typestr = 'default', 
-                        $methods = null, $hint = null, $form_method = null) {
+    function &context() {
         if (isset($this->form))
-            $this->form_end(); 
-        $this->form = new zlw_af_form($name, null, $typestr, $methods, $hint,
-                                      $form_method); 
-        return null; 
+            return $this->form; 
+        elseif (isset($this->section))
+            return $this->section; 
+        else
+            return $this->document(); 
     }
     
-    function form_end() {
+    function add_document($document) {
+        if (isset($this->document))
+            $this->end_document(); 
+        $this->document = $document; 
+    }
+    
+    function end_document() {
+        if (! isset($this->document))
+            die("not in a document context"); 
+        if (isset($this->section))
+            $this->end_section();
+        $document = $this->document;
+        unset($this->document); 
+        return $document; 
+    }
+    
+    function add_section($section) {
+        $this->document(); 
+        if (isset($this->section))
+            $this->end_section(); 
+        $this->section = $section; 
+    }
+    
+    function end_section() {
+        if (! isset($this->section))
+            die("not in a section context"); 
+        if (isset($this->form))
+            $this->end_form();
+        $section = $this->section;
+        unset($this->section); 
+        return $section; 
+    }
+    
+    function add_form($form) {
+        $this->section(); 
+        if (isset($this->form))
+            $this->end_form(); 
+        $this->form = $form; 
+    }
+    
+    function end_form() {
         if (! isset($this->form))
             die("not in a form context"); 
         $form = $this->form; 
@@ -154,56 +165,44 @@ class zlw_af_mode_base {
         return $form; 
     }
     
-    function section($name = null, $items = null, $hint = null, $hidden = null) {
-        $section = new zlw_af_section($name, $items, $hint, $hidden); 
-        return $this->process($section);
+    function add_data($data) {
+        $this->section()->add($data); 
     }
     
-    function section_start($name = null, $hint = null, $hidden = null) {
-        if (isset($this->section))
-            $this->session_end(); 
-        $this->section = new zlw_af_section($name, null, $hint, $hidden); 
-        return null; 
+    function add_input($input) {
+        $this->form()->add($input); 
     }
     
-    function section_end() {
-        if (! isset($this->section))
-            die("not in a section context"); 
-        if (isset($this->form))
-            $this->form_end();
-        $section = $this->section;
-        unset($this->section); 
-        return $section; 
+    function add_scalar($scalar) {
+        $this->add_data($scalar); 
     }
     
-    function document($title = 'Abstract Form', $params = null,
-                      $sections = null, $af_base = null, $xsl = null,
-                      $encoding = null, $version = null) {
-        $document = new zlw_af_document($title, $params, $sections, $af_base,
-                                        $xsl, $encoding, $version); 
-        return $this->process($document); 
+    function add_list($list) {
+        $this->add_data($list); 
     }
     
-    function document_start($title = 'Abstract Form', $params = null,
-                            $sections = null, $af_base = null, $xsl = null,
-                            $encoding = null, $version = null) {
-        if (isset($this->document))
-            $this->document_end(); 
-        
-        $this->document = new zlw_af_document($title, $sections, $params,
-                                              $af_base, $xsl,
-                                              $encoding, $version); 
-        return null;
+    function add_map($map) {
+        $this->add_data($map); 
     }
     
-    function document_end() {
-        if (! isset($this->document))
-            die("not in a document context"); 
-        if (isset($this->section))
-            $this->section_end();
-        $document = $this->document;
-        unset($this->document); 
-        return $document; 
+    function add_table($table) {
+        $this->add_data($table); 
+    }
+    
+    function add_user($user) {
+        $this->add_data($user); 
+    }
+    
+    function add_method($method) {
+        $this->add_input($method); 
+    }
+    
+    function add_doc($doc) {
+        $this->context()->add($doc); 
+    }
+    
+    function add_error($error) {
+        $this->context()->add($error); 
     }
 }
 
@@ -211,174 +210,182 @@ class zlw_af_mode_base {
 
 global $ZLW_AF_MODE;
 
-function zlw_af_endup() {
+function zlw_af_shutdown() {
     global $ZLW_AF_MODE;
     if (isset($ZLW_AF_MODE))
-        $ZLW_AF_MODE->endup();
+        $ZLW_AF_MODE->on_shutdown();
 }
 
-register_shutdown_function('zlw_af_endup');
+register_shutdown_function('zlw_af_shutdown');
 
-function zlw_af_scalar($name, $value, $typestr = 'string', $hold = null, 
-                       $hidden = null, $methods = null, $hint = null) {
+function MODE($mode_name = 'seq', $xmlns = '', $title = null) {
+    global $ZLW_AF_MODE; 
+    if (isset($ZLW_AF_MODE))
+        die('mode is already set to ' . get_class($ZLW_AF_MODE)); 
+    $mode_class = 'zlw_af_mode_' . $mode_name; 
+    $ZLW_AF_MODE = new $mode_class($xmlns); 
+    zlw_af_enable_xml_error($xmlns); 
+    if (isset($title))
+        DOCUMENT($title); 
+}
+
+# .section.  short functions
+
+function DOCUMENT($doc_title = 'Abstract Form', $params = null,
+                  $sections = null, $af_base = null, $xsl = null, 
+                  $encoding = null, $version = null) {
     global $ZLW_AF_MODE;
-    return $ZLW_AF_MODE->scalar($name, $value, $typestr, $hold, $hidden, $methods,
-                                $hint); 
+    assert(isset($ZLW_AF_MODE)); 
+    if ($doc_title instanceof zlw_af_document) {
+        $ZLW_AF_MODE->output($doc_title); 
+    } elseif (is_string($doc_title)) {
+        $document = new zlw_af_document($doc_title, $params, $sections,
+                                        $af_base, $xsl, $encoding, $version);
+        $ZLW_AF_MODE->output($document); 
+    } elseif (is_null($doc_title)) {
+        $ZLW_AF_MODE->end_document();
+    } else {
+        die("invalid document type"); 
+    }
 }
 
-function zlw_af_list($name, $items, $typestr = 'string', $hold = null, 
-                     $hidden = null, $methods = null, $hint = null,
-                     $sort = null, $sort_order = null) {
-    global $ZLW_AF_MODE; 
-    return $ZLW_AF_MODE->list_($name, $items, $typestr, $hold, $hidden, $methods,
-                               $hint, $sort, $sort_order); 
+function SECTION($sect_name = null, $items = null, $hint = null,
+                 $hidden = null) {
+    global $ZLW_AF_MODE;
+    assert(isset($ZLW_AF_MODE)); 
+    if ($sect_name instanceof zlw_af_section) {
+        $ZLW_AF_MODE->output($sect_name); 
+    } elseif (is_string($sect_name)) {
+        $section = new zlw_af_section($sect_name, $items, $hint, $hidden);
+        $ZLW_AF_MODE->output($section); 
+    } elseif (is_null($sect_name)) {
+        $ZLW_AF_MODE->end_section();
+    } else {
+        die("invalid section type"); 
+    }
 }
 
-function zlw_af_map($name, $entries, $typestr = 'string', $hold = null, 
-                    $hidden = null, $methods = null, $hint = null,
-                    $sort = null, $sort_order = null) {
-    global $ZLW_AF_MODE; 
-    return $ZLW_AF_MODE->map($name, $entries, $typestr, $hold, $hidden, $methods,
-                             $hint, $sort, $sort_order); 
+function FORM($form_name = null, $items = null, $typestr = 'default',
+              $methods = null, $hint = null, $form_method = null) {
+    global $ZLW_AF_MODE;
+    assert(isset($ZLW_AF_MODE));
+    if ($form_name instanceof zlw_af_form) {
+        $ZLW_AF_MODE->output($form_name);
+    } elseif (is_string($form_name)) {
+        $form = new zlw_af_form($form_name, $items, $typestr, $methods, $hint,
+                                $form_method);
+        $ZLW_AF_MODE->output($form);
+    } elseif (is_null($form_name)) {
+        $ZLW_AF_MODE->end_form();
+    } else {
+        die("invalid form type");
+    }
 }
 
-function zlw_af_table($name, $rows = null, $columns = null, 
-                      $typestr = 'string', $hold = null, $hidden = null, 
-                      $methods = null, $hint = null) {
-    global $ZLW_AF_MODE; 
-    return $ZLW_AF_MODE->table($name, $rows, $columns, $typestr, $hold, $hidden,
-                               $methods, $hint); 
+function OUT($data_name, $value = null, $typestr = null, $hold = null, 
+             $hidden = null, $methods = null, $hint = null, 
+             $sort = null, $sort_order = null, $columns = null) {
+    global $ZLW_AF_MODE;
+    assert(isset($ZLW_AF_MODE));
+    if (is_string($data_name)) {
+        $name = $data_name; 
+        if (is_scalar($value)) {
+            $o = new zlw_af_scalar($name, $value, $typestr, $hold, $hidden, 
+                                   $methods, $hint); 
+        } elseif (is_array($value)) {
+            if (phpx_is_array($value, true)) {
+                $item = $value[0]; 
+                if (isset($columns) || is_array($item)) {
+                    # table
+                    $o = new zlw_af_table($name, $value, $columns, $typestr, 
+                                          $hold, $hidden, $methods, $hint); 
+                } else {
+                    # list
+                    $o = new zlw_af_list($name, $value, $typestr, $hold, $hidden, 
+                                         $methods, $hint, $sort, $sort_order); 
+                }
+            } else {
+                # map
+                $o = new zlw_af_map($name, $value, $typestr, $hold, $hidden, 
+                                    $methods, $hint, $sort, $sort_order); 
+            }
+        } else {
+            die('invalid data value type'); 
+        }
+        $ZLW_AF_MODE->output($o); 
+    } elseif ($data_name instanceof zlw_af_data) {
+        $ZLW_AF_MODE->output($data_name);
+    } elseif ($data_name instanceof zlw_af_form) {
+        $ZLW_AF_MODE->output($data_name);
+    } elseif ($data_name instanceof zlw_af_doc) {
+        $ZLW_AF_MODE->output($data_name);
+    } elseif ($data_name instanceof zlw_af_error) {
+        $ZLW_AF_MODE->output($data_name);
+    } elseif (is_null($data_name)) {
+        die('cannot output a null'); 
+    } else {
+        die('invalid data type'); 
+    }
 }
 
-function zlw_af_user($name, $user, $typestr = null, $hold = null,
-                     $hidden = null, $methods = null, $hint = null) {
-    global $ZLW_AF_MODE; 
-    return $ZLW_AF_MODE->user($name, $user, $typestr, $hold, $hidden, $methods,
-                              $hint); 
+function IN($input_name, $value = null, $typestr = null, $multiline = false, 
+            $read_only = false, $max_length = null, $constraints = null, 
+            $selection = null) {
+    global $ZLW_AF_MODE;
+    assert(isset($ZLW_AF_MODE));
+    if (is_string($input_name)) {
+        $input = new zlw_af_input($input_name, $typestr, $value, $multiline, 
+                                  $read_only, $max_length, $constraints, 
+                                  $selection);
+        $ZLW_AF_MODE->output($input); 
+    } elseif ($input_name instanceof zlw_af_input) {
+        $ZLW_AF_MODE->output($input_name); 
+    } else {
+        die('invalid input type'); 
+    }
 }
 
-function zlw_af_input($name, $typestr = 'string', $value = null, 
-                      $multiline = false, $read_only = false,
-                      $max_length = null, $constraints = null,
-                      $selection) {
-    global $ZLW_AF_MODE; 
-    return $ZLW_AF_MODE->input($name, $typestr, $value, $multiline, $read_only,
-                               $max_length, $constraints, $selection);
+function METHOD($method_name, $hint = '', $typestr = 'default', $param = null, 
+                $const = false) {
+    global $ZLW_AF_MODE;
+    assert(isset($ZLW_AF_MODE));
+    if (is_string($method_name)) {
+        $method = new zlw_af_method($method_name, $hint, $typestr, $param,
+                                    $const);
+        $ZLW_AF_MODE->output($method); 
+    } elseif ($method_name instanceof zlw_af_method) {
+        $ZLW_AF_MODE->output($method_name); 
+    } else {
+        die('invalid method type');
+    }
 }
 
-function zlw_af_method($name, $hint = null, $typestr = 'default', 
-                       $param = null, $const = false) {
-    global $ZLW_AF_MODE; 
-    return $ZLW_AF_MODE->method($name, $hint, $typestr, $param, $const); 
+function DOC($contents, $doctype = 'text/html') {
+    global $ZLW_AF_MODE;
+    assert(isset($ZLW_AF_MODE));
+    if (is_string($contents)) {
+        $doc = new zlw_af_doc($contents, $doctype);
+        $ZLW_AF_MODE->output($doc);
+    } elseif ($contents instanceof zlw_af_doc) {
+        $ZLW_AF_MODE->output($doc);
+    } else {
+        die('invalid doc type');
+    }
 }
 
-function zlw_af_form($name, $items = null, $typestr = 'default',
-                     $methods = null, $hint = null, $form_method = null) {
-    global $ZLW_AF_MODE; 
-    if (is_null($items) && is_null($methods))
-        return $ZLW_AF_MODE->form_start($name, $typestr, $methods, $hint, 
-                                        $form_method); 
-    else
-        return $ZLW_AF_MODE->form($name, $items, $typestr, $methods, $hint,
-                                  $form_method); 
-}
-
-function zlw_af_form_start($name, $typestr = 'default', 
-                           $methods = null, $hint = null, $form_method = null) {
-    global $ZLW_AF_MODE; 
-    return $ZLW_AF_MODE->form_start($name, $typestr, $methods, $hint,
-                                    $form_method);
-}
-
-function zlw_af_form_end() {
-    global $ZLW_AF_MODE; 
-    return $ZLW_AF_MODE->form_end();
-}
-
-function zlw_af_section($name = null, $items = null, $hint = null, 
-                        $hidden = null) {
-    global $ZLW_AF_MODE; 
-    if (is_null($items))
-        return $ZLW_AF_MODE->section_start($name, $hint, $hidden); 
-    else
-        return $ZLW_AF_MODE->section($name, $items, $hint, $hidden); 
-}
-
-function zlw_af_section_start($name = null, $hint = null, $hidden = null) {
-    global $ZLW_AF_MODE; 
-    return $ZLW_AF_MODE->section_start($name, $hint, $hidden); 
-}
-
-function zlw_af_section_end() {
-    global $ZLW_AF_MODE; 
-    return $ZLW_AF_MODE->section_end(); 
-}
-
-function zlw_af_document($title = 'Abstract Form', $params = null,
-                         $sections = null, $af_base = null, $xsl = null,
-                         $encoding = null, $version = null) {
-    global $ZLW_AF_MODE; 
-    if (is_null($sections))
-        return $ZLW_AF_MODE->document_start($title, $params, $sections, $af_base,
-                                            $xsl, $encoding, $version);
-    else
-        return $ZLW_AF_MODE->document($title, $params, $sections, $af_base,
-                                      $xsl, $encoding, $version);
-}
-
-function zlw_af_start($title = 'Abstract Form', $params = null,
-                      $sections = null, $af_base = null, $xsl = null,
-                      $encoding = null, $version = null) {
-    global $ZLW_AF_MODE; 
-    return $ZLW_AF_MODE->document_start($title, $params, $sections, $af_base,
-                                        $xsl, $encoding, $version); 
-}
-
-function zlw_af_end() {
-    global $ZLW_AF_MODE; 
-    return $ZLW_AF_MODE->document_end();
-}
-
-# .section.  mode ext functions
-
-function zlw_af_query_table($dbi, $sqlrc, $keys = 'id', $name = null,
-                            $methods = 'delete:modify', $hint = null,
-                            $hidden = null) {
-    $table = new zlw_af_table($name, null, null, null, null, $hidden,
-                              $methods, $hint);
-    $dbi->_query_view($sqlrc, $table, $keys, null);
-    global $ZLW_AF_MODE; 
-    return $ZLW_AF_MODE->process($table);
-}
-
-function zlw_af_query_map($dbi, $sqlrc, $keys = 'id', $format = null, $name = null,
-                          $methods = 'delete:modify', $hint = null,
-                          $hidden = null) {
-    $map = new zlw_af_map($name, null, null, null, $hidden, $methods, $hint);
-    $dbi->_query_view($sqlrc, $map, $keys, $format);
-    global $ZLW_AF_MODE; 
-    return $ZLW_AF_MODE->process($map);
-}
-
-function zlw_af_query_list($dbi, $sqlrc, $format = null, $name = null, 
-                           $methods = 'delete:modify', $hint = '',
-                           $hidden = null) {
-    $list = new zlw_af_list($name, null, null, null, $hidden, $methods, $hint);
-    $dbi->_query_view($sqlrc, $list, null, $format);
-    global $ZLW_AF_MODE; 
-    return $ZLW_AF_MODE->process($list);
-}
-
-function zlw_af_query_edit($dbi, $sqlrc, $keys = null, $init = null,
-                           $name = null, $update_method = 'update',
-                           $hint = null, $selection = null) {
-    $methods = $update_method;
-    if (is_null($methods)) $methods = 'update'; 
-    
-    $form = new zlw_af_form($name, null, null, $methods, $hint);
-    $dbi->_query_edit($sqlrc, $form, $keys, $init, $selection);
-    global $ZLW_AF_MODE; 
-    return $ZLW_AF_MODE->process($form);
+function ERROR($error_summary, $source = null, $cause = null,
+               $methods = null, $hint = null) {
+    global $ZLW_AF_MODE;
+    assert(isset($ZLW_AF_MODE));
+    if (is_string($error_summary)) {
+        $error = new zlw_af_error($error_summary, $source, $cause,
+                                  $methods, $hint);
+        $ZLW_AF_MODE->output($error);
+    } elseif ($error_summary instanceof zlw_af_error) {
+        $ZLW_AF_MODE->output($error);
+    } else {
+        die('invalid error type');
+    }
 }
 
 ?>
