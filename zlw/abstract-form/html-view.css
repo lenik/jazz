@@ -47,3 +47,8 @@
 .event { }
 
 .vt-test { border: 1px dashed green; color: green }
+
+.submitted {
+    background-color: buttonface; 
+    font-style: oblique; 
+    }
