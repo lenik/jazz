@@ -48,17 +48,17 @@ function zlw_af_form_submit(ev) {
     // keep from repeat-submit
     for (var i = 0; i < form.elements.length; i++) {
         var elm = form.elements[i]; 
-        elm.class += " submitted"; 
+        elm.className += " submitted"; 
         if (elm.readOnly != null)
             elm.readOnly = true;
         switch (elm.type) {
-        case "submit": 
-            form[".method"].value = elm.name;
-        case "button":
+        case "submit":
+        case "button": 
             elm.disabled = true;
             break; 
         }
     }
+    
     return true; 
 }
 
