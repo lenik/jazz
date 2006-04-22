@@ -133,8 +133,7 @@ class zlw_af_section {
                     # maybe input, form, error, doc, etc.
                     $xml .= phpx_xml_value($item, $ns); 
                 } elseif (is_array($item)) {
-                    $keys = array_keys($item); 
-                    if (min($keys) == 0 && max($keys) == sizeof($keys) - 1) {
+                    if (phpx_is_array($item, true)) {
                         # array[0..N-1]
                         $list = new zlw_af_list($name, $item); 
                         $xml .= $list->xml($ns); 
@@ -516,11 +515,11 @@ class zlw_af_input extends phpx_error_support {
             return phpx_xml_tag($type . '-ref', null, $name, $ns);
         }
         if ($this->selection->dumped) {
-            if (is_a($this->selection, 'zlw_af_list'))
+            if ($this->selection instanceof zlw_af_list)
                 $type = 'list';
-            elseif (is_a($this->selection, 'zlw_af_map'))
+            elseif ($this->selection instanceof zlw_af_map)
                 $type = 'map';
-            elseif (is_a($this->selection, 'zlw_af_table'))
+            elseif ($this->selection instanceof zlw_af_table)
                 $type = 'table';
             else
                 die("Invalid selection type: " . get_class($this->selection));
@@ -567,7 +566,7 @@ class zlw_af_method {
     public $param; 
     public $const; 
     
-    function zlw_af_method($name, $hint = '', $typestr = 'default', 
+    function zlw_af_method($name, $hint = '', $typestr = null, 
                            $param = null, $const = false) {
         $this->name = $name; 
         $this->type = &zlw_af_type($typestr); 
@@ -675,7 +674,7 @@ class zlw_af_form {
     public $methods;                    # additional methods at bottom
     public $ticket; 
     
-    function zlw_af_form($name, $items = null, $typestr = 'default',
+    function zlw_af_form($name = null, $items = null, $typestr = 'default',
                          $methods = null, $hint = null,
                          $form_method = null) {
         $this->name = $name;
@@ -737,7 +736,23 @@ class zlw_af_form {
     }
 }
 
-# .section.  error
+# .section.  misc
+
+class zlw_af_doc {
+    public $doctype;
+    public $contents;
+    
+    function zlw_af_doc($contents, $doctype = 'text/html') {
+        $this->contents = $contents; 
+        $this->doctype = $doctype; 
+    }
+
+    function xml($ns = '') {
+        $xml = phpx_xml_tag('doc' . phpx_xml_attrs(array(
+            'doctype' => $this->doctype)), $this->contents, $ns);
+        return $xml; 
+    }
+}
 
 class zlw_af_error extends phpx_error {
     public $methods; 
