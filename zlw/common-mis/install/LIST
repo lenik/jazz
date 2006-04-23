@@ -1,6 +1,7 @@
 
 list
 
+    cam     com.app.module
     cdw     com.dd.world
     cuk     com.user.kernel
     cux     com.user.ext
