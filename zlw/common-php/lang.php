@@ -1,6 +1,6 @@
 <?php
 
-# .section. number format
+# .section.  number format
 
 if (! defined('PHPX_NUM_FORMAT'))
     define('PHPX_NUM_FORMAT', '%1.3f'); 
@@ -18,7 +18,7 @@ function &phpx_num_of(&$mix) {
     return $mix; 
 }
 
-# .section. date/time utilities
+# .section.  date/time utilities
 
 global $PHPX_TIMEOFDAY; 
 global $PHPX_TIMEZONE; 
@@ -65,7 +65,7 @@ function phpx_time_of_0($str_0) {
     return strtotime($str_0) + $PHPX_TIMEZONE; 
 }
 
-# .section. simple serialization
+# .section.  simple serialization
 
 function phpx_list_format($list) {
     $string = ''; 
@@ -155,7 +155,7 @@ function &phpx_map_parse($string) {
     return $map; 
 }
 
-# .section. logic string operators
+# .section.  logic string operators
 
 function strand() {
     $args = func_get_args(); 
@@ -238,7 +238,28 @@ function strpass($str) {
     return $args[$n - 1]; 
 }
 
-# .section. object reflect helper
+# .section.  object reflect helper
+
+function phpx_is_array($mixed, $strict = false) {
+    if (! is_array($mixed))
+        return false; 
+    $keys = array_keys($mixed);
+    $size = sizeof($keys); 
+    if ($strict) {
+        $hsize = ceil($size / 2); 
+        for ($i = 0, $j = $size - 1; $i < $hsize; $i++, $j--) {
+            if ($keys[$i] != $i)
+                return false; 
+            if ($keys[$j] != $j)
+                return false; 
+        }
+    } else {
+        for ($i = 0; $i < $size; $i++)
+            if (! is_integer($keys[$i]))
+                return false; 
+    }
+    return true; 
+}
 
 # BUG  $rv maybe contains recursive references. 
 function phpx_or(&$lv, &$rv) {
