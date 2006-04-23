@@ -4,6 +4,9 @@
     
     @session_start(); 
     
+    $sleep = $_REQUEST['_sleep']; 
+    if (isset($sleep))
+        usleep($sleep); 
     function dump_section($name, $map, $sep = '') {
         echo "<h2>$name" . "</h2>\n"; 
         sort($keys = array_keys($map)); 
