@@ -9,10 +9,10 @@ create table cat(
     )
     character set utf8 collate utf8_general_ci;
 
-create table cat_isa(
+create table isa(
     sub         int not null, 
     sup         int not null, 
-    primary key cat_isa_pk(sub, sup)
+    primary key isa_pk(sub, sup)
     )
     character set utf8 collate utf8_general_ci;
 
@@ -39,28 +39,28 @@ insert into cat(id, name) values
     (20, 'boy'), 
     (21, 'girl');
     
-insert into cat_isa(sub, sup) values
-    (4, 3), 
-    (5, 3), 
-    (4, 1), 
-    (5, 2), 
-    (20, 3), 
-    (21, 3), 
-    (20, 1), 
-    (21, 2), 
-    (3, 6), 
-    (7, 6), 
-    (8, 6), 
-    (9, 8), 
-    (11, 10), 
-    (12, 13), 
-    (13, 11), 
-    (14, 10), 
-    (15, 10), 
-    (16, 14), 
-    (16, 12), 
-    (17, 14), 
-    (17, 13), 
-    (18, 12), 
-    (19, 18), 
-    (19, 14);
+insert into isa(sub, sup) values
+    (4, 3),                             -- human -> man
+    (5, 3),                             --          women
+    (4, 1),                             -- male  -> man
+    (5, 2),                             -- female-> women
+    (20, 3),                            -- human -> boy
+    (21, 3),                            --          girl
+    (20, 1),                            -- male  -> boy
+    (21, 2),                            -- female-> girl
+    (3, 6),                             -- animal-> human
+    (7, 6),                             --          dog
+    (8, 6),                             --          cat
+    (9, 8),                             --          tiger
+    (11, 10),                           -- number-> real
+    (12, 13),                           -- ration-> integer
+    (13, 11),                           -- real  -> rational
+    (14, 10),                           -- number-> positive
+    (15, 10),                           --          negative
+    (16, 14),                           -- positi-> pos integer
+    (16, 12),                           -- intege-> pos integer
+    (17, 14),                           -- positi-> pos rational
+    (17, 13),                           -- ration-> pos rational
+    (18, 12),                           -- intege-> short
+    (19, 18),                           -- short -> short pos integer
+    (19, 14);                           -- positi-> short pos integer
