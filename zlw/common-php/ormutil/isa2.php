@@ -110,60 +110,56 @@ class sqltree {
     function move($node, $parent) {
         $new = $parent; 
         if (isset($Iname)) {
-            # B*(o), B*(n), B*(r)
-            $Bo = "select $Bname from $table where $Dname=$node"
-                . " order by $Iname asc";
-            $Bn = "select $Bname from $table where $Dname=$new"
-                . " order by $Iname asc union select $new";
-            $Bcom = "select L.$Bname as LB, R.$Bname as RB"
-                . " from ($Bo) as L, ($Bn) as R where L.$Bname=R.$Bname";
+            # LC = B*(old)
+            $LC = "select $Bname t from $table where $Dname=$node"
+                . " order by $Iname desc"; 
+            # RC = B*(new)
+            $RC = "select $Bname t from $table where $Dname=$new union $new"
+                . " order by $Iname desc"; 
             
-            $Idelta = "select ($Bn) - ($Box_N) as Delta";
+            # L = LC - RC = { B*(o) - B*(r) }
+            $L = "select t from ($LC) where t not in ($RC)";
+            # R = RC - LC = { B*(n) - B*(r) }
+            $R = "select t from ($RC) where t not in ($LC)";
+            # C = LC int. RC
+            $C = "select t from ($LC) where t in ($RC)";
             
-            # { B*(o) - B*(r) }, { B*(n) - B*(r) }
-            $Box = "select $Bname from ($Bo) where $Bname not in ($Bcom)";
-            $Bnx = "select $Bname from ($Bn) where $Bname not in ($Bcom)";
-            
-            # D+(x)
-            $D = "select $Dname from $table where $Bname=$node";
+            # D+(x), D*(x)
+            $D = "select $Dname t from $table where $Bname=$node";
             $D_inc = "$D union select $node"; 
             
-            # delete: { B*(o) - B*(r) } -> D*(x)
+            # delete: L -> D*(x)
             $sql = "delete from $table"
-                . " where $Bname in ($Box) and $Dname in ($D_inc)";
+                . " where $Bname in ($L) and $Dname in ($D_inc)";
             
-            # add: { B*(n) - B*(r) } -> D*(x)
-            #   => add.1: B*(n) -> x
-            #      add.2:    n  -> D+(x)
-            #      add.3: B+(n) -> D+(x)
-
-            $Idelta = "select count"; 
-            # add.1
-            $this->add($node, $new);
+            # Idelta = |R| - |L|
+            $Idelta = "select ("
+                . " (select count(*) from ($R) R) - "
+                . " (select count(*) from ($L) L)) delta"; 
             
-            # add.2: new I(n->D+(x)) := I(x->D+(x)) + 1
+            # set: I(C -> D*(x)) += Idelta
+            $sql = "update $table set $Iname=$Iname+($Idelta)"
+                . " where $Bname in ($C) and $Dname in ($D_inc)"; 
+            
+            # add: new I(n -> x) := 1
+            #      new I(R -> x) := I(R -> n) + 1
             $sql = "insert into $table($Bname, $Dname, $Iname)"
-                . " select $new, $Dname, $Iname+1 from $table"
-                . " where $Bname=$node and $Dname in ($D)";
+                . " select $new, $node, 1 union"
+                . " select $Bname, $node, $Iname+1 from $table"
+                . " where $Bname in ($R) and $Dname=$new";
             
-            # add.3: new I(B+(n)->D+(x)) :=
-            #            I(B+(n)->x    ) +
-            #            I(    x->D+(x))
-            insert into $table($Bname, $Dname, $Iname)
-                select $Bname
-                from $table
-                where $Bname in ($Bnx) and $Dname in ($D)
+            # Ri = I(R -> x)
+            $Ri = "select $Bname t, $Iname i from $table"
+                . " where $Bname in ($R) and $Dname=$node";
+            # Di = I(x -> D+(x))
+            $Di = "select $Dname t, $Iname i from $table"
+                . " where $Bname=$node and $Dname in ($D)"; 
+            # add: new I(R -> D+(x)) = I(R -> x) + I(x -> D+(x))
+            $sql = "insert into $table($Bname, $Dname, $Iname)"
+                . " select R.t $Bname, D.t $Dname, (R.i+D.i) $Iname"
+                . " from ($Ri) R, ($Di) D";
         } else {
-            $B0 = "select $Dname from $table"
-                . " where $Bname in ($B) and $Dname in ($B)"
-                . " group by $Bname"
-                . " order by count($Dname) desc"
-                . " limit 1"; 
         }
-        # remove old -> node, add new -> node
-        
-        $sql = "select $Bname from $table where $Dname=$node and $Iname=1"; 
-        select $Bname from $table where $Dname=$node
     }
 
     function build_tree($root_node) {
