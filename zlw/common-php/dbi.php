@@ -57,6 +57,26 @@ class phpx_dbi extends phpx_dbi_base {
         if ($connect) $this->_connect(); 
     }
     
+    function _reuse($dbi) {
+        if (! is_null($dbi)) {
+            $this->_err("[DBI] Cannot reuse null DBI"); 
+            return false; 
+        }
+        if ($this->_transacting) {
+            $this->_err("[DBI] This DBI was still in transaction. "); 
+            return false; 
+        }
+        if ($dbi->_transacting) {
+            $this->_err("[DBI] The target DBI to re-use was still in transaction. "); 
+            return false; 
+        }
+    	$this->_link = $dbi->_link; 
+    	$this->_debug = $dbi->_debug; 
+    	$dbi->_link = null; 
+    	$dbi->_transacting = false; 
+    	return true; 
+    }
+    
     function _add_type($type, $summary) {
         global $PHPX_ERROR_FORMAT; 
         if (! preg_match($PHPX_ERROR_FORMAT, $summary, $matches))
@@ -161,127 +181,6 @@ class phpx_dbi extends phpx_dbi_base {
         unset($PHPX_CONNECTED_DBI[$this->_dbi_id]); 
     }
     
-    function _reuse($dbi) {
-        if (! is_null($dbi)) {
-            $this->_err("[DBI] Cannot reuse null DBI"); 
-            return false; 
-        }
-        if ($this->_transacting) {
-            $this->_err("[DBI] This DBI was still in transaction. "); 
-            return false; 
-        }
-        if ($dbi->_transacting) {
-            $this->_err("[DBI] The target DBI to re-use was still in transaction. "); 
-            return false; 
-        }
-    	$this->_link = $dbi->_link; 
-    	$this->_debug = $dbi->_debug; 
-    	$dbi->_link = null; 
-    	$dbi->_transacting = false; 
-    	return true; 
-    }
-    
-    function _query($sql) {
-        $post = null;
-        
-        if (substr($sql, 0, 1) == '%') {
-            $segs = explode('%', $sql, 4);
-            $pre = $segs[1];            # pre
-            $post = $segs[2];           # post
-            $sql = $segs[3];            # body
-            if ($pre == '') {           # special mode
-                $post = trim($post); 
-                $mode = eval("return new phpx_querymode_$post; ");
-                $post = $mode->post(); 
-                eval($mode->pre()); 
-            } else {
-                eval($pre);
-            }
-        }
-        
-        $this->_info("[SQL] query: $sql"); 
-        $ret = parent::_query($sql);
-        
-        if (isset($post)) eval($post);
-        
-        if (! $ret)
-            $this->_warn("[SQL] query failed: $sql"); 
-        return $ret; 
-    }
-    
-    function _row($sql) {
-        $result = array(); /* for test if any exist record */
-        if ($rs = $this->_query($sql)) {
-            $result = $this->_fetch_row($rs); 
-            $this->_free_result($rs); 
-        }
-        return $result; 
-    }
-    
-    function _assoc($sql) {
-        $result = array(); /* for test if any exist record */
-        if ($rs = $this->_query($sql)) {
-            $result = $this->_fetch_assoc($rs); 
-            $this->_free_result($rs); 
-        }
-        return $result; 
-    }
-    
-    # _evaluate(SQL)                    0 0
-    # _evaluate(SQL, null)              : :     [][]
-    # _evaluate(SQL, null, null)        : :     [][]
-    # _evaluate(SQL, null, row)         row :   []
-    # _evaluate(SQL, col, null)         : col   []
-    # _evaluate(SQL, 1, 1)              0 0
-    # _evaluate(SQL, 1, rows)           * 0     []
-    # _evaluate(SQL, cols, 1)           0 *     []
-    # _evaluate(SQL, cols, rows)        * *     [][]
-    function _evaluate($sql, $cols = false, $rows = false, $mat = false) {
-        if (($ret = $this->_query($sql)) === false)
-            return false; 
-        if (($row = $this->_fetch_row($ret)) === false)
-            return false; 
-        
-        if ($cols === false) {          # 0 0
-            $v = $row[0]; 
-        } elseif ($cols === null) {
-            if ($rows === null || $rows === false) {
-                do {                    # : :
-                    $v[] = $row; 
-                } while ($row = $this->_fetch_row($ret));
-            } else {                    # row :
-                do {
-                    if (! $rows--) break; 
-                } while ($row = $this->_fetch_row($ret));
-                $v = $row; 
-            }
-        } elseif ($rows === null || $rows === false) {
-            do {                        # : col
-                $v[] = $row[$cols]; 
-            } while ($row = $this->_fetch_row($ret)); 
-        } elseif ($cols == 1 && ! $mat) {
-            if ($rows == 1)             # 0 0
-                $v = $row[0]; 
-            else                        # * 0
-                do {
-                    $v[] = $row[0]; 
-                    if (! --$rows) break; 
-                } while ($row = $this->_fetch_row($ret)); 
-        } elseif ($rows == 1 && ! $mat) { # 0 *
-            $v = array_splice($row, 0, $cols); 
-        } elseif ($cols > 0 && $rows > 0) {
-            do {
-                $v[] = array_splice($row, 0, $cols); 
-                if (! --$rows) break; 
-            } while ($row = $this->_fetch_row($ret)); 
-        } else {
-            $v = null; 
-        }
-        
-        $this->_free_result($ret); 
-        return $v; 
-    }
-    
     function _begin() {
         if ($this->_transacting) {
             $this->_err('[TRAN] Transaction has already begun'); 
@@ -326,6 +225,194 @@ class phpx_dbi extends phpx_dbi_base {
             return true; 
         }
         return false; 
+    }
+
+    function _sql_set($array, $quote = false) {
+        $sql = '';
+        if ($quote) {
+            foreach ($array as $i) {
+                if ($sql != '')
+                    $sql .= ', ';
+                $sql .= "'" . $this->_escape_string($i) . "'"; 
+            }
+        } else {
+            foreach ($array as $i) {
+                if ($sql != '')
+                    $sql .= ', ';
+                $sql .= $i; 
+            }
+        }
+        return $sql; 
+    }
+
+    function _parse_sqlex(&$sql) {
+        $post = null;
+        
+        if (substr($sql, 0, 1) == '%') {
+            $segs = explode('%', $sql, 4);
+            $pre = $segs[1];            # pre
+            $post = $segs[2];           # post
+            $sql = $segs[3];            # body
+            if ($pre == '') {           # special mode
+                $post = trim($post); 
+                $mode = eval("return new phpx_querymode_$post; ");
+                $post = $mode->post(); 
+                eval($mode->pre()); 
+            } else {
+                eval($pre);
+            }
+        }
+        return $post;
+    }
+    
+    function _query($sql) {
+        $post = $this->_parse_sqlex($sql);
+        
+        $this->_info("[SQL] query: $sql"); 
+        $rs = parent::_query($sql);
+        
+        if ($rs === false)
+            $this->_warn("[SQL] query failed: $sql");
+        elseif ($rs === true)
+            return null; 
+        else {
+            if (isset($post)) eval($post);
+        }
+        return $rs; 
+    }
+    
+    function _fast_query($sql) {
+        $post = $this->_parse_sqlex($sql);
+        
+        $this->_info("[SQL] fast query: $sql"); 
+        $rs = parent::_fast_query($sql);
+        
+        if ($rs === false)
+            $this->_warn("[SQL] fast query failed: $sql");
+        elseif ($rs === true)
+            return null; 
+        else {
+            if (isset($post)) eval($post);
+        }
+        return $rs; 
+    }
+    
+    function _test($sql, $max_rows = 3) {
+        $rs = $this->_fast_query($sql);
+        if ($rs === false)
+            return false;
+        $appx_rows = 0;
+        while ($appx_rows < $max_rows) {
+            $row = $this->_fetch_row($rs);
+            if ($row === false)
+                break;
+            $appx_rows++;
+        }
+        $this->_free_result($rs);
+        return $appx_rows; 
+    }
+    
+    function _update($sql) {
+        $post = _parse_sqlex($sql);
+        
+        $this->_info("[SQL] update: $sql"); 
+        $ret = parent::_fast_query($sql);
+        
+        if ($ret === false)
+            $this->_warn("[SQL] update failed: $sql");
+        
+        if ($ret === true)
+            $ret = $this->_affected_rows();
+        else
+            $ret = 0;
+        
+        if (isset($post)) eval($post);
+        return $ret;
+    }
+    
+    # _eval(SQL)                   	0 0
+    # _eval(SQL, null)              : :     [][]
+    # _eval(SQL, null, null)        : :     [][]
+    # _eval(SQL, null, row)         row :   []
+    # _eval(SQL, col, null)         : col   []
+    # _eval(SQL, 1, 1)              0 0
+    # _eval(SQL, 1, rows)           * 0     []
+    # _eval(SQL, cols, 1)           0 *     []
+    # _eval(SQL, cols, rows)        * *     [][]
+    function _eval($sql, $cols = false, $rows = false, $mat = false) {
+        if (($rs = $this->_fast_query($sql)) === false)
+            return false; 
+        if (($row = $this->_fetch_row($rs)) === false)
+            return false; 
+
+        $v = null;
+        
+        if ($cols === false) {          # (def, def)    0 0
+            $v = $row[0]; 
+        } elseif ($cols === null) {
+            if ($rows === null || $rows === false) { # (nul, nul) : :
+                if ($this->_num_fields($rs) == 1 && ! $mat) {
+                    do {
+                        $v[] = $row[0]; 
+                    } while ($row = $this->_fetch_row($rs));
+                } else {
+                    do {
+                        $v[] = $row; 
+                    } while ($row = $this->_fetch_row($rs));
+                }
+                if (count($v) == 1 && ! $mat)
+                    $v = $v[0];
+            } else {                    # (nul, 0..N)   row :
+                while ($rows--) {
+                    $row = $this->_fetch_row($rs);
+                    if ($row === false) break; 
+                }
+                if ($row !== false)
+                    $v = $row; 
+            }
+        } elseif ($rows === null || $rows === false) {
+            do {                        # (0..N, nul)  	: col
+                $v[] = $row[$cols]; 
+            } while ($row = $this->_fetch_row($rs)); 
+        } elseif ($cols == 1 && ! $mat) {
+            if ($rows == 1)             # (1, 1)    	0 0
+                $v = $row[0]; 
+            else                        # (1, 2..N)		* 0
+                do {
+                    $v[] = $row[0];
+                    $row = $this->_fetch_row($rs); 
+                    if ($row === false) break; 
+                } while (--$rows);      # XXX: fetch 1 extra rows than required
+        } elseif ($rows == 1 && ! $mat) { # (2..N, 1)  	0 *
+            $v = array_splice($row, 0, $cols); 
+        } elseif ($cols > 0 && $rows > 0) { # (1..N, 1..N) * *
+            do {
+                $v[] = array_splice($row, 0, $cols); 
+                $row = $this->_fetch_row($rs);
+                if ($row === false) break; 
+            } while (--$rows); 
+        } elseif (($cols == 0 && $rows >= 0) || ($cols > 0 && $rows == 0)) {
+            $v = array();
+        } else {
+            die("Unexpected");
+        }
+        
+        $this->_free_result($rs); 
+        return $v; 
+    }
+    
+    function _eval_set($sql, $cols = false, $rows = false, $mat = false) {
+        $v = $this->_eval($sql, $cols, $rows, $mat);
+        if ($v == null)
+            return '';
+        assert(is_array($v));
+        if (count($v) == 0)
+            return '';
+        if (! is_array($v[0]))
+            return $this->_sql_set($v); 
+        foreach ($v as $i)
+            $sets[] = $this->_sql_set($i);
+        return $sets; 
     }
     
     function _default_keys(&$result) {
@@ -387,7 +474,7 @@ class phpx_dbi extends phpx_dbi_base {
         
         if (is_null($method)) {
             # auto-detect
-            $rows = $this->_evaluate("select count(*) from $table where $criteria"); 
+            $rows = $this->_eval("select count(*) from $table where $criteria"); 
             $method = $rows ? 'update' : 'insert'; 
         }
         
