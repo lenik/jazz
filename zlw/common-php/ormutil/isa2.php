@@ -20,11 +20,8 @@ class sqltree {
     }
     
     function isA($d, $b) {
-        $dbi = $this->dbi; 
-        $table = $this->table; 
-        $Bname = $this->Bname; 
-        $Dname = $this->Dname; 
-        $Iname = $this->Iname; 
+        extract(phpx_to_assoc($this));
+        
         if (isset($Iname)) {
             $rs = $dbi->_query("select $Iname from $table"
                                . " where $Bname=$b and $Dname=$d");
@@ -48,11 +45,7 @@ class sqltree {
     }
     
     function add($node, $parent) {
-        $dbi = $this->dbi; 
-        $table = $this->table; 
-        $Bname = $this->Bname; 
-        $Dname = $this->Dname; 
-        $Iname = $this->Iname; 
+        extract(phpx_to_assoc($this));
         
         if (isset($Iname)) {
             # add: new I(parent -> x) = 1
@@ -77,11 +70,7 @@ class sqltree {
     }
     
     function remove($node, $recursive = false) {
-        $dbi = $this->dbi; 
-        $table = $this->table; 
-        $Bname = $this->Bname; 
-        $Dname = $this->Dname;
-        $Iname = $this->Iname;
+        extract(phpx_to_assoc($this)); 
         
         if ($recursive) {
             # delete: B*(x) -> D*(x)
@@ -108,15 +97,23 @@ class sqltree {
     }
     
     function move($node, $parent) {
+        extract(phpx_to_assoc($this)); 
+        
         $new = $parent; 
         if (isset($Iname)) {
             # LC = B*(old)
             $LC = "select $Bname t from $table where $Dname=$node"
-                . " order by $Iname desc"; 
+                . " order by $Iname desc";
+            $LC = $dbi->_eval_set($LC, 0); 
             # RC = B*(new)
             $RC = "select $Bname t from $table where $Dname=$new union $new"
-                . " order by $Iname desc"; 
-            
+                . " order by $Iname desc";
+            $RC = $dbi->_eval_set($RC, 0); 
+        } else {
+            $LC = "select $Bname t from $table where $Dname=$node"
+                . " group by ";
+        }
+        
             # L = LC - RC = { B*(o) - B*(r) }
             $L = "select t from ($LC) where t not in ($RC)";
             # R = RC - LC = { B*(n) - B*(r) }
@@ -158,10 +155,95 @@ class sqltree {
             $sql = "insert into $table($Bname, $Dname, $Iname)"
                 . " select R.t $Bname, D.t $Dname, (R.i+D.i) $Iname"
                 . " from ($Ri) R, ($Di) D";
-        } else {
-        }
     }
-
+    
+    function check($detail = false, $auto_fix = false) {
+        extract(phpx_to_assoc($this)); 
+        
+        $rows = 0;
+        
+        # No Self-Reversion
+        # x -> x
+        $sql = "select $Bname from $table where $Bname = $Dname";
+        $sql_fix = "delete from $table where $Bname = $Dname"; 
+        if ($dbi->_test($sql, 1) !== 0) {
+            if ($auto_fix)
+                $rows += $dbi->_update($sql_fix); 
+            if ($detail)
+                $msg[] = array('SR(x)' => $dbi->_eval($sql, 0)); 
+            else
+                return false;
+        }
+        
+        # No Reversion
+        # x -> y and y -> x
+        $sql = "select X.$Bname, X.$Dname from $table X, $table Y"
+            . " where X.B=Y.D and X.D=Y.B";
+        # delete only: y -> x, keep x -> y (this did choice randomly)
+        $sql_fix = "delete from $table where ($Dname, $Bname) in ($sql)"; 
+        if ($dbi->_test($sql, 1) !== 0) {
+            if ($auto_fix)
+                $rows += $dbi->_update($sql_fix); 
+            if ($detail)
+                $msg[] = array('R(x,y)' => $dbi->_eval($sql, null));
+            else
+                return false;
+        }
+        
+        # Illegal I (indirection level) value
+        # I(x -> y) < 1
+        $sql = "select $Bname, $Dname from $table where $Iname < 1";
+        $sql_fix = "update $Iname=1 where ($Bname, $Dname) in ($sql)"; 
+        if ($dbi->_test($sql, 1) !== 0) {
+            if ($auto_fix)
+                $rows += $dbi->_update($sql_fix); 
+            if ($detail)
+                $msg[] = array('I_dom(i)' => $dbi->_eval($sql, 0));
+            else
+                return false; 
+        }
+        
+        # Transference Broken:
+        # B+(B+(x)) not in B+(x)
+        $sql = "select Y.$Bname outside, X.$Dname"
+            . " from $table X, $table Y"
+            . " where X.$Bname=Y.$Dname and Y.$Bname not in"
+            . " (select G.$Bname from $table G where G.$Dname=X.$Dname)";
+        $sql_fix = "insert into $table($Bname, $Dname)"
+            . " $sql"; 
+        if ($dbi->_test($sql, 1) !== 0) {
+            if ($auto_fix)
+                $rows += $dbi->_update($sql_fix); 
+            if ($detail)
+                $msg[] = array('TB' => $dbi->_eval($sql, null));
+            else
+                return false;
+        }
+        
+        # Transference Closure Fail:
+        # x (not ->) z where x -> y, y -> z
+        $T2 = "select X.$Bname s, Y.$Dname t"
+            . " from $table X, $table Y"
+            . " where X.$Dname=Y.$Bname)";
+        $sql = "select s, t from ($T2) T2"
+            . " where (s, t) not in (select $Bname, $Dname from $table)";
+        $sql_fix = "insert into $table($Bname, $Dname)"
+            . " $sql"; 
+        if ($dbi->_test($sql, 1) !== 0) {
+            if ($auto_fix)
+                $rows += $dbi->_update($sql_fix); 
+            if ($detail)
+                $msg[] = array('TCF' => $dbi->_eval($sql, null));
+            else
+                return false;
+        }
+        
+        if ($auto_fix)
+            return $rows; 
+        else
+            return true; 
+    }
+    
     function build_tree($root_node) {
         die('not implemented, yet');
     }
