@@ -23,6 +23,9 @@
             header('Content-Type: text/plain'); 
         elseif ($pr_style == 'html')
             header('Content-Type: text/html');
+
+        error_reporting(E_ERROR | E_PARSE | E_WARNING); 
+        ini_set("display_errors",1);
         
         # include will get warnings, rather that require which will die. 
         include $pr_tmpphp; 
@@ -85,7 +88,7 @@ include_once 'dbi.php'; \n\
 \n\
 $db = phpx_connect_fast(); \n\
 \n\
-echo $db->_evaluate(\"select '$_REQUEST[test]'\"); \n\
+echo $db->_eval(\"select '$_REQUEST[test]'\"); \n\
 \n\
 $db->_close(); \n\
 ?></pre>"; 
