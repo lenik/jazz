@@ -566,8 +566,8 @@ class zlw_af_method {
     public $param; 
     public $const; 
     
-    function zlw_af_method($name, $hint = '', $typestr = null, 
-                           $param = null, $const = false) {
+    function zlw_af_method($name, $hint = null, $param = null, $typestr = null, 
+                           $const = false) {
         $this->name = $name; 
         $this->type = &zlw_af_type($typestr); 
         $this->hint = zlw_af_hint_prep($hint);
@@ -758,7 +758,8 @@ class zlw_af_error extends phpx_error {
     public $methods; 
     public $hint; 
     
-    function zlw_af_error($summary, $source = null, $cause = null, $methods = null, $hint = '') {
+    function zlw_af_error($summary, $source = null, $cause = null, 
+                          $methods = null, $hint = null) {
         $this->phpx_error('ZLW_AF', $summary, $source, $cause); 
         $this->methods = $methods; 
         $this->hint = zlw_af_hint_prep($hint); 
