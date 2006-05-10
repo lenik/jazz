@@ -35,6 +35,8 @@ class phpx_dbi_base {
                                       return call_user_func_array('mysql_error',                $args); }
     function _escape_string()       { $args = func_get_args(); 
                                       return call_user_func_array('mysql_escape_string',        $args); }
+    function _fast_query()          { $args = func_get_args(); $args[] = $this->_link;  #1
+                                      return call_user_func_array('mysql_unbuffered_query',     $args); }
     function _fetch_array()         { $args = func_get_args(); 
                                       return call_user_func_array('mysql_fetch_array',          $args); }
     function _fetch_assoc()         { $args = func_get_args(); 
@@ -103,8 +105,6 @@ class phpx_dbi_base {
                                       return call_user_func_array('mysql_tablename',            $args); }
     function _thread_id()           { $args = func_get_args(); $args[] = $this->_link; 
                                       return call_user_func_array('mysql_thread_id',            $args); }
-    function _unbuffered_query()    { $args = func_get_args(); $args[] = $this->_link;  #1
-                                      return call_user_func_array('mysql_unbuffered_query',     $args); }
     
     function _begin($link = null) {
         if (is_null($link)) 
