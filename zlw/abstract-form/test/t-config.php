@@ -1,5 +1,5 @@
 <?php
-    require_once dirname(__FILE__) . '/../phpfixes.php'; 
+    require_once dirname(__FILE__) . '/../../common-php/phpfixes.php'; 
     
     define('DBI_DIALECT', 'mysql'); 
     define('DBI_HOST', 'localhost'); 
