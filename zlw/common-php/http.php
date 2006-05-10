@@ -17,9 +17,8 @@ function phpx_noslashes($value) {
             break; 
         case 'array': 
             $newv = array(); 
-            foreach ($value as $k=>$v) {
+            foreach ($value as $k=>$v)
                 $newv[$k] = phpx_noslashes($v); 
-            }
             $value = $newv; 
             break; 
         }
@@ -32,23 +31,19 @@ function phpx_this_host($https = null) {
         $proto = 'http'; 
         if ($_SERVER['HTTPS'] == 'on')
             $proto .= 's'; 
-    } else {
+    } else
         $proto = $https ? 'https' : 'http'; 
-    }
     return "$proto://$_SERVER[HTTP_HOST]";
 }
 
 function phpx_this_url($https = null) {
-    $url = $_SERVER['REQUEST_URL']; 
-    if (strstr($url, '://')) {
+    $url = $_SERVER['REQUEST_URI']; 
+    if (strstr($url, '://'))
         return $url; 
-    }
-    
     $host = phpx_this_host($https); 
-    if (substr($url, 0, 1) != '/') {
+    if (substr($url, 0, 1) != '/')
         $url = "/$url"; 
-    }
-    return "$host$usl"; 
+    return "$host$url"; 
 }
 
 # concat this-url with specfied relative-url
