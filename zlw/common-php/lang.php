@@ -155,6 +155,13 @@ function &phpx_map_parse($string) {
     return $map; 
 }
 
+function phpx_to_assoc($object) {
+    foreach ($object as $name=>$value) {
+        $assoc[$name] = $value;
+    }
+    return $assoc; 
+}
+
 # .section.  logic string operators
 
 function strand() {
