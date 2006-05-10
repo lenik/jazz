@@ -439,7 +439,7 @@ class phpx_dbi extends phpx_dbi_base {
             $names[] = $name; 
             # $types[$name] = $type;
             if (! is_null($values[$name]))
-                $values[$name] = $this->_sql_encode($values[$name], $type); 
+                $sql_values[$name] = $this->_sql_encode($values[$name], $type); 
         }
         
         if (is_string($keys))
@@ -451,48 +451,57 @@ class phpx_dbi extends phpx_dbi_base {
         
         $this->_free_result($result); 
         
-        # the criteria is needed for auto-choose and update
-        $criteria = '';
+        # the cond_keys is needed for auto-choose and update
+        $cond_keys = '';
         
         if ($method != 'insert') {
             # update or auto-detect
             foreach ($keys as $key) {
-                if (array_key_exists($key, $values)) {
-                    if ($criteria != '') $criteria .= ' and ';
-                    $value = $values[$key]; 
-                    $criteria .= "$key=$value"; 
+                if (array_key_exists($key, $sql_values)) {
+                    if ($cond_keys != '') $cond_keys .= ' and ';
+                    $value = $sql_values[$key]; 
+                    unset($sql_values[$key]); 
+                    $cond_keys .= "$key=$value"; 
                 }
             }
-            if ($criteria == '') {
-                if ($method == 'update')
-                    return $this->_err("[UTBL] Range has not been specified"); 
+            # $keys isn't specified, then 
+            if ($cond_keys == '') {
+                if ($method == 'update' || $method == 'delete')
+                    return $this->_err("[UTBL] key has not been specified"); 
                 else
-                    # always insert when range is not specified. 
+                    # method == '' and no cond-keys
                     $method = 'insert'; 
             }
         }
         
         if (is_null($method)) {
             # auto-detect
-            $rows = $this->_eval("select count(*) from $table where $criteria"); 
-            $method = $rows ? 'update' : 'insert'; 
+            $rows = $this->_eval("select count(*) from $table where $cond_keys"); 
+            if ($rows) {
+                if ($sql_values != null)
+                    $method = 'update'; 
+                else
+                    $method = 'delete'; 
+            } else {
+                $method = 'insert'; 
+            }
         }
         
         if ($method == 'update') {
             foreach ($names as $name) {
                 if (in_array($name, $keys)) continue; 
-                $value = $values[$name]; 
+                $value = $sql_values[$name]; 
                 if (is_null($value)) continue; 
                 if ($S1 != '') $S1 .= ', '; 
                 $S1 .= "$name=$value"; 
             }
             if ($S1 == '')
                 return $this->_err("[UTBL] The fields list to update is empty: table $table"); 
-            if (! $this->_query("update $table set $S1 where $criteria"))
+            if (! $this->_update("update $table set $S1 where $cond_keys"))
                 return $this->_warn("[UTBL] Failed to update table: table $table"); 
-        } else if ($method == 'insert') {
+        } elseif ($method == 'insert') {
             foreach ($names as $name) {
-                $value = $values[$name]; 
+                $value = $sql_values[$name]; 
                 if (is_null($value)) continue; 
                 if ($S2 != '') {
                     $S2 .= ','; 
@@ -503,8 +512,11 @@ class phpx_dbi extends phpx_dbi_base {
             }
             if ($S2 == '')
                 return $this->_err("[UTBL] The fields list to insert is empty: table $table"); 
-            if (! $this->_query("insert into $table($S2) values($S3)"))
+            if (! $this->_update("insert into $table($S2) values($S3)"))
                 return $this->_warn("[UTBL] failed to insert into table: table $table"); 
+        } elseif ($method == 'delete') {
+            if (! $this->_update("delete from $table where $cond_keys"))
+                return $this->_warn("[UTBL] failed to delete from table: table $table"); 
         } else {
             return $this->_err("[UTBL] Unexpected update method: $method");
         }
