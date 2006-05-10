@@ -3,8 +3,8 @@
 require_once dirname(__FILE__) . '/../common-php/http.php'; 
 require_once dirname(__FILE__) . '/../common-php/xml.php'; 
 require_once dirname(__FILE__) . '/../common-php/once.php'; 
-require_once dirname(__FILE__) . "/af-object.php";
-require_once dirname(__FILE__) . "/af-dbi.php";
+require_once dirname(__FILE__) . '/af-object.php';
+require_once dirname(__FILE__) . '/af-dbi.php';
 
 # .section.  mode ext functions
 
@@ -44,15 +44,7 @@ function zlw_af_query_edit($dbi, $sqlrc, $keys = null, $init = null,
     return $form; 
 }
 
-function _getvals($names) {
-    foreach ($names as $name) {
-        if (($name = trim($name)) == '') continue; 
-        $vals[$name] = $_REQUEST[$name]; 
-    }
-    return $vals; 
-}
-
-function zlw_af_sp_crud($dbi, $table_name, $keys = null, $vars = null) {
+function zlw_af_sp_crud($dbi, $table, $keys = null, $vars = null) {
     if (is_null($vars))
         $vars = phpx_noslashes($_REQUEST); 
     $method = $vars['_method']; 
@@ -61,27 +53,35 @@ function zlw_af_sp_crud($dbi, $table_name, $keys = null, $vars = null) {
     case 'insert': 
     case 'update': 
     case 'delete': 
-        $db->_update_table($table, $req, $keys, $method); 
+        $dbi->_update_table($table, $vars, $keys, $method); 
         $reload = true; 
     }
     
     if ($reload)
         phpx_redirect_relative(); 
     
-    SECTION('zlw_af_sp_crud'); 
+    SECTION('sp-crud'); 
     
     switch ($method) {
     case 'modify': 
-        if (is_null($keys)) $keys = 
-        $keys = phpx_list_parse($keys); 
-        $keyvals = _getvals($keys); 
-        OUT($db->_query_edit(null, "select * from $table where $keyvals", $keys, 
-            phpx_noslashes($_REQUEST), null, 'update')); 
+        $where_keys = $dbi->_where_keys($table, $vars, $keys); 
+        OUT($dbi->_query_edit(null, "select * from $table where $where_keys", $keys, 
+            $vars, null, 'update')); 
         break; 
-    default: 
-        OUT($db->_query_table(null, "select * from $table")); 
-        OUT($db->_query_edit(null, "select * from $table where id=-1", $keys, 
-            phpx_noslashes($_REQUEST), null, 'insert')); 
+    default:
+        if (is_null($page = $vars['_page']))
+            $page = 0; 
+        $page_size = 10; 
+        if (isset($vars['_page_size']))
+            $page_size = $vars['_page_size']; 
+        $view_size = $page_size; 
+        OUT($dbi->_query_table(null, "%% page($page, $page_size, $view_size) % "
+            . "select * from $table", $keys)); 
+        FORM('sp-crud.page'); 
+        METHOD('prev', null, array('.page' => $page-1)); 
+        METHOD('next', null, array('.page' => $page+1)); 
+        OUT($dbi->_query_edit(null, "select * from $table where id=-1", $keys, 
+            $vars, null, 'insert')); 
         break; 
     }
 }
