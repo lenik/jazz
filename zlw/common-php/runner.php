@@ -33,12 +33,9 @@
         foreach (glob(dirname($pr_tmpphp) . '/PHP*') as $tmp) {
             unlink($tmp); 
         }
-    } elseif ($pr_style == 'php') {
-        # php_parse_and_colorize()...?
+    } elseif ($pr_style == 'color') {
         header('Content-Type: text/html'); 
-        $pr_src = htmlspecialchars($pr_src); 
-        $pr_src = str_replace("\n", "<br>", $pr_src); 
-        echo $pr_src; 
+        highlight_string($pr_src); 
     } else {
 ?>
 <html id="html" xmlns="http://www.w3.org/1999/xhtml">
@@ -58,6 +55,14 @@
             var src = form["_pr_src"]; 
             // ...?
         }
+
+        function do_color() {
+            var form = document.getElementById("frmScript");
+            var old_style = form["_pr_style"].value;
+            form["_pr_style"].value = "color";
+            form.submit();
+            form["_pr_style"].value = old_style; 
+        }
         
         function done() {
             var form = document.getElementById("frmScript"); 
@@ -68,7 +73,15 @@
         function set_style() {
             var form = document.getElementById("frmScript"); 
             var src = form["_pr_src"]; 
-            var style = form["_pr_style"]; 
+            var style = form["_pr_style"];
+            if (style.value == "text") {
+                var mstart = "<" + "pre>";
+                var mend = "<" + "/pre>";
+                if (src.value.substring(0, 5) == mstart
+                    && src.value.substring(src.value.length - 6) == mend) {
+                    src.value = src.value.substring(5, src.value.length - 6);
+                }
+            }
             src.focus(); 
         }
         
@@ -135,9 +148,12 @@ $db->_close(); \n\
                 <select name="_pr_style" title="Output Method" onchange="javascript: set_style(); ">
                     <option value="html">As HTML
                     <option value="text">As Plain-Text
-                    <option value="php">Code Format
+                    <option value="color">Colorize
                 </select>
                 <input type="submit" value="(R)un" accesskey="R"/>
+                <input type="button" value="" accesskey="C"
+                       style="width: 0px; height: 0px; border: 0px; position: absolute; "
+                       onclick="javascript: do_color(); ">
             </td><td width="*">
                 <input name="_pr_params" type="text" 
                     value="foo=bar:test=Hello, World!"
