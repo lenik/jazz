@@ -1,18 +1,21 @@
 <?php
 
 class sqltree {
-    protected $dbi; 
-    protected $table; 
-    protected $Bname;                   # Base
-    protected $Dname;                   # Derived
-    protected $Iname;                   # Indirection
+    # dbi -> DBI
+    # table -> table-name
+    # Bname -> Base-Field
+    # Dname -> Derived-Field, 
+    # Iname -> Indirection-Field
+    protected $names; 
     
     function sqltree($dbi, $table, $Bname = 'b', $Dname = 'd', $Iname = null) {
-        $this->dbi = $dbi; 
-        $this->table = $table; 
-        $this->Bname = $Bname;
-        $this->Dname = $Dname;
-        $this->Iname = $Iname;
+        $this->names = array(
+            'dbi' => $dbi, 
+            'table' => $table, 
+            'Bname' => $Bname, 
+            'Dname' => $Dname, 
+            'Iname' => $Iname, 
+            ); 
     }
     
     function hasA($b, $d) {
@@ -20,7 +23,7 @@ class sqltree {
     }
     
     function isA($d, $b) {
-        extract(phpx_to_assoc($this));
+        extract($this->names);
         
         if (isset($Iname)) {
             $rs = $dbi->_query("select $Iname from $table"
@@ -45,7 +48,7 @@ class sqltree {
     }
     
     function add($node, $parent) {
-        extract(phpx_to_assoc($this));
+        extract($this->names);
         
         if (isset($Iname)) {
             # add: new I(parent -> x) = 1
@@ -70,7 +73,7 @@ class sqltree {
     }
     
     function remove($node, $recursive = false) {
-        extract(phpx_to_assoc($this)); 
+        extract($this->names); 
         
         if ($recursive) {
             # delete: B*(x) -> D*(x)
@@ -97,7 +100,7 @@ class sqltree {
     }
     
     function move($node, $parent) {
-        extract(phpx_to_assoc($this)); 
+        extract($this->names); 
         
         $new = $parent; 
         if (isset($Iname)) {
@@ -158,7 +161,7 @@ class sqltree {
     }
     
     function check($detail = false, $auto_fix = false) {
-        extract(phpx_to_assoc($this)); 
+        extract($this->names); 
         
         $rows = 0;
         
