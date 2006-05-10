@@ -7,6 +7,8 @@ use Config;
 use CGI qw/:standard *table/;
 use File::Temp qw/:POSIX/;
 use Data::Dumper; 
+use File::Basename; 
+use lib dirname(__FILE__); 
 use cpl::utils;
 
 sub tempnam {
