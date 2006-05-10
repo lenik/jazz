@@ -6,55 +6,84 @@ require_once dirname(__FILE__) . '/../common-php/once.php';
 require_once dirname(__FILE__) . "/af-object.php";
 require_once dirname(__FILE__) . "/af-dbi.php";
 
-function zlw_af_quick_table($table_name) {
-    # zlw_af_enable_xml_error(); 
+# .section.  mode ext functions
+
+function zlw_af_query_table($dbi, $sqlrc, $keys = 'id', $name = null,
+                            $methods = 'delete:modify', $hint = null,
+                            $hidden = null) {
+    $table = new zlw_af_table($name, null, null, null, null, $hidden,
+                              $methods, $hint);
+    $dbi->_query_view($sqlrc, $table, $keys, null);
+    return $table; 
+}
+
+function zlw_af_query_map($dbi, $sqlrc, $keys = 'id', $format = null, $name = null,
+                          $methods = 'delete:modify', $hint = null,
+                          $hidden = null) {
+    $map = new zlw_af_map($name, null, null, null, $hidden, $methods, $hint);
+    $dbi->_query_view($sqlrc, $map, $keys, $format);
+    return $map; 
+}
+
+function zlw_af_query_list($dbi, $sqlrc, $format = null, $name = null, 
+                           $methods = 'delete:modify', $hint = '',
+                           $hidden = null) {
+    $list = new zlw_af_list($name, null, null, null, $hidden, $methods, $hint);
+    $dbi->_query_view($sqlrc, $list, null, $format);
+    return $list; 
+}
+
+function zlw_af_query_edit($dbi, $sqlrc, $keys = null, $init = null,
+                           $name = null, $update_method = 'update',
+                           $hint = null, $selection = null) {
+    $methods = $update_method;
+    if (is_null($methods)) $methods = 'update'; 
     
-    $reload = ! is_null($method = $_REQUEST['_method']); 
-    $id = $_REQUEST['id']; 
-    
-    $db = zlw_af_connect_fast(true); 
-    
+    $form = new zlw_af_form($name, null, null, $methods, $hint);
+    $dbi->_query_edit($sqlrc, $form, $keys, $init, $selection);
+    return $form; 
+}
+
+function _getvals($names) {
+    foreach ($names as $name) {
+        if (($name = trim($name)) == '') continue; 
+        $vals[$name] = $_REQUEST[$name]; 
+    }
+    return $vals; 
+}
+
+function zlw_af_sp_crud($dbi, $table_name, $keys = null, $vars = null) {
+    if (is_null($vars))
+        $vars = phpx_noslashes($_REQUEST); 
+    $method = $vars['_method']; 
+    $reload = false; 
     switch ($method) {
     case 'insert': 
     case 'update': 
-        $db->_update_table('vbank_lang', phpx_noslashes($_REQUEST), 'id', $method); 
-        break; 
     case 'delete': 
-        $db->_query("delete from vbank_lang where id=$id"); 
-        break; 
-    default: 
-        $reload = false; 
+        $db->_update_table($table, $req, $keys, $method); 
+        $reload = true; 
     }
     
     if ($reload)
         phpx_redirect_relative(); 
     
-    phpx_transient(); 
-    
-    # $af = new zlw_af_xml('Languages'); 
-    # echo $af->xml_start(); 
-    # echo $af->xml_page(); 
-    
-    $sec = new zlw_af_section(); 
-    echo $sec->xml_start(); 
+    SECTION('zlw_af_sp_crud'); 
     
     switch ($method) {
     case 'modify': 
-        echo zlw_af_query_edit($db, "select * from vbank_lang where id=$id", 'id', 
-            phpx_noslashes($_REQUEST), '', 'update', 'common-php/context.php'); 
+        if (is_null($keys)) $keys = 
+        $keys = phpx_list_parse($keys); 
+        $keyvals = _getvals($keys); 
+        OUT($db->_query_edit(null, "select * from $table where $keyvals", $keys, 
+            phpx_noslashes($_REQUEST), null, 'update')); 
         break; 
     default: 
-        echo zlw_af_query_table($db, "select * from vbank_lang"); 
-        echo zlw_af_query_edit($db, "select * from vbank_lang where id=-1", 'id', 
-            phpx_noslashes($_REQUEST), '', 'insert'); 
+        OUT($db->_query_table(null, "select * from $table")); 
+        OUT($db->_query_edit(null, "select * from $table where id=-1", $keys, 
+            phpx_noslashes($_REQUEST), null, 'insert')); 
         break; 
     }
-    
-    echo zlw_af_form(null, null, null, 
-        new zlw_af_method('Language Preference', 'vbank_lang_pref.php')
-        ); 
-    
-    echo $sec->xml_end(); 
-    # echo $af->xml_end(); 
 }
+
 ?>
