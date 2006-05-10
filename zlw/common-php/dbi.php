@@ -8,11 +8,11 @@
 require_once dirname(__FILE__) . '/lang.php'; 
 require_once dirname(__FILE__) . '/error.php'; 
 require_once dirname(__FILE__) . '/dbi/' . DBI_DIALECT . '.php'; 
-require_once dirname(__FILE__) . '/qmode.php';
+require_once dirname(__FILE__) . '/sqlex.php';
 
 function phpx_dbi_cleanup() {
     global $PHPX_CONNECTED_DBI; 
-    if (! is_null($PHPX_CONNECTED_DBI)) {
+    if (isset($PHPX_CONNECTED_DBI)) {
         foreach ($PHPX_CONNECTED_DBI as $id=>$dbi) {
             if ($dbi->_link) $dbi->_close(); 
         }
@@ -27,15 +27,16 @@ $PHPX_DBI_EM->register();
 
 class phpx_dbi extends phpx_dbi_base {
     private $_dbi_id; 
-    private $_host; 
-    private $_user; 
-    private $_password; 
-    private $_database; 
+    protected $_host; 
+    protected $_user; 
+    protected $_password; 
+    protected $_database; 
     private $_persist; 
     public $_link; 
-    private $_transacting = false; 
-    private $_debug = false; 
-    private $_em; 
+    protected $_transacting = false; 
+    protected $_debug = false; 
+    protected $_em;
+    protected $_sqlex; 
     
     function phpx_dbi($host, $user, $password, $database, 
                       $connect = true, $persist = true, $debug = false) {
@@ -58,7 +59,7 @@ class phpx_dbi extends phpx_dbi_base {
     }
     
     function _reuse($dbi) {
-        if (! is_null($dbi)) {
+        if (is_null($dbi)) {
             $this->_err("[DBI] Cannot reuse null DBI"); 
             return false; 
         }
@@ -159,7 +160,7 @@ class phpx_dbi extends phpx_dbi_base {
         }
         
         # set connection character set.
-        if (! parent::_query("set names 'utf8'")) {
+        if (! parent::_fast_query("set names 'utf8'")) {
             $this->_err("[CONN] Cannot set encoding to utf-8"); 
             $this->_close(); 
             return false; 
@@ -244,21 +245,22 @@ class phpx_dbi extends phpx_dbi_base {
         }
         return $sql; 
     }
-
+    
+    # ^% pre(..) % post(..) % body
+    # ^%% class(..) % body
     function _parse_sqlex(&$sql) {
         $post = null;
-        
         if (substr($sql, 0, 1) == '%') {
             $segs = explode('%', $sql, 4);
             $pre = $segs[1];            # pre
             $post = $segs[2];           # post
             $sql = $segs[3];            # body
-            if ($pre == '') {           # special mode
-                $post = trim($post); 
-                $mode = eval("return new phpx_querymode_$post; ");
-                $post = $mode->post(); 
-                eval($mode->pre()); 
-            } else {
+            if ($pre == '') {           # %% class
+                $sqlex = phpx_sqlex_get($post, $this); 
+                $sql = $sqlex->pre($sql);
+                $this->_sqlex = $sqlex; 
+                return $sqlex; 
+            } else {                    # % pre % post
                 eval($pre);
             }
         }
@@ -275,8 +277,11 @@ class phpx_dbi extends phpx_dbi_base {
             $this->_warn("[SQL] query failed: $sql");
         elseif ($rs === true)
             return null; 
-        else {
-            if (isset($post)) eval($post);
+        elseif (isset($post)) {
+            if (is_string($post))
+                eval($post);
+            elseif (is_object($post))
+                $rs = $post->post($rs); 
         }
         return $rs; 
     }
@@ -291,8 +296,11 @@ class phpx_dbi extends phpx_dbi_base {
             $this->_warn("[SQL] fast query failed: $sql");
         elseif ($rs === true)
             return null; 
-        else {
-            if (isset($post)) eval($post);
+        elseif (isset($post)) {
+            if (is_string($post))
+                eval($post);
+            elseif (is_object($post))
+                $rs = $post->post($rs); 
         }
         return $rs; 
     }
@@ -313,7 +321,7 @@ class phpx_dbi extends phpx_dbi_base {
     }
     
     function _update($sql) {
-        $post = _parse_sqlex($sql);
+        $post = $this->_parse_sqlex($sql);
         
         $this->_info("[SQL] update: $sql"); 
         $ret = parent::_fast_query($sql);
@@ -326,7 +334,30 @@ class phpx_dbi extends phpx_dbi_base {
         else
             $ret = 0;
         
-        if (isset($post)) eval($post);
+        if (isset($post)) {
+            if (is_string($post))
+                eval($post);
+            elseif (is_object($post))
+                $ret = $post->post($ret); 
+        }
+        return $ret;
+    }
+    
+    function _execute($sql) {
+        $post = _parse_sqlex($sql);
+        
+        $this->_info("[SQL] execute: $sql"); 
+        $ret = parent::_query($sql);
+        
+        if ($ret === false)
+            $this->_warn("[SQL] execute failed: $sql");
+
+        if (isset($post)) {
+            if (is_string($post))
+                eval($post);
+            elseif (is_object($post))
+                $ret = $post->post($ret); 
+        }
         return $ret;
     }
     
@@ -415,7 +446,14 @@ class phpx_dbi extends phpx_dbi_base {
         return $sets; 
     }
     
-    function _default_keys(&$result) {
+    function _default_keys($tbl_rs) {
+        if (is_string($tbl_rs)) {
+            $result = $this->_fast_query("select * from $tbl_rs where 1=2"); 
+            if (! $result)
+                return $this->_err("[UTBL] Failed to get structure: table $tbl_rs"); 
+        } else {
+            $result = $tbl_rs; 
+        }
         $n = $this->_num_fields($result);
         for ($i = 0; $i < $n; $i++) {
             $flags = $this->_field_flags($result, $i);
@@ -424,13 +462,53 @@ class phpx_dbi extends phpx_dbi_base {
         }
         if (is_null($keys))
             $keys[] = $this->_field_name($result, 0);
+        if (is_string($tbl_rs))
+            $this->_free_result($result); 
         return $keys;
+    }
+
+    function _where_keys($tbl_rs, $values, $keys = null) {
+        if (is_string($tbl_rs)) {
+            $result = $this->_fast_query("select * from $tbl_rs where 1=2"); 
+            if (! $result)
+                return $this->_err("[UTBL] Failed to get structure: table $tbl_rs"); 
+        } else {
+            $result = $tbl_rs; 
+        }
+        $n = $this->_num_fields($result);
+        for ($i = 0; $i < $n; $i++) {
+            $name = $this->_field_name($result, $i);
+            $type = $this->_field_type($result, $i); 
+            $flags = $this->_field_flags($result, $i);
+            
+            # using default keys ?
+            if (is_null($keys) && strpos($flags, 'primary_key') !== false)
+                $def_keys[] = $this->_field_name($result, $i);
+            
+            # escape field value by field type
+            if (isset($values[$name]))
+                $sql_values[$name] = $this->_sql_encode($values[$name], $type);
+        }
+        if (is_null($keys)) {           # using default primary keys
+            $keys = $def_keys;
+            if (is_null($keys))         # if no primary key defined
+                $keys[] = $this->_field_name($result, 0);
+        }
+        if (is_string($tbl_rs))
+            $this->_free_result($result);
+        
+        $sql = '';
+        foreach ($keys as $key) {
+            if ($sql != '') $sql .= ' and '; 
+            $sql .= $key . '=' . $sql_values[$key]; 
+        }
+        return $sql;
     }
     
     function _update_table($table, $values, $keys = null, $method = null) {
-        $result = $this->_query("select * from $table where 1=2"); 
+        $result = $this->_fast_query("select * from $table where 1=2"); 
         if (! $result)                  # using error cause?
-            return $this->_err("[UTBL] Failed to query table: $table"); 
+            return $this->_err("[UTBL] Failed to get structure: table $table"); 
         
         $n = $this->_num_fields($result);
         for ($i = 0; $i < $n; $i++) {
@@ -446,38 +524,29 @@ class phpx_dbi extends phpx_dbi_base {
             $keys = phpx_list_parse($keys); 
         if (is_null($keys))
             $keys = $this->_default_keys($result);
+            
         foreach ($keys as $key)
             $is_key[$key] = true;
         
         $this->_free_result($result); 
         
-        # the cond_keys is needed for auto-choose and update
-        $cond_keys = '';
+        # the where_keys is needed for auto-choose and update
+        $where_keys = $this->_where_keys($table, $values, $keys); 
         
-        if ($method != 'insert') {
-            # update or auto-detect
-            foreach ($keys as $key) {
-                if (array_key_exists($key, $sql_values)) {
-                    if ($cond_keys != '') $cond_keys .= ' and ';
-                    $value = $sql_values[$key]; 
-                    unset($sql_values[$key]); 
-                    $cond_keys .= "$key=$value"; 
-                }
-            }
-            # $keys isn't specified, then 
-            if ($cond_keys == '') {
+        if ($where_keys == '') {
+            if ($method != 'insert') {  # update, delete, <null for detect> ?
                 if ($method == 'update' || $method == 'delete')
                     return $this->_err("[UTBL] key has not been specified"); 
                 else
-                    # method == '' and no cond-keys
+                    # always do insert if no where-keys
                     $method = 'insert'; 
             }
         }
         
         if (is_null($method)) {
             # auto-detect
-            $rows = $this->_eval("select count(*) from $table where $cond_keys"); 
-            if ($rows) {
+            $anyrows = $this->_test("select * from $table where $where_keys"); 
+            if ($anyrows) {
                 if ($sql_values != null)
                     $method = 'update'; 
                 else
@@ -497,7 +566,7 @@ class phpx_dbi extends phpx_dbi_base {
             }
             if ($S1 == '')
                 return $this->_err("[UTBL] The fields list to update is empty: table $table"); 
-            if (! $this->_update("update $table set $S1 where $cond_keys"))
+            if (! $this->_update("update $table set $S1 where $where_keys"))
                 return $this->_warn("[UTBL] Failed to update table: table $table"); 
         } elseif ($method == 'insert') {
             foreach ($names as $name) {
@@ -515,7 +584,7 @@ class phpx_dbi extends phpx_dbi_base {
             if (! $this->_update("insert into $table($S2) values($S3)"))
                 return $this->_warn("[UTBL] failed to insert into table: table $table"); 
         } elseif ($method == 'delete') {
-            if (! $this->_update("delete from $table where $cond_keys"))
+            if (! $this->_update("delete from $table where $where_keys"))
                 return $this->_warn("[UTBL] failed to delete from table: table $table"); 
         } else {
             return $this->_err("[UTBL] Unexpected update method: $method");
