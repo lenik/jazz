@@ -207,7 +207,7 @@ class zlw_af_dbi extends phpx_dbi {
                 $len = $this->_field_len($rs, $i); 
                 $multiline = $this->_type_is_multiline($type); 
                 $read_only = $is_key[$i] || $is_key[$name];
-                $value = isset($init[$name]) ? $row[$i] : $init[$name];
+                $value = isset($init[$name]) ? $init[$name] : $row[$i];
                 $value = new zlw_af_variant($value, $this->_type_af($type), false); 
                 $sel = isset($selection) ? $selection[$name] : null; 
                 $input = new zlw_af_input($name, null, $value, $multiline, $read_only, 
