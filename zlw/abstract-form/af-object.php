@@ -161,7 +161,7 @@ function zlw_af_methods($methods, $ns = '') {
     $xml = ''; 
     if (is_null($methods)) return null;
     if (is_string($methods)) {
-        $names = explode(':', $methods);
+        $names = phpx_list_parse($methods);
         foreach ($names as $name) {
             $method = new zlw_af_method($name);
             $xml .= $method->xml($ns);
@@ -248,7 +248,7 @@ class zlw_af_list extends zlw_af_data {
         if (is_array($items))
             $this->items = $items; 
         elseif (is_string($items))
-            $this->items = explode(':', $items); 
+            $this->items = phpx_list_parse($items); 
         $this->sort = $sort; 
         $this->sort_order = $sort_order; 
     }
@@ -628,7 +628,7 @@ class zlw_af_ticket extends phpx_error_support {
             return $this->_err("[TIKT] Bad ticket: ticket has been already used");
         return true; 
     }
-
+    
     function &trace() {
         if (is_null($this->trace_prev)) return null; 
         return zlw_af_ticket_get($this->trace_prev);
@@ -650,7 +650,7 @@ function &zlw_af_ticket_alloc() {
     global $ZLW_AF_TICKETS;
     $id = rand(); 
     do {
-        $tid = ZLW_AF . '.' . $id++; 
+        $tid = 'ZLW_AF' . '.' . $id++; 
         $ticket = &$ZLW_AF_TICKETS[$tid];
     } while (! is_null($ticket));
     $ticket = new zlw_af_ticket($tid);
@@ -803,7 +803,7 @@ class zlw_af_error extends phpx_error {
         }
         
         if (! is_null($this->methods)) {
-            foreach (explode(':', $this->methods) as $method) {
+            foreach (phpx_list_parse($this->methods) as $method) {
                 if ($method == '') continue; 
                 $xml .= phpx_xml_tag('method', array('name' => $method), null, $ns); 
             }
