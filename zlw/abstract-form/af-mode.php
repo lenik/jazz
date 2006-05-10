@@ -345,12 +345,12 @@ function IN($input_name, $value = null, $typestr = null, $multiline = false,
     }
 }
 
-function METHOD($method_name, $hint = '', $typestr = 'default', $param = null, 
+function METHOD($method_name, $hint = null, $param = null, $typestr = null, 
                 $const = false) {
     global $ZLW_AF_MODE;
     assert(isset($ZLW_AF_MODE));
     if (is_string($method_name)) {
-        $method = new zlw_af_method($method_name, $hint, $typestr, $param,
+        $method = new zlw_af_method($method_name, $hint, $param, $typestr, 
                                     $const);
         $ZLW_AF_MODE->output($method); 
     } elseif ($method_name instanceof zlw_af_method) {
