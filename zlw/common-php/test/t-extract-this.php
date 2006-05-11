@@ -1,11 +1,11 @@
 <pre><?php
-include_once 'lang.php';
-include_once 'test/t-config.php'; 
-include_once 'dbi.php'; 
+include_once 't-config.php'; 
+include_once 'zlw/common-php/lang.php';
+include_once 'zlw/common-php/dbi.php'; 
 
 class C {
-  var $a='1';
-  var $b='hello'; 
+  public $a='1';
+  public $b='hello'; 
   function f() {
         extract(phpx_to_assoc($this)); 
     echo "a=$a, b=$b"; 

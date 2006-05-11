@@ -10,8 +10,8 @@
  */
 
 class phpx_cached_object {
-    var $name; 
-    var $save_path; 
+    protected $name; 
+    protected $save_path; 
     
     function phpx_cached_object($name) {
         $this->name = $name; 

@@ -1,7 +1,7 @@
 <?php
 
 class A {
-	var $name = 'hello'; 
+	public $name = 'hello'; 
 	function about() {
 		echo "This name: " . $this->name . "\n"; 
 	}

@@ -3,8 +3,8 @@
 # complex object ref
 
 class input {
-    var $name; 
-    var $value; 
+    public $name; 
+    public $value; 
     function input($name, $value) {
         $this->name = $name; 
         $this->value = $value; 
@@ -12,7 +12,7 @@ class input {
 }
 
 class form {
-    var $inputs; 
+    public $inputs; 
     function add_input(&$input) {
         $name = $input->name;
         $old = &$this->inputs[$name];

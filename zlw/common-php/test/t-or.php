@@ -3,13 +3,13 @@
 require '../lang.php'; 
 
 class C {
-	var $dog; 
-	var $cat; 
+	public $dog; 
+	public $cat; 
 }
 
 class D {
-	var $tiger; 
-	var $c; 
+	public $tiger; 
+	public $c; 
 	function D() {
 		$this->c = new C(); 
 	}
