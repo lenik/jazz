@@ -73,7 +73,7 @@ function phpx_url_relative($url = '', $https = null) {
 # concat this-url with specfied full-url
 function phpx_url_full($url, $https = null) {
     # url-absolute
-    if ($right = strstr($url, '://')) {
+    if (($right = strstr($url, '://')) !== false) {
         if (is_null($https))
             return $url; 
         else

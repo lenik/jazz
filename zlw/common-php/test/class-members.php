@@ -15,8 +15,9 @@ class C {
 }
 
 class D {
-    var $def; 
+    public $def; 
     function func() {
+        $def = $this->def; 
         if ($def == null)
             echo "def: == null\n"; 
         if ($def === null)

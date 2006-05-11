@@ -3,9 +3,9 @@
 # & (BYREF) has a low precedence. 
 
 class C {
-	var $a = 'A hello'; 
-	var $b = 'B world'; 
-	var $next; 
+	public $a = 'A hello'; 
+	public $b = 'B world'; 
+	public $next; 
 }
 
 $c1 = new C(); 
