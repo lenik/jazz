@@ -4,5 +4,6 @@
 	<classpathentry kind="src" path="net.bodz.mis.book"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/MisApp"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SWT"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
