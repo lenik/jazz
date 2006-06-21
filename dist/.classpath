@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="net.bodz.product"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SOAP"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SWT"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/MisApp"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry path="net.bodz.product" kind="src"/>
+	<classpathentry path="org.eclipse.jdt.launching.JRE_CONTAINER" kind="con"/>
+	<classpathentry path="org.eclipse.jdt.USER_LIBRARY/SWT" kind="con"/>
+	<classpathentry path="org.eclipse.jdt.USER_LIBRARY/MisApp" kind="con"/>
+	<classpathentry path="bin" kind="output"/>
 </classpath>
