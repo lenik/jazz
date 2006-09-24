@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="net.bodz.mis"/>
-	<classpathentry kind="src" path="net.bodz.mis.book"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/MisApp"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SWT"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry path="net.bodz.mis" kind="src"/>
+	<classpathentry path="net.bodz.mis.book" kind="src"/>
+	<classpathentry path="org.eclipse.jdt.launching.JRE_CONTAINER" kind="con"/>
+	<classpathentry path="org.eclipse.jdt.USER_LIBRARY/MisApp" kind="con"/>
+	<classpathentry path="org.eclipse.jdt.USER_LIBRARY/SWT" kind="con"/>
+	<classpathentry path="/net.bodz.commons" combineaccessrules="false" kind="src"/>
+	<classpathentry path="/net.bodz.zlw" combineaccessrules="false" kind="src"/>
+	<classpathentry path="bin" kind="output"/>
 </classpath>
