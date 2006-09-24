@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry sourcepath="ECLIPSE_HOME/plugins/org.eclipse.jdt.source_3.1.1/src/org.junit_3.8.1/junitsrc.zip" kind="var" path="JUNIT_HOME/junit.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/org.eclipse.swt"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry path="src" kind="src"/>
+	<classpathentry path="org.eclipse.jdt.launching.JRE_CONTAINER" kind="con"/>
+	<classpathentry sourcepath="/JUNIT_SRC_HOME/junitsrc.zip" path="JUNIT_HOME/junit.jar" kind="var"/>
+	<classpathentry path="org.eclipse.jdt.USER_LIBRARY/SWT" kind="con"/>
+	<classpathentry path="bin" kind="output"/>
 </classpath>
