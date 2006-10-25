@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry path="src" kind="src"/>
+	<classpathentry path="test" output="test.bin" kind="src"/>
+	<classpathentry path="org.eclipse.jdt.launching.JRE_CONTAINER" kind="con"/>
+	<classpathentry path="/net.bodz.commons" combineaccessrules="false" kind="src"/>
+	<classpathentry path="/net.sf.freejava" combineaccessrules="false" kind="src"/>
+	<classpathentry path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4" kind="con"/>
+	<classpathentry path="bin" kind="output"/>
+</classpath>
