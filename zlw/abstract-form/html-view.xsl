@@ -47,7 +47,7 @@
 				<!--<HR/>-->
 				<cite>Powered by ZLW::Abstract-Form</cite>
 				<br/>
-				<cite>$Id: html-view.xsl,v 1.6.2.15 2006-04-22 12:58:14 dansei Exp $</cite>
+				<cite>$Id: html-view.xsl,v 1.6.2.16 2006-10-29 23:52:10 lenik Exp $</cite>
 			</xsl:with-param>
 		</xsl:call-template>
 	</xsl:template>
@@ -1184,10 +1184,10 @@ $retvar, '.model = &quot;', $model, '&quot;', '; &#10;')"/>
 		<xsl:param name="form-id"/>
 		<xsl:param name="name" select="concat('.method_', position())"/>
 		<xsl:element name="input">
-			<xsl:attribute name="type">submit</xsl:attribute>
+			<xsl:attribute name="type">button</xsl:attribute>
 			<xsl:attribute name="name"><xsl:value-of select="$name"/></xsl:attribute>
 			<xsl:attribute name="value"><xsl:value-of select="@name"/></xsl:attribute>
-			<xsl:attribute name="onclick">javascript: var form = document.getElementById('<xsl:value-of select="$form-id"/>'); <xsl:if test="@hint or af:method-parameter"><!--Out-going??-->form.action = '<xsl:call-template name="t-href-concat"><xsl:with-param name="lhs"><xsl:call-template name="t-hint-with-hold"/></xsl:with-param><xsl:with-param name="rhs"><xsl:for-each select="af:method-parameter"><xsl:value-of select="concat('&amp;', @name, '=', text())"/></xsl:for-each></xsl:with-param></xsl:call-template>'; </xsl:if>form['.method'].value = form['<xsl:value-of select="$name"/>'].value; form.submit(); </xsl:attribute>
+			<xsl:attribute name="onclick"><!--1 - decl-->javascript: var form = document.getElementById('<xsl:value-of select="$form-id"/>'); <!--2 - form.action = '@hint'; --><xsl:if test="@hint">form.action = '<xsl:value-of select="@hint"/>'; </xsl:if><!--3 - form['.method'].value = form[$name].value-->form['.method'].value = form['<xsl:value-of select="$name"/>'].value; <!--4 - parameters--><xsl:if test="af:method-parameter">var i; <xsl:for-each select="af:method-parameter">i = document.createElement('input'); i.name = '<xsl:value-of select="@name"/>'; i.type='hidden'; i.value = '<xsl:value-of select="text()"/>'; form.appendChild(i); </xsl:for-each></xsl:if>form.submit();</xsl:attribute>
 		</xsl:element>
 	</xsl:template>
 	<xsl:template name="t-method-a" match="af:method[local-name(..)!='form']" priority="-1">
