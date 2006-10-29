@@ -282,7 +282,7 @@ function FORM($form_name = null, $items = null, $typestr = 'default',
     }
 }
 
-function OUT($data_name, $value = null, $typestr = null, $hold = null, 
+function OUT($data_name, $value = null, $typestr = 'string', $hold = null, 
              $hidden = null, $methods = null, $hint = null, 
              $sort = null, $sort_order = null, $columns = null) {
     global $ZLW_AF_MODE;
@@ -328,7 +328,7 @@ function OUT($data_name, $value = null, $typestr = null, $hold = null,
     }
 }
 
-function IN($input_name, $value = null, $typestr = null, $multiline = false, 
+function IN($input_name, $value = null, $typestr = 'string', $multiline = false, 
             $read_only = false, $max_length = null, $constraints = null, 
             $selection = null) {
     global $ZLW_AF_MODE;
