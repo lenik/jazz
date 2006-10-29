@@ -2,6 +2,7 @@
 list
 
     cam     com.app.module
+    cav     com.app.view
     cdw     com.dd.world
     cuk     com.user.kernel
     cux     com.user.ext

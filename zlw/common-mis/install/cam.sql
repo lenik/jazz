@@ -3,36 +3,11 @@
 
 set names 'gb2312';
 
-drop table com_mod_menu;
 drop table com_mod_access;
 drop table com_mod_files;
 drop table com_mod_inst;
 drop table com_mod_prereq; 
 drop table com_mod; 
-drop table com_menu_isa;
-drop table com_menu;
-
-create table com_menu(
-    id          int not null auto_increment,
-    title       varchar(100) not null,
-    icon        varchar(200) null,
-    tooltip     varchar(200) null,
-    primary key pk(id),
-    index       title(title)
-    )
-    character set utf8 collate utf8_general_ci;
-
-create table com_menu_isa(
-    parent      int not null,
-    child       int not null,
-    pr          int not null,
-    primary key pk(parent, child),
-    foreign key parent(parent)
-     references com_menu(id) on delete cascade,
-    foreign key child(child)
-     references com_menu(id) on delete cascade, 
-    index       pr(pr)
-    );
 
 create table com_mod(
     id          int not null auto_increment,
@@ -64,12 +39,12 @@ create table com_mod_prereq(            /* isa-compat */
 create table com_mod_inst(
     m           int not null, 
     instbase    varchar(200) not null,  /* install base directory */
-    entry       varchar(200) not null,  /* entry-point, relative to instbase */
+    main        varchar(200) not null,  /* main entry point, relative */
     primary key pk(m),
     foreign key m(m)
      references com_mod(id) on delete restrict,
     index       instbase(instbase),
-    index       entry(entry)
+    index       entry(main)
     )
     character set utf8 collate utf8_general_ci;
 
@@ -94,14 +69,3 @@ create table com_mod_access(
     foreign key priv(priv)
      references com_priv(id) on delete cascade
     );
-
-create table com_mod_menu(
-    m           int not null, 
-    menu        int not null,
-    primary key pk(m, menu),
-    foreign key m(m)
-     references com_mod(id) on delete cascade,
-    foreign key menu(menu)
-     references com_menu(id) on delete cascade
-    );
-
