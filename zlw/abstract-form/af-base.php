@@ -14,9 +14,12 @@ function zlw_af_homedir($req = null) {
     # URL-include, always using absolute url. 
     if (strpos($afdir, '//') !== false)
         return $afdir;                  # see t-dirname
-    $userdir = realpath($_SERVER['SCRIPT_FILENAME']); 
+    $userdir = $_SERVER['SCRIPT_FILENAME']; 
+    if ($userdir == 'dummy.php')
+        $userdir = getcwd(); 
+    else
+        $userdir = dirname(realpath($userdir));
     $userdir = str_replace('\\', '/', $userdir); 
-    $userdir = dirname($userdir); 
     
     $afsegs = explode('/', $afdir); 
     $usersegs = explode('/', $userdir); 
