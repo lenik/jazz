@@ -3,10 +3,10 @@
     require_once 'zlw/common-php/lang.php'; 
     require_once 'zlw/common-php/http.php'; 
     
-    $pr_style = $_REQUEST['_pr_style']; 
-    $pr_src = $_REQUEST['_pr_src']; 
+    @$pr_style = $_REQUEST['_pr_style']; 
+    @$pr_src = $_REQUEST['_pr_src']; 
     $pr_src = phpx_noslashes($pr_src); 
-    $pr_params = $_REQUEST['_pr_params']; 
+    @$pr_params = $_REQUEST['_pr_params']; 
     if (isset($pr_params)) {
         $pr_params = phpx_map_parse($pr_params); 
         foreach ($pr_params as $k=>$v) {
