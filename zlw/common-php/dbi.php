@@ -14,7 +14,8 @@ function phpx_dbi_cleanup() {
     global $PHPX_CONNECTED_DBI; 
     if (isset($PHPX_CONNECTED_DBI)) {
         foreach ($PHPX_CONNECTED_DBI as $id=>$dbi) {
-            if ($dbi->_link) $dbi->_close(); 
+            # never show error when closing in cleanup-stage. 
+            if ($dbi->_link) @$dbi->_close(); 
         }
         $PHPX_CONNECTED_DBI = null; 
     }
@@ -500,7 +501,7 @@ class phpx_dbi extends phpx_dbi_base {
         $sql = '';
         foreach ($keys as $key) {
             if ($sql != '') $sql .= ' and '; 
-            $sql .= $key . '=' . $sql_values[$key]; 
+            $sql .= $key . '=' . @$sql_values[$key]; 
         }
         return $sql;
     }
@@ -516,7 +517,7 @@ class phpx_dbi extends phpx_dbi_base {
             $type = $this->_field_type($result, $i);
             $names[] = $name; 
             # $types[$name] = $type;
-            if (! is_null($values[$name]))
+            if (! is_null(@$values[$name]))
                 $sql_values[$name] = $this->_sql_encode($values[$name], $type); 
         }
         
@@ -569,8 +570,10 @@ class phpx_dbi extends phpx_dbi_base {
             if (! $this->_update("update $table set $S1 where $where_keys"))
                 return $this->_warn("[UTBL] Failed to update table: table $table"); 
         } elseif ($method == 'insert') {
+            $S2 = '';
+            $S3 = '';
             foreach ($names as $name) {
-                $value = $sql_values[$name]; 
+                @$value = $sql_values[$name]; 
                 if (is_null($value)) continue; 
                 if ($S2 != '') {
                     $S2 .= ','; 
