@@ -15,40 +15,36 @@ import org.jibx.runtime.JiBXException;
 
 public class JiBX {
 
-    @SuppressWarnings("unchecked")
-    public static <T> T parse(Class<T> clazz, Reader xmlin)
-            throws JiBXException {
+    public static Object parse(Class clazz, Reader xmlin) throws JiBXException {
         IBindingFactory bfact = BindingDirectory.getFactory(clazz);
         IUnmarshallingContext uctx = bfact.createUnmarshallingContext();
         Object obj = uctx.unmarshalDocument(xmlin);
-        return (T) obj;
+        return obj;
     }
 
-    @SuppressWarnings("unchecked")
-    public static <T> T parse(Class<T> clazz, InputStream xmlin, String encoding)
+    public static Object parse(Class clazz, InputStream xmlin, String encoding)
             throws JiBXException {
         IBindingFactory bfact = BindingDirectory.getFactory(clazz);
         IUnmarshallingContext uctx = bfact.createUnmarshallingContext();
         Object obj = uctx.unmarshalDocument(xmlin, encoding);
-        return (T) obj;
+        return obj;
     }
 
-    public static <T> T parse(Class<T> clazz, InputStream xmlin)
+    public static Object parse(Class clazz, InputStream xmlin)
             throws JiBXException {
         return parse(clazz, xmlin, null);
     }
 
-    @SuppressWarnings("unchecked")
-    public static <T> T parse(Class<T> clazz, String xmlpath, String encoding)
+    public static Object parse(Class clazz, String xmlpath, String encoding)
             throws JiBXException, FileNotFoundException {
         IBindingFactory bfact = BindingDirectory.getFactory(clazz);
         IUnmarshallingContext uctx = bfact.createUnmarshallingContext();
         Object obj = uctx.unmarshalDocument(new FileInputStream(xmlpath),
                 encoding);
-        return (T) obj;
+        return obj;
     }
 
-    public static <T> T parse(Class<T> clazz, String xmlpath)
+    public static Object parse(Class clazz, String xmlpath)
             throws JiBXException, FileNotFoundException {
         return parse(clazz, xmlpath, null);
     }
