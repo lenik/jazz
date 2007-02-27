@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modpdb xmlns="http://www.bodz.net/xml/current/xmod/modpdb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.bodz.net/xml/current/xmod/modpdb
+C:\.radiko\.miaj\mirror\site\xml\current\xmod\modpdb.xsd">
+	<table>
+		<field/>
+	</table>
+	<table name="nam1">
+		<field/>
+	</table>
+	<table>
+		<field/>
+	</table>
+	<table name="nam2">
+		<field/>
+	</table>
+	<view name="nam3">
+		<src/>
+	</view>
+	<view>
+		<src/>
+	</view>
+</modpdb>

@@ -5,7 +5,11 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
+import java.io.StringWriter;
 import java.io.Writer;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Vector;
 
 import org.jibx.runtime.BindingDirectory;
 import org.jibx.runtime.IBindingFactory;
@@ -63,6 +67,29 @@ public class JiBX {
         IBindingFactory bfact = BindingDirectory.getFactory(obj.getClass());
         IMarshallingContext mctx = bfact.createMarshallingContext();
         mctx.marshalDocument(obj, encoding, null, xmlout);
+    }
+
+    public static String rewrite(Object obj, String encoding)
+            throws JiBXException {
+        Writer buf = new StringWriter();
+        rewrite(obj, buf, encoding);
+        return buf.toString();
+    }
+
+    public static String rewrite(Object obj) throws JiBXException {
+        return rewrite(obj, "utf-8");
+    }
+
+    public static ArrayList arrayList() throws JiBXException {
+        return new ArrayList();
+    }
+
+    public static LinkedList linkedList() throws JiBXException {
+        return new LinkedList();
+    }
+
+    public static Vector vector() throws JiBXException {
+        return new Vector();
     }
 
 }

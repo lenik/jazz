@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:pdb="http://www.bodz.net/xml/current/xmod/modpdb" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.bodz.net/xml/current/xmod/modpdb" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="modpdb">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="pdb:docobj">
+					<xs:choice minOccurs="0" maxOccurs="unbounded">
+						<xs:element ref="pdb:table"/>
+						<xs:element ref="pdb:view"/>
+						<xs:element name="hr" type="pdb:docobj">
+							<xs:annotation>
+								<xs:documentation>used to generate beautiful documents.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+		<xs:unique name="u_table_view">
+			<xs:selector xpath="pdb:table | pdb:view"/>
+			<xs:field xpath="@name"/>
+		</xs:unique>
+	</xs:element>
+	<xs:element name="table">
+		<xs:annotation>
+			<xs:documentation>REQ: @name
+
+opts: 
+    D=cache/dict
+    Dr=redundant (info-dict)
+    T=transient table
+    Ro=read-only table</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="pdb:docobj">
+					<xs:sequence>
+						<xs:element name="field" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>REQ: @name
+
+opts: 
+    N=nullable
+    K=primary key (group)
+    F([nam,] n:m ? table.field[, disp-sql]) = foreign key
+        F-> normal ref-integrity
+        F--> no ref-integrity
+        F=> cascade-update
+        F>> cascade-delete
+    I(nam)=index (group)
+    Ic(nam)=clustered index
+    U(nam)=unique (group)
+    T(field, ?)=timestamp
+    V(field, ?)=version
+    S?=special mode
+        Sd=cache/display-name
+    D(value)=default value
+    Dx(sql-exp)=default exp
+    Di(gen-method)[len] = identity
+</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="pdb:docobj">
+										<xs:attribute name="type" type="xs:string">
+											<xs:annotation>
+												<xs:documentation>sql type (YaSQL)
+default C[,32]
+
+B[min,max] = binary
+Bt = bit/boolean
+C[min,max] = 
+    char/varchar/text
+Cn[min,max] = 
+    nchar/nvarchar/ntext
+T? = datetime
+    Td=date
+    Tt=time
+    Ts=timestamp
+F?=float (default sys/float)
+I?=integer (default sys/int)
+    I8, I16, I32, I64, etc.
+M[totlen,declen] = money
+N[totlen,declen] = number</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="index" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>opts: 
+    K=primary key
+    F(n:m ? table.field)=foreign key
+    I=index
+    Ic=clustered index
+    U=unique</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="pdb:docobj">
+										<xs:sequence>
+											<xs:element name="field" type="xs:string" maxOccurs="unbounded"/>
+										</xs:sequence>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="check" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="pdb:docobj">
+										<xs:sequence>
+											<xs:element name="src" type="pdb:yasql"/>
+										</xs:sequence>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="trigger" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="pdb:docobj">
+										<xs:sequence>
+											<xs:element name="src" type="pdb:yasql"/>
+										</xs:sequence>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="row" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>data row</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded">
+										<xs:annotation>
+											<xs:documentation>field data</xs:documentation>
+										</xs:annotation>
+									</xs:any>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+		<xs:unique name="u_field">
+			<xs:selector xpath="field"/>
+			<xs:field xpath="@name"/>
+		</xs:unique>
+		<xs:unique name="u_index">
+			<xs:selector xpath="index"/>
+			<xs:field xpath="@name"/>
+		</xs:unique>
+		<xs:unique name="u_check">
+			<xs:selector xpath="check"/>
+			<xs:field xpath="@name"/>
+		</xs:unique>
+		<xs:unique name="u_trigger">
+			<xs:selector xpath="trigger"/>
+			<xs:field xpath="@name"/>
+		</xs:unique>
+	</xs:element>
+	<xs:element name="view">
+		<xs:annotation>
+			<xs:documentation>REQ: @name
+
+opts: 
+    D=cache/dict</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="pdb:docobj">
+					<xs:sequence>
+						<xs:element name="src" type="pdb:yasql"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="docobj">
+		<xs:sequence>
+			<xs:element ref="pdb:xdoc" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="id">
+			<xs:annotation>
+				<xs:documentation>xml id, used in $varname interpolation</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="name" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>object name</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="qname" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>qualified name.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="opts" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>options, in components' local-syntax</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="cat" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>category for organization purpose.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="disp" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>display string</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="icon" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>display icon</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="info" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>short help-info</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:element name="xdoc">
+		<xs:annotation>
+			<xs:documentation>built-in doc</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="html" type="xs:string"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="yasql">
+		<xs:simpleContent>
+			<xs:extension base="xs:string"/>
+		</xs:simpleContent>
+	</xs:complexType>
+</xs:schema>

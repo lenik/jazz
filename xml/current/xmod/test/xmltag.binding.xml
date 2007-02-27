@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<binding xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="C:\.radiko\varoj.java\XML\jibx\jibx\docs\binding.xsd" package="net.bodz.xml.xmod.modpdb">
+	<namespace prefix="pdb" uri="http://www.bodz.net/xml/current/xmod/modpdb" default="elements"/>
+	<!--/-->
+	<mapping name="modpdb" class="net.bodz.xml.xmod.modpdb.Testpdb">
+		<!--net.sf.freejava.fp.xml.XMLTag-->
+		<!--net.bodz.xml.xmod.modpdb.Testpdb-->
+		<collection field="tables">
+			<structure name="table" marshaller="net.bodz.xml.util.XMLTagMapper" unmarshaller="net.bodz.xml.util.XMLTagMapper" type="net.sf.freejava.fp.xml.XMLTag" flexible="true" ordered="false"/>
+		</collection>
+		<collection field="views" name="view" usage="optional">
+			<structure name="src"/>
+		</collection>
+	</mapping>
+</binding>
