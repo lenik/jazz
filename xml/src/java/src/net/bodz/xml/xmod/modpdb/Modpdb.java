@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.bodz.xml.xmod.util.Docobj;
 import net.sf.freejava.fp.dump.XMLDump;
 import net.sf.freejava.util.ConcatIterator;
 

@@ -1,4 +1,4 @@
-package net.bodz.xml.xmod.modpdb;
+package net.bodz.xml.xmod.util;
 
 import net.bodz.xml.util.Term;
 import net.bodz.xml.util.TermsParser;
