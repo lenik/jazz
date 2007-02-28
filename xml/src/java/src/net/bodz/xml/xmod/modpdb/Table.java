@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 import net.bodz.xml.util.Term;
+import net.bodz.xml.xmod.util.Docobj;
 import net.sf.freejava.fp.dump.XMLDump;
 
 class Column extends ArrayList<Object> {
@@ -81,7 +82,7 @@ public class Table extends Docobj {
         if (fieldIndexMap == null) {
             fieldIndexMap = new HashMap<String, Integer>();
             for (int index = 0; index < fields.size(); index++)
-                fieldIndexMap.put(fields.get(index).name, index);
+                fieldIndexMap.put(fields.get(index).getName(), index);
         }
         Integer index = fieldIndexMap.get(name);
         if (index == null)
@@ -104,7 +105,7 @@ public class Table extends Docobj {
         // 1, add new columns if not exists
         for (Cell cell : row.getCells()) {
             Field field = fields.get(cell.getIndex());
-            String fname = field.name;
+            String fname = field.getName();
             if (!columns.containsKey(fname)) {
                 int initcap = rows.size();
                 Column newColumn = new Column(initcap + 1);

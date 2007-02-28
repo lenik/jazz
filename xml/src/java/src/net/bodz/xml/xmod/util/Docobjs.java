@@ -1,4 +1,4 @@
-package net.bodz.xml.xmod.modpdb;
+package net.bodz.xml.xmod.util;
 
 import java.util.HashMap;
 import java.util.Map;

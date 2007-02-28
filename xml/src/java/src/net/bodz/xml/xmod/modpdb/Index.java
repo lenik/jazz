@@ -3,6 +3,7 @@ package net.bodz.xml.xmod.modpdb;
 import java.util.List;
 
 import net.bodz.xml.util.Term;
+import net.bodz.xml.xmod.util.Docobj;
 
 public class Index extends Docobj {
 

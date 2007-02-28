@@ -1,6 +1,7 @@
 package net.bodz.xml.xmod.modpdb;
 
 import net.bodz.xml.util.Term;
+import net.bodz.xml.xmod.util.Docobj;
 
 public class View extends Docobj {
 
