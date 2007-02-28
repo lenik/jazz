@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+import net.bodz.xml.util.Term;
 import net.sf.freejava.fp.dump.XMLDump;
 
 class Column extends ArrayList<Object> {
@@ -24,6 +25,20 @@ class Column extends ArrayList<Object> {
 }
 
 public class Table extends Docobj {
+
+    /** D, Dr (Forbid: T) */
+    public static final int      CACHED         = 1;
+
+    /** Dr */
+    public static final int      NOT_REFERENCED = 2;
+
+    /** T (Forbid: D, Dr) */
+    public static final int      TRANSIENT      = 4;
+
+    /** Ro */
+    public static final int      READ_ONLY      = 8;
+
+    protected int                flags;
 
     @XMLDump
     protected List<Field>        fields;
@@ -46,6 +61,20 @@ public class Table extends Docobj {
     public Table() {
         rows = new ArrayList<Row>();
         columns = new HashMap<String, Column>();
+    }
+
+    /**
+     * <pre>
+     *     D=cache/dict
+     *     Dr=redundant (info-dict)
+     *     T=transient table
+     *     Ro=read-only table
+     * </pre>
+     */
+    @Override
+    protected boolean parseOpts(Term opt) {
+        opt.getName();
+        return true;
     }
 
     protected int getFieldIndex(String name) {

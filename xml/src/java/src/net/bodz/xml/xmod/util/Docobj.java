@@ -1,12 +1,15 @@
 package net.bodz.xml.xmod.modpdb;
 
+import net.bodz.xml.util.Term;
+import net.bodz.xml.util.TermsParser;
+import net.sf.freejava.err.ParseException;
 
 public class Docobj {
 
     private String   id;
     protected String name;
     protected String qname;
-    protected String opts;
+    private String   opts;
     protected String cat;
     protected String disp;
     protected String icon;
@@ -35,8 +38,20 @@ public class Docobj {
         return opts;
     }
 
-    public void setOpts(String opts) {
+    public final void setOpts(String opts) throws ParseException {
         this.opts = opts;
+        if (opts != null) {
+            Term[] terms = TermsParser.parse(opts);
+            for (Term term : terms) {
+                if (!parseOpts(term))
+                    throw new IllegalArgumentException("Unknown option: "
+                            + term);
+            }
+        }
+    }
+
+    protected boolean parseOpts(Term opt) {
+        return false;
     }
 
     public String getCat() {
