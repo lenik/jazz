@@ -2,7 +2,52 @@
 <binding xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="C:\.radiko\varoj.java\XML\jibx\jibx\docs\binding.xsd">
 	<!--add prefix='pdb' to set the default prefix-->
 	<namespace uri="http://www.bodz.net/xml/current/xmod/modpdb" default="elements"/>
-	<mapping abstract="true" class="net.bodz.xml.xmod.modpdb.Docobj" value-style="attribute">
+	<!--/-->
+	<mapping name="modpdb" class="net.bodz.xml.xmod.modpdb.Modpdb" extends="net.bodz.xml.xmod.util.Docobj">
+		<structure map-as="net.bodz.xml.xmod.util.Docobj"/>
+		<collection add-method="add" iter-method="iterator">
+			<structure type="net.bodz.xml.xmod.modpdb.Table"/>
+			<structure type="net.bodz.xml.xmod.modpdb.View"/>
+			<structure type="net.bodz.xml.xmod.util.Hr"/>
+		</collection>
+	</mapping>
+	<!--/modpdb-->
+	<mapping name="table" class="net.bodz.xml.xmod.modpdb.Table" extends="net.bodz.xml.xmod.util.Docobj">
+		<structure map-as="net.bodz.xml.xmod.util.Docobj"/>
+		<collection field="fields" factory="net.bodz.xml.util.JiBX.arrayList">
+			<structure type="net.bodz.xml.xmod.modpdb.Field"/>
+		</collection>
+		<collection field="checks" factory="net.bodz.xml.util.JiBX.arrayList">
+			<structure type="net.bodz.xml.xmod.modpdb.TableCheck"/>
+		</collection>
+		<collection field="triggers" factory="net.bodz.xml.util.JiBX.arrayList">
+			<structure type="net.bodz.xml.xmod.modpdb.TableTrigger"/>
+		</collection>
+		<!--Rows...-->
+		<collection add-method="addRow" iter-method="iteratorRows" item-type="net.bodz.xml.xmod.modpdb.Row">
+			<structure type="net.bodz.xml.xmod.modpdb.Row"/>
+		</collection>
+	</mapping>
+	<mapping name="view" class="net.bodz.xml.xmod.modpdb.View" extends="net.bodz.xml.xmod.util.Docobj">
+		<structure map-as="net.bodz.xml.xmod.util.Docobj"/>
+		<structure name="src" field="src" map-as="yasql"/>
+	</mapping>
+	<!--/modpdb/table-->
+	<mapping name="field" class="net.bodz.xml.xmod.modpdb.Field" extends="net.bodz.xml.xmod.util.Docobj" pre-set="pre_set">
+		<structure map-as="net.bodz.xml.xmod.util.Docobj"/>
+		<value style="attribute" name="type" field="type" usage="optional"/>
+	</mapping>
+	<mapping name="check" class="net.bodz.xml.xmod.modpdb.TableCheck" extends="net.bodz.xml.xmod.util.Docobj">
+		<structure map-as="net.bodz.xml.xmod.util.Docobj"/>
+		<structure name="src" field="src" map-as="yasql"/>
+	</mapping>
+	<mapping name="trigger" class="net.bodz.xml.xmod.modpdb.TableTrigger" extends="net.bodz.xml.xmod.util.Docobj">
+		<structure map-as="net.bodz.xml.xmod.util.Docobj"/>
+		<structure name="src" field="src" map-as="yasql"/>
+	</mapping>
+	<mapping name="row" class="net.bodz.xml.xmod.modpdb.Row" marshaller="net.bodz.xml.xmod.modpdb.RowMapper" unmarshaller="net.bodz.xml.xmod.modpdb.RowMapper"/>
+	<!--...-->
+	<mapping abstract="true" class="net.bodz.xml.xmod.util.Docobj" value-style="attribute">
 		<value name="id" usage="optional" get-method="getId" set-method="setId"/>
 		<value name="name" field="name" usage="optional"/>
 		<value name="qname" field="qname" usage="optional"/>
@@ -15,60 +60,7 @@
 	<mapping abstract="true" type-name="yasql" class="net.bodz.xml.xmod.modpdb.Yasql">
 		<value style="text" get-method="getSql" set-method="setSql"/>
 	</mapping>
-	<!--/-->
-	<mapping name="modpdb" class="net.bodz.xml.xmod.modpdb.Modpdb" extends="net.bodz.xml.xmod.modpdb.Docobj">
-		<structure map-as="net.bodz.xml.xmod.modpdb.Docobj"/>
-		<collection add-method="add" iter-method="iterator">
-			<structure type="net.bodz.xml.xmod.modpdb.Table"/>
-			<structure type="net.bodz.xml.xmod.modpdb.View"/>
-			<structure type="net.bodz.xml.xmod.modpdb.Hr"/>
-		</collection>
+	<mapping name="hr" class="net.bodz.xml.xmod.util.Hr" extends="net.bodz.xml.xmod.util.Docobj">
+		<structure map-as="net.bodz.xml.xmod.util.Docobj"/>
 	</mapping>
-	<!--/modpdb-->
-	<mapping name="table" class="net.bodz.xml.xmod.modpdb.Table" extends="net.bodz.xml.xmod.modpdb.Docobj">
-		<structure map-as="net.bodz.xml.xmod.modpdb.Docobj"/>
-		<collection field="fields" factory="net.bodz.xml.util.JiBX.arrayList">
-			<structure type="net.bodz.xml.xmod.modpdb.Field"/>
-		</collection>
-		<collection field="indexes" factory="net.bodz.xml.util.JiBX.arrayList">
-			<structure type="net.bodz.xml.xmod.modpdb.Index"/>
-		</collection>
-		<collection field="checks" factory="net.bodz.xml.util.JiBX.arrayList">
-			<structure type="net.bodz.xml.xmod.modpdb.Check"/>
-		</collection>
-		<collection field="triggers" factory="net.bodz.xml.util.JiBX.arrayList">
-			<structure type="net.bodz.xml.xmod.modpdb.Trigger"/>
-		</collection>
-		<!--Rows...-->
-		<collection add-method="addRow" iter-method="iteratorRows" item-type="net.bodz.xml.xmod.modpdb.Row">
-			<structure type="net.bodz.xml.xmod.modpdb.Row"/>
-		</collection>
-	</mapping>
-	<mapping name="view" class="net.bodz.xml.xmod.modpdb.View" extends="net.bodz.xml.xmod.modpdb.Docobj">
-		<structure map-as="net.bodz.xml.xmod.modpdb.Docobj"/>
-		<structure name="src" field="src" map-as="yasql"/>
-	</mapping>
-	<mapping name="hr" class="net.bodz.xml.xmod.modpdb.Hr" extends="net.bodz.xml.xmod.modpdb.Docobj">
-		<structure map-as="net.bodz.xml.xmod.modpdb.Docobj"/>
-	</mapping>
-	<!--/modpdb/table-->
-	<mapping name="field" class="net.bodz.xml.xmod.modpdb.Field" extends="net.bodz.xml.xmod.modpdb.Docobj">
-		<structure map-as="net.bodz.xml.xmod.modpdb.Docobj"/>
-		<value style="attribute" name="type" field="type" usage="optional"/>
-	</mapping>
-	<mapping name="index" class="net.bodz.xml.xmod.modpdb.Index" extends="net.bodz.xml.xmod.modpdb.Docobj">
-		<structure map-as="net.bodz.xml.xmod.modpdb.Docobj"/>
-		<collection field="fields" factory="net.bodz.xml.util.JiBX.arrayList">
-			<value name="field" type="java.lang.String"/>
-		</collection>
-	</mapping>
-	<mapping name="check" class="net.bodz.xml.xmod.modpdb.Check" extends="net.bodz.xml.xmod.modpdb.Docobj">
-		<structure map-as="net.bodz.xml.xmod.modpdb.Docobj"/>
-		<structure name="src" field="src" map-as="yasql"/>
-	</mapping>
-	<mapping name="trigger" class="net.bodz.xml.xmod.modpdb.Trigger" extends="net.bodz.xml.xmod.modpdb.Docobj">
-		<structure map-as="net.bodz.xml.xmod.modpdb.Docobj"/>
-		<structure name="src" field="src" map-as="yasql"/>
-	</mapping>
-	<mapping name="row" class="net.bodz.xml.xmod.modpdb.Row" marshaller="net.bodz.xml.xmod.modpdb.RowMapper" unmarshaller="net.bodz.xml.xmod.modpdb.RowMapper"/>
 </binding>

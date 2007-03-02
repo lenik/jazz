@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import net.bodz.xml.xmod.modpdb.Modpdb;
+import net.sf.freejava.fp.dump.XMLDumper;
 import net.sf.freejava.test.TestInstance;
 import net.sf.freejava.util.Pair;
 import net.sf.freejava.xml.XMLTools;
@@ -44,11 +45,11 @@ public class JiBXTest {
     public void test1() throws Exception {
         TestInstance[] tests = new TestInstance[] {
 
-                entry(OK, new TPair(Modpdb.class, "/xmod/test/pdb_1.xml"),
-                        Modpdb.class, "xsd unique check: object name"),
+        // entry(OK, new TPair(Modpdb.class, "/xmod/test/pdb_1.xml"),
+        // Modpdb.class, "xsd unique check: object name"),
 
-                entry(OK, new TPair(Modpdb.class, "/xmod/test/pdb_2.xml"),
-                        Modpdb.class, "xsd unique check: object name"),
+        entry(OK, new TPair(Modpdb.class, "/xmod/test/pdb_2.xml"),
+                Modpdb.class, "xsd unique check: object name"),
 
         };
 
@@ -61,9 +62,12 @@ public class JiBXTest {
             test.validate(out, System.out);
             if (DUMP && obj != null) {
                 System.out.println("--------- DUMP START ----------");
-                // XMLDumper.dump(obj);
-                String xml = JiBX.rewrite(obj);
-                System.out.println(XMLTools.format(xml));
+                if (false) {
+                    XMLDumper.dump(obj);
+                } else {
+                    String xml = JiBX.rewrite(obj);
+                    System.out.println(XMLTools.format(xml));
+                }
                 System.out.println("---------  DUMP END  ----------");
             }
         }
