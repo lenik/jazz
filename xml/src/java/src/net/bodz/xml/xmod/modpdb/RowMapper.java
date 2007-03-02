@@ -27,9 +27,13 @@ public class RowMapper extends XMLTagMapper {
         assert table != null;
 
         XMLTag rowTag = new XMLTag(name);
-        for (Cell cell : row.getCells()) {
-            Field field = table.getField(cell.getIndex());
-            XMLTag cellTag = new XMLTag(field.getName(), cell.getValue());
+        int fields = table.sizeFields();
+        for (int i = 0; i < fields; i++) {
+            Object cell = row.get(i);
+            if (cell == Cell.MISSING)
+                continue;
+            Field field = table.getField(i);
+            XMLTag cellTag = new XMLTag(field.getName(), cell);
             rowTag.add(cellTag);
         }
         super.marshal(rowTag, ictx);
@@ -46,14 +50,15 @@ public class RowMapper extends XMLTagMapper {
             throw new IllegalStateException(
                     "<row> isn't appeared inside of a valid <table>");
 
-        Row row = new Row(table);
+        Row row = new RowFull(table);
         for (Node<?> child : tag.children()) {
             if (!(child instanceof XMLTag))
                 continue;
             XMLTag cell = (XMLTag) child;
             String name = cell.getName();
+            int index = table.getFieldIndex(name);
             String value = cell.text();
-            row.addCell(name, value);
+            row.set(index, value);
         }
         return row;
     }

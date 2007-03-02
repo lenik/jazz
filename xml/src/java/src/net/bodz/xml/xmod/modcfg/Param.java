@@ -4,4 +4,7 @@ import net.bodz.xml.xmod.util.Docobj;
 
 public class Param extends Docobj {
 
+    String name;
+    String value;
+    
 }
