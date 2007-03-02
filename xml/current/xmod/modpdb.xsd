@@ -56,7 +56,7 @@ opts:
         Sd=cache/display-name
     D(value)=default value
     Dx(sql-exp)=default exp
-    Di(gen-method)[len] = identity
+    Di(gen-method) = identity
 </xs:documentation>
 							</xs:annotation>
 							<xs:complexType>
@@ -90,12 +90,7 @@ N[totlen,declen] = number</xs:documentation>
 						</xs:element>
 						<xs:element name="index" minOccurs="0" maxOccurs="unbounded">
 							<xs:annotation>
-								<xs:documentation>opts: 
-    K=primary key
-    F(n:m ? table.field)=foreign key
-    I=index
-    Ic=clustered index
-    U=unique</xs:documentation>
+								<xs:documentation>(deprecated)</xs:documentation>
 							</xs:annotation>
 							<xs:complexType>
 								<xs:complexContent>
