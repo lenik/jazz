@@ -50,7 +50,7 @@ public class Docobj {
         }
     }
 
-    protected boolean parseOpts(Term opt) {
+    protected boolean parseOpts(Term opt) throws ParseException {
         return false;
     }
 

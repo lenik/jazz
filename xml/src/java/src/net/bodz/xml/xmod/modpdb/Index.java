@@ -1,26 +1,31 @@
 package net.bodz.xml.xmod.modpdb;
 
-import java.util.List;
+public class Index extends FieldsPartial {
 
-import net.bodz.xml.util.Term;
-import net.bodz.xml.xmod.util.Docobj;
+    protected boolean unique;
 
-public class Index extends Docobj {
+    public Index(Table table, int... indexes) {
+        super(table, indexes);
+    }
 
-    protected List<String> fields;
+    public Index(Table table, String... names) {
+        super(table, names);
+    }
 
-    /**
-     * <pre>
-     *   K=primary key
-     *   F(n:m ? table.field)=foreign key
-     *   I=index
-     *   Ic=clustered index
-     *   U=unique
-     * </pre>
-     */
-    @Override
-    protected boolean parseOpts(Term opt) {
-        return super.parseOpts(opt);
+    public Index(FieldsPartial base, int index1) {
+        super(base, index1);
+    }
+
+    public Index(FieldsPartial base, String name1) {
+        super(base, name1);
+    }
+
+    public boolean isUnique() {
+        return unique;
+    }
+
+    public void setUnique(boolean unique) {
+        this.unique = unique;
     }
 
 }

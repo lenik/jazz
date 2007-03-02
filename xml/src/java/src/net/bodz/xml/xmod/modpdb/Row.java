@@ -1,71 +1,23 @@
 package net.bodz.xml.xmod.modpdb;
 
-import java.util.ArrayList;
-import java.util.List;
+public interface Row {
+    
+    Table getTable();
 
-public class Row {
+    Object[] getCells();
 
-    private Table      table;
-    private List<Cell> cells;
+    void setCells(Object[] cells);
 
-    protected Row() {
-        cells = new ArrayList<Cell>();
-    }
+    boolean has(int index);
 
-    public Row(Table table) {
-        this();
-        this.table = table;
-    }
+    boolean has(String name);
 
-    @Deprecated
-    public Row(Table table, int rowIndex) {
-        this(table);
-        int fields = table.fields.size();
-        for (int fieldIndex = 0; fieldIndex < fields; fieldIndex++) {
-            Column column = table.getColumn(fieldIndex);
-            if (column != null) {
-                Object cellValue = column.get(rowIndex);
-                Cell cell = new Cell(fieldIndex, cellValue);
-                cells.add(cell);
-            }
-        }
-    }
+    Object get(int index);
 
-    public Table getTable() {
-        return table;
-    }
+    Object get(String name);
 
-    public void setTable(Table table) {
-        this.table = table;
-    }
+    void set(int index, Object cell);
 
-    public List<Cell> getCells() {
-        return cells;
-    }
+    void set(String name, Object cell);
 
-    public void addCell(String name, String value) {
-        int index = table.getFieldIndex(name);
-        Cell cell = new Cell(index, value);
-        cells.add(cell);
-    }
-
-    protected int getActualIndex(int fieldIndex) {
-        for (int actual = 0; actual < cells.size(); actual++) {
-            Cell cell = cells.get(actual);
-            if (cell.getIndex() == fieldIndex)
-                return actual;
-        }
-        return -1;
-    }
-
-    public boolean hasField(int fieldIndex) {
-        return getActualIndex(fieldIndex) >= 0;
-    }
-
-    public Object getField(int fieldIndex) {
-        int actualIndex = getActualIndex(fieldIndex);
-        if (actualIndex == -1)
-            return null;
-        return cells.get(actualIndex).getValue();
-    }
 }

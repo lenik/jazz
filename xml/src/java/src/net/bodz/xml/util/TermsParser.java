@@ -115,7 +115,7 @@ public class TermsParser {
             int t = nextToken(true);
             if (t != CHARS)
                 throw new ParseException("invalid argument");
-            return buf.toString();
+            return buf.toString().trim();
         } catch (IOException e) {
             throw new IdentifiedException(e.getMessage(), e);
         }
