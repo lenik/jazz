@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modcfg xmlns="http://www.bodz.net/xml/current/xmod/modcfg" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.bodz.net/xml/current/xmod/modcfg
+../modcfg.xsd">
+	<link rel="base" href="cfg_1.xml"/>
+	<param name="style" value="standard" info="standard, hot, metal"/>
+	<set name="chm.title" value="VicTalk PDB Reference Manual" disp="СHM 标题"/>
+	<set name="html.copyright" value="2007 EBJA Software Corp." disp="版权声明"/>
+	<set name="html.background" value="white" disp="背景颜色">
+		<condition name="style" value="standard"/>
+	</set>
+	<set name="html.background" value="yellow" disp="背景颜色">
+		<condition name="style" value="hot"/>
+	</set>
+	<set name="html.background" value="gray" disp="背景颜色">
+		<condition name="style" value="metal"/>
+	</set>
+	<set name="html.color" value="black" disp="前景颜色">
+		<condition name="style" value="standard"/>
+	</set>
+	<set name="html.color" value="red" disp="前景颜色">
+		<condition name="style" value="hot"/>
+	</set>
+	<set name="html.color" value="blue" disp="前景颜色">
+		<condition name="style" value="metal"/>
+	</set>
+</modcfg>

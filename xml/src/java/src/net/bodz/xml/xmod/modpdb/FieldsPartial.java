@@ -2,7 +2,6 @@ package net.bodz.xml.xmod.modpdb;
 
 import net.sf.freejava.util.Objects;
 
-// Optimize: null indexes == all fields
 public class FieldsPartial extends FieldsFull {
 
     protected final int[] indexes;
@@ -97,14 +96,14 @@ public class FieldsPartial extends FieldsFull {
         if (repr == null) {
             StringBuffer buffer = new StringBuffer();
             buffer.append(table.getName());
-            buffer.append('<');
+            buffer.append('(');
             for (int off = 0; off < indexes.length; off++) {
                 if (off > 0)
                     buffer.append(',');
                 Field field = table.getField(indexes[off]);
                 buffer.append(field.getName());
             }
-            buffer.append('>');
+            buffer.append(')');
             repr = buffer.toString();
         }
         return repr;

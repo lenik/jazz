@@ -1,31 +1,52 @@
 package net.bodz.xml.xmod.modcfg;
 
+import java.io.FileNotFoundException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import net.bodz.xml.util.InputSourceTrace;
+import net.bodz.xml.util.JiBX;
 import net.bodz.xml.xmod.util.Docobj;
 import net.sf.freejava.fp.dump.XMLDump;
-import net.sf.freejava.util.ConcatIterator;
 
-public class Modcfg extends Docobj {
+import org.jibx.runtime.IUnmarshallingContext;
+import org.jibx.runtime.JiBXException;
+import org.jibx.runtime.impl.UnmarshallingContext;
+
+public class Modcfg extends Docobj implements InputSourceTrace {
+
+    private Object               inputSource;
 
     @XMLDump
-    protected List<Link>           links;
-    
+    protected URL                src;
+
     @XMLDump
-    protected List<Docobj>         objs;
-    
-    protected Map<String, Param>   params;
-    protected Map<String, Setting> settings;
+    protected List<Link>         links;
+
+    @XMLDump
+    protected List<Docobj>       objs;
+
+    protected Map<String, Param> params;
 
     public Modcfg() {
         links = new ArrayList<Link>();
         objs = new ArrayList<Docobj>();
         params = new HashMap<String, Param>();
-        settings = new HashMap<String, Setting>();
+        // settings = new HashMap<String, Setting>();
+    }
+
+    protected void pre_set(IUnmarshallingContext ictx) {
+        UnmarshallingContext ctx = (UnmarshallingContext) ictx;
+        Object uc = ctx.getUserContext();
+        System.out.println(uc);
+    }
+
+    public void setInputSource(Object inputSource) {
+        this.inputSource = inputSource;
     }
 
     public void add(Object o) {
@@ -34,8 +55,8 @@ public class Modcfg extends Docobj {
             objs.add(dobj);
             if (dobj instanceof Param)
                 params.put(dobj.getName(), (Param) dobj);
-            else if (dobj instanceof Setting)
-                settings.put(dobj.getName(), (Setting) dobj);
+            // else if (dobj instanceof Setting)
+            // settings.put(dobj.getName(), (Setting) dobj);
         } else
             throw new IllegalArgumentException("Unknown type: " + o.getClass());
     }
@@ -44,15 +65,49 @@ public class Modcfg extends Docobj {
         return objs.size();
     }
 
-    public Object get(int index) {
-        if (index < params.size())
-            return params.get(index);
-        else
-            return settings.get(index);
+    public Docobj get(int index) {
+        if (index < 0 || index >= objs.size())
+            throw new IndexOutOfBoundsException("" + index);
+        return objs.get(index);
     }
 
     public Iterator<Docobj> iterator() {
-        return new ConcatIterator<Docobj>(params, settings);
+        return objs.iterator();
     }
 
+    public Param getParam(String name) {
+        return params.get(name);
+    }
+
+    public Map<String, Object> eval() throws FileNotFoundException,
+            JiBXException {
+        Map<String, Object> map = new HashMap<String, Object>();
+        String dirname = JiBX.dirname(inputSource);
+        for (Link link : links) {
+            if (!"base".equals(link.rel))
+                throw new UnsupportedOperationException(
+                        "Don't support links with rel other than 'base'");
+            String href = dirname + '/' + link.href;
+            Object sub = JiBX.parse(Modcfg.class, href);
+            Modcfg subcfg = (Modcfg) sub;
+            
+            // XXX - only add new ones
+            params.putAll(subcfg.params);
+            
+            Map<String, Object> submap = subcfg.eval();
+            map.putAll(submap);
+        }
+
+        obj: for (Docobj obj : objs) {
+            if (obj instanceof Setting) {
+                Setting set = (Setting) obj;
+                for (Condition cond : set.conditions) {
+                    if (!cond.test())
+                        continue obj;
+                }
+                map.put(set.getName(), set.getValue());
+            }
+        }
+        return map;
+    }
 }

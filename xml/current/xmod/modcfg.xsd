@@ -34,8 +34,11 @@
 								<xs:complexType>
 									<xs:complexContent>
 										<xs:extension base="cfg:docobj">
-											<xs:attribute name="name" type="xs:string" use="required"/>
-											<xs:attribute name="value" type="xs:string" default="true"/>
+											<xs:attribute name="value" type="xs:string">
+												<xs:annotation>
+													<xs:documentation>default 'true' means the parameter is just defined. </xs:documentation>
+												</xs:annotation>
+											</xs:attribute>
 										</xs:extension>
 									</xs:complexContent>
 								</xs:complexType>
@@ -50,12 +53,12 @@
 														<xs:documentation>assoc by boolean-and</xs:documentation>
 													</xs:annotation>
 													<xs:complexType>
-														<xs:attribute name="param" type="xs:string" use="required">
+														<xs:attribute name="name" type="xs:string" use="required">
 															<xs:annotation>
 																<xs:documentation>parameter name</xs:documentation>
 															</xs:annotation>
 														</xs:attribute>
-														<xs:attribute name="test" default="bool-eq">
+														<xs:attribute name="test" default="eq">
 															<xs:simpleType>
 																<xs:restriction base="xs:string">
 																	<xs:enumeration value="eq"/>
@@ -69,15 +72,14 @@
 																</xs:restriction>
 															</xs:simpleType>
 														</xs:attribute>
-														<xs:attribute name="value" type="xs:string" default="true"/>
+														<xs:attribute name="value" type="xs:string"/>
 														<xs:attribute name="ignore-case" type="xs:boolean" default="false"/>
 													</xs:complexType>
 												</xs:element>
 											</xs:sequence>
-											<xs:attribute name="key" type="xs:string" use="required"/>
 											<xs:attribute name="value" type="xs:string">
 												<xs:annotation>
-													<xs:documentation>default to set to "defined"</xs:documentation>
+													<xs:documentation>default 'true' means the setting is just defined. </xs:documentation>
 												</xs:annotation>
 											</xs:attribute>
 										</xs:extension>
@@ -92,42 +94,42 @@
 		</xs:complexType>
 	</xs:element>
 	<xs:complexType name="docobj">
-		<xs:attribute name="cfg:id">
+		<xs:attribute name="id">
 			<xs:annotation>
 				<xs:documentation>xml id, used in $varname interpolation</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
-		<xs:attribute name="cfg:name" type="xs:string">
+		<xs:attribute name="name" type="xs:string">
 			<xs:annotation>
 				<xs:documentation>object name</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
-		<xs:attribute name="cfg:qname" type="xs:string">
+		<xs:attribute name="qname" type="xs:string">
 			<xs:annotation>
 				<xs:documentation>qualified name.</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
-		<xs:attribute name="cfg:opts" type="xs:string" use="optional">
+		<xs:attribute name="opts" type="xs:string" use="optional">
 			<xs:annotation>
 				<xs:documentation>options, in components' local-syntax</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
-		<xs:attribute name="cfg:cat" type="xs:string">
+		<xs:attribute name="cat" type="xs:string">
 			<xs:annotation>
 				<xs:documentation>category for organization purpose.</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
-		<xs:attribute name="cfg:disp" type="xs:string" use="optional">
+		<xs:attribute name="disp" type="xs:string" use="optional">
 			<xs:annotation>
 				<xs:documentation>display string</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
-		<xs:attribute name="cfg:icon" type="xs:string" use="optional">
+		<xs:attribute name="icon" type="xs:string" use="optional">
 			<xs:annotation>
 				<xs:documentation>display icon</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
-		<xs:attribute name="cfg:info" type="xs:string" use="optional">
+		<xs:attribute name="info" type="xs:string" use="optional">
 			<xs:annotation>
 				<xs:documentation>short help-info</xs:documentation>
 			</xs:annotation>
