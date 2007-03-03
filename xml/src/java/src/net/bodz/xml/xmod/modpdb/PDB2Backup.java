@@ -1,5 +1,12 @@
 package net.bodz.xml.xmod.modpdb;
 
-public class PDB2Backup {
+import net.bodz.xml.xmod.util.Convlet;
+
+public class PDB2Backup extends Convlet {
+
+    @Override
+    public void Main() throws Exception {
+
+    }
 
 }

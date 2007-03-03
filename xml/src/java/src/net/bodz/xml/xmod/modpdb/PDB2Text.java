@@ -1,5 +1,12 @@
 package net.bodz.xml.xmod.modpdb;
 
-public class PDB2Text {
+import net.bodz.xml.xmod.util.Convlet;
+
+public class PDB2Text extends Convlet {
+
+    @Override
+    public void Main() throws Exception {
+
+    }
 
 }

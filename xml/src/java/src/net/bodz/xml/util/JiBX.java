@@ -1,5 +1,6 @@
 package net.bodz.xml.util;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -7,6 +8,7 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Vector;
@@ -23,6 +25,8 @@ public class JiBX {
         IBindingFactory bfact = BindingDirectory.getFactory(clazz);
         IUnmarshallingContext uctx = bfact.createUnmarshallingContext();
         Object obj = uctx.unmarshalDocument(xmlin);
+        if (obj instanceof InputSourceTrace)
+            ((InputSourceTrace) obj).setInputSource(xmlin);
         return obj;
     }
 
@@ -31,6 +35,8 @@ public class JiBX {
         IBindingFactory bfact = BindingDirectory.getFactory(clazz);
         IUnmarshallingContext uctx = bfact.createUnmarshallingContext();
         Object obj = uctx.unmarshalDocument(xmlin, encoding);
+        if (obj instanceof InputSourceTrace)
+            ((InputSourceTrace) obj).setInputSource(xmlin);
         return obj;
     }
 
@@ -45,6 +51,8 @@ public class JiBX {
         IUnmarshallingContext uctx = bfact.createUnmarshallingContext();
         Object obj = uctx.unmarshalDocument(new FileInputStream(xmlpath),
                 encoding);
+        if (obj instanceof InputSourceTrace)
+            ((InputSourceTrace) obj).setInputSource(xmlpath);
         return obj;
     }
 
@@ -92,4 +100,25 @@ public class JiBX {
         return new Vector();
     }
 
+    public static String dirname(Object inputSource) {
+        if (inputSource == null)
+            return null;
+        if (inputSource instanceof String)
+            return new File((String) inputSource).getParent();
+        if (inputSource instanceof File)
+            return ((File) inputSource).getParent();
+        if (inputSource instanceof URL) {
+            String url = ((URL) inputSource).toString();
+            int p = url.lastIndexOf('?');
+            if (p >= 0)
+                url = url.substring(0, p);
+            p = url.lastIndexOf('/');
+            if (p < 0)
+                return null; // unexpected?
+            return url.substring(0, p);
+        }
+        throw new UnsupportedOperationException("Can't fetch dirname of class "
+                + inputSource.getClass());
+    }
+    
 }

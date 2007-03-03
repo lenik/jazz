@@ -1,834 +1,834 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by Snima Denik (Bytes of Danci.Z) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ltx="http://www.bodz.net/xml/current/latix" xmlns:xsf="http://www.bodz.net/xml/current/xsf" targetNamespace="http://www.bodz.net/xml/current/latix" elementFormDefault="qualified" attributeFormDefault="unqualified">
-    <xs:import namespace="http://www.bodz.net/xml/current/xsf" schemaLocation="http://www.bodz.net/xml/current/xsf/structure.xsd"/>
-    <!--========== FACADE ==========-->
-    <xs:element name="latix">
-        <xs:annotation>
-            <xs:documentation>Think-infinite XML (see also Tis: Think-infinite script)</xs:documentation>
-        </xs:annotation>
-        <xs:complexType>
-            <xs:complexContent>
-                <xs:extension base="xsf:structure-composition">
-                    <xs:choice minOccurs="0" maxOccurs="unbounded">
-                        <xs:element name="global" type="ltx:st-namespace"/>
-                    </xs:choice>
-                </xs:extension>
-            </xs:complexContent>
-        </xs:complexType>
-    </xs:element>
-    <!--========== BASE STRUCTURE ==========-->
-    <xs:complexType name="base-code-unit">
-        <xs:attribute name="id" type="xs:string" use="optional"/>
-    </xs:complexType>
-    <xs:complexType name="base-execution">
-        <xs:annotation>
-            <xs:documentation>Execution elements have rtl attribute. </xs:documentation>
-        </xs:annotation>
-        <xs:complexContent>
-            <xs:extension base="ltx:base-code-unit">
-                <xs:attribute name="rtl" type="xs:integer" use="optional" default="0"/>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-    <xs:complexType name="base-expression">
-        <xs:annotation>
-            <xs:documentation>Expression elements carry meaningful value. </xs:documentation>
-        </xs:annotation>
-        <xs:choice>
-            <xs:group ref="ltx:grp-value"/>
-            <xs:group ref="ltx:operator-group"/>
-            <xs:group ref="ltx:grp-function"/>
-        </xs:choice>
-        <xs:attribute name="id" type="xs:string" use="optional"/>
-    </xs:complexType>
-    <!--========== OPERATOR ==========-->
-    <xs:complexType name="operator" mixed="true">
-        <xs:annotation>
-            <xs:documentation>Execution unit
+	<xs:import namespace="http://www.bodz.net/xml/current/xsf" schemaLocation="http://www.bodz.net/xml/current/xsf/base.xsd"/>
+	<!--========== FACADE ==========-->
+	<xs:element name="latix">
+		<xs:annotation>
+			<xs:documentation>Think-infinite XML (see also Tis: Think-infinite script)</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="xsf:structure-composition">
+					<xs:choice minOccurs="0" maxOccurs="unbounded">
+						<xs:element name="global" type="ltx:st-namespace"/>
+					</xs:choice>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<!--========== BASE STRUCTURE ==========-->
+	<xs:complexType name="base-code-unit">
+		<xs:attribute name="id" type="xs:string" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="base-execution">
+		<xs:annotation>
+			<xs:documentation>Execution elements have rtl attribute. </xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ltx:base-code-unit">
+				<xs:attribute name="rtl" type="xs:integer" use="optional" default="0"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="base-expression">
+		<xs:annotation>
+			<xs:documentation>Expression elements carry meaningful value. </xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:group ref="ltx:grp-value"/>
+			<xs:group ref="ltx:operator-group"/>
+			<xs:group ref="ltx:grp-function"/>
+		</xs:choice>
+		<xs:attribute name="id" type="xs:string" use="optional"/>
+	</xs:complexType>
+	<!--========== OPERATOR ==========-->
+	<xs:complexType name="operator" mixed="true">
+		<xs:annotation>
+			<xs:documentation>Execution unit
 
 If the (mixed-) content isn't empty, then it will be splited by space into operands. 
 
 The operand subelement can overload the operands of mixed-contents. </xs:documentation>
-        </xs:annotation>
-        <xs:complexContent mixed="true">
-            <xs:extension base="ltx:base-execution"/>
-        </xs:complexContent>
-    </xs:complexType>
-    <xs:complexType name="operator-unary">
-        <xs:annotation>
-            <xs:documentation>Unary operator</xs:documentation>
-        </xs:annotation>
-        <xs:complexContent>
-            <xs:extension base="ltx:operator">
-                <xs:sequence minOccurs="0">
-                    <xs:element ref="ltx:operand"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-    <xs:complexType name="operator-binary-left">
-        <xs:annotation>
-            <xs:documentation>Binary operator with left-association</xs:documentation>
-        </xs:annotation>
-        <xs:complexContent>
-            <xs:extension base="ltx:operator">
-                <xs:sequence minOccurs="0">
-                    <xs:element ref="ltx:operand" minOccurs="2" maxOccurs="unbounded"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-    <xs:complexType name="operator-binary-right">
-        <xs:annotation>
-            <xs:documentation>Binary operator with right-association</xs:documentation>
-        </xs:annotation>
-        <xs:complexContent>
-            <xs:extension base="ltx:operator">
-                <xs:sequence minOccurs="0">
-                    <xs:element ref="ltx:operand" minOccurs="2" maxOccurs="unbounded"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-    <xs:complexType name="operator-ternary">
-        <xs:annotation>
-            <xs:documentation>Ternary operator</xs:documentation>
-        </xs:annotation>
-        <xs:complexContent>
-            <xs:extension base="ltx:operator">
-                <xs:sequence minOccurs="0">
-                    <xs:element ref="ltx:operand" minOccurs="3" maxOccurs="3"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-    <xs:complexType name="operator-variable">
-        <xs:annotation>
-            <xs:documentation>Variable-argument operator</xs:documentation>
-        </xs:annotation>
-        <xs:complexContent>
-            <xs:extension base="ltx:operator">
-                <xs:sequence minOccurs="0">
-                    <xs:element ref="ltx:operand" minOccurs="0" maxOccurs="unbounded"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-    <xs:group name="operator-bit-group">
-        <xs:annotation>
-            <xs:documentation>Bit operators</xs:documentation>
-        </xs:annotation>
-        <xs:choice>
-            <xs:element name="bit-not" type="ltx:operator-unary"/>
-            <xs:element name="bit-neg" type="ltx:operator-unary"/>
-            <xs:element name="bit-and" type="ltx:operator-binary-left"/>
-            <xs:element name="bit-or" type="ltx:operator-binary-left"/>
-            <xs:element name="bit-xor" type="ltx:operator-binary-left"/>
-            <xs:element name="bit-shift">
-                <xs:annotation>
-                    <xs:documentation>shift: number of levels to shift, positive for right, negtive for left. 
+		</xs:annotation>
+		<xs:complexContent mixed="true">
+			<xs:extension base="ltx:base-execution"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="operator-unary">
+		<xs:annotation>
+			<xs:documentation>Unary operator</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ltx:operator">
+				<xs:sequence minOccurs="0">
+					<xs:element ref="ltx:operand"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="operator-binary-left">
+		<xs:annotation>
+			<xs:documentation>Binary operator with left-association</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ltx:operator">
+				<xs:sequence minOccurs="0">
+					<xs:element ref="ltx:operand" minOccurs="2" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="operator-binary-right">
+		<xs:annotation>
+			<xs:documentation>Binary operator with right-association</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ltx:operator">
+				<xs:sequence minOccurs="0">
+					<xs:element ref="ltx:operand" minOccurs="2" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="operator-ternary">
+		<xs:annotation>
+			<xs:documentation>Ternary operator</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ltx:operator">
+				<xs:sequence minOccurs="0">
+					<xs:element ref="ltx:operand" minOccurs="3" maxOccurs="3"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="operator-variable">
+		<xs:annotation>
+			<xs:documentation>Variable-argument operator</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ltx:operator">
+				<xs:sequence minOccurs="0">
+					<xs:element ref="ltx:operand" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:group name="operator-bit-group">
+		<xs:annotation>
+			<xs:documentation>Bit operators</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="bit-not" type="ltx:operator-unary"/>
+			<xs:element name="bit-neg" type="ltx:operator-unary"/>
+			<xs:element name="bit-and" type="ltx:operator-binary-left"/>
+			<xs:element name="bit-or" type="ltx:operator-binary-left"/>
+			<xs:element name="bit-xor" type="ltx:operator-binary-left"/>
+			<xs:element name="bit-shift">
+				<xs:annotation>
+					<xs:documentation>shift: number of levels to shift, positive for right, negtive for left. 
 
 looped: looped-shift
 
 signed: don't shift MSB</xs:documentation>
-                </xs:annotation>
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base="ltx:operator-binary-left">
-                            <xs:attribute name="looped" type="xs:boolean" use="optional" default="false"/>
-                            <xs:attribute name="signed" type="xs:boolean" use="optional" default="false"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="bit-count">
-                <xs:annotation>
-                    <xs:documentation>character: 0, [1]</xs:documentation>
-                </xs:annotation>
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base="ltx:operator-unary">
-                            <xs:attribute name="character" type="xs:string" use="optional" default="1"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="bit-count-prefix">
-                <xs:annotation>
-                    <xs:documentation>character: 0, 1
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="ltx:operator-binary-left">
+							<xs:attribute name="looped" type="xs:boolean" use="optional" default="false"/>
+							<xs:attribute name="signed" type="xs:boolean" use="optional" default="false"/>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="bit-count">
+				<xs:annotation>
+					<xs:documentation>character: 0, [1]</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="ltx:operator-unary">
+							<xs:attribute name="character" type="xs:string" use="optional" default="1"/>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="bit-count-prefix">
+				<xs:annotation>
+					<xs:documentation>character: 0, 1
 
 from: [left], right</xs:documentation>
-                </xs:annotation>
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base="ltx:operator-unary">
-                            <xs:attribute name="character" type="xs:string" use="optional" default="1"/>
-                            <xs:attribute name="from" type="xs:string" use="optional" default="left"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-        </xs:choice>
-    </xs:group>
-    <xs:group name="operator-arithmatic-group">
-        <xs:annotation>
-            <xs:documentation>Arithmatic operators</xs:documentation>
-        </xs:annotation>
-        <xs:choice>
-            <xs:element name="add" type="ltx:operator-binary-left"/>
-            <xs:element name="subtract" type="ltx:operator-binary-left"/>
-            <xs:element name="multiply" type="ltx:operator-binary-left"/>
-            <xs:element name="divide" type="ltx:operator-binary-left"/>
-            <xs:element name="power" type="ltx:operator-binary-right"/>
-            <xs:element name="increase" type="ltx:operator-unary"/>
-            <xs:element name="decrease" type="ltx:operator-unary"/>
-        </xs:choice>
-    </xs:group>
-    <xs:attributeGroup name="operator-logic-attrs">
-        <xs:attribute name="true" type="xs:integer" use="optional" default="1"/>
-        <xs:attribute name="short" type="xs:boolean" use="optional" default="false"/>
-    </xs:attributeGroup>
-    <xs:group name="operator-logic-group">
-        <xs:annotation>
-            <xs:documentation>Logical operators</xs:documentation>
-        </xs:annotation>
-        <xs:choice>
-            <xs:element name="is-all">
-                <xs:annotation>
-                    <xs:documentation>logic-and</xs:documentation>
-                </xs:annotation>
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base="ltx:operator-variable">
-                            <xs:attributeGroup ref="ltx:operator-logic-attrs"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="is-any">
-                <xs:annotation>
-                    <xs:documentation>logic-and</xs:documentation>
-                </xs:annotation>
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base="ltx:operator-variable">
-                            <xs:attributeGroup ref="ltx:operator-logic-attrs"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="is-only">
-                <xs:annotation>
-                    <xs:documentation>logic-xor only when binary-operator</xs:documentation>
-                </xs:annotation>
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base="ltx:operator-variable">
-                            <xs:attributeGroup ref="ltx:operator-logic-attrs"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="is">
-                <xs:annotation>
-                    <xs:documentation>simple test</xs:documentation>
-                </xs:annotation>
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base="ltx:operator-unary">
-                            <xs:attributeGroup ref="ltx:operator-logic-attrs"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="is-not">
-                <xs:annotation>
-                    <xs:documentation>logic-not</xs:documentation>
-                </xs:annotation>
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base="ltx:operator-unary">
-                            <xs:attributeGroup ref="ltx:operator-logic-attrs"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="is-equal">
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base="ltx:operator-binary-left">
-                            <xs:attributeGroup ref="ltx:operator-logic-attrs"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="is-greater">
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base="ltx:operator-binary-left">
-                            <xs:attributeGroup ref="ltx:operator-logic-attrs"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="is-less">
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base="ltx:operator-binary-left">
-                            <xs:attributeGroup ref="ltx:operator-logic-attrs"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-        </xs:choice>
-    </xs:group>
-    <xs:group name="operator-datatype-group">
-        <xs:annotation>
-            <xs:documentation>Data-type related operators</xs:documentation>
-        </xs:annotation>
-        <xs:choice>
-            <xs:element name="size-of" type="ltx:operator-unary"/>
-            <xs:element name="address-of" type="ltx:operator-unary"/>
-            <xs:element name="value-at" type="ltx:operator-unary"/>
-            <xs:element name="member-of">
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base="ltx:operator-unary">
-                            <xs:attribute name="select" type="xs:string" use="optional"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="reinterpret-cast" type="ltx:operator-unary"/>
-            <xs:element name="static-cast" type="ltx:operator-unary"/>
-            <xs:element name="dynamic-cast" type="ltx:operator-unary"/>
-        </xs:choice>
-    </xs:group>
-    <xs:group name="operator-misc-group">
-        <xs:annotation>
-            <xs:documentation>Other operators</xs:documentation>
-        </xs:annotation>
-        <xs:choice>
-            <xs:element name="iif" type="ltx:operator-ternary"/>
-        </xs:choice>
-    </xs:group>
-    <xs:group name="operator-group">
-        <xs:annotation>
-            <xs:documentation>arithmatic, type-cast, ref/deref, etc.</xs:documentation>
-        </xs:annotation>
-        <xs:choice>
-            <xs:group ref="ltx:operator-bit-group"/>
-            <xs:group ref="ltx:operator-arithmatic-group"/>
-            <xs:group ref="ltx:operator-logic-group"/>
-            <xs:group ref="ltx:operator-datatype-group"/>
-            <xs:group ref="ltx:operator-misc-group"/>
-        </xs:choice>
-    </xs:group>
-    <xs:complexType name="base-operand">
-        <xs:annotation>
-            <xs:documentation>An operand is lv-enabled expression. </xs:documentation>
-        </xs:annotation>
-        <xs:complexContent>
-            <xs:extension base="ltx:base-expression">
-                <xs:attribute name="left-value" type="xs:boolean" use="optional" default="false"/>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-    <xs:element name="operand" type="ltx:base-operand">
-        <xs:annotation>
-            <xs:documentation>Expression Operand</xs:documentation>
-        </xs:annotation>
-    </xs:element>
-    <!--========== FUNCTION ==========-->
-    <xs:group name="grp-function">
-        <xs:annotation>
-            <xs:documentation>assignment, function-call</xs:documentation>
-        </xs:annotation>
-        <xs:choice>
-            <xs:element name="call-function" type="ltx:operator"/>
-            <xs:element name="lv-assign"/>
-            <xs:element name="throw"/>
-        </xs:choice>
-    </xs:group>
-    <xs:complexType name="base-function-impl">
-        <xs:group ref="ltx:grp-any"/>
-        <xs:attribute name="layer" type="xs:string" use="optional" default="main"/>
-        <xs:attribute name="extends-at" use="optional" default="after">
-            <xs:simpleType>
-                <xs:restriction base="xs:token">
-                    <xs:enumeration value="before"/>
-                    <xs:enumeration value="after"/>
-                </xs:restriction>
-            </xs:simpleType>
-        </xs:attribute>
-    </xs:complexType>
-    <xs:complexType name="base-function">
-        <xs:annotation>
-            <xs:documentation>The storage-traits of a function is specified uncommonly. </xs:documentation>
-        </xs:annotation>
-        <xs:complexContent>
-            <xs:extension base="ltx:base-code-unit">
-                <xs:sequence>
-                    <xs:element name="in" type="ltx:base-typedef" minOccurs="0"/>
-                    <xs:element name="out" type="ltx:base-typedef" minOccurs="0"/>
-                    <xs:element name="throws" type="ltx:base-type-use" minOccurs="0" maxOccurs="unbounded"/>
-                    <xs:element name="assemble" type="ltx:base-typedef" minOccurs="0">
-                        <xs:annotation>
-                            <xs:documentation>Assemble the layers of a function, so some may be executed sequencely, some may be dynamics-choiced. </xs:documentation>
-                        </xs:annotation>
-                    </xs:element>
-                    <xs:element name="implement" type="ltx:base-function-impl" minOccurs="0" maxOccurs="unbounded">
-                        <xs:annotation>
-                            <xs:documentation>The order of implement layers is important. 
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="ltx:operator-unary">
+							<xs:attribute name="character" type="xs:string" use="optional" default="1"/>
+							<xs:attribute name="from" type="xs:string" use="optional" default="left"/>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:choice>
+	</xs:group>
+	<xs:group name="operator-arithmatic-group">
+		<xs:annotation>
+			<xs:documentation>Arithmatic operators</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="add" type="ltx:operator-binary-left"/>
+			<xs:element name="subtract" type="ltx:operator-binary-left"/>
+			<xs:element name="multiply" type="ltx:operator-binary-left"/>
+			<xs:element name="divide" type="ltx:operator-binary-left"/>
+			<xs:element name="power" type="ltx:operator-binary-right"/>
+			<xs:element name="increase" type="ltx:operator-unary"/>
+			<xs:element name="decrease" type="ltx:operator-unary"/>
+		</xs:choice>
+	</xs:group>
+	<xs:attributeGroup name="operator-logic-attrs">
+		<xs:attribute name="true" type="xs:integer" use="optional" default="1"/>
+		<xs:attribute name="short" type="xs:boolean" use="optional" default="false"/>
+	</xs:attributeGroup>
+	<xs:group name="operator-logic-group">
+		<xs:annotation>
+			<xs:documentation>Logical operators</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="is-all">
+				<xs:annotation>
+					<xs:documentation>logic-and</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="ltx:operator-variable">
+							<xs:attributeGroup ref="ltx:operator-logic-attrs"/>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="is-any">
+				<xs:annotation>
+					<xs:documentation>logic-and</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="ltx:operator-variable">
+							<xs:attributeGroup ref="ltx:operator-logic-attrs"/>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="is-only">
+				<xs:annotation>
+					<xs:documentation>logic-xor only when binary-operator</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="ltx:operator-variable">
+							<xs:attributeGroup ref="ltx:operator-logic-attrs"/>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="is">
+				<xs:annotation>
+					<xs:documentation>simple test</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="ltx:operator-unary">
+							<xs:attributeGroup ref="ltx:operator-logic-attrs"/>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="is-not">
+				<xs:annotation>
+					<xs:documentation>logic-not</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="ltx:operator-unary">
+							<xs:attributeGroup ref="ltx:operator-logic-attrs"/>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="is-equal">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="ltx:operator-binary-left">
+							<xs:attributeGroup ref="ltx:operator-logic-attrs"/>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="is-greater">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="ltx:operator-binary-left">
+							<xs:attributeGroup ref="ltx:operator-logic-attrs"/>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="is-less">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="ltx:operator-binary-left">
+							<xs:attributeGroup ref="ltx:operator-logic-attrs"/>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:choice>
+	</xs:group>
+	<xs:group name="operator-datatype-group">
+		<xs:annotation>
+			<xs:documentation>Data-type related operators</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="size-of" type="ltx:operator-unary"/>
+			<xs:element name="address-of" type="ltx:operator-unary"/>
+			<xs:element name="value-at" type="ltx:operator-unary"/>
+			<xs:element name="member-of">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="ltx:operator-unary">
+							<xs:attribute name="select" type="xs:string" use="optional"/>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="reinterpret-cast" type="ltx:operator-unary"/>
+			<xs:element name="static-cast" type="ltx:operator-unary"/>
+			<xs:element name="dynamic-cast" type="ltx:operator-unary"/>
+		</xs:choice>
+	</xs:group>
+	<xs:group name="operator-misc-group">
+		<xs:annotation>
+			<xs:documentation>Other operators</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="iif" type="ltx:operator-ternary"/>
+		</xs:choice>
+	</xs:group>
+	<xs:group name="operator-group">
+		<xs:annotation>
+			<xs:documentation>arithmatic, type-cast, ref/deref, etc.</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:group ref="ltx:operator-bit-group"/>
+			<xs:group ref="ltx:operator-arithmatic-group"/>
+			<xs:group ref="ltx:operator-logic-group"/>
+			<xs:group ref="ltx:operator-datatype-group"/>
+			<xs:group ref="ltx:operator-misc-group"/>
+		</xs:choice>
+	</xs:group>
+	<xs:complexType name="base-operand">
+		<xs:annotation>
+			<xs:documentation>An operand is lv-enabled expression. </xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ltx:base-expression">
+				<xs:attribute name="left-value" type="xs:boolean" use="optional" default="false"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="operand" type="ltx:base-operand">
+		<xs:annotation>
+			<xs:documentation>Expression Operand</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<!--========== FUNCTION ==========-->
+	<xs:group name="grp-function">
+		<xs:annotation>
+			<xs:documentation>assignment, function-call</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="call-function" type="ltx:operator"/>
+			<xs:element name="lv-assign"/>
+			<xs:element name="throw"/>
+		</xs:choice>
+	</xs:group>
+	<xs:complexType name="base-function-impl">
+		<xs:group ref="ltx:grp-any"/>
+		<xs:attribute name="layer" type="xs:string" use="optional" default="main"/>
+		<xs:attribute name="extends-at" use="optional" default="after">
+			<xs:simpleType>
+				<xs:restriction base="xs:token">
+					<xs:enumeration value="before"/>
+					<xs:enumeration value="after"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="base-function">
+		<xs:annotation>
+			<xs:documentation>The storage-traits of a function is specified uncommonly. </xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ltx:base-code-unit">
+				<xs:sequence>
+					<xs:element name="in" type="ltx:base-typedef" minOccurs="0"/>
+					<xs:element name="out" type="ltx:base-typedef" minOccurs="0"/>
+					<xs:element name="throws" type="ltx:base-type-use" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="assemble" type="ltx:base-typedef" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Assemble the layers of a function, so some may be executed sequencely, some may be dynamics-choiced. </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="implement" type="ltx:base-function-impl" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>The order of implement layers is important. 
 
 If no implement is declared, then the default main-implement is used. </xs:documentation>
-                        </xs:annotation>
-                    </xs:element>
-                    <xs:element name="extends" minOccurs="0" maxOccurs="unbounded">
-                        <xs:annotation>
-                            <xs:documentation>The order of multiple extends is important. </xs:documentation>
-                        </xs:annotation>
-                        <xs:complexType>
-                            <xs:choice minOccurs="0" maxOccurs="unbounded">
-                                <xs:element name="argument-transfer"/>
-                            </xs:choice>
-                            <xs:attribute name="on" type="xs:string" use="required"/>
-                        </xs:complexType>
-                    </xs:element>
-                </xs:sequence>
-                <xs:attribute name="name" type="xs:string" use="required"/>
-                <xs:attribute name="protocol" use="optional" default="cdecl">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:token">
-                            <xs:enumeration value="cdecl"/>
-                            <xs:enumeration value="pascal"/>
-                            <xs:enumeration value="fastcall"/>
-                            <xs:enumeration value="naked"/>
-                            <xs:enumeration value="thiscall"/>
-                            <xs:enumeration value="poscall"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:attribute>
-                <xs:attribute name="virtual" type="xs:boolean" use="optional" default="false"/>
-                <xs:attribute name="inline" type="xs:boolean" use="optional" default="false"/>
-                <xs:attributeGroup ref="ltx:atg-symbol"/>
-                <xs:attributeGroup ref="ltx:atg-storage-traits"/>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-    <xs:element name="function" type="ltx:base-function">
-        <xs:annotation>
-            <xs:documentation>Declare a function</xs:documentation>
-        </xs:annotation>
-    </xs:element>
-    <xs:element name="implement">
-        <xs:annotation>
-            <xs:documentation>Implement a layer of a function</xs:documentation>
-        </xs:annotation>
-        <xs:complexType>
-            <xs:complexContent>
-                <xs:extension base="ltx:base-function-impl">
-                    <xs:attribute name="name" type="xs:string" use="required"/>
-                </xs:extension>
-            </xs:complexContent>
-        </xs:complexType>
-    </xs:element>
-    <!--========== DATA TYPE ==========-->
-    <xs:attributeGroup name="atg-symbol">
-        <xs:attribute name="access" use="optional" default="local">
-            <xs:simpleType>
-                <xs:union>
-                    <xs:simpleType>
-                        <xs:restriction base="xs:integer">
-                            <xs:minInclusive value="-127"/>
-                            <xs:maxInclusive value="127"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                    <xs:simpleType>
-                        <xs:restriction base="xs:token">
-                            <xs:enumeration value="public"/>
-                            <xs:enumeration value="protected"/>
-                            <xs:enumeration value="private"/>
-                            <xs:enumeration value="local"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:union>
-            </xs:simpleType>
-        </xs:attribute>
-    </xs:attributeGroup>
-    <xs:attributeGroup name="atg-storage-traits">
-        <xs:attribute name="static" type="xs:boolean" use="optional" default="false"/>
-        <xs:attribute name="constant" type="xs:boolean" use="optional" default="false"/>
-        <xs:attribute name="transient" type="xs:boolean" use="optional" default="false"/>
-        <xs:attribute name="storage" use="optional">
-            <xs:simpleType>
-                <xs:union memberTypes="xs:integer">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:token">
-                            <xs:enumeration value="volatile"/>
-                            <xs:enumeration value="register"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:union>
-            </xs:simpleType>
-        </xs:attribute>
-        <xs:attribute name="share" use="optional">
-            <xs:simpleType>
-                <xs:union memberTypes="xs:integer">
-                    <xs:simpleType>
-                        <xs:restriction base="xs:token">
-                            <xs:enumeration value="global"/>
-                            <xs:enumeration value="process"/>
-                            <xs:enumeration value="thread"/>
-                        </xs:restriction>
-                    </xs:simpleType>
-                </xs:union>
-            </xs:simpleType>
-        </xs:attribute>
-        <xs:attribute name="managed" type="xs:boolean" use="optional" default="false"/>
-    </xs:attributeGroup>
-    <xs:complexType name="base-type-use">
-        <xs:annotation>
-            <xs:documentation>Not for creating new types</xs:documentation>
-        </xs:annotation>
-        <xs:complexContent>
-            <xs:extension base="ltx:base-code-unit">
-                <xs:choice minOccurs="0" maxOccurs="unbounded">
-                    <xs:element name="specialize" type="ltx:base-typedef"/>
-                    <xs:element name="construct" type="ltx:base-operand"/>
-                </xs:choice>
-                <xs:attribute name="base" type="xs:string" use="optional"/>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-    <xs:complexType name="base-typedef" mixed="true">
-        <xs:annotation>
-            <xs:documentation>For creating new data types or instances. 
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="extends" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>The order of multiple extends is important. </xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:choice minOccurs="0" maxOccurs="unbounded">
+								<xs:element name="argument-transfer"/>
+							</xs:choice>
+							<xs:attribute name="on" type="xs:string" use="required"/>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:attribute name="name" type="xs:string" use="required"/>
+				<xs:attribute name="protocol" use="optional" default="cdecl">
+					<xs:simpleType>
+						<xs:restriction base="xs:token">
+							<xs:enumeration value="cdecl"/>
+							<xs:enumeration value="pascal"/>
+							<xs:enumeration value="fastcall"/>
+							<xs:enumeration value="naked"/>
+							<xs:enumeration value="thiscall"/>
+							<xs:enumeration value="poscall"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:attribute>
+				<xs:attribute name="virtual" type="xs:boolean" use="optional" default="false"/>
+				<xs:attribute name="inline" type="xs:boolean" use="optional" default="false"/>
+				<xs:attributeGroup ref="ltx:atg-symbol"/>
+				<xs:attributeGroup ref="ltx:atg-storage-traits"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="function" type="ltx:base-function">
+		<xs:annotation>
+			<xs:documentation>Declare a function</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="implement">
+		<xs:annotation>
+			<xs:documentation>Implement a layer of a function</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="ltx:base-function-impl">
+					<xs:attribute name="name" type="xs:string" use="required"/>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<!--========== DATA TYPE ==========-->
+	<xs:attributeGroup name="atg-symbol">
+		<xs:attribute name="access" use="optional" default="local">
+			<xs:simpleType>
+				<xs:union>
+					<xs:simpleType>
+						<xs:restriction base="xs:integer">
+							<xs:minInclusive value="-127"/>
+							<xs:maxInclusive value="127"/>
+						</xs:restriction>
+					</xs:simpleType>
+					<xs:simpleType>
+						<xs:restriction base="xs:token">
+							<xs:enumeration value="public"/>
+							<xs:enumeration value="protected"/>
+							<xs:enumeration value="private"/>
+							<xs:enumeration value="local"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:union>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="atg-storage-traits">
+		<xs:attribute name="static" type="xs:boolean" use="optional" default="false"/>
+		<xs:attribute name="constant" type="xs:boolean" use="optional" default="false"/>
+		<xs:attribute name="transient" type="xs:boolean" use="optional" default="false"/>
+		<xs:attribute name="storage" use="optional">
+			<xs:simpleType>
+				<xs:union memberTypes="xs:integer">
+					<xs:simpleType>
+						<xs:restriction base="xs:token">
+							<xs:enumeration value="volatile"/>
+							<xs:enumeration value="register"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:union>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="share" use="optional">
+			<xs:simpleType>
+				<xs:union memberTypes="xs:integer">
+					<xs:simpleType>
+						<xs:restriction base="xs:token">
+							<xs:enumeration value="global"/>
+							<xs:enumeration value="process"/>
+							<xs:enumeration value="thread"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:union>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="managed" type="xs:boolean" use="optional" default="false"/>
+	</xs:attributeGroup>
+	<xs:complexType name="base-type-use">
+		<xs:annotation>
+			<xs:documentation>Not for creating new types</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ltx:base-code-unit">
+				<xs:choice minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="specialize" type="ltx:base-typedef"/>
+					<xs:element name="construct" type="ltx:base-operand"/>
+				</xs:choice>
+				<xs:attribute name="base" type="xs:string" use="optional"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="base-typedef" mixed="true">
+		<xs:annotation>
+			<xs:documentation>For creating new data types or instances. 
 
 The mixed-text do the value-construct. </xs:documentation>
-        </xs:annotation>
-        <xs:complexContent mixed="true">
-            <xs:extension base="ltx:base-type-use">
-                <xs:choice minOccurs="0" maxOccurs="unbounded">
-                    <xs:element name="specializer">
-                        <xs:annotation>
-                            <xs:documentation>Entity element can't have any template parameters.</xs:documentation>
-                        </xs:annotation>
-                        <xs:complexType>
-                            <xs:choice>
-                                <xs:element name="generic"/>
-                                <xs:element name="type"/>
-                            </xs:choice>
-                        </xs:complexType>
-                    </xs:element>
-                    <xs:element name="constructor">
-                        <xs:annotation>
-                            <xs:documentation>Specify how the type or element can be constructed. 
+		</xs:annotation>
+		<xs:complexContent mixed="true">
+			<xs:extension base="ltx:base-type-use">
+				<xs:choice minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="specializer">
+						<xs:annotation>
+							<xs:documentation>Entity element can't have any template parameters.</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:choice>
+								<xs:element name="generic"/>
+								<xs:element name="type"/>
+							</xs:choice>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="constructor">
+						<xs:annotation>
+							<xs:documentation>Specify how the type or element can be constructed. 
 For element, type-construct is done before element-constructor. </xs:documentation>
-                        </xs:annotation>
-                        <xs:complexType>
-                            <xs:sequence>
-                                <xs:element name="parameter" minOccurs="0" maxOccurs="unbounded"/>
-                                <xs:element name="initializer"/>
-                            </xs:sequence>
-                        </xs:complexType>
-                    </xs:element>
-                    <xs:element name="extends" type="ltx:base-type-use">
-                        <xs:annotation>
-                            <xs:documentation>parent::@base is just for copy (with public access and all private-elements kept), and extends are for inherit, multiple extends is allowed. </xs:documentation>
-                        </xs:annotation>
-                    </xs:element>
-                    <xs:group ref="ltx:grp-define"/>
-                    <xs:element ref="ltx:function"/>
-                    <xs:element name="trait">
-                        <xs:complexType>
-                            <xs:attribute name="name" type="xs:string" use="required"/>
-                        </xs:complexType>
-                    </xs:element>
-                </xs:choice>
-                <xs:attribute name="name" type="xs:string" use="optional"/>
-                <xs:attribute name="align" type="xs:integer" use="optional" default="1"/>
-                <xs:attribute name="bytes" type="xs:integer" use="optional"/>
-                <xs:attribute name="final" type="xs:boolean" use="optional" default="false"/>
-                <xs:attributeGroup ref="ltx:atg-symbol"/>
-                <xs:attributeGroup ref="ltx:atg-storage-traits"/>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-    <xs:group name="grp-define">
-        <xs:choice>
-            <xs:element ref="ltx:type"/>
-            <xs:element ref="ltx:element"/>
-            <xs:element ref="ltx:union"/>
-            <xs:element ref="ltx:pointer"/>
-            <xs:element ref="ltx:reference"/>
-            <xs:element ref="ltx:array"/>
-        </xs:choice>
-    </xs:group>
-    <xs:element name="type" type="ltx:base-typedef">
-        <xs:annotation>
-            <xs:documentation>Just another element, but for semantics.</xs:documentation>
-        </xs:annotation>
-    </xs:element>
-    <xs:element name="element" type="ltx:base-typedef">
-        <xs:annotation>
-            <xs:documentation>Entity element</xs:documentation>
-        </xs:annotation>
-    </xs:element>
-    <xs:element name="array">
-        <xs:annotation>
-            <xs:documentation>Array</xs:documentation>
-        </xs:annotation>
-        <xs:complexType>
-            <xs:complexContent>
-                <xs:extension base="ltx:base-typedef">
-                    <xs:attribute name="index-base" type="xs:integer" use="optional" default="0"/>
-                    <xs:attribute name="size" type="xs:integer" use="required"/>
-                </xs:extension>
-            </xs:complexContent>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="reference" type="ltx:base-typedef">
-        <xs:annotation>
-            <xs:documentation>Reference</xs:documentation>
-        </xs:annotation>
-    </xs:element>
-    <xs:element name="pointer" type="ltx:base-typedef">
-        <xs:annotation>
-            <xs:documentation>Pointer</xs:documentation>
-        </xs:annotation>
-    </xs:element>
-    <xs:element name="union">
-        <xs:annotation>
-            <xs:documentation>Union</xs:documentation>
-        </xs:annotation>
-        <xs:complexType>
-            <xs:complexContent>
-                <xs:extension base="ltx:base-typedef">
-                    <xs:choice minOccurs="0" maxOccurs="unbounded">
-                        <xs:element name="selector"/>
-                    </xs:choice>
-                </xs:extension>
-            </xs:complexContent>
-        </xs:complexType>
-    </xs:element>
-    <!--========== DATA VALUE ==========-->
-    <xs:group name="grp-value">
-        <xs:annotation>
-            <xs:documentation>Value representation</xs:documentation>
-        </xs:annotation>
-        <xs:choice>
-            <xs:element name="number" type="xs:string"/>
-            <xs:element name="string">
-                <xs:complexType>
-                    <xs:simpleContent>
-                        <xs:extension base="xs:string">
-                            <xs:attribute name="lang" type="xs:language" use="optional"/>
-                        </xs:extension>
-                    </xs:simpleContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="time">
-                <xs:complexType>
-                    <xs:simpleContent>
-                        <xs:extension base="xs:string">
-                            <xs:attribute name="format" type="xs:string" use="optional" default="YYYY-MM-DD"/>
-                            <xs:attribute name="timezone" type="xs:string" use="optional" default="+00:00"/>
-                        </xs:extension>
-                    </xs:simpleContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="binary">
-                <xs:complexType>
-                    <xs:simpleContent>
-                        <xs:extension base="xs:anySimpleType">
-                            <xs:attribute name="encoding" type="xs:string" use="required"/>
-                        </xs:extension>
-                    </xs:simpleContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="pointer"/>
-            <xs:element name="reference"/>
-            <xs:element name="expression" type="ltx:base-expression"/>
-            <xs:element name="array">
-                <xs:complexType/>
-            </xs:element>
-        </xs:choice>
-    </xs:group>
-    <!--========== DEVELOP ==========-->
-    <!--________________________________________________-->
-    <!--STATEMENT - CONTROL-->
-    <xs:group name="grp-control-symbol">
-        <xs:annotation>
-            <xs:documentation>control do-structure. 
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="parameter" minOccurs="0" maxOccurs="unbounded"/>
+								<xs:element name="initializer"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="extends" type="ltx:base-type-use">
+						<xs:annotation>
+							<xs:documentation>parent::@base is just for copy (with public access and all private-elements kept), and extends are for inherit, multiple extends is allowed. </xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:group ref="ltx:grp-define"/>
+					<xs:element ref="ltx:function"/>
+					<xs:element name="trait">
+						<xs:complexType>
+							<xs:attribute name="name" type="xs:string" use="required"/>
+						</xs:complexType>
+					</xs:element>
+				</xs:choice>
+				<xs:attribute name="name" type="xs:string" use="optional"/>
+				<xs:attribute name="align" type="xs:integer" use="optional" default="1"/>
+				<xs:attribute name="bytes" type="xs:integer" use="optional"/>
+				<xs:attribute name="final" type="xs:boolean" use="optional" default="false"/>
+				<xs:attributeGroup ref="ltx:atg-symbol"/>
+				<xs:attributeGroup ref="ltx:atg-storage-traits"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:group name="grp-define">
+		<xs:choice>
+			<xs:element ref="ltx:type"/>
+			<xs:element ref="ltx:element"/>
+			<xs:element ref="ltx:union"/>
+			<xs:element ref="ltx:pointer"/>
+			<xs:element ref="ltx:reference"/>
+			<xs:element ref="ltx:array"/>
+		</xs:choice>
+	</xs:group>
+	<xs:element name="type" type="ltx:base-typedef">
+		<xs:annotation>
+			<xs:documentation>Just another element, but for semantics.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="element" type="ltx:base-typedef">
+		<xs:annotation>
+			<xs:documentation>Entity element</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="array">
+		<xs:annotation>
+			<xs:documentation>Array</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="ltx:base-typedef">
+					<xs:attribute name="index-base" type="xs:integer" use="optional" default="0"/>
+					<xs:attribute name="size" type="xs:integer" use="required"/>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="reference" type="ltx:base-typedef">
+		<xs:annotation>
+			<xs:documentation>Reference</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="pointer" type="ltx:base-typedef">
+		<xs:annotation>
+			<xs:documentation>Pointer</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="union">
+		<xs:annotation>
+			<xs:documentation>Union</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="ltx:base-typedef">
+					<xs:choice minOccurs="0" maxOccurs="unbounded">
+						<xs:element name="selector"/>
+					</xs:choice>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<!--========== DATA VALUE ==========-->
+	<xs:group name="grp-value">
+		<xs:annotation>
+			<xs:documentation>Value representation</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="number" type="xs:string"/>
+			<xs:element name="string">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="lang" type="xs:language" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="time">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="format" type="xs:string" use="optional" default="YYYY-MM-DD"/>
+							<xs:attribute name="timezone" type="xs:string" use="optional" default="+00:00"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="binary">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:anySimpleType">
+							<xs:attribute name="encoding" type="xs:string" use="required"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="pointer"/>
+			<xs:element name="reference"/>
+			<xs:element name="expression" type="ltx:base-expression"/>
+			<xs:element name="array">
+				<xs:complexType/>
+			</xs:element>
+		</xs:choice>
+	</xs:group>
+	<!--========== DEVELOP ==========-->
+	<!--________________________________________________-->
+	<!--STATEMENT - CONTROL-->
+	<xs:group name="grp-control-symbol">
+		<xs:annotation>
+			<xs:documentation>control do-structure. 
 A do-structure has: 
     I initialize
     S step
     C condition
 
 label-attribute in control-symbol refers to target-label. </xs:documentation>
-        </xs:annotation>
-        <xs:choice>
-            <xs:element name="control-goto" type="ltx:base-code-unit">
-                <xs:annotation>
-                    <xs:documentation>unconditionally goto. </xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="control-break" type="ltx:base-code-unit">
-                <xs:annotation>
-                    <xs:documentation>break the do-structure</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="control-next" type="ltx:base-code-unit">
-                <xs:annotation>
-                    <xs:documentation>do the next-step, with C</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="control-previous" type="ltx:base-code-unit">
-                <xs:annotation>
-                    <xs:documentation>do the previous-step, with C</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="control-redo" type="ltx:base-code-unit">
-                <xs:annotation>
-                    <xs:documentation>re-do the current step, without C</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="control-reset" type="ltx:base-code-unit">
-                <xs:annotation>
-                    <xs:documentation>re-do the do-structure, with I-C</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="control-yield" type="ltx:base-code-unit">
-                <xs:annotation>
-                    <xs:documentation>yield the current do-structure, with a returned yield-handle. </xs:documentation>
-                </xs:annotation>
-            </xs:element>
-        </xs:choice>
-    </xs:group>
-    <xs:complexType name="base-control">
-        <xs:complexContent>
-            <xs:extension base="ltx:base-code-unit">
-                <xs:choice minOccurs="0" maxOccurs="unbounded">
-                    <xs:group ref="ltx:grp-control-symbol"/>
-                </xs:choice>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-    <xs:group name="grp-control">
-        <xs:annotation>
-            <xs:documentation>condition, loop, try-catch, fork</xs:documentation>
-        </xs:annotation>
-        <xs:choice>
-            <xs:element name="iterate">
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base="ltx:base-control">
-                            <xs:attribute name="iterator" type="xs:string" use="optional"/>
-                            <xs:attribute name="range" type="xs:string" use="optional"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="branch">
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base="ltx:base-control">
-                            <xs:sequence>
-                                <xs:element name="on" type="ltx:base-expression" minOccurs="0"/>
-                                <xs:element name="do"/>
-                            </xs:sequence>
-                            <xs:attribute name="on" type="xs:string" use="optional"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="branches">
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base="ltx:base-control">
-                            <xs:choice>
-                                <xs:element name="branch"/>
-                            </xs:choice>
-                            <xs:attribute name="default" type="xs:string" use="optional"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="loop">
-                <xs:annotation>
-                    <xs:documentation>infinite-loop if both while and until aren't specified.</xs:documentation>
-                </xs:annotation>
-                <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base="ltx:base-control">
-                            <xs:sequence>
-                                <xs:choice minOccurs="0">
-                                    <xs:element name="while" type="ltx:base-expression"/>
-                                    <xs:element name="until" type="ltx:base-expression"/>
-                                </xs:choice>
-                                <xs:element name="do"/>
-                            </xs:sequence>
-                            <xs:attribute name="while" type="xs:string" use="optional"/>
-                            <xs:attribute name="until" type="xs:string" use="optional"/>
-                        </xs:extension>
-                    </xs:complexContent>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="fork" type="ltx:base-control"/>
-            <xs:element ref="ltx:do"/>
-        </xs:choice>
-    </xs:group>
-    <xs:element name="do">
-        <xs:complexType>
-            <xs:complexContent>
-                <xs:extension base="ltx:base-control">
-                    <xs:choice>
-                        <xs:element name="initialize"/>
-                        <xs:element name="previous"/>
-                        <xs:element name="next"/>
-                        <xs:element name="check"/>
-                        <xs:element name="catch"/>
-                        <xs:element name="finalize"/>
-                        <xs:element name="cleanup"/>
-                    </xs:choice>
-                </xs:extension>
-            </xs:complexContent>
-        </xs:complexType>
-    </xs:element>
-    <!--STATEMENT - GENERAL-->
-    <!--========== STATEMENT GROUPS ==========-->
-    <xs:group name="grp-any">
-        <xs:choice>
-            <xs:group ref="ltx:grp-lexical"/>
-            <xs:group ref="ltx:grp-control"/>
-            <xs:group ref="ltx:operator-group"/>
-            <xs:group ref="ltx:grp-function"/>
-            <xs:group ref="ltx:grp-define"/>
-            <xs:group ref="ltx:grp-general"/>
-        </xs:choice>
-    </xs:group>
-    <xs:group name="grp-lexical">
-        <xs:annotation>
-            <xs:documentation>namespace</xs:documentation>
-        </xs:annotation>
-        <xs:choice>
-            <xs:element name="namespace" type="ltx:st-namespace"/>
-            <xs:element name="namespace-using" type="xs:string"/>
-        </xs:choice>
-    </xs:group>
-    <xs:group name="grp-general">
-        <xs:annotation>
-            <xs:documentation>modulization, misc</xs:documentation>
-        </xs:annotation>
-        <xs:choice/>
-    </xs:group>
-    <!--STATEMENT - LEXICAL-->
-    <xs:complexType name="st-namespace">
-        <xs:choice minOccurs="0" maxOccurs="unbounded">
-            <xs:group ref="ltx:grp-any"/>
-        </xs:choice>
-        <xs:attribute name="name" type="xs:string" use="optional" default="global"/>
-    </xs:complexType>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="control-goto" type="ltx:base-code-unit">
+				<xs:annotation>
+					<xs:documentation>unconditionally goto. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="control-break" type="ltx:base-code-unit">
+				<xs:annotation>
+					<xs:documentation>break the do-structure</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="control-next" type="ltx:base-code-unit">
+				<xs:annotation>
+					<xs:documentation>do the next-step, with C</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="control-previous" type="ltx:base-code-unit">
+				<xs:annotation>
+					<xs:documentation>do the previous-step, with C</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="control-redo" type="ltx:base-code-unit">
+				<xs:annotation>
+					<xs:documentation>re-do the current step, without C</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="control-reset" type="ltx:base-code-unit">
+				<xs:annotation>
+					<xs:documentation>re-do the do-structure, with I-C</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="control-yield" type="ltx:base-code-unit">
+				<xs:annotation>
+					<xs:documentation>yield the current do-structure, with a returned yield-handle. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:group>
+	<xs:complexType name="base-control">
+		<xs:complexContent>
+			<xs:extension base="ltx:base-code-unit">
+				<xs:choice minOccurs="0" maxOccurs="unbounded">
+					<xs:group ref="ltx:grp-control-symbol"/>
+				</xs:choice>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:group name="grp-control">
+		<xs:annotation>
+			<xs:documentation>condition, loop, try-catch, fork</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="iterate">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="ltx:base-control">
+							<xs:attribute name="iterator" type="xs:string" use="optional"/>
+							<xs:attribute name="range" type="xs:string" use="optional"/>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="branch">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="ltx:base-control">
+							<xs:sequence>
+								<xs:element name="on" type="ltx:base-expression" minOccurs="0"/>
+								<xs:element name="do"/>
+							</xs:sequence>
+							<xs:attribute name="on" type="xs:string" use="optional"/>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="branches">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="ltx:base-control">
+							<xs:choice>
+								<xs:element name="branch"/>
+							</xs:choice>
+							<xs:attribute name="default" type="xs:string" use="optional"/>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="loop">
+				<xs:annotation>
+					<xs:documentation>infinite-loop if both while and until aren't specified.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="ltx:base-control">
+							<xs:sequence>
+								<xs:choice minOccurs="0">
+									<xs:element name="while" type="ltx:base-expression"/>
+									<xs:element name="until" type="ltx:base-expression"/>
+								</xs:choice>
+								<xs:element name="do"/>
+							</xs:sequence>
+							<xs:attribute name="while" type="xs:string" use="optional"/>
+							<xs:attribute name="until" type="xs:string" use="optional"/>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="fork" type="ltx:base-control"/>
+			<xs:element ref="ltx:do"/>
+		</xs:choice>
+	</xs:group>
+	<xs:element name="do">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="ltx:base-control">
+					<xs:choice>
+						<xs:element name="initialize"/>
+						<xs:element name="previous"/>
+						<xs:element name="next"/>
+						<xs:element name="check"/>
+						<xs:element name="catch"/>
+						<xs:element name="finalize"/>
+						<xs:element name="cleanup"/>
+					</xs:choice>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<!--STATEMENT - GENERAL-->
+	<!--========== STATEMENT GROUPS ==========-->
+	<xs:group name="grp-any">
+		<xs:choice>
+			<xs:group ref="ltx:grp-lexical"/>
+			<xs:group ref="ltx:grp-control"/>
+			<xs:group ref="ltx:operator-group"/>
+			<xs:group ref="ltx:grp-function"/>
+			<xs:group ref="ltx:grp-define"/>
+			<xs:group ref="ltx:grp-general"/>
+		</xs:choice>
+	</xs:group>
+	<xs:group name="grp-lexical">
+		<xs:annotation>
+			<xs:documentation>namespace</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="namespace" type="ltx:st-namespace"/>
+			<xs:element name="namespace-using" type="xs:string"/>
+		</xs:choice>
+	</xs:group>
+	<xs:group name="grp-general">
+		<xs:annotation>
+			<xs:documentation>modulization, misc</xs:documentation>
+		</xs:annotation>
+		<xs:choice/>
+	</xs:group>
+	<!--STATEMENT - LEXICAL-->
+	<xs:complexType name="st-namespace">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:group ref="ltx:grp-any"/>
+		</xs:choice>
+		<xs:attribute name="name" type="xs:string" use="optional" default="global"/>
+	</xs:complexType>
 </xs:schema>

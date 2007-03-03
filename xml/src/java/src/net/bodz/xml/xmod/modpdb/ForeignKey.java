@@ -97,7 +97,7 @@ public class ForeignKey extends Index {
     }
 
     public void setDeleteBehav(int behav) {
-        if (behav < 0 || behav >= _BehavNames.length)
+        if (behav < 0 || behav >= _BehavSymbols.length)
             throw new IllegalArgumentException("Invalid behav number: " + behav);
         this.deleteBehav = behav;
     }
@@ -107,7 +107,7 @@ public class ForeignKey extends Index {
     }
 
     public void setUpdateBehav(int behav) {
-        if (behav < 0 || behav >= _BehavNames.length)
+        if (behav < 0 || behav >= _BehavSymbols.length)
             throw new IllegalArgumentException("Invalid behav number: " + behav);
         this.updateBehav = behav;
     }
@@ -121,18 +121,24 @@ public class ForeignKey extends Index {
     }
 
     private static final String[] _RelationNames;
-    private static final String[] _BehavNames;
+    private static final char[]   _BehavSymbols;
     static {
         _RelationNames = new String[] { "1:1", "1:n", "n:1", "n:m", };
-        _BehavNames = new String[] { "->", "-->", "=>", ">>", }; // TODO
+        _BehavSymbols = new char[] { '-', '=', '<', ':', };
     }
 
     public static String getRelationName(int relation) {
         return _RelationNames[relation];
     }
 
+    public static String getBehavName(int bupd, int bdel) {
+        if (bupd == bdel)
+            return getBehavName(bupd, bdel);
+        return _BehavSymbols[bupd] + _BehavSymbols[bdel] + ">";
+    }
+
     public static String getBehavName(int behav) {
-        return _BehavNames[behav];
+        return _BehavSymbols[behav] + ">";
     }
 
     public static int parseRelation(String relation) { // TODO
@@ -142,22 +148,33 @@ public class ForeignKey extends Index {
         return -1;
     }
 
-    public static int parseBehav(String behav) {
-        for (int i = 0; i < _BehavNames.length; i++)
-            if (_BehavNames[i].equals(behav))
+    public static int parseUpdateBehav(String behav) {
+        char bupd = behav.charAt(0);
+        for (int i = 0; i < _BehavSymbols.length; i++)
+            if (_BehavSymbols[i] == bupd)
+                return i;
+        return -1;
+    }
+
+    public static int parseDeleteBehav(String behav) {
+        char bdel = behav.charAt(0);
+        if (behav.length() >= 3)
+            bdel = behav.charAt(1);
+        for (int i = 0; i < _BehavSymbols.length; i++)
+            if (_BehavSymbols[i] == bdel)
                 return i;
         return -1;
     }
 
     @Override
     public String toString() {
-        // S<x,y,z> (del)-> n:1 (upd)-> F<u,v,w>
+        // S(x,y,z) -> n:1 -> F(u,v,w)
         String self = super.toString();
         String foreign = ref.toString();
         String rel = getRelationName(relation);
-        String del = getBehavName(deleteBehav);
-        String upd = getBehavName(deleteBehav);
-        return self + " " + del + " " + rel + " " + upd + " " + foreign;
+        String behav = getBehavName(updateBehav, deleteBehav);
+        return String
+                .format("%s %s %s %s %s", self, behav, rel, behav, foreign);
     }
 
 }

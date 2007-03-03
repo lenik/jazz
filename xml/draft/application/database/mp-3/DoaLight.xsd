@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by any (Ru-Board) -->
 <!-- edited with XMLSPY v2004 rel. 2 U (http://www.xmlspy.com) by XML (XML) -->
 <!-- Namespace: "vps://Ci.boot.1.fj/DoaLight 1.02/TR"-->
 <!--
@@ -41,11 +42,26 @@ Load-xml schema, see also Lxsi, LxsiRun, and Lxsi-to-SQL</xs:documentation>
 	<xs:complexType name="accessorType">
 		<xs:sequence>
 			<xs:choice>
-				<xs:element name="table" type="sqlstringType"/>
-				<xs:element name="query" type="sqlstringType"/>
+				<xs:annotation>
+					<xs:documentation>access target</xs:documentation>
+				</xs:annotation>
+				<xs:element name="table" type="sqlstringType">
+					<xs:annotation>
+						<xs:documentation>table-name</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="query" type="sqlstringType">
+					<xs:annotation>
+						<xs:documentation>query-statement</xs:documentation>
+					</xs:annotation>
+				</xs:element>
 			</xs:choice>
 			<xs:element name="tip" type="xs:string" minOccurs="0"/>
-			<xs:element name="header" type="sourceType" minOccurs="0"/>
+			<xs:element name="header" type="sourceType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>codes should be appeared in the class definition (rather than function definition) in prog lang</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="operate" minOccurs="0" maxOccurs="unbounded">
 				<xs:complexType>
 					<xs:sequence>
@@ -62,6 +78,9 @@ Load-xml schema, see also Lxsi, LxsiRun, and Lxsi-to-SQL</xs:documentation>
 							</xs:element>
 						</xs:choice>
 						<xs:element name="lang" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>programming-language features (default java)</xs:documentation>
+							</xs:annotation>
 							<xs:complexType>
 								<xs:simpleContent>
 									<xs:extension base="sourceType">
@@ -75,6 +94,9 @@ Load-xml schema, see also Lxsi, LxsiRun, and Lxsi-to-SQL</xs:documentation>
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="field" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>field definitions and mappings</xs:documentation>
+				</xs:annotation>
 				<xs:complexType>
 					<xs:complexContent>
 						<xs:extension base="fieldType"/>
@@ -86,23 +108,63 @@ Load-xml schema, see also Lxsi, LxsiRun, and Lxsi-to-SQL</xs:documentation>
 			<xs:element name="ex" type="exType" minOccurs="0" maxOccurs="unbounded"/>
 			<xs:element name="comment" type="commentType" minOccurs="0"/>
 		</xs:sequence>
-		<xs:attribute name="name" type="xs:string" use="required"/>
-		<xs:attribute name="extension" type="xs:string" use="optional" default=".java"/>
-		<xs:attribute name="package" type="xs:string" use="optional" default="freejava.data.doa.domain.mydomain"/>
-		<xs:attribute name="inherits" type="xs:string" use="optional" default="freejava.data.doa.DoaAccessor"/>
-		<xs:attribute name="readonly" type="xs:boolean" use="optional"/>
-		<xs:attribute name="doasp" type="xs:string" use="optional" default="freejava.data.doa.stdsql.StandardDoaServiceProvider"/>
+		<xs:attribute name="name" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>class name</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="extension" type="xs:string" use="optional" default=".java">
+			<xs:annotation>
+				<xs:documentation>file extension, default .java</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="package" type="xs:string" use="optional" default="freejava.data.doa.domain.mydomain">
+			<xs:annotation>
+				<xs:documentation>class package, default freejava.data.doa.domain.mydomain</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="inherits" type="xs:string" use="optional" default="freejava.data.doa.DoaAccessor">
+			<xs:annotation>
+				<xs:documentation>parent class, default freejava.data.doa.DoaAccessor</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="readonly" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>read-only accessor, default is read/write</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="doasp" type="xs:string" use="optional" default="freejava.data.doa.stdsql.StandardDoaServiceProvider">
+			<xs:annotation>
+				<xs:documentation>(connection) service provider, default freejava.data.doa.stdsql.StandardDoaServiceProvider</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
 		<xs:attribute name="clientClass" type="xs:anyURI" use="optional"/>
 		<xs:attribute name="client" type="xs:anyURI" use="optional"/>
-		<xs:attribute name="sequenced" type="xs:boolean" use="optional" default="false"/>
+		<xs:attribute name="sequenced" type="xs:boolean" use="optional" default="false">
+			<xs:annotation>
+				<xs:documentation>?? default false.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
 		<xs:attributeGroup ref="authorInformation"/>
 	</xs:complexType>
 	<xs:complexType name="fieldType">
 		<xs:sequence>
-			<xs:element name="name" type="sqlstringType"/>
+			<xs:element name="name" type="sqlstringType">
+				<xs:annotation>
+					<xs:documentation>field name in database</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="tip" type="xs:string" minOccurs="0"/>
-			<xs:element name="type" type="sqlstringType"/>
-			<xs:element name="props" type="sqlstringType" minOccurs="0"/>
+			<xs:element name="type" type="sqlstringType">
+				<xs:annotation>
+					<xs:documentation>sqltype of the fied</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="props" type="sqlstringType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>additional properties of the filed in sql create table statement</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="index" minOccurs="0">
 				<xs:complexType>
 					<xs:attribute name="primary" type="xs:boolean" use="optional" default="false"/>
@@ -110,19 +172,55 @@ Load-xml schema, see also Lxsi, LxsiRun, and Lxsi-to-SQL</xs:documentation>
 					<xs:attribute name="unique" type="xs:boolean" use="optional" default="false"/>
 				</xs:complexType>
 			</xs:element>
-			<xs:element name="default" type="sqlstringType" minOccurs="0"/>
-			<xs:element name="constraint" type="sqlstringType" minOccurs="0" maxOccurs="unbounded"/>
-			<xs:element name="trigger" type="sqlstringType" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="default" type="sqlstringType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>default value for new inserted records</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="constraint" type="sqlstringType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>constraints definition in sql</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="trigger" type="sqlstringType" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>triggers definition in sql</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 			<xs:element name="lang" minOccurs="0">
 				<xs:complexType>
 					<xs:sequence>
-						<xs:element name="name" type="sourceType" minOccurs="0"/>
-						<xs:element name="type" type="sourceType" minOccurs="0"/>
-						<xs:element name="default" type="sourceType" minOccurs="0"/>
-						<xs:element name="constraint" type="sourceType" minOccurs="0" maxOccurs="unbounded"/>
-						<xs:element name="trigger" type="sourceType" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element name="name" type="sourceType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>member property name in class</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="type" type="sourceType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>data type in proglang</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="default" type="sourceType" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>default value when the data isnt prepared</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="constraint" type="sourceType" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>pre-checking script in proglang</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="trigger" type="sourceType" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>pre-trigger script in proglang</xs:documentation>
+							</xs:annotation>
+						</xs:element>
 					</xs:sequence>
-					<xs:attribute name="readonly" type="xs:boolean" use="optional" default="false"/>
+					<xs:attribute name="readonly" type="xs:boolean" use="optional" default="false">
+						<xs:annotation>
+							<xs:documentation>forbidden to write in proglang</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
 					<xs:attributeGroup ref="langItemAttributes"/>
 				</xs:complexType>
 			</xs:element>

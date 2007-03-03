@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
+import net.bodz.xml.xmod.modcfg.Modcfg;
 import net.bodz.xml.xmod.modpdb.Modpdb;
 import net.sf.freejava.fp.dump.XMLDumper;
 import net.sf.freejava.test.TestInstance;
@@ -49,7 +50,13 @@ public class JiBXTest {
         // Modpdb.class, "xsd unique check: object name"),
 
         entry(OK, new TPair(Modpdb.class, "/xmod/test/pdb_2.xml"),
-                Modpdb.class, "xsd unique check: object name"),
+                Modpdb.class, "pdb: victalk"),
+
+        entry(OK, new TPair(Modcfg.class, "/xmod/test/cfg_1.xml"),
+                Modcfg.class, "cfg: test1"),
+
+        entry(OK, new TPair(Modcfg.class, "/xmod/test/cfg_2.xml"),
+                Modcfg.class, "cfg: test2, with link(rel=base)"),
 
         };
 

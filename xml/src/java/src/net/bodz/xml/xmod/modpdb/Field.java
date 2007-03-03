@@ -99,8 +99,9 @@ public class Field extends Docobj {
 
                 int behavPos = cnt.lastIndexOf('>');
                 String behavstr = cnt.substring(3, behavPos + 1).trim();
-                int behav = ForeignKey.parseBehav(behavstr);
-                if (behav == -1)
+                int behavUpdate = ForeignKey.parseUpdateBehav(behavstr);
+                int behavDelete = ForeignKey.parseDeleteBehav(behavstr);
+                if (behavUpdate == -1 || behavDelete == -1)
                     throw new ParseException("Invalid behav-string: "
                             + behavstr);
 
@@ -117,6 +118,8 @@ public class Field extends Docobj {
                 if (fk == null) {
                     fk = new ForeignKey(table, new String[] { name }, rtable,
                             new String[] { rfld });
+                    fk.setUpdateBehav(behavUpdate);
+                    fk.setDeleteBehav(behavDelete);
                     if (disp != null)
                         fk.disp = disp;
                     table.fkeys.put(nam, fk);

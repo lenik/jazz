@@ -6,10 +6,10 @@ import net.sf.freejava.err.ParseException;
 
 public class Docobj {
 
-    private String   id;
+    protected String id;
     protected String name;
     protected String qname;
-    private String   opts;
+    protected String opts;
     protected String cat;
     protected String disp;
     protected String icon;

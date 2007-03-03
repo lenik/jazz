@@ -3,7 +3,7 @@
 	<!--add prefix='cfg' to set the default prefix-->
 	<namespace uri="http://www.bodz.net/xml/current/xmod/modcfg" default="elements"/>
 	<!--/-->
-	<mapping name="modcfg" class="net.bodz.xml.xmod.modcfg.Modcfg" extends="net.bodz.xml.xmod.util.Docobj">
+	<mapping name="modcfg" class="net.bodz.xml.xmod.modcfg.Modcfg" extends="net.bodz.xml.xmod.util.Docobj" pre-set="pre_set">
 		<structure map-as="net.bodz.xml.xmod.util.Docobj"/>
 		<collection field="links" factory="net.bodz.xml.util.JiBX.arrayList">
 			<structure type="net.bodz.xml.xmod.modcfg.Link"/>
@@ -15,27 +15,25 @@
 		</collection>
 	</mapping>
 	<!--/modcfg-->
-	<mapping name="link" class="net.bodz.xml.xmod.modcfg.Link" extends="net.bodz.xml.xmod.util.Docobj">
+	<mapping name="link" class="net.bodz.xml.xmod.modcfg.Link" extends="net.bodz.xml.xmod.util.Docobj" value-style="attribute">
 		<structure map-as="net.bodz.xml.xmod.util.Docobj"/>
 		<value name="rel" field="rel"/>
 		<value name="href" field="href" usage="optional"/>
 	</mapping>
-	<mapping name="param" class="net.bodz.xml.xmod.modcfg.Param" extends="net.bodz.xml.xmod.util.Docobj" value-style="attribute">
+	<mapping name="param" class="net.bodz.xml.xmod.modcfg.Param" extends="net.bodz.xml.xmod.util.Docobj" value-style="attribute" pre-set="pre_set">
 		<structure map-as="net.bodz.xml.xmod.util.Docobj"/>
-		<value name="name" field="name"/>
 		<value name="value" field="value" usage="optional"/>
 	</mapping>
-	<mapping name="set" class="net.bodz.xml.xmod.modcfg.Setting" extends="net.bodz.xml.xmod.util.Docobj" value-style="attribute">
+	<mapping name="set" class="net.bodz.xml.xmod.modcfg.Setting" extends="net.bodz.xml.xmod.util.Docobj" value-style="attribute" pre-set="pre_set">
 		<structure map-as="net.bodz.xml.xmod.util.Docobj"/>
-		<value name="key" field="key"/>
 		<value name="value" field="value" usage="optional"/>
 		<collection field="conditions" factory="net.bodz.xml.util.JiBX.arrayList">
 			<structure type="net.bodz.xml.xmod.modcfg.Condition"/>
 		</collection>
 	</mapping>
 	<!--/modcfg/set-->
-	<mapping name="condition" class="net.bodz.xml.xmod.modcfg.Condition" value-style="attribute">
-		<value name="param" field="param"/>
+	<mapping name="condition" class="net.bodz.xml.xmod.modcfg.Condition" value-style="attribute" pre-set="pre_set">
+		<value name="name" field="name"/>
 		<value name="test" field="test" usage="optional"/>
 		<value name="value" field="value" usage="optional"/>
 		<value name="ignore-case" field="ignoreCase" usage="optional"/>
