@@ -26,10 +26,17 @@
 			<xs:documentation>REQ: @name
 
 opts: 
+    c=abstract
     D=cache/dict
     Dr=redundant (info-dict)
+    Ro=read-only table
+    S=sub-table
+        Sc=Columns-Continue (1:1)
+        S, Ss=Sub-Table (1:n)
+        Sr=Relationships (n:m)
+        Sx=eXtensible-Fields (1:n:n)
     T=transient table
-    Ro=read-only table</xs:documentation>
+</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:complexContent>
@@ -139,6 +146,13 @@ N[totlen,declen] = number</xs:documentation>
 							</xs:complexType>
 						</xs:element>
 					</xs:sequence>
+					<xs:attribute name="base" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>extends the specified table, 
+
+no duplicated fields is allowed.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
 				</xs:extension>
 			</xs:complexContent>
 		</xs:complexType>
@@ -197,7 +211,11 @@ opts:
 		</xs:attribute>
 		<xs:attribute name="opts" type="xs:string" use="optional">
 			<xs:annotation>
-				<xs:documentation>options, in components' local-syntax</xs:documentation>
+				<xs:documentation>options, in components' local-syntax
+
+Common Options: 
+    c=comment-out
+    </xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
 		<xs:attribute name="cat" type="xs:string">
