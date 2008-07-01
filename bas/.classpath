@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry path="src" kind="src"/>
-	<classpathentry path="test" output="test.bin" kind="src"/>
-	<classpathentry path="org.eclipse.jdt.launching.JRE_CONTAINER" kind="con"/>
-	<classpathentry path="/net.bodz.commons" combineaccessrules="false" kind="src"/>
-	<classpathentry path="/net.sf.freejava" combineaccessrules="false" kind="src"/>
-	<classpathentry path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4" kind="con"/>
-	<classpathentry path="bin" kind="output"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" output="mod/Application Framework/bin" path="mod/Application Framework/src"/>
+	<classpathentry kind="src" output="mod/Application Framework/test.bin" path="mod/Application Framework/test"/>
+	<classpathentry kind="src" output="mod/Bundled Modules/bin" path="mod/Bundled Modules/src"/>
+	<classpathentry kind="src" output="mod/Bundled Modules/test.bin" path="mod/Bundled Modules/test"/>
+	<classpathentry kind="src" output="mod/Data Types/bin" path="mod/Data Types/src"/>
+	<classpathentry kind="src" output="mod/Data Types/test.bin" path="mod/Data Types/test"/>
+	<classpathentry kind="src" output="mod/Database Abstraction/bin" path="mod/Database Abstraction/src"/>
+	<classpathentry kind="src" output="mod/Database Abstraction/test.bin" path="mod/Database Abstraction/test"/>
+	<classpathentry kind="src" output="mod/Functional Programming/bin" path="mod/Functional Programming/src"/>
+	<classpathentry kind="src" output="mod/Functional Programming/test.bin" path="mod/Functional Programming/test"/>
+	<classpathentry kind="src" output="mod/Language Extension/bin" path="mod/Language Extension/src"/>
+	<classpathentry kind="src" output="mod/Language Extension/test.bin" path="mod/Language Extension/test"/>
+	<classpathentry kind="src" output="mod/System Utilities/bin" path="mod/System Utilities/src"/>
+	<classpathentry kind="src" output="mod/System Utilities/test.bin" path="mod/System Utilities/test"/>
+	<classpathentry kind="src" output="mod/Wrapper Classes/bin" path="mod/Wrapper Classes/src"/>
+	<classpathentry kind="src" output="mod/Wrapper Classes/test.bin" path="mod/Wrapper Classes/test"/>
+	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<project name="net.bodz.bas" default="default">
+
+	<property environment="env" />
+	<property name="distdir" value="${env.JAVA_LIB}" />
+	<property name="distsrc" value="${env.JAVA_SRC}" />
+
+	<target name="default" depends="dist">
+	</target>
+
+	<target name="dist" depends=":bin.jar, :src.jar">
+		<copy todir="${distdir}">
+			<fileset dir="${basedir}/build">
+				<exclude name="*-source.jar" />
+			</fileset>
+		</copy>
+		<copy todir="${distsrc}">
+			<fileset dir="${basedir}/build">
+				<include name="*-source.jar" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name=":bin.jar">
+		<jar destfile="build/net.bodz.bas.jar">
+			<fileset dir="mod/Application Framework/bin" />
+			<fileset dir="mod/Bundled Modules/bin" />
+			<fileset dir="mod/Data Types/bin" />
+			<fileset dir="mod/Database Abstraction/bin" />
+			<fileset dir="mod/Functional Programming/bin" />
+			<fileset dir="mod/Language Extension/bin" />
+			<fileset dir="mod/System Utilities/bin" />
+			<fileset dir="mod/Wrapper Classes/bin" />
+		</jar>
+	</target>
+
+	<target name=":src.jar">
+		<jar destfile="build/net.bodz.bas-source.jar">
+			<fileset dir="mod/Application Framework/src" />
+			<fileset dir="mod/Bundled Modules/src" />
+			<fileset dir="mod/Data Types/src" />
+			<fileset dir="mod/Database Abstraction/src" />
+			<fileset dir="mod/Functional Programming/src" />
+			<fileset dir="mod/Language Extension/src" />
+			<fileset dir="mod/System Utilities/src" />
+			<fileset dir="mod/Wrapper Classes/src" />
+		</jar>
+	</target>
+
+</project>
