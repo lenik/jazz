@@ -1,0 +1,135 @@
+package net.bodz.bas.io;
+
+import java.io.IOException;
+import java.util.Locale;
+
+public abstract class CharOut implements ICharOut {
+
+    public void write(CharSequence chars, int off, int len) throws IOException {
+        if (chars instanceof String) {
+            write((String) chars, off, len);
+            return;
+        }
+        char[] buf = new char[len];
+        for (int i = 0; off < len; i++, off++)
+            buf[i] = chars.charAt(off);
+        write(buf, 0, len);
+    }
+
+    public void write(String string, int off, int len) throws IOException {
+        char[] buf = new char[len];
+        string.getChars(off, off + len, buf, 0);
+        write(buf, 0, len);
+    }
+
+    private final static char[] NULL = "(null)".toCharArray();
+    private final static char[] NL   = "\n".toCharArray();
+
+    public void print(String s) {
+        char[] chars = s == null ? NULL : s.toCharArray();
+        try {
+            write(chars, 0, chars.length);
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+    }
+
+    public void print(boolean b) {
+        print(String.valueOf(b));
+    }
+
+    public void print(char c) {
+        print(String.valueOf(c));
+    }
+
+    public void print(char[] s) {
+        assert s != null;
+        try {
+            write(s, 0, s.length);
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+    }
+
+    public void print(double d) {
+        print(String.valueOf(d));
+    }
+
+    public void print(float f) {
+        print(String.valueOf(f));
+    }
+
+    public void print(int i) {
+        print(String.valueOf(i));
+    }
+
+    public void print(long l) {
+        print(String.valueOf(l));
+    }
+
+    public void print(Object obj) {
+        print(String.valueOf(obj));
+    }
+
+    public void println() {
+        try {
+            write(NL, 0, NL.length);
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+    }
+
+    public void println(boolean x) {
+        print(x);
+        println();
+    }
+
+    public void println(char x) {
+        print(x);
+        println();
+    }
+
+    public void println(char[] x) {
+        print(x);
+        print("\n");
+    }
+
+    public void println(double x) {
+        print(x);
+        println();
+    }
+
+    public void println(float x) {
+        print(x);
+        println();
+    }
+
+    public void println(int x) {
+        print(x);
+        println();
+    }
+
+    public void println(long x) {
+        print(x);
+        println();
+    }
+
+    public void println(Object x) {
+        print(x);
+        println();
+    }
+
+    public void println(String x) {
+        print(x);
+        println();
+    }
+
+    public void printf(Locale l, String format, Object... args) {
+        print(String.format(l, format, args));
+    }
+
+    public void printf(String format, Object... args) {
+        print(String.format(format, args));
+    }
+
+}
