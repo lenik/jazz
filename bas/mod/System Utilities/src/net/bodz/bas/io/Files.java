@@ -17,6 +17,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.io.Reader;
+import java.io.StringReader;
 import java.io.Writer;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -35,6 +36,8 @@ import java.util.regex.Pattern;
 import net.bodz.bas.lang.err.IdentifiedException;
 import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.lang.err.UnexpectedException;
+import net.bodz.bas.types.diff.DiffComparator;
+import net.bodz.bas.types.diff.DiffInfo;
 import net.bodz.bas.types.util.PrefetchedIterator;
 
 public class Files {
@@ -149,6 +152,8 @@ public class Files {
             return null;
         if (in instanceof Reader)
             return (Reader) in;
+        if (in instanceof char[])
+            return new StringReader(new String((char[]) in));
         InputStream ins = getInputStream(in);
         return new InputStreamReader(ins, getCharset(charset));
     }
@@ -509,7 +514,7 @@ public class Files {
     }
 
     protected static Iterator<String> _readByLine(final Object[] files,
-            final String charset) {
+            final Charset charset) {
         return new PrefetchedIterator<String>() {
 
             private int            fileIndex = 0;
@@ -523,7 +528,7 @@ public class Files {
                     Object in = files[fileIndex];
                     assert in != null : "null file";
                     try {
-                        in = getBufferedReader(in, Charset.forName(charset));
+                        in = getBufferedReader(in, charset);
                     } catch (IOException e) {
                         throw new RuntimeException(e.getMessage(), e);
                     }
@@ -559,7 +564,7 @@ public class Files {
 
             @Override
             public Iterator<String> iterator() {
-                return _readByLine(files, null);
+                return _readByLine(files, encoding);
             }
 
         };
@@ -571,7 +576,7 @@ public class Files {
 
             @Override
             public Iterator<String> iterator() {
-                return _readByLine(files, charset);
+                return _readByLine(files, getCharset(charset));
             }
 
         };
@@ -953,15 +958,17 @@ public class Files {
             src = new File((String) src);
         if (dst instanceof String)
             dst = new File((String) dst);
-        if (src instanceof File && dst instanceof File) {
-            File srcf = (File) src;
-            File dstf = (File) dst;
-            if (srcf.exists() != dstf.exists())
+        File srcf = null;
+        File dstf = null;
+        if (src instanceof File)
+            if (!(srcf = ((File) src)).canRead())
                 return 0;
+        if (dst instanceof File)
+            if (!(dstf = ((File) dst)).canRead())
+                return 0;
+        if (srcf != null && dstf != null) {
             if (srcf.length() != dstf.length())
                 return 0;
-            if (srcf.isDirectory() != dstf.isDirectory())
-                return 0; // throw ??
         }
         boolean closeSrc = shouldClose(src);
         boolean closeDst = shouldClose(dst);
@@ -1005,6 +1012,29 @@ public class Files {
 
     public static boolean equals(Object src, Object dst) throws IOException {
         return diff_1(src, dst) == -1;
+    }
+
+    public static Object copyDiff(Object src, Object dst, DiffComparator diff)
+            throws IOException {
+        Object ret;
+        if (diff != null) {
+            List<String> al = Files.readLines(src);
+            List<String> bl = Files.readLines(dst);
+            List<DiffInfo> diffs = diff.diffCompare(al, bl);
+            if (diffs.size() == 0)
+                return null;
+            ret = diffs;
+        } else {
+            if (equals(src, dst))
+                return false;
+            ret = true;
+        }
+        write(dst, src);
+        return ret;
+    }
+
+    public static boolean copyDiff(Object src, Object dst) throws IOException {
+        return (Boolean) copyDiff(src, dst, null);
     }
 
 }

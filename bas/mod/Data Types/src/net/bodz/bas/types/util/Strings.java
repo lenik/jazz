@@ -175,4 +175,41 @@ public class Strings {
         return new String(buf);
     }
 
+    public static String ellipse(String s, int len, String ellipse) {
+        if (s.length() <= len)
+            return s;
+        int elen = ellipse.length();
+        if (len > elen)
+            return s.substring(0, len - elen) + ellipse;
+        else
+            return ellipse.substring(0, len);
+    }
+
+    public static String ellipse(String s, int len) {
+        return ellipse(s, len, "...");
+    }
+
+    public static String ellipse(String s, int len, String ellipse,
+            String epstart, String epend) {
+        int estart = 0;
+        if (epstart != null)
+            if ((estart = s.indexOf(epstart)) == -1)
+                estart = 0;
+            else
+                estart += epstart.length();
+        int eend = s.length();
+        if (epend != null)
+            if ((eend = s.lastIndexOf(epend)) == -1)
+                eend = s.length();
+        int trims = estart + (s.length() - eend);
+        String prefix = s.substring(0, estart);
+        String suffix = s.substring(eend);
+        if (len > trims + ellipse.length())
+            return prefix
+                    + ellipse(s.substring(estart, eend), len - trims, ellipse)
+                    + suffix;
+        else
+            return ellipse(s, len, ellipse);
+    }
+
 }

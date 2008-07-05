@@ -5,9 +5,9 @@ import java.util.Locale;
 
 public abstract class CharOut implements ICharOut {
 
-    public void write(CharSequence chars, int off, int len) throws IOException {
+    public void _write(CharSequence chars, int off, int len) throws IOException {
         if (chars instanceof String) {
-            write((String) chars, off, len);
+            _write((String) chars, off, len);
             return;
         }
         char[] buf = new char[len];
@@ -16,14 +16,20 @@ public abstract class CharOut implements ICharOut {
         write(buf, 0, len);
     }
 
-    public void write(String string, int off, int len) throws IOException {
+    public void _write(String string, int off, int len) throws IOException {
         char[] buf = new char[len];
         string.getChars(off, off + len, buf, 0);
         write(buf, 0, len);
     }
 
+    public void _write(char c) throws IOException {
+        char[] cv = new char[1];
+        cv[0] = c;
+        write(cv, 0, 1);
+    }
+
     private final static char[] NULL = "(null)".toCharArray();
-    private final static char[] NL   = "\n".toCharArray();
+    private final static char   NL   = '\n';
 
     public void print(String s) {
         char[] chars = s == null ? NULL : s.toCharArray();
@@ -39,7 +45,11 @@ public abstract class CharOut implements ICharOut {
     }
 
     public void print(char c) {
-        print(String.valueOf(c));
+        try {
+            _write(c);
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
     }
 
     public void print(char[] s) {
@@ -72,11 +82,7 @@ public abstract class CharOut implements ICharOut {
     }
 
     public void println() {
-        try {
-            write(NL, 0, NL.length);
-        } catch (IOException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
+        print(NL);
     }
 
     public void println(boolean x) {

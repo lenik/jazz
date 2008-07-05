@@ -5,12 +5,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.cli.CLIException;
-import net.bodz.bas.cli.LogBase;
 import net.bodz.bas.cli.TypeParser;
 import net.bodz.bas.cli.TypeParsers;
 import net.bodz.bas.lang.Control;
 
-public class CLIFunctions extends LogBase {
+public class CLIFunctions {
 
     private Map<String, CLIFunction> registry;
 

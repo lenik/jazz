@@ -7,6 +7,8 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Map.Entry;
 
+import net.bodz.bas.cli.TypeParsers.ALogParser;
+import net.bodz.bas.cli.TypeParsers.CharOutParser;
 import net.bodz.bas.cli.util.Author;
 import net.bodz.bas.cli.util.Doc;
 import net.bodz.bas.cli.util.Rcs;
@@ -14,10 +16,15 @@ import net.bodz.bas.cli.util.RcsKeywords;
 import net.bodz.bas.cli.util.Version;
 import net.bodz.bas.cli.util.VersionInfo;
 import net.bodz.bas.functors.lang.ControlBreak;
+import net.bodz.bas.io.CharOut;
+import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.annotations.OverrideOption;
 import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.lang.err.UnexpectedException;
+import net.bodz.bas.log.ALog;
+import net.bodz.bas.log.LogOut;
+import net.bodz.bas.log.LogOuts;
 import net.bodz.bas.types.util.Annotations;
 
 /**
@@ -48,9 +55,65 @@ import net.bodz.bas.types.util.Annotations;
 @RcsKeywords(id = "$Id: Rcs.java 784 2008-01-15 10:53:24Z lenik $")
 @RunInfo(lib = "bodz_bas")
 @OptionGroup(value = "standard", rank = -1)
-public class BasicCLI extends LogBase {
+public class BasicCLI {
+
+    @Option(hidden = true, parser = CharOutParser.class)
+    protected CharOut _stdout        = CharOuts.stdout;
+
+    @Option(name = "logout", hidden = true, parser = ALogParser.class)
+    protected ALog    L              = CLIConfig.getBootLog(ALog.INFO);
+
+    @Option(hidden = true)
+    protected String  _logPrefix     = "[" + getClass().getSimpleName() + "] ";
+
+    @Option(hidden = true)
+    protected boolean _logWithPrefix = true;
+
+    @Option(hidden = true)
+    protected boolean _logWithDate   = false;
+
+    @Option(alias = "v", doc = "repeat to get more info")
+    protected void _verbose() {
+        L.setLevel(L.getLevel() + 1);
+    }
+
+    @Option(alias = "q", doc = "repeat to get less info")
+    protected void _quiet() {
+        L.setLevel(L.getLevel() - 1);
+    }
 
     protected VersionInfo _version;
+
+    protected class CLILog extends ALog {
+
+        public CLILog(int level) {
+            super(level);
+        }
+
+        @Override
+        protected void register(String name, final LogOut out0) {
+            LogOut out = out0;
+            if (_logWithPrefix) {
+                out = new LogOuts.Proxy(out0, "prefix-" + name) {
+                    @Override
+                    protected String prefix() {
+                        if (_logWithDate) {
+                            String time = CLIConfig.logTimeFormat.format(System
+                                    .currentTimeMillis());
+                            return _logPrefix + time;
+                        }
+                        return _logPrefix;
+                    }
+                };
+            }
+            super.register(name, out);
+        }
+
+    }
+
+    public BasicCLI() {
+        L = new CLILog(L.getLevel());
+    }
 
     @Option(doc = "show version info")
     protected void _version() {
@@ -94,7 +157,7 @@ public class BasicCLI extends LogBase {
         if (doc == null)
             doc = clazz.getName();
 
-        System.err.println(String.format("[%s] %s", _logPrefix, doc));
+        System.err.println(String.format("[%s] %s", name, doc));
         System.err.println(String.format(
                 "Written by %s,  Version %s,  Last updated at %s",
                 _version.author, VersionInfo.getVersion(verjoin), _version
@@ -134,7 +197,7 @@ public class BasicCLI extends LogBase {
             _boot();
             runInfo.loadExtras();
 
-            if (_verbose >= 2) {
+            if (L.showDebug()) {
                 for (Entry<String, _Option<?>> entry : opts.getOptions()
                         .entrySet()) {
                     _Option<?> opt = entry.getValue();
@@ -144,7 +207,7 @@ public class BasicCLI extends LogBase {
                     Object optval = opt.get(this);
                     if (optval instanceof CallInfo)
                         continue;
-                    _log3(optnam, " = ", Util.dispval(optval));
+                    L.d.P(optnam, " = ", Util.dispval(optval));
                 }
             }
             _main(args);

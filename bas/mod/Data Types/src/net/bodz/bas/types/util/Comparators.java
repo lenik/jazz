@@ -10,6 +10,7 @@ public class Comparators {
 
     public static final Comparator<Object> STD;
     public static final Comparator<Object> NATURAL;
+    public static final Comparator<Object> TYPE;
     public static final Comparator<Object> METHOD;
     public static final Comparator<String> STRLEN;
     public static final Comparator<Object> PAIR1;
@@ -83,6 +84,21 @@ public class Comparators {
                 String sa = a.toString();
                 String sb = b.toString();
                 return sa.compareTo(sb);
+            }
+        };
+
+        TYPE = new Comparator<Object>() {
+            @Override
+            public int compare(Object l, Object r) {
+                if (l == r)
+                    return 0;
+                if (l == null)
+                    return -1;
+                if (r == null)
+                    return 1;
+                Class<?> lt = (Class<?>) l;
+                Class<?> rt = (Class<?>) r;
+                return lt.getName().compareTo(rt.getName());
             }
         };
 

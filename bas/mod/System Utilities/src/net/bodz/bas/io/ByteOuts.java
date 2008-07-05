@@ -8,6 +8,15 @@ import java.nio.ByteBuffer;
 
 public class ByteOuts {
 
+    public static final ByteOut nil;
+    static {
+        nil = new ByteOut() {
+            @Override
+            public void write(byte[] buf, int off, int len) throws IOException {
+            }
+        };
+    }
+
     public static final ByteOut stdout = get(System.out);
     public static final ByteOut stderr = get(System.err);
 
