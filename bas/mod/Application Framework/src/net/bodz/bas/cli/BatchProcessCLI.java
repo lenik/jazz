@@ -10,7 +10,6 @@ import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -49,8 +48,11 @@ public class BatchProcessCLI extends BasicCLI {
     @Option(alias = "P", doc = "protected mode, don't modify any files")
     protected boolean          dryRun;
 
-    @Option(alias = "f", doc = "always answer yes when necessary")
+    @Option(alias = "f", doc = "force overwrite existing files, this includes --error-continue")
     protected boolean          force;
+
+    @Option(doc = "always continue when error occurred")
+    protected boolean          errorContinue;
 
     @Option(alias = "r", vnam = "[DEPTH]", optional = "65536", doc = "max depth of directories recurse into")
     protected int              recursive;
@@ -88,7 +90,13 @@ public class BatchProcessCLI extends BasicCLI {
     protected DiffFormat       diffFormat     = DiffFormats.Simdiff;
 
     @Option(alias = "Do", vnam = "FILE", doc = "write diff output to specified file")
-    protected CharOut          diffOutput     = _logout;
+    protected CharOut          diffOutput     = CharOuts.stdout;
+
+    @Option(alias = "D3", doc = "diff between src/dst/out, when output to different file")
+    protected boolean          diff3          = false;
+
+    @Option(alias = "D2", doc = "diff between src/out rather then src/dst, or ignored whtn output to the same file")
+    protected boolean          diffWithDest   = false;
 
     protected BatchProcessCLI() {
         fileFilter = new FileFilter() {
@@ -124,37 +132,28 @@ public class BatchProcessCLI extends BasicCLI {
         return super._cliflags() | CLI_BATCHEDIT;
     }
 
-    protected static final int PROCESS_UNCHANGED = 0;
-    protected static final int PROCESS_SAVED     = 1;
-    protected static final int PROCESS_ERROR     = 2;
-    protected static final int PROCESS_IGNORE    = 3;
-    protected static final int PROCESS_EDIT      = 4;
-
-    protected static final int PROCESS_INCLUDED  = 10;
-
     protected boolean diff(File a, File b) throws IOException {
+        assert a != null;
+        assert b != null;
+        if (a.exists() && !b.exists()) {
+            L.i.P("[new ]", a);
+            return true;
+        } else if (!a.exists() && b.exists()) {
+            L.i.P("[miss]", a);
+            return true;
+        }
         if (diffAlgorithm == null) {
-            // TODO Files.fastCompare...
-            Iterator<String> ait = Files.readByLine2(//
-                    inputEncoding.name(), a).iterator();
-            Iterator<String> bit = Files.readByLine2(//
-                    outputEncoding.name(), b).iterator();
-            while (ait.hasNext()) {
-                if (!bit.hasNext())
-                    return true;
-                String x = ait.next();
-                String y = bit.next();
-                if (!x.equals(y))
-                    return true;
-            }
-            return false;
+            if (Files.equals(a, b))
+                return false;
+            L.i.P("[edit] ", a);
+            return true;
         }
         List<String> al = Files.readLines(a, inputEncoding.name());
         List<String> bl = Files.readLines(b, outputEncoding.name());
         List<DiffInfo> diffs = diffAlgorithm.diffCompare(al, bl);
         if (diffs.size() == 0)
             return false;
-        _log1("[edit] ", a);
+        L.i.P("[edit] ", a);
         diffFormat.format(al, bl, diffs, diffOutput);
         return true;
     }
@@ -179,49 +178,67 @@ public class BatchProcessCLI extends BasicCLI {
         File outd = outputDirectory;
         for (int i = tails.size() - 1; i >= 1; i--)
             outd = new File(outd, tails.get(i));
-        if (!outd.exists())
-            outd.mkdirs();
-        if (!outd.isDirectory())
+        if (outd.isFile())
             throw new Error("invalid output directory: " + outd);
         String base = in.getName();
         return new File(outd, base);
     }
 
-    /**
-     * @return PROCESS_UNCHANGED: ignored <br>
-     *         PROCESS_SAVED: diff and successfully saved <br>
-     *         PROCESS_ERROR: diff but failed to save
-     */
     @OverrideOption(group = "batchProcess")
-    protected int process(File file) throws Throwable {
+    protected ProcessResult process(File file) throws Throwable {
         boolean isBatchEdit = 0 != (_cliflags() & CLI_BATCHEDIT);
         File tmpOut = null;
         if (isBatchEdit) {
             String ext = Files.getExtension(file, true);
             tmpOut = File.createTempFile(tmpPrefix, ext, tmpDir);
         }
-        int status = process(file, tmpOut);
-        if (status == PROCESS_IGNORE)
-            status = PROCESS_UNCHANGED;
-        else if (tmpOut != null) {
-            boolean diff = diff(file, tmpOut);
-            boolean force = this.force || outputDirectory == null;
-            status = diff ? PROCESS_SAVED : PROCESS_UNCHANGED;
-            if (diff && !dryRun) {
-                File dst = getOutputFile(file, currentStartFile);
-                if (dst.exists() && !force)
-                    status = PROCESS_ERROR;
-                else {
-                    try {
-                        Files.copy(tmpOut, dst);
-                    } catch (IOException e) {
-                        status = PROCESS_ERROR;
-                    }
+        try {
+            ProcessResult result = process(file, tmpOut);
+            if (result == null) // ignored
+                return null;
+            if (tmpOut == null) // no save
+                return result;
+            File dst = getOutputFile(file, currentStartFile);
+            boolean diffPrinted = false;
+            if (result.changed == null) {
+                if (!diff3 && !diffWithDest) {
+                    result.changed = diff(file, tmpOut);
+                    diffPrinted = true;
+                } else
+                    result.changed = Files.equals(file, tmpOut);
+            }
+            if (!result.changed && dst.equals(file))
+                return result;
+            boolean canOverwrite = this.force || dst.equals(file);
+            if (dst.exists() && !canOverwrite) {
+                // user interaction...
+                throw new IllegalStateException("file " + dst
+                        + " already existed");
+            }
+            if (dryRun) {
+                result.saved();
+                return result;
+            }
+            File dstdir = dst.getParentFile();
+            if (dstdir != null)
+                dstdir.mkdirs();
+            if (!diffPrinted) {
+                if (diff3) {
+                    diff(file, tmpOut);
+                    diff(dst, tmpOut);
+                } else if (diffWithDest) {
+                    diff(dst, tmpOut);
+                } else {
+                    diff(file, tmpOut);
                 }
             }
-            tmpOut.delete();
+            Files.copy(tmpOut, dst);
+            result.saved();
+            return result;
+        } finally {
+            if (tmpOut != null)
+                tmpOut.delete();
         }
-        return status;
     }
 
     /**
@@ -229,7 +246,7 @@ public class BatchProcessCLI extends BasicCLI {
      *         PROCESS_EDIT: have the result written to the out file
      */
     @OverrideOption(group = "batchProcess")
-    protected int process(File in, File out) throws Throwable {
+    protected ProcessResult process(File in, File out) throws Throwable {
         InputStream ins = null;
         OutputStream outs = null;
         try {
@@ -252,7 +269,8 @@ public class BatchProcessCLI extends BasicCLI {
      *         PROCESS_EDIT: have the result written to the output
      */
     @OverrideOption(group = "batchProcess")
-    protected int process(InputStream in, OutputStream out) throws Throwable {
+    protected ProcessResult process(InputStream in, OutputStream out)
+            throws Throwable {
         Iterable<String> inIter = Files.readByLine2(inputEncoding.name(), in);
         CharOut cout = CharOuts.stdout;
         if (out != null)
@@ -265,59 +283,54 @@ public class BatchProcessCLI extends BasicCLI {
      *         PROCESS_EDIT: have the result written to the output
      */
     @OverrideOption(group = "batchProcess")
-    protected int process(Iterable<String> lines, CharOut out) throws Throwable {
+    protected ProcessResult process(Iterable<String> lines, CharOut out)
+            throws Throwable {
         throw new NotImplementedException();
     }
 
-    protected int statIgnored;
-    protected int statSaved;
-    protected int statErrored;
+    ProcessResultStat stat = new ProcessResultStat();
 
     @Override
     protected void _main(String[] args) throws Throwable {
         super._main(args);
-        int total = statIgnored + statSaved + statErrored;
-        int diffs = statSaved + statErrored;
-        String report = String.format(
-                "Total %d/%d files changed, %d/%d files saved.", //
-                diffs, total, statSaved, diffs);
-        _log1(report);
+        if (L.showDetail())
+            stat.dumpDetail(L.d);
+        else if (L.showMessage())
+            stat.dumpBrief(L.m);
+        // System.exit(stat.errors);
     }
 
     @Override
     @OverrideOption(group = "batchProcess")
     protected void _main(final File argfile) throws Throwable {
-        _log1("[start]", argfile);
+        L.i.P("[start]", argfile);
         currentStartFile = argfile;
         FileFilter walkfilter = fileFilter;
         FsWalk walker = new FsWalk(argfile, walkfilter, filterDirectories,
                 recursive, rootLast, sortComparator) {
             @Override
             public void process(File file) throws IOException {
+                Throwable err = null;
                 try {
-                    _sig1("[proc] ", file);
-                    int status = BatchProcessCLI.this.process(file);
-                    switch (status) {
-                    case PROCESS_IGNORE:
-                    case PROCESS_UNCHANGED:
-                        statIgnored++;
-                        break;
-                    case PROCESS_SAVED:
-                        statSaved++;
-                        _log1("[save] ", getOutputFile(file, currentStartFile));
-                        break;
-                    case PROCESS_ERROR:
-                        statErrored++;
-                        _log1("[fail] ", file);
-                        break;
-                    default:
-                        throw new UnexpectedException(
-                                "illegal status value returned: " + status);
-                    }
+                    L.i.sig("[proc] ", file);
+                    ProcessResult result = BatchProcessCLI.this.process(file);
+                    stat.add(result);
+                    if (result.error)
+                        if ((err = result.cause) == null)
+                            L.e.P("[fail] ", file);
+                    if (result.saved)
+                        L.u.P("[save] ", getOutputFile(file, currentStartFile));
                 } catch (IOException e) {
-                    throw e;
+                    err = e;
                 } catch (Throwable e) {
+                    err = e;
                     throw new RuntimeException(e.getMessage(), e);
+                } finally {
+                    if (err != null) {
+                        ProcessResult result = new ProcessResult(err);
+                        stat.add(result);
+                        L.e.P("[fail] ", file + ": " + err.getMessage());
+                    }
                 }
             }
         };

@@ -16,13 +16,18 @@ public abstract class ByteOut implements IByteOut {
         }
     }
 
+    public void _write(byte b) {
+        byte[] bv = new byte[1];
+        bv[0] = b;
+        _write(bv, 0, 1);
+    }
+
     public void print(byte[] buf) {
         _write(buf, 0, buf.length);
     }
 
     public synchronized void print(byte b) {
-        buf[0] = b;
-        _write(buf, 0, 1);
+        _write(b);
     }
 
     public synchronized void print(short s) {

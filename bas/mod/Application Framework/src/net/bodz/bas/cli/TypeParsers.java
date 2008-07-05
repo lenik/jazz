@@ -21,6 +21,9 @@ import net.bodz.bas.io.IByteOut;
 import net.bodz.bas.lang.IVoid;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.lang.err.UnexpectedException;
+import net.bodz.bas.log.ALog;
+import net.bodz.bas.log.ALogs;
+import net.bodz.bas.log.LogOuts;
 import net.bodz.bas.types.Obtain;
 
 public class TypeParsers {
@@ -186,6 +189,7 @@ public class TypeParsers {
         registry.put(File.class, new FileParser());
         registry.put(ByteOut.class, new ByteOutParser());
         registry.put(CharOut.class, new CharOutParser());
+        registry.put(ALog.class, new ALogParser());
         registry.put(Pattern.class, new PatternParser());
     }
 
@@ -388,6 +392,21 @@ public class TypeParsers {
                 throw new RuntimeException(e.getMessage(), e);
             }
             return CharOuts.get(out);
+        }
+
+    }
+
+    public static class ALogParser implements TypeParser<ALog> {
+
+        @Override
+        public ALog parse(String path) throws ParseException {
+            FileOutputStream out;
+            try {
+                out = new FileOutputStream(path);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e.getMessage(), e);
+            }
+            return ALogs.get(LogOuts.get(CharOuts.get(out), path));
         }
 
     }

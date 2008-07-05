@@ -9,6 +9,30 @@ import java.nio.CharBuffer;
 
 public class CharOuts {
 
+    public static final CharOut nil;
+    static {
+        nil = new CharOut() {
+            @Override
+            public void write(char[] chars, int off, int len)
+                    throws IOException {
+            }
+
+            @Override
+            public void _write(char c) throws IOException {
+            }
+
+            @Override
+            public void _write(CharSequence chars, int off, int len)
+                    throws IOException {
+            }
+
+            @Override
+            public void _write(String string, int off, int len)
+                    throws IOException {
+            }
+        };
+    }
+
     public static final CharOut stdout = get(System.out);
     public static final CharOut stderr = get(System.err);
 
@@ -44,17 +68,27 @@ public class CharOuts {
                 if (autoflush)
                     out.flush();
             }
+
+            @Override
+            public void _write(char c) throws IOException {
+                out.write(c);
+                if (autoflush)
+                    out.flush();
+            }
+
+            @Override
+            public void _write(String string, int off, int len)
+                    throws IOException {
+                out.write(string, off, len);
+                if (autoflush)
+                    out.flush();
+            }
+
         };
     }
 
-    public static CharOut get(final StringBuffer sb) {
-        return new CharOut() {
-            @Override
-            public void write(char[] chars, int off, int len)
-                    throws IOException {
-                sb.append(chars, off, len);
-            }
-        };
+    public static Buffer get(final StringBuffer sb) {
+        return new Buffer(sb);
     }
 
     public static CharOut get(final StringBuilder sb) {
@@ -63,6 +97,17 @@ public class CharOuts {
             public void write(char[] chars, int off, int len)
                     throws IOException {
                 sb.append(chars, off, len);
+            }
+
+            @Override
+            public void _write(char c) throws IOException {
+                sb.append(c);
+            }
+
+            @Override
+            public void _write(CharSequence chars, int off, int len)
+                    throws IOException {
+                sb.append(chars, off, off + len);
             }
         };
     }
@@ -74,15 +119,30 @@ public class CharOuts {
                     throws IOException {
                 cb.put(chars, off, len);
             }
+
+            @Override
+            public void _write(char c) throws IOException {
+                cb.put(c);
+            }
+
+            @Override
+            public void _write(String string, int off, int len)
+                    throws IOException {
+                cb.put(string, off, len);
+            }
         };
     }
 
-    public static class _StringBuffer extends CharOut {
+    public static class Buffer extends CharOut {
 
         protected final StringBuffer buffer;
 
-        public _StringBuffer(StringBuffer buffer) {
+        public Buffer(StringBuffer buffer) {
             this.buffer = buffer;
+        }
+
+        public Buffer() {
+            this(new StringBuffer());
         }
 
         public StringBuffer getStringBuffer() {
@@ -94,12 +154,15 @@ public class CharOuts {
             buffer.append(chars, off, len);
         }
 
-    }
+        @Override
+        public void _write(char c) throws IOException {
+            buffer.append(c);
+        }
 
-    public static class Buffer extends _StringBuffer {
-
-        public Buffer() {
-            super(new StringBuffer());
+        @Override
+        public void _write(CharSequence chars, int off, int len)
+                throws IOException {
+            buffer.append(chars, off, off + len);
         }
 
         public StringBuffer getBuffer() {
