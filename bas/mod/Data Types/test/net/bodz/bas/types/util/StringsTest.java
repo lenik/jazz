@@ -1,6 +1,10 @@
 package net.bodz.bas.types.util;
 
+import static net.bodz.bas.test.TestDefs.EQ;
 import static org.junit.Assert.assertEquals;
+
+import net.bodz.bas.test.TestDefs;
+import net.bodz.bas.test.TestEval;
 
 import org.junit.Test;
 
@@ -20,6 +24,42 @@ public class StringsTest {
         assertEquals("a/b/...", Strings.ellipse(s, 7, "...", "/", "/"));
         assertEquals("a/b.../i", Strings.ellipse(s, 8, "...", "/", "/"));
         assertEquals("a/b/c.../i", Strings.ellipse(s, 10, "...", "/", "/"));
+    }
+
+    @Test
+    public void testCount() throws Exception {
+        TestDefs.tests("(char pattern)", new TestEval<String>() {
+            public Object eval(String input) throws Throwable {
+                return Strings.count(input, '.');
+            }
+        }, //
+                EQ("empty", 0), //
+                EQ("hello.world", 1), //
+                EQ("oh... my god! ", 3), //
+                EQ(". dot .. everywhere .", 4) //
+                );
+
+        TestDefs.tests("(string pattern /1)", new TestEval<String>() {
+            public Object eval(String input) throws Throwable {
+                return Strings.count(input, ".");
+            }
+        }, //
+                EQ("empty", 0), //
+                EQ("hello.world", 1), //
+                EQ("oh... my god! ", 3), //
+                EQ(". dot .. everywhere .", 4) //
+                );
+
+        TestDefs.tests("(string pattern /2)", new TestEval<String>() {
+            public Object eval(String input) throws Throwable {
+                return Strings.count(input, "..");
+            }
+        }, //
+                EQ("empty", 0), //
+                EQ("hello.world", 0), //
+                EQ("oh... my god! ", 1), //
+                EQ(". dot .. everywhere .", 1) //
+                );
     }
 
 }
