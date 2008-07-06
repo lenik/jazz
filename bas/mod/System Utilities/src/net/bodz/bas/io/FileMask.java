@@ -2,6 +2,9 @@ package net.bodz.bas.io;
 
 import java.io.File;
 
+import net.bodz.bas.test.Relation;
+import net.bodz.bas.test.Relations;
+
 public class FileMask {
 
     public static final int READ      = 0x00000001;
@@ -53,14 +56,14 @@ public class FileMask {
         }
     }
 
-    private final boolean check(int bits) {
+    private final boolean masked(int bits) {
         return (mask & bits) != 0;
     }
 
-    public int getFileBits(File file) {
+    public int check(File file) {
         int bits = 0;
 
-        if (check(ACCESS)) {
+        if (masked(ACCESS)) {
             if (file.canRead())
                 bits |= READ;
             if (file.canWrite())
@@ -69,8 +72,8 @@ public class FileMask {
                 bits |= EXECUTE;
         }
 
-        if (check(ATTRIB)) {
-            if (check(HIDDEN))
+        if (masked(ATTRIB)) {
+            if (masked(HIDDEN))
                 if (file.isHidden())
                     bits |= HIDDEN;
                 else {
@@ -80,7 +83,7 @@ public class FileMask {
             // if (check(ARCHIVE | SYSTEM)) ; // not supported
         }
 
-        if (check(FILEINFO)) {
+        if (masked(FILEINFO)) {
             if (file.exists()) {
                 bits |= EXIST;
                 if (file.length() == 0l)
@@ -91,13 +94,13 @@ public class FileMask {
                 bits |= NEXIST;
         }
 
-        if (check(OBJTYPE))
+        if (masked(OBJTYPE))
             if (file.isDirectory())
                 bits |= DIRECTORY;
             else
                 bits |= FILE;
 
-        if (check(CNTTYPE) && (bits & EXIST) != 0)
+        if (masked(CNTTYPE) && (bits & EXIST) != 0)
             if (Files.isText(file))
                 bits |= TEXT;
             else
@@ -111,8 +114,13 @@ public class FileMask {
     }
 
     public boolean test(File file) {
-        int bits = getFileBits(file);
+        int bits = check(file);
         return (bits & mask) == this.bits;
+    }
+
+    @Override
+    public String toString() {
+        return format(bits) + "/" + format(mask);
     }
 
     public static int parse(String str) {
@@ -164,13 +172,14 @@ public class FileMask {
                 bits |= BINARY;
                 break;
             default:
-                throw new IllegalArgumentException("illegal mask char: " + c);
+                throw new IllegalArgumentException("illegal mask char: '"
+                        + (char) c + "' (" + c + ")");
             }
         }
         return bits;
     }
 
-    public static String str(int bits) {
+    public static String format(int bits) {
         StringBuffer buf = new StringBuffer();
         int mask = 1;
         for (int i = 0; i < 32; i++) {
@@ -181,9 +190,66 @@ public class FileMask {
         return buf.toString();
     }
 
-    @Override
-    public String toString() {
-        return str(bits) + "/" + str(mask);
+    public static String format(String str) {
+        return format(parse(str));
+    }
+
+    public static final FileMask ALL   = new FileMask(-1);
+    public static final FileMask BASIC = new FileMask(ACCESS | FILEINFO
+                                               | OBJTYPE);
+
+    public static int getFileBits(File file) {
+        int allBits = ALL.check(file);
+        return allBits;
+    }
+
+    public static String format(File file) {
+        return format(getFileBits(file));
+    }
+
+    public static class EQU implements Relation {
+
+        private FileMask mask;
+
+        public EQU(FileMask mask) {
+            this.mask = mask;
+        }
+
+        public EQU() {
+            mask = ALL;
+        }
+
+        private int getBits(Object o) {
+            if (o instanceof Number)
+                return ((Number) o).intValue();
+            else if (o instanceof String)
+                return parse((String) o);
+            else
+                throw new IllegalArgumentException(
+                        "not of int bits or string flags: " + o);
+        }
+
+        @Override
+        public void test(String comment, Object expected, Object actual) {
+            int ebits = mask.mask & getBits(expected);
+            int abits = mask.mask & getBits(actual);
+            if (ebits != abits)
+                Relations._fail(comment, format(ebits), format(abits));
+        }
+    }
+
+    public static EQU EQU = new EQU();
+
+    public static EQU EQU(FileMask mask) {
+        return new EQU(mask);
+    }
+
+    public static EQU EQU(String mask) {
+        return new EQU(new FileMask(mask));
+    }
+
+    public static EQU EQU(int mask) {
+        return new EQU(new FileMask(mask));
     }
 
 }

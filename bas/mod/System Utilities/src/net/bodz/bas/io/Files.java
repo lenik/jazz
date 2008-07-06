@@ -208,16 +208,21 @@ public class Files {
         return false;
     }
 
-    public static byte[] readBytes(Object in, Object charset, boolean close)
-            throws IOException {
+    public static byte[] readBytes(Object in, long size, Object charset,
+            boolean close) throws IOException {
         InputStream ins = getInputStream(in, charset);
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         byte block[] = new byte[blockSize];
         try {
-            while (true) {
-                int n = ins.read(block);
+            while (size != 0) {
+                int readSize = block.length;
+                if (size != -1 && readSize > size)
+                    readSize = (int) size;
+                int n = ins.read(block, 0, readSize);
                 if (n == -1)
                     break;
+                if (size != -1)
+                    size -= n;
                 buffer.write(block, 0, n);
             }
         } finally {
@@ -226,6 +231,26 @@ public class Files {
         }
         return buffer.toByteArray();
 
+    }
+
+    public static byte[] readBytes(Object in, long size, Object charset)
+            throws IOException {
+        boolean close = shouldClose(in);
+        return readBytes(in, size, close);
+    }
+
+    public static byte[] readBytes(Object in, long size, boolean close)
+            throws IOException {
+        return readBytes(in, size, encoding, close);
+    }
+
+    public static byte[] readBytes(Object in, long size) throws IOException {
+        return readBytes(in, size, encoding);
+    }
+
+    public static byte[] readBytes(Object in, Object charset, boolean close)
+            throws IOException {
+        return readBytes(in, -1, charset, close);
     }
 
     public static byte[] readBytes(Object in, Object charset)
