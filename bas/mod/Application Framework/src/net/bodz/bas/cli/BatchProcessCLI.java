@@ -95,7 +95,7 @@ public class BatchProcessCLI extends BasicCLI {
     @Option(alias = "D3", doc = "diff between src/dst/out, when output to different file")
     protected boolean          diff3          = false;
 
-    @Option(alias = "D2", doc = "diff between src/out rather then src/dst, or ignored whtn output to the same file")
+    @Option(alias = "D2", doc = "diff between src/out rather then src/dst, only used when output directory is different")
     protected boolean          diffWithDest   = false;
 
     protected BatchProcessCLI() {
@@ -189,8 +189,8 @@ public class BatchProcessCLI extends BasicCLI {
         boolean isBatchEdit = 0 != (_cliflags() & CLI_BATCHEDIT);
         File tmpOut = null;
         if (isBatchEdit) {
-            String ext = Files.getExtension(file, true);
-            tmpOut = File.createTempFile(tmpPrefix, ext, tmpDir);
+            String dotExt = Files.getExtension(file, true);
+            tmpOut = File.createTempFile(tmpPrefix, dotExt, tmpDir);
         }
         try {
             ProcessResult result = process(file, tmpOut);
@@ -315,6 +315,10 @@ public class BatchProcessCLI extends BasicCLI {
                     L.i.sig("[proc] ", file);
                     ProcessResult result = BatchProcessCLI.this.process(file);
                     stat.add(result);
+                    if (result == null) {
+                        L.d.P("[skip] ", file);
+                        return;
+                    }
                     if (result.error)
                         if ((err = result.cause) == null)
                             L.e.P("[fail] ", file);
