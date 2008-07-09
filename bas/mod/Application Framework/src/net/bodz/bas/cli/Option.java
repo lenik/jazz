@@ -75,7 +75,7 @@ public @interface Option {
 
     String parserinfo() default "";
 
-    Class<? extends TypeCheck> check() default TypeCheck.class;
+    Class<? extends ValueCheck> check() default ValueCheck.class;
 
     String checkinfo() default "";
 

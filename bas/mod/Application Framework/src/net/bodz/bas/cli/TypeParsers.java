@@ -24,6 +24,7 @@ import net.bodz.bas.lang.err.UnexpectedException;
 import net.bodz.bas.log.ALog;
 import net.bodz.bas.log.ALogs;
 import net.bodz.bas.log.LogOuts;
+import net.bodz.bas.types.AutoType;
 import net.bodz.bas.types.Obtain;
 
 public class TypeParsers {
@@ -221,7 +222,7 @@ public class TypeParsers {
         @Override
         public Byte parse(String text) throws ParseException {
             try {
-                return Byte.valueOf(text);
+                return AutoType.toByte(text); 
             } catch (NumberFormatException e) {
                 throw new ParseException(e.getMessage(), e);
             }
@@ -234,7 +235,7 @@ public class TypeParsers {
         @Override
         public Short parse(String text) throws ParseException {
             try {
-                return Short.valueOf(text);
+                return AutoType.toShort(text); 
             } catch (NumberFormatException e) {
                 throw new ParseException(e.getMessage(), e);
             }
@@ -247,7 +248,7 @@ public class TypeParsers {
         @Override
         public Integer parse(String text) throws ParseException {
             try {
-                return Integer.valueOf(text);
+                return AutoType.toInt(text); 
             } catch (NumberFormatException e) {
                 throw new ParseException(e.getMessage(), e);
             }
@@ -260,7 +261,7 @@ public class TypeParsers {
         @Override
         public Long parse(String text) throws ParseException {
             try {
-                return Long.valueOf(text);
+                return AutoType.toLong(text); 
             } catch (NumberFormatException e) {
                 throw new ParseException(e.getMessage(), e);
             }
@@ -273,7 +274,7 @@ public class TypeParsers {
         @Override
         public Float parse(String text) throws ParseException {
             try {
-                return Float.valueOf(text);
+                return AutoType.toFloat(text); 
             } catch (NumberFormatException e) {
                 throw new ParseException(e.getMessage(), e);
             }
@@ -286,7 +287,7 @@ public class TypeParsers {
         @Override
         public Double parse(String text) throws ParseException {
             try {
-                return Double.valueOf(text);
+                return AutoType.toDouble(text); 
             } catch (NumberFormatException e) {
                 throw new ParseException(e.getMessage(), e);
             }
@@ -299,7 +300,7 @@ public class TypeParsers {
         @Override
         public Boolean parse(String text) throws ParseException {
             try {
-                return Boolean.valueOf(text);
+                return AutoType.toBoolean(text); 
             } catch (NumberFormatException e) {
                 throw new ParseException(e.getMessage(), e);
             }
@@ -312,9 +313,7 @@ public class TypeParsers {
         @Override
         public Character parse(String text) throws ParseException {
             try {
-                if (text.isEmpty())
-                    return '\0';
-                return text.charAt(0);
+                return AutoType.toChar(text); 
             } catch (NumberFormatException e) {
                 throw new ParseException(e.getMessage(), e);
             }

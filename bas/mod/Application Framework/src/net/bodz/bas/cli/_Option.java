@@ -20,7 +20,7 @@ public abstract class _Option<T> implements ScriptField<T> {
     protected Class<T>            valtype;
 
     protected final TypeParser<T> parser;
-    protected final TypeCheck     check;
+    protected final ValueCheck     check;
 
     protected final String        optgrp;
 

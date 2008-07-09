@@ -5,9 +5,9 @@ import java.util.regex.Pattern;
 
 import net.bodz.bas.io.Files;
 
-public class TypeChecks {
+public class ValueChecks {
 
-    public static class Regex implements TypeCheck {
+    public static class Regex implements ValueCheck {
 
         private final Pattern pattern;
 
@@ -16,17 +16,17 @@ public class TypeChecks {
         }
 
         @Override
-        public void check(Object val) throws TypeCheckFailure {
+        public void check(Object val) throws ValueCheckFailure {
             String s = (val instanceof String) ? (String) val : String
                     .valueOf(val);
             if (!pattern.matcher(s).matches())
-                throw new TypeCheckFailure("string doesn't match regex "
+                throw new ValueCheckFailure("string doesn't match regex "
                         + pattern.pattern() + ": \n" + s);
         }
 
     }
 
-    public static class FileAccess implements TypeCheck {
+    public static class FileAccess implements ValueCheck {
 
         public static final int READ      = 1;
         public static final int WRITE     = 2;
@@ -78,20 +78,20 @@ public class TypeChecks {
         }
 
         @Override
-        public void check(Object val) throws TypeCheckFailure {
+        public void check(Object val) throws ValueCheckFailure {
             File f = (File) val;
             if (set(READ) && !f.canRead())
-                throw new TypeCheckFailure("can't read " + f);
+                throw new ValueCheckFailure("can't read " + f);
             if (set(WRITE) && !f.canWrite())
-                throw new TypeCheckFailure("can't write " + f);
+                throw new ValueCheckFailure("can't write " + f);
             if (set(EXECUTE) && !f.canExecute())
-                throw new TypeCheckFailure("can't execute " + f);
+                throw new ValueCheckFailure("can't execute " + f);
             if (set(DIRECTORY) && !f.isDirectory())
-                throw new TypeCheckFailure("not a directory " + f);
+                throw new ValueCheckFailure("not a directory " + f);
             if (set(FILE) && !f.isFile())
-                throw new TypeCheckFailure("not a file " + f);
+                throw new ValueCheckFailure("not a file " + f);
             if (set(TEXT) && !Files.isText(f))
-                throw new TypeCheckFailure("not a text file " + f);
+                throw new ValueCheckFailure("not a text file " + f);
         }
     }
 
