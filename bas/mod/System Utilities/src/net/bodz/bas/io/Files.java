@@ -904,7 +904,7 @@ public class Files {
     }
 
     public static String getExtension(String file) {
-        return getExtension(file, true);
+        return getExtension(file, false);
     }
 
     public static String getExtension(File file, boolean includeDot) {
@@ -912,7 +912,7 @@ public class Files {
     }
 
     public static String getExtension(File file) {
-        return getExtension(file.getName(), true);
+        return getExtension(file.getName(), false);
     }
 
     public static boolean isText(File file) {
