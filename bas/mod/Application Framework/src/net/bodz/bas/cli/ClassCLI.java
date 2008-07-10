@@ -18,6 +18,7 @@ import net.bodz.bas.types.util.Strings;
 
 public class ClassCLI {
 
+    private static boolean                     cache = false;
     private static ClassLocal<ClassOptions<?>> clOptions;
     static {
         clOptions = new ClassLocal<ClassOptions<?>>();
@@ -28,7 +29,8 @@ public class ClassCLI {
         ClassOptions<T> copt = (ClassOptions<T>) clOptions.get(clazz);
         if (copt == null) {
             copt = new ClassOptions<T>(clazz);
-            clOptions.put(clazz, copt);
+            if (cache)
+                clOptions.put(clazz, copt);
         }
         return copt;
     }
@@ -58,7 +60,7 @@ public class ClassCLI {
     @SuppressWarnings("unchecked")
     public static String helpOptions(Class<?> clazz, final int tabsize,
             final int docColumn) throws CLIException {
-        ClassOptions<Object> copt = (ClassOptions<Object>) getClassOptions(clazz);
+        final ClassOptions<Object> copt = (ClassOptions<Object>) getClassOptions(clazz);
         TreeMap<String, _Option<?>> options = copt.getOptions();
         StringBuffer buffer = new StringBuffer(options.size() * 80);
         final char[] tab = new char[tabsize];
@@ -78,6 +80,7 @@ public class ClassCLI {
                 buffer.append(' ');
                 buffer.append(fnam);
             }
+            buffer.append("\n");
         } else {
             buffer.append(" FILES\n");
         }
@@ -114,19 +117,15 @@ public class ClassCLI {
                 StringBuffer buffer = new StringBuffer(opts.size() * 80);
                 StringBuffer line = new StringBuffer(80);
                 for (_Option<?> opt : opts) {
-                    String optnam = opt.getCanonicalName();
-                    String[] aliases = opt.o.alias();
-                    String[] all = new String[aliases.length + 1];
-                    all[0] = optnam;
-                    System.arraycopy(aliases, 0, all, 1, aliases.length);
-                    Arrays.sort(all, Comparators.STRLEN);
+                    String[] aliases = copt.getAliases(opt);
+                    Arrays.sort(aliases, Comparators.STRLEN);
 
                     line.setLength(0);
                     line.append(tab);
                     int col = tabsize;
                     boolean hasshort = false;
-                    for (int i = 0; i < all.length; i++) {
-                        String nam = all[i];
+                    for (int i = 0; i < aliases.length; i++) {
+                        String nam = aliases[i];
                         if (i > 0) {
                             line.append(',');
                             while ((++col % tabsize) != 0)
@@ -145,7 +144,7 @@ public class ClassCLI {
                         line.insert(tabsize, tab);
                     String vnam = opt.o.vnam();
                     if (!vnam.isEmpty()) {
-                        if (all[all.length - 1].length() > 1)
+                        if (aliases[aliases.length - 1].length() > 1)
                             line.append('=');
                         line.append(vnam);
                     }

@@ -9,6 +9,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import net.bodz.bas.cli.CLIError;
+import net.bodz.bas.lang.IVoid;
 import net.bodz.bas.lang.Predicate;
 
 public class Types {
@@ -28,11 +30,11 @@ public class Types {
         return list.toArray(new Class<?>[0]);
     }
 
-    static final Class<?>[] CLASS_0 = new Class[0];
+    static final Class<?>[] EMPTY_CLASSES = {};
 
     public static Class<?>[] getTypes(Object... objects) {
         if (objects == null || objects.length == 0)
-            return CLASS_0;
+            return EMPTY_CLASSES;
 
         Class<?>[] classes = new Class[objects.length];
         for (int i = 0; i < objects.length; i++) {
@@ -319,6 +321,29 @@ public class Types {
             throws NoSuchMethodException, IllegalArgumentException,
             IllegalAccessException, InvocationTargetException {
         return invoke(obj.getClass(), obj, methodName, args);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> T getClassInstance(Class<T> clazz, Object... args) {
+        if (clazz == null)
+            return null;
+        if (clazz.isInterface())
+            return null;
+        if (IVoid.class.isAssignableFrom(clazz))
+            return null;
+        Class<?>[] argtypes = Types.getTypes(args);
+        try {
+            Method method = clazz.getMethod("getInstance", argtypes);
+            return (T) method.invoke(null, args);
+        } catch (NoSuchMethodException e1) {
+            try {
+                return clazz.getConstructor(argtypes).newInstance(args);
+            } catch (Exception e) {
+                throw new CLIError(e.getMessage(), e);
+            }
+        } catch (Exception e) {
+            throw new CLIError(e.getMessage(), e);
+        }
     }
 
 }

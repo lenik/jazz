@@ -5,10 +5,9 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Map.Entry;
 
-import net.bodz.bas.cli.TypeParsers.ALogParser;
-import net.bodz.bas.cli.TypeParsers.CharOutParser;
 import net.bodz.bas.cli.util.Author;
 import net.bodz.bas.cli.util.Doc;
 import net.bodz.bas.cli.util.Rcs;
@@ -21,10 +20,16 @@ import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.annotations.OverrideOption;
 import net.bodz.bas.lang.err.NotImplementedException;
+import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.lang.err.UnexpectedException;
 import net.bodz.bas.log.ALog;
 import net.bodz.bas.log.LogOut;
 import net.bodz.bas.log.LogOuts;
+import net.bodz.bas.types.AutoTypeMap;
+import net.bodz.bas.types.TypeParser;
+import net.bodz.bas.types.TypeParsers;
+import net.bodz.bas.types.TypeParsers.ALogParser;
+import net.bodz.bas.types.TypeParsers.CharOutParser;
 import net.bodz.bas.types.util.Annotations;
 
 /**
@@ -82,12 +87,39 @@ public class BasicCLI {
         L.setLevel(L.getLevel() - 1);
     }
 
+    protected AutoTypeMap<String, Object> vars;
+
+    @Option(name = "define", alias = ".D", vnam = "NAM=VAL", doc = "define variables")
+    protected void define(String exp) throws ParseException {
+        int eq = exp.indexOf('=');
+        String nam = exp;
+        Object val = null;
+        if (eq != -1) {
+            nam = exp.substring(0, eq);
+            exp = exp.substring(eq + 1);
+        }
+        if (eq == -1)
+            val = true;
+        else {
+            Class<?> type = getVarType(nam);
+            TypeParser<?> parser = TypeParsers.guess(type);
+            val = parser.parse(exp);
+        }
+        vars.put(nam, val);
+    }
+
+    protected Class<?> getVarType(String name) {
+        return String.class;
+    }
+
     protected VersionInfo _version;
 
     protected class CLILog extends ALog {
 
         public CLILog(int level) {
             super(level);
+            HashMap<String, Object> hmap = new HashMap<String, Object>();
+            vars = new AutoTypeMap<String, Object>(hmap);
         }
 
         @Override
@@ -165,7 +197,7 @@ public class BasicCLI {
         throw new ControlBreak();
     }
 
-    @Option(alias = "h", doc = "show help info")
+    @Option(alias = ".h", doc = "show help info")
     protected void _help() throws CLIException {
         try {
             _version();
@@ -178,7 +210,8 @@ public class BasicCLI {
     }
 
     @SuppressWarnings("unchecked")
-    protected <T extends BasicCLI> ClassOptions<T> getClassOptions() {
+    protected <T extends BasicCLI> ClassOptions<T> getClassOptions()
+            throws CLIException {
         Class<T> clazz = (Class<T>) this.getClass();
         ClassOptions<T> opts = ClassCLI.getClassOptions(clazz);
         return opts;
@@ -208,6 +241,11 @@ public class BasicCLI {
                     if (optval instanceof CallInfo)
                         continue;
                     L.d.P(optnam, " = ", Util.dispval(optval));
+                }
+                for (Entry<String, Object> entry : vars.entrySet()) {
+                    String name = entry.getKey();
+                    Object value = entry.getValue();
+                    L.d.P("var ", name, " = ", value);
                 }
             }
             _main(args);

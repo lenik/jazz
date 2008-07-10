@@ -13,8 +13,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import net.bodz.bas.cli.TypeParsers.ClassInstanceParser;
-import net.bodz.bas.cli.TypeParsers.WildcardsParser;
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.io.FileMask;
@@ -23,6 +21,8 @@ import net.bodz.bas.io.FsWalk;
 import net.bodz.bas.lang.annotations.OverrideOption;
 import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.lang.err.UnexpectedException;
+import net.bodz.bas.types.TypeParsers.ClassInstanceParser;
+import net.bodz.bas.types.TypeParsers.WildcardsParser;
 import net.bodz.bas.types.diff.DiffComparator;
 import net.bodz.bas.types.diff.DiffFormat;
 import net.bodz.bas.types.diff.DiffFormats;
@@ -31,9 +31,9 @@ import net.bodz.bas.types.diff.DiffInfo;
 @OptionGroup(value = "batch process", rank = -2)
 public class BatchProcessCLI extends BasicCLI {
 
-    @Option(alias = "e", vnam = "ENCODING", doc = "default encoding of input files")
+    @Option(alias = ".e", vnam = "ENCODING", doc = "default encoding of input files")
     protected Charset          inputEncoding  = Charset.defaultCharset();
-    @Option(alias = "E", vnam = "ENCODING", doc = "default encoding of output files")
+    @Option(alias = ".E", vnam = "ENCODING", doc = "default encoding of output files")
     protected Charset          outputEncoding = Charset.defaultCharset();
 
     @Option(alias = "O", vnam = "DIR", doc = "put output files under this directory")
@@ -83,19 +83,19 @@ public class BatchProcessCLI extends BasicCLI {
     @Option(vnam = "CLASS(Comparator)", parser = ClassInstanceParser.class, doc = "sort files in each directory")
     protected Comparator<File> sortComparator;
 
-    @Option(alias = "D", vnam = "DIFF-ALG", optional = "gnudiff", doc = "show diff between original and modified files, default using gnudiff")
+    @Option(alias = ".X", vnam = "DIFF-ALG", optional = "gnudiff", doc = "show diff between original and modified files, default using gnudiff")
     protected DiffComparator   diffAlgorithm;
 
-    @Option(alias = "Df", vnam = "FORMAT", doc = "Simdiff, ED, Context, Unified, Normal")
+    @Option(alias = "Xf", vnam = "FORMAT", doc = "Simdiff, ED, Context, Unified, Normal")
     protected DiffFormat       diffFormat     = DiffFormats.Simdiff;
 
-    @Option(alias = "Do", vnam = "FILE", doc = "write diff output to specified file")
+    @Option(alias = "Xo", vnam = "FILE", doc = "write diff output to specified file")
     protected CharOut          diffOutput     = CharOuts.stdout;
 
-    @Option(alias = "D3", doc = "diff between src/dst/out, when output to different file")
+    @Option(alias = "X3", doc = "diff between src/dst/out, when output to different file")
     protected boolean          diff3          = false;
 
-    @Option(alias = "D2", doc = "diff between src/out rather then src/dst, only used when output directory is different")
+    @Option(alias = "X2", doc = "diff between src/out rather then src/dst, only used when output directory is different")
     protected boolean          diffWithDest   = false;
 
     protected BatchProcessCLI() {

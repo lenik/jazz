@@ -1,8 +1,8 @@
 package net.bodz.bas.cli;
 
-import net.bodz.bas.cli.TypeParsers.CharOutParser;
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.CharOuts;
+import net.bodz.bas.types.TypeParsers.CharOutParser;
 
 public class LogBase {
 

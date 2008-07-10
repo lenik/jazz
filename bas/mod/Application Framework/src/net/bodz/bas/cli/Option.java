@@ -5,6 +5,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import net.bodz.bas.types.TypeParser;
+import net.bodz.bas.types.TypeParsers;
+import net.bodz.bas.types.ValueCheck;
+
 /**
  * [OPTION] [--] FILES
  * <p>
@@ -33,8 +37,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target( { ElementType.TYPE, ElementType.FIELD, ElementType.METHOD })
 public @interface Option {
-
-    boolean _final() default true;
 
     String name() default "";
 
