@@ -6,6 +6,9 @@ import java.lang.reflect.Method;
 import net.bodz.bas.lang.Control;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.lang.script.ScriptException;
+import net.bodz.bas.types.TypeParser;
+import net.bodz.bas.types.TypeParsers;
+import net.bodz.bas.types.util.Types;
 
 public class MethodOption extends _Option<CallInfo> {
 
@@ -24,7 +27,7 @@ public class MethodOption extends _Option<CallInfo> {
         argc = types.length;
         parsers = new TypeParser<?>[argc];
         for (int i = 0; i < wants.length; i++)
-            parsers[i] = Util.guessParser(Util.getClassInstance(wants[i]),
+            parsers[i] = Util.guessParser(Types.getClassInstance(wants[i]),
                     types[i]);
         for (int i = wants.length; i < argc; i++)
             parsers[i] = TypeParsers.guess(types[i]);

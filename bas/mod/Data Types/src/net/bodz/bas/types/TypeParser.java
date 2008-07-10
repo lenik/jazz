@@ -1,4 +1,4 @@
-package net.bodz.bas.cli;
+package net.bodz.bas.types;
 
 import net.bodz.bas.lang.err.ParseException;
 

@@ -5,8 +5,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import net.bodz.bas.cli.TypeParser;
-import net.bodz.bas.cli.TypeParsers;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target( { ElementType.TYPE })

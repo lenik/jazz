@@ -5,9 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.cli.CLIException;
-import net.bodz.bas.cli.TypeParser;
-import net.bodz.bas.cli.TypeParsers;
 import net.bodz.bas.lang.Control;
+import net.bodz.bas.types.TypeParser;
+import net.bodz.bas.types.TypeParsers;
 
 public class CLIFunctions {
 

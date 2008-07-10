@@ -1,7 +1,6 @@
 package net.bodz.bas.cli;
 
 import java.lang.reflect.Array;
-import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,10 +15,10 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Map.Entry;
 
-import net.bodz.bas.lang.IVoid;
 import net.bodz.bas.lang.script.ScriptException;
+import net.bodz.bas.types.TypeParser;
+import net.bodz.bas.types.TypeParsers;
 import net.bodz.bas.types.util.PatternProcessor;
-import net.bodz.bas.types.util.Types;
 
 class Util {
 
@@ -98,29 +97,6 @@ class Util {
 
         }
         return fieldobj;
-    }
-
-    @SuppressWarnings("unchecked")
-    public static <T> T getClassInstance(Class<T> clazz, Object... args) {
-        if (clazz == null)
-            return null;
-        if (clazz.isInterface())
-            return null;
-        if (IVoid.class.isAssignableFrom(clazz))
-            return null;
-        Class<?>[] argtypes = Types.getTypes(args);
-        try {
-            Method method = clazz.getMethod("getInstance", argtypes);
-            return (T) method.invoke(null, args);
-        } catch (NoSuchMethodException e1) {
-            try {
-                return clazz.getConstructor(argtypes).newInstance(args);
-            } catch (Exception e) {
-                throw new CLIError(e.getMessage(), e);
-            }
-        } catch (Exception e) {
-            throw new CLIError(e.getMessage(), e);
-        }
     }
 
     @SuppressWarnings("unchecked")
@@ -203,6 +179,7 @@ class Util {
         trueValues.put(Boolean.class, true);
         trueValues.put(char.class, '1');
         trueValues.put(Character.class, '1');
+        trueValues.put(String.class, "");
     }
 
     public static Object getTrueValue(Class<?> type) {

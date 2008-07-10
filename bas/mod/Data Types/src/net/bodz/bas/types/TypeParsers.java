@@ -1,4 +1,4 @@
-package net.bodz.bas.cli;
+package net.bodz.bas.types;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import net.bodz.bas.cli.CLIError;
 import net.bodz.bas.io.ByteOut;
 import net.bodz.bas.io.ByteOuts;
 import net.bodz.bas.io.CharOut;
@@ -24,8 +25,7 @@ import net.bodz.bas.lang.err.UnexpectedException;
 import net.bodz.bas.log.ALog;
 import net.bodz.bas.log.ALogs;
 import net.bodz.bas.log.LogOuts;
-import net.bodz.bas.types.AutoType;
-import net.bodz.bas.types.Obtain;
+import net.bodz.bas.types.util.Types;
 
 public class TypeParsers {
 
@@ -39,7 +39,7 @@ public class TypeParsers {
         Obtain obtain = type.getAnnotation(Obtain.class);
         if (obtain != null) {
             Class<? extends TypeParser<?>> parserClass = obtain.parser();
-            parser = (TypeParser<T>) Util.getClassInstance(parserClass);
+            parser = (TypeParser<T>) Types.getClassInstance(parserClass);
             if (parser != null)
                 return parser;
             final Class<?> registryClass = obtain.registry();
@@ -125,7 +125,7 @@ public class TypeParsers {
         public Object parse(String className) throws ParseException {
             try {
                 Class<?> clazz = Class.forName(className);
-                return Util.getClassInstance(clazz);
+                return Types.getClassInstance(clazz);
             } catch (ClassNotFoundException e) {
                 throw new ParseException(e.getMessage(), e);
             }
@@ -154,8 +154,8 @@ public class TypeParsers {
             if (s == null)
                 return null;
             String[] vals = separator.split(s);
-            @SuppressWarnings("unchecked")
-            T array = (T) Array.newInstance(valtype, vals.length);
+            @SuppressWarnings("unchecked") T array = (T) Array.newInstance(
+                    valtype, vals.length);
             for (int i = 0; i < vals.length; i++) {
                 Object val = valparser.parse(vals[i]);
                 Array.set(array, i, val);
@@ -222,7 +222,7 @@ public class TypeParsers {
         @Override
         public Byte parse(String text) throws ParseException {
             try {
-                return AutoType.toByte(text); 
+                return AutoType.toByte(text);
             } catch (NumberFormatException e) {
                 throw new ParseException(e.getMessage(), e);
             }
@@ -235,7 +235,7 @@ public class TypeParsers {
         @Override
         public Short parse(String text) throws ParseException {
             try {
-                return AutoType.toShort(text); 
+                return AutoType.toShort(text);
             } catch (NumberFormatException e) {
                 throw new ParseException(e.getMessage(), e);
             }
@@ -248,7 +248,7 @@ public class TypeParsers {
         @Override
         public Integer parse(String text) throws ParseException {
             try {
-                return AutoType.toInt(text); 
+                return AutoType.toInt(text);
             } catch (NumberFormatException e) {
                 throw new ParseException(e.getMessage(), e);
             }
@@ -261,7 +261,7 @@ public class TypeParsers {
         @Override
         public Long parse(String text) throws ParseException {
             try {
-                return AutoType.toLong(text); 
+                return AutoType.toLong(text);
             } catch (NumberFormatException e) {
                 throw new ParseException(e.getMessage(), e);
             }
@@ -274,7 +274,7 @@ public class TypeParsers {
         @Override
         public Float parse(String text) throws ParseException {
             try {
-                return AutoType.toFloat(text); 
+                return AutoType.toFloat(text);
             } catch (NumberFormatException e) {
                 throw new ParseException(e.getMessage(), e);
             }
@@ -287,7 +287,7 @@ public class TypeParsers {
         @Override
         public Double parse(String text) throws ParseException {
             try {
-                return AutoType.toDouble(text); 
+                return AutoType.toDouble(text);
             } catch (NumberFormatException e) {
                 throw new ParseException(e.getMessage(), e);
             }
@@ -300,7 +300,7 @@ public class TypeParsers {
         @Override
         public Boolean parse(String text) throws ParseException {
             try {
-                return AutoType.toBoolean(text); 
+                return AutoType.toBoolean(text);
             } catch (NumberFormatException e) {
                 throw new ParseException(e.getMessage(), e);
             }
@@ -313,7 +313,7 @@ public class TypeParsers {
         @Override
         public Character parse(String text) throws ParseException {
             try {
-                return AutoType.toChar(text); 
+                return AutoType.toChar(text);
             } catch (NumberFormatException e) {
                 throw new ParseException(e.getMessage(), e);
             }

@@ -22,11 +22,13 @@ import net.bodz.bas.types.util.Types;
 public class ClassOptions<CT> {
 
     private TreeMap<String, _Option<?>> options;
+    private Set<String>                 weakAliases;
     public TreeMap<Integer, _Option<?>> specfiles;
     private HashSet<_Option<?>>         required;
 
     public ClassOptions(Class<CT> clazz) {
         options = new TreeMap<String, _Option<?>>();
+        weakAliases = new HashSet<String>();
 
         BeanInfo beanInfo;
         try {
@@ -118,15 +120,28 @@ public class ClassOptions<CT> {
     protected void addOption(_Option<?> copt) {
         String optnam = copt.getCanonicalName();
         _Option<?> prev = options.get(optnam);
-        if (prev != null && prev.o._final())
+        if (prev != null)
             throw new IllegalArgumentException("option name " + optnam
                     + " is already existed");
         options.put(optnam, copt);
         for (String alias : copt.o.alias()) {
+            boolean weak = alias.startsWith(".");
+            if (weak)
+                alias = alias.substring(1);
             prev = options.get(alias);
-            if (prev != null && prev.o._final())
+            if (prev != null && !weak)
                 throw new IllegalArgumentException("option alias " + alias
                         + " is already existed");
+            if (weak)
+                if (prev == null)
+                    weakAliases.add(alias);
+                else
+                    assert weakAliases.contains(alias);
+            if (!weak)
+                if (prev != null)
+                    weakAliases.remove(alias);
+                else
+                    assert !weakAliases.contains(alias);
             options.put(alias, copt);
         }
         if (copt.o.required()) {
@@ -173,6 +188,19 @@ public class ClassOptions<CT> {
             }
         }
         return entry.getValue();
+    }
+
+    private static final String[] String_0 = {};
+
+    public String[] getAliases(_Option<?> opt) {
+        List<String> aliases = new ArrayList<String>();
+        for (Entry<String, _Option<?>> e : options.entrySet()) {
+            if (e.getValue() != opt)
+                continue;
+            String alias = e.getKey();
+            aliases.add(alias);
+        }
+        return aliases.toArray(String_0);
     }
 
     public String[] load(CT classobj, String... args) throws CLIException,
@@ -265,18 +293,18 @@ public class ClassOptions<CT> {
                     int eq = optarg.indexOf('=');
                     if (eq == -1) {
                         key = optarg;
-                        optarg = "";
+                        optarg = null;
                     } else {
                         key = optarg.substring(0, eq);
                         optarg = optarg.substring(eq + 1);
                     }
                 }
 
-                if (optarg == null || optarg.isEmpty())
+                if (optarg == null)
                     optval = Util.getTrueValue(valtype);
                 if (optval == null)
                     try {
-                        optval = opt.parse(optarg);
+                        optval = opt.parse(optarg, key);
                     } catch (ParseException e) {
                         throw new ParseException(
                                 "Can't get default/true value for type "
@@ -288,8 +316,7 @@ public class ClassOptions<CT> {
 
             if (optval != null)
                 try {
-                    @SuppressWarnings("unchecked")
-                    _Option<Object> _opt = (_Option<Object>) opt;
+                    @SuppressWarnings("unchecked") _Option<Object> _opt = (_Option<Object>) opt;
                     _opt.set(classobj, optval);
                 } catch (ScriptException e) {
                     throw new CLIException(e.getMessage(), e);
