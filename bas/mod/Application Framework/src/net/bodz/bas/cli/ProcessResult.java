@@ -2,26 +2,79 @@ package net.bodz.bas.cli;
 
 public class ProcessResult {
 
-    protected String[] tags;
+    public static final int NONE      = 0;
+    public static final int SAVE      = 10;
+    public static final int SAVE_SAME = 11;
+    public static final int SAVE_DIFF = 12;
+    public static final int DELETE    = 20;
+    public static final int RENAME    = 30;
+    public static final int MOVE      = 40;
+    public static final int COPY      = 50;
 
-    public Boolean     changed;
-    public boolean     saved;
-    public boolean     error;
-    public Throwable   cause;
+    protected String[]      tags;
 
-    public ProcessResult(Boolean changed, String... tags) {
+    public Boolean          changed;
+
+    public int              operation;
+
+    /** dest pathname for RENAME, MOVE, COPY */
+    public Object           dest;
+
+    /** saved, deleted, renamed, moved, copied */
+    public boolean          done;
+    public boolean          error;
+    public Throwable        cause;
+
+    public ProcessResult(String... tags) {
+        this.tags = tags;
+        this.operation = NONE;
+    }
+
+    public String getOperationName() {
+        switch (operation) {
+        case NONE:
+            return "none";
+        case SAVE:
+        case SAVE_DIFF:
+        case SAVE_SAME:
+            return "save";
+        case DELETE:
+            return "none";
+        case RENAME:
+            return "renm";
+        case MOVE:
+            return "move";
+        case COPY:
+            return "copy";
+        }
+        return "????";
+    }
+
+    public void save(Boolean changed) {
         this.changed = changed;
-        this.tags = tags;
+        if (changed == null)
+            operation = SAVE;
+        else
+            operation = changed ? SAVE_DIFF : SAVE_SAME;
     }
 
-    public ProcessResult(Throwable cause, String... tags) {
-        this.error = true;
-        this.cause = cause;
-        this.tags = tags;
+    public void delete() {
+        this.operation = DELETE;
     }
 
-    public void saved() {
-        this.saved = true;
+    public void renameTo(Object dest) {
+        this.operation = RENAME;
+        this.dest = dest;
+    }
+
+    public void moveTo(Object dest) {
+        this.operation = MOVE;
+        this.dest = dest;
+    }
+
+    public void copyTo(Object dest) {
+        this.operation = COPY;
+        this.dest = dest;
     }
 
     public void error(Throwable cause) {
@@ -29,20 +82,61 @@ public class ProcessResult {
         this.cause = cause;
     }
 
-    public static ProcessResult autodiff(String... tags) {
-        return new ProcessResult((Boolean) null, tags);
+    public void setDone() {
+        this.done = true;
     }
 
-    public static ProcessResult changed(String... tags) {
-        return new ProcessResult(true, tags);
+    public static ProcessResult pass(String... tags) {
+        ProcessResult result = new ProcessResult(tags);
+        return result;
     }
 
-    public static ProcessResult unchanged(String... tags) {
-        return new ProcessResult(false, tags);
+    public static ProcessResult compareAndSave(String... tags) {
+        ProcessResult result = new ProcessResult(tags);
+        result.save(null);
+        return result;
+    }
+
+    public static ProcessResult saveSame(String... tags) {
+        ProcessResult result = new ProcessResult(tags);
+        result.save(false);
+        return result;
+    }
+
+    public static ProcessResult saveDiff(String... tags) {
+        ProcessResult result = new ProcessResult(tags);
+        result.save(true);
+        return result;
+    }
+
+    public static ProcessResult rm(String... tags) {
+        ProcessResult result = new ProcessResult(tags);
+        result.delete();
+        return result;
+    }
+
+    public static ProcessResult ren(Object dest, String... tags) {
+        ProcessResult result = new ProcessResult(tags);
+        result.renameTo(dest);
+        return result;
+    }
+
+    public static ProcessResult mv(Object dest, String... tags) {
+        ProcessResult result = new ProcessResult(tags);
+        result.moveTo(dest);
+        return result;
+    }
+
+    public static ProcessResult cp(Object dest, String... tags) {
+        ProcessResult result = new ProcessResult(tags);
+        result.copyTo(dest);
+        return result;
     }
 
     public static ProcessResult error(Throwable cause, String... tags) {
-        return new ProcessResult(cause, tags);
+        ProcessResult result = new ProcessResult(tags);
+        result.error(cause);
+        return result;
     }
 
 }

@@ -30,6 +30,7 @@
 			<fileset dir="mod/Functional Programming/bin" />
 			<fileset dir="mod/Language Extension/bin" />
 			<fileset dir="mod/System Utilities/bin" />
+			<fileset dir="mod/Text Process/bin" />
 			<fileset dir="mod/Wrapper Classes/bin" />
 		</jar>
 	</target>
@@ -43,6 +44,7 @@
 			<fileset dir="mod/Functional Programming/src" />
 			<fileset dir="mod/Language Extension/src" />
 			<fileset dir="mod/System Utilities/src" />
+			<fileset dir="mod/Text Process/src" />
 			<fileset dir="mod/Wrapper Classes/src" />
 		</jar>
 	</target>

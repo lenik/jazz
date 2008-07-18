@@ -12,12 +12,15 @@ import net.bodz.bas.types.util.Strings;
 
 public class ProcessResultStat {
 
-    int ignored;
-    int total;
-    int changeUnknown;
-    int changed;
-    int saved;
-    int errors;
+    private int ignored;
+    private int total;
+    private int changed;
+    private int saved;
+    private int deleted;
+    private int renamed;
+    private int moved;
+    private int copied;
+    private int errorred;
 
     @SuppressWarnings("unused")
     private void _() {
@@ -37,12 +40,34 @@ public class ProcessResultStat {
             return;
         }
         total++;
-        if (result.changed == null)
-            changeUnknown++;
-        else if (result.changed)
-            changed++;
-        if (result.saved)
-            saved++;
+        if (result.changed != null) {
+            if (result.changed)
+                changed++;
+        }
+        if (result.done)
+            switch (result.operation) {
+            case ProcessResult.SAVE:
+                throw new IllegalArgumentException("unknown save state");
+            case ProcessResult.SAVE_DIFF:
+            case ProcessResult.SAVE_SAME:
+                saved++;
+            case ProcessResult.DELETE:
+                deleted++;
+                break;
+            case ProcessResult.RENAME:
+                renamed++;
+                break;
+            case ProcessResult.MOVE:
+                moved++;
+                break;
+            case ProcessResult.COPY:
+                copied++;
+                break;
+            default:
+                throw new IllegalArgumentException("unknown operation: "
+                        + result.operation);
+            }
+
         if (result.tags != null)
             for (String tag : result.tags) {
                 Integer tagCount = tagStat.get(tag);
@@ -51,7 +76,7 @@ public class ProcessResultStat {
                 tagStat.put(tag, ++tagCount);
             }
         if (result.error) {
-            errors++;
+            errorred++;
             if (result.cause != null) {
                 Class<? extends Throwable> errType = result.cause.getClass();
                 Integer errCount = errStat.get(errType);
@@ -68,7 +93,7 @@ public class ProcessResultStat {
             ignores = "(" + ignored + " ignored)";
         out.printf("Total %d/%d" + ignores
                 + " files changed, %d saved, %d error. \n", // 
-                changed, total, saved, errors);
+                changed, total, saved, errorred);
     }
 
     static final int NAMECOLUMN = 40;
@@ -102,9 +127,20 @@ public class ProcessResultStat {
             dumpField(out, 8, tag, count);
         }
 
-        dumpField(out, 4, "Changed", changed, total - (changed - changeUnknown));
-        dumpField(out, 4, "Saved", saved, total - saved);
-        dumpField(out, 4, "Errors", errors, total - errors);
+        if (changed > 0)
+            dumpField(out, 4, "Changed", changed, total - changed);
+        if (saved > 0)
+            dumpField(out, 4, "Saved", saved, total - saved);
+        if (deleted > 0)
+            dumpField(out, 4, "Deleted", deleted, total - deleted);
+        if (renamed > 0)
+            dumpField(out, 4, "Renamed", renamed, total - renamed);
+        if (moved > 0)
+            dumpField(out, 4, "Moved", moved, total - moved);
+        if (copied > 0)
+            dumpField(out, 4, "Copied", copied, total - copied);
+        if (errorred > 0)
+            dumpField(out, 4, "Errors", errorred, total - errorred);
 
         List<Class<? extends Throwable>> errTypes = new ArrayList<Class<? extends Throwable>>(
                 errStat.keySet());

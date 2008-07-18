@@ -1,5 +1,6 @@
 package net.bodz.bas.test;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -76,6 +77,39 @@ public class Relations {
                 _fail(comment, expected, actual);
             if (expected != null && expected.equals(actual))
                 _fail(comment, expected, actual);
+        }
+    }
+
+    public static class ArrayEQU implements Relation {
+        @Override
+        public void test(String comment, Object expected, Object actual) {
+            assertArrayEquals(comment, (Object[]) expected, (Object[]) actual);
+        }
+    }
+
+    public static class ArrayNEQ implements Relation {
+        @Override
+        public void test(String comment, Object expected, Object actual) {
+            if (expected == null)
+                assertNotNull(comment, actual);
+            else {
+                int len1 = Array.getLength(expected);
+                int len2 = Array.getLength(actual);
+                if (len1 != len2)
+                    return;
+                int len = Math.min(len1, len2);
+                for (int i = 0; i < len; i++) {
+                    Object e = Array.get(expected, i);
+                    Object a = Array.get(actual, i);
+                    if (e == a)
+                        continue;
+                    if (e == null || a == null)
+                        return;
+                    if (!e.equals(a))
+                        return;
+                }
+                fail(comment);
+            }
         }
     }
 
@@ -278,25 +312,27 @@ public class Relations {
         }
     }
 
-    public static final OK     OK     = new OK();
-    public static final T      T      = new T();
-    public static final F      F      = new F();
-    public static final N      N      = new N();
-    public static final NN     NN     = new NN();
-    public static final EQU    EQU    = new EQU();
-    public static final NEQ    NEQ    = new NEQ();
-    public static final _EQ    _EQ    = new _EQ();
-    public static final _NE    _NE    = new _NE();
-    public static final EQ     EQ     = new EQ();
-    public static final NE     NE     = new NE();
-    public static final LT     LT     = new LT();
-    public static final LE     LE     = new LE();
-    public static final GT     GT     = new GT();
-    public static final GE     GE     = new GE();
-    public static final EQf    EQf    = new EQf();
-    public static final NEf    NEf    = new NEf();
-    public static final InstOf InstOf = new InstOf();
-    public static final Throws Throws = new Throws();
+    public static final OK       OK       = new OK();
+    public static final T        T        = new T();
+    public static final F        F        = new F();
+    public static final N        N        = new N();
+    public static final NN       NN       = new NN();
+    public static final EQU      EQU      = new EQU();
+    public static final NEQ      NEQ      = new NEQ();
+    public static final ArrayEQU ArrayEQU = new ArrayEQU();
+    public static final ArrayNEQ ArrayNEQ = new ArrayNEQ();
+    public static final _EQ      _EQ      = new _EQ();
+    public static final _NE      _NE      = new _NE();
+    public static final EQ       EQ       = new EQ();
+    public static final NE       NE       = new NE();
+    public static final LT       LT       = new LT();
+    public static final LE       LE       = new LE();
+    public static final GT       GT       = new GT();
+    public static final GE       GE       = new GE();
+    public static final EQf      EQf      = new EQf();
+    public static final NEf      NEf      = new NEf();
+    public static final InstOf   InstOf   = new InstOf();
+    public static final Throws   Throws   = new Throws();
 
     public static final ArrayAll ArrayAll(Relation component) {
         return new ArrayAll(component);

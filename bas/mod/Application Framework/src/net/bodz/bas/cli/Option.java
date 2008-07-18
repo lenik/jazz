@@ -87,9 +87,7 @@ public @interface Option {
      */
     int fileIndex() default -1;
 
-    /**
-     * for method/callback only
-     */
+    /** for method/callback only */
     Class<? extends TypeParser<?>>[] want() default {};
 
 }

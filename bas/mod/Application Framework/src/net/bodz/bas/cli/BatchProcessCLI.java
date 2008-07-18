@@ -13,6 +13,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import net.bodz.bas.cli.util.ProtectedShell;
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.io.FileMask;
@@ -125,11 +126,9 @@ public class BatchProcessCLI extends BasicCLI {
         };
     }
 
-    protected static final int CLI_BATCHEDIT = 2;
-
-    @Override
-    protected int _cliflags() {
-        return super._cliflags() | CLI_BATCHEDIT;
+    protected File _getEditTmp(File file) throws IOException {
+        String dotExt = Files.getExtension(file, true);
+        return File.createTempFile(tmpPrefix, dotExt, tmpDir);
     }
 
     protected boolean diff(File a, File b) throws IOException {
@@ -186,58 +185,99 @@ public class BatchProcessCLI extends BasicCLI {
 
     @OverrideOption(group = "batchProcess")
     protected ProcessResult process(File file) throws Throwable {
-        boolean isBatchEdit = 0 != (_cliflags() & CLI_BATCHEDIT);
-        File tmpOut = null;
-        if (isBatchEdit) {
-            String dotExt = Files.getExtension(file, true);
-            tmpOut = File.createTempFile(tmpPrefix, dotExt, tmpDir);
-        }
+        File editTmp = _getEditTmp(file);
         try {
-            ProcessResult result = process(file, tmpOut);
-            if (result == null) // ignored
-                return null;
-            if (tmpOut == null) // no save
+            return _process(file, editTmp);
+        } finally {
+            if (editTmp != null)
+                editTmp.delete();
+        }
+    }
+
+    private ProcessResult _process(File file, File editTmp) throws Throwable {
+        ProcessResult result = process(file, editTmp);
+        if (result == null) // ignored
+            return null;
+        File dst = getOutputFile(file, currentStartFile);
+        if (result.dest instanceof String) {
+            String relpath = (String) result.dest;
+            result.dest = new File(dst, relpath);
+        }
+        if (result.dest != null)
+            dst = (File) result.dest;
+
+        boolean diffPrinted = false;
+        if (result.operation == ProcessResult.SAVE) {
+            assert result.changed == null;
+            if (editTmp == null)
+                throw new CLIException("can't save: not a batch editor");
+            if (!diff3 && !diffWithDest) {
+                result.changed = diff(file, editTmp);
+                diffPrinted = true;
+            } else
+                result.changed = Files.equals(file, editTmp);
+            if (result.changed)
+                result.operation = ProcessResult.SAVE_DIFF;
+            else
+                result.operation = ProcessResult.SAVE_SAME;
+        }
+
+        switch (result.operation) {
+        case ProcessResult.DELETE:
+            if (shell.delete(dst))
+                result.setDone();
+            return result;
+
+        case ProcessResult.RENAME:
+            if (shell.renameTo(file, dst))
+                result.setDone();
+            return result;
+
+        case ProcessResult.MOVE:
+            if (shell.move(file, dst, force))
+                result.setDone();
+            return result;
+
+        case ProcessResult.COPY:
+            if (shell.copy(file, dst))
+                result.setDone();
+            return result;
+
+        case ProcessResult.SAVE_DIFF:
+            assert result.changed;
+        case ProcessResult.SAVE_SAME:
+            boolean saveLocal = dst.equals(file);
+            if (!result.changed && saveLocal)
                 return result;
-            File dst = getOutputFile(file, currentStartFile);
-            boolean diffPrinted = false;
-            if (result.changed == null) {
-                if (!diff3 && !diffWithDest) {
-                    result.changed = diff(file, tmpOut);
-                    diffPrinted = true;
-                } else
-                    result.changed = Files.equals(file, tmpOut);
-            }
-            if (!result.changed && dst.equals(file))
-                return result;
-            boolean canOverwrite = this.force || dst.equals(file);
+            boolean canOverwrite = saveLocal || force;
             if (dst.exists() && !canOverwrite) {
                 // user interaction...
                 throw new IllegalStateException("file " + dst
                         + " already existed");
             }
-            if (dryRun) {
-                result.saved();
-                return result;
-            }
+
             File dstdir = dst.getParentFile();
             if (dstdir != null)
-                dstdir.mkdirs();
+                shell.mkdirs(dstdir);
             if (!diffPrinted) {
                 if (diff3) {
-                    diff(file, tmpOut);
-                    diff(dst, tmpOut);
+                    diff(file, editTmp);
+                    diff(dst, editTmp);
                 } else if (diffWithDest) {
-                    diff(dst, tmpOut);
+                    diff(dst, editTmp);
                 } else {
-                    diff(file, tmpOut);
+                    diff(file, editTmp);
                 }
             }
-            Files.copy(tmpOut, dst);
-            result.saved();
+            shell.copy(editTmp, dst);
+
+            result.setDone();
             return result;
-        } finally {
-            if (tmpOut != null)
-                tmpOut.delete();
+
+        case ProcessResult.SAVE:
+        default:
+            throw new UnexpectedException("invalid operation: "
+                    + result.operation);
         }
     }
 
@@ -290,6 +330,14 @@ public class BatchProcessCLI extends BasicCLI {
 
     ProcessResultStat stat = new ProcessResultStat();
 
+    ProtectedShell    shell;
+
+    @Override
+    protected void _boot() throws Throwable {
+        super._boot();
+        shell = new ProtectedShell(!dryRun, L);
+    }
+
     @Override
     protected void _main(String[] args) throws Throwable {
         super._main(args);
@@ -311,6 +359,7 @@ public class BatchProcessCLI extends BasicCLI {
             @Override
             public void process(File file) throws IOException {
                 Throwable err = null;
+                String[] tags = {};
                 try {
                     L.i.sig("[proc] ", file);
                     ProcessResult result = BatchProcessCLI.this.process(file);
@@ -319,11 +368,13 @@ public class BatchProcessCLI extends BasicCLI {
                         L.d.P("[skip] ", file);
                         return;
                     }
+                    tags = result.tags;
                     if (result.error)
                         if ((err = result.cause) == null)
                             L.e.P("[fail] ", file);
-                    if (result.saved)
-                        L.u.P("[save] ", getOutputFile(file, currentStartFile));
+                    if (result.done)
+                        L.u.P("[", result.getOperationName(), "] ",
+                                getOutputFile(file, currentStartFile));
                 } catch (IOException e) {
                     err = e;
                 } catch (Throwable e) {
@@ -331,8 +382,7 @@ public class BatchProcessCLI extends BasicCLI {
                     throw new RuntimeException(e.getMessage(), e);
                 } finally {
                     if (err != null) {
-                        ProcessResult result = new ProcessResult(err);
-                        stat.add(result);
+                        stat.add(ProcessResult.error(err, tags));
                         L.e.P("[fail] ", file + ": " + err.getMessage());
                     }
                 }

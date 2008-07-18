@@ -71,6 +71,11 @@ public abstract class _Option<T> implements ScriptField<T> {
     }
 
     @Override
+    public String getName() {
+        return name; // using un-hyphen name?
+    }
+
+    @Override
     public Class<T> getType() {
         return valtype;
     }

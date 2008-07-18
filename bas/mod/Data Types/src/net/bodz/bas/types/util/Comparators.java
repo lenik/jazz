@@ -11,6 +11,7 @@ public class Comparators {
     public static final Comparator<Object> STD;
     public static final Comparator<Object> NATURAL;
     public static final Comparator<Object> TYPE;
+    public static final Comparator<Object> TYPE_HIER;
     public static final Comparator<Object> METHOD;
     public static final Comparator<String> STRLEN;
     public static final Comparator<Object> PAIR1;
@@ -98,6 +99,52 @@ public class Comparators {
                     return 1;
                 Class<?> lt = (Class<?>) l;
                 Class<?> rt = (Class<?>) r;
+                return lt.getName().compareTo(rt.getName());
+            }
+        };
+
+        TYPE_HIER = new Comparator<Object>() {
+            private Class<?> getSuper(Class<?> type) {
+                if (type.isInterface()) {
+                    Class<?>[] intf = type.getInterfaces();
+                    // return min(intf)
+                    if (intf.length > 0)
+                        return intf[0];
+                }
+                return type.getSuperclass();
+            }
+
+            @Override
+            public int compare(Object l, Object r) {
+                if (l == r)
+                    return 0;
+                if (l == null)
+                    return -1;
+                if (r == null)
+                    return 1;
+                Class<?> lt = (Class<?>) l;
+                Class<?> rt = (Class<?>) r;
+                if (lt.isAssignableFrom(rt))
+                    return -1;
+                if (rt.isAssignableFrom(lt))
+                    return 1;
+                Class<?> com = getSuper(lt);
+                while (com != null) {
+                    if (com.isAssignableFrom(rt))
+                        break;
+                    lt = com;
+                    com = getSuper(com);
+                }
+                // maybe com == null if lt.isInterface.
+                Class<?> rsup = getSuper(rt);
+                while (rsup != null) {
+                    if (rsup == com)
+                        break;
+                    rt = rsup;
+                    rsup = getSuper(rsup);
+                }
+                // maybe rsup == null if com==null or rt.isInterface
+                // if (com==null)
                 return lt.getName().compareTo(rt.getName());
             }
         };

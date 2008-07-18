@@ -8,6 +8,7 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
@@ -20,16 +21,23 @@ import net.bodz.bas.types.util.Types;
 class _ScriptClass<T> implements ScriptClass<T> {
 
     // private Class<T> clazz;
+    private boolean                      forceAccess;
     private _ScriptClass<?>              next;
     private Map<String, ScriptField<?>>  fields;
     private Map<String, ScriptMethod<?>> methods;
 
     public _ScriptClass(Class<T> clazz) throws ScriptException {
+        this(clazz, false);
+    }
+
+    public _ScriptClass(Class<T> clazz, boolean forceAccess)
+            throws ScriptException {
         assert clazz != null;
         // this.clazz = clazz;
+        this.forceAccess = forceAccess;
         Class<?> _super = clazz.getSuperclass();
         if (_super != null)
-            next = (_ScriptClass<?>) Scripts.convertClass(_super);
+            next = (_ScriptClass<?>) Scripts.convertClass(_super, forceAccess);
 
         BeanInfo beanInfo;
         try {
@@ -51,6 +59,11 @@ class _ScriptClass<T> implements ScriptClass<T> {
     protected void importFields(Field... fields) {
         for (final Field field : fields) {
             ScriptField<Object> sfield = new ScriptField<Object>() {
+                @Override
+                public String getName() {
+                    return field.getName();
+                }
+
                 @SuppressWarnings("unchecked")
                 @Override
                 public Class<Object> getType() {
@@ -59,20 +72,32 @@ class _ScriptClass<T> implements ScriptClass<T> {
 
                 @Override
                 public Object get(Object object) throws ScriptException {
+                    boolean orig = field.isAccessible();
                     try {
+                        if (forceAccess && !orig)
+                            field.setAccessible(true);
                         return field.get(object);
                     } catch (IllegalAccessException e) {
                         throw new ScriptException(e.getMessage(), e);
+                    } finally {
+                        if (forceAccess && !orig)
+                            field.setAccessible(false);
                     }
                 }
 
                 @Override
                 public void set(Object object, Object value)
                         throws ScriptException {
+                    boolean orig = field.isAccessible();
                     try {
+                        if (forceAccess && !orig)
+                            field.setAccessible(true);
                         field.set(object, value);
                     } catch (IllegalAccessException e) {
                         throw new ScriptException(e.getMessage(), e);
+                    } finally {
+                        if (forceAccess && !orig)
+                            field.setAccessible(false);
                     }
                 }
             };
@@ -85,6 +110,10 @@ class _ScriptClass<T> implements ScriptClass<T> {
             final Method read = property.getReadMethod();
             final Method write = property.getWriteMethod();
             ScriptField<?> sfield = new ScriptField<Object>() {
+                @Override
+                public String getName() {
+                    return property.getName();
+                }
 
                 @SuppressWarnings("unchecked")
                 @Override
@@ -187,13 +216,19 @@ class _ScriptClass<T> implements ScriptClass<T> {
                             continue;
                         if (cmp > 0)
                             break;
-                        // using type adapter here
+                        // TODO - using type adapter here
+                        boolean orig = m.isAccessible();
                         try {
+                            if (forceAccess && !orig)
+                                m.setAccessible(true);
                             return m.invoke(object, parameters);
                         } catch (IllegalAccessException e) {
                             throw new ScriptException(e.getMessage(), e);
                         } catch (InvocationTargetException e) {
                             throw new ScriptException(e.getMessage(), e);
+                        } finally {
+                            if (forceAccess && !orig)
+                                m.setAccessible(false);
                         }
                     }
                     throw new UnsupportedOperationException(
@@ -228,7 +263,8 @@ class _ScriptClass<T> implements ScriptClass<T> {
 
     @Override
     public ScriptField<?>[] getFields() {
-        throw new NotImplementedException();
+        Collection<ScriptField<?>> fields = this.fields.values();
+        return fields.toArray(new ScriptField<?>[0]);
     }
 
     @Override
@@ -250,7 +286,8 @@ class _ScriptClass<T> implements ScriptClass<T> {
 
     @Override
     public ScriptMethod<?>[] getMethods() {
-        throw new NotImplementedException();
+        Collection<ScriptMethod<?>> methods = this.methods.values();
+        return methods.toArray(new ScriptMethod<?>[0]);
     }
 
     @Override
