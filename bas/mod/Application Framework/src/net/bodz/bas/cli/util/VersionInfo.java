@@ -3,6 +3,8 @@ package net.bodz.bas.cli.util;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import net.bodz.bas.types.util.Strings;
+
 public class VersionInfo implements Comparable<VersionInfo> {
 
     public String  name;
@@ -13,23 +15,9 @@ public class VersionInfo implements Comparable<VersionInfo> {
 
     private String revString;
 
-    public static String getVersion(int[] revs) {
-        if (revs == null)
-            return null;
-        StringBuffer buf = null;
-        for (int rev : revs) {
-            if (buf == null)
-                buf = new StringBuffer(revs.length * 4);
-            else
-                buf.append('.');
-            buf.append(rev);
-        }
-        return buf.toString();
-    }
-
     public String getVersion() {
         if (revString == null)
-            revString = getVersion(revision);
+            revString = Strings.joinDot(revision);
         return revString;
     }
 

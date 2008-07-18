@@ -3,16 +3,18 @@ package net.bodz.bas.cli;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.lang.reflect.Array;
+import java.lang.reflect.Constructor;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import net.bodz.bas.cli.util.Author;
-import net.bodz.bas.cli.util.Doc;
+import net.bodz.bas.annotations.ClassInfo;
+import net.bodz.bas.cli.ext.CLIPlugin;
+import net.bodz.bas.cli.ext.CLIPlugins;
 import net.bodz.bas.cli.util.Rcs;
 import net.bodz.bas.cli.util.RcsKeywords;
-import net.bodz.bas.cli.util.Version;
 import net.bodz.bas.cli.util.VersionInfo;
 import net.bodz.bas.functors.lang.ControlBreak;
 import net.bodz.bas.io.CharOut;
@@ -25,12 +27,15 @@ import net.bodz.bas.lang.err.UnexpectedException;
 import net.bodz.bas.log.ALog;
 import net.bodz.bas.log.LogOut;
 import net.bodz.bas.log.LogOuts;
+import net.bodz.bas.mod.CreateException;
+import net.bodz.bas.mod.plugins.PluginClass;
+import net.bodz.bas.mod.plugins.PluginException;
 import net.bodz.bas.types.AutoTypeMap;
 import net.bodz.bas.types.TypeParser;
 import net.bodz.bas.types.TypeParsers;
 import net.bodz.bas.types.TypeParsers.ALogParser;
 import net.bodz.bas.types.TypeParsers.CharOutParser;
-import net.bodz.bas.types.util.Annotations;
+import net.bodz.bas.types.util.Strings;
 
 /**
  * Recommend eclipse template `cli':
@@ -87,10 +92,10 @@ public class BasicCLI {
         L.setLevel(L.getLevel() - 1);
     }
 
-    protected AutoTypeMap<String, Object> vars;
+    protected AutoTypeMap<String, Object> _vars;
 
     @Option(name = "define", alias = ".D", vnam = "NAM=VAL", doc = "define variables")
-    protected void define(String exp) throws ParseException {
+    protected void _define(String exp) throws ParseException {
         int eq = exp.indexOf('=');
         String nam = exp;
         Object val = null;
@@ -101,15 +106,85 @@ public class BasicCLI {
         if (eq == -1)
             val = true;
         else {
-            Class<?> type = getVarType(nam);
+            Class<?> type = _getVarType(nam);
             TypeParser<?> parser = TypeParsers.guess(type);
             val = parser.parse(exp);
         }
-        vars.put(nam, val);
+        _vars.put(nam, val);
     }
 
-    protected Class<?> getVarType(String name) {
+    protected Class<?> _getVarType(String name) {
         return String.class;
+    }
+
+    protected CLIPlugins plugins = new CLIPlugins();
+
+    private class PluginParser<T extends CLIPlugin> implements TypeParser<T> {
+
+        @Override
+        public boolean variant() {
+            return true;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public T parse(String idCtor) throws ParseException {
+            int eq = idCtor.indexOf('=');
+            String id = idCtor;
+            String arg = null;
+            if (eq != -1) {
+                id = idCtor.substring(0, eq);
+                arg = idCtor.substring(eq + 1);
+            }
+            try {
+                PluginClass<?> pluginClass = plugins.getPluginClass(
+                        CLIPlugin.class, id);
+                Class<?> clazz = pluginClass.getType();
+                Constructor<?>[] ctors = clazz.getConstructors();
+                if (ctors.length != 1) {
+                    // fail("too many ctors to choice");
+                    return (T) pluginClass.newInstance(arg);
+                }
+
+                Class<?>[] sig = ctors[0].getParameterTypes();
+                if (sig.length == 0) {
+                    assert arg == null;
+                    return (T) pluginClass.newInstance(arg);
+                }
+                if (sig.length != 1)
+                    throw new PluginException(
+                            "no suitable constructor to use: " + pluginClass);
+
+                Class<?> sig0 = sig[0];
+                if (sig0 == String.class)
+                    return (T) pluginClass.newInstance(arg);
+                if (!sig0.isArray()) {
+                    TypeParser<?> parser = TypeParsers.guess(sig0);
+                    Object val = parser.parse(arg);
+                    return (T) pluginClass.newInstance(val);
+                }
+
+                // ctor(E[] array)
+                String[] args = {};
+                args = arg.split(",");
+                Class<?> valtype = sig0.getComponentType();
+                if (valtype == String.class)
+                    return (T) pluginClass.newInstance((Object) args);
+
+                TypeParser<?> parser = TypeParsers.guess(valtype);
+                Object valarray = Array.newInstance(valtype, args.length);
+                for (int i = 0; i < args.length; i++) {
+                    Object val = parser.parse(args[i]);
+                    Array.set(valarray, i, val);
+                }
+                return (T) pluginClass.newInstance((Object) valarray);
+            } catch (PluginException e) {
+                throw new ParseException(e.getMessage(), e);
+            } catch (CreateException e) {
+                throw new ParseException(e.getMessage(), e);
+            }
+        }
+
     }
 
     protected VersionInfo _version;
@@ -119,7 +194,7 @@ public class BasicCLI {
         public CLILog(int level) {
             super(level);
             HashMap<String, Object> hmap = new HashMap<String, Object>();
-            vars = new AutoTypeMap<String, Object>(hmap);
+            _vars = new AutoTypeMap<String, Object>(hmap);
         }
 
         @Override
@@ -144,13 +219,17 @@ public class BasicCLI {
     }
 
     public BasicCLI() {
+        TypeParsers.register(CLIPlugin.class, new PluginParser<CLIPlugin>());
         L = new CLILog(L.getLevel());
     }
 
     @Option(doc = "show version info")
-    protected void _version() {
+    protected void _version(CharOut out) {
         Class<? extends BasicCLI> clazz = getClass();
+        ClassInfo info = ClassInfo.get(clazz);
+
         String name = clazz.getSimpleName();
+
         RcsKeywords keywords = clazz.getAnnotation(RcsKeywords.class);
         if (keywords != null) {
             _version = Rcs.parseId(keywords);
@@ -168,7 +247,7 @@ public class BasicCLI {
             _version.revision = new int[] { 0 };
         }
 
-        int[] majorver = Annotations.getAnnotation(clazz, Version.class);
+        int[] majorver = info.getVersion();
         if (majorver == null)
             majorver = new int[] { 0 };
         int[] verjoin = new int[majorver.length + _version.revision.length];
@@ -176,36 +255,41 @@ public class BasicCLI {
         System.arraycopy(_version.revision, 0, verjoin, majorver.length,
                 _version.revision.length);
 
-        String author = Annotations.getAnnotation(clazz, Author.class);
+        String author = info.getAuthor();
         if (author != null)
             _version.author = author;
-
         if (_version.author == null)
             _version.author = "Caynoh";
         if (_version.state == null)
             _version.state = "UNKNOWN";
 
-        String doc = Annotations.getAnnotation(clazz, Doc.class);
+        String doc = info.getDoc();
         if (doc == null)
             doc = clazz.getName();
 
-        System.err.println(String.format("[%s] %s", name, doc));
-        System.err.println(String.format(
-                "Written by %s,  Version %s,  Last updated at %s",
-                _version.author, VersionInfo.getVersion(verjoin), _version
-                        .getDate()));
+        out.printf("[%s] %s\n", name, doc);
+        out.printf("Written by %s,  Version %s,  Last updated at %s\n",
+                _version.author, //
+                Strings.joinDot(verjoin), _version.getDate());
         throw new ControlBreak();
     }
 
     @Option(alias = ".h", doc = "show help info")
-    protected void _help() throws CLIException {
+    protected final void _help() throws CLIException {
+        _help(CharOuts.stderr);
+    }
+
+    protected void _help(CharOut out) throws CLIException {
         try {
-            _version();
+            _version(out);
         } catch (ControlBreak b) {
         }
-        System.err.println();
-        String doc = ClassCLI.helpOptions(getClass(), 4, 29);
-        System.err.print(doc);
+        out.println();
+        String hlp_opts = ClassCLI.helpOptions(getClass(), 4, 29);
+        out.print(hlp_opts);
+
+        if (plugins != null)
+            plugins.help(out, "");
         throw new ControlBreak();
     }
 
@@ -242,7 +326,7 @@ public class BasicCLI {
                         continue;
                     L.d.P(optnam, " = ", Util.dispval(optval));
                 }
-                for (Entry<String, Object> entry : vars.entrySet()) {
+                for (Entry<String, Object> entry : _vars.entrySet()) {
                     String name = entry.getKey();
                     Object value = entry.getValue();
                     L.d.P("var ", name, " = ", value);
@@ -262,17 +346,16 @@ public class BasicCLI {
         throw new ControlBreak("exit");
     }
 
-    protected static final int CLI_AUTOSTDIN = 1;
-
-    protected int _cliflags() {
-        return CLI_AUTOSTDIN;
+    protected InputStream _getDefaultIn() {
+        return System.in;
     }
 
     @OverrideOption(group = "basicMain")
     protected void _main(String[] args) throws Throwable {
         if (args.length == 0) {
-            if ((_cliflags() & CLI_AUTOSTDIN) != 0)
-                _main((File) null);
+            InputStream in = _getDefaultIn();
+            if (in != null)
+                _main(null, in);
             else
                 _help();
         } else
@@ -283,7 +366,8 @@ public class BasicCLI {
     /** if no argument specified, _main(null) is called. */
     @OverrideOption(group = "basicMain")
     protected void _main(File file) throws Throwable {
-        InputStream in = file == null ? System.in : new FileInputStream(file);
+        assert file != null;
+        FileInputStream in = new FileInputStream(file);
         _main(file, in);
         if (file != null)
             in.close();

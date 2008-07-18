@@ -8,6 +8,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.TreeMap;
+import java.util.TreeSet;
+import java.util.Map.Entry;
 
 import net.bodz.bas.cli.CLIError;
 import net.bodz.bas.lang.IVoid;
@@ -109,7 +112,40 @@ public class Types {
         return base;
     }
 
-    public static Iterable<Method> getMethods(final Class<?> clazz,
+    public static Class<?>[] findDerivations(TreeSet<Class<?>> set,
+            Class<?> type) {
+        List<Class<?>> list = new ArrayList<Class<?>>();
+        Class<?> d = set.ceiling(type);
+        while (d != null) {
+            if (!type.isAssignableFrom(d))
+                break;
+            list.add(d);
+            d = set.higher(d);
+        }
+        if (list.isEmpty())
+            return null;
+        return list.toArray(new Class<?>[0]);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <V> Entry<Class<?>, V>[] findDerivations(
+            TreeMap<Class<?>, V> map, Class<?> type) {
+        List<Entry<Class<?>, V>> list = new ArrayList<Entry<Class<?>, V>>();
+        Entry<Class<?>, V> e = map.ceilingEntry(type);
+        while (e != null) {
+            Class<?> d = e.getKey();
+            if (!type.isAssignableFrom(d))
+                break;
+            list.add(e);
+            e = map.higherEntry(d);
+        }
+        if (list.isEmpty())
+            return null;
+        return (Entry<Class<?>, V>[]) list.toArray(new Entry[0]);
+    }
+
+    /** Get matching methods */
+    public static Iterable<Method> findMethods(final Class<?> clazz,
             final String name, final Predicate pred) {
         return new Iterable<Method>() {
             @Override
@@ -136,7 +172,7 @@ public class Types {
         };
     }
 
-    public static Iterable<Method> getAllMethods(final Class<?> clazz,
+    public static Iterable<Method> findMethodsAllTree(final Class<?> clazz,
             final String name, final Predicate pred) {
         return new Iterable<Method>() {
             @Override
@@ -171,7 +207,7 @@ public class Types {
         };
     }
 
-    private static Iterable<Constructor<?>> getConstructors(
+    private static Iterable<Constructor<?>> findConstructors(
             final Constructor<?>[] ctors, final Predicate pred) {
         return new Iterable<Constructor<?>>() {
             @Override
@@ -193,43 +229,43 @@ public class Types {
     }
 
     public static Iterable<Method> getMethods(Class<?> clazz, String name) {
-        return getMethods(clazz, name, null);
+        return findMethods(clazz, name, null);
     }
 
     public static Iterable<Method> getMethods(Class<?> clazz) {
-        return getMethods(clazz, null, null);
+        return findMethods(clazz, null, null);
     }
 
-    public static Iterable<Method> getAllMethods(Class<?> clazz, String name) {
-        return getAllMethods(clazz, name, null);
+    public static Iterable<Method> getMethodsAllTree(Class<?> clazz, String name) {
+        return findMethodsAllTree(clazz, name, null);
     }
 
-    public static Iterable<Method> getAllMethods(Class<?> clazz) {
-        return getAllMethods(clazz, null, null);
+    public static Iterable<Method> getMethodsAllTree(Class<?> clazz) {
+        return findMethodsAllTree(clazz, null, null);
     }
 
-    public static Iterable<Constructor<?>> getConstructors(Class<?> clazz,
+    public static Iterable<Constructor<?>> findConstructors(Class<?> clazz,
             Predicate pred) {
-        return getConstructors(clazz.getConstructors(), pred);
+        return findConstructors(clazz.getConstructors(), pred);
     }
 
     public static Iterable<Constructor<?>> getConstructors(Class<?> clazz) {
-        return getConstructors(clazz.getConstructors(), null);
+        return findConstructors(clazz.getConstructors(), null);
     }
 
-    public static Iterable<Constructor<?>> getAllConstructors(
+    public static Iterable<Constructor<?>> findDeclaredConstructors(
             final Class<?> clazz, Predicate pred) {
-        return getConstructors(clazz.getDeclaredConstructors(), pred);
+        return findConstructors(clazz.getDeclaredConstructors(), pred);
     }
 
-    public static Iterable<Constructor<?>> getAllConstructors(
+    public static Iterable<Constructor<?>> getDeclaredConstructors(
             final Class<?> clazz) {
-        return getConstructors(clazz.getDeclaredConstructors(), null);
+        return findConstructors(clazz.getDeclaredConstructors(), null);
     }
 
     public static Method getCompatMethod(Class<?> clazz, String name,
             Class<?>[] argtypes, boolean all) {
-        Iterable<Method> methods = all ? getAllMethods(clazz, name)
+        Iterable<Method> methods = all ? getMethodsAllTree(clazz, name)
                 : getMethods(clazz, name);
         int mindist = -1;
         Method min = null;
@@ -252,8 +288,8 @@ public class Types {
     }
 
     public static Constructor<?> getCompatConstructor(Class<?> clazz,
-            Class<?>[] argtypes, boolean all) {
-        Iterable<Constructor<?>> ctors = all ? getAllConstructors(clazz)
+            Class<?>[] argtypes, boolean allDeclared) {
+        Iterable<Constructor<?>> ctors = allDeclared ? getDeclaredConstructors(clazz)
                 : getConstructors(clazz);
         int mindist = -1;
         Constructor<?> min = null;
@@ -281,11 +317,27 @@ public class Types {
             InstantiationException, IllegalAccessException,
             InvocationTargetException {
         Class<?>[] types = Types.getTypes(args);
-        Constructor<?> ctor = Types.getCompatConstructor(clazz, types);
+        Constructor<?> ctor = Types.getCompatConstructor(clazz, types, true);
         if (ctor == null)
             throw new NoSuchMethodException(clazz.getName() + "("
                     + joinNames(types) + ")");
-        return (T) ctor.newInstance(args);
+        boolean prevState = ctor.isAccessible();
+        if (!prevState)
+            ctor.setAccessible(true);
+        try {
+            return (T) ctor.newInstance(args);
+        } finally {
+            if (!prevState)
+                ctor.setAccessible(false);
+        }
+    }
+
+    public static <T> T newMemberInstance(Class<T> clazz, Object _this,
+            Object... args) throws NoSuchMethodException,
+            IllegalArgumentException, InstantiationException,
+            IllegalAccessException, InvocationTargetException {
+        Object[] concat = Arrays2.concat(_this, args);
+        return newInstance(clazz, concat);
     }
 
     @SuppressWarnings("unchecked")

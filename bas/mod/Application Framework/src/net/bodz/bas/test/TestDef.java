@@ -17,7 +17,7 @@ public class TestDef {
         this.comment = comment;
     }
 
-    public void test(Object actual) {
+    public void check(Object actual) {
         relation.test(comment, expected, actual);
     }
 
@@ -37,7 +37,7 @@ public class TestDef {
         } else {
             try {
                 Object actual = eval.eval((T) input);
-                test(actual);
+                check(actual);
             } catch (RuntimeException e) {
                 throw e;
             } catch (Error e) {

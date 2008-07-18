@@ -8,8 +8,10 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.Map.Entry;
@@ -75,11 +77,12 @@ public class ClassOptions<CT> {
             if (write == null)
                 continue;
 
+            Option opt = null;
             Method read = property.getReadMethod();
-            Option opt = read.getAnnotation(Option.class);
-            Option optw = write.getAnnotation(Option.class);
-            if (optw != null)
-                opt = optw;
+            if (read != null)
+                opt = read.getAnnotation(Option.class);
+            if (opt == null && write != null)
+                opt = write.getAnnotation(Option.class);
             if (opt == null)
                 opt = optf;
             if (opt == null)
@@ -161,7 +164,11 @@ public class ClassOptions<CT> {
         return options;
     }
 
-    public _Option<?> getOption(String name) throws CLIException {
+    public _Option<?> getOption(String name) {
+        return options.get(name);
+    }
+
+    public _Option<?> findOption(String name) throws CLIException {
         if (name.isEmpty())
             throw new CLIException("option name is empty");
         if (name.startsWith("no-"))
@@ -237,10 +244,10 @@ public class ClassOptions<CT> {
                     } else {
                         args.remove(i);
                     }
-                    opt = getOption(optnam);
+                    opt = findOption(optnam);
                 } else if (optnam.startsWith("-")) {
                     String chr = optnam.substring(1, 2);
-                    opt = getOption(chr);
+                    opt = findOption(chr);
                     if (opt.getParameterCount() == 0
                             || !opt.o.optional().isEmpty()) {
                         if (optnam.length() > 2)
@@ -270,7 +277,6 @@ public class ClassOptions<CT> {
                 missing.remove(opt);
 
             int usedArgs = 0;
-            Class<?> valtype = opt.getType();
             Object optval = null;
 
             if (opt instanceof MethodOption) {
@@ -285,33 +291,7 @@ public class ClassOptions<CT> {
                         usedArgs++;
                         optarg = args.get(i);
                     }
-                if (optarg == null)
-                    optarg = opt.o.optional();
-
-                String key = null;
-                if (opt.isMap()) {
-                    int eq = optarg.indexOf('=');
-                    if (eq == -1) {
-                        key = optarg;
-                        optarg = null;
-                    } else {
-                        key = optarg.substring(0, eq);
-                        optarg = optarg.substring(eq + 1);
-                    }
-                }
-
-                if (optarg == null)
-                    optval = Util.getTrueValue(valtype);
-                if (optval == null)
-                    try {
-                        optval = opt.parse(optarg, key);
-                    } catch (ParseException e) {
-                        throw new ParseException(
-                                "Can't get default/true value for type "
-                                        + valtype + "\n" + e.getMessage(), e);
-                    }
-                if (key != null)
-                    optval = new Pair<String, Object>(key, optval);
+                optval = _parseOptVal(opt, optarg);
             }
 
             if (optval != null)
@@ -325,7 +305,78 @@ public class ClassOptions<CT> {
             while (usedArgs-- > 0)
                 args.remove(i);
         }
+        _checkMissings(missing);
+    }
 
+    @SuppressWarnings("unchecked")
+    public void load(CT classobj, Map<String, String> argmap)
+            throws CLIException, ParseException {
+        Set<?> missing = required == null ? null : (Set<?>) required.clone();
+
+        for (Map.Entry<String, String> entry : argmap.entrySet()) {
+            String optnam = entry.getKey();
+            String optarg = entry.getValue();
+            _Option<?> opt = getOption(optnam);
+            if (missing != null && opt.o.required())
+                missing.remove(opt);
+
+            Object optval = null;
+
+            if (opt instanceof MethodOption) {
+                String[] cargs = optarg.split(",");
+                loadCall(classobj, (MethodOption) opt, Arrays.asList(cargs), 0);
+            } else if (opt.getParameterCount() > 0) {
+                // assert opt.getParameterCount() == 1;
+                optval = _parseOptVal(opt, optarg);
+            }
+
+            if (optval != null)
+                try {
+                    _Option<Object> _opt = (_Option<Object>) opt;
+                    _opt.set(classobj, optval);
+                } catch (ScriptException e) {
+                    throw new CLIException(e.getMessage(), e);
+                }
+        }
+        _checkMissings(missing);
+    }
+
+    private Object _parseOptVal(_Option<?> opt, String optarg)
+            throws ParseException {
+        Class<?> valtype = opt.getType();
+        Object optval = null;
+
+        if (optarg == null)
+            optarg = opt.o.optional();
+
+        String key = null;
+        if (opt.isMap()) {
+            int eq = optarg.indexOf('=');
+            if (eq == -1) {
+                key = optarg;
+                optarg = null;
+            } else {
+                key = optarg.substring(0, eq);
+                optarg = optarg.substring(eq + 1);
+            }
+        }
+
+        if (optarg == null)
+            optval = Util.getTrueValue(valtype);
+        if (optval == null)
+            try {
+                optval = opt.parse(optarg, key);
+            } catch (ParseException e) {
+                throw new ParseException(
+                        "Can't get default/true value for type " + valtype
+                                + "\n" + e.getMessage(), e);
+            }
+        if (key != null)
+            optval = new Pair<String, Object>(key, optval);
+        return optval;
+    }
+
+    private static void _checkMissings(Set<?> missing) throws CLIException {
         if (missing != null && !missing.isEmpty()) {
             StringBuffer buf = new StringBuffer(missing.size() * 20);
             for (Object m : missing) {

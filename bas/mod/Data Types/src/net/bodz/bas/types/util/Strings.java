@@ -59,9 +59,9 @@ public class Strings {
         return lcfirst + string.substring(1);
     }
 
-    public static String join(String separator, String... strings) {
+    public static String join(String separator, Object... strings) {
         StringBuffer buffer = null;
-        for (String s : strings) {
+        for (Object s : strings) {
             if (buffer == null)
                 buffer = new StringBuffer();
             else
@@ -69,6 +69,10 @@ public class Strings {
             buffer.append(s);
         }
         return buffer == null ? "" : buffer.toString();
+    }
+
+    public static String join(String separator, String... strings) {
+        return join(separator, (Object[]) strings);
     }
 
     public static String join(String separator, Iterable<?> iterable) {
@@ -108,6 +112,20 @@ public class Strings {
 
     public static Pair<String, String> join(String separator, Map<?, ?> map) {
         return join(separator, separator, map);
+    }
+
+    public static String joinDot(int... values) {
+        if (values == null)
+            return null;
+        StringBuffer buf = null;
+        for (int rev : values) {
+            if (buf == null)
+                buf = new StringBuffer(values.length * 4);
+            else
+                buf.append('.');
+            buf.append(rev);
+        }
+        return buf.toString();
     }
 
     public static String before(String string, String pattern) {

@@ -1,21 +1,17 @@
 package net.bodz.bas.lang.ref;
 
-public class ThreadLocalRef<T> extends Ref<T> {
+public class ThreadLocalRef<T> implements Ref<T> {
 
-    private ThreadLocal<T> tl;
+    private ThreadLocal<T> local = new ThreadLocal<T>();
 
-    public ThreadLocalRef() {
-        tl = new ThreadLocal<T>();
+    @Override
+    public T get() {
+        return local.get();
     }
 
     @Override
-    protected T peek() {
-        return tl.get();
-    }
-
-    @Override
-    protected void put(T o) {
-        tl.set(o);
+    public void set(T o) {
+        local.set(o);
     }
 
 }

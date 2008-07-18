@@ -111,19 +111,19 @@ public class MethodSignature {
     }
 
     public Iterable<Method> getMethods(Class<?> clazz) {
-        return Types.getMethods(clazz, name, new methodp());
+        return Types.findMethods(clazz, name, new methodp());
     }
 
     public Iterable<Method> getAllMethods(Class<?> clazz) {
-        return Types.getAllMethods(clazz, name, new methodp());
+        return Types.findMethodsAllTree(clazz, name, new methodp());
     }
 
     public Iterable<Constructor<?>> getConstructors(Class<?> clazz) {
-        return Types.getConstructors(clazz, new ctorp());
+        return Types.findConstructors(clazz, new ctorp());
     }
 
     public Iterable<Constructor<?>> getAllConstructors(Class<?> clazz) {
-        return Types.getAllConstructors(clazz, new ctorp());
+        return Types.findDeclaredConstructors(clazz, new ctorp());
     }
 
     public Method getCompatMethod(Class<?> clazz, boolean all) {

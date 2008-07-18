@@ -1,16 +1,16 @@
 package net.bodz.bas.lang.ref;
 
-public class StaticRef<T> extends Ref<T> {
+public class SimpleRef<T> implements Ref<T> {
 
     private T o;
 
     @Override
-    protected T peek() {
+    public T get() {
         return o;
     }
 
     @Override
-    protected void put(T o) {
+    public void set(T o) {
         this.o = o;
     }
 

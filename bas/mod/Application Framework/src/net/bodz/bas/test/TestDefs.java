@@ -1,5 +1,7 @@
 package net.bodz.bas.test;
 
+import static net.bodz.bas.test.Relations.ArrayEQU;
+import static net.bodz.bas.test.Relations.ArrayNEQ;
 import static net.bodz.bas.test.Relations.EQ;
 import static net.bodz.bas.test.Relations.EQU;
 import static net.bodz.bas.test.Relations.EQf;
@@ -31,7 +33,9 @@ import static net.bodz.bas.test.Relations._NE;
  *         return input;
  *     }
  * }, //
- *         EQ(&quot;example test&quot;, 1 + 1, 2)
+ *         EQ(&quot;example test&quot;, 1 + 1, 2), //
+ *         EQ(&quot;example test&quot;, 1 + 1, 2), //
+ *         END
  * );
  * </pre>
  */
@@ -88,6 +92,15 @@ public class TestDefs {
         return new TestDef(null, input, relation, expected);
     }
 
+    public static final TestDef END;
+    static {
+        END = new TestDef(null, null, OK, null) {
+            @Override
+            public <T> void test(TestEval<T> eval) {
+            }
+        };
+    }
+
     public static TestDef OK(String comment, Object input) {
         return new TestDef(comment, input, OK, null);
     }
@@ -142,6 +155,22 @@ public class TestDefs {
 
     public static TestDef NEQ(Object input, Object expected) {
         return new TestDef(null, input, NEQ, expected);
+    }
+
+    public static TestDef ArrayEQU(String comment, Object input, Object expected) {
+        return new TestDef(comment, input, ArrayEQU, expected);
+    }
+
+    public static TestDef ArrayEQU(Object input, Object expected) {
+        return new TestDef(null, input, ArrayEQU, expected);
+    }
+
+    public static TestDef ArrayNEQ(String comment, Object input, Object expected) {
+        return new TestDef(comment, input, ArrayNEQ, expected);
+    }
+
+    public static TestDef ArrayNEQ(Object input, Object expected) {
+        return new TestDef(null, input, ArrayNEQ, expected);
     }
 
     public static TestDef _EQ(String comment, Object input, Object expected) {
