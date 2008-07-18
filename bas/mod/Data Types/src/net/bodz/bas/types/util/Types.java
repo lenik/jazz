@@ -8,9 +8,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.TreeMap;
-import java.util.TreeSet;
-import java.util.Map.Entry;
 
 import net.bodz.bas.cli.CLIError;
 import net.bodz.bas.lang.IVoid;
@@ -112,41 +109,9 @@ public class Types {
         return base;
     }
 
-    public static Class<?>[] findDerivations(TreeSet<Class<?>> set,
-            Class<?> type) {
-        List<Class<?>> list = new ArrayList<Class<?>>();
-        Class<?> d = set.ceiling(type);
-        while (d != null) {
-            if (!type.isAssignableFrom(d))
-                break;
-            list.add(d);
-            d = set.higher(d);
-        }
-        if (list.isEmpty())
-            return null;
-        return list.toArray(new Class<?>[0]);
-    }
-
-    @SuppressWarnings("unchecked")
-    public static <V> Entry<Class<?>, V>[] findDerivations(
-            TreeMap<Class<?>, V> map, Class<?> type) {
-        List<Entry<Class<?>, V>> list = new ArrayList<Entry<Class<?>, V>>();
-        Entry<Class<?>, V> e = map.ceilingEntry(type);
-        while (e != null) {
-            Class<?> d = e.getKey();
-            if (!type.isAssignableFrom(d))
-                break;
-            list.add(e);
-            e = map.higherEntry(d);
-        }
-        if (list.isEmpty())
-            return null;
-        return (Entry<Class<?>, V>[]) list.toArray(new Entry[0]);
-    }
-
     /** Get matching methods */
     public static Iterable<Method> findMethods(final Class<?> clazz,
-            final String name, final Predicate pred) {
+            final String name, final Predicate<Method> pred) {
         return new Iterable<Method>() {
             @Override
             public Iterator<Method> iterator() {
@@ -173,7 +138,7 @@ public class Types {
     }
 
     public static Iterable<Method> findMethodsAllTree(final Class<?> clazz,
-            final String name, final Predicate pred) {
+            final String name, final Predicate<Method> pred) {
         return new Iterable<Method>() {
             @Override
             public Iterator<Method> iterator() {
@@ -208,7 +173,7 @@ public class Types {
     }
 
     private static Iterable<Constructor<?>> findConstructors(
-            final Constructor<?>[] ctors, final Predicate pred) {
+            final Constructor<?>[] ctors, final Predicate<Constructor<?>> pred) {
         return new Iterable<Constructor<?>>() {
             @Override
             public Iterator<Constructor<?>> iterator() {
@@ -220,7 +185,7 @@ public class Types {
                         if (i >= ctors.length)
                             return END;
                         Constructor<?> ctor = ctors[i++];
-                        boolean matched = pred == null || pred.eval(ctors);
+                        boolean matched = pred == null || pred.eval(ctor);
                         return matched ? ctor : fetch();
                     }
                 };
@@ -245,7 +210,7 @@ public class Types {
     }
 
     public static Iterable<Constructor<?>> findConstructors(Class<?> clazz,
-            Predicate pred) {
+            Predicate<Constructor<?>> pred) {
         return findConstructors(clazz.getConstructors(), pred);
     }
 
@@ -254,7 +219,7 @@ public class Types {
     }
 
     public static Iterable<Constructor<?>> findDeclaredConstructors(
-            final Class<?> clazz, Predicate pred) {
+            final Class<?> clazz, Predicate<Constructor<?>> pred) {
         return findConstructors(clazz.getDeclaredConstructors(), pred);
     }
 

@@ -45,7 +45,7 @@ public class CLIPluginType<T extends CLIPlugin> extends PluginType<T> {
                 T tmp = pluginClass.newInstance();
                 tmp.help(out, prefix + "    ");
             } catch (CreateException e) {
-                out.println(prefix + "    (failed to instantiate)");
+                out.println(prefix + "    (failed to instantiate: " + e + ")");
             }
         }
     }

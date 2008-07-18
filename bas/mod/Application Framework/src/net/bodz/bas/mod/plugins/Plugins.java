@@ -2,19 +2,18 @@ package net.bodz.bas.mod.plugins;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeMap;
 import java.util.Map.Entry;
 
+import net.bodz.bas.lang.Predicate;
 import net.bodz.bas.mod.CreateException;
-import net.bodz.bas.types.util.Comparators;
-import net.bodz.bas.types.util.Types;
+import net.bodz.bas.types.TypeHierMap;
 
 public class Plugins {
 
-    protected TreeMap<Class<?>, PluginType<?>> types;
+    protected TypeHierMap<PluginType<?>> types;
 
     public Plugins() {
-        types = new TreeMap<Class<?>, PluginType<?>>(Comparators.TYPE_HIER);
+        types = new TypeHierMap<PluginType<?>>();
     }
 
     public <T> boolean registerPluginType(PluginType<T> pluginType) {
@@ -33,16 +32,16 @@ public class Plugins {
     @SuppressWarnings("unchecked")
     public <T> PluginType<T> getPluginType(Class<T> pluginTypeClass,
             boolean strict) {
-        Entry<Class<?>, PluginType<?>> supersome = types
-                .floorEntry(pluginTypeClass);
-        if (supersome != null) {
-            Class<?> supersomeClass = supersome.getKey();
-            if (supersomeClass.isAssignableFrom(pluginTypeClass))
-                return (PluginType<T>) supersome.getValue();
+        PluginType<?> pluginType;
+        if (strict)
+            pluginType = types.get(pluginTypeClass);
+        else
+            pluginType = types.getBase(pluginTypeClass);
+        if (pluginType == null) {
+            pluginType = new PluginType<T>(pluginTypeClass);
+            types.put(pluginTypeClass, pluginType);
         }
-        PluginType<T> pluginType = new PluginType<T>(pluginTypeClass);
-        types.put(pluginTypeClass, pluginType);
-        return pluginType;
+        return (PluginType<T>) pluginType;
     }
 
     public <T> PluginType<T> getPluginType(Class<T> pluginTypeClass) {
@@ -84,19 +83,20 @@ public class Plugins {
         pluginType.register(pluginId, staticPlugin);
     }
 
-    PluginClass<?> find(Class<?> pluginTypeClass, String pluginId)
+    PluginClass<?> find(Class<?> pluginTypeClass, final String pluginId)
             throws PluginException {
-        Entry<Class<?>, PluginType<?>>[] derivations = Types.findDerivations(
-                types, pluginTypeClass);
-        if (derivations == null)
-            return null;
-        List<PluginClass<?>> found = new ArrayList<PluginClass<?>>();
-        for (Entry<Class<?>, PluginType<?>> e : derivations) {
-            PluginType<?> pluginType = e.getValue();
-            PluginClass<?> pc = pluginType.get(pluginId);
-            if (pc != null)
-                found.add(pc);
-        }
+        final List<PluginClass<?>> found = new ArrayList<PluginClass<?>>();
+        types.findSub(pluginTypeClass,
+                new Predicate<Entry<Class<?>, PluginType<?>>>() {
+                    @Override
+                    public boolean eval(Entry<Class<?>, PluginType<?>> e) {
+                        PluginType<?> pluginType = e.getValue();
+                        PluginClass<?> pc = pluginType.get(pluginId);
+                        if (pc != null)
+                            found.add(pc);
+                        return true;
+                    }
+                });
         if (found.isEmpty())
             return null;
         if (found.size() > 1) {

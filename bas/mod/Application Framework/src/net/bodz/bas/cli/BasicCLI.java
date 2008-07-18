@@ -147,15 +147,21 @@ public class BasicCLI {
                 }
 
                 Class<?>[] sig = ctors[0].getParameterTypes();
-                if (sig.length == 0) {
+                int len = sig.length;
+                int off = 0;
+                if (clazz.isMemberClass()) {
+                    len--;
+                    off++;
+                }
+                if (len == 0) {
                     assert arg == null;
                     return (T) pluginClass.newInstance(arg);
                 }
-                if (sig.length != 1)
+                if (len != 1)
                     throw new PluginException(
                             "no suitable constructor to use: " + pluginClass);
 
-                Class<?> sig0 = sig[0];
+                Class<?> sig0 = sig[off];
                 if (sig0 == String.class)
                     return (T) pluginClass.newInstance(arg);
                 if (!sig0.isArray()) {
@@ -166,7 +172,8 @@ public class BasicCLI {
 
                 // ctor(E[] array)
                 String[] args = {};
-                args = arg.split(",");
+                if (arg != null)
+                    args = arg.split(",");
                 Class<?> valtype = sig0.getComponentType();
                 if (valtype == String.class)
                     return (T) pluginClass.newInstance((Object) args);
@@ -184,7 +191,6 @@ public class BasicCLI {
                 throw new ParseException(e.getMessage(), e);
             }
         }
-
     }
 
     protected VersionInfo _version;

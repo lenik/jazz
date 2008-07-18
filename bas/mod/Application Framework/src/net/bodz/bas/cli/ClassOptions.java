@@ -19,17 +19,18 @@ import java.util.Map.Entry;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.lang.script.ScriptException;
 import net.bodz.bas.types.Pair;
+import net.bodz.bas.types.PrefixMap;
 import net.bodz.bas.types.util.Types;
 
 public class ClassOptions<CT> {
 
-    private TreeMap<String, _Option<?>> options;
+    private PrefixMap<_Option<?>>       options;
     private Set<String>                 weakAliases;
     public TreeMap<Integer, _Option<?>> specfiles;
     private HashSet<_Option<?>>         required;
 
     public ClassOptions(Class<CT> clazz) {
-        options = new TreeMap<String, _Option<?>>();
+        options = new PrefixMap<_Option<?>>();
         weakAliases = new HashSet<String>();
 
         BeanInfo beanInfo;
@@ -173,28 +174,25 @@ public class ClassOptions<CT> {
             throw new CLIException("option name is empty");
         if (name.startsWith("no-"))
             name = name.substring(3);
-        Entry<String, _Option<?>> entry = options.ceilingEntry(name);
-        if (entry == null)
+        if (options.containsKey(name))
+            return options.get(name);
+        List<String> fullnames = options.getSubKeys(name);
+        if (fullnames.isEmpty())
             throw new CLIException("no such option: " + name);
-        String nam = entry.getKey();
-        if (!nam.startsWith(name))
-            throw new CLIException("no such option: " + name);
-        if (!nam.equals(name)) {
-            String nam2 = options.higherKey(nam);
-            if (nam2.startsWith(name)) {
-                StringBuffer cands = new StringBuffer();
-                while (nam != null) {
-                    cands.append(nam);
-                    cands.append('\n');
-                    nam = options.higherKey(nam);
-                    if (nam == null || !nam.startsWith(name))
-                        break;
-                }
-                throw new CLIException("ambiguous option " + name + ": \n"
-                        + cands.toString());
+        if (fullnames.size() > 1) {
+            StringBuffer cands = new StringBuffer();
+            for (String nam : fullnames) {
+                cands.append(nam);
+                cands.append('\n');
+                nam = options.higherKey(nam);
+                if (nam == null || !nam.startsWith(name))
+                    break;
             }
+            throw new CLIException("ambiguous option " + name + ": \n"
+                    + cands.toString());
         }
-        return entry.getValue();
+        String fullname = fullnames.get(0);
+        return options.get(fullname);
     }
 
     private static final String[] String_0 = {};

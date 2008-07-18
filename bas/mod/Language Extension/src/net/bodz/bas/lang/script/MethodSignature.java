@@ -96,17 +96,17 @@ public class MethodSignature {
         }
     }
 
-    private class methodp implements Predicate {
+    private class methodp implements Predicate<Method> {
         @Override
-        public boolean eval(Object o) {
-            return matches((Method) o);
+        public boolean eval(Method method) {
+            return matches(method);
         }
     }
 
-    private class ctorp implements Predicate {
+    private class ctorp implements Predicate<Constructor<?>> {
         @Override
-        public boolean eval(Object o) {
-            return matches((Constructor<?>) o);
+        public boolean eval(Constructor<?> ctor) {
+            return matches(ctor);
         }
     }
 

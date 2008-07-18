@@ -1,7 +1,5 @@
 package net.bodz.bas.test;
 
-import net.bodz.bas.test.Relations.Throws;
-
 public class TestDef {
 
     public final String   comment;
@@ -23,28 +21,15 @@ public class TestDef {
 
     @SuppressWarnings("unchecked")
     public <T> void test(TestEval<T> eval) {
-        if (relation instanceof Throws) {
-            Throws throwsp = (Throws) relation;
-            try {
-                eval.eval((T) input);
-            } catch (RuntimeException e) {
-                throwsp.test(comment, expected, e);
-            } catch (Error e) {
-                throwsp.test(comment, expected, e);
-            } catch (Throwable e) {
-                throwsp.test(comment, expected, e);
-            }
-        } else {
-            try {
-                Object actual = eval.eval((T) input);
-                check(actual);
-            } catch (RuntimeException e) {
-                throw e;
-            } catch (Error e) {
-                throw e;
-            } catch (Throwable e) {
-                throw new RuntimeException(e.getMessage(), e);
-            }
+        try {
+            Object actual = eval.eval((T) input);
+            check(actual);
+        } catch (RuntimeException e) {
+            throw e;
+        } catch (Error e) {
+            throw e;
+        } catch (Throwable e) {
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
 

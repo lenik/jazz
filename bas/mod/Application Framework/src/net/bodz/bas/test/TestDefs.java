@@ -18,7 +18,6 @@ import static net.bodz.bas.test.Relations.NEf;
 import static net.bodz.bas.test.Relations.NN;
 import static net.bodz.bas.test.Relations.OK;
 import static net.bodz.bas.test.Relations.T;
-import static net.bodz.bas.test.Relations.Throws;
 import static net.bodz.bas.test.Relations._EQ;
 import static net.bodz.bas.test.Relations._NE;
 
@@ -83,13 +82,17 @@ public class TestDefs {
         _defs.test(eval);
     }
 
+    private static String hi(Object input) {
+        return input + " => ";
+    }
+
     public static TestDef entry(String comment, Relation relation,
             Object input, Object expected) {
         return new TestDef(comment, input, relation, expected);
     }
 
     public static TestDef entry(Relation relation, Object input, Object expected) {
-        return new TestDef(null, input, relation, expected);
+        return new TestDef(hi(input), input, relation, expected);
     }
 
     public static final TestDef END;
@@ -106,7 +109,7 @@ public class TestDefs {
     }
 
     public static TestDef OK(Object input) {
-        return new TestDef(null, input, OK, null);
+        return new TestDef(hi(input), input, OK, null);
     }
 
     public static TestDef T(String comment, Object input) {
@@ -114,7 +117,7 @@ public class TestDefs {
     }
 
     public static TestDef T(Object input) {
-        return new TestDef(null, input, T, null);
+        return new TestDef(hi(input), input, T, null);
     }
 
     public static TestDef F(String comment, Object input) {
@@ -122,7 +125,7 @@ public class TestDefs {
     }
 
     public static TestDef F(Object input) {
-        return new TestDef(null, input, F, null);
+        return new TestDef(hi(input), input, F, null);
     }
 
     public static TestDef N(String comment, Object input) {
@@ -130,7 +133,7 @@ public class TestDefs {
     }
 
     public static TestDef N(Object input) {
-        return new TestDef(null, input, N, null);
+        return new TestDef(hi(input), input, N, null);
     }
 
     public static TestDef NN(String comment, Object input) {
@@ -138,7 +141,7 @@ public class TestDefs {
     }
 
     public static TestDef NN(Object input) {
-        return new TestDef(null, input, NN, null);
+        return new TestDef(hi(input), input, NN, null);
     }
 
     public static TestDef EQU(String comment, Object input, Object expected) {
@@ -146,7 +149,7 @@ public class TestDefs {
     }
 
     public static TestDef EQU(Object input, Object expected) {
-        return new TestDef(null, input, EQU, expected);
+        return new TestDef(hi(input), input, EQU, expected);
     }
 
     public static TestDef NEQ(String comment, Object input, Object expected) {
@@ -154,7 +157,7 @@ public class TestDefs {
     }
 
     public static TestDef NEQ(Object input, Object expected) {
-        return new TestDef(null, input, NEQ, expected);
+        return new TestDef(hi(input), input, NEQ, expected);
     }
 
     public static TestDef ArrayEQU(String comment, Object input, Object expected) {
@@ -162,7 +165,7 @@ public class TestDefs {
     }
 
     public static TestDef ArrayEQU(Object input, Object expected) {
-        return new TestDef(null, input, ArrayEQU, expected);
+        return new TestDef(hi(input), input, ArrayEQU, expected);
     }
 
     public static TestDef ArrayNEQ(String comment, Object input, Object expected) {
@@ -170,7 +173,7 @@ public class TestDefs {
     }
 
     public static TestDef ArrayNEQ(Object input, Object expected) {
-        return new TestDef(null, input, ArrayNEQ, expected);
+        return new TestDef(hi(input), input, ArrayNEQ, expected);
     }
 
     public static TestDef _EQ(String comment, Object input, Object expected) {
@@ -178,7 +181,7 @@ public class TestDefs {
     }
 
     public static TestDef _EQ(Object input, Object expected) {
-        return new TestDef(null, input, _EQ, expected);
+        return new TestDef(hi(input), input, _EQ, expected);
     }
 
     public static TestDef _NE(String comment, Object input, Object expected) {
@@ -186,7 +189,7 @@ public class TestDefs {
     }
 
     public static TestDef _NE(Object input, Object expected) {
-        return new TestDef(null, input, _NE, expected);
+        return new TestDef(hi(input), input, _NE, expected);
     }
 
     public static TestDef EQ(String comment, Object input, Object expected) {
@@ -194,7 +197,7 @@ public class TestDefs {
     }
 
     public static TestDef EQ(Object input, Object expected) {
-        return new TestDef(null, input, EQ, expected);
+        return new TestDef(hi(input), input, EQ, expected);
     }
 
     public static TestDef NE(String comment, Object input, Object expected) {
@@ -202,7 +205,7 @@ public class TestDefs {
     }
 
     public static TestDef NE(Object input, Object expected) {
-        return new TestDef(null, input, NE, expected);
+        return new TestDef(hi(input), input, NE, expected);
     }
 
     public static TestDef LT(String comment, Object input, Object expected) {
@@ -210,7 +213,7 @@ public class TestDefs {
     }
 
     public static TestDef LT(Object input, Object expected) {
-        return new TestDef(null, input, LT, expected);
+        return new TestDef(hi(input), input, LT, expected);
     }
 
     public static TestDef LE(String comment, Object input, Object expected) {
@@ -218,7 +221,7 @@ public class TestDefs {
     }
 
     public static TestDef LE(Object input, Object expected) {
-        return new TestDef(null, input, LE, expected);
+        return new TestDef(hi(input), input, LE, expected);
     }
 
     public static TestDef GT(String comment, Object input, Object expected) {
@@ -226,7 +229,7 @@ public class TestDefs {
     }
 
     public static TestDef GT(Object input, Object expected) {
-        return new TestDef(null, input, GT, expected);
+        return new TestDef(hi(input), input, GT, expected);
     }
 
     public static TestDef GE(String comment, Object input, Object expected) {
@@ -234,7 +237,7 @@ public class TestDefs {
     }
 
     public static TestDef GE(Object input, Object expected) {
-        return new TestDef(null, input, GE, expected);
+        return new TestDef(hi(input), input, GE, expected);
     }
 
     public static TestDef EQf(String comment, Object input, Object expected) {
@@ -242,7 +245,7 @@ public class TestDefs {
     }
 
     public static TestDef EQf(Object input, Object expected) {
-        return new TestDef(null, input, EQf, expected);
+        return new TestDef(hi(input), input, EQf, expected);
     }
 
     public static TestDef NEf(String comment, Object input, Object expected) {
@@ -250,7 +253,7 @@ public class TestDefs {
     }
 
     public static TestDef NEf(Object input, Object expected) {
-        return new TestDef(null, input, NEf, expected);
+        return new TestDef(hi(input), input, NEf, expected);
     }
 
     public static TestDef InstOf(String comment, Object input, Object expected) {
@@ -258,15 +261,29 @@ public class TestDefs {
     }
 
     public static TestDef InstOf(Object input, Object expected) {
-        return new TestDef(null, input, InstOf, expected);
+        return new TestDef(hi(input), input, InstOf, expected);
     }
 
-    public static TestDef Throws(String comment, Object input, Object expected) {
-        return new TestDef(comment, input, Throws, expected);
+    public static TestDef Throws(String comment, Object input,
+            final Class<? extends Throwable> expected) {
+        return new TestDef(comment, input, InstOf, expected) {
+            @SuppressWarnings("unchecked")
+            @Override
+            public <T> void test(TestEval<T> eval) {
+                Throwable actual = null;
+                try {
+                    eval.eval((T) input);
+                } catch (Throwable e) {
+                    actual = e;
+                }
+                check(actual);
+            }
+        };
     }
 
-    public static TestDef Throws(Object input, Object expected) {
-        return new TestDef(null, input, Throws, expected);
+    public static TestDef Throws(Object input,
+            Class<? extends Throwable> expected) {
+        return Throws(hi(input), input, expected);
     }
 
 }
