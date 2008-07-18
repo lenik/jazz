@@ -9,6 +9,7 @@ import net.bodz.bas.lang.script.MethodSignature;
 
 public class Annotations {
 
+    /** Get annotation value */
     @SuppressWarnings("unchecked")
     public static <T, A extends Annotation> T getAnnotation(Class<?> clazz,
             Class<A> annotationClass) {
@@ -70,8 +71,6 @@ public class Annotations {
         }
 
         for (Method method : msig.getAllMethods(clazz)) {
-            
-            System.out.println(method);
             A annotation = method.getAnnotation(annotationClass);
             if (annotation != null)
                 return annotation;

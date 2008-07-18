@@ -1,7 +1,7 @@
 package net.bodz.bas.lang;
 
-public interface Predicate {
+public interface Predicate<T> {
 
-    boolean eval(Object o);
+    boolean eval(T o);
 
 }

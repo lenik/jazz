@@ -183,6 +183,49 @@ public class BatchProcessCLI extends BasicCLI {
         return new File(outd, base);
     }
 
+    protected File getOutputFile(File in) {
+        return getOutputFile(in, currentStartFile);
+    }
+
+    /** display progress info and calc stat */
+    protected void _process(File file) throws IOException {
+        Throwable err = null;
+        String[] tags = {};
+        try {
+            L.i.sig("[proc] ", file);
+            ProcessResult result = BatchProcessCLI.this.process(file);
+            stat.add(result);
+            if (result == null) {
+                L.d.P("[skip] ", file);
+                return;
+            }
+            tags = result.tags;
+            if (result.error)
+                if ((err = result.cause) == null)
+                    L.e.P("[fail] ", file);
+            if (result.done)
+                L.u.P("[", result.getOperationName(), "] ", //
+                        getOutputFile(file));
+        } catch (IOException e) {
+            err = e;
+        } catch (Throwable e) {
+            err = e;
+            throw new RuntimeException(e.getMessage(), e);
+        } finally {
+            if (err != null) {
+                stat.add(ProcessResult.error(err, tags));
+                L.e.P("[fail] ", file + ": " + err.getMessage());
+            }
+        }
+    }
+
+    /**
+     * <ul>
+     * <li>create edit tmp file
+     * <li>display diff
+     * <li>do result operation
+     * </ul>
+     */
     @OverrideOption(group = "batchProcess")
     protected ProcessResult process(File file) throws Throwable {
         File editTmp = _getEditTmp(file);
@@ -198,7 +241,7 @@ public class BatchProcessCLI extends BasicCLI {
         ProcessResult result = process(file, editTmp);
         if (result == null) // ignored
             return null;
-        File dst = getOutputFile(file, currentStartFile);
+        File dst = getOutputFile(file);
         if (result.dest instanceof String) {
             String relpath = (String) result.dest;
             result.dest = new File(dst, relpath);
@@ -282,6 +325,8 @@ public class BatchProcessCLI extends BasicCLI {
     }
 
     /**
+     * open file
+     * 
      * @return PROCESS_IGNORE: file skipped <br>
      *         PROCESS_EDIT: have the result written to the out file
      */
@@ -305,6 +350,8 @@ public class BatchProcessCLI extends BasicCLI {
     }
 
     /**
+     * read lines
+     * 
      * @return PROCESS_IGNORE: file skipped <br>
      *         PROCESS_EDIT: have the result written to the output
      */
@@ -319,6 +366,8 @@ public class BatchProcessCLI extends BasicCLI {
     }
 
     /**
+     * for each line
+     * 
      * @return PROCESS_IGNORE: file skipped <br>
      *         PROCESS_EDIT: have the result written to the output
      */
@@ -358,34 +407,7 @@ public class BatchProcessCLI extends BasicCLI {
                 recursive, rootLast, sortComparator) {
             @Override
             public void process(File file) throws IOException {
-                Throwable err = null;
-                String[] tags = {};
-                try {
-                    L.i.sig("[proc] ", file);
-                    ProcessResult result = BatchProcessCLI.this.process(file);
-                    stat.add(result);
-                    if (result == null) {
-                        L.d.P("[skip] ", file);
-                        return;
-                    }
-                    tags = result.tags;
-                    if (result.error)
-                        if ((err = result.cause) == null)
-                            L.e.P("[fail] ", file);
-                    if (result.done)
-                        L.u.P("[", result.getOperationName(), "] ",
-                                getOutputFile(file, currentStartFile));
-                } catch (IOException e) {
-                    err = e;
-                } catch (Throwable e) {
-                    err = e;
-                    throw new RuntimeException(e.getMessage(), e);
-                } finally {
-                    if (err != null) {
-                        stat.add(ProcessResult.error(err, tags));
-                        L.e.P("[fail] ", file + ": " + err.getMessage());
-                    }
-                }
+                _process(file);
             }
         };
         walker.walk();

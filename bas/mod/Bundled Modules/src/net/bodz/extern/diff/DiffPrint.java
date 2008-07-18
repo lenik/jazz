@@ -50,12 +50,12 @@ public class DiffPrint {
          * Set to ignore certain kinds of lines when printing an edit script.
          * For example, ignoring blank lines or comments.
          */
-        protected Predicate ignore = null;
+        protected Predicate<Object> ignore = null;
 
         /**
          * Set to the lines of the files being compared.
          */
-        protected List<?>        file0, file1;
+        protected List<?>           file0, file1;
 
         /**
          * Divide SCRIPT into pieces by calling HUNKFUN and print each piece

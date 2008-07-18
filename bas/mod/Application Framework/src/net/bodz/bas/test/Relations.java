@@ -243,9 +243,6 @@ public class Relations {
         }
     }
 
-    public static class Throws extends InstOf {
-    }
-
     public static class ArrayAll implements Relation {
         protected final Relation component;
 
@@ -332,7 +329,6 @@ public class Relations {
     public static final EQf      EQf      = new EQf();
     public static final NEf      NEf      = new NEf();
     public static final InstOf   InstOf   = new InstOf();
-    public static final Throws   Throws   = new Throws();
 
     public static final ArrayAll ArrayAll(Relation component) {
         return new ArrayAll(component);
