@@ -6,6 +6,10 @@ import net.bodz.bas.cli.CLIException;
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.lang.err.ParseException;
 
+/**
+ * Implementations must have at least a default constructor, while more
+ * constructors may be useful to receive cli-arguments.
+ */
 public interface CLIPlugin {
 
     // static methods
@@ -16,7 +20,7 @@ public interface CLIPlugin {
 
     // instance methods
 
-    void setParameters(Map<String, String> parameters) throws CLIException,
+    void setParameters(Map<String, Object> parameters) throws CLIException,
             ParseException;
 
 }

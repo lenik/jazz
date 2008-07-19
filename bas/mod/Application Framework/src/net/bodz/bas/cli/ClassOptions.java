@@ -307,25 +307,28 @@ public class ClassOptions<CT> {
     }
 
     @SuppressWarnings("unchecked")
-    public void load(CT classobj, Map<String, String> argmap)
+    public void load(CT classobj, Map<String, Object> argmap)
             throws CLIException, ParseException {
         Set<?> missing = required == null ? null : (Set<?>) required.clone();
 
-        for (Map.Entry<String, String> entry : argmap.entrySet()) {
+        for (Map.Entry<String, Object> entry : argmap.entrySet()) {
             String optnam = entry.getKey();
-            String optarg = entry.getValue();
+            Object optval = entry.getValue();
             _Option<?> opt = getOption(optnam);
+            if (opt == null)
+                continue;
+            // argmap.remove(optnam)
             if (missing != null && opt.o.required())
                 missing.remove(opt);
 
-            Object optval = null;
-
             if (opt instanceof MethodOption) {
-                String[] cargs = optarg.split(",");
+                String arg = String.valueOf(optval);
+                String[] cargs = arg.split(",");
                 loadCall(classobj, (MethodOption) opt, Arrays.asList(cargs), 0);
             } else if (opt.getParameterCount() > 0) {
                 // assert opt.getParameterCount() == 1;
-                optval = _parseOptVal(opt, optarg);
+                if (optval instanceof String)
+                    optval = _parseOptVal(opt, (String) optval);
             }
 
             if (optval != null)
