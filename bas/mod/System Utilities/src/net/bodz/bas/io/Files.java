@@ -896,9 +896,22 @@ public class Files {
         return TMPDIR;
     }
 
+    /** get name without extension */
+    public static String getName(File file) {
+        String name = file.getName();
+        int dot = name.lastIndexOf('.');
+        if (dot != -1)
+            return name.substring(0, dot);
+        return name;
+    }
+
+    public static String getName(String file) {
+        return getName(new File(file));
+    }
+
     public static String getExtension(String file, boolean includeDot) {
         int dot = file.lastIndexOf('.');
-        if (dot >= 0)
+        if (dot != -1)
             return file.substring(includeDot ? dot : dot + 1);
         return "";
     }

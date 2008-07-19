@@ -2,7 +2,7 @@ package net.bodz.bas.test;
 
 public class TestDef {
 
-    public final String   comment;
+    public String         comment;
     public final Object   input;
     public final Relation relation;
     public final Object   expected;
@@ -20,8 +20,10 @@ public class TestDef {
     }
 
     @SuppressWarnings("unchecked")
-    public <T> void test(TestEval<T> eval) {
+    public <T> void test(TestEval<T> eval, TestDefs defs) {
         try {
+            if (eval instanceof _TestEval && defs != null)
+                ((_TestEval) eval).setBreakpoint(defs.inBreakpoint());
             Object actual = eval.eval((T) input);
             check(actual);
         } catch (RuntimeException e) {

@@ -40,33 +40,59 @@ import static net.bodz.bas.test.Relations._NE;
  */
 public class TestDefs {
 
-    private String    groupName;
-    private TestDef[] defs;
+    private String               groupName;
+    private TestDef[]            defs;
+
+    private boolean              failBP;
+    private ThreadLocal<Boolean> inBreakpoint;
+    {
+        failBP = "1".equals(System.getProperty("failBP"));
+        inBreakpoint = new ThreadLocal<Boolean>();
+        inBreakpoint.set(false);
+    }
 
     public TestDefs(String groupName, TestDef... defs) {
         this.groupName = groupName;
-        this.defs = defs;
+        this.defs = wrapDefs(defs);
     }
 
     public TestDefs(TestDef... defs) {
         this(null, defs);
     }
 
+    private TestDef[] wrapDefs(TestDef[] defs) {
+        for (int i = 0; i < defs.length; i++) {
+            TestDef def = defs[i];
+            String comment = "[" + (1 + i) + "]";
+            if (groupName != null)
+                comment = groupName + comment;
+            if (def.comment != null)
+                comment += " " + def.comment;
+            def.comment = comment;
+        }
+        return defs;
+    }
+
+    public boolean inBreakpoint() {
+        return inBreakpoint.get();
+    }
+
     public <T> void test(TestEval<T> eval) {
-        if (groupName == null) {
-            for (TestDef def : defs)
-                def.test(eval);
-        } else {
-            for (int i = 0; i < defs.length; i++) {
-                TestDef def = defs[i];
-                String comment = "[" + i + "]";
-                if (groupName != null)
-                    comment = groupName + comment;
-                if (def.comment != null)
-                    comment += " " + def.comment;
-                def = new TestDef(comment, def.input, def.relation,
-                        def.expected);
-                def.test(eval);
+        for (int i = 0; i < defs.length; i++) {
+            TestDef def = defs[i];
+            if (failBP) {
+                try {
+                    def.test(eval, this);
+                } catch (Throwable t) {
+                    // HINT: Please set breakpoint at next statement.
+                    // or using
+                    inBreakpoint.set(true);
+                    def.test(eval, this);
+                } finally {
+                    inBreakpoint.set(false);
+                }
+            } else {
+                def.test(eval, this);
             }
         }
     }
@@ -99,7 +125,12 @@ public class TestDefs {
     static {
         END = new TestDef(null, null, OK, null) {
             @Override
-            public <T> void test(TestEval<T> eval) {
+            public <T> void test(TestEval<T> eval, TestDefs defs) {
+            }
+
+            @Override
+            public String toString() {
+                return "(END)";
             }
         };
     }
@@ -269,7 +300,7 @@ public class TestDefs {
         return new TestDef(comment, input, InstOf, expected) {
             @SuppressWarnings("unchecked")
             @Override
-            public <T> void test(TestEval<T> eval) {
+            public <T> void test(TestEval<T> eval, TestDefs defs) {
                 Throwable actual = null;
                 try {
                     eval.eval((T) input);

@@ -126,7 +126,6 @@ public class BasicCLI {
             return true;
         }
 
-        @SuppressWarnings("unchecked")
         @Override
         public T parse(String idCtor) throws ParseException {
             int eq = idCtor.indexOf('=');
@@ -137,59 +136,75 @@ public class BasicCLI {
                 arg = idCtor.substring(eq + 1);
             }
             try {
-                PluginClass<?> pluginClass = plugins.getPluginClass(
-                        CLIPlugin.class, id);
-                Class<?> clazz = pluginClass.getType();
-                Constructor<?>[] ctors = clazz.getConstructors();
-                if (ctors.length != 1) {
-                    // fail("too many ctors to choice");
-                    return (T) pluginClass.newInstance(arg);
-                }
-
-                Class<?>[] sig = ctors[0].getParameterTypes();
-                int len = sig.length;
-                int off = 0;
-                if (clazz.isMemberClass()) {
-                    len--;
-                    off++;
-                }
-                if (len == 0) {
-                    assert arg == null;
-                    return (T) pluginClass.newInstance(arg);
-                }
-                if (len != 1)
-                    throw new PluginException(
-                            "no suitable constructor to use: " + pluginClass);
-
-                Class<?> sig0 = sig[off];
-                if (sig0 == String.class)
-                    return (T) pluginClass.newInstance(arg);
-                if (!sig0.isArray()) {
-                    TypeParser<?> parser = TypeParsers.guess(sig0);
-                    Object val = parser.parse(arg);
-                    return (T) pluginClass.newInstance(val);
-                }
-
-                // ctor(E[] array)
-                String[] args = {};
-                if (arg != null)
-                    args = arg.split(",");
-                Class<?> valtype = sig0.getComponentType();
-                if (valtype == String.class)
-                    return (T) pluginClass.newInstance((Object) args);
-
-                TypeParser<?> parser = TypeParsers.guess(valtype);
-                Object valarray = Array.newInstance(valtype, args.length);
-                for (int i = 0; i < args.length; i++) {
-                    Object val = parser.parse(args[i]);
-                    Array.set(valarray, i, val);
-                }
-                return (T) pluginClass.newInstance((Object) valarray);
+                T plugin = create(id, arg);
+                plugin.setParameters(_vars);
+                return plugin;
             } catch (PluginException e) {
                 throw new ParseException(e.getMessage(), e);
             } catch (CreateException e) {
                 throw new ParseException(e.getMessage(), e);
+            } catch (CLIException e) {
+                throw new ParseException(e.getMessage(), e);
             }
+        }
+
+        @SuppressWarnings("unchecked")
+        private T create(String pluginId, String ctorArg)
+                throws CreateException, PluginException, ParseException {
+            PluginClass<?> pluginClass = plugins.getPluginClass(
+                    CLIPlugin.class, pluginId);
+            if (pluginClass == null)
+                throw new PluginException("no plugin of " + pluginId);
+            Class<?> clazz = pluginClass.getType();
+            Constructor<?>[] ctors = clazz.getConstructors();
+            Constructor<?> ctor = null;
+            Class<?>[] sig = null;
+            for (Constructor<?> _ctor : ctors) {
+                Class<?>[] _sig = _ctor.getParameterTypes();
+                if (ctor == null || _sig.length > sig.length) {
+                    ctor = _ctor;
+                    sig = _sig;
+                }
+            }
+            assert ctor != null;
+            int len = sig.length;
+            int off = 0;
+            if (clazz.isMemberClass()) {
+                len--;
+                off++;
+            }
+            if (len == 0) {
+                assert ctorArg == null;
+                return (T) pluginClass.newInstance(ctorArg);
+            }
+            if (len != 1)
+                throw new PluginException("no suitable constructor to use: "
+                        + pluginClass);
+
+            Class<?> sig0 = sig[off];
+            if (sig0 == String.class)
+                return (T) pluginClass.newInstance(ctorArg);
+            if (!sig0.isArray()) {
+                TypeParser<?> parser = TypeParsers.guess(sig0);
+                Object val = parser.parse(ctorArg);
+                return (T) pluginClass.newInstance(val);
+            }
+
+            // ctor(E[] array)
+            String[] args = {};
+            if (ctorArg != null)
+                args = ctorArg.split(",");
+            Class<?> valtype = sig0.getComponentType();
+            if (valtype == String.class)
+                return (T) pluginClass.newInstance((Object) args);
+
+            TypeParser<?> parser = TypeParsers.guess(valtype);
+            Object valarray = Array.newInstance(valtype, args.length);
+            for (int i = 0; i < args.length; i++) {
+                Object val = parser.parse(args[i]);
+                Array.set(valarray, i, val);
+            }
+            return (T) pluginClass.newInstance((Object) valarray);
         }
     }
 
@@ -307,7 +322,7 @@ public class BasicCLI {
         return opts;
     }
 
-    public final void climain(String[] args) throws Throwable {
+    public final void climain(String... args) throws Throwable {
         Class<? extends BasicCLI> clazz = getClass();
         _RunInfo runInfo = _RunInfo.parse(clazz, true);
 

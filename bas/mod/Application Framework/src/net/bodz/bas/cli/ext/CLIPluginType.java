@@ -34,10 +34,13 @@ public class CLIPluginType<T extends CLIPlugin> extends PluginType<T> {
             String desc = pluginClass.getDescription();
             out.print(prefix);
             out.print(id);
-            if (desc != null) {
-                out.print(": ");
-                int delta = maxlen - id.length();
-                out.print(Strings.repeat(delta, ' '));
+            out.print(": ");
+            int delta = maxlen - id.length();
+            out.print(Strings.repeat(delta, ' '));
+            if (desc == null) {
+                out.print(pluginClass);
+            } else {
+                out.print(desc);
             }
             out.println();
 

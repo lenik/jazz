@@ -32,7 +32,7 @@ public class _CLIPlugin implements CLIPlugin {
     }
 
     @Override
-    public void setParameters(Map<String, String> parameters)
+    public void setParameters(Map<String, Object> parameters)
             throws CLIException, ParseException {
         if (parameters.isEmpty())
             return;

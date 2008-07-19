@@ -400,7 +400,7 @@ public class BatchProcessCLI extends BasicCLI {
     @Override
     @OverrideOption(group = "batchProcess")
     protected void _main(final File argfile) throws Throwable {
-        L.i.P("[start]", argfile);
+        L.i.sig("[start] ", argfile);
         currentStartFile = argfile;
         FileFilter walkfilter = fileFilter;
         FsWalk walker = new FsWalk(argfile, walkfilter, filterDirectories,
