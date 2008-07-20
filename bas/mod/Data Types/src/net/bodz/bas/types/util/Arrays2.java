@@ -4,16 +4,16 @@ import java.lang.reflect.Array;
 
 public class Arrays2 {
 
-    public static Object copyOf(Object array, int off, int len) {
+    public static <T> T copyOf(T array, int off, int len) {
         Class<?> type = array.getClass();
         if (!type.isArray())
             throw new IllegalArgumentException("not an array: " + array);
         Class<?> ctype = type.getComponentType();
         int alen = Array.getLength(array);
         assert off >= 0 && len >= 0 && off + len <= alen;
-        Object dup;
         // if (ctype.isPrimitive())
-        dup = Array.newInstance(ctype, len);
+        @SuppressWarnings("unchecked") T dup = (T) Array
+                .newInstance(ctype, len);
         System.arraycopy(array, off, dup, 0, len);
         return dup;
     }
