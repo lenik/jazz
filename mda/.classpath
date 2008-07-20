@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/net.bodz.bas"/>
+	<classpathentry kind="src" output="mod/Text Parser/bin" path="mod/Text Parser/src"/>
+	<classpathentry kind="src" output="mod/Text Parser/test.bin" path="mod/Text Parser/test"/>
 	<classpathentry kind="src" output="mod/Yagg/bin" path="mod/Yagg/src"/>
 	<classpathentry kind="src" output="mod/Yagg/test.bin" path="mod/Yagg/test"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/net.bodz.bas"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
