@@ -94,6 +94,38 @@ public class FastMath {
         }
     }
 
-    // combines...
+    public static int ones(int bits) {
+        int c = 0;
+        while (bits != 0) {
+            bits = bits & (bits - 1);
+            c++;
+        }
+        return c;
+    }
+
+    public static int ones(long bits) {
+        int c = 0;
+        while (bits != 0) {
+            bits = bits & (bits - 1);
+            c++;
+        }
+        return c;
+    }
+
+    public static int zeros(byte bits) {
+        return Byte.SIZE - ones(bits);
+    }
+
+    public static int zeros(short bits) {
+        return Short.SIZE - ones(bits);
+    }
+
+    public static int zeros(int bits) {
+        return Integer.SIZE - ones(bits);
+    }
+
+    public static int zeros(long bits) {
+        return Long.SIZE - ones(bits);
+    }
 
 }
