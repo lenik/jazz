@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<project name="net.bodz.swt" default="default">
+
+	<property environment="env" />
+	<property name="distdir" value="${env.JAVA_LIB}" />
+	<property name="distsrc" value="${env.JAVA_SRC}" />
+
+	<target name="default" depends="dist">
+	</target>
+
+	<target name="dist" depends=":bin.jar, :src.jar">
+		<copy todir="${distdir}">
+			<fileset dir="${basedir}/build">
+				<exclude name="*-source.jar" />
+			</fileset>
+		</copy>
+		<copy todir="${distsrc}">
+			<fileset dir="${basedir}/build">
+				<include name="*-source.jar" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name=":bin.jar">
+		<jar destfile="build/net.bodz.swt.jar">
+			<fileset dir="mod/Bundled Modules/bin" />
+			<fileset dir="mod/Common Controls/bin" />
+			<fileset dir="mod/GUI Framework/bin" />
+		</jar>
+	</target>
+
+	<target name=":src.jar">
+		<jar destfile="build/net.bodz.swt-source.jar">
+			<fileset dir="mod/Bundled Modules/src" />
+			<fileset dir="mod/Common Controls/src" />
+			<fileset dir="mod/GUI Framework/src" />
+		</jar>
+	</target>
+
+</project>
