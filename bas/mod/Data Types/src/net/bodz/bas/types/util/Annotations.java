@@ -12,8 +12,14 @@ public class Annotations {
     /** Get annotation value */
     @SuppressWarnings("unchecked")
     public static <T, A extends Annotation> T getAnnotation(Class<?> clazz,
-            Class<A> annotationClass) {
-        A annotation = clazz.getAnnotation(annotationClass);
+            Class<A> annotationClass, boolean inherits) {
+        A annotation = null;
+        do {
+            annotation = clazz.getAnnotation(annotationClass);
+            if (annotation != null)
+                break;
+        } while (inherits && (clazz = clazz.getSuperclass()) != null);
+
         if (annotation == null)
             return null;
         try {
@@ -24,6 +30,11 @@ public class Annotations {
         } catch (Exception e) {
             throw new Error(e.getMessage(), e);
         }
+    }
+
+    public static <T, A extends Annotation> T getAnnotation(Class<?> clazz,
+            Class<A> annotationClass) {
+        return getAnnotation(clazz, annotationClass, false);
     }
 
     public static <A extends Annotation> A getFieldAnnotation(Class<?> clazz,

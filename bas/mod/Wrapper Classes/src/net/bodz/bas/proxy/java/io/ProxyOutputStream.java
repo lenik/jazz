@@ -3,6 +3,10 @@ package net.bodz.bas.proxy.java.io;
 import java.io.IOException;
 import java.io.OutputStream;
 
+/**
+ * @see java.io.FilterOutputStream
+ */
+@Deprecated
 public class ProxyOutputStream extends OutputStream {
 
     protected OutputStream proxy;

@@ -1,13 +1,12 @@
 package net.bodz.bas.io;
 
+import java.io.FilterReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.nio.CharBuffer;
 
-import net.bodz.bas.proxy.java.io.ProxyReader;
-
-public class LAReader extends ProxyReader {
+public class LAReader extends FilterReader {
 
     // LA(cap)
     protected final int cap;

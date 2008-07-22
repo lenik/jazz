@@ -135,7 +135,7 @@ public class CharOuts {
 
     public static class Buffer extends CharOut {
 
-        protected final StringBuffer buffer;
+        private StringBuffer buffer;
 
         public Buffer(StringBuffer buffer) {
             this.buffer = buffer;
@@ -145,8 +145,13 @@ public class CharOuts {
             this(new StringBuffer());
         }
 
-        public StringBuffer getStringBuffer() {
+        public StringBuffer getBuffer() {
             return buffer;
+        }
+
+        public void setBuffer(StringBuffer buffer) {
+            assert buffer != null;
+            this.buffer = buffer;
         }
 
         @Override
@@ -165,21 +170,17 @@ public class CharOuts {
             buffer.append(chars, off, off + len);
         }
 
-        public StringBuffer getBuffer() {
-            return buffer;
-        }
-
         public char charAt(int index) {
-            return getBuffer().charAt(index);
+            return buffer.charAt(index);
         }
 
         public int length() {
-            return getBuffer().length();
+            return buffer.length();
         }
 
         @Override
         public String toString() {
-            return getBuffer().toString();
+            return buffer.toString();
         }
 
     }

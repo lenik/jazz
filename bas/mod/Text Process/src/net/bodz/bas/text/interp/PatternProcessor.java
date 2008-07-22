@@ -1,21 +1,23 @@
-package net.bodz.bas.types.util;
+package net.bodz.bas.text.interp;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class PatternProcessor {
+import net.bodz.bas.io.CharOuts.Buffer;
+import net.bodz.bas.lang.annotations.OverrideOption;
 
-    protected Pattern      pattern;
-    protected String       source;
-    protected StringBuffer buffer;
+public class PatternProcessor extends Buffer {
 
-    protected Matcher      matcher;
-    protected int          matchIndex;
+    protected Pattern pattern;
+    protected String  source;
+
+    protected Matcher matcher;
+    protected int     matchIndex;
 
     /** end() position of last match */
-    protected int          matchBegin;
+    protected int     matchBegin;
 
-    protected int          count;
+    protected int     count;
 
     public PatternProcessor(Pattern pattern) {
         this.pattern = pattern;
@@ -33,18 +35,18 @@ public class PatternProcessor {
         matched(source.substring(start, end));
     }
 
-    // Recommend Override
+    @OverrideOption
     protected void matched(String part) {
-        buffer.append(part);
+        print(part);
     }
 
     protected void unmatched(int start, int end) {
         unmatched(source.substring(start, end));
     }
 
-    // Recommend Override
+    @OverrideOption
     protected void unmatched(String part) {
-        buffer.append(part);
+        print(part);
     }
 
     public synchronized String process(String source) {
@@ -53,7 +55,7 @@ public class PatternProcessor {
         matchIndex = 0;
         matchBegin = 0;
         count = 0;
-        buffer = new StringBuffer();
+        setBuffer(new StringBuffer());
         while (matcher.find()) {
             int start = matcher.start();
             int end = matcher.end();
@@ -76,11 +78,16 @@ public class PatternProcessor {
         if (matchBegin < source.length())
             unmatched(matchBegin, source.length());
 
-        return buffer.toString();
+        return super.toString();
     }
 
     public int getMatchedCount() {
         return count;
+    }
+
+    @Override
+    public String toString() {
+        return getClass() + "-" + System.identityHashCode(this);
     }
 
 }

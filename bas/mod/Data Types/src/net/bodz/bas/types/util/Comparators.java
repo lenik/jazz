@@ -8,13 +8,31 @@ import net.bodz.bas.types.Pair;
 
 public class Comparators {
 
+    /** compare Comparables */
     public static final Comparator<Object> STD;
+
+    /** if not Comparable, then compare by toString() */
     public static final Comparator<Object> NATURAL;
+
+    /** compare type name lexically */
     public static final Comparator<Object> TYPE;
+
+    /** compare by type hierarchically */
     public static final Comparator<Object> TYPE_HIER;
+
+    /**
+     * compare by method name, then parameters count, then each parameter's
+     * typename
+     */
     public static final Comparator<Object> METHOD;
+
+    /** compare by string length, then string text */
     public static final Comparator<String> STRLEN;
+
+    /** compare by key of pair */
     public static final Comparator<Object> PAIR1;
+
+    /** compare by value of pair */
     public static final Comparator<Object> PAIR2;
 
     public static <T> Comparator<T> descend(final Comparator<T> comparator) {

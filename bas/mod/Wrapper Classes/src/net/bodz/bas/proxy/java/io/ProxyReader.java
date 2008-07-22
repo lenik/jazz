@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.CharBuffer;
 
+/**
+ * @see java.io.FilterReader
+ */
+@Deprecated
 public class ProxyReader extends Reader {
 
     protected Reader proxy;

@@ -74,28 +74,28 @@ public class BasicCLI {
     protected ALog    L              = CLIConfig.getBootLog(ALog.INFO);
 
     @Option(hidden = true)
-    protected String  _logPrefix     = "[" + getClass().getSimpleName() + "] ";
+    String            _logPrefix     = "[" + getClass().getSimpleName() + "] ";
 
     @Option(hidden = true)
-    protected boolean _logWithPrefix = true;
+    boolean           _logWithPrefix = true;
 
     @Option(hidden = true)
-    protected boolean _logWithDate   = false;
+    boolean           _logWithDate   = false;
 
     @Option(alias = "v", doc = "repeat to get more info")
-    protected void _verbose() {
+    void _verbose() {
         L.setLevel(L.getLevel() + 1);
     }
 
     @Option(alias = "q", doc = "repeat to get less info")
-    protected void _quiet() {
+    void _quiet() {
         L.setLevel(L.getLevel() - 1);
     }
 
     protected AutoTypeMap<String, Object> _vars;
 
     @Option(name = "define", alias = ".D", vnam = "NAM=VAL", doc = "define variables")
-    protected void _define(String exp) throws ParseException {
+    void _define(String exp) throws ParseException {
         int eq = exp.indexOf('=');
         String nam = exp;
         Object val = null;
@@ -117,7 +117,7 @@ public class BasicCLI {
         return String.class;
     }
 
-    protected CLIPlugins plugins = new CLIPlugins();
+    protected final CLIPlugins plugins = new CLIPlugins();
 
     private class PluginParser<T extends CLIPlugin> implements TypeParser<T> {
 
@@ -208,8 +208,6 @@ public class BasicCLI {
         }
     }
 
-    protected VersionInfo _version;
-
     protected class CLILog extends ALog {
 
         public CLILog(int level) {
@@ -244,54 +242,71 @@ public class BasicCLI {
         L = new CLILog(L.getLevel());
     }
 
+    private ClassInfo _classInfo;
+
+    protected ClassInfo _loadClassInfo() {
+        if (_classInfo == null) {
+            Class<? extends BasicCLI> clazz = getClass();
+            ClassInfo info = ClassInfo.get(clazz);
+
+            String name = clazz.getSimpleName();
+            String doc = info.getDoc();
+            if (doc == null)
+                doc = clazz.getName();
+
+            int[] majorver = info.getVersion();
+            if (majorver == null)
+                majorver = new int[] { 0 };
+
+            RcsKeywords keywords = clazz.getAnnotation(RcsKeywords.class);
+            VersionInfo verinfo;
+            if (keywords != null) {
+                verinfo = Rcs.parseId(keywords);
+            } else {
+                verinfo = new VersionInfo();
+                URL url = Files.getClassResource(clazz);
+                File file;
+                try {
+                    file = new File(url.toURI());
+                } catch (URISyntaxException e) {
+                    throw new UnexpectedException(e.getMessage(), e);
+                }
+                verinfo.name = name;
+                verinfo.time = file.lastModified();
+                verinfo.revision = new int[] { 0 };
+            }
+
+            int[] verjoin = new int[majorver.length + verinfo.revision.length];
+            System.arraycopy(majorver, 0, verjoin, 0, majorver.length);
+            System.arraycopy(verinfo.revision, 0, verjoin, majorver.length,
+                    verinfo.revision.length);
+
+            String author = info.getAuthor();
+            if (author != null)
+                verinfo.author = author;
+            if (verinfo.author == null)
+                verinfo.author = "Caynoh";
+            if (verinfo.state == null)
+                verinfo.state = "UNKNOWN";
+
+            info.setName(name);
+            info.setDoc(doc);
+            info.setAuthor(author);
+            info.setVersion(verjoin);
+            info.setDateString(verinfo.getDate());
+            _classInfo = info;
+        }
+        return _classInfo;
+    }
+
     @Option(doc = "show version info")
     protected void _version(CharOut out) {
-        Class<? extends BasicCLI> clazz = getClass();
-        ClassInfo info = ClassInfo.get(clazz);
-
-        String name = clazz.getSimpleName();
-
-        RcsKeywords keywords = clazz.getAnnotation(RcsKeywords.class);
-        if (keywords != null) {
-            _version = Rcs.parseId(keywords);
-        } else {
-            _version = new VersionInfo();
-            URL url = Files.getClassResource(clazz);
-            File file;
-            try {
-                file = new File(url.toURI());
-            } catch (URISyntaxException e) {
-                throw new UnexpectedException(e.getMessage(), e);
-            }
-            _version.name = name;
-            _version.time = file.lastModified();
-            _version.revision = new int[] { 0 };
-        }
-
-        int[] majorver = info.getVersion();
-        if (majorver == null)
-            majorver = new int[] { 0 };
-        int[] verjoin = new int[majorver.length + _version.revision.length];
-        System.arraycopy(majorver, 0, verjoin, 0, majorver.length);
-        System.arraycopy(_version.revision, 0, verjoin, majorver.length,
-                _version.revision.length);
-
-        String author = info.getAuthor();
-        if (author != null)
-            _version.author = author;
-        if (_version.author == null)
-            _version.author = "Caynoh";
-        if (_version.state == null)
-            _version.state = "UNKNOWN";
-
-        String doc = info.getDoc();
-        if (doc == null)
-            doc = clazz.getName();
-
-        out.printf("[%s] %s\n", name, doc);
-        out.printf("Written by %s,  Version %s,  Last updated at %s\n",
-                _version.author, //
-                Strings.joinDot(verjoin), _version.getDate());
+        ClassInfo info = _loadClassInfo();
+        out.printf("[%s] %s\n", info.getName(), info.getDoc());
+        out.printf("Written by %s,  Version %s,  Last updated at %s\n", //
+                info.getAuthor(), //
+                Strings.joinDot(info.getVersion()), //
+                info.getDateString());
         throw new ControlBreak();
     }
 
@@ -376,27 +391,27 @@ public class BasicCLI {
         if (args.length == 0) {
             InputStream in = _getDefaultIn();
             if (in != null)
-                _main(null, in);
+                doFileArgument(null, in);
             else
                 _help();
         } else
             for (String arg : args)
-                _main(new File(arg));
+                doFileArgument(new File(arg));
     }
 
     /** if no argument specified, _main(null) is called. */
     @OverrideOption(group = "basicMain")
-    protected void _main(File file) throws Throwable {
+    protected void doFileArgument(File file) throws Throwable {
         assert file != null;
         FileInputStream in = new FileInputStream(file);
-        _main(file, in);
+        doFileArgument(file, in);
         if (file != null)
             in.close();
     }
 
     /** if no argument specified, _main(null, stdin) is called. */
     @OverrideOption(group = "basicMain")
-    protected void _main(File file, InputStream in) throws Throwable {
+    protected void doFileArgument(File file, InputStream in) throws Throwable {
         throw new NotImplementedException();
     }
 

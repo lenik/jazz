@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -33,71 +32,71 @@ import net.bodz.bas.types.diff.DiffInfo;
 public class BatchProcessCLI extends BasicCLI {
 
     @Option(alias = ".e", vnam = "ENCODING", doc = "default encoding of input files")
-    protected Charset          inputEncoding  = Charset.defaultCharset();
+    protected Charset inputEncoding  = Charset.defaultCharset();
     @Option(alias = ".E", vnam = "ENCODING", doc = "default encoding of output files")
-    protected Charset          outputEncoding = Charset.defaultCharset();
+    protected Charset outputEncoding = Charset.defaultCharset();
 
     @Option(alias = "O", vnam = "DIR", doc = "put output files under this directory")
-    protected File             outputDirectory;
+    protected File    outputDirectory;
 
     @Option(vnam = ".EXT", optional = ".bak", doc = "backup modified files with given extension")
-    protected String           backupExtension;
+    protected String  backupExtension;
 
     @Option(alias = "i", doc = "prefer to do case-insensitive comparation")
-    protected boolean          ignoreCase;
+    protected boolean ignoreCase;
 
     @Option(alias = "P", doc = "protected mode, don't modify any files")
-    protected boolean          dryRun;
+    protected boolean dryRun;
 
     @Option(alias = "f", doc = "force overwrite existing files, this includes --error-continue")
-    protected boolean          force;
+    protected boolean force;
 
     @Option(doc = "always continue when error occurred")
-    protected boolean          errorContinue;
+    protected boolean errorContinue;
 
     @Option(alias = "r", vnam = "[DEPTH]", optional = "65536", doc = "max depth of directories recurse into")
-    protected int              recursive;
+    protected int     recursive;
     @Option(alias = "rl", doc = "process children files before the parent directory")
-    protected boolean          rootLast;
+    boolean           rootLast;
 
     @Option(alias = "Im", vnam = "FILEMASK", doc = "include specified type of files, default non-hidden files")
-    protected FileMask         inclusiveMask  = new FileMask("f/fH");
+    FileMask          inclusiveMask  = new FileMask("f/fH");
     @Option(alias = "IM", vnam = "FILEMASK", doc = "exclude specified type of files")
-    protected FileMask         exclusiveMask;
+    FileMask          exclusiveMask;
 
     @Option(alias = "If", vnam = "WILDCARDS", parser = WildcardsParser.class, doc = "include these filenames")
-    protected Pattern          fileInclusivePattern;
+    Pattern           fileInclusivePattern;
     @Option(alias = "IF", vnam = "WILDCARDS", parser = WildcardsParser.class, doc = "exclude these filenames")
-    protected Pattern          fileExclusivePattern;
+    Pattern           fileExclusivePattern;
 
     @Option(alias = "Ip", vnam = "REGEXP", doc = "include these pathnames")
-    protected Pattern          pathInclusivePattern;
+    Pattern           pathInclusivePattern;
     @Option(alias = "IP", vnam = "REGEXP", doc = "exclude these pathnames")
-    protected Pattern          pathExclusivePattern;
+    Pattern           pathExclusivePattern;
 
     @Option(alias = "Id", doc = "also apply filters on directories")
-    protected boolean          filterDirectories;
+    boolean           filterDirectories;
 
     @Option(alias = "Ic", vnam = "CLASS(FileFilter)", parser = ClassInstanceParser.class, doc = "using custom file filter, this will override other --I* options")
-    protected FileFilter       fileFilter;
+    FileFilter        fileFilter;
 
     @Option(vnam = "CLASS(Comparator)", parser = ClassInstanceParser.class, doc = "sort files in each directory")
-    protected Comparator<File> sortComparator;
+    Comparator<File>  sortComparator;
 
     @Option(alias = ".X", vnam = "DIFF-ALG", optional = "gnudiff", doc = "show diff between original and modified files, default using gnudiff")
-    protected DiffComparator   diffAlgorithm;
+    DiffComparator    diffAlgorithm;
 
     @Option(alias = "Xf", vnam = "FORMAT", doc = "Simdiff, ED, Context, Unified, Normal")
-    protected DiffFormat       diffFormat     = DiffFormats.Simdiff;
+    DiffFormat        diffFormat     = DiffFormats.Simdiff;
 
     @Option(alias = "Xo", vnam = "FILE", doc = "write diff output to specified file")
-    protected CharOut          diffOutput     = CharOuts.stdout;
+    CharOut           diffOutput     = CharOuts.stdout;
 
     @Option(alias = "X3", doc = "diff between src/dst/out, when output to different file")
-    protected boolean          diff3          = false;
+    boolean           diff3          = false;
 
     @Option(alias = "X2", doc = "diff between src/out rather then src/dst, only used when output directory is different")
-    protected boolean          diffWithDest   = false;
+    boolean           diffWithDest   = false;
 
     protected BatchProcessCLI() {
         fileFilter = new FileFilter() {
@@ -131,7 +130,7 @@ public class BatchProcessCLI extends BasicCLI {
         return File.createTempFile(tmpPrefix, dotExt, tmpDir);
     }
 
-    protected boolean diff(File a, File b) throws IOException {
+    private boolean diff(File a, File b) throws IOException {
         assert a != null;
         assert b != null;
         if (a.exists() && !b.exists()) {
@@ -160,40 +159,30 @@ public class BatchProcessCLI extends BasicCLI {
     private File   tmpDir    = Files.getTmpDir();
     private String tmpPrefix = getClass().getSimpleName();
 
-    private File   currentStartFile;
+    protected File currentStartFile;
 
-    private File getOutputFile(File in, File start) {
-        if (outputDirectory == null)
-            return in;
-        List<String> tails = new ArrayList<String>();
-        for (File look = in;; look = look.getParentFile()) {
-            if (look == null)
-                throw new UnexpectedException("file " + in
-                        + " not in the start dir " + start);
-            if (look.equals(start))
-                break;
-            tails.add(look.getName());
-        }
-        File outd = outputDirectory;
-        for (int i = tails.size() - 1; i >= 1; i--)
-            outd = new File(outd, tails.get(i));
-        if (outd.isFile())
-            throw new Error("invalid output directory: " + outd);
-        String base = in.getName();
-        return new File(outd, base);
+    protected String getRelativeName(File in) {
+        return Files.getRelativeName(in, currentStartFile);
     }
 
     protected File getOutputFile(File in) {
-        return getOutputFile(in, currentStartFile);
+        if (outputDirectory == null)
+            return in;
+        String relative = getRelativeName(in);
+        File out = new File(outputDirectory, relative);
+        File outd = out.getParentFile();
+        if (outd.isFile())
+            throw new Error("invalid output directory: " + outd);
+        return out;
     }
 
     /** display progress info and calc stat */
-    protected void _process(File file) throws IOException {
+    protected void _doFile(File file) {
         Throwable err = null;
         String[] tags = {};
         try {
             L.i.sig("[proc] ", file);
-            ProcessResult result = BatchProcessCLI.this.process(file);
+            ProcessResult result = BatchProcessCLI.this.doFile(file);
             stat.add(result);
             if (result == null) {
                 L.d.P("[skip] ", file);
@@ -208,6 +197,10 @@ public class BatchProcessCLI extends BasicCLI {
                         getOutputFile(file));
         } catch (IOException e) {
             err = e;
+        } catch (RuntimeException e) {
+            throw e;
+        } catch (Error e) {
+            throw e;
         } catch (Throwable e) {
             err = e;
             throw new RuntimeException(e.getMessage(), e);
@@ -227,18 +220,18 @@ public class BatchProcessCLI extends BasicCLI {
      * </ul>
      */
     @OverrideOption(group = "batchProcess")
-    protected ProcessResult process(File file) throws Throwable {
+    protected ProcessResult doFile(File file) throws Throwable {
         File editTmp = _getEditTmp(file);
         try {
-            return _process(file, editTmp);
+            return doFile(file, editTmp);
         } finally {
             if (editTmp != null)
                 editTmp.delete();
         }
     }
 
-    private ProcessResult _process(File file, File editTmp) throws Throwable {
-        ProcessResult result = process(file, editTmp);
+    private ProcessResult doFile(File file, File editTmp) throws Throwable {
+        ProcessResult result = doFileEdit(file, editTmp);
         if (result == null) // ignored
             return null;
         File dst = getOutputFile(file);
@@ -267,22 +260,22 @@ public class BatchProcessCLI extends BasicCLI {
 
         switch (result.operation) {
         case ProcessResult.DELETE:
-            if (shell.delete(dst))
+            if (psh.delete(dst))
                 result.setDone();
             return result;
 
         case ProcessResult.RENAME:
-            if (shell.renameTo(file, dst))
+            if (psh.renameTo(file, dst))
                 result.setDone();
             return result;
 
         case ProcessResult.MOVE:
-            if (shell.move(file, dst, force))
+            if (psh.move(file, dst, force))
                 result.setDone();
             return result;
 
         case ProcessResult.COPY:
-            if (shell.copy(file, dst))
+            if (psh.copy(file, dst))
                 result.setDone();
             return result;
 
@@ -301,7 +294,7 @@ public class BatchProcessCLI extends BasicCLI {
 
             File dstdir = dst.getParentFile();
             if (dstdir != null)
-                shell.mkdirs(dstdir);
+                psh.mkdirs(dstdir);
             if (!diffPrinted) {
                 if (diff3) {
                     diff(file, editTmp);
@@ -312,7 +305,7 @@ public class BatchProcessCLI extends BasicCLI {
                     diff(file, editTmp);
                 }
             }
-            shell.copy(editTmp, dst);
+            psh.copy(editTmp, dst);
 
             result.setDone();
             return result;
@@ -331,7 +324,7 @@ public class BatchProcessCLI extends BasicCLI {
      *         PROCESS_EDIT: have the result written to the out file
      */
     @OverrideOption(group = "batchProcess")
-    protected ProcessResult process(File in, File out) throws Throwable {
+    protected ProcessResult doFileEdit(File in, File out) throws Throwable {
         InputStream ins = null;
         OutputStream outs = null;
         try {
@@ -340,7 +333,7 @@ public class BatchProcessCLI extends BasicCLI {
                 outs = new FileOutputStream(out);
             else
                 outs = System.out;
-            return process(ins, outs);
+            return doFileEdit(ins, outs);
         } finally {
             if (ins != null)
                 ins.close();
@@ -356,13 +349,13 @@ public class BatchProcessCLI extends BasicCLI {
      *         PROCESS_EDIT: have the result written to the output
      */
     @OverrideOption(group = "batchProcess")
-    protected ProcessResult process(InputStream in, OutputStream out)
+    protected ProcessResult doFileEdit(InputStream in, OutputStream out)
             throws Throwable {
         Iterable<String> inIter = Files.readByLine2(inputEncoding.name(), in);
         CharOut cout = CharOuts.stdout;
         if (out != null)
             cout = CharOuts.get(out, outputEncoding.name());
-        return process(inIter, cout);
+        return doFileEdit(inIter, cout);
     }
 
     /**
@@ -372,19 +365,19 @@ public class BatchProcessCLI extends BasicCLI {
      *         PROCESS_EDIT: have the result written to the output
      */
     @OverrideOption(group = "batchProcess")
-    protected ProcessResult process(Iterable<String> lines, CharOut out)
+    protected ProcessResult doFileEdit(Iterable<String> lines, CharOut out)
             throws Throwable {
         throw new NotImplementedException();
     }
 
     ProcessResultStat stat = new ProcessResultStat();
 
-    ProtectedShell    shell;
+    ProtectedShell    psh;
 
     @Override
     protected void _boot() throws Throwable {
         super._boot();
-        shell = new ProtectedShell(!dryRun, L);
+        psh = new ProtectedShell(!dryRun, L);
     }
 
     @Override
@@ -399,23 +392,24 @@ public class BatchProcessCLI extends BasicCLI {
 
     @Override
     @OverrideOption(group = "batchProcess")
-    protected void _main(final File argfile) throws Throwable {
-        L.i.sig("[start] ", argfile);
-        currentStartFile = argfile;
+    protected void doFileArgument(final File startFile) throws Throwable {
+        L.i.sig("[start] ", startFile);
+        currentStartFile = startFile;
         FileFilter walkfilter = fileFilter;
-        FsWalk walker = new FsWalk(argfile, walkfilter, filterDirectories,
+        FsWalk walker = new FsWalk(startFile, walkfilter, filterDirectories,
                 recursive, rootLast, sortComparator) {
             @Override
             public void process(File file) throws IOException {
-                _process(file);
+                _doFile(file);
             }
         };
         walker.walk();
     }
 
     @Override
-    protected final void _main(File file, InputStream in) throws Throwable {
-        throw new UnexpectedException();
+    protected final void doFileArgument(File file, InputStream in)
+            throws Throwable {
+        throw new NotImplementedException();
     }
 
 }

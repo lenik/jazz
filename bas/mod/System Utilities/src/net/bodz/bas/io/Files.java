@@ -44,6 +44,12 @@ public class Files {
 
     public static Charset encoding  = Charset.defaultCharset();
     public static int     blockSize = 4096;
+    private static String slash;
+    static {
+        slash = System.getProperty("file.separator");
+        if (slash == null)
+            slash = "/";
+    }
 
     // adapters
 
@@ -894,6 +900,29 @@ public class Files {
             TMPDIR = t;
         }
         return TMPDIR;
+    }
+
+    public static String getRelativeName(File file, File start) {
+        if (start == null)
+            throw new NullPointerException("start");
+        List<String> tails = new ArrayList<String>();
+        for (File look = file;; look = look.getParentFile()) {
+            if (look == null)
+                throw new UnexpectedException("file " + file
+                        + " not in the start dir " + start);
+            if (look.equals(start))
+                break;
+            tails.add(look.getName());
+        }
+        StringBuffer buffer = null;
+        for (int i = tails.size() - 1; i >= 0; i--) {
+            if (buffer == null)
+                buffer = new StringBuffer(tails.size() * 16);
+            else
+                buffer.append(slash);
+            buffer.append(tails.get(i));
+        }
+        return buffer.toString();
     }
 
     /** get name without extension */
