@@ -1,27 +1,29 @@
 package net.bodz.mda.parsers.io;
 
+import java.io.FilterReader;
 import java.io.IOException;
 import java.io.Reader;
 
 import net.bodz.bas.lang.err.OutOfDomainException;
-import net.bodz.bas.proxy.java.io.ProxyReader;
 import net.bodz.bas.types.buf.Buffer.CharBuffer;
 
-public class PassMemReader extends ProxyReader implements CharPassMem, Tellable {
+public class PassMemReader extends FilterReader implements CharPassMem,
+        FilePosition {
 
-    private Tellable   tellable;
-    private CharBuffer mem;
-    private long       memOffset;
+    private FilePosition positionInfo;
+    private CharBuffer   mem;
+    private long         memOffset;
 
     public PassMemReader(Reader proxy) {
-        super(proxy instanceof Tellable ? proxy : new TellableReader(proxy));
-        tellable = (Tellable) super.proxy;
+        super(proxy instanceof FilePosition ? proxy : new FilePositionReader(
+                proxy));
+        positionInfo = (FilePosition) super.in;
         mem = new CharBuffer();
     }
 
     @Override
     public long tell() throws IOException {
-        return tellable.tell();
+        return positionInfo.tell();
     }
 
     @Override
@@ -108,7 +110,7 @@ public class PassMemReader extends ProxyReader implements CharPassMem, Tellable 
     @Override
     public void reset() throws IOException {
         super.reset();
-        long newOffset = tellable.tell();
+        long newOffset = positionInfo.tell();
         if (newOffset < memOffset) {
             // some mem dropped before reset
             memOffset = newOffset;
@@ -132,7 +134,7 @@ public class PassMemReader extends ProxyReader implements CharPassMem, Tellable 
     public long skip(long n) throws IOException {
         long cb = super.skip(n);
         if (cb != 0) {
-            memOffset = tellable.tell();
+            memOffset = positionInfo.tell();
             mem.clear();
         }
         return cb;
