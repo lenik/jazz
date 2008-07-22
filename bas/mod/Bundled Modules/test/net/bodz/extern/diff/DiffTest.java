@@ -24,7 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.bodz.bas.io.CharOuts;
-import net.bodz.bas.types.diff.DiffInfo;
+import net.bodz.bas.text.diff.DiffInfo;
 
 import org.junit.Test;
 

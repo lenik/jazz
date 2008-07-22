@@ -205,12 +205,12 @@ public class TypeParsers {
         Class<?> baseClass = clazz;
         Entry<Class<?>, TypeParser<?>> base = registry.floorEntry(baseClass);
         while (base != null) {
-            TypeParser<?> baseParser = base.getValue();
-            if (baseParser.variant())
-                return (TypeParser<T>) baseParser;
             baseClass = base.getKey();
             if (!baseClass.isAssignableFrom(clazz))
                 break;
+            TypeParser<?> baseParser = base.getValue();
+            if (baseParser.variant())
+                return (TypeParser<T>) baseParser;
             base = registry.lowerEntry(baseClass);
         }
         return null;

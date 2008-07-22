@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.bodz.bas.types.diff.DiffInfo;
+import net.bodz.bas.text.diff.DiffInfo;
 
 /**
  * A class to compare vectors of objects. The result of comparison is a list of

@@ -2,8 +2,8 @@ package net.bodz.extern.diff;
 
 import java.util.List;
 
-import net.bodz.bas.types.diff.DiffComparator;
-import net.bodz.bas.types.diff.DiffInfo;
+import net.bodz.bas.text.diff.DiffComparator;
+import net.bodz.bas.text.diff.DiffInfo;
 
 public class GNUDiff implements DiffComparator {
 
