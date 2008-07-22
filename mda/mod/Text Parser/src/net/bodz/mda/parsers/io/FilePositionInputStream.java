@@ -1,16 +1,16 @@
 package net.bodz.mda.parsers.io;
 
+import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import net.bodz.bas.proxy.java.io.ProxyInputStream;
+public class FilePositionInputStream extends FilterInputStream implements
+        FilePosition {
 
-public class TellableInputStream extends ProxyInputStream implements Tellable {
+    private long pos;
+    private long markPos;
 
-    private long pos     = 0L;
-    private long markPos = 0L;
-
-    public TellableInputStream(InputStream proxy) {
+    public FilePositionInputStream(InputStream proxy) {
         super(proxy);
     }
 

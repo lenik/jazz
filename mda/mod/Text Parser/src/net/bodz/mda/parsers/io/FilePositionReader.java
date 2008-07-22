@@ -1,17 +1,16 @@
 package net.bodz.mda.parsers.io;
 
+import java.io.FilterReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.CharBuffer;
 
-import net.bodz.bas.proxy.java.io.ProxyReader;
+public class FilePositionReader extends FilterReader implements FilePosition {
 
-public class TellableReader extends ProxyReader implements Tellable {
+    private long pos;
+    private long markPos;
 
-    private long pos     = 0L;
-    private long markPos = 0L;
-
-    public TellableReader(Reader proxy) {
+    public FilePositionReader(Reader proxy) {
         super(proxy);
     }
 

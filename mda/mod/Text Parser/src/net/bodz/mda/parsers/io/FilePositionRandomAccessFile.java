@@ -5,15 +5,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-public class TellableRandomAccessFile extends RandomAccessFile implements
-        Tellable {
+public class FilePositionRandomAccessFile extends RandomAccessFile implements
+        FilePosition {
 
-    public TellableRandomAccessFile(File file, String mode)
+    public FilePositionRandomAccessFile(File file, String mode)
             throws FileNotFoundException {
         super(file, mode);
     }
 
-    public TellableRandomAccessFile(String name, String mode)
+    public FilePositionRandomAccessFile(String name, String mode)
             throws FileNotFoundException {
         super(name, mode);
     }
