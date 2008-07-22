@@ -21,12 +21,12 @@ import net.bodz.bas.io.FsWalk;
 import net.bodz.bas.lang.annotations.OverrideOption;
 import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.lang.err.UnexpectedException;
+import net.bodz.bas.text.diff.DiffComparator;
+import net.bodz.bas.text.diff.DiffFormat;
+import net.bodz.bas.text.diff.DiffFormats;
+import net.bodz.bas.text.diff.DiffInfo;
 import net.bodz.bas.types.TypeParsers.ClassInstanceParser;
 import net.bodz.bas.types.TypeParsers.WildcardsParser;
-import net.bodz.bas.types.diff.DiffComparator;
-import net.bodz.bas.types.diff.DiffFormat;
-import net.bodz.bas.types.diff.DiffFormats;
-import net.bodz.bas.types.diff.DiffInfo;
 
 @OptionGroup(value = "batch process", rank = -2)
 public class BatchProcessCLI extends BasicCLI {
@@ -165,15 +165,29 @@ public class BatchProcessCLI extends BasicCLI {
         return Files.getRelativeName(in, currentStartFile);
     }
 
-    protected File getOutputFile(File in) {
-        if (outputDirectory == null)
+    private File _getOutputFile(String relative, File in) {
+        if (outputDirectory == null) {
             return in;
-        String relative = getRelativeName(in);
-        File out = new File(outputDirectory, relative);
+        }
+        File out = Files.getAbsoluteFile(outputDirectory, relative);
         File outd = out.getParentFile();
         if (outd.isFile())
             throw new Error("invalid output directory: " + outd);
         return out;
+    }
+
+    protected File getOutputFile(String relative, File defaultStart) {
+        File in = Files.getAbsoluteFile(defaultStart, relative);
+        return _getOutputFile(relative, in);
+    }
+
+    protected File getOutputFile(String relative) {
+        return getOutputFile(relative, currentStartFile);
+    }
+
+    protected File getOutputFile(File in) {
+        String relative = getRelativeName(in);
+        return _getOutputFile(relative, in);
     }
 
     /** display progress info and calc stat */
@@ -230,7 +244,8 @@ public class BatchProcessCLI extends BasicCLI {
         }
     }
 
-    private ProcessResult doFile(File file, File editTmp) throws Throwable {
+    @OverrideOption(group = "batchProcess")
+    protected ProcessResult doFile(File file, File editTmp) throws Throwable {
         ProcessResult result = doFileEdit(file, editTmp);
         if (result == null) // ignored
             return null;
@@ -242,16 +257,21 @@ public class BatchProcessCLI extends BasicCLI {
         if (result.dest != null)
             dst = (File) result.dest;
 
+        return applyResult(file, dst, editTmp, result);
+    }
+
+    protected ProcessResult applyResult(File src, File dst, File edit,
+            ProcessResult result) throws IOException, CLIException {
         boolean diffPrinted = false;
         if (result.operation == ProcessResult.SAVE) {
             assert result.changed == null;
-            if (editTmp == null)
+            if (edit == null)
                 throw new CLIException("can't save: not a batch editor");
             if (!diff3 && !diffWithDest) {
-                result.changed = diff(file, editTmp);
+                result.changed = diff(src, edit);
                 diffPrinted = true;
             } else
-                result.changed = Files.equals(file, editTmp);
+                result.changed = Files.equals(src, edit);
             if (result.changed)
                 result.operation = ProcessResult.SAVE_DIFF;
             else
@@ -265,24 +285,24 @@ public class BatchProcessCLI extends BasicCLI {
             return result;
 
         case ProcessResult.RENAME:
-            if (psh.renameTo(file, dst))
+            if (psh.renameTo(src, dst))
                 result.setDone();
             return result;
 
         case ProcessResult.MOVE:
-            if (psh.move(file, dst, force))
+            if (psh.move(src, dst, force))
                 result.setDone();
             return result;
 
         case ProcessResult.COPY:
-            if (psh.copy(file, dst))
+            if (psh.copy(src, dst))
                 result.setDone();
             return result;
 
         case ProcessResult.SAVE_DIFF:
             assert result.changed;
         case ProcessResult.SAVE_SAME:
-            boolean saveLocal = dst.equals(file);
+            boolean saveLocal = dst.equals(src);
             if (!result.changed && saveLocal)
                 return result;
             boolean canOverwrite = saveLocal || force;
@@ -297,15 +317,15 @@ public class BatchProcessCLI extends BasicCLI {
                 psh.mkdirs(dstdir);
             if (!diffPrinted) {
                 if (diff3) {
-                    diff(file, editTmp);
-                    diff(dst, editTmp);
+                    diff(src, edit);
+                    diff(dst, edit);
                 } else if (diffWithDest) {
-                    diff(dst, editTmp);
+                    diff(dst, edit);
                 } else {
-                    diff(file, editTmp);
+                    diff(src, edit);
                 }
             }
-            psh.copy(editTmp, dst);
+            psh.copy(edit, dst);
 
             result.setDone();
             return result;
@@ -370,15 +390,15 @@ public class BatchProcessCLI extends BasicCLI {
         throw new NotImplementedException();
     }
 
-    ProcessResultStat stat = new ProcessResultStat();
-
-    ProtectedShell    psh;
+    protected ProtectedShell psh;
 
     @Override
     protected void _boot() throws Throwable {
         super._boot();
         psh = new ProtectedShell(!dryRun, L);
     }
+
+    protected final ProcessResultStat stat = new ProcessResultStat();
 
     @Override
     protected void _main(String[] args) throws Throwable {

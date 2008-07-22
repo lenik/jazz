@@ -156,7 +156,7 @@ public class BasicCLI {
             if (pluginClass == null)
                 throw new PluginException("no plugin of " + pluginId);
             Class<?> clazz = pluginClass.getType();
-            Constructor<?>[] ctors = clazz.getConstructors();
+            Constructor<?>[] ctors = clazz.getConstructors(); // only get public
             Constructor<?> ctor = null;
             Class<?>[] sig = null;
             for (Constructor<?> _ctor : ctors) {
@@ -166,7 +166,8 @@ public class BasicCLI {
                     sig = _sig;
                 }
             }
-            assert ctor != null;
+            if (ctor == null)
+                throw new PluginException("no constructor in " + clazz);
             int len = sig.length;
             int off = 0;
             if (clazz.isMemberClass()) {
@@ -175,7 +176,7 @@ public class BasicCLI {
             }
             if (len == 0) {
                 assert ctorArg == null;
-                return (T) pluginClass.newInstance(ctorArg);
+                return (T) pluginClass.newInstance();
             }
             if (len != 1)
                 throw new PluginException("no suitable constructor to use: "

@@ -8,7 +8,7 @@ import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.Predicate;
-import net.bodz.bas.types.diff.DiffInfo;
+import net.bodz.bas.text.diff.DiffInfo;
 import net.bodz.bas.types.util.Dates;
 
 /**

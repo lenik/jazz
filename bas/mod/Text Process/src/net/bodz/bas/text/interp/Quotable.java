@@ -40,7 +40,7 @@ public class Quotable extends PatternProcessor {
     private static Pattern compile(char open, char close) {
         String _open = Pattern.quote(String.valueOf(open));
         String _close = Pattern.quote(String.valueOf(close));
-        String regex = _open + "(\\\\.|.)*?" + _close;
+        String regex = _open + "((?:\\\\.|.)*?)" + _close;
         return Pattern.compile(regex);
     }
 
@@ -53,7 +53,7 @@ public class Quotable extends PatternProcessor {
                 regexBuf.append("|");
             char c = chars[i];
             String qc = Pattern.quote(String.valueOf(c));
-            regexBuf.append(qc);
+            regexBuf.append(qc + "((?:\\\\.|.)*?)" + qc);
         }
         String regex = regexBuf.toString();
         return Pattern.compile(regex);

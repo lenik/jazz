@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 import net.bodz.bas.lang.err.NotImplementedException;
+import net.bodz.bas.text.interp.PatternProcessor;
 import net.bodz.bas.types.Pair;
 
 public class Strings {
@@ -230,4 +231,31 @@ public class Strings {
             return ellipse(s, len, ellipse);
     }
 
+    private static PatternProcessor escapeProcessor;
+    static {
+        escapeProcessor = new PatternProcessor("[\\\\\"\'\r\n]") {
+            @Override
+            protected void matched(String part) {
+                assert part.length() == 1;
+                char c = part.charAt(0);
+                switch (c) {
+                case '\r':
+                    print("\\r");
+                    break;
+                case '\n':
+                    print("\\n");
+                    break;
+                default:
+                    print('\\');
+                    print(c);
+                }
+            }
+        };
+    }
+
+    public static String escape(String s) {
+        if (s == null)
+            return s;
+        return escapeProcessor.process(s);
+    }
 }

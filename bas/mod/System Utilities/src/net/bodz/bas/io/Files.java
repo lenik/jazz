@@ -36,8 +36,8 @@ import java.util.regex.Pattern;
 import net.bodz.bas.lang.err.IdentifiedException;
 import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.lang.err.UnexpectedException;
-import net.bodz.bas.types.diff.DiffComparator;
-import net.bodz.bas.types.diff.DiffInfo;
+import net.bodz.bas.text.diff.DiffComparator;
+import net.bodz.bas.text.diff.DiffInfo;
 import net.bodz.bas.types.util.PrefetchedIterator;
 
 public class Files {
@@ -922,7 +922,15 @@ public class Files {
                 buffer.append(slash);
             buffer.append(tails.get(i));
         }
+        if (buffer == null)
+            return "";
         return buffer.toString();
+    }
+
+    public static File getAbsoluteFile(File start, String relativeName) {
+        if (relativeName == null || relativeName.isEmpty())
+            return start;
+        return new File(start, relativeName);
     }
 
     /** get name without extension */

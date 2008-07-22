@@ -1,8 +1,11 @@
 package net.bodz.bas.io;
 
+import static net.bodz.bas.test.TestDefs.END;
 import static net.bodz.bas.test.TestDefs.EQ;
+import static net.bodz.bas.types.util.Arrays2._;
 import static org.junit.Assert.assertEquals;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,4 +62,18 @@ public class FilesTest {
                 EQ("abcdefghijklmopqrst|-bcdefghijklmopqrst", 0L));
     }
 
+    @Test
+    public void testGetRelativeName() {
+        TestDefs.tests(new TestEval<Object[]>() {
+            public Object eval(Object[] input) throws Throwable {
+                File start = new File((String) input[0]);
+                File file = new File((String) input[1]);
+                return Files.getRelativeName(file, start);
+            }
+        }, //
+                EQ(_("a", "a/b"), "b"), //
+                EQ(_("a/", "a/b"), "b"), //
+                EQ(_("a/b", "a/b"), ""), //
+                END);
+    }
 }
