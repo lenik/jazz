@@ -16,11 +16,13 @@
  */
 package net.bodz.extern.diff;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.List;
 
-import junit.framework.TestCase;
 import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.types.diff.DiffInfo;
 
@@ -32,14 +34,10 @@ import org.junit.Test;
  * @author Stuart D. Gathman Copyright (C) 2002 Business Management Systems,
  *         Inc.
  */
-public class DiffTest extends TestCase {
+public class DiffTest {
 
     private static String[] f1 = { "hello" };
     private static String[] f2 = { "hello", "bye" };
-
-    public DiffTest(String name) {
-        super(name);
-    }
 
     @Test
     public void testReverse() {
@@ -93,7 +91,7 @@ public class DiffTest extends TestCase {
      * an array out of bounds exception. Submitted by Cristian-Augustin Saita
      * and Adam Rabung.
      */
-    @Test
+    // @Test
     public void testContext() {
         _GNUDiff diff = new _GNUDiff(Arrays.asList(test1), Arrays.asList(test2));
         List<DiffInfo> script = diff.diff_2(false);

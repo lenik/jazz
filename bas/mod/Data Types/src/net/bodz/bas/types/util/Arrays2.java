@@ -4,6 +4,10 @@ import java.lang.reflect.Array;
 
 public class Arrays2 {
 
+    public static Object[] _(Object... array) {
+        return array;
+    }
+
     public static <T> T copyOf(T array, int off, int len) {
         Class<?> type = array.getClass();
         if (!type.isArray())
@@ -12,8 +16,8 @@ public class Arrays2 {
         int alen = Array.getLength(array);
         assert off >= 0 && len >= 0 && off + len <= alen;
         // if (ctype.isPrimitive())
-        @SuppressWarnings("unchecked") T dup = (T) Array
-                .newInstance(ctype, len);
+        @SuppressWarnings("unchecked")
+        T dup = (T) Array.newInstance(ctype, len);
         System.arraycopy(array, off, dup, 0, len);
         return dup;
     }

@@ -14,16 +14,19 @@ public class ClassInfo {
     private final ClassLoader loader;
     private boolean           loaded;
 
+    private String            name;
     private String            doc;
     private URL               icon;
     private Map<String, URL>  iconMap;
     private String            author;
     private int[]             version;
+    private String            dateString;
 
     public ClassInfo(Class<?> clazz) {
         assert clazz != null;
         this.clazz = clazz;
         this.loader = clazz.getClassLoader();
+        load();
     }
 
     protected String join(String[] components) {
@@ -35,6 +38,7 @@ public class ClassInfo {
     protected void load() {
         if (loaded)
             return;
+        name = clazz.getSimpleName();
         String[] doc = Annotations.getAnnotation(clazz, Doc.class);
         if (doc != null)
             this.doc = join(doc);
@@ -72,18 +76,27 @@ public class ClassInfo {
         return url;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getDoc() {
-        load();
         return doc;
     }
 
+    public void setDoc(String doc) {
+        this.doc = doc;
+    }
+
     public URL getIcon() {
-        load();
         return icon;
     }
 
     public URL getIcon(String usage) {
-        load();
         if (iconMap != null) {
             URL url = iconMap.get(usage);
             if (url != null)
@@ -92,18 +105,51 @@ public class ClassInfo {
         return icon;
     }
 
+    public void setIcon(URL icon) {
+        this.icon = icon;
+    }
+
+    public URL[] getIcons() {
+        if (iconMap != null)
+            return iconMap.values().toArray(new URL[0]);
+        if (icon != null)
+            return new URL[] { icon };
+        return null;
+    }
+
     public String getAuthor() {
-        load();
         return author;
     }
 
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
     public int[] getVersion() {
-        load();
         return version;
+    }
+
+    public void setVersion(int... version) {
+        this.version = version;
     }
 
     public String getVersionString() {
         return Strings.joinDot(getVersion());
+    }
+
+    public void setVersionString(String version) {
+        String[] parts = version.split("\\.");
+        this.version = new int[parts.length];
+        for (int i = 0; i < parts.length; i++)
+            this.version[i] = Integer.parseInt(parts[i]);
+    }
+
+    public String getDateString() {
+        return dateString;
+    }
+
+    public void setDateString(String dateString) {
+        this.dateString = dateString;
     }
 
     private static final ClassLocal<ClassInfo> infos;

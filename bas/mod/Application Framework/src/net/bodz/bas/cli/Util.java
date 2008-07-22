@@ -16,9 +16,9 @@ import java.util.TreeSet;
 import java.util.Map.Entry;
 
 import net.bodz.bas.lang.script.ScriptException;
+import net.bodz.bas.text.interp.PatternProcessor;
 import net.bodz.bas.types.TypeParser;
 import net.bodz.bas.types.TypeParsers;
-import net.bodz.bas.types.util.PatternProcessor;
 
 class Util {
 
@@ -28,8 +28,8 @@ class Util {
         PatternProcessor pp = new PatternProcessor("[A-Z]+") {
             @Override
             protected void matched(String part) {
-                buffer.append('-');
-                buffer.append(part.toLowerCase());
+                print('-');
+                print(part.toLowerCase());
             }
         };
         String s = pp.process(words);

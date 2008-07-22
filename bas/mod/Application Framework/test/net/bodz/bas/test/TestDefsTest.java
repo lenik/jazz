@@ -17,7 +17,7 @@ public class TestDefsTest {
                 EQ("example +", 1 + 1, 2), //
                 EQ("example -", 1 - 1, 0), //
                 EQ("example *", 1 * 1, 1), //
-                EQ("example /", 1 / 1, 2));
+                EQ("example /", 1 / 1, 1));
     }
 
 }

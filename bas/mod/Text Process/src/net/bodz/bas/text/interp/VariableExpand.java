@@ -3,7 +3,6 @@ package net.bodz.bas.text.interp;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import net.bodz.bas.types.util.PatternProcessor;
 
 public class VariableExpand extends PatternProcessor {
 
@@ -50,7 +49,7 @@ public class VariableExpand extends PatternProcessor {
     }
 
     protected void defined(String name, String expanded) {
-        buffer.append(expanded);
+        print(expanded);
     }
 
     protected void undefined(String name, int start, int end) {

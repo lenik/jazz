@@ -2,7 +2,6 @@ package net.bodz.bas.text.interp;
 
 import java.util.regex.Pattern;
 
-import net.bodz.bas.types.util.PatternProcessor;
 
 public class Unescape extends PatternProcessor {
 
@@ -68,7 +67,7 @@ public class Unescape extends PatternProcessor {
             break;
         default:
         }
-        buffer.append(c);
+        print(c);
         return eat;
     }
 

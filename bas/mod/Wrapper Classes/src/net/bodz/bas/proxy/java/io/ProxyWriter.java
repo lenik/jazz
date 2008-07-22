@@ -3,6 +3,10 @@ package net.bodz.bas.proxy.java.io;
 import java.io.IOException;
 import java.io.Writer;
 
+/**
+ * @see java.io.FilterWriter
+ */
+@Deprecated
 public class ProxyWriter extends Writer {
 
     protected Writer proxy;

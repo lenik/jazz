@@ -32,9 +32,13 @@ public abstract class CharOut implements ICharOut {
     private final static char   NL   = '\n';
 
     public void print(String s) {
-        char[] chars = s == null ? NULL : s.toCharArray();
         try {
-            write(chars, 0, chars.length);
+            // char[] chars = s == null ? NULL : s.toCharArray();
+            // write(chars, 0, chars.length);
+            if (s == null)
+                write(NULL, 0, NULL.length);
+            else
+                _write(s, 0, s.length());
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
