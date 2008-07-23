@@ -133,7 +133,7 @@ public class ProcessResult {
         return result;
     }
 
-    public static ProcessResult error(Throwable cause, String... tags) {
+    public static ProcessResult err(Throwable cause, String... tags) {
         ProcessResult result = new ProcessResult(tags);
         result.error(cause);
         return result;
