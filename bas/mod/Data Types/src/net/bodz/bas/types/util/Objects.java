@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
+@Deprecated
 public class Objects {
 
     public static boolean equals(byte[] pattern, byte[] bytes, int off) {

@@ -50,8 +50,8 @@ public class ArrayOps {
         }
     }
 
-    public static class Byte extends _ArrayOp<byte[]> {
-        public Byte() {
+    public static class Bytes extends _ArrayOp<byte[]> {
+        public Bytes() {
             super(byte.class);
         }
 
@@ -118,8 +118,8 @@ public class ArrayOps {
         }
     }
 
-    public static class Short extends _ArrayOp<short[]> {
-        public Short() {
+    public static class Shorts extends _ArrayOp<short[]> {
+        public Shorts() {
             super(short.class);
         }
 
@@ -187,8 +187,8 @@ public class ArrayOps {
         }
     }
 
-    public static class Int extends _ArrayOp<int[]> {
-        public Int() {
+    public static class Ints extends _ArrayOp<int[]> {
+        public Ints() {
             super(int.class);
         }
 
@@ -256,8 +256,8 @@ public class ArrayOps {
         }
     }
 
-    public static class Long extends _ArrayOp<long[]> {
-        public Long() {
+    public static class Longs extends _ArrayOp<long[]> {
+        public Longs() {
             super(long.class);
         }
 
@@ -325,8 +325,8 @@ public class ArrayOps {
         }
     }
 
-    public static class Float extends _ArrayOp<float[]> {
-        public Float() {
+    public static class Floats extends _ArrayOp<float[]> {
+        public Floats() {
             super(float.class);
         }
 
@@ -394,8 +394,8 @@ public class ArrayOps {
         }
     }
 
-    public static class Double extends _ArrayOp<double[]> {
-        public Double() {
+    public static class Doubles extends _ArrayOp<double[]> {
+        public Doubles() {
             super(double.class);
         }
 
@@ -463,8 +463,8 @@ public class ArrayOps {
         }
     }
 
-    public static class Boolean extends _ArrayOp<boolean[]> {
-        public Boolean() {
+    public static class Booleans extends _ArrayOp<boolean[]> {
+        public Booleans() {
             super(boolean.class);
         }
 
@@ -534,8 +534,8 @@ public class ArrayOps {
         }
     }
 
-    public static class Char extends _ArrayOp<char[]> {
-        public Char() {
+    public static class Chars extends _ArrayOp<char[]> {
+        public Chars() {
             super(char.class);
         }
 
@@ -603,8 +603,8 @@ public class ArrayOps {
         }
     }
 
-    public static class Obj<T> extends _ArrayOp<T[]> {
-        public Obj(Class<T> clazz) {
+    public static class Objects<T> extends _ArrayOp<T[]> {
+        public Objects(Class<T> clazz) {
             super(clazz);
         }
 
@@ -686,17 +686,28 @@ public class ArrayOps {
     }
 
     private static final Map<Class<?>, ArrayOp<?>> ops;
+
+    public static final Bytes                      Bytes;
+    public static final Shorts                     Shorts;
+    public static final Ints                       Ints;
+    public static final Longs                      Longs;
+    public static final Floats                     Floats;
+    public static final Doubles                    Doubles;
+    public static final Booleans                   Booleans;
+    public static final Chars                      Chars;
+    public static final Objects<Object>            Objects;
+
     static {
         ops = new HashMap<Class<?>, ArrayOp<?>>();
-        ops.put(byte.class, new Byte());
-        ops.put(short.class, new Short());
-        ops.put(int.class, new Int());
-        ops.put(long.class, new Long());
-        ops.put(float.class, new Float());
-        ops.put(double.class, new Double());
-        ops.put(boolean.class, new Boolean());
-        ops.put(char.class, new Char());
-        ops.put(Object.class, new Obj<Object>(Object.class));
+        ops.put(byte.class, Bytes = new Bytes());
+        ops.put(short.class, Shorts = new Shorts());
+        ops.put(int.class, Ints = new Ints());
+        ops.put(long.class, Longs = new Longs());
+        ops.put(float.class, Floats = new Floats());
+        ops.put(double.class, Doubles = new Doubles());
+        ops.put(boolean.class, Booleans = new Booleans());
+        ops.put(char.class, Chars = new Chars());
+        ops.put(Object.class, Objects = new Objects<Object>(Object.class));
     }
 
     @SuppressWarnings("unchecked")

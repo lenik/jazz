@@ -34,7 +34,6 @@ import java.util.Properties;
 import java.util.regex.Pattern;
 
 import net.bodz.bas.lang.err.IdentifiedException;
-import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.lang.err.UnexpectedException;
 import net.bodz.bas.text.diff.DiffComparator;
 import net.bodz.bas.text.diff.DiffInfo;
@@ -94,10 +93,10 @@ public class Files {
         if (in instanceof InputStream)
             return (InputStream) in;
         if (in instanceof Reader)
-            throw new NotImplementedException();
+            return new ReaderInputStream((Reader) in, getCharset(charset));
         if (in instanceof File)
             return new FileInputStream((File) in);
-        if (in instanceof String)
+        if (in instanceof String) // filename
             return new FileInputStream((String) in);
         if (in instanceof URL)
             return ((URL) in).openStream();
@@ -120,7 +119,7 @@ public class Files {
         if (out instanceof OutputStream)
             return (OutputStream) out;
         if (out instanceof Writer)
-            throw new NotImplementedException();
+            return new WriterOutputStream((Writer) out, getCharset(charset));
         if (out instanceof File)
             return new FileOutputStream((File) out, append);
         if (out instanceof String)
@@ -206,7 +205,7 @@ public class Files {
         return getWriter(out, encoding, false);
     }
 
-    private static boolean shouldClose(Object io) {
+    public static boolean shouldClose(Object io) {
         if (io instanceof File)
             return true;
         if (io instanceof String)
@@ -434,7 +433,7 @@ public class Files {
         return readLen(in, length, encoding);
     }
 
-    protected static Iterator<Integer> _loadByBlock(final Object[] files,
+    protected static Iterator<Integer> _readByBlock(final Object[] files,
             final byte[] buffer) {
         assert files != null : "null files[]";
         assert buffer != null : "null buffer";
@@ -490,22 +489,22 @@ public class Files {
         };
     }
 
-    public static Iterable<Integer> loadByBlock(final byte[] buffer,
+    public static Iterable<Integer> readByBlock(final byte[] buffer,
             final Object... files) {
         return new Iterable<Integer>() {
 
             @Override
             public Iterator<Integer> iterator() {
-                return _loadByBlock(files, buffer);
+                return _readByBlock(files, buffer);
             }
 
         };
     }
 
-    public static Iterable<byte[]> loadByBlock(final int blockSize,
+    public static Iterable<byte[]> readByBlock(final int blockSize,
             final Object... files) {
         final byte[] buffer = new byte[blockSize];
-        final Iterator<Integer> it = _loadByBlock(files, buffer);
+        final Iterator<Integer> it = _readByBlock(files, buffer);
         return new Iterable<byte[]>() {
 
             @Override
@@ -540,8 +539,8 @@ public class Files {
         };
     }
 
-    public static Iterable<byte[]> loadByBlock(final Object... files) {
-        return loadByBlock(blockSize, files);
+    public static Iterable<byte[]> readByBlock(final Object... files) {
+        return readByBlock(blockSize, files);
     }
 
     protected static Iterator<String> _readByLine(final Object[] files,
