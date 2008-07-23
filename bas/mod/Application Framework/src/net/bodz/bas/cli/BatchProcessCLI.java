@@ -193,22 +193,10 @@ public class BatchProcessCLI extends BasicCLI {
     /** display progress info and calc stat */
     protected void _doFile(File file) {
         Throwable err = null;
-        String[] tags = {};
         try {
             L.i.sig("[proc] ", file);
             ProcessResult result = BatchProcessCLI.this.doFile(file);
-            stat.add(result);
-            if (result == null) {
-                L.d.P("[skip] ", file);
-                return;
-            }
-            tags = result.tags;
-            if (result.error)
-                if ((err = result.cause) == null)
-                    L.e.P("[fail] ", file);
-            if (result.done)
-                L.u.P("[", result.getOperationName(), "] ", //
-                        getOutputFile(file));
+            addResult(file, result);
         } catch (IOException e) {
             err = e;
         } catch (RuntimeException e) {
@@ -220,7 +208,7 @@ public class BatchProcessCLI extends BasicCLI {
             throw new RuntimeException(e.getMessage(), e);
         } finally {
             if (err != null) {
-                stat.add(ProcessResult.error(err, tags));
+                stat.add(ProcessResult.error(err, new String[0]));
                 L.e.P("[fail] ", file + ": " + err.getMessage());
             }
         }
@@ -237,7 +225,9 @@ public class BatchProcessCLI extends BasicCLI {
     protected ProcessResult doFile(File file) throws Throwable {
         File editTmp = _getEditTmp(file);
         try {
-            return doFile(file, editTmp);
+            ProcessResult result = doFile(file, editTmp);
+            addResult(file, getOutputFile(file), editTmp, result);
+            return null;
         } finally {
             if (editTmp != null)
                 editTmp.delete();
@@ -257,84 +247,8 @@ public class BatchProcessCLI extends BasicCLI {
         if (result.dest != null)
             dst = (File) result.dest;
 
-        return applyResult(file, dst, editTmp, result);
-    }
-
-    protected ProcessResult applyResult(File src, File dst, File edit,
-            ProcessResult result) throws IOException, CLIException {
-        boolean diffPrinted = false;
-        if (result.operation == ProcessResult.SAVE) {
-            assert result.changed == null;
-            if (edit == null)
-                throw new CLIException("can't save: not a batch editor");
-            if (!diff3 && !diffWithDest) {
-                result.changed = diff(src, edit);
-                diffPrinted = true;
-            } else
-                result.changed = Files.equals(src, edit);
-            if (result.changed)
-                result.operation = ProcessResult.SAVE_DIFF;
-            else
-                result.operation = ProcessResult.SAVE_SAME;
-        }
-
-        switch (result.operation) {
-        case ProcessResult.DELETE:
-            if (psh.delete(dst))
-                result.setDone();
-            return result;
-
-        case ProcessResult.RENAME:
-            if (psh.renameTo(src, dst))
-                result.setDone();
-            return result;
-
-        case ProcessResult.MOVE:
-            if (psh.move(src, dst, force))
-                result.setDone();
-            return result;
-
-        case ProcessResult.COPY:
-            if (psh.copy(src, dst))
-                result.setDone();
-            return result;
-
-        case ProcessResult.SAVE_DIFF:
-            assert result.changed;
-        case ProcessResult.SAVE_SAME:
-            boolean saveLocal = dst.equals(src);
-            if (!result.changed && saveLocal)
-                return result;
-            boolean canOverwrite = saveLocal || force;
-            if (dst.exists() && !canOverwrite) {
-                // user interaction...
-                throw new IllegalStateException("file " + dst
-                        + " already existed");
-            }
-
-            File dstdir = dst.getParentFile();
-            if (dstdir != null)
-                psh.mkdirs(dstdir);
-            if (!diffPrinted) {
-                if (diff3) {
-                    diff(src, edit);
-                    diff(dst, edit);
-                } else if (diffWithDest) {
-                    diff(dst, edit);
-                } else {
-                    diff(src, edit);
-                }
-            }
-            psh.copy(edit, dst);
-
-            result.setDone();
-            return result;
-
-        case ProcessResult.SAVE:
-        default:
-            throw new UnexpectedException("invalid operation: "
-                    + result.operation);
-        }
+        addResult(file, dst, editTmp, result);
+        return null;
     }
 
     /**
@@ -399,6 +313,116 @@ public class BatchProcessCLI extends BasicCLI {
     }
 
     protected final ProcessResultStat stat = new ProcessResultStat();
+
+    protected void addResult(ProcessResult result) throws IOException,
+            CLIException {
+        addResult(null, null, null, result);
+    }
+
+    protected void addResult(File src, ProcessResult result)
+            throws IOException, CLIException {
+        addResult(src, getOutputFile(src), result);
+    }
+
+    protected void addResult(File src, File dst, ProcessResult result)
+            throws IOException, CLIException {
+        addResult(src, dst, null, result);
+    }
+
+    protected void addResult(File src, File dst, File edit, ProcessResult result)
+            throws IOException, CLIException {
+        if (result == null) {
+            L.d.P("[skip] ", src);
+        } else {
+            if (src != null)
+                applyResult(src, dst, edit, result);
+            stat.add(result);
+            if (result.done)
+                L.u.P("[", result.getOperationName(), "] ", dst);
+            if (result.error)
+                if (result.cause != null)
+                    L.e.P("[fail] ", result.cause);
+                else
+                    L.e.P("[fail]");
+        }
+    }
+
+    private void applyResult(File src, File dst, File edit, ProcessResult result)
+            throws IOException, CLIException {
+        boolean diffPrinted = false;
+        if (result.operation == ProcessResult.SAVE) {
+            assert result.changed == null;
+            if (edit == null)
+                throw new CLIException("can't save: not a batch editor");
+            if (!diff3 && !diffWithDest) {
+                result.changed = diff(src, edit);
+                diffPrinted = true;
+            } else
+                result.changed = Files.equals(src, edit);
+            if (result.changed)
+                result.operation = ProcessResult.SAVE_DIFF;
+            else
+                result.operation = ProcessResult.SAVE_SAME;
+        }
+
+        switch (result.operation) {
+        case ProcessResult.DELETE:
+            if (psh.delete(dst))
+                result.setDone();
+            return;
+
+        case ProcessResult.RENAME:
+            if (psh.renameTo(src, dst))
+                result.setDone();
+            return;
+
+        case ProcessResult.MOVE:
+            if (psh.move(src, dst, force))
+                result.setDone();
+            return;
+
+        case ProcessResult.COPY:
+            if (psh.copy(src, dst))
+                result.setDone();
+            return;
+
+        case ProcessResult.SAVE_DIFF:
+            assert result.changed;
+        case ProcessResult.SAVE_SAME:
+            boolean saveLocal = dst.equals(src);
+            if (!result.changed && saveLocal)
+                return;
+            boolean canOverwrite = saveLocal || force;
+            if (dst.exists() && !canOverwrite) {
+                // user interaction...
+                throw new IllegalStateException("file " + dst
+                        + " already existed");
+            }
+
+            File dstdir = dst.getParentFile();
+            if (dstdir != null)
+                psh.mkdirs(dstdir);
+            if (!diffPrinted) {
+                if (diff3) {
+                    diff(src, edit);
+                    diff(dst, edit);
+                } else if (diffWithDest) {
+                    diff(dst, edit);
+                } else {
+                    diff(src, edit);
+                }
+            }
+            psh.copy(edit, dst);
+
+            result.setDone();
+            return;
+
+        case ProcessResult.SAVE:
+        default:
+            throw new UnexpectedException("invalid operation: "
+                    + result.operation);
+        }
+    }
 
     @Override
     protected void _main(String[] args) throws Throwable {

@@ -9,6 +9,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Map.Entry;
@@ -156,8 +159,8 @@ public class TypeParsers {
             if (s == null)
                 return null;
             String[] vals = separator.split(s);
-            @SuppressWarnings("unchecked") T array = (T) Array.newInstance(
-                    valtype, vals.length);
+            @SuppressWarnings("unchecked")
+            T array = (T) Array.newInstance(valtype, vals.length);
             for (int i = 0; i < vals.length; i++) {
                 Object val = valparser.parse(vals[i]);
                 Array.set(array, i, val);
@@ -195,6 +198,7 @@ public class TypeParsers {
         registry.put(CharOut.class, new CharOutParser());
         registry.put(ALog.class, new ALogParser());
         registry.put(Pattern.class, new PatternParser());
+        registry.put(MessageDigest.class, new MessageDigestParser());
     }
 
     @SuppressWarnings("unchecked")
@@ -495,6 +499,30 @@ public class TypeParsers {
 
         public WildcardsIParser() {
             super(Pattern.CASE_INSENSITIVE);
+        }
+
+    }
+
+    public static class MessageDigestParser extends _TypeParser<MessageDigest> {
+
+        @Override
+        public MessageDigest parse(String name) throws ParseException {
+            String provider = null;
+            int d = name.indexOf("::");
+            if (d != -1) {
+                provider = name.substring(0, d);
+                name = name.substring(d + 2);
+            }
+            try {
+                if (provider == null)
+                    return MessageDigest.getInstance(name);
+                else
+                    return MessageDigest.getInstance(name, provider);
+            } catch (NoSuchAlgorithmException e) {
+                throw new ParseException(e.getMessage(), e);
+            } catch (NoSuchProviderException e) {
+                throw new ParseException(e.getMessage(), e);
+            }
         }
 
     }

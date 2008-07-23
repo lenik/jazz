@@ -384,7 +384,7 @@ public class BasicCLI {
     }
 
     protected InputStream _getDefaultIn() {
-        return System.in;
+        return null;
     }
 
     @OverrideOption(group = "basicMain")
