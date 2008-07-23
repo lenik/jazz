@@ -1,6 +1,7 @@
 package net.bodz.bas.types;
 
 import java.util.AbstractList;
+import java.util.Arrays;
 
 import net.bodz.bas.lang.err.ReadOnlyException;
 
@@ -19,6 +20,10 @@ public class ArrayAccessList<T> extends AbstractList<T> {
         this.len = len;
     }
 
+    /**
+     * @see Arrays#asList(Object...)
+     */
+    @Deprecated
     public ArrayAccessList(T[] array) {
         this(array, 0, array.length);
     }

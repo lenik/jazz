@@ -1,5 +1,6 @@
 package net.bodz.bas.types;
 
+import java.util.Arrays;
 import java.util.List;
 
 import net.bodz.bas.lang.err.ReadOnlyException;
@@ -25,7 +26,7 @@ public class ArrayMatrix<T> implements Matrix<T> {
     }
 
     public List<T> get(int row) {
-        return new ArrayAccessList<T>(array[row]);
+        return Arrays.asList(array[row]);
     }
 
     public List<T> getColumn(int column) {

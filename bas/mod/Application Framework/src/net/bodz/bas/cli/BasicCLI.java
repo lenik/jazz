@@ -395,12 +395,23 @@ public class BasicCLI {
                 doFileArgument(null, in);
             else
                 _help();
-        } else
-            for (String arg : args)
-                doFileArgument(new File(arg));
+        } else {
+            int index = 0;
+            while (doMain(args))
+                L.x.P("run again(", ++index, ")");
+        }
     }
 
-    /** if no argument specified, _main(null) is called. */
+    /**
+     * @return true if do again
+     */
+    @OverrideOption(group = "basicMain")
+    protected boolean doMain(String[] args) throws Throwable {
+        for (String arg : args)
+            doFileArgument(new File(arg));
+        return false;
+    }
+
     @OverrideOption(group = "basicMain")
     protected void doFileArgument(File file) throws Throwable {
         assert file != null;

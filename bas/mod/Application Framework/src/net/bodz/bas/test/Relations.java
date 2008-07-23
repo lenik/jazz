@@ -131,6 +131,7 @@ public class Relations {
         @SuppressWarnings("unchecked")
         @Override
         public final void test(String comment, Object expected, Object actual) {
+            assert expected != null : "use EQU";
             assert expected instanceof Comparable;
             Comparable<Object> _expected = (Comparable<Object>) expected;
             if (!test(_expected.compareTo(actual)))

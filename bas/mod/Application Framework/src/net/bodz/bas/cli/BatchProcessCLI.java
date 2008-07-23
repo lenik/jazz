@@ -208,7 +208,7 @@ public class BatchProcessCLI extends BasicCLI {
             throw new RuntimeException(e.getMessage(), e);
         } finally {
             if (err != null) {
-                stat.add(ProcessResult.error(err, new String[0]));
+                stat.add(ProcessResult.err(err));
                 L.e.P("[fail] ", file + ": " + err.getMessage());
             }
         }
@@ -309,7 +309,11 @@ public class BatchProcessCLI extends BasicCLI {
     @Override
     protected void _boot() throws Throwable {
         super._boot();
-        psh = new ProtectedShell(!dryRun, L);
+        psh = _getShell();
+    }
+
+    protected ProtectedShell _getShell() {
+        return new ProtectedShell(!dryRun, L);
     }
 
     protected final ProcessResultStat stat = new ProcessResultStat();
@@ -349,6 +353,8 @@ public class BatchProcessCLI extends BasicCLI {
 
     private void applyResult(File src, File dst, File edit, ProcessResult result)
             throws IOException, CLIException {
+        assert result != null;
+
         boolean diffPrinted = false;
         if (result.operation == ProcessResult.SAVE) {
             assert result.changed == null;
@@ -366,6 +372,9 @@ public class BatchProcessCLI extends BasicCLI {
         }
 
         switch (result.operation) {
+        case ProcessResult.NONE:
+            return;
+
         case ProcessResult.DELETE:
             if (psh.delete(dst))
                 result.setDone();

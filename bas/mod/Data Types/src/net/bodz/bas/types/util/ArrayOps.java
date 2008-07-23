@@ -48,6 +48,15 @@ public class ArrayOps {
                 Comparator<?> comparator) {
             throw new IllegalArgumentException("comparator isn't used");
         }
+
+        public Object contents(A array, boolean deep) {
+            return new ArrayContents<A, Object>(array, deep, this);
+        }
+
+        public Object contents(A array) {
+            return new ArrayContents<A, Object>(array, false, this);
+        }
+
     }
 
     public static class Bytes extends _ArrayOp<byte[]> {
@@ -716,7 +725,10 @@ public class ArrayOps {
             throw new IllegalArgumentException("not type of array: "
                     + arrayType);
         Class<?> componentType = arrayType.getComponentType();
-        return (ArrayOp<A>) ops.get(componentType);
+        if (componentType.isPrimitive())
+            return (ArrayOp<A>) ops.get(componentType);
+        else
+            return (ArrayOp<A>) Objects;
     }
 
 }
