@@ -99,6 +99,12 @@ public class BatchProcessCLI extends BasicCLI {
     boolean           diffWithDest   = false;
 
     protected BatchProcessCLI() {
+        _init();
+    }
+
+    protected ProtectedShell psh;
+
+    private void _init() {
         fileFilter = new FileFilter() {
             @Override
             public boolean accept(File file) {
@@ -123,6 +129,7 @@ public class BatchProcessCLI extends BasicCLI {
                 return true;
             }
         };
+        psh = _getShell();
     }
 
     protected File _getEditTmp(File file) throws IOException {
@@ -170,7 +177,7 @@ public class BatchProcessCLI extends BasicCLI {
             return in;
         }
         File out = Files.getAbsoluteFile(outputDirectory, relative);
-        File outd = out.getParentFile();
+        File outd = out.getAbsoluteFile().getParentFile();
         if (outd.isFile())
             throw new Error("invalid output directory: " + outd);
         return out;
@@ -304,12 +311,9 @@ public class BatchProcessCLI extends BasicCLI {
         throw new NotImplementedException();
     }
 
-    protected ProtectedShell psh;
-
     @Override
     protected void _boot() throws Throwable {
         super._boot();
-        psh = _getShell();
     }
 
     protected ProtectedShell _getShell() {

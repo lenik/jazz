@@ -2,7 +2,6 @@ package net.bodz.bas.text.interp;
 
 import java.util.regex.Pattern;
 
-
 public class Unescape extends PatternProcessor {
 
     private final int escapeCharLen;
@@ -71,7 +70,7 @@ public class Unescape extends PatternProcessor {
         return eat;
     }
 
-    protected int lookHex(int off, int len) {
+    protected final int lookHex(int off, int len) {
         len = Math.min(len, source.length() - off);
         for (int i = 0; i < len; i++) {
             char c = source.charAt(off + i);
@@ -87,7 +86,7 @@ public class Unescape extends PatternProcessor {
         return len;
     }
 
-    protected int lookOct(int off, int len) {
+    protected final int lookOct(int off, int len) {
         len = Math.min(len, source.length() - off);
         for (int i = 0; i < len; i++) {
             char c = source.charAt(off + i);
@@ -99,7 +98,7 @@ public class Unescape extends PatternProcessor {
         return len;
     }
 
-    protected int parseInt(int radix, int off, int len) {
+    protected final int parseInt(int radix, int off, int len) {
         String s = source.substring(off, off + len);
         return Integer.parseInt(s, radix);
     }

@@ -238,19 +238,30 @@ public class Strings {
             protected void matched(String part) {
                 assert part.length() == 1;
                 char c = part.charAt(0);
-                switch (c) {
-                case '\r':
-                    print("\\r");
-                    break;
-                case '\n':
-                    print("\\n");
-                    break;
-                default:
-                    print('\\');
-                    print(c);
-                }
+                print(escape(c));
             }
         };
+    }
+
+    public static String escape(char c) {
+        switch (c) {
+        case '\r':
+            return "\\r";
+        case '\n':
+            return "\\n";
+        case '\t':
+            return "\\t";
+        case '\0':
+            return "\\0";
+
+        case '\\': // followings: "\\"+c:
+            return "\\\\";
+        case '\"':
+            return "\\\"";
+        case '\'':
+            return "\\\'";
+        }
+        return String.valueOf(c);
     }
 
     public static String escape(String s) {

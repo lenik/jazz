@@ -145,6 +145,10 @@ public class CharOuts {
             this(new StringBuffer());
         }
 
+        public Buffer(int capacity) {
+            this(new StringBuffer(capacity));
+        }
+
         public StringBuffer getBuffer() {
             return buffer;
         }

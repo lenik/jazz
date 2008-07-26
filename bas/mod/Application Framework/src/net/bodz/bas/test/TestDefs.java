@@ -37,6 +37,8 @@ import static net.bodz.bas.test.Relations._NE;
  *         END
  * );
  * </pre>
+ * 
+ * And also add {@code net.bodz.bas.test.*} to stack filter. 
  */
 public class TestDefs {
 
