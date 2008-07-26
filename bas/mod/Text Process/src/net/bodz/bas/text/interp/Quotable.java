@@ -77,7 +77,7 @@ public class Quotable extends PatternProcessor {
     }
 
     protected String interpQuotedText(String quotedText) {
-        return Unescape.interp(quotedText);
+        return Unescape.unescape(quotedText);
     }
 
     protected String interpUnquotedText(String s) {

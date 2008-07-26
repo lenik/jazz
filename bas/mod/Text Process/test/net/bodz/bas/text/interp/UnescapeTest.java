@@ -15,7 +15,7 @@ public class UnescapeTest {
             public Object eval(String input) throws Throwable {
                 if (isBreakpoint())
                     System.out.println(input);
-                return Unescape.interp(input);
+                return Unescape.unescape(input);
             }
         }, //
                 EQ("", ""), //

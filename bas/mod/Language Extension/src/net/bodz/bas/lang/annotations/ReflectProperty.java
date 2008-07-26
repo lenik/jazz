@@ -9,6 +9,8 @@ import java.lang.annotation.Target;
 @Target( { ElementType.FIELD })
 public @interface ReflectProperty {
 
+    Class<?> _class() default void.class;
+
     String value() default "";
 
     boolean secure() default false;

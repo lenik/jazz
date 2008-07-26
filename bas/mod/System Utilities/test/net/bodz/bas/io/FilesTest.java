@@ -4,8 +4,11 @@ import static net.bodz.bas.test.TestDefs.END;
 import static net.bodz.bas.test.TestDefs.EQ;
 import static net.bodz.bas.types.util.Arrays2._;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +18,12 @@ import net.bodz.bas.test.TestEval;
 import org.junit.Test;
 
 public class FilesTest {
+
+    private final File testDir;
+
+    public FilesTest() {
+        testDir = Files.getTmpDir();
+    }
 
     @Test
     public void testGetClassFile() throws Exception {
@@ -76,4 +85,26 @@ public class FilesTest {
                 EQ(_("a/b", "a/b"), ""), //
                 END);
     }
+
+    File file(String path) {
+        return new File(testDir, path);
+    }
+
+    void create(String path, Object data) throws IOException {
+        File f = file(path);
+        f.getParentFile().mkdirs();
+        Files.write(f, data);
+    }
+
+    @Test
+    public void testDeleteTree() throws IOException {
+        create("dt/a/b/c", "1");
+        create("dt/d/e/f", "1");
+        create("dt/d/g/h", "1");
+        assertTrue("envprep", file("dt/d/e").isDirectory());
+        assertTrue("envprep", file("dt/d/g/h").isFile());
+        Files.deleteTree(file("dt"));
+        assertFalse(file("dt").exists());
+    }
+
 }

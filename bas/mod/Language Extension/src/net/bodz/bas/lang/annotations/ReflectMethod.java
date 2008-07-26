@@ -9,6 +9,8 @@ import java.lang.annotation.Target;
 @Target( { ElementType.FIELD })
 public @interface ReflectMethod {
 
+    Class<?> _class() default void.class;
+
     String value() default "";
 
     Class<?>[] parameters() default {};

@@ -9,6 +9,8 @@ import java.lang.annotation.Target;
 @Target( { ElementType.FIELD })
 public @interface ReflectField {
 
+    Class<?> _class() default void.class;
+
     String value() default "";
 
     Class<?> type() default Object.class;
