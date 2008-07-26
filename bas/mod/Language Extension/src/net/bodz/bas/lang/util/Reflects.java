@@ -29,9 +29,18 @@ public class Reflects {
         }
     }
 
+    private static Class<?> ifvoid(Class<?> c, Class<?> t) {
+        return c == void.class ? t : c;
+    }
+
     public static void bind(Class<?> declareClass, Object defineObject) {
         assert defineObject != null;
         Class<?> defineClass = defineObject.getClass();
+        bind(declareClass, defineClass, defineObject);
+    }
+
+    public static void bind(Class<?> declareClass, Class<?> defineClass,
+            Object defineObject) {
         Map<String, PropertyDescriptor> properties = null;
 
         for (Field declareField : declareClass.getDeclaredFields()) {
@@ -41,12 +50,13 @@ public class Reflects {
                 if (!Field.class.isAssignableFrom(declareField.getType()))
                     throw new Error(ReflectField.class
                             + " must be declared on Field field");
+                Class<?> _class = ifvoid(f._class(), defineClass);
                 String name = f.value();
                 if (name.isEmpty())
                     name = declareField.getName();
                 if (f.secure()) {
                     try {
-                        def = defineClass.getField(name);
+                        def = _class.getField(name);
                     } catch (SecurityException e) {
                         throw new Error(e.getMessage(), e);
                     } catch (NoSuchFieldException e) {
@@ -54,7 +64,7 @@ public class Reflects {
                 } else {
                     do {
                         try {
-                            Field defField = defineClass.getDeclaredField(name);
+                            Field defField = _class.getDeclaredField(name);
                             defField.setAccessible(true);
                             def = defField;
                             break;
@@ -62,8 +72,8 @@ public class Reflects {
                             throw new Error(e.getMessage(), e);
                         } catch (NoSuchFieldException e) {
                         }
-                        defineClass = defineClass.getSuperclass();
-                    } while (defineClass != null);
+                        _class = _class.getSuperclass();
+                    } while (_class != null);
                 }
                 if (def == null)
                     throw new NoSuchFieldError(name);
@@ -73,13 +83,14 @@ public class Reflects {
 
             ReflectMethod m = declareField.getAnnotation(ReflectMethod.class);
             if (m != null) {
+                Class<?> _class = ifvoid(m._class(), defineClass);
                 String name = m.value();
                 if (name.isEmpty())
                     name = declareField.getName();
                 Class<?>[] parameters = m.parameters();
                 if (m.secure()) {
                     try {
-                        def = defineClass.getMethod(name, parameters);
+                        def = _class.getMethod(name, parameters);
                     } catch (SecurityException e) {
                         throw new Error(e.getMessage(), e);
                     } catch (NoSuchMethodException e) {
@@ -87,8 +98,8 @@ public class Reflects {
                 } else {
                     do {
                         try {
-                            Method defMethod = defineClass.getDeclaredMethod(
-                                    name, parameters);
+                            Method defMethod = _class.getDeclaredMethod(name,
+                                    parameters);
                             defMethod.setAccessible(true);
                             def = defMethod;
                             break;
@@ -96,8 +107,8 @@ public class Reflects {
                             throw new Error(e.getMessage(), e);
                         } catch (NoSuchMethodException e) {
                         }
-                        defineClass = defineClass.getSuperclass();
-                    } while (defineClass != null);
+                        _class = _class.getSuperclass();
+                    } while (_class != null);
                 }
                 if (def == null)
                     throw new NoSuchMethodError(name);
@@ -109,9 +120,10 @@ public class Reflects {
                     .getAnnotation(ReflectProperty.class);
             if (p != null) {
                 if (properties == null) {
+                    Class<?> _class = ifvoid(p._class(), defineClass);
                     BeanInfo beanInfo;
                     try {
-                        beanInfo = Introspector.getBeanInfo(defineClass);
+                        beanInfo = Introspector.getBeanInfo(_class);
                     } catch (IntrospectionException e) {
                         throw new Error(e.getMessage(), e);
                     }

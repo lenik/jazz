@@ -3,6 +3,9 @@ package net.bodz.bas.types.util;
 import static net.bodz.bas.test.TestDefs.END;
 import static net.bodz.bas.test.TestDefs.EQ;
 import static org.junit.Assert.assertEquals;
+
+import java.util.regex.Pattern;
+
 import net.bodz.bas.test.TestDefs;
 import net.bodz.bas.test.TestEval;
 
@@ -77,4 +80,30 @@ public class StringsTest {
                 END);
     }
 
+    @Test
+    public void testFindAll() {
+        final Pattern square = Pattern.compile("\\[(.*?)\\]");
+        TestDefs.tests(new TestEval<String>() {
+            public Object eval(String input) throws Throwable {
+                return Strings.join("|", Strings.findAll(input, square, 1));
+            }
+        }, //
+                EQ("[hello]", "hello"), //
+                EQ("[a] [b] [c]", "a|b|c"), //
+                EQ("[a [b [c]]] [[d] [[e] f]]", "a [b [c|[d|[e"), //
+                EQ("none", ""), //
+                EQ("[][][]", "||"), //
+                END);
+
+        final Pattern names = Pattern.compile("(\\w+)\\.(\\w+)");
+        TestDefs.tests(new TestEval<String>() {
+            public Object eval(String input) throws Throwable {
+                return Strings.join("|", Strings.findAll(input, names,
+                        "<$1-$2>"));
+            }
+        }, //
+                EQ("bill.gates", "<bill-gates>"), //
+                EQ("a.b, c.d,...  e.f", "<a-b>|<c-d>|<e-f>"), //
+                END);
+    }
 }

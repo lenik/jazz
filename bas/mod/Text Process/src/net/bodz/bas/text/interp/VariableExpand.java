@@ -3,27 +3,27 @@ package net.bodz.bas.text.interp;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-
 public class VariableExpand extends PatternProcessor {
 
-    private static Pattern variableRef;
+    private static Pattern variableRefPattern;
     static {
-        variableRef = Pattern.compile("\\$(?:(\\w+)|\\{((?:\\\\.|.)*?)\\})");
+        variableRefPattern = Pattern.compile( //
+                "\\$(?:(\\w+)|\\{((?:\\\\.|.)*?)\\})");
     }
 
     private Map<String, ?> map;
 
     public VariableExpand() {
-        super(variableRef);
+        super(variableRefPattern);
     }
 
     public VariableExpand(Map<String, ?> map) {
-        super(variableRef);
+        super(variableRefPattern);
         this.map = map;
     }
 
     protected String unescapeBracedName(String name) {
-        return Unescape.interp(name);
+        return Unescape.unescape(name);
     }
 
     protected String expand(String name) {

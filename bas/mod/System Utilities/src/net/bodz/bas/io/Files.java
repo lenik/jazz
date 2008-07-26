@@ -33,10 +33,12 @@ import java.util.List;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
+import net.bodz.bas.lang.Predicate2;
 import net.bodz.bas.lang.err.IdentifiedException;
 import net.bodz.bas.lang.err.UnexpectedException;
 import net.bodz.bas.text.diff.DiffComparator;
 import net.bodz.bas.text.diff.DiffInfo;
+import net.bodz.bas.types.util.Empty;
 import net.bodz.bas.types.util.PrefetchedIterator;
 
 public class Files {
@@ -974,6 +976,22 @@ public class Files {
 
     // File system operations
 
+    public static boolean deleteTree(File start) {
+        assert start != null;
+        if (!start.exists())
+            return false;
+        if (start.isFile())
+            return start.delete();
+        assert start.isDirectory();
+        File[] children = start.listFiles();
+        boolean succ = true;
+        for (File child : children) {
+            succ = deleteTree(child) && succ;
+        }
+        succ = start.delete() && succ;
+        return succ;
+    }
+
     public static boolean move(File src, File dst, boolean force)
             throws IOException {
         if (dst.exists())
@@ -1109,6 +1127,54 @@ public class Files {
 
     public static boolean copyDiff(Object src, Object dst) throws IOException {
         return (Boolean) copyDiff(src, dst, null);
+    }
+
+    /**
+     * @param inputs
+     *            each input may be:
+     *            <ul>
+     *            <li>File inputFile
+     *            <li>String inputFileName
+     *            <li>Predicate2(output, File[] inputs) rule
+     *            </ul>
+     */
+    @SuppressWarnings("unchecked")
+    public static boolean make(File output, Object... inputs) {
+        assert output != null;
+        File outd = output.getParentFile();
+        if (outd == null)
+            outd = output.getAbsoluteFile().getParentFile();
+        List<File> files = new ArrayList<File>();
+        long outl = output.exists() ? output.lastModified() : 0l;
+        long mostRecent = outl;
+        boolean succeeded = true;
+        for (Object input : inputs) {
+            assert input != null;
+            File inputf;
+            if (input instanceof File)
+                inputf = (File) input;
+            else if (input instanceof String)
+                inputf = new File(outd, (String) input);
+            else if (input instanceof Predicate2) {
+                if (mostRecent > outl) {
+                    File[] finputs = files.toArray(Empty.Files);
+                    Predicate2<File, File[]> ruledef = (Predicate2<File, File[]>) input;
+                    boolean succ = ruledef.eval(output, finputs);
+                    succeeded = succeeded && succ;
+                }
+                files.clear();
+                continue;
+            } else
+                throw new IllegalArgumentException("input type not accepted: "
+                        + input.getClass());
+            if (!inputf.exists())
+                throw new IllegalArgumentException("input file isn't existed: "
+                        + inputf);
+            files.add(inputf);
+            if (inputf.lastModified() > mostRecent)
+                mostRecent = inputf.lastModified();
+        }
+        return succeeded;
     }
 
 }

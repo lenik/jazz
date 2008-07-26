@@ -14,9 +14,17 @@ public class Unescape extends PatternProcessor {
 
     @Override
     protected void matched(int start, int end) {
-        start += escapeCharLen;
-        int eatenLen = end - start;
-        eatAhead = recognizeEscapeCode(start) - eatenLen;
+        int eatStart = start + escapeCharLen;
+        int eatenLen = end - eatStart;
+        int eat = recognizeEscapeCode(eatStart);
+        if (eat == -1) {
+            print(source.substring(start, end));
+            eatAhead = 0;
+        } else {
+            assert eat >= eatenLen;
+            // print(source.substring(eatStart + eat, end));
+            eatAhead = eat - eatenLen;
+        }
     }
 
     protected int recognizeEscapeCode(int start) {
@@ -110,7 +118,7 @@ public class Unescape extends PatternProcessor {
         super.unmatched(start, end);
     }
 
-    public static String interp(String s, String escapeChar) {
+    public static String unescape(String s, String escapeChar) {
         Unescape unescape = new Unescape(escapeChar);
         return unescape.process(s);
     }
@@ -120,7 +128,7 @@ public class Unescape extends PatternProcessor {
         cUnescape = new Unescape("\\");
     }
 
-    public static String interp(String s) {
+    public static String unescape(String s) {
         return cUnescape.process(s);
     }
 

@@ -1,9 +1,14 @@
 package net.bodz.bas.types.util;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import net.bodz.bas.lang.err.NotImplementedException;
+import net.bodz.bas.text.interp.Interps;
 import net.bodz.bas.text.interp.PatternProcessor;
 import net.bodz.bas.types.Pair;
 
@@ -268,6 +273,29 @@ public class Strings {
         if (s == null)
             return s;
         return escapeProcessor.process(s);
+    }
+
+    public static String[] findAll(String s, Pattern pattern, int group) {
+        Matcher m = pattern.matcher(s);
+        List<String> list = new ArrayList<String>();
+        while (m.find()) {
+            list.add(m.group(group));
+        }
+        return list.toArray(Empty.Strings);
+    }
+
+    public static String[] findAll(String s, Pattern pattern) {
+        return findAll(s, pattern, 0);
+    }
+
+    public static String[] findAll(String s, Pattern pattern, String replacement) {
+        Matcher m = pattern.matcher(s);
+        List<String> list = new ArrayList<String>();
+        while (m.find()) {
+            String deref = Interps.dereference(replacement, m);
+            list.add(deref);
+        }
+        return list.toArray(Empty.Strings);
     }
 
 }
