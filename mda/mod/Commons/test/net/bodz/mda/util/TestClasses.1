@@ -1,0 +1,48 @@
+
+==== Hello: hello
+
+public class Hello {
+	public String toString() {
+		return "hello"; 
+	}
+}
+
+==== a.b.C: a.b.C
+
+package a.b; 
+
+public class C { 
+	public String toString() {
+		return getClass().getName(); 
+	}
+}
+
+==== a.LoadMany: load 100
+
+package a; 
+
+public class LoadMany {
+	public static class Inner {
+		public int getInt() {
+			return 100; 
+		}
+	}
+	public String toString() {
+		Inner inner = new Inner(); 
+		int n = inner.getInt();
+		return "load " + n; 
+	}
+}
+
+==== a.Complex$J: inner-J 
+
+package a; 
+
+public class Complex {
+	public static class J {
+		public String toString() {
+			return "inner-J"; 
+		}
+	}
+}
+
