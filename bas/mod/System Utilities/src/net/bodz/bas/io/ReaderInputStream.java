@@ -9,7 +9,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 import java.nio.charset.CoderResult;
 
-import net.bodz.bas.lang.FastMath;
+import net.bodz.bas.lang.IntMath;
 import net.bodz.bas.lang.err.UnexpectedException;
 
 public class ReaderInputStream extends InputStream {
@@ -56,7 +56,7 @@ public class ReaderInputStream extends InputStream {
             encode(false);
         }
         byte b = bytebuf.get();
-        return FastMath.unsign(b);
+        return IntMath.unsign(b);
     }
 
     // @Override

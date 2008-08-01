@@ -22,10 +22,9 @@ public abstract class PrefetchedIterator<E> implements Iterator<E> {
             if (e != END)
                 return (E) e;
             prefetched = END;
-            throw new NoSuchElementException();
         }
         if (prefetched == END)
-            return null;
+            throw new NoSuchElementException();
         E t = (E) prefetched;
         prefetched = UNDEFINED;
         return t;

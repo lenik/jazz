@@ -132,6 +132,9 @@ public class BatchProcessCLI extends BasicCLI {
         psh = _getShell();
     }
 
+    /**
+     * @return canonical file
+     */
     protected File _getEditTmp(File file) throws IOException {
         String dotExt = Files.getExtension(file, true);
         return File.createTempFile(tmpPrefix, dotExt, tmpDir);
@@ -166,6 +169,7 @@ public class BatchProcessCLI extends BasicCLI {
     private File   tmpDir    = Files.getTmpDir();
     private String tmpPrefix = getClass().getSimpleName();
 
+    /** canonical file */
     protected File currentStartFile;
 
     protected String getRelativeName(File in) {
@@ -177,7 +181,7 @@ public class BatchProcessCLI extends BasicCLI {
             return in;
         }
         File out = Files.getAbsoluteFile(outputDirectory, relative);
-        File outd = out.getAbsoluteFile().getParentFile();
+        File outd = out.getParentFile();
         if (outd.isFile())
             throw new Error("invalid output directory: " + outd);
         return out;
@@ -197,7 +201,12 @@ public class BatchProcessCLI extends BasicCLI {
         return _getOutputFile(relative, in);
     }
 
-    /** display progress info and calc stat */
+    /**
+     * display progress info and calc stat
+     * 
+     * @param file
+     *            canonical file
+     */
     protected void _doFile(File file) {
         Throwable err = null;
         try {
@@ -227,6 +236,9 @@ public class BatchProcessCLI extends BasicCLI {
      * <li>display diff
      * <li>do result operation
      * </ul>
+     * 
+     * @param file
+     *            canonical file
      */
     @OverrideOption(group = "batchProcess")
     protected ProcessResult doFile(File file) throws Throwable {
@@ -241,6 +253,12 @@ public class BatchProcessCLI extends BasicCLI {
         }
     }
 
+    /**
+     * @param file
+     *            canonical file
+     * @param editTmp
+     *            canonical file
+     */
     @OverrideOption(group = "batchProcess")
     protected ProcessResult doFile(File file, File editTmp) throws Throwable {
         ProcessResult result = doFileEdit(file, editTmp);
@@ -252,7 +270,7 @@ public class BatchProcessCLI extends BasicCLI {
             result.dest = new File(dst, relpath);
         }
         if (result.dest != null)
-            dst = (File) result.dest;
+            dst = Files.canoniOf(result.dest);
 
         addResult(file, dst, editTmp, result);
         return null;
@@ -449,15 +467,15 @@ public class BatchProcessCLI extends BasicCLI {
 
     @Override
     @OverrideOption(group = "batchProcess")
-    protected void doFileArgument(final File startFile) throws Throwable {
-        L.i.sig("[start] ", startFile);
-        currentStartFile = startFile;
+    protected void doFileArgument(final File file) throws Throwable {
+        L.i.sig("[start] ", file);
+        currentStartFile = file;
         FileFilter walkfilter = fileFilter;
-        FsWalk walker = new FsWalk(startFile, walkfilter, filterDirectories,
+        FsWalk walker = new FsWalk(file, walkfilter, filterDirectories,
                 recursive, rootLast, sortComparator) {
             @Override
             public void process(File file) throws IOException {
-                _doFile(file);
+                _doFile(Files.canoniOf(file));
             }
         };
         walker.walk();

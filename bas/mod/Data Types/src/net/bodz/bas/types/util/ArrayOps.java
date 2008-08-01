@@ -4,6 +4,8 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import net.bodz.bas.lang.err.NotImplementedException;
@@ -29,6 +31,28 @@ public class ArrayOps {
         }
 
         @Override
+        public A toArray(Iterator<?> iterator, int size) {
+            A array = allocate(size);
+            int index = 0;
+            while (iterator.hasNext() && index < size) {
+                Object value = iterator.next();
+                set(array, index, value);
+                index++;
+            }
+            return array;
+        }
+
+        @Override
+        public A toArray(Iterable<?> iterable, int size) {
+            return toArray(iterable.iterator(), size);
+        }
+
+        @Override
+        public A toArray(List<?> list) {
+            return toArray(list, list.size());
+        }
+
+        @Override
         public void copy(A src, int srcoff, A dst, int dstoff, int len) {
             System.arraycopy(src, srcoff, dst, dstoff, len);
         }
@@ -36,6 +60,26 @@ public class ArrayOps {
         @Override
         public A copyOf(A array) {
             return copyOf(array, Array.getLength(array));
+        }
+
+        @Override
+        public int indexOf(A array, Object key) {
+            return indexOf(array, key, 0);
+        }
+
+        @Override
+        public int indexOf(A array, Object key, int start) {
+            return indexOf(array, 0, Array.getLength(array), key, start);
+        }
+
+        @Override
+        public int lastIndexOf(A array, Object key) {
+            return lastIndexOf(array, key, Array.getLength(array));
+        }
+
+        @Override
+        public int lastIndexOf(A array, Object key, int start) {
+            return lastIndexOf(array, 0, Array.getLength(array), key, start);
         }
 
         @Override
@@ -49,6 +93,11 @@ public class ArrayOps {
             throw new IllegalArgumentException("comparator isn't used");
         }
 
+        @Override
+        public void reverse(A array) {
+            reverse(array, 0, Array.getLength(array));
+        }
+
         public Object contents(A array, boolean deep) {
             return new ArrayContents<A, Object>(array, deep, this);
         }
@@ -57,11 +106,67 @@ public class ArrayOps {
             return new ArrayContents<A, Object>(array, false, this);
         }
 
+        @Override
+        public boolean equals(A a, int aoff, A b, int boff, int len) {
+            assert a != null;
+            assert b != null;
+            assert aoff >= 0;
+            assert boff >= 0;
+            int alen = Array.getLength(a);
+            int blen = Array.getLength(b);
+            assert aoff + len <= alen;
+            assert boff + len <= blen;
+            if (aoff == 0 && boff == 0 && alen == len && blen == len)
+                return equals(a, b);
+            return _equals(a, aoff, b, boff, len);
+        }
+
+        protected boolean _equals(A a, int aoff, A b, int boff, int len) {
+            while (--len >= 0) {
+                Object u = Array.get(a, aoff++);
+                Object v = Array.get(b, boff++);
+                if (u == v)
+                    continue;
+                if (u == null || v == null)
+                    return false;
+                if (!u.equals(v))
+                    return false;
+            }
+            return true;
+        }
+
+        @Override
+        public boolean equalsWithWrap(A pattern, A array) {
+            return equalsWithWrap(pattern, array, 0, Array.getLength(array));
+        }
+
+        @Override
+        public boolean equalsWithWrap(A pattern, A array, int from, int to) {
+            int plen = Array.getLength(pattern);
+            int pindex = 0;
+            while (from < to) { // optimize: call _equals(parts)
+                Object p = Array.get(pattern, pindex);
+                Object v = Array.get(array, from);
+                if (p == v)
+                    continue;
+                if (p == null || v == null)
+                    return false;
+                if (!p.equals(v))
+                    return false;
+                pindex = (pindex + 1) % plen;
+            }
+            return true;
+        }
     }
 
     public static class Bytes extends _ArrayOp<byte[]> {
         public Bytes() {
             super(byte.class);
+        }
+
+        @Override
+        public Object get(byte[] array, int index) {
+            return array[index];
         }
 
         @Override
@@ -78,6 +183,33 @@ public class ArrayOps {
         @Override
         public byte[] copyOfRange(byte[] array, int from, int to) {
             return Arrays.copyOfRange(array, from, to);
+        }
+
+        @Override
+        public int indexOf(byte[] array, int from, int to, Object key, int start) {
+            if (start < from)
+                start = from;
+            byte v = (Byte) key;
+            while (start < to) {
+                if (array[start] == v)
+                    return start;
+                start++;
+            }
+            return -1;
+        }
+
+        @Override
+        public int lastIndexOf(byte[] array, int from, int to, Object key,
+                int start) {
+            if (start >= to)
+                start = to - 1;
+            byte v = (Byte) key;
+            while (start >= from) {
+                if (array[start] == v)
+                    return start;
+                start--;
+            }
+            return -1;
         }
 
         @Override
@@ -112,6 +244,19 @@ public class ArrayOps {
         }
 
         @Override
+        public void reverse(byte[] array, int fromIndex, int toIndex) {
+            int f = fromIndex;
+            int t = toIndex - 1;
+            while (f < t) {
+                byte mem = array[t];
+                array[f] = mem;
+                array[t] = mem;
+                f++;
+                t--;
+            }
+        }
+
+        @Override
         public boolean equals(byte[] a, byte[] b) {
             return Arrays.equals(a, b);
         }
@@ -133,6 +278,11 @@ public class ArrayOps {
         }
 
         @Override
+        public Object get(short[] array, int index) {
+            return array[index];
+        }
+
+        @Override
         public void set(short[] array, int index, Object value) {
             array[index] = (java.lang.Short) value;
             // AutoType.toShort(value);
@@ -146,6 +296,34 @@ public class ArrayOps {
         @Override
         public short[] copyOfRange(short[] array, int from, int to) {
             return Arrays.copyOfRange(array, from, to);
+        }
+
+        @Override
+        public int indexOf(short[] array, int from, int to, Object key,
+                int start) {
+            if (start < from)
+                start = from;
+            short v = (Short) key;
+            while (start < to) {
+                if (array[start] == v)
+                    return start;
+                start++;
+            }
+            return -1;
+        }
+
+        @Override
+        public int lastIndexOf(short[] array, int from, int to, Object key,
+                int start) {
+            if (start >= to)
+                start = to - 1;
+            short v = (Short) key;
+            while (start >= from) {
+                if (array[start] == v)
+                    return start;
+                start--;
+            }
+            return -1;
         }
 
         @Override
@@ -181,6 +359,19 @@ public class ArrayOps {
         }
 
         @Override
+        public void reverse(short[] array, int fromIndex, int toIndex) {
+            int f = fromIndex;
+            int t = toIndex - 1;
+            while (f < t) {
+                short mem = array[t];
+                array[f] = mem;
+                array[t] = mem;
+                f++;
+                t--;
+            }
+        }
+
+        @Override
         public boolean equals(short[] a, short[] b) {
             return Arrays.equals(a, b);
         }
@@ -202,6 +393,11 @@ public class ArrayOps {
         }
 
         @Override
+        public Object get(int[] array, int index) {
+            return array[index];
+        }
+
+        @Override
         public void set(int[] array, int index, Object value) {
             array[index] = (java.lang.Integer) value;
             // AutoType.toInt(value);
@@ -215,6 +411,33 @@ public class ArrayOps {
         @Override
         public int[] copyOfRange(int[] array, int from, int to) {
             return Arrays.copyOfRange(array, from, to);
+        }
+
+        @Override
+        public int indexOf(int[] array, int from, int to, Object key, int start) {
+            if (start < from)
+                start = from;
+            int v = (Integer) key;
+            while (start < to) {
+                if (array[start] == v)
+                    return start;
+                start++;
+            }
+            return -1;
+        }
+
+        @Override
+        public int lastIndexOf(int[] array, int from, int to, Object key,
+                int start) {
+            if (start >= to)
+                start = to - 1;
+            int v = (Integer) key;
+            while (start >= from) {
+                if (array[start] == v)
+                    return start;
+                start--;
+            }
+            return -1;
         }
 
         @Override
@@ -250,6 +473,19 @@ public class ArrayOps {
         }
 
         @Override
+        public void reverse(int[] array, int fromIndex, int toIndex) {
+            int f = fromIndex;
+            int t = toIndex - 1;
+            while (f < t) {
+                int mem = array[t];
+                array[f] = mem;
+                array[t] = mem;
+                f++;
+                t--;
+            }
+        }
+
+        @Override
         public boolean equals(int[] a, int[] b) {
             return Arrays.equals(a, b);
         }
@@ -271,6 +507,11 @@ public class ArrayOps {
         }
 
         @Override
+        public Object get(long[] array, int index) {
+            return array[index];
+        }
+
+        @Override
         public void set(long[] array, int index, Object value) {
             array[index] = (java.lang.Long) value;
             // AutoType.toLong(value);
@@ -284,6 +525,33 @@ public class ArrayOps {
         @Override
         public long[] copyOfRange(long[] array, int from, int to) {
             return Arrays.copyOfRange(array, from, to);
+        }
+
+        @Override
+        public int indexOf(long[] array, int from, int to, Object key, int start) {
+            if (start < from)
+                start = from;
+            long v = (Long) key;
+            while (start < to) {
+                if (array[start] == v)
+                    return start;
+                start++;
+            }
+            return -1;
+        }
+
+        @Override
+        public int lastIndexOf(long[] array, int from, int to, Object key,
+                int start) {
+            if (start >= to)
+                start = to - 1;
+            long v = (Long) key;
+            while (start >= from) {
+                if (array[start] == v)
+                    return start;
+                start--;
+            }
+            return -1;
         }
 
         @Override
@@ -319,6 +587,19 @@ public class ArrayOps {
         }
 
         @Override
+        public void reverse(long[] array, int fromIndex, int toIndex) {
+            int f = fromIndex;
+            int t = toIndex - 1;
+            while (f < t) {
+                long mem = array[t];
+                array[f] = mem;
+                array[t] = mem;
+                f++;
+                t--;
+            }
+        }
+
+        @Override
         public boolean equals(long[] a, long[] b) {
             return Arrays.equals(a, b);
         }
@@ -340,6 +621,11 @@ public class ArrayOps {
         }
 
         @Override
+        public Object get(float[] array, int index) {
+            return array[index];
+        }
+
+        @Override
         public void set(float[] array, int index, Object value) {
             array[index] = (java.lang.Float) value;
             // AutoType.toFloat(value);
@@ -353,6 +639,34 @@ public class ArrayOps {
         @Override
         public float[] copyOfRange(float[] array, int from, int to) {
             return Arrays.copyOfRange(array, from, to);
+        }
+
+        @Override
+        public int indexOf(float[] array, int from, int to, Object key,
+                int start) {
+            if (start < from)
+                start = from;
+            float v = (Float) key;
+            while (start < to) {
+                if (array[start] == v)
+                    return start;
+                start++;
+            }
+            return -1;
+        }
+
+        @Override
+        public int lastIndexOf(float[] array, int from, int to, Object key,
+                int start) {
+            if (start >= to)
+                start = to - 1;
+            float v = (Float) key;
+            while (start >= from) {
+                if (array[start] == v)
+                    return start;
+                start--;
+            }
+            return -1;
         }
 
         @Override
@@ -388,6 +702,19 @@ public class ArrayOps {
         }
 
         @Override
+        public void reverse(float[] array, int fromIndex, int toIndex) {
+            int f = fromIndex;
+            int t = toIndex - 1;
+            while (f < t) {
+                float mem = array[t];
+                array[f] = mem;
+                array[t] = mem;
+                f++;
+                t--;
+            }
+        }
+
+        @Override
         public boolean equals(float[] a, float[] b) {
             return Arrays.equals(a, b);
         }
@@ -409,6 +736,11 @@ public class ArrayOps {
         }
 
         @Override
+        public Object get(double[] array, int index) {
+            return array[index];
+        }
+
+        @Override
         public void set(double[] array, int index, Object value) {
             array[index] = (java.lang.Double) value;
             // AutoType.toDouble(value);
@@ -422,6 +754,34 @@ public class ArrayOps {
         @Override
         public double[] copyOfRange(double[] array, int from, int to) {
             return Arrays.copyOfRange(array, from, to);
+        }
+
+        @Override
+        public int indexOf(double[] array, int from, int to, Object key,
+                int start) {
+            if (start < from)
+                start = from;
+            double v = (Double) key;
+            while (start < to) {
+                if (array[start] == v)
+                    return start;
+                start++;
+            }
+            return -1;
+        }
+
+        @Override
+        public int lastIndexOf(double[] array, int from, int to, Object key,
+                int start) {
+            if (start >= to)
+                start = to - 1;
+            double v = (Double) key;
+            while (start >= from) {
+                if (array[start] == v)
+                    return start;
+                start--;
+            }
+            return -1;
         }
 
         @Override
@@ -457,6 +817,19 @@ public class ArrayOps {
         }
 
         @Override
+        public void reverse(double[] array, int fromIndex, int toIndex) {
+            int f = fromIndex;
+            int t = toIndex - 1;
+            while (f < t) {
+                double mem = array[t];
+                array[f] = mem;
+                array[t] = mem;
+                f++;
+                t--;
+            }
+        }
+
+        @Override
         public boolean equals(double[] a, double[] b) {
             return Arrays.equals(a, b);
         }
@@ -478,6 +851,11 @@ public class ArrayOps {
         }
 
         @Override
+        public Object get(boolean[] array, int index) {
+            return array[index];
+        }
+
+        @Override
         public void set(boolean[] array, int index, Object value) {
             array[index] = (java.lang.Boolean) value;
             // AutoType.toBoolean(value);
@@ -491,6 +869,34 @@ public class ArrayOps {
         @Override
         public boolean[] copyOfRange(boolean[] array, int from, int to) {
             return Arrays.copyOfRange(array, from, to);
+        }
+
+        @Override
+        public int indexOf(boolean[] array, int from, int to, Object key,
+                int start) {
+            if (start < from)
+                start = from;
+            boolean v = (Boolean) key;
+            while (start < to) {
+                if (array[start] == v)
+                    return start;
+                start++;
+            }
+            return -1;
+        }
+
+        @Override
+        public int lastIndexOf(boolean[] array, int from, int to, Object key,
+                int start) {
+            if (start >= to)
+                start = to - 1;
+            boolean v = (Boolean) key;
+            while (start >= from) {
+                if (array[start] == v)
+                    return start;
+                start--;
+            }
+            return -1;
         }
 
         @Override
@@ -528,6 +934,19 @@ public class ArrayOps {
         }
 
         @Override
+        public void reverse(boolean[] array, int fromIndex, int toIndex) {
+            int f = fromIndex;
+            int t = toIndex - 1;
+            while (f < t) {
+                boolean mem = array[t];
+                array[f] = mem;
+                array[t] = mem;
+                f++;
+                t--;
+            }
+        }
+
+        @Override
         public boolean equals(boolean[] a, boolean[] b) {
             return Arrays.equals(a, b);
         }
@@ -549,6 +968,11 @@ public class ArrayOps {
         }
 
         @Override
+        public Object get(char[] array, int index) {
+            return array[index];
+        }
+
+        @Override
         public void set(char[] array, int index, Object value) {
             array[index] = (java.lang.Character) value;
             // AutoType.toChar(value);
@@ -562,6 +986,33 @@ public class ArrayOps {
         @Override
         public char[] copyOfRange(char[] array, int from, int to) {
             return Arrays.copyOfRange(array, from, to);
+        }
+
+        @Override
+        public int indexOf(char[] array, int from, int to, Object key, int start) {
+            if (start < from)
+                start = from;
+            char v = (Character) key;
+            while (start < to) {
+                if (array[start] == v)
+                    return start;
+                start++;
+            }
+            return -1;
+        }
+
+        @Override
+        public int lastIndexOf(char[] array, int from, int to, Object key,
+                int start) {
+            if (start >= to)
+                start = to - 1;
+            char v = (Character) key;
+            while (start >= from) {
+                if (array[start] == v)
+                    return start;
+                start--;
+            }
+            return -1;
         }
 
         @Override
@@ -597,6 +1048,19 @@ public class ArrayOps {
         }
 
         @Override
+        public void reverse(char[] array, int fromIndex, int toIndex) {
+            int f = fromIndex;
+            int t = toIndex - 1;
+            while (f < t) {
+                char mem = array[t];
+                array[t] = array[f];
+                array[f] = mem;
+                f++;
+                t--;
+            }
+        }
+
+        @Override
         public boolean equals(char[] a, char[] b) {
             return Arrays.equals(a, b);
         }
@@ -617,6 +1081,11 @@ public class ArrayOps {
             super(clazz);
         }
 
+        @Override
+        public Object get(T[] array, int index) {
+            return array[index];
+        }
+
         @SuppressWarnings("unchecked")
         @Override
         public void set(T[] array, int index, Object value) {
@@ -631,6 +1100,35 @@ public class ArrayOps {
         @Override
         public T[] copyOfRange(T[] array, int from, int to) {
             return Arrays.copyOfRange(array, from, to);
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public int indexOf(T[] array, int from, int to, Object key, int start) {
+            if (start < from)
+                start = from;
+            T v = (T) key;
+            while (start < to) {
+                if (array[start] == v)
+                    return start;
+                start++;
+            }
+            return -1;
+        }
+
+        @SuppressWarnings("unchecked")
+        @Override
+        public int lastIndexOf(T[] array, int from, int to, Object key,
+                int start) {
+            if (start >= to)
+                start = to - 1;
+            T v = (T) key;
+            while (start >= from) {
+                if (array[start] == v)
+                    return start;
+                start--;
+            }
+            return -1;
         }
 
         @Override
@@ -676,6 +1174,19 @@ public class ArrayOps {
                 Comparator<?> comparator) {
             Arrays.sort(array, fromIndex, toIndex,
                     (Comparator<? super T>) comparator);
+        }
+
+        @Override
+        public void reverse(T[] array, int fromIndex, int toIndex) {
+            int f = fromIndex;
+            int t = toIndex - 1;
+            while (f < t) {
+                T mem = array[t];
+                array[f] = mem;
+                array[t] = mem;
+                f++;
+                t--;
+            }
         }
 
         @Override
@@ -729,6 +1240,13 @@ public class ArrayOps {
             return (ArrayOp<A>) ops.get(componentType);
         else
             return (ArrayOp<A>) Objects;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <A> ArrayOp<A> get(A array) {
+        assert array != null;
+        Class<A> arrayType = (Class<A>) array.getClass();
+        return get(arrayType);
     }
 
 }

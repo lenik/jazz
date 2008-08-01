@@ -7,7 +7,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CoderResult;
 
-import net.bodz.bas.lang.FastMath;
+import net.bodz.bas.lang.IntMath;
 
 public class HexCharsetDecoder extends CharsetDecoder {
 
@@ -34,7 +34,7 @@ public class HexCharsetDecoder extends CharsetDecoder {
 
         try {
             while (in.hasRemaining()) {
-                hexchr = FastMath.unsign(in.get());
+                hexchr = IntMath.unsign(in.get());
 
                 // System.err.print(""+Integer.toHexString((int)b)+ " ");
                 if (hexchr == delimiter) {

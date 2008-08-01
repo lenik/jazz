@@ -22,7 +22,7 @@
 	</target>
 
 	<target name=":bin.jar">
-		<jar destfile="build/net.bodz.bas.jar">
+		<jar destfile="build/net.bodz.bas.jar" update="true">
 			<fileset dir="mod/Application Framework/bin" />
 			<fileset dir="mod/Bundled Modules/bin" />
 			<fileset dir="mod/Data Types/bin" />
@@ -36,7 +36,7 @@
 	</target>
 
 	<target name=":src.jar">
-		<jar destfile="build/net.bodz.bas-source.jar">
+		<jar destfile="build/net.bodz.bas-source.jar" update="true">
 			<fileset dir="mod/Application Framework/src" />
 			<fileset dir="mod/Bundled Modules/src" />
 			<fileset dir="mod/Data Types/src" />

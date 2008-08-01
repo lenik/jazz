@@ -265,7 +265,7 @@ public class BasicCLI {
                 verinfo = Rcs.parseId(keywords);
             } else {
                 verinfo = new VersionInfo();
-                URL url = Files.getClassResource(clazz);
+                URL url = Files.classData(clazz);
                 File file;
                 try {
                     file = new File(url.toURI());
@@ -349,7 +349,7 @@ public class BasicCLI {
         try {
             args = opts.load(this, args);
             _boot();
-            runInfo.loadExtras();
+            runInfo.loadDelayed();
 
             if (L.showDebug()) {
                 for (Entry<String, _Option<?>> entry : opts.getOptions()
@@ -408,10 +408,14 @@ public class BasicCLI {
     @OverrideOption(group = "basicMain")
     protected boolean doMain(String[] args) throws Throwable {
         for (String arg : args)
-            doFileArgument(new File(arg));
+            doFileArgument(Files.canoniOf(arg));
         return false;
     }
 
+    /**
+     * @param file
+     *            canonical file
+     */
     @OverrideOption(group = "basicMain")
     protected void doFileArgument(File file) throws Throwable {
         assert file != null;
@@ -421,7 +425,12 @@ public class BasicCLI {
             in.close();
     }
 
-    /** if no argument specified, _main(null, stdin) is called. */
+    /**
+     * if no argument specified, _main(null, stdin) is called.
+     * 
+     * @param file
+     *            canonical file or null
+     */
     @OverrideOption(group = "basicMain")
     protected void doFileArgument(File file, InputStream in) throws Throwable {
         throw new NotImplementedException();

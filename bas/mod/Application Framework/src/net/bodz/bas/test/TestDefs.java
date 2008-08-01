@@ -26,7 +26,8 @@ import static net.bodz.bas.test.Relations._NE;
  * 
  * <pre>
  * ${:importStatic(
- *     'net.bodz.bas.test.TestDefs.*'
+ *     'net.bodz.bas.test.TestDefs.*',
+ *     'org.junit.Assert.*'
  * )}TestDefs.tests(new TestEval&lt;${Object}&gt;() {
  *     public Object eval(${Object} input) throws Throwable {
  *         return input;

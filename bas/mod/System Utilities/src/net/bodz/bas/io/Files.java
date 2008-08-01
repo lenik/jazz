@@ -812,46 +812,23 @@ public class Files {
 
     // data associated with a class
 
-    public static URL classData(Class<?> clazz, String name) {
+    public static URL classData(Class<?> clazz, String extension) {
         ClassLoader loader = clazz.getClassLoader();
         String className = clazz.getName();
-        String fileName = className.replace('.', '/') + "." + name;
+        String fileName = className.replace('.', '/') + "." + extension;
         return loader.getResource(fileName);
+    }
+
+    /**
+     * Same as {@link #classData(Class, String)} with ".class" as
+     * <code>extension</code>.
+     */
+    public static URL classData(Class<?> clazz) {
+        return classData(clazz, ".class");
     }
 
     public static URL getDataURL(Object object, String name) {
         return classData(object.getClass(), name);
-    }
-
-    // dump
-
-    public static void dump(Object out, Object... objs) throws IOException {
-        assert out != null;
-        ObjectOutput objout = (out instanceof ObjectOutput) ? (ObjectOutput) out
-                : new ObjectOutputStream(getOutputStream(out));
-        boolean close = shouldClose(out);
-        for (Object o : objs)
-            objout.writeObject(o);
-        if (close)
-            objout.close();
-    }
-
-    public static byte[] dumpBytes(Object... objs) throws IOException {
-        ByteArrayOutputStream buf = new ByteArrayOutputStream();
-        dump(buf, objs);
-        return buf.toByteArray();
-    }
-
-    // Path functions
-
-    public static URL getClassResource(Class<?> clazz) {
-        ClassLoader classLoader = clazz.getClassLoader();
-        if (classLoader == null)
-            throw new NullPointerException("can't getClassLoader");
-        String pkg = clazz.getPackage().getName();
-        String base = clazz.getSimpleName() + ".class";
-        String name = pkg.replace('.', '/') + '/' + base;
-        return classLoader.getResource(name);
     }
 
     public static URL getRootResource(Class<?> clazz) {
@@ -882,17 +859,87 @@ public class Files {
         return url;
     }
 
+    // dump
+
+    public static void dump(Object out, Object... objs) throws IOException {
+        assert out != null;
+        ObjectOutput objout = (out instanceof ObjectOutput) ? (ObjectOutput) out
+                : new ObjectOutputStream(getOutputStream(out));
+        boolean close = shouldClose(out);
+        for (Object o : objs)
+            objout.writeObject(o);
+        if (close)
+            objout.close();
+    }
+
+    public static byte[] dumpBytes(Object... objs) throws IOException {
+        ByteArrayOutputStream buf = new ByteArrayOutputStream();
+        dump(buf, objs);
+        return buf.toByteArray();
+    }
+
+    // Path functions
+
+    /**
+     * This canonical form is safe to getParentFile().
+     */
+    public static File canoniOf(File f) {
+        if (f == null)
+            return null;
+        try {
+            return f.getCanonicalFile();
+        } catch (Exception e) {
+            return f.getAbsoluteFile();
+        }
+    }
+
+    public static File canoniOf(String path) throws NullPointerException {
+        return canoniOf(new File(path));
+    }
+
+    public static File canoniOf(URI uri) throws NullPointerException {
+        return canoniOf(new File(uri));
+    }
+
+    public static File canoniOf(URL url) throws NullPointerException {
+        try {
+            return canoniOf(new File(url.toURI()));
+        } catch (URISyntaxException e) {
+            throw new IllegalArgumentException(e.getMessage(), e);
+        }
+    }
+
+    public static File canoniOf(Object o) {
+        if (o == null)
+            return null;
+        if (o instanceof File)
+            return canoniOf((File) o);
+        if (o instanceof String)
+            return canoniOf((String) o);
+        if (o instanceof URI)
+            return canoniOf((URI) o);
+        if (o instanceof URL)
+            return canoniOf((URL) o);
+        throw new IllegalArgumentException();
+    }
+
+    public static File canoniOf(Object parent, String child) {
+        File _parent = canoniOf(parent);
+        return canoniOf(new File(_parent, child));
+    }
+
     private static File TMPDIR;
 
     public static synchronized File getTmpDir() {
         if (TMPDIR == null) {
-            File t = new File("/tmp");
+            File t;
             String TEMP;
-            if ((TEMP = System.getenv("TEMP")) != null) {
-                t = new File(TEMP);
-            } else if ((TEMP = System.getenv("TMP")) != null) {
-                t = new File(TEMP);
-            }
+            if ((TEMP = System.getenv("TEMP")) != null)
+                t = Files.canoniOf(TEMP);
+            else if ((TEMP = System.getenv("TMP")) != null)
+                t = Files.canoniOf(TEMP);
+            else
+                t = Files.canoniOf("/tmp");
             if (t.exists()) {
                 if (!t.isDirectory())
                     throw new RuntimeException("not a directory: " + t);
@@ -906,6 +953,8 @@ public class Files {
     public static String getRelativeName(File file, File start) {
         if (start == null)
             throw new NullPointerException("start");
+        file = Files.canoniOf(file);
+        start = Files.canoniOf(start);
         List<String> tails = new ArrayList<String>();
         for (File look = file;; look = look.getParentFile()) {
             if (look == null)
@@ -931,7 +980,7 @@ public class Files {
     public static File getAbsoluteFile(File start, String relativeName) {
         if (relativeName == null || relativeName.isEmpty())
             return start;
-        return new File(start, relativeName);
+        return Files.canoniOf(start, relativeName);
     }
 
     /** get name without extension */
@@ -1141,9 +1190,8 @@ public class Files {
     @SuppressWarnings("unchecked")
     public static boolean make(File output, Object... inputs) {
         assert output != null;
+        output = Files.canoniOf(output);
         File outd = output.getParentFile();
-        if (outd == null)
-            outd = output.getAbsoluteFile().getParentFile();
         List<File> files = new ArrayList<File>();
         long outl = output.exists() ? output.lastModified() : 0l;
         long mostRecent = outl;
@@ -1154,7 +1202,7 @@ public class Files {
             if (input instanceof File)
                 inputf = (File) input;
             else if (input instanceof String)
-                inputf = new File(outd, (String) input);
+                inputf = Files.canoniOf(outd, (String) input);
             else if (input instanceof Predicate2) {
                 if (mostRecent > outl) {
                     File[] finputs = files.toArray(Empty.Files);

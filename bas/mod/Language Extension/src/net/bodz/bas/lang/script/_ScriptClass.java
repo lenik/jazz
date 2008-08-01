@@ -267,13 +267,14 @@ class _ScriptClass<T> implements ScriptClass<T> {
         return fields.toArray(new ScriptField<?>[0]);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public ScriptField<?> getField(String name) {
+    public <F> ScriptField<F> getField(String name) {
         _ScriptClass<?> cc = this;
         while (cc != null) {
             ScriptField<?> sfield = cc.fields.get(name);
             if (sfield != null)
-                return sfield;
+                return (ScriptField<F>) sfield;
             cc = cc.getSuperClass();
         }
         return null;
@@ -290,13 +291,14 @@ class _ScriptClass<T> implements ScriptClass<T> {
         return methods.toArray(new ScriptMethod<?>[0]);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public ScriptMethod<?> getMethod(String name) {
+    public <R> ScriptMethod<R> getMethod(String name) {
         _ScriptClass<?> cc = this;
         while (cc != null) {
             ScriptMethod<?> smethod = cc.methods.get(name);
             if (smethod != null)
-                return smethod;
+                return (ScriptMethod<R>) smethod;
             cc = cc.getSuperClass();
         }
         return null;
