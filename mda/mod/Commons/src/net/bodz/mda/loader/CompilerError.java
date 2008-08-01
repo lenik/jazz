@@ -1,4 +1,4 @@
-package net.bodz.mda.util;
+package net.bodz.mda.loader;
 
 public class CompilerError extends Error {
 

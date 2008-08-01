@@ -7,7 +7,7 @@ import net.bodz.bas.lang.annotations.ReflectField;
 import net.bodz.bas.lang.annotations.ReflectMethod;
 import net.bodz.bas.lang.util.Reflects;
 
-public abstract class ByaccParser extends _Parser {
+public abstract class ByaccjParser extends _Parser {
 
     @ReflectField
     private Field  yystate;

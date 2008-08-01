@@ -1,13 +1,17 @@
 
-==== Hello: hello
+name: Hello
+expected: hello
 
 public class Hello {
 	public String toString() {
 		return "hello"; 
 	}
 }
+.
 
-==== a.b.C: a.b.C
+----------------------------------------------------------------------
+name: a.b.C
+expected: a.b.C
 
 package a.b; 
 
@@ -16,8 +20,11 @@ public class C {
 		return getClass().getName(); 
 	}
 }
+.
 
-==== a.LoadMany: load 100
+----------------------------------------------------------------------
+name: a.LoadMany
+expected: load 100
 
 package a; 
 
@@ -33,8 +40,11 @@ public class LoadMany {
 		return "load " + n; 
 	}
 }
+.
 
-==== a.Complex$J: inner-J 
+----------------------------------------------------------------------
+name: a.Complex$J
+expected: inner-J
 
 package a; 
 

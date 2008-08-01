@@ -99,7 +99,7 @@ public abstract class _Lexer implements Lexer {
             tokenNames = new HashMap<Integer, String>();
         String name = tokenNames.get(id);
         if (name == null) {
-            name = Util.getFirstFieldName(getTokenDeclClass(), null, id);
+            name = ReflectUtil.getFirstFieldName(getTokenDeclClass(), null, id);
             if (name == null)
                 name = String.valueOf(id);
             tokenNames.put(id, name);
@@ -119,7 +119,7 @@ public abstract class _Lexer implements Lexer {
             stateNames = new HashMap<Integer, String>();
         String name = stateNames.get(state);
         if (name == null) {
-            name = Util.getFirstFieldName(getClass(), null, state);
+            name = ReflectUtil.getFirstFieldName(getClass(), null, state);
             if (name == null)
                 name = String.valueOf(state);
             stateNames.put(state, name);

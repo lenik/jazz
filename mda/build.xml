@@ -22,14 +22,14 @@
 	</target>
 
 	<target name=":bin.jar">
-		<jar destfile="build/net.bodz.mda.jar">
+		<jar destfile="build/net.bodz.mda.jar" update="true">
 			<fileset dir="mod/Text Parser/bin" />
 			<fileset dir="mod/Javalava/bin" />
 		</jar>
 	</target>
 
 	<target name=":src.jar">
-		<jar destfile="build/net.bodz.mda-source.jar">
+		<jar destfile="build/net.bodz.mda-source.jar" update="true">
 			<fileset dir="mod/Text Parser/bin" />
 			<fileset dir="mod/Javalava/bin" />
 		</jar>

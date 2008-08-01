@@ -1,4 +1,4 @@
-package net.bodz.mda.util;
+package net.bodz.mda.loader;
 
 import static org.junit.Assert.assertEquals;
 
@@ -7,6 +7,8 @@ import java.io.File;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.Caller;
 import net.bodz.bas.lang.util.Classpath;
+import net.bodz.mda.loader.AutoCompileLoader;
+import net.bodz.mda.loader.JavaCompiler;
 
 import org.junit.Test;
 
