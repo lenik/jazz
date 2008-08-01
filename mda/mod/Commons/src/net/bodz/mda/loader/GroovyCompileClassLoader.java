@@ -1,4 +1,4 @@
-package net.bodz.mda.util;
+package net.bodz.mda.loader;
 
 import groovy.lang.GroovyShell;
 import groovy.util.GroovyScriptEngine;

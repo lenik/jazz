@@ -1,4 +1,4 @@
-package net.bodz.mda.util;
+package net.bodz.mda.loader;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,16 +25,16 @@ public class JavaCompiler {
     private String sourceVersion;
     /** -target */
     private String targetVersion;
-    /** -d */
+    /** -d, canonical file */
     private File   srcdir;
-    /** -s */
+    /** -s, canonical file */
     private File   classdir;
     /** -encoding */
     private String encoding           = "utf-8";
 
     public JavaCompiler(File srcdir, File classdir) {
-        this.srcdir = srcdir;
-        this.classdir = classdir;
+        this.srcdir = Files.canoniOf(srcdir);
+        this.classdir = Files.canoniOf(classdir);
     }
 
     public JavaCompiler(File dir) {
