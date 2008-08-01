@@ -4,9 +4,12 @@ import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-@Deprecated
 public class Objects {
 
+    /**
+     * @see ArrayOps.Objects#equals(Object[], Object[])
+     */
+    @Deprecated
     public static boolean equals(byte[] pattern, byte[] bytes, int off) {
         assert pattern != null;
         assert bytes != null;
@@ -18,6 +21,11 @@ public class Objects {
         return true;
     }
 
+    /**
+     * @see net.bodz.bas.types.util.ArrayOps.Bytes#equalsWithWrap(byte[],
+     *      byte[])
+     */
+    @Deprecated
     public static boolean equalsWithWrap(byte[] pattern, byte[] bytes, int off) {
         for (int i = 0; i < pattern.length; i++) {
             if (off >= bytes.length)
@@ -35,6 +43,7 @@ public class Objects {
         return a.equals(b);
     }
 
+    @Deprecated
     public static boolean equals(Object[] pattern, Object[] objs, int off) {
         assert pattern != null;
         assert objs != null;
@@ -46,6 +55,7 @@ public class Objects {
         return true;
     }
 
+    @Deprecated
     public static boolean equalsWithWrap(Object[] pattern, Object[] objs,
             int off) {
         for (int i = 0; i < pattern.length; i++) {

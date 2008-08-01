@@ -16,20 +16,19 @@ import net.bodz.bas.types.util.Types;
 
 public class _RunInfo {
 
-    private RunInfo  a;
+    private RunInfo  annotation;
     private _RunInfo next;
 
     // private Class<?>[] init;
 
     private URL[]    libs;
-    private URL[]    jars;
 
     // private String[] _load;
     // private String[] load;
 
     public _RunInfo(RunInfo info, _RunInfo next) throws CLIException {
         assert info != null;
-        this.a = info;
+        this.annotation = info;
         this.next = next;
         reset();
     }
@@ -48,12 +47,9 @@ public class _RunInfo {
     }
 
     public void reset() throws CLIException {
-        libs = new URL[a.lib().length];
-        jars = new URL[a.jar().length];
+        libs = new URL[annotation.lib().length];
         for (int i = 0; i < libs.length; i++)
-            libs[i] = resolveLib(a.lib()[i]);
-        for (int i = 0; i < jars.length; i++)
-            jars[i] = resolveJar(a.jar()[i]);
+            libs[i] = resolveLib(annotation.lib()[i]);
         flags = 0;
     }
 
@@ -63,7 +59,7 @@ public class _RunInfo {
     static {
         String javalib = System.getenv("JAVA_LIB");
         if (javalib != null) {
-            libJava = new File(javalib);
+            libJava = Files.canoniOf(javalib);
             File verprops = new File(libJava, "versions.property");
             if (verprops.exists())
                 try {
@@ -95,13 +91,6 @@ public class _RunInfo {
         if (test(LIBRARIES_LOADED))
             return;
         for (URL url : libs)
-            // should be added by the mkbat wrappers
-            try {
-                Classpath.addURL(url);
-            } catch (IOException e) {
-                throw new CLIException(e.getMessage(), e);
-            }
-        for (URL url : jars)
             try {
                 Classpath.addURL(url);
             } catch (IOException e) {
@@ -115,26 +104,26 @@ public class _RunInfo {
     public void loadBoot() throws CLIException {
         if (test(BOOT_LOADED))
             return;
-        for (Class<?> init : a.init())
+        for (Class<?> init : annotation.init())
             try {
                 Class.forName(init.getName());
             } catch (ClassNotFoundException e) {
                 throw new CLIException(e.getMessage(), e);
             }
-        for (String exp : a._load())
+        for (String exp : annotation.load())
             global.eval(exp);
         if (next != null)
             next.loadBoot();
         flags |= BOOT_LOADED;
     }
 
-    public void loadExtras() throws CLIException {
+    public void loadDelayed() throws CLIException {
         if (test(EXTRA_LOADED))
             return;
-        for (String exp : a.load())
+        for (String exp : annotation.loadDelayed())
             global.eval(exp);
         if (next != null)
-            next.loadExtras();
+            next.loadDelayed();
         flags |= EXTRA_LOADED;
     }
 

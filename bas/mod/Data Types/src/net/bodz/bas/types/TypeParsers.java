@@ -22,6 +22,7 @@ import net.bodz.bas.io.ByteOut;
 import net.bodz.bas.io.ByteOuts;
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.CharOuts;
+import net.bodz.bas.io.Files;
 import net.bodz.bas.io.IByteOut;
 import net.bodz.bas.lang.IVoid;
 import net.bodz.bas.lang.err.ParseException;
@@ -390,7 +391,7 @@ public class TypeParsers {
 
         @Override
         public File parse(String path) throws ParseException {
-            return new File(path);
+            return Files.canoniOf(path);
         }
 
     }

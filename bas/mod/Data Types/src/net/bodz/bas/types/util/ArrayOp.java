@@ -1,6 +1,8 @@
 package net.bodz.bas.types.util;
 
 import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
 
 public interface ArrayOp<A> {
 
@@ -8,7 +10,15 @@ public interface ArrayOp<A> {
 
     A allocate(int size);
 
+    Object get(A array, int index);
+
     void set(A array, int index, Object value);
+
+    A toArray(Iterator<?> iterator, int size);
+
+    A toArray(Iterable<?> iterable, int size);
+
+    A toArray(List<?> list);
 
     void copy(A src, int srcoff, A dst, int dstoff, int len);
 
@@ -26,6 +36,24 @@ public interface ArrayOp<A> {
      * @see java.util.Arrays#copyOfRange(Object[], int, int)
      */
     A copyOfRange(A array, int from, int to);
+
+    int indexOf(A array, Object key);
+
+    /**
+     * @see String#indexOf(String, int)
+     */
+    int indexOf(A array, Object key, int start);
+
+    int indexOf(A array, int from, int to, Object key, int start);
+
+    int lastIndexOf(A array, Object key);
+
+    /**
+     * @see String#lastIndexOf(String, int)
+     */
+    int lastIndexOf(A array, Object key, int start);
+
+    int lastIndexOf(A array, int from, int to, Object key, int start);
 
     /**
      * @see java.util.Arrays#binarySearch(Object[], Object)
@@ -67,10 +95,20 @@ public interface ArrayOp<A> {
      */
     void sort(A array, int fromIndex, int toIndex, Comparator<?> comparator);
 
+    void reverse(A array);
+
+    void reverse(A array, int fromIndex, int toIndex);
+
     /**
      * @see java.util.Arrays#equals(Object[], Object[])
      */
     boolean equals(A a, A b);
+
+    boolean equals(A a, int aoff, A b, int boff, int len);
+
+    boolean equalsWithWrap(A pattern, A array);
+
+    boolean equalsWithWrap(A pattern, A array, int from, int to);
 
     /**
      * @see java.util.Arrays#hashCode(Object[])

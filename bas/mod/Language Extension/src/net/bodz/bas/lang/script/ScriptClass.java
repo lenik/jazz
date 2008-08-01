@@ -11,14 +11,14 @@ public interface ScriptClass<T> {
     boolean hasField(String name);
 
     /** return null if not exists */
-    ScriptField<?> getField(String name);
+    <F> ScriptField<F> getField(String name);
 
     ScriptMethod<?>[] getMethods();
 
     boolean hasMethod(String name);
 
     /** return null if not exists */
-    ScriptMethod<?> getMethod(String name);
+    <R> ScriptMethod<R> getMethod(String name);
 
     T cast(Object obj);
 

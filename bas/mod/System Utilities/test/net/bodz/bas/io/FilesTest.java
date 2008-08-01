@@ -87,7 +87,7 @@ public class FilesTest {
     }
 
     File file(String path) {
-        return new File(testDir, path);
+        return Files.canoniOf(testDir, path);
     }
 
     void create(String path, Object data) throws IOException {

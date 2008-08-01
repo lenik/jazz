@@ -42,7 +42,7 @@ public class WriterOutputStreamTest {
         assertEquals("s", buf.toString());
         for (int i = 0; i < 3; i++)
             out.write(hello[i]);
-        assertEquals("sΜΜΜ", buf.toString());
+        assertEquals("sMMM", buf.toString());
     }
 
 }

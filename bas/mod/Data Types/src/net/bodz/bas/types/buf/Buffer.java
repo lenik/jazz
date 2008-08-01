@@ -4,7 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.util.Comparator;
 
-import net.bodz.bas.lang.FastMath;
+import net.bodz.bas.lang.IntMath;
 import net.bodz.bas.lang.err.OutOfDomainException;
 import net.bodz.bas.types.util.ArrayOp;
 import net.bodz.bas.types.util.ArrayOps;
@@ -19,7 +19,7 @@ public class Buffer<A> {
     private A     tmpValue;
 
     private static void _checkpow2(int n) {
-        if (FastMath.ones(n) != 1)
+        if (IntMath.ones(n) != 1)
             throw new OutOfDomainException("n=pow2(x)", n);
     }
 
