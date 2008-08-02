@@ -16,27 +16,10 @@ import java.util.TreeSet;
 import java.util.Map.Entry;
 
 import net.bodz.bas.lang.script.ScriptException;
-import net.bodz.bas.text.interp.PatternProcessor;
 import net.bodz.bas.types.TypeParser;
 import net.bodz.bas.types.TypeParsers;
 
 class Util {
-
-    public static String hyphen(String words) {
-        while (words.startsWith("_"))
-            words = words.substring(1);
-        PatternProcessor pp = new PatternProcessor("[A-Z]+") {
-            @Override
-            protected void matched(String part) {
-                print('-');
-                print(part.toLowerCase());
-            }
-        };
-        String s = pp.process(words);
-        if (s.startsWith("-"))
-            s = s.substring(1);
-        return s;
-    }
 
     @SuppressWarnings("unchecked")
     public static <T> T addarray(Class<?> type, T fieldobj, Object val) {

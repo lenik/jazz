@@ -2,11 +2,11 @@ package net.bodz.bas.cli;
 
 public class CallInfo {
 
-    public Object[] argv;
-    public Object   retval;
+    public Object[] parameters;
+    public Object   returnValue;
 
-    public CallInfo(int argc) {
-        argv = new Object[argc];
+    public CallInfo(int parameterCount) {
+        parameters = new Object[parameterCount];
     }
 
 }

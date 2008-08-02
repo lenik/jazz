@@ -1,30 +1,105 @@
 package net.bodz.bas.lang.script;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.bodz.bas.types.util.Annotations;
+
 public class Scripts {
 
-    private static Map<Class<?>, _ScriptClass<?>> classes;
+    private static Map<Class<?>, ScriptClass<?>>          explicitScriptClasses;
+    private static Map<Class<?>, ReflectedScriptClass<?>> convertedScriptClasses;
     static {
-        classes = new HashMap<Class<?>, _ScriptClass<?>>();
+        explicitScriptClasses = new HashMap<Class<?>, ScriptClass<?>>();
+        convertedScriptClasses = new HashMap<Class<?>, ReflectedScriptClass<?>>();
     }
 
+    /**
+     * @param dynamicImpl
+     */
     @SuppressWarnings("unchecked")
-    public static <T> ScriptClass<T> convertClass(Class<?> clazz,
-            boolean forceAccess) throws ScriptException {
-        _ScriptClass<T> sclass = (_ScriptClass<T>) classes.get(clazz);
+    public static <T> ScriptClass<T> getScriptClass(Class<?> origClass,
+            Object dynamicImpl) throws ScriptException {
+        assert origClass != null;
+        ScriptClass<?> sclass = explicitScriptClasses.get(origClass);
         if (sclass == null) {
-            sclass = new _ScriptClass<T>((Class<T>) clazz, forceAccess);
-            classes.put(clazz, sclass);
+            Class<? extends ScriptClass<?>> scType;
+            scType = Annotations.getAnnotation(origClass, ScriptType.class,
+                    true);
+            if (scType == null)
+                throw new ScriptException("no script class defined for "
+                        + origClass);
+            sclass = newScriptClass(scType, origClass, dynamicImpl);
+            explicitScriptClasses.put(origClass, sclass);
+        }
+        return (ScriptClass<T>) sclass;
+    }
+
+    public static <T> ScriptClass<T> getScriptClass(Class<?> origClass)
+            throws ScriptException {
+        return getScriptClass(origClass, null);
+    }
+
+    public static <T> ScriptClass<T> getScriptClass(Object dynamicImpl)
+            throws ScriptException {
+        assert dynamicImpl != null;
+        return getScriptClass(dynamicImpl.getClass(), dynamicImpl);
+    }
+
+    private static final Class<?>[] STATIC_CTOR  = { Class.class };
+    private static final Class<?>[] DYNAMIC_CTOR = { Class.class, Object.class };
+
+    @SuppressWarnings("unchecked")
+    static ScriptClass<?> newScriptClass(
+            Class<? extends ScriptClass<?>> scType, Class<?> origClass,
+            Object dynamicImpl) {
+        ScriptClass<?> sclass;
+        try {
+            if (dynamicImpl == null) {
+                Constructor<ScriptClass<?>> staticCtor;
+                staticCtor = (Constructor<ScriptClass<?>>) scType
+                        .getConstructor(STATIC_CTOR);
+                sclass = staticCtor.newInstance(origClass);
+            } else {
+                Constructor<ScriptClass<?>> dynamicCtor;
+                dynamicCtor = (Constructor<ScriptClass<?>>) scType
+                        .getConstructor(DYNAMIC_CTOR);
+                sclass = dynamicCtor.newInstance(origClass, dynamicImpl);
+            }
+        } catch (NoSuchMethodException e) {
+            throw new RuntimeException("no suitable constructor", e);
+        } catch (Exception e) {
+            throw new RuntimeException("can't instantiate script class", e);
         }
         return sclass;
     }
 
+    /**
+     * @throws NullPointerException
+     *             if <code>clazz</code> is null
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> ScriptClass<T> convertClass(Class<?> clazz,
+            boolean forceAccess) throws ScriptException {
+        assert clazz != null;
+        ReflectedScriptClass<?> sclass = convertedScriptClasses.get(clazz);
+        if (sclass == null) {
+            sclass = new ReflectedScriptClass<T>((Class<T>) clazz, forceAccess);
+            convertedScriptClasses.put(clazz, sclass);
+        }
+        return (ScriptClass<T>) sclass;
+    }
+
+    /**
+     * @throws NullPointerException
+     *             if <code>clazz</code> is null
+     */
     public static <T> ScriptClass<T> convertClass(Class<?> clazz)
             throws ScriptException {
+        assert clazz != null;
         return convertClass(clazz, false);
     }
 

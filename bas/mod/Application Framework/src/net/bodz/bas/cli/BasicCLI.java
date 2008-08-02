@@ -7,7 +7,9 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map.Entry;
 
 import net.bodz.bas.annotations.ClassInfo;
@@ -24,6 +26,7 @@ import net.bodz.bas.lang.annotations.OverrideOption;
 import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.lang.err.UnexpectedException;
+import net.bodz.bas.lang.script.ScriptType;
 import net.bodz.bas.log.ALog;
 import net.bodz.bas.log.LogOut;
 import net.bodz.bas.log.LogOuts;
@@ -35,6 +38,7 @@ import net.bodz.bas.types.TypeParser;
 import net.bodz.bas.types.TypeParsers;
 import net.bodz.bas.types.TypeParsers.ALogParser;
 import net.bodz.bas.types.TypeParsers.CharOutParser;
+import net.bodz.bas.types.util.Empty;
 import net.bodz.bas.types.util.Strings;
 
 /**
@@ -65,6 +69,7 @@ import net.bodz.bas.types.util.Strings;
 @RcsKeywords(id = "$Id: Rcs.java 784 2008-01-15 10:53:24Z lenik $")
 @RunInfo(lib = "bodz_bas")
 @OptionGroup(value = "standard", rank = -1)
+@ScriptType(CLIScriptClass.class)
 public class BasicCLI {
 
     @Option(hidden = true, parser = CharOutParser.class)
@@ -238,11 +243,6 @@ public class BasicCLI {
 
     }
 
-    public BasicCLI() {
-        TypeParsers.register(CLIPlugin.class, new PluginParser<CLIPlugin>());
-        L = new CLILog(L.getLevel());
-    }
-
     private ClassInfo _classInfo;
 
     protected ClassInfo _loadClassInfo() {
@@ -330,6 +330,29 @@ public class BasicCLI {
         throw new ControlBreak();
     }
 
+    private boolean                prepared;
+    private _RunInfo               runInfo;
+    private ClassOptions<BasicCLI> opts;
+    private List<String>           restArgs;
+
+    public BasicCLI() {
+        TypeParsers.register(CLIPlugin.class, new PluginParser<CLIPlugin>());
+        L = new CLILog(L.getLevel());
+    }
+
+    private void _prepare() throws CLIException {
+        if (prepared)
+            return;
+
+        runInfo = _RunInfo.parse(getClass(), true);
+        runInfo.loadBoot();
+        // runInfo.loadLibraries();
+
+        opts = getClassOptions();
+        restArgs = new ArrayList<String>();
+        prepared = true;
+    }
+
     @SuppressWarnings("unchecked")
     protected <T extends BasicCLI> ClassOptions<T> getClassOptions()
             throws CLIException {
@@ -338,24 +361,30 @@ public class BasicCLI {
         return opts;
     }
 
-    public final void climain(String... args) throws Throwable {
-        Class<? extends BasicCLI> clazz = getClass();
-        _RunInfo runInfo = _RunInfo.parse(clazz, true);
+    protected void parseArguments(String... args) throws CLIException,
+            ParseException {
+        _prepare();
+        String[] rest = opts.load(this, args);
+        for (String arg : rest)
+            restArgs.add(arg);
+    }
 
-        runInfo.loadBoot();
-        // runInfo.loadLibraries();
+    /**
+     * public access: so derivations don't have to declare static main()s.
+     */
+    public final synchronized void run(String... args) throws Throwable {
+        _prepare();
+        int preRestSize = restArgs.size(); // make climain() reentrant.
 
-        ClassOptions<BasicCLI> opts = getClassOptions();
         try {
-            args = opts.load(this, args);
+            parseArguments(args);
             _boot();
             runInfo.loadDelayed();
-
             if (L.showDebug()) {
                 for (Entry<String, _Option<?>> entry : opts.getOptions()
                         .entrySet()) {
                     _Option<?> opt = entry.getValue();
-                    String optnam = opt.getCanonicalName();
+                    String optnam = opt.getCLIName();
                     if (!optnam.equals(entry.getKey()))
                         continue;
                     Object optval = opt.get(this);
@@ -369,10 +398,15 @@ public class BasicCLI {
                     L.d.P("var ", name, " = ", value);
                 }
             }
-            _main(args);
+            String[] rest = restArgs.toArray(Empty.Strings);
+
+            _main(rest);
             _exit();
         } catch (ControlBreak b) {
             return;
+        } finally {
+            while (restArgs.size() > preRestSize)
+                restArgs.remove(restArgs.size() - 1);
         }
     }
 
