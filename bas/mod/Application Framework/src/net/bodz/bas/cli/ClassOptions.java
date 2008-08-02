@@ -122,7 +122,7 @@ public class ClassOptions<CT> {
     }
 
     protected void addOption(_Option<?> copt) {
-        String optnam = copt.getCanonicalName();
+        String optnam = copt.getCLIName();
         _Option<?> prev = options.get(optnam);
         if (prev != null)
             throw new IllegalArgumentException("option name " + optnam
@@ -382,7 +382,7 @@ public class ClassOptions<CT> {
             StringBuffer buf = new StringBuffer(missing.size() * 20);
             for (Object m : missing) {
                 _Option<?> mopt = (_Option<?>) m;
-                buf.append("    " + mopt.getCanonicalName() + "\n");
+                buf.append("    " + mopt.getCLIName() + "\n");
             }
             throw new CLIException("missing required option(s): \n" + buf);
         }
@@ -390,22 +390,18 @@ public class ClassOptions<CT> {
 
     private int loadCall(CT object, MethodOption optcall, List<String> args,
             int off) throws CLIException, ParseException {
-        int cargs = optcall.getParameterCount();
+        int argc = optcall.getParameterCount();
         int rest = args.size() - off;
-        if (cargs > rest)
+        if (argc > rest)
             throw new CLIException("not enough parameters for function-option "
-                    + optcall.getCanonicalName());
-        CallInfo call = new CallInfo(cargs);
-        for (int i = 0; i < cargs; i++) {
-            String arg = args.get(i);
-            call.argv[i] = optcall.parseParameter(arg, i);
-        }
+                    + optcall.getCLIName());
+        String[] argv = args.subList(off, off + argc).toArray(new String[0]);
         try {
-            optcall.set(object, call);
+            optcall.call(object, argv);
         } catch (ScriptException e) {
             throw new CLIException(e.getMessage(), e);
         }
-        return cargs;
+        return argc;
     }
 
 }

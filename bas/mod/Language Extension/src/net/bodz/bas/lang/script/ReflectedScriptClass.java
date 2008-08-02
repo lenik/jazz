@@ -8,45 +8,37 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.TreeSet;
 
-import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.lang.err.ReadOnlyException;
 import net.bodz.bas.types.util.Comparators;
 import net.bodz.bas.types.util.Types;
 
-class _ScriptClass<T> implements ScriptClass<T> {
+class ReflectedScriptClass<T> extends _ScriptClass<T> {
 
-    // private Class<T> clazz;
-    private boolean                      forceAccess;
-    private _ScriptClass<?>              next;
-    private Map<String, ScriptField<?>>  fields;
-    private Map<String, ScriptMethod<?>> methods;
+    private boolean forceAccess;
 
-    public _ScriptClass(Class<T> clazz) throws ScriptException {
-        this(clazz, false);
+    public ReflectedScriptClass(Class<T> origClass) throws ScriptException {
+        this(origClass, false);
     }
 
-    public _ScriptClass(Class<T> clazz, boolean forceAccess)
+    public ReflectedScriptClass(Class<T> origClass, boolean forceAccess)
             throws ScriptException {
-        assert clazz != null;
-        // this.clazz = clazz;
+        super(origClass, _get(origClass.getSuperclass(), forceAccess));
         this.forceAccess = forceAccess;
-        Class<?> _super = clazz.getSuperclass();
-        if (_super != null)
-            next = (_ScriptClass<?>) Scripts.convertClass(_super, forceAccess);
 
+        load();
+    }
+
+    protected void load() throws ScriptException {
         BeanInfo beanInfo;
         try {
-            beanInfo = Introspector.getBeanInfo(clazz);
+            beanInfo = Introspector.getBeanInfo(origClass);
         } catch (IntrospectionException e) {
             throw new ScriptException(e.getMessage(), e);
         }
 
-        importFields(clazz.getDeclaredFields());
+        importFields(origClass.getDeclaredFields());
 
         // bean properties overwrite fields
         importProperties(beanInfo.getPropertyDescriptors());
@@ -239,79 +231,13 @@ class _ScriptClass<T> implements ScriptClass<T> {
         }
     }
 
-    protected void putField(String name, ScriptField<?> sfield) {
-        if (fields == null)
-            fields = new HashMap<String, ScriptField<?>>();
-        fields.put(name, sfield);
-    }
-
-    protected void putMethod(String name, ScriptMethod<?> smethod) {
-        if (methods == null)
-            methods = new HashMap<String, ScriptMethod<?>>();
-        methods.put(name, smethod);
-    }
-
-    @Override
-    public String getName() {
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public _ScriptClass<?> getSuperClass() {
-        return next;
-    }
-
-    @Override
-    public ScriptField<?>[] getFields() {
-        Collection<ScriptField<?>> fields = this.fields.values();
-        return fields.toArray(new ScriptField<?>[0]);
-    }
-
     @SuppressWarnings("unchecked")
-    @Override
-    public <F> ScriptField<F> getField(String name) {
-        _ScriptClass<?> cc = this;
-        while (cc != null) {
-            ScriptField<?> sfield = cc.fields.get(name);
-            if (sfield != null)
-                return (ScriptField<F>) sfield;
-            cc = cc.getSuperClass();
-        }
-        return null;
-    }
-
-    @Override
-    public boolean hasField(String name) {
-        return getField(name) != null;
-    }
-
-    @Override
-    public ScriptMethod<?>[] getMethods() {
-        Collection<ScriptMethod<?>> methods = this.methods.values();
-        return methods.toArray(new ScriptMethod<?>[0]);
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public <R> ScriptMethod<R> getMethod(String name) {
-        _ScriptClass<?> cc = this;
-        while (cc != null) {
-            ScriptMethod<?> smethod = cc.methods.get(name);
-            if (smethod != null)
-                return (ScriptMethod<R>) smethod;
-            cc = cc.getSuperClass();
-        }
-        return null;
-    }
-
-    @Override
-    public boolean hasMethod(String name) {
-        return getMethod(name) != null;
-    }
-
-    @Override
-    public T cast(Object obj) {
-        throw new NotImplementedException();
+    private static <R> ReflectedScriptClass<R> _get(Class<R> clazz,
+            boolean forceAccess) throws ScriptException {
+        if (clazz == null)
+            return null;
+        return (ReflectedScriptClass<R>) Scripts.convertClass(clazz,
+                forceAccess);
     }
 
 }

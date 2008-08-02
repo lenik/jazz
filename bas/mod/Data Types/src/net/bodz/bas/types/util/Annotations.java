@@ -9,7 +9,9 @@ import net.bodz.bas.lang.script.MethodSignature;
 
 public class Annotations {
 
-    /** Get annotation value */
+    /**
+     * @return Object returned by value() of annotation instance
+     */
     @SuppressWarnings("unchecked")
     public static <T, A extends Annotation> T getAnnotation(Class<?> clazz,
             Class<A> annotationClass, boolean inherits) {
@@ -32,6 +34,9 @@ public class Annotations {
         }
     }
 
+    /**
+     * @return Object returned by value() of annotation instance
+     */
     public static <T, A extends Annotation> T getAnnotation(Class<?> clazz,
             Class<A> annotationClass) {
         return getAnnotation(clazz, annotationClass, false);

@@ -1,7 +1,6 @@
 package net.bodz.bas.cli;
 
 import static net.bodz.bas.cli.Util.guessParser;
-import static net.bodz.bas.cli.Util.hyphen;
 
 import java.util.Collection;
 import java.util.Map;
@@ -9,12 +8,15 @@ import java.util.Map;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.lang.script.ScriptField;
 import net.bodz.bas.types.TypeParser;
+import net.bodz.bas.types.TypeParsers;
 import net.bodz.bas.types.ValueCheck;
+import net.bodz.bas.types.util.Strings;
 import net.bodz.bas.types.util.Types;
 
 public abstract class _Option<T> implements ScriptField<T> {
 
-    protected final String            name;
+    protected String                  name;
+    protected final String            hname;
     public final Option               o;
 
     protected final Class<?>          type;
@@ -28,23 +30,30 @@ public abstract class _Option<T> implements ScriptField<T> {
     protected final String            optgrp;
 
     @SuppressWarnings("unchecked")
-    public _Option(String name, Option option, Class<T> type, OptionGroup optgrp) {
-        if (!option.name().isEmpty())
-            name = option.name();
-        this.name = hyphen(name);
+    public _Option(String name, Option option, Class<?> type, OptionGroup optgrp) {
+        if (!option.name().isEmpty()) {
+            this.name = Strings.dehyphenatize(name);
+            this.hname = option.name();
+        } else {
+            this.name = name;
+            this.hname = Strings.hyphenatize(name);
+        }
         this.o = option;
         this.type = type;
         this.optgrp = optgrp == null ? null : optgrp.value();
 
-        valtype = (Class<T>) option.valtype();
-        multi = valtype != void.class;
+        if (type.isArray() && isDefaultParser(option.parser()))
+            valtype = (Class<T>) type.getComponentType();
+        if (option.valtype() != void.class)
+            valtype = (Class<T>) option.valtype();
+        multi = valtype != null;
         if (multi) {
             if (!(isArray() || isCollection() || isMap()))
                 throw new CLIError(
                         "valtype can only be specified on Array/Collection/Map types: "
                                 + type);
         } else
-            valtype = type;
+            valtype = (Class<T>) type;
 
         if (type == CallInfo.class) {
             parser = null;
@@ -72,7 +81,7 @@ public abstract class _Option<T> implements ScriptField<T> {
 
     @Override
     public String getName() {
-        return name; // using un-hyphen name?
+        return name;
     }
 
     @Override
@@ -80,8 +89,8 @@ public abstract class _Option<T> implements ScriptField<T> {
         return valtype;
     }
 
-    public String getCanonicalName() {
-        return name;
+    public String getCLIName() {
+        return hname;
     }
 
     public Class<?> getFieldType() {
@@ -130,6 +139,11 @@ public abstract class _Option<T> implements ScriptField<T> {
         if (check != null)
             check.check(val);
         return val;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static boolean isDefaultParser(Class<? extends TypeParser> parser) {
+        return parser == TypeParsers.Void.class;
     }
 
 }

@@ -54,15 +54,53 @@ public class Strings {
     }
 
     public static String ucfirst(String string) {
-        assert string.length() >= 1;
+        if (string == null)
+            return null;
+        if (string.length() <= 1)
+            return string.toUpperCase();
         char ucfirst = Character.toUpperCase(string.charAt(0));
         return ucfirst + string.substring(1);
     }
 
     public static String lcfirst(String string) {
-        assert string.length() >= 1;
+        if (string == null)
+            return null;
+        if (string.length() <= 1)
+            return string.toUpperCase();
         char lcfirst = Character.toLowerCase(string.charAt(0));
         return lcfirst + string.substring(1);
+    }
+
+    public static String hyphenatize(String words) {
+        while (words.startsWith("_"))
+            words = words.substring(1);
+        PatternProcessor pp = new PatternProcessor("[A-Z]+") {
+            @Override
+            protected void matched(String part) {
+                print('-');
+                print(part.toLowerCase());
+            }
+        };
+        String s = pp.process(words);
+        if (s.startsWith("-"))
+            s = s.substring(1);
+        return s;
+    }
+
+    public static String dehyphenatize(String hstr) {
+        String[] parts = hstr.split("-");
+        StringBuffer buf = new StringBuffer();
+        for (int i = 0; i < parts.length; i++) {
+            String part = parts[i];
+            if (part.isEmpty())
+                buf.append('_');
+            else {
+                if (i != 0)
+                    part = Strings.ucfirst(part);
+                buf.append(part);
+            }
+        }
+        return buf.toString();
     }
 
     public static String join(String separator, Object... strings) {

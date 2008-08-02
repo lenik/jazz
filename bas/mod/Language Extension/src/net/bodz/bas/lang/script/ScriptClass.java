@@ -13,6 +13,11 @@ public interface ScriptClass<T> {
     /** return null if not exists */
     <F> ScriptField<F> getField(String name);
 
+    Object get(Object object, String fieldName) throws ScriptException;
+
+    void set(Object object, String fieldName, Object newValue)
+            throws ScriptException;
+
     ScriptMethod<?>[] getMethods();
 
     boolean hasMethod(String name);
@@ -20,6 +25,9 @@ public interface ScriptClass<T> {
     /** return null if not exists */
     <R> ScriptMethod<R> getMethod(String name);
 
-    T cast(Object obj);
+    Object invoke(Object object, String methodName, Object... parameters)
+            throws ScriptException;
+
+    T cast(Object object) throws ScriptException;
 
 }

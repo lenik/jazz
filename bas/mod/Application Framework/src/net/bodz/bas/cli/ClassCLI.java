@@ -76,7 +76,7 @@ public class ClassCLI {
                 _Option<?> fopt = copt.specfiles.get(ifile++);
                 if (fopt == null)
                     break;
-                String fnam = fopt.getCanonicalName();
+                String fnam = fopt.getCLIName();
                 buffer.append(' ');
                 buffer.append(fnam);
             }
@@ -90,14 +90,14 @@ public class ClassCLI {
         Comparator<_Option<?>> optnamsort = new Comparator<_Option<?>>() {
             @Override
             public int compare(_Option<?> a, _Option<?> b) {
-                return a.getCanonicalName().compareTo(b.getCanonicalName());
+                return a.getCLIName().compareTo(b.getCLIName());
             }
         };
         for (Map.Entry<String, _Option<?>> entry : options.entrySet()) {
             _Option<?> opt = entry.getValue();
             if (opt.o.hidden())
                 continue;
-            String optnam = opt.getCanonicalName();
+            String optnam = opt.getCLIName();
             if (!optnam.equals(entry.getKey()))
                 continue;
             String groupName = opt.getGroup();
