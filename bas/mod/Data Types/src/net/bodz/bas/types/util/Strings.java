@@ -1,5 +1,11 @@
 package net.bodz.bas.types.util;
 
+import static net.bodz.bas.lang.BoolMath.test;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StreamTokenizer;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -7,6 +13,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.text.interp.Interps;
 import net.bodz.bas.text.interp.PatternProcessor;
@@ -26,49 +33,77 @@ public class Strings {
         return a.equalsIgnoreCase(b);
     }
 
-    public static String chop(String string, int chars) {
-        assert string != null;
-        if (string.length() < chars)
+    public static String chop(String s, int chopLen) {
+        assert s != null;
+        if (s.length() < chopLen)
             return "";
-        return string.substring(0, string.length() - chars);
+        return s.substring(0, s.length() - chopLen);
     }
 
-    public static String chop(String string) {
-        return chop(string, 1);
+    public static String chop(String s) {
+        return chop(s, 1);
     }
 
-    public static String chomp(String string, String pattern) {
-        assert string != null;
+    public static String chomp(String s, String pattern) {
+        assert s != null;
         assert pattern != null;
         int chars = pattern.length();
-        if (string.length() < chars)
-            return string;
-        int len = string.length();
-        if (string.substring(len - chars).equals(pattern))
-            return string.substring(0, len - chars);
-        return string;
+        if (s.length() < chars)
+            return s;
+        int len = s.length();
+        if (s.substring(len - chars).equals(pattern))
+            return s.substring(0, len - chars);
+        return s;
     }
 
-    public static String chomp(String string) {
-        return chomp(string, "\n");
+    public static String chomp(String s) {
+        return chomp(s, "\n");
     }
 
-    public static String ucfirst(String string) {
-        if (string == null)
+    public static String trimLeft(String s, int end) {
+        if (end > s.length())
+            end = s.length();
+        int l = -1;
+        while (++l < end)
+            if (!Character.isWhitespace(s.charAt(l)))
+                break;
+        return s.substring(l, end);
+    }
+
+    public static String trimLeft(String s) {
+        return trimLeft(s, s.length());
+    }
+
+    public static String trimRight(String s, int start) {
+        if (start < 0)
+            start = 0;
+        int l = s.length();
+        while (--l >= start)
+            if (!Character.isWhitespace(s.charAt(l)))
+                break;
+        return s.substring(start, l + 1);
+    }
+
+    public static String trimRight(String s) {
+        return trimRight(s, 0);
+    }
+
+    public static String ucfirst(String s) {
+        if (s == null)
             return null;
-        if (string.length() <= 1)
-            return string.toUpperCase();
-        char ucfirst = Character.toUpperCase(string.charAt(0));
-        return ucfirst + string.substring(1);
+        if (s.length() <= 1)
+            return s.toUpperCase();
+        char ucfirst = Character.toUpperCase(s.charAt(0));
+        return ucfirst + s.substring(1);
     }
 
-    public static String lcfirst(String string) {
-        if (string == null)
+    public static String lcfirst(String s) {
+        if (s == null)
             return null;
-        if (string.length() <= 1)
-            return string.toUpperCase();
-        char lcfirst = Character.toLowerCase(string.charAt(0));
-        return lcfirst + string.substring(1);
+        if (s.length() <= 1)
+            return s.toUpperCase();
+        char lcfirst = Character.toLowerCase(s.charAt(0));
+        return lcfirst + s.substring(1);
     }
 
     public static String hyphenatize(String words) {
@@ -172,6 +207,147 @@ public class Strings {
         return buf.toString();
     }
 
+    /** trim each token */
+    public static final int TRIM       = 1;
+
+    /** EOL also used to delimit tokens */
+    public static final int MULTILINES = 2;
+
+    /** string quoted by " or ' are treated as single token */
+    public static final int QUOTE      = 4;
+
+    /** line comment (//) and block comment are removed */
+    public static final int COMMENT    = 8;
+
+    public static String[] split(Object src, char[] delims, int limit, int flags)
+            throws IOException {
+        boolean trimList = limit == 0;
+        boolean trim = test(flags & TRIM);
+        if (limit <= 0)
+            limit = Integer.MAX_VALUE;
+        Reader reader = Files.getReader(src);
+        boolean shouldClose = Files.shouldClose(src);
+
+        StreamTokenizer tokenizer = new StreamTokenizer(reader);
+        tokenizer.resetSyntax();
+        tokenizer.wordChars(Character.MIN_CODE_POINT, Character.MAX_CODE_POINT);
+        if (delims == null)
+            for (char sp : " \t\n\r".toCharArray())
+                tokenizer.whitespaceChars(sp, sp);
+        else
+            for (char d : delims)
+                tokenizer.ordinaryChar(d);
+        if (test(flags & MULTILINES)) {
+            tokenizer.whitespaceChars('\n', '\n');
+            tokenizer.whitespaceChars('\r', '\r');
+        }
+        if (test(flags & QUOTE)) {
+            tokenizer.quoteChar('"');
+            tokenizer.quoteChar('\'');
+        }
+        if (test(flags & COMMENT)) {
+            tokenizer.slashSlashComments(true);
+            tokenizer.slashStarComments(true);
+        }
+
+        List<String> list = new ArrayList<String>();
+        int got = 0;
+        int token;
+        StringBuffer buf = null;
+        try {
+            while (got < limit
+                    && (token = tokenizer.nextToken()) != StreamTokenizer.TT_EOF) {
+                // boolean quote = false;
+                switch (token) {
+                case '"':
+                case '\'':
+                    // quote = true;
+                case StreamTokenizer.TT_WORD:
+                    String val = tokenizer.sval;
+                    if (delims == null && buf != null) {
+                        list.add(buf.toString());
+                        buf.setLength(0);
+                        got++;
+                    }
+                    if (buf == null) {
+                        buf = new StringBuffer(val.length());
+                        got++;
+                    }
+                    // if (quote) buf.append((char) token);
+                    buf.append(val);
+                    // if (quote) buf.append((char) token);
+                    break;
+                default: // ordinary char
+                    // assert new String(delims).contains(tokenizer.sval);
+                    if (buf == null)
+                        buf = new StringBuffer();
+                    if (list.size() == limit - 1)
+                        buf.append((char) token);
+                    list.add(buf.toString());
+                    buf.setLength(0);
+                    got++;
+                }
+            }
+            if (got == limit) {
+                String rest = Files.readAll(reader);
+                if (buf == null)
+                    buf = new StringBuffer(rest.length());
+
+                // flush peek cache in StreamTokenizer
+                tokenizer.resetSyntax(); // make all chars ordinary
+                while ((token = tokenizer.nextToken()) != StreamTokenizer.TT_EOF)
+                    // tailbuf.append("<" + (char) lastToken + ">");
+                    buf.append((char) token);
+
+                buf.append(rest);
+                String tail = buf.toString();
+                if (delims == null)
+                    tail = trimRight(tail);
+                if (got > list.size())
+                    list.add(tail);
+                else {
+                    int end = list.size() - 1;
+                    list.set(end, list.get(end) + tail);
+                }
+                buf = null;
+            }
+            if (buf != null) {
+                assert list.size() < limit;
+                list.add(buf.toString());
+            }
+        } finally {
+            if (shouldClose)
+                reader.close();
+        }
+
+        int size = list.size();
+        if (trim)
+            for (int i = 0; i < size; i++)
+                list.set(i, list.get(i).trim());
+        if (trimList)
+            while (size > 0 && list.get(size - 1).isEmpty())
+                list.remove(--size);
+        return list.toArray(Empty.Strings);
+    }
+
+    public static String[] split(String s, char[] delims, int limit, int flags) {
+        try {
+            return split(new StringReader(s), delims, limit, flags);
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+    }
+
+    public static String[] split(String s, char[] delims, int limit) {
+        return split(s, delims, limit, TRIM | QUOTE);
+    }
+
+    public static String[] split(String s, char... delims) {
+        if (delims.length == 0)
+            delims = null;
+        return split(s, delims, 0);
+    }
+
     public static String before(String string, String pattern) {
         int pos = string.indexOf(pattern);
         if (pos == -1)
@@ -180,44 +356,44 @@ public class Strings {
         return string.substring(0, pos);
     }
 
-    public static String before(String string, char pattern) {
-        int pos = string.indexOf(pattern);
+    public static String before(String s, char pattern) {
+        int pos = s.indexOf(pattern);
         if (pos == -1)
             throw new NotImplementedException(
                     "TODO: see substring-before for not-found");
-        return string.substring(0, pos);
+        return s.substring(0, pos);
     }
 
-    public static String after(String string, String pattern) {
-        int pos = string.indexOf(pattern);
+    public static String after(String s, String pattern) {
+        int pos = s.indexOf(pattern);
         if (pos == -1)
             throw new NotImplementedException(
                     "TODO: see substring-after for not-found");
-        return string.substring(pos + 1);
+        return s.substring(pos + 1);
     }
 
-    public static String after(String string, char pattern) {
-        int pos = string.indexOf(pattern);
+    public static String after(String s, char pattern) {
+        int pos = s.indexOf(pattern);
         if (pos == -1)
             throw new NotImplementedException(
                     "TODO: see substring-after for not-found");
-        return string.substring(pos + 1);
+        return s.substring(pos + 1);
     }
 
-    public static int count(String string, char pattern) {
+    public static int count(String s, char pattern) {
         int count = 0;
         int index = 0;
-        while ((index = string.indexOf(pattern, index)) != -1) {
+        while ((index = s.indexOf(pattern, index)) != -1) {
             index++;
             count++;
         }
         return count;
     }
 
-    public static int count(String string, String pattern) {
+    public static int count(String s, String pattern) {
         int count = 0;
         int index = 0;
-        while ((index = string.indexOf(pattern, index)) != -1) {
+        while ((index = s.indexOf(pattern, index)) != -1) {
             index += pattern.length();
             count++;
         }

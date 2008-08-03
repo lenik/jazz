@@ -26,7 +26,10 @@ import net.bodz.bas.lang.annotations.OverrideOption;
 import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.lang.err.UnexpectedException;
+import net.bodz.bas.lang.script.ScriptClass;
+import net.bodz.bas.lang.script.ScriptException;
 import net.bodz.bas.lang.script.ScriptType;
+import net.bodz.bas.lang.script.Scripts;
 import net.bodz.bas.log.ALog;
 import net.bodz.bas.log.LogOut;
 import net.bodz.bas.log.LogOuts;
@@ -340,6 +343,11 @@ public class BasicCLI {
         L = new CLILog(L.getLevel());
     }
 
+    public ScriptClass<? extends BasicCLI> getScriptClass()
+            throws ScriptException {
+        return Scripts.getScriptClass(this);
+    }
+
     private void _prepare() throws CLIException {
         if (prepared)
             return;
@@ -367,6 +375,13 @@ public class BasicCLI {
         String[] rest = opts.load(this, args);
         for (String arg : rest)
             restArgs.add(arg);
+    }
+
+    public void run(String cmdline) throws Throwable {
+        String[] args = {};
+        if (cmdline != null)
+            args = Strings.split(cmdline);
+        run(args);
     }
 
     /**
