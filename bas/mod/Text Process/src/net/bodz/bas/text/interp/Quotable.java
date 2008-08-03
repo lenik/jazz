@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import net.bodz.bas.types.util.Strings;
+
 public class Quotable extends PatternProcessor {
 
     int leftTrim  = 0;
@@ -88,7 +90,10 @@ public class Quotable extends PatternProcessor {
         print(text);
     }
 
-    public String[] split(final String delimiter, String s, int limit) {
+    /**
+     * @see Strings#split(String, char[], int)
+     */
+    public String[] split(final String delim, String s, int limit) {
         boolean trim = limit == 0;
         final List<String> parts;
         if (limit <= 0) {
@@ -121,7 +126,7 @@ public class Quotable extends PatternProcessor {
                     buf.append(text);
                     return;
                 }
-                String[] v = text.split(delimiter, rest);
+                String[] v = text.split(delim, rest);
                 buf.append(v[0]);
                 // if (v.length > 0)
                 if (v.length > 1) {
@@ -150,7 +155,10 @@ public class Quotable extends PatternProcessor {
         return parts.toArray(new String[0]);
     }
 
-    public String[] split(String delimiter, String s) {
-        return split(delimiter, s, 0);
+    /**
+     * @see Strings#split(String, char[])
+     */
+    public String[] split(String delim, String s) {
+        return split(delim, s, 0);
     }
 }

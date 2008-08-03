@@ -32,8 +32,8 @@ public abstract class _Option<T> implements ScriptField<T> {
     @SuppressWarnings("unchecked")
     public _Option(String name, Option option, Class<?> type, OptionGroup optgrp) {
         if (!option.name().isEmpty()) {
-            this.name = Strings.dehyphenatize(name);
             this.hname = option.name();
+            this.name = Strings.dehyphenatize(hname);
         } else {
             this.name = name;
             this.hname = Strings.hyphenatize(name);

@@ -88,6 +88,19 @@ public class Files {
         throw new IllegalArgumentException("illegal charset type: " + charset);
     }
 
+    /**
+     * @param in
+     *            type of one of following types:
+     *            <ul>
+     *            <li><code>InputStream</code>
+     *            <li><code>Reader</code> -> {@link ReaderInputStream}
+     *            <li><code>File</code> -> {@link FileInputStream}
+     *            <li><code>String</code> -> {@link FileInputStream}
+     *            <li><code>URI</code>-> {@link URL#openStream()}
+     *            <li><code>URL</code> -> {@link URL#openStream()}
+     *            <li><code>byte[]</code> -> {@link ByteArrayInputStream}
+     *            </ul>
+     */
     public static InputStream getInputStream(Object in, Object charset)
             throws IOException {
         if (in == null)
@@ -110,10 +123,25 @@ public class Files {
                 "Can't convert type to InputStream: " + in.getClass());
     }
 
+    /**
+     * @see #getInputStream(Object, Object)
+     */
     public static InputStream getInputStream(Object in) throws IOException {
         return getInputStream(in, encoding);
     }
 
+    /**
+     * @param out
+     *            type of one of following types:
+     *            <ul>
+     *            <li><code>OutputStream</code>
+     *            <li><code>Writer</code> -> {@link WriterOutputStream}
+     *            <li><code>File</code> -> {@link FileOutputStream}
+     *            <li><code>String</code> -> {@link FileOutputStream}
+     *            <li><code>URI</code>-> {@link File#File(URI)}
+     *            <li><code>URL</code> -> {@link File#File(URI)}
+     *            </ul>
+     */
     public static OutputStream getOutputStream(Object out, Object charset,
             boolean append) throws IOException {
         if (out == null)
@@ -139,32 +167,57 @@ public class Files {
                 "Can't convert type to InputStream: " + out.getClass());
     }
 
+    /**
+     * @see #getOutputStream(Object, Object, boolean)
+     */
     public static OutputStream getOutputStream(Object out, boolean append)
             throws IOException {
         return getOutputStream(out, encoding, append);
     }
 
+    /**
+     * @see #getOutputStream(Object, Object, boolean)
+     */
     public static OutputStream getOutputStream(Object out, Object charset)
             throws IOException {
         return getOutputStream(out, charset, false);
     }
 
+    /**
+     * @see #getOutputStream(Object, Object, boolean)
+     */
     public static OutputStream getOutputStream(Object out) throws IOException {
         return getOutputStream(out, encoding);
     }
 
+    /**
+     * @param in
+     *            type of one of following types, or any of
+     *            {@link #getInputStream(Object, Object)} thru
+     *            {@link InputStreamReader}.
+     *            <ul>
+     *            <li><code>Reader</code>
+     *            <li><code>String</code> -> {@link StringReader}
+     *            <li><code>char[]</code> -> {@link StringReader}
+     *            </ul>
+     */
     public static Reader getReader(Object in, Object charset)
             throws IOException {
         if (in == null)
             return null;
         if (in instanceof Reader)
             return (Reader) in;
+        if (in instanceof String)
+            return new StringReader((String) in);
         if (in instanceof char[])
             return new StringReader(new String((char[]) in));
         InputStream ins = getInputStream(in);
         return new InputStreamReader(ins, getCharset(charset));
     }
 
+    /**
+     * @see #getReader(Object, Object)
+     */
     public static Reader getReader(Object in) throws IOException {
         return getReader(in, encoding);
     }
@@ -183,6 +236,15 @@ public class Files {
         return getBufferedReader(in, encoding);
     }
 
+    /**
+     * @param out
+     *            type of one of following types, or any of
+     *            {@link #getOutputStream(Object, Object)} thru
+     *            {@link OutputStreamWriter}.
+     *            <ul>
+     *            <li><code>Writer</code>
+     *            </ul>
+     */
     public static Writer getWriter(Object out, Object charset, boolean append)
             throws IOException {
         if (out == null)
@@ -824,7 +886,7 @@ public class Files {
      * <code>extension</code>.
      */
     public static URL classData(Class<?> clazz) {
-        return classData(clazz, ".class");
+        return classData(clazz, "class");
     }
 
     public static URL getDataURL(Object object, String name) {
