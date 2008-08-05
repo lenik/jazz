@@ -6,6 +6,8 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 
+import net.bodz.bas.io.CharOut;
+import net.bodz.bas.lang.Caller;
 import net.bodz.bas.lang.err.Err;
 import net.bodz.bas.lang.err.IdentifiedException;
 import net.bodz.bas.lang.err.UnexpectedException;
@@ -45,6 +47,27 @@ public class Classpath {
 
     public static void addURL(URL url) throws IOException {
         addURL(ClassLoader.getSystemClassLoader(), url);
+    }
+
+    public static void dumpURLs(ClassLoader loader, CharOut out) {
+        out.println("; loader " + loader);
+        if (!(loader instanceof URLClassLoader)) {
+            out.println("; (no url info)");
+        } else {
+            URLClassLoader uloader = (URLClassLoader) loader;
+            URL[] urls = uloader.getURLs();
+            for (URL url : urls)
+                out.println(url);
+        }
+        ClassLoader parent = loader.getParent();
+        if (parent != null) {
+            out.println();
+            dumpURLs(parent, out);
+        }
+    }
+
+    public static void dumpURLs(CharOut out) {
+        dumpURLs(Caller.getCallerClassLoader(), out);
     }
 
 }

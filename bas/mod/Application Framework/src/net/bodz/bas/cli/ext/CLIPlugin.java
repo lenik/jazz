@@ -20,7 +20,16 @@ public interface CLIPlugin {
 
     // instance methods
 
+    /**
+     * @see #boot()
+     */
     void setParameters(Map<String, Object> parameters) throws CLIException,
             ParseException;
+
+    /**
+     * Parameters is defined in System.properties.
+     */
+    @Deprecated
+    void boot() throws CLIException, ParseException;
 
 }

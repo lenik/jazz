@@ -22,6 +22,7 @@
 	</target>
 
 	<target name=":bin.jar">
+		<mkdir dir="build" />
 		<jar destfile="build/net.bodz.bas.jar" update="true">
 			<fileset dir="mod/Application Framework/bin" />
 			<fileset dir="mod/Bundled Modules/bin" />
@@ -36,6 +37,7 @@
 	</target>
 
 	<target name=":src.jar">
+		<mkdir dir="build" />
 		<jar destfile="build/net.bodz.bas-source.jar" update="true">
 			<fileset dir="mod/Application Framework/src" />
 			<fileset dir="mod/Bundled Modules/src" />
@@ -47,6 +49,12 @@
 			<fileset dir="mod/Text Process/src" />
 			<fileset dir="mod/Wrapper Classes/src" />
 		</jar>
+	</target>
+
+	<target name="clean">
+		<delete>
+			<fileset dir="${basedir}/build" includes="*.jar" />
+		</delete>
 	</target>
 
 </project>

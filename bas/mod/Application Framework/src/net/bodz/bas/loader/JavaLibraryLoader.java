@@ -46,20 +46,38 @@ public class JavaLibraryLoader {
     public JavaLibraryLoader() {
         findPaths = new ArrayList<String>();
         libDirs = new HashMap<File, LibDir>();
-
-        String JAVA_LIB = System.getenv("JAVA_LIB");
-        if (JAVA_LIB != null) {
-            String pathSeparator = SystemInfo.pathSeparator;
-            String[] paths = JAVA_LIB.split(pathSeparator);
-            for (String path : paths) {
-                findPaths.add(path);
-            }
-        }
-        findPaths.add(".");
-        findPaths.add("../lib");
     }
 
-    public LibInfo findLibrary(String name) throws IOException {
+    public void addPath(String path) {
+        findPaths.add(path);
+    }
+
+    public void addPaths(String paths) {
+        String[] pathv = paths.split(SystemInfo.pathSeparator);
+        for (String path : pathv) {
+            findPaths.add(path);
+        }
+    }
+
+    /**
+     * @return null if not found
+     */
+    public File findFile(String filename) {
+        for (String path : findPaths) {
+            File canoni = Files.canoniOf(path);
+            if (!canoni.isDirectory())
+                continue;
+            File file = new File(canoni, filename);
+            if (file.exists())
+                return file;
+        }
+        return null;
+    }
+
+    /**
+     * @return null if not found
+     */
+    public LibInfo findLibrary(String name) {
         for (String path : findPaths) {
             File canoni = Files.canoniOf(path);
             if (!canoni.isDirectory())
@@ -78,14 +96,27 @@ public class JavaLibraryLoader {
         return null;
     }
 
+    public File findLibraryFile(String name) {
+        LibInfo lib = findLibrary(name);
+        if (lib == null)
+            return null;
+        return lib.getTarget();
+    }
+
     public static String librariesIni = "libraries.ini";
 
-    protected LibDir loadLibDir(File dir) throws IOException {
+    protected LibDir loadLibDir(File dir) {
         assert dir.isDirectory();
         LibDir libDir = new LibDir();
         File ini = new File(dir, librariesIni);
         if (ini.canRead()) {
-            Properties libraries = Files.loadProperties(ini);
+            Properties libraries;
+            try {
+                libraries = Files.loadProperties(ini);
+            } catch (IOException e) {
+                throw new Error(
+                        "failed to load " + ini + ": " + e.getMessage(), e);
+            }
             for (Entry<Object, Object> e : libraries.entrySet()) {
                 String name = (String) e.getKey();
                 if (libDir.containsKey(name))
@@ -95,7 +126,7 @@ public class JavaLibraryLoader {
                 String value = (String) e.getValue();
 
                 File target = Files.canoniOf(dir, value);
-                assert target.isFile();
+                assert target.isFile() : "invalid target " + target;
                 if (!target.isFile())
                     continue;
 
@@ -104,6 +135,16 @@ public class JavaLibraryLoader {
             }
         }
         return libDir;
+    }
+
+    public static final JavaLibraryLoader DEFAULT;
+    static {
+        DEFAULT = new JavaLibraryLoader();
+        String JAVA_LIB = System.getenv("JAVA_LIB");
+        if (JAVA_LIB != null)
+            DEFAULT.addPaths(JAVA_LIB);
+        DEFAULT.addPath(".");
+        DEFAULT.addPath("../lib");
     }
 
 }

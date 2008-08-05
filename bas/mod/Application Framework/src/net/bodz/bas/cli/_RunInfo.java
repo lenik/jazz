@@ -6,25 +6,25 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Properties;
 
-import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.ClassLocal;
-import net.bodz.bas.lang.err.IdentifiedException;
 import net.bodz.bas.lang.util.Classpath;
+import net.bodz.bas.loader.JavaLibraryLoader;
 import net.bodz.bas.types.util.Types;
 
 public class _RunInfo {
 
-    private RunInfo  annotation;
-    private _RunInfo next;
+    private RunInfo           annotation;
+    private _RunInfo          next;
 
     // private Class<?>[] init;
 
-    private URL[]    libs;
+    private URL[]             libs;
 
     // private String[] _load;
     // private String[] load;
+
+    private JavaLibraryLoader libloader;
 
     public _RunInfo(RunInfo info, _RunInfo next) throws CLIException {
         assert info != null;
@@ -46,45 +46,33 @@ public class _RunInfo {
         return (flags & bit) != 0;
     }
 
-    public void reset() throws CLIException {
+    private void reset() throws CLIException {
+        libloader = JavaLibraryLoader.DEFAULT;
         libs = new URL[annotation.lib().length];
-        for (int i = 0; i < libs.length; i++)
-            libs[i] = resolveLib(annotation.lib()[i]);
+        for (int i = 0; i < libs.length; i++) {
+            String libname = annotation.lib()[i];
+            File libfile;
+            if (libname.contains("."))
+                libfile = resolveJar(libname);
+            else
+                libfile = resolveLib(libname);
+            if (libfile == null)
+                throw new Error("can't resolve lib " + libname);
+            try {
+                libs[i] = libfile.toURI().toURL();
+            } catch (MalformedURLException e) {
+                throw new CLIException(e.getMessage(), e);
+            }
+        }
         flags = 0;
     }
 
-    public static File       libJava;    // == Lapiota.searchJavaLib
-    public static Properties libversions;
-
-    static {
-        String javalib = System.getenv("JAVA_LIB");
-        if (javalib != null) {
-            libJava = Files.canoniOf(javalib);
-            File verprops = new File(libJava, "versions.property");
-            if (verprops.exists())
-                try {
-                    libversions = Files.loadProperties(verprops);
-                } catch (IOException e) {
-                    throw new IdentifiedException(e.getMessage(), e);
-                }
-            else
-                libversions = new Properties();
-        } else {
-            libJava = null; // new File("/");
-        }
+    File resolveLib(String name) throws CLIException {
+        return libloader.findLibraryFile(name);
     }
 
-    URL resolveLib(String lib) throws CLIException {
-        return resolveJar(libversions.get("lib" + lib) + ".jar");
-    }
-
-    URL resolveJar(String jar) throws CLIException {
-        try {
-            File libf = new File(libJava, jar);
-            return libf.toURI().toURL();
-        } catch (MalformedURLException e) {
-            throw new CLIException(e.getMessage(), e);
-        }
+    File resolveJar(String jar) throws CLIException {
+        return libloader.findFile(jar);
     }
 
     public void loadLibraries() throws CLIException {

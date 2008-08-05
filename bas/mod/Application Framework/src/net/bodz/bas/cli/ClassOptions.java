@@ -165,17 +165,29 @@ public class ClassOptions<CT> {
         return options;
     }
 
+    /**
+     * @param name
+     *            explicit option name
+     * @return null if option does not exist
+     */
     public _Option<?> getOption(String name) {
         return options.get(name);
     }
 
-    public _Option<?> findOption(String name) throws CLIException {
+    /**
+     * @param possible
+     *            prefix of option name
+     * @exception CLIException
+     *                if option does not exist
+     */
+    @SuppressWarnings("unchecked")
+    public _Option<Object> findOption(String name) throws CLIException {
         if (name.isEmpty())
             throw new CLIException("option name is empty");
         if (name.startsWith("no-"))
             name = name.substring(3);
         if (options.containsKey(name))
-            return options.get(name);
+            return (_Option<Object>) options.get(name);
         List<String> fullnames = options.getSubKeys(name);
         if (fullnames.isEmpty())
             throw new CLIException("no such option: " + name);
@@ -192,7 +204,7 @@ public class ClassOptions<CT> {
                     + cands.toString());
         }
         String fullname = fullnames.get(0);
-        return options.get(fullname);
+        return (_Option<Object>) options.get(fullname);
     }
 
     private static final String[] String_0 = {};
@@ -307,13 +319,12 @@ public class ClassOptions<CT> {
     }
 
     @SuppressWarnings("unchecked")
-    public void load(CT classobj, Map<String, Object> argmap)
-            throws CLIException, ParseException {
+    public void load(CT classobj, Map<String, ?> argmap) throws CLIException,
+            ParseException {
         Set<?> missing = required == null ? null : (Set<?>) required.clone();
 
-        for (Map.Entry<String, Object> entry : argmap.entrySet()) {
+        for (Map.Entry<String, ?> entry : argmap.entrySet()) {
             String optnam = entry.getKey();
-            Object optval = entry.getValue();
             _Option<?> opt = getOption(optnam);
             if (opt == null)
                 continue;
@@ -321,6 +332,7 @@ public class ClassOptions<CT> {
             if (missing != null && opt.o.required())
                 missing.remove(opt);
 
+            Object optval = entry.getValue();
             if (opt instanceof MethodOption) {
                 String arg = String.valueOf(optval);
                 String[] cargs = arg.split(",");

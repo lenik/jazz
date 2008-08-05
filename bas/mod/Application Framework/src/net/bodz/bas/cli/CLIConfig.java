@@ -15,10 +15,13 @@ public class CLIConfig {
         return log;
     }
 
-    public static DateFormat logTimeFormat;
+    public static DateFormat   logTimeFormat;
 
     static {
         logTimeFormat = new SimpleDateFormat("[yyyy-MM-dd hh:mm:sss] ");
     }
+
+    public static final String PROPERTY_LOGLEVEL   = "cli.loglevel";
+    public static final String PROPERTY_LIB_LOADED = "cli.lib_loaded";
 
 }

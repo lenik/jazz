@@ -40,6 +40,14 @@ public class _CLIPlugin implements CLIPlugin {
         opts.load(this, parameters);
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public void boot() throws CLIException, ParseException {
+        ClassOptions<_CLIPlugin> opts = getOptions();
+        Map<?, ?> properties = System.getProperties();
+        opts.load(this, (Map<String, ?>) properties);
+    }
+
     @Override
     public void help(CharOut out, String prefix) {
         ClassOptions<_CLIPlugin> opts = getOptions();

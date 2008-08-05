@@ -138,6 +138,14 @@ public class Strings {
         return buf.toString();
     }
 
+    public static String q(String s) {
+        return "'" + s + "'";
+    }
+
+    public static String qq(String s) {
+        return '"' + s + '"';
+    }
+
     public static String join(String separator, Object... strings) {
         StringBuffer buffer = null;
         for (Object s : strings) {
