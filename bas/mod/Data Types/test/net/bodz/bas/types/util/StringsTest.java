@@ -172,4 +172,28 @@ public class StringsTest {
                         END);
     }
 
+    @Test
+    public void testSplitBySize() {
+        TestDefs.tests(new TestEval<String>() {
+            public Object eval(String input) throws Throwable {
+                String[] args = input.split("\\|", 2);
+                int limit = Integer.parseInt(args[0]);
+                String s = args[1];
+                String[] v = Strings.splitBySize(s, 3, limit);
+                return Strings.join("|", v);
+            }
+        }, //
+                EQ("1|aaabbbccc", "aaabbbccc"), //
+                EQ("2|aaabbbccc", "aaa|bbbccc"), //
+                EQ("3|aaabbbccc", "aaa|bbb|ccc"), //
+                EQ("4|aaabbbccc", "aaa|bbb|ccc"), //
+                EQ("3|aaabbbcc", "aaa|bbb|cc"), //
+                EQ("3|aaabbbc", "aaa|bbb|c"), //
+                EQ("3|aaa", "aaa"), //
+                EQ("3|aa", "aa"), //
+                EQ("3|a", "a"), //
+                EQ("3|", ""), //
+                END);
+    }
+
 }
