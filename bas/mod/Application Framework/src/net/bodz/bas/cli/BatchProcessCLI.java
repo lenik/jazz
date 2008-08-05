@@ -1,5 +1,6 @@
 package net.bodz.bas.cli;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
@@ -317,6 +318,22 @@ public class BatchProcessCLI extends BasicCLI {
         if (out != null)
             cout = CharOuts.get(out, outputEncoding.name());
         return doFileEdit(inIter, cout);
+    }
+
+    public final byte[] doFileEdit(Object in) throws IOException {
+        InputStream ins = Files.getInputStream(in);
+        boolean closeIn = Files.shouldClose(in);
+        ByteArrayOutputStream outbuf = new ByteArrayOutputStream();
+        try {
+            // ProcessResult result =
+            doFileEdit(ins, outbuf);
+        } catch (Throwable e) {
+            throw new RuntimeException(e.getMessage(), e);
+        } finally {
+            if (closeIn)
+                ins.close();
+        }
+        return outbuf.toByteArray();
     }
 
     /**

@@ -356,6 +356,50 @@ public class Strings {
         return split(s, delims, 0);
     }
 
+    public static String[] splitBySize(String s, int[] sizes, int limit) {
+        if (limit == 0)
+            limit = Integer.MAX_VALUE;
+        if (sizes.length < 1)
+            throw new IllegalArgumentException("empty sizes");
+        int len = s.length();
+        int _sizesum = 0;
+        for (int i = 0; i < sizes.length; i++) {
+            int size = sizes[i];
+            if (size <= 0)
+                throw new IllegalArgumentException("illegal size [" + i + "]");
+            _sizesum += size;
+        }
+        List<String> list = new ArrayList<String>(len / _sizesum * sizes.length
+                + 1);
+        int start = 0;
+        int index = 0;
+        while (start < len) {
+            if (index == limit - 1) {
+                s = s.substring(start);
+                assert !s.isEmpty();
+                list.add(s);
+                break;
+            }
+            int size = sizes[index++ % sizes.length];
+            int subsize = Math.min(len - start, size);
+            assert subsize != 0;
+            list.add(s.substring(start, start + subsize));
+            start += subsize;
+        }
+        return list.toArray(Empty.Strings);
+    }
+
+    public static String[] splitBySize(String s, int size, int limit) {
+        int len = s.length();
+        if (len <= size)
+            return new String[] { s };
+        return splitBySize(s, new int[] { size }, limit);
+    }
+
+    public static String[] splitBySize(String s, int size) {
+        return splitBySize(s, size, 0);
+    }
+
     public static String before(String string, String pattern) {
         int pos = string.indexOf(pattern);
         if (pos == -1)

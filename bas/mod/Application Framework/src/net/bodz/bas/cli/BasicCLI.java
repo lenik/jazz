@@ -58,16 +58,19 @@ import net.bodz.bas.types.util.Strings;
  * public class ${primary_type_name} extends ${CLI:newType(net.bodz.bas.cli.BasicCLI)} {
  * 
  *     &#064;Override
- *     protected void _main(String[] args) throws Throwable {
+ *     protected void doFileArgument(File file, InputStream in) throws Throwable {
  *         ${cursor}
  *     }
  * 
  *     public static void main(String[] args) throws Throwable {
- *         new ${primary_type_name}().climain(args);
+ *         new ${primary_type_name}().run(args);
  *     }
  * 
  * }
  * </pre>
+ * 
+ * @see ClassOptions
+ * @see Option
  */
 @RcsKeywords(id = "$Id: Rcs.java 784 2008-01-15 10:53:24Z lenik $")
 @RunInfo(lib = "bodz_bas")
