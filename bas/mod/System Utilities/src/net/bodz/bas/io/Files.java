@@ -1237,7 +1237,13 @@ public class Files {
     }
 
     public static boolean copyDiff(Object src, Object dst) throws IOException {
-        return (Boolean) copyDiff(src, dst, null);
+        Object diff = copyDiff(src, dst, null);
+        if (diff == null)
+            return false;
+        if (diff instanceof List)
+            return true;
+        assert diff instanceof Boolean;
+        return (Boolean) diff;
     }
 
     /**

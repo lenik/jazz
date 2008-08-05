@@ -79,7 +79,7 @@ public class BasicCLI {
     protected CharOut _stdout        = CharOuts.stdout;
 
     @Option(name = "logout", hidden = true, parser = ALogParser.class)
-    protected ALog    L              = CLIConfig.getBootLog(ALog.INFO);
+    protected ALog    L;
 
     @Option(hidden = true)
     String            _logPrefix     = "[" + getClass().getSimpleName() + "] ";
@@ -304,6 +304,10 @@ public class BasicCLI {
     }
 
     @Option(doc = "show version info")
+    protected final void _version() {
+        _version(CharOuts.stderr);
+    }
+
     protected void _version(CharOut out) {
         ClassInfo info = _loadClassInfo();
         out.printf("[%s] %s\n", info.getName(), info.getDoc());
@@ -340,7 +344,10 @@ public class BasicCLI {
 
     public BasicCLI() {
         TypeParsers.register(CLIPlugin.class, new PluginParser<CLIPlugin>());
-        L = new CLILog(L.getLevel());
+        String loglevel = System.getProperty(CLIConfig.PROPERTY_LOGLEVEL);
+        int bootLevel = loglevel == null ? ALog.INFO : Integer
+                .parseInt(loglevel);
+        L = CLIConfig.getBootLog(bootLevel);
     }
 
     public ScriptClass<? extends BasicCLI> getScriptClass()
@@ -348,28 +355,36 @@ public class BasicCLI {
         return Scripts.getScriptClass(this);
     }
 
-    private void _prepare() throws CLIException {
-        if (prepared)
-            return;
-
-        runInfo = _RunInfo.parse(getClass(), true);
-        runInfo.loadBoot();
-        // runInfo.loadLibraries();
-
-        opts = getClassOptions();
-        restArgs = new ArrayList<String>();
-        prepared = true;
-    }
-
     @SuppressWarnings("unchecked")
-    protected <T extends BasicCLI> ClassOptions<T> getClassOptions()
+    public <T extends BasicCLI> ClassOptions<T> getOptions()
             throws CLIException {
         Class<T> clazz = (Class<T>) this.getClass();
         ClassOptions<T> opts = ClassCLI.getClassOptions(clazz);
         return opts;
     }
 
-    protected void parseArguments(String... args) throws CLIException,
+    private void _prepare() throws CLIException {
+        if (prepared)
+            return;
+
+        L.x.P("cli parse runinfo");
+        runInfo = _RunInfo.parse(getClass(), true);
+
+        L.x.P("cli load boot");
+        runInfo.loadBoot();
+
+        if (!"1".equals(System.getProperty(CLIConfig.PROPERTY_LIB_LOADED))) {
+            L.x.P("cli load libraries");
+            runInfo.loadLibraries();
+        }
+
+        L.x.P("cli get options");
+        opts = getOptions();
+        restArgs = new ArrayList<String>();
+        prepared = true;
+    }
+
+    public void addArguments(String... args) throws CLIException,
             ParseException {
         _prepare();
         String[] rest = opts.load(this, args);
@@ -388,13 +403,19 @@ public class BasicCLI {
      * public access: so derivations don't have to declare static main()s.
      */
     public final synchronized void run(String... args) throws Throwable {
+        L.x.P("cli prepare");
         _prepare();
         int preRestSize = restArgs.size(); // make climain() reentrant.
 
         try {
-            parseArguments(args);
+            addArguments(args);
+
+            L.x.P("cli boot");
             _boot();
+
+            L.x.P("cli load delayed");
             runInfo.loadDelayed();
+
             if (L.showDebug()) {
                 for (Entry<String, _Option<?>> entry : opts.getOptions()
                         .entrySet()) {
@@ -415,7 +436,10 @@ public class BasicCLI {
             }
             String[] rest = restArgs.toArray(Empty.Strings);
 
+            L.x.P("cli main");
             _main(rest);
+
+            L.x.P("cli exit");
             _exit();
         } catch (ControlBreak b) {
             return;

@@ -27,6 +27,7 @@ import net.bodz.bas.text.diff.DiffFormats;
 import net.bodz.bas.text.diff.DiffInfo;
 import net.bodz.bas.types.TypeParsers.ClassInstanceParser;
 import net.bodz.bas.types.TypeParsers.WildcardsParser;
+import net.bodz.bas.types.util.Strings;
 
 @OptionGroup(value = "batch process", rank = -2)
 public class BatchProcessCLI extends BasicCLI {
@@ -213,16 +214,17 @@ public class BatchProcessCLI extends BasicCLI {
             L.i.sig("[proc] ", file);
             ProcessResult result = BatchProcessCLI.this.doFile(file);
             addResult(file, result);
-        } catch (IOException e) {
-            err = e;
         } catch (RuntimeException e) {
             throw e;
         } catch (Error e) {
             throw e;
+        } catch (IOException e) {
+            err = e;
         } catch (Throwable e) {
             err = e;
             throw new RuntimeException(e.getMessage(), e);
         } finally {
+            // err before addResult() or raised inside addResult()
             if (err != null) {
                 stat.add(ProcessResult.err(err));
                 L.e.P("[fail] ", file + ": " + err.getMessage());
@@ -329,11 +331,6 @@ public class BatchProcessCLI extends BasicCLI {
         throw new NotImplementedException();
     }
 
-    @Override
-    protected void _boot() throws Throwable {
-        super._boot();
-    }
-
     protected ProtectedShell _getShell() {
         return new ProtectedShell(!dryRun, L);
     }
@@ -365,11 +362,17 @@ public class BatchProcessCLI extends BasicCLI {
             stat.add(result);
             if (result.done)
                 L.u.P("[", result.getOperationName(), "] ", dst);
-            if (result.error)
-                if (result.cause != null)
-                    L.e.P("[fail] ", result.cause);
+            if (result.error) {
+                String tags;
+                if (result.tags.length == 0)
+                    tags = "";
                 else
-                    L.e.P("[fail]");
+                    tags = "|" + Strings.join("|", result.tags);
+                if (result.cause != null)
+                    L.e.P("[fail", tags, "] ", src, ": ", result.cause);
+                else
+                    L.e.P("[fail", tags, "] ", src);
+            }
         }
     }
 

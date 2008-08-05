@@ -4,7 +4,10 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Map;
+import java.util.Map.Entry;
 
+import net.bodz.bas.io.CharOut;
 import net.bodz.bas.lang.script.MethodSignature;
 
 public class Annotations {
@@ -106,6 +109,44 @@ public class Annotations {
                 return annotation;
         }
         return null;
+    }
+
+    static boolean _accessorsInited;
+    static Field   Class_annotations;
+    static Field   Class_declaredAnnotations;
+
+    static void initAccessors() {
+        if (_accessorsInited)
+            return;
+        try {
+            Class_annotations = Class.class.getDeclaredField(//
+                    "annotations");
+            Class_declaredAnnotations = Class.class.getDeclaredField(//
+                    "declaredAnnotations");
+            Class_annotations.setAccessible(true);
+            Class_declaredAnnotations.setAccessible(true);
+        } catch (NoSuchFieldException e) {
+            throw new Error(e.getMessage(), e);
+        }
+        _accessorsInited = true;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static void dumpAnnotationMap(Class<?> clazz, CharOut out,
+            String indent) {
+        initAccessors();
+        try {
+            Map<Class<?>, Annotation> annotations = (Map<Class<?>, Annotation>) Class_annotations
+                    .get(clazz);
+            for (Entry<Class<?>, Annotation> ent : annotations.entrySet())
+                out.println(indent + ent.getKey() + " " + ent.getValue());
+        } catch (IllegalAccessException e) {
+            throw new Error(e.getMessage(), e);
+        }
+    }
+
+    public static void dumpAnnotationMap(Class<?> clazz, CharOut out) {
+        dumpAnnotationMap(clazz, out, "");
     }
 
 }

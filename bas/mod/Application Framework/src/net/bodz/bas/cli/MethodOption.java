@@ -2,6 +2,7 @@ package net.bodz.bas.cli;
 
 import static net.bodz.bas.types.util.ArrayOps.Objects;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import net.bodz.bas.lang.Control;
@@ -62,7 +63,9 @@ public class MethodOption extends _Option<CallInfo> implements
         }
         try {
             return Control.invoke(method, object, parameters);
-        } catch (Exception e) {
+        } catch (IllegalAccessException e) {
+            throw new ScriptException(e.getMessage(), e);
+        } catch (InvocationTargetException e) {
             throw new ScriptException(e.getMessage(), e);
         }
     }

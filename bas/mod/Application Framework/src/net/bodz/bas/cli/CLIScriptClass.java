@@ -35,7 +35,7 @@ public class CLIScriptClass<T extends BasicCLI> extends _ScriptClass<T> {
     }
 
     protected void load() throws CLIException {
-        ClassOptions<BasicCLI> copts = dynamicImpl.getClassOptions();
+        ClassOptions<BasicCLI> copts = dynamicImpl.getOptions();
         TreeMap<String, _Option<?>> map = copts.getOptions();
         for (Entry<String, _Option<?>> e : map.entrySet()) {
             // String cliKey = e.getKey();
