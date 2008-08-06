@@ -6,6 +6,8 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.nio.CharBuffer;
 
+import net.bodz.bas.lang.err.OutOfDomainException;
+
 public class LAReader extends FilterReader {
 
     // LA(cap)
@@ -159,7 +161,7 @@ public class LAReader extends FilterReader {
 
     public int look(char[] cbuf, int off, int len) throws IOException {
         if (len > cap)
-            throw new IllegalArgumentException("look-ahead(" + cap + ")");
+            throw new OutOfDomainException("look-len", len, cap);
         // len = Math.min(cap, len);
         int las = las();
         if (las < len && !isLabFull()) {

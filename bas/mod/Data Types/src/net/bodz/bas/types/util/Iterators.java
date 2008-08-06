@@ -3,6 +3,8 @@ package net.bodz.bas.types.util;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import net.bodz.bas.lang.err.IllegalArgumentTypeException;
+
 public class Iterators {
 
     private static final EmptyIterator<?> EMPTY = new EmptyIterator<Object>();
@@ -49,7 +51,8 @@ public class Iterators {
             else if (iter instanceof Iterable)
                 return ((Iterable<E>) iter).iterator();
             else
-                throw new IllegalArgumentException("Not iterable: " + iter);
+                throw new IllegalArgumentTypeException(iter,
+                        "iterator or iterable");
         }
 
         @Override

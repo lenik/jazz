@@ -35,6 +35,7 @@ import java.util.regex.Pattern;
 
 import net.bodz.bas.lang.Predicate2;
 import net.bodz.bas.lang.err.IdentifiedException;
+import net.bodz.bas.lang.err.IllegalArgumentTypeException;
 import net.bodz.bas.lang.err.UnexpectedException;
 import net.bodz.bas.text.diff.DiffComparator;
 import net.bodz.bas.text.diff.DiffInfo;
@@ -61,7 +62,7 @@ public class Files {
             return (Charset) charset;
         if (charset instanceof String)
             return Charset.forName((String) charset);
-        throw new IllegalArgumentException("illegal charset type: " + charset);
+        throw new IllegalArgumentTypeException(charset, "String or Charset");
     }
 
     public static CharsetEncoder getCharsetEncoder(Object charset) {
@@ -73,7 +74,7 @@ public class Files {
             return ((Charset) charset).newEncoder();
         if (charset instanceof String)
             return Charset.forName((String) charset).newEncoder();
-        throw new IllegalArgumentException("illegal charset type: " + charset);
+        throw new IllegalArgumentTypeException(charset);
     }
 
     public static CharsetDecoder getCharsetDecoder(Object charset) {
@@ -85,7 +86,7 @@ public class Files {
             return ((Charset) charset).newDecoder();
         if (charset instanceof String)
             return Charset.forName((String) charset).newDecoder();
-        throw new IllegalArgumentException("illegal charset type: " + charset);
+        throw new IllegalArgumentTypeException(charset);
     }
 
     /**
@@ -119,8 +120,7 @@ public class Files {
             return ((URI) in).toURL().openStream();
         if (in instanceof byte[])
             return new ByteArrayInputStream((byte[]) in);
-        throw new IllegalArgumentException(
-                "Can't convert type to InputStream: " + in.getClass());
+        throw new IllegalArgumentTypeException(in);
     }
 
     /**
@@ -163,8 +163,7 @@ public class Files {
             }
         if (out instanceof URI)
             return new FileOutputStream(new File((URI) out), append);
-        throw new IllegalArgumentException(
-                "Can't convert type to InputStream: " + out.getClass());
+        throw new IllegalArgumentTypeException(out);
     }
 
     /**
@@ -187,7 +186,7 @@ public class Files {
      * @see #getOutputStream(Object, Object, boolean)
      */
     public static OutputStream getOutputStream(Object out) throws IOException {
-        return getOutputStream(out, encoding);
+        return getOutputStream(out, encoding, false);
     }
 
     /**
@@ -982,7 +981,7 @@ public class Files {
             return canoniOf((URI) o);
         if (o instanceof URL)
             return canoniOf((URL) o);
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentTypeException(o);
     }
 
     public static File canoniOf(Object parent, String child) {
@@ -1281,8 +1280,7 @@ public class Files {
                 files.clear();
                 continue;
             } else
-                throw new IllegalArgumentException("input type not accepted: "
-                        + input.getClass());
+                throw new IllegalArgumentTypeException(input);
             if (!inputf.exists())
                 throw new IllegalArgumentException("input file isn't existed: "
                         + inputf);

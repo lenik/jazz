@@ -12,6 +12,8 @@ import static org.junit.Assert.fail;
 
 import java.lang.reflect.Array;
 
+import net.bodz.bas.lang.err.IllegalArgumentTypeException;
+
 public class Relations {
 
     public static void _fail(String comment, Object expected, Object actual) {
@@ -189,7 +191,7 @@ public class Relations {
             assert expected instanceof Number;
             Number _expected = (Number) expected;
             if (!(actual instanceof Number))
-                throw new IllegalArgumentException("not a number: " + actual);
+                throw new IllegalArgumentTypeException(actual, Number.class);
             Number _actual = (Number) actual;
             if (!test(_expected, _actual))
                 _fail(comment, _expected, _actual);

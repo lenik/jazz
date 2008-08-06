@@ -2,6 +2,8 @@ package net.bodz.bas.types.util;
 
 import java.lang.reflect.Array;
 
+import net.bodz.bas.lang.err.IllegalArgumentTypeException;
+
 public class Arrays2 {
 
     public static Object[] _(Object... array) {
@@ -11,7 +13,7 @@ public class Arrays2 {
     public static <T> T copyOf(T array, int off, int len) {
         Class<?> type = array.getClass();
         if (!type.isArray())
-            throw new IllegalArgumentException("not an array: " + array);
+            throw new IllegalArgumentTypeException(array, "array");
         Class<?> ctype = type.getComponentType();
         int alen = Array.getLength(array);
         assert off >= 0 && len >= 0 && off + len <= alen;
