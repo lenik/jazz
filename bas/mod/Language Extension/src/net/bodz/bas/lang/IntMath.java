@@ -2,6 +2,8 @@ package net.bodz.bas.lang;
 
 import java.math.BigInteger;
 
+import net.bodz.bas.lang.err.OutOfDomainException;
+
 public class IntMath {
 
     public static int signum(int n) {
@@ -130,7 +132,7 @@ public class IntMath {
      */
     public static Number fac(int n) {
         if (n < 0)
-            throw new IllegalArgumentException(n + " < 0");
+            throw new OutOfDomainException("n<", n, 0);
         if (n < precalc.length)
             return precalc[n];
         int i = precalc.length; // 41

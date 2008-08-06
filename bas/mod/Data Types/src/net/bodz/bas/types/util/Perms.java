@@ -3,6 +3,7 @@ package net.bodz.bas.types.util;
 import java.lang.reflect.Array;
 
 import net.bodz.bas.lang.Closure;
+import net.bodz.bas.lang.err.OutOfDomainException;
 
 public class Perms {
 
@@ -80,8 +81,7 @@ public class Perms {
             int srcindex = op.indexOf(src, val, srcoff);
             int mod = candidates.indexOf(srcindex);
             if (mod == -1 || mod >= srclen)
-                throw new IllegalArgumentException("invalid value at dst["
-                        + (dstoff + i) + "]");
+                throw new OutOfDomainException("dst[" + (dstoff + i) + "]");
             candidates.removeAbsolute(srcindex);
 
             ord = ord * (srclen - i) + mod;

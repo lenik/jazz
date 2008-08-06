@@ -69,7 +69,7 @@ public abstract class JavaEnum implements Comparable<JavaEnum> {
             // }
         }
         // throw exception?
-        throw new IllegalArgumentException("No enum const " + type + "." + name);
+        throw new NoSuchConstException(type + "." + name);
     }
 
     @SuppressWarnings("unchecked")

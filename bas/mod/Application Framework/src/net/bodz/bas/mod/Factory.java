@@ -18,7 +18,7 @@ public interface Factory<T> {
             assert clazz != null;
             if (clazz.isMemberClass()) {
                 if (outer == null)
-                    throw new IllegalArgumentException(
+                    throw new NullPointerException(
                             "no outer specified for member " + clazz);
             }
             this.clazz = (Class<ET>) clazz;

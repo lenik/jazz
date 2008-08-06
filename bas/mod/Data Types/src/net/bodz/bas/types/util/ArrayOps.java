@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import net.bodz.bas.lang.err.IllegalArgumentTypeException;
 import net.bodz.bas.lang.err.NotImplementedException;
 
 public class ArrayOps {
@@ -84,13 +85,13 @@ public class ArrayOps {
 
         @Override
         public void sort(A array, Comparator<?> comparator) {
-            throw new IllegalArgumentException("comparator isn't used");
+            throw new UnsupportedOperationException("comparator isn't used");
         }
 
         @Override
         public void sort(A array, int fromIndex, int toIndex,
                 Comparator<?> comparator) {
-            throw new IllegalArgumentException("comparator isn't used");
+            throw new UnsupportedOperationException("comparator isn't used");
         }
 
         @Override
@@ -1233,8 +1234,7 @@ public class ArrayOps {
     @SuppressWarnings("unchecked")
     public static <A> ArrayOp<A> get(Class<A> arrayType) {
         if (!arrayType.isArray())
-            throw new IllegalArgumentException("not type of array: "
-                    + arrayType);
+            throw new IllegalArgumentTypeException(arrayType, "array");
         Class<?> componentType = arrayType.getComponentType();
         if (componentType.isPrimitive())
             return (ArrayOp<A>) ops.get(componentType);

@@ -12,13 +12,15 @@ public class OutOfDomainException extends IllegalArgumentException {
         super(s);
     }
 
+    // 3 (boundary n< at 0)
     public OutOfDomainException(String arg, Object actualval, Object boundval) {
-        super(arg + " out of domain: " + actualval + " (boundary point: "
+        super(String.valueOf(actualval) + " (boundary " + arg + " at "
                 + boundval + ")");
     }
 
+    // 3 (x)
     public OutOfDomainException(String arg, Object actualval) {
-        super(arg + " out of domain: " + actualval);
+        super(String.valueOf(actualval) + " (" + arg + ")");
     }
 
 }

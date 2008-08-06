@@ -47,7 +47,7 @@ public class ProcessResultStat {
         if (result.done)
             switch (result.operation) {
             case ProcessResult.SAVE:
-                throw new IllegalArgumentException("unknown save state");
+                throw new IllegalStateException();
             case ProcessResult.SAVE_DIFF:
             case ProcessResult.SAVE_SAME:
                 saved++;

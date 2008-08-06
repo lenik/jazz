@@ -34,6 +34,7 @@ public class ByteOuts {
             @Override
             public void write(byte[] buf, int off, int len) throws IOException {
                 out.write(buf, off, len);
+                out.flush();
             }
         };
     }

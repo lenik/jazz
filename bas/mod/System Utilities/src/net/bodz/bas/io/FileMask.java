@@ -2,6 +2,7 @@ package net.bodz.bas.io;
 
 import java.io.File;
 
+import net.bodz.bas.lang.err.IllegalArgumentTypeException;
 import net.bodz.bas.test.Relation;
 import net.bodz.bas.test.Relations;
 
@@ -225,8 +226,8 @@ public class FileMask {
             else if (o instanceof String)
                 return parse((String) o);
             else
-                throw new IllegalArgumentException(
-                        "not of int bits or string flags: " + o);
+                throw new IllegalArgumentTypeException(o,
+                        "int bits or string flags");
         }
 
         @Override

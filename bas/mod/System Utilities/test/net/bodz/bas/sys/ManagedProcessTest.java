@@ -5,8 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.File;
 import java.io.IOException;
 
-import net.bodz.bas.io.CharOut;
-import net.bodz.bas.io.CharOuts;
+import net.bodz.bas.io.ByteOut;
 import net.bodz.bas.io.CharOuts.Buffer;
 
 import org.junit.Test;
@@ -26,40 +25,38 @@ public class ManagedProcessTest {
 
     static String encoding = "utf-8";
 
-    static class CapMP extends ManagedProcess {
+    static class Cap extends _IOCallback {
 
         private String[] inputs;
         private Buffer   buf = new Buffer();
 
-        public CapMP(String... inputs) {
+        public Cap(String... inputs) {
             this.inputs = inputs;
         }
 
         @Override
-        protected void recvErr(byte[] b, int off, int len) throws IOException {
-            String s = "!" + new String(b, off, len, encoding) + " ";
-            buf.print(s);
-        }
-
-        @Override
-        protected void recvIn(byte[] b, int off, int len) throws IOException {
-            String s = "-" + new String(b, off, len, encoding) + " ";
-            buf.print(s);
-        }
-
-        @Override
-        public synchronized int takeOver(Process process)
-                throws InterruptedException {
-            return super.takeOver(process);
-        }
-
-        @Override
-        protected void start() {
-            CharOut cout = CharOuts.get(out);
+        public void sendProc(ByteOut out) throws IOException {
+            // CharOut cout = CharOuts.get(out);
             if (inputs != null)
                 for (String input : inputs) {
-                    cout.println(input);
+                    // cout.println(input);
+                    byte[] bytes = (input + "\n").getBytes();
+                    out.print(bytes);
                 }
+        }
+
+        @Override
+        public void recvErr(byte[] b, int off, int len) throws IOException {
+            String s = "!" + new String(b, off, len, encoding) + " ";
+            buf.print(s);
+            System.err.println(s);
+        }
+
+        @Override
+        public void recvIn(byte[] b, int off, int len) throws IOException {
+            String s = "-" + new String(b, off, len, encoding) + " ";
+            buf.print(s);
+            System.out.println(s);
         }
 
         @Override
@@ -73,10 +70,10 @@ public class ManagedProcessTest {
         if (mtpulse == null) // skip
             return;
         Process process = Runtime.getRuntime().exec(cmd);
-        ManagedProcess mp = new CapMP(inputs);
+        Cap cap = new Cap(inputs);
+        ManagedProcess mp = new ManagedProcess(cap);
         int retval = mp.takeOver(process);
-        String cap = mp.toString();
-        assertEquals(expected, cap);
+        assertEquals(expected, cap.toString());
         assertEquals(expectedExit, retval);
     }
 
