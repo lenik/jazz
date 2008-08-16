@@ -14,48 +14,53 @@ import net.bodz.bas.lang.util.Reflects;
 public abstract class JFlexLexer extends _Lexer {
 
     @ReflectField
-    private Field  YYINITIAL;
+    private Field  YYINITIAL;   // public int
 
     @ReflectMethod
-    private Method yylex;
+    private Method yylex;       // public int()
 
     @ReflectMethod(value = "yyreset", parameters = Reader.class)
-    private Method yyreset;
+    private Method yyreset;     // public void(Reader)
 
     @ReflectMethod
-    private Method yyclose;
+    private Method yyclose;     // public void()
 
     @ReflectMethod
-    private Method yystate;
+    private Method yystate;     // public int()
 
     @ReflectMethod(value = "yybegin", parameters = int.class)
-    private Method yybegin;
+    private Method yybegin;     // public void(int)
 
     @ReflectMethod
-    private Method yytext;
+    private Method yytext;      // public String()
 
     @ReflectMethod(value = "yycharat", parameters = int.class)
-    private Method yycharat;
+    private Method yycharat;    // public char(int)
 
     @ReflectMethod
-    private Method yylength;
+    private Method yylength;    // public int()
 
     @ReflectField
-    private Field  yychar;
+    private Field  yyline;      // private int
 
     @ReflectField
-    private Field  yyline;
+    private Field  yycolumn;    // private int
 
     @ReflectField
-    private Field  yycolumn;
+    private Field  zzReader;    // private Reader
 
-    protected JFlexLexer() {
-        this(null);
-    }
+    @ReflectField
+    private Field  zzCurrentPos; // private int
 
-    protected JFlexLexer(Parser parser) {
-        super(parser);
+    @ReflectField
+    private Field  zzAtEOF;     // private boolean, see also zzEOFDone
+
+    protected JFlexLexer(Reader in) {
+        super(false);
         Reflects.bind(JFlexLexer.class, this);
+        init();
+        // set zzReader=in is slightly faster then reset(in).
+        Reflects.set(this, zzReader, in);
     }
 
     @Override
@@ -70,7 +75,7 @@ public abstract class JFlexLexer extends _Lexer {
 
     @Override
     public long tell() {
-        return (Long) Reflects.get(this, yychar);
+        return (Integer) Reflects.get(this, zzCurrentPos);
     }
 
     @Override
@@ -124,7 +129,12 @@ public abstract class JFlexLexer extends _Lexer {
      */
     @Override
     protected int _read() {
-        return (Integer) Reflects.invoke(this, yylex);
+        int c = (Integer) Reflects.invoke(this, yylex);
+        if (c == 0) {
+            if ((Boolean) Reflects.get(this, zzAtEOF))
+                return -1;
+        }
+        return c;
     }
 
 }
