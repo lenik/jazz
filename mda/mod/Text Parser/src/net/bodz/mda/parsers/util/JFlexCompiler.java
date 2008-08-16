@@ -4,7 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import net.bodz.bas.cli.RunInfo;
 import net.bodz.bas.cli.util.JavaLauncher;
@@ -14,12 +18,13 @@ import net.bodz.bas.lang.err.CompileException;
 import net.bodz.bas.lang.err.UnexpectedException;
 import net.bodz.bas.types.util.Empty;
 import net.bodz.bas.types.util.Types;
+import net.bodz.mda.xmm.initial.EnclosedTags;
 
 @RunInfo(lib = "jflex")
 public class JFlexCompiler extends JavaLauncher {
 
     /** clean generated files, default <code>true</code> */
-    public boolean          clean       = true;
+    public boolean          clean        = true;
 
     // command-line options
 
@@ -28,12 +33,12 @@ public class JFlexCompiler extends JavaLauncher {
 
     /** use external skeleton &lt;file&gt; */
     public File             skel;
-    private boolean         skelOverride;
+    public boolean          skelOverride = true;
 
-    public static final int CGM_DEFAULT = 0;
-    public static final int CGM_SWITCH  = 1;
-    public static final int CGM_TABLE   = 2;
-    public static final int CGM_PACK    = 3;
+    public static final int CGM_DEFAULT  = 0;
+    public static final int CGM_SWITCH   = 1;
+    public static final int CGM_TABLE    = 2;
+    public static final int CGM_PACK     = 3;
     public int              codeGenMethod;
 
     /** strict JLex compatibility */
@@ -51,18 +56,18 @@ public class JFlexCompiler extends JavaLauncher {
     /** write graphviz .dot files for the generated automata (alpha) */
     public boolean          dot;
 
-    public int              verbose     = 0;
+    public int              verbose      = 0;
 
     // not command-line options
 
     /** recognize EOF, yylex() returns int rather then Yytoken object */
-    public boolean          f_byaccj    = true;
+    public boolean          f_byaccj     = true;
 
-    public boolean          f_unicode   = true;
-    public boolean          f_line      = true;
-    public boolean          f_column    = true;
+    public boolean          f_unicode    = true;
+    public boolean          f_line       = true;
+    public boolean          f_column     = true;
     public String           f_type;
-    public boolean          f_int       = true;
+    public boolean          f_int        = true;
     /** %init { ... } */
     public String           f_init;
     /** %initthrow { exception1 [, ...] } */
@@ -152,8 +157,12 @@ public class JFlexCompiler extends JavaLauncher {
         } catch (Exception e) {
             throw new CompileException(e.getMessage(), e);
         } finally {
-            if (_skel != skel)
+            if (_skel != skel) {
+                // it seems JFlex didn't close the skeleton properly.
+                // but we just don't care.
+                // System.gc();
                 _skel.delete();
+            }
         }
     }
 
@@ -247,7 +256,7 @@ public class JFlexCompiler extends JavaLauncher {
 
         try {
             if (lexImplFile.exists())
-                result[R_IMPL] = Files.readAll(lexImplFile);
+                result[R_IMPL] = readImplOverride(lexImplFile);
         } catch (IOException e) {
             throw new CompileException(e.getMessage(), e);
         } finally {
@@ -258,21 +267,67 @@ public class JFlexCompiler extends JavaLauncher {
         return result;
     }
 
+    public static String implClassNameSuffix = "Impl";
+
+    public static String getImplClassName(Class<?> lexerModel) {
+        String cname = lexerModel.getName();
+        cname = cname.replace('$', '_');
+        return cname + implClassNameSuffix;
+    }
+
     public String[] compile(Class<?> lexerModel) throws CompileException {
-        String genSuffix = "Impl";
-        String lexerClassName = lexerModel.getName() + genSuffix;
-        JFlexFormatter formatter = new JFlexFormatter(lexerModel,
-                lexerClassName);
+        String genClassName = getImplClassName(lexerModel);
+        JFlexFormatter formatter = new JFlexFormatter(lexerModel, genClassName);
         String header = formatter.getHeader();
         String decl = formatter.getDecl();
         String body = formatter.getBody();
 
-        f_classSimpleName = lexerModel.getSimpleName() + genSuffix;
-        f_classExtends = lexerModel.getSimpleName(); // reflect
+        f_classSimpleName = formatter.getSimpleName();
+        f_classExtends = formatter.getSimpleSuperName();
         // f_initthrow = null; // reflect
-        f_yylexthrow = Types.joinNames(", ", true, formatter
-                .getRulesExceptions());
+        Class<?>[] rulesExceptions = formatter.getRulesExceptions();
+        if (rulesExceptions.length != 0)
+            f_yylexthrow = Types.joinNames(", ", true, rulesExceptions);
         return compile(header, decl, body);
     }
 
+    static final Map<String, String> tagMap;
+    static final EnclosedTags        prep;
+    static final Pattern             killAnchor;
+    static {
+        tagMap = new HashMap<String, String>();
+        tagMap.put("delete", "");
+        prep = new EnclosedTags(tagMap);
+        killAnchor = Pattern.compile("//\\s*<kill=(\\d+)>\\s*$",
+                Pattern.MULTILINE);
+    }
+
+    static String killLines(String s, int off, int lines) {
+        int end = off;
+        while (lines-- > 0) {
+            end = s.indexOf('\n', end);
+            if (end == -1) {
+                end = s.length();
+                break;
+            }
+            end++; // eat the '\n'.
+        }
+        String head = s.substring(0, off);
+        String foot = s.substring(end);
+        return head + foot;
+    }
+
+    public String readImplOverride(File f) throws IOException {
+        String s = Files.readAll(f);
+        if (skelOverride) {
+            // s = prep.process(s);
+            Matcher m = killAnchor.matcher(s);
+            if (m.find()) {
+                // +1 for tag itself
+                int kills = Integer.valueOf(m.group(1)) + 1;
+                s = killLines(s, m.start(), kills);
+            }
+        }
+        return s;
+    }
 }

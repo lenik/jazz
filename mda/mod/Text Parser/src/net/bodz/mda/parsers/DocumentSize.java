@@ -27,6 +27,11 @@ public class DocumentSize {
         return new DocumentSize(mlen, mlines, moff);
     }
 
+    @Override
+    public String toString() {
+        return length + "(" + lines + "L+" + lineOffset + ")";
+    }
+
     public static DocumentSize get(String s) {
         int len = s.length();
         int lines = 0;

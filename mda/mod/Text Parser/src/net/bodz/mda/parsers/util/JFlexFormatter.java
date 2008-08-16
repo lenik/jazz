@@ -9,6 +9,7 @@ import net.bodz.bas.io.CharOuts.Buffer;
 import net.bodz.bas.lang.err.OutOfDomainException;
 import net.bodz.bas.types.util.Empty;
 import net.bodz.bas.types.util.Strings;
+import net.bodz.mda.java.codesnippets.CopyConstructor;
 import net.bodz.mda.java.initial.util.Imports;
 import net.bodz.mda.parsers.LexAnnotations;
 import net.bodz.mda.parsers.LexMatchAcceptor;
@@ -17,29 +18,45 @@ import net.bodz.mda.parsers.LexAnnotations.Alignment;
 
 public class JFlexFormatter extends LexMatchAcceptor {
 
+    private String        simpleName;
+    private String        simpleSuperName;
     private Imports       imports;
     private Buffer        header;
     private Buffer        decl;
     private Buffer        body;
-    private Alignment     alignment;
-    private int           ruleAlignInState;
-    private int           indent;
     private Set<Class<?>> rulesExceptions;
+    private Alignment     alignment;
+    private int           currentRuleAlignment;
+    private int           indent;
 
     public JFlexFormatter(Class<?> lexerModel, String className) {
-        LexAnnotations la = new LexAnnotations(lexerModel);
-        alignment = la.getAlignment();
+        simpleName = Strings.afterLast(className, '.');
+        simpleSuperName = lexerModel.getSimpleName();
+
         imports = new Imports(lexerModel);
         header = new Buffer();
         decl = new Buffer();
         body = new Buffer();
         rulesExceptions = new HashSet<Class<?>>();
+        LexAnnotations la = new LexAnnotations(lexerModel);
+        alignment = la.getAlignment();
+
+        imports.add(lexerModel);
+
+        CopyConstructor cc = new CopyConstructor();
+        cc.setImports(imports);
+        cc.setIndent(indent + 1);
+        String ctors = cc.generate(lexerModel, className);
+        decl.println("%{");
+        decl.print(ctors);
+        decl.println("%}");
 
         la.visit(this);
 
         Package package_ = lexerModel.getPackage();
         if (package_ != null)
             header.println("package " + package_.getName() + ";");
+
         if (!imports.isEmpty()) {
             header.println();
             imports.dump(header);
@@ -60,6 +77,8 @@ public class JFlexFormatter extends LexMatchAcceptor {
 
     @Override
     protected void enter(String state) {
+        if (state == null || state.isEmpty())
+            return;
         boolean exclusive = state.startsWith("-");
         if (exclusive) {
             state = state.substring(1);
@@ -69,27 +88,29 @@ public class JFlexFormatter extends LexMatchAcceptor {
         indent(body);
         body.println("<" + state + "> {");
         indent++;
-        ruleAlignInState = alignment.getRuleAlignment(state);
+        currentRuleAlignment = alignment.getRuleAlignment(state);
     }
 
     @Override
     protected void leave(String state) {
+        if (state == null || state.isEmpty())
+            return;
         indent--;
         body.println("}");
     }
 
     @Override
-    protected void rule(_LexMatch match, Method action, int mode) {
+    protected void rule(_LexMatch match, Method actionMethod, int mode) {
         // ControlBreak
         indent(body);
         String _action = null;
-        if (action != null)
+        if (actionMethod != null)
             switch (mode) {
             case VOID:
-                _action = action + "();";
+                _action = actionMethod.getName() + "();";
                 break;
             case YYTEXT:
-                _action = action + "(yytext);"; // getText()
+                _action = actionMethod.getName() + "(yytext());"; // getText()
                 break;
             default:
                 throw new OutOfDomainException("mode", mode);
@@ -97,11 +118,11 @@ public class JFlexFormatter extends LexMatchAcceptor {
         if (_action == null)
             _action = "";
         else {
-            for (Class<?> et : action.getExceptionTypes()) {
+            for (Class<?> et : actionMethod.getExceptionTypes()) {
                 imports.add(et);
                 rulesExceptions.add(et);
             }
-            Class<?> retType = action.getReturnType();
+            Class<?> retType = actionMethod.getReturnType();
             if (retType == void.class) {
                 if (match.isMayReturn()) {
                     String LEXVT = "";
@@ -116,8 +137,18 @@ public class JFlexFormatter extends LexMatchAcceptor {
             }
             _action = "{ " + _action + " }";
         }
-        body.printf("%s %s", //
-                Strings.padRight(match.getValue(), ruleAlignInState), _action);
+        body.printf(
+                "%s %s", //
+                Strings.padRight(match.getValue(), currentRuleAlignment),
+                _action);
+    }
+
+    public String getSimpleName() {
+        return simpleName;
+    }
+
+    public String getSimpleSuperName() {
+        return simpleSuperName;
     }
 
     public String getHeader() {

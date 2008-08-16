@@ -37,12 +37,12 @@ public abstract class ByaccjParser extends _Parser {
     }
 
     @Override
-    public void setValue(Object value) {
+    public Object getValue() {
+        return null;
     }
 
     @Override
-    public Object value() {
-        return null;
+    public void setValue(Object value) {
     }
 
 }

@@ -6,12 +6,11 @@ import java.util.Map;
 import java.util.Stack;
 
 import net.bodz.bas.io.CharOuts.Buffer;
-import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.types.util.Strings;
 
 public abstract class _Lexer implements Lexer {
 
-    protected final Parser parser;
+    private Object         value;
 
     private Stack<Integer> stateStack;
     private int            currentState;
@@ -22,18 +21,13 @@ public abstract class _Lexer implements Lexer {
     private Stack<Buffer>  recordStack;
     private Buffer         currentRecord;
 
-    /**
-     * @param parser
-     *            used by:
-     *            <ul>
-     *            <li>{@link #getTokenDeclClass()}
-     *            <li>{@link #setValue()}
-     *            <li>{@link #read()}
-     *            </ul>
-     */
-    public _Lexer(Parser parser) {
-        this.parser = parser;
-        this.currentState = getInitialState();
+    public _Lexer(boolean initImmediately) {
+        if (initImmediately)
+            init();
+    }
+
+    protected void init() {
+        currentState = getInitialState();
     }
 
     protected abstract int getInitialState();
@@ -89,6 +83,20 @@ public abstract class _Lexer implements Lexer {
         setState(currentState = stateStack.pop());
     }
 
+    /**
+     * If lexer is used with parser, then the parser shall wrap&override this.
+     */
+    protected Object getValue() {
+        return value;
+    }
+
+    /**
+     * If lexer is used with parser, then the parser shall wrap&override this.
+     */
+    protected void setValue(Object value) {
+        this.value = value;
+    }
+
     private Map<Integer, String> tokenNames;
 
     /**
@@ -117,8 +125,13 @@ public abstract class _Lexer implements Lexer {
         return name;
     }
 
+    /**
+     * if the token consts are defined in parser class, then return that parser
+     * class.
+     */
     protected Class<?> getTokenDeclClass() {
-        return parser.getClass();
+        // throw new IllegalUsageError("tokenDeclClass isn't set.");
+        return getClass();
     }
 
     private Map<Integer, String> stateNames;
@@ -173,10 +186,6 @@ public abstract class _Lexer implements Lexer {
         return true;
     }
 
-    public void setValue(Object value) {
-        parser.setValue(value);
-    }
-
     public class _Token implements Token {
 
         private int          id;
@@ -210,12 +219,8 @@ public abstract class _Lexer implements Lexer {
         @Override
         public String getName() {
             if (name == null)
-                name = resolveName(id);
+                name = getTokenName(id);
             return name;
-        }
-
-        protected String resolveName(int id) {
-            throw new NotImplementedException();
         }
 
         @Override
@@ -300,12 +305,12 @@ public abstract class _Lexer implements Lexer {
             buf.print(Strings.escape(text));
             buf.print("\" at ");
             buf.print(start);
-            buf.print('(');
-            buf.print(line);
-            buf.print(':');
+            buf.print("(L");
+            buf.print(Config.humanLine(line));
+            buf.print(":");
             buf.print(column);
             buf.print("), value=");
-            buf.println(String.valueOf(value));
+            buf.print(String.valueOf(value));
             return buf.toString();
         }
     }
@@ -316,6 +321,10 @@ public abstract class _Lexer implements Lexer {
         return end;
     }
 
+    public static final int EOF = -1;
+
+    protected abstract int _read();
+
     @Override
     public Token read() {
         boolean look = lookAheadEndOfMatch();
@@ -324,11 +333,11 @@ public abstract class _Lexer implements Lexer {
             end = end();
         }
         int tokenId = _read();
-        Object value = parser.value();
+        if (tokenId == EOF)
+            return null;
+        Object value = getValue();
         return new _Token(tokenId, value);
     }
-
-    protected abstract int _read();
 
     protected void startRecord() {
         startRecord(32);

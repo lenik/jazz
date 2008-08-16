@@ -3,6 +3,7 @@ package net.bodz.mda.parsers;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.Map.Entry;
@@ -98,6 +99,7 @@ public class LexAnnotations {
 
         private int                  symSize;
         private Map<String, Integer> ruleSizeInState;
+        private int                  ruleSizeInDefaultState;
         private int                  ruleSize;
 
         @Override
@@ -113,7 +115,13 @@ public class LexAnnotations {
 
         @Override
         protected void leave(String state) {
-            ruleSizeInState.put(state, ruleSize);
+            if (state == null || state.isEmpty())
+                ruleSizeInDefaultState = ruleSize;
+            else {
+                if (ruleSizeInState == null)
+                    ruleSizeInState = new HashMap<String, Integer>();
+                ruleSizeInState.put(state, ruleSize);
+            }
         }
 
         @Override
@@ -128,7 +136,16 @@ public class LexAnnotations {
         }
 
         public int getRuleAlignment(String state) {
-            return ruleSizeInState.get(state);
+            if (state == null || state.isEmpty())
+                return ruleSizeInDefaultState;
+            Integer val = null;
+            if (ruleSizeInState != null)
+                val = ruleSizeInState.get(state);
+            if (val == null) {
+                // return 0;
+                throw new IllegalArgumentException("no such state: " + state);
+            }
+            return val;
         }
 
     }
