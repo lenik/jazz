@@ -1,4 +1,4 @@
-package net.bodz.bas.functors.lang;
+package net.bodz.bas.lang;
 
 import net.bodz.bas.functors.ControlGoto;
 

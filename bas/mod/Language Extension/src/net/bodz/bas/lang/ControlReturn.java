@@ -1,8 +1,7 @@
-package net.bodz.bas.functors.lang;
+package net.bodz.bas.lang;
 
-import net.bodz.bas.lang.Control;
 
-class ControlReturn extends Control {
+public class ControlReturn extends Control {
 
     private static final long serialVersionUID = 7374615167936405650L;
 

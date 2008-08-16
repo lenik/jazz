@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 
 import net.bodz.bas.lang.Predicate;
+import net.bodz.bas.types.util.CompatMethods;
 import net.bodz.bas.types.util.Types;
 
 public class MethodSignature {
@@ -127,19 +128,19 @@ public class MethodSignature {
     }
 
     public Method getCompatMethod(Class<?> clazz, boolean all) {
-        return Types.getCompatMethod(clazz, name, types, all);
+        return CompatMethods.getMethod(clazz, name, types, all);
     }
 
     public Method getCompatMethod(Class<?> clazz) {
-        return Types.getCompatMethod(clazz, name, types);
+        return CompatMethods.getMethod(clazz, name, types);
     }
 
     public Constructor<?> getCompatConstructor(Class<?> clazz, boolean all) {
-        return Types.getCompatConstructor(clazz, types, all);
+        return CompatMethods.getConstructor(clazz, types, all);
     }
 
     public Constructor<?> getCompatConstructor(Class<?> clazz) {
-        return Types.getCompatConstructor(clazz, types);
+        return CompatMethods.getConstructor(clazz, types);
     }
 
 }

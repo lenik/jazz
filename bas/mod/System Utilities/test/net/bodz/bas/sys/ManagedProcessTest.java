@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
 
-import net.bodz.bas.io.ByteOut;
 import net.bodz.bas.io.CharOuts.Buffer;
 
 import org.junit.Test;
@@ -35,14 +35,15 @@ public class ManagedProcessTest {
         }
 
         @Override
-        public void sendProc(ByteOut out) throws IOException {
+        public void sendProc(OutputStream out) throws IOException {
             // CharOut cout = CharOuts.get(out);
             if (inputs != null)
                 for (String input : inputs) {
                     // cout.println(input);
                     byte[] bytes = (input + "\n").getBytes();
-                    out.print(bytes);
+                    out.write(bytes);
                 }
+            out.close();
         }
 
         @Override
@@ -69,7 +70,7 @@ public class ManagedProcessTest {
             throws Exception {
         if (mtpulse == null) // skip
             return;
-        Process process = Runtime.getRuntime().exec(cmd);
+        Process process = Runtime.getRuntime().exec("mtpulse I30 " + cmd);
         Cap cap = new Cap(inputs);
         ManagedProcess mp = new ManagedProcess(cap);
         int retval = mp.takeOver(process);
@@ -78,18 +79,30 @@ public class ManagedProcessTest {
     }
 
     @Test
+    public void testOutFirst() throws Exception {
+        test("C a a a a a a a a a a a a a a a Xx",
+                "-a -a -a -a -a -a -a -a -a -a -a -a -a -a -a !x ", 0);
+    }
+
+    @Test
+    public void testErrFirst() throws Exception {
+        test("C Xx Xx Xx Xx Xx Xx Xx Xx Xx Xx Xx Xx Xx Xx Xx a",
+                "!x !x !x !x !x !x !x !x !x !x !x !x !x !x !x -a ", 0);
+    }
+
+    @Test
     public void testCont() throws Exception {
-        test("mtpulse C a Xb Oc ?10", "-a !b -c ", 10);
+        test("C a Xb Oc ?10", "-a !b -c ", 10);
     }
 
     @Test
     public void testNL() throws Exception {
-        test("mtpulse N a Xb Oc", "-a\n !b\n -c\n ", 0);
+        test("N a Xb Oc", "-a\n !b\n -c\n ", 0);
     }
 
     @Test
     public void testIn() throws Exception {
-        test("mtpulse C a E b E c", "-a -x\n -b -y\n -c ", 0, "x", "y", "z");
+        test("C a E b E c", "-a -x\n -b -y\n -c ", 0, "x", "y", "z");
     }
 
     public static void main(String[] args) throws Throwable {

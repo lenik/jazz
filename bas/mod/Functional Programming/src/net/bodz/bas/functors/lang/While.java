@@ -3,6 +3,8 @@ package net.bodz.bas.functors.lang;
 import net.bodz.bas.functors.ValidationException;
 import net.bodz.bas.functors._Functor;
 import net.bodz.bas.lang.Control;
+import net.bodz.bas.lang.ControlBreak;
+import net.bodz.bas.lang.ControlContinue;
 import net.bodz.bas.lang.EvalException;
 import net.bodz.bas.lang.FunctorException;
 

@@ -196,4 +196,20 @@ public class StringsTest {
                 END);
     }
 
+    @Test
+    public void testHyphen() {
+        TestDefs.tests(new TestEval<String>() {
+            public Object eval(String input) throws Throwable {
+                return Strings.hyphenatize(input);
+            }
+        }, //
+                EQ("hello", "hello"), //
+                EQ("helloWorld", "hello-world"), //
+                EQ("HelloWorld", "hello-world"), //
+                EQ("ABC", "abc"), //
+                EQ("UUEncode", "uuencode"), //
+                EQ("FFTestAndRTest", "fftest-and-rtest"), //
+                END);
+    }
+
 }

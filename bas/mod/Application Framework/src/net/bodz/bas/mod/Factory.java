@@ -1,6 +1,6 @@
 package net.bodz.bas.mod;
 
-import net.bodz.bas.types.util.Types;
+import net.bodz.bas.types.util.CompatMethods;
 
 public interface Factory<T> {
 
@@ -38,9 +38,9 @@ public interface Factory<T> {
         public ET create(Object... args) throws CreateException {
             try {
                 if (clazz.isMemberClass())
-                    return Types.newMemberInstance(clazz, outer, args);
+                    return CompatMethods.newMemberInstance(clazz, outer, args);
                 else
-                    return Types.newInstance(clazz, args);
+                    return CompatMethods.newInstance(clazz, args);
             } catch (Exception e) {
                 throw new CreateException(e.getMessage(), e);
             }

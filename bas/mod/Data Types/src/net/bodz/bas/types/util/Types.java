@@ -6,14 +6,29 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
-import net.bodz.bas.cli.CLIError;
 import net.bodz.bas.lang.IVoid;
 import net.bodz.bas.lang.Predicate;
+import net.bodz.bas.lang.err.OutOfDomainException;
+import net.bodz.bas.lang.err.ReflectException;
+import net.bodz.bas.lang.err.UnexpectedException;
 
 public class Types {
+
+    public static void load(Class<?> clazz) {
+        String name = clazz.getName();
+        ClassLoader loader = clazz.getClassLoader();
+        try {
+            Class.forName(name, true, loader);
+        } catch (ClassNotFoundException e) {
+            throw new UnexpectedException(e.getMessage(), e);
+        }
+    }
 
     public static Class<?>[] getTypeChain(Class<?> clazz) {
         return getTypeChain(clazz, false);
@@ -46,54 +61,35 @@ public class Types {
         return classes;
     }
 
-    public static String joinNames(String delim, Class<?>... types) {
+    public static String joinNames(String delim, boolean simpleNames,
+            Class<?>... types) {
         StringBuffer b = null;
         for (Class<?> t : types) {
             if (b == null)
                 b = new StringBuffer(types.length * 20);
             else
                 b.append(delim);
-            String n = t.getName();
-            if (n.startsWith("java.lang."))
+            String n;
+            if (simpleNames)
+                // || t.getCanonicalName().startsWith("java.lang."))
                 n = t.getSimpleName();
+            else
+                n = t.getName();
             b.append(n);
         }
         return b == null ? "" : b.toString();
+    }
+
+    public static String joinNames(String delim, Class<?>... types) {
+        return joinNames(delim, false, types);
     }
 
     public static String joinNames(Class<?>... types) {
         return joinNames(", ", types);
     }
 
-    public static int dist(Class<?> root, Class<?> leaf) {
-        assert root != null && leaf != null;
-        int dist = -1;
-        while (root.isAssignableFrom(leaf)) {
-            dist++;
-            leaf = leaf.getSuperclass();
-            if (leaf == null)
-                break;
-        }
-        return dist;
-    }
-
-    public static int dist(Class<?>[] roots, Class<?>[] leaves) {
-        if (roots.length != leaves.length)
-            return -1;
-        int distsum = 0;
-        for (int i = 0; i < roots.length; i++) {
-            if (leaves[i] == null) // option?
-                continue;
-            int dist = dist(roots[i], leaves[i]);
-            if (dist < 0)
-                return -1;
-            distsum += dist;
-        }
-        return distsum;
-    }
-
     public static Class<?> gcd(Class<?> a, Class<?> b) {
-        while (!a.isAssignableFrom(b))
+        while (a != null && !a.isAssignableFrom(b))
             a = a.getSuperclass();
         return a;
     }
@@ -107,6 +103,68 @@ public class Types {
                 base = gcd(base, clazz);
         }
         return base;
+    }
+
+    static class Igcd {
+
+        private Set<Class<?>> trueSet;
+        private Set<Class<?>> falseSet;
+
+        public Igcd(boolean sort) {
+            if (sort) {
+                trueSet = new TreeSet<Class<?>>(Comparators.TYPE);
+            } else
+                trueSet = new HashSet<Class<?>>();
+            falseSet = new HashSet<Class<?>>();
+        }
+
+        public void _solve(Class<?> a, Class<?> b) {
+            assert !a.isAssignableFrom(b) : "illegal usage";
+            for (Class<?> iface : a.getInterfaces()) {
+                if (iface.isAssignableFrom(b))
+                    trueSet.add(iface);
+                else {
+                    if (falseSet.add(iface)) {
+                        trueSet.remove(iface);
+                        _solve(iface, b);
+                    }
+                }
+            }
+            Class<?> _super = a.getSuperclass();
+            if (_super != null)
+                _solve(_super, b);
+        }
+
+        public Class<?>[] solve(Class<?> a, Class<?> b) {
+            _solve(a, b);
+            return trueSet.toArray(Empty.Classes);
+        }
+
+    }
+
+    public static Class<?>[] igcd(Class<?> a, Class<?> b, boolean sort) {
+        Class<?> gcd = gcd(a, b);
+        if (gcd != null)
+            return new Class<?>[] { gcd };
+        Igcd igcd = new Igcd(sort);
+        return igcd.solve(a, b);
+    }
+
+    public static Class<?>[] igcd(Class<?> a, Class<?> b) {
+        return igcd(a, b, false);
+    }
+
+    /** under dev */
+    @Deprecated
+    public static Class<?>[] igcd(Collection<Class<?>> classes, boolean sort) {
+        Igcd igcd = new Igcd(sort);
+        Class<?> prev = null;
+        for (Class<?> clazz : classes) {
+            if (prev != null)
+                igcd._solve(prev, clazz);
+            prev = clazz;
+        }
+        return igcd.trueSet.toArray(Empty.Classes);
     }
 
     /** Get matching methods */
@@ -228,116 +286,25 @@ public class Types {
         return findConstructors(clazz.getDeclaredConstructors(), null);
     }
 
-    public static Method getCompatMethod(Class<?> clazz, String name,
-            Class<?>[] argtypes, boolean all) {
-        Iterable<Method> methods = all ? getMethodsAllTree(clazz, name)
-                : getMethods(clazz, name);
-        int mindist = -1;
-        Method min = null;
-        for (Method method : methods) {
-            Class<?>[] decltypes = method.getParameterTypes();
-            int dist = dist(decltypes, argtypes);
-            if (dist == -1)
-                continue;
-            if (dist < mindist || mindist == -1) {
-                mindist = dist;
-                min = method;
-            }
-        }
-        return min;
-    }
-
-    public static Method getCompatMethod(Class<?> clazz, String name,
-            Class<?>[] argtypes) {
-        return getCompatMethod(clazz, name, argtypes, false);
-    }
-
-    public static Constructor<?> getCompatConstructor(Class<?> clazz,
-            Class<?>[] argtypes, boolean allDeclared) {
-        Iterable<Constructor<?>> ctors = allDeclared ? getDeclaredConstructors(clazz)
-                : getConstructors(clazz);
-        int mindist = -1;
-        Constructor<?> min = null;
-        for (Constructor<?> ctor : ctors) {
-            Class<?>[] decltypes = ctor.getParameterTypes();
-            int dist = dist(decltypes, argtypes);
-            if (dist == -1)
-                continue;
-            if (dist < mindist || mindist == -1) {
-                mindist = dist;
-                min = ctor;
-            }
-        }
-        return min;
-    }
-
-    public static Constructor<?> getCompatConstructor(Class<?> clazz,
-            Class<?>[] argtypes) {
-        return getCompatConstructor(clazz, argtypes, false);
-    }
-
-    @SuppressWarnings("unchecked")
-    public static <T> T newInstance(Class<T> clazz, Object... args)
-            throws NoSuchMethodException, IllegalArgumentException,
-            InstantiationException, IllegalAccessException,
-            InvocationTargetException {
-        Class<?>[] types = Types.getTypes(args);
-        Constructor<?> ctor = Types.getCompatConstructor(clazz, types, true);
-        if (ctor == null)
-            throw new NoSuchMethodException(clazz.getName() + "("
-                    + joinNames(types) + ")");
-        boolean prevState = ctor.isAccessible();
-        if (!prevState)
-            ctor.setAccessible(true);
+    public static <T> T newInstance(Class<T> clazz, Class<?>[] argtypes,
+            Object... args) {
         try {
-            return (T) ctor.newInstance(args);
-        } finally {
-            if (!prevState)
-                ctor.setAccessible(false);
+            Constructor<T> ctor = clazz.getConstructor(argtypes);
+            return ctor.newInstance(args);
+        } catch (InstantiationException e) {
+            throw new ReflectException(e.getMessage(), e);
+        } catch (IllegalAccessException e) {
+            throw new ReflectException(e.getMessage(), e);
+        } catch (InvocationTargetException e) {
+            throw new ReflectException(e.getMessage(), e);
+        } catch (NoSuchMethodException e) {
+            throw new ReflectException(e.getMessage(), e);
         }
     }
 
-    public static <T> T newMemberInstance(Class<T> clazz, Object _this,
-            Object... args) throws NoSuchMethodException,
-            IllegalArgumentException, InstantiationException,
-            IllegalAccessException, InvocationTargetException {
-        Object[] concat = Arrays2.concat(_this, args);
-        return newInstance(clazz, concat);
-    }
-
-    @SuppressWarnings("unchecked")
-    public static <T> T newInstance(String className, Object... args)
-            throws ClassNotFoundException, IllegalArgumentException,
-            NoSuchMethodException, InstantiationException,
-            IllegalAccessException, InvocationTargetException {
-        Class<T> clazz = (Class<T>) Class.forName(className);
-        return newInstance(clazz, args);
-    }
-
-    @SuppressWarnings("unchecked")
-    public static <T> T invoke(Class<?> clazz, Object obj, String methodName,
-            Object... args) throws NoSuchMethodException,
-            IllegalArgumentException, IllegalAccessException,
-            InvocationTargetException {
-        Class<?>[] types = Types.getTypes(args);
-        Method method = Types.getCompatMethod(clazz, methodName, types);
-        if (method == null)
-            throw new NoSuchMethodException(clazz.getName() + "." + methodName
-                    + "(" + joinNames(types) + ")");
-        return (T) method.invoke(obj, args);
-    }
-
-    public static <T> T invoke(Class<?> clazz, String methodName,
-            Object... args) throws NoSuchMethodException,
-            IllegalArgumentException, IllegalAccessException,
-            InvocationTargetException {
-        return invoke(clazz, null, methodName, args);
-    }
-
-    public static <T> T invoke(Object obj, String methodName, Object... args)
-            throws NoSuchMethodException, IllegalArgumentException,
-            IllegalAccessException, InvocationTargetException {
-        return invoke(obj.getClass(), obj, methodName, args);
+    public static <T> T newInstance(Class<T> clazz, Object... args) {
+        Class<?>[] argTypes = Types.getTypes(args);
+        return newInstance(clazz, argTypes, args);
     }
 
     @SuppressWarnings("unchecked")
@@ -345,21 +312,19 @@ public class Types {
         if (clazz == null)
             return null;
         if (clazz.isInterface())
-            return null;
+            throw new OutOfDomainException("clazz", clazz, "interface");
         if (IVoid.class.isAssignableFrom(clazz))
-            return null;
-        Class<?>[] argtypes = Types.getTypes(args);
+            throw new OutOfDomainException("clazz", clazz, IVoid.class);
+        Class<?>[] argTypes = Types.getTypes(args);
         try {
-            Method method = clazz.getMethod("getInstance", argtypes);
+            Method method = clazz.getMethod("getInstance", argTypes);
             return (T) method.invoke(null, args);
-        } catch (NoSuchMethodException e1) {
-            try {
-                return clazz.getConstructor(argtypes).newInstance(args);
-            } catch (Exception e) {
-                throw new CLIError(e.getMessage(), e);
-            }
-        } catch (Exception e) {
-            throw new CLIError(e.getMessage(), e);
+        } catch (NoSuchMethodException e) {
+            return newInstance(clazz, argTypes, args);
+        } catch (IllegalAccessException e) {
+            throw new ReflectException(e.getMessage(), e);
+        } catch (InvocationTargetException e) {
+            throw new ReflectException(e.getMessage(), e);
         }
     }
 

@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 
-import net.bodz.bas.io.ByteOut;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.types.util.Arrays2;
 import net.bodz.bas.types.util.Strings;
@@ -77,7 +76,7 @@ public class Processes {
         ManagedProcess mp = new ManagedProcess(new _IOCallback() {
 
             @Override
-            public void sendProc(ByteOut out) throws IOException {
+            public void sendProc(OutputStream out) throws IOException {
                 if (sendSrc == null)
                     ; // super.sendProc();
                 else

@@ -37,6 +37,10 @@ public class Objects {
         return true;
     }
 
+    /**
+     * @return <code>true</code> if both a and b are <code>null</code>, or
+     *         <code>a.equals(b)</code>
+     */
     public static final boolean equals(Object a, Object b) {
         if (a == null || b == null)
             return a == b;

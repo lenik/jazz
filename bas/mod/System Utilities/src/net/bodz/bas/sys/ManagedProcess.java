@@ -4,9 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import net.bodz.bas.io.ByteOut;
-import net.bodz.bas.io.ByteOuts;
-
 public class ManagedProcess {
 
     private final String   name;
@@ -51,8 +48,8 @@ public class ManagedProcess {
             @Override
             public void run() {
                 try {
-                    ByteOut bout = ByteOuts.get(out);
-                    ManagedProcess.this.callback.sendProc(bout);
+                    // ByteOut bout = ByteOuts.get(out);
+                    ManagedProcess.this.callback.sendProc(out);
                 } catch (IOException e) {
                     throw new Error(e.getMessage(), e);
                 }
@@ -94,7 +91,7 @@ public class ManagedProcess {
             inGrabber.start();
             errGrabber.start();
             sender.start();
-            start();
+            // start();
             return process.waitFor();
         } finally {
             sender.interrupt();
@@ -103,8 +100,8 @@ public class ManagedProcess {
         }
     }
 
-    protected void start() {
-    }
+    // protected void start() {
+    // }
 
     private static final int BLOCK = 4096;
 
@@ -137,7 +134,7 @@ public class ManagedProcess {
          */
 
         @Override
-        public void sendProc(ByteOut out) throws IOException {
+        public void sendProc(OutputStream out) throws IOException {
             sendProc(out, System.in);
         }
 

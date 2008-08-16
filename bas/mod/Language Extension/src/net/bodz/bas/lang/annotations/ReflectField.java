@@ -15,6 +15,9 @@ public @interface ReflectField {
 
     Class<?> type() default Object.class;
 
+    /**
+     * only bind to public accessible members
+     */
     boolean secure() default false;
 
 }
