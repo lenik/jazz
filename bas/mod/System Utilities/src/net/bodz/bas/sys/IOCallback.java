@@ -1,12 +1,11 @@
 package net.bodz.bas.sys;
 
 import java.io.IOException;
-
-import net.bodz.bas.io.ByteOut;
+import java.io.OutputStream;
 
 public interface IOCallback {
 
-    void sendProc(ByteOut out) throws IOException;
+    void sendProc(OutputStream out) throws IOException;
 
     /**
      * Process data received from stdout of the process

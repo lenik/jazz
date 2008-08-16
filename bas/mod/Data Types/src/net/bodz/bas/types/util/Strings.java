@@ -14,13 +14,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.bodz.bas.io.Files;
-import net.bodz.bas.lang.err.NotImplementedException;
+import net.bodz.bas.io.CharOuts.Buffer;
 import net.bodz.bas.text.interp.Interps;
 import net.bodz.bas.text.interp.PatternProcessor;
 import net.bodz.bas.types.Pair;
+import static net.bodz.bas.types.util.ArrayOps.Chars;
 
 public class Strings {
 
+    /**
+     * @see Objects#equals(Object, Object)
+     */
+    @Deprecated
     public static final boolean equals(String a, String b) {
         if (a == null || b == null)
             return a == b;
@@ -88,6 +93,44 @@ public class Strings {
         return trimRight(s, 0);
     }
 
+    static final char PADCHAR = ' ';
+
+    public static String padLeft(String s, int len, char padChar) {
+        int padLen = len - s.length();
+        if (padLen <= 0)
+            return s;
+        return Strings.repeat(padLen, padChar) + s;
+    }
+
+    public static String padLeft(String s, int len) {
+        return padLeft(s, len, PADCHAR);
+    }
+
+    public static String padRight(String s, int len, char padChar) {
+        int padLen = len - s.length();
+        if (padLen <= 0)
+            return s;
+        return s + Strings.repeat(padLen, padChar);
+    }
+
+    public static String padRight(String s, int len) {
+        return padRight(s, len, PADCHAR);
+    }
+
+    public static String padMiddle(String s, int len, char padChar) {
+        int padLen = len - s.length();
+        if (padLen <= 0)
+            return s;
+        int padLeft = padLen / 2; // slightly left-ward
+        int padRight = padLen - padLeft;
+        return Strings.repeat(padLeft, padChar) + s
+                + Strings.repeat(padRight, padChar);
+    }
+
+    public static String padMiddle(String s, int len) {
+        return padMiddle(s, len, PADCHAR);
+    }
+
     public static String ucfirst(String s) {
         if (s == null)
             return null;
@@ -109,17 +152,24 @@ public class Strings {
     public static String hyphenatize(String words) {
         while (words.startsWith("_"))
             words = words.substring(1);
-        PatternProcessor pp = new PatternProcessor("[A-Z]+") {
-            @Override
-            protected void matched(String part) {
-                print('-');
-                print(part.toLowerCase());
-            }
-        };
-        String s = pp.process(words);
+        Buffer buf = new Buffer(words.length() * 3 / 2);
+        boolean breakNext = false;
+        for (int wordStart = 0; wordStart < words.length();) {
+            int wordEnd;
+            wordEnd = indexOf(words, Character.UPPERCASE_LETTER, wordStart + 1);
+            if (wordEnd == -1)
+                wordEnd = words.length();
+            String word = words.substring(wordStart, wordEnd);
+            if (breakNext)
+                buf.print('-');
+            buf.print(word);
+            breakNext = word.length() > 1;
+            wordStart = wordEnd;
+        }
+        String s = buf.toString();
         if (s.startsWith("-"))
             s = s.substring(1);
-        return s;
+        return s.toLowerCase();
     }
 
     public static String dehyphenatize(String hstr) {
@@ -400,53 +450,213 @@ public class Strings {
         return splitBySize(s, size, 0);
     }
 
-    public static String before(String string, String pattern) {
-        int pos = string.indexOf(pattern);
-        if (pos == -1)
-            throw new NotImplementedException(
-                    "TODO: see substring-before for not-found");
-        return string.substring(0, pos);
+    public static int indexOf(String s, char[] charSet, int fromIndex) {
+        int len = s.length();
+        for (int i = fromIndex; i < len; i++) {
+            char c = s.charAt(i);
+            if (Chars.indexOf(charSet, c) != -1)
+                return i;
+        }
+        return -1;
     }
 
-    public static String before(String s, char pattern) {
-        int pos = s.indexOf(pattern);
+    public static int indexOf(String s, char... charSet) {
+        return indexOf(s, charSet, 0);
+    }
+
+    public static int indexOf(String s, int charType, int fromIndex) {
+        int len = s.length();
+        for (int i = fromIndex; i < len; i++) {
+            char c = s.charAt(i);
+            int type = Character.getType(c);
+            if (type == charType)
+                return i;
+        }
+        return -1;
+    }
+
+    public static int indexOf(String s, int charType) {
+        return indexOf(s, charType, 0);
+    }
+
+    public static int lastIndexOf(String s, char[] charSet, int fromIndex) {
+        int len = s.length();
+        if (fromIndex >= len)
+            fromIndex = len - 1;
+        for (int i = fromIndex; i >= 0; i--) {
+            char c = s.charAt(i);
+            if (Chars.indexOf(charSet, c) != -1)
+                return i;
+        }
+        return -1;
+    }
+
+    public static int lastIndexOf(String s, char[] charSet) {
+        return lastIndexOf(s, charSet, 0);
+    }
+
+    public static int lastIndexOf(String s, int charType, int fromIndex) {
+        int len = s.length();
+        if (fromIndex >= len)
+            fromIndex = len - 1;
+        for (int i = fromIndex; i >= 0; i--) {
+            char c = s.charAt(i);
+            int type = Character.getType(c);
+            if (type == charType)
+                return i;
+        }
+        return -1;
+    }
+
+    public static int lastIndexOf(String s, int charType) {
+        return lastIndexOf(s, charType, s.length() - 1);
+    }
+
+    /**
+     * @return <code>null</code> if <code>pattern</code> isn't contained
+     */
+    public static String before(String s, String literalPattern) {
+        int pos = s.indexOf(literalPattern);
         if (pos == -1)
-            throw new NotImplementedException(
-                    "TODO: see substring-before for not-found");
+            return null;
         return s.substring(0, pos);
     }
 
-    public static String after(String s, String pattern) {
-        int pos = s.indexOf(pattern);
+    /**
+     * @return <code>null</code> if <code>pattern</code> isn't contained
+     */
+    public static String before(String s, char literalPattern) {
+        int pos = s.indexOf(literalPattern);
         if (pos == -1)
-            throw new NotImplementedException(
-                    "TODO: see substring-after for not-found");
+            return null;
+        return s.substring(0, pos);
+    }
+
+    /**
+     * @return <code>null</code> if <code>charCategory</code> isn't contained
+     */
+    public static String before(String s, byte charCategory) {
+        int pos = indexOf(s, charCategory);
+        if (pos == -1)
+            return null;
+        return s.substring(0, pos);
+    }
+
+    /**
+     * @return <code>null</code> if <code>pattern</code> isn't contained
+     */
+    public static String beforeLast(String s, String literalPattern) {
+        int pos = s.lastIndexOf(literalPattern);
+        if (pos == -1)
+            return null;
+        return s.substring(0, pos);
+    }
+
+    /**
+     * @return <code>null</code> if <code>pattern</code> isn't contained
+     */
+    public static String beforeLast(String s, char literalPattern) {
+        int pos = s.lastIndexOf(literalPattern);
+        if (pos == -1)
+            return null;
+        return s.substring(0, pos);
+    }
+
+    /**
+     * @return <code>null</code> if <code>charCategory</code> isn't contained
+     */
+    public static String beforeLast(String s, byte charCategory) {
+        int pos = lastIndexOf(s, charCategory);
+        if (pos == -1)
+            return null;
+        return s.substring(0, pos);
+    }
+
+    /**
+     * @return <code>null</code> if <code>pattern</code> isn't contained
+     */
+    public static String after(String s, String literalPattern) {
+        int pos = s.indexOf(literalPattern);
+        if (pos == -1)
+            return null;
+        return s.substring(pos + literalPattern.length());
+    }
+
+    /**
+     * @return <code>null</code> if <code>pattern</code> isn't contained
+     */
+    public static String after(String s, char literalPattern) {
+        int pos = s.indexOf(literalPattern);
+        if (pos == -1)
+            return null;
         return s.substring(pos + 1);
     }
 
-    public static String after(String s, char pattern) {
-        int pos = s.indexOf(pattern);
+    /**
+     * @return <code>null</code> if <code>charCategory</code> isn't contained
+     */
+    public static String after(String s, byte charCategory) {
+        int pos = indexOf(s, charCategory);
         if (pos == -1)
-            throw new NotImplementedException(
-                    "TODO: see substring-after for not-found");
+            return null;
         return s.substring(pos + 1);
     }
 
-    public static int count(String s, char pattern) {
+    /**
+     * @return <code>null</code> if <code>pattern</code> isn't contained
+     */
+    public static String afterLast(String s, String literalPattern) {
+        int pos = s.lastIndexOf(literalPattern);
+        if (pos == -1)
+            return null;
+        return s.substring(pos + literalPattern.length());
+    }
+
+    /**
+     * @return <code>null</code> if <code>pattern</code> isn't contained
+     */
+    public static String afterLast(String s, char literalPattern) {
+        int pos = s.lastIndexOf(literalPattern);
+        if (pos == -1)
+            return null;
+        return s.substring(pos + 1);
+    }
+
+    /**
+     * @return <code>null</code> if <code>charCategory</code> isn't contained
+     */
+    public static String afterLast(String s, byte charCategory) {
+        int pos = lastIndexOf(s, charCategory);
+        if (pos == -1)
+            return null;
+        return s.substring(pos + 1);
+    }
+
+    public static int count(String s, char literalPattern) {
         int count = 0;
         int index = 0;
-        while ((index = s.indexOf(pattern, index)) != -1) {
+        while ((index = s.indexOf(literalPattern, index)) != -1) {
             index++;
             count++;
         }
         return count;
     }
 
-    public static int count(String s, String pattern) {
+    public static int count(String s, String literalPattern) {
         int count = 0;
         int index = 0;
-        while ((index = s.indexOf(pattern, index)) != -1) {
-            index += pattern.length();
+        while ((index = s.indexOf(literalPattern, index)) != -1) {
+            index += literalPattern.length();
+            count++;
+        }
+        return count;
+    }
+
+    public static int count(String s, byte charCategory) {
+        int count = 0;
+        int index = 0;
+        while ((index = indexOf(s, charCategory, index)) != -1) {
+            index++;
             count++;
         }
         return count;

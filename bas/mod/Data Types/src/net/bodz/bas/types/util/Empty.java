@@ -1,6 +1,7 @@
 package net.bodz.bas.types.util;
 
 import java.io.File;
+import java.net.URL;
 
 public class Empty {
 
@@ -21,5 +22,8 @@ public class Empty {
 
     // java.io
     public static final File[]     Files    = {};
+
+    // java.net
+    public static final URL[]      URLs     = {};
 
 }

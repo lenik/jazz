@@ -18,10 +18,10 @@ import net.bodz.bas.cli.ext.CLIPlugins;
 import net.bodz.bas.cli.util.Rcs;
 import net.bodz.bas.cli.util.RcsKeywords;
 import net.bodz.bas.cli.util.VersionInfo;
-import net.bodz.bas.functors.lang.ControlBreak;
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.io.Files;
+import net.bodz.bas.lang.ControlBreak;
 import net.bodz.bas.lang.annotations.OverrideOption;
 import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.lang.err.ParseException;
@@ -77,6 +77,10 @@ import net.bodz.bas.types.util.Strings;
 @OptionGroup(value = "standard", rank = -1)
 @ScriptType(CLIScriptClass.class)
 public class BasicCLI {
+
+    static {
+        CLIConfig.load();
+    }
 
     @Option(hidden = true, parser = CharOutParser.class)
     protected CharOut _stdout        = CharOuts.stdout;
