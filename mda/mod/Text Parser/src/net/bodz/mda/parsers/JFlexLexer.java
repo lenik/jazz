@@ -49,6 +49,10 @@ public abstract class JFlexLexer extends _Lexer {
     @ReflectField
     private Field  yycolumn;
 
+    protected JFlexLexer() {
+        this(null);
+    }
+
     protected JFlexLexer(Parser parser) {
         super(parser);
         Reflects.bind(JFlexLexer.class, this);
