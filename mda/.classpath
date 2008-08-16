@@ -17,5 +17,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/net.sf.freejava"/>
 	<classpathentry kind="var" path="JAVA_LIB/dom4j-1.6.1.jar" sourcepath="/JAVA_SRC/src-dom4j-1.6.1.zip"/>
 	<classpathentry kind="var" path="JAVA_LIB/groovy-all-1.5.6.jar" sourcepath="/JAVA_SRC/groovy-src-1.5.6.zip"/>
+	<classpathentry kind="var" path="JAVA_HOME/lib/tools.jar" sourcepath="/JAVA_SRC/src-jdk-1.6.0_03.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

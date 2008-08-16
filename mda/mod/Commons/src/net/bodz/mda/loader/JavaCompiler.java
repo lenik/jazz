@@ -2,35 +2,42 @@ package net.bodz.mda.loader;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.lang.reflect.Method;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.bodz.bas.cli.RunInfo;
+import net.bodz.bas.cli.util.JavaLauncher;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.err.NotImplementedException;
-import net.bodz.bas.lang.util.Reflects;
+import net.bodz.bas.lang.util.Classpath;
+import net.bodz.bas.sys.SystemInfo;
 import net.bodz.bas.types.util.Empty;
 import net.bodz.bas.types.util.RegexProcessor;
+import net.bodz.bas.types.util.Strings;
 
-public class JavaCompiler {
-
-    static String  javacMainClassName = "com.sun.tools.javac.Main";
-    static Method  javacMainCompile;
+@RunInfo(load = "findcp|$JAVA_HOME/lib/tools.jar")
+public class JavaCompiler extends JavaLauncher {
 
     /** -source */
-    private String sourceVersion;
+    private String     sourceVersion;
+
     /** -target */
-    private String targetVersion;
+    private String     targetVersion;
+
     /** -d, canonical file */
-    private File   srcdir;
+    private File       srcdir;
+
     /** -s, canonical file */
-    private File   classdir;
+    private File       classdir;
+
     /** -encoding */
-    private String encoding           = "utf-8";
+    private String     encoding = "utf-8";
+
+    private List<File> classpaths;
 
     public JavaCompiler(File srcdir, File classdir) {
         this.srcdir = Files.canoniOf(srcdir);
@@ -43,6 +50,11 @@ public class JavaCompiler {
 
     public JavaCompiler() {
         this(Files.getTmpDir());
+    }
+
+    @Override
+    protected String getMainClassName() {
+        return "com.sun.tools.javac.Main";
     }
 
     public File getSourceDir() {
@@ -69,7 +81,29 @@ public class JavaCompiler {
         return new File(dir, fname);
     }
 
-    void compile(File file) throws IOException {
+    public void setClasspaths(List<File> classpaths) {
+        this.classpaths = classpaths;
+    }
+
+    public void inheritsClasspath() {
+        URL[] urls = Classpath.findURLs();
+        for (URL url : urls) {
+            try {
+                File file = new File(url.toURI());
+                addClasspath(file);
+            } catch (URISyntaxException e) {
+                throw new RuntimeException(e.getMessage(), e);
+            }
+        }
+    }
+
+    public void addClasspath(File path) {
+        if (classpaths == null)
+            classpaths = new ArrayList<File>();
+        classpaths.add(path);
+    }
+
+    public void compile(File file) throws IOException {
         List<String> list = new ArrayList<String>();
         if (classdir != null) {
             list.add("-d");
@@ -91,31 +125,27 @@ public class JavaCompiler {
         // list.add("-s");
         // list.add(this.srcdir.getPath());
         // }
+
+        if (classpaths != null) {
+            String cp = Strings.join(SystemInfo.pathSeparator, classpaths);
+            list.add("-cp");
+            list.add(cp);
+        }
+
         // String relative = Files.getRelativeName(srcfile, srcdir);
         // list.add(relative);
         list.add(file.getPath());
 
         String[] args = list.toArray(Empty.Strings);
-        StringWriter outbuf = new StringWriter();
-        PrintWriter out = new PrintWriter(outbuf, true);
-        int exit = (Integer) Reflects.invoke(null, //
-                javacMainCompile, args, out);
-        if (exit != 0)
-            throw new CompilerError(outbuf.toString());
+
+        try {
+            launch(args);
+        } catch (Exception e) {
+            throw new CompilerError(e.getMessage(), e);
+        }
     }
 
-    void compile(String java, String name) throws IOException {
-        if (javacMainCompile == null) {
-            try {
-                Class<?> c = Class.forName(javacMainClassName);
-                javacMainCompile = c.getMethod("compile", String[].class,
-                        PrintWriter.class);
-            } catch (ClassNotFoundException e) {
-                throw new NoClassDefFoundError(e.getMessage());
-            } catch (NoSuchMethodException e) {
-                throw new NoSuchMethodError(e.getMessage());
-            }
-        }
+    public void compile(String java, String name) throws IOException {
         File srcfile = getSourceFile(name);
         srcfile.getParentFile().mkdirs();
         Files.write(srcfile, java, encoding);
@@ -125,6 +155,14 @@ public class JavaCompiler {
     public void compile(String java) throws IOException {
         String name = findTypeNames(java);
         compile(java, name);
+    }
+
+    @Override
+    protected void _exit(int status) {
+        if (status != 0) {
+            String msg = "javac abnormally exited, exit status = " + status;
+            throw new CompilerError(msg);
+        }
     }
 
     private static Pattern javaNamesPattern;

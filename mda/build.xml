@@ -22,17 +22,31 @@
 	</target>
 
 	<target name=":bin.jar">
+		<mkdir dir="build" />
 		<jar destfile="build/net.bodz.mda.jar" update="true">
+			<fileset dir="mod/Commons/bin" />
+			<fileset dir="mod/Inplas Framework/bin" />
 			<fileset dir="mod/Text Parser/bin" />
-			<fileset dir="mod/Javalava/bin" />
+			<fileset dir="mod/Javalava Parser/bin" />
+			<fileset dir="mod/XML Models/bin" />
 		</jar>
 	</target>
 
 	<target name=":src.jar">
+		<mkdir dir="build" />
 		<jar destfile="build/net.bodz.mda-source.jar" update="true">
-			<fileset dir="mod/Text Parser/bin" />
-			<fileset dir="mod/Javalava/bin" />
+			<fileset dir="mod/Commons/src" />
+			<fileset dir="mod/Inplas Framework/src" />
+			<fileset dir="mod/Text Parser/src" />
+			<fileset dir="mod/Javalava Parser/src" />
+			<fileset dir="mod/XML Models/src" />
 		</jar>
+	</target>
+
+	<target name="clean">
+		<delete>
+			<fileset dir="${basedir}/build" includes="*.jar" />
+		</delete>
 	</target>
 
 </project>

@@ -91,6 +91,16 @@ public abstract class _Lexer implements Lexer {
 
     private Map<Integer, String> tokenNames;
 
+    /**
+     * Guess token name by searching static fields.
+     * <p>
+     * This may be not accuracy.
+     * 
+     * In common case, id &lt; 256 is single-char token, and therefore no
+     * corresponding token name.
+     * 
+     * @return guessed token name
+     */
     @Override
     public String getTokenName(int id) {
         if (id >= 0 && id < 256)
@@ -113,6 +123,15 @@ public abstract class _Lexer implements Lexer {
 
     private Map<Integer, String> stateNames;
 
+    /**
+     * Guess state name by searching static fields.
+     * <p>
+     * This may be not accuracy, because state is few used in most lexers, and
+     * their values range in 0..10 which are frequently used, often collision
+     * with many other irrelevant field values.
+     * 
+     * @return guessed state name
+     */
     @Override
     public String getStateName(int state) {
         if (stateNames == null)
@@ -142,16 +161,11 @@ public abstract class _Lexer implements Lexer {
     /**
      * Enable using of:
      * <ul>
-     * <li>{@link net.bodz.mda.parsers.Token#getPreStart()}
-     * <li>
-     * {@link net.bodz.mda.parsers.Token#getPreStartLine()}
-     * <li>
-     * {@link net.bodz.mda.parsers.Token#getPreStartCOlumn()}
-     * <li>
-     * {@link net.bodz.mda.parsers.Token#getEnd()}
-     * <li>
-     * {@link net.bodz.mda.parsers.Token#getEndLine()}
-     * <li>
+     * <li>{@link net.bodz.mda.parsers.Token#getPreStart()} <li>
+     * {@link net.bodz.mda.parsers.Token#getPreStartLine()} <li>
+     * {@link net.bodz.mda.parsers.Token#getPreStartCOlumn()} <li>
+     * {@link net.bodz.mda.parsers.Token#getEnd()} <li>
+     * {@link net.bodz.mda.parsers.Token#getEndLine()} <li>
      * {@link net.bodz.mda.parsers.Token#getEndColumn()}
      * </ul>
      */
