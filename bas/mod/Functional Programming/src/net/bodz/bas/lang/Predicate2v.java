@@ -1,6 +1,6 @@
 package net.bodz.bas.lang;
 
-public interface Predicate2<T, U> {
+public interface Predicate2v<T, U> {
 
     boolean eval(T a, U b);
 

@@ -6,7 +6,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import net.bodz.bas.types.TypeParser;
-import net.bodz.bas.types.TypeParsers;
 import net.bodz.bas.types.ValueCheck;
 
 /**
@@ -72,8 +71,7 @@ public @interface Option {
      */
     Class<?> valtype() default void.class;
 
-    @SuppressWarnings("unchecked")
-    Class<? extends TypeParser> parser() default TypeParsers.Void.class;
+    Class<? extends TypeParser> parser() default TypeParser.class;
 
     String parserinfo() default "";
 
@@ -88,6 +86,6 @@ public @interface Option {
     int fileIndex() default -1;
 
     /** for method/callback only */
-    Class<? extends TypeParser<?>>[] want() default {};
+    Class<? extends TypeParser>[] want() default {};
 
 }

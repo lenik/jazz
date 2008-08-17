@@ -1,5 +1,6 @@
 package net.bodz.bas.mod;
 
+import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.types.util.CompatMethods;
 
 public interface Factory<T> {

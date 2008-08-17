@@ -23,6 +23,7 @@ import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.ControlBreak;
 import net.bodz.bas.lang.annotations.OverrideOption;
+import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.lang.err.UnexpectedException;
@@ -33,8 +34,7 @@ import net.bodz.bas.lang.script.Scripts;
 import net.bodz.bas.log.ALog;
 import net.bodz.bas.log.LogOut;
 import net.bodz.bas.log.LogOuts;
-import net.bodz.bas.mod.CreateException;
-import net.bodz.bas.mod.plugins.PluginClass;
+import net.bodz.bas.mod.plugins.PluginTypeEx;
 import net.bodz.bas.mod.plugins.PluginException;
 import net.bodz.bas.types.AutoTypeMap;
 import net.bodz.bas.types.TypeParser;
@@ -110,7 +110,7 @@ public class BasicCLI {
     protected AutoTypeMap<String, Object> _vars;
 
     @Option(name = "define", alias = ".D", vnam = "NAM=VAL", doc = "define variables")
-    void _define(String exp) throws ParseException {
+    void _define(String exp) throws CreateException, ParseException {
         int eq = exp.indexOf('=');
         String nam = exp;
         Object val = null;
@@ -122,7 +122,7 @@ public class BasicCLI {
             val = true;
         else {
             Class<?> type = _getVarType(nam);
-            TypeParser<?> parser = TypeParsers.guess(type);
+            TypeParser parser = TypeParsers.guess(type);
             val = parser.parse(exp);
         }
         _vars.put(nam, val);
@@ -134,7 +134,7 @@ public class BasicCLI {
 
     protected final CLIPlugins plugins = new CLIPlugins();
 
-    private class PluginParser<T extends CLIPlugin> implements TypeParser<T> {
+    private class PluginParser implements TypeParser {
 
         @Override
         public boolean variant() {
@@ -142,7 +142,7 @@ public class BasicCLI {
         }
 
         @Override
-        public T parse(String idCtor) throws ParseException {
+        public CLIPlugin parse(String idCtor) throws ParseException {
             int eq = idCtor.indexOf('=');
             String id = idCtor;
             String arg = null;
@@ -151,7 +151,7 @@ public class BasicCLI {
                 arg = idCtor.substring(eq + 1);
             }
             try {
-                T plugin = create(id, arg);
+                CLIPlugin plugin = create(id, arg);
                 plugin.setParameters(_vars);
                 return plugin;
             } catch (PluginException e) {
@@ -163,14 +163,12 @@ public class BasicCLI {
             }
         }
 
-        @SuppressWarnings("unchecked")
-        private T create(String pluginId, String ctorArg)
+        private CLIPlugin create(String pluginId, String ctorArg)
                 throws CreateException, PluginException, ParseException {
-            PluginClass<?> pluginClass = plugins.getPluginClass(
-                    CLIPlugin.class, pluginId);
-            if (pluginClass == null)
+            PluginTypeEx typeEx = plugins.getTypeEx(CLIPlugin.class, pluginId);
+            if (typeEx == null)
                 throw new PluginException("no plugin of " + pluginId);
-            Class<?> clazz = pluginClass.getType();
+            Class<?> clazz = typeEx.getType();
             Constructor<?>[] ctors = clazz.getConstructors(); // only get public
             Constructor<?> ctor = null;
             Class<?>[] sig = null;
@@ -191,19 +189,19 @@ public class BasicCLI {
             }
             if (len == 0) {
                 assert ctorArg == null;
-                return (T) pluginClass.newInstance();
+                return (CLIPlugin) typeEx.newInstance();
             }
             if (len != 1)
                 throw new PluginException("no suitable constructor to use: "
-                        + pluginClass);
+                        + typeEx);
 
             Class<?> sig0 = sig[off];
             if (sig0 == String.class)
-                return (T) pluginClass.newInstance(ctorArg);
+                return (CLIPlugin) typeEx.newInstance(ctorArg);
             if (!sig0.isArray()) {
-                TypeParser<?> parser = TypeParsers.guess(sig0);
+                TypeParser parser = TypeParsers.guess(sig0);
                 Object val = parser.parse(ctorArg);
-                return (T) pluginClass.newInstance(val);
+                return (CLIPlugin) typeEx.newInstance(val);
             }
 
             // ctor(E[] array)
@@ -212,15 +210,15 @@ public class BasicCLI {
                 args = ctorArg.split(",");
             Class<?> valtype = sig0.getComponentType();
             if (valtype == String.class)
-                return (T) pluginClass.newInstance((Object) args);
+                return (CLIPlugin) typeEx.newInstance((Object) args);
 
-            TypeParser<?> parser = TypeParsers.guess(valtype);
+            TypeParser parser = TypeParsers.guess(valtype);
             Object valarray = Array.newInstance(valtype, args.length);
             for (int i = 0; i < args.length; i++) {
                 Object val = parser.parse(args[i]);
                 Array.set(valarray, i, val);
             }
-            return (T) pluginClass.newInstance((Object) valarray);
+            return (CLIPlugin) typeEx.newInstance((Object) valarray);
         }
     }
 
@@ -228,8 +226,6 @@ public class BasicCLI {
 
         public CLILog(int level) {
             super(level);
-            HashMap<String, Object> hmap = new HashMap<String, Object>();
-            _vars = new AutoTypeMap<String, Object>(hmap);
         }
 
         @Override
@@ -350,11 +346,13 @@ public class BasicCLI {
     private List<String>           restArgs;
 
     public BasicCLI() {
-        TypeParsers.register(CLIPlugin.class, new PluginParser<CLIPlugin>());
+        TypeParsers.register(CLIPlugin.class, new PluginParser());
         String loglevel = System.getProperty(CLIConfig.PROPERTY_LOGLEVEL);
         int bootLevel = loglevel == null ? ALog.INFO : Integer
                 .parseInt(loglevel);
         L = CLIConfig.getBootLog(bootLevel);
+        HashMap<String, Object> hmap = new HashMap<String, Object>();
+        _vars = new AutoTypeMap<String, Object>(hmap);
     }
 
     public ScriptClass<? extends BasicCLI> getScriptClass()
@@ -387,6 +385,10 @@ public class BasicCLI {
 
         L.x.P("cli get options");
         opts = getOptions();
+
+        L.x.P("drop the boot logger");
+        L = new CLILog(L.getLevel());
+
         restArgs = new ArrayList<String>();
         prepared = true;
     }

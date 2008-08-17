@@ -18,6 +18,11 @@ public class Interps {
 
     public static String dereference(String format, List<String> list,
             String missing) {
+        return dereference(format, 0, list, missing);
+    }
+
+    public static String dereference(String format, int indexBase,
+            List<String> list, String missing) {
         int len = format.length();
         StringBuffer buffer = new StringBuffer(len);
         for (int i = 0; i < len; i++) {
@@ -62,6 +67,7 @@ public class Interps {
                     buffer.append(look);
                     continue;
                 }
+                index -= indexBase;
                 String s = (missing != null && index >= list.size()) ? missing
                         : list.get(index);
                 buffer.append(s);

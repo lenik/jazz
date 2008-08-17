@@ -1,33 +1,31 @@
 package net.bodz.bas.cli;
 
-import static net.bodz.bas.cli.Util.guessParser;
-
 import java.util.Collection;
 import java.util.Map;
 
+import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.lang.script.ScriptField;
 import net.bodz.bas.types.TypeParser;
-import net.bodz.bas.types.TypeParsers;
 import net.bodz.bas.types.ValueCheck;
 import net.bodz.bas.types.util.Strings;
 import net.bodz.bas.types.util.Types;
 
 public abstract class _Option<T> implements ScriptField<T> {
 
-    protected String                  name;
-    protected final String            hname;
-    public final Option               o;
+    protected String               name;
+    protected final String         hname;
+    public final Option            o;
 
-    protected final Class<?>          type;
-    protected final boolean           multi;
-    protected Class<T>                valtype;
+    protected final Class<?>       type;
+    protected final boolean        multi;
+    protected Class<T>             valtype;
 
-    protected final TypeParser<T>     parser;
-    protected final ItemTypeParser<T> valparser;
-    protected final ValueCheck        check;
+    protected final TypeParser     parser;
+    protected final ItemTypeParser valparser;
+    protected final ValueCheck     check;
 
-    protected final String            optgrp;
+    protected final String         optgrp;
 
     @SuppressWarnings("unchecked")
     public _Option(String name, Option option, Class<?> type, OptionGroup optgrp) {
@@ -42,7 +40,11 @@ public abstract class _Option<T> implements ScriptField<T> {
         this.type = type;
         this.optgrp = optgrp == null ? null : optgrp.value();
 
-        if (type.isArray() && isDefaultParser(option.parser()))
+        Class<? extends TypeParser> parser0 = option.parser();
+        if (parser0 == TypeParser.class)
+            parser0 = null;
+
+        if (type.isArray() && parser0 == null)
             valtype = (Class<T>) type.getComponentType();
         if (option.valtype() != void.class)
             valtype = (Class<T>) option.valtype();
@@ -61,20 +63,28 @@ public abstract class _Option<T> implements ScriptField<T> {
             check = null;
         } else {
             try {
-                parser = guessParser(Types.getClassInstance(option.parser()),
+                parser = Util.guessParser(Types.getClassInstance(parser0),
                         valtype);
                 if (parser instanceof ItemTypeParser)
-                    valparser = (ItemTypeParser<T>) parser;
+                    valparser = (ItemTypeParser) parser;
                 else
                     valparser = null;
+
+                Class<? extends ValueCheck> check0 = option.check();
+                if (check0 == ValueCheck.class)
+                    check = null;
+                else {
+                    String checkinfo = option.checkinfo();
+                    if (checkinfo.isEmpty())
+                        check = Types.getClassInstance(check0);
+                    else
+                        check = Types.getClassInstance(check0, checkinfo);
+                }
+            } catch (CreateException e) {
+                throw new CLIError(e.getMessage(), e);
             } catch (CLIError e) {
                 throw new CLIError("option " + name + ": " + e.getMessage(), e);
             }
-            String checkinfo = option.checkinfo();
-            if (checkinfo.isEmpty())
-                check = Types.getClassInstance(option.check());
-            else
-                check = Types.getClassInstance(option.check(), checkinfo);
         }
 
     }
@@ -139,11 +149,6 @@ public abstract class _Option<T> implements ScriptField<T> {
         if (check != null)
             check.check(val);
         return val;
-    }
-
-    @SuppressWarnings("unchecked")
-    public static boolean isDefaultParser(Class<? extends TypeParser> parser) {
-        return parser == TypeParsers.Void.class;
     }
 
 }

@@ -1,4 +1,4 @@
-package net.bodz.bas.mod;
+package net.bodz.bas.lang.err;
 
 public class CreateException extends Exception {
 

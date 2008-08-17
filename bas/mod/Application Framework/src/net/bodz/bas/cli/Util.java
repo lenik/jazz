@@ -15,6 +15,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Map.Entry;
 
+import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.script.ScriptException;
 import net.bodz.bas.types.TypeParser;
 import net.bodz.bas.types.TypeParsers;
@@ -82,11 +83,10 @@ class Util {
         return fieldobj;
     }
 
-    @SuppressWarnings("unchecked")
-    public static <T> TypeParser<T> guessParser(TypeParser<T> parser,
-            Class<?> clazz) {
+    public static TypeParser guessParser(TypeParser parser, Class<?> clazz)
+            throws CreateException {
         if (parser == null)
-            parser = (TypeParser<T>) TypeParsers.guess(clazz);
+            parser = (TypeParser) TypeParsers.guess(clazz);
         return parser;
     }
 

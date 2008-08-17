@@ -13,29 +13,29 @@ import net.bodz.bas.types.util.Strings;
 
 import org.junit.Test;
 
-public class PrefixMapTest {
+public class PrefixSetTest {
 
-    PrefixMap<String> map = new PrefixMap<String>();
+    PrefixSet set = new PrefixSet();
 
-    public PrefixMapTest() {
-        map.put("name", "tom");
-        map.put("aa", "aa");
-        map.put("aaa", "aaa");
-        map.put("aab", "aab");
+    public PrefixSetTest() {
+        set.add("name");
+        set.add("aa");
+        set.add("aaa");
+        set.add("aab");
     }
 
     @Test
-    public void test_getChildrenValues() {
+    public void test_getChildren() {
         TestDefs.tests(new TestEval<String>() {
             public Object eval(String input) throws Throwable {
-                List<String> vals = map.getChildrenValues(input);
+                List<String> vals = set.getChildren(input);
                 return Strings.join(",", vals);
             }
         }, //
-                EQ("n", "tom"), //
-                EQ("na", "tom"), //
-                EQ("nam", "tom"), //
-                EQ("name", "tom"), //
+                EQ("n", "name"), //
+                EQ("na", "name"), //
+                EQ("nam", "name"), //
+                EQ("name", "name"), //
                 EQ("a", "aa,aaa,aab"), //
                 EQ("aa", "aa,aaa,aab"), //
                 EQ("aaa", "aaa"), //
@@ -46,7 +46,7 @@ public class PrefixMapTest {
     public void test_hasChildren() {
         TestDefs.tests(new TestEval<String>() {
             public Object eval(String input) throws Throwable {
-                return map.hasChildren(input);
+                return set.hasChildren(input);
             }
         }, //
                 T(""), //

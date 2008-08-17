@@ -5,16 +5,15 @@ import java.util.Map;
 import net.bodz.bas.cli.CLIException;
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.lang.err.ParseException;
+import net.bodz.bas.mod.plugins.Plugin;
 
 /**
  * Implementations must have at least a default constructor, while more
  * constructors may be useful to receive cli-arguments.
  */
-public interface CLIPlugin {
+public interface CLIPlugin extends Plugin {
 
     // static methods
-
-    String getDescription();
 
     void help(CharOut out, String prefix);
 
@@ -25,11 +24,5 @@ public interface CLIPlugin {
      */
     void setParameters(Map<String, Object> parameters) throws CLIException,
             ParseException;
-
-    /**
-     * Parameters is defined in System.properties.
-     */
-    @Deprecated
-    void boot() throws CLIException, ParseException;
 
 }

@@ -33,10 +33,11 @@ import java.util.List;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
-import net.bodz.bas.lang.Predicate2;
+import net.bodz.bas.lang.Predicate2v;
 import net.bodz.bas.lang.err.IdentifiedException;
 import net.bodz.bas.lang.err.IllegalArgumentTypeException;
 import net.bodz.bas.lang.err.UnexpectedException;
+import net.bodz.bas.lang.err.WrappedException;
 import net.bodz.bas.text.diff.DiffComparator;
 import net.bodz.bas.text.diff.DiffInfo;
 import net.bodz.bas.types.util.Empty;
@@ -793,76 +794,85 @@ public class Files {
 
     // _load
 
-    private static Object _NA = new Object();
+    /**
+     * @return {@link Iterable} whose {@link Iterator#next()} throws
+     *         {@link WrappedException} of {@link IOException}
+     */
+    public static Iterable<Object> _load(final Object in) {
 
-    public static Iterable<Object> _load(Object in) throws IOException {
-        final ObjectInput _objin = (in instanceof ObjectInput) ? (ObjectInput) in
-                : new ObjectInputStream(getInputStream(in));
-        final boolean close = shouldClose(in);
+        class ObjIter extends PrefetchedIterator<Object> {
+            ObjectInput objin;
+            boolean     close;
 
-        final Iterator<Object> iterator = new Iterator<Object>() {
-            private ObjectInput objin = _objin;
-            private Object      next  = _NA;
-
-            @Override
-            public boolean hasNext() {
-                if (next == _NA)
-                    next = next();
-                if (next == _NA)
-                    if (objin != null && close)
-                        try {
-                            objin.close();
-                            objin = null;
-                        } catch (IOException e) {
-                            throw new RuntimeException(e.getMessage(), e);
-                        }
-                return next != _NA;
+            public ObjIter() throws IOException {
+                if (in instanceof ObjectInput)
+                    objin = (ObjectInput) in;
+                else
+                    objin = new ObjectInputStream(getInputStream(in));
+                close = shouldClose(in);
             }
 
             @Override
-            public Object next() {
-                if (next != _NA) {
-                    Object t = next;
-                    next = _NA;
-                    return t;
-                }
+            protected Object fetch() {
+                if (objin == null)
+                    return END;
                 Object t;
                 try {
                     t = objin.readObject();
+                    if (t == null) {
+                        if (close)
+                            objin.close();
+                        objin = null;
+                        return END;
+                    }
                 } catch (ClassNotFoundException e) {
-                    throw new IdentifiedException(e.getMessage(), e);
+                    throw new WrappedException(e);
                 } catch (IOException e) {
-                    throw new IdentifiedException(e.getMessage(), e);
+                    throw new WrappedException(e);
                 }
                 return t;
             }
 
             @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
+            protected void finalize() throws Throwable {
+                if (close && objin != null)
+                    objin.close();
             }
-        };
+        }
+
         return new Iterable<Object>() {
             @Override
             public Iterator<Object> iterator() {
-                return iterator;
+                try {
+                    return new ObjIter();
+                } catch (IOException e) {
+                    throw new WrappedException(e);
+                }
             }
         };
     }
 
     public static Object[] loadAll(Object in) throws IOException {
         List<Object> buf = new ArrayList<Object>();
-        for (Object o : _load(in)) {
-            buf.add(o);
+        try {
+            for (Object o : _load(in)) {
+                buf.add(o);
+            }
+        } catch (WrappedException e) {
+            e.rethrow(IOException.class);
         }
         return buf.toArray();
     }
 
     public static Object load(Object in, int index) throws IOException {
         assert index >= 0 : "Invalid index " + index;
-        for (Object o : _load(in)) {
-            if (index-- == 0)
-                return o;
+        try {
+            for (Object o : _load(in)) {
+                if (index-- == 0)
+                    return o;
+            }
+        } catch (WrappedException e) {
+            e.rethrow(IOException.class);
         }
         throw new IndexOutOfBoundsException("scan over the end of in: " + index);
     }
@@ -1270,10 +1280,10 @@ public class Files {
                 inputf = (File) input;
             else if (input instanceof String)
                 inputf = Files.canoniOf(outd, (String) input);
-            else if (input instanceof Predicate2) {
+            else if (input instanceof Predicate2v) {
                 if (mostRecent > outl) {
                     File[] finputs = files.toArray(Empty.Files);
-                    Predicate2<File, File[]> ruledef = (Predicate2<File, File[]>) input;
+                    Predicate2v<File, File[]> ruledef = (Predicate2v<File, File[]>) input;
                     boolean succ = ruledef.eval(output, finputs);
                     succeeded = succeeded && succ;
                 }

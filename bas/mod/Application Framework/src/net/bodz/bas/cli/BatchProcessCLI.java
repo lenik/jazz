@@ -26,7 +26,7 @@ import net.bodz.bas.text.diff.DiffComparator;
 import net.bodz.bas.text.diff.DiffFormat;
 import net.bodz.bas.text.diff.DiffFormats;
 import net.bodz.bas.text.diff.DiffInfo;
-import net.bodz.bas.types.TypeParsers.ClassInstanceParser;
+import net.bodz.bas.types.TypeParsers.GetInstanceParser;
 import net.bodz.bas.types.TypeParsers.WildcardsParser;
 import net.bodz.bas.types.util.Strings;
 
@@ -79,10 +79,10 @@ public class BatchProcessCLI extends BasicCLI {
     @Option(alias = "Id", doc = "also apply filters on directories")
     boolean           filterDirectories;
 
-    @Option(alias = "Ic", vnam = "CLASS(FileFilter)", parser = ClassInstanceParser.class, doc = "using custom file filter, this will override other --I* options")
+    @Option(alias = "Ic", vnam = "CLASS(FileFilter)", parser = GetInstanceParser.class, doc = "using custom file filter, this will override other --I* options")
     FileFilter        fileFilter;
 
-    @Option(vnam = "CLASS(Comparator)", parser = ClassInstanceParser.class, doc = "sort files in each directory")
+    @Option(vnam = "CLASS(Comparator)", parser = GetInstanceParser.class, doc = "sort files in each directory")
     Comparator<File>  sortComparator;
 
     @Option(alias = ".X", vnam = "DIFF-ALG", optional = "gnudiff", doc = "show diff between original and modified files, default using gnudiff")

@@ -13,16 +13,17 @@ import net.bodz.bas.lang.Control;
 import net.bodz.bas.lang.ControlBreak;
 import net.bodz.bas.lang.EvalException;
 import net.bodz.bas.lang.FunctorException;
+import net.bodz.bas.types.Key;
 
 public class Switch<T> extends _Functor<T> {
 
-    protected _Functor<Object>      key;
-    protected List<_Functor<T>>     caseList = new ArrayList<_Functor<T>>();
+    protected _Functor<Object>     key;
+    protected List<_Functor<T>>    caseList = new ArrayList<_Functor<T>>();
     protected Map<Object, Integer> caseMap  = new HashMap<Object, Integer>();
 
     protected T                    evaluated;
 
-    public static final Object     DEFAULT  = new Object();
+    public static final Key        DEFAULT  = new Key("default");
 
     public Switch() {
     }

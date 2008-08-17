@@ -188,7 +188,7 @@ public class ClassOptions<CT> {
             name = name.substring(3);
         if (options.containsKey(name))
             return (_Option<Object>) options.get(name);
-        List<String> fullnames = options.getSubKeys(name);
+        List<String> fullnames = options.getChildrenKeys(name);
         if (fullnames.isEmpty())
             throw new CLIException("no such option: " + name);
         if (fullnames.size() > 1) {

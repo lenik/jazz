@@ -58,27 +58,27 @@ public class ComparatorsTest {
     @Test
     public void testTYPE_HIER() {
 
-        final TestEval<Class<?>[]> sort = new TestEval<Class<?>[]>() {
+        final TestEval<Class<?>[]> orderTest = new TestEval<Class<?>[]>() {
             public Object eval(Class<?>[] input) throws Throwable {
-                Class<?>[] sort = Arrays.copyOf(input, input.length);
-                Arrays.sort(sort, Comparators.TYPE_HIER);
+                Class<?>[] typeHierOrder = Arrays.copyOf(input, input.length);
+                Arrays.sort(typeHierOrder, Comparators.TYPE_HIER);
                 System.out.print(vstr(input));
                 System.out.print(" => ");
-                System.out.println(vstr(sort));
-                return sort;
+                System.out.println(vstr(typeHierOrder));
+                return typeHierOrder;
             }
         };
 
-        final Class<?>[] cv = { Root.class, Bar.class, ZBar.class, Foo.class,
-                AFoo.class };
+        final Class<?>[] correct = { Root.class, Bar.class, ZBar.class,
+                Foo.class, AFoo.class };
 
         final Class<?>[] iv = { RootI.class, BarI.class, ZBarI.class,
                 FooI.class, AFooI.class };
-        Perms.iterate(cv, new Closure<Class<?>[]>() {
+        Perms.iterate(correct, new Closure<Class<?>[]>() {
             @Override
-            public void execute(Class<?>[] perm) {
-                TestDefs.tests(sort, //
-                        ArrayEQU(perm, cv), //
+            public void execute(Class<?>[] everyCondition) {
+                TestDefs.tests(orderTest, //
+                        ArrayEQU(everyCondition, correct), //
                         END);
             }
         });
@@ -86,7 +86,7 @@ public class ComparatorsTest {
         Perms.iterate(iv, new Closure<Class<?>[]>() {
             @Override
             public void execute(Class<?>[] perm) {
-                TestDefs.tests(sort, //
+                TestDefs.tests(orderTest, //
                         ArrayEQU(perm, iv), //
                         END);
             }

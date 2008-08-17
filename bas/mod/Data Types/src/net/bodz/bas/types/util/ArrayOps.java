@@ -249,8 +249,8 @@ public class ArrayOps {
             int f = fromIndex;
             int t = toIndex - 1;
             while (f < t) {
-                byte mem = array[t];
-                array[f] = mem;
+                byte mem = array[f];
+                array[f] = array[t];
                 array[t] = mem;
                 f++;
                 t--;
@@ -364,8 +364,8 @@ public class ArrayOps {
             int f = fromIndex;
             int t = toIndex - 1;
             while (f < t) {
-                short mem = array[t];
-                array[f] = mem;
+                short mem = array[f];
+                array[f] = array[t];
                 array[t] = mem;
                 f++;
                 t--;
@@ -478,8 +478,8 @@ public class ArrayOps {
             int f = fromIndex;
             int t = toIndex - 1;
             while (f < t) {
-                int mem = array[t];
-                array[f] = mem;
+                int mem = array[f];
+                array[f] = array[t];
                 array[t] = mem;
                 f++;
                 t--;
@@ -592,8 +592,8 @@ public class ArrayOps {
             int f = fromIndex;
             int t = toIndex - 1;
             while (f < t) {
-                long mem = array[t];
-                array[f] = mem;
+                long mem = array[f];
+                array[f] = array[t];
                 array[t] = mem;
                 f++;
                 t--;
@@ -707,8 +707,8 @@ public class ArrayOps {
             int f = fromIndex;
             int t = toIndex - 1;
             while (f < t) {
-                float mem = array[t];
-                array[f] = mem;
+                float mem = array[f];
+                array[f] = array[t];
                 array[t] = mem;
                 f++;
                 t--;
@@ -822,8 +822,8 @@ public class ArrayOps {
             int f = fromIndex;
             int t = toIndex - 1;
             while (f < t) {
-                double mem = array[t];
-                array[f] = mem;
+                double mem = array[f];
+                array[f] = array[t];
                 array[t] = mem;
                 f++;
                 t--;
@@ -939,8 +939,8 @@ public class ArrayOps {
             int f = fromIndex;
             int t = toIndex - 1;
             while (f < t) {
-                boolean mem = array[t];
-                array[f] = mem;
+                boolean mem = array[f];
+                array[f] = array[t];
                 array[t] = mem;
                 f++;
                 t--;
@@ -1053,9 +1053,9 @@ public class ArrayOps {
             int f = fromIndex;
             int t = toIndex - 1;
             while (f < t) {
-                char mem = array[t];
-                array[t] = array[f];
-                array[f] = mem;
+                char mem = array[f];
+                array[f] = array[t];
+                array[t] = mem;
                 f++;
                 t--;
             }
@@ -1182,8 +1182,8 @@ public class ArrayOps {
             int f = fromIndex;
             int t = toIndex - 1;
             while (f < t) {
-                T mem = array[t];
-                array[f] = mem;
+                T mem = array[f];
+                array[f] = array[t];
                 array[t] = mem;
                 f++;
                 t--;
