@@ -33,7 +33,7 @@ public class FilePositionReader extends FilterReader implements FilePosition {
 
     @Override
     public int read() throws IOException {
-        int c = super.read();
+        int c = in.read();
         if (c != -1)
             pos++;
         return c;
@@ -41,7 +41,7 @@ public class FilePositionReader extends FilterReader implements FilePosition {
 
     @Override
     public int read(char[] cbuf, int off, int len) throws IOException {
-        int cc = super.read(cbuf, off, len);
+        int cc = in.read(cbuf, off, len);
         if (cc != -1)
             pos += cc;
         return cc;
@@ -49,7 +49,7 @@ public class FilePositionReader extends FilterReader implements FilePosition {
 
     @Override
     public int read(char[] cbuf) throws IOException {
-        int cc = super.read(cbuf);
+        int cc = in.read(cbuf);
         if (cc != -1)
             pos += cc;
         return cc;
@@ -57,7 +57,7 @@ public class FilePositionReader extends FilterReader implements FilePosition {
 
     @Override
     public int read(CharBuffer target) throws IOException {
-        int cc = super.read(target);
+        int cc = in.read(target);
         if (cc != -1)
             pos += cc;
         return cc;
@@ -65,7 +65,7 @@ public class FilePositionReader extends FilterReader implements FilePosition {
 
     @Override
     public long skip(long n) throws IOException {
-        long cc = super.skip(n);
+        long cc = in.skip(n);
         pos += cc;
         return cc;
     }
