@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-public class TellableInputStreamTest {
+public class FilePositionInputStreamTest {
 
     static byte[] hello = "hello, abcdefg".getBytes();
 

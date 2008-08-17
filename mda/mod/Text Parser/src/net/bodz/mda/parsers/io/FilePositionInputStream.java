@@ -33,7 +33,7 @@ public class FilePositionInputStream extends FilterInputStream implements
 
     @Override
     public int read() throws IOException {
-        int b = super.read();
+        int b = in.read();
         if (b != -1)
             pos++;
         return b;
@@ -41,7 +41,7 @@ public class FilePositionInputStream extends FilterInputStream implements
 
     @Override
     public int read(byte[] b, int off, int len) throws IOException {
-        int cb = super.read(b, off, len);
+        int cb = in.read(b, off, len);
         if (cb != -1)
             pos += cb;
         return cb;
@@ -49,7 +49,7 @@ public class FilePositionInputStream extends FilterInputStream implements
 
     @Override
     public int read(byte[] b) throws IOException {
-        int cb = super.read(b);
+        int cb = in.read(b);
         if (cb != -1)
             pos += cb;
         return cb;
@@ -57,7 +57,7 @@ public class FilePositionInputStream extends FilterInputStream implements
 
     @Override
     public long skip(long n) throws IOException {
-        long cb = super.skip(n);
+        long cb = in.skip(n);
         pos += cb;
         return cb;
     }

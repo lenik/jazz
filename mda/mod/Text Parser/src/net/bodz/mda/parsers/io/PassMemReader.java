@@ -85,7 +85,7 @@ public class PassMemReader extends FilterReader implements CharPassMem,
 
     @Override
     public int read() throws IOException {
-        int c = super.read();
+        int c = in.read();
         if (c != -1)
             mem.appendValue((char) c);
         return c;
@@ -93,7 +93,7 @@ public class PassMemReader extends FilterReader implements CharPassMem,
 
     @Override
     public int read(char[] b, int off, int len) throws IOException {
-        int cc = super.read(b, off, len);
+        int cc = in.read(b, off, len);
         if (cc != -1)
             mem.append(b, off, cc);
         return cc;
@@ -101,7 +101,7 @@ public class PassMemReader extends FilterReader implements CharPassMem,
 
     @Override
     public int read(char[] b) throws IOException {
-        int cc = super.read(b);
+        int cc = in.read(b);
         if (cc != -1)
             mem.append(b, 0, cc);
         return cc;
@@ -109,7 +109,7 @@ public class PassMemReader extends FilterReader implements CharPassMem,
 
     @Override
     public void reset() throws IOException {
-        super.reset();
+        in.reset();
         long newOffset = positionInfo.tell();
         if (newOffset < memOffset) {
             // some mem dropped before reset
@@ -132,7 +132,7 @@ public class PassMemReader extends FilterReader implements CharPassMem,
 
     @Override
     public long skip(long n) throws IOException {
-        long cb = super.skip(n);
+        long cb = in.skip(n);
         if (cb != 0) {
             memOffset = positionInfo.tell();
             mem.clear();

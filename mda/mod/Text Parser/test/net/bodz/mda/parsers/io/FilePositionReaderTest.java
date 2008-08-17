@@ -6,7 +6,7 @@ import java.io.StringReader;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class TellableReaderTest {
+public class FilePositionReaderTest {
 
     static String hello = "hello, abcdefg";
 

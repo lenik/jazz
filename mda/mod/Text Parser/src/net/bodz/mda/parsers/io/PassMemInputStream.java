@@ -85,7 +85,7 @@ public class PassMemInputStream extends FilterInputStream implements
 
     @Override
     public int read() throws IOException {
-        int b = super.read();
+        int b = in.read();
         if (b != -1)
             mem.appendValue((byte) b);
         return b;
@@ -93,7 +93,7 @@ public class PassMemInputStream extends FilterInputStream implements
 
     @Override
     public int read(byte[] b, int off, int len) throws IOException {
-        int cb = super.read(b, off, len);
+        int cb = in.read(b, off, len);
         if (cb != -1)
             mem.append(b, off, cb);
         return cb;
@@ -101,7 +101,7 @@ public class PassMemInputStream extends FilterInputStream implements
 
     @Override
     public int read(byte[] b) throws IOException {
-        int cb = super.read(b);
+        int cb = in.read(b);
         if (cb != -1)
             mem.append(b, 0, cb);
         return cb;
@@ -109,7 +109,7 @@ public class PassMemInputStream extends FilterInputStream implements
 
     @Override
     public void reset() throws IOException {
-        super.reset();
+        in.reset();
         long newOffset = positionInfo.tell();
         if (newOffset < memOffset) {
             // some mem dropped before reset
@@ -132,7 +132,7 @@ public class PassMemInputStream extends FilterInputStream implements
 
     @Override
     public long skip(long n) throws IOException {
-        long cb = super.skip(n);
+        long cb = in.skip(n);
         if (cb != 0) {
             memOffset = positionInfo.tell();
             mem.clear();
