@@ -2,10 +2,10 @@ package net.bodz.bas.types;
 
 import net.bodz.bas.lang.err.ParseException;
 
-public interface TypeParser<T> {
+public interface TypeParser {
 
     boolean variant();
 
-    T parse(String text) throws ParseException;
+    Object parse(String text) throws ParseException;
 
 }

@@ -1,7 +1,7 @@
 package net.bodz.bas.lang;
 
-public abstract class Predicate2F<T, U> implements Functor<Boolean>,
-        Predicate2<T, U> {
+public abstract class Predicate2vF<T, U> implements Functor<Boolean>,
+        Predicate2v<T, U> {
 
     @SuppressWarnings("unchecked")
     @Override

@@ -3,28 +3,16 @@ package net.bodz.bas.cli.ext;
 import java.util.Map;
 import java.util.TreeMap;
 
-import net.bodz.bas.annotations.ClassInfo;
 import net.bodz.bas.cli.CLIException;
 import net.bodz.bas.cli.ClassCLI;
 import net.bodz.bas.cli.ClassOptions;
 import net.bodz.bas.cli._Option;
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.lang.err.ParseException;
+import net.bodz.bas.mod.plugins._Plugin;
 import net.bodz.bas.types.util.Strings;
 
-public class _CLIPlugin implements CLIPlugin {
-
-    private final String description;
-
-    public _CLIPlugin() {
-        ClassInfo info = ClassInfo.get(getClass());
-        description = info.getDoc();
-    }
-
-    @Override
-    public String getDescription() {
-        return description;
-    }
+public class _CLIPlugin extends _Plugin implements CLIPlugin {
 
     @SuppressWarnings("unchecked")
     protected ClassOptions<_CLIPlugin> getOptions() {
@@ -40,12 +28,20 @@ public class _CLIPlugin implements CLIPlugin {
         opts.load(this, parameters);
     }
 
+    @Deprecated
     @SuppressWarnings("unchecked")
     @Override
-    public void boot() throws CLIException, ParseException {
+    public void initialize() {
+        super.initialize();
         ClassOptions<_CLIPlugin> opts = getOptions();
         Map<?, ?> properties = System.getProperties();
-        opts.load(this, (Map<String, ?>) properties);
+        try {
+            opts.load(this, (Map<String, ?>) properties);
+        } catch (CLIException e) {
+            throw new Error(e.getMessage(), e);
+        } catch (ParseException e) {
+            throw new Error(e.getMessage(), e);
+        }
     }
 
     @Override

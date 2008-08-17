@@ -14,6 +14,7 @@ import java.util.TreeSet;
 
 import net.bodz.bas.lang.IVoid;
 import net.bodz.bas.lang.Predicate;
+import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.err.OutOfDomainException;
 import net.bodz.bas.lang.err.ReflectException;
 import net.bodz.bas.lang.err.UnexpectedException;
@@ -308,7 +309,8 @@ public class Types {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> T getClassInstance(Class<T> clazz, Object... args) {
+    public static <T> T getClassInstance(Class<T> clazz, Object... args)
+            throws CreateException {
         if (clazz == null)
             return null;
         if (clazz.isInterface())
@@ -322,9 +324,9 @@ public class Types {
         } catch (NoSuchMethodException e) {
             return newInstance(clazz, argTypes, args);
         } catch (IllegalAccessException e) {
-            throw new ReflectException(e.getMessage(), e);
+            throw new CreateException(e.getMessage(), e);
         } catch (InvocationTargetException e) {
-            throw new ReflectException(e.getMessage(), e);
+            throw new CreateException(e.getMessage(), e);
         }
     }
 

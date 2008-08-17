@@ -24,11 +24,13 @@ public class ClassLocal<T> extends HashMap<Class<?>, T> {
         super(m);
     }
 
+    @Deprecated
     public T get() {
         Class<?> clazz = getCallerClass(2);
         return super.get(clazz);
     }
 
+    @Deprecated
     public T set(T value) {
         Class<?> clazz = getCallerClass(2);
         return super.put(clazz, value);

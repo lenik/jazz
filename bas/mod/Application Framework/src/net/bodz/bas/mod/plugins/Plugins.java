@@ -5,95 +5,96 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import net.bodz.bas.lang.Predicate;
-import net.bodz.bas.mod.CreateException;
+import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.types.TypeHierMap;
 
 public class Plugins {
 
-    protected TypeHierMap<PluginType<?>> types;
+    /**
+     * base-type -> category
+     */
+    protected TypeHierMap<PluginCategory> categories;
 
     public Plugins() {
-        types = new TypeHierMap<PluginType<?>>();
+        categories = new TypeHierMap<PluginCategory>();
     }
 
-    public <T> boolean registerPluginType(PluginType<T> pluginType) {
-        Class<T> pluginTypeClass = pluginType.getType();
-        if (types.containsKey(pluginTypeClass))
+    public boolean registerCategory(PluginCategory category) {
+        Class<?> baseType = category.getBaseType();
+        if (categories.containsKey(baseType))
             return false;
-        types.put(pluginTypeClass, pluginType);
+        categories.put(baseType, category);
         return true;
     }
 
-    public <T> boolean registerPluginType(String name, Class<T> pluginTypeClass) {
-        PluginType<T> pluginType = new PluginType<T>(name, pluginTypeClass);
-        return registerPluginType(pluginType);
+    public boolean registerCategory(String name,
+            Class<? extends Plugin> baseType) {
+        PluginCategory category = new PluginCategory(name, baseType);
+        return registerCategory(category);
     }
 
-    @SuppressWarnings("unchecked")
-    public <T> PluginType<T> getPluginType(Class<T> pluginTypeClass,
+    public PluginCategory getOrCreateCategory(Class<? extends Plugin> type,
             boolean strict) {
-        PluginType<?> pluginType;
+        PluginCategory pluginType;
         if (strict)
-            pluginType = types.get(pluginTypeClass);
+            pluginType = categories.get(type);
         else
-            pluginType = types.getBase(pluginTypeClass);
+            pluginType = categories.getParent(type);
         if (pluginType == null) {
-            pluginType = new PluginType<T>(pluginTypeClass);
-            types.put(pluginTypeClass, pluginType);
+            pluginType = new PluginCategory(type);
+            categories.put(type, pluginType);
         }
-        return (PluginType<T>) pluginType;
+        return (PluginCategory) pluginType;
     }
 
-    public <T> PluginType<T> getPluginType(Class<T> pluginTypeClass) {
-        return getPluginType(pluginTypeClass, false);
+    public PluginCategory getOrCreateCategory(
+            Class<? extends Plugin> pluginTypeClass) {
+        return getOrCreateCategory(pluginTypeClass, false);
     }
 
-    public PluginType<?> getPluginType(String pluginTypeName) {
-        assert pluginTypeName != null;
-        for (PluginType<?> type : types.values()) {
-            if (pluginTypeName.equals(type.getName()))
-                return type;
+    public PluginCategory getCategory(String categoryName) {
+        assert categoryName != null;
+        for (PluginCategory category : categories.values()) {
+            if (categoryName.equals(category.getName()))
+                return category;
         }
         return null;
     }
 
-    @SuppressWarnings("unchecked")
-    public <T> void register(String pluginId, PluginClass<T> pluginClass) {
-        Class<T> pluginTypeClass = (Class<T>) pluginClass.getType();
-        PluginType<T> pluginType = getPluginType(pluginTypeClass);
-        pluginType.register(pluginId, pluginClass);
+    public void register(String pluginId, PluginTypeEx typeEx) {
+        Class<? extends Plugin> type = typeEx.getType();
+        PluginCategory category = getOrCreateCategory(type);
+        category.register(pluginId, typeEx);
     }
 
-    public <T> void register(String pluginId, Class<T> pluginClass) {
-        Class<T> pluginTypeClass = pluginClass;
-        PluginType<T> pluginType = getPluginType(pluginTypeClass);
-        pluginType.register(pluginId, pluginClass);
+    public void register(String pluginId, Class<? extends Plugin> type) {
+        PluginCategory category = getOrCreateCategory(type);
+        category.register(pluginId, type);
     }
 
-    public <T> void register(String pluginId, Class<T> pluginClass, Object outer) {
-        Class<T> pluginTypeClass = pluginClass;
-        PluginType<T> pluginType = getPluginType(pluginTypeClass);
-        pluginType.register(pluginId, pluginClass, outer);
+    public void register(String pluginId, Class<? extends Plugin> type,
+            Object outer) {
+        PluginCategory category = getOrCreateCategory(type);
+        category.register(pluginId, type, outer);
     }
 
-    @SuppressWarnings("unchecked")
-    public <T> void register(String pluginId, T staticPlugin) {
-        Class<T> pluginTypeClass = (Class<T>) staticPlugin.getClass();
-        PluginType<T> pluginType = getPluginType(pluginTypeClass);
-        pluginType.register(pluginId, staticPlugin);
+    public <T> void register(String pluginId, Plugin staticInstance) {
+        Class<? extends Plugin> type = staticInstance.getClass();
+        PluginCategory category = getOrCreateCategory(type);
+        category.register(pluginId, staticInstance);
     }
 
-    PluginClass<?> find(Class<?> pluginTypeClass, final String pluginId)
+    PluginTypeEx find(Class<?> type, final String pluginId)
             throws PluginException {
-        final List<PluginClass<?>> found = new ArrayList<PluginClass<?>>();
-        types.findSub(pluginTypeClass,
-                new Predicate<Entry<Class<?>, PluginType<?>>>() {
+        final List<PluginTypeEx> found = new ArrayList<PluginTypeEx>();
+        categories.findChildren(type,
+                new Predicate<Entry<Class<?>, PluginCategory>>() {
                     @Override
-                    public boolean eval(Entry<Class<?>, PluginType<?>> e) {
-                        PluginType<?> pluginType = e.getValue();
-                        PluginClass<?> pc = pluginType.get(pluginId);
-                        if (pc != null)
-                            found.add(pc);
+                    public boolean eval(Entry<Class<?>, PluginCategory> e) {
+                        PluginCategory category = e.getValue();
+                        PluginTypeEx typeEx = category.get(pluginId);
+                        if (typeEx != null)
+                            found.add(typeEx);
                         return true;
                     }
                 });
@@ -101,12 +102,12 @@ public class Plugins {
             return null;
         if (found.size() > 1) {
             StringBuffer cands = null;
-            for (PluginClass<?> pc : found) {
+            for (PluginTypeEx typeEx : found) {
                 if (cands == null)
                     new StringBuffer(found.size() * 30);
                 else
                     cands.append('\n');
-                cands.append(pc);
+                cands.append(typeEx);
             }
             throw new PluginException("ambiguous plugin id: " + pluginId
                     + ", candidates: \n" + cands);
@@ -114,19 +115,19 @@ public class Plugins {
         return found.get(0);
     }
 
-    public PluginClass<?> getPluginClass(Class<?> pluginTypeClass,
-            String pluginId) throws PluginException {
-        return find(pluginTypeClass, pluginId);
+    // ???
+    public PluginTypeEx getTypeEx(Class<?> type, String pluginId)
+            throws PluginException {
+        return find(type, pluginId);
     }
 
-    @SuppressWarnings("unchecked")
-    public <T> T load(Class<T> pluginTypeClass, String pluginId, Object... args)
-            throws PluginException {
-        PluginClass<T> pclass = (PluginClass<T>) find(pluginTypeClass, pluginId);
-        if (pclass == null)
+    public Plugin load(Class<? extends Plugin> type, String pluginId,
+            Object... args) throws PluginException {
+        PluginTypeEx typeEx = find(type, pluginId);
+        if (typeEx == null)
             return null;
         try {
-            return pclass.newInstance(args);
+            return typeEx.newInstance(args);
         } catch (CreateException e) {
             throw new PluginException(e.getMessage(), e);
         }

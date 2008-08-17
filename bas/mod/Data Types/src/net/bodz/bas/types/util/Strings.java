@@ -492,7 +492,7 @@ public class Strings {
     }
 
     public static int lastIndexOf(String s, char[] charSet) {
-        return lastIndexOf(s, charSet, 0);
+        return lastIndexOf(s, charSet, s.length() - 1);
     }
 
     public static int lastIndexOf(String s, int charType, int fromIndex) {

@@ -6,6 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import net.bodz.bas.lang.Control;
+import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.lang.script.ScriptException;
 import net.bodz.bas.lang.script.ScriptMethod;
@@ -16,9 +17,9 @@ import net.bodz.bas.types.util.Types;
 public class MethodOption extends _Option<CallInfo> implements
         ScriptMethod<Object> {
 
-    private final Method          method;
-    private final int             argc;
-    private final TypeParser<?>[] parsers;
+    private final Method       method;
+    private final int          argc;
+    private final TypeParser[] parsers;
 
     public MethodOption(String name, Option option, Method method,
             OptionGroup optgrp) {
@@ -26,15 +27,19 @@ public class MethodOption extends _Option<CallInfo> implements
         this.method = method;
         method.setAccessible(true); // ...
 
-        Class<? extends TypeParser<?>>[] wants = option.want();
+        Class<? extends TypeParser>[] wants = option.want();
         Class<?>[] types = method.getParameterTypes();
         argc = types.length;
-        parsers = new TypeParser<?>[argc];
-        for (int i = 0; i < wants.length; i++)
-            parsers[i] = Util.guessParser(Types.getClassInstance(wants[i]),
-                    types[i]);
-        for (int i = wants.length; i < argc; i++)
-            parsers[i] = TypeParsers.guess(types[i]);
+        parsers = new TypeParser[argc];
+        try {
+            for (int i = 0; i < wants.length; i++)
+                parsers[i] = Util.guessParser(Types.getClassInstance(wants[i]),
+                        types[i]);
+            for (int i = wants.length; i < argc; i++)
+                parsers[i] = TypeParsers.guess(types[i]);
+        } catch (CreateException e) {
+            throw new CLIError(e.getMessage(), e);
+        }
     }
 
     public Method getMethod() {

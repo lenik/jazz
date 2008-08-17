@@ -3,6 +3,8 @@ package net.bodz.bas.types.util;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import net.bodz.bas.types.Key;
+
 public abstract class PrefetchedIterator<E> implements Iterator<E> {
 
     private Object prefetched = UNDEFINED;
@@ -37,7 +39,7 @@ public abstract class PrefetchedIterator<E> implements Iterator<E> {
         throw new UnsupportedOperationException();
     }
 
-    private final static Object   UNDEFINED = new Object();
-    protected final static Object END       = new Object();
+    private final static Key   UNDEFINED = new Key("undef");
+    protected final static Key END       = new Key("end");
 
 }

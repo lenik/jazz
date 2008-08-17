@@ -6,19 +6,19 @@ import java.util.List;
 
 import net.bodz.bas.cli.CLIException;
 import net.bodz.bas.io.CharOut;
-import net.bodz.bas.mod.CreateException;
-import net.bodz.bas.mod.plugins.PluginClass;
-import net.bodz.bas.mod.plugins.PluginType;
+import net.bodz.bas.lang.err.CreateException;
+import net.bodz.bas.mod.plugins.PluginTypeEx;
+import net.bodz.bas.mod.plugins.PluginCategory;
 import net.bodz.bas.types.util.Strings;
 
-public class CLIPluginType<T extends CLIPlugin> extends PluginType<T> {
+public class CLIPluginCategory extends PluginCategory {
 
-    public CLIPluginType(Class<T> type) {
-        super(type);
+    public CLIPluginCategory(Class<? extends CLIPlugin> baseType) {
+        super(baseType);
     }
 
-    public CLIPluginType(String name, Class<T> type) {
-        super(name, type);
+    public CLIPluginCategory(String name, Class<? extends CLIPlugin> baseType) {
+        super(name, baseType);
     }
 
     public void help(CharOut out, String prefix) throws CLIException {
@@ -30,7 +30,7 @@ public class CLIPluginType<T extends CLIPlugin> extends PluginType<T> {
             if (id.length() > maxlen)
                 maxlen = id.length();
         for (String id : ids) {
-            PluginClass<T> pluginClass = registry.get(id);
+            PluginTypeEx pluginClass = registry.get(id);
             String desc = pluginClass.getDescription();
             out.print(prefix);
             out.print(id);
@@ -45,7 +45,7 @@ public class CLIPluginType<T extends CLIPlugin> extends PluginType<T> {
             out.println();
 
             try {
-                T tmp = pluginClass.newInstance();
+                CLIPlugin tmp = (CLIPlugin) pluginClass.newInstance();
                 tmp.help(out, prefix + "    ");
             } catch (CreateException e) {
                 out.println(prefix + "    (failed to instantiate: " + e + ")");

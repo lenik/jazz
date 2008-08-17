@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.Iterator;
 
 import net.bodz.bas.io.Files;
+import net.bodz.bas.lang.err.CreateException;
+import net.bodz.bas.lang.err.IllegalUsageError;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.types.TypeParser;
 import net.bodz.bas.types.TypeParsers;
@@ -12,11 +14,11 @@ import net.bodz.bas.types.util.PrefetchedIterator;
 public abstract class MultipartsFile<T> extends _FileType implements
         FileSource<T> {
 
-    private final Object  file;
-    private String        encoding;
-    private TypeParser<?> keyParser;
-    private TypeParser<?> valueParser;
-    private Object        textKey;
+    private final Object file;
+    private String       encoding;
+    private TypeParser   keyParser;
+    private TypeParser   valueParser;
+    private Object       textKey;
 
     /**
      * @param file
@@ -25,8 +27,18 @@ public abstract class MultipartsFile<T> extends _FileType implements
     public MultipartsFile(Object file, String encoding) {
         this.file = file;
         this.encoding = encoding;
-        this.keyParser = TypeParsers.guess(getKeyClass());
-        this.valueParser = TypeParsers.guess(getValueClass());
+        try {
+            this.keyParser = TypeParsers.guess(getKeyClass());
+        } catch (CreateException e) {
+            throw new IllegalUsageError("Invalid key class: " + getKeyClass(),
+                    e);
+        }
+        try {
+            this.valueParser = TypeParsers.guess(getValueClass());
+        } catch (CreateException e) {
+            throw new IllegalUsageError("Invalid value class: "
+                    + getValueClass(), e);
+        }
         this.textKey = getTextKey();
     }
 

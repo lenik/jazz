@@ -3,8 +3,8 @@ package net.bodz.bas.cli;
 import net.bodz.bas.lang.err.ParseException;
 
 /** reserved for future use */
-public interface ItemTypeParser<T> {
+public interface ItemTypeParser {
 
-    T parse(Object index, String text) throws ParseException;
+    Object parse(Object index, String text) throws ParseException;
 
 }

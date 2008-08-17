@@ -6,6 +6,7 @@ import java.util.Map;
 
 import net.bodz.bas.cli.CLIException;
 import net.bodz.bas.lang.Control;
+import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.types.TypeParser;
 import net.bodz.bas.types.TypeParsers;
 
@@ -59,9 +60,14 @@ public class CLIFunctions {
             throws NoSuchMethodException {
         final Method method = clazz.getMethod(methodName, argTypes);
         final int argc = argTypes.length;
-        final TypeParser<?>[] parsers = new TypeParser<?>[argc];
+        final TypeParser[] parsers = new TypeParser[argc];
         for (int i = 0; i < argc; i++)
-            parsers[i] = TypeParsers.guess(argTypes[i]);
+            try {
+                parsers[i] = TypeParsers.guess(argTypes[i]);
+            } catch (CreateException e) {
+                throw new IllegalArgumentException("unsupported cli type: "
+                        + argTypes[i], e);
+            }
         return new CLIFunction() {
             @Override
             public Object eval(String... args) throws Throwable {

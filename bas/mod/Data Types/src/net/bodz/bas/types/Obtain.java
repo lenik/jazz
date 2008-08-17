@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Target( { ElementType.TYPE })
 public @interface Obtain {
 
-    Class<? extends TypeParser<?>> parser() default TypeParsers.Void.class;
+    Class<? extends TypeParser> parser() default TypeParser.class;
 
     Class<?> registry() default void.class;
 
