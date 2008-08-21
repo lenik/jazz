@@ -34,8 +34,9 @@ public class RegexProcessorTest {
     public void testSpaceOverride() {
         // new SpaceOverride("\\s|//.*?\n");
         final SpaceOverride regexProc = RegexProcessor.javaComments;
-        final Pattern pwords = regexProc
-                .compile("(\\w+)(\\s*)", Pattern.DOTALL);
+        final Pattern pwords = regexProc.compile(//
+                "(\\w+)(\\s*)", Pattern.DOTALL);
+        System.out.println("pwords=" + pwords);
         TestDefs.tests(new FindAll(pwords, 1), //
                 EQ("hello", "hello"), //
                 EQ("hello world", "hello|world"), //
@@ -51,6 +52,7 @@ public class RegexProcessorTest {
         final SpaceOverride regexProc = RegexProcessor.javaComments;
         final Pattern square = regexProc.compile(".*?\\[(.*?)\\]",
                 Pattern.DOTALL);
+        System.out.println("square=" + square);
         TestDefs.tests(new FindAll(square, 1), //
                 EQ("[hello]", "hello"), //
                 EQ("[a]/* [b]*/ [c]", "a|c"), //

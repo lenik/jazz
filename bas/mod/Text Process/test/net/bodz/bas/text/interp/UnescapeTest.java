@@ -18,7 +18,7 @@ public class UnescapeTest {
                 return Unescape.unescape(input);
             }
         }, //
-                EQ("", ""), //
+                EQ("", ""), // 1
                 EQ("hello", "hello"), //
                 EQ("he\\\\llo", "he\\llo"), //
                 EQ("he\\\"llo", "he\"llo"), //
@@ -30,7 +30,7 @@ public class UnescapeTest {
                 EQ("hello\\t", "hello\t"), //
                 EQ("\\t", "\t"), //
 
-                EQ("\\x9hello", "\thello"), //
+                EQ("\\x9hello", "\thello"), // 11
                 EQ("hell\\x9o", "hell\to"), //
                 EQ("hello\\x9", "hello\t"), //
                 EQ("\\x9", "\t"), //
@@ -42,12 +42,16 @@ public class UnescapeTest {
                 EQ("\\11", "\t"), //
 
                 EQ("\\x41hello", "Ahello"), //
-                EQ("h\\x41ello", "hAello"), //
+                EQ("h\\x41ello", "hAello"), // 21
                 EQ("hell\\x41o", "hellAo"), //
                 EQ("hello\\x41", "helloA"), //
                 EQ("\\x41", "A"), //
 
                 END);
+    }
+
+    public static void main(String[] args) {
+        new UnescapeTest().testInterpString();
     }
 
 }

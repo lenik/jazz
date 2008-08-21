@@ -1,5 +1,6 @@
 package net.bodz.bas.types.util;
 
+import java.nio.CharBuffer;
 import java.util.regex.Pattern;
 
 import net.bodz.bas.lang.err.NotImplementedException;
@@ -12,72 +13,72 @@ public class RegexProcessor extends Unescape {
     }
 
     @Override
-    protected int recognizeEscapeCode(int start) {
-        char c = source.charAt(start);
+    protected String decode(CharBuffer in) {
+        char c = in.get();
         switch (c) {
         case 's':
-            matchSpace();
-            return 1;
+            return matchSpace();
         case 'S':
-            matchNonspace();
-            return 1;
+            return matchNonspace();
         case 'w':
-            matchWord();
-            return 1;
+            return matchWord();
         case 'W':
-            matchNonword();
-            return 1;
+            return matchNonword();
         }
-        return -1;
+        // in.position(in.position() - 1);
+        // return super.decode(in);
+        return String.valueOf(c);
     }
 
-    protected void matchSpace() {
-        print("\\s");
+    protected String matchSpace() {
+        return "\\s";
     }
 
-    protected void matchNonspace() {
-        print("\\S");
+    protected String matchNonspace() {
+        return "\\S";
     }
 
-    protected void matchWord() {
-        print("\\w");
+    protected String matchWord() {
+        return "\\w";
     }
 
-    protected void matchNonword() {
-        print("\\W");
+    protected String matchNonword() {
+        return "\\W";
     }
 
     @Override
-    protected void unmatched(int start, int end) {
-        assert start < end; // len > 0
-        for (int i = start; i < end; i++) {
-            char c = source.charAt(i);
+    protected String unmatched(String s) {
+        int len = s.length();
+        StringBuffer buf = new StringBuffer();
+        for (int i = 0; i < len; i++) {
+            char c = s.charAt(i);
             switch (c) {
             case '.':
-                matchDot();
+                buf.append(matchDot());
                 break;
             case '^':
-                matchCaret();
+                buf.append(matchCaret());
                 break;
             case '$':
-                matchDollar();
+                buf.append(matchDollar());
                 break;
             default:
-                print(c);
+                buf.append(c);
             }
         }
+        return buf.toString();
     }
 
-    protected void matchDot() {
-        print('.');
+    protected String matchDot() {
+        return ".";
     }
 
-    protected void matchCaret() {
-        print('^');
+    protected String matchCaret() {
+        return "^";
     }
 
-    protected void matchDollar() {
-        print('$');
+    protected String matchDollar() {
+        return "$";
     }
 
     public Pattern compile(String regex, int flags) {
@@ -100,18 +101,18 @@ public class RegexProcessor extends Unescape {
         }
 
         @Override
-        protected void matchSpace() {
-            print(spaceRegex);
+        protected String matchSpace() {
+            return spaceRegex;
         }
 
         @Override
-        protected void matchNonspace() {
+        protected String matchNonspace() {
             throw new NotImplementedException();
         }
 
         @Override
-        protected void matchDot() {
-            print(dotRegex);
+        protected String matchDot() {
+            return dotRegex;
         }
     }
 

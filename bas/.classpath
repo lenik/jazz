@@ -6,6 +6,8 @@
   <classpathentry kind="output" path="bin"/>
   <classpathentry kind="src" output="mod/Application Framework/bin" path="mod/Application Framework/src"/>
   <classpathentry kind="src" output="mod/Application Framework/test.bin" path="mod/Application Framework/test"/>
+  <classpathentry kind="src" path="mod/B-IOS Framework/src" output="mod/B-IOS Framework/bin"/>
+  <classpathentry kind="src" path="mod/B-IOS Framework/test" output="mod/B-IOS Framework/test.bin"/>
   <classpathentry kind="src" output="mod/Bundled Modules/bin" path="mod/Bundled Modules/src"/>
   <classpathentry kind="src" output="mod/Bundled Modules/test.bin" path="mod/Bundled Modules/test"/>
   <classpathentry kind="src" output="mod/Data Types/bin" path="mod/Data Types/src"/>
