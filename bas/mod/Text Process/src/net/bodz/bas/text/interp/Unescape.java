@@ -1,35 +1,65 @@
 package net.bodz.bas.text.interp;
 
-import java.util.regex.Pattern;
+import java.nio.CharBuffer;
 
-public class Unescape extends PatternProcessor {
+import net.bodz.bas.io.CharOut;
+import net.bodz.bas.io.CharOuts.Buffer;
+import net.bodz.bas.text.util.BufParsers;
 
-    private final int escapeCharLen;
-    private int       eatAhead;
+public class Unescape {
+
+    private final char[] ESC;
 
     public Unescape(String escapeChar) {
-        super(Pattern.compile(Pattern.quote(escapeChar) + "."));
-        escapeCharLen = escapeChar.length();
+        this.ESC = escapeChar.toCharArray();
     }
 
-    @Override
-    protected void matched(int start, int end) {
-        int eatStart = start + escapeCharLen;
-        int eatenLen = end - eatStart;
-        int eat = recognizeEscapeCode(eatStart);
-        if (eat == -1) {
-            print(source.substring(start, end));
-            eatAhead = 0;
-        } else {
-            assert eat >= eatenLen;
-            // print(source.substring(eatStart + eat, end));
-            eatAhead = eat - eatenLen;
+    private boolean getESC(CharBuffer in, int start) {
+        if (ESC.length > in.remaining())
+            return false;
+        for (int i = 0; i < ESC.length; i++) {
+            if (in.charAt(i) != ESC[i])
+                return false;
+        }
+        in.position(in.position() + ESC.length);
+        return true;
+    }
+
+    public void process(CharBuffer in, CharOut out) {
+        int limit = in.limit();
+        StringBuffer t = new StringBuffer();
+        int i = in.position();
+        while (i < limit) {
+            if (getESC(in, i)) {
+                if (t.length() != 0) {
+                    String s = unmatched(t.toString());
+                    out.print(s);
+                    t.setLength(0);
+                }
+                String decoded = decode(in);
+                out.print(decoded);
+                i = in.position();
+            } else {
+                char c = in.get();
+                t.append(c);
+                i++;
+            }
+        }
+        if (t.length() != 0) {
+            String s = unmatched(t.toString());
+            out.print(s);
         }
     }
 
-    protected int recognizeEscapeCode(int start) {
-        char c = source.charAt(start);
-        int eat = 1;
+    public String process(String s) {
+        Buffer buf = new Buffer();
+        process(CharBuffer.wrap(s), buf);
+        return buf.toString();
+    }
+
+    protected String decode(CharBuffer in) {
+        char c = in.get();
+        int v;
         switch (c) {
         case 'b':
             c = '\b';
@@ -48,17 +78,16 @@ public class Unescape extends PatternProcessor {
             break;
         case 'x':
         case 'X':
-            eat = lookHex(start + 1, 2);
-            if (eat != 0)
-                c = (char) parseInt(16, start + 1, eat);
-            eat++;
+            v = BufParsers.getInt(in, 16, 255);
+            if (v != -1)
+                c = (char) v;
             break;
         case 'u':
         case 'U':
-            eat = lookHex(start + 1, 4);
-            if (eat != 0)
-                c = (char) parseInt(16, start + 1, eat);
-            eat++;
+            // Character.MAX_CODE_POINT;
+            v = BufParsers.getInt(in, 16, Character.MAX_VALUE);
+            if (v != -1)
+                c = (char) v;
             break;
         case '0':
         case '1':
@@ -68,54 +97,18 @@ public class Unescape extends PatternProcessor {
         case '5':
         case '6':
         case '7':
-            eat = lookOct(start, 3);
-            if (eat != 0)
-                c = (char) parseInt(8, start, eat);
+            in.position(in.position() - 1); // unget
+            v = BufParsers.getInt(in, 8, 255);
+            if (v != -1)
+                c = (char) v;
             break;
         default:
         }
-        print(c);
-        return eat;
+        return String.valueOf(c);
     }
 
-    protected final int lookHex(int off, int len) {
-        len = Math.min(len, source.length() - off);
-        for (int i = 0; i < len; i++) {
-            char c = source.charAt(off + i);
-            if (c >= '0' && c <= '9')
-                c -= '0';
-            else if (c >= 'a' && c <= 'f')
-                c -= 'a' - 10;
-            else if (c >= 'A' && c <= 'F')
-                c -= 'A' - 10;
-            else
-                return i;
-        }
-        return len;
-    }
-
-    protected final int lookOct(int off, int len) {
-        len = Math.min(len, source.length() - off);
-        for (int i = 0; i < len; i++) {
-            char c = source.charAt(off + i);
-            if (c >= '0' && c <= '7')
-                c -= '0';
-            else
-                return i;
-        }
-        return len;
-    }
-
-    protected final int parseInt(int radix, int off, int len) {
-        String s = source.substring(off, off + len);
-        return Integer.parseInt(s, radix);
-    }
-
-    @Override
-    protected void unmatched(int start, int end) {
-        start += eatAhead;
-        eatAhead = 0;
-        super.unmatched(start, end);
+    protected String unmatched(String s) {
+        return s;
     }
 
     public static String unescape(String s, String escapeChar) {

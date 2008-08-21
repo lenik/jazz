@@ -14,13 +14,22 @@ public class OutOfDomainException extends IllegalArgumentException {
 
     // 3 (boundary n< at 0)
     public OutOfDomainException(String arg, Object actualval, Object boundval) {
-        super(String.valueOf(actualval) + " (boundary " + arg + " at "
-                + boundval + ")");
+        super(getMesg(arg, actualval, boundval));
     }
 
     // 3 (x)
     public OutOfDomainException(String arg, Object actualval) {
-        super(String.valueOf(actualval) + " (" + arg + ")");
+        super(getMesg(arg, actualval));
+    }
+
+    public static String getMesg(String arg, Object actualval, Object boundval) {
+        return String.valueOf(actualval) + //
+                " (boundary " + arg + " at " + boundval + ")";
+    }
+
+    public static String getMesg(String arg, Object actualval) {
+        return String.valueOf(actualval) + //
+                " (" + arg + ")";
     }
 
 }

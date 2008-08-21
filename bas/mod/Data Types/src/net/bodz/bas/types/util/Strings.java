@@ -1,11 +1,13 @@
 package net.bodz.bas.types.util;
 
 import static net.bodz.bas.lang.BoolMath.test;
+import static net.bodz.bas.types.util.ArrayOps.Chars;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StreamTokenizer;
 import java.io.StringReader;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,7 +20,6 @@ import net.bodz.bas.io.CharOuts.Buffer;
 import net.bodz.bas.text.interp.Interps;
 import net.bodz.bas.text.interp.PatternProcessor;
 import net.bodz.bas.types.Pair;
-import static net.bodz.bas.types.util.ArrayOps.Chars;
 
 public class Strings {
 
@@ -196,20 +197,18 @@ public class Strings {
         return '"' + s + '"';
     }
 
-    public static String join(String separator, Object... strings) {
+    public static String join(String separator, Object array) {
         StringBuffer buffer = null;
-        for (Object s : strings) {
+        int len = Array.getLength(array);
+        for (int i = 0; i < len; i++) {
             if (buffer == null)
                 buffer = new StringBuffer();
             else
                 buffer.append(separator);
-            buffer.append(s);
+            Object e = Array.get(array, i);
+            buffer.append(e);
         }
         return buffer == null ? "" : buffer.toString();
-    }
-
-    public static String join(String separator, String... strings) {
-        return join(separator, (Object[]) strings);
     }
 
     public static String join(String separator, Iterable<?> iterable) {
