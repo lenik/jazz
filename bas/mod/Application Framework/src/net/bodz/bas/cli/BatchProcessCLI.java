@@ -101,12 +101,12 @@ public class BatchProcessCLI extends BasicCLI {
     boolean           diffWithDest   = false;
 
     protected BatchProcessCLI() {
-        _init();
     }
 
     protected ProtectedShell psh;
 
-    private void _init() {
+    @Override
+    void _postInit() {
         fileFilter = new FileFilter() {
             @Override
             public boolean accept(File file) {

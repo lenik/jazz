@@ -420,6 +420,7 @@ public class BasicCLI {
             addArguments(args);
 
             L.x.P("cli boot");
+            _postInit();
             _boot();
 
             L.x.P("cli load delayed");
@@ -456,6 +457,9 @@ public class BasicCLI {
             while (restArgs.size() > preRestSize)
                 restArgs.remove(restArgs.size() - 1);
         }
+    }
+
+    void _postInit() throws Throwable {
     }
 
     protected void _boot() throws Throwable {
