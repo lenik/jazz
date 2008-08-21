@@ -380,9 +380,9 @@ public class ClassOptions<CT> {
             try {
                 optval = opt.parse(optarg, key);
             } catch (ParseException e) {
-                throw new ParseException(
-                        "Can't get default/true value for type " + valtype
-                                + "\n" + e.getMessage(), e);
+                throw new ParseException("Can't parse option "
+                        + opt.getCLIName() + " of " + valtype
+                        + " with argument: " + optarg, e);
             }
         if (key != null)
             optval = new Pair<String, Object>(key, optval);

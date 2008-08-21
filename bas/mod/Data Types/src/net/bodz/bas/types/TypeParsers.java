@@ -44,14 +44,15 @@ public class TypeParsers {
         }
 
         @Override
-        public Object parse(String text) throws ParseException {
+        public Object parse(String entry) throws ParseException {
             try {
-                Field field = registryClass.getField(text);
+                Field field = registryClass.getField(entry);
                 return field.get(null);
             } catch (NoSuchFieldException e) {
-                throw new ParseException(e.getMessage(), e);
+                throw new ParseException("Entry " + entry
+                        + " isn't defined in registry " + registryClass, e);
             } catch (Exception e) {
-                throw new ParseException("Failed to load entry " + text
+                throw new ParseException("Failed to load entry " + entry
                         + " in registry " + registryClass);
             }
         }
