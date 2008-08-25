@@ -15,21 +15,15 @@ public class IntMath {
     }
 
     public static int unsign(byte b) {
-        if (b < 0)
-            return 256 + b;
-        return b;
+        return b & 0xFF;
     }
 
     public static int unsign(short s) {
-        if (s < 0)
-            return 65536 + s;
-        return s;
+        return s & 0xFFFF;
     }
 
     public static long unsign(int i) {
-        if (i < 0)
-            return 0x100000000L + i;
-        return i;
+        return i & 0xFFFFFFFFL;
     }
 
     private static final BigInteger _2e64;
@@ -78,9 +72,9 @@ public class IntMath {
         return Long.SIZE - ones(bits);
     }
 
-    private static final Number[] precalc;
+    private static final Number[] facConsts;
     static {
-        precalc = new Number[] { 1, // 0
+        facConsts = new Number[] { 1, // 0
             1, // 1
             2, // 2
             6, // 3
@@ -133,10 +127,10 @@ public class IntMath {
     public static Number fac(int n) {
         if (n < 0)
             throw new OutOfDomainException("n<", n, 0);
-        if (n < precalc.length)
-            return precalc[n];
-        int i = precalc.length; // 41
-        BigInteger result = (BigInteger) precalc[precalc.length - 1]; // 40!
+        if (n < facConsts.length)
+            return facConsts[n];
+        int i = facConsts.length; // 41
+        BigInteger result = (BigInteger) facConsts[facConsts.length - 1]; // 40!
         while (i <= n) {
             BigInteger bigI = BigInteger.valueOf(i++);
             result = result.multiply(bigI);
