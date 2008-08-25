@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import net.bodz.bas.lang.err.IllegalArgumentTypeException;
 import net.bodz.bas.lang.err.NotImplementedException;
@@ -81,6 +82,16 @@ public class ArrayOps {
         @Override
         public int lastIndexOf(A array, Object key, int start) {
             return lastIndexOf(array, 0, Array.getLength(array), key, start);
+        }
+
+        @Override
+        public void fill(A array, Object val) {
+            fill(array, 0, Array.getLength(array), val);
+        }
+
+        @Override
+        public void fill(A array, Random randomVals) {
+            fill(array, 0, Array.getLength(array), randomVals);
         }
 
         @Override
@@ -234,6 +245,26 @@ public class ArrayOps {
             Arrays.fill(array, fromIndex, toIndex, (java.lang.Byte) val);
         }
 
+        static int RAND_BLOCK = 32;
+
+        @Override
+        public void fill(byte[] array, int fromIndex, int toIndex, Random rands) {
+            if (fromIndex == 0 && toIndex == array.length) {
+                rands.nextBytes(array);
+                return;
+            }
+            int size = toIndex - fromIndex;
+            byte[] randBlock = null;
+            while (size > 0) {
+                int cb = Math.min(size, RAND_BLOCK);
+                if (randBlock == null || randBlock.length != cb)
+                    randBlock = new byte[cb];
+                rands.nextBytes(randBlock);
+                copy(randBlock, 0, array, fromIndex, cb);
+                size -= cb;
+            }
+        }
+
         @Override
         public void sort(byte[] array) {
             Arrays.sort(array);
@@ -347,6 +378,12 @@ public class ArrayOps {
         @Override
         public void fill(short[] array, int fromIndex, int toIndex, Object val) {
             Arrays.fill(array, fromIndex, toIndex, (java.lang.Short) val);
+        }
+
+        @Override
+        public void fill(short[] array, int fromIndex, int toIndex, Random rands) {
+            while (fromIndex < toIndex)
+                array[fromIndex++] = (short) rands.nextInt();
         }
 
         @Override
@@ -464,6 +501,12 @@ public class ArrayOps {
         }
 
         @Override
+        public void fill(int[] array, int fromIndex, int toIndex, Random rands) {
+            while (fromIndex < toIndex)
+                array[fromIndex++] = rands.nextInt();
+        }
+
+        @Override
         public void sort(int[] array) {
             Arrays.sort(array);
         }
@@ -575,6 +618,12 @@ public class ArrayOps {
         @Override
         public void fill(long[] array, int fromIndex, int toIndex, Object val) {
             Arrays.fill(array, fromIndex, toIndex, (java.lang.Long) val);
+        }
+
+        @Override
+        public void fill(long[] array, int fromIndex, int toIndex, Random rands) {
+            while (fromIndex < toIndex)
+                array[fromIndex++] = rands.nextLong();
         }
 
         @Override
@@ -693,6 +742,12 @@ public class ArrayOps {
         }
 
         @Override
+        public void fill(float[] array, int fromIndex, int toIndex, Random rands) {
+            while (fromIndex < toIndex)
+                array[fromIndex++] = rands.nextFloat();
+        }
+
+        @Override
         public void sort(float[] array) {
             Arrays.sort(array);
         }
@@ -805,6 +860,13 @@ public class ArrayOps {
         @Override
         public void fill(double[] array, int fromIndex, int toIndex, Object val) {
             Arrays.fill(array, fromIndex, toIndex, (java.lang.Double) val);
+        }
+
+        @Override
+        public void fill(double[] array, int fromIndex, int toIndex,
+                Random rands) {
+            while (fromIndex < toIndex)
+                array[fromIndex++] = rands.nextDouble();
         }
 
         @Override
@@ -925,6 +987,13 @@ public class ArrayOps {
         }
 
         @Override
+        public void fill(boolean[] array, int fromIndex, int toIndex,
+                Random rands) {
+            while (fromIndex < toIndex)
+                array[fromIndex++] = rands.nextBoolean();
+        }
+
+        @Override
         public void sort(boolean[] array) {
             throw new NotImplementedException();
         }
@@ -1036,6 +1105,12 @@ public class ArrayOps {
         @Override
         public void fill(char[] array, int fromIndex, int toIndex, Object val) {
             Arrays.fill(array, fromIndex, toIndex, (java.lang.Character) val);
+        }
+
+        @Override
+        public void fill(char[] array, int fromIndex, int toIndex, Random rands) {
+            while (fromIndex < toIndex)
+                array[fromIndex++] = (char) rands.nextInt();
         }
 
         @Override
@@ -1151,6 +1226,11 @@ public class ArrayOps {
         @Override
         public void fill(T[] array, int fromIndex, int toIndex, Object val) {
             Arrays.fill(array, fromIndex, toIndex, val);
+        }
+
+        @Override
+        public void fill(T[] array, int fromIndex, int toIndex, Random rands) {
+            throw new UnsupportedOperationException("only random numbers");
         }
 
         @Override

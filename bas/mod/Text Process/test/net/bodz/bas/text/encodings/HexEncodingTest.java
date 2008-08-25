@@ -2,6 +2,7 @@ package net.bodz.bas.text.encodings;
 
 import static net.bodz.bas.test.TestDefs.END;
 import static net.bodz.bas.test.TestDefs.EQ;
+import static net.bodz.bas.text.encodings.Encodings.HEX;
 import net.bodz.bas.test.TestDefs;
 import net.bodz.bas.test.TestEval;
 
@@ -9,13 +10,11 @@ import org.junit.Test;
 
 public class HexEncodingTest {
 
-    Encoding hex = new HexEncoding();
-
     @Test
     public void testEncode() {
         TestDefs.tests(new TestEval<String>() {
             public Object eval(String input) throws Throwable {
-                return hex.encode(input.getBytes("ascii"));
+                return HEX.encode(input.getBytes("ascii"));
             }
         }, //
                 EQ("", ""), //
@@ -28,7 +27,7 @@ public class HexEncodingTest {
     public void testDecode() {
         TestDefs.tests(new TestEval<String>() {
             public Object eval(String input) throws Throwable {
-                byte[] decode = hex.decode(input);
+                byte[] decode = HEX.decode(input);
                 return new String(decode, "ascii");
             }
         }, //

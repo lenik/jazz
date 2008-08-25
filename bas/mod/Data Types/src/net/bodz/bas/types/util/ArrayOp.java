@@ -3,6 +3,7 @@ package net.bodz.bas.types.util;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 public interface ArrayOp<A> {
 
@@ -74,6 +75,10 @@ public interface ArrayOp<A> {
      * @see java.util.Arrays#fill(Object[], int, int, Object)
      */
     void fill(A array, int fromIndex, int toIndex, Object val);
+
+    void fill(A array, Random rands);
+
+    void fill(A array, int fromIndex, int toIndex, Random rands);
 
     /**
      * @see java.util.Arrays#sort(Object[])

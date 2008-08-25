@@ -10,6 +10,9 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.SOURCE)
 public @interface Derived {
 
-    Class<?> modelType() default void.class;
+    /**
+     * Original model type
+     */
+    Class<?> value() default void.class;
 
 }
