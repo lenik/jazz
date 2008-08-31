@@ -1,0 +1,70 @@
+package net.bodz.bios;
+
+import java.io.IOException;
+
+import net.bodz.bas.lang.ClassLocal;
+import net.bodz.bas.lang.annotations.MetaClass;
+import net.bodz.bas.lang.err.OutOfDomainException;
+import net.bodz.bas.types.util.Annotations;
+import net.bodz.bas.types.util.Types;
+
+public abstract class _InPort extends _Port implements InPort, ReceiverEx {
+
+    private int index;
+
+    public _InPort(Unit unit, int index) {
+        super(unit);
+        this.index = index;
+    }
+
+    private static ClassLocal<PortMeta> metas;
+    static {
+        metas = new ClassLocal<PortMeta>();
+    }
+
+    @Override
+    public PortMeta getInPortMeta() {
+        Class<? extends _Port> clazz = getClass();
+        PortMeta meta = metas.get(clazz);
+        if (meta == null) {
+            Class<?> metaClass = Annotations.getValue(clazz, MetaClass.class);
+            if (metaClass != null)
+                meta = (PortMeta) Types.newInstance(metaClass);
+            else
+                meta = createPortMeta();
+            metas.put(clazz, meta);
+        }
+        return meta;
+    }
+
+    protected PortMeta createPortMeta() {
+        return new STPortMeta(getName(), Object.class);
+    }
+
+    @Override
+    public int getInPortIndex() {
+        return index;
+    }
+
+    @Override
+    public abstract void recv(Object data) throws IOException;
+
+    @Override
+    public void recvNull() throws IOException {
+        throw new NullPointerException("recvNull");
+    }
+
+    @Override
+    public void recvUnknown(Object data) throws IOException {
+        throw new OutOfDomainException("type", data.getClass());
+    }
+
+    @Override
+    public void addSrc(OutPort srcPort) throws IOException {
+    }
+
+    @Override
+    public void removeSrc(OutPort srcPort) throws IOException {
+    }
+
+}
