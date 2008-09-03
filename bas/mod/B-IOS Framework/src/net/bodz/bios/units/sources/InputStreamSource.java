@@ -9,8 +9,8 @@ import net.bodz.bios.units.SOSource;
 
 public class InputStreamSource extends SOSource {
 
-    Iterable<byte[]> blocks;
-    Iterator<byte[]> blockIter;
+    private Iterable<byte[]> blocks;
+    private Iterator<byte[]> blockIter;
 
     public InputStreamSource(InputStream in, int blockSize) throws IOException {
         blocks = Files.readByBlock(blockSize, in);

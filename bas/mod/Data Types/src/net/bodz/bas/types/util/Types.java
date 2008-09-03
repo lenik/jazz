@@ -6,14 +6,14 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
 import net.bodz.bas.lang.IVoid;
-import net.bodz.bas.lang.Predicate;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.err.OutOfDomainException;
 import net.bodz.bas.lang.err.ReflectException;
@@ -31,6 +31,40 @@ public class Types {
         }
     }
 
+    private static Map<Class<?>, Class<?>> p2w;
+    private static Map<Class<?>, Class<?>> w2p;
+    static {
+        p2w = new HashMap<Class<?>, Class<?>>();
+        p2w.put(void.class, Void.class);
+        p2w.put(byte.class, Byte.class);
+        p2w.put(short.class, Short.class);
+        p2w.put(int.class, Integer.class);
+        p2w.put(long.class, Long.class);
+        p2w.put(float.class, Float.class);
+        p2w.put(double.class, Double.class);
+        p2w.put(char.class, Character.class);
+        p2w.put(boolean.class, Boolean.class);
+        w2p = new HashMap<Class<?>, Class<?>>();
+        w2p.put(Void.class, void.class);
+        w2p.put(Byte.class, byte.class);
+        w2p.put(Short.class, short.class);
+        w2p.put(Integer.class, int.class);
+        w2p.put(Long.class, long.class);
+        w2p.put(Float.class, float.class);
+        w2p.put(Double.class, double.class);
+        w2p.put(Character.class, char.class);
+        w2p.put(Boolean.class, boolean.class);
+    }
+
+    public static Class<?> box(Class<?> type) {
+        return type.isPrimitive() ? p2w.get(type) : type;
+    }
+
+    public static Class<?> unbox(Class<?> type) {
+        Class<?> primitive = w2p.get(type);
+        return primitive == null ? type : primitive;
+    }
+
     public static Class<?>[] getTypeChain(Class<?> clazz) {
         return getTypeChain(clazz, false);
     }
@@ -46,11 +80,9 @@ public class Types {
         return list.toArray(new Class<?>[0]);
     }
 
-    static final Class<?>[] EMPTY_CLASSES = {};
-
     public static Class<?>[] getTypes(Object... objects) {
         if (objects == null || objects.length == 0)
-            return EMPTY_CLASSES;
+            return Empty.Classes;
 
         Class<?>[] classes = new Class[objects.length];
         for (int i = 0; i < objects.length; i++) {
@@ -168,125 +200,6 @@ public class Types {
         return igcd.trueSet.toArray(Empty.Classes);
     }
 
-    /** Get matching methods */
-    public static Iterable<Method> findMethods(final Class<?> clazz,
-            final String name, final Predicate<Method> pred) {
-        return new Iterable<Method>() {
-            @Override
-            public Iterator<Method> iterator() {
-                return new PrefetchedIterator<Method>() {
-                    private Method[] methods;
-                    private int      i;
-
-                    @Override
-                    protected Object fetch() {
-                        if (methods == null)
-                            methods = clazz.getDeclaredMethods();
-                        if (i >= methods.length)
-                            return END;
-                        Method method = methods[i++];
-                        boolean matched = name == null
-                                || name.equals(method.getName());
-                        matched = matched
-                                && (pred == null || pred.eval(method));
-                        return matched ? method : fetch();
-                    }
-                };
-            }
-        };
-    }
-
-    public static Iterable<Method> findMethodsAllTree(final Class<?> clazz,
-            final String name, final Predicate<Method> pred) {
-        return new Iterable<Method>() {
-            @Override
-            public Iterator<Method> iterator() {
-                return new PrefetchedIterator<Method>() {
-                    private Class<?> c = clazz;
-                    private Method[] methods;
-                    private int      i;
-
-                    @Override
-                    protected Object fetch() {
-                        if (c == null)
-                            return END;
-                        if (methods == null) {
-                            methods = c.getDeclaredMethods();
-                            i = 0;
-                        }
-                        if (i >= methods.length) {
-                            c = c.getSuperclass();
-                            methods = null;
-                            return fetch();
-                        }
-                        Method method = methods[i++];
-                        boolean matched = name == null
-                                || name.equals(method.getName());
-                        matched = matched
-                                && (pred == null || pred.eval(method));
-                        return matched ? method : fetch();
-                    }
-                };
-            }
-        };
-    }
-
-    private static Iterable<Constructor<?>> findConstructors(
-            final Constructor<?>[] ctors, final Predicate<Constructor<?>> pred) {
-        return new Iterable<Constructor<?>>() {
-            @Override
-            public Iterator<Constructor<?>> iterator() {
-                return new PrefetchedIterator<Constructor<?>>() {
-                    private int i;
-
-                    @Override
-                    protected Object fetch() {
-                        if (i >= ctors.length)
-                            return END;
-                        Constructor<?> ctor = ctors[i++];
-                        boolean matched = pred == null || pred.eval(ctor);
-                        return matched ? ctor : fetch();
-                    }
-                };
-            }
-        };
-    }
-
-    public static Iterable<Method> getMethods(Class<?> clazz, String name) {
-        return findMethods(clazz, name, null);
-    }
-
-    public static Iterable<Method> getMethods(Class<?> clazz) {
-        return findMethods(clazz, null, null);
-    }
-
-    public static Iterable<Method> getMethodsAllTree(Class<?> clazz, String name) {
-        return findMethodsAllTree(clazz, name, null);
-    }
-
-    public static Iterable<Method> getMethodsAllTree(Class<?> clazz) {
-        return findMethodsAllTree(clazz, null, null);
-    }
-
-    public static Iterable<Constructor<?>> findConstructors(Class<?> clazz,
-            Predicate<Constructor<?>> pred) {
-        return findConstructors(clazz.getConstructors(), pred);
-    }
-
-    public static Iterable<Constructor<?>> getConstructors(Class<?> clazz) {
-        return findConstructors(clazz.getConstructors(), null);
-    }
-
-    public static Iterable<Constructor<?>> findDeclaredConstructors(
-            final Class<?> clazz, Predicate<Constructor<?>> pred) {
-        return findConstructors(clazz.getDeclaredConstructors(), pred);
-    }
-
-    public static Iterable<Constructor<?>> getDeclaredConstructors(
-            final Class<?> clazz) {
-        return findConstructors(clazz.getDeclaredConstructors(), null);
-    }
-
     public static <T> T newInstance(Class<T> clazz, Class<?>[] argtypes,
             Object... args) {
         try {
@@ -306,6 +219,16 @@ public class Types {
     public static <T> T newInstance(Class<T> clazz, Object... args) {
         Class<?>[] argTypes = Types.getTypes(args);
         return newInstance(clazz, argTypes, args);
+    }
+
+    public static <T> T newInstance(Class<T> clazz) {
+        try {
+            return clazz.newInstance();
+        } catch (InstantiationException e) {
+            throw new ReflectException(e.getMessage(), e);
+        } catch (IllegalAccessException e) {
+            throw new ReflectException(e.getMessage(), e);
+        }
     }
 
     @SuppressWarnings("unchecked")

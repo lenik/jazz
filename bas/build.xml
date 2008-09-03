@@ -25,6 +25,7 @@
 		<mkdir dir="build" />
 		<jar destfile="build/net.bodz.bas.jar" update="true">
 			<fileset dir="mod/Application Framework/bin" />
+			<fileset dir="mod/B-IOS Framework/bin" />
 			<fileset dir="mod/Bundled Modules/bin" />
 			<fileset dir="mod/Data Types/bin" />
 			<fileset dir="mod/Database Abstraction/bin" />
@@ -40,6 +41,7 @@
 		<mkdir dir="build" />
 		<jar destfile="build/net.bodz.bas-source.jar" update="true">
 			<fileset dir="mod/Application Framework/src" />
+			<fileset dir="mod/B-IOS Framework/bin" />
 			<fileset dir="mod/Bundled Modules/src" />
 			<fileset dir="mod/Data Types/src" />
 			<fileset dir="mod/Database Abstraction/src" />

@@ -59,25 +59,29 @@ public class WriterOutputStream extends OutputStream {
 
     protected void decode(boolean end) throws IOException {
         bytebuf.flip();
-        CoderResult result = decoder.decode(bytebuf, charbuf, end);
-        if (result.isOverflow())
-            throw new UnexpectedException("charbuf overflow");
-        if (result.isError()) {
-            if (result.isMalformed())
-                handleMalformed(bytebuf);
-            else if (result.isUnmappable())
-                handleUnmappable(bytebuf);
-            else
-                handleError(bytebuf);
+        {
+            CoderResult result = decoder.decode(bytebuf, charbuf, end);
+            if (result.isOverflow())
+                throw new UnexpectedException("charbuf overflow");
+            if (result.isError()) {
+                if (result.isMalformed())
+                    handleMalformed(bytebuf);
+                else if (result.isUnmappable())
+                    handleUnmappable(bytebuf);
+                else
+                    handleError(bytebuf);
+            }
+            charbuf.flip();
+            {
+                int len = charbuf.limit();
+                for (int i = 0; i < len; i++) {
+                    char c = charbuf.charAt(i);
+                    writer.write(c);
+                }
+            }
+            charbuf.clear();
         }
         bytebuf.compact();
-        charbuf.flip();
-        int len = charbuf.limit();
-        for (int i = 0; i < len; i++) {
-            char c = charbuf.charAt(i);
-            writer.write(c);
-        }
-        charbuf.clear();
     }
 
     protected void handleMalformed(ByteBuffer buffer) throws IOException {

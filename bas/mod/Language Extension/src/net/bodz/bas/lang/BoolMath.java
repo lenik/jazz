@@ -69,4 +69,16 @@ public class BoolMath {
         }
     }
 
+    public static boolean and(int bits, int mask) {
+        return (bits & mask) != 0;
+    }
+
+    public static boolean or(int bits, int mask) {
+        return (bits | mask) != 0;
+    }
+
+    public static boolean implies(int bits, int mask) {
+        return (~bits | mask) != 0;
+    }
+
 }

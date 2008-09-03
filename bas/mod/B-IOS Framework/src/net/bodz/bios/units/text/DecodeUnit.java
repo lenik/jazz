@@ -7,12 +7,13 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CoderResult;
 
+import net.bodz.bas.lang.err.IllegalUsageError;
+
 public class DecodeUnit extends BinaryProcessUnit {
 
     private CharsetDecoder decoder;
     private ByteBuffer     unconv;
     private CharBuffer     convBuf;
-    private boolean        flush;
 
     public DecodeUnit(String charsetName) {
         this(Charset.forName(charsetName));
@@ -35,21 +36,49 @@ public class DecodeUnit extends BinaryProcessUnit {
 
     @Override
     public void reset() throws IOException {
+        unconv.reset();
+        convBuf.reset();
     }
 
     @Override
     public void flush() throws IOException {
+        assert convBuf.position() == 0;
+        if (unconv.position() != 0)
+            conv(true);
     }
 
     @Override
     public void recv(byte[] bytes, int start, int end) throws IOException {
-        unconv.put(bytes, start, end - start);
-        boolean endOfInput = flush;
-        CoderResult result = decoder.decode(unconv, convBuf, endOfInput);
-        // result.isMalformed()
-        String conv = convBuf.toString();
-        convBuf.clear();
-        send(conv);
+        int length = end - start;
+        while (length > 0) {
+            int block = Math.min(length, unconv.remaining());
+            unconv.put(bytes, start, block);
+            start += block;
+            length -= block;
+            conv(false);
+        }
+    }
+
+    void conv(boolean endOfInput) throws IOException {
+        unconv.flip();
+        CoderResult result;
+        do {
+            result = decoder.decode(unconv, convBuf, endOfInput);
+            if (convBuf.position() != 0) {
+                convBuf.flip();
+                send(convBuf);
+                convBuf.clear();
+            }
+            // avoid empty-loop.
+            else if (result.isOverflow())
+                throw new IllegalUsageError("capacity too small");
+            if (result.isError()) {
+                // remove the error byte
+                byte errByte = unconv.get();
+                send(errByte);
+            }
+        } while (result.isOverflow());
+        unconv.compact();
     }
 
 }

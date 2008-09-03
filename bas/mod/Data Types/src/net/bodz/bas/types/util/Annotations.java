@@ -40,7 +40,7 @@ public class Annotations {
     /**
      * @return Object returned by value() of annotation instance
      */
-    public static <T, A extends Annotation> T getAnnotation(Class<?> clazz,
+    public static <T, A extends Annotation> T getValue(Class<?> clazz,
             Class<A> annotationClass) {
         return getAnnotation(clazz, annotationClass, false);
     }

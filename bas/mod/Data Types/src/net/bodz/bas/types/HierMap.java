@@ -47,15 +47,26 @@ public class HierMap<K, V> extends TreeMap<K, V> {
         this.relpred = relations;
     }
 
+    /**
+     * @throws NoSuchElementException
+     *             by default
+     */
     protected K nonexistKey() {
         // return null;
         throw new NoSuchElementException();
     }
 
+    /**
+     * @return <code>null</code> by default
+     */
     protected V nonexistValue() {
         return null;
     }
 
+    /**
+     * @throws NoSuchElementException
+     *             by default
+     */
     protected Entry<K, V> nonexistEntry() {
         // return null;
         throw new NoSuchElementException();
@@ -69,6 +80,21 @@ public class HierMap<K, V> extends TreeMap<K, V> {
         return relpred.eval(floorKey, childInclKey);
     }
 
+    /**
+     * @return parent key, or {@link #nonexistKey()}
+     */
+    public K getParentKey(K childInclKey) {
+        K floorKey = floorKey(childInclKey);
+        if (floorKey == null)
+            return nonexistKey();
+        if (relpred.eval(floorKey, childInclKey))
+            return floorKey;
+        return nonexistKey();
+    }
+
+    /**
+     * @return parent value, or {@link #nonexistValue()}
+     */
     public V getParent(K childInclKey) {
         Entry<K, V> entry = floorEntry(childInclKey);
         if (entry == null)

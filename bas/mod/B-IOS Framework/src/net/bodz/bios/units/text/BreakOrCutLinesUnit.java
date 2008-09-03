@@ -40,15 +40,16 @@ public class BreakOrCutLinesUnit extends TextProcessUnit {
 
     @Override
     public void reset() {
-        lineBuf.reset();
+        lineBuf.clear();
     }
 
     @Override
     public void flush() throws IOException {
-        String s = lineBuf.toString();
-        if (!s.isEmpty())
-            send(s);
-        reset();
+        if (lineBuf.position() != 0) {
+            String line = lineBuf.flip().toString();
+            lineBuf.clear();
+            send(line);
+        }
     }
 
     @Override
@@ -67,31 +68,27 @@ public class BreakOrCutLinesUnit extends TextProcessUnit {
                 eol = next;
             recvl(chars, start, eol - start);
             // if buf is N*maxLen, then it may be empty now.
-            if (lineBuf.length() != 0) {
-                String line = lineBuf.toString();
-                lineBuf.clear();
-                send(line);
-            }
+            flush();
             start = next;
         } while (true);
     }
 
     void recvl(char[] chars, int offset, int length) throws IOException {
         int capacity = lineBuf.capacity();
-        int rest = capacity - lineBuf.limit();
-        while (rest < length) {
+        assert capacity == lineBuf.limit();
+        int free = lineBuf.remaining(); // capacity - lineBuf.limit();
+        while (length >= free) {
             String cut;
-            if (rest == capacity)
-                cut = new String(chars, offset, capacity);
+            if (free == capacity) // buffer empty
+                cut = new String(chars, offset, free);
             else {
-                lineBuf.put(chars, offset, rest);
-                cut = lineBuf.toString();
-                lineBuf.clear();
+                cut = lineBuf.put(chars, offset, free).flip().toString();
+                // lineBuf.clear();
             }
             send(cut);
-            offset += rest;
-            length -= rest;
-            rest = capacity;
+            offset += free;
+            length -= free;
+            free = capacity;
         }
         lineBuf.put(chars, offset, length);
     }

@@ -3,10 +3,14 @@ package net.bodz.bas.lang.script;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Iterator;
 
-import net.bodz.bas.lang.Predicate;
+import net.bodz.bas.lang.util.Members.AllConstructors;
+import net.bodz.bas.lang.util.Members.AllMethods;
+import net.bodz.bas.lang.util.Members.PublicConstructors;
+import net.bodz.bas.lang.util.Members.PublicMethods;
 import net.bodz.bas.types.util.CompatMethods;
-import net.bodz.bas.types.util.Types;
+import net.bodz.bas.types.util.Objects;
 
 public class MethodSignature {
 
@@ -59,19 +63,14 @@ public class MethodSignature {
     public boolean equals(MethodSignature msig) {
         if (msig == this)
             return true;
-        boolean eqnam = false;
-        if (name == msig.name)
-            eqnam = true;
-        else if (name == null || msig.name == null)
-            eqnam = false;
-        else
-            eqnam = name.equals(msig.name);
-        if (!eqnam)
+        if (!Objects.equals(name, msig.name))
             return false;
         return Arrays.equals(types, msig.types);
     }
 
     public boolean matches(Method method) {
+        if (!Objects.equals(name, method.getName()))
+            return false;
         MethodSignature msig = new MethodSignature(method);
         return equals(msig);
     }
@@ -97,34 +96,60 @@ public class MethodSignature {
         }
     }
 
-    private class methodp implements Predicate<Method> {
-        @Override
-        public boolean eval(Method method) {
-            return matches(method);
-        }
+    public Iterable<Method> getMethods(final Class<?> clazz) {
+        return new Iterable<Method>() {
+            @Override
+            public Iterator<Method> iterator() {
+                return new PublicMethods(clazz) {
+                    @Override
+                    protected boolean accept(Method m) {
+                        return matches(m);
+                    }
+                };
+            }
+        };
     }
 
-    private class ctorp implements Predicate<Constructor<?>> {
-        @Override
-        public boolean eval(Constructor<?> ctor) {
-            return matches(ctor);
-        }
+    public Iterable<Method> getAllMethods(final Class<?> clazz) {
+        return new Iterable<Method>() {
+            @Override
+            public Iterator<Method> iterator() {
+                return new AllMethods(clazz) {
+                    @Override
+                    protected boolean accept(Method m) {
+                        return matches(m);
+                    }
+                };
+            }
+        };
     }
 
-    public Iterable<Method> getMethods(Class<?> clazz) {
-        return Types.findMethods(clazz, name, new methodp());
+    public Iterable<Constructor<?>> getConstructors(final Class<?> clazz) {
+        return new Iterable<Constructor<?>>() {
+            @Override
+            public Iterator<Constructor<?>> iterator() {
+                return new PublicConstructors(clazz) {
+                    @Override
+                    protected boolean accept(Constructor<?> ctor) {
+                        return matches(ctor);
+                    }
+                };
+            }
+        };
     }
 
-    public Iterable<Method> getAllMethods(Class<?> clazz) {
-        return Types.findMethodsAllTree(clazz, name, new methodp());
-    }
-
-    public Iterable<Constructor<?>> getConstructors(Class<?> clazz) {
-        return Types.findConstructors(clazz, new ctorp());
-    }
-
-    public Iterable<Constructor<?>> getAllConstructors(Class<?> clazz) {
-        return Types.findDeclaredConstructors(clazz, new ctorp());
+    public Iterable<Constructor<?>> getAllConstructors(final Class<?> clazz) {
+        return new Iterable<Constructor<?>>() {
+            @Override
+            public Iterator<Constructor<?>> iterator() {
+                return new AllConstructors(clazz) {
+                    @Override
+                    protected boolean accept(Constructor<?> ctor) {
+                        return matches(ctor);
+                    }
+                };
+            }
+        };
     }
 
     public Method getCompatMethod(Class<?> clazz, boolean all) {

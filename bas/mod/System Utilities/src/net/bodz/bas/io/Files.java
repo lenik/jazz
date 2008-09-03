@@ -607,6 +607,116 @@ public class Files {
         return readByBlock(blockSize, files);
     }
 
+    protected static Iterator<Integer> _readByLen(final Object[] files,
+            final char[] buffer) {
+        assert files != null : "null files[]";
+        assert buffer != null : "null buffer";
+
+        return new PrefetchedIterator<Integer>() {
+
+            private int     index = -1;
+            private Reader  input = null;
+            private boolean close;
+
+            @Override
+            public Object fetch() {
+                if (index >= files.length)
+                    return END;
+                if (input == null)
+                    nextFile();
+                int len;
+                try {
+                    len = input.read(buffer);
+                } catch (IOException e) {
+                    throw new RuntimeException(e.getMessage(), e);
+                }
+                if (len == -1) {
+                    nextFile();
+                    return fetch();
+                }
+                return len;
+            }
+
+            protected boolean nextFile() {
+                if (input != null && close)
+                    try {
+                        input.close();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e.getMessage(), e);
+                    }
+                if (++index >= files.length)
+                    return false;
+                try {
+                    input = getReader(files[index]);
+                    close = shouldClose(files[index]);
+                } catch (IOException e) {
+                    throw new RuntimeException(e.getMessage(), e);
+                }
+                return true;
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+
+        };
+    }
+
+    public static Iterable<Integer> readByLen(final char[] buffer,
+            final Object... files) {
+        return new Iterable<Integer>() {
+
+            @Override
+            public Iterator<Integer> iterator() {
+                return _readByLen(files, buffer);
+            }
+
+        };
+    }
+
+    public static Iterable<char[]> readByLen(final int blockSize,
+            final Object... files) {
+        final char[] buffer = new char[blockSize];
+        final Iterator<Integer> it = _readByLen(files, buffer);
+        return new Iterable<char[]>() {
+
+            @Override
+            public Iterator<char[]> iterator() {
+                return new Iterator<char[]>() {
+
+                    @Override
+                    public boolean hasNext() {
+                        return it.hasNext();
+                    }
+
+                    @Override
+                    public char[] next() {
+                        int len = it.next();
+                        if (len == blockSize)
+                            return buffer;
+                        if (len == -1)
+                            return null;
+                        char[] spec = new char[len];
+                        System.arraycopy(buffer, 0, spec, 0, len);
+                        return spec;
+                    }
+
+                    @Override
+                    public void remove() {
+                        it.remove();
+                    }
+
+                };
+            }
+
+        };
+    }
+
+    public static Iterable<char[]> readByLen(final Object... files) {
+        return readByLen(blockSize, files);
+    }
+
     protected static Iterator<String> _readByLine(final Object[] files,
             final Charset charset) {
         return new PrefetchedIterator<String>() {
