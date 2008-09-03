@@ -9,8 +9,8 @@ import net.bodz.bios.units.SOSource;
 
 public class ReaderSource extends SOSource {
 
-    Iterable<char[]> blocks;
-    Iterator<char[]> blockIter;
+    private Iterable<char[]> blocks;
+    private Iterator<char[]> blockIter;
 
     public ReaderSource(Reader in, int blockSize) throws IOException {
         blocks = Files.readByLen(blockSize, in);

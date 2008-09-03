@@ -39,11 +39,11 @@ public class ClassInfo {
         if (loaded)
             return;
         name = clazz.getSimpleName();
-        String[] doc = Annotations.getAnnotation(clazz, Doc.class);
+        String[] doc = Annotations.getValue(clazz, Doc.class);
         if (doc != null)
             this.doc = join(doc);
 
-        String[] icon = Annotations.getAnnotation(clazz, Icon.class);
+        String[] icon = Annotations.getValue(clazz, Icon.class);
         if (icon != null)
             for (String iconDef : icon) {
                 int sep = iconDef.indexOf('|');
@@ -62,11 +62,11 @@ public class ClassInfo {
                 }
             }
 
-        String[] author = Annotations.getAnnotation(clazz, Author.class);
+        String[] author = Annotations.getValue(clazz, Author.class);
         if (author != null)
             this.author = join(author);
 
-        int[] version = Annotations.getAnnotation(clazz, Version.class);
+        int[] version = Annotations.getValue(clazz, Version.class);
         if (version != null)
             this.version = version;
     }

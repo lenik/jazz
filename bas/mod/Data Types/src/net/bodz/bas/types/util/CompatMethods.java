@@ -1,5 +1,8 @@
 package net.bodz.bas.types.util;
 
+import static net.bodz.bas.lang.util.Members.constructors;
+import static net.bodz.bas.lang.util.Members.methods;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -35,11 +38,9 @@ public class CompatMethods {
 
     public static Method getMethod(Class<?> clazz, String name,
             Class<?>[] argtypes, boolean all) {
-        Iterable<Method> methods = all ? Types.getMethodsAllTree(clazz, name)
-                : Types.getMethods(clazz, name);
         int mindist = -1;
         Method min = null;
-        for (Method method : methods) {
+        for (Method method : methods(clazz, name, all)) {
             Class<?>[] decltypes = method.getParameterTypes();
             int dist = dist(decltypes, argtypes);
             if (dist == -1)
@@ -58,12 +59,10 @@ public class CompatMethods {
     }
 
     public static Constructor<?> getConstructor(Class<?> clazz,
-            Class<?>[] argtypes, boolean allDeclared) {
-        Iterable<Constructor<?>> ctors = allDeclared ? Types
-                .getDeclaredConstructors(clazz) : Types.getConstructors(clazz);
+            Class<?>[] argtypes, boolean all) {
         int mindist = -1;
         Constructor<?> min = null;
-        for (Constructor<?> ctor : ctors) {
+        for (Constructor<?> ctor : constructors(clazz, all)) {
             Class<?>[] decltypes = ctor.getParameterTypes();
             int dist = dist(decltypes, argtypes);
             if (dist == -1)

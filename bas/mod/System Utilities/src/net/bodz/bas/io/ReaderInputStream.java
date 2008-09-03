@@ -37,13 +37,17 @@ public class ReaderInputStream extends InputStream {
 
     protected void encode(boolean end) {
         charbuf.flip();
-        bytebuf.clear();
-        CoderResult result = encoder.encode(charbuf, bytebuf, end);
-        if (result.isOverflow())
-            throw new UnexpectedException("bytebuf overflow");
-        assert !result.isError() : "encode error";
+        {
+            bytebuf.clear();
+            {
+                CoderResult result = encoder.encode(charbuf, bytebuf, end);
+                if (result.isOverflow())
+                    throw new UnexpectedException("bytebuf overflow");
+                assert !result.isError() : "encode error";
+            }
+            bytebuf.flip();
+        }
         charbuf.compact();
-        bytebuf.flip();
     }
 
     @Override
