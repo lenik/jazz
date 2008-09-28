@@ -89,6 +89,8 @@ public abstract class _Encoding implements Encoding {
 
     @Override
     public String encode(byte[] bytes) {
+        if (bytes == null)
+            return null;
         try {
             return encode(bytes, bytes.length);
         } catch (IOException e) {
@@ -144,6 +146,8 @@ public abstract class _Encoding implements Encoding {
 
     @Override
     public byte[] decode(String s) {
+        if (s == null)
+            return null;
         try {
             return decode(new StringReader(s), s.length());
         } catch (IOException e) {

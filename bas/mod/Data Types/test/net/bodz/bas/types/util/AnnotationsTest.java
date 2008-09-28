@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 
 import java.lang.annotation.Annotation;
 
-import net.bodz.bas.annotations.Author;
+import net.bodz.bas.a.Author;
 import net.bodz.bas.io.CharOuts.Buffer;
 
 import org.junit.Test;

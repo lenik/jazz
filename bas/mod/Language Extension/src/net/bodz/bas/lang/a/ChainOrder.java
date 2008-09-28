@@ -1,4 +1,4 @@
-package net.bodz.bas.lang.annotations;
+package net.bodz.bas.lang.a;
 
 public enum ChainOrder {
 

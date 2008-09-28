@@ -1,9 +1,10 @@
-package net.bodz.bas.annotations;
+package net.bodz.bas.a;
 
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.bodz.bas.gui.a.Icon;
 import net.bodz.bas.lang.ClassLocal;
 import net.bodz.bas.types.util.Annotations;
 import net.bodz.bas.types.util.Strings;

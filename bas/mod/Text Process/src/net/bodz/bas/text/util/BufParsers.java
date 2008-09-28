@@ -2,7 +2,7 @@ package net.bodz.bas.text.util;
 
 import java.nio.CharBuffer;
 
-import net.bodz.bas.lang.annotations.Derived;
+import net.bodz.bas.lang.a.Derived;
 
 public class BufParsers {
 

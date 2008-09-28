@@ -11,10 +11,12 @@ import net.bodz.bas.types.util.Annotations;
 public class Scripts {
 
     private static Map<Class<?>, ScriptClass<?>>          explicitScriptClasses;
-    private static Map<Class<?>, ReflectedScriptClass<?>> convertedScriptClasses;
+    private static Map<Class<?>, ReflectedScriptClass<?>> forceConverted;
+    private static Map<Class<?>, ReflectedScriptClass<?>> noforceConverted;
     static {
         explicitScriptClasses = new HashMap<Class<?>, ScriptClass<?>>();
-        convertedScriptClasses = new HashMap<Class<?>, ReflectedScriptClass<?>>();
+        forceConverted = new HashMap<Class<?>, ReflectedScriptClass<?>>();
+        noforceConverted = new HashMap<Class<?>, ReflectedScriptClass<?>>();
     }
 
     /**
@@ -78,6 +80,12 @@ public class Scripts {
     }
 
     /**
+     * (Singleton) Convert specified java class to script class,
+     * 
+     * @param clazz
+     *            java class to be converted
+     * @param forceAccess
+     *            whether all members are converted.
      * @throws NullPointerException
      *             if <code>clazz</code> is null
      */
@@ -85,15 +93,27 @@ public class Scripts {
     public static <T> ScriptClass<T> convertClass(Class<?> clazz,
             boolean forceAccess) throws ScriptException {
         assert clazz != null;
-        ReflectedScriptClass<?> sclass = convertedScriptClasses.get(clazz);
-        if (sclass == null) {
-            sclass = new ReflectedScriptClass<T>((Class<T>) clazz, forceAccess);
-            convertedScriptClasses.put(clazz, sclass);
+        ReflectedScriptClass<?> sclass;
+        if (forceAccess) {
+            sclass = forceConverted.get(clazz);
+            if (sclass == null) {
+                sclass = new ReflectedScriptClass<T>((Class<T>) clazz, true);
+                forceConverted.put(clazz, sclass);
+            }
+        } else {
+            sclass = noforceConverted.get(clazz);
+            if (sclass == null) {
+                sclass = new ReflectedScriptClass<T>((Class<T>) clazz, false);
+                noforceConverted.put(clazz, sclass);
+            }
         }
         return (ScriptClass<T>) sclass;
     }
 
     /**
+     * (Singleton) Convert specified java class to script class, only public
+     * members are converted.
+     * 
      * @throws NullPointerException
      *             if <code>clazz</code> is null
      */

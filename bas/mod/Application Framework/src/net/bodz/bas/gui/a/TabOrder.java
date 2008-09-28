@@ -1,12 +1,11 @@
-package net.bodz.bas.annotations;
+package net.bodz.bas.gui.a;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Author {
+public @interface TabOrder {
 
-    /** text or resource path */
-    String[] value() default {};
+    int value();
 
 }

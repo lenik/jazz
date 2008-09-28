@@ -1,4 +1,4 @@
-package net.bodz.bas.lang.annotations;
+package net.bodz.bas.lang.a;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,11 +7,13 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target( { ElementType.FIELD })
-public @interface ReflectProperty {
+public @interface ReflectMethod {
 
     Class<?> _class() default void.class;
 
     String value() default "";
+
+    Class<?>[] parameters() default {};
 
     boolean secure() default false;
 

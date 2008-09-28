@@ -1,7 +1,7 @@
 package net.bodz.bios;
 
 import net.bodz.bas.lang.ClassLocal;
-import net.bodz.bas.lang.annotations.MetaClass;
+import net.bodz.bas.mda.a.MetaClass;
 import net.bodz.bas.types.util.Annotations;
 import net.bodz.bas.types.util.Types;
 
