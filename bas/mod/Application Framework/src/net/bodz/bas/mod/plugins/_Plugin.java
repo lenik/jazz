@@ -1,6 +1,6 @@
 package net.bodz.bas.mod.plugins;
 
-import net.bodz.bas.annotations.ClassInfo;
+import net.bodz.bas.a.ClassInfo;
 
 public class _Plugin implements Plugin {
 

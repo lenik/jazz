@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
-import net.bodz.bas.annotations.ClassInfo;
+import net.bodz.bas.a.ClassInfo;
 import net.bodz.bas.cli.ext.CLIPlugin;
 import net.bodz.bas.cli.ext.CLIPlugins;
 import net.bodz.bas.cli.util.Rcs;
@@ -22,7 +22,7 @@ import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.ControlBreak;
-import net.bodz.bas.lang.annotations.OverrideOption;
+import net.bodz.bas.lang.a.OverrideOption;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.lang.err.ParseException;
@@ -171,17 +171,17 @@ public class BasicCLI {
             Class<?> clazz = typeEx.getType();
             Constructor<?>[] ctors = clazz.getConstructors(); // only get public
             Constructor<?> ctor = null;
-            Class<?>[] sig = null;
+            Class<?>[] sigMaxLen = null;
             for (Constructor<?> _ctor : ctors) {
                 Class<?>[] _sig = _ctor.getParameterTypes();
-                if (ctor == null || _sig.length > sig.length) {
+                if (ctor == null || _sig.length > sigMaxLen.length) {
                     ctor = _ctor;
-                    sig = _sig;
+                    sigMaxLen = _sig;
                 }
             }
             if (ctor == null)
                 throw new PluginException("no constructor in " + clazz);
-            int len = sig.length;
+            int len = sigMaxLen.length;
             int off = 0;
             if (clazz.isMemberClass()) {
                 len--;
@@ -195,7 +195,7 @@ public class BasicCLI {
                 throw new PluginException("no suitable constructor to use: "
                         + typeEx);
 
-            Class<?> sig0 = sig[off];
+            Class<?> sig0 = sigMaxLen[off];
             if (sig0 == String.class)
                 return (CLIPlugin) typeEx.newInstance(ctorArg);
             if (!sig0.isArray()) {
@@ -459,20 +459,36 @@ public class BasicCLI {
         }
     }
 
+    /** Do nothing, to be overrided. */
     void _postInit() throws Throwable {
     }
 
+    /** Do nothing, to be overrided. */
     protected void _boot() throws Throwable {
     }
 
+    /**
+     * @throws ControlBreak
+     */
     protected void _exit() throws Throwable {
         throw new ControlBreak("exit");
     }
 
+    /**
+     * return non-null value to enable the `<i>default file is read from
+     * stdin</i>' mode.
+     * 
+     * @return <code>null</code>
+     */
     protected InputStream _getDefaultIn() {
         return null;
     }
 
+    /**
+     * User main method.
+     * 
+     * The --options have been parsed.
+     */
     @OverrideOption(group = "basicMain")
     protected void _main(String[] args) throws Throwable {
         if (args.length == 0) {
@@ -489,6 +505,10 @@ public class BasicCLI {
     }
 
     /**
+     * User repeatable-main method.
+     * 
+     * stdin is never used.
+     * 
      * @return true if do again
      */
     @OverrideOption(group = "basicMain")
@@ -506,9 +526,11 @@ public class BasicCLI {
     protected void doFileArgument(File file) throws Throwable {
         assert file != null;
         FileInputStream in = new FileInputStream(file);
-        doFileArgument(file, in);
-        if (file != null)
+        try {
+            doFileArgument(file, in);
+        } finally {
             in.close();
+        }
     }
 
     /**

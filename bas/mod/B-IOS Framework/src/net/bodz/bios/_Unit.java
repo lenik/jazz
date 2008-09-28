@@ -7,7 +7,7 @@ import java.util.Set;
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.CharOuts.Buffer;
 import net.bodz.bas.lang.ClassLocal;
-import net.bodz.bas.lang.annotations.MetaClass;
+import net.bodz.bas.mda.a.MetaClass;
 import net.bodz.bas.types.util.Annotations;
 import net.bodz.bas.types.util.Strings;
 import net.bodz.bas.types.util.Types;

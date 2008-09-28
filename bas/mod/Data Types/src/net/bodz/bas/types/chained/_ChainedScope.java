@@ -1,7 +1,7 @@
 package net.bodz.bas.types.chained;
 
-import net.bodz.bas.lang.annotations.ChainUsage;
-import net.bodz.bas.lang.annotations.OverrideOption;
+import net.bodz.bas.lang.a.ChainUsage;
+import net.bodz.bas.lang.a.OverrideOption;
 
 public abstract class _ChainedScope<T> implements ChainedScope<T> {
 

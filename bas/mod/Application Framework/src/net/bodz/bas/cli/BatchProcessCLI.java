@@ -19,7 +19,7 @@ import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.io.FileMask;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.io.FsWalk;
-import net.bodz.bas.lang.annotations.OverrideOption;
+import net.bodz.bas.lang.a.OverrideOption;
 import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.lang.err.UnexpectedException;
 import net.bodz.bas.text.diff.DiffComparator;
@@ -103,8 +103,14 @@ public class BatchProcessCLI extends BasicCLI {
     protected BatchProcessCLI() {
     }
 
-    protected ProtectedShell psh;
+    /**
+     * psh is invalid until {@link #_postInit()} (before {@link #_boot()}).
+     */
+    protected ProtectedShell psh = null;
 
+    /**
+     * Set up {@link #fileFilter} and {@link #psh}.
+     */
     @Override
     void _postInit() {
         fileFilter = new FileFilter() {
@@ -349,7 +355,12 @@ public class BatchProcessCLI extends BasicCLI {
     }
 
     protected ProtectedShell _getShell() {
-        return new ProtectedShell(!dryRun, L);
+        if (dryRun)
+            // in common case, dry mode is provided for verbose purpose
+            return new ProtectedShell(false, L.m);
+        else
+            // when in real mode, the verbose info goes into debug out
+            return new ProtectedShell(true, L.x);
     }
 
     protected final ProcessResultStat stat = new ProcessResultStat();

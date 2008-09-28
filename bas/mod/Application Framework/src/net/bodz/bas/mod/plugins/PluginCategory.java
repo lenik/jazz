@@ -3,7 +3,7 @@ package net.bodz.bas.mod.plugins;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.annotations.ClassInfo;
+import net.bodz.bas.a.ClassInfo;
 import net.bodz.bas.lang.err.OutOfDomainException;
 
 /**

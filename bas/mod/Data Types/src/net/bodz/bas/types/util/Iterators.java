@@ -1,5 +1,6 @@
 package net.bodz.bas.types.util;
 
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -78,6 +79,55 @@ public class Iterators {
             current.remove();
         }
 
+    }
+
+    public static <E> Iterator<E> iterator(final Enumeration<E> enumr) {
+        return new Iterator<E>() {
+
+            @Override
+            public boolean hasNext() {
+                return enumr.hasMoreElements();
+            }
+
+            @Override
+            public E next() {
+                return enumr.nextElement();
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+
+        };
+    }
+
+    static class OneTimeIterable<E> implements Iterable<E> {
+
+        private Iterator<E> iter;
+
+        public OneTimeIterable(Iterator<E> iter) {
+            assert iter != null;
+            this.iter = iter;
+        }
+
+        @Override
+        public Iterator<E> iterator() {
+            if (this.iter == null)
+                throw new IllegalStateException("already been iterated");
+            Iterator<E> iter = this.iter;
+            this.iter = null;
+            return iter;
+        }
+
+    }
+
+    public static <E> Iterable<E> iterate(Iterator<E> iter) {
+        return new OneTimeIterable<E>(iter);
+    }
+
+    public static <E> Iterable<E> iterate(Enumeration<E> enumr) {
+        return new OneTimeIterable<E>(iterator(enumr));
     }
 
 }

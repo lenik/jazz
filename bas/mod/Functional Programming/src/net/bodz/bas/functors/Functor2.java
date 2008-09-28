@@ -3,9 +3,9 @@ package net.bodz.bas.functors;
 import net.bodz.bas.lang.Control;
 import net.bodz.bas.lang.EvalException;
 import net.bodz.bas.lang.FunctorException;
-import net.bodz.bas.lang.annotations.ChainOrder;
-import net.bodz.bas.lang.annotations.ChainUsage;
-import net.bodz.bas.lang.annotations.OverrideOption;
+import net.bodz.bas.lang.a.ChainOrder;
+import net.bodz.bas.lang.a.ChainUsage;
+import net.bodz.bas.lang.a.OverrideOption;
 
 public abstract class Functor2<T> implements IFunctor<T>, Groupable<T> {
 

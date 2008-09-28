@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.bodz.bas.io.CharOuts.Buffer;
-import net.bodz.bas.lang.annotations.OverrideOption;
+import net.bodz.bas.lang.a.OverrideOption;
 
 public class PatternProcessor extends Buffer {
 

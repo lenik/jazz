@@ -1,7 +1,7 @@
 package net.bodz.bas.mem.types;
 
 import net.bodz.bas.lang.IntMath;
-import net.bodz.bas.lang.annotations.ThreadUnsafe;
+import net.bodz.bas.lang.a.ThreadUnsafe;
 import net.bodz.bas.mem.AccessException;
 import net.bodz.bas.mem.Memory;
 import net.bodz.bas.mem._Type;

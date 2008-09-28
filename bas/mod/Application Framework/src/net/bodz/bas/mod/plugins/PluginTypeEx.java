@@ -1,6 +1,6 @@
 package net.bodz.bas.mod.plugins;
 
-import net.bodz.bas.annotations.ClassInfo;
+import net.bodz.bas.a.ClassInfo;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.mod.Factory;
 
@@ -10,26 +10,31 @@ import net.bodz.bas.mod.Factory;
 public class PluginTypeEx {
 
     private final Class<? extends Plugin> clazz;
-    private final Factory<Plugin>         factory;
+    private final Factory                 factory;
     private final ClassInfo               info;
 
-    public PluginTypeEx(Factory<Plugin> factory) {
+    @SuppressWarnings("unchecked")
+    public PluginTypeEx(Factory factory) {
         assert factory != null;
         this.factory = factory;
-        this.clazz = factory.getType();
+        Class<?> type = factory.getType();
+        if (!Plugin.class.isAssignableFrom(type))
+            throw new IllegalArgumentException("wrong factory which create "
+                    + type);
+        this.clazz = (Class<? extends Plugin>) type;
         this.info = ClassInfo.get(clazz);
     }
 
     public PluginTypeEx(Class<? extends Plugin> clazz) {
-        this(new Factory.Ctor<Plugin>(clazz));
+        this(new Factory.Ctor(clazz));
     }
 
     public PluginTypeEx(Class<? extends Plugin> clazz, Object outer) {
-        this(new Factory.Ctor<Plugin>(clazz, outer));
+        this(new Factory.Ctor(clazz, outer));
     }
 
     public PluginTypeEx(Plugin staticInstance) {
-        this(new Factory.Static<Plugin>(staticInstance));
+        this(new Factory.Static(staticInstance));
     }
 
     public Class<? extends Plugin> getType() {
@@ -45,7 +50,7 @@ public class PluginTypeEx {
     }
 
     public Plugin newInstance(Object... args) throws CreateException {
-        return factory.create(args);
+        return (Plugin) factory.create(args);
     }
 
     @Override

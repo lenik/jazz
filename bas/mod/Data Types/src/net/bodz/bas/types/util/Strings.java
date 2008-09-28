@@ -10,6 +10,7 @@ import java.io.StringReader;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -221,6 +222,10 @@ public class Strings {
             buffer.append(String.valueOf(o));
         }
         return buffer == null ? "" : buffer.toString();
+    }
+
+    public static String join(String separator, Enumeration<?> enumr) {
+        return join(separator, Iterators.iterate(enumr));
     }
 
     public static Pair<String, String> join(String separatorKey,

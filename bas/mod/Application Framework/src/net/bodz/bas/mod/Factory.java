@@ -3,40 +3,39 @@ package net.bodz.bas.mod;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.types.util.CompatMethods;
 
-public interface Factory<T> {
+public interface Factory {
 
-    Class<T> getType();
+    Class<?> getType();
 
-    T create(Object... args) throws CreateException;
+    Object create(Object... args) throws CreateException;
 
-    class Ctor<ET> implements Factory<ET> {
+    class Ctor implements Factory {
 
-        private Class<ET> clazz;
-        private Object    outer;
+        private Class<?> clazz;
+        private Object   outer;
 
-        @SuppressWarnings("unchecked")
-        public Ctor(Class<? extends ET> clazz, Object outer) {
+        public Ctor(Class<?> clazz, Object outer) {
             assert clazz != null;
             if (clazz.isMemberClass()) {
                 if (outer == null)
                     throw new NullPointerException(
                             "no outer specified for member " + clazz);
             }
-            this.clazz = (Class<ET>) clazz;
+            this.clazz = clazz;
             this.outer = outer;
         }
 
-        public Ctor(Class<? extends ET> clazz) {
+        public Ctor(Class<?> clazz) {
             this(clazz, null);
         }
 
         @Override
-        public Class<ET> getType() {
+        public Class<?> getType() {
             return clazz;
         }
 
         @Override
-        public ET create(Object... args) throws CreateException {
+        public Object create(Object... args) throws CreateException {
             try {
                 if (clazz.isMemberClass())
                     return CompatMethods.newMemberInstance(clazz, outer, args);
@@ -48,23 +47,22 @@ public interface Factory<T> {
         }
     }
 
-    class Static<ET> implements Factory<ET> {
+    class Static implements Factory {
 
-        private final ET instance;
+        private final Object instance;
 
-        public Static(ET instance) {
+        public Static(Object instance) {
             assert instance != null;
             this.instance = instance;
         }
 
-        @SuppressWarnings("unchecked")
         @Override
-        public Class<ET> getType() {
-            return (Class<ET>) instance.getClass();
+        public Class<?> getType() {
+            return (Class<?>) instance.getClass();
         }
 
         @Override
-        public ET create(Object... args) {
+        public Object create(Object... args) {
             return instance;
         }
 

@@ -1,6 +1,6 @@
 package net.bodz.bas.lang;
 
-import net.bodz.bas.lang.annotations.Derived;
+import net.bodz.bas.lang.a.Derived;
 
 public class RReal extends Number {
 
