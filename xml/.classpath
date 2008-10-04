@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/net.bodz.bas"/>
+	<classpathentry kind="src" output="mod/Commons/bin" path="mod/Commons/src"/>
+	<classpathentry kind="src" output="mod/Commons/test.bin" path="mod/Commons/test"/>
+	<classpathentry kind="src" output="mod/XML Modules/bin" path="mod/XML Modules/src"/>
+	<classpathentry kind="src" output="mod/XML Modules/test.bin" path="mod/XML Modules/test"/>
+	<classpathentry kind="var" path="JAVA_LIB/dom4j-1.6.1.jar" sourcepath="/JAVA_VAROJ/XML/dom4j-1.6.1.zip"/>
+	<classpathentry kind="var" path="JAVA_LIB/jibx-run.jar" sourcepath="/JAVA_LIB/src/src-jibx.zip"/>
+	<classpathentry kind="var" path="JAVA_LIB/net.sf.freejava.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
