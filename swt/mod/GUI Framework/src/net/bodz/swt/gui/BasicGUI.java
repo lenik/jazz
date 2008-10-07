@@ -4,9 +4,10 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.annotations.ClassInfo;
+import net.bodz.bas.a.ClassInfo;
 import net.bodz.bas.cli.BasicCLI;
-import net.bodz.bas.cli.Option;
+import net.bodz.bas.cli.a.Option;
+import net.bodz.bas.cli.a.RunInfo;
 import net.bodz.swt.controls.helper.DynamicControl;
 import net.bodz.swt.gui.util.Controls;
 
@@ -22,6 +23,9 @@ import org.eclipse.swt.widgets.ToolBar;
 
 import swing2swt.layout.BorderLayout;
 
+@RunInfo(lib = { "bodz_swt", "bodz_icons" },
+
+load = { "findcp|eclipse*/plugins/org.eclipse.swt_*", })
 public class BasicGUI extends BasicCLI {
 
     @Option(alias = "Xw")
@@ -43,10 +47,17 @@ public class BasicGUI extends BasicCLI {
         shell = createShell();
         shell.open();
         shell.layout();
+        _start();
         while (!shell.isDisposed()) {
             if (!display.readAndDispatch())
                 display.sleep();
         }
+    }
+
+    /**
+     * shell created and just before message loop
+     */
+    protected void _start() {
     }
 
     private Image[] loadImages(URL[] urls) {

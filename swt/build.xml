@@ -22,7 +22,7 @@
 	</target>
 
 	<target name=":bin.jar">
-		<jar destfile="build/net.bodz.swt.jar">
+		<jar destfile="build/net.bodz.swt.jar" update="true">
 			<fileset dir="mod/Bundled Modules/bin" />
 			<fileset dir="mod/Common Controls/bin" />
 			<fileset dir="mod/GUI Framework/bin" />
@@ -30,11 +30,17 @@
 	</target>
 
 	<target name=":src.jar">
-		<jar destfile="build/net.bodz.swt-source.jar">
+		<jar destfile="build/net.bodz.swt-source.jar" update="true">
 			<fileset dir="mod/Bundled Modules/src" />
 			<fileset dir="mod/Common Controls/src" />
 			<fileset dir="mod/GUI Framework/src" />
 		</jar>
+	</target>
+
+	<target name="clean">
+		<delete verbose="true">
+			<fileset dir="${basedir}/build" includes="*.jar" />
+		</delete>
 	</target>
 
 </project>
