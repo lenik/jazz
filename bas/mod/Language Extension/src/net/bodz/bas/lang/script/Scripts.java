@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.types.util.Annotations;
+import net.bodz.bas.types.util.Ns;
 
 public class Scripts {
 
@@ -29,8 +29,7 @@ public class Scripts {
         ScriptClass<?> sclass = explicitScriptClasses.get(origClass);
         if (sclass == null) {
             Class<? extends ScriptClass<?>> scType;
-            scType = Annotations.getAnnotation(origClass, ScriptType.class,
-                    true);
+            scType = Ns._getValue(origClass, ScriptType.class);
             if (scType == null)
                 throw new ScriptException("no script class defined for "
                         + origClass);
