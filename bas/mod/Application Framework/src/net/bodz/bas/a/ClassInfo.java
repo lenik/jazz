@@ -7,6 +7,7 @@ import java.util.Map;
 import net.bodz.bas.gui.a.Icon;
 import net.bodz.bas.lang.ClassLocal;
 import net.bodz.bas.types.util.Annotations;
+import net.bodz.bas.types.util.Ns;
 import net.bodz.bas.types.util.Strings;
 
 public class ClassInfo {
@@ -40,11 +41,11 @@ public class ClassInfo {
         if (loaded)
             return;
         name = clazz.getSimpleName();
-        String[] doc = Annotations.getValue(clazz, Doc.class);
-        if (doc != null)
-            this.doc = join(doc);
 
-        String[] icon = Annotations.getValue(clazz, Icon.class);
+        Doc docN = Ns.getN(clazz, Doc.class);
+        this.doc = A_bas.parse(docN);
+
+        String[] icon = Annotations._getValue(clazz, Icon.class);
         if (icon != null)
             for (String iconDef : icon) {
                 int sep = iconDef.indexOf('|');
@@ -63,11 +64,11 @@ public class ClassInfo {
                 }
             }
 
-        String[] author = Annotations.getValue(clazz, Author.class);
+        String[] author = Ns._getValue(clazz, Author.class);
         if (author != null)
             this.author = join(author);
 
-        int[] version = Annotations.getValue(clazz, Version.class);
+        int[] version = Ns._getValue(clazz, Version.class);
         if (version != null)
             this.version = version;
     }

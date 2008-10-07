@@ -15,8 +15,7 @@ public class Annotations {
     /**
      * @return Object returned by value() of annotation instance
      */
-    @SuppressWarnings("unchecked")
-    public static <T, A extends Annotation> T getAnnotation(Class<?> clazz,
+    public static <A extends Annotation> Object getValue(Class<?> clazz,
             Class<A> annotationClass, boolean inherits) {
         A annotation = null;
         do {
@@ -29,7 +28,7 @@ public class Annotations {
             return null;
         try {
             Method valuef = annotationClass.getMethod("value");
-            return (T) valuef.invoke(annotation);
+            return valuef.invoke(annotation);
         } catch (NoSuchMethodException e) {
             return null;
         } catch (Exception e) {
@@ -40,9 +39,21 @@ public class Annotations {
     /**
      * @return Object returned by value() of annotation instance
      */
-    public static <T, A extends Annotation> T getValue(Class<?> clazz,
+    public static <A extends Annotation> Object getValue(Class<?> clazz,
             Class<A> annotationClass) {
-        return getAnnotation(clazz, annotationClass, false);
+        return getValue(clazz, annotationClass, false);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T, A extends Annotation> T _getValue(Class<?> clazz,
+            Class<A> annotationClass, boolean inherits) {
+        return (T) getValue(clazz, annotationClass, inherits);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T, A extends Annotation> T _getValue(Class<?> clazz,
+            Class<A> annotationClass) {
+        return (T) getValue(clazz, annotationClass, false);
     }
 
     public static <A extends Annotation> A getFieldAnnotation(Class<?> clazz,
