@@ -1,14 +1,12 @@
 package net.bodz.bas.cli.util;
 
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.cli.CLIException;
 import net.bodz.bas.lang.Control;
-import net.bodz.bas.lang.err.CreateException;
-import net.bodz.bas.types.TypeParser;
-import net.bodz.bas.types.TypeParsers;
+import net.bodz.bas.lang.util.Members;
+import net.bodz.bas.lang.util.VarArgcMethod;
 
 public class CLIFunctions {
 
@@ -55,42 +53,26 @@ public class CLIFunctions {
         return invoke(name, args);
     }
 
-    public CLIFunction wrap(Class<?> clazz, final Object obj,
-            String methodName, Class<?>... argTypes)
+    public CLIFunction wrap(Class<?> clazz, final Object obj, String methodName)
             throws NoSuchMethodException {
-        final Method method = clazz.getMethod(methodName, argTypes);
-        final int argc = argTypes.length;
-        final TypeParser[] parsers = new TypeParser[argc];
-        for (int i = 0; i < argc; i++)
-            try {
-                parsers[i] = TypeParsers.guess(argTypes[i]);
-            } catch (CreateException e) {
-                throw new IllegalArgumentException("unsupported cli type: "
-                        + argTypes[i], e);
-            }
+        final VarArgcMethod method = new VarArgcMethod(methodName,//
+                Members.publicMethods(clazz, methodName));
         return new CLIFunction() {
             @Override
             public Object eval(String... args) throws Throwable {
-                Object[] argv = new Object[argc];
-                for (int i = 0; i < argc; i++) {
-                    if (i >= args.length)
-                        argv[i] = null;
-                    else
-                        argv[i] = parsers[i].parse(args[i]);
-                }
-                return Control.invoke(method, obj, argv);
+                return method.invoke(obj, (Object[]) args);
             }
         };
     }
 
-    public CLIFunction wrap(Class<?> clazz, String methodName,
-            Class<?>... argTypes) throws NoSuchMethodException {
-        return wrap(clazz, null, methodName, argTypes);
+    public CLIFunction wrap(Class<?> clazz, String methodName)
+            throws NoSuchMethodException {
+        return wrap(clazz, null, methodName);
     }
 
-    public CLIFunction wrap(Object obj, String methodName, Class<?>... argTypes)
+    public CLIFunction wrap(Object obj, String methodName)
             throws NoSuchMethodException {
-        return wrap(obj.getClass(), obj, methodName, argTypes);
+        return wrap(obj.getClass(), obj, methodName);
     }
 
     public static final CLIFunctions global;

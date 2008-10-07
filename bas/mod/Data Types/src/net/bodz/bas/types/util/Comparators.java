@@ -20,6 +20,9 @@ public class Comparators {
     /** compare by type hierarchically */
     public static final Comparator<Object> TYPE_HIER;
 
+    /** compare by type-list hierarchically */
+    public static final Comparator<Object> TYPES_HIER;
+
     /**
      * compare by method name, then parameters count, then each parameter's
      * typename
@@ -72,6 +75,17 @@ public class Comparators {
         };
     }
 
+    // @Deprecated
+    static Class<?> getSuper(Class<?> type) {
+        if (type.isInterface()) {
+            Class<?>[] intf = type.getInterfaces();
+            // return min(intf)
+            if (intf.length > 0)
+                return intf[0];
+        }
+        return type.getSuperclass();
+    }
+
     static {
 
         STD = new Comparator<Object>() {
@@ -122,16 +136,6 @@ public class Comparators {
         };
 
         TYPE_HIER = new Comparator<Object>() {
-            private Class<?> getSuper(Class<?> type) {
-                if (type.isInterface()) {
-                    Class<?>[] intf = type.getInterfaces();
-                    // return min(intf)
-                    if (intf.length > 0)
-                        return intf[0];
-                }
-                return type.getSuperclass();
-            }
-
             @Override
             public int compare(Object l, Object r) {
                 if (l == r)
@@ -164,6 +168,30 @@ public class Comparators {
                 // maybe rsup == null if com==null or rt.isInterface
                 // if (com==null)
                 return lt.getName().compareTo(rt.getName());
+            }
+        };
+
+        TYPES_HIER = new Comparator<Object>() {
+            @Override
+            public int compare(Object l, Object r) {
+                if (l == r)
+                    return 0;
+                if (l == null)
+                    return -1;
+                if (r == null)
+                    return 1;
+                Class<?>[] lv = (Class<?>[]) l;
+                Class<?>[] rv = (Class<?>[]) r;
+                if (lv.length != rv.length)
+                    return lv.length - rv.length;
+                for (int i = 0; i < lv.length; i++) {
+                    Class<?> lt = lv[i];
+                    Class<?> rt = rv[i];
+                    int c = TYPE_HIER.compare(lt, rt);
+                    if (c != 0)
+                        return c;
+                }
+                return 0;
             }
         };
 

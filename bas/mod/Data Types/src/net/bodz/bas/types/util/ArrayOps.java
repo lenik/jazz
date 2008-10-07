@@ -65,6 +65,22 @@ public class ArrayOps {
         }
 
         @Override
+        public A shift(A array) {
+            int len = Array.getLength(array);
+            if (len == 0)
+                return array;
+            return copyOfRange(array, 1, len);
+        }
+
+        @Override
+        public A pop(A array) {
+            int len = Array.getLength(array);
+            if (len == 0)
+                return array;
+            return copyOf(array, len - 1);
+        }
+
+        @Override
         public int indexOf(A array, Object key) {
             return indexOf(array, key, 0);
         }
@@ -1297,6 +1313,7 @@ public class ArrayOps {
     public static final Booleans                   Booleans;
     public static final Chars                      Chars;
     public static final Objects<Object>            Objects;
+    public static final Objects<String>            Strings;
 
     static {
         ops = new HashMap<Class<?>, ArrayOp<?>>();
@@ -1309,6 +1326,7 @@ public class ArrayOps {
         ops.put(boolean.class, Booleans = new Booleans());
         ops.put(char.class, Chars = new Chars());
         ops.put(Object.class, Objects = new Objects<Object>(Object.class));
+        ops.put(String.class, Strings = new Objects<String>(String.class));
     }
 
     @SuppressWarnings("unchecked")

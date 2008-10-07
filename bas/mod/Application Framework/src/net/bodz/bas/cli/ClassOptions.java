@@ -16,6 +16,8 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 
+import net.bodz.bas.cli.a.Option;
+import net.bodz.bas.cli.a.OptionGroup;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.lang.script.ScriptException;
 import net.bodz.bas.types.Pair;

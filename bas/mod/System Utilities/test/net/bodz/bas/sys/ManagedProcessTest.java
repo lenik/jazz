@@ -66,15 +66,19 @@ public class ManagedProcessTest {
         }
     }
 
+    static int INTERVAL = 40;
+
     void test(String cmd, String expected, int expectedExit, String... inputs)
             throws Exception {
         if (mtpulse == null) // skip
             return;
-        Process process = Runtime.getRuntime().exec("mtpulse I30 " + cmd);
+        Process process = Runtime.getRuntime().exec(
+                "mtpulse I" + INTERVAL + " " + cmd);
         Cap cap = new Cap(inputs);
         ManagedProcess mp = new ManagedProcess(cap);
         int retval = mp.takeOver(process);
-        assertEquals(expected, cap.toString());
+        String cap_u = cap.toString().replace("\r", "");
+        assertEquals(expected, cap_u);
         assertEquals(expectedExit, retval);
     }
 

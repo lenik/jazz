@@ -9,6 +9,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.bodz.bas.lang.Control;
 import net.bodz.bas.lang.a.ReflectField;
 import net.bodz.bas.lang.a.ReflectMethod;
 import net.bodz.bas.lang.a.ReflectProperty;
@@ -190,7 +191,7 @@ public class Reflects {
 
     public static Object invoke(Object obj, Method method, Object... args) {
         try {
-            return method.invoke(obj, args);
+            return Control.invoke(method, obj, args);
         } catch (RuntimeException e) {
             throw e;
         } catch (Exception e) {

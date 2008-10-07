@@ -1,5 +1,7 @@
 package net.bodz.bas.cli.util;
 
+import static net.bodz.bas.types.util.ArrayOps.Strings;
+
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -8,17 +10,19 @@ import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 
 import net.bodz.bas.cli.CLIConfig;
-import net.bodz.bas.cli.RunInfo;
 import net.bodz.bas.cli._RunInfo;
+import net.bodz.bas.cli.a.RunInfo;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.Control;
 import net.bodz.bas.lang.ControlExit;
 import net.bodz.bas.lang.RunnableThrows;
 import net.bodz.bas.lang.err.OutOfDomainException;
+import net.bodz.bas.log.LogOut;
+import net.bodz.bas.log.LogOuts;
 import net.bodz.bas.sec.CatchExit;
 
-@RunInfo(lib = "bodz_bas")
-public abstract class JavaLauncher {
+@RunInfo(lib = { "bodz_bas" })
+public abstract class JavaLauncher implements Launcher {
 
     private Method                mainf;
 
@@ -32,6 +36,8 @@ public abstract class JavaLauncher {
     private ByteArrayOutputStream outbuf;
     private ByteArrayOutputStream errbuf;
 
+    private static LogOut         out = LogOuts.debug;
+
     public JavaLauncher() {
         libLoaded = "1".equals(System
                 .getProperty(CLIConfig.PROPERTY_LIB_LOADED));
@@ -43,6 +49,7 @@ public abstract class JavaLauncher {
         CLIConfig.load();
     }
 
+    @Override
     public void launch(final String[] args) throws Exception {
         if (mainf == null)
             load();
@@ -93,18 +100,45 @@ public abstract class JavaLauncher {
     }
 
     protected void load() throws Exception {
-        _RunInfo runInfo = _RunInfo.parse(getClass(), true);
+        Class<?> launcherClass = getClass();
+        _RunInfo launcherInfo = _RunInfo.parse(launcherClass, true);
+        if (launcherInfo != null) {
+            out.P("load boot: ", launcherClass);
+            launcherInfo.loadBoot();
 
-        runInfo.loadBoot();
-
-        // if (!libLoaded)
-        runInfo.loadLibraries();
+            // if (!libLoaded)
+            out.P("load libraries: ", launcherClass);
+            launcherInfo.loadLibraries();
+        }
 
         String mainClassName = getMainClassName();
-        Class<?> mainClass = Class.forName(mainClassName);
-        mainf = mainClass.getMethod("main", String[].class);
+        ClassLoader classLoader = ClassLoader.getSystemClassLoader();
+        {
+            Class<?> mainClass = Class.forName(mainClassName, false,
+                    classLoader);
 
-        runInfo.loadDelayed();
+            _RunInfo runInfo = _RunInfo.parse(mainClass, true);
+            if (runInfo != null) {
+                out.P("load boot: ", mainClass);
+                runInfo.loadBoot();
+
+                // if (!libLoaded)
+                out.P("load libraries: ", mainClass);
+                runInfo.loadLibraries();
+            }
+
+            mainf = mainClass.getMethod("main", String[].class);
+
+            if (runInfo != null) {
+                out.P("load delayed: ", mainClass);
+                runInfo.loadDelayed();
+            }
+        }
+
+        if (launcherInfo != null) {
+            out.P("load delayed: ", launcherClass);
+            launcherInfo.loadDelayed();
+        }
     }
 
     public void setRedirectIn(InputStream redirectIn) {
@@ -173,6 +207,19 @@ public abstract class JavaLauncher {
     public String getCapturedError(Object charset) {
         Charset _charset = Files.getCharset(charset);
         return new String(getCapturedError(), _charset);
+    }
+
+    public static void main(String[] args) throws Exception {
+        if (args.length < 1)
+            throw new IllegalArgumentException("classname expected");
+        final String className = args[0];
+        final String[] _args = Strings.shift(args);
+        new JavaLauncher() {
+            @Override
+            protected String getMainClassName() {
+                return className;
+            }
+        }.launch(_args);
     }
 
 }

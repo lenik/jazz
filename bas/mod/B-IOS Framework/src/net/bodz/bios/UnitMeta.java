@@ -1,6 +1,8 @@
 package net.bodz.bios;
 
-public interface UnitMeta {
+import net.bodz.bas.lang.Meta;
+
+public interface UnitMeta extends Meta {
 
     String getName();
 

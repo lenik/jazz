@@ -13,6 +13,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import net.bodz.bas.cli.a.Option;
+import net.bodz.bas.cli.a.OptionGroup;
 import net.bodz.bas.cli.util.ProtectedShell;
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.CharOuts;

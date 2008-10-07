@@ -11,9 +11,13 @@ import java.util.Map;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.err.UnexpectedException;
 import net.bodz.bas.lang.util.Classpath;
+import net.bodz.bas.log.LogOut;
+import net.bodz.bas.log.LogOuts;
 import net.bodz.bas.sys.SystemInfo;
 
 public class PathFunctions {
+
+    static LogOut out = LogOuts.debug;
 
     /**
      * Max-matched prefixes & suffixes.
@@ -58,7 +62,7 @@ public class PathFunctions {
         namedRoots = new HashMap<String, File>();
         try {
             global.register("findcp", //
-                    global.wrap(PathFunctions.class, "findcp", String.class));
+                    global.wrap(PathFunctions.class, "findcp"));
         } catch (NoSuchMethodException e) {
             throw new UnexpectedException(e.getMessage(), e);
         }
@@ -159,12 +163,19 @@ public class PathFunctions {
         return find(exp, parent);
     }
 
-    public static Object findcp(String exp) throws IOException {
+    public static Object findcp(String exp, boolean errcont) throws IOException {
         File file = find(exp, null);
-        if (file == null) // _log...
-            return null;
+        if (file == null)
+            if (errcont)
+                out.P("findcp failed: ", exp);
+            else
+                throw new RuntimeException("findcp failed: " + exp);
         Classpath.addURL(file.toURI().toURL());
         return file;
+    }
+
+    public static Object findcp(String exp) throws IOException {
+        return findcp(exp, false);
     }
 
 }

@@ -12,12 +12,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import net.bodz.bas.a.A_bas;
 import net.bodz.bas.a.ClassInfo;
+import net.bodz.bas.a.RcsKeywords;
+import net.bodz.bas.a.VersionInfo;
+import net.bodz.bas.cli.a.Option;
+import net.bodz.bas.cli.a.OptionGroup;
+import net.bodz.bas.cli.a.RunInfo;
 import net.bodz.bas.cli.ext.CLIPlugin;
 import net.bodz.bas.cli.ext.CLIPlugins;
-import net.bodz.bas.cli.util.Rcs;
-import net.bodz.bas.cli.util.RcsKeywords;
-import net.bodz.bas.cli.util.VersionInfo;
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.io.Files;
@@ -34,8 +37,8 @@ import net.bodz.bas.lang.script.Scripts;
 import net.bodz.bas.log.ALog;
 import net.bodz.bas.log.LogOut;
 import net.bodz.bas.log.LogOuts;
-import net.bodz.bas.mod.plugins.PluginTypeEx;
 import net.bodz.bas.mod.plugins.PluginException;
+import net.bodz.bas.mod.plugins.PluginTypeEx;
 import net.bodz.bas.types.AutoTypeMap;
 import net.bodz.bas.types.TypeParser;
 import net.bodz.bas.types.TypeParsers;
@@ -268,7 +271,7 @@ public class BasicCLI {
             RcsKeywords keywords = clazz.getAnnotation(RcsKeywords.class);
             VersionInfo verinfo;
             if (keywords != null) {
-                verinfo = Rcs.parseId(keywords);
+                verinfo = A_bas.parseId(keywords);
             } else {
                 verinfo = new VersionInfo();
                 URL url = Files.classData(clazz);
@@ -291,8 +294,10 @@ public class BasicCLI {
             String author = info.getAuthor();
             if (author != null)
                 verinfo.author = author;
-            if (verinfo.author == null)
-                verinfo.author = "Caynoh";
+            else
+                author = verinfo.author;
+            if (author == null)
+                author = "Caynoh";
             if (verinfo.state == null)
                 verinfo.state = "UNKNOWN";
 
@@ -498,9 +503,7 @@ public class BasicCLI {
             else
                 _help();
         } else {
-            int index = 0;
-            while (doMain(args))
-                L.x.P("run again(", ++index, ")");
+            doMain(args);
         }
     }
 
@@ -508,14 +511,11 @@ public class BasicCLI {
      * User repeatable-main method.
      * 
      * stdin is never used.
-     * 
-     * @return true if do again
      */
     @OverrideOption(group = "basicMain")
-    protected boolean doMain(String[] args) throws Throwable {
+    protected void doMain(String[] args) throws Throwable {
         for (String arg : args)
             doFileArgument(Files.canoniOf(arg));
-        return false;
     }
 
     /**

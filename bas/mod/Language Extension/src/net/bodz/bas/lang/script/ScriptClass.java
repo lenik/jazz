@@ -1,6 +1,8 @@
 package net.bodz.bas.lang.script;
 
-public interface ScriptClass<T> {
+import net.bodz.bas.lang.Meta;
+
+public interface ScriptClass<T> extends Meta {
 
     String getName();
 

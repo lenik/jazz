@@ -6,7 +6,13 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Doc {
 
-    /** text or resource path */
+    /**
+     * text
+     * 
+     * /resource-path
+     * 
+     * #bundle.property
+     */
     String[] value() default {};
 
 }

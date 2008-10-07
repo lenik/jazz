@@ -4,6 +4,8 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import net.bodz.bas.cli.a.Option;
+import net.bodz.bas.cli.a.OptionGroup;
 import net.bodz.bas.lang.script.ScriptException;
 
 public class PropertyOption<T> extends _Option<T> {

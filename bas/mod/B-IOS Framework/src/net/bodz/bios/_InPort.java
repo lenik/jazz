@@ -27,7 +27,8 @@ public abstract class _InPort extends _Port implements InPort, ReceiverEx {
         Class<? extends _Port> clazz = getClass();
         PortMeta meta = metas.get(clazz);
         if (meta == null) {
-            Class<?> metaClass = Annotations.getValue(clazz, MetaClass.class);
+            Class<?> metaClass = (Class<?>) Annotations.getValue(clazz,
+                    MetaClass.class);
             if (metaClass != null)
                 meta = (PortMeta) Types.newInstance(metaClass);
             else

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 rel. 3 sp1 (http://www.altova.com) by what (ever) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="model">
+		<xs:annotation>
+			<xs:documentation>GUI Model Config</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="widget" type="widgetType"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="widgetType">
+		<xs:sequence>
+			<xs:element name="font" minOccurs="0">
+				<xs:complexType>
+					<xs:attribute name="name" type="xs:string"/>
+					<xs:attribute name="size" type="xs:decimal"/>
+					<xs:attribute name="style" type="xs:string"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="property">
+					<xs:complexType>
+						<xs:attribute name="name" type="xs:string" use="required"/>
+						<xs:attribute name="value" type="xs:string" use="required"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="check" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="class" type="xs:string"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="enable" type="xs:boolean"/>
+		<xs:attribute name="visible" type="xs:boolean"/>
+		<xs:attribute name="order" type="xs:integer"/>
+		<xs:attribute name="taborder" type="xs:integer"/>
+		<xs:attribute name="width" type="xs:integer"/>
+		<xs:attribute name="height" type="xs:integer"/>
+		<xs:attribute name="color" type="xs:string"/>
+		<xs:attribute name="textcolor" type="xs:string"/>
+		<xs:attribute name="backcolor" type="xs:string"/>
+	</xs:complexType>
+	<xs:complexType name="textType">
+		<xs:complexContent>
+			<xs:extension base="widgetType">
+				<xs:attribute name="maxlength" type="xs:integer"/>
+				<xs:attribute name="multiline" type="xs:boolean"/>
+				<xs:attribute name="columns" type="xs:integer"/>
+				<xs:attribute name="rows" type="xs:integer"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="layoutType">
+		<xs:complexContent>
+			<xs:extension base="widgetType">
+				<xs:attribute name="type"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

@@ -54,7 +54,7 @@
 	</target>
 
 	<target name="clean">
-		<delete>
+		<delete verbose="true">
 			<fileset dir="${basedir}/build" includes="*.jar" />
 		</delete>
 	</target>

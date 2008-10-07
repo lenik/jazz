@@ -1,4 +1,4 @@
-package net.bodz.bas.cli;
+package net.bodz.bas.cli.a;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

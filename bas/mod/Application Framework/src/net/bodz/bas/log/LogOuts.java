@@ -35,6 +35,8 @@ public class LogOuts {
     public static final LogOut stdout = get(CharOuts.stdout, "stdout");
     public static final LogOut stderr = get(CharOuts.stderr, "stderr");
 
+    public static final LogOut debug  = nil;
+
     public static LogOut get(final ICharOut out, String name) {
         return new LogOut(name) {
             @Override

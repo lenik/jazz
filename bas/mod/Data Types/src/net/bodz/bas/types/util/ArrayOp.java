@@ -38,6 +38,10 @@ public interface ArrayOp<A> {
      */
     A copyOfRange(A array, int from, int to);
 
+    A shift(A array);
+
+    A pop(A array);
+
     int indexOf(A array, Object key);
 
     /**

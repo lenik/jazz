@@ -9,13 +9,22 @@ import net.bodz.bas.lang.err.IdentifiedException;
 
 public class SimpleJavaCall {
 
+    /**
+     * @return null for null at correspond index.
+     */
     public static Class<?>[] getClasses(Object[] objects) {
         Class<?>[] protos = new Class[objects.length];
-        for (int i = 0; i < objects.length; i++)
-            protos[i] = objects[i].getClass();
+        for (int i = 0; i < objects.length; i++) {
+            if (objects[i] != null)
+                protos[i] = objects[i].getClass();
+        }
         return protos;
     }
 
+    /**
+     * Error if arguments contains null.
+     */
+    @Deprecated
     public static Object call(Object object, String methodName,
             Object[] arguments) {
         try {
@@ -33,6 +42,10 @@ public class SimpleJavaCall {
         }
     }
 
+    /**
+     * Error if arguments contains null.
+     */
+    @Deprecated
     public static Object call(Class<?> clazz, String methodName,
             Object[] arguments) {
         try {
@@ -63,6 +76,7 @@ public class SimpleJavaCall {
         }
     }
 
+    @Deprecated
     public static Object call(Object object, String methodName,
             Object[] arguments, Object defaultValue) {
         try {
@@ -72,6 +86,7 @@ public class SimpleJavaCall {
         }
     }
 
+    @Deprecated
     public static Object call(Class<?> cls, String methodName,
             Object[] arguments, Object defaultValue) {
         try {
@@ -81,6 +96,7 @@ public class SimpleJavaCall {
         }
     }
 
+    @Deprecated
     public static Object call(String className, String methodName,
             Object[] arguments) {
         try {
@@ -95,6 +111,7 @@ public class SimpleJavaCall {
         }
     }
 
+    @Deprecated
     public static Object call(String className, String methodName,
             Object[] arguments, Object defaultValue) {
         try {
