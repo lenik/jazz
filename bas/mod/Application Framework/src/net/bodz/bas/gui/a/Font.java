@@ -10,16 +10,16 @@ public @interface Font {
 
     String name() default "";
 
-    int size() default 0;
+    int height() default 0;
 
     int PLAIN  = java.awt.Font.PLAIN;
     int BOLD   = java.awt.Font.BOLD;
     int ITALIC = java.awt.Font.ITALIC;
 
-    int style() default 0;
+    int style() default PLAIN;
 
     /**
-     * create(usage) -> Font
+     * create(usage) -> FontData
      */
     Class<? extends Factory> factory() default Factory.class;
 

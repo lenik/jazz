@@ -13,9 +13,13 @@ import net.bodz.bas.lang.Caller;
 import net.bodz.bas.lang.err.Err;
 import net.bodz.bas.lang.err.IdentifiedException;
 import net.bodz.bas.lang.err.UnexpectedException;
+import net.bodz.bas.log.LogOut;
+import net.bodz.bas.log.LogOuts;
 import net.bodz.bas.types.util.Empty;
 
 public class Classpath {
+
+    static LogOut out = LogOuts.debug;
 
     static Method URLClassLoader_addURL;
     static {
@@ -30,7 +34,10 @@ public class Classpath {
         }
     }
 
-    public static void addURL(ClassLoader loader, URL url) {
+    /**
+     * @return <code>false</code> if url is existed.
+     */
+    public static boolean addURL(ClassLoader loader, URL url) {
         if (URLClassLoader_addURL == null)
             throw new Error("can't access URLClassLoader.addURL()");
 
@@ -39,17 +46,25 @@ public class Classpath {
                     + loader.getClass());
 
         try {
-            // System.err.println("addURL " + url + " -> " + loader);
-            URLClassLoader_addURL.invoke(loader, url);
+            URLClassLoader ucl = (URLClassLoader) loader;
+            for (URL u : ucl.getURLs())
+                if (u.equals(url))
+                    return false;
+            out.P("addURL ", url, " -> ", ucl);
+            URLClassLoader_addURL.invoke(ucl, url);
         } catch (IllegalAccessException e) {
             throw new IdentifiedException(e.getMessage(), e);
         } catch (InvocationTargetException e) {
             Err.unwrap(e);
         }
+        return true;
     }
 
-    public static void addURL(URL url) throws IOException {
-        addURL(ClassLoader.getSystemClassLoader(), url);
+    /**
+     * @return <code>false</code> if url is existed.
+     */
+    public static boolean addURL(URL url) throws IOException {
+        return addURL(ClassLoader.getSystemClassLoader(), url);
     }
 
     public static abstract class Iter {

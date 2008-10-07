@@ -3,6 +3,8 @@ package net.bodz.bas.cli;
 import java.util.Collection;
 import java.util.Map;
 
+import net.bodz.bas.cli.a.Option;
+import net.bodz.bas.cli.a.OptionGroup;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.lang.script.ScriptField;

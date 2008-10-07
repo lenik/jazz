@@ -1,4 +1,4 @@
-package net.bodz.bas.cli.util;
+package net.bodz.bas.a;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

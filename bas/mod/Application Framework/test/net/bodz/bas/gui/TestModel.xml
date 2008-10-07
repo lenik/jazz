@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 rel. 3 sp1 (http://www.altova.com) by what (ever) -->
+<m:model xmlns:m="http://xml.bodz.net/ref/net/bodz/bas/gui/Model" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xml.bodz.net/ref/net/bodz/bas/gui/Model ..\..\..\..\..\..\..\..\net.bodz.xml\ref\net\bodz\bas\gui\model.xsd">
+	<m:root name="ClassName" xsi:type="m:containerType">
+		<m:component name="member1" order="10" enable="true" color="pink">
+			<m:font name="Tahoma"/>
+		</m:component>
+		<m:component name="member2" order="10" enable="true" color="pink"/>
+	</m:root>
+</m:model>

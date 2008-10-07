@@ -14,6 +14,7 @@ import java.util.List;
 
 import net.bodz.bas.test.TestDefs;
 import net.bodz.bas.test.TestEval;
+import net.bodz.bas.types.util.Strings;
 
 import org.junit.Test;
 
@@ -105,6 +106,16 @@ public class FilesTest {
         assertTrue("envprep", file("dt/d/g/h").isFile());
         Files.deleteTree(file("dt"));
         assertFalse(file("dt").exists());
+    }
+
+    @Test
+    public void testFind1() {
+        List<File> find = Files
+                .find("K:/workspace/net.bodz/*/mod/*/src/net/bodz");
+        if (find == null)
+            System.out.println("no match");
+        else
+            System.out.println(Strings.join("\n", find));
     }
 
 }

@@ -2,6 +2,8 @@ package net.bodz.bas.cli;
 
 import java.lang.reflect.Field;
 
+import net.bodz.bas.cli.a.Option;
+import net.bodz.bas.cli.a.OptionGroup;
 import net.bodz.bas.lang.script.ScriptException;
 
 public class FieldOption<T> extends _Option<T> {

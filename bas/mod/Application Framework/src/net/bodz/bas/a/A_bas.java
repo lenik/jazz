@@ -1,11 +1,46 @@
-package net.bodz.bas.cli.util;
+package net.bodz.bas.a;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import net.bodz.bas.io.Files;
+import net.bodz.bas.lang.err.NotImplementedException;
+
 @RcsKeywords(id = "$Id: Rcs.java 784 2008-01-15 10:53:24Z lenik $")
-public class Rcs {
+public class A_bas {
+
+    public static String parse(Doc docN) {
+        if (docN == null)
+            return null;
+        String[] doc = docN.value();
+        if (doc.length == 0)
+            return null;
+        if (doc.length == 1)
+            return parseDocString(doc[0]);
+        StringBuffer buf = new StringBuffer(doc.length * 80);
+        for (int i = 0; i < doc.length; i++) {
+            // if (i != 0) buf.append('\n');
+            buf.append(parseDocString(doc[i]));
+        }
+        return buf.toString();
+    }
+
+    static String parseDocString(String doc) {
+        if (doc.startsWith("#")) {
+            // #bundle.property
+            throw new NotImplementedException();
+        } else if (doc.startsWith("/")) {
+            // doc = doc.substring(1);
+            try {
+                doc = Files.readAll(doc, "utf-8");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return doc;
+    }
 
     static DateFormat DATETIME;
     static DateFormat DATE;

@@ -3,16 +3,19 @@ package net.bodz.bas.gui.a;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import net.bodz.bas.mod.Factory;
-
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Color {
 
-    int rgb();
+    /**
+     * [NAME]#AARRGGBB
+     * 
+     * if color name exists, then ignore the color value
+     */
+    String value() default "";
 
     /**
-     * create(usage) -> label text
+     * Background Color
      */
-    Class<? extends Factory> factory() default Factory.class;
+    String back() default "";
 
 }

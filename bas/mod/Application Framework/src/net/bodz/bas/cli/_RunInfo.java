@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import net.bodz.bas.cli.a.RunInfo;
 import net.bodz.bas.lang.ClassLocal;
 import net.bodz.bas.lang.util.Classpath;
 import net.bodz.bas.loader.JavaLibraryLoader;

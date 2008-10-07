@@ -4,6 +4,6 @@ public interface Ref<T> {
 
     T get();
 
-    void set(T o);
+    void set(T value);
 
 }

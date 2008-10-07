@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import net.bodz.bas.lang.Control;
 import net.bodz.bas.lang.IVoid;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.err.OutOfDomainException;
@@ -243,7 +244,7 @@ public class Types {
         Class<?>[] argTypes = Types.getTypes(args);
         try {
             Method method = clazz.getMethod("getInstance", argTypes);
-            return (T) method.invoke(null, args);
+            return (T) Control.invoke(method, null, args);
         } catch (NoSuchMethodException e) {
             return newInstance(clazz, argTypes, args);
         } catch (IllegalAccessException e) {

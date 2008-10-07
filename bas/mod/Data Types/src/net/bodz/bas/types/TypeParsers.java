@@ -152,6 +152,10 @@ public class TypeParsers {
 
     }
 
+    /**
+     * @throws OutOfDomainException
+     *             if no suitable type parser exists.
+     */
     public static TypeParser guess(Class<?> type) throws CreateException {
         TypeParser parser = get(type);
         if (parser != null)
@@ -210,6 +214,10 @@ public class TypeParsers {
         registry.put(MessageDigest.class, new MessageDigestParser());
     }
 
+    /**
+     * @return <code>null</code> if no explicitly (or implicitly derived) type
+     *         registered.
+     */
     public static TypeParser get(Class<?> clazz) {
         TypeParser registered = registry.get(clazz);
         if (registered != null)

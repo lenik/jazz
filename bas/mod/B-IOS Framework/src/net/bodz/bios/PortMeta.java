@@ -2,7 +2,9 @@ package net.bodz.bios;
 
 import java.util.Collection;
 
-public interface PortMeta {
+import net.bodz.bas.lang.Meta;
+
+public interface PortMeta extends Meta {
 
     /**
      * @return display name

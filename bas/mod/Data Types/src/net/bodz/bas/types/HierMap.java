@@ -48,12 +48,10 @@ public class HierMap<K, V> extends TreeMap<K, V> {
     }
 
     /**
-     * @throws NoSuchElementException
-     *             by default
+     * @throws <code>null</code> by default
      */
     protected K nonexistKey() {
-        // return null;
-        throw new NoSuchElementException();
+        return null;
     }
 
     /**

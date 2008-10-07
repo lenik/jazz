@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.SortedSet;
 
 import net.bodz.bas.lang.Predicate2s;
+import net.bodz.bas.types.util.Comparators;
 
 public class TypeHierSet extends HierSet<Class<?>> {
 
@@ -27,20 +28,23 @@ public class TypeHierSet extends HierSet<Class<?>> {
 
     static final Inherits inherits = new Inherits();
 
+    @Deprecated
     public TypeHierSet(Collection<? extends Class<?>> c) {
         super(inherits, c);
     }
 
+    @Deprecated
     public TypeHierSet(Comparator<? super Class<?>> comparator) {
         super(inherits, comparator);
     }
 
+    @Deprecated
     public TypeHierSet(SortedSet<Class<?>> s) {
         super(inherits, s);
     }
 
     public TypeHierSet() {
-        super(inherits);
+        super(inherits, Comparators.TYPE_HIER);
     }
 
 }

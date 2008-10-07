@@ -12,14 +12,17 @@ public class TypeHierMap<V> extends HierMap<Class<?>, V> {
 
     private static final long serialVersionUID = 2448961592894592311L;
 
+    @Deprecated
     public TypeHierMap(Comparator<? super Class<?>> comparator) {
         super(inherits, comparator);
     }
 
+    @Deprecated
     public TypeHierMap(Map<? extends Class<?>, ? extends V> m) {
         super(inherits, m);
     }
 
+    @Deprecated
     public TypeHierMap(SortedMap<Class<?>, ? extends V> m) {
         super(inherits, m);
     }

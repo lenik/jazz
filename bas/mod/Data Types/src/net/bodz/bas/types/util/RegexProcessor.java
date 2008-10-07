@@ -27,7 +27,7 @@ public class RegexProcessor extends Unescape {
         }
         // in.position(in.position() - 1);
         // return super.decode(in);
-        return String.valueOf(c);
+        return "\\" + String.valueOf(c);
     }
 
     protected String matchSpace() {

@@ -7,6 +7,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import net.bodz.bas.lang.Control;
+
 public class CompatMethods {
 
     public static int dist(Class<?> root, Class<?> leaf) {
@@ -128,7 +130,7 @@ public class CompatMethods {
         if (method == null)
             throw new NoSuchMethodException(clazz.getName() + "." + methodName
                     + "(" + Types.joinNames(types) + ")");
-        return (T) method.invoke(obj, args);
+        return (T) Control.invoke(method, obj, args);
     }
 
     public static <T> T invoke(Class<?> clazz, String methodName,
