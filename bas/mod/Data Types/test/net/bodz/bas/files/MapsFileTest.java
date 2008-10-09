@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+import net.bodz.bas.files.MapsFile.PartMap;
 import net.bodz.bas.io.Files;
 
 import org.junit.Test;
@@ -41,8 +42,8 @@ public class MapsFileTest {
     public void test1() {
         URL f = Files.getDataURL(this, "1");
         MapsFile maps = new MapsFile(f);
-        Iterator<Map<String, String>> it = maps.iterator();
-        Map<String, String> part;
+        Iterator<PartMap> it = maps.iterator();
+        PartMap part;
 
         part = it.next();
         assertEquals("part A", ".=hello\nworld, age=10, name=a", map2str(part));

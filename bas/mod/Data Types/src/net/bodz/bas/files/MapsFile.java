@@ -1,14 +1,27 @@
 package net.bodz.bas.files;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Preferred file name: *.maps
  */
-public class MapsFile extends MultipartsFile<Map<String, String>> {
+public class MapsFile extends MultipartsFile<MapsFile.PartMap> {
 
-    private Map<String, String> partMap;
+    public class PartMap extends TreeMap<String, String> {
+
+        private static final long serialVersionUID = 7647573703380582923L;
+
+        public String getText() {
+            return get(textKey);
+        }
+
+        public void setText(String text) {
+            put((String) textKey, text);
+        }
+
+    }
+
+    private PartMap partMap;
 
     public MapsFile(Object file, String encoding) {
         super(file, encoding);
@@ -25,7 +38,7 @@ public class MapsFile extends MultipartsFile<Map<String, String>> {
     @Override
     protected void beginPart() {
         if (partMap == null)
-            partMap = new HashMap<String, String>();
+            partMap = new PartMap();
         else
             partMap.clear();
     }
