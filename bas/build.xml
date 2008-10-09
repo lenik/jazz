@@ -24,6 +24,7 @@
 	<target name=":bin.jar">
 		<mkdir dir="build" />
 		<jar destfile="build/net.bodz.bas.jar" update="true">
+			<fileset dir="mod/_MODEL/bin" />
 			<fileset dir="mod/Application Framework/bin" />
 			<fileset dir="mod/B-IOS Framework/bin" />
 			<fileset dir="mod/Bundled Modules/bin" />
@@ -40,6 +41,7 @@
 	<target name=":src.jar">
 		<mkdir dir="build" />
 		<jar destfile="build/net.bodz.bas-source.jar" update="true">
+			<fileset dir="mod/_MODEL/src" />
 			<fileset dir="mod/Application Framework/src" />
 			<fileset dir="mod/B-IOS Framework/bin" />
 			<fileset dir="mod/Bundled Modules/src" />

@@ -18,7 +18,8 @@ public abstract class MultipartsFile<T> extends _FileType implements
     private String       encoding;
     private TypeParser   keyParser;
     private TypeParser   valueParser;
-    private Object       textKey;
+    public final Object  textKey;
+    private final String partTerm = ".";
 
     /**
      * @param file
@@ -124,20 +125,28 @@ public abstract class MultipartsFile<T> extends _FileType implements
                 boolean preheader = true;
                 boolean header = true;
                 Object tKey = textKey;
+                int indent = 0;
                 StringBuffer text = null;
                 beginPart();
-                while (lines.hasNext()) {
+                L: while (lines.hasNext()) {
                     String line = lines.next();
-                    if (header) {
+                    H: while (header) {
                         if (line.isEmpty() || isPreHeaderComment(line)) {
                             if (preheader)
-                                continue;
+                                continue L;
                             header = false;
-                            continue;
+                            continue L;
                         }
                         preheader = false;
                         if (isHeaderComment(line))
-                            continue;
+                            continue L;
+
+                        while (Character.isWhitespace(line.charAt(indent)))
+                            indent++;
+                        if (indent != 0) {
+                            header = false;
+                            break H;
+                        }
 
                         String name = line;
                         String value = null;
@@ -156,9 +165,9 @@ public abstract class MultipartsFile<T> extends _FileType implements
                             Object val = parseValue(value);
                             addPartEntry(key, val);
                         }
-                        continue;
+                        continue L;
                     }
-                    if (line.equals(".")) {
+                    if (line.equals(partTerm)) {
                         addPartEntry(tKey, _parseText(text));
                         text = null;
                         if (tKey == textKey)
@@ -173,6 +182,15 @@ public abstract class MultipartsFile<T> extends _FileType implements
                         text = new StringBuffer();
                     else
                         text.append('\n');
+
+                    // remove necessary indent
+                    int removeIndent = indent;
+                    while (removeIndent > 0
+                            && Character.isWhitespace(line.charAt(0))) {
+                        line = line.substring(1);
+                        removeIndent--;
+                    }
+
                     text.append(line);
                 }
                 if (text != null)
@@ -183,5 +201,4 @@ public abstract class MultipartsFile<T> extends _FileType implements
             }
         };
     }
-
 }

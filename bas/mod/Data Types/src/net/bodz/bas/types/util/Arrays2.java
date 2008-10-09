@@ -24,7 +24,7 @@ public class Arrays2 {
         return dup;
     }
 
-    public static Object copyOf(Object array) {
+    public static <T> T copyOf(T array) {
         int len = Array.getLength(array);
         return copyOf(array, 0, len);
     }

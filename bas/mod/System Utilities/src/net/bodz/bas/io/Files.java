@@ -34,6 +34,7 @@ import java.util.List;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
+import net.bodz.bas.lang.IntMath;
 import net.bodz.bas.lang.Predicate2v;
 import net.bodz.bas.lang.err.IdentifiedException;
 import net.bodz.bas.lang.err.IllegalArgumentTypeException;
@@ -41,6 +42,8 @@ import net.bodz.bas.lang.err.UnexpectedException;
 import net.bodz.bas.lang.err.WrappedException;
 import net.bodz.bas.text.diff.DiffComparator;
 import net.bodz.bas.text.diff.DiffInfo;
+import net.bodz.bas.text.util.CharFeature;
+import net.bodz.bas.types.Bits;
 import net.bodz.bas.types.util.Empty;
 import net.bodz.bas.types.util.PrefetchedIterator;
 
@@ -1199,8 +1202,48 @@ public class Files {
         return getExtension(file.getName(), false);
     }
 
+    /**
+     * @see CharFeature Part.1, is-text
+     */
+    static Bits textBits;
+    static {
+        textBits = new Bits.IntvLE( //
+                134231808, -1, -1, -1, -1, -1, -1, -1);
+    }
+
+    static int  textLookSize = blockSize;
+    static int  textFailSize = (int) 0.90f * textLookSize;
+
+    public static boolean isText(byte[] bytes) {
+        int lookSize = Math.min(textLookSize, bytes.length);
+        int fail = 0;
+        for (int i = 0; i < lookSize; i++) {
+            int b = IntMath.unsign(bytes[i]);
+            if (!textBits.test(b))
+                if (++fail > textFailSize)
+                    return false;
+        }
+        return true;
+    }
+
+    /**
+     * Treat inaccessible file as binary treat inaccessible file as binary
+     * 
+     * @return <code>true</code> if file is text like.
+     */
     public static boolean isText(File file) {
-        return false;
+        byte[] block;
+        try {
+            block = readBytes(file, textLookSize);
+        } catch (IOException e) {
+            // throw new RuntimeException(e);
+            return false;
+        }
+        return isText(block);
+    }
+
+    public static boolean isBinary(byte[] bytes) {
+        return !isText(bytes);
     }
 
     public static boolean isBinary(File file) {

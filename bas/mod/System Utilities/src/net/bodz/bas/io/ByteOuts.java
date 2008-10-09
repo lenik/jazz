@@ -14,6 +14,14 @@ public class ByteOuts {
             @Override
             public void write(byte[] buf, int off, int len) throws IOException {
             }
+
+            @Override
+            public void _write(byte b) {
+            }
+
+            @Override
+            public void _write(byte[] buf, int off, int len) {
+            }
         };
     }
 
@@ -71,6 +79,10 @@ public class ByteOuts {
 
         public Buffer() {
             super(new ByteArrayOutputStream());
+        }
+
+        public Buffer(int initialSize) {
+            super(new ByteArrayOutputStream(initialSize));
         }
 
         public ByteArrayOutputStream getBuffer() {

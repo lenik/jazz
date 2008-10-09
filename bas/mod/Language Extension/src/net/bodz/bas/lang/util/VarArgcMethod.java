@@ -1,7 +1,5 @@
 package net.bodz.bas.lang.util;
 
-import static net.bodz.bas.types.util.ArrayOps.Objects;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -50,11 +48,11 @@ public class VarArgcMethod {
         if (autotype) {
             Class<?>[] declTypes = method.getParameterTypes();
             Class<?>[] actuTypes = Types.getTypes(args);
-            Object[] argv = Objects.copyOf(args);
+            Object[] argv = new Object[argc];
             for (int i = 0; i < argc; i++) {
-                Class<?> dt = Types.box(declTypes[i]);
+                Class<?> dt = declTypes[i];
                 Class<?> at = actuTypes[i];
-                if (argv[i] != null && !dt.isAssignableFrom(at))
+                if (argv[i] != null && !Types.box(dt).isAssignableFrom(at))
                     if (at == String.class) {
                         String stringArg = (String) args[i];
                         try {
