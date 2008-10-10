@@ -18,7 +18,8 @@ public class MethodParameter extends AccessibleObject {
     }
 
     public MethodParameter(int paramIndex, Annotation[] annotations) {
-        this(paramIndex, "$" + paramIndex, annotations);
+        this(paramIndex, // "$" +
+                String.valueOf(paramIndex), annotations);
     }
 
     public String getName() {

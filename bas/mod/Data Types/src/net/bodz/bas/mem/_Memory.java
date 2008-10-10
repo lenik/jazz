@@ -1,6 +1,8 @@
 package net.bodz.bas.mem;
 
-import static net.bodz.bas.mem.types.Types.*;
+import static net.bodz.bas.mem.types.Types.INT16LE;
+import static net.bodz.bas.mem.types.Types.INT32LE;
+import static net.bodz.bas.mem.types.Types.INT64LE;
 
 public abstract class _Memory implements Memory {
 
@@ -12,13 +14,6 @@ public abstract class _Memory implements Memory {
     @Override
     public void write(int addr, byte[] buf) throws AccessException {
         write(addr, buf, 0, buf.length);
-    }
-
-    @Override
-    public Memory offset(int off) {
-        if (off == 0)
-            return this;
-        return new MemoryOffset(this, off);
     }
 
     @Override

@@ -3,7 +3,7 @@ package net.bodz.bas.mem;
 public interface RefType extends Type {
 
     @Override
-    MemoryOffset get(Memory memory, int offset) throws AccessException;
+    MemoryWrapOffset get(Memory memory, int offset) throws AccessException;
 
     Object getTarget(Memory memory, int offset) throws AccessException;
 

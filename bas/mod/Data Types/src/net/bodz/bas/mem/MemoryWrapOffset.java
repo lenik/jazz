@@ -1,13 +1,13 @@
 package net.bodz.bas.mem;
 
-public class MemoryOffset extends _Memory {
+public class MemoryWrapOffset extends _Memory {
 
     private final Memory orig;
 
     /** addr_t */
     private final int    offset;
 
-    public MemoryOffset(Memory orig, int offset) {
+    public MemoryWrapOffset(Memory orig, int offset) {
         assert orig != null;
         this.orig = orig;
         this.offset = offset;
@@ -19,6 +19,14 @@ public class MemoryOffset extends _Memory {
 
     public int getOffset() {
         return offset;
+    }
+
+    @Override
+    public MemoryWrapOffset offset(long off) {
+        int off32 = (int) off;
+        if (off32 == 0)
+            return this;
+        return new MemoryWrapOffset(orig, this.offset + (int) off32);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package net.bodz.bas.lang.err;
 
-public class CheckException extends RuntimeException {
+public class CheckException extends Exception {
 
     private static final long serialVersionUID = -7500685030093882350L;
 

@@ -17,7 +17,7 @@ public interface Memory {
 
     void write(int addr, byte[] buf) throws AccessException;
 
-    Memory offset(int off);
+    Memory offset(long off);
 
     int LITTLE_ENDIAN = 0;
     int BIG_ENDIAN    = 1;

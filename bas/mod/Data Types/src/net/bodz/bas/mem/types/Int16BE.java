@@ -22,14 +22,14 @@ public class Int16BE extends _Type {
         memory.write(offset, mem);
     }
 
-    public static short read(byte[] b) throws AccessException {
+    public static short read(byte[] b) {
         int value = IntMath.unsign(b[0]);
         value <<= 8;
         value |= IntMath.unsign(b[1]);
         return (short) value;
     }
 
-    public static void write(byte[] b, short value) throws AccessException {
+    public static void write(byte[] b, short value) {
         b[1] = (byte) value;
         value >>= 8;
         b[0] = (byte) value;

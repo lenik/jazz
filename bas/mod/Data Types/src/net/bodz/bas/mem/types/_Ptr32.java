@@ -2,7 +2,7 @@ package net.bodz.bas.mem.types;
 
 import net.bodz.bas.mem.AccessException;
 import net.bodz.bas.mem.Memory;
-import net.bodz.bas.mem.MemoryOffset;
+import net.bodz.bas.mem.MemoryWrapOffset;
 import net.bodz.bas.mem.Type;
 import net.bodz.bas.mem._RefType;
 
@@ -26,9 +26,9 @@ public abstract class _Ptr32 extends _RefType {
             throws AccessException;
 
     @Override
-    public MemoryOffset get(Memory memory, int offset) throws AccessException {
+    public MemoryWrapOffset get(Memory memory, int offset) throws AccessException {
         int addr = getAddress(memory, offset);
-        return new MemoryOffset(memory, addr);
+        return new MemoryWrapOffset(memory, addr);
     }
 
     /**

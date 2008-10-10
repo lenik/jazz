@@ -5,7 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import net.bodz.bas.types.ValueCheck;
+import net.bodz.bas.types.Checker;
 
 /**
  * Bean Annotation
@@ -18,6 +18,6 @@ public @interface UIFormat {
 
     Class<? extends UICodec> value() default UICodec.class;
 
-    Class<? extends ValueCheck> check() default ValueCheck.class;
+    Class<? extends Checker> check() default Checker.class;
 
 }

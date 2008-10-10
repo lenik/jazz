@@ -30,6 +30,7 @@ import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.log.ALog;
 import net.bodz.bas.log.ALogs;
 import net.bodz.bas.log.LogOuts;
+import net.bodz.bas.text.encodings.Encodings;
 import net.bodz.bas.types.util.Comparators;
 import net.bodz.bas.types.util.Types;
 
@@ -539,6 +540,24 @@ public class TypeParsers {
             } catch (NoSuchProviderException e) {
                 throw new ParseException(e.getMessage(), e);
             }
+        }
+
+    }
+
+    public static class HexParser extends _TypeParser {
+
+        @Override
+        public byte[] parse(String hex) throws ParseException {
+            return Encodings.HEX.decode(hex);
+        }
+
+    }
+
+    public static class Base64Parser extends _TypeParser {
+
+        @Override
+        public byte[] parse(String hex) throws ParseException {
+            return Encodings.BASE64.decode(hex);
         }
 
     }

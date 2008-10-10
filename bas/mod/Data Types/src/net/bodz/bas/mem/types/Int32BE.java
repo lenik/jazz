@@ -25,7 +25,7 @@ public class Int32BE extends _Type {
         memory.write(offset, mem);
     }
 
-    public static int read(byte[] b) throws AccessException {
+    public static int read(byte[] b) {
         int value = IntMath.unsign(b[0]);
         value <<= 8;
         value |= IntMath.unsign(b[1]);
@@ -36,7 +36,7 @@ public class Int32BE extends _Type {
         return value;
     }
 
-    public static void write(byte[] b, int value) throws AccessException {
+    public static void write(byte[] b, int value) {
         b[3] = (byte) value;
         value >>= 8;
         b[2] = (byte) value;
