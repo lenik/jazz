@@ -12,13 +12,13 @@ public abstract class _RefType extends _Type implements RefType {
      * @return memory position of the referent
      */
     @Override
-    public abstract MemoryOffset get(Memory memory, int offset)
+    public abstract MemoryWrapOffset get(Memory memory, int offset)
             throws AccessException;
 
     @Override
     public void put(Memory memory, int offset, Object targetAddr)
             throws AccessException {
-        MemoryOffset target = (MemoryOffset) targetAddr;
+        MemoryWrapOffset target = (MemoryWrapOffset) targetAddr;
         Memory targetMemory = target.getOrig();
         int targetOffset = target.getOffset();
         if (memory == targetMemory)
@@ -37,14 +37,14 @@ public abstract class _RefType extends _Type implements RefType {
 
     @Override
     public Object getTarget(Memory memory, int offset) throws AccessException {
-        MemoryOffset target = get(memory, offset);
+        MemoryWrapOffset target = get(memory, offset);
         return targetType.get(target.getOrig(), target.getOffset());
     }
 
     @Override
     public void putTarget(Memory memory, int offset, Object value)
             throws AccessException {
-        MemoryOffset target = get(memory, offset);
+        MemoryWrapOffset target = get(memory, offset);
         targetType.put(target.getOrig(), target.getOffset(), value);
     }
 

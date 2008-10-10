@@ -54,14 +54,22 @@ public class ArrayMemory extends _Memory {
         Bytes.copy(buf, off, array, start + addr, len);
     }
 
+    /**
+     * if access by negative index is allowed, the precheck should be disabled.
+     */
+    static boolean precheck = true;
+
     @Override
-    public ArrayMemory offset(int off) {
+    public ArrayMemory offset(long off) {
         if (off == 0)
             return this;
         int len = end - start;
-        if (off > len)
+        if (precheck && off > len)
             throw new OutOfDomainException("off", off, len);
-        return new ArrayMemory(array, start + off, len - off);
+        int off32 = (int) off;
+        if (precheck && start + off32 < 0)
+            throw new OutOfDomainException("off", off, len);
+        return new ArrayMemory(array, start + off32, len - off32);
     }
 
 }

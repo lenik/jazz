@@ -25,7 +25,7 @@ public class Int64LE extends _Type {
         memory.write(offset, mem);
     }
 
-    public static long read(byte[] b) throws AccessException {
+    public static long read(byte[] b) {
         int vh = IntMath.unsign(b[7]);
         vh <<= 8;
         vh |= IntMath.unsign(b[6]);
@@ -46,7 +46,7 @@ public class Int64LE extends _Type {
         return value;
     }
 
-    public static void write(byte[] b, long value) throws AccessException {
+    public static void write(byte[] b, long value) {
         int vl = (int) value;
         b[0] = (byte) vl;
         vl >>= 8;

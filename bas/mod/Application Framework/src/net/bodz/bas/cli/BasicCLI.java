@@ -314,6 +314,7 @@ public class BasicCLI {
     @Option(doc = "show version info")
     protected final void _version() {
         _version(CharOuts.stderr);
+        throw new ControlBreak();
     }
 
     protected void _version(CharOut out) {
@@ -323,26 +324,23 @@ public class BasicCLI {
                 info.getAuthor(), //
                 Strings.joinDot(info.getVersion()), //
                 info.getDateString());
-        throw new ControlBreak();
     }
 
     @Option(alias = ".h", doc = "show help info")
     protected final void _help() throws CLIException {
         _help(CharOuts.stderr);
+        throw new ControlBreak();
     }
 
     protected void _help(CharOut out) throws CLIException {
-        try {
-            _version(out);
-        } catch (ControlBreak b) {
-        }
+        _version(out);
         out.println();
+
         String hlp_opts = ClassCLI.helpOptions(getClass(), 4, 29);
         out.print(hlp_opts);
 
         if (plugins != null)
             plugins.help(out, "");
-        throw new ControlBreak();
     }
 
     private boolean                prepared;

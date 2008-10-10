@@ -138,4 +138,16 @@ public class IntMath {
         return result;
     }
 
+    public static int min(int a, long b) {
+        if (b > Integer.MAX_VALUE)
+            return a;
+        return Math.min(a, (int) b);
+    }
+
+    public static int min(long a, int b) {
+        if (a > Integer.MAX_VALUE)
+            return b;
+        return Math.min(b, (int) a);
+    }
+
 }

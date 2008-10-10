@@ -5,11 +5,12 @@ import java.util.Map;
 
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.cli.a.OptionGroup;
+import net.bodz.bas.lang.err.CheckException;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.lang.script.ScriptField;
+import net.bodz.bas.types.Checker;
 import net.bodz.bas.types.TypeParser;
-import net.bodz.bas.types.ValueCheck;
 import net.bodz.bas.types.util.Strings;
 import net.bodz.bas.types.util.Types;
 
@@ -25,7 +26,7 @@ public abstract class _Option<T> implements ScriptField<T> {
 
     protected final TypeParser     parser;
     protected final ItemTypeParser valparser;
-    protected final ValueCheck     check;
+    protected final Checker        check;
 
     protected final String         optgrp;
 
@@ -72,8 +73,8 @@ public abstract class _Option<T> implements ScriptField<T> {
                 else
                     valparser = null;
 
-                Class<? extends ValueCheck> check0 = option.check();
-                if (check0 == ValueCheck.class)
+                Class<? extends Checker> check0 = option.check();
+                if (check0 == Checker.class)
                     check = null;
                 else {
                     String checkinfo = option.checkinfo();
@@ -138,7 +139,11 @@ public abstract class _Option<T> implements ScriptField<T> {
     public Object parse(String s) throws ParseException {
         Object val = parser.parse(s);
         if (check != null)
-            check.check(val);
+            try {
+                check.check(val);
+            } catch (CheckException e) {
+                throw new ParseException(e);
+            }
         return val;
     }
 
@@ -149,7 +154,11 @@ public abstract class _Option<T> implements ScriptField<T> {
         else
             val = parser.parse(s);
         if (check != null)
-            check.check(val);
+            try {
+                check.check(val);
+            } catch (CheckException e) {
+                throw new ParseException(e);
+            }
         return val;
     }
 

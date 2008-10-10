@@ -4,10 +4,26 @@ import java.io.File;
 import java.util.regex.Pattern;
 
 import net.bodz.bas.io.Files;
+import net.bodz.bas.lang.err.CheckException;
+import net.bodz.bas.lang.err.CheckFailure;
 
-public class ValueChecks {
+public class Checks {
 
-    public static class Regex implements ValueCheck {
+    public static void setOnlyOne(Object... args) throws CheckException {
+        int last = -1;
+        for (int i = 0; i < args.length; i++) {
+            if (args[i] != null) {
+                if (last != -1)
+                    throw new CheckException("only one is allowed: " + last
+                            + ", " + i);
+                last = i;
+            }
+        }
+        if (last == -1)
+            throw new CheckException("no argument specified");
+    }
+
+    public static class Regex implements Checker {
 
         private final Pattern pattern;
 
@@ -16,17 +32,17 @@ public class ValueChecks {
         }
 
         @Override
-        public void check(Object val) throws ValueCheckFailure {
+        public void check(Object val) throws CheckFailure {
             String s = (val instanceof String) ? (String) val : String
                     .valueOf(val);
             if (!pattern.matcher(s).matches())
-                throw new ValueCheckFailure("string doesn't match regex "
+                throw new CheckFailure("string doesn't match regex "
                         + pattern.pattern() + ": \n" + s);
         }
 
     }
 
-    public static class FileAccess implements ValueCheck {
+    public static class FileAccess implements Checker {
 
         public static final int READ      = 1;
         public static final int WRITE     = 2;
@@ -78,20 +94,20 @@ public class ValueChecks {
         }
 
         @Override
-        public void check(Object val) throws ValueCheckFailure {
+        public void check(Object val) throws CheckFailure {
             File f = (File) val;
             if (set(READ) && !f.canRead())
-                throw new ValueCheckFailure("can't read " + f);
+                throw new CheckFailure("can't read " + f);
             if (set(WRITE) && !f.canWrite())
-                throw new ValueCheckFailure("can't write " + f);
+                throw new CheckFailure("can't write " + f);
             if (set(EXECUTE) && !f.canExecute())
-                throw new ValueCheckFailure("can't execute " + f);
+                throw new CheckFailure("can't execute " + f);
             if (set(DIRECTORY) && !f.isDirectory())
-                throw new ValueCheckFailure("not a directory " + f);
+                throw new CheckFailure("not a directory " + f);
             if (set(FILE) && !f.isFile())
-                throw new ValueCheckFailure("not a file " + f);
+                throw new CheckFailure("not a file " + f);
             if (set(TEXT) && !Files.isText(f))
-                throw new ValueCheckFailure("not a text file " + f);
+                throw new CheckFailure("not a text file " + f);
         }
     }
 
