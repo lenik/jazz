@@ -25,6 +25,7 @@ import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.ControlBreak;
+import net.bodz.bas.lang.a.ChainUsage;
 import net.bodz.bas.lang.a.OverrideOption;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.err.NotImplementedException;
@@ -52,9 +53,9 @@ import net.bodz.bas.types.util.Strings;
  * 
  * <pre>
  * ${:import(
- *     net.bodz.bas.cli.util.Doc, 
- *     net.bodz.bas.cli.util.RcsKeywords, 
- *     net.bodz.bas.cli.util.Version
+ *     net.bodz.bas.a.Doc, 
+ *     net.bodz.bas.a.RcsKeywords, 
+ *     net.bodz.bas.a.Version
  * )}@Doc(&quot;${primary_type_name} ${description}&quot;)
  * &#064;Version({ 0, 0 })
  * &#064;RcsKeywords(id = &quot;$$Id: ${primary_type_name}.java 0 ${date} ${time} ${user} $$&quot;)
@@ -463,6 +464,7 @@ public class BasicCLI {
     }
 
     /** Do nothing, to be overrided. */
+    @OverrideOption(chain = ChainUsage.PREFERRED)
     void _postInit() throws Throwable {
     }
 
