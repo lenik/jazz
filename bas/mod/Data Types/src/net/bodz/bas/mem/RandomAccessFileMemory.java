@@ -1,5 +1,7 @@
 package net.bodz.bas.mem;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
@@ -12,6 +14,11 @@ public class RandomAccessFileMemory extends _Memory {
     private long             offset;
 
     private static boolean   precheck = false;
+
+    public RandomAccessFileMemory(File file, long offset)
+            throws FileNotFoundException {
+        this(new RandomAccessFile(file, "rw"), offset);
+    }
 
     public RandomAccessFileMemory(RandomAccessFile file, long offset) {
         if (file == null)

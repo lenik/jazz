@@ -26,14 +26,14 @@ public class ArrayMemory extends _Memory {
     @Override
     public byte read(int addr) throws AccessException {
         if (addr >= end - start)
-            throw new OutOfDomainException("addr", addr, end - start);
+            throw new BadAddressException(addr, end - start);
         return array[start + addr];
     }
 
     @Override
     public void write(int addr, byte value) throws AccessException {
         if (addr >= end - start)
-            throw new OutOfDomainException("addr", addr, end - start);
+            throw new BadAddressException(addr, end - start);
         array[start + addr] = value;
     }
 
@@ -42,15 +42,16 @@ public class ArrayMemory extends _Memory {
             throws AccessException {
         int actualEnd = start + addr + len;
         if (actualEnd > end)
-            throw new OutOfDomainException("actualEnd", actualEnd, end);
+            throw new BadAddressException(actualEnd, end);
         Bytes.copy(array, start + addr, buf, off, len);
     }
 
     @Override
-    public void write(int addr, byte[] buf, int off, int len) {
+    public void write(int addr, byte[] buf, int off, int len)
+            throws BadAddressException {
         int actualEnd = start + addr + len;
         if (actualEnd > end)
-            throw new OutOfDomainException("actualEnd", actualEnd, end);
+            throw new BadAddressException(actualEnd, end);
         Bytes.copy(buf, off, array, start + addr, len);
     }
 
