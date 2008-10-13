@@ -4,12 +4,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import net.bodz.bas.lang.Control;
-import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.err.IllegalUsageError;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.lang.err.ReflectException;
 import net.bodz.bas.types.IndexMap;
-import net.bodz.bas.types.TypeParser;
 import net.bodz.bas.types.TypeParsers;
 import net.bodz.bas.types.util.Types;
 
@@ -52,15 +50,11 @@ public class VarArgcMethod {
             for (int i = 0; i < argc; i++) {
                 Class<?> dt = declTypes[i];
                 Class<?> at = actuTypes[i];
-                if (argv[i] != null && !Types.box(dt).isAssignableFrom(at))
+                if (args[i] != null && !Types.box(dt).isAssignableFrom(at))
                     if (at == String.class) {
                         String stringArg = (String) args[i];
                         try {
-                            TypeParser parser = TypeParsers.guess(dt);
-                            Object parsed = parser.parse(stringArg);
-                            argv[i] = parsed;
-                        } catch (CreateException e) {
-                            throw new IllegalArgumentException(e);
+                            argv[i] = TypeParsers.parse(dt, stringArg);
                         } catch (ParseException e) {
                             throw new IllegalArgumentException(e);
                         }

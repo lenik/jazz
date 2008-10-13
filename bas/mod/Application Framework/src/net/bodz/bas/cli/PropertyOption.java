@@ -4,7 +4,6 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.cli.a.OptionGroup;
 import net.bodz.bas.lang.script.ScriptException;
 
@@ -15,9 +14,10 @@ public class PropertyOption<T> extends _Option<T> {
     private final Method             writef;
 
     @SuppressWarnings("unchecked")
-    public PropertyOption(String name, Option option,
-            PropertyDescriptor property, OptionGroup optgrp) {
-        super(name, option, (Class<T>) property.getPropertyType(), optgrp);
+    public PropertyOption(String name, PropertyDescriptor property,
+            OptionGroup optgrp) {
+        super(name, property.getReadMethod(), // AnnotatedElement
+                (Class<T>) property.getPropertyType(), optgrp);
         this.property = property;
         this.readf = property.getReadMethod();
         this.writef = property.getWriteMethod();

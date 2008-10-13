@@ -1,10 +1,13 @@
 package net.bodz.bas.cli;
 
+import java.lang.reflect.AnnotatedElement;
 import java.util.Collection;
 import java.util.Map;
 
+import net.bodz.bas.cli.a.CheckBy;
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.cli.a.OptionGroup;
+import net.bodz.bas.cli.a.ParseBy;
 import net.bodz.bas.lang.err.CheckException;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.err.ParseException;
@@ -31,7 +34,9 @@ public abstract class _Option<T> implements ScriptField<T> {
     protected final String         optgrp;
 
     @SuppressWarnings("unchecked")
-    public _Option(String name, Option option, Class<?> type, OptionGroup optgrp) {
+    public _Option(String name, AnnotatedElement elm, Class<?> type,
+            OptionGroup optgrp) {
+        Option option = elm.getAnnotation(Option.class);
         if (!option.name().isEmpty()) {
             this.hname = option.name();
             this.name = Strings.dehyphenatize(hname);
@@ -43,11 +48,19 @@ public abstract class _Option<T> implements ScriptField<T> {
         this.type = type;
         this.optgrp = optgrp == null ? null : optgrp.value();
 
-        Class<? extends TypeParser> parser0 = option.parser();
-        if (parser0 == TypeParser.class)
-            parser0 = null;
+        ParseBy parseBy = elm.getAnnotation(ParseBy.class);
+        Class<? extends TypeParser> parserClass = null;
+        String parserParam = null;
+        if (parseBy != null) {
+            parserClass = parseBy.value();
+            parserParam = parseBy.param();
+            if (parserClass == TypeParser.class)
+                parserClass = null;
+            if (parserParam.isEmpty())
+                parserParam = null;
+        }
 
-        if (type.isArray() && parser0 == null)
+        if (type.isArray() && parserClass == null)
             valtype = (Class<T>) type.getComponentType();
         if (option.valtype() != void.class)
             valtype = (Class<T>) option.valtype();
@@ -66,30 +79,40 @@ public abstract class _Option<T> implements ScriptField<T> {
             check = null;
         } else {
             try {
-                parser = Util.guessParser(Types.getClassInstance(parser0),
-                        valtype);
+                TypeParser parser0;
+                if (parserParam == null)
+                    parser0 = Types.getClassInstance(parserClass);
+                else
+                    parser0 = Types.getClassInstance(parserClass, parserParam);
+                parser = Util.guessParser(parser0, valtype);
                 if (parser instanceof ItemTypeParser)
                     valparser = (ItemTypeParser) parser;
                 else
                     valparser = null;
 
-                Class<? extends Checker> check0 = option.check();
-                if (check0 == Checker.class)
+                CheckBy checkBy = elm.getAnnotation(CheckBy.class);
+                Class<? extends Checker> check0 = null;
+                if (checkBy != null) {
+                    check0 = checkBy.value();
+                    if (check0 == Checker.class)
+                        check = null;
+                    else {
+                        String checkinfo = checkBy.param();
+                        if (checkinfo.isEmpty())
+                            check = Types.getClassInstance(check0);
+                        else
+                            check = Types.getClassInstance(check0, checkinfo);
+                    }
+                } else
                     check = null;
-                else {
-                    String checkinfo = option.checkinfo();
-                    if (checkinfo.isEmpty())
-                        check = Types.getClassInstance(check0);
-                    else
-                        check = Types.getClassInstance(check0, checkinfo);
-                }
             } catch (CreateException e) {
-                throw new CLIError(e.getMessage(), e);
+                throw new CLIError("can't init option " + name, e);
             } catch (CLIError e) {
-                throw new CLIError("option " + name + ": " + e.getMessage(), e);
+                throw new CLIError("can't init option " + name, e);
+            } catch (ParseException e) {
+                throw new CLIError("can't init option " + name, e);
             }
         }
-
     }
 
     @Override

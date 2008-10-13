@@ -2,7 +2,6 @@ package net.bodz.bas.cli;
 
 import java.lang.reflect.Field;
 
-import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.cli.a.OptionGroup;
 import net.bodz.bas.lang.script.ScriptException;
 
@@ -11,9 +10,8 @@ public class FieldOption<T> extends _Option<T> {
     private final Field field;
 
     @SuppressWarnings("unchecked")
-    public FieldOption(String name, Option option, Field field,
-            OptionGroup optgrp) {
-        super(name, option, (Class<T>) field.getType(), optgrp);
+    public FieldOption(String name, Field field, OptionGroup optgrp) {
+        super(name, field, (Class<T>) field.getType(), optgrp);
         this.field = field;
         field.setAccessible(true);
     }

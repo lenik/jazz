@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.cli.a.OptionGroup;
+import net.bodz.bas.cli.a.ParseBy;
 import net.bodz.bas.io.FileMask;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.io.FsWalk;
@@ -43,9 +44,11 @@ public class BatchCLI extends BasicCLI {
     @Option(alias = "IM", vnam = "FILEMASK", doc = "exclude specified type of files")
     FileMask          exclusiveMask;
 
-    @Option(alias = "If", vnam = "WILDCARDS", parser = WildcardsParser.class, doc = "include these filenames")
+    @Option(alias = "If", vnam = "WILDCARDS", doc = "include these filenames")
+    @ParseBy(WildcardsParser.class)
     Pattern           fileInclusivePattern;
-    @Option(alias = "IF", vnam = "WILDCARDS", parser = WildcardsParser.class, doc = "exclude these filenames")
+    @Option(alias = "IF", vnam = "WILDCARDS", doc = "exclude these filenames")
+    @ParseBy(WildcardsParser.class)
     Pattern           fileExclusivePattern;
 
     @Option(alias = "Ip", vnam = "REGEXP", doc = "include these pathnames")
@@ -56,10 +59,12 @@ public class BatchCLI extends BasicCLI {
     @Option(alias = "Id", doc = "also apply filters on directories")
     boolean           filterDirectories;
 
-    @Option(alias = "Ic", vnam = "CLASS(FileFilter)", parser = GetInstanceParser.class, doc = "using custom file filter, this will override other --I* options")
+    @Option(alias = "Ic", vnam = "CLASS(FileFilter)", doc = "using custom file filter, this will override other --I* options")
+    @ParseBy(GetInstanceParser.class)
     FileFilter        fileFilter;
 
-    @Option(vnam = "CLASS(Comparator)", parser = GetInstanceParser.class, doc = "sort files in each directory")
+    @Option(vnam = "CLASS(Comparator)", doc = "sort files in each directory")
+    @ParseBy(GetInstanceParser.class)
     Comparator<File>  sortComparator;
 
     protected BatchCLI() {

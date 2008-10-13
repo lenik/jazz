@@ -5,7 +5,7 @@ import static net.bodz.bas.types.util.ArrayOps.Objects;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import net.bodz.bas.cli.a.Option;
+import net.bodz.bas.cli.a.ArgsParseBy;
 import net.bodz.bas.cli.a.OptionGroup;
 import net.bodz.bas.lang.Control;
 import net.bodz.bas.lang.err.CreateException;
@@ -23,25 +23,46 @@ public class MethodOption extends _Option<CallInfo> implements
     private final int          argc;
     private final TypeParser[] parsers;
 
-    public MethodOption(String name, Option option, Method method,
-            OptionGroup optgrp) {
-        super(name, option, CallInfo.class, optgrp);
+    public MethodOption(String name, Method method, OptionGroup optgrp) {
+        super(name, method, CallInfo.class, optgrp);
         this.method = method;
         method.setAccessible(true); // ...
 
-        Class<? extends TypeParser>[] wants = option.want();
+        ArgsParseBy argsParseBy = method.getAnnotation(ArgsParseBy.class);
+        Class<? extends TypeParser>[] wants = _c0;
+        String[] wantParams = null;
+        if (argsParseBy != null) {
+            wants = argsParseBy.value();
+            wantParams = argsParseBy.param();
+        }
         Class<?>[] types = method.getParameterTypes();
         argc = types.length;
         parsers = new TypeParser[argc];
         try {
-            for (int i = 0; i < wants.length; i++)
-                parsers[i] = Util.guessParser(Types.getClassInstance(wants[i]),
-                        types[i]);
-            for (int i = wants.length; i < argc; i++)
-                parsers[i] = TypeParsers.guess(types[i]);
+            for (int i = 0; i < wants.length; i++) {
+                TypeParser parserInst;
+                if (i < wantParams.length)
+                    parserInst = Types.getClassInstance(wants[i], //
+                            wantParams[i]);
+                else
+                    parserInst = Types.getClassInstance(wants[i]);
+                parsers[i] = Util.guessParser(parserInst, types[i]);
+            }
+            for (int i = wants.length; i < argc; i++) {
+                parsers[i] = TypeParsers.guess(types[i], true);
+            }
         } catch (CreateException e) {
-            throw new CLIError(e.getMessage(), e);
+            throw new CLIError(e);
+        } catch (ParseException e) {
+            throw new CLIError(e);
         }
+    }
+
+    private static final Class<? extends TypeParser>[] _c0;
+    static {
+        @SuppressWarnings("unchecked")//
+        Class<? extends TypeParser>[] c0 = (Class<? extends TypeParser>[]) new Class<?>[0];
+        _c0 = c0;
     }
 
     public Method getMethod() {

@@ -2,6 +2,9 @@ package net.bodz.bas.lang.ref;
 
 import java.util.LinkedList;
 
+/**
+ * Scoped Var.
+ */
 public class ScopedRef<T> implements Ref<T> {
 
     protected LinkedList<T> stack = new LinkedList<T>();

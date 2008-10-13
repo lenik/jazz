@@ -5,9 +5,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import net.bodz.bas.types.TypeParser;
-import net.bodz.bas.types.Checker;
-
 /**
  * [OPTION] [--] FILES
  * <p>
@@ -71,21 +68,10 @@ public @interface Option {
      */
     Class<?> valtype() default void.class;
 
-    Class<? extends TypeParser> parser() default TypeParser.class;
-
-    String parserinfo() default "";
-
-    Class<? extends Checker> check() default Checker.class;
-
-    String checkinfo() default "";
-
     /**
      * Get option also from FILES by index. for collection/map types, this is
      * the starting index.
      */
     int fileIndex() default -1;
-
-    /** for method/callback only */
-    Class<? extends TypeParser>[] want() default {};
 
 }

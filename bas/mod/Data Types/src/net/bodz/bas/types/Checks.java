@@ -1,13 +1,37 @@
 package net.bodz.bas.types;
 
 import java.io.File;
+import java.lang.reflect.AnnotatedElement;
 import java.util.regex.Pattern;
 
+import net.bodz.bas.cli.a.CheckBy;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.err.CheckException;
 import net.bodz.bas.lang.err.CheckFailure;
+import net.bodz.bas.lang.err.CreateException;
+import net.bodz.bas.types.util.Types;
 
 public class Checks {
+
+    public static Checker getChecker(AnnotatedElement elm) throws CreateException {
+        CheckBy checkBy = elm.getAnnotation(CheckBy.class);
+        return getChecker(checkBy);
+    }
+
+    public static Checker getChecker(CheckBy checkBy) throws CreateException {
+        if (checkBy == null)
+            return null;
+        Class<? extends Checker> checkerClass = checkBy.value();
+        if (checkerClass == Checker.class)
+            return null;
+        String param = checkBy.param();
+        if (param.isEmpty())
+            param = null;
+        if (param == null)
+            return Types.getClassInstance(checkerClass);
+        else
+            return Types.getClassInstance(checkerClass, param);
+    }
 
     public static void setOnlyOne(Object... args) throws CheckException {
         int last = -1;

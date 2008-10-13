@@ -15,7 +15,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Map.Entry;
 
-import net.bodz.bas.lang.err.CreateException;
+import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.lang.script.ScriptException;
 import net.bodz.bas.types.TypeParser;
 import net.bodz.bas.types.TypeParsers;
@@ -84,9 +84,9 @@ class Util {
     }
 
     public static TypeParser guessParser(TypeParser parser, Class<?> clazz)
-            throws CreateException {
+            throws ParseException {
         if (parser == null)
-            parser = (TypeParser) TypeParsers.guess(clazz);
+            parser = (TypeParser) TypeParsers.guess(clazz, true);
         return parser;
     }
 

@@ -5,19 +5,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import net.bodz.bas.types.Checker;
+import net.bodz.bas.lang.a.TargetSide;
 
-/**
- * Bean Annotation
- */
 @Retention(RetentionPolicy.RUNTIME)
 @Target( { ElementType.FIELD, ElementType.METHOD })
-public @interface UIFormat {
+@TargetSide(TargetSide.BEAN)
+public @interface CodecBy {
 
-    Class<?> preferredDisplayType() default Object.class;
-
-    Class<? extends UICodec> value() default UICodec.class;
-
-    Class<? extends Checker> check() default Checker.class;
+    Class<? extends Codec> value() default Codec.class;
 
 }
