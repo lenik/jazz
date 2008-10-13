@@ -5,11 +5,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/**
- * GUI Annotation
- */
+import net.bodz.bas.lang.a.TargetSide;
+
 @Retention(RetentionPolicy.RUNTIME)
 @Target( { ElementType.FIELD, ElementType.METHOD })
+@TargetSide(TargetSide.GUI)
 public @interface BindProperty {
 
     /**

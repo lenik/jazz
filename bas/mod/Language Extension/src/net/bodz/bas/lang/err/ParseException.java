@@ -20,4 +20,9 @@ public class ParseException extends Exception {
         super(cause);
     }
 
+    public ParseException(Class<?> unparsableType, String unparsableText) {
+        this("don't know how to parse " + unparsableType + ": "
+                + unparsableText);
+    }
+
 }

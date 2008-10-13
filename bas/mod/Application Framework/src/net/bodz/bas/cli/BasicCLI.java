@@ -18,6 +18,7 @@ import net.bodz.bas.a.RcsKeywords;
 import net.bodz.bas.a.VersionInfo;
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.cli.a.OptionGroup;
+import net.bodz.bas.cli.a.ParseBy;
 import net.bodz.bas.cli.a.RunInfo;
 import net.bodz.bas.cli.ext.CLIPlugin;
 import net.bodz.bas.cli.ext.CLIPlugins;
@@ -86,10 +87,12 @@ public class BasicCLI {
         CLIConfig.load();
     }
 
-    @Option(hidden = true, parser = CharOutParser.class)
+    @Option(hidden = true)
+    @ParseBy(CharOutParser.class)
     protected CharOut _stdout        = CharOuts.stdout;
 
-    @Option(name = "logout", hidden = true, parser = ALogParser.class)
+    @Option(name = "logout", hidden = true)
+    @ParseBy(ALogParser.class)
     protected ALog    L;
 
     @Option(hidden = true)
@@ -114,7 +117,7 @@ public class BasicCLI {
     protected AutoTypeMap<String, Object> _vars;
 
     @Option(name = "define", alias = ".D", vnam = "NAM=VAL", doc = "define variables")
-    void _define(String exp) throws CreateException, ParseException {
+    void _define(String exp) throws ParseException {
         int eq = exp.indexOf('=');
         String nam = exp;
         Object val = null;
@@ -126,8 +129,7 @@ public class BasicCLI {
             val = true;
         else {
             Class<?> type = _getVarType(nam);
-            TypeParser parser = TypeParsers.guess(type);
-            val = parser.parse(exp);
+            val = TypeParsers.parse(type, exp);
         }
         _vars.put(nam, val);
     }
@@ -203,8 +205,7 @@ public class BasicCLI {
             if (sig0 == String.class)
                 return (CLIPlugin) typeEx.newInstance(ctorArg);
             if (!sig0.isArray()) {
-                TypeParser parser = TypeParsers.guess(sig0);
-                Object val = parser.parse(ctorArg);
+                Object val = TypeParsers.parse(sig0, ctorArg);
                 return (CLIPlugin) typeEx.newInstance(val);
             }
 
@@ -216,7 +217,7 @@ public class BasicCLI {
             if (valtype == String.class)
                 return (CLIPlugin) typeEx.newInstance((Object) args);
 
-            TypeParser parser = TypeParsers.guess(valtype);
+            TypeParser parser = TypeParsers.guess(valtype, true);
             Object valarray = Array.newInstance(valtype, args.length);
             for (int i = 0; i < args.length; i++) {
                 Object val = parser.parse(args[i]);

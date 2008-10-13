@@ -4,8 +4,6 @@ import java.io.File;
 import java.util.Iterator;
 
 import net.bodz.bas.io.Files;
-import net.bodz.bas.lang.err.CreateException;
-import net.bodz.bas.lang.err.IllegalUsageError;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.types.TypeParser;
 import net.bodz.bas.types.TypeParsers;
@@ -29,16 +27,10 @@ public abstract class MultipartsFile<T> extends _FileType implements
         this.file = file;
         this.encoding = encoding;
         try {
-            this.keyParser = TypeParsers.guess(getKeyClass());
-        } catch (CreateException e) {
-            throw new IllegalUsageError("Invalid key class: " + getKeyClass(),
-                    e);
-        }
-        try {
-            this.valueParser = TypeParsers.guess(getValueClass());
-        } catch (CreateException e) {
-            throw new IllegalUsageError("Invalid value class: "
-                    + getValueClass(), e);
+            this.keyParser = TypeParsers.guess(getKeyClass(), "KeyClass");
+            this.valueParser = TypeParsers.guess(getValueClass(), "ValueClass");
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
         }
         this.textKey = getTextKey();
     }

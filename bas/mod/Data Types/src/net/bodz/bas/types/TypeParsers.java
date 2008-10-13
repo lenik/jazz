@@ -13,8 +13,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.util.Map;
-import java.util.TreeMap;
-import java.util.Map.Entry;
 import java.util.regex.Pattern;
 
 import net.bodz.bas.cli.CLIError;
@@ -25,13 +23,11 @@ import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.io.IByteOut;
 import net.bodz.bas.lang.err.CreateException;
-import net.bodz.bas.lang.err.OutOfDomainException;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.log.ALog;
 import net.bodz.bas.log.ALogs;
 import net.bodz.bas.log.LogOuts;
 import net.bodz.bas.text.encodings.Encodings;
-import net.bodz.bas.types.util.Comparators;
 import net.bodz.bas.types.util.Types;
 
 public class TypeParsers {
@@ -126,11 +122,18 @@ public class TypeParsers {
         private TypeParser valparser;
         private Pattern    separator;
 
+        public ArrayParser(Class<?> valtype, TypeParser valparser,
+                Pattern separator) {
+            if (valparser == null)
+                throw new NullPointerException("null valparser");
+            this.valtype = valtype;
+            this.valparser = valparser;
+            this.separator = separator;
+        }
+
         public ArrayParser(Class<?> valtype, Pattern separator)
                 throws CreateException {
-            this.valtype = valtype;
-            this.valparser = TypeParsers.guess(valtype);
-            this.separator = separator;
+            this(valtype, TypeParsers.guess(valtype), separator);
         }
 
         public ArrayParser(Class<?> valtype, String separator)
@@ -154,13 +157,48 @@ public class TypeParsers {
     }
 
     /**
-     * @throws OutOfDomainException
-     *             if no suitable type parser exists.
+     * @return <code>null</code> if no explicitly (or implicitly derived) type
+     *         registered.
+     */
+    public static TypeParser get(Class<?> clazz) {
+        return registry.getParent(clazz);
+    }
+
+    public static void register(Class<?> clazz, TypeParser parser) {
+        registry.put(clazz, parser);
+    }
+
+    public static boolean unregister(Class<?> clazz) {
+        return registry.remove(clazz) != null;
+    }
+
+    public static int unregister(TypeParser parser) {
+        int n = 0;
+        for (Map.Entry<Class<?>, TypeParser> entry : registry.entrySet()) {
+            if (entry.getValue() == parser)
+                if (registry.remove(entry.getKey()) != null)
+                    n++;
+        }
+        return n;
+    }
+
+    /**
+     * Support types:
+     * <ul>
+     * <li>Array
+     * <li>@Obtain
+     * <li>ctor(String)
+     * </ul>
+     * 
+     * @return <code>null</code> if no suitable type parser exists.
+     * @throws CreateException
+     *             if get from Obtain failed.
      */
     public static TypeParser guess(Class<?> type) throws CreateException {
         TypeParser parser = get(type);
         if (parser != null)
             return parser;
+
         if (type.isArray())
             return new ArrayParser(type.getComponentType(), ",");
 
@@ -181,78 +219,35 @@ public class TypeParsers {
         if (parser != null)
             return parser;
 
-        throw new OutOfDomainException("don't know how to parser " + type);
-    }
-
-    private static TreeMap<Class<?>, TypeParser> registry;
-    static {
-        registry = new TreeMap<Class<?>, TypeParser>(Comparators.TYPE_HIER);
-        registry.put(byte.class, new ByteParser());
-        registry.put(Byte.class, new ByteParser());
-        registry.put(short.class, new ShortParser());
-        registry.put(Short.class, new ShortParser());
-        registry.put(int.class, new IntegerParser());
-        registry.put(Integer.class, new IntegerParser());
-        registry.put(long.class, new LongParser());
-        registry.put(Long.class, new LongParser());
-        registry.put(float.class, new FloatParser());
-        registry.put(Float.class, new FloatParser());
-        registry.put(double.class, new DoubleParser());
-        registry.put(Double.class, new DoubleParser());
-        registry.put(boolean.class, new BooleanParser());
-        registry.put(Boolean.class, new BooleanParser());
-        registry.put(char.class, new CharacterParser());
-        registry.put(Character.class, new CharacterParser());
-        registry.put(char[].class, new CharArrayParser());
-        registry.put(String.class, new StringParser());
-        registry.put(Class.class, new ClassParser());
-        registry.put(Charset.class, new CharsetParser());
-        registry.put(File.class, new FileParser());
-        registry.put(ByteOut.class, new ByteOutParser());
-        registry.put(CharOut.class, new CharOutParser());
-        registry.put(ALog.class, new ALogParser());
-        registry.put(Pattern.class, new PatternParser());
-        registry.put(MessageDigest.class, new MessageDigestParser());
-    }
-
-    /**
-     * @return <code>null</code> if no explicitly (or implicitly derived) type
-     *         registered.
-     */
-    public static TypeParser get(Class<?> clazz) {
-        TypeParser registered = registry.get(clazz);
-        if (registered != null)
-            return registered;
-        Class<?> baseClass = clazz;
-        Entry<Class<?>, TypeParser> base = registry.floorEntry(baseClass);
-        while (base != null) {
-            baseClass = base.getKey();
-            if (!baseClass.isAssignableFrom(clazz))
-                break;
-            TypeParser baseParser = base.getValue();
-            if (baseParser.variant())
-                return baseParser;
-            base = registry.lowerEntry(baseClass);
-        }
         return null;
     }
 
-    public static void register(Class<?> clazz, TypeParser parser) {
-        registry.put(clazz, parser);
-    }
-
-    public static boolean unregister(Class<?> clazz) {
-        return registry.remove(clazz) != null;
-    }
-
-    public static int unregister(TypeParser parser) {
-        int n = 0;
-        for (Map.Entry<Class<?>, TypeParser> entry : registry.entrySet()) {
-            if (entry.getValue() == parser)
-                if (registry.remove(entry.getKey()) != null)
-                    n++;
+    public static TypeParser guess(Class<?> type, String errname)
+            throws ParseException {
+        TypeParser parser;
+        try {
+            parser = guess(type);
+        } catch (CreateException e) {
+            throw new ParseException(e);
         }
-        return n;
+        if (parser == null && errname != null) {
+            throw new ParseException("can't parse " + errname
+                    + ": no suitable parser for " + type);
+        }
+        return parser;
+    }
+
+    public static TypeParser guess(Class<?> type, boolean fail)
+            throws ParseException {
+        return guess(type, fail ? "" : null);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> T parse(Class<T> type, String s) throws ParseException {
+        TypeParser parser = guess(type, true);
+        Object val = parser.parse(s);
+        // return type.isPrimitive() ? (T) val : type.cast(val);
+        return (T) val;
     }
 
     public static class ByteParser extends _TypeParser {
@@ -560,6 +555,37 @@ public class TypeParsers {
             return Encodings.BASE64.decode(hex);
         }
 
+    }
+
+    private static TypeHierMap<TypeParser> registry;
+    static {
+        registry = new TypeHierMap<TypeParser>();
+        registry.put(byte.class, new ByteParser());
+        registry.put(Byte.class, new ByteParser());
+        registry.put(short.class, new ShortParser());
+        registry.put(Short.class, new ShortParser());
+        registry.put(int.class, new IntegerParser());
+        registry.put(Integer.class, new IntegerParser());
+        registry.put(long.class, new LongParser());
+        registry.put(Long.class, new LongParser());
+        registry.put(float.class, new FloatParser());
+        registry.put(Float.class, new FloatParser());
+        registry.put(double.class, new DoubleParser());
+        registry.put(Double.class, new DoubleParser());
+        registry.put(boolean.class, new BooleanParser());
+        registry.put(Boolean.class, new BooleanParser());
+        registry.put(char.class, new CharacterParser());
+        registry.put(Character.class, new CharacterParser());
+        registry.put(char[].class, new CharArrayParser());
+        registry.put(String.class, new StringParser());
+        registry.put(Class.class, new ClassParser());
+        registry.put(Charset.class, new CharsetParser());
+        registry.put(File.class, new FileParser());
+        registry.put(ByteOut.class, new ByteOutParser());
+        registry.put(CharOut.class, new CharOutParser());
+        registry.put(ALog.class, new ALogParser());
+        registry.put(Pattern.class, new PatternParser());
+        registry.put(MessageDigest.class, new MessageDigestParser());
     }
 
 }

@@ -42,85 +42,65 @@ public class ClassOptions<CT> {
             throw new CLIError(e.getMessage(), e);
         }
 
-        Option optfull = clazz.getAnnotation(Option.class);
-
         for (Class<?> c : Types.getTypeChain(clazz, true)) {
             if (c == Object.class) // opt for speed
                 continue;
             OptionGroup optgrp = c.getAnnotation(OptionGroup.class);
-            importFields(optgrp, optfull, c.getDeclaredFields());
-            importMethods(optgrp, optfull, c.getDeclaredMethods());
+            importFields(optgrp, c.getDeclaredFields());
+            importMethods(optgrp, c.getDeclaredMethods());
         }
 
         // bean properties overwrite fields
-        importProperties(optfull, beanInfo.getPropertyDescriptors());
+        importProperties(beanInfo.getPropertyDescriptors());
 
-        // importMethods(optgrp, optfull, beanInfo.getMethodDescriptors());
+        // importMethods(optgrp, beanInfo.getMethodDescriptors());
     }
 
-    protected void importFields(OptionGroup optgrp, Option optf,
-            Field... fields) {
+    protected void importFields(OptionGroup optgrp, Field... fields) {
         for (final Field field : fields) {
-            Option opt = field.getAnnotation(Option.class);
-            if (opt == null)
-                opt = optf;
-            if (opt == null)
+            if (!field.isAnnotationPresent(Option.class))
                 continue;
-
-            FieldOption<Object> fieldopt = new FieldOption<Object>(field
-                    .getName(), opt, field, optgrp);
+            FieldOption<Object> fieldopt = new FieldOption<Object>(//
+                    field.getName(), field, optgrp);
             addOption(fieldopt);
         }
     }
 
-    protected void importProperties(Option optf,
-            PropertyDescriptor... properties) {
+    /**
+     * Only annotations on read method is used.
+     */
+    protected void importProperties(PropertyDescriptor... properties) {
         for (final PropertyDescriptor property : properties) {
-            Method write = property.getWriteMethod();
-            if (write == null)
+            Method readf = property.getReadMethod();
+            if (readf == null)
                 continue;
-
-            Option opt = null;
-            Method read = property.getReadMethod();
-            if (read != null)
-                opt = read.getAnnotation(Option.class);
-            if (opt == null && write != null)
-                opt = write.getAnnotation(Option.class);
-            if (opt == null)
-                opt = optf;
-            if (opt == null)
+            if (!readf.isAnnotationPresent(Option.class))
                 continue;
-
-            OptionGroup optgrp = read.getDeclaringClass().getAnnotation(
+            OptionGroup optgrp = readf.getDeclaringClass().getAnnotation(
                     OptionGroup.class);
-            PropertyOption<Object> propopt = new PropertyOption<Object>(
-                    property.getName(), opt, property, optgrp);
+            PropertyOption<Object> propopt = new PropertyOption<Object>( //
+                    property.getName(), property, optgrp);
             addOption(propopt);
         }
     }
 
-    protected void importMethod(OptionGroup optgrp, Option optf,
-            final Method method) {
-        Option opt = method.getAnnotation(Option.class);
-        if (opt == null)
-            opt = optf;
-        if (opt == null)
+    protected void importMethod(OptionGroup optgrp, final Method method) {
+        if (!method.isAnnotationPresent(Option.class))
             return;
-        _Option<CallInfo> copt = new MethodOption(method.getName(), opt,
-                method, optgrp);
+        _Option<CallInfo> copt = new MethodOption(//
+                method.getName(), method, optgrp);
         addOption(copt);
     }
 
-    protected void importMethods(OptionGroup optgrp, Option optf,
-            Method... methods) {
+    protected void importMethods(OptionGroup optgrp, Method... methods) {
         for (Method method : methods)
-            importMethod(optgrp, optf, method);
+            importMethod(optgrp, method);
     }
 
-    protected void importMethods(OptionGroup optgrp, Option optf,
+    protected void importMethods(OptionGroup optgrp,
             MethodDescriptor... methods) {
         for (MethodDescriptor _method : methods)
-            importMethod(optgrp, optf, _method.getMethod());
+            importMethod(optgrp, _method.getMethod());
     }
 
     protected void addOption(_Option<?> copt) {
