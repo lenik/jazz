@@ -32,10 +32,9 @@ public class GridBuilder implements GUIBuilder {
         grid.setLayout(layout);
 
         int row = 0;
-        for (Entry<Member, GUIMember> entry : guiclass.members.entrySet()) {
-            Member m = entry.getKey();
-            GUIMember g = entry.getValue();
-            // ICON | ...
+        for (GUIItem item : guiclass.getItems()) {
+            String name = item.getName();
+            
             GUIHint hint = null;
 
             Label iconLabel = null;
@@ -58,6 +57,7 @@ public class GridBuilder implements GUIBuilder {
             }
 
             Control control;
+            
         }
         return grid;
     }
