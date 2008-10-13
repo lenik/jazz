@@ -1,6 +1,8 @@
 package net.bodz.swt.gui;
 
+import java.beans.PropertyDescriptor;
 import java.lang.reflect.AnnotatedElement;
+import java.lang.reflect.Method;
 
 import net.bodz.bas.gui.a.PreferredSize;
 import net.bodz.bas.lang.err.CreateException;
@@ -8,8 +10,7 @@ import net.bodz.bas.lang.err.IllegalUsageError;
 import net.bodz.bas.mod.Factory;
 import net.bodz.bas.types.util.Ns;
 import net.bodz.swt.gui.a.A_gui;
-import net.bodz.swt.gui.a.MenuItem;
-import net.bodz.swt.gui.a.ToolItem;
+import net.bodz.swt.gui.a.MenuContrib;
 import net.bodz.swt.gui.a.View;
 import net.bodz.swt.util.SWTResources;
 
@@ -22,10 +23,10 @@ import org.eclipse.swt.graphics.RGB;
 
 public class GUIHint {
 
+    public int      order;
     public Boolean  enabled;
     public Boolean  visible;
-    private int     order;
-    private int     tabOrder;
+    public int      tabOrder;
     private Factory iconFactory;
     private Factory labelFactory;
     private Factory fontFactory;
@@ -66,7 +67,6 @@ public class GUIHint {
 
     public GUIHint(GUIHint copy, AnnotatedElement elm) {
         this(copy);
-
         Boolean enabled = (Boolean) Ns.getValue(elm,
                 net.bodz.bas.gui.a.Enabled.class);
         if (enabled != null)
@@ -118,20 +118,34 @@ public class GUIHint {
         if (preferredSize != null)
             this.preferredSize = preferredSize;
 
-        String menuItem = (String) Ns.getValue(elm, MenuItem.class);
+        String menuItem = (String) Ns.getValue(elm, MenuContrib.class);
         if (menuItem != null)
             this.menuItem = prep(menuItem, elm);
-
-        String toolItem = (String) Ns.getValue(elm, ToolItem.class);
-        if (toolItem != null)
-            this.toolItem = prep(toolItem, elm);
 
         String viewId = (String) Ns.getValue(elm, View.class);
         if (viewId != null)
             this.viewId = prep(viewId, elm);
     }
 
-    private Class<? extends Throwable> exceptionHandler;
+    protected GUIHint(AnnotatedElement elm) {
+        this(null, elm);
+    }
+
+    public static GUIHint get(AnnotatedElement elm) {
+        // parent...
+        return new GUIHint(elm);
+    }
+
+    public static GUIHint get(PropertyDescriptor property) {
+        Method readf = property.getReadMethod();
+        Method writef = property.getWriteMethod();
+        GUIHint hint = null;
+        if (readf != null)
+            hint = new GUIHint(hint, readf);
+        if (writef != null)
+            hint = new GUIHint(hint, writef);
+        return hint;
+    }
 
     public Image getIcon(Object... args) throws CreateException {
         if (iconFactory == null)

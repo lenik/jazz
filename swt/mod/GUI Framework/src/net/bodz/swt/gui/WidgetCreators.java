@@ -1,5 +1,7 @@
 package net.bodz.swt.gui;
 
+import java.util.zip.CRC32;
+
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 
@@ -16,5 +18,5 @@ class TextBuilder extends _WidgetCreator {
 }
 
 public class WidgetCreators {
-
+    
 }
