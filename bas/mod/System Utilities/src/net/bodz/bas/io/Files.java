@@ -240,6 +240,19 @@ public class Files {
         return getBufferedReader(in, encoding);
     }
 
+    public static LineReader getLineReader(Object in, Object charset)
+            throws IOException {
+        if (in == null)
+            return null;
+        if (in instanceof LineReader)
+            return (LineReader) in;
+        return new LineReader(getReader(in, charset));
+    }
+
+    public static LineReader getLineReader(Object in) throws IOException {
+        return getLineReader(in, encoding);
+    }
+
     /**
      * @param out
      *            type of one of following types, or any of
@@ -371,15 +384,19 @@ public class Files {
         return readAll(in, encoding);
     }
 
+    /**
+     * @return each line includes line term chars.
+     * 
+     * @see LineReader#readLine()
+     */
     public static List<String> readLines(Object in, Object charset,
             boolean close) throws IOException {
-        BufferedReader reader = getBufferedReader(in, charset);
+        LineReader reader = getLineReader(in, charset);
         List<String> lines = new ArrayList<String>();
         String line;
         try {
-            while ((line = reader.readLine()) != null) {
+            while ((line = reader.readLine()) != null)
                 lines.add(line);
-            }
         } finally {
             if (close)
                 reader.close();
@@ -387,25 +404,45 @@ public class Files {
         return lines;
     }
 
+    /**
+     * @return each line includes line term chars.
+     * 
+     * @see LineReader#readLine()
+     */
     public static List<String> readLines(Object in, Object charset)
             throws IOException {
         boolean close = shouldClose(in);
         return readLines(in, charset, close);
     }
 
+    /**
+     * @return each line includes line term chars.
+     * 
+     * @see LineReader#readLine()
+     */
     public static List<String> readLines(Object in, boolean close)
             throws IOException {
         return readLines(in, encoding, close);
     }
 
+    /**
+     * @return each line includes line term chars.
+     * 
+     * @see LineReader#readLine()
+     */
     public static List<String> readLines(Object in) throws IOException {
         return readLines(in, encoding);
     }
 
+    /**
+     * @return line includes line term chars.
+     * 
+     * @see LineReader#readLine()
+     */
     public static String readLine(Object in, Object charset, boolean close,
             int index, Pattern pattern) throws IOException {
         assert index > 0;
-        BufferedReader reader = getBufferedReader(in, charset);
+        LineReader reader = getLineReader(in, charset);
         String line = null;
         try {
             while (--index >= 0) {
@@ -422,20 +459,40 @@ public class Files {
         return line;
     }
 
+    /**
+     * @return line includes line term chars.
+     * 
+     * @see LineReader#readLine()
+     */
     public static String readLine(Object in, Object charset, boolean close)
             throws IOException {
         return readLine(in, charset, close, 1, null);
     }
 
+    /**
+     * @return line includes line term chars.
+     * 
+     * @see LineReader#readLine()
+     */
     public static String readLine(Object in, Object charset) throws IOException {
         boolean close = shouldClose(in);
         return readLine(in, charset, close);
     }
 
+    /**
+     * @return line includes line term chars.
+     * 
+     * @see LineReader#readLine()
+     */
     public static String readLine(Object in, boolean close) throws IOException {
         return readLine(in, encoding, close);
     }
 
+    /**
+     * @return line includes line term chars.
+     * 
+     * @see LineReader#readLine()
+     */
     public static String readLine(Object in) throws IOException {
         return readLine(in, encoding);
     }
@@ -721,12 +778,17 @@ public class Files {
         return readByLen(blockSize, files);
     }
 
+    /**
+     * @return iterated line includes line term chars.
+     * 
+     * @see LineReader#readLine()
+     */
     protected static Iterator<String> _readByLine(final Object[] files,
             final Charset charset) {
         return new PrefetchedIterator<String>() {
 
-            private int            fileIndex = 0;
-            private BufferedReader reader    = null;
+            private int        fileIndex = 0;
+            private LineReader reader    = null;
 
             @Override
             public Object fetch() {
@@ -736,11 +798,11 @@ public class Files {
                     Object in = files[fileIndex];
                     assert in != null : "null file";
                     try {
-                        in = getBufferedReader(in, charset);
+                        in = getLineReader(in, charset);
                     } catch (IOException e) {
                         throw new RuntimeException(e.getMessage(), e);
                     }
-                    reader = (BufferedReader) in;
+                    reader = (LineReader) in;
                 }
                 String line;
                 try {
@@ -767,6 +829,11 @@ public class Files {
         };
     }
 
+    /**
+     * @return iterated line includes line term chars.
+     * 
+     * @see LineReader#readLine()
+     */
     public static Iterable<String> readByLine(final Object... files) {
         return new Iterable<String>() {
 
@@ -778,7 +845,12 @@ public class Files {
         };
     }
 
-    public static Iterable<String> readByLine2(final String charset,
+    /**
+     * @return iterated line includes line term chars.
+     * 
+     * @see LineReader#readLine()
+     */
+    public static Iterable<String> readByLine2(final Object charset,
             final Object... files) {
         return new Iterable<String>() {
 
@@ -820,17 +892,40 @@ public class Files {
         return loadProperties(in, encoding);
     }
 
-    // writeTo
+    // printTo
 
-    public static PrintStream writeTo(Object out, Object charset)
+    public static PrintStream printTo(Object out, Object charset)
             throws IOException {
         boolean autoFlush = false;
         String cs = getCharset(charset).name();
         return new PrintStream(getOutputStream(out), autoFlush, cs);
     }
 
-    public static PrintStream writeTo(Object out) throws IOException {
-        return writeTo(out, encoding);
+    public static PrintStream printTo(Object out) throws IOException {
+        return printTo(out, encoding);
+    }
+
+    // outputTo
+
+    public static OutputStream outputTo(Object out, Object charset)
+            throws IOException {
+        String cs = getCharset(charset).name();
+        return getOutputStream(out, cs);
+    }
+
+    public static OutputStream outputTo(Object out) throws IOException {
+        return getOutputStream(out);
+    }
+
+    // writeTo
+
+    public static Writer writeTo(Object out, Object charset) throws IOException {
+        String cs = getCharset(charset).name();
+        return getWriter(out, cs);
+    }
+
+    public static Writer writeTo(Object out) throws IOException {
+        return getWriter(out);
     }
 
     // write

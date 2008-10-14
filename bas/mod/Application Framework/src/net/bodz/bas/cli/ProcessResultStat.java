@@ -2,36 +2,34 @@ package net.bodz.bas.cli;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import net.bodz.bas.io.CharOut;
+import net.bodz.bas.types.TextMap;
+import net.bodz.bas.types.TypeMap;
+import net.bodz.bas.types.TextMap.TreeTextMap;
+import net.bodz.bas.types.TypeMap.HashTypeMap;
 import net.bodz.bas.types.util.Comparators;
 import net.bodz.bas.types.util.Strings;
 
 public class ProcessResultStat {
 
-    private int ignored;
-    private int total;
-    private int changed;
-    private int saved;
-    private int deleted;
-    private int renamed;
-    private int moved;
-    private int copied;
-    private int errorred;
+    private int              ignored;
+    private int              total;
+    private int              changed;
+    private int              saved;
+    private int              deleted;
+    private int              renamed;
+    private int              moved;
+    private int              copied;
+    private int              errorred;
 
-    @SuppressWarnings("unused")
-    private void _() {
-    }
-
-    Map<String, Integer>                     tagStat;
-    Map<Class<? extends Throwable>, Integer> errStat;
+    private TextMap<Integer> tagStat;
+    private TypeMap<Integer> errStat;
 
     public ProcessResultStat() {
-        tagStat = new HashMap<String, Integer>();
-        errStat = new HashMap<Class<? extends Throwable>, Integer>();
+        tagStat = new TreeTextMap<Integer>();
+        errStat = new HashTypeMap<Integer>();
     }
 
     public void add(ProcessResult result) {
@@ -142,10 +140,9 @@ public class ProcessResultStat {
         if (errorred > 0)
             dumpField(out, 4, "Errors", errorred, total - errorred);
 
-        List<Class<? extends Throwable>> errTypes = new ArrayList<Class<? extends Throwable>>(
-                errStat.keySet());
+        List<Class<?>> errTypes = new ArrayList<Class<?>>(errStat.keySet());
         Collections.sort(errTypes, Comparators.TYPE);
-        for (Class<? extends Throwable> errType : errTypes) {
+        for (Class<?> errType : errTypes) {
             int count = errStat.get(errType);
             dumpField(out, 8, errType.getName(), count);
         }

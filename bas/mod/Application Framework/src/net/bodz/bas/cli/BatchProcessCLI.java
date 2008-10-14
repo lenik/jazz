@@ -17,6 +17,7 @@ import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.a.OverrideOption;
+import net.bodz.bas.lang.err.IllegalUsageError;
 import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.lang.err.UnexpectedException;
 import net.bodz.bas.text.diff.DiffComparator;
@@ -191,7 +192,7 @@ public class BatchProcessCLI extends BatchCLI {
     }
 
     /**
-     * 
+     * @throws NotImplementedException
      */
     @Override
     @Deprecated
@@ -248,7 +249,8 @@ public class BatchProcessCLI extends BatchCLI {
     }
 
     /**
-     * read lines
+     * Implemented as: read lines and pass to
+     * {@link #doFileEdit(Iterable, CharOut)}.
      * 
      * @return PROCESS_IGNORE: file skipped <br>
      *         PROCESS_EDIT: have the result written to the output
@@ -256,11 +258,11 @@ public class BatchProcessCLI extends BatchCLI {
     @OverrideOption(group = "batchProcess")
     protected ProcessResult doFileEdit(InputStream in, OutputStream out)
             throws Throwable {
-        Iterable<String> inIter = Files.readByLine2(inputEncoding.name(), in);
+        Iterable<String> lines = Files.readByLine2(inputEncoding.name(), in);
         CharOut cout = CharOuts.stdout;
         if (out != null)
             cout = CharOuts.get(out, outputEncoding.name());
-        return doFileEdit(inIter, cout);
+        return doFileEdit(lines, cout);
     }
 
     public final byte[] doFileEdit(Object in) throws IOException {
@@ -280,7 +282,7 @@ public class BatchProcessCLI extends BatchCLI {
     }
 
     /**
-     * for each line
+     * Iterated line includes the line term chars.
      * 
      * @return PROCESS_IGNORE: file skipped <br>
      *         PROCESS_EDIT: have the result written to the output
@@ -302,8 +304,7 @@ public class BatchProcessCLI extends BatchCLI {
 
     protected final ProcessResultStat stat = new ProcessResultStat();
 
-    protected void addResult(ProcessResult result) throws IOException,
-            CLIException {
+    protected void addResult(ProcessResult result) throws IOException {
         addResult(null, null, null, result);
     }
 
@@ -313,12 +314,12 @@ public class BatchProcessCLI extends BatchCLI {
     }
 
     protected void addResult(File src, File dst, ProcessResult result)
-            throws IOException, CLIException {
+            throws IOException {
         addResult(src, dst, null, result);
     }
 
     protected void addResult(File src, File dst, File edit, ProcessResult result)
-            throws IOException, CLIException {
+            throws IOException {
         if (result == null) {
             L.d.P("[skip] ", src);
         } else {
@@ -342,14 +343,14 @@ public class BatchProcessCLI extends BatchCLI {
     }
 
     private void applyResult(File src, File dst, File edit, ProcessResult result)
-            throws IOException, CLIException {
+            throws IOException {
         assert result != null;
 
         boolean diffPrinted = false;
         if (result.operation == ProcessResult.SAVE) {
             assert result.changed == null;
             if (edit == null)
-                throw new CLIException("can't save: not a batch editor");
+                throw new IllegalUsageError("can't save: not a batch editor");
             if (!diff3 && !diffWithDest) {
                 result.changed = diff(src, edit);
                 diffPrinted = true;

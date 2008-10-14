@@ -3,20 +3,20 @@ package net.bodz.bas.lang.script;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
 
+import net.bodz.bas.types.TypeMap;
+import net.bodz.bas.types.TypeMap.HashTypeMap;
 import net.bodz.bas.types.util.Ns;
 
 public class Scripts {
 
-    private static Map<Class<?>, ScriptClass<?>>          explicitScriptClasses;
-    private static Map<Class<?>, ReflectedScriptClass<?>> forceConverted;
-    private static Map<Class<?>, ReflectedScriptClass<?>> noforceConverted;
+    private static TypeMap<ScriptClass<?>>          explicitScriptClasses;
+    private static TypeMap<ReflectedScriptClass<?>> forceConverted;
+    private static TypeMap<ReflectedScriptClass<?>> noforceConverted;
     static {
-        explicitScriptClasses = new HashMap<Class<?>, ScriptClass<?>>();
-        forceConverted = new HashMap<Class<?>, ReflectedScriptClass<?>>();
-        noforceConverted = new HashMap<Class<?>, ReflectedScriptClass<?>>();
+        explicitScriptClasses = new HashTypeMap<ScriptClass<?>>();
+        forceConverted = new HashTypeMap<ReflectedScriptClass<?>>();
+        noforceConverted = new HashTypeMap<ReflectedScriptClass<?>>();
     }
 
     /**

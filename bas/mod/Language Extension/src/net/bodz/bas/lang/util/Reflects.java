@@ -6,13 +6,13 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
 
 import net.bodz.bas.lang.Control;
 import net.bodz.bas.lang.a.ReflectField;
 import net.bodz.bas.lang.a.ReflectMethod;
 import net.bodz.bas.lang.a.ReflectProperty;
+import net.bodz.bas.types.TextMap;
+import net.bodz.bas.types.TextMap.HashTextMap;
 
 public class Reflects {
 
@@ -42,7 +42,7 @@ public class Reflects {
 
     public static void bind(Class<?> declareClass, Class<?> defineClass,
             Object defineObject) {
-        Map<String, PropertyDescriptor> properties = null;
+        TextMap<PropertyDescriptor> properties = null;
 
         for (Field declareField : declareClass.getDeclaredFields()) {
             Object def = null;
@@ -128,7 +128,7 @@ public class Reflects {
                     } catch (IntrospectionException e) {
                         throw new Error(e.getMessage(), e);
                     }
-                    properties = new HashMap<String, PropertyDescriptor>();
+                    properties = new HashTextMap<PropertyDescriptor>();
                     for (PropertyDescriptor property : beanInfo
                             .getPropertyDescriptors())
                         properties.put(property.getName(), property);
