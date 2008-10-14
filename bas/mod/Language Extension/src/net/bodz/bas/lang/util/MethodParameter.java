@@ -7,23 +7,31 @@ import java.lang.reflect.Method;
 public class MethodParameter extends AccessibleObject {
 
     private final int          index;
+    private final Class<?>     type;
     private final String       name;
     // private Method declaringMethod;
     private final Annotation[] annotations;
 
-    public MethodParameter(int paramIndex, String name, Annotation[] annotations) {
+    public MethodParameter(int paramIndex, String paramName, Class<?> type,
+            Annotation[] annotations) {
         this.index = paramIndex;
-        this.name = name;
+        this.name = paramName;
+        this.type = type;
         this.annotations = annotations;
     }
 
-    public MethodParameter(int paramIndex, Annotation[] annotations) {
+    public MethodParameter(int paramIndex, Class<?> type,
+            Annotation[] annotations) {
         this(paramIndex, // "$" +
-                String.valueOf(paramIndex), annotations);
+                String.valueOf(paramIndex), type, annotations);
     }
 
     public String getName() {
         return name;
+    }
+
+    public Class<?> getType() {
+        return type;
     }
 
     public int getIndex() {
@@ -58,16 +66,21 @@ public class MethodParameter extends AccessibleObject {
     }
 
     public static MethodParameter[] getParameters(Method method) {
-        Annotation[][] av = method.getParameterAnnotations();
-        MethodParameter[] params = new MethodParameter[av.length];
-        for (int i = 0; i < av.length; i++)
-            params[i] = new MethodParameter(i, av[i]);
+        Class<?>[] ptv = method.getParameterTypes();
+        Annotation[][] pav = method.getParameterAnnotations();
+        assert ptv.length == pav.length;
+        MethodParameter[] params = new MethodParameter[ptv.length];
+        for (int i = 0; i < ptv.length; i++) {
+            params[i] = new MethodParameter(i, ptv[i], pav[i]);
+        }
         return params;
     }
 
     public static MethodParameter getParameter(Method method, int paramIndex) {
-        Annotation[][] av = method.getParameterAnnotations();
-        MethodParameter param = new MethodParameter(paramIndex, av[paramIndex]);
+        Class<?>[] ptv = method.getParameterTypes();
+        Annotation[][] pav = method.getParameterAnnotations();
+        MethodParameter param = new MethodParameter(paramIndex,
+                ptv[paramIndex], pav[paramIndex]);
         return param;
     }
 

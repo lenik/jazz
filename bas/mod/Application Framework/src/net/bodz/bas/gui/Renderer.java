@@ -1,13 +1,12 @@
 package net.bodz.bas.gui;
 
-import java.util.Map;
-
 import net.bodz.bas.lang.KeyObject;
+import net.bodz.bas.lang.ref.Var;
 
 public interface Renderer {
 
     KeyObject HINT = new KeyObject("HINT");
 
-    Object render(Object obj, Map<?, ?> ctx) throws RenderException;
+    Object render(Var<?> var) throws RenderException;
 
 }

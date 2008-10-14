@@ -108,6 +108,9 @@ public class BatchCLI extends BasicCLI {
         return Files.getRelativeName(in, currentStartFile);
     }
 
+    /**
+     * Implemented as: walk start from the file argument.
+     */
     @Override
     @OverrideOption(group = "batch")
     protected void doFileArgument(final File file) throws Throwable {

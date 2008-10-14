@@ -2,9 +2,10 @@ package net.bodz.bas.text.encodings;
 
 import java.nio.charset.Charset;
 import java.nio.charset.spi.CharsetProvider;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
+
+import net.bodz.bas.types.TextMap;
+import net.bodz.bas.types.TextMap.TreeTextMap;
 
 /**
  * Literal Charset Provider Literal charset is designed for debug or special
@@ -12,11 +13,11 @@ import java.util.Map;
  */
 public class Charsets extends CharsetProvider {
 
-    static Charset       ASCII     = Charset.forName("ascii");
+    static Charset   ASCII     = Charset.forName("ascii");
 
-    HexCharset           hexCharset;
+    HexCharset       hexCharset;
 
-    Map<String, Charset> _charsets = new HashMap<String, Charset>();
+    TextMap<Charset> _charsets = new TreeTextMap<Charset>();
 
     public Charsets() {
         super();

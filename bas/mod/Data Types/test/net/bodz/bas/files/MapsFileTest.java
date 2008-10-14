@@ -35,7 +35,7 @@ public class MapsFileTest {
         }
         if (buf == null)
             return "";
-        return buf.toString();
+        return buf.toString().replace("\r", "");
     }
 
     @Test
@@ -46,14 +46,21 @@ public class MapsFileTest {
         PartMap part;
 
         part = it.next();
-        assertEquals("part A", ".=hello\nworld, age=10, name=a", map2str(part));
-
-        part = it.next();
-        assertEquals("part B", ".=BBB, age=20, location=home, name=b",
+        assertEquals("part A", ".=hello\nworld\n, age=10, name=a",
                 map2str(part));
 
         part = it.next();
-        assertEquals("part C", ".=CCC", map2str(part));
+        assertEquals("part B", ".=BBB\n, age=20, location=home\n, name=b",
+                map2str(part));
+
+        part = it.next();
+        assertEquals("part C", ".=CCC\n", map2str(part));
+
+        part = it.next();
+        assertEquals("part D", ".=DDD\n, name=d", map2str(part));
+
+        part = it.next();
+        assertEquals("part E", ".=EEE\nFFF\n", map2str(part));
 
         assertFalse(it.hasNext());
         try {

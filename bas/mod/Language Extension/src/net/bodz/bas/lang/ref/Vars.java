@@ -1,5 +1,6 @@
 package net.bodz.bas.lang.ref;
 
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -202,12 +203,130 @@ public class Vars {
 
     }
 
+    public static class ConstantMeta implements VarMeta {
+
+        private final String       name;
+        private final Class<?>     type;
+        private final Annotation[] annotations;
+        static final Annotation[]  Annotation_0 = {};
+
+        public ConstantMeta(String name, Class<?> type) {
+            this.name = name;
+            this.type = type;
+            annotations = Annotation_0;
+        }
+
+        public ConstantMeta(Class<?> type) {
+            this(null, type);
+        }
+
+        @Override
+        public String getName() {
+            return name;
+        }
+
+        @Override
+        public Class<?> getType() {
+            return type;
+        }
+
+        @Override
+        public int getModifiers() {
+            return 0;
+        }
+
+        @Override
+        public boolean isReadOnly() {
+            return true;
+        }
+
+        @Override
+        public <T extends Annotation> T getAnnotation(Class<T> annotationClass) {
+            for (int i = 0; i < annotations.length; i++) {
+                Annotation a = annotations[i];
+                if (annotationClass.isInstance(a))
+                    return annotationClass.cast(a);
+            }
+            return null;
+        }
+
+        @Override
+        public Annotation[] getAnnotations() {
+            return annotations;
+        }
+
+        @Override
+        public Annotation[] getDeclaredAnnotations() {
+            return annotations;
+        }
+
+        @Override
+        public boolean isAnnotationPresent(
+                Class<? extends Annotation> annotationClass) {
+            for (int i = 0; i < annotations.length; i++) {
+                Annotation a = annotations[i];
+                if (annotationClass.isInstance(a))
+                    return true;
+            }
+            return false;
+        }
+
+    }
+
+    public static class ConstantVar<T> implements Var<T> {
+
+        private final ConstantMeta meta;
+        private final T            value;
+
+        public ConstantVar(String name, T value) {
+            this.meta = new ConstantMeta(name, value.getClass());
+            this.value = value;
+        }
+
+        public ConstantVar(T value) {
+            this.meta = new ConstantMeta(value.getClass());
+            this.value = value;
+        }
+
+        @Override
+        public VarMeta getMeta() {
+            return meta;
+        }
+
+        @Override
+        public T get() {
+            return value;
+        }
+
+        @Override
+        public void set(T value) {
+            throw new ReadOnlyException();
+        }
+
+        @Override
+        public void registerChangeListener(PropertyChangeListener listener) {
+        }
+
+        @Override
+        public void unregisterChangeListener(PropertyChangeListener listener) {
+        }
+
+    }
+
     public static <T> Var<T> wrap(Object object, Field field) {
         return new FieldVar<T>(field, object);
     }
 
     public static <T> Var<T> wrap(Object object, PropertyDescriptor property) {
         return new PropertyVar<T>(property, object);
+    }
+
+    public static <T> Var<T> wrap(String name, T constant) {
+        return new ConstantVar<T>(name, constant);
+    }
+
+    public static <T> Var<T> wrap(T constant) {
+        return new ConstantVar<T>(constant);
     }
 
 }
