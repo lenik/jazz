@@ -21,6 +21,7 @@ import net.bodz.bas.types.testtypes.Dx;
 import net.bodz.bas.types.testtypes.DxKI;
 import net.bodz.bas.types.testtypes.DxKIx;
 import net.bodz.bas.types.testtypes.I;
+import net.bodz.bas.types.util.Collections2;
 import net.bodz.bas.types.util.Types;
 
 import org.junit.Test;
@@ -66,21 +67,21 @@ public class TypesHierMapTest {
 
         List<Object> children;
 
-        assertEquals("CI, DxKI", map.getParent(r(CI.class, DxKIx.class)));
+        assertEquals("CI, DxKI", map.floor(r(CI.class, DxKIx.class)));
 
-        children = map.getChildrenValues(r(CI.class, D.class));
+        children = Collections2.toList(map.ceilings(r(CI.class, D.class)));
         assertEquals(2, children.size());
         assertEquals("CI, Dx", children.get(0));
         assertEquals("CI, DxKI", children.get(1));
 
-        children = map.getChildrenValues(r(CJ.class, I.class));
+        children = Collections2.toList(map.ceilings(r(CJ.class, I.class)));
         assertEquals(3, children.size());
         // DIJy extends DIJ, but CJz order take precedence.
         assertEquals("CJz, DIJy", children.get(0)); // DIJy
         assertEquals("CJz, DxKI", children.get(1));
         assertEquals("CJzKI, DIJ", children.get(2)); // DIJ
 
-        assertEquals(null, map.getParent(r(CJzKI.class, Dx.class)));
+        assertEquals(null, map.floor(r(CJzKI.class, Dx.class)));
     }
 
 }

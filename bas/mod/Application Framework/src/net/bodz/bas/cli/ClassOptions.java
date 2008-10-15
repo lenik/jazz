@@ -22,6 +22,7 @@ import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.lang.script.ScriptException;
 import net.bodz.bas.types.Pair;
 import net.bodz.bas.types.PrefixMap;
+import net.bodz.bas.types.util.Collections2;
 import net.bodz.bas.types.util.Types;
 
 public class ClassOptions<CT> {
@@ -170,7 +171,7 @@ public class ClassOptions<CT> {
             name = name.substring(3);
         if (options.containsKey(name))
             return (_Option<Object>) options.get(name);
-        List<String> fullnames = options.getChildrenKeys(name);
+        List<String> fullnames = Collections2.toList(options.ceilingKeys(name));
         if (fullnames.isEmpty())
             throw new CLIException("no such option: " + name);
         if (fullnames.size() > 1) {
@@ -288,7 +289,8 @@ public class ClassOptions<CT> {
 
             if (optval != null)
                 try {
-                    @SuppressWarnings("unchecked") _Option<Object> _opt = (_Option<Object>) opt;
+                    @SuppressWarnings("unchecked")
+                    _Option<Object> _opt = (_Option<Object>) opt;
                     _opt.set(classobj, optval);
                 } catch (ScriptException e) {
                     throw new CLIException(e.getMessage(), e);

@@ -1,7 +1,6 @@
 package net.bodz.bas.gui;
 
-import java.util.Map;
-
+import net.bodz.bas.lang.ref.Var;
 import net.bodz.bas.types.TypeHierMap;
 
 public abstract class Style extends TypeHierMap<Renderer> {
@@ -13,16 +12,27 @@ public abstract class Style extends TypeHierMap<Renderer> {
      * @throws NullPointerException
      *             if obj is <code>null</code>.
      */
-    public Object render(Object obj, Map<?, ?> ctx) throws GUIException {
-        if (obj == null)
+    public Object render(Var<?> var) throws RenderException {
+        Renderer renderer = findRenderer(var);
+        if (renderer == null)
+            throw new RenderException("Don't know how to render "
+                    + var.getMeta().getType());
+        return renderer.render(var);
+    }
+
+    /**
+     * @throws NullPointerException
+     *             if var is null.
+     * @return <code>null</code> if no matching renderer.
+     */
+    protected Renderer findRenderer(Var<?> var) {
+        if (var == null)
             throw new NullPointerException();
-        Class<?> type = obj.getClass();
-        Class<?> usingType = getParentKey(type);
+        Class<?> type = var.getMeta().getType();
+        Class<?> usingType = floorKey(type);
         if (usingType == null)
-            throw new GUIException("Don't know how to render " + type);
-        Renderer renderer = get(usingType);
-        assert renderer != null;
-        return renderer.render(obj, ctx);
+            return null;
+        return get(usingType);
     }
 
 }

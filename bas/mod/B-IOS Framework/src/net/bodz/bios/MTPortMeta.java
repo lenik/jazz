@@ -17,7 +17,8 @@ public class MTPortMeta extends _PortMeta {
 
     public MTPortMeta(String name, Collection<Class<?>> baseTypes) {
         super(name);
-        this.baseTypes = new TypeHierSet(baseTypes);
+        this.baseTypes = new TypeHierSet();
+        this.baseTypes.addAll(baseTypes);
     }
 
     public MTPortMeta(String name, TypeHierSet baseTypes) {
@@ -27,7 +28,7 @@ public class MTPortMeta extends _PortMeta {
 
     @Override
     public boolean isSupportedType(Class<?> type) {
-        return baseTypes.hasParent(type);
+        return baseTypes.floor(type) != null;
     }
 
     @Override

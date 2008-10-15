@@ -11,7 +11,8 @@ import net.bodz.bas.types.Checker;
  * fields or bean accessors
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.TYPE, ElementType.FIELD, ElementType.METHOD })
+@Target( { ElementType.TYPE, ElementType.FIELD, ElementType.METHOD,
+        ElementType.PARAMETER })
 public @interface CheckBy {
 
     Class<? extends Checker> value() default Checker.class;

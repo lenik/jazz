@@ -161,7 +161,7 @@ public class TypeParsers {
      *         registered.
      */
     public static TypeParser get(Class<?> clazz) {
-        return registry.getParent(clazz);
+        return registry.floor(clazz);
     }
 
     public static void register(Class<?> clazz, TypeParser parser) {

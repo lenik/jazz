@@ -18,14 +18,14 @@ public class TypeHierMapTest {
     @Deprecated
     public void test1() {
         TypeHierMap<Object> map = new TypeHierMap<Object>(orig);
-        assertEquals("getparent", "Number", map.getParent(Integer.class));
+        assertEquals("getparent", "Number", map.floor(Integer.class));
     }
 
     @Test
     public void test2() {
         TypeHierMap<Object> map = new TypeHierMap<Object>();
         map.putAll(orig);
-        assertEquals("getparent", "Number", map.getParent(Integer.class));
+        assertEquals("getparent", "Number", map.floor(Integer.class));
     }
 
 }

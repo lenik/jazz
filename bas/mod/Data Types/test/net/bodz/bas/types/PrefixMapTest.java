@@ -4,9 +4,6 @@ import static net.bodz.bas.test.TestDefs.END;
 import static net.bodz.bas.test.TestDefs.EQ;
 import static net.bodz.bas.test.TestDefs.F;
 import static net.bodz.bas.test.TestDefs.T;
-
-import java.util.List;
-
 import net.bodz.bas.test.TestDefs;
 import net.bodz.bas.test.TestEval;
 import net.bodz.bas.test._TestEval;
@@ -29,7 +26,7 @@ public class PrefixMapTest {
     public void test_getChildrenValues() {
         TestDefs.tests(new TestEval<String>() {
             public Object eval(String input) throws Throwable {
-                List<String> vals = map.getChildrenValues(input);
+                Iterable<String> vals = map.ceilings(input);
                 return Strings.join(",", vals);
             }
         }, //
@@ -47,7 +44,7 @@ public class PrefixMapTest {
     public void test_hasChildren() {
         TestDefs.tests(new TestEval<String>() {
             public Object eval(String input) throws Throwable {
-                return map.hasChildren(input);
+                return map.ceilingKey(input) != null;
             }
         }, //
                 T(""), //
@@ -70,7 +67,7 @@ public class PrefixMapTest {
             public Object eval(String abbr) throws Throwable {
                 if (isBreakpoint())
                     System.err.println(abbr);
-                String parent = map.getParentKey(abbr);
+                String parent = map.floor(abbr);
                 if (parent == null)
                     return "==" + abbr;
                 String expand = map.get(parent);
