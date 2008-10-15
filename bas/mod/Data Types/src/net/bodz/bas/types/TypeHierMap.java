@@ -1,7 +1,5 @@
 package net.bodz.bas.types;
 
-import static net.bodz.bas.types.TypeHierSet.inherits;
-
 import java.util.Comparator;
 import java.util.Map;
 import java.util.SortedMap;
@@ -14,21 +12,31 @@ public class TypeHierMap<V> extends HierMap<Class<?>, V> {
 
     @Deprecated
     public TypeHierMap(Comparator<? super Class<?>> comparator) {
-        super(inherits, comparator);
+        super(comparator);
     }
 
     @Deprecated
     public TypeHierMap(Map<? extends Class<?>, ? extends V> m) {
-        super(inherits, m);
+        super(m);
     }
 
     @Deprecated
     public TypeHierMap(SortedMap<Class<?>, ? extends V> m) {
-        super(inherits, m);
+        super(m);
     }
 
     public TypeHierMap() {
-        super(inherits, Comparators.TYPE_HIER);
+        super(Comparators.TYPE_HIER);
+    }
+
+    @Override
+    public boolean derives(Class<?> sup, Class<?> sub) {
+        return sup.isAssignableFrom(sub);
+    }
+
+    @Override
+    public Class<?> shrink(Class<?> e) {
+        return e.getSuperclass();
     }
 
 }

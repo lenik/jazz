@@ -4,9 +4,7 @@ import static net.bodz.bas.test.TestDefs.END;
 import static net.bodz.bas.test.TestDefs.EQ;
 import static net.bodz.bas.test.TestDefs.F;
 import static net.bodz.bas.test.TestDefs.T;
-
-import java.util.List;
-
+import static org.junit.Assert.assertEquals;
 import net.bodz.bas.test.TestDefs;
 import net.bodz.bas.test.TestEval;
 import net.bodz.bas.types.util.Strings;
@@ -25,11 +23,11 @@ public class PrefixSetTest {
     }
 
     @Test
-    public void test_getChildren() {
+    public void testGetChildren() {
         TestDefs.tests(new TestEval<String>() {
             public Object eval(String input) throws Throwable {
-                List<String> vals = set.getChildren(input);
-                return Strings.join(",", vals);
+                Iterable<String> ceilings = set.ceilings(input);
+                return Strings.join(",", ceilings);
             }
         }, //
                 EQ("n", "name"), //
@@ -43,10 +41,10 @@ public class PrefixSetTest {
     }
 
     @Test
-    public void test_hasChildren() {
+    public void testHasChildren() {
         TestDefs.tests(new TestEval<String>() {
             public Object eval(String input) throws Throwable {
-                return set.hasChildren(input);
+                return set.ceiling(input) != null;
             }
         }, //
                 T(""), //
@@ -58,6 +56,16 @@ public class PrefixSetTest {
                 T("aaa"), //
                 F("bb"), //
                 END);
+    }
+
+    @Test
+    public void testCrossParent() {
+        PrefixSet set = new PrefixSet();
+        set.add("cat");
+        set.add("catx");
+        set.add("catz");
+        assertEquals("catx", set.floor("catxy"));
+        assertEquals("cat", set.floor("caty"));
     }
 
 }

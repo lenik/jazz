@@ -150,6 +150,8 @@ public class Comparators {
                     return -1;
                 if (rt.isAssignableFrom(lt))
                     return 1;
+
+                // lt = findFirstIncompat(lt, rt)
                 Class<?> com = getSuper(lt);
                 while (com != null) {
                     if (com.isAssignableFrom(rt))
@@ -158,6 +160,8 @@ public class Comparators {
                     com = getSuper(com);
                 }
                 // maybe com == null if lt.isInterface.
+
+                // rt = firstJustUnderCom(com, rt)
                 Class<?> rsup = getSuper(rt);
                 while (rsup != null) {
                     if (rsup == com)
@@ -166,7 +170,8 @@ public class Comparators {
                     rsup = getSuper(rsup);
                 }
                 // maybe rsup == null if com==null or rt.isInterface
-                // if (com==null)
+
+                // if (com==null) ...?
                 return lt.getName().compareTo(rt.getName());
             }
         };

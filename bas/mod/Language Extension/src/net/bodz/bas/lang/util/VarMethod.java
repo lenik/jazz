@@ -38,7 +38,7 @@ public class VarMethod {
     }
 
     public Method findMethod(Class<?>... paramTypes) {
-        return ptmap.getParent(paramTypes);
+        return ptmap.floor(paramTypes);
     }
 
     public Object invoke(Object obj, Class<?>[] paramTypes, Object... params)

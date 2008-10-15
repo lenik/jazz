@@ -1,10 +1,7 @@
 package net.bodz.bas.mod.plugins;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map.Entry;
 
-import net.bodz.bas.lang.Predicate;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.types.TypeHierMap;
 
@@ -39,7 +36,7 @@ public class Plugins {
         if (strict)
             pluginType = categories.get(type);
         else
-            pluginType = categories.getParent(type);
+            pluginType = categories.floor(type);
         if (pluginType == null) {
             pluginType = new PluginCategory(type);
             categories.put(type, pluginType);
@@ -86,33 +83,30 @@ public class Plugins {
 
     PluginTypeEx find(Class<?> type, final String pluginId)
             throws PluginException {
-        final List<PluginTypeEx> found = new ArrayList<PluginTypeEx>();
-        categories.findChildren(type,
-                new Predicate<Entry<Class<?>, PluginCategory>>() {
-                    @Override
-                    public boolean eval(Entry<Class<?>, PluginCategory> e) {
-                        PluginCategory category = e.getValue();
-                        PluginTypeEx typeEx = category.get(pluginId);
-                        if (typeEx != null)
-                            found.add(typeEx);
-                        return true;
+        PluginTypeEx found = null;
+        StringBuffer errmsg = null;
+        for (Entry<Class<?>, PluginCategory> e : categories
+                .ceilingEntries(type)) {
+            PluginCategory category = e.getValue();
+            PluginTypeEx typeEx = category.get(pluginId);
+            if (typeEx != null) {
+                if (found == null) {
+                    found = typeEx;
+                } else {
+                    if (errmsg == null) {
+                        errmsg = new StringBuffer();
+                        errmsg.append("ambiguous plugin id: " + pluginId);
+                        errmsg.append(", candidates: \n");
+                        errmsg.append(found);
                     }
-                });
-        if (found.isEmpty())
-            return null;
-        if (found.size() > 1) {
-            StringBuffer cands = null;
-            for (PluginTypeEx typeEx : found) {
-                if (cands == null)
-                    new StringBuffer(found.size() * 30);
-                else
-                    cands.append('\n');
-                cands.append(typeEx);
+                    errmsg.append('\n');
+                    errmsg.append(typeEx);
+                }
             }
-            throw new PluginException("ambiguous plugin id: " + pluginId
-                    + ", candidates: \n" + cands);
         }
-        return found.get(0);
+        if (errmsg != null)
+            throw new PluginException(errmsg.toString());
+        return found;
     }
 
     // ???

@@ -143,11 +143,6 @@ public class BasicCLI {
     private class PluginParser implements TypeParser {
 
         @Override
-        public boolean variant() {
-            return true;
-        }
-
-        @Override
         public CLIPlugin parse(String idCtor) throws ParseException {
             int eq = idCtor.indexOf('=');
             String id = idCtor;

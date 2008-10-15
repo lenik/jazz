@@ -1,105 +1,92 @@
 package net.bodz.bas.types;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.Iterator;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.bodz.bas.lang.Predicate;
-import net.bodz.bas.lang.Predicate2s;
+import net.bodz.bas.types.util.PrefetchedIterator;
 
-public class HierSet<E> extends TreeSet<E> {
+public abstract class HierSet<E> extends TreeSet<E> implements Hier<E> {
 
     private static final long serialVersionUID = -3131717397860882935L;
 
-    private Predicate2s<E>    relpred;
-
-    public HierSet(Predicate2s<E> relations) {
+    public HierSet() {
         super();
-        setRelations(relations);
     }
 
-    public HierSet(Predicate2s<E> relations, Collection<? extends E> c) {
+    public HierSet(Collection<? extends E> c) {
         super(c);
-        setRelations(relations);
     }
 
-    public HierSet(Predicate2s<E> relations, Comparator<? super E> comparator) {
+    public HierSet(Comparator<? super E> comparator) {
         super(comparator);
-        setRelations(relations);
     }
 
-    public HierSet(Predicate2s<E> relations, SortedSet<E> s) {
+    public HierSet(SortedSet<E> s) {
         super(s);
-        setRelations(relations);
     }
 
-    public Predicate2s<E> getRelations() {
-        return relpred;
-    }
-
-    public void setRelations(Predicate2s<E> relations) {
-        assert relations != null : "null predicate";
-        this.relpred = relations;
-    }
-
+    /**
+     * @return <code>null</code>
+     */
     protected E nonexist() {
-        // return null;
-        throw new NoSuchElementException();
+        return null;
     }
 
-    public boolean hasParent(E childIncl) {
-        E floor = floor(childIncl);
-        if (floor == null)
-            return false;
-        return relpred.eval(floor, childIncl);
-    }
-
-    public E getParent(E childIncl) {
-        E floor = floor(childIncl);
-        if (floor == null)
-            return nonexist();
-        if (relpred.eval(floor, childIncl))
-            return floor;
+    @Override
+    public E floor(E e) {
+        E floo = super.floor(e);
+        while (floo != null) {
+            if (derives(floo, e))
+                return floo;
+            e = shrink(e);
+            if (e == null)
+                break;
+            floo = super.floor(e);
+        }
         return nonexist();
     }
 
-    public void findChildren(E parentIncl, Predicate<E> callback) {
-        E ceiling = ceiling(parentIncl);
-        while (ceiling != null) {
-            if (!relpred.eval(parentIncl, ceiling))
-                break;
-            if (!callback.eval(ceiling))
-                break;
-            ceiling = higher(ceiling);
+    @Override
+    public E ceiling(E e) {
+        E ceil = super.ceiling(e);
+        if (ceil == null)
+            return nonexist();
+        if (!derives(e, ceil))
+            return nonexist();
+        return ceil;
+    }
+
+    public Iterable<E> ceilings(final E e) {
+        final E start = ceiling(e);
+
+        class Iter extends PrefetchedIterator<E> {
+            private E next;
+
+            public Iter(E next) {
+                this.next = next;
+            }
+
+            @Override
+            protected Object fetch() {
+                if (next == null)
+                    return END;
+                E ret = next;
+                next = higher(next);
+                if (next != null && !derives(e, next))
+                    next = null;
+                return ret;
+            }
         }
-    }
 
-    public boolean hasChildren(E parentIncl) {
-        final boolean[] boolv = new boolean[1];
-        findChildren(parentIncl, new Predicate<E>() {
+        return new Iterable<E>() {
             @Override
-            public boolean eval(E e) {
-                boolv[0] = true;
-                return false;
+            public Iterator<E> iterator() {
+                return new Iter(start);
             }
-        });
-        return boolv[0];
-    }
-
-    public List<E> getChildren(E parentIncl) {
-        final List<E> list = new ArrayList<E>();
-        findChildren(parentIncl, new Predicate<E>() {
-            @Override
-            public boolean eval(E e) {
-                list.add(e);
-                return true;
-            }
-        });
-        return list;
+        };
     }
 
 }

@@ -45,7 +45,7 @@ public class MethodEx {
         Class<?> argType = Object.class;
         if (arg != null)
             argType = arg.getClass();
-        Method method = typeMap.getParent(argType);
+        Method method = typeMap.floor(argType);
         if (method == null)
             return invokeOnUnknownType(obj, argType, arg);
         method.setAccessible(true); // scoping..?
@@ -62,15 +62,15 @@ public class MethodEx {
     }
 
     public boolean hasMethodFor(Class<?> childInclKey) {
-        return typeMap.hasParent(childInclKey);
+        return typeMap.floorKey(childInclKey) != null;
     }
 
     public Class<?> getDeclaredType(Class<?> childInclKey) {
-        return typeMap.getParentKey(childInclKey);
+        return typeMap.floorKey(childInclKey);
     }
 
     public Method getMethodFor(Class<?> childInclKey) {
-        return typeMap.getParent(childInclKey);
+        return typeMap.floor(childInclKey);
     }
 
     public Method removeDeclaredType(Object key) {

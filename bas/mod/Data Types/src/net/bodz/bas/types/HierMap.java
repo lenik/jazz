@@ -1,50 +1,32 @@
 package net.bodz.bas.types;
 
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
+import java.util.Iterator;
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 
-import net.bodz.bas.lang.Predicate;
-import net.bodz.bas.lang.Predicate2s;
+import net.bodz.bas.types.util.PrefetchedIterator;
 
-public class HierMap<K, V> extends TreeMap<K, V> {
+public abstract class HierMap<K, V> extends TreeMap<K, V> implements Hier<K> {
 
     private static final long serialVersionUID = 5702402360129338243L;
 
-    private Predicate2s<K>    relpred;
-
-    public HierMap(Predicate2s<K> relations) {
+    public HierMap() {
         super();
-        setRelations(relations);
     }
 
-    public HierMap(Predicate2s<K> relations, Comparator<? super K> comparator) {
+    public HierMap(Comparator<? super K> comparator) {
         super(comparator);
-        setRelations(relations);
     }
 
-    public HierMap(Predicate2s<K> relations, Map<? extends K, ? extends V> m) {
+    public HierMap(Map<? extends K, ? extends V> m) {
         super(m);
-        setRelations(relations);
     }
 
-    public HierMap(Predicate2s<K> relations, SortedMap<K, ? extends V> m) {
+    public HierMap(SortedMap<K, ? extends V> m) {
         super(m);
-        setRelations(relations);
-    }
-
-    public Predicate2s<K> getRelations() {
-        return relpred;
-    }
-
-    public void setRelations(Predicate2s<K> relations) {
-        assert relations != null : "null predicate";
-        this.relpred = relations;
     }
 
     /**
@@ -62,105 +44,151 @@ public class HierMap<K, V> extends TreeMap<K, V> {
     }
 
     /**
-     * @throws NoSuchElementException
-     *             by default
+     * @return <code>null</code> by default
      */
     protected Entry<K, V> nonexistEntry() {
-        // return null;
-        throw new NoSuchElementException();
+        return null;
     }
 
-    public boolean hasParent(K childInclKey) {
-        Entry<K, V> entry = floorEntry(childInclKey);
-        if (entry == null)
-            return false;
-        K floorKey = entry.getKey();
-        return relpred.eval(floorKey, childInclKey);
-    }
-
-    /**
-     * @return parent key, or {@link #nonexistKey()}
-     */
-    public K getParentKey(K childInclKey) {
-        K floorKey = floorKey(childInclKey);
-        if (floorKey == null)
-            return nonexistKey();
-        if (relpred.eval(floorKey, childInclKey))
-            return floorKey;
+    @Override
+    public K floorKey(K key) {
+        K floo = super.floorKey(key);
+        while (floo != null) {
+            if (derives(floo, key))
+                return floo;
+            key = shrink(key);
+            if (key == null)
+                break;
+            floo = super.floorKey(key);
+        }
         return nonexistKey();
     }
 
-    /**
-     * @return parent value, or {@link #nonexistValue()}
-     */
-    public V getParent(K childInclKey) {
-        Entry<K, V> entry = floorEntry(childInclKey);
-        if (entry == null)
-            return nonexistValue();
-        K floorKey = entry.getKey();
-        if (relpred.eval(floorKey, childInclKey))
-            return entry.getValue();
-        return nonexistValue();
-    }
-
-    public void findChildren(K parentInclKey, Predicate<Entry<K, V>> callback) {
-        Entry<K, V> entry = ceilingEntry(parentInclKey);
-        while (entry != null) {
-            K subKey = entry.getKey();
-            if (!relpred.eval(parentInclKey, subKey))
+    @Override
+    public Entry<K, V> floorEntry(K key) {
+        Entry<K, V> floo = super.floorEntry(key);
+        while (floo != null) {
+            if (derives(floo.getKey(), key))
+                return floo;
+            key = shrink(key);
+            if (key == null)
                 break;
-            if (!callback.eval(entry))
-                break;
-            entry = higherEntry(subKey);
+            floo = super.floorEntry(key);
         }
+        return nonexistEntry();
     }
 
-    public boolean hasChildren(K parentInclKey) {
-        final boolean[] boolv = new boolean[1];
-        findChildren(parentInclKey, new Predicate<Entry<K, V>>() {
-            @Override
-            public boolean eval(Entry<K, V> entry) {
-                boolv[0] = true;
-                return false;
+    public V floor(K key) {
+        Entry<K, V> floo = floorEntry(key);
+        if (floo == null)
+            return nonexistValue();
+        return floo.getValue();
+    }
+
+    @Override
+    public K ceilingKey(K key) {
+        return super.ceilingKey(key);
+    }
+
+    @Override
+    public Entry<K, V> ceilingEntry(K key) {
+        return super.ceilingEntry(key);
+    }
+
+    public V ceiling(K key) {
+        Entry<K, V> ceil = ceilingEntry(key);
+        if (ceil == null)
+            return nonexistValue();
+        return ceil.getValue();
+    }
+
+    public Iterable<K> ceilingKeys(final K key) {
+        final K start = ceilingKey(key);
+
+        class Iter extends PrefetchedIterator<K> {
+            private K next;
+
+            public Iter(K next) {
+                this.next = next;
             }
-        });
-        return boolv[0];
-    }
 
-    public List<Entry<K, V>> getChildrenEntries(K parentInclKey) {
-        final List<Entry<K, V>> list = new ArrayList<Entry<K, V>>();
-        findChildren(parentInclKey, new Predicate<Entry<K, V>>() {
             @Override
-            public boolean eval(Entry<K, V> entry) {
-                list.add(entry);
-                return true;
+            protected Object fetch() {
+                if (next == null)
+                    return END;
+                K ret = next;
+                next = higherKey(next);
+                if (next != null && !derives(key, next))
+                    next = null;
+                return ret;
             }
-        });
-        return list;
-    }
+        }
 
-    public List<K> getChildrenKeys(K parentInclKey) {
-        final List<K> list = new ArrayList<K>();
-        findChildren(parentInclKey, new Predicate<Entry<K, V>>() {
+        return new Iterable<K>() {
             @Override
-            public boolean eval(Entry<K, V> entry) {
-                list.add(entry.getKey());
-                return true;
+            public Iterator<K> iterator() {
+                return new Iter(start);
             }
-        });
-        return list;
+        };
     }
 
-    public List<V> getChildrenValues(K parentInclKey) {
-        final List<V> list = new ArrayList<V>();
-        findChildren(parentInclKey, new Predicate<Entry<K, V>>() {
+    public Iterable<Entry<K, V>> ceilingEntries(final K key) {
+        final Entry<K, V> start = ceilingEntry(key);
+
+        class Iter extends PrefetchedIterator<Entry<K, V>> {
+            private Entry<K, V> next;
+
+            public Iter(Entry<K, V> next) {
+                this.next = next;
+            }
+
             @Override
-            public boolean eval(Entry<K, V> entry) {
-                list.add(entry.getValue());
-                return true;
+            protected Object fetch() {
+                if (next == null)
+                    return END;
+                Entry<K, V> ret = next;
+                next = higherEntry(next.getKey());
+                if (next != null && !derives(key, next.getKey()))
+                    next = null;
+                return ret;
             }
-        });
-        return list;
+        }
+
+        return new Iterable<Entry<K, V>>() {
+            @Override
+            public Iterator<Entry<K, V>> iterator() {
+                return new Iter(start);
+            }
+        };
     }
 
+    public Iterable<V> ceilings(final K key) {
+        final Entry<K, V> start = ceilingEntry(key);
+
+        class Iter extends PrefetchedIterator<V> {
+            private Entry<K, V> next;
+
+            public Iter(Entry<K, V> next) {
+                this.next = next;
+            }
+
+            @Override
+            protected Object fetch() {
+                if (next == null)
+                    return END;
+                V ret = next.getValue();
+                next = higherEntry(next.getKey());
+                if (next != null && !derives(key, next.getKey()))
+                    next = null;
+                return ret;
+            }
+        }
+
+        return new Iterable<V>() {
+            @Override
+            public Iterator<V> iterator() {
+                return new Iter(start);
+            }
+        };
+    }
 }

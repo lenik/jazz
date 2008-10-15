@@ -8,6 +8,13 @@ import java.util.Set;
 
 public class Collections2 {
 
+    public static <E> List<E> toList(Iterable<E> iterable) {
+        List<E> list = new LinkedList<E>();
+        for (E e : iterable)
+            list.add(e);
+        return list;
+    }
+
     public static <E> List<E> toList(Enumeration<E> enumr) {
         List<E> list = new LinkedList<E>();
         while (enumr.hasMoreElements()) {
@@ -15,6 +22,13 @@ public class Collections2 {
             list.add(e);
         }
         return list;
+    }
+
+    public static <E> Set<E> toSet(Iterable<E> iterable) {
+        Set<E> set = new HashSet<E>();
+        for (E e : iterable)
+            set.add(e);
+        return set;
     }
 
     public static <E> Set<E> toSet(Enumeration<E> enumr) {

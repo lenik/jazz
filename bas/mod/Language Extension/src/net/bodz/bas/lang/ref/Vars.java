@@ -275,17 +275,20 @@ public class Vars {
 
     public static class ConstantVar<T> implements Var<T> {
 
-        private final ConstantMeta meta;
-        private final T            value;
+        protected final ConstantMeta meta;
+        protected final T            value;
 
-        public ConstantVar(String name, T value) {
-            this.meta = new ConstantMeta(name, value.getClass());
+        public ConstantVar(ConstantMeta meta, T value) {
+            this.meta = meta;
             this.value = value;
         }
 
+        public ConstantVar(String name, T value) {
+            this(new ConstantMeta(name, value.getClass()), value);
+        }
+
         public ConstantVar(T value) {
-            this.meta = new ConstantMeta(value.getClass());
-            this.value = value;
+            this(new ConstantMeta(value.getClass()), value);
         }
 
         @Override
