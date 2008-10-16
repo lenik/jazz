@@ -7,7 +7,6 @@ import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 
 import net.bodz.bas.lang.err.IllegalUsageError;
-import net.bodz.bas.lang.err.UnexpectedException;
 
 /**
  * Inherited Annotations
@@ -22,12 +21,17 @@ public class Ns {
     }
 
     public static AnnotatedElement getParent(AnnotatedElement elm) {
+        assert elm != null;
         if (elm instanceof Class)
             return ((Class<?>) elm).getSuperclass();
-
-        assert elm instanceof Member;
+        if (!(elm instanceof Member))
+            // MethodParameter, or other user defined AnnotatedElement.
+            return null;
         Member member = ((Member) elm);
         Class<?> _super = member.getDeclaringClass().getSuperclass();
+        if (_super == null)
+            return null;
+
         if (member instanceof Field) {
             Field f = (Field) member;
             try {
@@ -36,7 +40,7 @@ public class Ns {
             } catch (SecurityException e) {
                 throw new RuntimeException(e);
             } catch (NoSuchFieldException e) {
-                throw new UnexpectedException(e);
+                return null;
             }
         }
         if (member instanceof Method) {
@@ -48,7 +52,7 @@ public class Ns {
             } catch (SecurityException e) {
                 throw new RuntimeException(e);
             } catch (NoSuchMethodException e) {
-                throw new RuntimeException(e);
+                return null;
             }
         }
         // assert member instanceof Constructor;

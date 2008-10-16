@@ -27,6 +27,10 @@ public class Vars {
             this(field, field.isAnnotationPresent(ReadOnly.class));
         }
 
+        public Field getField() {
+            return field;
+        }
+
         @Override
         public String getName() {
             return field.getName();
@@ -70,6 +74,11 @@ public class Vars {
             return field.isAnnotationPresent(annotationClass);
         }
 
+        @Override
+        public String toString() {
+            return field.toString();
+        }
+
     }
 
     public static class FieldVar<T> extends _Var<T> {
@@ -102,6 +111,11 @@ public class Vars {
             Reflects.set(ctx, meta.field, value);
         }
 
+        @Override
+        public String toString() {
+            return getMeta() + "@" + ctx;
+        }
+
     }
 
     /**
@@ -121,6 +135,10 @@ public class Vars {
                 throw new UnsupportedOperationException(
                         "unreadable property isn't supported: "
                                 + property.getName());
+        }
+
+        public PropertyDescriptor getProperty() {
+            return property;
         }
 
         @Override
@@ -165,6 +183,11 @@ public class Vars {
             return readf.isAnnotationPresent(annotationClass);
         }
 
+        @Override
+        public String toString() {
+            return property.toString();
+        }
+
     }
 
     public static class PropertyVar<T> extends _Var<T> {
@@ -199,6 +222,11 @@ public class Vars {
                 throw new ReadOnlyException("unwritable property: "
                         + meta.getName());
             Reflects.invoke(ctx, meta.writef, value);
+        }
+
+        @Override
+        public String toString() {
+            return getMeta() + "@" + ctx;
         }
 
     }
@@ -271,6 +299,11 @@ public class Vars {
             return false;
         }
 
+        @Override
+        public String toString() {
+            return "Constant of " + type;
+        }
+
     }
 
     public static class ConstantVar<T> implements Var<T> {
@@ -312,6 +345,11 @@ public class Vars {
 
         @Override
         public void unregisterChangeListener(PropertyChangeListener listener) {
+        }
+
+        @Override
+        public String toString() {
+            return getMeta() + ": " + value;
         }
 
     }

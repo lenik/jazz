@@ -42,9 +42,12 @@ public class PrefixMapTest {
 
     @Test
     public void test_hasChildren() {
-        TestDefs.tests(new TestEval<String>() {
+        TestDefs.tests(new _TestEval<String>() {
             public Object eval(String input) throws Throwable {
-                return map.ceilingKey(input) != null;
+                if (isBreakpoint())
+                    System.out.println(input);
+                String actu = map.ceilingKey(input);
+                return actu != null;
             }
         }, //
                 T(""), //
@@ -61,13 +64,13 @@ public class PrefixMapTest {
     @Test
     public void test_getParent() {
         final PrefixMap<String> map = new PrefixMap<String>();
-        map.put("z.bas", "net.bodz.bas");
-        map.put("z.xml", "net.bodz.xml");
+        map.put("z.bas", "%bas");
+        map.put("z.xml", "%xml");
         TestDefs.tests(new _TestEval<String>() {
             public Object eval(String abbr) throws Throwable {
                 if (isBreakpoint())
                     System.err.println(abbr);
-                String parent = map.floor(abbr);
+                String parent = map.floorKey(abbr);
                 if (parent == null)
                     return "==" + abbr;
                 String expand = map.get(parent);
@@ -76,11 +79,11 @@ public class PrefixMapTest {
             }
         }, //
                 EQ("hello", "==hello"), //
-                EQ("z.bas", "net.bodz.bas"), //
-                EQ("z.bas123", "net.bodz.bas123"), //
-                EQ("z.bas/hello", "net.bodz.bas/hello"), //
+                EQ("z.bas", "%bas"), //
+                EQ("z.bas123", "%bas123"), //
+                EQ("z.bas/hello", "%bas/hello"), //
                 EQ("z.ba", "==z.ba"), //
-                EQ("z.xml", "net.bodz.xml"), //
+                EQ("z.xml", "%xml"), //
                 EQ("z.", "==z."), //
                 END);
     }

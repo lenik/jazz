@@ -2,6 +2,7 @@ package net.bodz.bas.gui;
 
 import net.bodz.bas.lang.ref.Var;
 import net.bodz.bas.types.TypeHierMap;
+import net.bodz.bas.types.util.Types;
 
 public abstract class Style extends TypeHierMap<Renderer> {
 
@@ -30,8 +31,14 @@ public abstract class Style extends TypeHierMap<Renderer> {
             throw new NullPointerException();
         Class<?> type = var.getMeta().getType();
         Class<?> usingType = floorKey(type);
-        if (usingType == null)
-            return null;
+        if (usingType == null) {
+            if (type.isPrimitive()) {
+                usingType = floorKey(Types.box(type));
+                if (usingType == null)
+                    return null;
+            } else
+                return null;
+        }
         return get(usingType);
     }
 
