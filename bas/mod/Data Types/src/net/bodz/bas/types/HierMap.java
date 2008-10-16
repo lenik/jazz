@@ -87,19 +87,31 @@ public abstract class HierMap<K, V> extends TreeMap<K, V> implements Hier<K> {
 
     @Override
     public K ceilingKey(K key) {
-        return super.ceilingKey(key);
+        K ceil = super.ceilingKey(key);
+        if (ceil == null)
+            return nonexistKey();
+        if (derives(key, ceil))
+            return ceil;
+        return nonexistKey();
     }
 
     @Override
     public Entry<K, V> ceilingEntry(K key) {
-        return super.ceilingEntry(key);
+        Entry<K, V> ceil = super.ceilingEntry(key);
+        if (ceil == null)
+            return nonexistEntry();
+        if (derives(key, ceil.getKey()))
+            return ceil;
+        return nonexistEntry();
     }
 
     public V ceiling(K key) {
         Entry<K, V> ceil = ceilingEntry(key);
         if (ceil == null)
             return nonexistValue();
-        return ceil.getValue();
+        if (derives(key, ceil.getKey()))
+            return ceil.getValue();
+        return nonexistValue();
     }
 
     public Iterable<K> ceilingKeys(final K key) {
