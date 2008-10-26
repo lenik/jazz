@@ -16,7 +16,7 @@
 		</copy>
 		<copy todir="${basedir}/lib">
 			<fileset dir="${distsrc}">
-				<include name="net.bodz.bas-source.jar" />
+				<include name="net.bodz.bas-src.jar" />
 			</fileset>
 		</copy>
 	</target>

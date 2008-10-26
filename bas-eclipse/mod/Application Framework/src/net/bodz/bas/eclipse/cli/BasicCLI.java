@@ -9,7 +9,7 @@ public class BasicCLI extends net.bodz.bas.cli.BasicCLI implements IApplication 
     public Object start(IApplicationContext context) throws Exception {
         String[] args = Util.getArguments(context);
         try {
-            climain(args);
+            run(args);
         } catch (Exception e) {
             throw e;
         } catch (Error e) {
