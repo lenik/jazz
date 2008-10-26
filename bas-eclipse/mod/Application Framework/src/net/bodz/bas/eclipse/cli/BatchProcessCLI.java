@@ -10,7 +10,7 @@ public class BatchProcessCLI extends net.bodz.bas.cli.BatchProcessCLI implements
     public Object start(IApplicationContext context) throws Exception {
         String[] args = Util.getArguments(context);
         try {
-            climain(args);
+            run(args);
         } catch (Exception e) {
             throw e;
         } catch (Error e) {
