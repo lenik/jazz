@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.bodz.bas.cli.RunInfo;
+import net.bodz.bas.cli.a.RunInfo;
 import net.bodz.bas.cli.util.JavaLauncher;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.err.NotImplementedException;
@@ -19,7 +19,7 @@ import net.bodz.bas.types.util.Empty;
 import net.bodz.bas.types.util.RegexProcessor;
 import net.bodz.bas.types.util.Strings;
 
-@RunInfo(load = "findcp|$JAVA_HOME/lib/tools.jar")
+@RunInfo(load = "findcp $JAVA_HOME/lib/tools.jar")
 public class JavaCompiler extends JavaLauncher {
 
     /** -source */

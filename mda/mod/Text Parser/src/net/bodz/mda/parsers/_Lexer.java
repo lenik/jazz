@@ -1,11 +1,10 @@
 package net.bodz.mda.parsers;
 
 import java.io.Reader;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Stack;
 
 import net.bodz.bas.io.CharOuts.Buffer;
+import net.bodz.bas.types.IndexMap;
 import net.bodz.bas.types.util.Strings;
 
 public abstract class _Lexer implements Lexer {
@@ -97,7 +96,7 @@ public abstract class _Lexer implements Lexer {
         this.value = value;
     }
 
-    private Map<Integer, String> tokenNames;
+    private IndexMap<String> tokenNames;
 
     /**
      * Guess token name by searching static fields.
@@ -114,13 +113,13 @@ public abstract class _Lexer implements Lexer {
         if (id >= 0 && id < 256)
             return Strings.escape((char) id);
         if (tokenNames == null)
-            tokenNames = new HashMap<Integer, String>();
+            tokenNames = new IndexMap<String>();
         String name = tokenNames.get(id);
         if (name == null) {
             name = ReflectUtil.getFirstFieldName(getTokenDeclClass(), null, id);
             if (name == null)
                 name = String.valueOf(id);
-            tokenNames.put(id, name);
+            tokenNames.set(id, name);
         }
         return name;
     }
@@ -134,7 +133,7 @@ public abstract class _Lexer implements Lexer {
         return getClass();
     }
 
-    private Map<Integer, String> stateNames;
+    private IndexMap<String> stateNames;
 
     /**
      * Guess state name by searching static fields.
@@ -148,13 +147,13 @@ public abstract class _Lexer implements Lexer {
     @Override
     public String getStateName(int state) {
         if (stateNames == null)
-            stateNames = new HashMap<Integer, String>();
+            stateNames = new IndexMap<String>();
         String name = stateNames.get(state);
         if (name == null) {
             name = ReflectUtil.getFirstFieldName(getClass(), null, state);
             if (name == null)
                 name = String.valueOf(state);
-            stateNames.put(state, name);
+            stateNames.set(state, name);
         }
         return name;
     }

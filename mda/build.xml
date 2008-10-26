@@ -11,12 +11,12 @@
 	<target name="dist" depends=":bin.jar, :src.jar">
 		<copy todir="${distdir}">
 			<fileset dir="${basedir}/build">
-				<exclude name="*-source.jar" />
+				<exclude name="*-src.jar" />
 			</fileset>
 		</copy>
 		<copy todir="${distsrc}">
 			<fileset dir="${basedir}/build">
-				<include name="*-source.jar" />
+				<include name="*-src.jar" />
 			</fileset>
 		</copy>
 	</target>
@@ -34,7 +34,7 @@
 
 	<target name=":src.jar">
 		<mkdir dir="build" />
-		<jar destfile="build/net.bodz.mda-source.jar" update="true">
+		<jar destfile="build/net.bodz.mda-src.jar" update="true">
 			<fileset dir="mod/Commons/src" />
 			<fileset dir="mod/Inplas Framework/src" />
 			<fileset dir="mod/Text Parser/src" />

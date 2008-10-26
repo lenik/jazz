@@ -3,8 +3,8 @@ package net.bodz.mda.parsers;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import net.bodz.bas.lang.annotations.ReflectField;
-import net.bodz.bas.lang.annotations.ReflectMethod;
+import net.bodz.bas.lang.a.ReflectField;
+import net.bodz.bas.lang.a.ReflectMethod;
 import net.bodz.bas.lang.util.Reflects;
 
 public abstract class ByaccjParser extends _Parser {

@@ -3,15 +3,15 @@ package net.bodz.mda.loader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Iterator;
-import java.util.Map;
 
 import net.bodz.bas.files.MapsFile;
+import net.bodz.bas.files.MapsFile.PartMap;
 import net.bodz.bas.io.Files;
 
 public class TestClasses {
 
-    private MapsFile                 parts;
-    private Iterator<Map<String, String>> iterator;
+    private MapsFile          parts;
+    private Iterator<PartMap> iterator;
 
     public TestClasses(ClassLoader loader, String part) throws IOException {
         this.loader = loader;
@@ -27,10 +27,10 @@ public class TestClasses {
     public boolean next() {
         if (!iterator.hasNext())
             return false;
-        Map<String, String> map = iterator.next();
-        java = map.get(".");
+        PartMap map = iterator.next();
         name = map.get("name");
         expected = map.get("expected");
+        java = map.getText();
         return true;
     }
 
