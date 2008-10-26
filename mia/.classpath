@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<classpath> 
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+  <classpathentry kind="output" path="bin"/>
+  <classpathentry combineaccessrules="false" kind="src" path="/net.bodz.bas"/>
+  <classpathentry kind="src" path="mod/Math/src" output="mod/Math/bin"/>
+  <classpathentry kind="src" path="mod/Math/test" output="mod/Math/test.bin"/>
+  <classpathentry kind="src" path="mod/Node Graph/src" output="mod/Node Graph/bin"/>
+  <classpathentry kind="src" path="mod/Node Graph/test" output="mod/Node Graph/test.bin"/>
+  <classpathentry kind="src" path="mod/Shape Drawings/src" output="mod/Shape Drawings/bin"/>
+  <classpathentry kind="src" path="mod/Shape Drawings/test" output="mod/Shape Drawings/test.bin"/>
+  <classpathentry kind="src" path="src"/>
+</classpath>
