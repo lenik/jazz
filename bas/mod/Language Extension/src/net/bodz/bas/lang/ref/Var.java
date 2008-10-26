@@ -6,8 +6,8 @@ public interface Var<T> extends Ref<T> {
 
     VarMeta getMeta();
 
-    void registerChangeListener(PropertyChangeListener listener);
+    void addPropertyChangeListener(PropertyChangeListener listener);
 
-    void unregisterChangeListener(PropertyChangeListener listener);
+    void removePropertyChangeListener(PropertyChangeListener listener);
 
 }

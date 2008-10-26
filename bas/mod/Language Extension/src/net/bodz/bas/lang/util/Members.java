@@ -43,6 +43,27 @@ public class Members {
         };
     }
 
+    /**
+     * @param stopClass
+     *            exclude methods from stop-class and its super classes.
+     */
+    public static Iterable<Method> publicMethods(final Class<?> clazz,
+            final Class<?> stopClass) {
+        return new Iterable<Method>() {
+            @Override
+            public Iterator<Method> iterator() {
+                return new PublicMethods(clazz) {
+                    @Override
+                    protected boolean accept(Method m) {
+                        boolean superOfStop = m.getDeclaringClass()
+                                .isAssignableFrom(stopClass);
+                        return !superOfStop;
+                    }
+                };
+            }
+        };
+    }
+
     public static Iterable<Method> publicMethods(final Class<?> clazz,
             final String methodName) {
         assert methodName != null;

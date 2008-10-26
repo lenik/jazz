@@ -12,4 +12,6 @@ public interface VarMeta extends AnnotatedElement {
 
     boolean isReadOnly();
 
+    boolean hasPropertyChangeSupport();
+
 }

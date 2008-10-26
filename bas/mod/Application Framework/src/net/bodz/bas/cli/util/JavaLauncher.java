@@ -20,9 +20,14 @@ import net.bodz.bas.lang.err.OutOfDomainException;
 import net.bodz.bas.log.LogOut;
 import net.bodz.bas.log.LogOuts;
 import net.bodz.bas.sec.CatchExit;
+import net.bodz.bas.types.util.Types;
 
 @RunInfo(lib = { "bodz_bas" })
 public abstract class JavaLauncher implements Launcher {
+
+    static {
+        Types.load(CLIConfig.class);
+    }
 
     private Method                mainf;
 
@@ -44,10 +49,6 @@ public abstract class JavaLauncher implements Launcher {
     }
 
     protected abstract String getMainClassName();
-
-    static {
-        CLIConfig.load();
-    }
 
     @Override
     public void launch(final String[] args) throws Exception {

@@ -48,6 +48,7 @@ import net.bodz.bas.types.TypeParsers.ALogParser;
 import net.bodz.bas.types.TypeParsers.CharOutParser;
 import net.bodz.bas.types.util.Empty;
 import net.bodz.bas.types.util.Strings;
+import net.bodz.bas.types.util.Types;
 
 /**
  * Recommend eclipse template `cli':
@@ -78,13 +79,13 @@ import net.bodz.bas.types.util.Strings;
  * @see Option
  */
 @RcsKeywords(id = "$Id: Rcs.java 784 2008-01-15 10:53:24Z lenik $")
-@RunInfo(lib = "bodz_bas")
+@RunInfo(lib = { "bodz_bas" })
 @OptionGroup(value = "standard", rank = -1)
 @ScriptType(CLIScriptClass.class)
 public class BasicCLI {
 
     static {
-        CLIConfig.load();
+        Types.load(CLIConfig.class);
     }
 
     @Option(hidden = true)
@@ -447,7 +448,7 @@ public class BasicCLI {
             String[] rest = restArgs.toArray(Empty.Strings);
 
             L.x.P("cli main");
-            _main(rest);
+            doMain(rest);
 
             L.x.P("cli exit");
             _exit();
@@ -486,12 +487,12 @@ public class BasicCLI {
     }
 
     /**
+     * Start point after all options are parsed.
+     * <p>
      * User main method.
-     * 
-     * The --options have been parsed.
      */
     @OverrideOption(group = "basicMain")
-    protected void _main(String[] args) throws Throwable {
+    protected void doMain(String[] args) throws Throwable {
         if (args.length == 0) {
             InputStream in = _getDefaultIn();
             if (in != null)
@@ -499,17 +500,17 @@ public class BasicCLI {
             else
                 _help();
         } else {
-            doMain(args);
+            doMainManaged(args);
         }
     }
 
     /**
      * User repeatable-main method.
-     * 
-     * stdin is never used.
+     * <p>
+     * <i> stdin is never used. </i>
      */
     @OverrideOption(group = "basicMain")
-    protected void doMain(String[] args) throws Throwable {
+    protected void doMainManaged(String[] args) throws Throwable {
         for (String arg : args)
             doFileArgument(Files.canoniOf(arg));
     }
