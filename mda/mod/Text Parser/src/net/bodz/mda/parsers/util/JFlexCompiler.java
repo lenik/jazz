@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.bodz.bas.cli.RunInfo;
+import net.bodz.bas.cli.a.RunInfo;
 import net.bodz.bas.cli.util.JavaLauncher;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.io.CharOuts.Buffer;

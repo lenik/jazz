@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import net.bodz.bas.io.Files;
-import net.bodz.bas.lang.Predicate2;
+import net.bodz.bas.lang.Predicate2v;
 
 public class AutoCompileLoader extends ClassLoader {
 
@@ -26,7 +26,7 @@ public class AutoCompileLoader extends ClassLoader {
         if (!src.isFile())
             throw new ClassNotFoundException();
         File dst = compiler.getClassFile(name);
-        Files.make(dst, src, new Predicate2<File, File[]>() {
+        Files.make(dst, src, new Predicate2v<File, File[]>() {
             @Override
             public boolean eval(File dst, File[] srcs) {
                 for (File src : srcs)

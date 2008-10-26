@@ -33,15 +33,15 @@ public class ReflectUtil {
 
     public static Field getFirstField(Class<?> clazz, Object object,
             Object fieldValue) {
-        final Ref<Field> first = new SimpleRef<Field>();
+        final Field[] first = new Field[1];
         findField(clazz, object, fieldValue, new Predicate<Field>() {
             @Override
             public boolean eval(Field field) {
-                first.set(field);
+                first[0] = field;
                 return false;
             }
         });
-        return first.get();
+        return first[0];
     }
 
     public static Field getFirstField(Object object, Object fieldValue) {
