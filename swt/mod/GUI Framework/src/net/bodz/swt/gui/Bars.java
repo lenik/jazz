@@ -41,15 +41,15 @@ public class Bars {
     }
 
     public ToolBar findToolBar(String path) {
-        return toolbars.getParent(path);
+        return toolbars.floor(path);
     }
 
     public Menu findMenuBar(String path) {
-        return menubars.getParent(path);
+        return menubars.floor(path);
     }
 
     public ExpandItem findExpandBar(String path) {
-        return expandbars.getParent(path);
+        return expandbars.floor(path);
     }
 
 }

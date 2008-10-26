@@ -11,12 +11,12 @@
 	<target name="dist" depends=":bin.jar, :src.jar">
 		<copy todir="${distdir}">
 			<fileset dir="${basedir}/build">
-				<exclude name="*-source.jar" />
+				<exclude name="*-src.jar" />
 			</fileset>
 		</copy>
 		<copy todir="${distsrc}">
 			<fileset dir="${basedir}/build">
-				<include name="*-source.jar" />
+				<include name="*-src.jar" />
 			</fileset>
 		</copy>
 	</target>
@@ -30,7 +30,7 @@
 	</target>
 
 	<target name=":src.jar">
-		<jar destfile="build/net.bodz.swt-source.jar" update="true">
+		<jar destfile="build/net.bodz.swt-src.jar" update="true">
 			<fileset dir="mod/Bundled Modules/src" />
 			<fileset dir="mod/Common Controls/src" />
 			<fileset dir="mod/GUI Framework/src" />

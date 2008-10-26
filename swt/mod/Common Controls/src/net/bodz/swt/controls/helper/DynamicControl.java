@@ -40,13 +40,17 @@ public class DynamicControl extends Composite {
         Control[] children = getChildren();
         int excepts = 0;
         for (Control child : children) {
-            if (child.equals(except)) {
+            if (except != null && child.equals(except)) {
                 excepts++;
                 continue;
             }
             child.dispose();
         }
         return excepts;
+    }
+
+    public void clear() {
+        clear(null);
     }
 
     public Control getControl() {
@@ -61,15 +65,21 @@ public class DynamicControl extends Composite {
             control.setParent(this);
     }
 
+    static final Point emptySize = new Point(4, 4);
+
     @Override
     public Point computeSize(int wHint, int hHint) {
         Control control = getControl();
+        if (control == null)
+            return emptySize;
         return control.computeSize(wHint, hHint);
     }
 
     @Override
     public Point computeSize(int wHint, int hHint, boolean changed) {
         Control control = getControl();
+        if (control == null)
+            return emptySize;
         return control.computeSize(wHint, hHint, changed);
     }
 

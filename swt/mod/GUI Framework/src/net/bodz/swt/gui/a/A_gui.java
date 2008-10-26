@@ -1,11 +1,11 @@
 package net.bodz.swt.gui.a;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import net.bodz.bas.gui.a.PreferredSize;
 import net.bodz.bas.lang.err.CreateException;
+import net.bodz.bas.lang.err.IllegalUsageError;
 import net.bodz.bas.mod.Factory;
+import net.bodz.bas.types.TextMap;
+import net.bodz.bas.types.TextMap.HashTextMap;
 import net.bodz.bas.types.util.Types;
 
 import org.eclipse.swt.graphics.FontData;
@@ -18,14 +18,16 @@ public class A_gui extends net.bodz.bas.gui.a.A_gui {
      * @param device
      *            get the current device if <code>null</code>
      */
-    public static Factory getFontFactory(net.bodz.bas.gui.a.Font fontAnnotation) {
-        Class<? extends Factory> factoryClass = fontAnnotation.factory();
+    public static Factory getFontFactory(net.bodz.bas.gui.a.Font font) {
+        if (font == null)
+            return null;
+        Class<? extends Factory> factoryClass = font.factory();
         if (factoryClass == Factory.class) {
-            String name = fontAnnotation.name();
-            int height = fontAnnotation.height();
-            int style = fontAnnotation.style();
-            FontData font = new FontData(name, height, style);
-            return new Factory.Static(font);
+            String name = font.name();
+            int height = font.height();
+            int style = font.style();
+            FontData fontData = new FontData(name, height, style);
+            return new Factory.Static(fontData);
         }
         try {
             return Types.getClassInstance(factoryClass);
@@ -40,9 +42,9 @@ public class A_gui extends net.bodz.bas.gui.a.A_gui {
         return new Point(size.width(), size.height());
     }
 
-    static Map<String, RGB> colorNames;
+    static TextMap<RGB> colorNames;
     static {
-        colorNames = new HashMap<String, RGB>();
+        colorNames = new HashTextMap<RGB>();
         colorNames.put("black", new RGB(0, 0, 0));
         colorNames.put("white", new RGB(255, 255, 255));
         colorNames.put("red", new RGB(255, 0, 0));
@@ -54,11 +56,14 @@ public class A_gui extends net.bodz.bas.gui.a.A_gui {
         colorNames.put("gray", new RGB(128, 128, 128));
     }
 
+    /**
+     * [NAME]#AARRGGBB
+     */
     public static RGB parseColor(String colorExp) {
         if (colorExp == null || colorExp.isEmpty())
             return null;
         int sharp = colorExp.indexOf('#');
-        String name = sharp == -1 ? null : colorExp.substring(0, sharp);
+        String name = sharp == -1 ? colorExp : colorExp.substring(0, sharp);
         if (!name.isEmpty()) {
             RGB rgb = colorNames.get(name);
             if (rgb != null)
@@ -66,10 +71,10 @@ public class A_gui extends net.bodz.bas.gui.a.A_gui {
         }
         // color name not exists, and the fail value isn't specified.
         if (sharp == -1)
-            throw new IllegalAccessError("Bad color name: " + colorExp);
+            throw new IllegalUsageError("Bad color name: " + colorExp);
         String failval = colorExp.substring(sharp + 1);
         if (failval.length() != 6)
-            throw new IllegalAccessError("color format: #rrggbb, given "
+            throw new IllegalUsageError("color format: #rrggbb, given "
                     + failval);
         int rgb = Integer.parseInt(failval, 16);
         int blue = rgb & 0xff;

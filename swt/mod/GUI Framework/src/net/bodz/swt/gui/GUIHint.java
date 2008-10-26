@@ -4,6 +4,9 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
 
+import net.bodz.bas.a.A_bas;
+import net.bodz.bas.a.Doc;
+import net.bodz.bas.gui.a.Border;
 import net.bodz.bas.gui.a.PreferredSize;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.err.IllegalUsageError;
@@ -23,6 +26,8 @@ import org.eclipse.swt.graphics.RGB;
 
 public class GUIHint {
 
+    public String   doc;
+
     public int      order;
     public Boolean  enabled;
     public Boolean  visible;
@@ -33,6 +38,7 @@ public class GUIHint {
     public RGB      color;
     public RGB      backColor;
     public Point    preferredSize;
+    public int      border;
 
     private String  menuItem;
     private String  toolItem;
@@ -41,6 +47,8 @@ public class GUIHint {
     public GUIHint(GUIHint copy) {
         if (copy == null)
             return;
+        this.doc = copy.doc;
+
         this.enabled = copy.enabled;
         this.visible = copy.visible;
         this.order = copy.order;
@@ -51,6 +59,7 @@ public class GUIHint {
         this.color = copy.color;
         this.backColor = copy.backColor;
         this.preferredSize = copy.preferredSize;
+        this.border = copy.border;
 
         this.menuItem = copy.menuItem;
         this.toolItem = copy.toolItem;
@@ -67,6 +76,8 @@ public class GUIHint {
 
     public GUIHint(GUIHint copy, AnnotatedElement elm) {
         this(copy);
+        this.doc = A_bas.parse(Ns.getN(elm, Doc.class));
+
         Boolean enabled = (Boolean) Ns.getValue(elm,
                 net.bodz.bas.gui.a.Enabled.class);
         if (enabled != null)
@@ -117,6 +128,10 @@ public class GUIHint {
                 .parseSize(Ns.getN(elm, PreferredSize.class));
         if (preferredSize != null)
             this.preferredSize = preferredSize;
+
+        Integer border = (Integer) Ns.getValue(elm, Border.class);
+        if (border != null)
+            this.border = border;
 
         String menuItem = (String) Ns.getValue(elm, MenuContrib.class);
         if (menuItem != null)
