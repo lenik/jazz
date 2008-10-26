@@ -1,9 +1,13 @@
 package net.bodz.bas.types.util;
 
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Comparator;
 
+import net.bodz.bas.lang.err.IllegalUsageError;
 import net.bodz.bas.lang.script.MethodSignature;
+import net.bodz.bas.lang.util.Reflects;
 import net.bodz.bas.types.Pair;
 
 public class Comparators {
@@ -28,7 +32,8 @@ public class Comparators {
                 Comparable<Object> _a = ((Comparable<Object>) a);
                 return _a.compareTo(b);
             }
-            return 0;
+            throw new IllegalUsageError("Can't compare between " + a.getClass()
+                    + " and " + b.getClass());
         }
     }
 
@@ -311,6 +316,103 @@ public class Comparators {
                 return 0;
             }
         };
+    }
+
+    public static class MemberFieldComparator implements Comparator<Object> {
+
+        private final Comparator<Object> comparator;
+        protected final Field            memberField;
+
+        public MemberFieldComparator(Comparator<Object> comparator,
+                Field memberField) {
+            assert memberField != null;
+            assert comparator != null;
+            this.comparator = comparator;
+            this.memberField = memberField;
+        }
+
+        @Override
+        public int compare(Object aobj, Object bobj) {
+            if (aobj == bobj)
+                return 0;
+            if (aobj == null)
+                return -1;
+            if (bobj == null)
+                return 1;
+            Object a = Reflects.get(aobj, memberField);
+            Object b = Reflects.get(bobj, memberField);
+            return comparator.compare(a, b);
+        }
+
+    }
+
+    public static class MemberMethodComparator implements Comparator<Object> {
+
+        protected final Method           memberMethod;
+        protected final Object[]         args;
+        private final Comparator<Object> comparator;
+
+        public MemberMethodComparator(Comparator<Object> comparator,
+                Method memberMethod, Object... args) {
+            assert comparator != null;
+            assert memberMethod != null;
+            this.comparator = comparator;
+            this.memberMethod = memberMethod;
+            this.args = args;
+        }
+
+        @Override
+        public int compare(Object aobj, Object bobj) {
+            if (aobj == bobj)
+                return 0;
+            if (aobj == null)
+                return -1;
+            if (bobj == null)
+                return 1;
+            Object a = Reflects.invoke(aobj, memberMethod, args);
+            Object b = Reflects.invoke(bobj, memberMethod, args);
+            return comparator.compare(a, b);
+        }
+
+    }
+
+    public static class MemberPropertyComparator extends MemberMethodComparator {
+
+        public MemberPropertyComparator(Comparator<Object> comparator,
+                PropertyDescriptor memberProperty) {
+            super(comparator, memberProperty.getReadMethod());
+            if (memberMethod == null)
+                throw new IllegalArgumentException("member property "
+                        + memberProperty.getName() + " isn't readable");
+        }
+
+    }
+
+    public static Comparator<Object> member(Comparator<Object> comparator,
+            Field memberField) {
+        return new MemberFieldComparator(comparator, memberField);
+    }
+
+    public static Comparator<Object> member(Comparator<Object> comparator,
+            Method memberMethod, Object... args) {
+        return new MemberMethodComparator(comparator, memberMethod, args);
+    }
+
+    public static Comparator<Object> member(Comparator<Object> comparator,
+            PropertyDescriptor memberProperty) {
+        return new MemberPropertyComparator(comparator, memberProperty);
+    }
+
+    public static Comparator<Object> member(Field member) {
+        return member(STD, member);
+    }
+
+    public static Comparator<Object> member(Method member) {
+        return member(STD, member);
+    }
+
+    public static Comparator<Object> member(PropertyDescriptor member) {
+        return member(STD, member);
     }
 
 }

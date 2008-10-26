@@ -1,7 +1,5 @@
 package net.bodz.bas.cli;
 
-import static net.bodz.bas.cli.util.CLIFunctions.global;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -20,6 +18,7 @@ public class _RunInfo {
 
     // private Class<?>[] init;
 
+    private String[]          libconds;
     private URL[]             libs;
 
     // private String[] _load;
@@ -49,23 +48,48 @@ public class _RunInfo {
 
     private void reset() throws CLIException {
         libloader = JavaLibraryLoader.DEFAULT;
-        libs = new URL[annotation.lib().length];
+        String[] libN = annotation.lib();
+        libconds = new String[libN.length];
+        libs = new URL[libN.length];
         for (int i = 0; i < libs.length; i++) {
-            String libname = annotation.lib()[i];
-            File libfile;
-            if (libname.contains("."))
-                libfile = resolveJar(libname);
-            else
-                libfile = resolveLib(libname);
-            if (libfile == null)
-                throw new Error("can't resolve lib " + libname);
-            try {
-                libs[i] = libfile.toURI().toURL();
-            } catch (MalformedURLException e) {
-                throw new CLIException(e.getMessage(), e);
+            String s = libN[i];
+            int pipe = s.indexOf('|');
+            String libcond, libname;
+            if (pipe == -1) {
+                libcond = "fortype %" + s;
+                libname = s;
+            } else {
+                libcond = s.substring(0, pipe).trim();
+                libname = s.substring(pipe + 1).trim();
             }
+            libconds[i] = libcond;
+            libs[i] = findLib(libname);
         }
         flags = 0;
+    }
+
+    /**
+     * <code>jarname.jar</code> (with extension) is searched and loaded using
+     * {@link JavaLibraryLoader}.
+     * <p>
+     * <code>libname</code> (without extension) are resolved using
+     * <code>libraries.ini</code> file, if <code>libname</code> isn't defined in
+     * <code>libraries.ini</code> , then <code>libname.jar</code> is used.
+     * 
+     */
+    public URL findLib(String libspec) throws CLIException {
+        File libfile;
+        if (libspec.contains("."))
+            libfile = resolveJar(libspec);
+        else
+            libfile = resolveLib(libspec);
+        if (libfile == null)
+            throw new Error("can't resolve lib " + libspec);
+        try {
+            return libfile.toURI().toURL();
+        } catch (MalformedURLException e) {
+            throw new CLIException(e.getMessage(), e);
+        }
     }
 
     File resolveLib(String name) throws CLIException {
@@ -79,12 +103,17 @@ public class _RunInfo {
     public void loadLibraries() throws CLIException {
         if (test(LIBRARIES_LOADED))
             return;
-        for (URL url : libs)
+        for (int i = 0; i < libs.length; i++) {
+            String cond = libconds[i];
+            URL url = libs[i];
+            if (cond != null && (Boolean) CLIConfig.libEval(cond))
+                continue;
             try {
                 Classpath.addURL(url);
             } catch (IOException e) {
                 throw new CLIException(e.getMessage(), e);
             }
+        }
         if (next != null)
             next.loadLibraries();
         flags |= LIBRARIES_LOADED;
@@ -100,7 +129,7 @@ public class _RunInfo {
                 throw new CLIException(e.getMessage(), e);
             }
         for (String exp : annotation.load())
-            global.eval(exp);
+            evalExp(exp);
         if (next != null)
             next.loadBoot();
         flags |= BOOT_LOADED;
@@ -110,10 +139,21 @@ public class _RunInfo {
         if (test(EXTRA_LOADED))
             return;
         for (String exp : annotation.loadDelayed())
-            global.eval(exp);
+            evalExp(exp);
         if (next != null)
             next.loadDelayed();
         flags |= EXTRA_LOADED;
+    }
+
+    void evalExp(String exp) throws CLIException {
+        int pipe = exp.indexOf('|');
+        if (pipe != -1) {
+            String cond = exp.substring(0, pipe).trim();
+            if ((Boolean) CLIConfig.libEval(cond))
+                return;
+            exp = exp.substring(pipe + 1).trim();
+        }
+        CLIConfig.libEval(exp);
     }
 
     private static ClassLocal<_RunInfo> local;

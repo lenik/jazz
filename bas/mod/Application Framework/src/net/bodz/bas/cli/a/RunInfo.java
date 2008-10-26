@@ -5,7 +5,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import net.bodz.bas.loader.JavaLibraryLoader;
+import net.bodz.bas.cli._RunInfo;
+import net.bodz.bas.cli.util.Conditions;
 
 /**
  * Dependancy and loading information.
@@ -28,21 +29,25 @@ public @interface RunInfo {
     Class<?>[] init() default {};
 
     /**
-     * <code>jarname.jar</code> (with extension) is searched and loaded using
-     * {@link JavaLibraryLoader}.
-     * <p>
-     * <code>libname</code> (without extension) are resolved using
-     * <code>libraries.ini</code> file, if <code>libname</code> isn't defined in
-     * <code>libraries.ini</code> , then <code>libname.jar</code> is used.
+     * [type-condition|] library-spec
+     * 
+     * if type-condition isn't specified, 'fortype %libspec' is used.
+     * 
+     * @see _RunInfo#findLib(String)
+     * @see Conditions#fortype(String)
      */
     String[] lib() default {};
 
     /**
+     * [type-condition|] expression
+     * 
      * load before parse any options.
      */
     String[] load() default {};
 
     /**
+     * [type-condition|] expression
+     * 
      * load after the kernel is loaded.
      */
     String[] loadDelayed() default {};

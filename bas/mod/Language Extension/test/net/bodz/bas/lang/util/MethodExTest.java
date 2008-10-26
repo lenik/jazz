@@ -3,10 +3,10 @@ package net.bodz.bas.lang.util;
 import static net.bodz.bas.lang.util.Members.publicMethods;
 import static org.junit.Assert.assertEquals;
 import net.bodz.bas.lang.err.OutOfDomainException;
-import net.bodz.bas.lang.util.MethodEx;
 
 import org.junit.Test;
 
+@Deprecated
 public class MethodExTest {
 
     static final MethodEx _process;

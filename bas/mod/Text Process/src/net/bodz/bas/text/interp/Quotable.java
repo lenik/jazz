@@ -93,7 +93,8 @@ public class Quotable extends PatternProcessor {
     /**
      * @see Strings#split(String, char[], int)
      */
-    public String[] split(final String delim, String s, int limit) {
+    public String[] _split(final boolean dequote, final String delim, String s,
+            int limit) {
         boolean trim = limit == 0;
         final List<String> parts;
         if (limit <= 0) {
@@ -103,7 +104,6 @@ public class Quotable extends PatternProcessor {
             parts = new ArrayList<String>(limit);
         final int _limit = limit;
         final StringBuffer buf = new StringBuffer();
-        final boolean dequote = false;
         new Quotable(this) {
             private int rest = _limit; // assert limit >= 1
 
@@ -156,9 +156,31 @@ public class Quotable extends PatternProcessor {
     }
 
     /**
-     * @see Strings#split(String, char[])
+     * @see Strings#split(String, char[], int)
+     */
+    public String[] split(String delim, String s, int limit) {
+        return _split(false, delim, s, limit);
+    }
+
+    /**
+     * @see Strings#split(String, char[], int)
      */
     public String[] split(String delim, String s) {
-        return split(delim, s, 0);
+        return _split(false, delim, s, 0);
     }
+
+    /**
+     * @see Strings#split(String, char[], int)
+     */
+    public String[] splitDequote(String delim, String s, int limit) {
+        return _split(true, delim, s, limit);
+    }
+
+    /**
+     * @see Strings#split(String, char[], int)
+     */
+    public String[] splitDequote(String delim, String s) {
+        return _split(true, delim, s, 0);
+    }
+
 }

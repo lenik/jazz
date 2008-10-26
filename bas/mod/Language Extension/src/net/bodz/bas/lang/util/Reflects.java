@@ -11,6 +11,7 @@ import net.bodz.bas.lang.Control;
 import net.bodz.bas.lang.a.ReflectField;
 import net.bodz.bas.lang.a.ReflectMethod;
 import net.bodz.bas.lang.a.ReflectProperty;
+import net.bodz.bas.lang.err.ReflectException;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TextMap.HashTextMap;
 
@@ -153,30 +154,60 @@ public class Reflects {
         }
     }
 
+    public static Field getField(Class<?> clazz, String fieldName) {
+        try {
+            return clazz.getField(fieldName);
+        } catch (Exception e) {
+            throw new ReflectException(e);
+        }
+    }
+
+    public static Field getDeclaredField(Class<?> clazz, String fieldName) {
+        try {
+            return clazz.getDeclaredField(fieldName);
+        } catch (Exception e) {
+            throw new ReflectException(e);
+        }
+    }
+
+    public static Method getMethod(Class<?> clazz, String methodName,
+            Class<?>... parameterTypes) {
+        try {
+            return clazz.getMethod(methodName, parameterTypes);
+        } catch (Exception e) {
+            throw new ReflectException(e);
+        }
+    }
+
+    public static Method getDeclaredMethod(Class<?> clazz, String methodName,
+            Class<?>... parameterTypes) {
+        try {
+            return clazz.getDeclaredMethod(methodName, parameterTypes);
+        } catch (Exception e) {
+            throw new ReflectException(e);
+        }
+    }
+
     public static Object get(Object obj, Field field) {
         try {
             return field.get(obj);
-        } catch (RuntimeException e) {
-            throw e;
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage(), e);
+            throw new ReflectException(e.getMessage(), e);
         }
     }
 
     public static void set(Object obj, Field field, Object value) {
         try {
             field.set(obj, value);
-        } catch (RuntimeException e) {
-            throw e;
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage(), e);
+            throw new ReflectException(e.getMessage(), e);
         }
     }
 
     public static Object get(Object obj, PropertyDescriptor property) {
         Method read = property.getReadMethod();
         if (read == null)
-            throw new RuntimeException("property " + property.getName()
+            throw new IllegalArgumentException("property " + property.getName()
                     + " isn't readable");
         return invoke(obj, read);
     }
@@ -184,7 +215,7 @@ public class Reflects {
     public static void set(Object obj, PropertyDescriptor property, Object value) {
         Method write = property.getWriteMethod();
         if (write == null)
-            throw new RuntimeException("property " + property.getName()
+            throw new IllegalArgumentException("property " + property.getName()
                     + " isn't writable");
         invoke(obj, write, value);
     }
@@ -192,10 +223,8 @@ public class Reflects {
     public static Object invoke(Object obj, Method method, Object... args) {
         try {
             return Control.invoke(method, obj, args);
-        } catch (RuntimeException e) {
-            throw e;
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage(), e);
+            throw new ReflectException(e.getMessage(), e);
         }
     }
 

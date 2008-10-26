@@ -1210,25 +1210,51 @@ public class Files {
         return canoniOf(new File(_parent, child));
     }
 
+    /**
+     * if url is entry of jar file, then the jar file is returned.
+     * 
+     * @return the accessible file part of url
+     */
+    public static File getFile(URL url) {
+        String protocol = url.getProtocol();
+        try {
+            if ("jar".equals(protocol)) {
+                String path = url.getPath();
+                int excl = path.lastIndexOf('!');
+                if (excl != -1) // assert
+                    path = path.substring(0, excl);
+                url = new URL(path);
+            }
+            return Files.canoniOf(url);
+        } catch (MalformedURLException e) {
+            throw new UnexpectedException(e);
+        }
+    }
+
     private static File TMPDIR;
 
-    public static synchronized File getTmpDir() {
-        if (TMPDIR == null) {
-            File t;
-            String TEMP;
-            if ((TEMP = System.getenv("TEMP")) != null)
-                t = Files.canoniOf(TEMP);
-            else if ((TEMP = System.getenv("TMP")) != null)
-                t = Files.canoniOf(TEMP);
-            else
-                t = Files.canoniOf("/tmp");
-            if (t.exists()) {
-                if (!t.isDirectory())
-                    throw new RuntimeException("not a directory: " + t);
-            } else
-                t.mkdirs();
-            TMPDIR = t;
-        }
+    static {
+        File t;
+        String TEMP;
+        if ((TEMP = System.getenv("TEMP")) != null)
+            t = Files.canoniOf(TEMP);
+        else if ((TEMP = System.getenv("TMP")) != null)
+            t = Files.canoniOf(TEMP);
+        else
+            t = Files.canoniOf("/tmp");
+        if (t.exists()) {
+            if (!t.isDirectory())
+                throw new RuntimeException("not a directory: " + t);
+        } else
+            t.mkdirs();
+        TMPDIR = t;
+    }
+
+    /**
+     * @see File#createTempFile(String, String)
+     * @see File#createTempFile(String, String, File)
+     */
+    public static File getTmpDir() {
         return TMPDIR;
     }
 
@@ -1346,6 +1372,17 @@ public class Files {
     }
 
     // File system operations
+
+    /**
+     * @return <code>true</code> if succeeded.
+     */
+    public static boolean touch(File file, long time) {
+        return file.setLastModified(time);
+    }
+
+    public static boolean touch(File file) {
+        return touch(file, System.currentTimeMillis());
+    }
 
     public static boolean deleteTree(File start) {
         assert start != null;

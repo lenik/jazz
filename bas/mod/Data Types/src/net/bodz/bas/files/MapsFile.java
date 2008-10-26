@@ -1,13 +1,15 @@
 package net.bodz.bas.files;
 
-import java.util.TreeMap;
+import java.nio.charset.Charset;
+
+import net.bodz.bas.types.TextMap.TreeTextMap;
 
 /**
  * Preferred file name: *.maps
  */
 public class MapsFile extends MultipartsFile<MapsFile.PartMap> {
 
-    public class PartMap extends TreeMap<String, String> {
+    public class PartMap extends TreeTextMap<String> {
 
         private static final long serialVersionUID = 7647573703380582923L;
 
@@ -22,6 +24,10 @@ public class MapsFile extends MultipartsFile<MapsFile.PartMap> {
     }
 
     private PartMap partMap;
+
+    public MapsFile(Object file, Charset charset) {
+        super(file, charset);
+    }
 
     public MapsFile(Object file, String encoding) {
         super(file, encoding);

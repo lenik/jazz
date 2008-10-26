@@ -5,6 +5,7 @@ import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 import net.bodz.bas.lang.a.ReadOnly;
 import net.bodz.bas.lang.err.ReadOnlyException;
@@ -14,13 +15,16 @@ public class Vars {
 
     public static class FieldMeta implements VarMeta {
 
-        protected final Field field;
-        protected boolean     readOnly;
+        protected final Field   field;
+        protected final boolean readOnly;
+        protected final boolean hasPropertyChangeSupport;
 
         public FieldMeta(Field field, boolean readOnly) {
             assert field != null;
             this.field = field;
-            this.readOnly = readOnly;
+            this.readOnly = readOnly || Modifier.isFinal(field.getModifiers());
+            hasPropertyChangeSupport = PropertyChangeSupport.class
+                    .isAssignableFrom(field.getDeclaringClass());
         }
 
         public FieldMeta(Field field) {
@@ -49,6 +53,11 @@ public class Vars {
         @Override
         public boolean isReadOnly() {
             return readOnly;
+        }
+
+        @Override
+        public boolean hasPropertyChangeSupport() {
+            return hasPropertyChangeSupport;
         }
 
         // AnnotatedElement
@@ -112,6 +121,20 @@ public class Vars {
         }
 
         @Override
+        public void addPropertyChangeListener(PropertyChangeListener listener) {
+            if (meta.hasPropertyChangeSupport)
+                ((PropertyChangeSupport) ctx).addPropertyChangeListener(//
+                        meta.getName(), listener);
+        }
+
+        @Override
+        public void removePropertyChangeListener(PropertyChangeListener listener) {
+            if (meta.hasPropertyChangeSupport)
+                ((PropertyChangeSupport) ctx).removePropertyChangeListener(//
+                        meta.getName(), listener);
+        }
+
+        @Override
         public String toString() {
             return getMeta() + "@" + ctx;
         }
@@ -126,6 +149,7 @@ public class Vars {
         protected final PropertyDescriptor property;
         protected final Method             readf;
         protected final Method             writef;
+        protected final boolean            hasPropertyChangeSupport;
 
         public PropertyMeta(PropertyDescriptor property) {
             this.property = property;
@@ -135,6 +159,8 @@ public class Vars {
                 throw new UnsupportedOperationException(
                         "unreadable property isn't supported: "
                                 + property.getName());
+            hasPropertyChangeSupport = PropertyChangeSupport.class
+                    .isAssignableFrom(readf.getDeclaringClass());
         }
 
         public PropertyDescriptor getProperty() {
@@ -159,6 +185,11 @@ public class Vars {
         @Override
         public boolean isReadOnly() {
             return writef == null;
+        }
+
+        @Override
+        public boolean hasPropertyChangeSupport() {
+            return hasPropertyChangeSupport;
         }
 
         // AnnotatedElement
@@ -225,6 +256,20 @@ public class Vars {
         }
 
         @Override
+        public void addPropertyChangeListener(PropertyChangeListener listener) {
+            if (meta.hasPropertyChangeSupport)
+                ((PropertyChangeSupport) ctx).addPropertyChangeListener(//
+                        meta.getName(), listener);
+        }
+
+        @Override
+        public void removePropertyChangeListener(PropertyChangeListener listener) {
+            if (meta.hasPropertyChangeSupport)
+                ((PropertyChangeSupport) ctx).removePropertyChangeListener(//
+                        meta.getName(), listener);
+        }
+
+        @Override
         public String toString() {
             return getMeta() + "@" + ctx;
         }
@@ -266,6 +311,11 @@ public class Vars {
         @Override
         public boolean isReadOnly() {
             return true;
+        }
+
+        @Override
+        public boolean hasPropertyChangeSupport() {
+            return false;
         }
 
         @Override
@@ -340,11 +390,11 @@ public class Vars {
         }
 
         @Override
-        public void registerChangeListener(PropertyChangeListener listener) {
+        public void addPropertyChangeListener(PropertyChangeListener listener) {
         }
 
         @Override
-        public void unregisterChangeListener(PropertyChangeListener listener) {
+        public void removePropertyChangeListener(PropertyChangeListener listener) {
         }
 
         @Override

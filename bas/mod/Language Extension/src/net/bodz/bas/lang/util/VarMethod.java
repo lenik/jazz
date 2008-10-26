@@ -2,14 +2,16 @@ package net.bodz.bas.lang.util;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Map;
 
 import net.bodz.bas.lang.Control;
 import net.bodz.bas.lang.err.IllegalUsageError;
-import net.bodz.bas.lang.err.ReflectException;
+import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TypesHierMap;
+import net.bodz.bas.types.TextMap.HashTextMap;
 import net.bodz.bas.types.util.Types;
 
-public class VarMethod {
+public class VarMethod extends _VMethod {
 
     private final String         name;
 
@@ -27,10 +29,19 @@ public class VarMethod {
     public VarMethod(String name, Iterable<Method> methods) {
         this.name = name;
         ptmap = new TypesHierMap<Method>();
-        for (Method method : methods) {
-            Class<?>[] pt = method.getParameterTypes();
-            ptmap.put(pt, method);
-        }
+        for (Method method : methods)
+            add(method);
+    }
+
+    public VarMethod(String name, Method method) {
+        this.name = name;
+        ptmap = new TypesHierMap<Method>();
+        add(method);
+    }
+
+    public void add(Method method) {
+        Class<?>[] pt = method.getParameterTypes();
+        ptmap.put(pt, method);
     }
 
     public TypesHierMap<Method> getPTMap() {
@@ -41,7 +52,8 @@ public class VarMethod {
         return ptmap.floor(paramTypes);
     }
 
-    public Object invoke(Object obj, Class<?>[] paramTypes, Object... params)
+    @Override
+    public Object invokel(Object obj, Class<?>[] paramTypes, Object... params)
             throws NoSuchMethodException, IllegalArgumentException,
             IllegalAccessException, InvocationTargetException {
         Method method = findMethod(paramTypes);
@@ -59,38 +71,18 @@ public class VarMethod {
         return Control.invoke(method, obj, params);
     }
 
-    public Object invoke(Object obj, Object... params)
-            throws IllegalArgumentException, NoSuchMethodException,
-            IllegalAccessException, InvocationTargetException {
-        Class<?>[] paramTypes = Types.getTypes(params);
-        return invoke(obj, paramTypes, params);
-    }
-
-    public Object _invoke(Object obj, Class<?>[] paramTypes, Object... params) {
-        try {
-            return invoke(obj, paramTypes, params);
-        } catch (IllegalArgumentException e) {
-            throw new ReflectException(e);
-        } catch (NoSuchMethodException e) {
-            throw new ReflectException(e);
-        } catch (IllegalAccessException e) {
-            throw new ReflectException(e);
-        } catch (InvocationTargetException e) {
-            throw new ReflectException(e);
-        }
-    }
-
-    public Object _invoke(Object obj, Object... params) {
-        try {
-            return invoke(obj, params);
-        } catch (IllegalArgumentException e) {
-            throw new ReflectException(e);
-        } catch (NoSuchMethodException e) {
-            throw new ReflectException(e);
-        } catch (IllegalAccessException e) {
-            throw new ReflectException(e);
-        } catch (InvocationTargetException e) {
-            throw new ReflectException(e);
+    public static void classify(Iterable<Method> methods,
+            Map<String, VarMethod> map) {
+        TextMap<VarMethod> tmp = new HashTextMap<VarMethod>();
+        for (Method m : methods) {
+            String name = m.getName();
+            VarMethod varm = tmp.get(name);
+            if (varm == null) {
+                varm = new VarMethod(name, m);
+                tmp.put(name, varm);
+            } else {
+                varm.add(m);
+            }
         }
     }
 

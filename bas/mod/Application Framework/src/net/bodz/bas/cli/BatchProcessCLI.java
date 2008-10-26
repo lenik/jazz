@@ -425,8 +425,8 @@ public class BatchProcessCLI extends BatchCLI {
     }
 
     @Override
-    protected void _main(String[] args) throws Throwable {
-        super._main(args);
+    protected void doMain(String[] args) throws Throwable {
+        super.doMain(args);
         if (L.showDetail())
             stat.dumpDetail(L.d);
         else if (L.showMessage())

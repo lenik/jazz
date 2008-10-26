@@ -1,6 +1,7 @@
 package net.bodz.bas.files;
 
 import java.io.File;
+import java.nio.charset.Charset;
 import java.util.Iterator;
 
 import net.bodz.bas.io.Files;
@@ -12,20 +13,20 @@ import net.bodz.bas.types.util.PrefetchedIterator;
 public abstract class MultipartsFile<T> extends _FileType implements
         FileSource<T> {
 
-    private final Object file;
-    private String       encoding;
-    private TypeParser   keyParser;
-    private TypeParser   valueParser;
-    public final Object  textKey;
-    private final String partTerm = ".";
+    private final Object  file;
+    private final Charset charset;
+    private TypeParser    keyParser;
+    private TypeParser    valueParser;
+    public final Object   textKey;
+    private final String  partTerm = ".";
 
     /**
      * @param file
      *            can be File, URL
      */
-    public MultipartsFile(Object file, String encoding) {
+    public MultipartsFile(Object file, Charset charset) {
         this.file = file;
-        this.encoding = encoding;
+        this.charset = charset;
         try {
             this.keyParser = TypeParsers.guess(getKeyClass(), "KeyClass");
             this.valueParser = TypeParsers.guess(getValueClass(), "ValueClass");
@@ -35,8 +36,12 @@ public abstract class MultipartsFile<T> extends _FileType implements
         this.textKey = getTextKey();
     }
 
+    public MultipartsFile(Object file, String encoding) {
+        this(file, Files.getCharset(encoding));
+    }
+
     public MultipartsFile(Object file) {
-        this(file, null);
+        this(file, (Charset) null);
     }
 
     public MultipartsFile(String path) {
@@ -107,7 +112,7 @@ public abstract class MultipartsFile<T> extends _FileType implements
         return new PrefetchedIterator<T>() {
             private Iterator<String> lines;
             {
-                lines = Files.readByLine2(encoding, file).iterator();
+                lines = Files.readByLine2(charset, file).iterator();
             }
 
             @Override
@@ -151,7 +156,7 @@ public abstract class MultipartsFile<T> extends _FileType implements
                         int pos = line.indexOf(':');
                         if (pos != -1) {
                             value = line.substring(pos + 1).trim(); // trimLeft&
-                                                                    // Right
+                            // Right
                             name = line.substring(0, pos).trim(); // trimRight
                         } else {
                             name = name.trim();

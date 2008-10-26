@@ -15,6 +15,7 @@ import net.bodz.bas.types.util.Types;
  * 
  * interface isn't supported, yet.
  */
+@Deprecated
 public class MethodEx {
 
     private TypeHierMap<Method> typeMap;

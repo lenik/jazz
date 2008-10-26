@@ -16,8 +16,9 @@ public class Ns {
     public static String getName(AnnotatedElement elm) {
         if (elm instanceof Class)
             return ((Class<?>) elm).getName();
-        assert elm instanceof Member;
-        return ((Member) elm).getName();
+        if (elm instanceof Member)
+            return ((Member) elm).getName();
+        return null;
     }
 
     public static AnnotatedElement getParent(AnnotatedElement elm) {
@@ -59,6 +60,9 @@ public class Ns {
         return null;
     }
 
+    /**
+     * Get annotation with inheritance support.
+     */
     public static <A extends Annotation> A getN(AnnotatedElement elm,
             Class<A> nClass) {
         A n = elm.getAnnotation(nClass);
@@ -87,6 +91,11 @@ public class Ns {
         }
     }
 
+    /**
+     * getValue with implicit type cast.
+     * 
+     * @see #getValue(AnnotatedElement, Class)
+     */
     @SuppressWarnings("unchecked")
     public static <T, A extends Annotation> T _getValue(AnnotatedElement elm,
             Class<A> nClass) {

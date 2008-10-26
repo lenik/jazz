@@ -1,21 +1,17 @@
 package net.bodz.bas.cli.util;
 
-import static net.bodz.bas.cli.util.CLIFunctions.global;
-
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import net.bodz.bas.io.Files;
-import net.bodz.bas.lang.err.UnexpectedException;
 import net.bodz.bas.lang.util.Classpath;
 import net.bodz.bas.log.LogOut;
 import net.bodz.bas.log.LogOuts;
 import net.bodz.bas.sys.SystemInfo;
+import net.bodz.bas.types.TextMap;
 
-public class PathFunctions {
+public class FindPath {
 
     static LogOut out = LogOuts.debug;
 
@@ -48,27 +44,10 @@ public class PathFunctions {
         }
     }
 
-    public static File              defaultRoot;
-    public static Map<String, File> namedRoots;
+    public File          defaultRoot;
+    public TextMap<File> namedRoots;
 
-    static {
-        defaultRoot = new File("/");
-        if (SystemInfo.isWin32()) {
-            String programFiles = System.getenv("ProgramFiles");
-            if (programFiles == null)
-                programFiles = "C:\\Program Files";
-            defaultRoot = Files.canoniOf(programFiles);
-        }
-        namedRoots = new HashMap<String, File>();
-        try {
-            global.register("findcp", //
-                    global.wrap(PathFunctions.class, "findcp"));
-        } catch (NoSuchMethodException e) {
-            throw new UnexpectedException(e.getMessage(), e);
-        }
-    }
-
-    public static File findabc(String name, File root) {
+    public File findabc(String name, File root) {
         File file = new File(root, name);
         if (file.exists())
             return file;
@@ -87,7 +66,7 @@ public class PathFunctions {
         return null;
     }
 
-    public static File findabc(String name) {
+    public File findabc(String name) {
         return findabc(name, defaultRoot);
     }
 
@@ -97,11 +76,11 @@ public class PathFunctions {
      *          eclipse&#42;/plugins/org.eclipse.core&#42;<br>
      *          $ECLIPSE_HOME/plugins/org.eclipse.core&#42;<br>
      */
-    public static File find(String exp) {
+    public File find(String exp) {
         return find(exp, null);
     }
 
-    public static File find(String exp, File parent) {
+    public File find(String exp, File parent) {
         // termination
         if (exp == null)
             return parent;
@@ -151,7 +130,7 @@ public class PathFunctions {
         // fuzzy*
         if (component.endsWith("*")) {
             String prefix = component.substring(0, component.length() - 1);
-            File expanded = PathFunctions.findabc(prefix, parent);
+            File expanded = findabc(prefix, parent);
             if (expanded == null || !expanded.exists())
                 return null;
             return find(exp, expanded);
@@ -163,7 +142,7 @@ public class PathFunctions {
         return find(exp, parent);
     }
 
-    public static Object findcp(String exp, boolean errcont) throws IOException {
+    public Object findcp(String exp, boolean errcont) throws IOException {
         File file = find(exp, null);
         if (file == null)
             if (errcont)
@@ -174,7 +153,7 @@ public class PathFunctions {
         return file;
     }
 
-    public static Object findcp(String exp) throws IOException {
+    public Object findcp(String exp) throws IOException {
         return findcp(exp, false);
     }
 
