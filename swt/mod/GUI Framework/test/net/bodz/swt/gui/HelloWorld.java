@@ -5,6 +5,10 @@ import net.bodz.bas.gui.a.Font;
 import net.bodz.bas.gui.a.Visible;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.VerifyEvent;
@@ -39,6 +43,24 @@ public class HelloWorld extends BasicGUI {
     @Override
     protected Composite createInitialView(Composite parent) {
         Composite view = new Composite(parent, SWT.BORDER);
+        view.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseDown(final MouseEvent e) {
+                System.out.println(e);
+            }
+        });
+        view.setCapture(true);
+        view.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(final KeyEvent e) {
+                System.out.println(e);
+            }
+
+            @Override
+            public void keyReleased(final KeyEvent e) {
+                System.out.println(e);
+            }
+        });
         view.setLayout(new FormLayout());
 
         final Label greetingLabel = new Label(view, SWT.NONE);
@@ -46,14 +68,13 @@ public class HelloWorld extends BasicGUI {
         fd_greetingLabel.bottom = new FormAttachment(0, 25);
         fd_greetingLabel.right = new FormAttachment(0, 95);
         fd_greetingLabel.top = new FormAttachment(0, 5);
-        fd_greetingLabel.left = new FormAttachment(0, 5);
         greetingLabel.setLayoutData(fd_greetingLabel);
         greetingLabel.setText("Greeting: ");
 
         greetingText = new Text(view, SWT.BORDER);
         greetingText.addVerifyListener(new VerifyListener() {
             public void verifyText(final VerifyEvent e) {
-                greeting = e.text;
+                greeting = greetingText.getText();
             }
         });
         greetingText.setText(greeting);
@@ -86,7 +107,7 @@ public class HelloWorld extends BasicGUI {
         nameText = new Text(view, SWT.BORDER);
         nameText.addVerifyListener(new VerifyListener() {
             public void verifyText(final VerifyEvent e) {
-                name = e.text;
+                name = nameText.getText();
             }
         });
         nameText.setText(name);
@@ -101,7 +122,7 @@ public class HelloWorld extends BasicGUI {
         ageText.addVerifyListener(new VerifyListener() {
             public void verifyText(final VerifyEvent e) {
                 try {
-                    age = Integer.parseInt(e.text);
+                    age = Integer.parseInt(ageText.getText());
                 } catch (NumberFormatException err) {
                     e.doit = false;
                 }
@@ -146,6 +167,19 @@ public class HelloWorld extends BasicGUI {
         Point cs = view.computeSize(SWT.DEFAULT, SWT.DEFAULT);
         System.out.println(cs);
         view.setSize(cs);
+
+        Label greetingIcon;
+        greetingIcon = new Label(view, SWT.NONE);
+        fd_greetingLabel.left = new FormAttachment(greetingIcon, 5, SWT.RIGHT);
+        greetingIcon.setImage(SWTResourceManager.getImage(HelloWorld.class,
+                "/icons/full/obj16/read_obj.gif"));
+        final FormData fd_greetingIcon = new FormData();
+        fd_greetingIcon.right = new FormAttachment(0, 25);
+        fd_greetingIcon.bottom = new FormAttachment(greetingLabel, 0,
+                SWT.BOTTOM);
+        fd_greetingIcon.top = new FormAttachment(greetingLabel, 0, SWT.TOP);
+        fd_greetingIcon.left = new FormAttachment(0, 5);
+        greetingIcon.setLayoutData(fd_greetingIcon);
         return view;
     }
 

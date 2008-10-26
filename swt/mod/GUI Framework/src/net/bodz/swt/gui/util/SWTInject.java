@@ -32,23 +32,6 @@ public class SWTInject {
             inject((ToolTip) widget, data);
     }
 
-    public void inject(Control control, GUIHint data) {
-        Device device = control.getDisplay();
-        if (data.visible != null)
-            control.setVisible(data.visible);
-        if (data.enabled != null)
-            control.setEnabled(data.enabled);
-        if (data.color != null)
-            control.setForeground(new Color(device, data.color));
-        if (data.backColor != null)
-            control.setBackground(new Color(device, data.backColor));
-        Font font = data.getFont(device);
-        if (font != null)
-            control.setFont(font);
-        if (data.preferredSize != null)
-            control.setSize(data.preferredSize);
-    }
-
     public void inject(Item item, GUIHint data) throws InjectException {
         try {
             Image icon = data.getIcon();

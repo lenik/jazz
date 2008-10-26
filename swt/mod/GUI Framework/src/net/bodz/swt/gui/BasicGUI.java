@@ -8,12 +8,18 @@ import net.bodz.bas.a.ClassInfo;
 import net.bodz.bas.cli.BasicCLI;
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.cli.a.RunInfo;
+import net.bodz.bas.gui.GUIException;
+import net.bodz.bas.gui.a.PreferredSize;
+import net.bodz.bas.types.util.Ns;
+import net.bodz.bas.types.util.Types;
 import net.bodz.swt.controls.helper.DynamicControl;
 import net.bodz.swt.gui.util.Controls;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTException;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.Menu;
@@ -25,8 +31,12 @@ import swing2swt.layout.BorderLayout;
 
 @RunInfo(lib = { "bodz_swt", "bodz_icons" },
 
-load = { "findcp|eclipse*/plugins/org.eclipse.swt_*", })
+load = { "findcp eclipse*/plugins/org.eclipse.swt_*", })
 public class BasicGUI extends BasicCLI {
+
+    static {
+        Types.load(GUIConfig.class);
+    }
 
     @Option(alias = "Xw")
     private int                    shellWidth  = 320;
@@ -34,12 +44,20 @@ public class BasicGUI extends BasicCLI {
     @Option(alias = "Xh")
     private int                    shellHeight = 240;
 
+    {
+        PreferredSize size = Ns.getN(getClass(), PreferredSize.class);
+        if (size != null) {
+            shellWidth = size.width();
+            shellHeight = size.height();
+        }
+    }
+
     protected Shell                shell;
     private DynamicControl         viewArea;
     private Map<Object, Composite> views;
 
     @Override
-    protected void _main(String[] args) throws Throwable {
+    protected void doMain(String[] args) throws Throwable {
         // this.args = args;
         views = new HashMap<Object, Composite>();
 
@@ -70,7 +88,7 @@ public class BasicGUI extends BasicCLI {
         return images;
     }
 
-    protected Shell createShell() {
+    protected Shell createShell() throws GUIException, SWTException {
         Shell shell = new Shell();
         shell.setSize(shellWidth, shellHeight);
         ClassInfo info = _loadClassInfo();
@@ -85,15 +103,15 @@ public class BasicGUI extends BasicCLI {
 
         shell.setLayout(new BorderLayout(0, 0));
 
-        Composite toolBar = createToolBar(shell);
+        Control toolBar = createToolBar(shell);
         if (toolBar != null)
             toolBar.setLayoutData(BorderLayout.NORTH);
 
-        Composite statusBar = createStatusBar(shell);
+        Control statusBar = createStatusBar(shell);
         if (statusBar != null)
             statusBar.setLayoutData(BorderLayout.SOUTH);
 
-        Composite expandBar = createExpandBar(shell);
+        Control expandBar = createExpandBar(shell);
         if (expandBar != null)
             expandBar.setLayoutData(BorderLayout.WEST);
 
@@ -118,22 +136,23 @@ public class BasicGUI extends BasicCLI {
         return menu;
     }
 
-    protected Composite createToolBar(Composite parent) {
+    protected Control createToolBar(Composite parent) {
         ToolBar toolBar = new ToolBar(parent, SWT.FLAT | SWT.RIGHT);
         return toolBar;
     }
 
-    protected Composite createStatusBar(Composite parent) {
+    protected Control createStatusBar(Composite parent) {
         Composite statusBar = new Composite(parent, SWT.NONE); // SWT.BORDER
         return statusBar;
     }
 
-    protected Composite createExpandBar(Composite parent) {
+    protected Control createExpandBar(Composite parent) {
         ExpandBar expandBar = new ExpandBar(parent, SWT.NONE);
         return expandBar;
     }
 
-    protected Composite createInitialView(Composite parent) {
+    protected Composite createInitialView(Composite parent)
+            throws GUIException, SWTException {
         return createView(parent, null);
     }
 
