@@ -12,7 +12,7 @@ public class Conditions {
     }
 
     public void setAlias(String libspec, String fqcn) {
-        System.out.println("set-alias: %" + libspec + "=" + fqcn);
+        // System.out.println("set-alias: %" + libspec + "=" + fqcn);
         typealiases.put(libspec, fqcn);
     }
 

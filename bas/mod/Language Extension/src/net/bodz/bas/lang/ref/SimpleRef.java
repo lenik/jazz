@@ -16,9 +16,10 @@ public class SimpleRef<T> implements Ref<T> {
         return o;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public void set(T o) {
-        this.o = o;
+    public void set(Object o) {
+        this.o = (T) o;
     }
 
 }

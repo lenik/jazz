@@ -11,6 +11,7 @@ import net.bodz.bas.lang.util.Members.PublicConstructors;
 import net.bodz.bas.lang.util.Members.PublicMethods;
 import net.bodz.bas.types.util.CompatMethods;
 import net.bodz.bas.types.util.Objects;
+import net.bodz.bas.types.util.Types;
 
 public class MethodSignature {
 
@@ -44,12 +45,24 @@ public class MethodSignature {
     }
 
     @Override
+    public String toString() {
+        return "signature " + name + "(" + Types.joinNames(types) + ")";
+    }
+
+    private transient Integer hash;
+
+    @Override
     public int hashCode() {
-        int hash = 0;
-        if (name != null)
-            hash += name.hashCode();
-        if (types != null)
-            hash += types.hashCode();
+        if (this.hash == null) {
+            int hash = 0;
+            if (name != null)
+                hash += name.hashCode();
+            if (types != null)
+                for (Class<?> type : types)
+                    if (type != null)
+                        hash += type.hashCode();
+            this.hash = hash;
+        }
         return hash;
     }
 

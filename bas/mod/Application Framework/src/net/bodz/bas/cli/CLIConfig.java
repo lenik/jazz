@@ -36,9 +36,9 @@ public class CLIConfig {
     public static final Conditions conds;
 
     public static Object libEval(String exp) throws CLIException {
-        System.out.println("eval: " + exp);
+        // System.out.println("eval: " + exp);
         Object ret = lib.eval(exp);
-        System.out.println("  ret = " + ret);
+        // System.out.println("  ret = " + ret);
         return ret;
     }
 
@@ -61,6 +61,7 @@ public class CLIConfig {
         findPath.namedRoots = new HashTextMap<File>();
 
         lib.addMethods(conds = new Conditions());
+
         conds.setAlias("bodz_bas", ALog.class.getName());
     }
 

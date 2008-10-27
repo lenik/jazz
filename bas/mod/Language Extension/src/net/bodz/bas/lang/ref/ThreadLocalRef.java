@@ -9,9 +9,10 @@ public class ThreadLocalRef<T> implements Ref<T> {
         return local.get();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public void set(T o) {
-        local.set(o);
+    public void set(Object o) {
+        local.set((T) o);
     }
 
 }

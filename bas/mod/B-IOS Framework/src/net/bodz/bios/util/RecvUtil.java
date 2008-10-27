@@ -8,6 +8,7 @@ import net.bodz.bas.lang.ClassLocal;
 import net.bodz.bas.lang.util.MethodEx;
 import net.bodz.bios.ReceiverEx;
 
+@SuppressWarnings("deprecation")
 public class RecvUtil {
 
     public static MethodEx getMethodEx(Class<?> clazz, String methodName) {
