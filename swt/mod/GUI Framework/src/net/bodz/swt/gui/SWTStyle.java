@@ -2,6 +2,8 @@ package net.bodz.swt.gui;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.util.EventObject;
 
 import net.bodz.bas.gui.Interaction;
 import net.bodz.bas.gui.RenderException;
@@ -10,18 +12,20 @@ import net.bodz.bas.gui.Style;
 import net.bodz.bas.gui.a.Border;
 import net.bodz.bas.lang.a.ChainUsage;
 import net.bodz.bas.lang.a.OverrideOption;
+import net.bodz.bas.lang.err.CheckException;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.lang.ref.Var;
 import net.bodz.bas.types.TypeParser;
 import net.bodz.bas.types.TypeParsers;
 import net.bodz.bas.types.util.Ns;
+import net.bodz.swt.adapters.ControlAdapters;
+import net.bodz.swt.adapters.CommitAdapter;
+import net.bodz.swt.adapters.CommitException;
 import net.bodz.swt.controls.helper.DynamicControl;
 import net.bodz.swt.gui.a.MaxLength;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
-import org.eclipse.swt.events.FocusAdapter;
-import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
@@ -30,8 +34,11 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+
+import swing2swt.layout.BorderLayout;
 
 public abstract class SWTStyle extends Style {
 
@@ -118,36 +125,38 @@ public abstract class SWTStyle extends Style {
         put(Number.class, new R_Number());
         put(boolean.class, new R_Boolean());
         put(Boolean.class, new R_Boolean());
+        put(File.class, new R_File());
+        // put(byte[].class, new R_binary);
     }
 
     abstract class _R_Object extends SWTRenderer {
 
         @Override
-        protected Control render(GUIVar<Object> ctxVar, Composite parent,
-                int style) throws RenderException, SWTException {
-            GUIVarMeta meta = ctxVar.getMeta();
+        protected Control render(GUIVar<?> var, Composite parent, int style)
+                throws RenderException, SWTException {
+            GUIVarMeta meta = var.getMeta();
             Control control = null;
             try {
                 if (meta.isReadOnly()) {
-                    Object value = ctxVar.get();
+                    Object value = var.get();
                     if (value == null) {
                         Label label = new Label(parent, style);
                         label.setText("(null)");
                         return control = label;
                     } else {
-                        return control = renderObject(ctxVar, parent, style);
+                        return control = renderObject(var, parent, style);
                     }
                 }
                 DynamicControl dyna = new DynamicControl(parent, SWT.NONE);
-                control = renderObject(ctxVar, dyna, style);
+                control = renderObject(var, dyna, style);
                 return dyna;
             } finally {
                 if (control != null)
-                    addEffects(control, ctxVar);
+                    addEffects(control, var);
             }
         }
 
-        protected abstract Control renderObject(GUIVar<Object> var,
+        protected abstract Control renderObject(GUIVar<?> var,
                 Composite parent, int style) throws RenderException,
                 SWTException;
 
@@ -156,8 +165,8 @@ public abstract class SWTStyle extends Style {
     class R_Text extends SWTRenderer {
 
         @Override
-        public Control render(final GUIVar<Object> var, Composite parent,
-                int style) throws RenderException, SWTException {
+        public Control render(final GUIVar<?> var, Composite parent, int style)
+                throws RenderException, SWTException {
             GUIVarMeta meta = var.getMeta();
             boolean readOnly = meta.isReadOnly();
             String val = String.valueOf(var.get());
@@ -192,7 +201,6 @@ public abstract class SWTStyle extends Style {
                             text.setText(String.valueOf(var.get()));
                         }
                     });
-                // verify, TODO: add check support
                 Class<?> type = meta.getType();
                 final TypeParser parser;
                 try {
@@ -201,16 +209,18 @@ public abstract class SWTStyle extends Style {
                     throw new RenderException(
                             "Can't guess parser for number class: " + type);
                 }
-                text.addFocusListener(new FocusAdapter() {
+                ControlAdapters.commit(text, new CommitAdapter(interact(text)) {
                     @Override
-                    public void focusLost(FocusEvent e) {
+                    public void commit(EventObject event)
+                            throws CommitException {
                         try {
                             Object val = parser.parse(text.getText());
+                            var.check(val);
                             var.set(val);
-                        } catch (ParseException err) {
-                            interact(text).alert("Parse Failure", err);
-                            text.setSelection(0, text.getText().length());
-                            text.setFocus();
+                        } catch (ParseException e) {
+                            throw new CommitException(e);
+                        } catch (CheckException e) {
+                            throw new CommitException(e);
                         }
                     }
                 });
@@ -225,7 +235,7 @@ public abstract class SWTStyle extends Style {
         private final R_Text rText = new R_Text();
 
         @Override
-        protected Control render(GUIVar<Object> var, Composite parent, int style)
+        protected Control render(GUIVar<?> var, Composite parent, int style)
                 throws RenderException, SWTException {
             // GUIVarMeta meta = var.getMeta();
             // if min/max then render in slider...
@@ -237,11 +247,11 @@ public abstract class SWTStyle extends Style {
     class R_Boolean extends SWTRenderer {
 
         @Override
-        protected Control render(final GUIVar<Object> var,
-                final Composite parent, int style) throws RenderException,
-                SWTException {
+        protected Control render(final GUIVar<?> var, final Composite parent,
+                int style) throws RenderException, SWTException {
             GUIVarMeta meta = var.getMeta();
-            boolean val = (Boolean) var.get();
+            Boolean _val = (Boolean) var.get();
+            boolean val = _val == null ? false : _val;
             final Button check = new Button(parent, style | SWT.CHECK);
             check.setSelection(val);
             if (meta.isReadOnly())
@@ -258,17 +268,88 @@ public abstract class SWTStyle extends Style {
                 bindProperty(var, check, new PropertyChangeListener() {
                     @Override
                     public void propertyChange(PropertyChangeEvent evt) {
-                        check.setSelection((Boolean) var.get());
+                        Boolean _val = (Boolean) var.get();
+                        check.setSelection(_val == null ? false : _val);
                     }
                 });
-            // verify
             if (!meta.isReadOnly()) {
-                // checkers.
+                ControlAdapters.commit(check,
+                        new CommitAdapter(interact(check)) {
+                            @Override
+                            public void commit(EventObject event)
+                                    throws CommitException {
+                                boolean val = check.getSelection();
+                                try {
+                                    var.check(val);
+                                    var.set(val);
+                                } catch (CheckException e) {
+                                    throw new CommitException(e);
+                                }
+                            }
+                        });
             }
             addEffects(check, var);
             return check;
         }
+    }
 
+    class R_File extends SWTRenderer {
+
+        @Override
+        protected Control render(final GUIVar<?> var, final Composite parent,
+                int style) throws RenderException, SWTException {
+            GUIVarMeta meta = var.getMeta();
+            File val = (File) var.get();
+            assert val != null;
+            final Composite comp = new Composite(parent, style);
+            BorderLayout layout = new BorderLayout();
+            comp.setLayout(layout);
+            final Text fileText = new Text(comp, SWT.BORDER);
+            fileText.setText(val.getPath());
+            fileText.setLayoutData(BorderLayout.CENTER);
+            final Button browseButton = new Button(comp, SWT.NONE);
+            browseButton.setText("Browse");
+            browseButton.addSelectionListener(new SelectionAdapter() {
+                @Override
+                public void widgetSelected(SelectionEvent e) {
+                    FileDialog dialog = new FileDialog(parent.getShell());
+                    String path = dialog.open();
+                    if (path != null)
+                        fileText.setText(path);
+                }
+            });
+            browseButton.setLayoutData(BorderLayout.EAST);
+            if (meta.isReadOnly()) {
+                fileText.setEnabled(false);
+                browseButton.setEnabled(false);
+            } else {
+                ControlAdapters.commit(fileText, new CommitAdapter(//
+                        interact(fileText)) {
+                    @Override
+                    public void commit(EventObject event)
+                            throws CommitException {
+                        File file = new File(fileText.getText());
+                        try {
+                            var.check(file);
+                            var.set(file);
+                        } catch (CheckException e) {
+                            throw new CommitException(e);
+                        }
+                    }
+                });
+            }
+            if (meta.hasPropertyChangeSupport())
+                bindProperty(var, fileText, new PropertyChangeListener() {
+                    @Override
+                    public void propertyChange(PropertyChangeEvent evt) {
+                        File file = (File) var.get();
+                        assert file != null;
+                        fileText.setText(String.valueOf(file));
+                    }
+                });
+            addEffects(comp, var);
+            return comp;
+        }
     }
 
 }

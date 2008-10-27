@@ -13,6 +13,7 @@ import net.bodz.bas.lang.ref.Vars.PropertyMeta;
 import net.bodz.bas.lang.ref.Vars.PropertyVar;
 import net.bodz.bas.types.Checker;
 import net.bodz.bas.types.Checks;
+import net.bodz.bas.types.util.Types;
 
 public class GUIVars {
 
@@ -36,7 +37,7 @@ public class GUIVars {
 
         public void check(Object value) throws CheckException {
             Class<?> type = getType();
-            if (value != null && !type.isInstance(value))
+            if (value != null && !Types.box(type).isInstance(value))
                 throw new CheckException("Not a instanceof " + type + ": "
                         + value);
             if (checker != null)
@@ -60,7 +61,7 @@ public class GUIVars {
         }
 
         @Override
-        public void check(T newValue) throws CheckException {
+        public void check(Object newValue) throws CheckException {
             GUIFieldMeta meta = (GUIFieldMeta) this.meta;
             meta.check(newValue);
         }
@@ -88,7 +89,7 @@ public class GUIVars {
 
         public void check(Object value) throws CheckException {
             Class<?> type = getType();
-            if (value != null && !type.isInstance(value))
+            if (value != null && !Types.box(type).isInstance(value))
                 throw new CheckException("Not a instanceof " + type + ": "
                         + value);
             if (checker != null)
@@ -114,7 +115,7 @@ public class GUIVars {
         }
 
         @Override
-        public void check(T newValue) throws CheckException {
+        public void check(Object newValue) throws CheckException {
             GUIPropertyMeta meta = (GUIPropertyMeta) this.meta;
             meta.check(newValue);
         }
@@ -154,7 +155,7 @@ public class GUIVars {
 
         public void check(Object value) throws CheckException {
             Class<?> type = getType();
-            if (value != null && !type.isInstance(value))
+            if (value != null && !Types.box(type).isInstance(value))
                 throw new CheckException("Not a instanceof " + type + ": "
                         + value);
             if (checker != null)
@@ -188,7 +189,7 @@ public class GUIVars {
         }
 
         @Override
-        public void check(T newValue) throws CheckException {
+        public void check(Object newValue) throws CheckException {
             GUIConstantMeta meta = (GUIConstantMeta) this.meta;
             meta.check(newValue);
         }

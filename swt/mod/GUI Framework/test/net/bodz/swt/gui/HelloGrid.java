@@ -27,7 +27,6 @@ public class HelloGrid extends BasicGUI {
 
         final Label label = new Label(view, SWT.NONE);
         label.setImage(SWTResourceManager.getImage(HelloGrid.class, "/icons/full/obj16/genericvariable_obj.gif"));
-        label.setText("Label");
 
         final Label label_1 = new Label(view, SWT.NONE);
         label_1.setText("Label");
@@ -36,7 +35,7 @@ public class HelloGrid extends BasicGUI {
         text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
         final Label label_2 = new Label(view, SWT.NONE);
-        label_2.setText("Label");
+        label_2.setImage(SWTResourceManager.getImage(HelloGrid.class, "/icons/full/obj16/unknown_obj.gif"));
 
         final Label label_3 = new Label(view, SWT.NONE);
         label_3.setText("Label");
@@ -45,7 +44,6 @@ public class HelloGrid extends BasicGUI {
         button.setText("Check Button");
 
         final Label label_4 = new Label(view, SWT.NONE);
-        label_4.setText("Label");
 
         final Label label_5 = new Label(view, SWT.NONE);
         label_5.setText("Label");
