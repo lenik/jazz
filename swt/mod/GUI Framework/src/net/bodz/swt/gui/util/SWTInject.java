@@ -2,10 +2,10 @@ package net.bodz.swt.gui.util;
 
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.swt.gui.GUIHint;
+import net.bodz.swt.gui.GUIVar;
+import net.bodz.swt.gui.GUIVarMeta;
 
-import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Device;
-import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.ExpandItem;
@@ -18,6 +18,22 @@ import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.swt.widgets.Widget;
 
 public class SWTInject {
+
+    public static int styleFx(int style, GUIHint hint) {
+        if (hint != null) {
+            if (hint.border != 0)
+                style |= SWT.BORDER;
+        }
+        return style;
+    }
+
+    public static int styleFx(int style, GUIVarMeta meta) {
+        return styleFx(style, meta.getHint());
+    }
+
+    public static int styleFx(int style, GUIVar<?> var) {
+        return styleFx(style, var.getMeta().getHint());
+    }
 
     public void inject(Widget widget, GUIHint data) throws InjectException {
         if (widget instanceof Control)

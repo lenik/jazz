@@ -25,15 +25,14 @@ public abstract class SWTRenderer implements Renderer {
         try {
             if (!(var instanceof GUIVar))
                 throw new RenderException("not a GUIVar: " + var.getClass());
-            @SuppressWarnings("unchecked")
-            GUIVar<Object> gvar = (GUIVar<Object>) var;
+            GUIVar<?> gvar = (GUIVar<?>) var;
             return render(gvar, null, SWT.NONE);
         } catch (SWTException e) {
             throw new RenderException(e);
         }
     }
 
-    protected abstract Control render(GUIVar<Object> var, Composite parent,
+    protected abstract Control render(GUIVar<?> var, Composite parent,
             int style) throws RenderException, SWTException;
 
     protected void bindProperty(final GUIVar<?> var, final Control control,
@@ -45,22 +44,6 @@ public abstract class SWTRenderer implements Renderer {
                 var.removePropertyChangeListener(listener);
             }
         });
-    }
-
-    protected static int styleFx(int style, GUIHint hint) {
-        if (hint != null) {
-            if (hint.border != 0)
-                style |= SWT.BORDER;
-        }
-        return style;
-    }
-
-    protected static int styleFx(int style, GUIVarMeta meta) {
-        return styleFx(style, meta.getHint());
-    }
-
-    protected static int styleFx(int style, GUIVar<?> var) {
-        return styleFx(style, var.getMeta().getHint());
     }
 
 }

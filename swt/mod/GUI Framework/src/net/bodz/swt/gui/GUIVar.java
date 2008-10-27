@@ -8,6 +8,6 @@ public interface GUIVar<T> extends Var<T> {
     @Override
     GUIVarMeta getMeta();
 
-    void check(T newValue) throws CheckException;
+    void check(Object newValue) throws CheckException;
 
 }

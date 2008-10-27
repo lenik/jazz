@@ -29,9 +29,7 @@ import org.eclipse.swt.widgets.ToolBar;
 
 import swing2swt.layout.BorderLayout;
 
-@RunInfo(lib = { "bodz_swt", "bodz_icons" },
-
-load = { "findcp eclipse*/plugins/org.eclipse.swt_*", })
+@RunInfo(lib = { "bodz_swt", "bodz_icons" })
 public class BasicGUI extends BasicCLI {
 
     static {
