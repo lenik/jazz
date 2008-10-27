@@ -1,8 +1,12 @@
 package net.bodz.bas.lang.ref;
 
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 
-public interface PropertyChangeSupport {
+/**
+ * @see PropertyChangeSupport
+ */
+public interface IPropertyChangeSupport {
 
     void addPropertyChangeListener(PropertyChangeListener listener);
 

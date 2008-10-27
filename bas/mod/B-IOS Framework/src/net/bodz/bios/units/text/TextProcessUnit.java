@@ -3,7 +3,6 @@ package net.bodz.bios.units.text;
 import java.io.IOException;
 import java.nio.CharBuffer;
 
-import net.bodz.bas.lang.util.MethodEx;
 import net.bodz.bios.units.SISOUnit;
 
 public abstract class TextProcessUnit extends SISOUnit {
@@ -16,8 +15,7 @@ public abstract class TextProcessUnit extends SISOUnit {
     }
 
     /**
-     * {@link CharSequence} is interface, which isn't supported by
-     * {@link MethodEx}.
+     * {@link CharSequence} is interface, which isn't supported by MethodEx
      */
     public void recv(String string) throws IOException {
         recv(string.toCharArray());

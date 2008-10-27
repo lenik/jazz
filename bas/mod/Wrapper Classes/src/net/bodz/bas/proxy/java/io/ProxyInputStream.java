@@ -37,7 +37,7 @@ public class ProxyInputStream extends InputStream {
     }
 
     @Override
-    public void mark(int readlimit) {
+    public synchronized void mark(int readlimit) {
         proxy.mark(readlimit);
     }
 
@@ -62,7 +62,7 @@ public class ProxyInputStream extends InputStream {
     }
 
     @Override
-    public void reset() throws IOException {
+    public synchronized void reset() throws IOException {
         proxy.reset();
     }
 

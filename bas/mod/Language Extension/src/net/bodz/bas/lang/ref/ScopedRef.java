@@ -16,11 +16,12 @@ public class ScopedRef<T> implements Ref<T> {
         return stack.getLast();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public void set(T o) {
+    public void set(Object o) {
         if (stack.isEmpty())
             throw new RuntimeException("stack underflow");
-        stack.set(stack.size(), o);
+        stack.set(stack.size(), (T) o);
     }
 
     public void begin(T init) {

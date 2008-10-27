@@ -23,7 +23,7 @@ public class Vars {
             assert field != null;
             this.field = field;
             this.readOnly = readOnly || Modifier.isFinal(field.getModifiers());
-            hasPropertyChangeSupport = PropertyChangeSupport.class
+            hasPropertyChangeSupport = IPropertyChangeSupport.class
                     .isAssignableFrom(field.getDeclaringClass());
         }
 
@@ -123,14 +123,14 @@ public class Vars {
         @Override
         public void addPropertyChangeListener(PropertyChangeListener listener) {
             if (meta.hasPropertyChangeSupport)
-                ((PropertyChangeSupport) ctx).addPropertyChangeListener(//
+                ((IPropertyChangeSupport) ctx).addPropertyChangeListener(//
                         meta.getName(), listener);
         }
 
         @Override
         public void removePropertyChangeListener(PropertyChangeListener listener) {
             if (meta.hasPropertyChangeSupport)
-                ((PropertyChangeSupport) ctx).removePropertyChangeListener(//
+                ((IPropertyChangeSupport) ctx).removePropertyChangeListener(//
                         meta.getName(), listener);
         }
 
@@ -159,7 +159,7 @@ public class Vars {
                 throw new UnsupportedOperationException(
                         "unreadable property isn't supported: "
                                 + property.getName());
-            hasPropertyChangeSupport = PropertyChangeSupport.class
+            hasPropertyChangeSupport = IPropertyChangeSupport.class
                     .isAssignableFrom(readf.getDeclaringClass());
         }
 
@@ -248,7 +248,7 @@ public class Vars {
         }
 
         @Override
-        public void set(T value) {
+        public void set(Object value) {
             if (meta.writef == null)
                 throw new ReadOnlyException("unwritable property: "
                         + meta.getName());
@@ -258,14 +258,14 @@ public class Vars {
         @Override
         public void addPropertyChangeListener(PropertyChangeListener listener) {
             if (meta.hasPropertyChangeSupport)
-                ((PropertyChangeSupport) ctx).addPropertyChangeListener(//
+                ((IPropertyChangeSupport) ctx).addPropertyChangeListener(//
                         meta.getName(), listener);
         }
 
         @Override
         public void removePropertyChangeListener(PropertyChangeListener listener) {
             if (meta.hasPropertyChangeSupport)
-                ((PropertyChangeSupport) ctx).removePropertyChangeListener(//
+                ((IPropertyChangeSupport) ctx).removePropertyChangeListener(//
                         meta.getName(), listener);
         }
 
@@ -385,7 +385,7 @@ public class Vars {
         }
 
         @Override
-        public void set(T value) {
+        public void set(Object value) {
             throw new ReadOnlyException();
         }
 

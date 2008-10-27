@@ -9,6 +9,8 @@ public abstract class Style extends TypeHierMap<Renderer> {
     private static final long serialVersionUID = 383209437177989123L;
 
     /**
+     * Render editable var
+     * 
      * @throws GUIException
      * @throws NullPointerException
      *             if obj is <code>null</code>.
@@ -30,6 +32,10 @@ public abstract class Style extends TypeHierMap<Renderer> {
         if (var == null)
             throw new NullPointerException();
         Class<?> type = var.getMeta().getType();
+        return findRenderer(type);
+    }
+
+    protected Renderer findRenderer(Class<?> type) {
         Class<?> usingType = floorKey(type);
         if (usingType == null) {
             if (type.isPrimitive()) {

@@ -38,6 +38,7 @@ import net.bodz.bas.lang.IntMath;
 import net.bodz.bas.lang.Predicate2v;
 import net.bodz.bas.lang.err.IdentifiedException;
 import net.bodz.bas.lang.err.IllegalArgumentTypeException;
+import net.bodz.bas.lang.err.IllegalUsageError;
 import net.bodz.bas.lang.err.UnexpectedException;
 import net.bodz.bas.lang.err.WrappedException;
 import net.bodz.bas.text.diff.DiffComparator;
@@ -1099,6 +1100,18 @@ public class Files {
         String className = clazz.getName();
         String fileName = className.replace('.', '/') + "." + extension;
         return loader.getResource(fileName);
+    }
+
+    public static URL classDataURL(Class<?> clazz, String extension) {
+        String classURL = classData(clazz).toString();
+        int dot = classURL.lastIndexOf('.');
+        String url = classURL.substring(0, dot + 1) + extension;
+        try {
+            return new URL(url);
+        } catch (MalformedURLException e) {
+            throw new IllegalUsageError(
+                    "maybe the extension part contains bad URL chars");
+        }
     }
 
     /**
