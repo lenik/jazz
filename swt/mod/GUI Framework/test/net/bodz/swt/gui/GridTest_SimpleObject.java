@@ -7,6 +7,7 @@ import net.bodz.bas.gui.a.Border;
 import net.bodz.bas.gui.a.Color;
 import net.bodz.bas.gui.a.Label;
 import net.bodz.bas.gui.a.PreferredSize;
+import net.bodz.swt.gui.styles.grid.SWTGridStyle;
 import net.bodz.swt.gui.testtypes.ComplexPerson;
 import net.bodz.swt.gui.testtypes.SimplePerson;
 import net.bodz.swt.gui.util.Timer;
@@ -17,7 +18,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 @PreferredSize(width = 500, height = 400)
-public class SWTGridStyleTest extends BasicGUI {
+public class GridTest_SimpleObject extends BasicGUI {
 
     public static class School {
 
@@ -45,7 +46,7 @@ public class SWTGridStyleTest extends BasicGUI {
 
     private School school;
 
-    public SWTGridStyleTest() {
+    public GridTest_SimpleObject() {
         school = new School("Dream School");
         school.lucy = new SimplePerson("Lucy", 12, false);
         school.lily = new ComplexPerson();
@@ -91,7 +92,7 @@ public class SWTGridStyleTest extends BasicGUI {
     }
 
     public static void main(String[] args) throws Throwable {
-        new SWTGridStyleTest().run(args);
+        new GridTest_SimpleObject().run(args);
     }
 
 }

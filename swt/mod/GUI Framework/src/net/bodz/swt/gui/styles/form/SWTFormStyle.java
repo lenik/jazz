@@ -1,10 +1,6 @@
-package net.bodz.swt.gui;
+package net.bodz.swt.gui.styles.form;
 
-import net.bodz.bas.gui.RenderException;
-
-import org.eclipse.swt.SWTException;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
+import net.bodz.swt.gui.styles.base.SWTStyle;
 
 public class SWTFormStyle extends SWTStyle {
 
@@ -35,19 +31,7 @@ public class SWTFormStyle extends SWTStyle {
     @Override
     protected void setup() {
         super.setup();
-        put(Object.class, new R_Object());
-    }
-
-    class R_Object extends _R_Object {
-
-        @Override
-        protected Control renderObject(GUIVar<?> var, Composite parent,
-                int style) throws RenderException, SWTException {
-            assert var != null;
-            // GUIVarMeta meta = var.getMeta();
-            return null;
-        }
-
+        put(Object.class, new R_Object(this));
     }
 
 }
