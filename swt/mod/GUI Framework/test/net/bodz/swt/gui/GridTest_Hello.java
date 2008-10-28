@@ -12,7 +12,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import com.swtdesigner.SWTResourceManager;
 
-public class HelloGrid extends BasicGUI {
+public class GridTest_Hello extends BasicGUI {
 
     private Text text_2;
     private Text text;
@@ -26,7 +26,8 @@ public class HelloGrid extends BasicGUI {
         view.setLayout(gridLayout);
 
         final Label label = new Label(view, SWT.NONE);
-        label.setImage(SWTResourceManager.getImage(HelloGrid.class, "/icons/full/obj16/genericvariable_obj.gif"));
+        label.setImage(SWTResourceManager.getImage(GridTest_Hello.class,
+                "/icons/full/obj16/genericvariable_obj.gif"));
 
         final Label label_1 = new Label(view, SWT.NONE);
         label_1.setText("Label");
@@ -35,7 +36,8 @@ public class HelloGrid extends BasicGUI {
         text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
         final Label label_2 = new Label(view, SWT.NONE);
-        label_2.setImage(SWTResourceManager.getImage(HelloGrid.class, "/icons/full/obj16/unknown_obj.gif"));
+        label_2.setImage(SWTResourceManager.getImage(GridTest_Hello.class,
+                "/icons/full/obj16/unknown_obj.gif"));
 
         final Label label_3 = new Label(view, SWT.NONE);
         label_3.setText("Label");
@@ -44,12 +46,14 @@ public class HelloGrid extends BasicGUI {
         button.setText("Check Button");
 
         final Label label_4 = new Label(view, SWT.NONE);
+        label_4.setText("lab4");
 
         final Label label_5 = new Label(view, SWT.NONE);
         label_5.setText("Label");
 
         final Composite composite = new Composite(view, SWT.NONE);
-        composite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+        composite
+                .setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         final GridLayout gridLayout_1 = new GridLayout();
         gridLayout_1.numColumns = 3;
         composite.setLayout(gridLayout_1);
@@ -77,7 +81,7 @@ public class HelloGrid extends BasicGUI {
     }
 
     public static void main(String[] args) throws Throwable {
-        new HelloGrid().run(args);
+        new GridTest_Hello().run(args);
     }
 
 }

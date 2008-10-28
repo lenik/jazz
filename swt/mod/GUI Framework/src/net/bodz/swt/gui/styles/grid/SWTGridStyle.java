@@ -1,29 +1,28 @@
-package net.bodz.swt.gui;
+package net.bodz.swt.gui.styles.grid;
 
 import static net.bodz.swt.gui.util.SWTInject.styleFx;
 import net.bodz.bas.gui.RenderException;
 import net.bodz.bas.lang.err.CreateException;
-import net.bodz.bas.lang.err.NotImplementedException;
-import net.bodz.bas.lang.err.ReflectException;
+import net.bodz.swt.gui.CallObject;
+import net.bodz.swt.gui.GUIHint;
+import net.bodz.swt.gui.GUIStruct;
+import net.bodz.swt.gui.GUIVar;
+import net.bodz.swt.gui.GUIVarMeta;
+import net.bodz.swt.gui.MIcon;
 import net.bodz.swt.gui.GUIStructs.GUICallMeta;
-import net.bodz.swt.gui.GUIStructs.GUICallVar;
-import net.bodz.swt.gui.GUIStructs.GUIObjectStruct;
 import net.bodz.swt.gui.GUIStructs.ParameterMeta;
 import net.bodz.swt.gui.GUIStructs.RetvalMeta;
 import net.bodz.swt.gui.GUIVars.GUIFieldMeta;
 import net.bodz.swt.gui.GUIVars.GUIPropertyMeta;
+import net.bodz.swt.gui.styles.base.SWTStyle;
 import net.bodz.swt.util.SWTResources;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
@@ -57,8 +56,8 @@ public class SWTGridStyle extends SWTStyle {
     @Override
     protected void setup() {
         super.setup();
-        put(Object.class, new R_Object());
-        put(CallObject.class, new R_CallObject());
+        put(Object.class, new R_Object(this));
+        put(CallObject.class, new R_CallObject(this));
     }
 
     private static MIcon fieldIcons;
@@ -84,7 +83,7 @@ public class SWTGridStyle extends SWTStyle {
         retvalIcons = new MIcon("/icons/full/obj16/field_default_obj.gif");
     }
 
-    Composite renderStruct(GUIStruct struct, Composite parent, int style)
+    public Composite renderStruct(GUIStruct struct, Composite parent, int style)
             throws RenderException, SWTException {
         Composite grid = new Composite(parent, style);
         // icon label control
@@ -158,69 +157,6 @@ public class SWTGridStyle extends SWTStyle {
         child.setLayoutData(childd);
 
         addEffects(child, var);
-    }
-
-    class R_Object extends _R_Object {
-
-        @Override
-        protected Composite renderObject(GUIVar<?> var, Composite parent,
-                int style) throws RenderException, SWTException {
-            assert var != null;
-            Object object = var.get();
-            if (object != null) {
-                GUIStruct objStruct = new GUIObjectStruct(object);
-                return renderStruct(objStruct, parent, styleFx(style, var));
-            }
-            throw new NotImplementedException("null obj");
-        }
-
-    }
-
-    class R_CallObject extends SWTRenderer {
-
-        @Override
-        protected Control render(GUIVar<?> var, Composite parent, int style)
-                throws RenderException, SWTException {
-            if (!(var instanceof GUICallVar))
-                throw new IllegalArgumentException("not GUICallVar: " + var);
-            final GUICallVar callVar = (GUICallVar) var;
-            GUICallMeta meta = callVar.getMeta();
-            GUIHint hint = meta.getHint();
-            final Composite comp = renderStruct(callVar, parent, style);
-            final Composite opbar = new Composite(comp, SWT.NONE);
-            opbar.setLayoutData(new GridData(//
-                    SWT.FILL, SWT.CENTER, true, false, 3, 1));
-            RowLayout rowLayout = new RowLayout();
-            rowLayout.marginLeft = rowLayout.marginRight = 0;
-            rowLayout.marginTop = rowLayout.marginBottom = 0;
-            opbar.setLayout(rowLayout);
-            {
-                final Button button = new Button(opbar, SWT.NONE);
-                String label = hint.getLabel();
-                if (label == null)
-                    label = meta.getName();
-                // hint.getIcon();
-                button.setText(label);
-                final Label retLabel = new Label(opbar, SWT.NONE);
-                // = SWTGridStyle.this.render(retVar,opbar,SWT.NONE);
-                final boolean isVoid = meta.getReturnType() == void.class;
-                button.addSelectionListener(new SelectionAdapter() {
-                    @Override
-                    public void widgetSelected(SelectionEvent e) {
-                        try {
-                            Object retval = callVar.invoke();
-                            if (!isVoid) {
-                                retLabel.setText(String.valueOf(retval));
-                                opbar.layout();
-                            }
-                        } catch (ReflectException re) {
-                            interact(button).alert("Failed to invoke call", re);
-                        }
-                    }
-                });
-            }
-            return comp;
-        }
     }
 
 }

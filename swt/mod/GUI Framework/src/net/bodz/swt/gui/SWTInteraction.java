@@ -13,13 +13,16 @@ public class SWTInteraction extends _Interaction {
 
     private Shell parent;
 
+    public SWTInteraction() {
+        this(new Shell());
+    }
+
     public SWTInteraction(Shell parent) {
         this.parent = parent;
     }
 
     @Override
     public void alert(String title, Object detail) {
-
         MessageBox box = new MessageBox(parent);
         box.setText(title);
         if (detail != null)
@@ -38,7 +41,8 @@ public class SWTInteraction extends _Interaction {
     }
 
     @Override
-    public <K> K choice(String title, Object detail, Map<K, ?> candidates) {
+    public <K> K choice(String title, Object detail, Map<K, ?> candidates,
+            K initial) {
         throw new NotImplementedException();
     }
 

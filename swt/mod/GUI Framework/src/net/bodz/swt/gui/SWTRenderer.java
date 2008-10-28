@@ -15,6 +15,13 @@ import org.eclipse.swt.widgets.Control;
 
 public abstract class SWTRenderer implements Renderer {
 
+    protected final RenderContext rc;
+
+    public SWTRenderer(RenderContext rc) {
+        assert rc != null;
+        this.rc = rc;
+    }
+
     /**
      * @throw NullPointerException if var is null
      */
@@ -32,8 +39,8 @@ public abstract class SWTRenderer implements Renderer {
         }
     }
 
-    protected abstract Control render(GUIVar<?> var, Composite parent,
-            int style) throws RenderException, SWTException;
+    public abstract Control render(GUIVar<?> var, Composite parent, int style)
+            throws RenderException, SWTException;
 
     protected void bindProperty(final GUIVar<?> var, final Control control,
             final PropertyChangeListener listener) {
