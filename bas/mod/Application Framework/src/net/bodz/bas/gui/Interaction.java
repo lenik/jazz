@@ -20,24 +20,76 @@ public interface Interaction {
 
     boolean confirm(String title, Object detail);
 
+    /**
+     * @return <code>null</code> if canceled
+     */
     String prompt(String title);
 
+    /**
+     * @return <code>null</code> if canceled
+     */
     String prompt(String title, Object detail);
 
+    /**
+     * @return <code>null</code> if canceled
+     */
     String prompt(String title, String initial);
 
+    /**
+     * @return <code>null</code> if canceled
+     */
     String prompt(String title, Object detail, String initial);
 
+    /**
+     * @return <code>null</code> if canceled
+     */
     <T> T prompt(String title, Class<T> type, T initial);
 
+    /**
+     * @return <code>null</code> if canceled
+     */
     <T> T prompt(String title, Object detail, Class<T> type, T initial);
 
-    <K> K choice(String title, Map<K, ?> candidates);
+    /**
+     * @return <code>null</code> if canceled
+     */
+    <K> K choice(String title, Map<K, ?> candidates, K initial);
 
-    <K> K choice(String title, Object detail, Map<K, ?> candidates);
+    /**
+     * @return <code>null</code> if canceled
+     */
+    <K> K choice(String title, Object detail, Map<K, ?> candidates, K initial);
 
-    int choice(String title, List<?> candidates);
+    /**
+     * @return -1 if canceled
+     */
+    int choice(String title, List<?> candidates, int initial);
 
-    int choice(String title, Object detail, List<?> candidates);
+    /**
+     * @return -1 if canceled
+     */
+    int choice(String title, Object detail, List<?> candidates, int initial);
+
+    /**
+     * @return <code>null</code> if canceled
+     */
+    <K> K[] choices(String title, Map<K, ?> candidates, K... initial);
+
+    /**
+     * @return <code>null</code> if canceled
+     */
+    <K> K[] choices(String title, Object detail, Map<K, ?> candidates,
+            K... initial);
+
+    /**
+     * @return <code>null</code> if canceled
+     */
+    int[] choices(String title, List<?> candidates, int... initial);
+
+    /**
+     * @return <code>null</code> if canceled
+     */
+    int[] choices(String title, Object detail, List<?> candidates,
+            int... initial);
 
 }

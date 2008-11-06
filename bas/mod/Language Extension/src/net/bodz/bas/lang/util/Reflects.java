@@ -4,6 +4,7 @@ import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
@@ -218,6 +219,14 @@ public class Reflects {
             throw new IllegalArgumentException("property " + property.getName()
                     + " isn't writable");
         invoke(obj, write, value);
+    }
+
+    public static <T> T newInstance(Constructor<T> ctor, Object... initargs) {
+        try {
+            return Control.newInstance(ctor, initargs);
+        } catch (Exception e) {
+            throw new ReflectException(e.getMessage(), e);
+        }
     }
 
     public static Object invoke(Object obj, Method method, Object... args) {

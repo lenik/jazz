@@ -1244,6 +1244,15 @@ public class Files {
         }
     }
 
+    public static URI path2URI(String path) {
+        URI uri = new File(path).toURI();
+        return uri;
+    }
+
+    public static URL path2URL(String path) throws MalformedURLException {
+        return path2URI(path).toURL();
+    }
+
     private static File TMPDIR;
 
     static {

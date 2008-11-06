@@ -13,6 +13,7 @@ import net.bodz.bas.types.util.Types;
 
 public class _RunInfo {
 
+    private final String      name;
     private RunInfo           annotation;
     private _RunInfo          next;
 
@@ -26,15 +27,17 @@ public class _RunInfo {
 
     private JavaLibraryLoader libloader;
 
-    public _RunInfo(RunInfo info, _RunInfo next) throws CLIException {
+    public _RunInfo(String name, RunInfo info, _RunInfo next)
+            throws CLIException {
         assert info != null;
+        this.name = name;
         this.annotation = info;
         this.next = next;
         reset();
     }
 
-    public _RunInfo(RunInfo info) throws CLIException {
-        this(info, null);
+    public _RunInfo(String name, RunInfo info) throws CLIException {
+        this(name, info, null);
     }
 
     private int      flags;
@@ -66,6 +69,11 @@ public class _RunInfo {
             libs[i] = findLib(libname);
         }
         flags = 0;
+    }
+
+    @Override
+    public String toString() {
+        return "<_RunInfo for " + name + ", flags=" + flags + ">";
     }
 
     /**
@@ -106,8 +114,15 @@ public class _RunInfo {
         for (int i = 0; i < libs.length; i++) {
             String cond = libconds[i];
             URL url = libs[i];
-            if (cond != null && (Boolean) CLIConfig.libEval(cond))
-                continue;
+            if (cond != null) {
+                try {
+                    if ((Boolean) CLIConfig.libEval(cond))
+                        continue;
+                } catch (Exception e) {
+                    throw new CLIException("loadLibraries failed on: " + this,
+                            e);
+                }
+            }
             try {
                 Classpath.addURL(url);
             } catch (IOException e) {
@@ -128,8 +143,13 @@ public class _RunInfo {
             } catch (ClassNotFoundException e) {
                 throw new CLIException(e.getMessage(), e);
             }
+
         for (String exp : annotation.load())
-            evalExp(exp);
+            try {
+                evalExp(exp);
+            } catch (Exception e) {
+                throw new CLIException("loadBoot failed on: " + this, e);
+            }
         if (next != null)
             next.loadBoot();
         flags |= BOOT_LOADED;
@@ -139,7 +159,11 @@ public class _RunInfo {
         if (test(EXTRA_LOADED))
             return;
         for (String exp : annotation.loadDelayed())
-            evalExp(exp);
+            try {
+                evalExp(exp);
+            } catch (Exception e) {
+                throw new CLIException("loadDlayed failed on: " + this, e);
+            }
         if (next != null)
             next.loadDelayed();
         flags |= EXTRA_LOADED;
@@ -171,9 +195,9 @@ public class _RunInfo {
             if (declInfo == null)
                 continue;
             if (_info == null)
-                _info = new _RunInfo(declInfo);
+                _info = new _RunInfo(decl.getName(), declInfo);
             else
-                _info = new _RunInfo(declInfo, _info);
+                _info = new _RunInfo(decl.getName(), declInfo, _info);
         }
         local.put(clazz, _info);
         return _info;
