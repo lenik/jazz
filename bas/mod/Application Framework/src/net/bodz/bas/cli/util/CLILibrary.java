@@ -115,7 +115,7 @@ public class CLILibrary {
         } catch (Control c) {
             throw c;
         } catch (Throwable e) {
-            throw new CLIException(e.getMessage(), e);
+            throw new CLIException("libfunction fail: " + name, e);
         }
     }
 
@@ -130,7 +130,11 @@ public class CLILibrary {
         String[] args = new String[s.length - 1];
         for (int i = 0; i < args.length; i++)
             args[i] = s[i + 1];
-        return invoke(name, args);
+        try {
+            return invoke(name, args);
+        } catch (Exception e) {
+            throw new CLIException("failed to eval: " + exp, e);
+        }
     }
 
 }
