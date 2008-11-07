@@ -266,6 +266,8 @@ public class Strings {
                 buf.append('.');
             buf.append(rev);
         }
+        if (buf == null)
+            return "";
         return buf.toString();
     }
 

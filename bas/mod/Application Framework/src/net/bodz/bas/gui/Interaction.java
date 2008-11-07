@@ -2,6 +2,7 @@ package net.bodz.bas.gui;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * may throw exceptions in future:
@@ -53,7 +54,17 @@ public interface Interaction {
     /**
      * @return <code>null</code> if canceled
      */
+    <K> K choice(String title, Map<K, ?> candidates);
+
+    /**
+     * @return <code>null</code> if canceled
+     */
     <K> K choice(String title, Map<K, ?> candidates, K initial);
+
+    /**
+     * @return <code>null</code> if canceled
+     */
+    <K> K choice(String title, Object detail, Map<K, ?> candidates);
 
     /**
      * @return <code>null</code> if canceled
@@ -63,7 +74,17 @@ public interface Interaction {
     /**
      * @return -1 if canceled
      */
+    int choice(String title, List<?> candidates);
+
+    /**
+     * @return -1 if canceled
+     */
     int choice(String title, List<?> candidates, int initial);
+
+    /**
+     * @return -1 if canceled
+     */
+    int choice(String title, Object detail, List<?> candidates);
 
     /**
      * @return -1 if canceled
@@ -73,12 +94,12 @@ public interface Interaction {
     /**
      * @return <code>null</code> if canceled
      */
-    <K> K[] choices(String title, Map<K, ?> candidates, K... initial);
+    <K> Set<K> choices(String title, Map<K, ?> candidates, K... initial);
 
     /**
      * @return <code>null</code> if canceled
      */
-    <K> K[] choices(String title, Object detail, Map<K, ?> candidates,
+    <K> Set<K> choices(String title, Object detail, Map<K, ?> candidates,
             K... initial);
 
     /**

@@ -8,6 +8,7 @@ import net.bodz.bas.a.Doc;
 import net.bodz.bas.a.LoadBy;
 import net.bodz.bas.a.RcsKeywords;
 import net.bodz.bas.a.Version;
+import net.bodz.bas.cli.CLIConfig;
 import net.bodz.bas.cli._RunInfo;
 import net.bodz.bas.lang.Control;
 import net.bodz.bas.lang.util.Reflects;
@@ -20,10 +21,12 @@ import net.bodz.bas.lang.util.Reflects;
 @RcsKeywords(id = "$Id: ClassLauncher.java 29 2008-10-07 13:38:08Z lenik $")
 public class LoadByLauncher {
 
-    private static boolean checkLoaded = true;
+    private static boolean checkLoader;
     private static Method  findLoadedClass;
     static {
-        if (checkLoaded) {
+        String _checkLoader = System.getProperty(CLIConfig.PROPERTY_CHECKLOADER);
+        checkLoader = "1".equals(_checkLoader);
+        if (checkLoader) {
             findLoadedClass = Reflects.getDeclaredMethod(ClassLoader.class,
                     "findLoadedClass", String.class);
             findLoadedClass.setAccessible(true);
@@ -41,7 +44,7 @@ public class LoadByLauncher {
                 .forName(loaderClassName);
         ClassLoader loader = loaderClass.newInstance();
 
-        if (checkLoaded) {
+        if (checkLoader) {
             Class<?> loaded = (Class<?>) Reflects.invoke(loader,
                     findLoadedClass, mainClassName);
             if (loaded != null)
@@ -49,7 +52,7 @@ public class LoadByLauncher {
                         + " is already loaded by " + loaded.getClassLoader());
         }
         Class<?> mainClass = loader.loadClass(mainClassName);
-        if (checkLoaded) {
+        if (checkLoader) {
             if (mainClass.getClassLoader() != loader)
                 System.err.println("Class " + mainClassName
                         + " is loaded by another " //

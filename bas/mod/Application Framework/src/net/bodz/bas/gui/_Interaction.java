@@ -2,6 +2,7 @@ package net.bodz.bas.gui;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import net.bodz.bas.types.IndexMap;
 
@@ -43,8 +44,23 @@ public abstract class _Interaction implements Interaction {
     }
 
     @Override
+    public <K> K choice(String title, Map<K, ?> candidates) {
+        return choice(title, title, candidates, null);
+    }
+
+    @Override
     public <K> K choice(String title, Map<K, ?> candidates, K initial) {
         return choice(title, title, candidates, initial);
+    }
+
+    @Override
+    public <K> K choice(String title, Object detail, Map<K, ?> candidates) {
+        return choice(title, detail, candidates, null);
+    }
+
+    @Override
+    public int choice(String title, List<?> candidates) {
+        return choice(title, title, candidates, -1);
     }
 
     @Override
@@ -53,26 +69,34 @@ public abstract class _Interaction implements Interaction {
     }
 
     @Override
-    public int choice(String title, Object detail, List<?> candidates,
-            int initial) {
-        return choice(title, detail, list2map(candidates), initial);
+    public int choice(String title, Object detail, List<?> candidates) {
+        Integer index = choice(title, detail, list2map(candidates), -1);
+        return index == null ? -1 : index;
     }
 
     @Override
-    public <K> K[] choices(String title, Map<K, ?> candidates, K... initial) {
+    public int choice(String title, Object detail, List<?> candidates,
+            int initial) {
+        Integer index = choice(title, detail, list2map(candidates), initial);
+        return index == null ? -1 : index;
+    }
+
+    @Override
+    public <K> Set<K> choices(String title, Map<K, ?> candidates, K... initial) {
         return choices(title, title, candidates, initial);
     }
 
     @Override
     public int[] choices(String title, List<?> candidates, int... initial) {
-        Integer[] choices = choices(title, list2map(candidates), box(initial));
+        Set<Integer> choices = choices(title, list2map(candidates),
+                box(initial));
         return unbox(choices);
     }
 
     @Override
     public int[] choices(String title, Object detail, List<?> candidates,
             int... initial) {
-        Integer[] choices = choices(title, detail, list2map(candidates),
+        Set<Integer> choices = choices(title, detail, list2map(candidates),
                 box(initial));
         return unbox(choices);
     }
@@ -96,12 +120,14 @@ public abstract class _Interaction implements Interaction {
         return boxed;
     }
 
-    private int[] unbox(Integer[] boxed) {
+    private int[] unbox(Set<Integer> boxed) {
         if (boxed == null)
             return null;
-        int[] ints = new int[boxed.length];
-        for (int i = 0; i < boxed.length; i++)
-            ints[i] = boxed[i];
+        int size = boxed.size();
+        int[] ints = new int[size];
+        int i = 0;
+        for (Integer val : boxed)
+            ints[i++] = val;
         return ints;
     }
 

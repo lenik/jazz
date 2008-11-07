@@ -10,38 +10,36 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
-public class Pair<TK, TV> implements Map<TK, TV>, Entry<TK, TV>, Serializable {
+public class Pair<K, V> implements Map<K, V>, Entry<K, V>, Serializable {
 
-    private static final long serialVersionUID = -7265744237177039061L;
-
-    public TK                 first;
-    public TV                 second;
+    public K first;
+    public V second;
 
     public Pair() {
     }
 
-    public Pair(TK first) {
+    public Pair(K first) {
         this.first = first;
     }
 
-    public Pair(TK first, TV second) {
+    public Pair(K first, V second) {
         this.first = first;
         this.second = second;
     }
 
-    public TK getFirst() {
+    public K getFirst() {
         return first;
     }
 
-    public void setFirst(TK first) {
+    public void setFirst(K first) {
         this.first = first;
     }
 
-    public TV getSecond() {
+    public V getSecond() {
         return second;
     }
 
-    public void setSecond(TV second) {
+    public void setSecond(V second) {
         this.second = second;
     }
 
@@ -98,14 +96,14 @@ public class Pair<TK, TV> implements Map<TK, TV>, Entry<TK, TV>, Serializable {
         return second.equals(value);
     }
 
-    public Set<java.util.Map.Entry<TK, TV>> entrySet() {
-        Set<java.util.Map.Entry<TK, TV>> set = new HashSet<java.util.Map.Entry<TK, TV>>();
+    public Set<java.util.Map.Entry<K, V>> entrySet() {
+        Set<java.util.Map.Entry<K, V>> set = new HashSet<java.util.Map.Entry<K, V>>();
         if (first != null)
             set.add(this);
         return set;
     }
 
-    public TV get(Object key) {
+    public V get(Object key) {
         if (key == null)
             throw new NullPointerException("null key");
         if (key.equals(first))
@@ -117,14 +115,14 @@ public class Pair<TK, TV> implements Map<TK, TV>, Entry<TK, TV>, Serializable {
         return first == null;
     }
 
-    public Set<TK> keySet() {
-        Set<TK> s = new HashSet<TK>();
+    public Set<K> keySet() {
+        Set<K> s = new HashSet<K>();
         if (first != null)
             s.add(first);
         return s;
     }
 
-    public TV put(TK key, TV value) {
+    public V put(K key, V value) {
         if (key == null)
             throw new NullPointerException("null key");
         first = key;
@@ -132,16 +130,16 @@ public class Pair<TK, TV> implements Map<TK, TV>, Entry<TK, TV>, Serializable {
         return null;
     }
 
-    public void putAll(Map<? extends TK, ? extends TV> t) {
+    public void putAll(Map<? extends K, ? extends V> t) {
         // assert t != null;
-        Iterator<? extends TK> it = t.keySet().iterator();
+        Iterator<? extends K> it = t.keySet().iterator();
         if (it.hasNext()) {
             first = it.next();
             second = t.get(first);
         }
     }
 
-    public TV remove(Object key) {
+    public V remove(Object key) {
         if (key == null)
             throw new NullPointerException("Null key");
         if (key.equals(first)) {
@@ -157,8 +155,8 @@ public class Pair<TK, TV> implements Map<TK, TV>, Entry<TK, TV>, Serializable {
         return 1;
     }
 
-    public Collection<TV> values() {
-        List<TV> list = new ArrayList<TV>();
+    public Collection<V> values() {
+        List<V> list = new ArrayList<V>();
         if (first != null)
             list.add(second);
         return list;
@@ -166,18 +164,20 @@ public class Pair<TK, TV> implements Map<TK, TV>, Entry<TK, TV>, Serializable {
 
     // Map.Entry
 
-    public TK getKey() {
+    public K getKey() {
         return first;
     }
 
-    public TV getValue() {
+    public V getValue() {
         return second;
     }
 
-    public TV setValue(TV value) {
-        TV old = second;
+    public V setValue(V value) {
+        V old = second;
         second = value;
         return old;
     }
+
+    private static final long serialVersionUID = -7265744237177039061L;
 
 }
