@@ -50,19 +50,19 @@ public class Processes {
 
     public static Process shellExec(String[] cmdarray) throws IOException {
         Runtime runtime = Runtime.getRuntime();
-        return runtime.exec(Arrays2._concat(shvec, cmdarray));
+        return runtime.exec(Arrays2.concat(shvec, cmdarray));
     }
 
     public static Process shellExec(String[] cmdarray, String[] envp)
             throws IOException {
         Runtime runtime = Runtime.getRuntime();
-        return runtime.exec(Arrays2._concat(shvec, cmdarray), envp);
+        return runtime.exec(Arrays2.concat(shvec, cmdarray), envp);
     }
 
     public static Process shellExec(String[] cmdarray, String[] envp, File dir)
             throws IOException {
         Runtime runtime = Runtime.getRuntime();
-        return runtime.exec(Arrays2._concat(shvec, cmdarray), envp, dir);
+        return runtime.exec(Arrays2.concat(shvec, cmdarray), envp, dir);
     }
 
     /**

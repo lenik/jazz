@@ -39,6 +39,12 @@ public class Control extends RuntimeException {
         return "Detail: " + String.valueOf(detail);
     }
 
+    public static <T> T newInstance(Class<T> clazz)
+            throws IllegalArgumentException, IllegalAccessException,
+            InvocationTargetException, InstantiationException {
+        return clazz.newInstance();
+    }
+
     public static <T> T newInstance(Constructor<T> ctor, Object... initargs)
             throws IllegalArgumentException, IllegalAccessException,
             InvocationTargetException, InstantiationException {

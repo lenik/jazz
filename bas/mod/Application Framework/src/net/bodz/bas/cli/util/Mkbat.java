@@ -12,25 +12,26 @@ import java.util.Set;
 
 import net.bodz.bas.a.ClassInfo;
 import net.bodz.bas.a.Doc;
+import net.bodz.bas.a.LoadBoot;
 import net.bodz.bas.a.LoadBy;
 import net.bodz.bas.a.ProgramName;
 import net.bodz.bas.a.RcsKeywords;
 import net.bodz.bas.a.Version;
 import net.bodz.bas.cli.BatchProcessCLI;
-import net.bodz.bas.cli.CLIConfig;
 import net.bodz.bas.cli.ProcessResult;
-import net.bodz.bas.cli._RunInfo;
-import net.bodz.bas.cli.a.RunInfo;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.io.CharOuts.Buffer;
 import net.bodz.bas.lang.Caller;
 import net.bodz.bas.lang.err.IdentifiedException;
-import net.bodz.bas.loader.JavaLibraryLoader;
+import net.bodz.bas.loader.LoadByLauncher;
+import net.bodz.bas.snm.SJLibLoader;
+import net.bodz.bas.snm.SJProject;
 import net.bodz.bas.text.interp.Interps;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TextMap.HashTextMap;
 import net.bodz.bas.types.util.Annotations;
 import net.bodz.bas.types.util.Ns;
+import net.bodz.bas.types.util.Strings;
 import net.bodz.bas.types.util.Types;
 
 @Doc("Generate program launcher for java applications")
@@ -46,7 +47,6 @@ public class Mkbat extends BatchProcessCLI {
     public Mkbat() {
         generated = new HashSet<String>();
         varmap = new HashTextMap<String>();
-        varmap.put("PROPERTY_LIB_LOADED", CLIConfig.PROPERTY_LIB_LOADED);
         ClassInfo classInfo = _loadClassInfo();
         varmap.put("GENERATOR", Mkbat.class.getSimpleName() + " "
                 + classInfo.getVersionString() + ", "
@@ -78,42 +78,32 @@ public class Mkbat extends BatchProcessCLI {
         if (generated.contains(className))
             return ProcessResult.pass("repeat");
 
-        ClassLoader loader = Caller.getCallerClassLoader();
-
-        Class<?> clazz = null;
+        Class<?> clazz0 = null;
         try {
             L.d.P("try ", className);
-            clazz = Class.forName(className, false, loader);
+            ClassLoader ccl = Caller.getCallerClassLoader();
+            clazz0 = Class.forName(className, false, ccl);
         } catch (Throwable t) {
             return ProcessResult.err(t, "loadc");
         }
 
-        int modifiers = clazz.getModifiers();
+        int modifiers = clazz0.getModifiers();
         if (!Modifier.isPublic(modifiers))
             return ProcessResult.pass("local");
 
-        LoadBy loadBy = Ns.getN(clazz, LoadBy.class);
-        if (loadBy != null) {
-            int preload = loadBy.preload();
-            if (preload != 0) {
-                _RunInfo runInfo = _RunInfo.parse(clazz);
-                if ((LoadBy.BOOT & preload) != 0)
-                    runInfo.loadBoot();
-                if ((LoadBy.LIB & preload) != 0)
-                    runInfo.loadLibraries();
-                if ((LoadBy.DELAYED & preload) != 0)
-                    runInfo.loadDelayed();
-            }
-        }
+        File whichClass = SJProject.findBase(clazz0);
+        URL whichClassURL = whichClass.toURI().toURL();
+        Class<?> clazz1 = LoadByLauncher.load(className, whichClassURL);
+
         try {
-            clazz.getMethod("main", String[].class);
-            L.i.P("    main-class: ", clazz);
+            clazz1.getMethod("main", String[].class);
+            L.i.P("    main-class: ", clazz1);
         } catch (NoSuchMethodException e) {
             return ProcessResult.pass("notapp");
         } catch (Throwable t) {
             return ProcessResult.err(t, "loadf");
         }
-        generate(clazz);
+        generate(clazz1);
         return ProcessResult.pass("ok");
     }
 
@@ -130,30 +120,34 @@ public class Mkbat extends BatchProcessCLI {
         batf.getParentFile().mkdirs();
 
         // varmap.clear();
-        varmap.put("TEMPLATE", new File(batTemplate.getPath()).getName());
+        varmap.put("TEMPLATE", new File(batTempl.getPath()).getName());
         varmap.put("NAME", name);
 
-        String launch = "";
-
+        Class<?> launcherClass = LoadByLauncher.class;
         LoadBy loadBy = Ns.getN(clazz, LoadBy.class);
         if (loadBy != null) {
-            Class<? extends ClassLoader> loaderClass = loadBy.value();
-            if (loaderClass == ClassLoader.class)
-                loaderClass = null;
-            Class<?> launcherClass = loadBy.launcher();
-            launch = launcherClass.getName();
-            if (loaderClass != null)
-                launch += " " + loaderClass.getName();
+            Class<?> _launcherClass = loadBy.launcher();
+            if (_launcherClass != LoadByLauncher.class)
+                launcherClass = _launcherClass;
+        }
+
+        String launch = "";
+        String[] loadArgs = LoadByLauncher.getLoadArgs(clazz);
+        if (loadArgs.length != 0) {
+            launch = launcherClass.getName() + " "
+                    + Strings.join(" ", loadArgs) + " -";
+        } else if (launcherClass != LoadByLauncher.class) {
+            launch = launcherClass.getName() + " -";
         }
         varmap.put("LAUNCH", launch);
 
         Buffer loadlibs = new Buffer();
-        JavaLibraryLoader libloader = JavaLibraryLoader.DEFAULT;
+        SJLibLoader libloader = SJLibLoader.DEFAULT;
         for (Class<?> c : Types.getTypeChain(clazz)) {
-            RunInfo runInfo = c.getAnnotation(RunInfo.class);
-            if (runInfo == null)
+            LoadBoot loadBoot = c.getAnnotation(LoadBoot.class);
+            if (loadBoot == null)
                 continue;
-            for (String lib : runInfo.lib()) {
+            for (String lib : loadBoot.value()) {
                 File f = libloader.findLibraryFile(lib);
                 String fname;
                 if (f == null) {
@@ -165,10 +159,10 @@ public class Mkbat extends BatchProcessCLI {
                 loadlibs.println("    " + loadlib);
             }
         }
-        varmap.put("LOADLIBS_0", "");
+        // varmap.put("LOADLIBS_0", "");
         varmap.put("LOADLIBS", loadlibs.toString());
 
-        String inst = Interps.dereference(batTemplateBody, varmap);
+        String inst = Interps.dereference(batTemplBody, varmap);
         byte[] batData = inst.getBytes();
         byte[] batFixed = fix_BatBB.doFileEdit(batData);
         if (!Bytes.equals(batData, batFixed))
@@ -180,14 +174,14 @@ public class Mkbat extends BatchProcessCLI {
             L.m.P("save ", batf);
     }
 
-    static URL       batTemplate;
-    static String    batTemplateBody;
+    static URL       batTempl;
+    static String    batTemplBody;
     static Fix_BatBB fix_BatBB;
 
     static {
         try {
-            batTemplate = Files.classData(Mkbat.class, "batTemplate");
-            batTemplateBody = Files.readAll(batTemplate, "utf-8");
+            batTempl = Files.classData(Mkbat.class, "batTempl");
+            batTemplBody = Files.readAll(batTempl, "utf-8");
         } catch (IOException e) {
             throw new IdentifiedException(e.getMessage(), e);
         }

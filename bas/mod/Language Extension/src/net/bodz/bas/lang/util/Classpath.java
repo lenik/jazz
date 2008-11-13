@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.io.CharOut;
+import net.bodz.bas.io.CharOuts.Buffer;
 import net.bodz.bas.lang.Caller;
 import net.bodz.bas.lang.err.Err;
 import net.bodz.bas.lang.err.IdentifiedException;
@@ -35,21 +36,41 @@ public class Classpath {
     }
 
     /**
-     * @return <code>false</code> if url is existed.
+     * @return {@link URLClassLoader} which contains the specified url, or
+     *         <code>null</code> if not found.
      */
-    public static boolean addURL(ClassLoader loader, URL url) {
+    public static URLClassLoader exists(ClassLoader cl, URL url,
+            boolean findParents) {
+        if (url == null)
+            throw new NullPointerException();
+        while (cl != null) {
+            if (cl instanceof URLClassLoader) {
+                URLClassLoader ucl = (URLClassLoader) cl;
+                for (URL u : ucl.getURLs())
+                    if (url.equals(u))
+                        return ucl;
+            }
+            if (findParents)
+                cl = cl.getParent();
+            else
+                break;
+        }
+        return null;
+    }
+
+    /**
+     * try to not add duplicated urls.
+     * 
+     * @return <code>false</code> if specified url is already existed in ucl or
+     *         its parents.
+     */
+    public static boolean addURL(URLClassLoader ucl, URL url) {
         if (URLClassLoader_addURL == null)
             throw new Error("can't access URLClassLoader.addURL()");
-
-        if (!(loader instanceof URLClassLoader))
-            throw new UnsupportedOperationException("can't addURL to "
-                    + loader.getClass());
-
         try {
-            URLClassLoader ucl = (URLClassLoader) loader;
-            for (URL u : ucl.getURLs())
-                if (u.equals(url))
-                    return false;
+            URLClassLoader exists = exists(ucl, url, true);
+            if (exists != null)
+                return false;
             out.P("addURL ", url, " -> ", ucl);
             URLClassLoader_addURL.invoke(ucl, url);
         } catch (IllegalAccessException e) {
@@ -58,6 +79,17 @@ public class Classpath {
             Err.unwrap(e);
         }
         return true;
+    }
+
+    /**
+     * @return <code>false</code> if url is existed.
+     */
+    public static boolean addURL(ClassLoader loader, URL url) {
+        if (!(loader instanceof URLClassLoader))
+            throw new UnsupportedOperationException("can't addURL to "
+                    + loader.getClass());
+        URLClassLoader ucl = (URLClassLoader) loader;
+        return addURL(ucl, url);
     }
 
     /**
@@ -170,6 +202,16 @@ public class Classpath {
 
     public static void dumpURLs(CharOut out) {
         dumpURLs(Caller.getCallerClassLoader(), out);
+    }
+
+    public static String dumpURLs(ClassLoader loader) {
+        Buffer buf = new Buffer();
+        dumpURLs(loader, buf);
+        return buf.toString();
+    }
+
+    public static String dumpURLs() {
+        return dumpURLs(Caller.getCallerClassLoader());
     }
 
 }

@@ -1102,16 +1102,26 @@ public class Files {
         return loader.getResource(fileName);
     }
 
-    public static URL classDataURL(Class<?> clazz, String extension) {
+    /**
+     * @param addDot
+     *            default is <code>true</code>.
+     */
+    public static URL classDataURL(Class<?> clazz, String extension,
+            boolean addDot) {
         String classURL = classData(clazz).toString();
         int dot = classURL.lastIndexOf('.');
-        String url = classURL.substring(0, dot + 1) + extension;
+        int add = addDot ? 1 : 0;
+        String url = classURL.substring(0, dot + add) + extension;
         try {
             return new URL(url);
         } catch (MalformedURLException e) {
             throw new IllegalUsageError(
                     "maybe the extension part contains bad URL chars");
         }
+    }
+
+    public static URL classDataURL(Class<?> clazz, String extension) {
+        return classDataURL(clazz, extension, !extension.startsWith("/"));
     }
 
     /**
@@ -1193,12 +1203,16 @@ public class Files {
     }
 
     public static File canoniOf(URI uri) throws NullPointerException {
+        if (uri == null)
+            throw new NullPointerException();
         return canoniOf(new File(uri));
     }
 
     public static File canoniOf(URL url) throws NullPointerException {
+        if (url == null)
+            throw new NullPointerException();
         try {
-            return canoniOf(new File(url.toURI()));
+            return canoniOf(url.toURI());
         } catch (URISyntaxException e) {
             throw new IllegalArgumentException(e.getMessage(), e);
         }
@@ -1471,6 +1485,9 @@ public class Files {
         return copy(src, dst, false);
     }
 
+    /**
+     * @return first position of difference, or -1 if the two are same.
+     */
     public static long diff_1(Object src, Object dst) throws IOException {
         if (src == dst)
             return -1;

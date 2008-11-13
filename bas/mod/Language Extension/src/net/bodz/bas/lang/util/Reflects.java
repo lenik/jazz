@@ -221,6 +221,14 @@ public class Reflects {
         invoke(obj, write, value);
     }
 
+    public static <T> T newInstance(Class<T> clazz) {
+        try {
+            return Control.newInstance(clazz);
+        } catch (Exception e) {
+            throw new ReflectException(e.getMessage(), e);
+        }
+    }
+
     public static <T> T newInstance(Constructor<T> ctor, Object... initargs) {
         try {
             return Control.newInstance(ctor, initargs);

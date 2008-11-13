@@ -60,7 +60,7 @@
     set      _nam=$NAME
     set     _namf=%_nam:.=\%
     set      _ext=
-    set _javaopts=%JAVA_OPTS% -D$PROPERTY_LIB_LOADED=1 $LAUNCH
+    set _javaopts=%JAVA_OPTS% $LAUNCH
     
     if not "%JAVA_HOME%"=="" set PATH=%JAVA_HOME%\bin;%PATH%
     
@@ -81,7 +81,6 @@
     )
     
     set _morecp=
-$LOADLIBS_0
 $LOADLIBS
     goto initcp2
     

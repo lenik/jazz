@@ -4,7 +4,7 @@ import net.bodz.bas.lang.ref.Var;
 import net.bodz.bas.types.TypeHierMap;
 import net.bodz.bas.types.util.Types;
 
-public abstract class Style extends TypeHierMap<Renderer> {
+public abstract class RenderStrategy extends TypeHierMap<Renderer> {
 
     private static final long serialVersionUID = 383209437177989123L;
 
