@@ -107,7 +107,7 @@ public class CompatMethods {
             Object... args) throws NoSuchMethodException,
             IllegalArgumentException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
-        Object[] concat = Arrays2.concat(_this, args);
+        Object[] concat = Arrays2.concatv(_this, args);
         return newInstance(clazz, concat);
     }
 

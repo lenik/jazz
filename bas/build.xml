@@ -43,7 +43,7 @@
 		<jar destfile="build/net.bodz.bas-src.jar" update="true">
 			<fileset dir="mod/_MODEL/src" />
 			<fileset dir="mod/Application Framework/src" />
-			<fileset dir="mod/B-IOS Framework/bin" />
+			<fileset dir="mod/B-IOS Framework/src" />
 			<fileset dir="mod/Bundled Modules/src" />
 			<fileset dir="mod/Data Types/src" />
 			<fileset dir="mod/Database Abstraction/src" />
@@ -52,6 +52,17 @@
 			<fileset dir="mod/System Utilities/src" />
 			<fileset dir="mod/Text Process/src" />
 			<fileset dir="mod/Wrapper Classes/src" />
+		</jar>
+	</target>
+
+	<target name="loadertest.jar">
+		<mkdir dir="build" />
+		<jar destfile="build/loadertest.jar">
+			<fileset dir="mod/Application Framework/bin">
+				<include name="net/bodz/bas/a/LoadBy.class" />
+				<include name="net/bodz/bas/loader/BundledLoader.class" />
+				<include name="net/bodz/bas/loader/LoaderTest.class" />
+			</fileset>
 		</jar>
 	</target>
 

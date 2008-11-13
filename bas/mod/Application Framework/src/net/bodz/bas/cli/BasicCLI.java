@@ -13,13 +13,13 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import net.bodz.bas.a.A_bas;
+import net.bodz.bas.a.BootInfo;
 import net.bodz.bas.a.ClassInfo;
 import net.bodz.bas.a.RcsKeywords;
 import net.bodz.bas.a.VersionInfo;
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.cli.a.OptionGroup;
 import net.bodz.bas.cli.a.ParseBy;
-import net.bodz.bas.cli.a.RunInfo;
 import net.bodz.bas.cli.ext.CLIPlugin;
 import net.bodz.bas.cli.ext.CLIPlugins;
 import net.bodz.bas.io.CharOut;
@@ -36,6 +36,7 @@ import net.bodz.bas.lang.script.ScriptClass;
 import net.bodz.bas.lang.script.ScriptException;
 import net.bodz.bas.lang.script.ScriptType;
 import net.bodz.bas.lang.script.Scripts;
+import net.bodz.bas.loader._LoadConfig;
 import net.bodz.bas.log.ALog;
 import net.bodz.bas.log.LogOut;
 import net.bodz.bas.log.LogOuts;
@@ -48,7 +49,6 @@ import net.bodz.bas.types.TypeParsers.ALogParser;
 import net.bodz.bas.types.TypeParsers.CharOutParser;
 import net.bodz.bas.types.util.Empty;
 import net.bodz.bas.types.util.Strings;
-import net.bodz.bas.types.util.Types;
 
 /**
  * Recommend eclipse template `cli':
@@ -78,15 +78,11 @@ import net.bodz.bas.types.util.Types;
  * @see ClassOptions
  * @see Option
  */
-@RcsKeywords(id = "$Id: Rcs.java 784 2008-01-15 10:53:24Z lenik $")
-@RunInfo(lib = { "bodz_bas" })
+@BootInfo(userlibs = "bodz_bas")
 @OptionGroup(value = "standard", rank = -1)
+@RcsKeywords(id = "$Id: Rcs.java 784 2008-01-15 10:53:24Z lenik $")
 @ScriptType(CLIScriptClass.class)
-public class BasicCLI {
-
-    static {
-        Types.load(CLIConfig.class);
-    }
+public class BasicCLI extends _LoadConfig {
 
     @Option(hidden = true)
     @ParseBy(CharOutParser.class)
@@ -342,7 +338,7 @@ public class BasicCLI {
     }
 
     private boolean                prepared;
-    private _RunInfo               runInfo;
+    // private BootProc bootProc;
     private ClassOptions<BasicCLI> opts;
     private List<String>           restArgs;
 
@@ -373,16 +369,17 @@ public class BasicCLI {
         if (prepared)
             return;
 
-        L.x.P("cli parse runinfo");
-        runInfo = _RunInfo.parse(getClass(), true);
-
-        L.x.P("cli load boot");
-        runInfo.loadBoot();
-
-        if (!"1".equals(System.getProperty(CLIConfig.PROPERTY_LIB_LOADED))) {
-            L.x.P("cli load libraries");
-            runInfo.loadLibraries();
-        }
+        // L.x.P("parse boot info");
+        // bootProc = BootProc.get(getClass());
+        //
+        // if (bootProc != null) {
+        // L.x.P("load-config PRE");
+        // try {
+        // bootProc.load(Integer.MIN_VALUE, 0);
+        // } catch (LoadException e) {
+        // throw new CLIException(e);
+        // }
+        // }
 
         L.x.P("cli get options");
         opts = getOptions();
@@ -424,8 +421,14 @@ public class BasicCLI {
             _postInit();
             _boot();
 
-            L.x.P("cli load delayed");
-            runInfo.loadDelayed();
+            // if (bootProc != null) {
+            // L.x.P("load-config post");
+            // try {
+            // bootProc.load(0, Integer.MAX_VALUE);
+            // } catch (LoadException e) {
+            // throw new CLIException(e);
+            // }
+            // }
 
             if (L.showDebug()) {
                 for (Entry<String, _Option<?>> entry : opts.getOptions()

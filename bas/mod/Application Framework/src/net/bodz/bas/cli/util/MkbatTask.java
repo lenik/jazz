@@ -2,8 +2,6 @@ package net.bodz.bas.cli.util;
 
 import java.io.File;
 
-import net.bodz.bas.cli.CLIConfig;
-
 import org.apache.tools.ant.BuildException;
 
 public class MkbatTask extends CLITask {
@@ -21,7 +19,8 @@ public class MkbatTask extends CLITask {
          * Set cli.lib_loaded to suppress load bodz_lapiota by BasicCLI, so all
          * annotation types are loaded only by AntClassLoader.
          */
-        System.setProperty(CLIConfig.PROPERTY_LIB_LOADED, "1");
+        // This is fixed by load condition.
+        // System.setProperty(CLIConfig.PROPERTY_LIB_LOADED, "1");
     }
 
     private File srcdir;

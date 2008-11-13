@@ -16,8 +16,14 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.io.CharOuts.Buffer;
+import net.bodz.bas.text.diff.DiffComparator;
+import net.bodz.bas.text.diff.DiffComparators;
+import net.bodz.bas.text.diff.DiffFormat;
+import net.bodz.bas.text.diff.DiffFormats;
+import net.bodz.bas.text.diff.DiffInfo;
 import net.bodz.bas.text.interp.Interps;
 import net.bodz.bas.text.interp.PatternProcessor;
 import net.bodz.bas.types.Pair;
@@ -778,6 +784,34 @@ public class Strings {
             list.add(deref);
         }
         return list.toArray(Empty.Strings);
+    }
+
+    public static void diff(List<?> a, List<?> b, CharOut out, DiffFormat format) {
+        DiffComparator alg = DiffComparators.gnudiff;
+        List<DiffInfo> diffs = alg.diffCompare(a, b);
+        format.format(a, b, diffs, out);
+    }
+
+    public static void diff(List<?> a, List<?> b, CharOut out) {
+        diff(a, b, out, DiffFormats.Simdiff);
+    }
+
+    public static String diff(List<?> a, List<?> b) {
+        Buffer buffer = new Buffer();
+        diff(a, b, buffer);
+        return buffer.toString();
+    }
+
+    public static void diff(String a, String b, CharOut out) {
+        String[] av = a.split("\n");
+        String[] bv = b.split("\n");
+        diff(Arrays.asList(av), Arrays.asList(bv), out);
+    }
+
+    public static String diff(String a, String b) {
+        Buffer buffer = new Buffer();
+        diff(a, b, buffer);
+        return buffer.toString();
     }
 
 }

@@ -1,4 +1,4 @@
-package net.bodz.bas.loader;
+package net.bodz.bas.snm;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,7 +12,7 @@ import java.util.Map.Entry;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.sys.SystemInfo;
 
-public class JavaLibraryLoader {
+public class SJLibLoader {
 
     public static class LibInfo {
 
@@ -43,7 +43,7 @@ public class JavaLibraryLoader {
     private List<String>      findPaths;
     private Map<File, LibDir> libDirs;
 
-    public JavaLibraryLoader() {
+    public SJLibLoader() {
         findPaths = new ArrayList<String>();
         libDirs = new HashMap<File, LibDir>();
     }
@@ -137,9 +137,9 @@ public class JavaLibraryLoader {
         return libDir;
     }
 
-    public static final JavaLibraryLoader DEFAULT;
+    public static final SJLibLoader DEFAULT;
     static {
-        DEFAULT = new JavaLibraryLoader();
+        DEFAULT = new SJLibLoader();
         String JAVA_LIB = System.getenv("JAVA_LIB");
         if (JAVA_LIB != null)
             DEFAULT.addPaths(JAVA_LIB);
