@@ -32,4 +32,20 @@ public class BundledLoader extends URLClassLoader {
         return installer.findLibrary(this, libname);
     }
 
+    public static BundledLoader replace(ClassLoader loader) {
+        if (loader == null)
+            return new BundledLoader(Empty.URLs);
+        if (loader instanceof BundledLoader)
+            return (BundledLoader) loader;
+        if (loader instanceof URLClassLoader) {
+            URLClassLoader ucl = (URLClassLoader) loader;
+            URL[] urls = ucl.getURLs();
+            ClassLoader parent = ucl.getParent();
+            return new BundledLoader(urls, parent);
+        }
+        throw new UnsupportedOperationException(
+                "can't replace the given loader: " + loader
+                        + " to BundledLoader.");
+    }
+
 }

@@ -4,6 +4,7 @@ import net.bodz.bas.lang.Caller;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TextMap.HashTextMap;
 
+@Deprecated
 public class Conditions {
 
     TextMap<String> typealiases;

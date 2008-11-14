@@ -2,6 +2,8 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" output="mod/.Removed Items/bin" path="mod/.Removed Items/src"/>
+	<classpathentry kind="src" output="mod/.Removed Items/test.bin" path="mod/.Removed Items/test"/>
 	<classpathentry kind="src" output="mod/Application Framework/bin" path="mod/Application Framework/src"/>
 	<classpathentry kind="src" output="mod/Application Framework/test.bin" path="mod/Application Framework/test"/>
 	<classpathentry kind="src" output="mod/B-IOS Framework/bin" path="mod/B-IOS Framework/src"/>
