@@ -6,6 +6,7 @@ import net.bodz.bas.test.types.Dog;
 
 import org.junit.Test;
 
+@Deprecated
 public class CLILibraryTest {
 
     CLILibrary lib = new CLILibrary();

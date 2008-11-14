@@ -7,32 +7,35 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Modifier;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import net.bodz.bas.a.BootProc;
 import net.bodz.bas.a.ClassInfo;
 import net.bodz.bas.a.Doc;
-import net.bodz.bas.a.LoadBoot;
-import net.bodz.bas.a.LoadBy;
 import net.bodz.bas.a.ProgramName;
 import net.bodz.bas.a.RcsKeywords;
 import net.bodz.bas.a.Version;
 import net.bodz.bas.cli.BatchProcessCLI;
 import net.bodz.bas.cli.ProcessResult;
+import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.io.CharOuts.Buffer;
 import net.bodz.bas.lang.Caller;
 import net.bodz.bas.lang.err.IdentifiedException;
-import net.bodz.bas.loader.LoadByLauncher;
+import net.bodz.bas.loader.DefaultBooter;
+import net.bodz.bas.loader.LoadUtil;
+import net.bodz.bas.loader.TempClassLoader;
 import net.bodz.bas.snm.SJLibLoader;
-import net.bodz.bas.snm.SJProject;
 import net.bodz.bas.text.interp.Interps;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TextMap.HashTextMap;
 import net.bodz.bas.types.util.Annotations;
-import net.bodz.bas.types.util.Ns;
+import net.bodz.bas.types.util.Arrays2;
+import net.bodz.bas.types.util.Empty;
 import net.bodz.bas.types.util.Strings;
-import net.bodz.bas.types.util.Types;
 
 @Doc("Generate program launcher for java applications")
 @Version( { 0, 1 })
@@ -44,6 +47,10 @@ public class Mkbat extends BatchProcessCLI {
     private TextMap<String> varmap;
     private Set<String>     generated;
 
+    private List<URL>       _userlibs;
+    private URL[]           userlibs;
+    private ClassLoader     bootSysLoader;
+
     public Mkbat() {
         generated = new HashSet<String>();
         varmap = new HashTextMap<String>();
@@ -53,9 +60,30 @@ public class Mkbat extends BatchProcessCLI {
                 + classInfo.getDateString());
     }
 
+    @Option(alias = "l", vnam = "LIBSPEC", doc = "add user lib for locating the class")
+    public void addUserLib(String libspec) {
+        URL url = LoadUtil.findLib(libspec, true);
+        addUserLib(url);
+    }
+
+    public void addUserLib(URL url) {
+        if (_userlibs == null)
+            _userlibs = new ArrayList<URL>();
+        _userlibs.add(url);
+    }
+
     @Override
     protected void _boot() throws Throwable {
-        // Classpath.dumpURLs(Caller.getCallerClassLoader(), CharOuts.stderr);
+        ClassLoader parent = Caller.getCallerClassLoader();
+        if (_userlibs == null || _userlibs.isEmpty())
+            userlibs = null;
+        else
+            userlibs = _userlibs.toArray(Empty.URLs);
+        if (userlibs == null)
+            bootSysLoader = parent;
+        else
+            bootSysLoader = TempClassLoader.get(userlibs, parent);
+        // Classpath.dumpURLs(b, CharOuts.stderr);
     }
 
     @Override
@@ -78,32 +106,36 @@ public class Mkbat extends BatchProcessCLI {
         if (generated.contains(className))
             return ProcessResult.pass("repeat");
 
-        Class<?> clazz0 = null;
+        Class<?> class0 = null;
         try {
             L.d.P("try ", className);
-            ClassLoader ccl = Caller.getCallerClassLoader();
-            clazz0 = Class.forName(className, false, ccl);
+            class0 = Class.forName(className, false, bootSysLoader);
         } catch (Throwable t) {
             return ProcessResult.err(t, "loadc");
         }
-
-        int modifiers = clazz0.getModifiers();
+        int modifiers = class0.getModifiers();
         if (!Modifier.isPublic(modifiers))
             return ProcessResult.pass("local");
 
-        File whichClass = SJProject.findBase(clazz0);
-        URL whichClassURL = whichClass.toURI().toURL();
-        Class<?> clazz1 = LoadByLauncher.load(className, whichClassURL);
+        BootProc bootProc = BootProc.get(class0);
 
+        ClassLoader realSysLoader = Caller.getCallerClassLoader();
+        if (bootProc != null)
+            realSysLoader = bootProc.configSysLoader(realSysLoader);
+
+        Class<?> class1 = DefaultBooter
+                .load(realSysLoader, className, userlibs);
         try {
-            clazz1.getMethod("main", String[].class);
-            L.i.P("    main-class: ", clazz1);
+            class1.getMethod("main", String[].class);
+            L.i.P("    main-class: ", class1);
         } catch (NoSuchMethodException e) {
             return ProcessResult.pass("notapp");
         } catch (Throwable t) {
             return ProcessResult.err(t, "loadf");
         }
-        generate(clazz1);
+
+        generate(class1);
+
         return ProcessResult.pass("ok");
     }
 
@@ -123,41 +155,42 @@ public class Mkbat extends BatchProcessCLI {
         varmap.put("TEMPLATE", new File(batTempl.getPath()).getName());
         varmap.put("NAME", name);
 
-        Class<?> launcherClass = LoadByLauncher.class;
-        LoadBy loadBy = Ns.getN(clazz, LoadBy.class);
-        if (loadBy != null) {
-            Class<?> _launcherClass = loadBy.launcher();
-            if (_launcherClass != LoadByLauncher.class)
-                launcherClass = _launcherClass;
+        BootProc bootProc = BootProc.get(clazz);
+        String booter = null;
+        String[] bootArgs = {};
+        String[] cplibs = {};
+        if (bootProc != null) {
+            booter = bootProc.getBooterClassName();
+            cplibs = bootProc.getSysLibs();
+            if (!bootProc.hasConfig()) {
+                // merge syslibs & userlibs if no config.
+                String[] userlibs = bootProc.getUserLibs();
+                cplibs = Arrays2.concat(cplibs, userlibs);
+            } else
+                // XXX: anything other then userlib in boot args?
+                bootArgs = bootProc.getBootArgs();
         }
 
         String launch = "";
-        String[] loadArgs = LoadByLauncher.getLoadArgs(clazz);
-        if (loadArgs.length != 0) {
-            launch = launcherClass.getName() + " "
-                    + Strings.join(" ", loadArgs) + " -";
-        } else if (launcherClass != LoadByLauncher.class) {
-            launch = launcherClass.getName() + " -";
+        if (bootArgs.length != 0) {
+            launch = booter + " " + Strings.join(" ", bootArgs) + " --";
+        } else if (booter != null) {
+            launch = booter + " --";
         }
         varmap.put("LAUNCH", launch);
 
         Buffer loadlibs = new Buffer();
         SJLibLoader libloader = SJLibLoader.DEFAULT;
-        for (Class<?> c : Types.getTypeChain(clazz)) {
-            LoadBoot loadBoot = c.getAnnotation(LoadBoot.class);
-            if (loadBoot == null)
-                continue;
-            for (String lib : loadBoot.value()) {
-                File f = libloader.findLibraryFile(lib);
-                String fname;
-                if (f == null) {
-                    fname = lib + ".jar";
-                    L.w.P("lib ", lib, " => ", fname);
-                } else
-                    fname = f.getName();
-                String loadlib = "call :load " + qq(lib) + " " + qq(fname);
-                loadlibs.println("    " + loadlib);
-            }
+        for (String lib : cplibs) {
+            File f = libloader.findLibraryFile(lib);
+            String fname;
+            if (f == null) {
+                fname = lib + ".jar";
+                L.w.P("lib ", lib, " => ", fname);
+            } else
+                fname = f.getName();
+            String loadlib = "call :load " + qq(lib) + " " + qq(fname);
+            loadlibs.println("    " + loadlib);
         }
         // varmap.put("LOADLIBS_0", "");
         varmap.put("LOADLIBS", loadlibs.toString());

@@ -36,7 +36,6 @@ import net.bodz.bas.lang.script.ScriptClass;
 import net.bodz.bas.lang.script.ScriptException;
 import net.bodz.bas.lang.script.ScriptType;
 import net.bodz.bas.lang.script.Scripts;
-import net.bodz.bas.loader._LoadConfig;
 import net.bodz.bas.log.ALog;
 import net.bodz.bas.log.LogOut;
 import net.bodz.bas.log.LogOuts;
@@ -78,11 +77,11 @@ import net.bodz.bas.types.util.Strings;
  * @see ClassOptions
  * @see Option
  */
-@BootInfo(userlibs = "bodz_bas")
+@BootInfo(syslibs = "bodz_bas")
 @OptionGroup(value = "standard", rank = -1)
 @RcsKeywords(id = "$Id: Rcs.java 784 2008-01-15 10:53:24Z lenik $")
 @ScriptType(CLIScriptClass.class)
-public class BasicCLI extends _LoadConfig {
+public class BasicCLI {
 
     @Option(hidden = true)
     @ParseBy(CharOutParser.class)

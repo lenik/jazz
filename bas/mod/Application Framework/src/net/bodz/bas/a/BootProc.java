@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import net.bodz.bas.io.CharOut;
+import net.bodz.bas.io.CharOuts.Buffer;
 import net.bodz.bas.lang.Caller;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.loader.DefaultBooter;
@@ -14,13 +16,16 @@ import net.bodz.bas.loader.LoadConfig;
 import net.bodz.bas.loader.LoadException;
 import net.bodz.bas.loader.LoadUtil;
 import net.bodz.bas.types.util.Empty;
+import net.bodz.bas.types.util.Strings;
 
 public class BootProc {
 
-    private BootProc      prev;
+    private final String   description;
 
-    private String[]      syslibs;
-    private String[]      userlibs;
+    private final BootProc prev;
+
+    private String[]       syslibs;
+    private String[]       userlibs;
 
     /**
      * <pre>
@@ -31,11 +36,12 @@ public class BootProc {
      *             +-- @BootInfo.booter : scl
      * </pre>
      */
-    private String        booterClassName;
+    private String         booterClassName;
 
-    private ConfigParam[] configs;
+    private ConfigParam[]  configs;
 
-    public BootProc(BootProc prev, BootInfo info) {
+    public BootProc(String description, BootProc prev, BootInfo info) {
+        this.description = description;
         this.prev = prev;
 
         syslibs = info.syslibs();
@@ -55,10 +61,14 @@ public class BootProc {
     }
 
     public static BootProc get(Class<?> clazz, BootProc prev) {
+        Class<?> sup = clazz.getSuperclass();
+        if (sup != null)
+            prev = get(sup, prev);
         BootInfo info = clazz.getAnnotation(BootInfo.class);
         if (info == null)
             return prev;
-        return new BootProc(prev, info);
+        String desc = clazz.getName() + "@" + System.identityHashCode(clazz);
+        return new BootProc(desc, prev, info);
     }
 
     public static BootProc get(Class<?> clazz) {
@@ -101,6 +111,17 @@ public class BootProc {
         if (prev != null)
             return prev.getBooterClassName();
         return DefaultBooter.class.getName();
+    }
+
+    /**
+     * if no config, the userlibs can be merged into syslibs.
+     */
+    public boolean hasConfig() {
+        if (configs != null && configs.length != 0)
+            return true;
+        if (prev != null)
+            return prev.hasConfig();
+        return false;
     }
 
     static class ConfigParam {
@@ -209,6 +230,34 @@ public class BootProc {
         if (!buf.isEmpty())
             buf.add("--");
         return buf.toArray(Empty.Strings);
+    }
+
+    void dump(CharOut out) {
+        out.println("BootProc: " + description);
+        if (syslibs.length != 0)
+            out.println("    syslibs=" + Strings.join(", ", syslibs));
+        if (userlibs.length != 0)
+            out.println("    userlibs=" + Strings.join(", ", userlibs));
+        if (booterClassName != null)
+            out.println("    booter=" + booterClassName);
+        if (configs != null && configs.length != 0) {
+            out.println("    Configs: ");
+            for (ConfigParam config : configs) {
+                out.print("        " + config.clazz);
+                out.println("(" + Strings.join(", ", config.args) + ")");
+            }
+        }
+        if (prev != null) {
+            out.print("prev ");
+            prev.dump(out);
+        }
+    }
+
+    @Override
+    public String toString() {
+        Buffer buffer = new Buffer(10000);
+        dump(buffer);
+        return buffer.toString();
     }
 
 }

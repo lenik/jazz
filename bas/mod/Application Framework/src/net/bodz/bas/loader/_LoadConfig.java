@@ -1,9 +1,6 @@
 package net.bodz.bas.loader;
 
 import java.net.URL;
-import java.net.URLClassLoader;
-
-import net.bodz.bas.lang.util.Classpath;
 
 public class _LoadConfig implements LoadConfig {
 
@@ -13,12 +10,8 @@ public class _LoadConfig implements LoadConfig {
     }
 
     protected ClassLoader addLibs(ClassLoader parent, String... libspecs) {
-        URLClassLoader ucl = LoadUtil.getUcl(parent);
-        for (String libspec : libspecs) {
-            URL url = LoadUtil.findLib(libspec);
-            Classpath.addURL(ucl, url);
-        }
-        return ucl;
+        URL[] urls = LoadUtil.findLibs(libspecs);
+        return UCL.addOrCreate(parent, urls);
     }
 
     @Override

@@ -15,6 +15,7 @@ import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TextMap.HashTextMap;
 import net.bodz.bas.types.TextMap.TreeTextMap;
 
+@Deprecated
 public class CLILibrary {
 
     private TextMap<VMethod> methods;

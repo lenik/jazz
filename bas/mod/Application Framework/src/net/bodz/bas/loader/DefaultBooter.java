@@ -8,6 +8,8 @@ import java.util.List;
 import net.bodz.bas.a.BootInfo;
 import net.bodz.bas.a.BootProc;
 import net.bodz.bas.lang.Caller;
+import net.bodz.bas.log.LogOut;
+import net.bodz.bas.log.LogOuts;
 import net.bodz.bas.types.util.Arrays2;
 import net.bodz.bas.types.util.Empty;
 
@@ -16,24 +18,23 @@ import net.bodz.bas.types.util.Empty;
  */
 public class DefaultBooter {
 
-    public static Class<?> load(String className, URL... bootlibs)
+    private static LogOut out = LogOuts.stderr;
+
+    public static Class<?> load(String className, URL... userlibs)
             throws LoadException {
         ClassLoader parent = Caller.getCallerClassLoader();
-        return load(parent, className, bootlibs);
+        return load(parent, className, userlibs);
     }
 
     /**
-     * @param bootlibs
+     * @param userlibs
      *            use {@link BootInfo#userlibs()}
      */
-    public static Class<?> load(ClassLoader parent, String className,
-            URL... bootlibs) throws LoadException {
+    public static Class<?> load(ClassLoader sysLoader, String className,
+            URL... userlibs) throws LoadException {
         // get class0
-        ClassLoader bootLoader;
-        if (bootlibs == null)// || bootlibs.length == 0)
-            bootLoader = parent;
-        else
-            bootLoader = new URLClassLoader(bootlibs, parent);
+        // WORKAROUND: let the boot bit more smooth.
+        ClassLoader bootLoader = TempClassLoader.get(userlibs, sysLoader);
         Class<?> class0;
         try {
             class0 = bootLoader.loadClass(className);
@@ -43,8 +44,32 @@ public class DefaultBooter {
 
         // prepare real-loader
         BootProc bootProc = BootProc.get(class0);
-        ClassLoader realLoader = bootProc.configLoader(parent);
+        ClassLoader realLoader = sysLoader;
+        if (bootProc != null)
+            realLoader = bootProc.configLoader(sysLoader);
+
+        // add userlibs to the last
+        // these libs are specified by Booter-Main(-l, USERLIB, ..., FQCN, ...)
+        // OPT..
+        realLoader = UCL.addOrCreate(realLoader, userlibs);
+
+        // Classpath.dumpURLs(realLoader, out);
         try {
+            Class<?> class1 = Class.forName(className, false, realLoader);
+            ClassLoader userLoader = class1.getClassLoader();
+            if (userLoader != realLoader) {
+                out.println("Warning: class loader cut: ");
+                ClassLoader l = realLoader;
+                while (l != null && l != userLoader) {
+                    out.println("  may lose: " + l);
+                    if (l instanceof URLClassLoader) {
+                        URLClassLoader ucl = (URLClassLoader) l;
+                        for (URL url : ucl.getURLs())
+                            out.println("    " + url);
+                    }
+                    l = l.getParent();
+                }
+            }
             return Class.forName(className, true, realLoader);
         } catch (ClassNotFoundException e) {
             throw new LoadException(e);
@@ -83,7 +108,7 @@ public class DefaultBooter {
             throw new IllegalArgumentException(
                     "Main class name isn't specified.");
         String className = args[++index];
-        args = Arrays2.copyOf(args, index, args.length);
+        args = Arrays2.copyOf(args, index, args.length - index);
 
         // reload and exec
         URL[] urls = userlibs.toArray(Empty.URLs);

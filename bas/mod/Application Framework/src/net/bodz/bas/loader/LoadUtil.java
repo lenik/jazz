@@ -15,6 +15,7 @@ import net.bodz.bas.snm.SJLibLoader;
 
 public class LoadUtil {
 
+    @Deprecated
     public static URLClassLoader getUcl(ClassLoader cl) {
         if (cl == null)
             throw new NullPointerException("null class loader");
@@ -60,14 +61,17 @@ public class LoadUtil {
      * <code>libraries.ini</code> , then <code>libname.jar</code> is used.
      * 
      */
-    public static URL findLib(String libspec) {
+    public static URL findLib(String libspec, boolean errorFail) {
         File libfile;
         if (libspec.contains("."))
             libfile = resolveJar(libspec);
         else
             libfile = resolveLib(libspec);
         if (libfile == null)
-            throw new Error("can't resolve lib " + libspec);
+            if (errorFail)
+                throw new Error("can't resolve lib " + libspec);
+            else
+                return null;
         try {
             return libfile.toURI().toURL();
         } catch (MalformedURLException e) {
@@ -76,11 +80,26 @@ public class LoadUtil {
         }
     }
 
-    public static URL[] findLibs(String[] libspecs) {
+    /**
+     * @return <code>null</code> if jar isn't exists, or libspec isn't defined.
+     */
+    public static URL findLib(String libspec) {
+        return findLib(libspec, false);
+    }
+
+    public static URL[] findLibs(String[] libspecs, boolean errorFail) {
         URL[] urls = new URL[libspecs.length];
         for (int i = 0; i < libspecs.length; i++)
-            urls[i] = findLib(libspecs[i]);
+            urls[i] = findLib(libspecs[i], errorFail);
         return urls;
+    }
+
+    /**
+     * @return URL array with each component set to <code>null</code> if
+     *         corresponding jar isn't exists, or libspec isn't defined.
+     */
+    public static URL[] findLibs(String[] libspecs) {
+        return findLibs(libspecs, false);
     }
 
     static File resolveLib(String name) {

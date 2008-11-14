@@ -2,18 +2,30 @@ package net.bodz.bas.cli.util;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.io.IOException;
+import java.util.Map;
 
 import net.bodz.bas.io.Files;
-import net.bodz.bas.lang.util.Classpath;
-import net.bodz.bas.log.LogOut;
-import net.bodz.bas.log.LogOuts;
 import net.bodz.bas.sys.SystemInfo;
-import net.bodz.bas.types.TextMap;
+import net.bodz.bas.types.TextMap.HashTextMap;
 
-public class FindPath {
+public class FindFile {
 
-    static LogOut out = LogOuts.debug;
+    private File              root;
+    private Map<String, File> modules;
+
+    public FindFile(File root, Map<String, File> modules) {
+        this.root = root;
+        this.modules = modules;
+    }
+
+    public FindFile(File root) {
+        this(root, new HashTextMap<File>());
+    }
+
+    @Override
+    public String toString() {
+        return "FindFile: " + root;
+    }
 
     /**
      * Max-matched prefixes & suffixes.
@@ -44,9 +56,6 @@ public class FindPath {
         }
     }
 
-    public File          defaultRoot;
-    public TextMap<File> namedRoots;
-
     public File findabc(String name, File root) {
         File file = new File(root, name);
         if (file.exists())
@@ -67,20 +76,20 @@ public class FindPath {
     }
 
     public File findabc(String name) {
-        return findabc(name, defaultRoot);
+        return findabc(name, root);
     }
 
     /**
      * @example /lapiota/abc.d/eclipse&#42;/plugins/org.eclipse.core&#42;<br>
-     *          &#64;root/abc.d/eclipse&#42;/plugins/org.eclipse.core&#42;<br>
+     *          &#64;module/abc.d/eclipse&#42;/plugins/org.eclipse.core&#42;<br>
      *          eclipse&#42;/plugins/org.eclipse.core&#42;<br>
      *          $ECLIPSE_HOME/plugins/org.eclipse.core&#42;<br>
      */
-    public File find(String exp) {
-        return find(exp, null);
+    public File findexp(String exp) {
+        return findexp(exp, null);
     }
 
-    public File find(String exp, File parent) {
+    public File findexp(String exp, File parent) {
         // termination
         if (exp == null)
             return parent;
@@ -89,14 +98,14 @@ public class FindPath {
         if (parent == null) {
             // absolute path?
             if (exp.startsWith("/"))
-                return find(exp.substring(1), Files.canoniOf("/"));
+                return findexp(exp.substring(1), Files.canoniOf("/"));
             if (SystemInfo.isWin32() && exp.length() > 2
                     && exp.charAt(1) == ':') {
                 File driveRoot = Files.canoniOf(exp.substring(0, 2));
-                return find(exp.substring(2), driveRoot);
+                return findexp(exp.substring(2), driveRoot);
             }
             // default root if relative path.
-            parent = defaultRoot;
+            parent = root;
         }
         String component = null;
         int slash = exp.indexOf('/');
@@ -112,7 +121,7 @@ public class FindPath {
             File newParent = null;
             if (component.startsWith("@")) {
                 String mod = component.substring(1);
-                newParent = namedRoots.get(mod);
+                newParent = modules.get(mod);
                 if (newParent == null)
                     return null;
             } else if (component.startsWith("$")) {
@@ -124,7 +133,7 @@ public class FindPath {
             if (newParent != null) {
                 if (!newParent.isDirectory())
                     return null;
-                return find(exp, newParent);
+                return findexp(exp, newParent);
             }
         }
         // fuzzy*
@@ -133,28 +142,26 @@ public class FindPath {
             File expanded = findabc(prefix, parent);
             if (expanded == null || !expanded.exists())
                 return null;
-            return find(exp, expanded);
+            return findexp(exp, expanded);
         }
         // plain
         parent = new File(parent, component);
         if (!parent.exists())
             throw null;
-        return find(exp, parent);
+        return findexp(exp, parent);
     }
 
-    public Object findcp(String exp, boolean errcont) throws IOException {
-        File file = find(exp, null);
-        if (file == null)
-            if (errcont)
-                out.P("findcp failed: ", exp);
-            else
-                throw new RuntimeException("findcp failed: " + exp);
-        Classpath.addURL(file.toURI().toURL());
-        return file;
-    }
+    public static FindFile DEFAULT;
 
-    public Object findcp(String exp) throws IOException {
-        return findcp(exp, false);
+    static {
+        File root = new File("/");
+        if (SystemInfo.isWin32()) {
+            String programFiles = System.getenv("ProgramFiles");
+            if (programFiles == null)
+                programFiles = "C:/Program Files";
+            root = Files.canoniOf(programFiles);
+        }
+        DEFAULT = new FindFile(root);
     }
 
 }
