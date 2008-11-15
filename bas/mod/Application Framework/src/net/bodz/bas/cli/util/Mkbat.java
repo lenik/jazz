@@ -41,8 +41,8 @@ import net.bodz.bas.types.util.Empty;
 import net.bodz.bas.types.util.Strings;
 
 @Doc("Generate program launcher for java applications")
-@Version( { 0, 1 })
-@RcsKeywords(id = "$Id: Rcs.java 784 2008-01-15 10:53:24Z lenik $")
+@Version( { 0, 2 })
+@RcsKeywords(id = "$Id$")
 @ProgramName("mkbat")
 public class Mkbat extends BatchProcessCLI {
 

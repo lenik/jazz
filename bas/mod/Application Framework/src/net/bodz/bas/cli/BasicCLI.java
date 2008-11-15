@@ -58,8 +58,8 @@ import net.bodz.bas.types.util.Strings;
  *     net.bodz.bas.a.RcsKeywords, 
  *     net.bodz.bas.a.Version
  * )}@Doc(&quot;${primary_type_name} ${description}&quot;)
+ * &#064;RcsKeywords(id = &quot;$$Id${primary_type_name}.java 0 ${date} ${time} ${user} $$&quot;)
  * &#064;Version({ 0, 0 })
- * &#064;RcsKeywords(id = &quot;$$Id: ${primary_type_name}.java 0 ${date} ${time} ${user} $$&quot;)
  * public class ${primary_type_name} extends ${CLI:newType(net.bodz.bas.cli.BasicCLI)} {
  * 
  *     &#064;Override
@@ -79,7 +79,7 @@ import net.bodz.bas.types.util.Strings;
  */
 @BootInfo(syslibs = "bodz_bas")
 @OptionGroup(value = "standard", rank = -1)
-@RcsKeywords(id = "$Id: Rcs.java 784 2008-01-15 10:53:24Z lenik $")
+@RcsKeywords(id = "$Id$")
 @ScriptType(CLIScriptClass.class)
 public class BasicCLI {
 

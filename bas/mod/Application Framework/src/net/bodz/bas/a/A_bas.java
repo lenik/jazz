@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.err.NotImplementedException;
 
-@RcsKeywords(id = "$Id: Rcs.java 784 2008-01-15 10:53:24Z lenik $")
+@RcsKeywords(id = "$Id$")
 public class A_bas {
 
     public static String parse(Doc docN) {
