@@ -1,4 +1,4 @@
-package net.bodz.swt.gui.util;
+package net.bodz.swt.controls;
 
 import org.eclipse.swt.widgets.Display;
 

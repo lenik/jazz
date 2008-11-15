@@ -13,11 +13,11 @@ import org.eclipse.swt.widgets.Composite;
 
 public class R_Object extends _R_Object {
 
-    protected final SWTGridStyle gridStyle;
+    protected final SWTGridStrategy strategy;
 
-    public R_Object(SWTGridStyle gridStyle) {
+    public R_Object(SWTGridStrategy gridStyle) {
         super(gridStyle);
-        this.gridStyle = gridStyle;
+        this.strategy = gridStyle;
     }
 
     @Override
@@ -25,12 +25,10 @@ public class R_Object extends _R_Object {
             throws RenderException, SWTException {
         assert var != null;
         Object object = var.get();
-        if (object != null) {
-            GUIStruct objStruct = new GUIObjectStruct(object);
-            return gridStyle.renderStruct(objStruct, parent,
-                    styleFx(style, var));
-        }
-        throw new NotImplementedException("null obj");
+        if (object == null)
+            throw new NotImplementedException("null obj: " + var);
+        GUIStruct objStruct = new GUIObjectStruct(object);
+        return strategy.renderStruct(objStruct, parent, styleFx(style, var));
     }
 
 }

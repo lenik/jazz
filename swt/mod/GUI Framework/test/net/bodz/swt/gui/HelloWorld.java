@@ -41,16 +41,15 @@ public class HelloWorld extends BasicGUI {
     private Label helloLabel;
 
     @Override
-    protected Composite createInitialView(Composite parent) {
-        Composite view = new Composite(parent, SWT.BORDER);
-        view.addMouseListener(new MouseAdapter() {
+    protected void createInitialView(Composite comp) {
+        comp.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseDown(final MouseEvent e) {
                 System.out.println(e);
             }
         });
-        view.setCapture(true);
-        view.addKeyListener(new KeyAdapter() {
+        comp.setCapture(true);
+        comp.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(final KeyEvent e) {
                 System.out.println(e);
@@ -61,9 +60,9 @@ public class HelloWorld extends BasicGUI {
                 System.out.println(e);
             }
         });
-        view.setLayout(new FormLayout());
+        comp.setLayout(new FormLayout());
 
-        final Label greetingLabel = new Label(view, SWT.NONE);
+        final Label greetingLabel = new Label(comp, SWT.NONE);
         final FormData fd_greetingLabel = new FormData();
         fd_greetingLabel.bottom = new FormAttachment(0, 25);
         fd_greetingLabel.right = new FormAttachment(0, 95);
@@ -71,7 +70,7 @@ public class HelloWorld extends BasicGUI {
         greetingLabel.setLayoutData(fd_greetingLabel);
         greetingLabel.setText("Greeting: ");
 
-        greetingText = new Text(view, SWT.BORDER);
+        greetingText = new Text(comp, SWT.BORDER);
         greetingText.addVerifyListener(new VerifyListener() {
             public void verifyText(final VerifyEvent e) {
                 greeting = greetingText.getText();
@@ -86,7 +85,7 @@ public class HelloWorld extends BasicGUI {
         fd_greetingText.left = new FormAttachment(greetingLabel, 5, SWT.RIGHT);
         greetingText.setLayoutData(fd_greetingText);
 
-        final Label nameLabel = new Label(view, SWT.NONE);
+        final Label nameLabel = new Label(comp, SWT.NONE);
         final FormData fd_nameLabel = new FormData();
         fd_nameLabel.bottom = new FormAttachment(0, 50);
         fd_nameLabel.right = new FormAttachment(greetingLabel, 0, SWT.RIGHT);
@@ -95,7 +94,7 @@ public class HelloWorld extends BasicGUI {
         nameLabel.setLayoutData(fd_nameLabel);
         nameLabel.setText("Name: ");
 
-        final Label ageLabel = new Label(view, SWT.NONE);
+        final Label ageLabel = new Label(comp, SWT.NONE);
         final FormData fd_ageLabel = new FormData();
         fd_ageLabel.bottom = new FormAttachment(0, 75);
         fd_ageLabel.right = new FormAttachment(nameLabel, 0, SWT.RIGHT);
@@ -104,7 +103,7 @@ public class HelloWorld extends BasicGUI {
         ageLabel.setLayoutData(fd_ageLabel);
         ageLabel.setText("Age: ");
 
-        nameText = new Text(view, SWT.BORDER);
+        nameText = new Text(comp, SWT.BORDER);
         nameText.addVerifyListener(new VerifyListener() {
             public void verifyText(final VerifyEvent e) {
                 name = nameText.getText();
@@ -118,7 +117,7 @@ public class HelloWorld extends BasicGUI {
         fd_nameText.left = new FormAttachment(nameLabel, 5, SWT.RIGHT);
         nameText.setLayoutData(fd_nameText);
 
-        ageText = new Text(view, SWT.BORDER);
+        ageText = new Text(comp, SWT.BORDER);
         ageText.addVerifyListener(new VerifyListener() {
             public void verifyText(final VerifyEvent e) {
                 try {
@@ -136,7 +135,7 @@ public class HelloWorld extends BasicGUI {
         fd_ageText.left = new FormAttachment(ageLabel, 5, SWT.RIGHT);
         ageText.setLayoutData(fd_ageText);
 
-        final Button sayButton = new Button(view, SWT.NONE);
+        final Button sayButton = new Button(comp, SWT.NONE);
         sayButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent e) {
@@ -153,7 +152,7 @@ public class HelloWorld extends BasicGUI {
         sayButton.setLayoutData(fd_sayButton);
         sayButton.setText("&Say: ");
 
-        helloLabel = new Label(view, SWT.WRAP);
+        helloLabel = new Label(comp, SWT.WRAP);
         helloLabel.setFont(SWTResourceManager.getFont("Tahoma", 12, SWT.NONE));
         final FormData fd_helloLabel = new FormData();
         fd_helloLabel.bottom = new FormAttachment(100, -5);
@@ -164,12 +163,12 @@ public class HelloWorld extends BasicGUI {
         helloLabel.setText("hello!");
 
         // Scrollable scroll = new Scrollable(parent, SWT.BORDER);
-        Point cs = view.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+        Point cs = comp.computeSize(SWT.DEFAULT, SWT.DEFAULT);
         System.out.println(cs);
-        view.setSize(cs);
+        comp.setSize(cs);
 
         Label greetingIcon;
-        greetingIcon = new Label(view, SWT.NONE);
+        greetingIcon = new Label(comp, SWT.NONE);
         fd_greetingLabel.left = new FormAttachment(greetingIcon, 5, SWT.RIGHT);
         greetingIcon.setImage(SWTResourceManager.getImage(HelloWorld.class,
                 "/icons/full/obj16/read_obj.gif"));
@@ -180,7 +179,6 @@ public class HelloWorld extends BasicGUI {
         fd_greetingIcon.top = new FormAttachment(greetingLabel, 0, SWT.TOP);
         fd_greetingIcon.left = new FormAttachment(0, 5);
         greetingIcon.setLayoutData(fd_greetingIcon);
-        return view;
     }
 
     public static void main(String[] args) throws Throwable {

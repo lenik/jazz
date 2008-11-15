@@ -25,6 +25,7 @@
 		<jar destfile="build/net.bodz.swt.jar" update="true">
 			<fileset dir="mod/Bundled Modules/bin" />
 			<fileset dir="mod/Common Controls/bin" />
+			<fileset dir="mod/Commons/bin" />
 			<fileset dir="mod/GUI Framework/bin" />
 		</jar>
 	</target>
@@ -33,6 +34,7 @@
 		<jar destfile="build/net.bodz.swt-src.jar" update="true">
 			<fileset dir="mod/Bundled Modules/src" />
 			<fileset dir="mod/Common Controls/src" />
+			<fileset dir="mod/Commons/src" />
 			<fileset dir="mod/GUI Framework/src" />
 		</jar>
 	</target>

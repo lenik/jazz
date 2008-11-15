@@ -4,7 +4,6 @@ import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.beans.PropertyDescriptor;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -59,7 +58,8 @@ public class GUIStructs {
 
         private static final int        DEFAULT;
         static {
-            DEFAULT = FIELDS | PROPERTIES | METHODS | ALL_DECL | NO_DUP_PROPS;
+            DEFAULT = FIELDS | PROPERTIES | METHODS | ALL_DECL | FORCE_ACCESS
+                    | NO_DUP_PROPS;
         }
 
         private final ClassMeta         prev;
@@ -252,21 +252,76 @@ public class GUIStructs {
 
     }
 
+    public static class ParametersMeta {
+
+        protected ParameterMeta[] mv;
+
+        public ParametersMeta(MethodParameter[] mpv) {
+            mv = new ParameterMeta[mpv.length];
+            for (int i = 0; i < mv.length; i++)
+                mv[i] = new ParameterMeta(mpv[i]);
+        }
+
+        public int size() {
+            return mv.length;
+        }
+
+        public ParameterMeta get(int index) {
+            return mv[index];
+        }
+
+        public Class<?> getType(int index) {
+            return mv[index].getType();
+        }
+
+    }
+
+    public static class ParametersStruct extends _GUIStruct {
+
+        private static final long serialVersionUID = 3563070864386890361L;
+
+        private CallContext       cc;
+
+        public ParametersStruct(ParametersMeta meta, CallContext cc,
+                Object... initArgs) {
+            super(meta.size());
+            this.cc = cc;
+            int n = meta.size();
+            for (int i = 0; i < n; i++) {
+                ParameterMeta paramMeta = meta.get(i);
+                ParameterVar paramVar = new ParameterVar(paramMeta, cc);
+                if (i < initArgs.length) {
+                    try {
+                        paramVar.check(initArgs[i]);
+                    } catch (CheckException e) {
+                        throw new IllegalUsageError(
+                                "Check failed on init arguments");
+                    }
+                    paramVar.set(initArgs[i]);
+                }
+                add(paramVar);
+            }
+        }
+
+        public CallContext getCallContext() {
+            return cc;
+        }
+
+    }
+
     public static class GUICallMeta implements GUIVarMeta {
 
-        protected Method          method;
-        protected GUIHint         hint;
-        protected RetvalMeta      retvalMeta;
-        protected ParameterMeta[] parameterMetas;
+        protected Method         method;
+        protected GUIHint        hint;
+        protected RetvalMeta     retvalMeta;
+        protected ParametersMeta parametersMeta;
 
         public GUICallMeta(Method method) {
             this.method = method;
+            this.hint = GUIHint.get(method);
             this.retvalMeta = new RetvalMeta(method);
             MethodParameter[] mpv = MethodParameter.getParameters(method);
-            parameterMetas = new ParameterMeta[mpv.length];
-            for (int i = 0; i < parameterMetas.length; i++)
-                parameterMetas[i] = new ParameterMeta(mpv[i]);
-            this.hint = GUIHint.get(method);
+            this.parametersMeta = new ParametersMeta(mpv);
         }
 
         @Override
@@ -284,7 +339,7 @@ public class GUIStructs {
         }
 
         public Class<?> getParameterType(int index) {
-            return parameterMetas[index].getType();
+            return parametersMeta.getType(index);
         }
 
         @Override
@@ -340,39 +395,27 @@ public class GUIStructs {
 
     }
 
-    public static class GUICallVar extends _GUIStruct implements
+    public static class GUICallVar extends ParametersStruct implements
             GUIVar<CallObject> {
 
         private static final long   serialVersionUID = 7447549523460668389L;
 
         protected final GUICallMeta meta;
-        protected CallObject        call;
         protected RetvalVar         retval;
 
         /**
          * insufficient arguments default to null. extra arguments are ignored.
          */
         public GUICallVar(GUICallMeta meta, Object object, Object... initArgs) {
-            super(meta.parameterMetas.length);
+            super(meta.parametersMeta, new CallObject(object, meta.method));
             this.meta = meta;
-            this.call = new CallObject(object, meta.method);
-            int n = meta.parameterMetas.length;
-            for (int i = 0; i < n; i++) {
-                ParameterMeta paramMeta = meta.parameterMetas[i];
-                ParameterVar paramVar = new ParameterVar(paramMeta, call);
-                if (i < initArgs.length) {
-                    try {
-                        paramVar.check(initArgs[i]);
-                    } catch (CheckException e) {
-                        throw new IllegalUsageError(
-                                "Check failed on init arguments");
-                    }
-                    paramVar.set(initArgs[i]);
-                }
-                add(paramVar);
-            }
-            retval = new RetvalVar(meta.retvalMeta, call);
+            retval = new RetvalVar(meta.retvalMeta, getCallContext());
             // add(retvalVar);
+        }
+
+        @Override
+        public CallObject getCallContext() {
+            return (CallObject) super.getCallContext();
         }
 
         @Override
@@ -386,7 +429,7 @@ public class GUIStructs {
 
         @Override
         public CallObject get() {
-            return call;
+            return getCallContext();
         }
 
         @Override
@@ -408,7 +451,7 @@ public class GUIStructs {
         }
 
         public Object invoke() throws ReflectException {
-            return call.invoke();
+            return getCallContext().invoke();
         }
 
     }
@@ -491,13 +534,13 @@ public class GUIStructs {
 
     public static class RetvalVar implements GUIVar<Object> {
 
-        private final RetvalMeta meta;
-        private final CallObject call;
+        private final RetvalMeta  meta;
+        private final CallContext cc;
 
-        public RetvalVar(RetvalMeta meta, CallObject call) {
+        public RetvalVar(RetvalMeta meta, CallContext cc) {
             assert meta != null;
             this.meta = meta;
-            this.call = call;
+            this.cc = cc;
         }
 
         @Override
@@ -507,15 +550,12 @@ public class GUIStructs {
 
         @Override
         public Object get() {
-            return call.getRetval();
+            return cc.getRetval();
         }
-
-        PropertyChangeSupport pcs;
 
         @Override
         public void set(Object value) {
-            call.setRetval(value);
-
+            cc.setRetval(value);
         }
 
         @Override
@@ -525,12 +565,12 @@ public class GUIStructs {
 
         @Override
         public void addPropertyChangeListener(PropertyChangeListener listener) {
-            call.addPropertyChangeListener(listener);
+            cc.addPropertyChangeListener(listener);
         }
 
         @Override
         public void removePropertyChangeListener(PropertyChangeListener listener) {
-            call.removePropertyChangeListener(listener);
+            cc.removePropertyChangeListener(listener);
         }
 
     }
@@ -627,12 +667,12 @@ public class GUIStructs {
     public static class ParameterVar implements GUIVar<Object> {
 
         private final ParameterMeta meta;
-        private final CallObject    call;
+        private final CallContext   cc;
 
-        public ParameterVar(ParameterMeta meta, CallObject call) {
+        public ParameterVar(ParameterMeta meta, CallContext cc) {
             assert meta != null;
             this.meta = meta;
-            this.call = call;
+            this.cc = cc;
         }
 
         @Override
@@ -642,12 +682,12 @@ public class GUIStructs {
 
         @Override
         public Object get() {
-            return call.get(meta.index);
+            return cc.get(meta.index);
         }
 
         @Override
         public void set(Object value) {
-            call.set(meta.index, value);
+            cc.set(meta.index, value);
         }
 
         @Override
@@ -657,12 +697,12 @@ public class GUIStructs {
 
         @Override
         public void addPropertyChangeListener(PropertyChangeListener listener) {
-            call.addPropertyChangeListener(listener);
+            cc.addPropertyChangeListener(listener);
         }
 
         @Override
         public void removePropertyChangeListener(PropertyChangeListener listener) {
-            call.removePropertyChangeListener(listener);
+            cc.removePropertyChangeListener(listener);
         }
 
     }

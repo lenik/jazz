@@ -21,9 +21,9 @@ import org.eclipse.swt.widgets.Label;
 
 public class R_CallObject extends SWTRenderer {
 
-    protected final SWTGridStyle gridStyle;
+    protected final SWTGridStrategy gridStyle;
 
-    public R_CallObject(SWTGridStyle gridStyle) {
+    public R_CallObject(SWTGridStrategy gridStyle) {
         super(gridStyle);
         this.gridStyle = gridStyle;
     }

@@ -10,11 +10,11 @@ import org.eclipse.swt.widgets.Control;
 
 public class R_Object extends _R_Object {
 
-    protected final SWTFormStyle formStyle;
+    protected final SWTFormStrategy strategy;
 
-    public R_Object(SWTFormStyle formStyle) {
+    public R_Object(SWTFormStrategy formStyle) {
         super(formStyle);
-        this.formStyle = formStyle;
+        this.strategy = formStyle;
     }
 
     @Override
