@@ -15,7 +15,7 @@ import net.bodz.bas.io.Files;
 
 @Doc("Fix: .bat goto labels must not cross 1k block boundary.")
 @Version( { 0, 0 })
-@RcsKeywords(id = "$Id: Fix_Bat4K.java 0 2008-8-6 上午05:59:30 lenik $")
+@RcsKeywords(id = "$Id$")
 public class Fix_BatBB extends BatchProcessCLI {
 
     @Option(alias = "b", vnam = "SIZE", doc = "block size, default 1024")
