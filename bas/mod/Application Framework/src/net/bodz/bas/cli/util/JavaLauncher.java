@@ -7,16 +7,22 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.lang.reflect.Method;
+import java.net.URL;
 import java.nio.charset.Charset;
 
 import net.bodz.bas.a.BootInfo;
+import net.bodz.bas.a.BootProc;
+import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.Caller;
 import net.bodz.bas.lang.Control;
 import net.bodz.bas.lang.ControlExit;
 import net.bodz.bas.lang.RunnableThrows;
 import net.bodz.bas.lang.err.OutOfDomainException;
+import net.bodz.bas.lang.util.Classpath;
 import net.bodz.bas.loader.DefaultBooter;
+import net.bodz.bas.loader.LoadUtil;
+import net.bodz.bas.loader.UCL;
 import net.bodz.bas.sec.CatchExit;
 
 @BootInfo(syslibs = "bodz_bas")
@@ -89,11 +95,22 @@ public abstract class JavaLauncher implements Launcher {
     }
 
     protected void load() throws Exception {
-        String className = getMainClassName();
-        // prepare parent = BootProc(class).getSysLoader();
-        ClassLoader parent = Caller.getCallerClassLoader();
-        Class<?> clazz = DefaultBooter.load(parent, className);
-        mainf = clazz.getMethod("main", String[].class);
+        ClassLoader initSysLoader = Caller.getCallerClassLoader();
+        ClassLoader sysLoader = initSysLoader;
+
+        BootProc bootProc = BootProc.get(getClass());
+        if (bootProc != null) {
+            // sysLoader = bootProc.configSysLoader();
+            // sysLoader = bootProc.configLoader(sysLoader);
+            URL[] urls = LoadUtil.find(bootProc.getSysLibs());
+            Classpath.addURL(urls);
+        }
+        if (false)
+            UCL.dump(sysLoader, CharOuts.stderr);
+
+        String targetName = getMainClassName();
+        Class<?> targetClass = DefaultBooter.loadFix(sysLoader, targetName);
+        mainf = targetClass.getMethod("main", String[].class);
     }
 
     public void setRedirectIn(InputStream redirectIn) {

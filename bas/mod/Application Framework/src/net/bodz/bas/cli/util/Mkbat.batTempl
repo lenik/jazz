@@ -37,17 +37,17 @@
 :startc
     if "%JAVA%"=="" set JAVA=java
     if %_verbose% geq 1 (
-        echo "%JAVA%" %_javaopts% %_nam% %_rest%
+        echo %JAVA% %_javaopts% %_nam% %_rest%
     )
-    "%JAVA%" %_javaopts% %_nam% %_rest%
+    %JAVA% %_javaopts% %_nam% %_rest%
     exit /b
 
 :startw
     if "%JAVAW%"=="" set JAVAW=javaw
     if %_verbose% geq 1 (
-        echo "%JAVAW%" %_javaopts% %_nam% %_rest%
+        echo %JAVAW% %_javaopts% %_nam% %_rest%
     )
-    "%JAVAW%" %_javaopts% %_nam% %_rest%
+    %JAVAW% %_javaopts% %_nam% %_rest%
     exit /b
 
 :init
@@ -93,9 +93,9 @@ $LOADLIBS
     set _libname=%~1
     set _libfile=!lib_%_libname%!
     if "%_libfile%"=="" (
-        for %%d in (. .. ..\lib) do (
+        for %%d in (. .. ..\lib %JAVA_LIB%) do (
             if exist "%%d\%~2" (
-                set _libfile=%~2
+                set _libfile=%%~dpnxd\%~2
                 goto got
             )
         )

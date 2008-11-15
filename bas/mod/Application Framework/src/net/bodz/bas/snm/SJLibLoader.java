@@ -140,11 +140,12 @@ public class SJLibLoader {
     public static final SJLibLoader DEFAULT;
     static {
         DEFAULT = new SJLibLoader();
+        DEFAULT.addPath(".");
+        DEFAULT.addPath("..");
+        DEFAULT.addPath("../lib");
         String JAVA_LIB = System.getenv("JAVA_LIB");
         if (JAVA_LIB != null)
             DEFAULT.addPaths(JAVA_LIB);
-        DEFAULT.addPath(".");
-        DEFAULT.addPath("../lib");
     }
 
 }

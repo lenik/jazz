@@ -59,20 +59,24 @@ public class UCL {
      * @return <code>false</code> if specified url is already existed in ucl or
      *         its parents.
      */
-    public static boolean addURL(URLClassLoader ucl, URL url) {
+    public static int addURL(URLClassLoader ucl, URL... urls) {
         if (URLClassLoader_addURL == null)
             throw new Error("can't access URLClassLoader.addURL()");
+        int added = 0;
         try {
-            URLClassLoader exists = exists(ucl, url, true);
-            if (exists != null)
-                return false;
-            URLClassLoader_addURL.invoke(ucl, url);
+            for (URL url : urls) {
+                URLClassLoader exists = exists(ucl, url, true);
+                if (exists != null)
+                    continue;
+                URLClassLoader_addURL.invoke(ucl, url);
+                added++;
+            }
         } catch (IllegalAccessException e) {
             throw new IdentifiedException(e.getMessage(), e);
         } catch (InvocationTargetException e) {
             Err.unwrap(e);
         }
-        return true;
+        return added;
     }
 
     public static URLClassLoader addOrCreate(ClassLoader loader, URL... urls) {

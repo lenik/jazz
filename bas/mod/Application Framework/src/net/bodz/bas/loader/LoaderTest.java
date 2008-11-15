@@ -2,10 +2,10 @@ package net.bodz.bas.loader;
 
 import net.bodz.bas.a.BootInfo;
 
-@BootInfo(configs = LoaderTest._LC.class)
+@BootInfo(configs = LoaderTest.Config1.class)
 public class LoaderTest {
 
-    private static class _LC extends _LoadConfig {
+    private static class Config1 extends _LoadConfig {
     }
 
     static {

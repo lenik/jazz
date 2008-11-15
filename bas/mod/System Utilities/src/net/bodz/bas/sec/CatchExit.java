@@ -23,21 +23,23 @@ public class CatchExit extends _SecurityManager {
             throws E, ControlExit {
         SecurityManager security0 = System.getSecurityManager();
         SecurityControl control = null;
+
+        Throwable caught = null;
         try {
             System.setSecurityManager(this);
             ((RunnableThrows<Throwable>) runnable).run();
-        } catch (SecurityControl c) {
-            control = c;
         } catch (InvocationTargetException e) {
-            if (e.getCause() instanceof SecurityControl)
-                control = (SecurityControl) e.getCause();
-            else
-                throw (E) e;
+            caught = e.getCause();
         } catch (Throwable t) {
-            throw (E) t;
+            caught = t;
         } finally {
             System.setSecurityManager(security0);
         }
+        if (caught instanceof SecurityControl)
+            control = (SecurityControl) caught;
+        else
+            throw (E) caught;
+
         if (control != null)
             if (control.getCode() == SecurityControl.EXIT)
                 exitHandler((Integer) control.getValue());

@@ -12,14 +12,20 @@ import net.bodz.bas.types.util.Strings;
 
 public class SJProject {
 
-    public static File findProjectBase(Class<?> clazz) {
-        File base = findBase(clazz);
-        while (base != null) {
-            if (new File(base, ".project").exists())
-                return base;
-            base = base.getParentFile();
+    public static File findProjectBase(File dir) {
+        if (dir != null && !dir.isDirectory())
+            return null;
+        while (dir != null) {
+            if (new File(dir, ".project").exists())
+                return dir;
+            dir = dir.getParentFile();
         }
         return null;
+    }
+
+    public static File findProjectBase(Class<?> clazz) {
+        File base = findBase(clazz);
+        return findProjectBase(base);
     }
 
     static class URLInfo {
