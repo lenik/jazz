@@ -1,8 +1,8 @@
 package net.bodz.swt.gui.styles.form;
 
-import net.bodz.swt.gui.styles.base.SWTStyle;
+import net.bodz.swt.gui.styles.base.SWTStrategy;
 
-public class SWTFormStyle extends SWTStyle {
+public class SWTFormStrategy extends SWTStrategy {
 
     private static final long serialVersionUID = -6334086901913739452L;
 
@@ -20,11 +20,11 @@ public class SWTFormStyle extends SWTStyle {
 
     protected final FormConfig config;
 
-    public SWTFormStyle(FormConfig config) {
+    public SWTFormStrategy(FormConfig config) {
         this.config = config;
     }
 
-    public SWTFormStyle() {
+    public SWTFormStrategy() {
         this(FormConfig.getDefault());
     }
 

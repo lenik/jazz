@@ -36,9 +36,7 @@ public class SWTInject {
     }
 
     public void inject(Widget widget, GUIHint data) throws InjectException {
-        if (widget instanceof Control)
-            inject((Control) widget, data);
-        else if (widget instanceof Item)
+        if (widget instanceof Item)
             inject((Item) widget, data);
         else if (widget instanceof Menu)
             inject((Menu) widget, data);

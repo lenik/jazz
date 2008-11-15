@@ -5,13 +5,14 @@ import java.io.File;
 import net.bodz.bas.gui.Interaction;
 import net.bodz.bas.gui.RenderException;
 import net.bodz.bas.gui.Renderer;
-import net.bodz.bas.gui.Style;
+import net.bodz.bas.gui.RenderStrategy;
 import net.bodz.bas.lang.a.ChainUsage;
 import net.bodz.bas.lang.a.OverrideOption;
 import net.bodz.bas.lang.ref.Var;
 import net.bodz.swt.gui.GUIHint;
 import net.bodz.swt.gui.GUIVar;
 import net.bodz.swt.gui.GUIVarMeta;
+import net.bodz.swt.gui.GUIVars;
 import net.bodz.swt.gui.RenderContext;
 import net.bodz.swt.gui.SWTInteraction;
 import net.bodz.swt.gui.SWTRenderer;
@@ -24,7 +25,8 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
-public abstract class SWTStyle extends Style implements RenderContext {
+public abstract class SWTStrategy extends RenderStrategy implements
+        RenderContext {
 
     private static final long serialVersionUID = 4665944902525510516L;
 
@@ -40,7 +42,7 @@ public abstract class SWTStyle extends Style implements RenderContext {
 
     }
 
-    public SWTStyle() {
+    public SWTStrategy() {
         setup();
     }
 
@@ -80,6 +82,12 @@ public abstract class SWTStyle extends Style implements RenderContext {
         @SuppressWarnings("unchecked")
         GUIVar<Object> gvar = (GUIVar<Object>) var;
         return renderer.render(gvar, parent, style);
+    }
+
+    public Control render(Object constantValue, Composite parent, int style)
+            throws RenderException, SWTException {
+        GUIVar<Object> var = GUIVars.wrap(constantValue);
+        return render(var, parent, style);
     }
 
     @Override

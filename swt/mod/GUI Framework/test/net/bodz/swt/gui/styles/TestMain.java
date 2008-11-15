@@ -6,12 +6,11 @@ import net.bodz.swt.gui.BasicGUI;
 import net.bodz.swt.gui.GUIVar;
 import net.bodz.swt.gui.GUIVars;
 import net.bodz.swt.gui.SWTInteraction;
-import net.bodz.swt.gui.styles.grid.SWTGridStyle;
+import net.bodz.swt.gui.styles.grid.SWTGridStrategy;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 
 @PreferredSize(width = 640, height = 400)
 public class TestMain extends BasicGUI {
@@ -19,12 +18,11 @@ public class TestMain extends BasicGUI {
     Object obj;
 
     @Override
-    protected Composite createInitialView(Composite parent)
-            throws GUIException, SWTException {
-        SWTGridStyle style = new SWTGridStyle();
+    protected void createInitialView(Composite comp) throws GUIException,
+            SWTException {
+        SWTGridStrategy strategy = new SWTGridStrategy();
         GUIVar<Object> var = GUIVars.wrap(obj);
-        Control varRend = style.render(var, parent, SWT.NONE);
-        return (Composite) varRend;
+        strategy.render(var, comp, SWT.NONE);
     }
 
     public static void test(Object obj) {

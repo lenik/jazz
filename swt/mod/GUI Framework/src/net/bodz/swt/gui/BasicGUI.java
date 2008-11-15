@@ -4,24 +4,27 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.bodz.bas.a.BootInfo;
 import net.bodz.bas.a.ClassInfo;
 import net.bodz.bas.cli.BasicCLI;
 import net.bodz.bas.cli.a.Option;
-import net.bodz.bas.cli.a.RunInfo;
 import net.bodz.bas.gui.GUIException;
 import net.bodz.bas.gui.a.PreferredSize;
+import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.types.util.Ns;
-import net.bodz.bas.types.util.Types;
 import net.bodz.swt.controls.helper.DynamicControl;
-import net.bodz.swt.gui.util.Controls;
+import net.bodz.swt.controls.util.Menus;
+import net.bodz.swt.controls.util.Shells;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.ExpandBar;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
@@ -29,12 +32,9 @@ import org.eclipse.swt.widgets.ToolBar;
 
 import swing2swt.layout.BorderLayout;
 
-@RunInfo(lib = { "bodz_swt", "bodz_icons" })
-public class BasicGUI extends BasicCLI {
 
-    static {
-        Types.load(GUIConfig.class);
-    }
+@BootInfo(userlibs = { "bodz_swt", "bodz_icons" }, configs = SWTConfig.class)
+public class BasicGUI extends BasicCLI {
 
     @Option(alias = "Xw")
     private int                    shellWidth  = 320;
@@ -89,6 +89,7 @@ public class BasicGUI extends BasicCLI {
     protected Shell createShell() throws GUIException, SWTException {
         Shell shell = new Shell();
         shell.setSize(shellWidth, shellHeight);
+        Shells.center(shell);
         ClassInfo info = _loadClassInfo();
         shell.setText(info.getDoc());
         Image[] icons = loadImages(info.getIcons());
@@ -116,53 +117,62 @@ public class BasicGUI extends BasicCLI {
         viewArea = new DynamicControl(shell, SWT.NONE);
         viewArea.setLayoutData(BorderLayout.CENTER);
 
-        Composite initialView = createInitialView(viewArea);
-        if (initialView != null)
-            initialView.setLayoutData(viewArea);
-        viewArea.setControl(initialView);
+        Composite homeView = new Composite(viewArea, SWT.NONE);
+        createInitialView(homeView);
 
         return shell;
     }
 
-    protected Menu createMenu(Shell parent) {
+    protected Menu createMenu(Shell parent) throws SWTException, GUIException {
         final Menu menu = new Menu(parent, SWT.BAR);
 
-        final Menu fileMenu = Controls.newSubMenu(menu, "&File");
+        final Menu fileMenu = Menus.newSubMenu(menu, "&File");
         final MenuItem fileExit = new MenuItem(fileMenu, SWT.NONE);
         fileExit.setText("E&xit");
 
         return menu;
     }
 
-    protected Control createToolBar(Composite parent) {
+    protected Control createToolBar(Composite parent) throws SWTException,
+            GUIException {
         ToolBar toolBar = new ToolBar(parent, SWT.FLAT | SWT.RIGHT);
         return toolBar;
     }
 
-    protected Control createStatusBar(Composite parent) {
+    protected Control createStatusBar(Composite parent) throws SWTException,
+            GUIException {
         Composite statusBar = new Composite(parent, SWT.NONE); // SWT.BORDER
         return statusBar;
     }
 
-    protected Control createExpandBar(Composite parent) {
+    protected Control createExpandBar(Composite parent) throws SWTException,
+            GUIException {
         ExpandBar expandBar = new ExpandBar(parent, SWT.NONE);
         return expandBar;
     }
 
-    protected Composite createInitialView(Composite parent)
-            throws GUIException, SWTException {
-        return createView(parent, null);
+    protected void createInitialView(Composite comp) throws GUIException,
+            SWTException {
+        comp.setLayout(new FillLayout());
+        Label welcomeLabel = new Label(comp, SWT.NONE);
+        welcomeLabel.setText("Welcome BasicGUI!");
     }
 
-    protected Composite createView(Composite parent, Object key) {
-        Composite view = new Composite(parent, SWT.NONE);
-        return view;
+    protected void createView(Composite comp, Object key) throws SWTException,
+            GUIException {
+        if (key == null) {
+            createInitialView(comp);
+            return;
+        }
+        throw new NotImplementedException("key: " + key);
     }
 
-    protected void openView(Composite parent, Object key) {
+    protected void openView(Composite parent, Object key) throws SWTException,
+            GUIException {
         Composite view = views.get(key);
         if (view == null) {
-            view = createView(parent, key);
+            view = new Composite(parent, SWT.NONE);
+            createView(view, key);
             views.put(key, view);
         }
         viewArea.setControl(view);

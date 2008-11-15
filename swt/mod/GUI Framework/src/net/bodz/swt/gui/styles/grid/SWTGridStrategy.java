@@ -14,7 +14,7 @@ import net.bodz.swt.gui.GUIStructs.ParameterMeta;
 import net.bodz.swt.gui.GUIStructs.RetvalMeta;
 import net.bodz.swt.gui.GUIVars.GUIFieldMeta;
 import net.bodz.swt.gui.GUIVars.GUIPropertyMeta;
-import net.bodz.swt.gui.styles.base.SWTStyle;
+import net.bodz.swt.gui.styles.base.SWTStrategy;
 import net.bodz.swt.util.SWTResources;
 
 import org.eclipse.swt.SWT;
@@ -27,7 +27,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 
-public class SWTGridStyle extends SWTStyle {
+public class SWTGridStrategy extends SWTStrategy {
 
     private static final long serialVersionUID = -6476584130668546414L;
 
@@ -45,11 +45,11 @@ public class SWTGridStyle extends SWTStyle {
 
     protected final GridConfig config;
 
-    public SWTGridStyle(GridConfig config) {
+    public SWTGridStrategy(GridConfig config) {
         this.config = config;
     }
 
-    public SWTGridStyle() {
+    public SWTGridStrategy() {
         this(GridConfig.getDefault());
     }
 
@@ -136,7 +136,7 @@ public class SWTGridStyle extends SWTStyle {
 
         // Column #3
         Control child;
-        child = SWTGridStyle.this.render(var, grid, styleFx(SWT.NONE, hint));
+        child = SWTGridStrategy.this.render(var, grid, styleFx(SWT.NONE, hint));
 
         Point iconz = iconLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
         Point labelz = label.computeSize(SWT.DEFAULT, SWT.DEFAULT);

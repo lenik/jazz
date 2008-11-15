@@ -7,10 +7,10 @@ import net.bodz.bas.gui.a.Border;
 import net.bodz.bas.gui.a.Color;
 import net.bodz.bas.gui.a.Label;
 import net.bodz.bas.gui.a.PreferredSize;
-import net.bodz.swt.gui.styles.grid.SWTGridStyle;
+import net.bodz.swt.controls.Timer;
+import net.bodz.swt.gui.styles.grid.SWTGridStrategy;
 import net.bodz.swt.gui.testtypes.ComplexPerson;
 import net.bodz.swt.gui.testtypes.SimplePerson;
-import net.bodz.swt.gui.util.Timer;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -55,20 +55,18 @@ public class GridTest_SimpleObject extends BasicGUI {
     }
 
     @Override
-    protected Composite createInitialView(Composite parent)
-            throws GUIException, SWTException {
+    protected void createInitialView(Composite comp) throws GUIException,
+            SWTException {
         GUIVar<School> schoolVar = GUIVars.wrap(school);
 
-        SWTGridStyle style = new SWTGridStyle();
-        Composite view;
+        SWTGridStrategy style = new SWTGridStrategy();
         try {
-            view = (Composite) style.render(schoolVar, parent, SWT.BORDER);
+            style.render(schoolVar, comp, SWT.BORDER);
         } catch (RenderException e) {
             throw new GUIException(e);
         } catch (SWTException e) {
             throw new GUIException(e);
         }
-        return view;
     }
 
     @Override
