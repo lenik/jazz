@@ -64,7 +64,12 @@ public class BootProc {
         Class<?> sup = clazz.getSuperclass();
         if (sup != null)
             prev = get(sup, prev);
-        BootInfo info = clazz.getAnnotation(BootInfo.class);
+        BootInfo info;
+        try {
+            info = clazz.getAnnotation(BootInfo.class);
+        } catch (RuntimeException e) {
+            throw e;
+        }
         if (info == null)
             return prev;
         String desc = clazz.getName() + "@" + System.identityHashCode(clazz);
@@ -227,8 +232,6 @@ public class BootProc {
     public String[] getBootArgs() {
         List<String> buf = new ArrayList<String>();
         dumpBootArgs(buf);
-        if (!buf.isEmpty())
-            buf.add("--");
         return buf.toArray(Empty.Strings);
     }
 

@@ -21,13 +21,16 @@ import net.bodz.bas.a.Version;
 import net.bodz.bas.cli.BatchProcessCLI;
 import net.bodz.bas.cli.ProcessResult;
 import net.bodz.bas.cli.a.Option;
+import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.io.CharOuts.Buffer;
 import net.bodz.bas.lang.Caller;
 import net.bodz.bas.lang.err.IdentifiedException;
 import net.bodz.bas.loader.DefaultBooter;
+import net.bodz.bas.loader.LoadException;
 import net.bodz.bas.loader.LoadUtil;
 import net.bodz.bas.loader.TempClassLoader;
+import net.bodz.bas.loader.UCL;
 import net.bodz.bas.snm.SJLibLoader;
 import net.bodz.bas.text.interp.Interps;
 import net.bodz.bas.types.TextMap;
@@ -83,11 +86,12 @@ public class Mkbat extends BatchProcessCLI {
             bootSysLoader = parent;
         else
             bootSysLoader = TempClassLoader.get(userlibs, parent);
-        // Classpath.dumpURLs(b, CharOuts.stderr);
+        if (false)
+            UCL.dump(bootSysLoader, CharOuts.stderr);
     }
 
     @Override
-    protected ProcessResult doFile(File file) throws Throwable {
+    protected ProcessResult doFile(File file) throws LoadException, IOException {
         String ext = Files.getExtension(file, true);
         if (!".java".equals(ext) && !".class".equals(ext))
             return ProcessResult.pass();
@@ -107,29 +111,50 @@ public class Mkbat extends BatchProcessCLI {
             return ProcessResult.pass("repeat");
 
         Class<?> class0 = null;
+        // can found by bootSysLoader?
         try {
             L.d.P("try ", className);
             class0 = Class.forName(className, false, bootSysLoader);
-        } catch (Throwable t) {
-            return ProcessResult.err(t, "loadc");
+            // class0.getMethod("main", String[].class);
+        } catch (ClassNotFoundException e) {
+            return ProcessResult.err(e, "loadc");
+        } catch (NoClassDefFoundError e) {
+            return ProcessResult.err(e, "loadc");
         }
+
+        // is public?
         int modifiers = class0.getModifiers();
         if (!Modifier.isPublic(modifiers))
             return ProcessResult.pass("local");
 
+        // has main()? [1, bootSysLoader]
+        try {
+            class0.getMethod("main", String[].class);
+        } catch (NoSuchMethodException e) {
+            return ProcessResult.pass("notapp0");
+            // return ProcessResult.err(e, "notapp0");
+        } catch (NoClassDefFoundError t) {
+            // continue search.
+        }
+
         BootProc bootProc = BootProc.get(class0);
 
+        // prepare realSysLoader
         ClassLoader realSysLoader = Caller.getCallerClassLoader();
         if (bootProc != null)
             realSysLoader = bootProc.configSysLoader(realSysLoader);
 
+        // realSysLoader -> configLoader
         Class<?> class1 = DefaultBooter
                 .load(realSysLoader, className, userlibs);
+
+        // has main()? [2, configLoader]
         try {
             class1.getMethod("main", String[].class);
             L.i.P("    main-class: ", class1);
         } catch (NoSuchMethodException e) {
             return ProcessResult.pass("notapp");
+            // return ProcessResult.err(e, "notapp");
         } catch (Throwable t) {
             return ProcessResult.err(t, "loadf");
         }
