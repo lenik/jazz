@@ -1,14 +1,10 @@
 package net.bodz.bas.cli.util;
 
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 
 import net.bodz.bas.cli.BasicCLI;
 import net.bodz.bas.cli.CLIException;
-import net.bodz.bas.cli.ClassOptions;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.lang.script.ScriptClass;
 import net.bodz.bas.lang.script.ScriptException;
@@ -16,7 +12,6 @@ import net.bodz.bas.log.ALog;
 import net.bodz.bas.types.util.Empty;
 
 import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.RuntimeConfigurable;
 import org.apache.tools.ant.Task;
 
 public class CLITask extends Task {

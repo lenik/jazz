@@ -53,25 +53,33 @@ public class DefaultBooter {
         // OPT..
         realLoader = UCL.addOrCreate(realLoader, userlibs);
 
-        // Classpath.dumpURLs(realLoader, out);
+        if (false)
+            UCL.dump(realLoader, out);
+        Class<?> class1;
         try {
-            Class<?> class1 = Class.forName(className, false, realLoader);
-            ClassLoader userLoader = class1.getClassLoader();
-            if (userLoader != realLoader) {
-                out.println("Warning: class loader cut: ");
-                ClassLoader l = realLoader;
-                while (l != null && l != userLoader) {
-                    out.println("  may lose: " + l);
-                    if (l instanceof URLClassLoader) {
-                        URLClassLoader ucl = (URLClassLoader) l;
-                        for (URL url : ucl.getURLs())
-                            out.println("    " + url);
-                    }
-                    l = l.getParent();
+            class1 = Class.forName(className, false, realLoader);
+        } catch (ClassNotFoundException e) {
+            throw new LoadException(e);
+        }
+        ClassLoader userLoader = class1.getClassLoader();
+        if (userLoader != realLoader) {
+            out.println("Warning: class loader cut: ");
+            ClassLoader l = realLoader;
+            while (l != null && l != userLoader) {
+                out.println("  may lose: " + l);
+                if (l instanceof URLClassLoader) {
+                    URLClassLoader ucl = (URLClassLoader) l;
+                    for (URL url : ucl.getURLs())
+                        out.println("    " + url);
                 }
+                l = l.getParent();
             }
+        }
+        try {
             return Class.forName(className, true, realLoader);
         } catch (ClassNotFoundException e) {
+            throw new LoadException(e);
+        } catch (NoClassDefFoundError e) {
             throw new LoadException(e);
         }
     }
