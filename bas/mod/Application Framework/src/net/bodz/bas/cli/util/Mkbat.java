@@ -210,7 +210,10 @@ public class Mkbat extends BatchProcessCLI {
             File f = libloader.findLibraryFile(lib);
             String fname;
             if (f == null) {
-                fname = lib + ".jar";
+                if (lib.contains("."))
+                    fname = lib;
+                else
+                    fname = lib + ".jar";
                 L.w.P("lib ", lib, " => ", fname);
             } else
                 fname = f.getName();

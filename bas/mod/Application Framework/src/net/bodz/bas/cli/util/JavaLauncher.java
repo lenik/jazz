@@ -19,7 +19,7 @@ import net.bodz.bas.lang.err.OutOfDomainException;
 import net.bodz.bas.loader.DefaultBooter;
 import net.bodz.bas.sec.CatchExit;
 
-@BootInfo(userlibs = "bodz_bas")
+@BootInfo(syslibs = "bodz_bas")
 public abstract class JavaLauncher implements Launcher {
 
     private Method                mainf;
