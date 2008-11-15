@@ -7,7 +7,9 @@ import java.util.List;
 
 import net.bodz.bas.a.BootInfo;
 import net.bodz.bas.a.BootProc;
+import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.lang.Caller;
+import net.bodz.bas.lang.util.Classpath;
 import net.bodz.bas.log.LogOut;
 import net.bodz.bas.log.LogOuts;
 import net.bodz.bas.types.util.Arrays2;
@@ -20,10 +22,39 @@ public class DefaultBooter {
 
     private static LogOut out = LogOuts.stderr;
 
+    public static Class<?> loadFix(ClassLoader initSysLoader, String className,
+            URL... userlibs) throws LoadException {
+        ClassLoader bootSysLoader;
+        if (userlibs == null)
+            bootSysLoader = initSysLoader;
+        else
+            bootSysLoader = TempClassLoader.get(userlibs, initSysLoader);
+        if (false)
+            UCL.dump(bootSysLoader, CharOuts.stderr);
+
+        Class<?> class0 = null;
+        // can found by bootSysLoader?
+        try {
+            class0 = Class.forName(className, false, bootSysLoader);
+        } catch (ClassNotFoundException e) {
+            throw new LoadException(e);
+        }
+
+        BootProc bootProc = BootProc.get(class0);
+        if (bootProc != null) {
+            String[] sysLibs = bootProc.getSysLibs();
+            URL[] urls = LoadUtil.find(sysLibs);
+            Classpath.addURL(initSysLoader, urls);
+        }
+
+        // realSysLoader -> configLoader
+        return load(initSysLoader, className, userlibs);
+    }
+
     public static Class<?> load(String className, URL... userlibs)
             throws LoadException {
-        ClassLoader parent = Caller.getCallerClassLoader();
-        return load(parent, className, userlibs);
+        ClassLoader sysLoader = Caller.getCallerClassLoader();
+        return load(sysLoader, className, userlibs);
     }
 
     /**
@@ -97,15 +128,15 @@ public class DefaultBooter {
             if (arg.startsWith("-")) {
                 if (arg.length() != 2)
                     break;
-                if ("--".equals(args)) {
+                if ("--".equals(arg)) {
                     index++;
                     break;
                 }
                 switch (arg.charAt(1)) {
                 case 'l':
                     String libspec = args[++index];
-                    URL url = LoadUtil.findLib(libspec);
-                    userlibs.add(url);
+                    for (URL url : LoadUtil.find(libspec))
+                        userlibs.add(url);
                     break;
                 default:
                     break A;
@@ -115,7 +146,7 @@ public class DefaultBooter {
         if (index == args.length)
             throw new IllegalArgumentException(
                     "Main class name isn't specified.");
-        String className = args[++index];
+        String className = args[index++];
         args = Arrays2.copyOf(args, index, args.length - index);
 
         // reload and exec

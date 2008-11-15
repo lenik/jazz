@@ -1,5 +1,7 @@
 package net.bodz.bas.a;
 
+import static net.bodz.bas.types.util.ArrayOps.Ints;
+
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -136,7 +138,14 @@ public class ClassInfo {
     }
 
     public String getVersionString() {
-        return Strings.joinDot(getVersion());
+        return getVersionString(true);
+    }
+
+    public String getVersionString(boolean includeRevNumber) {
+        int[] ver = getVersion();
+        if (!includeRevNumber)
+            ver = Ints.copyOf(ver, ver.length - 1);
+        return Strings.joinDot(ver);
     }
 
     public void setVersionString(String version) {

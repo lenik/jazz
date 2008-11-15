@@ -225,7 +225,7 @@ public class BootProc {
     }
 
     public ClassLoader configSysLoader(ClassLoader parent) {
-        URL[] syslibs = LoadUtil.findLibs(getSysLibs());
+        URL[] syslibs = LoadUtil.find(getSysLibs());
         return new URLClassLoader(syslibs, parent);
     }
 

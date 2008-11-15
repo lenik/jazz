@@ -10,14 +10,12 @@
 
 	<target name="dist" depends=":bin.jar, :src.jar">
 		<copy todir="${distdir}">
-			<fileset dir="${basedir}/build">
+			<fileset file="${basedir}/build/*.jar">
 				<exclude name="*-src.jar" />
 			</fileset>
 		</copy>
 		<copy todir="${distsrc}">
-			<fileset dir="${basedir}/build">
-				<include name="*-src.jar" />
-			</fileset>
+			<fileset file="${basedir}/build/*-src.jar" />
 		</copy>
 	</target>
 
@@ -64,6 +62,15 @@
 				<include name="net/bodz/bas/loader/LoaderTest.class" />
 			</fileset>
 		</jar>
+	</target>
+
+	<target name="testbats" depends=":bin.jar">
+		<taskdef name="mkbat" classname="net.bodz.bas.cli.util.MkbatTask">
+			<classpath path="build/net.bodz.bas.jar" />
+		</taskdef>
+		<mkbat outdir="build/bin">
+			<srcdir path="mod/Application Framework/bin" />
+		</mkbat>
 	</target>
 
 	<target name="clean">

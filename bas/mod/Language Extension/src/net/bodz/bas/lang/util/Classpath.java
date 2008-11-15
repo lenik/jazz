@@ -17,22 +17,27 @@ public class Classpath {
     /**
      * @return <code>false</code> if url is existed.
      */
-    public static boolean addURL(ClassLoader loader, URL url) {
+    public static int addURL(ClassLoader loader, URL... urls) {
         if (!(loader instanceof URLClassLoader))
             throw new UnsupportedOperationException("can't addURL to "
                     + loader.getClass());
         URLClassLoader ucl = (URLClassLoader) loader;
-        boolean added = UCL.addURL(ucl, url);
-        if (added)
-            out.P("addURL ", url, " -> ", ucl);
-        return added;
+        int count = 0;
+        for (URL url : urls) {
+            int added = UCL.addURL(ucl, url);
+            if (added != 0) {
+                count += added;
+                out.P("addURL ", url, " -> ", ucl);
+            }
+        }
+        return count;
     }
 
     /**
      * @return <code>false</code> if url is existed.
      */
-    public static boolean addURL(URL url) throws IOException {
-        return addURL(ClassLoader.getSystemClassLoader(), url);
+    public static int addURL(URL... urls) throws IOException {
+        return addURL(ClassLoader.getSystemClassLoader(), urls);
     }
 
     public static void dumpURLs(CharOut out) {

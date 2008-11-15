@@ -1243,6 +1243,8 @@ public class Files {
      * @return the accessible file part of url
      */
     public static File getFile(URL url) {
+        if (url == null)
+            return null;
         String protocol = url.getProtocol();
         try {
             if ("jar".equals(protocol)) {
@@ -1258,13 +1260,35 @@ public class Files {
         }
     }
 
-    public static URI path2URI(String path) {
+    public static URI getURI(String path) {
+        if (path == null)
+            return null;
         URI uri = new File(path).toURI();
         return uri;
     }
 
-    public static URL path2URL(String path) throws MalformedURLException {
-        return path2URI(path).toURL();
+    public static URI getURI(File file) {
+        if (file == null)
+            return null;
+        file = canoniOf(file);
+        return file.toURI();
+    }
+
+    public static URL getURL(String path) throws MalformedURLException {
+        if (path == null)
+            return null;
+        return getURI(path).toURL();
+    }
+
+    public static URL getURL(File file) {
+        if (file == null)
+            return null;
+        file = canoniOf(file);
+        try {
+            return file.toURI().toURL();
+        } catch (MalformedURLException e) {
+            throw new UnexpectedException(e);
+        }
     }
 
     private static File TMPDIR;

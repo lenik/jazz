@@ -1,54 +1,23 @@
 package net.bodz.bas.loader;
 
 import java.io.File;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLClassLoader;
+import java.util.ArrayList;
+import java.util.List;
 
+import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.Control;
 import net.bodz.bas.lang.err.IllegalUsageError;
-import net.bodz.bas.lang.util.Reflects;
+import net.bodz.bas.lang.err.ParseException;
+import net.bodz.bas.snm.EclipseProject;
 import net.bodz.bas.snm.SJLibLoader;
+import net.bodz.bas.snm.SJProject;
+import net.bodz.bas.types.util.Empty;
 
 public class LoadUtil {
-
-    @Deprecated
-    public static URLClassLoader getUcl(ClassLoader cl) {
-        if (cl == null)
-            throw new NullPointerException("null class loader");
-        // return getUcl(ClassLoader.getSystemClassLoader());
-        if (cl instanceof URLClassLoader)
-            return (URLClassLoader) cl;
-        return new DynamicUCL(new URL[0], cl);
-    }
-
-    @Deprecated
-    public static URLClassLoader getUcl(String loaderClassName,
-            ClassLoader parent) {
-        Class<?> loaderClass;
-        try {
-            loaderClass = Class.forName(loaderClassName);
-        } catch (ClassNotFoundException e) {
-            throw new IllegalArgumentException("bad loader class name: "
-                    + loaderClassName, e);
-        }
-        if (!ClassLoader.class.isAssignableFrom(loaderClass))
-            throw new IllegalArgumentException("Not a ClassLoader: "
-                    + loaderClassName);
-        Constructor<?> uclCtor;
-        try {
-            uclCtor = loaderClass
-                    .getConstructor(URL[].class, ClassLoader.class);
-        } catch (Exception e) {
-            throw new IllegalArgumentException(
-                    "can't ctor using (URL[], ClassLoader)", e);
-        }
-        Object loader = Reflects.newInstance(uclCtor, new URL[0], parent);
-        return (URLClassLoader) loader;
-    }
 
     private static SJLibLoader sjlibs = SJLibLoader.DEFAULT;
 
@@ -61,19 +30,21 @@ public class LoadUtil {
      * <code>libraries.ini</code> , then <code>libname.jar</code> is used.
      * 
      */
-    public static URL findLib(String libspec, boolean errorFail) {
+    public static URL[] find(String libspec, boolean errorFail) {
         File libfile;
-        if (libspec.contains("."))
-            libfile = resolveJar(libspec);
+        if (libspec.startsWith("%"))
+            return findPack(libspec.substring(1));
+        else if (libspec.contains("."))
+            libfile = _findJar(libspec);
         else
-            libfile = resolveLib(libspec);
+            libfile = _findLib(libspec);
         if (libfile == null)
             if (errorFail)
                 throw new Error("can't resolve lib " + libspec);
             else
                 return null;
         try {
-            return libfile.toURI().toURL();
+            return new URL[] { libfile.toURI().toURL() };
         } catch (MalformedURLException e) {
             throw new IllegalUsageError("incorrect lib " + libspec + ": "
                     + libfile, e);
@@ -83,30 +54,48 @@ public class LoadUtil {
     /**
      * @return <code>null</code> if jar isn't exists, or libspec isn't defined.
      */
-    public static URL findLib(String libspec) {
-        return findLib(libspec, false);
+    public static URL[] find(String libspec) {
+        return find(libspec, false);
     }
 
-    public static URL[] findLibs(String[] libspecs, boolean errorFail) {
-        URL[] urls = new URL[libspecs.length];
-        for (int i = 0; i < libspecs.length; i++)
-            urls[i] = findLib(libspecs[i], errorFail);
-        return urls;
+    public static URL[] find(String[] libspecs, boolean errorFail) {
+        List<URL> urls = new ArrayList<URL>(libspecs.length);
+        for (int i = 0; i < libspecs.length; i++) {
+            for (URL url : find(libspecs[i], errorFail))
+                urls.add(url);
+        }
+        return urls.toArray(Empty.URLs);
     }
 
     /**
      * @return URL array with each component set to <code>null</code> if
      *         corresponding jar isn't exists, or libspec isn't defined.
      */
-    public static URL[] findLibs(String[] libspecs) {
-        return findLibs(libspecs, false);
+    public static URL[] find(String[] libspecs) {
+        return find(libspecs, false);
     }
 
-    static File resolveLib(String name) {
+    static URL[] findPack(String name) {
+        if ("project".equals(name)) {
+            File start = Files.canoniOf(".");
+            File base = SJProject.findProjectBase(start);
+            if (base == null)
+                throw new IllegalArgumentException("can't find project base: "
+                        + start);
+            try {
+                return new EclipseProject(base).getClasspaths();
+            } catch (ParseException e) {
+                throw new RuntimeException(e);
+            }
+        } else
+            throw new IllegalArgumentException("unsupported pack name: " + name);
+    }
+
+    static File _findLib(String name) {
         return sjlibs.findLibraryFile(name);
     }
 
-    static File resolveJar(String jar) {
+    static File _findJar(String jar) {
         return sjlibs.findFile(jar);
     }
 

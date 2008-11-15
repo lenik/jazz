@@ -21,7 +21,12 @@ public class TempClassLoader extends URLClassLoader {
         super(urls);
     }
 
+    public static TempClassLoader get(URL[] urls) {
+        return get(urls, ClassLoader.getSystemClassLoader());
+    }
+
     public static TempClassLoader get(URL[] urls, ClassLoader parent) {
+        assert urls != null;
         // if (parent instanceof URLClassLoader) {
         // URL[] merged = merge(parent, urls);
         // parent = parent.getParent();
@@ -30,11 +35,8 @@ public class TempClassLoader extends URLClassLoader {
         return new TempClassLoader(urls, parent);
     }
 
-    public static TempClassLoader get(URL[] urls) {
-        return get(urls, ClassLoader.getSystemClassLoader());
-    }
-
     public static URL[] merge(ClassLoader parent, URL[] urls, boolean recursive) {
+        assert urls != null;
         URL[] merged = urls;
         if (parent instanceof URLClassLoader) {
             URLClassLoader ucl = (URLClassLoader) parent;
@@ -55,6 +57,7 @@ public class TempClassLoader extends URLClassLoader {
     @Override
     protected synchronized Class<?> loadClass(String name, boolean resolve)
             throws ClassNotFoundException {
+        assert name != null : "null name";
         Class<?> c = findLoadedClass(name);
         if (c == null) {
             try {

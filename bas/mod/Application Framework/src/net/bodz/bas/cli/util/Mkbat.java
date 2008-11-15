@@ -41,7 +41,7 @@ import net.bodz.bas.types.util.Empty;
 import net.bodz.bas.types.util.Strings;
 
 @Doc("Generate program launcher for java applications")
-@Version( { 0, 2 })
+@Version( { 0, 3 })
 @RcsKeywords(id = "$Id$")
 @ProgramName("mkbat")
 public class Mkbat extends BatchProcessCLI {
@@ -51,7 +51,7 @@ public class Mkbat extends BatchProcessCLI {
     private Set<String>     generated;
 
     private List<URL>       _userlibs;
-    private URL[]           userlibs;
+    private URL[]           userlibs = {};
     private ClassLoader     bootSysLoader;
 
     public Mkbat() {
@@ -59,14 +59,14 @@ public class Mkbat extends BatchProcessCLI {
         varmap = new HashTextMap<String>();
         ClassInfo classInfo = _loadClassInfo();
         varmap.put("GENERATOR", Mkbat.class.getSimpleName() + " "
-                + classInfo.getVersionString() + ", "
+                + classInfo.getVersionString(false) + ", "
                 + classInfo.getDateString());
     }
 
     @Option(alias = "l", vnam = "LIBSPEC", doc = "add user lib for locating the class")
     public void addUserLib(String libspec) {
-        URL url = LoadUtil.findLib(libspec, true);
-        addUserLib(url);
+        for (URL url : LoadUtil.find(libspec, true))
+            addUserLib(url);
     }
 
     public void addUserLib(URL url) {
@@ -77,15 +77,13 @@ public class Mkbat extends BatchProcessCLI {
 
     @Override
     protected void _boot() throws Throwable {
-        ClassLoader parent = Caller.getCallerClassLoader();
-        if (_userlibs == null || _userlibs.isEmpty())
-            userlibs = null;
-        else
+        ClassLoader initSysLoader = Caller.getCallerClassLoader();
+        if (_userlibs != null)
             userlibs = _userlibs.toArray(Empty.URLs);
         if (userlibs == null)
-            bootSysLoader = parent;
+            bootSysLoader = initSysLoader;
         else
-            bootSysLoader = TempClassLoader.get(userlibs, parent);
+            bootSysLoader = TempClassLoader.get(userlibs, initSysLoader);
         if (false)
             UCL.dump(bootSysLoader, CharOuts.stderr);
     }
@@ -114,8 +112,8 @@ public class Mkbat extends BatchProcessCLI {
         // can found by bootSysLoader?
         try {
             L.d.P("try ", className);
-            class0 = Class.forName(className, false, bootSysLoader);
-            // class0.getMethod("main", String[].class);
+            class0 = bootSysLoader.loadClass(className);
+            // class0 = Class.forName(className, false, bootSysLoader);
         } catch (ClassNotFoundException e) {
             return ProcessResult.err(e, "loadc");
         } catch (NoClassDefFoundError e) {
@@ -177,8 +175,9 @@ public class Mkbat extends BatchProcessCLI {
         batf.getParentFile().mkdirs();
 
         // varmap.clear();
-        varmap.put("TEMPLATE", new File(batTempl.getPath()).getName());
-        varmap.put("NAME", name);
+        String templName = new File(batTempl.getPath()).getName();
+        varmap.put("TEMPLATE", batEscape(templName));
+        varmap.put("NAME", batEscape(name));
 
         BootProc bootProc = BootProc.get(clazz);
         String booter = null;
@@ -202,7 +201,7 @@ public class Mkbat extends BatchProcessCLI {
         } else if (booter != null) {
             launch = booter + " --";
         }
-        varmap.put("LAUNCH", launch);
+        varmap.put("LAUNCH", batEscape(launch));
 
         Buffer loadlibs = new Buffer();
         SJLibLoader libloader = SJLibLoader.DEFAULT;
@@ -221,7 +220,7 @@ public class Mkbat extends BatchProcessCLI {
             loadlibs.println("    " + loadlib);
         }
         // varmap.put("LOADLIBS_0", "");
-        varmap.put("LOADLIBS", loadlibs.toString());
+        varmap.put("LOADLIBS", batEscape(loadlibs.toString()));
 
         String inst = Interps.dereference(batTemplBody, varmap);
         byte[] batData = inst.getBytes();
@@ -247,6 +246,12 @@ public class Mkbat extends BatchProcessCLI {
             throw new IdentifiedException(e.getMessage(), e);
         }
         fix_BatBB = new Fix_BatBB();
+    }
+
+    static String batEscape(String s) {
+        s = s.replace("^", "^^");
+        s = s.replace("%", "%%");
+        return s;
     }
 
     public static void main(String[] args) throws Throwable {
