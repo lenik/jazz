@@ -39,8 +39,10 @@ import net.bodz.bas.lang.Predicate2v;
 import net.bodz.bas.lang.err.IdentifiedException;
 import net.bodz.bas.lang.err.IllegalArgumentTypeException;
 import net.bodz.bas.lang.err.IllegalUsageError;
+import net.bodz.bas.lang.err.RuntimizedException;
 import net.bodz.bas.lang.err.UnexpectedException;
 import net.bodz.bas.lang.err.WrappedException;
+import net.bodz.bas.lang.err._throws;
 import net.bodz.bas.text.diff.DiffComparator;
 import net.bodz.bas.text.diff.DiffInfo;
 import net.bodz.bas.text.util.CharFeature;
@@ -559,6 +561,9 @@ public class Files {
         return readLen(in, length, encoding);
     }
 
+    /**
+     * {@link Iterator#next()} throws {@link RuntimizedException}.
+     */
     protected static Iterator<Integer> _readByBlock(final Object[] files,
             final byte[] buffer) {
         assert files != null : "null files[]";
@@ -570,40 +575,32 @@ public class Files {
             private InputStream input = null;
             private boolean     close;
 
+            @_throws(IOException.class)
             @Override
             public Object fetch() {
-                if (index >= files.length)
-                    return END;
-                if (input == null)
-                    nextFile();
-                int len;
                 try {
-                    len = input.read(buffer);
+                    if (index >= files.length)
+                        return END;
+                    if (input == null)
+                        nextFile();
+                    int len = input.read(buffer);
+                    if (len == -1) {
+                        nextFile();
+                        return fetch();
+                    }
+                    return len;
                 } catch (IOException e) {
-                    throw new RuntimeException(e.getMessage(), e);
+                    throw new RuntimizedException(e.getMessage(), e);
                 }
-                if (len == -1) {
-                    nextFile();
-                    return fetch();
-                }
-                return len;
             }
 
-            protected boolean nextFile() {
+            protected boolean nextFile() throws IOException {
                 if (input != null && close)
-                    try {
-                        input.close();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e.getMessage(), e);
-                    }
+                    input.close();
                 if (++index >= files.length)
                     return false;
-                try {
-                    input = getInputStream(files[index]);
-                    close = shouldClose(files[index]);
-                } catch (IOException e) {
-                    throw new RuntimeException(e.getMessage(), e);
-                }
+                input = getInputStream(files[index]);
+                close = shouldClose(files[index]);
                 return true;
             }
 
@@ -615,6 +612,9 @@ public class Files {
         };
     }
 
+    /**
+     * {@link Iterator#next()} throws {@link RuntimizedException}.
+     */
     public static Iterable<Integer> readByBlock(final byte[] buffer,
             final Object... files) {
         return new Iterable<Integer>() {
@@ -627,6 +627,9 @@ public class Files {
         };
     }
 
+    /**
+     * {@link Iterator#next()} throws {@link RuntimizedException}.
+     */
     public static Iterable<byte[]> readByBlock(final int blockSize,
             final Object... files) {
         final byte[] buffer = new byte[blockSize];
@@ -665,10 +668,16 @@ public class Files {
         };
     }
 
+    /**
+     * {@link Iterator#next()} throws {@link RuntimizedException}.
+     */
     public static Iterable<byte[]> readByBlock(final Object... files) {
         return readByBlock(blockSize, files);
     }
 
+    /**
+     * {@link Iterator#next()} throws {@link RuntimizedException}.
+     */
     protected static Iterator<Integer> _readByLen(final Object[] files,
             final char[] buffer) {
         assert files != null : "null files[]";
@@ -680,40 +689,32 @@ public class Files {
             private Reader  input = null;
             private boolean close;
 
+            @_throws(IOException.class)
             @Override
             public Object fetch() {
-                if (index >= files.length)
-                    return END;
-                if (input == null)
-                    nextFile();
-                int len;
                 try {
-                    len = input.read(buffer);
+                    if (index >= files.length)
+                        return END;
+                    if (input == null)
+                        nextFile();
+                    int len = input.read(buffer);
+                    if (len == -1) {
+                        nextFile();
+                        return fetch();
+                    }
+                    return len;
                 } catch (IOException e) {
-                    throw new RuntimeException(e.getMessage(), e);
+                    throw new RuntimizedException(e.getMessage(), e);
                 }
-                if (len == -1) {
-                    nextFile();
-                    return fetch();
-                }
-                return len;
             }
 
-            protected boolean nextFile() {
+            protected boolean nextFile() throws IOException {
                 if (input != null && close)
-                    try {
-                        input.close();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e.getMessage(), e);
-                    }
+                    input.close();
                 if (++index >= files.length)
                     return false;
-                try {
-                    input = getReader(files[index]);
-                    close = shouldClose(files[index]);
-                } catch (IOException e) {
-                    throw new RuntimeException(e.getMessage(), e);
-                }
+                input = getReader(files[index]);
+                close = shouldClose(files[index]);
                 return true;
             }
 
@@ -725,6 +726,9 @@ public class Files {
         };
     }
 
+    /**
+     * {@link Iterator#next()} throws {@link RuntimizedException}.
+     */
     public static Iterable<Integer> readByLen(final char[] buffer,
             final Object... files) {
         return new Iterable<Integer>() {
@@ -737,6 +741,9 @@ public class Files {
         };
     }
 
+    /**
+     * {@link Iterator#next()} throws {@link RuntimizedException}.
+     */
     public static Iterable<char[]> readByLen(final int blockSize,
             final Object... files) {
         final char[] buffer = new char[blockSize];
@@ -775,11 +782,16 @@ public class Files {
         };
     }
 
+    /**
+     * {@link Iterator#next()} throws {@link RuntimizedException}.
+     */
     public static Iterable<char[]> readByLen(final Object... files) {
         return readByLen(blockSize, files);
     }
 
     /**
+     * {@link Iterator#next()} throws {@link RuntimizedException}.
+     * 
      * @return iterated line includes line term chars.
      * 
      * @see LineReader#readLine()
@@ -791,35 +803,31 @@ public class Files {
             private int        fileIndex = 0;
             private LineReader reader    = null;
 
+            @_throws(IOException.class)
             @Override
             public Object fetch() {
                 if (fileIndex >= files.length)
                     return END;
-                if (reader == null) {
-                    Object in = files[fileIndex];
-                    assert in != null : "null file";
-                    try {
-                        in = getLineReader(in, charset);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e.getMessage(), e);
-                    }
-                    reader = (LineReader) in;
-                }
-                String line;
                 try {
-                    line = reader.readLine();
-                } catch (IOException e) {
-                    throw new RuntimeException(e.getMessage(), e);
-                }
-                if (line == null) {
-                    try {
-                        reader.close();
-                    } catch (IOException e) {
+                    if (reader == null) {
+                        Object in = files[fileIndex];
+                        assert in != null : "null file";
+                        in = getLineReader(in, charset);
+                        reader = (LineReader) in;
                     }
-                    fileIndex++;
-                    return fetch();
+                    String line = reader.readLine();
+                    if (line == null) {
+                        try {
+                            reader.close();
+                        } catch (IOException e) {
+                        }
+                        fileIndex++;
+                        return fetch();
+                    }
+                    return line;
+                } catch (IOException e) {
+                    throw new RuntimizedException(e.getMessage(), e);
                 }
-                return line;
             }
 
             @Override
@@ -831,6 +839,8 @@ public class Files {
     }
 
     /**
+     * {@link Iterator#next()} throws {@link RuntimizedException}.
+     * 
      * @return iterated line includes line term chars.
      * 
      * @see LineReader#readLine()
@@ -847,6 +857,8 @@ public class Files {
     }
 
     /**
+     * {@link Iterator#next()} throws {@link RuntimizedException}.
+     * 
      * @return iterated line includes line term chars.
      * 
      * @see LineReader#readLine()
@@ -1281,9 +1293,14 @@ public class Files {
     }
 
     public static URL getURL(File file) {
+        return getURL(file, true);
+    }
+
+    public static URL getURL(File file, boolean canonical) {
         if (file == null)
             return null;
-        file = canoniOf(file);
+        if (canonical)
+            file = canoniOf(file);
         try {
             return file.toURI().toURL();
         } catch (MalformedURLException e) {
@@ -1577,6 +1594,12 @@ public class Files {
         return diff_1(src, dst) == -1;
     }
 
+    /**
+     * if difference info is available, then return the first difference.
+     * otherwise return <code>false</code> if any different exists.
+     * 
+     * @return <code>null</code> if the same
+     */
     public static Object copyDiff(Object src, Object dst, DiffComparator diff)
             throws IOException {
         Object ret;
@@ -1589,21 +1612,18 @@ public class Files {
             ret = diffs;
         } else {
             if (equals(src, dst))
-                return false;
-            ret = true;
+                return null;
+            ret = false;
         }
         write(dst, src);
         return ret;
     }
 
+    /**
+     * return <code>true</code> if the two are diff and actually copied.
+     */
     public static boolean copyDiff(Object src, Object dst) throws IOException {
-        Object diff = copyDiff(src, dst, null);
-        if (diff == null)
-            return false;
-        if (diff instanceof List)
-            return true;
-        assert diff instanceof Boolean;
-        return (Boolean) diff;
+        return copyDiff(src, dst, null) != null;
     }
 
     /**

@@ -1,10 +1,12 @@
 package net.bodz.bas.types.util;
 
+import java.lang.reflect.Constructor;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import net.bodz.bas.lang.err.IllegalArgumentTypeException;
+import net.bodz.bas.lang.err.IllegalUsageError;
 
 public class Iterators {
 
@@ -128,6 +130,54 @@ public class Iterators {
 
     public static <E> Iterable<E> iterate(Enumeration<E> enumr) {
         return new OneTimeIterable<E>(iterator(enumr));
+    }
+
+    public static <E> Iterable<E> iterate(
+            final Class<? extends Iterator<E>> iterType) {
+        if (iterType == null)
+            throw new NullPointerException("iterType");
+        return new Iterable<E>() {
+
+            @Override
+            public Iterator<E> iterator() {
+                try {
+                    return iterType.newInstance();
+                } catch (InstantiationException e) {
+                    throw new RuntimeException(e);
+                } catch (IllegalAccessException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+        };
+    }
+
+    public static <E> Iterable<E> iterate(
+            final Class<? extends Iterator<E>> iterType, final Object enclosing) {
+        if (enclosing == null)
+            throw new NullPointerException("encldoing");
+        final Constructor<? extends Iterator<E>> ctor;
+        try {
+            ctor = iterType.getDeclaredConstructor(enclosing.getClass());
+        } catch (NoSuchMethodException e) {
+            System.err.println("Constructors: ");
+            for (Constructor<?> c : iterType.getDeclaredConstructors())
+                System.err.println(c);
+            throw new IllegalUsageError(e);
+        }
+        ctor.setAccessible(true);
+        return new Iterable<E>() {
+            @Override
+            public Iterator<E> iterator() {
+                Iterator<E> iter;
+                try {
+                    iter = ctor.newInstance(enclosing);
+                } catch (Exception e) {
+                    throw new IllegalUsageError(e);
+                }
+                return iter;
+            }
+        };
     }
 
 }

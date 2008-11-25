@@ -12,11 +12,10 @@ public class RuntimizedException extends RuntimeException {
         super(cause);
     }
 
-    @SuppressWarnings("unchecked")
-    public <T extends Throwable> void rethrow() throws T {
+    public <T extends Throwable> void rethrow(Class<T> type) throws T {
         Throwable cause = getCause();
         try {
-            throw (T) cause;
+            throw type.cast(cause);
         } catch (ClassCastException e) {
             throw new UnexpectedException(
                     "EFJG - Enhance the fucking java generics");

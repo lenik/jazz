@@ -297,6 +297,7 @@ public class BasicCLI {
             info.setName(name);
             info.setDoc(doc);
             info.setAuthor(author);
+            // if (info.getVersion() == null) // FIX
             info.setVersion(verjoin);
             info.setDateString(verinfo.getDate());
             _classInfo = info;
@@ -398,7 +399,7 @@ public class BasicCLI {
             restArgs.add(arg);
     }
 
-    public void run(String cmdline) throws Throwable {
+    public void runExtra(String cmdline) throws Throwable {
         String[] args = {};
         if (cmdline != null)
             args = Strings.split(cmdline);

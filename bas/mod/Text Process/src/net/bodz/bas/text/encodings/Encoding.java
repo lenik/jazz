@@ -6,6 +6,8 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
 
+import net.bodz.bas.lang.err.ParseException;
+
 public interface Encoding {
 
     String preferredStringCharset();
@@ -29,23 +31,28 @@ public interface Encoding {
      */
     String encode(byte[] bytes);
 
-    void decode(Reader in, OutputStream out) throws IOException;
+    String encode(byte[] bytes, int from, int to);
 
-    void decode(Object charIn, Object byteOut) throws IOException;
+    void decode(Reader in, OutputStream out) throws IOException, ParseException;
 
-    /**
-     * @return <code>null</code> if <code>charIn</code> is null.
-     */
-    byte[] decode(Object charIn, int cbAppx) throws IOException;
+    void decode(Object charIn, Object byteOut) throws IOException,
+            ParseException;
 
     /**
      * @return <code>null</code> if <code>charIn</code> is null.
      */
-    byte[] decode(Object charIn) throws IOException;
+    byte[] decode(Object charIn, int cbAppx) throws IOException, ParseException;
+
+    /**
+     * @return <code>null</code> if <code>charIn</code> is null.
+     */
+    byte[] decode(Object charIn) throws IOException, ParseException;
 
     /**
      * @return <code>null</code> if <code>s</code> is null.
      */
-    byte[] decode(String s);
+    byte[] decode(String s) throws ParseException;
+
+    byte[] decode(char[] chars, int from, int to) throws ParseException;
 
 }

@@ -151,7 +151,7 @@ public class CLITask extends Task {
             throw new BuildException(e.getMessage(), e);
         }
         try {
-            app.run(tailargs);
+            app.runExtra(tailargs);
         } catch (Throwable e) {
             throw new BuildException(e.getMessage(), e);
         }

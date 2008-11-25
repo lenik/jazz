@@ -28,35 +28,127 @@ import net.bodz.bas.types.util.Strings;
 
 @OptionGroup(value = "batch process", rank = -3)
 public class BatchProcessCLI extends BatchCLI {
+
     @Option(alias = ".E", vnam = "ENCODING", doc = "default encoding of output files")
-    protected Charset outputEncoding = Charset.defaultCharset();
+    Charset        outputEncoding = Charset.defaultCharset();
 
     @Option(alias = "O", vnam = "DIR", doc = "put output files under this directory")
-    protected File    outputDirectory;
+    File           outputDirectory;
 
     @Option(vnam = ".EXT", optional = ".bak", doc = "backup modified files with given extension")
-    protected String  backupExtension;
+    String         backupExtension;
 
     @Option(alias = "P", doc = "protected mode, don't modify any files")
-    protected boolean dryRun;
+    boolean        dryRun;
 
     @Option(alias = "f", doc = "force overwrite existing files, this includes --error-continue")
-    protected boolean force;
+    boolean        force;
 
     @Option(alias = ".X", vnam = "DIFF-ALG", optional = "gnudiff", doc = "show diff between original and modified files, default using gnudiff")
-    DiffComparator    diffAlgorithm;
+    DiffComparator diffAlgorithm;
 
     @Option(alias = "Xf", vnam = "FORMAT", doc = "Simdiff, ED, Context, Unified, Normal")
-    DiffFormat        diffFormat     = DiffFormats.Simdiff;
+    DiffFormat     diffFormat     = DiffFormats.Simdiff;
 
     @Option(alias = "Xo", vnam = "FILE", doc = "write diff output to specified file")
-    CharOut           diffOutput     = CharOuts.stdout;
+    CharOut        diffOutput     = CharOuts.stdout;
 
     @Option(alias = "X3", doc = "diff between src/dst/out, when output to different file")
-    boolean           diff3          = false;
+    boolean        diff3          = false;
 
     @Option(alias = "X2", doc = "diff between src/out rather then src/dst, only used when output directory is different")
-    boolean           diffWithDest   = false;
+    boolean        diffWithDest   = false;
+
+    public class Parameters extends BatchCLI.Parameters {
+
+        public Charset getOutputEncoding() {
+            return outputEncoding;
+        }
+
+        public void setOutputEncoding(Charset outputEncoding) {
+            BatchProcessCLI.this.outputEncoding = outputEncoding;
+        }
+
+        public File getOutputDirectory() {
+            return outputDirectory;
+        }
+
+        public void setOutputDirectory(File outputDirectory) {
+            BatchProcessCLI.this.outputDirectory = outputDirectory;
+        }
+
+        public String getBackupExtension() {
+            return backupExtension;
+        }
+
+        public void setBackupExtension(String backupExtension) {
+            BatchProcessCLI.this.backupExtension = backupExtension;
+        }
+
+        public boolean isDryRun() {
+            return dryRun;
+        }
+
+        public void setDryRun(boolean dryRun) {
+            BatchProcessCLI.this.dryRun = dryRun;
+        }
+
+        public boolean isForce() {
+            return force;
+        }
+
+        public void setForce(boolean force) {
+            BatchProcessCLI.this.force = force;
+        }
+
+        public DiffComparator getDiffAlgorithm() {
+            return diffAlgorithm;
+        }
+
+        public void setDiffAlgorithm(DiffComparator diffAlgorithm) {
+            BatchProcessCLI.this.diffAlgorithm = diffAlgorithm;
+        }
+
+        public DiffFormat getDiffFormat() {
+            return diffFormat;
+        }
+
+        public void setDiffFormat(DiffFormat diffFormat) {
+            BatchProcessCLI.this.diffFormat = diffFormat;
+        }
+
+        public CharOut getDiffOutput() {
+            return diffOutput;
+        }
+
+        public void setDiffOutput(CharOut diffOutput) {
+            BatchProcessCLI.this.diffOutput = diffOutput;
+        }
+
+        public boolean isDiff3() {
+            return diff3;
+        }
+
+        public void setDiff3(boolean diff3) {
+            BatchProcessCLI.this.diff3 = diff3;
+        }
+
+        public boolean isDiffWithDest() {
+            return diffWithDest;
+        }
+
+        public void setDiffWithDest(boolean diffWithDest) {
+            BatchProcessCLI.this.diffWithDest = diffWithDest;
+        }
+
+    }
+
+    @Override
+    protected Parameters parameters() {
+        if (parameters == null)
+            parameters = new Parameters();
+        return (Parameters) parameters;
+    }
 
     protected BatchProcessCLI() {
     }

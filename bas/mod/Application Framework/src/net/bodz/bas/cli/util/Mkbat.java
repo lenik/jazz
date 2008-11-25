@@ -17,6 +17,7 @@ import net.bodz.bas.a.ClassInfo;
 import net.bodz.bas.a.Doc;
 import net.bodz.bas.a.ProgramName;
 import net.bodz.bas.a.RcsKeywords;
+import net.bodz.bas.a.StartMode;
 import net.bodz.bas.a.Version;
 import net.bodz.bas.cli.BatchProcessCLI;
 import net.bodz.bas.cli.ProcessResult;
@@ -38,6 +39,7 @@ import net.bodz.bas.types.TextMap.HashTextMap;
 import net.bodz.bas.types.util.Annotations;
 import net.bodz.bas.types.util.Arrays2;
 import net.bodz.bas.types.util.Empty;
+import net.bodz.bas.types.util.Ns;
 import net.bodz.bas.types.util.Strings;
 
 @Doc("Generate program launcher for java applications")
@@ -45,6 +47,8 @@ import net.bodz.bas.types.util.Strings;
 @RcsKeywords(id = "$Id$")
 @ProgramName("mkbat")
 public class Mkbat extends BatchProcessCLI {
+
+    boolean                 force;
 
     // private String prefix = "";
     private TextMap<String> varmap;
@@ -77,6 +81,8 @@ public class Mkbat extends BatchProcessCLI {
 
     @Override
     protected void _boot() throws Throwable {
+        force = parameters().isForce();
+
         ClassLoader initSysLoader = Caller.getCallerClassLoader();
         if (_userlibs != null)
             userlibs = _userlibs.toArray(Empty.URLs);
@@ -163,8 +169,6 @@ public class Mkbat extends BatchProcessCLI {
     }
 
     protected void generate(Class<?> clazz) throws IOException {
-        String name = clazz.getName();
-
         String batName = (String) Annotations
                 .getValue(clazz, ProgramName.class);
         if (batName == null) {
@@ -173,11 +177,27 @@ public class Mkbat extends BatchProcessCLI {
         }
         File batf = getOutputFile(batName + ".bat");
         batf.getParentFile().mkdirs();
+        String name = clazz.getName();
 
         // varmap.clear();
         String templName = new File(batTempl.getPath()).getName();
         varmap.put("TEMPLATE", batEscape(templName));
         varmap.put("NAME", batEscape(name));
+
+        String start = "";
+
+        Integer startMode = (Integer) Ns.getValue(clazz, StartMode.class);
+        if (startMode != null)
+            switch (startMode) {
+            case StartMode.CLI:
+                break;
+            case StartMode.GUI:
+                start = "startw";
+                break;
+            case StartMode.DAEMON:
+                break;
+            }
+        varmap.put("START", start);
 
         BootProc bootProc = BootProc.get(clazz);
         String booter = null;

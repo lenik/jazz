@@ -56,6 +56,7 @@
     set     _rest=
     set _startdir=%~dp0
     set  _program=%~dpnx0
+    set    _start=$START
 
     set      _nam=$NAME
     set     _namf=%_nam:.=\%

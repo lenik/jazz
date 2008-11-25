@@ -26,48 +26,173 @@ import net.bodz.bas.types.TypeParsers.WildcardsParser;
 public class BatchCLI extends BasicCLI {
 
     @Option(alias = ".e", vnam = "ENCODING", doc = "default encoding of input files")
-    protected Charset inputEncoding = Charset.defaultCharset();
+    Charset          inputEncoding = Charset.defaultCharset();
 
     @Option(alias = "i", doc = "prefer to do case-insensitive comparation")
-    protected boolean ignoreCase;
+    boolean          ignoreCase;
 
     @Option(doc = "always continue when error occurred")
-    protected boolean errorContinue;
+    boolean          errorContinue;
 
     @Option(alias = "r", vnam = "[DEPTH]", optional = "65536", doc = "max depth of directories recurse into")
-    protected int     recursive;
+    int              recursive;
     @Option(alias = "rl", doc = "process children files before the parent directory")
-    boolean           rootLast;
+    boolean          rootLast;
 
     @Option(alias = "Im", vnam = "FILEMASK", doc = "include specified type of files, default non-hidden files")
-    FileMask          inclusiveMask = new FileMask("f/fH");
+    FileMask         inclusiveMask = new FileMask("f/fH");
     @Option(alias = "IM", vnam = "FILEMASK", doc = "exclude specified type of files")
-    FileMask          exclusiveMask;
+    FileMask         exclusiveMask;
 
     @Option(alias = "If", vnam = "WILDCARDS", doc = "include these filenames")
     @ParseBy(WildcardsParser.class)
-    Pattern           fileInclusivePattern;
+    Pattern          fileInclusivePattern;
     @Option(alias = "IF", vnam = "WILDCARDS", doc = "exclude these filenames")
     @ParseBy(WildcardsParser.class)
-    Pattern           fileExclusivePattern;
+    Pattern          fileExclusivePattern;
 
     @Option(alias = "Ip", vnam = "REGEXP", doc = "include these pathnames")
-    Pattern           pathInclusivePattern;
+    Pattern          pathInclusivePattern;
     @Option(alias = "IP", vnam = "REGEXP", doc = "exclude these pathnames")
-    Pattern           pathExclusivePattern;
+    Pattern          pathExclusivePattern;
 
     @Option(alias = "Id", doc = "also apply filters on directories")
-    boolean           filterDirectories;
+    boolean          filterDirectories;
 
     @Option(alias = "Ic", vnam = "CLASS(FileFilter)", doc = "using custom file filter, this will override other --I* options")
     @ParseBy(GetInstanceParser.class)
-    FileFilter        fileFilter;
+    FileFilter       fileFilter;
 
     @Option(vnam = "CLASS(Comparator)", doc = "sort files in each directory")
     @ParseBy(GetInstanceParser.class)
-    Comparator<File>  sortComparator;
+    Comparator<File> sortComparator;
+
+    public class Parameters {
+
+        public Charset getInputEncoding() {
+            return inputEncoding;
+        }
+
+        public void setInputEncoding(Charset inputEncoding) {
+            BatchCLI.this.inputEncoding = inputEncoding;
+        }
+
+        public boolean isIgnoreCase() {
+            return ignoreCase;
+        }
+
+        public void setIgnoreCase(boolean ignoreCase) {
+            BatchCLI.this.ignoreCase = ignoreCase;
+        }
+
+        public boolean isErrorContinue() {
+            return errorContinue;
+        }
+
+        public void setErrorContinue(boolean errorContinue) {
+            BatchCLI.this.errorContinue = errorContinue;
+        }
+
+        public int getRecursive() {
+            return recursive;
+        }
+
+        public void setRecursive(int recursive) {
+            BatchCLI.this.recursive = recursive;
+        }
+
+        public boolean isRootLast() {
+            return rootLast;
+        }
+
+        public void setRootLast(boolean rootLast) {
+            BatchCLI.this.rootLast = rootLast;
+        }
+
+        public FileMask getInclusiveMask() {
+            return inclusiveMask;
+        }
+
+        public void setInclusiveMask(FileMask inclusiveMask) {
+            BatchCLI.this.inclusiveMask = inclusiveMask;
+        }
+
+        public FileMask getExclusiveMask() {
+            return exclusiveMask;
+        }
+
+        public void setExclusiveMask(FileMask exclusiveMask) {
+            BatchCLI.this.exclusiveMask = exclusiveMask;
+        }
+
+        public Pattern getFileInclusivePattern() {
+            return fileInclusivePattern;
+        }
+
+        public void setFileInclusivePattern(Pattern fileInclusivePattern) {
+            BatchCLI.this.fileInclusivePattern = fileInclusivePattern;
+        }
+
+        public Pattern getFileExclusivePattern() {
+            return fileExclusivePattern;
+        }
+
+        public void setFileExclusivePattern(Pattern fileExclusivePattern) {
+            BatchCLI.this.fileExclusivePattern = fileExclusivePattern;
+        }
+
+        public Pattern getPathInclusivePattern() {
+            return pathInclusivePattern;
+        }
+
+        public void setPathInclusivePattern(Pattern pathInclusivePattern) {
+            BatchCLI.this.pathInclusivePattern = pathInclusivePattern;
+        }
+
+        public Pattern getPathExclusivePattern() {
+            return pathExclusivePattern;
+        }
+
+        public void setPathExclusivePattern(Pattern pathExclusivePattern) {
+            BatchCLI.this.pathExclusivePattern = pathExclusivePattern;
+        }
+
+        public boolean isFilterDirectories() {
+            return filterDirectories;
+        }
+
+        public void setFilterDirectories(boolean filterDirectories) {
+            BatchCLI.this.filterDirectories = filterDirectories;
+        }
+
+        public FileFilter getFileFilter() {
+            return fileFilter;
+        }
+
+        public void setFileFilter(FileFilter fileFilter) {
+            BatchCLI.this.fileFilter = fileFilter;
+        }
+
+        public Comparator<File> getSortComparator() {
+            return sortComparator;
+        }
+
+        public void setSortComparator(Comparator<File> sortComparator) {
+            BatchCLI.this.sortComparator = sortComparator;
+        }
+
+    }
+
+    Parameters parameters;
+
+    protected Parameters parameters() {
+        if (parameters == null)
+            parameters = new Parameters();
+        return parameters;
+    }
 
     protected BatchCLI() {
+
     }
 
     /**
