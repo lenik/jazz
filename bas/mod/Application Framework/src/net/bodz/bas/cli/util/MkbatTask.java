@@ -1,10 +1,11 @@
 package net.bodz.bas.cli.util;
 
 import java.io.File;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import net.bodz.bas.io.Files;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.types.Path;
@@ -49,13 +50,9 @@ public class MkbatTask extends CLITask {
         for (Path userlibs : userlibsList) {
             String[] paths = userlibs.list();
             for (int i = 0; i < paths.length; i++) {
-                String path = paths[i];
-                try {
-                    URL url = new File(path).toURI().toURL();
-                    mkbat.addUserLib(url);
-                } catch (MalformedURLException e) {
-                    throw new BuildException(e);
-                }
+                File file = new File(paths[i]);
+                URL url = Files.getURL(file);
+                mkbat.addUserLib(url);
             }
         }
         for (Path srcdir : srcdirList) {

@@ -10,6 +10,8 @@ import java.io.StringWriter;
 import java.io.Writer;
 
 import net.bodz.bas.io.Files;
+import net.bodz.bas.lang.err.ParseException;
+import static net.bodz.bas.types.util.ArrayOps.Bytes;
 
 public abstract class _Encoding implements Encoding {
 
@@ -98,12 +100,20 @@ public abstract class _Encoding implements Encoding {
         }
     }
 
-    protected void _decode(InputStream in, OutputStream out) throws IOException {
+    @Override
+    public String encode(byte[] bytes, int from, int to) {
+        byte[] copy = Bytes.copyOfRange(bytes, from, to);
+        return encode(copy);
+    }
+
+    protected void _decode(InputStream in, OutputStream out)
+            throws IOException, ParseException {
         decode(Files.getReader(in, charset), out);
     }
 
     @Override
-    public void decode(Object charIn, Object byteOut) throws IOException {
+    public void decode(Object charIn, Object byteOut) throws IOException,
+            ParseException {
         OutputStream out = Files.getOutputStream(byteOut);
         boolean closeOut = Files.shouldClose(byteOut);
         try {
@@ -123,11 +133,11 @@ public abstract class _Encoding implements Encoding {
             if (closeOut)
                 out.close();
         }
-
     }
 
     @Override
-    public byte[] decode(Object charIn, int cc) throws IOException {
+    public byte[] decode(Object charIn, int cc) throws IOException,
+            ParseException {
         if (charIn == null)
             return null;
         int cb = cc == 0 ? 0 : (int) (cc * bpc);
@@ -140,12 +150,12 @@ public abstract class _Encoding implements Encoding {
     }
 
     @Override
-    public byte[] decode(Object charIn) throws IOException {
+    public byte[] decode(Object charIn) throws IOException, ParseException {
         return decode(charIn, 0);
     }
 
     @Override
-    public byte[] decode(String s) {
+    public byte[] decode(String s) throws ParseException {
         if (s == null)
             return null;
         try {
@@ -153,6 +163,12 @@ public abstract class _Encoding implements Encoding {
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
+    }
+
+    @Override
+    public byte[] decode(char[] chars, int from, int to) throws ParseException {
+        String s = new String(chars, from, to - from);
+        return decode(s);
     }
 
 }

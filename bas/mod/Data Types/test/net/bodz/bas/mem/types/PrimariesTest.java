@@ -7,7 +7,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Random;
 
-import net.bodz.bas.mem.AccessException;
 import net.bodz.bas.mem.ArrayMemory;
 import net.bodz.bas.mem.Memory;
 import net.bodz.bas.mem.Type;
@@ -19,7 +18,7 @@ public class PrimariesTest {
     Random rands = new Random();
 
     void test(Class<? extends Type> typeClass, Object val, String memHex)
-            throws AccessException {
+            throws Exception {
         String tnam = typeClass.getSimpleName();
         byte[] mem0 = HEX.decode(memHex);
         byte[] memv = Bytes.copyOf(mem0);
@@ -45,7 +44,7 @@ public class PrimariesTest {
     }
 
     @Test
-    public void testInts() throws AccessException {
+    public void testInts() throws Exception {
         test(Int8.class, (byte) 0x81, "81");
         test(Int16LE.class, (short) 0x8182, "82 81");
         test(Int16BE.class, (short) 0x8182, "81 82");
@@ -56,7 +55,7 @@ public class PrimariesTest {
     }
 
     @Test
-    public void testFloats() throws AccessException {
+    public void testFloats() throws Exception {
         test(Ieee754FloatLE.class, Float.MIN_VALUE, "01 00 00 00");
         test(Ieee754FloatLE.class, Float.MAX_VALUE, "ff ff 7f 7f");
         test(Ieee754FloatLE.class, Float.NaN, "00 00 c0 7f");

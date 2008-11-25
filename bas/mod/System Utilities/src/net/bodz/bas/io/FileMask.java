@@ -39,6 +39,10 @@ public class FileMask {
     private final int       bits;
 
     public FileMask(int bits, int mask) {
+        if ((bits & CNTTYPE) != 0) {
+            bits |= FILE | EXIST;
+            mask |= FILE | EXIST;
+        }
         this.mask = mask;
         this.bits = bits & mask;
     }
@@ -47,14 +51,24 @@ public class FileMask {
         this(bits, bits);
     }
 
+    /**
+     * bits/mask
+     */
     public FileMask(String str) {
         int slash = str.indexOf('/');
+        int bits, mask;
         if (slash != -1) {
             bits = parse(str.substring(0, slash));
             mask = parse(str.substring(slash + 1));
         } else {
             bits = mask = parse(str);
         }
+        if ((bits & CNTTYPE) != 0) {
+            bits |= FILE | EXIST;
+            mask |= FILE | EXIST;
+        }
+        this.bits = bits;
+        this.mask = mask;
     }
 
     private final boolean masked(int bits) {

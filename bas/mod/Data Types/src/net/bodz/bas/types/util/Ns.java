@@ -75,6 +75,9 @@ public class Ns {
         return n;
     }
 
+    /**
+     * Get annotation with inheritance support.
+     */
     public static <A extends Annotation> Object getValue(AnnotatedElement elm,
             Class<A> nClass) {
         A n = getN(elm, nClass);

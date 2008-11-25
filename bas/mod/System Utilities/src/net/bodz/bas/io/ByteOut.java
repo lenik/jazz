@@ -12,7 +12,7 @@ public abstract class ByteOut implements IByteOut {
         try {
             write(buf, off, len);
         } catch (IOException e) {
-            throw new RuntimeException(e.getMessage(), e);
+            throw new PrintException(e.getMessage(), e);
         }
     }
 
@@ -104,7 +104,7 @@ public abstract class ByteOut implements IByteOut {
             out = new ObjectOutputStream(buf);
             out.writeObject(obj);
         } catch (IOException e) {
-            throw new RuntimeException(e.getMessage(), e);
+            throw new PrintException(e.getMessage(), e);
         }
         print(buf.toByteArray());
     }

@@ -128,11 +128,7 @@ public class SJEclipse {
         for (FindFile find : searches) {
             File got = find.findexp(exp);
             if (got != null)
-                try {
-                    return got.toURI().toURL();
-                } catch (MalformedURLException e) {
-                    throw new UnexpectedException(e);
-                }
+                return Files.getURL(got);
         }
         if (errorFail)
             throw new Error("can't find, prefix=" + prefix);

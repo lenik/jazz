@@ -3,14 +3,12 @@ package net.bodz.bas.loader;
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.Control;
-import net.bodz.bas.lang.err.IllegalUsageError;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.snm.EclipseProject;
 import net.bodz.bas.snm.SJLibLoader;
@@ -29,12 +27,13 @@ public class LoadUtil {
      * <code>libraries.ini</code> file, if <code>libname</code> isn't defined in
      * <code>libraries.ini</code> , then <code>libname.jar</code> is used.
      * 
+     * @return <code>null</code> if can't resolve the libspec
      */
     public static URL[] find(String libspec, boolean errorFail) {
-        File libfile;
         if (libspec.startsWith("%"))
             return findPack(libspec.substring(1));
-        else if (libspec.contains("."))
+        File libfile;
+        if (libspec.contains("."))
             libfile = _findJar(libspec);
         else
             libfile = _findLib(libspec);
@@ -43,12 +42,7 @@ public class LoadUtil {
                 throw new Error("can't resolve lib " + libspec);
             else
                 return null;
-        try {
-            return new URL[] { libfile.toURI().toURL() };
-        } catch (MalformedURLException e) {
-            throw new IllegalUsageError("incorrect lib " + libspec + ": "
-                    + libfile, e);
-        }
+        return new URL[] { Files.getURL(libfile) };
     }
 
     /**
@@ -59,9 +53,16 @@ public class LoadUtil {
     }
 
     public static URL[] find(String[] libspecs, boolean errorFail) {
+        assert libspecs != null : "null libspecs";
         List<URL> urls = new ArrayList<URL>(libspecs.length);
         for (int i = 0; i < libspecs.length; i++) {
-            for (URL url : find(libspecs[i], errorFail))
+            String libspec = libspecs[i];
+            if (libspec == null)
+                throw new NullPointerException("libspecs[" + i + "]");
+            URL[] specUrls = find(libspec, errorFail);
+            if (specUrls == null) // according to errorFail.
+                continue;
+            for (URL url : specUrls)
                 urls.add(url);
         }
         return urls.toArray(Empty.URLs);

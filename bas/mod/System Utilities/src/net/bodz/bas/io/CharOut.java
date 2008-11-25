@@ -40,7 +40,7 @@ public abstract class CharOut implements ICharOut {
             else
                 _write(s, 0, s.length());
         } catch (IOException e) {
-            throw new RuntimeException(e.getMessage(), e);
+            throw new PrintException(e.getMessage(), e);
         }
     }
 

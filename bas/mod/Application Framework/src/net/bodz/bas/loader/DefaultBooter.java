@@ -9,6 +9,10 @@ import net.bodz.bas.a.BootInfo;
 import net.bodz.bas.a.BootProc;
 import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.lang.Caller;
+import net.bodz.bas.lang.ControlBreak;
+import net.bodz.bas.lang.ControlContinue;
+import net.bodz.bas.lang.ControlExit;
+import net.bodz.bas.lang.Predicate;
 import net.bodz.bas.lang.util.Classpath;
 import net.bodz.bas.log.LogOut;
 import net.bodz.bas.log.LogOuts;
@@ -115,6 +119,37 @@ public class DefaultBooter {
         }
     }
 
+    static class Once implements Predicate<Throwable> {
+        @Override
+        public boolean eval(Throwable o) {
+            return false;
+        }
+    }
+
+    static class Repeat implements Predicate<Throwable> {
+        @Override
+        public boolean eval(Throwable o) {
+            return true;
+        }
+    }
+
+    static class Count implements Predicate<Throwable> {
+        int     count;
+        boolean errorContinue;
+
+        public Count(int count, boolean errorContinue) {
+            this.count = count;
+            this.errorContinue = errorContinue;
+        }
+
+        @Override
+        public boolean eval(Throwable o) {
+            if (o != null && !errorContinue)
+                return false;
+            return --count > 0;
+        }
+    }
+
     /**
      * Booter(-l, USERLIB, ..., --, MAINCLASS, ARGS)
      * 
@@ -123,6 +158,7 @@ public class DefaultBooter {
     public static void main(String[] args) throws LoadException, Throwable {
         int index = 0;
         List<URL> userlibs = new ArrayList<URL>();
+        Predicate<Throwable> loopPred = new Once();
         A: for (; index < args.length; index++) {
             String arg = args[index];
             if (arg.startsWith("-")) {
@@ -133,10 +169,31 @@ public class DefaultBooter {
                     break;
                 }
                 switch (arg.charAt(1)) {
-                case 'l':
+                case 'l': // userlib
                     String libspec = args[++index];
                     for (URL url : LoadUtil.find(libspec))
                         userlibs.add(url);
+                    break;
+                case 'r': // repeat
+                    String termCond = args[++index];
+                    try {
+                        final int count = Integer.parseInt(termCond);
+                        if (count == 0)
+                            loopPred = new Repeat();
+                        else if (count > 0)
+                            loopPred = new Count(count, false);
+                        else
+                            loopPred = new Count(-count, true);
+                    } catch (NumberFormatException e) {
+                        final String predProp = termCond;
+                        loopPred = new Predicate<Throwable>() {
+                            @Override
+                            public boolean eval(Throwable o) {
+                                String val = System.getProperty(predProp);
+                                return "1".equals(val);
+                            }
+                        };
+                    }
                     break;
                 default:
                     break A;
@@ -152,7 +209,24 @@ public class DefaultBooter {
         // reload and exec
         URL[] urls = userlibs.toArray(Empty.URLs);
         Class<?> clazz = load(className, urls);
-        LoadUtil.execMain(clazz, args);
+        while (true) {
+            try {
+                LoadUtil.execMain(clazz, args);
+                if (loopPred.eval(null))
+                    continue;
+                break;
+            } catch (ControlBreak b) {
+                break;
+            } catch (ControlContinue c) {
+                continue;
+            } catch (ControlExit exit) {
+                System.exit(exit.getStatus());
+            } catch (Throwable t) {
+                if (loopPred.eval(t))
+                    continue;
+                throw t;
+            }
+        }
     }
 
 }
