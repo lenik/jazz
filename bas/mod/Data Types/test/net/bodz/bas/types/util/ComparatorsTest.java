@@ -5,7 +5,7 @@ import static net.bodz.bas.test.TestDefs.END;
 
 import java.util.Arrays;
 
-import net.bodz.bas.lang.Closure;
+import net.bodz.bas.lang.Proc1;
 import net.bodz.bas.test.TestDefs;
 import net.bodz.bas.test.TestEval;
 
@@ -74,18 +74,18 @@ public class ComparatorsTest {
 
         final Class<?>[] iv = { RootI.class, BarI.class, ZBarI.class,
                 FooI.class, AFooI.class };
-        Perms.iterate(correct, new Closure<Class<?>[]>() {
+        Perms.iterate(correct, new Proc1<Class<?>[]>() {
             @Override
-            public void execute(Class<?>[] everyCondition) {
+            public void exec(Class<?>[] everyCondition) {
                 TestDefs.tests(orderTest, //
                         ArrayEQU(everyCondition, correct), //
                         END);
             }
         });
 
-        Perms.iterate(iv, new Closure<Class<?>[]>() {
+        Perms.iterate(iv, new Proc1<Class<?>[]>() {
             @Override
-            public void execute(Class<?>[] perm) {
+            public void exec(Class<?>[] perm) {
                 TestDefs.tests(orderTest, //
                         ArrayEQU(perm, iv), //
                         END);

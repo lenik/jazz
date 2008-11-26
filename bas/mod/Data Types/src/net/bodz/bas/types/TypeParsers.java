@@ -32,7 +32,7 @@ import net.bodz.bas.types.util.Types;
 
 public class TypeParsers {
 
-    public static class GetFromRegistryParser extends _TypeParser {
+    public static class GetFromRegistryParser implements TypeParser {
 
         private final Class<?> registryClass;
 
@@ -65,7 +65,7 @@ public class TypeParsers {
         return null;
     }
 
-    public static class StringCtorParser extends _TypeParser {
+    public static class StringCtorParser implements TypeParser {
 
         private final Constructor<?> ctor;
 
@@ -100,7 +100,7 @@ public class TypeParsers {
 
     }
 
-    public static class GetInstanceParser extends _TypeParser {
+    public static class GetInstanceParser implements TypeParser {
 
         @Override
         public Object parse(String className) throws ParseException {
@@ -116,7 +116,7 @@ public class TypeParsers {
 
     }
 
-    public static class ArrayParser extends _TypeParser {
+    public static class ArrayParser implements TypeParser {
 
         private Class<?>   valtype;
         private TypeParser valparser;
@@ -250,7 +250,7 @@ public class TypeParsers {
         return (T) val;
     }
 
-    public static class ByteParser extends _TypeParser {
+    public static class ByteParser implements TypeParser {
 
         @Override
         public Byte parse(String text) throws ParseException {
@@ -263,7 +263,7 @@ public class TypeParsers {
 
     }
 
-    public static class ShortParser extends _TypeParser {
+    public static class ShortParser implements TypeParser {
 
         @Override
         public Short parse(String text) throws ParseException {
@@ -276,7 +276,7 @@ public class TypeParsers {
 
     }
 
-    public static class IntegerParser extends _TypeParser {
+    public static class IntegerParser implements TypeParser {
 
         @Override
         public Integer parse(String text) throws ParseException {
@@ -289,7 +289,7 @@ public class TypeParsers {
 
     }
 
-    public static class LongParser extends _TypeParser {
+    public static class LongParser implements TypeParser {
 
         @Override
         public Long parse(String text) throws ParseException {
@@ -302,7 +302,7 @@ public class TypeParsers {
 
     }
 
-    public static class FloatParser extends _TypeParser {
+    public static class FloatParser implements TypeParser {
 
         @Override
         public Float parse(String text) throws ParseException {
@@ -315,7 +315,7 @@ public class TypeParsers {
 
     }
 
-    public static class DoubleParser extends _TypeParser {
+    public static class DoubleParser implements TypeParser {
 
         @Override
         public Double parse(String text) throws ParseException {
@@ -328,7 +328,7 @@ public class TypeParsers {
 
     }
 
-    public static class BooleanParser extends _TypeParser {
+    public static class BooleanParser implements TypeParser {
 
         @Override
         public Boolean parse(String text) throws ParseException {
@@ -341,7 +341,7 @@ public class TypeParsers {
 
     }
 
-    public static class CharacterParser extends _TypeParser {
+    public static class CharacterParser implements TypeParser {
 
         @Override
         public Character parse(String text) throws ParseException {
@@ -354,7 +354,7 @@ public class TypeParsers {
 
     }
 
-    public static class CharArrayParser extends _TypeParser {
+    public static class CharArrayParser implements TypeParser {
 
         @Override
         public char[] parse(String text) throws ParseException {
@@ -363,7 +363,7 @@ public class TypeParsers {
 
     }
 
-    public static class StringParser extends _TypeParser {
+    public static class StringParser implements TypeParser {
 
         @Override
         public String parse(String text) throws ParseException {
@@ -372,7 +372,7 @@ public class TypeParsers {
 
     }
 
-    public static class ClassParser extends _TypeParser {
+    public static class ClassParser implements TypeParser {
 
         @Override
         public Class<?> parse(String name) throws ParseException {
@@ -385,7 +385,7 @@ public class TypeParsers {
 
     }
 
-    public static class CharsetParser extends _TypeParser {
+    public static class CharsetParser implements TypeParser {
 
         @Override
         public Charset parse(String name) throws ParseException {
@@ -398,7 +398,7 @@ public class TypeParsers {
 
     }
 
-    public static class FileParser extends _TypeParser {
+    public static class FileParser implements TypeParser {
 
         @Override
         public File parse(String path) throws ParseException {
@@ -407,7 +407,7 @@ public class TypeParsers {
 
     }
 
-    public static class ByteOutParser extends _TypeParser {
+    public static class ByteOutParser implements TypeParser {
 
         @Override
         public IByteOut parse(String path) throws ParseException {
@@ -422,7 +422,7 @@ public class TypeParsers {
 
     }
 
-    public static class CharOutParser extends _TypeParser {
+    public static class CharOutParser implements TypeParser {
 
         @Override
         public CharOut parse(String path) throws ParseException {
@@ -437,7 +437,7 @@ public class TypeParsers {
 
     }
 
-    public static class ALogParser extends _TypeParser {
+    public static class ALogParser implements TypeParser {
 
         @Override
         public ALog parse(String path) throws ParseException {
@@ -452,7 +452,7 @@ public class TypeParsers {
 
     }
 
-    public static class PatternParser extends _TypeParser {
+    public static class PatternParser implements TypeParser {
 
         private final int flags;
 
@@ -479,7 +479,7 @@ public class TypeParsers {
 
     }
 
-    public static class WildcardsParser extends _TypeParser {
+    public static class WildcardsParser implements TypeParser {
 
         private final int flags;
 
@@ -515,7 +515,7 @@ public class TypeParsers {
 
     }
 
-    public static class MessageDigestParser extends _TypeParser {
+    public static class MessageDigestParser implements TypeParser {
 
         @Override
         public MessageDigest parse(String name) throws ParseException {
@@ -539,7 +539,7 @@ public class TypeParsers {
 
     }
 
-    public static class HexParser extends _TypeParser {
+    public static class HexParser implements TypeParser {
 
         @Override
         public byte[] parse(String hex) throws ParseException {
@@ -548,7 +548,7 @@ public class TypeParsers {
 
     }
 
-    public static class Base64Parser extends _TypeParser {
+    public static class Base64Parser implements TypeParser {
 
         @Override
         public byte[] parse(String hex) throws ParseException {

@@ -35,7 +35,7 @@ import java.util.Properties;
 import java.util.regex.Pattern;
 
 import net.bodz.bas.lang.IntMath;
-import net.bodz.bas.lang.Predicate2v;
+import net.bodz.bas.lang.Pred2;
 import net.bodz.bas.lang.err.IdentifiedException;
 import net.bodz.bas.lang.err.IllegalArgumentTypeException;
 import net.bodz.bas.lang.err.IllegalUsageError;
@@ -1651,10 +1651,10 @@ public class Files {
                 inputf = (File) input;
             else if (input instanceof String)
                 inputf = Files.canoniOf(outd, (String) input);
-            else if (input instanceof Predicate2v) {
+            else if (input instanceof Pred2) {
                 if (mostRecent > outl) {
                     File[] finputs = files.toArray(Empty.Files);
-                    Predicate2v<File, File[]> ruledef = (Predicate2v<File, File[]>) input;
+                    Pred2<File, File[]> ruledef = (Pred2<File, File[]>) input;
                     boolean succ = ruledef.eval(output, finputs);
                     succeeded = succeeded && succ;
                 }

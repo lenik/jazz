@@ -7,7 +7,7 @@ import java.util.List;
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.io.Files;
-import net.bodz.bas.lang.Predicate;
+import net.bodz.bas.lang.Pred1;
 import net.bodz.bas.text.diff.DiffInfo;
 import net.bodz.bas.types.util.Dates;
 
@@ -50,7 +50,7 @@ public class DiffPrint {
          * Set to ignore certain kinds of lines when printing an edit script.
          * For example, ignoring blank lines or comments.
          */
-        protected Predicate<Object> ignore = null;
+        protected Pred1<Object> ignore = null;
 
         /**
          * Set to the lines of the files being compared.

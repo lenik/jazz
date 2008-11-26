@@ -13,6 +13,8 @@ import java.security.KeyStore.Builder;
 import java.security.KeyStore.CallbackHandlerProtection;
 import java.security.Provider.Service;
 import java.security.cert.Certificate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.security.auth.callback.CallbackHandler;
 
@@ -20,13 +22,15 @@ import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.err.IllegalUsageException;
 import net.bodz.bas.lang.err.UnexpectedException;
-import net.bodz.bas.types.util.Iterators;
+import net.bodz.bas.net.CURL;
+import net.bodz.bas.net.CURL.Alpha;
+import net.bodz.bas.types.util.Iterates;
 import net.bodz.bas.types.util.Objects;
 import net.bodz.bas.types.util.PrefetchedIterator;
 
 import com.sun.security.auth.callback.TextCallbackHandler;
 
-public class CertURL {
+public class CertSelector {
 
     public static final int AUTO        = 0;
     public static final int NONE        = 1;
@@ -47,96 +51,92 @@ public class CertURL {
     private String          certAlias;
     private String          subEntry;       // not used.
 
-    public CertURL(String certURL) {
-        this(certURL, AUTO);
+    public CertSelector(String curl) {
+        this(new CURL(curl));
     }
 
-    public CertURL(String certURL, Provider provider) throws KeyStoreException {
-        this(certURL, AUTO, provider);
+    public CertSelector(CURL curl) {
+        this(curl, AUTO);
     }
 
-    public CertURL(String certURL, int type) {
+    public CertSelector(String curl, Provider provider)
+            throws KeyStoreException {
+        this(new CURL(curl), provider);
+    }
+
+    public CertSelector(CURL curl, Provider provider) throws KeyStoreException {
+        this(curl, AUTO, provider);
+    }
+
+    public CertSelector(CURL curl, int type) {
         try {
-            _parse(certURL, type, null);
+            _parse(curl, type, null);
         } catch (KeyStoreException e) {
             throw new UnexpectedException(e);
         }
     }
 
-    public CertURL(String certURL, int type, Provider provider)
+    public CertSelector(CURL curl, int type, Provider provider)
             throws KeyStoreException {
-        _parse(certURL, type, provider);
+        _parse(curl, type, provider);
     }
 
-    void _parse(String certURL, int type, Provider provider)
+    static final String defaultStoreType = "JKS";
+
+    void _parse(CURL curl, int type, Provider provider)
             throws KeyStoreException {
-        if (certURL == null)
+        if (curl == null)
             throw new NullPointerException("certURL");
-        int detType;
-        String s = certURL; // | ST://SP@URL#CP@ALIAS/...
-        int p;
-        p = s.indexOf("://");
-        if (p != -1) {
-            storeType = s.substring(0, p);
-            s = s.substring(p + 3); // ST:// | SP@PATH#CP@ALIAS/...
-            int _sharp = s.indexOf('#');
-            p = s.indexOf('@'); // XXX - [#@] in the password
-            if (_sharp != -1 && p > _sharp)
-                p = -1;
-            if (p != -1) {
-                storePassword = s.substring(0, p);
-                s = s.substring(p + 1); // ST://SP@ | PATH#CP@ALIAS/...
-            }
-            p = s.indexOf('#');
-            String path;
-            if (p != -1) {
-                path = s.substring(0, p);
-                s = s.substring(p + 1); // ST://SP@PATH# | CP@ALIAS/...
-                p = s.indexOf('@');
-                if (p != -1) {
-                    certPassword = s.substring(0, p);
-                    s = s.substring(p + 1); // ST://SP@URL#CP@ | ALIAS/...
+        int detType = NONE;
+        storeType = curl.getType();
+        if (storeType != null)
+            detType = STORETYPE;
+        else
+            storeType = defaultStoreType;
+        Alpha[] alphas = curl.getAlphas();
+        if (alphas.length >= 1) {
+            Alpha ks = alphas[0];
+            String[] storeParams = ks.getInitParameters();
+            String path = ks.formatBetas();
+            if (storeParams != null)
+                storePassword = storeParams[0];
+            if (!path.isEmpty()) {
+                if (path.contains("://"))
+                    try {
+                        storeURL = new URL(path);
+                        // create a temp file when necessary?
+                        storeURLFile = new File(storeURL.toURI());
+                    } catch (URISyntaxException e) {
+                        throw new IllegalArgumentException(e);
+                    } catch (MalformedURLException e) {
+                        throw new IllegalArgumentException(e);
+                    }
+                else {
+                    storeURLFile = Files.canoniOf(path);
+                    storeURL = Files.getURL(storeURLFile);
                 }
-                p = s.indexOf('/');
-                if (p != -1) {
-                    certAlias = s.substring(0, p);
-                    subEntry = s.substring(p + 1);
-                    if (subEntry.isEmpty())
-                        subEntry = null;
-                    detType = SUBENTRY;
-                } else {
-                    certAlias = s;
+            }
+            detType = KEYSTORE;
+            if (alphas.length >= 2) {
+                Alpha cert = alphas[1];
+                String[] certParams = cert.getInitParameters();
+                String alias = cert.formatBetas();
+                if (certParams != null)
+                    certPassword = certParams[0];
+                if (alias != null) {
+                    certAlias = alias;
                     detType = CERTIFICATE;
                 }
-                if (certAlias.isEmpty()) {
-                    certAlias = null;
-                    detType = KEYSTORE;
+                if (alphas.length >= 3) {
+                    Alpha subent = alphas[2];
+                    subEntry = subent.formatBetas();
+                    detType = SUBENTRY;
                 }
-            } else {
-                path = s;
-                detType = KEYSTORE;
             }
-            if (path.contains("://"))
-                try {
-                    storeURL = new URL(path);
-                    // create a temp file when necessary?
-                    storeURLFile = new File(storeURL.toURI());
-                } catch (URISyntaxException e) {
-                    throw new IllegalArgumentException(e);
-                } catch (MalformedURLException e) {
-                    throw new IllegalArgumentException(e);
-                }
-            else {
-                storeURLFile = Files.canoniOf(path);
-                storeURL = Files.getURL(storeURLFile);
-            }
-        } else {
-            storeType = s;
-            detType = STORETYPE;
         }
         if (type > detType)
             throw new IllegalArgumentException("type(" + type
-                    + ") not completed: " + certURL);
+                    + ") not completed: " + curl);
         this.type = type == AUTO ? detType : type;
         if (provider != null) {
             this.provider = provider;
@@ -169,7 +169,11 @@ public class CertURL {
         return storeURLFile;
     }
 
-    public String getAlias() {
+    public String getCertPassword() {
+        return certPassword;
+    }
+
+    public String getCertAlias() {
         return certAlias;
     }
 
@@ -201,7 +205,7 @@ public class CertURL {
                 return END;
             }
         }
-        return Iterators.iterate(Iter.class, this);
+        return Iterates.iterate(Iter.class, this);
     }
 
     protected CallbackHandler getPromptPasswordHandler() {
@@ -284,9 +288,9 @@ public class CertURL {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof CertURL))
+        if (!(obj instanceof CertSelector))
             return false;
-        CertURL c = (CertURL) obj;
+        CertSelector c = (CertSelector) obj;
         if (type != c.type)
             return false;
         if (!Objects.equals(storeType, c.storeType))
@@ -322,33 +326,37 @@ public class CertURL {
         throw new UnexpectedException();
     }
 
-    @Override
-    public String toString() {
-        StringBuffer buf = new StringBuffer(128);
-        if (type >= STORETYPE) {
-            buf.append(storeType);
-            if (type >= KEYSTORE) {
-                buf.append("://");
-                if (storePassword != null) {
-                    buf.append(storePassword);
-                    buf.append("@");
-                }
-                buf.append(storeURL);
-                if (type >= CERTIFICATE) {
-                    buf.append("#");
-                    if (certPassword != null) {
-                        buf.append(certPassword);
-                        buf.append("@");
-                    }
-                    buf.append(certAlias);
-                    if (type >= SUBENTRY) {
-                        buf.append("/");
-                        buf.append(subEntry);
-                    }
+    public CURL toCURL() {
+        List<Alpha> list = new ArrayList<Alpha>(3);
+        if (storeURL != null) {
+            String[] params1 = null;
+            if (storePassword != null)
+                params1 = new String[] { storePassword };
+            String[] betas1 = Alpha.parseBetas(storeURL.toString());
+            Alpha alpha1 = new Alpha(params1, betas1);
+            list.add(alpha1);
+            if (certAlias != null || certPassword != null) {
+                String[] params2 = null;
+                if (certPassword != null)
+                    params2 = new String[] { certPassword };
+                String s = certAlias == null ? "" : certAlias;
+                String[] betas2 = Alpha.parseBetas(s);
+                Alpha alpha2 = new Alpha(params2, betas2);
+                list.add(alpha2);
+                if (subEntry != null) {
+                    String[] betas3 = Alpha.parseBetas(subEntry);
+                    Alpha alpha3 = new Alpha(null, betas3);
+                    list.add(alpha3);
                 }
             }
         }
-        return buf.toString();
+        Alpha[] alphas = list.toArray(new Alpha[0]);
+        return new CURL(storeType, alphas);
+    }
+
+    @Override
+    public String toString() {
+        return toCURL().toString();
     }
 
     public void dump(CharOut out) throws KeyStoreException {
@@ -398,7 +406,7 @@ public class CertURL {
                     dumper.dump("  ", cert);
                 }
         } else {
-            for (String alias : Iterators.iterate(keyStore.aliases())) {
+            for (String alias : Iterates.iterate(keyStore.aliases())) {
                 dumper.dump("", keyStore, alias, certPassword);
             }
         }

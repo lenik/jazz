@@ -231,7 +231,7 @@ public class Strings {
     }
 
     public static String join(String separator, Enumeration<?> enumr) {
-        return join(separator, Iterators.iterate(enumr));
+        return join(separator, Iterators.adapt(enumr));
     }
 
     public static Pair<String, String> join(String separatorKey,
