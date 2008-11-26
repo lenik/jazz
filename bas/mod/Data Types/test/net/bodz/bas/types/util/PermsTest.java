@@ -12,8 +12,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.bodz.bas.lang.Closure;
 import net.bodz.bas.lang.IntMath;
+import net.bodz.bas.lang.Proc1;
 import net.bodz.bas.log.ALog;
 import net.bodz.bas.log.ALogs;
 import net.bodz.bas.test.TestDefs;
@@ -36,9 +36,9 @@ public class PermsTest {
         final char[] array = orig.toCharArray();
         final Set<String> instances = new HashSet<String>();
 
-        Perms.iterate(array, new Closure<char[]>() {
+        Perms.iterate(array, new Proc1<char[]>() {
             @Override
-            public void execute(char[] inst) {
+            public void exec(char[] inst) {
                 count++;
                 // System.out.println(cc);
                 String s = new String(inst);
@@ -233,9 +233,9 @@ public class PermsTest {
     public void testIterOrd() {
         final char[] src = "1234".toCharArray();
         final List<Integer> ords = new ArrayList<Integer>();
-        Perms.iterate(src, new Closure<char[]>() {
+        Perms.iterate(src, new Proc1<char[]>() {
             @Override
-            public void execute(char[] inst) {
+            public void exec(char[] inst) {
                 int ord = Perms.ord(src, inst);
                 ords.add(ord);
             }

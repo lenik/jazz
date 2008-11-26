@@ -25,7 +25,7 @@ public class IteratorsTest {
             t += x.next();
         assertEquals(5050, t);
 
-        Iterable<Integer> set = Iterators.iterate(It.class, this);
+        Iterable<Integer> set = Iterates.iterate(It.class, this);
         t = 0;
         for (Integer n : set)
             t += n;

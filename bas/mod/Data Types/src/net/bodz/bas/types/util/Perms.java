@@ -2,42 +2,41 @@ package net.bodz.bas.types.util;
 
 import java.lang.reflect.Array;
 
-import net.bodz.bas.lang.Closure;
+import net.bodz.bas.lang.Proc1;
 import net.bodz.bas.lang.err.OutOfDomainException;
 
 public class Perms {
 
-    private static <A> void _iterate(A array, int off, int len,
-            Closure<A> closure) {
+    private static <A> void _iterate(A array, int off, int len, Proc1<A> visitor) {
         if (len == 1) {
-            closure.execute(array);
+            visitor.exec(array);
             return;
         }
         ArrayOp<A> op = ArrayOps.get(array);
         int count = len;
         while (count-- > 0) {
-            _iterate(array, off + 1, len - 1, closure);
+            _iterate(array, off + 1, len - 1, visitor);
             if (count != 0)
                 op.reverse(array, off, off + len);
         }
     }
 
-    public static <A> void iterate(A array, int off, int len, Closure<A> closure) {
+    public static <A> void iterate(A array, int off, int len, Proc1<A> closure) {
         A copy = Arrays2.copyOf(array, off, len);
         _iterate(copy, off, len, closure);
     }
 
     public static <A> void iterateInPlace(A array, int off, int len,
-            Closure<A> closure) {
+            Proc1<A> closure) {
         _iterate(array, off, len, closure);
         Arrays2.reverse(array, off, len);
     }
 
-    public static <A> void iterate(A array, Closure<A> closure) {
+    public static <A> void iterate(A array, Proc1<A> closure) {
         iterate(array, 0, Array.getLength(array), closure);
     }
 
-    public static <A> void iterateInPlace(A array, Closure<A> closure) {
+    public static <A> void iterateInPlace(A array, Proc1<A> closure) {
         iterateInPlace(array, 0, Array.getLength(array), closure);
     }
 

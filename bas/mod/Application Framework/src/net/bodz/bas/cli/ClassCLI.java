@@ -11,7 +11,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import net.bodz.bas.lang.ClassLocal;
-import net.bodz.bas.lang.Filter;
+import net.bodz.bas.lang.Filt1;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.types.util.Comparators;
 import net.bodz.bas.types.util.Strings;
@@ -55,6 +55,14 @@ public class ClassCLI {
         } catch (ParseException e) {
             throw new CLIException(e.getMessage(), e);
         }
+    }
+
+    protected static abstract class OptionFormat extends
+            Filt1<String, Set<_Option<?>>> {
+
+        @Override
+        public abstract String filter(Set<_Option<?>> a);
+
     }
 
     @SuppressWarnings("unchecked")
@@ -110,8 +118,7 @@ public class ClassCLI {
             group.add(opt);
         }
 
-        Filter<String, Set<_Option<?>>> groupfmt;
-        groupfmt = new Filter<String, Set<_Option<?>>>() {
+        OptionFormat groupfmt = new OptionFormat() {
             @Override
             public String filter(Set<_Option<?>> opts) {
                 StringBuffer buffer = new StringBuffer(opts.size() * 80);

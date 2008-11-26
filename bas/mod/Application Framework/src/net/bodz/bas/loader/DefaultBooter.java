@@ -12,7 +12,7 @@ import net.bodz.bas.lang.Caller;
 import net.bodz.bas.lang.ControlBreak;
 import net.bodz.bas.lang.ControlContinue;
 import net.bodz.bas.lang.ControlExit;
-import net.bodz.bas.lang.Predicate;
+import net.bodz.bas.lang.Pred1;
 import net.bodz.bas.lang.util.Classpath;
 import net.bodz.bas.log.LogOut;
 import net.bodz.bas.log.LogOuts;
@@ -119,21 +119,21 @@ public class DefaultBooter {
         }
     }
 
-    static class Once implements Predicate<Throwable> {
+    static class Once extends Pred1<Throwable> {
         @Override
-        public boolean eval(Throwable o) {
+        public boolean test(Throwable o) {
             return false;
         }
     }
 
-    static class Repeat implements Predicate<Throwable> {
+    static class Repeat extends Pred1<Throwable> {
         @Override
-        public boolean eval(Throwable o) {
+        public boolean test(Throwable o) {
             return true;
         }
     }
 
-    static class Count implements Predicate<Throwable> {
+    static class Count extends Pred1<Throwable> {
         int     count;
         boolean errorContinue;
 
@@ -143,7 +143,7 @@ public class DefaultBooter {
         }
 
         @Override
-        public boolean eval(Throwable o) {
+        public boolean test(Throwable o) {
             if (o != null && !errorContinue)
                 return false;
             return --count > 0;
@@ -158,7 +158,7 @@ public class DefaultBooter {
     public static void main(String[] args) throws LoadException, Throwable {
         int index = 0;
         List<URL> userlibs = new ArrayList<URL>();
-        Predicate<Throwable> loopPred = new Once();
+        Pred1<Throwable> loopPred = new Once();
         A: for (; index < args.length; index++) {
             String arg = args[index];
             if (arg.startsWith("-")) {
@@ -186,9 +186,9 @@ public class DefaultBooter {
                             loopPred = new Count(-count, true);
                     } catch (NumberFormatException e) {
                         final String predProp = termCond;
-                        loopPred = new Predicate<Throwable>() {
+                        loopPred = new Pred1<Throwable>() {
                             @Override
-                            public boolean eval(Throwable o) {
+                            public boolean test(Throwable o) {
                                 String val = System.getProperty(predProp);
                                 return "1".equals(val);
                             }

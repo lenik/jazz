@@ -1,7 +1,11 @@
 package net.bodz.bas.types.util;
 
 import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
+import net.bodz.bas.lang.Filt1;
+import net.bodz.bas.lang.Pred1;
 import net.bodz.bas.lang.err.IllegalArgumentTypeException;
 
 public class Arrays2 {
@@ -10,7 +14,13 @@ public class Arrays2 {
         return array;
     }
 
+    /**
+     * @throws NullPointerException
+     *             if <code>array</code> is <code>null</code>.
+     */
     public static <T> T copyOf(T array, int off, int len) {
+        if (array == null)
+            throw new NullPointerException("array");
         Class<?> type = array.getClass();
         if (!type.isArray())
             throw new IllegalArgumentTypeException(array, "array");
@@ -24,7 +34,12 @@ public class Arrays2 {
         return dup;
     }
 
+    /**
+     * @return <code>null</code> if <code>array</code> is <code>null</code>.
+     */
     public static <T> T copyOf(T array) {
+        if (array == null)
+            return null;
         int len = Array.getLength(array);
         return copyOf(array, 0, len);
     }
@@ -90,7 +105,13 @@ public class Arrays2 {
         return concatv(heads, (A) tails);
     }
 
+    /**
+     * @throws NullPointerException
+     *             if <code>array</code> is <code>null</code>
+     */
     public static void reverse(Object array, int off, int len) {
+        if (array == null)
+            throw new NullPointerException("array");
         if (len < 2)
             return;
         int end = off + len - 1;
@@ -104,8 +125,65 @@ public class Arrays2 {
         }
     }
 
+    /**
+     * @throws NullPointerException
+     *             if <code>array</code> is <code>null</code>
+     */
     public static void reverse(Object array) {
         reverse(array, 0, Array.getLength(array));
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <A> A map(A array, Filt1<?, ?> filter) {
+        Filt1<Object, Object> _filter = (Filt1<Object, Object>) filter;
+        return (A) map((Object[]) array, _filter);
+    }
+
+    public static <T> T[] map(T[] array, Filt1<T, T> filter) {
+        if (array == null)
+            return null;
+        Class<?> t = array.getClass().getComponentType();
+        int len = array.length;
+        @SuppressWarnings("unchecked")
+        T[] dest = (T[]) Array.newInstance(t, len);
+        for (int i = 0; i < len; i++) {
+            T v = array[i];
+            v = filter.filter(v);
+            dest[i] = v;
+        }
+        return dest;
+    }
+
+    public static <A> A grep(A array, Pred1<?> pred) {
+        return grep(array, pred, 0.5f);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <A> A grep(A array, Pred1<?> pred, float appxHit) {
+        Pred1<Object> _pred = (Pred1<Object>) pred;
+        return (A) grep((Object[]) array, _pred, appxHit);
+    }
+
+    public static <T> T[] grep(T[] array, Pred1<T> pred) {
+        return grep(array, pred, 0.5f);
+    }
+
+    public static <T> T[] grep(T[] array, Pred1<T> pred, float appxHit) {
+        if (array == null)
+            return null;
+        Class<?> t = array.getClass().getComponentType();
+        int len = array.length;
+        int cap = (int) (len * appxHit);
+        // cap = (cap + 0x10) & ~0xf;
+        List<T> list = new ArrayList<T>(cap);
+        for (int i = 0; i < len; i++) {
+            T v = array[i];
+            if (pred.test(v))
+                list.add(v);
+        }
+        @SuppressWarnings("unchecked")
+        T[] dest = (T[]) Array.newInstance(t, list.size());
+        return list.toArray(dest);
     }
 
 }

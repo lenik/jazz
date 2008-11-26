@@ -28,8 +28,6 @@ import java.util.Set;
 import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.x500.X500Principal;
 
-import com.sun.security.auth.callback.TextCallbackHandler;
-
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.sec.crypto.Cryptos;
 import net.bodz.bas.text.encodings.Encodings;
@@ -39,6 +37,8 @@ import net.bodz.bas.types.TextMap.TreeTextMap;
 import sun.security.x509.AlgorithmId;
 import sun.security.x509.X500Name;
 import sun.security.x509.X509Key;
+
+import com.sun.security.auth.callback.TextCallbackHandler;
 
 public class CertDumper {
 
@@ -85,11 +85,14 @@ public class CertDumper {
                     out.println(prefix + "    entry: "
                             + entry.getClass().getName());
             } catch (UnsupportedOperationException e) {
-                out.println(prefix + "    Error getEntry: " + e.getMessage());
+                out.println(prefix + "    Error getEntry: unsupported, "
+                        + e.getMessage());
             } catch (UnrecoverableEntryException e) {
-                out.println(prefix + "    Error getEntry: " + e.getMessage());
+                out.println(prefix + "    Error getEntry: unrecoverable, "
+                        + e.getMessage());
             } catch (NoSuchAlgorithmException e) {
-                out.println(prefix + "    Error getEntry: " + e.getMessage());
+                out.println(prefix + "    Error getEntry: no-alg, "
+                        + e.getMessage());
             }
 
             if (password != null) {
@@ -100,9 +103,11 @@ public class CertDumper {
                         dumpKey(prefix + "      ", key);
                     }
                 } catch (UnrecoverableKeyException e) {
-                    out.println(prefix + "    Error getKey: " + e.getMessage());
+                    out.println(prefix + "    Error getKey: unrecoverable, "
+                            + e.getMessage());
                 } catch (NoSuchAlgorithmException e) {
-                    out.println(prefix + "    Error getKey: " + e.getMessage());
+                    out.println(prefix + "    Error getKey: no-alg, "
+                            + e.getMessage());
                 }
             }
         }
