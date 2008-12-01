@@ -55,7 +55,7 @@ public class DiffPrint {
         /**
          * Set to the lines of the files being compared.
          */
-        protected List<?>           file0, file1;
+        protected List<?>       file0, file1;
 
         /**
          * Divide SCRIPT into pieces by calling HUNKFUN and print each piece
@@ -300,7 +300,7 @@ public class DiffPrint {
                 outfile.println(mark + ' ' + label);
             else if (inf.lastModified() > 0)
                 outfile.println(mark + ' ' + inf.getPath() + '\t'
-                        + Dates.formatDateTime(inf.lastModified()));
+                        + Dates.sysDateTimeFormat.format(inf.lastModified()));
             else
                 /* Don't pretend that standard input is ancient. */
                 outfile.println(mark + ' ' + inf.getPath());

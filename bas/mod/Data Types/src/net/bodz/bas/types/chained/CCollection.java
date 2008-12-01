@@ -78,7 +78,9 @@ public abstract class CCollection<E> extends _ChainedScope<Collection<E>>
         }
 
         public Iterator<El> iterator() {
-            return Iterators.concat(_this.iterator(), next.iterator());
+            Iterator<El> it1 = _this.iterator();
+            Iterator<El> it2 = next.iterator();
+            return Iterators.concat(it1, it2);
         }
 
     }

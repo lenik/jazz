@@ -17,7 +17,7 @@ public class LogOuts {
             }
 
             @Override
-            public void _write(char c) throws IOException {
+            public void _write(int c) throws IOException {
             }
 
             @Override
@@ -53,33 +53,42 @@ public class LogOuts {
 
     public static class Proxy extends LogOut {
 
-        protected final CharOut proxy;
+        public final CharOut out;
 
-        public Proxy(CharOut proxy, String name) {
+        public Proxy(CharOut out, String name) {
             super(name);
-            assert proxy != null;
-            this.proxy = proxy;
+            this.out = out;
         }
 
         @Override
         public void write(char[] chars, int off, int len) throws IOException {
-            proxy.write(chars, off, len);
+            out.write(chars, off, len);
         }
 
         @Override
-        public void _write(char c) throws IOException {
-            proxy._write(c);
+        public void _write(int c) throws IOException {
+            out._write(c);
         }
 
         @Override
         public void _write(CharSequence chars, int off, int len)
                 throws IOException {
-            proxy._write(chars, off, len);
+            out._write(chars, off, len);
         }
 
         @Override
         public void _write(String string, int off, int len) throws IOException {
-            proxy._write(string, off, len);
+            out._write(string, off, len);
+        }
+
+        @Override
+        public void _flush() throws IOException {
+            out._flush();
+        }
+
+        @Override
+        public void _close() throws IOException {
+            out._close();
         }
 
     }

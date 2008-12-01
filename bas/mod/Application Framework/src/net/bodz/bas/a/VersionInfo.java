@@ -1,8 +1,6 @@
 package net.bodz.bas.a;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
+import net.bodz.bas.types.util.Dates;
 import net.bodz.bas.types.util.Strings;
 
 public class VersionInfo implements Comparable<VersionInfo> {
@@ -21,19 +19,12 @@ public class VersionInfo implements Comparable<VersionInfo> {
         return revString;
     }
 
-    private static DateFormat DATE;
-    private static DateFormat TIME;
-    static {
-        DATE = new SimpleDateFormat("yyyy-MM-dd");
-        TIME = new SimpleDateFormat("hh:mm:sss");
-    }
-
     public String getDate() {
-        return DATE.format(time);
+        return Dates.dateFormat.format(time);
     }
 
     public String getTime() {
-        return TIME.format(time);
+        return Dates.timeFormat.format(time);
     }
 
     @Override

@@ -3,7 +3,6 @@ package net.bodz.bas.lang;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class ClassLocal<T> extends HashMap<Class<?>, T> {
 
     private static final long serialVersionUID = 6470297212054945897L;
@@ -26,13 +25,13 @@ public class ClassLocal<T> extends HashMap<Class<?>, T> {
 
     @Deprecated
     public T get() {
-        Class<?> clazz = getCallerClass(2);
+        Class<?> clazz = getCallerClass(1);
         return super.get(clazz);
     }
 
     @Deprecated
     public T set(T value) {
-        Class<?> clazz = getCallerClass(2);
+        Class<?> clazz = getCallerClass(1);
         return super.put(clazz, value);
     }
 
@@ -43,7 +42,7 @@ public class ClassLocal<T> extends HashMap<Class<?>, T> {
 
     // @Diagnostic
     public Class<?> getCallerClass() {
-        Class<?> clazz = getCallerClass(2);
+        Class<?> clazz = getCallerClass(1);
         return clazz;
     }
 

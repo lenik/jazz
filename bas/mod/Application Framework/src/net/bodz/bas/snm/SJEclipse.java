@@ -3,7 +3,6 @@ package net.bodz.bas.snm;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +10,6 @@ import java.util.regex.Pattern;
 
 import net.bodz.bas.cli.util.FindFile;
 import net.bodz.bas.io.Files;
-import net.bodz.bas.lang.err.UnexpectedException;
 import net.bodz.bas.text.util.Patterns;
 
 public class SJEclipse {

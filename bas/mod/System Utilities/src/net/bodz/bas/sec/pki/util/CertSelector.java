@@ -82,6 +82,7 @@ public class CertSelector {
     }
 
     static final String defaultStoreType = "JKS";
+    static final String KS_NONE          = "-";
 
     void _parse(CURL curl, int type, Provider provider)
             throws KeyStoreException {
@@ -101,7 +102,10 @@ public class CertSelector {
             if (storeParams != null)
                 storePassword = storeParams[0];
             if (!path.isEmpty()) {
-                if (path.contains("://"))
+                if (KS_NONE.equals(path)) {
+                    storeURL = null;
+                    storeURLFile = null;
+                } else if (path.contains("://"))
                     try {
                         storeURL = new URL(path);
                         // create a temp file when necessary?
@@ -226,7 +230,9 @@ public class CertSelector {
             else
                 keyStore = KeyStore.getInstance(storeType, provider);
             try {
-                InputStream in = Files.getInputStream(storeURL);
+                InputStream in = null;
+                if (storeURL != null)
+                    in = Files.getInputStream(storeURL);
                 keyStore.load(in, storePassword.toCharArray());
             } catch (Exception e) {
                 throw new KeyStoreException(e);
@@ -332,7 +338,12 @@ public class CertSelector {
             String[] params1 = null;
             if (storePassword != null)
                 params1 = new String[] { storePassword };
-            String[] betas1 = Alpha.parseBetas(storeURL.toString());
+            String[] betas1;
+            if (storeURL == null) {
+                betas1 = Alpha.parseBetas(KS_NONE);
+            } else {
+                betas1 = Alpha.parseBetas(storeURL.toString());
+            }
             Alpha alpha1 = new Alpha(params1, betas1);
             list.add(alpha1);
             if (certAlias != null || certPassword != null) {
@@ -360,56 +371,46 @@ public class CertSelector {
     }
 
     public void dump(CharOut out) throws KeyStoreException {
-        int det;
+        dump(out, 1);
+    }
+
+    public void dump(CharOut out, int detail) throws KeyStoreException {
+        if (type == NONE) {
+            out.println("NONE");
+            return;
+        }
+        PKIDumper dumper = new PKIDumper(out, detail);
+        KeyStore keyStore;
         switch (type) {
-        case NONE:
+        case STORETYPE:
+            if (provider == null) {
+                // dump all providers
+                for (Provider provider : getStoreTypeProviders()) {
+                    out.println("Provider " + provider.getName());
+                    keyStore = getKeyStore(provider);
+                    dumper.dumpKeyStore("", keyStore);
+                }
+            } else {
+                keyStore = getKeyStore();
+                // dump keystore of specified provider
+                dumper.dumpKeyStore("", keyStore);
+            }
+            break;
         case KEYSTORE:
-            det = CertDumper.SIMPLE;
+            keyStore = getKeyStore();
+            dumper.dumpKeyStore("", keyStore);
             break;
         case CERTIFICATE:
-            det = CertDumper.DETAIL;
+            keyStore = getKeyStore();
+            dumper.dumpStoreEntry("", keyStore, certAlias, certPassword);
             break;
         case SUBENTRY:
-        default:
-            det = CertDumper.FULL;
+            out.println("Not implemented.");
             break;
+        default:
+            throw new IllegalStateException();
         }
-        dump(out, det);
-    }
-
-    /**
-     * @see CertDumper#SIMPLE
-     * @see CertDumper#DETAIL
-     * @see CertDumper#FULL
-     */
-    public void dump(CharOut out, int detail) throws KeyStoreException {
-        if (provider == null) {
-            for (Provider provider : getStoreTypeProviders()) {
-                out.println("Provider " + provider.getName());
-                KeyStore keyStore = getKeyStore(provider);
-                dump(keyStore, out, detail);
-            }
-        } else
-            dump(keyStore, out, detail);
-    }
-
-    void dump(KeyStore keyStore, CharOut out, int detail)
-            throws KeyStoreException {
-        CertDumper dumper = new CertDumper(out, detail);
-        if (type >= CERTIFICATE) {
-            assert certAlias != null;
-            dumper.dump("", keyStore, certAlias, certPassword);
-            Certificate[] chain = keyStore.getCertificateChain(certAlias);
-            if (chain != null)
-                for (Certificate cert : chain) {
-                    out.print("> ");
-                    dumper.dump("  ", cert);
-                }
-        } else {
-            for (String alias : Iterates.iterate(keyStore.aliases())) {
-                dumper.dump("", keyStore, alias, certPassword);
-            }
-        }
+        out.flush();
     }
 
 }

@@ -46,6 +46,7 @@ import net.bodz.bas.types.TypeParser;
 import net.bodz.bas.types.TypeParsers;
 import net.bodz.bas.types.TypeParsers.ALogParser;
 import net.bodz.bas.types.TypeParsers.CharOutParser;
+import net.bodz.bas.types.util.Dates;
 import net.bodz.bas.types.util.Empty;
 import net.bodz.bas.types.util.Strings;
 
@@ -232,9 +233,9 @@ public class BasicCLI {
                     @Override
                     protected String prefix() {
                         if (_logWithDate) {
-                            String time = CLIConfig.logTimeFormat.format(System
+                            String time = Dates.dateTimeFormat.format(System
                                     .currentTimeMillis());
-                            return _logPrefix + time;
+                            return _logPrefix + "[" + time + "]";
                         }
                         return _logPrefix;
                     }
@@ -242,7 +243,6 @@ public class BasicCLI {
             }
             super.register(name, out);
         }
-
     }
 
     private ClassInfo _classInfo;

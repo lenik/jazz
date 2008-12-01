@@ -128,6 +128,18 @@ public class CURL {
         this.parameters = parameters;
     }
 
+    public String getParameter(String name) {
+        if (parameters == null)
+            return null;
+        return parameters.get(name);
+    }
+
+    public void setParameter(String name, String value) {
+        if (parameters == null)
+            parameters = new TreeTextMap<String>();
+        parameters.put(name, value);
+    }
+
     public String formatParameters() {
         if (parameters == null || parameters.isEmpty())
             return null;
