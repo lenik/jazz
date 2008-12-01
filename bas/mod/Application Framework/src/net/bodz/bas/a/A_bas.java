@@ -1,12 +1,11 @@
 package net.bodz.bas.a;
 
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.err.NotImplementedException;
+import net.bodz.bas.types.util.Dates;
 
 @RcsKeywords(id = "$Id$")
 public class A_bas {
@@ -42,15 +41,6 @@ public class A_bas {
         return doc;
     }
 
-    static DateFormat DATETIME;
-    static DateFormat DATE;
-    static DateFormat TIME;
-    static {
-        DATE = new SimpleDateFormat("yyyy-MM-dd");
-        TIME = new SimpleDateFormat("hh:mm:sss");
-        DATETIME = new SimpleDateFormat("yyyy-MM-dd hh:mm:sss");
-    }
-
     public static VersionInfo parseId(String id) {
         id = id.substring(0, id.length() - 1);
         String[] parts = id.split("\\s+");
@@ -63,14 +53,14 @@ public class A_bas {
         case 5: // 10:53:242
             long _time = 0;
             try {
-                _time = TIME.parse(parts[4]).getTime();
+                _time = Dates.timeFormat.parse(parts[4]).getTime();
             } catch (ParseException e) {
             }
             info.time += _time;
         case 4: // 2008-01-15
             long _date = 0;
             try {
-                _date = DATE.parse(parts[3]).getTime();
+                _date = Dates.dateFormat.parse(parts[3]).getTime();
             } catch (ParseException e) {
             }
             info.time += _date;

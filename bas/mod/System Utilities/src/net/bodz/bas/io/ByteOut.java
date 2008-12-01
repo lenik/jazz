@@ -3,6 +3,7 @@ package net.bodz.bas.io;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 
 public abstract class ByteOut implements IByteOut {
 
@@ -16,9 +17,10 @@ public abstract class ByteOut implements IByteOut {
         }
     }
 
-    public void _write(byte b) {
+    public void _write(int b) {
+        assert b >= Byte.MIN_VALUE && b <= Byte.MAX_VALUE;
         byte[] bv = new byte[1];
-        bv[0] = b;
+        bv[0] = (byte) b;
         _write(bv, 0, 1);
     }
 
@@ -107,6 +109,56 @@ public abstract class ByteOut implements IByteOut {
             throw new PrintException(e.getMessage(), e);
         }
         print(buf.toByteArray());
+    }
+
+    public void _flush() throws IOException {
+    }
+
+    public void _close() throws IOException {
+    }
+
+    public final void flush() {
+        try {
+            _flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public final void close() {
+        try {
+            _close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    class ByteOutOutputStream extends OutputStream {
+
+        @Override
+        public void close() throws IOException {
+            ByteOut.this._close();
+        }
+
+        @Override
+        public void flush() throws IOException {
+            ByteOut.this._flush();
+        }
+
+        @Override
+        public void write(byte[] b, int off, int len) throws IOException {
+            ByteOut.this._write(b, off, len);
+        }
+
+        @Override
+        public void write(int b) throws IOException {
+            ByteOut.this._write(b);
+        }
+
+    }
+
+    public OutputStream toOutputStream() {
+        return new ByteOutOutputStream();
     }
 
 }

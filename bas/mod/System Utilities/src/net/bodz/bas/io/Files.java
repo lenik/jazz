@@ -1381,6 +1381,9 @@ public class Files {
         return getName(new File(file));
     }
 
+    /**
+     * @return "" if file has no extension.
+     */
     public static String getExtension(String file, boolean includeDot) {
         int dot = file.lastIndexOf('.');
         if (dot != -1)
@@ -1388,14 +1391,23 @@ public class Files {
         return "";
     }
 
+    /**
+     * @return without dot, "" if file has no extension.
+     */
     public static String getExtension(String file) {
         return getExtension(file, false);
     }
 
+    /**
+     * @return "" if file has no extension.
+     */
     public static String getExtension(File file, boolean includeDot) {
         return getExtension(file.getName(), includeDot);
     }
 
+    /**
+     * @return without dot, "" if file has no extension.
+     */
     public static String getExtension(File file) {
         return getExtension(file.getName(), false);
     }

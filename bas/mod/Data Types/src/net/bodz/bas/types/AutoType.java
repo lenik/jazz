@@ -1,9 +1,9 @@
 package net.bodz.bas.types;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import net.bodz.bas.types.util.Dates;
 
 public class AutoType {
 
@@ -582,16 +582,11 @@ public class AutoType {
         return b ? new Date() : null;
     }
 
-    private static DateFormat DATE_FORMAT;
-    static {
-        DATE_FORMAT = new SimpleDateFormat("yy/MM/dd hh:mm:ss");
-    }
-
     public static Date toDate(String s) {
         if (s == null)
             return null;
         try {
-            return DATE_FORMAT.parse(s);
+            return Dates.dateTimeFormat.parse(s);
         } catch (ParseException e) {
             throw new IllegalArgumentException(e.getMessage(), e);
         }

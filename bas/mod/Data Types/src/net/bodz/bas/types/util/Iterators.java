@@ -81,6 +81,16 @@ public class Iterators {
         return new ArrayIterator();
     }
 
+    /**
+     * Warning removal: <i> Type safety : A generic array of Iterator<El> is
+     * created for a varargs </i>
+     */
+    public static <T> Iterator<T> concat(Iterator<T> it1, Iterator<T> it2) {
+        @SuppressWarnings("unchecked")
+        Iterator<T>[] v = (Iterator<T>[]) new Iterator<?>[2];
+        return concat(v);
+    }
+
     public static <T> Iterator<T> concat(final Iterator<T>... iterators) {
         class ConcatIterator extends PrefetchedIterator<T> {
 

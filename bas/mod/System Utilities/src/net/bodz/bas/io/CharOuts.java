@@ -1,5 +1,6 @@
 package net.bodz.bas.io;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -18,7 +19,7 @@ public class CharOuts {
             }
 
             @Override
-            public void _write(char c) throws IOException {
+            public void _write(int c) throws IOException {
             }
 
             @Override
@@ -48,89 +49,81 @@ public class CharOuts {
 
     public static CharOut get(OutputStream out, String charset)
             throws UnsupportedEncodingException {
-        return get(new OutputStreamWriter(out, charset), true);
+        return get(new OutputStreamWriter(out, charset));
     }
 
     public static CharOut get(OutputStream out) {
-        return get(new OutputStreamWriter(out), true);
+        return get(new OutputStreamWriter(out));
     }
 
-    public static CharOut get(final Writer out) {
-        return get(out, false);
+    public static class WriterCharOut extends CharOut {
+
+        private final Writer writer;
+
+        public WriterCharOut(Writer out) {
+            this.writer = out;
+        }
+
+        @Override
+        public void write(char[] chars, int off, int len) throws IOException {
+            writer.write(chars, off, len);
+        }
+
+        @Override
+        public void _write(int c) throws IOException {
+            writer.write(c);
+        }
+
+        @Override
+        public void _write(String string, int off, int len) throws IOException {
+            writer.write(string, off, len);
+        }
+
+        @Override
+        public void _flush() throws IOException {
+            writer.flush();
+        }
+
+        @Override
+        public void _close() throws IOException {
+            writer.close();
+        }
+
     }
 
-    public static CharOut get(final Writer out, final boolean autoflush) {
-        return new CharOut() {
-            @Override
-            public void write(char[] chars, int off, int len)
-                    throws IOException {
-                out.write(chars, off, len);
-                if (autoflush)
-                    out.flush();
-            }
-
-            @Override
-            public void _write(char c) throws IOException {
-                out.write(c);
-                if (autoflush)
-                    out.flush();
-            }
-
-            @Override
-            public void _write(String string, int off, int len)
-                    throws IOException {
-                out.write(string, off, len);
-                if (autoflush)
-                    out.flush();
-            }
-
-        };
+    public static CharOut get(Writer writer) {
+        return new WriterCharOut(writer);
     }
 
-    public static Buffer get(final StringBuffer sb) {
-        return new Buffer(sb);
-    }
+    public static class TempCharOut extends WriterCharOut {
 
-    public static CharOut get(final StringBuilder sb) {
-        return new CharOut() {
-            @Override
-            public void write(char[] chars, int off, int len)
-                    throws IOException {
-                sb.append(chars, off, len);
-            }
+        private final File file;
 
-            @Override
-            public void _write(char c) throws IOException {
-                sb.append(c);
-            }
+        public TempCharOut(TempWriter writer) {
+            super(writer);
+            this.file = writer.getFile();
+        }
 
-            @Override
-            public void _write(CharSequence chars, int off, int len)
-                    throws IOException {
-                sb.append(chars, off, off + len);
-            }
-        };
-    }
+        public TempCharOut(String fileName) throws IOException {
+            this(new TempWriter(fileName));
+        }
 
-    public static CharOut get(final CharBuffer cb) {
-        return new CharOut() {
-            @Override
-            public void write(char[] chars, int off, int len)
-                    throws IOException {
-                cb.put(chars, off, len);
-            }
+        public TempCharOut(File file) throws IOException {
+            this(new TempWriter(file));
+        }
 
-            @Override
-            public void _write(char c) throws IOException {
-                cb.put(c);
-            }
+        public TempCharOut(String fileName, Object charset) throws IOException {
+            this(new TempWriter(fileName, charset));
+        }
 
-            @Override
-            public void _write(String string, int off, int len)
-                    throws IOException {
-                cb.put(string, off, len);
-            }
-        };
+        public TempCharOut(File file, Object charset) throws IOException {
+            this(new TempWriter(file, charset));
+        }
+
+        public File getFile() {
+            return file;
+        }
+
     }
 
     public static class Buffer extends CharOut {
@@ -164,8 +157,8 @@ public class CharOuts {
         }
 
         @Override
-        public void _write(char c) throws IOException {
-            buffer.append(c);
+        public void _write(int c) throws IOException {
+            buffer.append((char) c);
         }
 
         @Override
@@ -185,6 +178,56 @@ public class CharOuts {
         @Override
         public String toString() {
             return buffer.toString();
+        }
+
+    }
+
+    public static class SBCharOut extends CharOut {
+
+        private final StringBuilder sb;
+
+        public SBCharOut(StringBuilder sb) {
+            this.sb = sb;
+        }
+
+        @Override
+        public void write(char[] chars, int off, int len) throws IOException {
+            sb.append(chars, off, len);
+        }
+
+        @Override
+        public void _write(int c) throws IOException {
+            sb.append((char) c);
+        }
+
+        @Override
+        public void _write(CharSequence chars, int off, int len)
+                throws IOException {
+            sb.append(chars, off, off + len);
+        }
+    }
+
+    public static class CBCharOut extends CharOut {
+
+        private final CharBuffer cb;
+
+        public CBCharOut(CharBuffer cb) {
+            this.cb = cb;
+        }
+
+        @Override
+        public void write(char[] chars, int off, int len) throws IOException {
+            cb.put(chars, off, len);
+        }
+
+        @Override
+        public void _write(int c) throws IOException {
+            cb.put((char) c);
+        }
+
+        @Override
+        public void _write(String string, int off, int len) throws IOException {
+            cb.put(string, off, len);
         }
 
     }

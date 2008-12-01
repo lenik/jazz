@@ -1,6 +1,7 @@
 package net.bodz.bas.sec.pki.util;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.io.File;
 
@@ -11,13 +12,37 @@ import org.junit.Test;
 public class CertSelectorTest {
 
     static File secdir;
+    static File cacerts;
     static {
-        String javaHome = System.getenv("JAVA_HOME");
-        if (javaHome != null) {
-            File f = new File(javaHome, "jre/lib/security");
-            if (f.isDirectory())
-                secdir = f;
+        if (secdir == null) {
+            String javaHome = System.getenv("JAVA_HOME");
+            if (javaHome != null) {
+                File f = new File(javaHome, "jre/lib/security");
+                if (f.isDirectory())
+                    secdir = f;
+            }
         }
+        if (secdir != null) {
+            cacerts = Files.canoniOf(secdir, "cacerts");
+        }
+    }
+
+    public static CertSelector get() {
+        if (secdir == null)
+            return null;
+        String cacertsPath = cacerts.getPath();
+        String s = "JKS://changeit@" + cacertsPath;
+        CertSelector cs = new CertSelector(s);
+        return cs;
+    }
+
+    public static CertSelector get(String alias) {
+        if (secdir == null)
+            return null;
+        String cacertsPath = cacerts.getPath();
+        String s = "JKS://changeit@" + cacertsPath + "#" + alias;
+        CertSelector cs = new CertSelector(s);
+        return cs;
     }
 
     /**
@@ -38,13 +63,10 @@ public class CertSelectorTest {
      */
     @Test
     public void test1() {
-        if (secdir == null)
-            return;
-        File cacerts = Files.canoniOf(secdir, "cacerts");
-        String cacertsPath = cacerts.getPath();
         String alias = "globalsignca";
-        String s = "JKS://changeit@" + cacertsPath + "#" + alias;
-        CertSelector cs = new CertSelector(s);
+        CertSelector cs = get(alias);
+        if (cs == null)
+            return;
 
         assertEquals("JKS", cs.getStoreType());
         assertEquals("changeit", cs.getStorePassword());
