@@ -7,7 +7,7 @@ import net.bodz.bas.io.Files;
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.types.util.PrefetchedIterator;
 
-public class CSVFile extends _FileType implements FileSource<String[]> {
+public class CSVFile implements FileSource<String[]> {
 
     private String     delim;
     private int        limit;
@@ -17,7 +17,7 @@ public class CSVFile extends _FileType implements FileSource<String[]> {
             throws IOException {
         this.delim = delim;
         this.limit = maxColumns;
-        lineReader = Files.getLineReader(in, charset);
+        this.lineReader = Files.getLineReader(in, charset);
     }
 
     public CSVFile(String delim, Object in, Object charset) throws IOException {
