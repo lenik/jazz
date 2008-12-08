@@ -47,9 +47,9 @@ public class ClassInfo {
         Doc docN = Ns.getN(clazz, Doc.class);
         this.doc = A_bas.parse(docN);
 
-        String[] icon = Annotations._getValue(clazz, Icon.class);
-        if (icon != null)
-            for (String iconDef : icon) {
+        String[] iconDefs = Annotations._getValue(clazz, Icon.class);
+        if (iconDefs != null)
+            for (String iconDef : iconDefs) {
                 int sep = iconDef.indexOf('|');
                 if (sep == -1) {
                     assert this.icon == null : "default icon duplicate";
@@ -77,6 +77,8 @@ public class ClassInfo {
 
     protected URL loadIcon(String name) {
         URL url = loader.getResource(name);
+        if (url == null)
+            throw new IllegalArgumentException("res isn't existed: " + name);
         return url;
     }
 

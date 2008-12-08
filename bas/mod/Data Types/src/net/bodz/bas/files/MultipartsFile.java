@@ -1,75 +1,34 @@
 package net.bodz.bas.files;
 
-import java.io.File;
-import java.nio.charset.Charset;
 import java.util.Iterator;
 
 import net.bodz.bas.io.Files;
+import net.bodz.bas.lang.ControlBreak;
+import net.bodz.bas.lang.ControlContinue;
 import net.bodz.bas.lang.err.ParseException;
-import net.bodz.bas.types.TypeParser;
-import net.bodz.bas.types.TypeParsers;
 import net.bodz.bas.types.util.PrefetchedIterator;
 
-public abstract class MultipartsFile<T> extends _FileType implements
-        FileSource<T> {
+public abstract class MultipartsFile<T> extends _MapFile<T> {
 
-    private final Object  file;
-    private final Charset charset;
-    private TypeParser    keyParser;
-    private TypeParser    valueParser;
-    public final Object   textKey;
-    private final String  partTerm = ".";
+    private Object   textKey;
+    protected String partTerm = ".";
 
-    /**
-     * @param file
-     *            can be File, URL
-     */
-    public MultipartsFile(Object file, Charset charset) {
-        this.file = file;
-        this.charset = charset;
-        try {
-            this.keyParser = TypeParsers.guess(getKeyClass(), "KeyClass");
-            this.valueParser = TypeParsers.guess(getValueClass(), "ValueClass");
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-        this.textKey = getTextKey();
+    public MultipartsFile(Object in, Object charset) {
+        super(in, charset);
     }
 
-    public MultipartsFile(Object file, String encoding) {
-        this(file, Files.getCharset(encoding));
+    public MultipartsFile(Object in) {
+        super(in);
     }
 
-    public MultipartsFile(Object file) {
-        this(file, (Charset) null);
-    }
-
-    public MultipartsFile(String path) {
-        this(new File(path));
-    }
-
-    protected Class<?> getKeyClass() {
-        return String.class;
-    }
-
-    protected Class<?> getValueClass() {
-        return String.class;
-    }
-
-    protected Object parseKey(String key) throws ParseException {
-        return keyParser.parse(key);
-    }
-
-    protected Object parseValue(String value) throws ParseException {
-        return valueParser.parse(value);
-    }
-
-    protected Object getTextKey() {
-        try {
-            return keyParser.parse(".");
-        } catch (ParseException e) {
-            throw new Error("error body key", e);
-        }
+    public Object getTextKey() {
+        if (textKey == null)
+            try {
+                textKey = keyParser.parse(".");
+            } catch (ParseException e) {
+                throw new Error("error body key", e);
+            }
+        return textKey;
     }
 
     protected Object parseText(String text) throws ParseException {
@@ -93,14 +52,6 @@ public abstract class MultipartsFile<T> extends _FileType implements
         return "<<<".equals(value);
     }
 
-    protected abstract void beginPart();
-
-    protected abstract Object endPart();
-
-    protected abstract boolean isPartEmpty();
-
-    protected abstract void addPartEntry(Object key, Object value);
-
     protected boolean isIndentChar(char c) {
         if (c == '\n' || c == '\r')
             return false;
@@ -112,7 +63,7 @@ public abstract class MultipartsFile<T> extends _FileType implements
         return new PrefetchedIterator<T>() {
             private Iterator<String> lines;
             {
-                lines = Files.readByLine2(charset, file).iterator();
+                lines = Files.readByLine2(charset, in).iterator();
             }
 
             @Override
@@ -121,16 +72,21 @@ public abstract class MultipartsFile<T> extends _FileType implements
                     return _fetch();
                 } catch (ParseException e) {
                     throw new RuntimeException(e.getMessage(), e);
+                } catch (ControlContinue c) {
+                    return fetch();
+                } catch (ControlBreak b) {
+                    return END;
                 }
             }
 
             protected Object _fetch() throws ParseException {
                 boolean preheader = true;
                 boolean header = true;
-                Object tKey = textKey;
+                Object tKey = getTextKey();
                 int indent = 0;
                 StringBuffer text = null;
-                beginPart();
+                MapRecordBuilder<T> builder = (MapRecordBuilder<T>) MultipartsFile.this.builder;
+                builder.reset();
                 L: while (lines.hasNext()) {
                     String line = lines.next();
                     H: while (header) {
@@ -167,18 +123,18 @@ public abstract class MultipartsFile<T> extends _FileType implements
                             tKey = key;
                         } else {
                             Object val = parseValue(value);
-                            addPartEntry(key, val);
+                            builder.add(key, val);
                         }
                         continue L;
                     } // headers
 
                     if (line.trim().equals(partTerm)) {
-                        addPartEntry(tKey, _parseText(text));
+                        builder.add(tKey, _parseText(text));
                         text = null;
-                        if (tKey == textKey)
+                        if (tKey == getTextKey()) // end part if text-key
                             break;
                         else {
-                            tKey = textKey;
+                            tKey = getTextKey(); // continue next head entry
                             header = true;
                             continue;
                         }
@@ -196,11 +152,10 @@ public abstract class MultipartsFile<T> extends _FileType implements
                 } // lines
 
                 if (text != null)
-                    addPartEntry(tKey, _parseText(text));
-                if (isPartEmpty())
-                    return END;
-                return endPart();
+                    builder.add(tKey, _parseText(text));
+                return builder.accept();
             }
         };
     }
+
 }

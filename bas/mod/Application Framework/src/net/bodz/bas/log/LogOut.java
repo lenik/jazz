@@ -47,6 +47,7 @@ public abstract class LogOut extends CharOut implements ILogOut {
         prevlen = len;
         len = 0;
         newline = true;
+        flush();
     }
 
     @Override

@@ -27,7 +27,7 @@ public class SJProjectTest {
         String bin = Files.classData(Object.class).toString();
         String src = SJProject.findSrc(Object.class).toString();
         String src0 = bin.replace(".class", ".java");
-        src0 = src0.replace("rt.jar!", "rt-source.jar!");
+        src0 = src0.replace("rt.jar!", "rt-src.jar!");
         assertEquals(src0, src);
     }
 

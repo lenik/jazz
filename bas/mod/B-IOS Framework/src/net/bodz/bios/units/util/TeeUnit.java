@@ -6,9 +6,11 @@ import java.util.List;
 
 import net.bodz.bios.OutPort;
 import net.bodz.bios.Receiver;
+import net.bodz.bios.Stateless;
 import net.bodz.bios.WireOutPort;
 import net.bodz.bios.units.SIUnit;
 
+@Stateless
 public class TeeUnit extends SIUnit {
 
     private List<OutPort> outPorts;

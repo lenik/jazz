@@ -43,7 +43,7 @@ public class ProvidersTest extends TestCase {
         Provider reuse2 = Providers.parse(curl);
         assertEquals(provider, reuse2);
 
-        PKIDumper dumper = new PKIDumper(CharOuts.stdout, 3);
+        PKIDumper dumper = new PKIDumper(CharOuts.stdout, 4);
         dumper.dumpProvider("", provider, "kl");
         CharOuts.stdout.flush();
 
@@ -51,7 +51,7 @@ public class ProvidersTest extends TestCase {
         // sprov.load((InputStream) null);
         // sprov.login(subject, handler)
 
-        // get keystore thru CertSelector
+        System.out.println("-- dump keystore thru CertSelector --");
         String password = "kl";
         curl = "PKCS11://" + password + "@";
         CertSelector cs = new CertSelector(curl, provider);
@@ -60,4 +60,5 @@ public class ProvidersTest extends TestCase {
         KeyStore keyStore = cs.getKeyStore();
         System.out.println(keyStore);
     }
+
 }

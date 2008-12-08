@@ -335,6 +335,8 @@ public class BasicCLI {
 
         if (plugins != null)
             plugins.help(out, "");
+
+        out.flush();
     }
 
     private boolean                prepared;

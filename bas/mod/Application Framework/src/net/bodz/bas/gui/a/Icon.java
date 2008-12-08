@@ -11,7 +11,7 @@ public @interface Icon {
     /**
      * resource-path
      */
-    String value() default "";
+    String[] value() default {};
 
     /**
      * create(usage) -> resource-path or Image, where usage is `big', `small',

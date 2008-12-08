@@ -217,7 +217,9 @@ public class CertSelector {
     }
 
     public KeyStore getKeyStore() throws KeyStoreException {
-        return getKeyStore(provider);
+        if (keyStore == null)
+            keyStore = getKeyStore(provider);
+        return keyStore;
     }
 
     public KeyStore getKeyStore(Provider provider) throws KeyStoreException {
@@ -256,8 +258,7 @@ public class CertSelector {
     public Certificate getCertificate() throws KeyStoreException {
         if (type < CERTIFICATE)
             throw new IllegalUsageException();
-        if (provider == null)
-            keyStore = getKeyStore(); // ...
+        KeyStore keyStore = getKeyStore();
         return getCertificate(keyStore);
     }
 

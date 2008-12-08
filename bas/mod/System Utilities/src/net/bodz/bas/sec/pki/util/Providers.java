@@ -2,6 +2,7 @@ package net.bodz.bas.sec.pki.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.security.Provider;
 import java.security.ProviderException;
 import java.security.Security;
@@ -17,6 +18,8 @@ import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TypeParser;
 import net.bodz.bas.types.TextMap.HashTextMap;
 import sun.security.pkcs11.SunPKCS11;
+import sun.security.pkcs11.wrapper.PKCS11;
+import sun.security.pkcs11.wrapper.PKCS11Exception;
 
 public class Providers {
 
@@ -76,11 +79,29 @@ public class Providers {
     static class PKCS11Parser implements TypeParser {
 
         TempCharOut getTemp() throws IOException {
-            File tempFile = File.createTempFile("p11conf", "ini");
+            File tempFile = File.createTempFile("p11conf", ".ini");
             return new TempCharOut(tempFile, "utf-8");
         }
 
-        static int searchSlots = 10;
+        static Field _p11;
+
+        static PKCS11 getP11(SunPKCS11 obj) {
+            try {
+                if (_p11 == null) {
+                    _p11 = SunPKCS11.class.getDeclaredField("p11");
+                    _p11.setAccessible(true);
+                }
+                return (PKCS11) _p11.get(obj);
+            } catch (Exception e) {
+                throw new Error(e);
+            }
+        }
+
+        boolean hasToken(Provider provider) {
+            // has any token?
+            Service service = provider.getService("KeyStore", "PKCS11");
+            return service != null;
+        }
 
         @Override
         public Provider parse(String s) throws ParseException {
@@ -106,21 +127,33 @@ public class Providers {
 
                 try {
                     if ("*".equals(slot)) { // auto-search
-                        int found = -1;
-                        for (int i = 0; i < searchSlots; i++) {
-                            slot = String.valueOf(i);
-                            provider = tryConfig(name, library, slot,
-                                    parameters);
-                            // has any token?
-                            Service service = provider.getService("KeyStore",
-                                    "PKCS11");
-                            if (service != null) {
-                                found = i;
-                                break;
+                        SunPKCS11 sprov = tryConfig(name, library, "0",
+                                parameters);
+                        if (!hasToken(sprov)) {
+                            PKCS11 p11 = getP11(sprov);
+                            long[] slots;
+                            try {
+                                slots = p11.C_GetSlotList(true);
+                            } catch (PKCS11Exception e) {
+                                throw new ParseException(e);
                             }
+                            if (slots.length == 0)
+                                throw new ParseException(
+                                        "no slot is token available!");
+                            int got = -1;
+                            for (int i = 0; i < slots.length; i++) {
+                                String slotId = ":" + slots[i];
+                                sprov = tryConfig(name, library, slotId,
+                                        parameters);
+                                if (hasToken(sprov)) {
+                                    got = i;
+                                    break;
+                                }
+                            }
+                            if (got == -1)
+                                throw new ParseException("no available slot!");
+                            provider = sprov;
                         }
-                        if (found == -1)
-                            throw new ParseException("no available slot!");
                     } else
                         provider = tryConfig(name, library, slot, parameters);
                 } catch (IOException e) {
@@ -141,10 +174,10 @@ public class Providers {
             if (slot != null) {
                 if (slot.startsWith(":")) {
                     slot = slot.substring(1);
-                    int slotId = Integer.parseInt(slot);
+                    long slotId = Long.parseLong(slot);
                     out.println("slot = " + slotId);
                 } else if (!slot.isEmpty()) {
-                    int slotListIndex = Integer.parseInt(slot);
+                    long slotListIndex = Long.parseLong(slot);
                     out.println("slotListIndex = " + slotListIndex);
                 }
             }
@@ -164,7 +197,7 @@ public class Providers {
                 return provider;
             } catch (ProviderException e) {
                 String config = Files.readAll(file, "utf-8");
-                System.err.println("Config: ");
+                System.err.println("Config error: " + e.getMessage());
                 System.err.println(config);
                 throw e;
             }
