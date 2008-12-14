@@ -1,5 +1,6 @@
 package net.bodz.bas.cli;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -10,10 +11,14 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.lang.ClassLocal;
 import net.bodz.bas.lang.Filt1;
 import net.bodz.bas.lang.err.ParseException;
+import net.bodz.bas.lang.util.Members;
+import net.bodz.bas.lang.util.Reflects;
 import net.bodz.bas.types.util.Comparators;
+import net.bodz.bas.types.util.Ns;
 import net.bodz.bas.types.util.Strings;
 
 public class ClassCLI {
@@ -66,8 +71,8 @@ public class ClassCLI {
     }
 
     @SuppressWarnings("unchecked")
-    public static String helpOptions(Class<?> clazz, final int tabsize,
-            final int docColumn) throws CLIException {
+    public static String helpOptions(Class<?> clazz, String restSyntax,
+            final int tabsize, final int docColumn) throws CLIException {
         final ClassOptions<Object> copt = (ClassOptions<Object>) getClassOptions(clazz);
         TreeMap<String, _Option<?>> options = copt.getOptions();
         StringBuffer buffer = new StringBuffer(options.size() * 80);
@@ -88,10 +93,30 @@ public class ClassCLI {
                 buffer.append(' ');
                 buffer.append(fnam);
             }
-            buffer.append("\n");
-        } else {
-            buffer.append(" FILES\n");
         }
+
+        buffer.append(" ");
+        if (restSyntax == null) {
+            boolean usingRestSyntax = false;
+            if (usingRestSyntax) {
+                // getRestSyntax();
+                Method restf = Members.findDeclaredMethod(clazz,
+                        "getRestSyntax");
+                if (restf == null)
+                    buffer.append("...");
+                else {
+                    restSyntax = (String) Reflects.invoke(null, restf);
+                    buffer.append(restSyntax);
+                }
+            } else {
+                Option appopt = Ns.getN(clazz, Option.class);
+                restSyntax = appopt.vnam();
+                buffer.append(restSyntax);
+            }
+        }
+        buffer.append(restSyntax);
+        buffer.append("\n");
+
         buffer.append("\n");
 
         Map<String, Set<_Option<?>>> groups = new HashMap<String, Set<_Option<?>>>();
@@ -190,4 +215,5 @@ public class ClassCLI {
         }
         return buffer.toString();
     }
+
 }

@@ -1,6 +1,6 @@
 package net.bodz.bas.cli;
 
-public class ProcessResult {
+public class EditResult {
 
     public static final int NONE      = 0;
     public static final int SAVE      = 10;
@@ -25,7 +25,7 @@ public class ProcessResult {
     public boolean          error;
     public Throwable        cause;
 
-    public ProcessResult(String... tags) {
+    public EditResult(String... tags) {
         this.tags = tags;
         this.operation = NONE;
     }
@@ -86,55 +86,55 @@ public class ProcessResult {
         this.done = true;
     }
 
-    public static ProcessResult pass(String... tags) {
-        ProcessResult result = new ProcessResult(tags);
+    public static EditResult pass(String... tags) {
+        EditResult result = new EditResult(tags);
         return result;
     }
 
-    public static ProcessResult compareAndSave(String... tags) {
-        ProcessResult result = new ProcessResult(tags);
+    public static EditResult compareAndSave(String... tags) {
+        EditResult result = new EditResult(tags);
         result.save(null);
         return result;
     }
 
-    public static ProcessResult saveSame(String... tags) {
-        ProcessResult result = new ProcessResult(tags);
+    public static EditResult saveSame(String... tags) {
+        EditResult result = new EditResult(tags);
         result.save(false);
         return result;
     }
 
-    public static ProcessResult saveDiff(String... tags) {
-        ProcessResult result = new ProcessResult(tags);
+    public static EditResult saveDiff(String... tags) {
+        EditResult result = new EditResult(tags);
         result.save(true);
         return result;
     }
 
-    public static ProcessResult rm(String... tags) {
-        ProcessResult result = new ProcessResult(tags);
+    public static EditResult rm(String... tags) {
+        EditResult result = new EditResult(tags);
         result.delete();
         return result;
     }
 
-    public static ProcessResult ren(Object dest, String... tags) {
-        ProcessResult result = new ProcessResult(tags);
+    public static EditResult ren(Object dest, String... tags) {
+        EditResult result = new EditResult(tags);
         result.renameTo(dest);
         return result;
     }
 
-    public static ProcessResult mv(Object dest, String... tags) {
-        ProcessResult result = new ProcessResult(tags);
+    public static EditResult mv(Object dest, String... tags) {
+        EditResult result = new EditResult(tags);
         result.moveTo(dest);
         return result;
     }
 
-    public static ProcessResult cp(Object dest, String... tags) {
-        ProcessResult result = new ProcessResult(tags);
+    public static EditResult cp(Object dest, String... tags) {
+        EditResult result = new EditResult(tags);
         result.copyTo(dest);
         return result;
     }
 
-    public static ProcessResult err(Throwable cause, String... tags) {
-        ProcessResult result = new ProcessResult(tags);
+    public static EditResult err(Throwable cause, String... tags) {
+        EditResult result = new EditResult(tags);
         result.error(cause);
         return result;
     }

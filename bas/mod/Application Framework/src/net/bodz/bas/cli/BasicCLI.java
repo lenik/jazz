@@ -44,8 +44,8 @@ import net.bodz.bas.mod.plugins.PluginTypeEx;
 import net.bodz.bas.types.AutoTypeMap;
 import net.bodz.bas.types.TypeParser;
 import net.bodz.bas.types.TypeParsers;
-import net.bodz.bas.types.TypeParsers.ALogParser;
-import net.bodz.bas.types.TypeParsers.CharOutParser;
+import net.bodz.bas.types.parsers.ALogParser;
+import net.bodz.bas.types.parsers.CharOutParser;
 import net.bodz.bas.types.util.Dates;
 import net.bodz.bas.types.util.Empty;
 import net.bodz.bas.types.util.Strings;
@@ -330,13 +330,18 @@ public class BasicCLI {
         _version(out);
         out.println();
 
-        String hlp_opts = ClassCLI.helpOptions(getClass(), 4, 29);
+        String hlp_opts = ClassCLI.helpOptions(getClass(), _helpRestSyntax(),
+                4, 29);
         out.print(hlp_opts);
 
         if (plugins != null)
             plugins.help(out, "");
 
         out.flush();
+    }
+
+    protected String _helpRestSyntax() {
+        return "FILES";
     }
 
     private boolean                prepared;

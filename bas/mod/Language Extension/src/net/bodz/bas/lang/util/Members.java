@@ -385,4 +385,17 @@ public class Members {
                 fieldName);
     }
 
+    public static Method findDeclaredMethod(Class<?> clazz, String name,
+            Class<?>... parameterTypes) {
+        while (clazz != null) {
+            try {
+                Method method = clazz.getDeclaredMethod(name, parameterTypes);
+                return method;
+            } catch (NoSuchMethodException e) {
+                clazz = clazz.getSuperclass();
+            }
+        }
+        return null;
+    }
+
 }

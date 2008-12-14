@@ -5,7 +5,9 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.CharOuts.Buffer;
@@ -97,14 +99,19 @@ public class UCL {
             this.list = new ArrayList<URL>();
         }
 
+        public URL[] get() {
+            return list.toArray(Empty.URLs);
+        }
+
+        @Override
+        public boolean loader(ClassLoader loader) {
+            return filter(loader);
+        }
+
         @Override
         public boolean entry(URL classpath) {
             list.add(classpath);
             return true;
-        }
-
-        public URL[] get() {
-            return list.toArray(Empty.URLs);
         }
 
     }
@@ -140,16 +147,18 @@ public class UCL {
 
     public static abstract class Iter {
 
+        public abstract boolean loader(ClassLoader loader);
+
         public abstract boolean entry(URL classpath);
 
-        /**
-         * (hint) it's useful to break if loader is-a
-         */
-        public boolean loader(ClassLoader loader) {
-            String className = loader.getClass().getName();
-            if (className.equals("sun.misc.Launcher$ExtClassLoader"))
-                return false;
-            return true;
+        public static final Set<String> stops;
+        static {
+            stops = new HashSet<String>();
+            stops.add("sun.misc.Launcher$ExtClassLoader");
+        }
+
+        protected boolean filter(ClassLoader loader) {
+            return !stops.contains(loader);
         }
 
     }
@@ -175,13 +184,14 @@ public class UCL {
                 out.println();
             cont = true;
             out.println("; loader " + loader);
-            if (!super.loader(loader)) {
-                out.println("; (system loader ignored)");
+            if (filter(loader)) {
+                if (!(loader instanceof URLClassLoader))
+                    out.println("; (no url info)");
+                return true;
+            } else {
+                out.println("; (stopped)");
                 return false;
             }
-            if (!(loader instanceof URLClassLoader))
-                out.println("; (no url info)");
-            return true;
         }
 
     }

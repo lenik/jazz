@@ -19,8 +19,8 @@ import net.bodz.bas.a.ProgramName;
 import net.bodz.bas.a.RcsKeywords;
 import net.bodz.bas.a.StartMode;
 import net.bodz.bas.a.Version;
-import net.bodz.bas.cli.BatchProcessCLI;
-import net.bodz.bas.cli.ProcessResult;
+import net.bodz.bas.cli.BatchEditCLI;
+import net.bodz.bas.cli.EditResult;
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.io.Files;
@@ -46,7 +46,7 @@ import net.bodz.bas.types.util.Strings;
 @Version( { 0, 3 })
 @RcsKeywords(id = "$Id$")
 @ProgramName("mkbat")
-public class Mkbat extends BatchProcessCLI {
+public class Mkbat extends BatchEditCLI {
 
     boolean                 force;
 
@@ -95,24 +95,24 @@ public class Mkbat extends BatchProcessCLI {
     }
 
     @Override
-    protected ProcessResult doFile(File file) throws LoadException, IOException {
+    protected EditResult doEdit(File file) throws LoadException, IOException {
         String ext = Files.getExtension(file, true);
         if (!".java".equals(ext) && !".class".equals(ext))
-            return ProcessResult.pass();
+            return EditResult.pass();
         String name = Files.getName(file);
         if (name.contains("$")) // ignore inner classes
-            return ProcessResult.pass("inner");
+            return EditResult.pass("inner");
 
         File bootFile = new File(file.getParentFile(), name + "Boot." + ext);
         if (bootFile.exists())
-            return ProcessResult.pass("boot");
+            return EditResult.pass("boot");
 
         String className = getRelativeName(file);
         className = className.substring(0, className.length() - ext.length());
         className = className.replace('\\', '/');
         className = className.replace('/', '.');
         if (generated.contains(className))
-            return ProcessResult.pass("repeat");
+            return EditResult.pass("repeat");
 
         Class<?> class0 = null;
         // can found by bootSysLoader?
@@ -121,21 +121,21 @@ public class Mkbat extends BatchProcessCLI {
             class0 = bootSysLoader.loadClass(className);
             // class0 = Class.forName(className, false, bootSysLoader);
         } catch (ClassNotFoundException e) {
-            return ProcessResult.err(e, "loadc");
+            return EditResult.err(e, "loadc");
         } catch (NoClassDefFoundError e) {
-            return ProcessResult.err(e, "loadc");
+            return EditResult.err(e, "loadc");
         }
 
         // is public?
         int modifiers = class0.getModifiers();
         if (!Modifier.isPublic(modifiers))
-            return ProcessResult.pass("local");
+            return EditResult.pass("local");
 
         // has main()? [1, bootSysLoader]
         try {
             class0.getMethod("main", String[].class);
         } catch (NoSuchMethodException e) {
-            return ProcessResult.pass("notapp0");
+            return EditResult.pass("notapp0");
             // return ProcessResult.err(e, "notapp0");
         } catch (NoClassDefFoundError t) {
             // continue search.
@@ -157,15 +157,15 @@ public class Mkbat extends BatchProcessCLI {
             class1.getMethod("main", String[].class);
             L.i.P("    main-class: ", class1);
         } catch (NoSuchMethodException e) {
-            return ProcessResult.pass("notapp");
+            return EditResult.pass("notapp");
             // return ProcessResult.err(e, "notapp");
         } catch (Throwable t) {
-            return ProcessResult.err(t, "loadf");
+            return EditResult.err(t, "loadf");
         }
 
         generate(class1);
 
-        return ProcessResult.pass("ok");
+        return EditResult.pass("ok");
     }
 
     protected void generate(Class<?> clazz) throws IOException {
@@ -244,7 +244,7 @@ public class Mkbat extends BatchProcessCLI {
 
         String inst = Interps.dereference(batTemplBody, varmap);
         byte[] batData = inst.getBytes();
-        byte[] batFixed = fix_BatBB.doFileEdit(batData);
+        byte[] batFixed = fix_BatBB.methods().doEditToBuffer(batData);
         if (!Bytes.equals(batData, batFixed))
             L.m.P("bat label boundary fixed: ", batf);
         if (force) {

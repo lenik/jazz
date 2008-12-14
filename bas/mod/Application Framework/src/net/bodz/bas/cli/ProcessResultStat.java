@@ -32,7 +32,7 @@ public class ProcessResultStat {
         errStat = new HashTypeMap<Integer>();
     }
 
-    public void add(ProcessResult result) {
+    public void add(EditResult result) {
         if (result == null) {
             ignored++;
             return;
@@ -44,21 +44,21 @@ public class ProcessResultStat {
         }
         if (result.done)
             switch (result.operation) {
-            case ProcessResult.SAVE:
+            case EditResult.SAVE:
                 throw new IllegalStateException();
-            case ProcessResult.SAVE_DIFF:
-            case ProcessResult.SAVE_SAME:
+            case EditResult.SAVE_DIFF:
+            case EditResult.SAVE_SAME:
                 saved++;
-            case ProcessResult.DELETE:
+            case EditResult.DELETE:
                 deleted++;
                 break;
-            case ProcessResult.RENAME:
+            case EditResult.RENAME:
                 renamed++;
                 break;
-            case ProcessResult.MOVE:
+            case EditResult.MOVE:
                 moved++;
                 break;
-            case ProcessResult.COPY:
+            case EditResult.COPY:
                 copied++;
                 break;
             default:

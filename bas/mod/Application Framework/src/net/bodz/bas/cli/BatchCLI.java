@@ -20,7 +20,7 @@ import net.bodz.bas.lang.ControlBreak;
 import net.bodz.bas.lang.a.OverrideOption;
 import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.types.TypeParsers.GetInstanceParser;
-import net.bodz.bas.types.TypeParsers.WildcardsParser;
+import net.bodz.bas.types.parsers.WildcardsParser;
 
 @OptionGroup(value = "batch", rank = -2)
 public class BatchCLI extends BasicCLI {
@@ -245,7 +245,7 @@ public class BatchCLI extends BasicCLI {
                 recursive, rootLast, sortComparator) {
             @Override
             public void process(File file) throws IOException {
-                _doFile(Files.canoniOf(file));
+                _processFile(Files.canoniOf(file));
             }
         };
         walker.walk();
@@ -256,7 +256,7 @@ public class BatchCLI extends BasicCLI {
      * 
      * This method will only be called if no argument is given.
      * 
-     * @see #doFile(File)
+     * @see #_processFile(File)
      */
     @Override
     @Deprecated
@@ -271,12 +271,10 @@ public class BatchCLI extends BasicCLI {
      *            canonical file
      * @throws FileNotFoundException
      */
-    protected void _doFile(File file) {
+    protected void _processFile(File file) {
         assert file != null;
-        FileInputStream in = null;
         try {
-            in = new FileInputStream(file);
-            doFile(file, in);
+            doFile(file);
         } catch (Throwable e) {
             L.e.P("file ", file, " error: ", e.getMessage());
             if (L.showDetail())
@@ -284,12 +282,15 @@ public class BatchCLI extends BasicCLI {
             if (!errorContinue)
                 throw new ControlBreak();
         } finally {
-            try {
-                if (in != null)
-                    in.close();
-            } catch (IOException e) {
-                // ignore
-            }
+        }
+    }
+
+    protected void doFile(File file) throws Throwable {
+        FileInputStream in = new FileInputStream(file);
+        try {
+            doFile(file, in);
+        } finally {
+            in.close();
         }
     }
 
@@ -299,6 +300,30 @@ public class BatchCLI extends BasicCLI {
      */
     protected void doFile(File file, InputStream in) throws Throwable {
         throw new NotImplementedException();
+    }
+
+    public class Methods {
+
+        public void doFileArgument(File file) throws Throwable {
+            BatchCLI.this.doFileArgument(file);
+        }
+
+        public void doFile(File file) throws Throwable {
+            BatchCLI.this.doFile(file);
+        }
+
+        public void doFile(File file, InputStream in) throws Throwable {
+            BatchCLI.this.doFile(file, in);
+        }
+
+    }
+
+    Methods methods;
+
+    public Methods methods() {
+        if (methods == null)
+            methods = new Methods();
+        return methods;
     }
 
 }

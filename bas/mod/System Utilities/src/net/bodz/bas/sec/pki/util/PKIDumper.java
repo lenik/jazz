@@ -283,6 +283,14 @@ public class PKIDumper {
             byte[] encoded = x509.getEncoded();
             out.print(prefix + "encoded: ");
             dumpBytes(prefix + "  ", encoded, detail);
+
+            byte[] md5 = Cryptos.md5(encoded);
+            out.print(prefix + "  md5: ");
+            dumpBytes(prefix + "    ", md5, detail + 1); // full dump
+
+            byte[] sha1 = Cryptos.sha1(encoded);
+            out.print(prefix + "  sha1: ");
+            dumpBytes(prefix + "    ", sha1, detail + 1); // full dump
         } catch (CertificateEncodingException e) {
             dumpError(prefix + "  ", e, detail);
         }
@@ -588,14 +596,6 @@ public class PKIDumper {
         assert signature != null;
         // out.print(prefix + "raw-bytes: ");
         dumpBytes(prefix + "    ", signature, detail);
-
-        byte[] md5 = Cryptos.md5(signature);
-        out.print(prefix + "md5: ");
-        dumpBytes(prefix + "  ", md5, detail + 1); // full dump
-
-        byte[] sha1 = Cryptos.sha1(signature);
-        out.print(prefix + "sha1: ");
-        dumpBytes(prefix + "  ", sha1, detail + 1); // full dump
     }
 
     void dumpError(String prefix, Throwable t, int detail) {
