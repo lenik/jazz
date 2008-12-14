@@ -247,8 +247,11 @@ public class CertSelector {
                 ch = new SimpleCallbackHandler(storePassword);
             CallbackHandlerProtection prot = new CallbackHandlerProtection(ch);
             File file = storeURLFile;
-            Builder builder = Builder.newInstance(storeType, provider, file,
-                    prot);
+            Builder builder;
+            if (file == null)
+                builder = Builder.newInstance(storeType, provider, prot);
+            else
+                builder = Builder.newInstance(storeType, provider, file, prot);
             // will ask password here.
             keyStore = builder.getKeyStore();
         }

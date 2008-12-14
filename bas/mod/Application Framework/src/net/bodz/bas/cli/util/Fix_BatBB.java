@@ -8,15 +8,15 @@ import java.nio.ByteBuffer;
 import net.bodz.bas.a.Doc;
 import net.bodz.bas.a.RcsKeywords;
 import net.bodz.bas.a.Version;
-import net.bodz.bas.cli.BatchProcessCLI;
-import net.bodz.bas.cli.ProcessResult;
+import net.bodz.bas.cli.BatchEditCLI;
+import net.bodz.bas.cli.EditResult;
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.io.Files;
 
 @Doc("Fix: .bat goto labels must not cross 1k block boundary.")
 @Version( { 0, 0 })
 @RcsKeywords(id = "$Id$")
-public class Fix_BatBB extends BatchProcessCLI {
+public class Fix_BatBB extends BatchEditCLI {
 
     @Option(alias = "b", vnam = "SIZE", doc = "block size, default 1024")
     int  blockSize = 1024;
@@ -25,7 +25,7 @@ public class Fix_BatBB extends BatchProcessCLI {
     char fillChar  = ':';
 
     @Override
-    protected ProcessResult doFileEdit(InputStream in, OutputStream out)
+    protected EditResult doEditByIO(InputStream in, OutputStream out)
             throws Throwable {
         int start = 0; // out
 
@@ -63,7 +63,7 @@ public class Fix_BatBB extends BatchProcessCLI {
                 }
             }
         }
-        return ProcessResult.compareAndSave();
+        return EditResult.compareAndSave();
     }
 
     boolean crossBlocks(int start, int end) {

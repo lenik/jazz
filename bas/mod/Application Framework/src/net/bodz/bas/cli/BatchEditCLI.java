@@ -27,7 +27,7 @@ import net.bodz.bas.text.diff.DiffInfo;
 import net.bodz.bas.types.util.Strings;
 
 @OptionGroup(value = "batch process", rank = -3)
-public class BatchProcessCLI extends BatchCLI {
+public class BatchEditCLI extends BatchCLI {
 
     @Option(alias = ".E", vnam = "ENCODING", doc = "default encoding of output files")
     Charset        outputEncoding = Charset.defaultCharset();
@@ -66,7 +66,7 @@ public class BatchProcessCLI extends BatchCLI {
         }
 
         public void setOutputEncoding(Charset outputEncoding) {
-            BatchProcessCLI.this.outputEncoding = outputEncoding;
+            BatchEditCLI.this.outputEncoding = outputEncoding;
         }
 
         public File getOutputDirectory() {
@@ -74,7 +74,7 @@ public class BatchProcessCLI extends BatchCLI {
         }
 
         public void setOutputDirectory(File outputDirectory) {
-            BatchProcessCLI.this.outputDirectory = outputDirectory;
+            BatchEditCLI.this.outputDirectory = outputDirectory;
         }
 
         public String getBackupExtension() {
@@ -82,7 +82,7 @@ public class BatchProcessCLI extends BatchCLI {
         }
 
         public void setBackupExtension(String backupExtension) {
-            BatchProcessCLI.this.backupExtension = backupExtension;
+            BatchEditCLI.this.backupExtension = backupExtension;
         }
 
         public boolean isDryRun() {
@@ -90,7 +90,7 @@ public class BatchProcessCLI extends BatchCLI {
         }
 
         public void setDryRun(boolean dryRun) {
-            BatchProcessCLI.this.dryRun = dryRun;
+            BatchEditCLI.this.dryRun = dryRun;
         }
 
         public boolean isForce() {
@@ -98,7 +98,7 @@ public class BatchProcessCLI extends BatchCLI {
         }
 
         public void setForce(boolean force) {
-            BatchProcessCLI.this.force = force;
+            BatchEditCLI.this.force = force;
         }
 
         public DiffComparator getDiffAlgorithm() {
@@ -106,7 +106,7 @@ public class BatchProcessCLI extends BatchCLI {
         }
 
         public void setDiffAlgorithm(DiffComparator diffAlgorithm) {
-            BatchProcessCLI.this.diffAlgorithm = diffAlgorithm;
+            BatchEditCLI.this.diffAlgorithm = diffAlgorithm;
         }
 
         public DiffFormat getDiffFormat() {
@@ -114,7 +114,7 @@ public class BatchProcessCLI extends BatchCLI {
         }
 
         public void setDiffFormat(DiffFormat diffFormat) {
-            BatchProcessCLI.this.diffFormat = diffFormat;
+            BatchEditCLI.this.diffFormat = diffFormat;
         }
 
         public CharOut getDiffOutput() {
@@ -122,7 +122,7 @@ public class BatchProcessCLI extends BatchCLI {
         }
 
         public void setDiffOutput(CharOut diffOutput) {
-            BatchProcessCLI.this.diffOutput = diffOutput;
+            BatchEditCLI.this.diffOutput = diffOutput;
         }
 
         public boolean isDiff3() {
@@ -130,7 +130,7 @@ public class BatchProcessCLI extends BatchCLI {
         }
 
         public void setDiff3(boolean diff3) {
-            BatchProcessCLI.this.diff3 = diff3;
+            BatchEditCLI.this.diff3 = diff3;
         }
 
         public boolean isDiffWithDest() {
@@ -138,7 +138,7 @@ public class BatchProcessCLI extends BatchCLI {
         }
 
         public void setDiffWithDest(boolean diffWithDest) {
-            BatchProcessCLI.this.diffWithDest = diffWithDest;
+            BatchEditCLI.this.diffWithDest = diffWithDest;
         }
 
     }
@@ -150,7 +150,7 @@ public class BatchProcessCLI extends BatchCLI {
         return (Parameters) parameters;
     }
 
-    protected BatchProcessCLI() {
+    protected BatchEditCLI() {
     }
 
     /**
@@ -236,11 +236,11 @@ public class BatchProcessCLI extends BatchCLI {
      *            canonical file
      */
     @Override
-    protected void _doFile(File file) {
+    protected void _processFile(File file) {
         Throwable err = null;
         try {
             L.i.sig("[proc] ", file);
-            ProcessResult result = BatchProcessCLI.this.doFile(file);
+            EditResult result = BatchEditCLI.this.doEdit(file);
             addResult(file, result);
         } catch (RuntimeException e) {
             throw e;
@@ -254,7 +254,7 @@ public class BatchProcessCLI extends BatchCLI {
         } finally {
             // err before addResult() or raised inside addResult()
             if (err != null) {
-                stat.add(ProcessResult.err(err));
+                stat.add(EditResult.err(err));
                 L.e.P("[fail] ", file + ": " + err.getMessage());
             }
         }
@@ -270,11 +270,11 @@ public class BatchProcessCLI extends BatchCLI {
      * @param file
      *            canonical file
      */
-    @OverrideOption(group = "batchProcess")
-    protected ProcessResult doFile(File file) throws Throwable {
+    @OverrideOption(group = "batchEdit")
+    protected EditResult doEdit(File file) throws Throwable {
         File editTmp = _getEditTmp(file);
         try {
-            ProcessResult result = doFile(file, editTmp);
+            EditResult result = doEditWithTemp(file, editTmp);
             addResult(file, getOutputFile(file), editTmp, result);
             return null;
         } finally {
@@ -298,9 +298,10 @@ public class BatchProcessCLI extends BatchCLI {
      * @param editTmp
      *            canonical file
      */
-    @OverrideOption(group = "batchProcess")
-    protected ProcessResult doFile(File file, File editTmp) throws Throwable {
-        ProcessResult result = doFileEdit(file, editTmp);
+    @OverrideOption(group = "batchEdit")
+    protected EditResult doEditWithTemp(File file, File editTmp)
+            throws Throwable {
+        EditResult result = doEdit(file, editTmp);
         if (result == null) // ignored
             return null;
         File dst = getOutputFile(file);
@@ -321,8 +322,8 @@ public class BatchProcessCLI extends BatchCLI {
      * @return PROCESS_IGNORE: file skipped <br>
      *         PROCESS_EDIT: have the result written to the out file
      */
-    @OverrideOption(group = "batchProcess")
-    protected ProcessResult doFileEdit(File in, File out) throws Throwable {
+    @OverrideOption(group = "batchEdit")
+    protected EditResult doEdit(File in, File out) throws Throwable {
         InputStream ins = null;
         OutputStream outs = null;
         try {
@@ -331,7 +332,7 @@ public class BatchProcessCLI extends BatchCLI {
                 outs = new FileOutputStream(out);
             else
                 outs = System.out;
-            return doFileEdit(ins, outs);
+            return doEditByIO(ins, outs);
         } finally {
             if (ins != null)
                 ins.close();
@@ -342,35 +343,19 @@ public class BatchProcessCLI extends BatchCLI {
 
     /**
      * Implemented as: read lines and pass to
-     * {@link #doFileEdit(Iterable, CharOut)}.
+     * {@link #doEditByLine(Iterable, CharOut)}.
      * 
      * @return PROCESS_IGNORE: file skipped <br>
      *         PROCESS_EDIT: have the result written to the output
      */
-    @OverrideOption(group = "batchProcess")
-    protected ProcessResult doFileEdit(InputStream in, OutputStream out)
+    @OverrideOption(group = "batchEdit")
+    protected EditResult doEditByIO(InputStream in, OutputStream out)
             throws Throwable {
         Iterable<String> lines = Files.readByLine2(inputEncoding.name(), in);
         CharOut cout = CharOuts.stdout;
         if (out != null)
             cout = CharOuts.get(out, outputEncoding.name());
-        return doFileEdit(lines, cout);
-    }
-
-    public final byte[] doFileEdit(Object in) throws IOException {
-        InputStream ins = Files.getInputStream(in);
-        boolean closeIn = Files.shouldClose(in);
-        ByteArrayOutputStream outbuf = new ByteArrayOutputStream();
-        try {
-            // ProcessResult result =
-            doFileEdit(ins, outbuf);
-        } catch (Throwable e) {
-            throw new RuntimeException(e.getMessage(), e);
-        } finally {
-            if (closeIn)
-                ins.close();
-        }
-        return outbuf.toByteArray();
+        return doEditByLine(lines, cout);
     }
 
     /**
@@ -379,8 +364,8 @@ public class BatchProcessCLI extends BatchCLI {
      * @return PROCESS_IGNORE: file skipped <br>
      *         PROCESS_EDIT: have the result written to the output
      */
-    @OverrideOption(group = "batchProcess")
-    protected ProcessResult doFileEdit(Iterable<String> lines, CharOut out)
+    @OverrideOption(group = "batchEdit")
+    protected EditResult doEditByLine(Iterable<String> lines, CharOut out)
             throws Throwable {
         throw new NotImplementedException();
     }
@@ -396,21 +381,21 @@ public class BatchProcessCLI extends BatchCLI {
 
     protected final ProcessResultStat stat = new ProcessResultStat();
 
-    protected void addResult(ProcessResult result) throws IOException {
+    protected void addResult(EditResult result) throws IOException {
         addResult(null, null, null, result);
     }
 
-    protected void addResult(File src, ProcessResult result)
-            throws IOException, CLIException {
+    protected void addResult(File src, EditResult result) throws IOException,
+            CLIException {
         addResult(src, getOutputFile(src), result);
     }
 
-    protected void addResult(File src, File dst, ProcessResult result)
+    protected void addResult(File src, File dst, EditResult result)
             throws IOException {
         addResult(src, dst, null, result);
     }
 
-    protected void addResult(File src, File dst, File edit, ProcessResult result)
+    protected void addResult(File src, File dst, File edit, EditResult result)
             throws IOException {
         if (result == null) {
             L.d.P("[skip] ", src);
@@ -434,12 +419,12 @@ public class BatchProcessCLI extends BatchCLI {
         }
     }
 
-    private void applyResult(File src, File dst, File edit, ProcessResult result)
+    private void applyResult(File src, File dst, File edit, EditResult result)
             throws IOException {
         assert result != null;
 
         boolean diffPrinted = false;
-        if (result.operation == ProcessResult.SAVE) {
+        if (result.operation == EditResult.SAVE) {
             assert result.changed == null;
             if (edit == null)
                 throw new IllegalUsageError("can't save: not a batch editor");
@@ -449,38 +434,38 @@ public class BatchProcessCLI extends BatchCLI {
             } else
                 result.changed = Files.equals(src, edit);
             if (result.changed)
-                result.operation = ProcessResult.SAVE_DIFF;
+                result.operation = EditResult.SAVE_DIFF;
             else
-                result.operation = ProcessResult.SAVE_SAME;
+                result.operation = EditResult.SAVE_SAME;
         }
 
         switch (result.operation) {
-        case ProcessResult.NONE:
+        case EditResult.NONE:
             return;
 
-        case ProcessResult.DELETE:
+        case EditResult.DELETE:
             if (psh.delete(dst))
                 result.setDone();
             return;
 
-        case ProcessResult.RENAME:
+        case EditResult.RENAME:
             if (psh.renameTo(src, dst))
                 result.setDone();
             return;
 
-        case ProcessResult.MOVE:
+        case EditResult.MOVE:
             if (psh.move(src, dst, force))
                 result.setDone();
             return;
 
-        case ProcessResult.COPY:
+        case EditResult.COPY:
             if (psh.copy(src, dst))
                 result.setDone();
             return;
 
-        case ProcessResult.SAVE_DIFF:
+        case EditResult.SAVE_DIFF:
             assert result.changed;
-        case ProcessResult.SAVE_SAME:
+        case EditResult.SAVE_SAME:
             boolean saveLocal = dst.equals(src);
             if (!result.changed && saveLocal)
                 return;
@@ -509,7 +494,7 @@ public class BatchProcessCLI extends BatchCLI {
             result.setDone();
             return;
 
-        case ProcessResult.SAVE:
+        case EditResult.SAVE:
         default:
             throw new UnexpectedException("invalid operation: "
                     + result.operation);
@@ -527,10 +512,55 @@ public class BatchProcessCLI extends BatchCLI {
     }
 
     @Override
-    @OverrideOption(group = "batchProcess")
+    @OverrideOption(group = "batchEdit")
     protected void doFileArgument(final File file) throws Throwable {
         L.i.sig("[start] ", file);
         super.doFileArgument(file);
+    }
+
+    public class Methods extends net.bodz.bas.cli.BatchCLI.Methods {
+
+        public EditResult doEdit(File file) throws Throwable {
+            return BatchEditCLI.this.doEdit(file);
+        }
+
+        public EditResult doEdit(File in, File out) throws Throwable {
+            return BatchEditCLI.this.doEdit(in, out);
+        }
+
+        public EditResult doEditByIO(InputStream in, OutputStream out)
+                throws Throwable {
+            return BatchEditCLI.this.doEditByIO(in, out);
+        }
+
+        public EditResult doEditByLine(Iterable<String> lines, CharOut out)
+                throws Throwable {
+            return BatchEditCLI.this.doEditByLine(lines, out);
+        }
+
+        public final byte[] doEditToBuffer(Object in) throws IOException {
+            InputStream ins = Files.getInputStream(in);
+            boolean closeIn = Files.shouldClose(in);
+            ByteArrayOutputStream outbuf = new ByteArrayOutputStream();
+            try {
+                // ProcessResult result =
+                doEditByIO(ins, outbuf);
+            } catch (Throwable e) {
+                throw new RuntimeException(e.getMessage(), e);
+            } finally {
+                if (closeIn)
+                    ins.close();
+            }
+            return outbuf.toByteArray();
+        }
+
+    }
+
+    @Override
+    public Methods methods() {
+        if (methods == null)
+            methods = new Methods();
+        return (Methods) methods;
     }
 
 }

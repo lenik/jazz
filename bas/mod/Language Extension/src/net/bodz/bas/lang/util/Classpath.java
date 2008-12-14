@@ -42,6 +42,7 @@ public class Classpath {
 
     public static void dumpURLs(CharOut out) {
         UCL.dump(Caller.getCallerClassLoader(), out);
+        out.flush();
     }
 
     public static String dumpURLs() {

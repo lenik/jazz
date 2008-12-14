@@ -2,6 +2,7 @@ package net.bodz.bas.types.util;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 import net.bodz.bas.lang.Filt1;
@@ -184,6 +185,14 @@ public class Arrays2 {
         @SuppressWarnings("unchecked")
         T[] dest = (T[]) Array.newInstance(t, list.size());
         return list.toArray(dest);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> T[] convert(Enumeration<T> enumr) {
+        List<T> list = new ArrayList<T>();
+        while (enumr.hasMoreElements())
+            list.add(enumr.nextElement());
+        return (T[]) list.toArray();
     }
 
 }

@@ -35,7 +35,7 @@ public class Fix_BatBBTest {
         System.out.println("------------------------------");
         ByteArrayInputStream in = new ByteArrayInputStream(src.getBytes());
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        app.doFileEdit(in, out);
+        app.doEditByIO(in, out);
         String dst = new String(out.toByteArray());
         dst = dst.replace(' ', '_');
         System.out.println(dst);
