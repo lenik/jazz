@@ -11,12 +11,13 @@
 	</section>
 	<section name="ShowViewDialog">
 		<item value="316" key="DIALOG_WIDTH"/>
-		<item value="org.eclipse.pde.runtime.RegistryBrowser" key="ShowViewDialog.STORE_SELECTED_VIEW_ID"/>
+		<item value="org.eclipse.wst.internet.monitor.view" key="ShowViewDialog.STORE_SELECTED_VIEW_ID"/>
 		<item value="104" key="DIALOG_Y_ORIGIN"/>
 		<item value="420" key="DIALOG_HEIGHT"/>
 		<item value="354" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Tahoma|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Tahoma" key="DIALOG_FONT_NAME"/>
 		<list key="ShowViewDialog.STORE_EXPANDED_CATEGORIES_ID">
+			<item value="org.eclipse.debug.ui"/>
 			<item value="org.eclipse.pde.ui"/>
 			<item value="org.eclipse.pde.runtime"/>
 		</list>
