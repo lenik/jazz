@@ -1,12 +1,12 @@
 package net.bodz.bas.lang;
 
-public abstract class Pred_<A> implements Func1<Boolean, A> {
+public abstract class Pred_<V> implements Func_<Boolean, V> {
 
     @Override
-    public final Boolean eval(A a) {
-        return test(a);
+    public final Boolean eval(V... args) {
+        return test(args);
     }
 
-    public abstract boolean test(A a);
+    public abstract boolean test(V... args);
 
 }

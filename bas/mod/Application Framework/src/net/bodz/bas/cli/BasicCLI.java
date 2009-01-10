@@ -22,6 +22,7 @@ import net.bodz.bas.cli.a.OptionGroup;
 import net.bodz.bas.cli.a.ParseBy;
 import net.bodz.bas.cli.ext.CLIPlugin;
 import net.bodz.bas.cli.ext.CLIPlugins;
+import net.bodz.bas.io.CWD;
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.io.Files;
@@ -522,7 +523,7 @@ public class BasicCLI {
     @OverrideOption(group = "basicMain")
     protected void doMainManaged(String[] args) throws Throwable {
         for (String arg : args)
-            doFileArgument(Files.canoniOf(arg));
+            doFileArgument(CWD.get(arg));
     }
 
     /**

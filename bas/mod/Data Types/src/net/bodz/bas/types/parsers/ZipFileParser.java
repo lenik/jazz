@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
-import net.bodz.bas.io.Files;
+import net.bodz.bas.io.CWD;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.types.TypeParser;
 
@@ -13,7 +13,7 @@ public class ZipFileParser implements TypeParser {
 
     @Override
     public ZipFile parse(String path) throws ParseException {
-        File file = Files.canoniOf(path);
+        File file = CWD.get(path);
         try {
             return new ZipFile(file);
         } catch (ZipException e) {

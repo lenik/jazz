@@ -30,6 +30,14 @@ public class EclipseProject {
         return new EclipseProject(base);
     }
 
+    public File getBase() {
+        return base;
+    }
+
+    public void setBase(File base) {
+        this.base = base;
+    }
+
     public URL[] getClasspaths() throws ParseException {
         File cpFile = new File(base, ".classpath");
         final String[] _output = new String[1];
@@ -71,6 +79,10 @@ public class EclipseProject {
         if (output != null)
             urls[i] = Files.getURL(new File(base, output));
         return urls;
+    }
+
+    public EclipseWorkspace findWorkspace() {
+        return null;
     }
 
 }

@@ -1,13 +1,13 @@
 package net.bodz.bas.lang;
 
-public abstract class Proc_<A> implements Func1<Void, A> {
+public abstract class Proc_<V> implements Func_<Void, V> {
 
     @Override
-    public final Void eval(A a) {
-        exec(a);
+    public final Void eval(V... args) {
+        exec(args);
         return null;
     }
 
-    public abstract boolean exec(A a);
+    public abstract void exec(V... args);
 
 }

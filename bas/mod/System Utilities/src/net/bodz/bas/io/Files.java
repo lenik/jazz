@@ -24,8 +24,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.nio.charset.CharsetDecoder;
-import java.nio.charset.CharsetEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -45,6 +43,7 @@ import net.bodz.bas.lang.err.WrappedException;
 import net.bodz.bas.lang.err._throws;
 import net.bodz.bas.text.diff.DiffComparator;
 import net.bodz.bas.text.diff.DiffInfo;
+import net.bodz.bas.text.encodings.Charsets;
 import net.bodz.bas.text.util.CharFeature;
 import net.bodz.bas.types.Bits;
 import net.bodz.bas.types.util.Empty;
@@ -52,7 +51,6 @@ import net.bodz.bas.types.util.PrefetchedIterator;
 
 public class Files {
 
-    public static Charset encoding  = Charset.defaultCharset();
     public static int     blockSize = 4096;
     private static String slash;
     static {
@@ -62,40 +60,6 @@ public class Files {
     }
 
     // adapters
-
-    public static Charset getCharset(Object charset) {
-        if (charset == null)
-            return encoding;
-        if (charset instanceof Charset)
-            return (Charset) charset;
-        if (charset instanceof String)
-            return Charset.forName((String) charset);
-        throw new IllegalArgumentTypeException(charset, "String or Charset");
-    }
-
-    public static CharsetEncoder getCharsetEncoder(Object charset) {
-        if (charset == null)
-            return encoding.newEncoder();
-        if (charset instanceof CharsetEncoder)
-            return (CharsetEncoder) charset;
-        if (charset instanceof Charset)
-            return ((Charset) charset).newEncoder();
-        if (charset instanceof String)
-            return Charset.forName((String) charset).newEncoder();
-        throw new IllegalArgumentTypeException(charset);
-    }
-
-    public static CharsetDecoder getCharsetDecoder(Object charset) {
-        if (charset == null)
-            return encoding.newDecoder();
-        if (charset instanceof CharsetDecoder)
-            return (CharsetDecoder) charset;
-        if (charset instanceof Charset)
-            return ((Charset) charset).newDecoder();
-        if (charset instanceof String)
-            return Charset.forName((String) charset).newDecoder();
-        throw new IllegalArgumentTypeException(charset);
-    }
 
     /**
      * @param in
@@ -117,7 +81,7 @@ public class Files {
         if (in instanceof InputStream)
             return (InputStream) in;
         if (in instanceof Reader)
-            return new ReaderInputStream((Reader) in, getCharset(charset));
+            return new ReaderInputStream((Reader) in, Charsets.get(charset));
         if (in instanceof File)
             return new FileInputStream((File) in);
         if (in instanceof String) // filename
@@ -135,7 +99,7 @@ public class Files {
      * @see #getInputStream(Object, Object)
      */
     public static InputStream getInputStream(Object in) throws IOException {
-        return getInputStream(in, encoding);
+        return getInputStream(in, Charsets.DEFAULT);
     }
 
     /**
@@ -157,7 +121,7 @@ public class Files {
         if (out instanceof OutputStream)
             return (OutputStream) out;
         if (out instanceof Writer)
-            return new WriterOutputStream((Writer) out, getCharset(charset));
+            return new WriterOutputStream((Writer) out, Charsets.get(charset));
         if (out instanceof File)
             return new FileOutputStream((File) out, append);
         if (out instanceof String)
@@ -179,7 +143,7 @@ public class Files {
      */
     public static OutputStream getOutputStream(Object out, boolean append)
             throws IOException {
-        return getOutputStream(out, encoding, append);
+        return getOutputStream(out, Charsets.DEFAULT, append);
     }
 
     /**
@@ -194,7 +158,7 @@ public class Files {
      * @see #getOutputStream(Object, Object, boolean)
      */
     public static OutputStream getOutputStream(Object out) throws IOException {
-        return getOutputStream(out, encoding, false);
+        return getOutputStream(out, Charsets.DEFAULT, false);
     }
 
     /**
@@ -219,14 +183,14 @@ public class Files {
         if (in instanceof char[])
             return new StringReader(new String((char[]) in));
         InputStream ins = getInputStream(in);
-        return new InputStreamReader(ins, getCharset(charset));
+        return new InputStreamReader(ins, Charsets.get(charset));
     }
 
     /**
      * @see #getReader(Object, Object)
      */
     public static Reader getReader(Object in) throws IOException {
-        return getReader(in, encoding);
+        return getReader(in, Charsets.DEFAULT);
     }
 
     public static BufferedReader getBufferedReader(Object in, Object charset)
@@ -240,7 +204,7 @@ public class Files {
 
     public static BufferedReader getBufferedReader(Object in)
             throws IOException {
-        return getBufferedReader(in, encoding);
+        return getBufferedReader(in, Charsets.DEFAULT);
     }
 
     public static LineReader getLineReader(Object in, Object charset)
@@ -253,7 +217,7 @@ public class Files {
     }
 
     public static LineReader getLineReader(Object in) throws IOException {
-        return getLineReader(in, encoding);
+        return getLineReader(in, Charsets.DEFAULT);
     }
 
     /**
@@ -272,12 +236,12 @@ public class Files {
         if (out instanceof Writer)
             return (Writer) out;
         OutputStream outs = getOutputStream(out, append);
-        return new OutputStreamWriter(outs, getCharset(charset));
+        return new OutputStreamWriter(outs, Charsets.get(charset));
     }
 
     public static Writer getWriter(Object out, boolean append)
             throws IOException {
-        return getWriter(out, encoding, append);
+        return getWriter(out, Charsets.DEFAULT, append);
     }
 
     public static Writer getWriter(Object out, Object charset)
@@ -286,7 +250,7 @@ public class Files {
     }
 
     public static Writer getWriter(Object out) throws IOException {
-        return getWriter(out, encoding, false);
+        return getWriter(out, Charsets.DEFAULT, false);
     }
 
     public static boolean shouldClose(Object io) {
@@ -330,11 +294,11 @@ public class Files {
 
     public static byte[] readBytes(Object in, long size, boolean close)
             throws IOException {
-        return readBytes(in, size, encoding, close);
+        return readBytes(in, size, Charsets.DEFAULT, close);
     }
 
     public static byte[] readBytes(Object in, long size) throws IOException {
-        return readBytes(in, size, encoding);
+        return readBytes(in, size, Charsets.DEFAULT);
     }
 
     public static byte[] readBytes(Object in, Object charset, boolean close)
@@ -349,11 +313,11 @@ public class Files {
     }
 
     public static byte[] readBytes(Object in, boolean close) throws IOException {
-        return readBytes(in, encoding, close);
+        return readBytes(in, Charsets.DEFAULT, close);
     }
 
     public static byte[] readBytes(Object in) throws IOException {
-        return readBytes(in, encoding);
+        return readBytes(in, Charsets.DEFAULT);
     }
 
     public static String readAll(Object in, Object charset, boolean close)
@@ -380,11 +344,11 @@ public class Files {
     }
 
     public static String readAll(Object in, boolean close) throws IOException {
-        return readAll(in, encoding, close);
+        return readAll(in, Charsets.DEFAULT, close);
     }
 
     public static String readAll(Object in) throws IOException {
-        return readAll(in, encoding);
+        return readAll(in, Charsets.DEFAULT);
     }
 
     /**
@@ -425,7 +389,7 @@ public class Files {
      */
     public static List<String> readLines(Object in, boolean close)
             throws IOException {
-        return readLines(in, encoding, close);
+        return readLines(in, Charsets.DEFAULT, close);
     }
 
     /**
@@ -434,7 +398,7 @@ public class Files {
      * @see LineReader#readLine()
      */
     public static List<String> readLines(Object in) throws IOException {
-        return readLines(in, encoding);
+        return readLines(in, Charsets.DEFAULT);
     }
 
     /**
@@ -488,7 +452,7 @@ public class Files {
      * @see LineReader#readLine()
      */
     public static String readLine(Object in, boolean close) throws IOException {
-        return readLine(in, encoding, close);
+        return readLine(in, Charsets.DEFAULT, close);
     }
 
     /**
@@ -497,7 +461,7 @@ public class Files {
      * @see LineReader#readLine()
      */
     public static String readLine(Object in) throws IOException {
-        return readLine(in, encoding);
+        return readLine(in, Charsets.DEFAULT);
     }
 
     public static String readTill(Object in, char term, Charset charset,
@@ -526,11 +490,11 @@ public class Files {
 
     public static String readTill(Object in, char term, boolean close)
             throws IOException {
-        return readTill(in, term, encoding, close);
+        return readTill(in, term, Charsets.DEFAULT, close);
     }
 
     public static String readTill(Object in, char term) throws IOException {
-        return readTill(in, term, encoding);
+        return readTill(in, term, Charsets.DEFAULT);
     }
 
     public static String readLen(Object in, int length, Charset charset,
@@ -554,11 +518,11 @@ public class Files {
 
     public static String readLen(Object in, int length, boolean close)
             throws IOException {
-        return readLen(in, length, encoding, close);
+        return readLen(in, length, Charsets.DEFAULT, close);
     }
 
     public static String readLen(Object in, int length) throws IOException {
-        return readLen(in, length, encoding);
+        return readLen(in, length, Charsets.DEFAULT);
     }
 
     /**
@@ -850,7 +814,7 @@ public class Files {
 
             @Override
             public Iterator<String> iterator() {
-                return _readByLine(files, encoding);
+                return _readByLine(files, Charsets.DEFAULT);
             }
 
         };
@@ -869,7 +833,7 @@ public class Files {
 
             @Override
             public Iterator<String> iterator() {
-                return _readByLine(files, getCharset(charset));
+                return _readByLine(files, Charsets.get(charset));
             }
 
         };
@@ -898,11 +862,11 @@ public class Files {
 
     public static Properties loadProperties(Object in, boolean close)
             throws IOException {
-        return loadProperties(in, encoding, close);
+        return loadProperties(in, Charsets.DEFAULT, close);
     }
 
     public static Properties loadProperties(Object in) throws IOException {
-        return loadProperties(in, encoding);
+        return loadProperties(in, Charsets.DEFAULT);
     }
 
     // printTo
@@ -910,19 +874,19 @@ public class Files {
     public static PrintStream printTo(Object out, Object charset)
             throws IOException {
         boolean autoFlush = false;
-        String cs = getCharset(charset).name();
+        String cs = Charsets.get(charset).name();
         return new PrintStream(getOutputStream(out), autoFlush, cs);
     }
 
     public static PrintStream printTo(Object out) throws IOException {
-        return printTo(out, encoding);
+        return printTo(out, Charsets.DEFAULT);
     }
 
     // outputTo
 
     public static OutputStream outputTo(Object out, Object charset)
             throws IOException {
-        String cs = getCharset(charset).name();
+        String cs = Charsets.get(charset).name();
         return getOutputStream(out, cs);
     }
 
@@ -933,7 +897,7 @@ public class Files {
     // writeTo
 
     public static Writer writeTo(Object out, Object charset) throws IOException {
-        String cs = getCharset(charset).name();
+        String cs = Charsets.get(charset).name();
         return getWriter(out, cs);
     }
 
@@ -968,7 +932,7 @@ public class Files {
     }
 
     public static <T> void write(Object out, T data) throws IOException {
-        write(out, data, encoding);
+        write(out, data, Charsets.DEFAULT);
     }
 
     public static <T> void write(Object out, byte[] data, int off, int len)
@@ -988,12 +952,12 @@ public class Files {
             return appendTo(new FileOutputStream((String) out, true), charset);
         OutputStream outs = getOutputStream(out);
         boolean autoFlush = true;
-        String cs = getCharset(charset).name();
+        String cs = Charsets.get(charset).name();
         return new PrintStream(outs, autoFlush, cs);
     }
 
     public static PrintStream appendTo(Object out) throws IOException {
-        return appendTo(out, encoding);
+        return appendTo(out, Charsets.DEFAULT);
     }
 
     public static <T> void append(Object out, T data, Object charset)
@@ -1002,7 +966,7 @@ public class Files {
     }
 
     public static <T> void append(Object out, T data) throws IOException {
-        write(out, data, encoding, true);
+        write(out, data, Charsets.DEFAULT, true);
     }
 
     public static <T> void append(Object out, byte[] data, int off, int len)
@@ -1210,6 +1174,9 @@ public class Files {
         }
     }
 
+    /**
+     * @see CWD#get(String)
+     */
     public static File canoniOf(String path) throws NullPointerException {
         return canoniOf(new File(path));
     }

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.nio.CharBuffer;
@@ -93,6 +94,65 @@ public class CharOuts {
 
     public static CharOut get(Writer writer) {
         return new WriterCharOut(writer);
+    }
+
+    public static class PrintStreamCharOut extends CharOut {
+        private final PrintStream ps;
+
+        public PrintStreamCharOut(PrintStream ps) {
+            this.ps = ps;
+        }
+
+        @Override
+        public void write(char[] chars, int off, int len) throws IOException {
+            ps.print(new String(chars, off, len));
+        }
+
+        @Override
+        public void _write(CharSequence chars, int off, int len)
+                throws IOException {
+            ps.print(chars.subSequence(off, off + len).toString());
+        }
+
+        @Override
+        public void _write(int c) throws IOException {
+            ps.print((char) c);
+        }
+
+        @Override
+        public void _write(String string, int off, int len) throws IOException {
+            ps.print(string.substring(off, off + len));
+        }
+
+        @Override
+        public void _close() throws IOException {
+            ps.close();
+        }
+
+        @Override
+        public void _flush() throws IOException {
+            ps.flush();
+        }
+
+        @Override
+        public void print(Object obj) {
+            ps.print(obj);
+        }
+
+        @Override
+        public void print(String s) {
+            ps.print(s);
+        }
+
+        @Override
+        public void println() {
+            ps.println();
+        }
+
+    }
+
+    public static CharOut get(PrintStream out) {
+        return new PrintStreamCharOut(out);
     }
 
     public static class TempCharOut extends WriterCharOut {

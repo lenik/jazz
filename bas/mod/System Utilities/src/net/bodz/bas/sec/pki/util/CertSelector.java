@@ -45,8 +45,8 @@ public class CertSelector {
 
     private String          storeType;
     private String          storePassword;
-    private URL             storeURL;
-    private File            storeURLFile;
+    private String          storePath;
+    private File            storeFile;
     private String          certPassword;
     private String          certAlias;
     private String          subEntry;       // not used.
@@ -98,26 +98,24 @@ public class CertSelector {
         if (alphas.length >= 1) {
             Alpha ks = alphas[0];
             String[] storeParams = ks.getInitParameters();
-            String path = ks.formatBetas();
+            storePath = ks.formatBetas();
             if (storeParams != null)
                 storePassword = storeParams[0];
-            if (!path.isEmpty()) {
-                if (KS_NONE.equals(path)) {
-                    storeURL = null;
-                    storeURLFile = null;
-                } else if (path.contains("://"))
+            if (!storePath.isEmpty()) {
+                if (KS_NONE.equals(storePath)) {
+                    storeFile = null;
+                } else if (storePath.contains("://"))
                     try {
-                        storeURL = new URL(path);
+                        URL url = new URL(storePath);
                         // create a temp file when necessary?
-                        storeURLFile = new File(storeURL.toURI());
+                        storeFile = new File(url.toURI());
                     } catch (URISyntaxException e) {
                         throw new IllegalArgumentException(e);
                     } catch (MalformedURLException e) {
                         throw new IllegalArgumentException(e);
                     }
                 else {
-                    storeURLFile = Files.canoniOf(path);
-                    storeURL = Files.getURL(storeURLFile);
+                    storeFile = Files.canoniOf(storePath);
                 }
             }
             detType = KEYSTORE;
@@ -165,12 +163,12 @@ public class CertSelector {
         return storePassword;
     }
 
-    public URL getStoreURL() {
-        return storeURL;
+    public String getStorePath() {
+        return storePath;
     }
 
-    public File getStoreURLFile() {
-        return storeURLFile;
+    public File getStoreFile() {
+        return storeFile;
     }
 
     public String getCertPassword() {
@@ -233,8 +231,10 @@ public class CertSelector {
                 keyStore = KeyStore.getInstance(storeType, provider);
             try {
                 InputStream in = null;
-                if (storeURL != null)
-                    in = Files.getInputStream(storeURL);
+                if (storeFile != null)
+                    in = Files.getInputStream(storeFile);
+                else
+                    throw new IllegalStateException("no key store specified?");
                 keyStore.load(in, storePassword.toCharArray());
             } catch (Exception e) {
                 throw new KeyStoreException(e);
@@ -246,7 +246,7 @@ public class CertSelector {
             else
                 ch = new SimpleCallbackHandler(storePassword);
             CallbackHandlerProtection prot = new CallbackHandlerProtection(ch);
-            File file = storeURLFile;
+            File file = storeFile;
             Builder builder;
             if (file == null)
                 builder = Builder.newInstance(storeType, provider, prot);
@@ -285,8 +285,8 @@ public class CertSelector {
             h = h * 97 + storeType.hashCode();
         if (storePassword != null)
             h = h * 97 + storePassword.hashCode();
-        if (storeURL != null)
-            h = h * 97 + storeURL.hashCode();
+        if (storePath != null)
+            h = h * 97 + storePath.hashCode();
         if (certPassword != null)
             h = h * 97 + certPassword.hashCode();
         if (certAlias != null)
@@ -307,7 +307,7 @@ public class CertSelector {
             return false;
         if (!Objects.equals(storePassword, c.storePassword))
             return false;
-        if (!Objects.equals(storeURL, c.storeURL))
+        if (!Objects.equals(storePath, c.storePath))
             return false;
         if (!Objects.equals(certPassword, c.certPassword))
             return false;
@@ -338,16 +338,12 @@ public class CertSelector {
 
     public CURL toCURL() {
         List<Alpha> list = new ArrayList<Alpha>(3);
-        if (storeURL != null) {
+        if (storePath != null) {
             String[] params1 = null;
             if (storePassword != null)
                 params1 = new String[] { storePassword };
             String[] betas1;
-            if (storeURL == null) {
-                betas1 = Alpha.parseBetas(KS_NONE);
-            } else {
-                betas1 = Alpha.parseBetas(storeURL.toString());
-            }
+            betas1 = Alpha.parseBetas(storePath.toString());
             Alpha alpha1 = new Alpha(params1, betas1);
             list.add(alpha1);
             if (certAlias != null || certPassword != null) {

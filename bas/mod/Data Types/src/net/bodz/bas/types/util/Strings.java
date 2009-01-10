@@ -19,6 +19,7 @@ import java.util.regex.Pattern;
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.io.CharOuts.Buffer;
+import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.text.diff.DiffComparator;
 import net.bodz.bas.text.diff.DiffComparators;
 import net.bodz.bas.text.diff.DiffFormat;
@@ -286,9 +287,16 @@ public class Strings {
     /** string quoted by " or ' are treated as single token */
     public static final int QUOTE      = 4;
 
-    /** line comment (//) and block comment are removed */
-    public static final int COMMENT    = 8;
+    /** remove quote chars, only affects with {@link #QUOTE} */
+    public static final int DEQUOTE    = 8;
 
+    /** line comment (//) and block comment are removed */
+    public static final int COMMENT    = 16;
+
+    /**
+     * @param delims
+     *            whitespace if <code>null</code>
+     */
     public static String[] split(Object src, char[] delims, int limit, int flags)
             throws IOException {
         boolean trimList = limit == 0;
@@ -312,6 +320,9 @@ public class Strings {
             tokenizer.whitespaceChars('\r', '\r');
         }
         if (test(flags & QUOTE)) {
+            // TODO - DEQUOTE or not.
+            if (!test(flags & DEQUOTE))
+                throw new NotImplementedException("raw quote isn't impl.");
             tokenizer.quoteChar('"');
             tokenizer.quoteChar('\'');
         }
@@ -333,7 +344,7 @@ public class Strings {
                 case '\'':
                     // quote = true;
                 case StreamTokenizer.TT_WORD:
-                    String val = tokenizer.sval;
+                    String val = tokenizer.sval; // body of the string
                     if (delims == null && buf != null) {
                         list.add(buf.toString());
                         buf.setLength(0);
@@ -408,10 +419,22 @@ public class Strings {
         }
     }
 
+    /**
+     * @see #split(String, char[], int, int)
+     * @see #TRIM
+     * @see #QUOTE
+     * @see #DEQUOTE
+     */
     public static String[] split(String s, char[] delims, int limit) {
-        return split(s, delims, limit, TRIM | QUOTE);
+        return split(s, delims, limit, TRIM | QUOTE | DEQUOTE);
     }
 
+    /**
+     * @see #split(String, char[], int, int)
+     * @see #TRIM
+     * @see #QUOTE
+     * @see #DEQUOTE
+     */
     public static String[] split(String s, char... delims) {
         if (delims.length == 0)
             delims = null;

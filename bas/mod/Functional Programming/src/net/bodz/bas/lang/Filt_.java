@@ -1,12 +1,12 @@
 package net.bodz.bas.lang;
 
-public abstract class Filt_<T, A> implements Func1<T, A> {
+public abstract class Filt_<T, V> implements Func_<T, V> {
 
     @Override
-    public final T eval(A a) {
-        return filter(a);
+    public final T eval(V... args) {
+        return filter(args);
     }
 
-    public abstract T filter(A a);
+    public abstract T filter(V... args);
 
 }

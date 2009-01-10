@@ -1,9 +1,12 @@
 package net.bodz.bas.text.encodings;
 
 import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
+import java.nio.charset.CharsetEncoder;
 import java.nio.charset.spi.CharsetProvider;
 import java.util.Iterator;
 
+import net.bodz.bas.lang.err.IllegalArgumentTypeException;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TextMap.TreeTextMap;
 
@@ -13,34 +16,70 @@ import net.bodz.bas.types.TextMap.TreeTextMap;
  */
 public class Charsets extends CharsetProvider {
 
-    static Charset   ASCII     = Charset.forName("ascii");
-
-    HexCharset       hexCharset;
-
-    TextMap<Charset> _charsets = new TreeTextMap<Charset>();
+    private TextMap<Charset> charsetsImpl = new TreeTextMap<Charset>();
 
     public Charsets() {
-        super();
-        hexCharset = new HexCharset();
+        implCharset(new HexCharset());
+    }
 
-        _charsets.put(hexCharset.name(), hexCharset);
+    void implCharset(Charset charset) {
+        charsetsImpl.put(charset.name(), charset);
     }
 
     @Override
     public Iterator<Charset> charsets() {
-        return _charsets.values().iterator();
+        return charsetsImpl.values().iterator();
     }
 
     @Override
     public Charset charsetForName(String charsetName) {
-        for (String name : _charsets.keySet()) {
-            Charset cs = _charsets.get(name);
+        for (String name : charsetsImpl.keySet()) {
+            Charset cs = charsetsImpl.get(name);
             if (name.equals(charsetName))
                 return cs;
             if (cs.aliases().contains(charsetName))
                 return cs;
         }
         return null;
+    }
+
+    // utilities
+
+    public static Charset DEFAULT = Charset.defaultCharset();
+    public static Charset ASCII   = Charset.forName("ascii");
+
+    public static Charset get(Object charset) {
+        if (charset == null)
+            return DEFAULT;
+        if (charset instanceof Charset)
+            return (Charset) charset;
+        if (charset instanceof String)
+            return Charset.forName((String) charset);
+        throw new IllegalArgumentTypeException(charset, "String or Charset");
+    }
+
+    public static CharsetEncoder getEncoder(Object charset) {
+        if (charset == null)
+            return DEFAULT.newEncoder();
+        if (charset instanceof CharsetEncoder)
+            return (CharsetEncoder) charset;
+        if (charset instanceof Charset)
+            return ((Charset) charset).newEncoder();
+        if (charset instanceof String)
+            return Charset.forName((String) charset).newEncoder();
+        throw new IllegalArgumentTypeException(charset);
+    }
+
+    public static CharsetDecoder getDecoder(Object charset) {
+        if (charset == null)
+            return DEFAULT.newDecoder();
+        if (charset instanceof CharsetDecoder)
+            return (CharsetDecoder) charset;
+        if (charset instanceof Charset)
+            return ((Charset) charset).newDecoder();
+        if (charset instanceof String)
+            return Charset.forName((String) charset).newDecoder();
+        throw new IllegalArgumentTypeException(charset);
     }
 
 }
