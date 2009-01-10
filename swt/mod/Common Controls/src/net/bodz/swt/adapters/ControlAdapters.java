@@ -1,7 +1,11 @@
 package net.bodz.swt.adapters;
 
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.widgets.Control;
 
 public class ControlAdapters {
@@ -41,5 +45,19 @@ public class ControlAdapters {
     public static void commit(Control control, CommitAdapter commitAdapter) {
         commit(control, commitAdapter, commitAdapter);
     }
+
+    public static class FontAutoSize extends ControlAdapter {
+        @Override
+        public void controlResized(final ControlEvent e) {
+            Control control = (Control) e.widget;
+            int height = control.getBounds().height;
+            FontData fontData = control.getFont().getFontData()[0];
+            fontData.setHeight(height / 2);
+            Font font = new Font(control.getDisplay(), fontData);
+            control.setFont(font);
+        }
+    }
+
+    public static final FontAutoSize fontAutoSize = new FontAutoSize();
 
 }

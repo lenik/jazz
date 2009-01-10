@@ -1,11 +1,13 @@
 package net.bodz.swt.gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.a.BootInfo;
 import net.bodz.bas.a.ClassInfo;
+import net.bodz.bas.a.StartMode;
 import net.bodz.bas.cli.BasicCLI;
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.gui.GUIException;
@@ -15,6 +17,7 @@ import net.bodz.bas.types.util.Ns;
 import net.bodz.swt.controls.helper.DynamicControl;
 import net.bodz.swt.controls.util.Menus;
 import net.bodz.swt.controls.util.Shells;
+import net.bodz.swt.util.SWTResources;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -32,8 +35,8 @@ import org.eclipse.swt.widgets.ToolBar;
 
 import swing2swt.layout.BorderLayout;
 
-
 @BootInfo(userlibs = { "bodz_swt", "bodz_icons" }, configs = SWTConfig.class)
+@StartMode(StartMode.GUI)
 public class BasicGUI extends BasicCLI {
 
     @Option(alias = "Xw")
@@ -76,23 +79,36 @@ public class BasicGUI extends BasicCLI {
     protected void _start() {
     }
 
-    private Image[] loadImages(URL[] urls) {
+    private Image[] loadImages(URL[] urls) throws IOException {
         if (urls == null)
             return null;
         Image[] images = new Image[urls.length];
         for (int i = 0; i < urls.length; i++) {
-            images[i] = null;
+            URL url = urls[i];
+            images[i] = SWTResources.getImage(url);
         }
         return images;
+    }
+
+    String getTitle() {
+        ClassInfo info = _loadClassInfo();
+        String title = info.getName() + ": " + info.getDoc();
+        String version = info.getVersionString();
+        return title + " " + version;
     }
 
     protected Shell createShell() throws GUIException, SWTException {
         Shell shell = new Shell();
         shell.setSize(shellWidth, shellHeight);
         Shells.center(shell);
+        shell.setText(getTitle());
         ClassInfo info = _loadClassInfo();
-        shell.setText(info.getDoc());
-        Image[] icons = loadImages(info.getIcons());
+        Image[] icons;
+        try {
+            icons = loadImages(info.getIcons());
+        } catch (IOException e) {
+            throw new GUIException(e);
+        }
         if (icons != null)
             shell.setImages(icons);
 
@@ -118,12 +134,15 @@ public class BasicGUI extends BasicCLI {
         viewArea.setLayoutData(BorderLayout.CENTER);
 
         Composite homeView = new Composite(viewArea, SWT.NONE);
+        homeView.setLayout(new FillLayout());
         createInitialView(homeView);
 
         return shell;
     }
 
     protected Menu createMenu(Shell parent) throws SWTException, GUIException {
+        if (true)
+            return null;
         final Menu menu = new Menu(parent, SWT.BAR);
 
         final Menu fileMenu = Menus.newSubMenu(menu, "&File");
@@ -135,18 +154,28 @@ public class BasicGUI extends BasicCLI {
 
     protected Control createToolBar(Composite parent) throws SWTException,
             GUIException {
+        if (true)
+            return null;
         ToolBar toolBar = new ToolBar(parent, SWT.FLAT | SWT.RIGHT);
         return toolBar;
     }
 
     protected Control createStatusBar(Composite parent) throws SWTException,
             GUIException {
-        Composite statusBar = new Composite(parent, SWT.NONE); // SWT.BORDER
+        Composite statusBar = new Composite(parent, SWT.BORDER); // SWT.BORDER
+        statusBar.setLayout(new FillLayout());
+        Label label = new Label(statusBar, SWT.NONE);
+        ClassInfo info = _loadClassInfo();
+        String copyright = "(C) Copyright " + info.getAuthor() + ", "
+                + info.getDateString();
+        label.setText(copyright);
         return statusBar;
     }
 
     protected Control createExpandBar(Composite parent) throws SWTException,
             GUIException {
+        if (true)
+            return null;
         ExpandBar expandBar = new ExpandBar(parent, SWT.NONE);
         return expandBar;
     }
