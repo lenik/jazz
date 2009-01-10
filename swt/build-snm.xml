@@ -27,6 +27,8 @@
 			<fileset dir="mod/Common Controls/bin" />
 			<fileset dir="mod/Commons/bin" />
 			<fileset dir="mod/GUI Framework/bin" />
+			<fileset dir="mod/Geom Shapes/bin" />
+			<fileset dir="mod/Presentation/bin" />
 		</jar>
 	</target>
 
@@ -36,6 +38,8 @@
 			<fileset dir="mod/Common Controls/src" />
 			<fileset dir="mod/Commons/src" />
 			<fileset dir="mod/GUI Framework/src" />
+			<fileset dir="mod/Geom Shapes/src" />
+			<fileset dir="mod/Presentation/src" />
 		</jar>
 	</target>
 

@@ -8,6 +8,6 @@ public abstract class Proc4<A, B, C, D> implements Func4<Void, A, B, C, D> {
         return null;
     }
 
-    public abstract boolean exec(A a, B b, C c, D d);
+    public abstract void exec(A a, B b, C c, D d);
 
 }

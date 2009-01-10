@@ -4,6 +4,7 @@ import net.bodz.bas.lang.err.CancelException;
 import net.bodz.bas.lang.err.CheckException;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.ref.Ref;
+import net.bodz.swt.controls.util.Shells;
 import net.bodz.swt.gui.SWTInteraction;
 import net.bodz.swt.util.SWTResources;
 
@@ -88,6 +89,7 @@ public class SimpleDialog extends Dialog implements Ref<Object> {
         size.x = Math.max(size.x, minWidth);
         size.y = Math.max(size.y, minHeight);
         shell.setSize(size);
+        Shells.center(shell);
         shell.layout();
 
         boolean center = true;
@@ -147,7 +149,6 @@ public class SimpleDialog extends Dialog implements Ref<Object> {
                 | SWT.RESIZE | SWT.CLOSE);
         shell.setImage(getIcon());
         shell.setLayout(new FormLayout());
-        shell.setSize(500, 375);
 
         String title = getTitle();
         if (title != null)

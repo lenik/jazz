@@ -35,10 +35,11 @@ public class CatchExit extends _SecurityManager {
         } finally {
             System.setSecurityManager(security0);
         }
-        if (caught instanceof SecurityControl)
-            control = (SecurityControl) caught;
-        else
-            throw (E) caught;
+        if (caught != null)
+            if (caught instanceof SecurityControl)
+                control = (SecurityControl) caught;
+            else
+                throw (E) caught;
 
         if (control != null)
             if (control.getCode() == SecurityControl.EXIT)

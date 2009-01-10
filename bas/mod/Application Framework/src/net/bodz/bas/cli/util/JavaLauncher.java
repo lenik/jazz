@@ -13,7 +13,6 @@ import java.nio.charset.Charset;
 import net.bodz.bas.a.BootInfo;
 import net.bodz.bas.a.BootProc;
 import net.bodz.bas.io.CharOuts;
-import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.Caller;
 import net.bodz.bas.lang.Control;
 import net.bodz.bas.lang.ControlExit;
@@ -24,6 +23,7 @@ import net.bodz.bas.loader.DefaultBooter;
 import net.bodz.bas.loader.LoadUtil;
 import net.bodz.bas.loader.UCL;
 import net.bodz.bas.sec.CatchExit;
+import net.bodz.bas.text.encodings.Charsets;
 
 @BootInfo(syslibs = "bodz_bas")
 public abstract class JavaLauncher implements Launcher {
@@ -168,7 +168,7 @@ public abstract class JavaLauncher implements Launcher {
     }
 
     public String getCapturedOutput(Object charset) {
-        Charset _charset = Files.getCharset(charset);
+        Charset _charset = Charsets.get(charset);
         return new String(getCapturedOutput(), _charset);
     }
 
@@ -177,7 +177,7 @@ public abstract class JavaLauncher implements Launcher {
     }
 
     public String getCapturedError(Object charset) {
-        Charset _charset = Files.getCharset(charset);
+        Charset _charset = Charsets.get(charset);
         return new String(getCapturedError(), _charset);
     }
 

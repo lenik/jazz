@@ -70,7 +70,7 @@ public class CertSelectorTest {
 
         assertEquals("JKS", cs.getStoreType());
         assertEquals("changeit", cs.getStorePassword());
-        assertEquals(cacerts, cs.getStoreURLFile());
+        assertEquals(cacerts, cs.getStoreFile());
 
         assertNull(cs.getCertPassword());
         assertEquals(alias, cs.getCertAlias());

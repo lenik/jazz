@@ -9,7 +9,7 @@ public class SystemInfo {
     static {
         pathSeparator = System.getProperty("path.separator", "/");
         fileSeparator = System.getProperty("file.separator", ":");
-        osName = System.getProperty("osName", "unix");
+        osName = System.getProperty("os.name", "unix");
     }
 
     public static boolean isWin32() {

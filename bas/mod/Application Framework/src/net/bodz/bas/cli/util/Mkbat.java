@@ -62,9 +62,11 @@ public class Mkbat extends BatchEditCLI {
         generated = new HashSet<String>();
         varmap = new HashTextMap<String>();
         ClassInfo classInfo = _loadClassInfo();
-        varmap.put("GENERATOR", Mkbat.class.getSimpleName() + " "
-                + classInfo.getVersionString(false) + ", "
-                + classInfo.getDateString());
+        String generator = Mkbat.class.getSimpleName() //
+                + " " + classInfo.getVersionString(false) //
+        // + ", " + classInfo.getDateString()
+        ;
+        varmap.put("GENERATOR", generator);
     }
 
     @Option(alias = "l", vnam = "LIBSPEC", doc = "add user lib for locating the class")
