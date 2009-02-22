@@ -1,24 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: boDz Basic Framework
-Bundle-SymbolicName: net.bodz.bas
+Bundle-SymbolicName: net.bodz.bas;singleton:=true
 Bundle-Version: 1.0.0
-Bundle-Activator: net.bodz.bas.eclipse.Activator
 Bundle-Vendor: Lenik
-Require-Bundle: org.eclipse.core.runtime
-Bundle-ActivationPolicy: lazy
-Bundle-ClassPath: 
- mod/Application Framework/bin/,
- mod/B-IOS Framework/bin/,
- mod/Bundled Modules/bin/,
- mod/Data Types/bin/,
- mod/Database Abstraction/bin/,
- mod/Functional Programming/bin/,
- mod/Language Extension/bin/,
- mod/System Utilities/bin/,
- mod/Text Process/bin/,
- mod/Wrapper Classes/bin/,
- mod/_MODEL/bin/ .
 Export-Package: net.bodz.bas.a,
  net.bodz.bas.cli,
  net.bodz.bas.cli.a,
@@ -26,8 +11,6 @@ Export-Package: net.bodz.bas.a,
  net.bodz.bas.cli.util,
  net.bodz.bas.db.binding,
  net.bodz.bas.dnb,
- net.bodz.bas.eclipse,
- net.bodz.bas.eclipse.cli,
  net.bodz.bas.files,
  net.bodz.bas.functors,
  net.bodz.bas.functors.lang,
@@ -88,3 +71,14 @@ Export-Package: net.bodz.bas.a,
  net.bodz.bios.util,
  net.bodz.extern.diff,
  net.bodz.math.mat
+Bundle-ClassPath: mod/_MODEL/bin/,
+ mod/Application Framework/bin/,
+ mod/B-IOS Framework/bin/,
+ mod/Bundled Modules/bin/,
+ mod/Data Types/bin/,
+ mod/Database Abstraction/bin/,
+ mod/Functional Programming/bin/,
+ mod/Language Extension/bin/,
+ mod/System Utilities/bin/,
+ mod/Text Process/bin/,
+ mod/Wrapper Classes/bin/

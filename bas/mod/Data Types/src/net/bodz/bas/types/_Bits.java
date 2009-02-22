@@ -189,9 +189,11 @@ public abstract class _Bits implements Bits {
         return out.toString();
     }
 
+    static boolean BITMAP_STRING = true;
+
     @Override
     public String toString() {
-        if (true)
+        if (BITMAP_STRING)
             return draw(16, '.', '*');
         int size = size();
         StringBuffer buf = new StringBuffer(size);

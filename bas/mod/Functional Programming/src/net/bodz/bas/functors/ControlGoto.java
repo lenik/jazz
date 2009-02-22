@@ -18,8 +18,8 @@ public class ControlGoto extends Control {
         Object label = getLabel();
         if (label == null)
             return true;
-        if (f instanceof _Functor) {
-            if (((_Functor<?>) f).getOuter() instanceof Sequence) {
+        if (f instanceof _Functor<?>) {
+            if (((_Functor<?>) f).getOuter() instanceof Sequence<?>) {
                 Sequence<?> outseq = ((Sequence<?>) ((_Functor<?>) f).getOuter());
                 if (outseq.labelAt(label) == f)
                     return true;

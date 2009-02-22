@@ -14,7 +14,7 @@ import net.bodz.bas.lang.err.IllegalUsageError;
 public class Ns {
 
     public static String getName(AnnotatedElement elm) {
-        if (elm instanceof Class)
+        if (elm instanceof Class<?>)
             return ((Class<?>) elm).getName();
         if (elm instanceof Member)
             return ((Member) elm).getName();
@@ -23,7 +23,7 @@ public class Ns {
 
     public static AnnotatedElement getParent(AnnotatedElement elm) {
         assert elm != null;
-        if (elm instanceof Class)
+        if (elm instanceof Class<?>)
             return ((Class<?>) elm).getSuperclass();
         if (!(elm instanceof Member))
             // MethodParameter, or other user defined AnnotatedElement.

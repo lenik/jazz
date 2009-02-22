@@ -17,6 +17,6 @@ public @interface Icon {
      * create(usage) -> resource-path or Image, where usage is `big', `small',
      * etc.
      */
-    Class<? extends Factory> factory() default Factory.class;
+    Class<? extends Factory<?>> factory() default Factory_Object_null.class;
 
 }

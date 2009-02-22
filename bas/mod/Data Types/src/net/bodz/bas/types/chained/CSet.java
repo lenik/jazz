@@ -22,8 +22,8 @@ public class CSet<E> extends CCollection<E> implements Set<E> {
 
     @Override
     protected Collection<E> link(Collection<E> _this, Collection<E> next) {
-        assert _this instanceof Set;
-        assert next instanceof Set;
+        assert _this instanceof Set<?>;
+        assert next instanceof Set<?>;
         return new Link<E>((Set<E>) _this, (Set<E>) next);
     }
 

@@ -3,18 +3,18 @@ package net.bodz.bas.mod;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.types.util.CompatMethods;
 
-public interface Factory {
+public interface Factory<T> {
 
-    Class<?> getType();
+    Class<? extends T> getType();
 
-    Object create(Object... args) throws CreateException;
+    T create(Object... args) throws CreateException;
 
-    class Ctor implements Factory {
+    class Ctor<T> implements Factory<T> {
 
-        private Class<?> clazz;
-        private Object   outer;
+        private Class<? extends T> clazz;
+        private Object             outer;
 
-        public Ctor(Class<?> clazz, Object outer) {
+        public Ctor(Class<? extends T> clazz, Object outer) {
             assert clazz != null;
             if (clazz.isMemberClass()) {
                 if (outer == null)
@@ -25,17 +25,17 @@ public interface Factory {
             this.outer = outer;
         }
 
-        public Ctor(Class<?> clazz) {
+        public Ctor(Class<? extends T> clazz) {
             this(clazz, null);
         }
 
         @Override
-        public Class<?> getType() {
+        public Class<? extends T> getType() {
             return clazz;
         }
 
         @Override
-        public Object create(Object... args) throws CreateException {
+        public T create(Object... args) throws CreateException {
             try {
                 if (clazz.isMemberClass())
                     return CompatMethods.newMemberInstance(clazz, outer, args);
@@ -47,22 +47,23 @@ public interface Factory {
         }
     }
 
-    class Static implements Factory {
+    class Static<T> implements Factory<T> {
 
-        private final Object instance;
+        private final T instance;
 
-        public Static(Object instance) {
+        public Static(T instance) {
             assert instance != null;
             this.instance = instance;
         }
 
+        @SuppressWarnings("unchecked")
         @Override
-        public Class<?> getType() {
-            return (Class<?>) instance.getClass();
+        public Class<? extends T> getType() {
+            return (Class<? extends T>) instance.getClass();
         }
 
         @Override
-        public Object create(Object... args) {
+        public T create(Object... args) {
             return instance;
         }
 

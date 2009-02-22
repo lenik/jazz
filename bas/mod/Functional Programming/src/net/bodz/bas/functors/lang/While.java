@@ -13,7 +13,7 @@ public class While<T> extends _Functor<T> {
     protected _Functor<Boolean> predicate;
     protected _Functor<T>       body;
 
-    protected T                evaluated;
+    protected T                 evaluated;
 
     public While() {
     }
@@ -75,7 +75,7 @@ public class While<T> extends _Functor<T> {
 
     @Override
     public While<T> reduce() throws FunctorException {
-        if (predicate instanceof _Functor) {
+        if (predicate instanceof _Functor<?>) {
             _Functor<?> afPredicate = (_Functor<?>) predicate;
             if (body == null)
                 if (afPredicate.isClosed())
@@ -106,7 +106,8 @@ public class While<T> extends _Functor<T> {
 
     private static ThreadLocal<While<?>> tlBuilt = new ThreadLocal<While<?>>();
 
-    public static <U> While<U> build(_Functor<Boolean> predicate, _Functor<U> body) {
+    public static <U> While<U> build(_Functor<Boolean> predicate,
+            _Functor<U> body) {
         While<U> built = built();
         tlBuilt.set(null);
         built.setPredicate(predicate);

@@ -16,6 +16,6 @@ public @interface Label {
     /**
      * create(usage) -> label text
      */
-    Class<? extends Factory> factory() default Factory.class;
+    Class<? extends Factory<String>> factory() default Factory_String_null.class;
 
 }

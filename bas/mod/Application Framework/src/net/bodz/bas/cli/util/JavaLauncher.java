@@ -94,6 +94,8 @@ public abstract class JavaLauncher implements Launcher {
         System.exit(status);
     }
 
+    static boolean LOAD_DUMP = false; 
+    
     protected void load() throws Exception {
         ClassLoader initSysLoader = Caller.getCallerClassLoader();
         ClassLoader sysLoader = initSysLoader;
@@ -105,7 +107,7 @@ public abstract class JavaLauncher implements Launcher {
             URL[] urls = LoadUtil.find(bootProc.getSysLibs());
             Classpath.addURL(urls);
         }
-        if (false)
+        if (LOAD_DUMP)
             UCL.dump(sysLoader, CharOuts.stderr);
 
         String targetName = getMainClassName();

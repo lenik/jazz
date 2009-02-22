@@ -10,11 +10,11 @@ import net.bodz.bas.mod.Factory;
 public class PluginTypeEx {
 
     private final Class<? extends Plugin> clazz;
-    private final Factory                 factory;
+    private final Factory<Plugin>         factory;
     private final ClassInfo               info;
 
     @SuppressWarnings("unchecked")
-    public PluginTypeEx(Factory factory) {
+    public PluginTypeEx(Factory<Plugin> factory) {
         assert factory != null;
         this.factory = factory;
         Class<?> type = factory.getType();
@@ -26,15 +26,15 @@ public class PluginTypeEx {
     }
 
     public PluginTypeEx(Class<? extends Plugin> clazz) {
-        this(new Factory.Ctor(clazz));
+        this(new Factory.Ctor<Plugin>(clazz));
     }
 
     public PluginTypeEx(Class<? extends Plugin> clazz, Object outer) {
-        this(new Factory.Ctor(clazz, outer));
+        this(new Factory.Ctor<Plugin>(clazz, outer));
     }
 
     public PluginTypeEx(Plugin staticInstance) {
-        this(new Factory.Static(staticInstance));
+        this(new Factory.Static<Plugin>(staticInstance));
     }
 
     public Class<? extends Plugin> getType() {

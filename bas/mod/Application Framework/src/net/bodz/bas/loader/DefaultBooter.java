@@ -26,6 +26,7 @@ public class DefaultBooter {
 
     private static LogOut out = LogOuts.stderr;
 
+    static boolean LOADFIX_DUMP = false; 
     public static Class<?> loadFix(ClassLoader initSysLoader, String className,
             URL... userlibs) throws LoadException {
         ClassLoader bootSysLoader;
@@ -33,7 +34,7 @@ public class DefaultBooter {
             bootSysLoader = initSysLoader;
         else
             bootSysLoader = TempClassLoader.get(userlibs, initSysLoader);
-        if (false)
+        if (LOADFIX_DUMP)
             UCL.dump(bootSysLoader, CharOuts.stderr);
 
         Class<?> class0 = null;
@@ -61,6 +62,7 @@ public class DefaultBooter {
         return load(sysLoader, className, userlibs);
     }
 
+    static boolean LOAD_DUMP = false; 
     /**
      * @param userlibs
      *            use {@link BootInfo#userlibs()}
@@ -88,7 +90,7 @@ public class DefaultBooter {
         // OPT..
         realLoader = UCL.addOrCreate(realLoader, userlibs);
 
-        if (false)
+        if (LOAD_DUMP)
             UCL.dump(realLoader, out);
         Class<?> class1;
         try {

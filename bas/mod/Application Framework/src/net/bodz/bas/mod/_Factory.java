@@ -1,19 +1,20 @@
 package net.bodz.bas.mod;
 
-public abstract class _Factory implements Factory {
+public abstract class _Factory<T> implements Factory<T> {
 
-    private final Class<?> type;
+    private final Class<T> type;
 
+    @SuppressWarnings("unchecked")
     public _Factory() {
-        this(Object.class);
+        this((Class<T>) Object.class);
     }
 
-    public _Factory(Class<?> type) {
+    public _Factory(Class<T> type) {
         this.type = type;
     }
 
     @Override
-    public Class<?> getType() {
+    public Class<T> getType() {
         return type;
     }
 
