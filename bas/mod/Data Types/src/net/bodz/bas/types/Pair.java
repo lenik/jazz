@@ -49,7 +49,7 @@ public class Pair<K, V> implements Map<K, V>, Entry<K, V>, Serializable {
             return true;
         if (object == null)
             return false;
-        if (!(object instanceof Pair))
+        if (!(object instanceof Pair<?, ?>))
             return false;
         Pair<?, ?> objectPair = (Pair<?, ?>) object;
         if (first == null) {

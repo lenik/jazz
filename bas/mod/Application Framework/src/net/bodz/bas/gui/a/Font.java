@@ -21,6 +21,6 @@ public @interface Font {
     /**
      * create(usage) -> FontData
      */
-    Class<? extends Factory> factory() default Factory.class;
+    Class<? extends Factory<?>> factory() default Factory_Object_null.class;
 
 }

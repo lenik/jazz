@@ -14,7 +14,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.bodz.bas.lang.Control;
-import net.bodz.bas.lang.IVoid;
+import net.bodz.bas.lang.null_class;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.err.OutOfDomainException;
 import net.bodz.bas.lang.err.ReflectException;
@@ -239,8 +239,8 @@ public class Types {
             return null;
         if (clazz.isInterface())
             throw new OutOfDomainException("clazz", clazz, "interface");
-        if (IVoid.class.isAssignableFrom(clazz))
-            throw new OutOfDomainException("clazz", clazz, IVoid.class);
+        if (null_class.class.isAssignableFrom(clazz))
+            return null;
         Class<?>[] argTypes = Types.getTypes(args);
         try {
             Method method = clazz.getMethod("getInstance", argTypes);

@@ -105,7 +105,7 @@ class Util {
                 buf.append(dispval(Array.get(o, i)));
             }
             buf.append("}");
-        } else if (o instanceof Collection) {
+        } else if (o instanceof Collection<?>) {
             Collection<?> col = (Collection<?>) o;
             buf = new StringBuffer(col.size() * 20);
             buf.append(type.getSimpleName() + " {");
@@ -118,7 +118,7 @@ class Util {
                 buf.append(dispval(c));
             }
             buf.append('}');
-        } else if (o instanceof Map) {
+        } else if (o instanceof Map<?, ?>) {
             Map<?, ?> map = (Map<?, ?>) o;
             buf = new StringBuffer(map.size() * 20);
             buf.append(type.getSimpleName() + " {");

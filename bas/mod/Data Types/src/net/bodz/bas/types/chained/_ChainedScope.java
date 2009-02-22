@@ -37,7 +37,7 @@ public abstract class _ChainedScope<T> implements ChainedScope<T> {
 
     @Override
     public void leave() {
-        if (!(head instanceof SLink))
+        if (!(head instanceof SLink<?>))
             throw new IllegalStateException("end of link");
         @SuppressWarnings("unchecked")
         SLink<T> link = (SLink<T>) head;

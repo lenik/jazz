@@ -81,6 +81,7 @@ public class Mkbat extends BatchEditCLI {
         _userlibs.add(url);
     }
 
+    static boolean BOOT_DUMP  = false; 
     @Override
     protected void _boot() throws Throwable {
         force = parameters().isForce();
@@ -92,7 +93,7 @@ public class Mkbat extends BatchEditCLI {
             bootSysLoader = initSysLoader;
         else
             bootSysLoader = TempClassLoader.get(userlibs, initSysLoader);
-        if (false)
+        if (BOOT_DUMP)
             UCL.dump(bootSysLoader, CharOuts.stderr);
     }
 

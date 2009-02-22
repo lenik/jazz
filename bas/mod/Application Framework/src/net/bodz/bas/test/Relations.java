@@ -241,7 +241,7 @@ public class Relations {
     public static class InstOf implements Relation {
         @Override
         public void test(String comment, Object expected, Object actual) {
-            assert expected instanceof Class;
+            assert expected instanceof Class<?>;
             Class<?> _class = (Class<?>) expected;
             assertTrue(comment, _class.isInstance(actual));
         }
