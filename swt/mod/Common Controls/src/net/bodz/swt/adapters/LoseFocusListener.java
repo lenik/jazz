@@ -1,9 +1,10 @@
 package net.bodz.swt.adapters;
 
-import org.eclipse.swt.events.FocusEvent;
-import org.eclipse.swt.internal.SWTEventListener;
+import java.util.EventListener;
 
-public interface LoseFocusListener extends SWTEventListener {
+import org.eclipse.swt.events.FocusEvent;
+
+public interface LoseFocusListener extends EventListener {
 
     /**
      * @return whether `doit', <code>false</code> to grab focus again

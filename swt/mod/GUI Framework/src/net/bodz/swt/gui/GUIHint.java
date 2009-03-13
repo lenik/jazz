@@ -26,23 +26,23 @@ import org.eclipse.swt.graphics.RGB;
 
 public class GUIHint {
 
-    public String   doc;
+    public String           doc;
 
-    public int      order;
-    public Boolean  enabled;
-    public Boolean  visible;
-    public int      tabOrder;
-    private Factory iconFactory;
-    private Factory labelFactory;
-    private Factory fontFactory;
-    public RGB      color;
-    public RGB      backColor;
-    public Point    preferredSize;
-    public int      border;
+    public int              order;
+    public Boolean          enabled;
+    public Boolean          visible;
+    public int              tabOrder;
+    private Factory<?>      iconFactory;
+    private Factory<String> labelFactory;
+    private Factory<?>      fontFactory;
+    public RGB              color;
+    public RGB              backColor;
+    public Point            preferredSize;
+    public int              border;
 
-    private String  menuItem;
-    private String  toolItem;
-    private String  viewId;
+    private String          menuItem;
+    private String          toolItem;
+    private String          viewId;
 
     public GUIHint(GUIHint copy) {
         if (copy == null)
@@ -98,17 +98,17 @@ public class GUIHint {
         if (tabOrder != null)
             this.tabOrder = tabOrder;
 
-        Factory iconFactory = A_gui.getIconFactory(Ns.getN(elm,
+        Factory<?> iconFactory = A_gui.getIconFactory(Ns.getN(elm,
                 net.bodz.bas.gui.a.Icon.class));
         if (iconFactory != null)
             this.iconFactory = iconFactory;
 
-        Factory labelFactory = A_gui.getLabelFactory(Ns.getN(elm,
+        Factory<String> labelFactory = A_gui.getLabelFactory(Ns.getN(elm,
                 net.bodz.bas.gui.a.Label.class));
         if (labelFactory != null)
             this.labelFactory = labelFactory;
 
-        Factory fontFactory = A_gui.getFontFactory(Ns.getN(elm,
+        Factory<?> fontFactory = A_gui.getFontFactory(Ns.getN(elm,
                 net.bodz.bas.gui.a.Font.class));
         if (fontFactory != null)
             this.fontFactory = fontFactory;

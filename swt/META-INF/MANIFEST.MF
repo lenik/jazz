@@ -3,17 +3,9 @@ Bundle-ManifestVersion: 2
 Bundle-Name: boDz SWT Utilizations
 Bundle-SymbolicName: net.bodz.swt
 Bundle-Version: 1.0.0
-Bundle-Activator: net.bodz.bas.eclipse.Activator
 Bundle-Vendor: Lenik
-Require-Bundle: org.eclipse.core.runtime,
- org.eclipse.swt;bundle-version="3.5.0"
-Bundle-ActivationPolicy: lazy
-Bundle-ClassPath: mod/Bundled Modules/bin/,
- mod/Common Controls/bin/,
- mod/Commons/bin/,
- mod/Geom Shapes/bin/,
- mod/GUI Framework/bin/,
- mod/Presentation/bin/
+Require-Bundle: org.eclipse.swt;bundle-version="3.5.0";visibility:=reexport,
+ net.bodz.bas;bundle-version="1.0.0"
 Export-Package: com.swtdesigner,
  net.bodz.geom.attributes,
  net.bodz.geom.base,
@@ -32,6 +24,7 @@ Export-Package: com.swtdesigner,
  net.bodz.swt.auto,
  net.bodz.swt.auto.vt,
  net.bodz.swt.controls,
+ net.bodz.swt.controls.gs,
  net.bodz.swt.controls.helper,
  net.bodz.swt.controls.util,
  net.bodz.swt.editors.objecteditor,
@@ -53,3 +46,9 @@ Export-Package: com.swtdesigner,
  net.bodz.swt.util,
  net.bodz.swt.widgets,
  swing2swt.layout
+Bundle-ClassPath: mod/Bundled Modules/bin/,
+ mod/Common Controls/bin/,
+ mod/Commons/bin/,
+ mod/Geom Shapes/bin/,
+ mod/GUI Framework/bin/,
+ mod/Presentation/bin/
