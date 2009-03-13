@@ -30,7 +30,7 @@ public abstract class SWTRenderer implements Renderer {
         if (var == null)
             throw new NullPointerException("render var");
         try {
-            if (!(var instanceof GUIVar))
+            if (!(var instanceof GUIVar<?>))
                 throw new RenderException("not a GUIVar: " + var.getClass());
             GUIVar<?> gvar = (GUIVar<?>) var;
             return render(gvar, null, SWT.NONE);

@@ -14,20 +14,16 @@ import org.eclipse.swt.graphics.RGB;
 
 public class A_gui extends net.bodz.bas.gui.a.A_gui {
 
-    /**
-     * @param device
-     *            get the current device if <code>null</code>
-     */
-    public static Factory getFontFactory(net.bodz.bas.gui.a.Font font) {
+    public static Factory<?> getFontFactory(net.bodz.bas.gui.a.Font font) {
         if (font == null)
             return null;
-        Class<? extends Factory> factoryClass = font.factory();
+        Class<? extends Factory<?>> factoryClass = font.factory();
         if (factoryClass == Factory.class) {
             String name = font.name();
             int height = font.height();
             int style = font.style();
             FontData fontData = new FontData(name, height, style);
-            return new Factory.Static(fontData);
+            return new Factory.Static<FontData>(fontData);
         }
         try {
             return Types.getClassInstance(factoryClass);

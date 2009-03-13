@@ -3,7 +3,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/net.bodz.bas"/>
 	<classpathentry kind="src" output="mod/Bundled Modules/bin" path="mod/Bundled Modules/src"/>
 	<classpathentry kind="src" output="mod/Bundled Modules/test.bin" path="mod/Bundled Modules/test"/>
 	<classpathentry kind="src" output="mod/Common Controls/bin" path="mod/Common Controls/src"/>

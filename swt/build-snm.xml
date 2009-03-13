@@ -10,19 +10,20 @@
 
 	<target name="dist" depends=":bin.jar, :src.jar">
 		<copy todir="${distdir}">
-			<fileset dir="${basedir}/build">
+			<fileset dir="${basedir}/lib">
 				<exclude name="*-src.jar" />
 			</fileset>
 		</copy>
 		<copy todir="${distsrc}">
-			<fileset dir="${basedir}/build">
+			<fileset dir="${basedir}/lib">
 				<include name="*-src.jar" />
 			</fileset>
 		</copy>
 	</target>
 
 	<target name=":bin.jar">
-		<jar destfile="build/net.bodz.swt.jar" update="true">
+		<mkdir dir="lib" />
+		<jar destfile="lib/net.bodz.swt.jar" update="true">
 			<fileset dir="mod/Bundled Modules/bin" />
 			<fileset dir="mod/Common Controls/bin" />
 			<fileset dir="mod/Commons/bin" />
@@ -33,7 +34,8 @@
 	</target>
 
 	<target name=":src.jar">
-		<jar destfile="build/net.bodz.swt-src.jar" update="true">
+		<mkdir dir="lib" />
+		<jar destfile="lib/net.bodz.swt-src.jar" update="true">
 			<fileset dir="mod/Bundled Modules/src" />
 			<fileset dir="mod/Common Controls/src" />
 			<fileset dir="mod/Commons/src" />
@@ -45,7 +47,7 @@
 
 	<target name="clean">
 		<delete verbose="true">
-			<fileset dir="${basedir}/build" includes="*.jar" />
+			<fileset dir="${basedir}/lib" includes="*.jar" />
 		</delete>
 	</target>
 
