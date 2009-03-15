@@ -27,8 +27,8 @@ public class R_Throwable extends SWTRenderer {
         super(rc);
     }
 
-    static final String expandedIcon  = "/com/sun/java/swing/plaf/motif/icons/ScrollDownArrow.gif";
-    static final String collapsedIcon = "/com/sun/java/swing/plaf/motif/icons/ScrollRightArrow.gif";
+    static final String expandedIcon  = "/icons/full/obj16/remove_correction.gif";
+    static final String collapsedIcon = "/icons/full/obj16/add_correction.gif";
 
     @Override
     public Control render(GUIVar<?> var, Composite parent, int style)
