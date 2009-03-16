@@ -15,4 +15,9 @@ public class PageChangeEvent extends EventObject {
         this.current = current;
     }
 
+    @Override
+    public String toString() {
+        return "page change: " + previous + " -> " + current;
+    }
+
 }

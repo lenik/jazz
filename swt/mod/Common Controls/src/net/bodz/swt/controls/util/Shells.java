@@ -1,6 +1,7 @@
 package net.bodz.swt.controls.util;
 
- import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
@@ -26,11 +27,24 @@ public class Shells {
         shell.setLocation(x, y);
     }
 
+    static final Point defaultMinSize = new Point(1, 1);
+    static final Point defaultMaxSize = new Point(Integer.MAX_VALUE,
+                                              Integer.MAX_VALUE);
+
+    public static boolean fitToClientAreaSize(Shell shell) {
+        Point clientAreaSize = shell.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+        return fitToClientAreaSize(shell, clientAreaSize, null, null);
+    }
+
     /**
      * @return <code>true</code> if size changed.
      */
     public static boolean fitToClientAreaSize(Shell shell,
             Point clientAreaSize, Point minSize, Point maxSize) {
+        if (minSize == null)
+            minSize = defaultMinSize;
+        if (maxSize == null)
+            maxSize = defaultMaxSize;
         Point shellSize = shell.getSize();
         Rectangle area = shell.getClientArea();
         int padWidth = shellSize.x - area.width;
