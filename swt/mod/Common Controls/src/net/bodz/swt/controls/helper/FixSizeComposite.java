@@ -3,6 +3,9 @@ package net.bodz.swt.controls.helper;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 
+/**
+ * @TestBy FixSizeCompositeTest
+ */
 public class FixSizeComposite extends Composite {
 
     private Point fixed;

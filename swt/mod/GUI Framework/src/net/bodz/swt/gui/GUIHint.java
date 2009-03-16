@@ -5,7 +5,6 @@ import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
 
 import net.bodz.bas.a.A_bas;
-import net.bodz.bas.a.Doc;
 import net.bodz.bas.gui.a.Border;
 import net.bodz.bas.gui.a.PreferredSize;
 import net.bodz.bas.lang.err.CreateException;
@@ -74,46 +73,46 @@ public class GUIHint {
         return id;
     }
 
-    public GUIHint(GUIHint copy, AnnotatedElement elm) {
+    public GUIHint(GUIHint copy, AnnotatedElement aobject) {
         this(copy);
-        this.doc = A_bas.parse(Ns.getN(elm, Doc.class));
+        this.doc = A_bas.getDoc(aobject);
 
-        Boolean enabled = (Boolean) Ns.getValue(elm,
+        Boolean enabled = (Boolean) Ns.getValue(aobject,
                 net.bodz.bas.gui.a.Enabled.class);
         if (enabled != null)
             this.enabled = enabled;
 
-        Boolean visible = (Boolean) Ns.getValue(elm,
+        Boolean visible = (Boolean) Ns.getValue(aobject,
                 net.bodz.bas.gui.a.Visible.class);
         if (visible != null)
             this.visible = visible;
 
-        Integer order = (Integer) Ns.getValue(elm,
+        Integer order = (Integer) Ns.getValue(aobject,
                 net.bodz.bas.gui.a.Order.class);
         if (order != null)
             this.order = order;
 
-        Integer tabOrder = (Integer) Ns.getValue(elm,
+        Integer tabOrder = (Integer) Ns.getValue(aobject,
                 net.bodz.bas.gui.a.TabOrder.class);
         if (tabOrder != null)
             this.tabOrder = tabOrder;
 
-        Factory<?> iconFactory = A_gui.getIconFactory(Ns.getN(elm,
+        Factory<?> iconFactory = A_gui.getIconFactory(Ns.getN(aobject,
                 net.bodz.bas.gui.a.Icon.class));
         if (iconFactory != null)
             this.iconFactory = iconFactory;
 
-        Factory<String> labelFactory = A_gui.getLabelFactory(Ns.getN(elm,
+        Factory<String> labelFactory = A_gui.getLabelFactory(Ns.getN(aobject,
                 net.bodz.bas.gui.a.Label.class));
         if (labelFactory != null)
             this.labelFactory = labelFactory;
 
-        Factory<?> fontFactory = A_gui.getFontFactory(Ns.getN(elm,
+        Factory<?> fontFactory = A_gui.getFontFactory(Ns.getN(aobject,
                 net.bodz.bas.gui.a.Font.class));
         if (fontFactory != null)
             this.fontFactory = fontFactory;
 
-        net.bodz.bas.gui.a.Color colorN = Ns.getN(elm,
+        net.bodz.bas.gui.a.Color colorN = Ns.getN(aobject,
                 net.bodz.bas.gui.a.Color.class);
         if (colorN != null) {
             RGB color = A_gui.parseColor(colorN.value());
@@ -124,22 +123,22 @@ public class GUIHint {
                 this.backColor = back;
         }
 
-        Point preferredSize = A_gui
-                .parseSize(Ns.getN(elm, PreferredSize.class));
+        Point preferredSize = A_gui.parseSize(Ns.getN(aobject,
+                PreferredSize.class));
         if (preferredSize != null)
             this.preferredSize = preferredSize;
 
-        Integer border = (Integer) Ns.getValue(elm, Border.class);
+        Integer border = (Integer) Ns.getValue(aobject, Border.class);
         if (border != null)
             this.border = border;
 
-        String menuItem = (String) Ns.getValue(elm, MenuContrib.class);
+        String menuItem = (String) Ns.getValue(aobject, MenuContrib.class);
         if (menuItem != null)
-            this.menuItem = prep(menuItem, elm);
+            this.menuItem = prep(menuItem, aobject);
 
-        String viewId = (String) Ns.getValue(elm, View.class);
+        String viewId = (String) Ns.getValue(aobject, View.class);
         if (viewId != null)
-            this.viewId = prep(viewId, elm);
+            this.viewId = prep(viewId, aobject);
     }
 
     protected GUIHint(AnnotatedElement elm) {

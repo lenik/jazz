@@ -10,7 +10,7 @@ import net.bodz.swt.controls.util.Shells;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -22,10 +22,11 @@ import swing2swt.layout.BorderLayout;
 
 public class SWTTest {
 
-    public Display   display = Display.getDefault();
-    public String    title   = "SWT Test";
-    public Shell     shell;
-    public Composite parent;
+    public Display    display = Display.getDefault();
+    public String     title   = "SWT Test";
+    public Shell      shell;
+    public Composite  parent;
+    private Composite tools;
 
     public SWTTest() {
         setup();
@@ -47,7 +48,7 @@ public class SWTTest {
         parent.setLayout(parentLayout);
         parent.setLayoutData(BorderLayout.CENTER);
 
-        Composite tools = new Composite(shell, SWT.NONE);
+        tools = new Composite(shell, SWT.NONE);
         FillLayout toolsLayout = new FillLayout();
         tools.setLayout(toolsLayout);
         tools.setLayoutData(BorderLayout.NORTH);
@@ -57,14 +58,19 @@ public class SWTTest {
         autoFit.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                Point clientAreaSize = shell.computeSize(SWT.DEFAULT,
-                        SWT.DEFAULT);
-                Point minSize = new Point(1, 1);
-                Point maxSize = new Point(640, 480);
-                Shells.fitToClientAreaSize(shell, clientAreaSize, minSize,
-                        maxSize);
+                autoFit();
             }
         });
+    }
+
+    public void autoFit() {
+        Shells.fitToClientAreaSize(shell);
+    }
+
+    public void addToolButton(String text, SelectionListener listener) {
+        Button button = new Button(tools, SWT.NONE);
+        button.setText(text);
+        button.addSelectionListener(listener);
     }
 
     public <T extends Control> T add(Class<? extends T> controlType) {

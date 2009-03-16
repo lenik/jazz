@@ -8,7 +8,7 @@ public class ValidateException extends CheckException {
 
     private static final long serialVersionUID = 4861800631957356772L;
 
-    public Control            control;
+    private Control           control;
 
     public ValidateException() {
         super();
@@ -24,6 +24,30 @@ public class ValidateException extends CheckException {
 
     public ValidateException(Throwable cause) {
         super(cause);
+    }
+
+    public ValidateException(Control control) {
+        super();
+        this.control = control;
+    }
+
+    public ValidateException(Control control, String message, Throwable cause) {
+        super(message, cause);
+        this.control = control;
+    }
+
+    public ValidateException(Control control, String message) {
+        super(message);
+        this.control = control;
+    }
+
+    public ValidateException(Control control, Throwable cause) {
+        super(cause);
+        this.control = control;
+    }
+
+    public Control getControl() {
+        return control;
     }
 
 }
