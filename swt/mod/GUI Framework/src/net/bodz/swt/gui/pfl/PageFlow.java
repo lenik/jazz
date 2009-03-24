@@ -1,161 +1,88 @@
 package net.bodz.swt.gui.pfl;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.NoSuchElementException;
 
-import net.bodz.bas.lang.err.OutOfDomainException;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TextMap.TreeTextMap;
 import net.bodz.swt.gui.ValidateException;
 
-public class PageFlow {
+public class PageFlow extends Location {
 
     /**
      * unix-style path -> page object
      */
-    private TextMap<Page>            pages;
-
-    private String                   current;
-    private LinkedList<String>       history;
-    private int                      maxHistory;
-
-    private List<PageChangeListener> pageChangeListeners;
+    private TextMap<Page> pages;
 
     public PageFlow() {
-        this(0);
-    }
-
-    public PageFlow(int maxHistory) {
-        if (maxHistory < 0)
-            throw new OutOfDomainException("maxHistory", maxHistory, 0);
-        if (maxHistory == 0)
-            maxHistory = Integer.MAX_VALUE;
         this.pages = new TreeTextMap<Page>();
-        this.history = new LinkedList<String>();
-        this.maxHistory = maxHistory;
-    }
-
-    public void addPageChangeListener(PageChangeListener pageChangeListener) {
-        if (pageChangeListeners == null)
-            pageChangeListeners = new ArrayList<PageChangeListener>(1);
-        pageChangeListeners.add(pageChangeListener);
-    }
-
-    public void removePageChangeListener(PageChangeListener pageChangeListener) {
-        if (pageChangeListeners != null)
-            pageChangeListeners.remove(pageChangeListener);
     }
 
     public Collection<Page> getPages() {
         return pages.values();
     }
 
-    protected boolean isPageLoaded(String path) {
-        return pages.containsKey(path);
+    public boolean isPageLoadable(String address) {
+        return false;
     }
 
-    public Page getPage(String path) {
-        Page page = pages.get(path);
-        if (page == null) {
-            page = loadPage(path);
-            if (page != null)
-                pages.put(path, page);
+    protected boolean isPageLoaded(String address) {
+        return pages.containsKey(address);
+    }
+
+    /**
+     * Only called if {@link #isPageLoadable(String)} returns <code>true</code>
+     * on the specified address
+     * 
+     * @return <code>null</code> in default implementation.
+     */
+    protected Page loadPage(String address) {
+        return null;
+    }
+
+    public Page getPage() {
+        String address = get();
+        return getPage(address);
+    }
+
+    public Page getPage(String address) {
+        if (address == null)
+            return null;
+        Page page = pages.get(address);
+        if (page == null && isPageLoadable(address)) {
+            page = loadPage(address);
+            pages.put(address, page);
         }
         return page;
     }
 
-    /**
-     * @return <code>null</code> in default implementation.
-     */
-    public Page loadPage(String path) {
-        return null;
-    }
-
-    public String getCurrentPath() {
-        return current;
-    }
-
-    /**
-     * the current page is changed before trigger {@link PageChangeListener}.
-     */
-    public void setCurrentPath(String newPath) {
-        String oldPath = current;
-        current = newPath;
-        if (pageChangeListeners != null) {
-            PageChangeEvent e = new PageChangeEvent(this, oldPath, newPath);
-            for (PageChangeListener l : pageChangeListeners)
-                l.pageChange(e);
-        }
-    }
-
-    public Page getCurrentPage() {
-        return getPage(current);
-    }
-
-    public boolean hasPrevious() {
-        return !history.isEmpty();
-    }
-
-    public Page previous() {
-        if (history.isEmpty())
+    public void goBack() {
+        if (!has(-1))
             throw new NoSuchElementException("previous");
-        String prevPath = history.removeFirst();
-        Page prevPage = getPage(prevPath);
-        setCurrentPath(prevPath);
-        return prevPage;
+        go(-1);
     }
 
-    protected String getNextPath(String path, Object exitState) {
-        String s;
-        if (exitState == null)
-            s = "next";
-        else
-            s = String.valueOf(exitState);
-        String nextPath = PagePath.join(path, s);
-        return nextPath;
-    }
-
-    public boolean hasNext() {
-        Page currentPage = getCurrentPage();
-        if (currentPage == null)
-            return false;
-        String nextPath = getNextPath(current, currentPage.exitState());
-        Page nextPage = getPage(nextPath);
-        return nextPage != null;
-    }
-
-    public Page next() throws ValidateException {
-        Page currentPage = getCurrentPage();
-        if (currentPage == null)
+    public void goOn() throws ValidateException {
+        Page prevPage = getPage();
+        if (prevPage == null)
             throw new IllegalStateException("no current page");
-        String nextPath = getNextPath(current, currentPage.exitState());
-        return go(nextPath);
+        prevPage.validate();
+        Object exit = prevPage.exitState();
+        String next = exit == null ? null : String.valueOf(exit);
+        set(next);
     }
 
-    public synchronized Page go(String path) throws ValidateException {
-        Page currentPage = getCurrentPage();
-        Page nextPage = getPage(path);
-        if (currentPage == nextPage)
-            return currentPage;
+    @Override
+    protected void locationChange(String prev, String next) {
+        Page prevPage = getPage(prev);
+        if (prevPage != null)
+            prevPage.leave(next);
 
-        if (currentPage != null) {
-            currentPage.validate();
-            currentPage.leave(path);
-        }
+        Page nextPage = getPage(next);
         if (nextPage != null)
-            nextPage.enter(current);
+            nextPage.enter(prev);
 
-        if (current != null) {
-            if (history.size() > maxHistory)
-                history.removeFirst();
-            history.addLast(current);
-        }
-
-        setCurrentPath(path);
-        return nextPage;
+        super.locationChange(prev, next);
     }
 
 }

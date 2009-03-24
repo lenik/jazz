@@ -1,69 +1,59 @@
 package net.bodz.swt.gui.pfl;
 
+import java.util.Map.Entry;
+
+import net.bodz.bas.io.CharOuts.BCharOut;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TextMap.TreeTextMap;
 
 public class SymlinkPageFlow extends PageFlow {
 
-    private TextMap<String>  symlinks = new TreeTextMap<String>(); ;
+    public static final int maxDepth = 16;
 
-    private static final int maxDepth = 16;
+    private TextMap<String> symlinks;
 
     public SymlinkPageFlow() {
-        super();
-    }
-
-    public SymlinkPageFlow(int maxHistory) {
-        super(maxHistory);
+        symlinks = new TreeTextMap<String>();
     }
 
     @Override
-    public Page getPage(String path) {
-        if (path == null)
+    public String normalize(String address) {
+        if (address == null)
             return null;
         int depth = 0;
         do {
-            if (super.isPageLoaded(path))
-                return super.getPage(path);
-            String symlink = symlinks.get(path);
+            if (isPageLoaded(address))
+                return address;
+            if (isPageLoadable(address))
+                return address;
+            String symlink = symlinks.get(address);
             if (symlink != null) {
-                path = symlink;
+                address = symlink;
                 continue;
             }
-            Page lazyCreatedPage = super.getPage(path);
-            if (lazyCreatedPage != null)
-                return lazyCreatedPage;
             return null;
         } while (++depth < maxDepth);
         throw new IllegalStateException("exceeds the max symlink depth: "
                 + depth);
     }
 
-    public void putLink(String linkName, String path) {
-        symlinks.put(linkName, path);
+    public void putLink(String name, String address) {
+        symlinks.put(name, address);
     }
 
-    public void removeLink(String linkName) {
-        symlinks.remove(linkName);
+    public void removeLink(String name) {
+        symlinks.remove(name);
     }
 
-    protected String deref(String path) {
-        String target = path;
-        while (true) {
-            target = symlinks.get(path);
-            if (target == null)
-                break;
-            path = target;
-        }
-        return path;
-    }
-
-    /**
-     * symlinks are dereferenced if necessary.
-     */
     @Override
-    public void setCurrentPath(String newPath) {
-        super.setCurrentPath(deref(newPath));
+    public String toString() {
+        BCharOut buf = new BCharOut(symlinks.size() * 30);
+        buf.println("<symlink>");
+        for (Entry<String, String> e : symlinks.entrySet()) {
+            buf.println("  " + e.getKey() + " -> " + e.getValue());
+        }
+        buf.println("</symlink>");
+        return buf.toString();
     }
 
 }

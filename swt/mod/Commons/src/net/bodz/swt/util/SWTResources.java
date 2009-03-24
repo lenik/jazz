@@ -22,12 +22,22 @@ public class SWTResources {
         return SWTResourceManager.getImage(path);
     }
 
+    public static ImageData getImageData(String path) {
+        Image image = getImage(path);
+        if (image == null)
+            return null;
+        return image.getImageData();
+    }
+
     public static Image getImage(InputStream in) {
         Display display = Display.getCurrent();
         ImageData data = new ImageData(in);
+        Image image;
         if (data.transparentPixel > 0)
-            return new Image(display, data, data.getTransparencyMask());
-        return new Image(display, data);
+            image = new Image(display, data, data.getTransparencyMask());
+        else
+            image = new Image(display, data);
+        return image;
     }
 
     public static Image getImage(URL url) throws IOException {
@@ -64,6 +74,21 @@ public class SWTResources {
             return (Image) imageOrPath;
         assert imageOrPath instanceof String;
         return getImageRes(clazz, (String) imageOrPath);
+    }
+
+    public static ImageData getImageDataRes(String path) {
+        if (path.startsWith("/"))
+            path = path.substring(1);
+        ClassLoader loader = Caller.getCallerClassLoader();
+        InputStream in = loader.getResourceAsStream(path);
+        if (in == null) {
+            UCL.dump(loader, CharOuts.stderr);
+            CharOuts.stderr.flush();
+            throw new IllegalArgumentException("bad path: " + path);
+        }
+        ImageData imageData = new ImageData(in);
+        return imageData;
+        // return getImageRes(Caller.getCallerClass(1), path);
     }
 
     public static Image getImageRes(String path) {

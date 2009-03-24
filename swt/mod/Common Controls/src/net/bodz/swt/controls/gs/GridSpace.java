@@ -69,7 +69,7 @@ public abstract class GridSpace extends _GeomSpace {
         setCellHeight(size);
     }
 
-    static abstract class _Array extends GridSpace {
+    public static abstract class _Array extends GridSpace {
 
         int size;
         int rows;

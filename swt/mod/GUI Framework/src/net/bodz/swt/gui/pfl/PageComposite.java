@@ -24,7 +24,7 @@ public class PageComposite extends Composite implements Page {
     }
 
     @Override
-    public String getTitle() {
+    public String getPageTitle() {
         Class<?> clazz = getClass();
         String doc = A_bas.getDoc(clazz);
         if (doc != null)
@@ -33,7 +33,7 @@ public class PageComposite extends Composite implements Page {
     }
 
     @Override
-    public Image getImage() {
+    public Image getPageIcon() {
         Class<?> clazz = getClass();
         Image icon = A_gui.getIcon(clazz);
         return icon;

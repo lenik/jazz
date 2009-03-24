@@ -10,14 +10,16 @@ import org.eclipse.swt.graphics.Rectangle;
 
 public abstract class _GeomSpace implements GeomSpace {
 
+    static final Rectangle emptyRect = new Rectangle(0, 0, 0, 0);
+
     /**
-     * @return <code>null</code> if no object defined.
+     * @return <code>(0, 0, 0, 0)</code> if no object defined.
      */
     @Override
     public Rectangle getBounds() {
         int n = size();
         if (n == 0)
-            return null;
+            return emptyRect;
         Rectangle b0 = getBound(0); // min-max
         if (n == 1)
             return b0;

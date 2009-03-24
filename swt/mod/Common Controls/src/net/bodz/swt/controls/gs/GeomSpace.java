@@ -14,6 +14,8 @@ public interface GeomSpace {
     Rectangle getBound(int index);
 
     /**
+     * if no element in the geom space, an empty rect at [0,0] is assumed.
+     * 
      * @return copy of rectangle which can be reused.
      */
     Rectangle getBounds();

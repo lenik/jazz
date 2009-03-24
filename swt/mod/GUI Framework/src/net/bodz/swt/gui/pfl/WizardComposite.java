@@ -31,14 +31,18 @@ import com.swtdesigner.SWTResourceManager;
 /**
  * @TestBy WizardCompositeTest
  */
-public class WizardComposite extends Composite implements PageChangeListener {
+public class WizardComposite extends Composite implements
+        LocationChangeListener {
 
     private boolean              useLegend;
+
     private Composite            legends;
     private Label                titleImage;
     private Label                titleLabel;
     private StackComposite       contents;
-    private Button               previousButton;
+
+    private Button               beginButton;
+    private Button               backButton;
     private Button               nextButton;
     private Button               finishButton;
 
@@ -47,6 +51,7 @@ public class WizardComposite extends Composite implements PageChangeListener {
 
     private Interaction          iact;
 
+    static boolean               showBegin  = true;
     static boolean               showFinish = false;
 
     public WizardComposite(Composite parent, int style) {
@@ -73,7 +78,7 @@ public class WizardComposite extends Composite implements PageChangeListener {
                 return page;
             }
         };
-        pageFlow.addPageChangeListener(this);
+        pageFlow.addLocationChangeListener(this);
         this.iact = new SWTInteraction(getShell());
         createContents();
     }
@@ -90,11 +95,11 @@ public class WizardComposite extends Composite implements PageChangeListener {
 
     @Override
     public void dispose() {
-        pageFlow.removePageChangeListener(this);
+        pageFlow.removeLocationChangeListener(this);
         super.dispose();
     }
 
-    Image defaultTitleImage;
+    private Image defaultTitleImage;
 
     void createContents() {
         defaultTitleImage = SWTResourceManager.getImage(WizardComposite.class,
@@ -151,22 +156,41 @@ public class WizardComposite extends Composite implements PageChangeListener {
         gridLayout.marginHeight = 0;
         gridLayout.makeColumnsEqualWidth = true;
         gridLayout.numColumns = 2;
+        if (showBegin)
+            gridLayout.numColumns++;
         if (showFinish)
             gridLayout.numColumns++;
         navbar.setLayout(gridLayout);
 
-        previousButton = new Button(navbar, SWT.NONE);
-        previousButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
+        if (showBegin) {
+            beginButton = new Button(navbar, SWT.NONE);
+            beginButton.setImage(SWTResourceManager.getImage(
+                    WizardComposite.class,
+                    "/icons/full/etool16/shift_l_edit.gif"));
+            beginButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
+                    false));
+            beginButton.setText("Beg&in");
+        }
+
+        backButton = new Button(navbar, SWT.NONE);
+        backButton.setImage(SWTResourceManager.getImage(WizardComposite.class,
+                "/icons/elcl16/nav_backward.gif"));
+        backButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
                 false));
-        previousButton.setText("&Previous");
+        backButton.setText("&Back");
 
         nextButton = new Button(navbar, SWT.NONE);
+        nextButton.setImage(SWTResourceManager.getImage(WizardComposite.class,
+                "/icons/elcl16/nav_forward.gif"));
         nextButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
                 false));
         nextButton.setText("&Next");
 
         if (showFinish) {
             finishButton = new Button(navbar, SWT.NONE);
+            finishButton.setImage(SWTResourceManager.getImage(
+                    WizardComposite.class,
+                    "/icons/full/etool16/shift_r_edit.gif"));
             finishButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
                     false, false));
             finishButton.setText("&Finish");
@@ -176,17 +200,26 @@ public class WizardComposite extends Composite implements PageChangeListener {
     }
 
     void setupEvents() {
-        previousButton.addSelectionListener(new SelectionAdapter() {
+        if (beginButton != null) {
+            beginButton.addSelectionListener(new SelectionAdapter() {
+                @Override
+                public void widgetSelected(SelectionEvent e) {
+                    while (pageFlow.has(-1))
+                        pageFlow.goBack();
+                }
+            });
+        }
+        backButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                pageFlow.previous();
+                pageFlow.goBack();
             }
         });
         nextButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 try {
-                    pageFlow.next();
+                    pageFlow.goOn();
                 } catch (ValidateException ex) {
                     exceptionHandler(ex);
                     return;
@@ -197,14 +230,14 @@ public class WizardComposite extends Composite implements PageChangeListener {
             finishButton.addSelectionListener(new SelectionAdapter() {
                 @Override
                 public void widgetSelected(SelectionEvent e) {
-                    while (pageFlow.hasNext())
+                    while (pageFlow.has(1))
                         try {
-                            pageFlow.next();
+                            pageFlow.goOn();
                         } catch (ValidateException ex) {
                             exceptionHandler(ex);
                             return;
                         }
-                    Page lastPage = pageFlow.getCurrentPage();
+                    Page lastPage = pageFlow.getPage();
                     assert lastPage != null;
                     lastPage.leave(null);
                     dispose();
@@ -245,29 +278,30 @@ public class WizardComposite extends Composite implements PageChangeListener {
     }
 
     @Override
-    public void pageChange(PageChangeEvent e) {
+    public void locationChange(LocationChangeEvent e) {
         refreshPage();
     }
 
     void refreshPage() {
-        Page currentPage = pageFlow.getCurrentPage();
-        if (currentPage == null)
+        Page page = pageFlow.getPage();
+        if (page == null)
             return;
-        String title = currentPage.getTitle();
+        String title = page.getPageTitle();
         setTitle(title);
-        Image image = currentPage.getImage();
+        Image image = page.getPageIcon();
         if (image == null)
             image = defaultTitleImage;
         setTitleImage(image);
 
-        assert currentPage instanceof Composite;
-        Composite currentPageComposite = (Composite) currentPage;
+        assert page instanceof Composite;
+        Composite currentPageComposite = (Composite) page;
         contents.bringFront(currentPageComposite);
 
-        previousButton.setEnabled(pageFlow.hasPrevious());
-        nextButton.setEnabled(pageFlow.hasNext());
+        beginButton.setEnabled(pageFlow.has(-1));
+        backButton.setEnabled(pageFlow.has(-1));
+        nextButton.setEnabled(pageFlow.has(1));
         if (finishButton != null)
-            finishButton.setEnabled(!pageFlow.hasNext());
+            finishButton.setEnabled(!pageFlow.has(1));
     }
 
 }
