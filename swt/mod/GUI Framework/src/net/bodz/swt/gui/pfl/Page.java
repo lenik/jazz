@@ -6,9 +6,9 @@ import org.eclipse.swt.graphics.Image;
 
 public interface Page {
 
-    String getTitle();
+    String getPageTitle();
 
-    Image getImage();
+    Image getPageIcon();
 
     /**
      * @param prev

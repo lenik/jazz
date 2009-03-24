@@ -150,6 +150,7 @@ public class AWTBridge {
             if (transferType != DataBuffer.TYPE_BYTE)
                 throw new NotImplementedException(
                         "ccm transferType isn't BYTE: " + transferType);
+            // XXX - ??
             PaletteData palette = new PaletteData(0x0000ff, 0x00ff00, 0xff0000);
             ImageData data = new ImageData(width, height, pixelSize, palette);
             WritableRaster raster = bufferedImage.getRaster();

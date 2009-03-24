@@ -26,7 +26,7 @@ public class WizardCompositeTest {
         });
         SymlinkPageFlow pageFlow = wizard.getPageFlow();
         pageFlow.putLink("aaa/next", "bbb");
-        pageFlow.setCurrentPath("aaa");
+        pageFlow.set("aaa");
         test.run();
     }
 
