@@ -10,13 +10,16 @@ public class CodeSet {
     static final int[]      ordinals;
 
     static {
-        // removed: E O R W
+        String zerospec = "EORW";
         chars = "0123456789ABCDFGHIJKLMNPQSTUVXYZ".toCharArray();
         assert chars.length == size;
         ordinals = new int[256];
-        // all unknown chars are mapped to 0.
+        for (int i = 0; i < 256; i++)
+            ordinals[i] = -1;
         for (int i = 0; i < size; i++)
             ordinals[chars[i]] = i;
+        for (int i = 0; i < zerospec.length(); i++)
+            ordinals[zerospec.charAt(i)] = 0;
     }
 
     public static char chr(int ord) {
@@ -33,7 +36,7 @@ public class CodeSet {
         StringBuffer buf = new StringBuffer(8);
         while (n != 0) {
             int r = n & mask;
-            n >>= bits;
+            n >>>= bits;
             buf.append(chars[r]);
         }
         return buf.reverse().toString();
@@ -45,7 +48,7 @@ public class CodeSet {
         StringBuffer buf = new StringBuffer(8);
         while (n != 0) {
             int r = (int) n & mask;
-            n >>= bits;
+            n >>>= bits;
             buf.append(chars[r]);
         }
         return buf.reverse().toString();
@@ -55,11 +58,13 @@ public class CodeSet {
         int len = s.length();
         int n = 0;
         for (int i = 0; i < len; i++) {
-            n <<= bits;
             char c = s.charAt(i);
             if (c < ordinals.length) {
                 int ord = ordinals[c];
-                n += ord;
+                if (ord != -1) {
+                    n <<= bits;
+                    n += ord;
+                }
             }
         }
         return n;
@@ -69,11 +74,13 @@ public class CodeSet {
         int len = s.length();
         long n = 0;
         for (int i = 0; i < len; i++) {
-            n <<= bits;
             char c = s.charAt(i);
             if (c < ordinals.length) {
                 int ord = ordinals[c];
-                n += ord;
+                if (ord != -1) {
+                    n <<= bits;
+                    n += ord;
+                }
             }
         }
         return n;
