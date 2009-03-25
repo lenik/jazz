@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: boDz Software Product
+Bundle-SymbolicName: net.bodz.product
+Bundle-Version: 1.0.0
+Bundle-Vendor: Lenik
+Require-Bundle: net.bodz.bas;bundle-version="1.0.0",
+ net.bodz.swt;bundle-version="1.0.0"
+Export-Package: net.bodz.product.customize,
+ net.bodz.product.lm,
+ net.bodz.product.seals,
+ net.bodz.product.ver
+Bundle-ClassPath: mod/Package Maintaince/bin/,
+ mod/Software Protection/bin/,
+ mod/Utilities/bin/

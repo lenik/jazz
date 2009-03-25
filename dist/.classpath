@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<classpath>
-	<classpathentry path="src" kind="src"/>
-	<classpathentry path="org.eclipse.jdt.launching.JRE_CONTAINER" kind="con"/>
-	<classpathentry path="JAVA_LIB/org.eclipse.swt.win32.win32.x86.jar" kind="var"/>
-	<classpathentry path="JAVA_LIB/log4j-1.2.8.jar" kind="var"/>
-	<classpathentry path="bin" kind="output"/>
+
+<classpath> 
+  <classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+  <classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+  <classpathentry kind="output" path="bin"/>
+  <classpathentry kind="src" path="mod/Package Maintaince/src" output="mod/Package Maintaince/bin"/>
+  <classpathentry kind="src" path="mod/Package Maintaince/test" output="mod/Package Maintaince/test.bin"/>
+  <classpathentry kind="src" path="mod/Software Protection/src" output="mod/Software Protection/bin"/>
+  <classpathentry kind="src" path="mod/Software Protection/test" output="mod/Software Protection/test.bin"/>
+  <classpathentry kind="src" path="mod/Utilities/src" output="mod/Utilities/bin"/>
+  <classpathentry kind="src" path="mod/Utilities/test" output="mod/Utilities/test.bin"/>
+  <classpathentry kind="src" path="src"/>
+  <classpathentry kind="var" path="JAVA_LIB/log4j-1.3alpha-8.jar"/>
 </classpath>
