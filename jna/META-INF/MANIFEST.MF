@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: boDz JNA Libraries
+Bundle-SymbolicName: net.bodz.jna
+Bundle-Version: 1.0.0
+Bundle-ClassPath: lib/jna-3.0.jar,
+ mod/Win32 Commons/bin/
+Require-Bundle: net.bodz.bas;bundle-version="1.0.0",
+ org.junit
