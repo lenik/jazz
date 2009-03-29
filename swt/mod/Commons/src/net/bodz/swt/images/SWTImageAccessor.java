@@ -7,11 +7,11 @@ import org.eclipse.swt.graphics.RGB;
 
 public abstract class SWTImageAccessor extends _ImageAccessor {
 
-    protected ImageData image;
-    protected byte[]    data;
-    protected int       bytesPerLine;
-    protected int       depthBytes;
-    protected int       pointer;
+    protected final ImageData image;
+    protected final byte[]    data;
+    protected final int       bytesPerLine;
+    protected final int       depthBytes;
+    protected int             pointer;
 
     public SWTImageAccessor(ImageData image) {
         this(image, 0);

@@ -1,12 +1,10 @@
 package net.bodz.swt.controls.gs;
 
-import java.util.Iterator;
-
 import net.bodz.bas.lang.err.OutOfDomainException;
 import net.bodz.bas.lang.err.ReadOnlyException;
+import net.bodz.bas.types.ints.IntIterator;
+import net.bodz.bas.types.ints.PrefetchedIntIterator;
 import net.bodz.bas.types.util.Empty;
-import net.bodz.bas.types.util.Iterators;
-import net.bodz.bas.types.util.PrefetchedIterator;
 
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
@@ -164,20 +162,20 @@ public abstract class GridSpace extends _GeomSpace {
         }
 
         @Override
-        public final Iterator<Integer> iterator(int x0, int y0, int x1, int y1) {
-            assert x0 <= x1 && y0 <= y1;
-            if (x0 < 0)
-                x0 = 0;
-            if (y0 < 0)
-                y0 = 0;
+        public final IntIterator iterator(Rectangle rect) {
+            if (rect == null)
+                return iteratorAll();
+            assert rect.width >= 0 && rect.height >= 0;
+            int x0 = Math.max(0, rect.x);
+            int y0 = Math.max(0, rect.y);
             int dx = cellw + hpad;
             int dy = cellh + vpad;
             final int r0 = y0 / dy;
             final int c0 = x0 / dx;
             if (r0 >= rows || c0 >= columns)
-                return Iterators.EMPTY();
-            int r1 = y1 / dy;
-            int c1 = x1 / dx;
+                return IntIterator.empty;
+            int r1 = (y0 + rect.height) / dy;
+            int c1 = (x0 + rect.width) / dx;
             if (r1 >= rows)
                 r1 = rows - 1;
             if (c1 >= columns)
@@ -185,11 +183,11 @@ public abstract class GridSpace extends _GeomSpace {
             final int rn = r1 - r0 + 1;
             final int cn = c1 - c0 + 1;
             if (rn < 1 || cn < 1)
-                return Iterators.EMPTY();
+                return IntIterator.empty;
             return iteratorCells(r0, c0, rn, cn);
         }
 
-        protected abstract Iterator<Integer> iteratorCells(final int r0,
+        protected abstract IntIterator iteratorCells(final int r0,
                 final int c0, final int rn, final int cn);
 
     }
@@ -238,19 +236,22 @@ public abstract class GridSpace extends _GeomSpace {
         }
 
         @Override
-        protected Iterator<Integer> iteratorCells(final int r0, final int c0,
+        protected IntIterator iteratorCells(final int r0, final int c0,
                 final int rn, final int cn) {
             assert rn >= 0 && cn >= 0;
             final int r1 = r0 + rn;
             final int c1 = c0 + cn;
-            return new PrefetchedIterator<Integer>() {
+            class Iter extends PrefetchedIntIterator {
+                public Iter() {
+                    super(-1);
+                }
 
                 int row   = r0;
                 int col   = c0;
                 int index = row * columns + col;
 
                 @Override
-                protected Object fetch() {
+                protected int fetch() {
                     if (row >= r1 || index >= size)
                         return END;
                     int ret = index++;
@@ -261,8 +262,8 @@ public abstract class GridSpace extends _GeomSpace {
                     }
                     return ret;
                 }
-
-            };
+            }
+            return new Iter();
         }
     }
 

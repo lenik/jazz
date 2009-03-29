@@ -19,8 +19,8 @@ import net.bodz.bas.types.TypeParser;
 import net.bodz.bas.types.TypeParsers;
 import net.bodz.bas.types.TextMap.HashTextMap;
 import net.bodz.bas.types.util.Objects;
-import net.bodz.swt.controls.helper.SimpleDialog;
 import net.bodz.swt.controls.helper.StackComposite;
+import net.bodz.swt.dialogs.SimpleDialog;
 import net.bodz.swt.gui.styles.base.SWTStrategy;
 import net.bodz.swt.gui.styles.grid.SWTGridStrategy;
 import net.bodz.swt.util.SWTResources;
@@ -255,7 +255,7 @@ public class SWTInteraction extends _Interaction {
             }
 
             @Override
-            protected void updateResult() {
+            protected void execute() {
                 String s = text.getText();
                 try {
                     Object value = parser.parse(s);
@@ -277,10 +277,10 @@ public class SWTInteraction extends _Interaction {
     private static int FLATMAX = 3;
 
     static class PreRenderred {
-        private SWTStrategy style;
-        private StackComposite       stack;
-        private Control[]   controls;
-        private int         next;
+        private SWTStrategy    style;
+        private StackComposite stack;
+        private Control[]      controls;
+        private int            next;
 
         public PreRenderred(Composite parent, SWTStrategy style, int size) {
             this.stack = new StackComposite(parent, SWT.BORDER);
@@ -461,7 +461,7 @@ public class SWTInteraction extends _Interaction {
             }
 
             @Override
-            protected void updateResult() throws CheckException {
+            protected void execute() throws CheckException {
                 Set<K> set = selection.get();
                 set(set);
             }

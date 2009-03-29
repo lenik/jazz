@@ -6,6 +6,9 @@ import net.bodz.bas.io.CharOuts.BCharOut;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TextMap.TreeTextMap;
 
+/**
+ * @TestBy SymlinkPageFlowTest
+ */
 public class SymlinkPageFlow extends PageFlow {
 
     public static final int maxDepth = 16;
@@ -31,7 +34,7 @@ public class SymlinkPageFlow extends PageFlow {
                 address = symlink;
                 continue;
             }
-            return null;
+            return address;
         } while (++depth < maxDepth);
         throw new IllegalStateException("exceeds the max symlink depth: "
                 + depth);

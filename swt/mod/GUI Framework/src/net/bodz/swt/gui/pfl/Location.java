@@ -19,9 +19,9 @@ public class Location {
         return history.get(index);
     }
 
-    public String set(String address) {
+    public String set(String next) {
         String prev = get();
-        String resolved = resolv(prev, address);
+        String resolved = resolv(prev, next);
         history.add(++index, resolved);
         // clear the broken forwards: (index, len)
         int keeplen = index + 1;
@@ -32,7 +32,13 @@ public class Location {
         return resolved;
     }
 
+    public final String resolv(String next) {
+        String prev = get();
+        return resolv(prev, next);
+    }
+
     public final String resolv(String prev, String next) {
+        // XXX - prev = normalize(prev);
         String resolved = _resolv(prev, next);
         String normalized = normalize(resolved);
         return normalized;
@@ -42,7 +48,7 @@ public class Location {
         if (prev == null)
             return next;
         if (next == null)
-            return null;
+            return prev + "/next"; // option?
         if (next.startsWith("/"))
             return next;
         if (!prev.endsWith("/"))
@@ -54,7 +60,13 @@ public class Location {
         return address;
     }
 
-    boolean has(int relativeIndex) {
+    public boolean has(String next) {
+        String prev = get();
+        String nextResolved = resolv(prev, next);
+        return nextResolved != null;
+    }
+
+    public boolean has(int relativeIndex) {
         int i = index + relativeIndex;
         return i >= 0 && i < history.size();
     }

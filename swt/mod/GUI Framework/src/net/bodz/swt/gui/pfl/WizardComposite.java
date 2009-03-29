@@ -37,8 +37,9 @@ public class WizardComposite extends Composite implements
     private boolean              useLegend;
 
     private Composite            legends;
-    private Label                titleImage;
-    private Label                titleLabel;
+    private Composite            body;
+    private Label                pageIconLabel;
+    private Label                pageTitleLabel;
     private StackComposite       contents;
 
     private Button               beginButton;
@@ -63,18 +64,17 @@ public class WizardComposite extends Composite implements
         this.useLegend = useLegend;
         pageFlow = new SymlinkPageFlow() {
             @Override
-            public PageComposite loadPage(String path) {
-                PageComposite page;
-                Composite parent = WizardComposite.this.contents;
-                if (pageFactories != null) {
-                    PageFactory factory = pageFactories.get(path);
-                    if (factory != null) {
-                        page = factory.create(parent);
-                        if (page != null)
-                            return page;
-                    }
-                }
-                page = createPage(parent, path);
+            public boolean isPageLoadable(String address) {
+                if (super.isPageLoadable(address))
+                    return true;
+                return WizardComposite.this.isPageLoadable(address);
+            }
+
+            @Override
+            public Page loadPage(String address) {
+                Page page = super.loadPage(address);
+                if (page == null)
+                    page = WizardComposite.this.loadPage(address);
                 return page;
             }
         };
@@ -83,14 +83,24 @@ public class WizardComposite extends Composite implements
         createContents();
     }
 
-    public void definePage(String path, PageFactory factory) {
+    public void definePage(String address, PageFactory factory) {
         if (pageFactories == null)
             pageFactories = new HashTextMap<PageFactory>();
-        pageFactories.put(path, factory);
+        pageFactories.put(address, factory);
     }
 
-    protected PageComposite createPage(Composite parent, String path) {
-        return null;
+    protected boolean isPageLoadable(String address) {
+        return pageFactories.containsKey(address);
+    }
+
+    protected PageComposite loadPage(String address) {
+        if (pageFactories == null)
+            return null;
+        PageFactory factory = pageFactories.get(address);
+        if (factory == null)
+            return null;
+        Composite parent = WizardComposite.this.contents;
+        return factory.create(parent);
     }
 
     @Override
@@ -99,10 +109,10 @@ public class WizardComposite extends Composite implements
         super.dispose();
     }
 
-    private Image defaultTitleImage;
+    private Image defaultPageIcon;
 
     void createContents() {
-        defaultTitleImage = SWTResourceManager.getImage(WizardComposite.class,
+        defaultPageIcon = SWTResourceManager.getImage(WizardComposite.class,
                 "/icons/full/obj16/brkp_grp.gif");
 
         final BorderLayout borderLayout = new BorderLayout(0, 0);
@@ -115,7 +125,7 @@ public class WizardComposite extends Composite implements
             legends.setLayoutData(BorderLayout.NORTH);
         }
 
-        final Composite body = new Composite(this, SWT.NONE);
+        body = new Composite(this, SWT.NONE);
         final BorderLayout bodyLayout = new BorderLayout(0, 0);
         bodyLayout.setVgap(3);
         body.setLayout(bodyLayout);
@@ -125,20 +135,20 @@ public class WizardComposite extends Composite implements
         titlebar.setLayout(new FormLayout());
         titlebar.setLayoutData(BorderLayout.NORTH);
 
-        titleImage = new Label(titlebar, SWT.NONE);
+        pageIconLabel = new Label(titlebar, SWT.NONE);
         final FormData fd_titleImage = new FormData();
         fd_titleImage.top = new FormAttachment(0, 3);
         fd_titleImage.left = new FormAttachment(0, 3);
-        titleImage.setLayoutData(fd_titleImage);
-        titleImage.setImage(defaultTitleImage);
+        pageIconLabel.setLayoutData(fd_titleImage);
+        pageIconLabel.setImage(defaultPageIcon);
 
-        titleLabel = new Label(titlebar, SWT.WRAP);
+        pageTitleLabel = new Label(titlebar, SWT.WRAP);
         final FormData fd_titleLabel = new FormData();
         fd_titleLabel.right = new FormAttachment(100, -5);
-        fd_titleLabel.top = new FormAttachment(titleImage, 0, SWT.TOP);
-        fd_titleLabel.left = new FormAttachment(titleImage, 5, SWT.RIGHT);
-        titleLabel.setLayoutData(fd_titleLabel);
-        titleLabel.setText("Title Of Current Page");
+        fd_titleLabel.top = new FormAttachment(pageIconLabel, 0, SWT.TOP);
+        fd_titleLabel.left = new FormAttachment(pageIconLabel, 5, SWT.RIGHT);
+        pageTitleLabel.setLayoutData(fd_titleLabel);
+        pageTitleLabel.setText("Title Of Current Page");
 
         contents = new StackComposite(body, SWT.BORDER);
         contents.setLayoutData(BorderLayout.CENTER);
@@ -265,43 +275,41 @@ public class WizardComposite extends Composite implements
         return pageFlow;
     }
 
-    protected String getTitle() {
-        return titleLabel.getText();
-    }
-
-    protected void setTitle(String title) {
-        titleLabel.setText(title);
-    }
-
-    protected void setTitleImage(Image image) {
-        titleImage.setImage(image);
-    }
-
     @Override
     public void locationChange(LocationChangeEvent e) {
         refreshPage();
     }
 
-    void refreshPage() {
+    protected void refreshPage() {
         Page page = pageFlow.getPage();
         if (page == null)
             return;
         String title = page.getPageTitle();
-        setTitle(title);
-        Image image = page.getPageIcon();
-        if (image == null)
-            image = defaultTitleImage;
-        setTitleImage(image);
+        pageTitleLabel.setText(title);
+        Image pageIcon = page.getPageIcon();
+        if (pageIcon == null)
+            pageIcon = defaultPageIcon;
+        pageIconLabel.setImage(pageIcon);
 
-        assert page instanceof Composite;
-        Composite currentPageComposite = (Composite) page;
-        contents.bringFront(currentPageComposite);
+        assert page instanceof PageComposite;
+        PageComposite pageComp = (PageComposite) page;
+        contents.bringFront(pageComp);
 
-        beginButton.setEnabled(pageFlow.has(-1));
-        backButton.setEnabled(pageFlow.has(-1));
-        nextButton.setEnabled(pageFlow.has(1));
+        beginButton.setEnabled(pageFlow.canGoBack());
+        backButton.setEnabled(pageFlow.canGoBack());
+        nextButton.setEnabled(pageFlow.canGoOn());
         if (finishButton != null)
-            finishButton.setEnabled(!pageFlow.has(1));
+            finishButton.setEnabled(pageFlow.canGoOn());
+
+        body.layout();
+    }
+
+    public Composite getLegends() {
+        return legends;
+    }
+
+    public StackComposite getContents() {
+        return contents;
     }
 
 }

@@ -1,9 +1,12 @@
 package net.bodz.swt.controls.gs;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
+
+import net.bodz.bas.io.CharOuts.BCharOut;
+import net.bodz.bas.types.ints.IntIterable;
+import net.bodz.bas.types.ints.IntIterator;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlAdapter;
@@ -19,6 +22,7 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.graphics.Region;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ScrollBar;
@@ -28,16 +32,16 @@ import org.eclipse.swt.widgets.ScrollBar;
  */
 public class GeomCanvas extends Canvas {
 
-    GeomSpace                       gspace;
-
-    private List<PaintGeomListener> pgListeners;
+    private GeomSpace               gspace;
+    private boolean                 paintBg;
 
     private ScrollBar               hbar;
     private ScrollBar               vbar;
-    int                             xoff;
-    int                             yoff;
-    int                             xoffMax;
-    int                             yoffMax;
+    private Point                   viewOffset;
+    private int                     xoffMax;
+    private int                     yoffMax;
+
+    private List<PaintGeomListener> pgListeners;
 
     public GeomCanvas(Composite parent, GeomSpace space) {
         this(parent, SWT.H_SCROLL | SWT.V_SCROLL, space);
@@ -50,8 +54,9 @@ public class GeomCanvas extends Canvas {
      * @see SWT#V_SCROLL (recommend)
      */
     public GeomCanvas(Composite parent, int style, GeomSpace space) {
-        super(parent, style | SWT.NO_REDRAW_RESIZE);
+        super(parent, style | SWT.NO_REDRAW_RESIZE | SWT.NO_BACKGROUND);
         this.gspace = space;
+        this.paintBg = 0 == (style & SWT.NO_BACKGROUND);
 
         this.addControlListener(new ControlAdapter() {
             @Override
@@ -67,7 +72,8 @@ public class GeomCanvas extends Canvas {
                 if (painting)
                     throw new IllegalStateException("paint no reentrant");
                 painting = true;
-                doPaint(e);
+                Rectangle viewRect = new Rectangle(e.x, e.y, e.width, e.height);
+                paintImpl(e.gc, viewRect, viewOffset);
                 painting = false;
             }
         });
@@ -103,7 +109,7 @@ public class GeomCanvas extends Canvas {
             public void mouseScrolled(MouseEvent e) {
                 boolean shiftDown = 0 != (e.stateMask & SWT.SHIFT);
                 if (shiftDown) {
-                    int newoff = xoff + e.count * getWheelScale().x;
+                    int newoff = viewOffset.x + e.count * getWheelScale().x;
                     if (newoff < 0)
                         newoff = 0;
                     if (newoff > xoffMax)
@@ -113,7 +119,7 @@ public class GeomCanvas extends Canvas {
                     else
                         hscroll(newoff);
                 } else {
-                    int newoff = yoff + e.count * getWheelScale().y;
+                    int newoff = viewOffset.y + e.count * getWheelScale().y;
                     if (newoff < 0)
                         newoff = 0;
                     if (newoff > yoffMax)
@@ -154,13 +160,17 @@ public class GeomCanvas extends Canvas {
     void updateBounds() {
         if (gspace == null)
             return;
-        Rectangle bounds = gspace.getBounds();
-        Point size = getSize();
-        boolean useh = xoff != 0 || bounds.width > size.x;
-        boolean usev = yoff != 0 || bounds.height > size.y;
+        Rectangle geomBounds = gspace.getBounds();
+        Point canvasSize = getSize();
+        boolean useh = viewOffset.x != 0 || geomBounds.width > canvasSize.x;
+        boolean usev = viewOffset.y != 0 || geomBounds.height > canvasSize.y;
         // this.setSize(bounds.width, bounds.height);
-        xoffMax = bounds.width - size.x + safeAdd;
-        yoffMax = bounds.height - size.y + safeAdd;
+        xoffMax = geomBounds.width - canvasSize.x + safeAdd;
+        yoffMax = geomBounds.height - canvasSize.y + safeAdd;
+        if (xoffMax < 0)
+            xoffMax = 0;
+        if (yoffMax < 0)
+            yoffMax = 0;
         if (hbar != null) {
             hbar.setVisible(useh);
             if (useh)
@@ -181,6 +191,14 @@ public class GeomCanvas extends Canvas {
         return new Point(bounds.width, bounds.height);
     }
 
+    /**
+     * The background of concrete geom components are not included in the global
+     * background, for geom with non-rectangular shapes, implementations of
+     * {@link PaintGeomListener#paintGeom(PaintGeomEvent)} must take consider of
+     * {@link #isPaintBg() paintBg} to decide whether to paint the geom's
+     * background. For most cases, call {@link #paintBackground(GC, Rectangle)}
+     * with the component's {@link GeomSpace#getBound(int) bounds} is just fine.
+     */
     public void addPaintGeomListener(PaintGeomListener listener) {
         if (listener == null)
             throw new NullPointerException("listener");
@@ -193,57 +211,123 @@ public class GeomCanvas extends Canvas {
         pgListeners.remove(listener);
     }
 
+    public boolean isPaintBg() {
+        return paintBg;
+    }
+
+    public void setPaintBg(boolean paintBg) {
+        if (this.paintBg != paintBg) {
+            this.paintBg = paintBg;
+            if (paintBg)
+                redraw();
+        }
+    }
+
+    /** used in default painting */
     private static Random  random    = new Random();
+
     private static boolean paintStat = false;
 
-    void doPaint(PaintEvent e) {
+    protected GRegion createGRegion(Rectangle rect) {
+        SWTGRegion region = new SWTGRegion();
+        region.add(rect);
+        return region;
+    }
+
+    protected void paintBackground(GC gc, Region region) {
+        Rectangle bounds = region.getBounds();
+        paintBackground(gc, bounds);
+    }
+
+    protected void paintBackground(GC gc, Rectangle bounds) {
+        Color bgColor = getBackground();
+        // bgColor = new Color(gc.getDevice(), 255, 0, 0);
+        gc.setBackground(bgColor);
+        gc.fillRectangle(bounds);
+        bgColor.dispose();
+    }
+
+    // protected void
+    private void paintImpl(GC gc, Rectangle viewRect, Point viewOffset) {
         if (gspace == null)
             return;
-        int vx0 = e.x;
-        int vy0 = e.y;
-        int vx1 = vx0 + e.width;
-        int vy1 = vy0 + e.height;
-        Iterator<Integer> it = gspace.iterator(//
-                xoff + vx0, yoff + vy0, xoff + vx1, yoff + vy1);
-        List<Integer> geoms = null;
-        if (paintStat)
-            geoms = new ArrayList<Integer>();
-        while (it.hasNext()) {
-            int geomIndex = it.next();
-            if (paintStat)
-                geoms.add(geomIndex);
-            PaintGeomEvent e2 = new PaintGeomEvent(e, this, geomIndex);
+        Rectangle geomBounds = null;
+        if (viewRect == null) {
+            Rectangle bounds = gspace.getBounds();
+            viewRect = new Rectangle(0, 0, bounds.height, bounds.height);
+            // keep geomBounds == null, to iterate ALL geoms.
+        } else {
+            geomBounds = new Rectangle(//
+                    viewRect.x + viewOffset.x, viewRect.y + viewOffset.y, //
+                    viewRect.width, viewRect.height);
+        }
+        IntIterable geoms = gspace.find(geomBounds);
+        IntIterator geomsIter;
+
+        if (paintStat) {
+            BCharOut buf = null;
+            int n = 0;
+            geomsIter = geoms.iterator();
+            while (geomsIter.hasNext()) {
+                int geom = geomsIter.next();
+                if (buf == null)
+                    buf = new BCharOut();
+                else
+                    buf.print(", ");
+                buf.print(geom);
+                n++;
+            }
+            // System.out.println(e);
+            System.out.print("    Pant(" + n + "): ");
+            System.out.println(buf);
+        }
+        if (paintBg) {
+            GRegion gregion = createGRegion(viewRect);
+            geomsIter = geoms.iterator();
+            while (geomsIter.hasNext()) {
+                int geom = geomsIter.next();
+                Rectangle geomRect = gspace.getBound(geom);
+                geomRect.x -= viewOffset.x;
+                geomRect.y -= viewOffset.y;
+                gregion.subtract(geomRect);
+            }
+            Region region = gregion.toRegion();
+            gc.setClipping(region);
+            paintBackground(gc, region);
+            gc.setClipping((Region) null);
+            gregion.dispose();
+        }
+
+        geomsIter = geoms.iterator();
+        while (geomsIter.hasNext()) {
+            int geom = geomsIter.next();
+            Rectangle geomRect = gspace.getBound(geom);
+            geomRect.x -= viewOffset.x;
+            geomRect.y -= viewOffset.y;
             if (pgListeners == null) {
                 // default to show the rectangular boxes.
-                GC gc = e.gc;
-                Rectangle rect = gspace.getBound(geomIndex);
-                rect.x -= xoff;
-                rect.y -= yoff;
                 int red = random.nextInt(256);
                 int green = random.nextInt(256);
                 int blue = random.nextInt(256);
                 Color bgColor = new Color(getDisplay(), red, green, blue);
                 // Color bg0 = gc.getBackground();
                 gc.setBackground(bgColor);
-                gc.fillRectangle(rect);
-                gc.drawRectangle(rect);
-                String str = String.valueOf(geomIndex);
+                gc.fillRectangle(geomRect);
+                gc.drawRectangle(geomRect);
+                String str = String.valueOf(geom);
                 if (str.length() > 3)
                     str = str.substring(str.length() - 3);
                 Point strExt = gc.textExtent(str);
                 gc.drawText(str, //
-                        rect.x + (rect.width - strExt.x) / 2, //
-                        rect.y + (rect.height - strExt.y) / 2);
+                        geomRect.x + (geomRect.width - strExt.x) / 2, //
+                        geomRect.y + (geomRect.height - strExt.y) / 2);
                 // gc.setBackground(bg0);
             } else {
+                PaintGeomEvent paintGeomEvent = new PaintGeomEvent(this, gc,
+                        geom, geomRect);
                 for (PaintGeomListener l : pgListeners)
-                    l.paintGeom(e2);
+                    l.paintGeom(paintGeomEvent);
             }
-        }
-        if (paintStat) {
-            System.out.println(e);
-            System.out.print("    Pant(" + geoms.size() + "): ");
-            System.out.println(geoms);
         }
     }
 
@@ -252,30 +336,38 @@ public class GeomCanvas extends Canvas {
     }
 
     public void redrawGeom(int index, boolean all) {
-        Rectangle b = gspace.getBound(index);
-        int viewx = b.x - xoff;
-        int viewy = b.y - yoff;
-        redraw(viewx, viewy, b.width, b.height, all);
+        Rectangle geomRect = gspace.getBound(index);
+        int viewx = geomRect.x - viewOffset.x;
+        int viewy = geomRect.y - viewOffset.y;
+        redraw(viewx, viewy, geomRect.width, geomRect.height, all);
+    }
+
+    public void drawTo(GC gc) {
+        drawTo(gc, null);
+    }
+
+    public void drawTo(GC gc, Rectangle clipRect) {
+        paintImpl(gc, clipRect, new Point(0, 0));
     }
 
     protected void hscroll(int x) {
-        if (x == xoff) // SWT.DRAG, SWT.NONE
+        if (x == viewOffset.x) // SWT.DRAG, SWT.NONE
             return;
-        int dx = xoff - x;
+        int dx = viewOffset.x - x;
         Point view = getSize();
         this.scroll(dx, 0, //
                 0, 0, view.x, view.y, false);
-        xoff = x;
+        viewOffset.x = x;
     }
 
     protected void vscroll(int y) {
-        if (y == yoff)
+        if (y == viewOffset.y)
             return;
-        int dy = yoff - y;
+        int dy = viewOffset.y - y;
         Point view = getSize();
         this.scroll(0, dy, //
                 0, 0, view.x, view.y, false);
-        yoff = y;
+        viewOffset.y = y;
     }
 
     public Point getIncrement() {
@@ -307,22 +399,28 @@ public class GeomCanvas extends Canvas {
     @Override
     public Rectangle getClientArea() {
         Rectangle clientArea = super.getClientArea();
-        clientArea.x += xoff;
-        clientArea.y += yoff;
+        clientArea.x += viewOffset.x;
+        clientArea.y += viewOffset.y;
         System.out.println(clientArea);
         return clientArea;
     }
 
-    public Point view2abs(int viewX, int viewY) {
-        int x = xoff + viewX;
-        int y = yoff + viewY;
+    public Point toGlobal(int viewX, int viewY) {
+        int x = viewOffset.x + viewX;
+        int y = viewOffset.y + viewY;
         return new Point(x, y);
+    }
+
+    public Point toView(int x, int y) {
+        int viewX = x - viewOffset.x;
+        int viewY = y - viewOffset.y;
+        return new Point(viewX, viewY);
     }
 
     public int hittest(int viewX, int viewY) {
         if (gspace == null)
             return -1;
-        Point p = view2abs(viewX, viewY);
+        Point p = toGlobal(viewX, viewY);
         int find = gspace.find(p.x, p.y);
         return find;
     }

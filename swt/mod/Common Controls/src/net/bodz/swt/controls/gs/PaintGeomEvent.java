@@ -10,10 +10,7 @@ public class PaintGeomEvent extends EventObject {
 
     private static final long serialVersionUID = -8403157009512252619L;
 
-    /**
-     * geom space
-     */
-    public GeomSpace          gspace;
+    public GeomCanvas         canvas;
 
     /**
      * geometry index
@@ -22,24 +19,15 @@ public class PaintGeomEvent extends EventObject {
 
     public GC                 gc;
 
-    /**
-     * orig x (left of the geometry) in current view.
-     */
-    public int                x;
+    public Rectangle          viewRect;
 
-    /**
-     * orig y (top of the geometry) in current view
-     */
-    public int                y;
-
-    public PaintGeomEvent(PaintEvent e, GeomCanvas canvas, int index) {
-        super(e);
-        this.gspace = canvas.gspace;
+    public PaintGeomEvent(GeomCanvas canvas, GC gc, int index,
+            Rectangle viewRect) {
+        super(canvas);
+        this.canvas = canvas;
+        this.gc = gc;
         this.index = index;
-        this.gc = e.gc;
-        Rectangle bound = gspace.getBound(index);
-        this.x = bound.x - canvas.xoff;
-        this.y = bound.y - canvas.yoff;
+        this.viewRect = viewRect;
     }
 
     @Override
@@ -51,11 +39,12 @@ public class PaintGeomEvent extends EventObject {
     public String toString() {
         PaintEvent source = getSource();
         String s = source.toString();
+        GeomSpace gspace = canvas.getGeomSpace();
         s = s.substring(0, s.length() - 1) // remove trailing '}'
                 + " space=" + gspace //
                 + " index=" + index //
-                + " x=" + x //
-                + " y=" + y;
+                + " vrect=" + viewRect //
+        ;
         return s;
     }
 
