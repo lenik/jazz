@@ -10,12 +10,25 @@ public class WizardCompositeTest {
     public static void main(String[] args) {
         SWTTest test = new SWTTest();
 
-        WizardComposite wizard = new WizardComposite(test.parent, SWT.NONE) {
+        final WizardComposite wizard = new WizardComposite(test.parent,
+                SWT.NONE) {
             @Override
-            protected PageComposite createPage(Composite parent, String path) {
-                if ("aaa".equals(path))
-                    return new TestPage1(parent, SWT.NONE);
-                return null;
+            protected boolean isPageLoadable(String address) {
+                if (super.isPageLoadable(address))
+                    return true;
+                if ("aaa".equals(address))
+                    return true;
+                return false;
+            }
+
+            @Override
+            protected PageComposite loadPage(String address) {
+                PageComposite page = super.loadPage(address);
+                if (page == null) {
+                    if ("aaa".equals(address))
+                        page = new TestPage1(getContents(), SWT.NONE);
+                }
+                return page;
             }
         };
         wizard.definePage("bbb", new PageFactory() {

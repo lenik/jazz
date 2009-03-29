@@ -1,10 +1,12 @@
 package net.bodz.swt.controls.gs;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
-import net.bodz.bas.types.util.PrefetchedIterator;
+import net.bodz.bas.types.ints.IntIterable;
+import net.bodz.bas.types.ints.IntIterator;
+import net.bodz.bas.types.ints.PrefetchedIntIterator;
 
 import org.eclipse.swt.graphics.Rectangle;
 
@@ -79,25 +81,78 @@ public abstract class _GeomSpace implements GeomSpace {
         return indexes;
     }
 
-    @Override
-    public Iterator<Integer> iterator(int x0, int y0, int x1, int y1) {
-        final Rectangle rect = new Rectangle(x0, y0, x1 - x0, y1 - y0);
-        return new PrefetchedIterator<Integer>() {
+    public IntIterable findAll() {
+        return new IntIterable() {
+            @Override
+            public IntIterator iterator() {
+                return iteratorAll();
+            }
+        };
+    }
 
-            int i;
+    public IntIterator iteratorAll() {
+        final int size = size();
+        class IterAll implements IntIterator {
+            private int i;
 
             @Override
-            protected Object fetch() {
-                while (i < size()) {
+            public boolean hasNext() {
+                return i < size;
+            }
+
+            @Override
+            public int next() {
+                if (i < size)
+                    return i++;
+                throw new NoSuchElementException();
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+        }
+        return new IterAll();
+    }
+
+    @Override
+    public IntIterable find(final Rectangle rect) {
+        if (rect == null)
+            return findAll();
+
+        final int size = size();
+
+        class ClipIter extends PrefetchedIntIterator {
+            ClipIter() {
+                super(-1);
+            }
+
+            private int i;
+
+            @Override
+            protected int fetch() {
+                while (i < size) {
                     Rectangle b = getBound(i);
                     if (rect.intersects(b))
                         return i++;
                     i++;
                 }
-                return END;
+                return -1;
             }
-
+        }
+        return new IntIterable() {
+            @Override
+            public IntIterator iterator() {
+                return new ClipIter();
+            }
         };
+    }
+
+    @Override
+    public IntIterator iterator(Rectangle rect) {
+        if (rect == null)
+            return iteratorAll();
+        return find(rect).iterator();
     }
 
 }

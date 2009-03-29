@@ -22,12 +22,15 @@ public class StackComposite extends Composite {
 
     @Override
     public Point computeSize(int wHint, int hHint) {
-        Point size = super.computeSize(wHint, hHint);
+        Point size;
+        // if (stackLayout.topControl != null)
+        // size = stackLayout.topControl.computeSize(wHint, hHint);
+        // else
+        size = super.computeSize(wHint, hHint);
         if (size.x == 0)
             size.x = 1;
         if (size.y == 0)
             size.y = 1;
         return size;
     }
-
 }

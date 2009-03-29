@@ -66,10 +66,17 @@ public class BasicGUI extends BasicCLI {
         shell = createShell();
         shell.open();
         shell.layout();
-        _start();
-        while (!shell.isDisposed()) {
-            if (!display.readAndDispatch())
-                display.sleep();
+
+        try {
+            _start();
+            while (!shell.isDisposed()) {
+                if (!display.readAndDispatch())
+                    display.sleep();
+            }
+        } catch (Throwable t) {
+            SWTInteraction iact = new SWTInteraction(shell);
+            iact.alert(t.getMessage(), t);
+            throw t;
         }
     }
 
@@ -141,7 +148,7 @@ public class BasicGUI extends BasicCLI {
     }
 
     protected Menu createMenu(Shell parent) throws SWTException, GUIException {
-        boolean TODO = true; 
+        boolean TODO = true;
         if (TODO)
             return null;
         final Menu menu = new Menu(parent, SWT.BAR);
@@ -155,7 +162,7 @@ public class BasicGUI extends BasicCLI {
 
     protected Control createToolBar(Composite parent) throws SWTException,
             GUIException {
-        boolean TODO = true; 
+        boolean TODO = true;
         if (TODO)
             return null;
         ToolBar toolBar = new ToolBar(parent, SWT.FLAT | SWT.RIGHT);
@@ -176,9 +183,9 @@ public class BasicGUI extends BasicCLI {
 
     protected Control createExpandBar(Composite parent) throws SWTException,
             GUIException {
-        boolean TODO = true; 
+        boolean TODO = true;
         if (TODO)
-            return null; 
+            return null;
         ExpandBar expandBar = new ExpandBar(parent, SWT.NONE);
         return expandBar;
     }

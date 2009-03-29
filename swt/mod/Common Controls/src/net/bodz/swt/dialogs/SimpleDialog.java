@@ -1,9 +1,10 @@
-package net.bodz.swt.controls.helper;
+package net.bodz.swt.dialogs;
 
 import net.bodz.bas.lang.err.CancelException;
 import net.bodz.bas.lang.err.CheckException;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.ref.Ref;
+import net.bodz.swt.controls.helper.FixSizeComposite;
 import net.bodz.swt.controls.util.Shells;
 import net.bodz.swt.gui.SWTInteraction;
 import net.bodz.swt.util.SWTResources;
@@ -37,14 +38,16 @@ public class SimpleDialog extends Dialog implements Ref<Object> {
     /**
      * no title bar if title is null
      */
-    private String  title;
-    private int     margin       = 20;
-    private int     padding      = 5;
-    private int     buttonHeight = 30;
+    private String      title;
+    private int         margin       = 20;
+    private int         padding      = 5;
+    private int         buttonHeight = 30;
 
-    protected Shell shell;
-    private Object  result;
-    private boolean canceled;
+    protected Shell     shell;
+    protected Composite body;
+
+    private Object      result;
+    private boolean     canceled;
 
     /**
      * @see SWT#PRIMARY_MODAL
@@ -141,7 +144,7 @@ public class SimpleDialog extends Dialog implements Ref<Object> {
         this.result = result;
     }
 
-    protected void updateResult() throws CheckException {
+    protected void execute() throws CheckException {
     }
 
     protected void createContents() throws SWTException, CreateException {
@@ -182,7 +185,7 @@ public class SimpleDialog extends Dialog implements Ref<Object> {
         ops.setLayoutData(fd_ops);
         createOps(ops);
 
-        final Composite body = new Composite(shell, SWT.NONE);
+        body = new Composite(shell, SWT.NONE);
         body.setLayout(new FillLayout());
         final FormData fd_body = new FormData();
         fd_body.left = new FormAttachment(iconLabel, 0, SWT.LEFT);
@@ -229,14 +232,14 @@ public class SimpleDialog extends Dialog implements Ref<Object> {
         addCancelButton(parent);
     }
 
-    private static SWTInteraction interact;
+    protected static SWTInteraction interact;
     static {
         interact = new SWTInteraction(SWT.APPLICATION_MODAL);
     }
 
     protected void accept() {
         try {
-            updateResult();
+            execute();
         } catch (CheckException ex) {
             interact.alert("Check Failure", ex);
             return;

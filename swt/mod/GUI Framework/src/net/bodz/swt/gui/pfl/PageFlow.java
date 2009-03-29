@@ -22,12 +22,20 @@ public class PageFlow extends Location {
         return pages.values();
     }
 
-    public boolean isPageLoadable(String address) {
-        return false;
+    @Override
+    public boolean has(String next) {
+        String address = resolv(next);
+        if (pages.containsKey(address))
+            return true;
+        return isPageLoadable(address);
     }
 
     protected boolean isPageLoaded(String address) {
         return pages.containsKey(address);
+    }
+
+    public boolean isPageLoadable(String address) {
+        return false;
     }
 
     /**
@@ -56,10 +64,29 @@ public class PageFlow extends Location {
         return page;
     }
 
+    public boolean canGoBack() {
+        return has(-1);
+    }
+
     public void goBack() {
         if (!has(-1))
             throw new NoSuchElementException("previous");
         go(-1);
+    }
+
+    protected String getPageNext(Page page) {
+        Object exit = page.exitState();
+        if (exit == null)
+            return null;
+        return String.valueOf(exit);
+    }
+
+    public boolean canGoOn() {
+        Page page = getPage();
+        if (page == null)
+            return false;
+        String next = getPageNext(page);
+        return has(next);
     }
 
     public void goOn() throws ValidateException {

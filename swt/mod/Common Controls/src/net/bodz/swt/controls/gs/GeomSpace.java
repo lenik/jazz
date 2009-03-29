@@ -1,6 +1,7 @@
 package net.bodz.swt.controls.gs;
 
-import java.util.Iterator;
+import net.bodz.bas.types.ints.IntIterable;
+import net.bodz.bas.types.ints.IntIterator;
 
 import org.eclipse.swt.graphics.Rectangle;
 
@@ -30,6 +31,20 @@ public interface GeomSpace {
      */
     int[] findAll(int x, int y);
 
-    Iterator<Integer> iterator(int x0, int y0, int x1, int y1);
+    /**
+     * Find geoms fully included.
+     * 
+     * @param rect
+     *            <code>null</code> to iterator all geoms.
+     */
+    IntIterable find(Rectangle rect);
+
+    /**
+     * Find geoms fully included.
+     * 
+     * @param rect
+     *            <code>null</code> to iterator all geoms.
+     */
+    IntIterator iterator(Rectangle rect);
 
 }

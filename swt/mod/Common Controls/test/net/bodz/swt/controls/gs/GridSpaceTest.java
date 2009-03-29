@@ -2,9 +2,7 @@ package net.bodz.swt.controls.gs;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
-
-import java.util.Iterator;
-
+import net.bodz.bas.types.ints.IntIterator;
 import net.bodz.bas.types.util.Arrays2;
 import net.bodz.swt.controls.gs.GridSpace.HFirst;
 
@@ -48,7 +46,7 @@ public class GridSpaceTest {
         assertEquals(-1, gs.find(40, 40));// cell(4, 4)
 
         // [2, 2] - [3, 3]
-        Iterator<Integer> it = gs.iterator(22, 22, 33, 33);
+        IntIterator it = gs.iterator(new Rectangle(22, 22, 10, 10));
         int[] found = Arrays2.convert(it);
         int[] exp1 = {
         //
