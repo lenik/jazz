@@ -5,7 +5,11 @@ public class AccumEntropy extends _Entropy {
     private final int multiplier;
     private int       acc;
 
-    private AccumEntropy(int multiplier) {
+    public AccumEntropy() {
+        this(97);
+    }
+
+    public AccumEntropy(int multiplier) {
         this.multiplier = multiplier;
     }
 
