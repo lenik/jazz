@@ -4,9 +4,9 @@ import java.util.Random;
 
 public class RandomSequence implements Sequence {
 
-    final Random rand;
+    private final Random rand;
 
-    private RandomSequence(int seed) {
+    public RandomSequence(int seed) {
         rand = new Random(seed);
     }
 
