@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<classpath> 
-  <classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-  <classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-  <classpathentry kind="output" path="bin"/>
-  <classpathentry kind="src" path="mod/Package Maintaince/src" output="mod/Package Maintaince/bin"/>
-  <classpathentry kind="src" path="mod/Package Maintaince/test" output="mod/Package Maintaince/test.bin"/>
-  <classpathentry kind="src" path="mod/Software Protection/src" output="mod/Software Protection/bin"/>
-  <classpathentry kind="src" path="mod/Software Protection/test" output="mod/Software Protection/test.bin"/>
-  <classpathentry kind="src" path="mod/Utilities/src" output="mod/Utilities/bin"/>
-  <classpathentry kind="src" path="mod/Utilities/test" output="mod/Utilities/test.bin"/>
-  <classpathentry kind="src" path="src"/>
-  <classpathentry kind="var" path="JAVA_LIB/log4j-1.3alpha-8.jar"/>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" output="mod/Package Maintaince/bin" path="mod/Package Maintaince/src"/>
+	<classpathentry kind="src" output="mod/Package Maintaince/test.bin" path="mod/Package Maintaince/test"/>
+	<classpathentry kind="src" output="mod/Software Protection/bin" path="mod/Software Protection/src"/>
+	<classpathentry kind="src" output="mod/Software Protection/test.bin" path="mod/Software Protection/test"/>
+	<classpathentry kind="src" output="mod/Utilities/bin" path="mod/Utilities/src"/>
+	<classpathentry kind="src" output="mod/Utilities/test.bin" path="mod/Utilities/test"/>
+	<classpathentry kind="var" path="JAVA_LIB/log4j-1.3alpha-8.jar"/>
+	<classpathentry kind="output" path="mod/bin"/>
 </classpath>
