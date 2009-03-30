@@ -1,16 +1,18 @@
 !define DEBUG 1
 
 !include "lenix.nsh"
+!define __HOME__ ${__DIR__}\..
 
 Name "Lenix Runtime"
-OutFile "${__DIR__}\..\dist\lenix-base.exe"
+OutFile "${__HOME__}\dist\lenix-base.exe"
 InstallDir ${LENIX}
 
 ; Page custom...
 Page instfiles
 
 Section "-Lenix Core Runtime"
-    !insertmacro DirRec $INSTDIR . dev
+    !insertmacro DirRec $INSTDIR ${__HOME__} bin
+    !insertmacro DirRec $INSTDIR ${__HOME__} etc
 SectionEnd
 
 Section "Cygwin Runtime (1.7.0)"
@@ -25,19 +27,26 @@ Section "Cygwin Runtime (1.7.0)"
             /x cygoct* \
             /x cygxaw* \
             bin\*.dll
+!endif
         File bin\bash.exe
+        File bin\bzip2.exe
+        File bin\bunzip2.exe
         File bin\diff.exe
         File bin\echo.exe
         File bin\grep.exe
+        File bin\gunzip
+        File bin\gzip.exe
         File bin\m4.exe
         File bin\md5sum.exe
         File bin\mount.exe
         File bin\sh.exe
         File bin\sha1sum.exe
         File bin\tac.exe
+        File bin\tar.exe
         File bin\umount.exe
-!endif
+        File bin\unzip.exe
         File bin\wget.exe
+        File bin\zip.exe
 SectionEnd
 
 Section "Java Runtime Environment (1.7.0)"
@@ -47,5 +56,12 @@ Section "Java Runtime Environment (1.7.0)"
 SectionEnd
 
 Section "Java Extra Libraries"
-    ; !insertmacro Files $INSTDIR\lib ${LAPIOTA}\usr\lib\java *
+    !cd ${LAPIOTA}\usr\lib\java
+    SetOutPath $INSTDIR\lib
+!ifndef DEBUG
+    File \
+        /x net.bodz.* \
+        *.jar
+!endif
+    File libraries.ini
 SectionEnd
