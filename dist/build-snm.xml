@@ -23,7 +23,8 @@
 
 	<target name=":bin.jar">
 		<mkdir dir="lib" />
-		<jar destfile="lib/net.bodz.product.jar" update="true">
+		<jar destfile="lib/net.bodz.product.jar" update="true" manifest="META-INF/MANIFEST.MF">
+			<zipfileset prefix="META-INF" dir="META-INF" />
 			<fileset dir="mod/Package Maintaince/bin" />
 			<fileset dir="mod/Software Protection/bin" />
 			<fileset dir="mod/Utilities/bin" />
