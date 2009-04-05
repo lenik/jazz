@@ -1,49 +1,51 @@
 <?xml version="1.0"?>
-<project name="net.bodz.product" default="default">
+<project name="net.bodz.dist" default="default">
 
-	<property environment="env" />
-	<property name="distdir" value="${env.JAVA_LIB}" />
-	<property name="distsrc" value="${env.JAVA_SRC}" />
+    <property environment="env" />
+    <property name="distdir" value="${env.JAVA_LIB}" />
+    <property name="distsrc" value="${env.JAVA_SRC}" />
 
-	<target name="default" depends="dist">
-	</target>
+    <target name="default" depends="dist">
+    </target>
 
-	<target name="dist" depends=":bin.jar, :src.jar">
-		<copy todir="${distdir}">
-			<fileset dir="${basedir}/lib">
-				<exclude name="*-src.jar" />
-			</fileset>
-		</copy>
-		<copy todir="${distsrc}">
-			<fileset dir="${basedir}/lib">
-				<include name="*-src.jar" />
-			</fileset>
-		</copy>
-	</target>
+    <target name="dist" depends=":bin.jar, :src.jar">
+        <copy todir="${distdir}">
+            <fileset dir="${basedir}/lib">
+                <exclude name="*-src.jar" />
+            </fileset>
+        </copy>
+        <copy todir="${distsrc}">
+            <fileset dir="${basedir}/lib">
+                <include name="*-src.jar" />
+            </fileset>
+        </copy>
+    </target>
 
-	<target name=":bin.jar">
-		<mkdir dir="lib" />
-		<jar destfile="lib/net.bodz.product.jar" update="true" manifest="META-INF/MANIFEST.MF">
-			<zipfileset prefix="META-INF" dir="META-INF" />
-			<fileset dir="mod/Package Maintaince/bin" />
-			<fileset dir="mod/Software Protection/bin" />
-			<fileset dir="mod/Utilities/bin" />
-		</jar>
-	</target>
+    <target name=":bin.jar">
+        <mkdir dir="lib" />
+        <jar destfile="lib/net.bodz.dist.jar"
+             update="true"
+             manifest="META-INF/MANIFEST.MF">
+            <zipfileset prefix="META-INF" dir="META-INF" />
+            <fileset dir="mod/Package Maintaince/bin" />
+            <fileset dir="mod/Software Protection/bin" />
+            <fileset dir="mod/Utilities/bin" />
+        </jar>
+    </target>
 
-	<target name=":src.jar">
-		<mkdir dir="lib" />
-		<jar destfile="lib/net.bodz.product-src.jar" update="true">
-			<fileset dir="mod/Package Maintaince/src" />
-			<fileset dir="mod/Software Protection/src" />
-			<fileset dir="mod/Utilities/src" />
-		</jar>
-	</target>
+    <target name=":src.jar">
+        <mkdir dir="lib" />
+        <jar destfile="lib/net.bodz.dist-src.jar" update="true">
+            <fileset dir="mod/Package Maintaince/src" />
+            <fileset dir="mod/Software Protection/src" />
+            <fileset dir="mod/Utilities/src" />
+        </jar>
+    </target>
 
-	<target name="clean">
-		<delete verbose="true">
-			<fileset dir="${basedir}/lib" includes="*.jar" />
-		</delete>
-	</target>
+    <target name="clean">
+        <delete verbose="true">
+            <fileset dir="${basedir}/lib" includes="*.jar" />
+        </delete>
+    </target>
 
 </project>
