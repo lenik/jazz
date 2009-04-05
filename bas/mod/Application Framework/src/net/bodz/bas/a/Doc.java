@@ -7,11 +7,12 @@ import java.lang.annotation.RetentionPolicy;
 public @interface Doc {
 
     /**
-     * text
-     * 
-     * /resource-path
-     * 
-     * #bundle.property
+     * Can be:
+     * <ul>
+     * <li>text
+     * <li>/resource-path
+     * <li>#bundle.property
+     * </ul>
      */
     String[] value() default {};
 

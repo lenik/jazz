@@ -1,11 +1,15 @@
 package net.bodz.bas.types.util;
 
+import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import net.bodz.bas.lang.Filt1;
 
+/**
+ * @TestBy IteratorsTest
+ */
 public class Iterators {
 
     static class EmptyIterator<T> implements Iterator<T> {
@@ -52,6 +56,9 @@ public class Iterators {
         };
     }
 
+    /**
+     * @see Arrays2#convert(Iterator)
+     */
     public static <T> Iterator<T> adapt(final T[] array) {
         if (array == null)
             throw new NullPointerException("array");
@@ -85,10 +92,10 @@ public class Iterators {
      * Warning removal: <i> Type safety : A generic array of Iterator<El> is
      * created for a varargs </i>
      */
+    @SuppressWarnings("unchecked")
     public static <T> Iterator<T> concat(Iterator<T> it1, Iterator<T> it2) {
-        @SuppressWarnings("unchecked")
-        Iterator<T>[] v = (Iterator<T>[]) new Iterator<?>[2];
-        return concat(v);
+        Iterator<?>[] gv = { it1, it2 };
+        return concat((Iterator<T>[]) gv);
     }
 
     public static <T> Iterator<T> concat(final Iterator<T>... iterators) {
@@ -143,6 +150,111 @@ public class Iterators {
 
         }
         return new FilterIterator();
+    }
+
+    private static class ItrNxt<T> {
+
+        Iterator<T> itr;
+        T           nxt;
+
+        public ItrNxt(Iterator<T> itr, T first) {
+            assert itr != null : "null itr";
+            this.itr = itr;
+            this.nxt = first;
+        }
+
+        public boolean next() {
+            if (!itr.hasNext())
+                return false;
+            nxt = itr.next();
+            return true;
+        }
+
+    }
+
+    private static class ItrNxtCmp<T> implements Comparator<ItrNxt<T>> {
+
+        final Comparator<? super T> nxtcmp;
+
+        public ItrNxtCmp(Comparator<? super T> nxtcmp) {
+            assert nxtcmp != null;
+            this.nxtcmp = nxtcmp;
+        }
+
+        @Override
+        public int compare(ItrNxt<T> a, ItrNxt<T> b) {
+            return nxtcmp.compare(a.nxt, b.nxt);
+        }
+
+    }
+
+    public static <T> Iterator<T> weave(final Iterator<T>... itrs) {
+        return weave(Comparators.STD, itrs);
+    }
+
+    public static <T> Iterator<T> weave(Iterator<T> itr1, Iterator<T> itr2) {
+        return weave(Comparators.STD, itr1, itr2);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> Iterator<T> weave(Comparator<? super T> cmp,
+            Iterator<T> itr1, Iterator<T> itr2) {
+        Iterator<?> gv[] = { itr1, itr2 };
+        return weave(cmp, (Iterator<T>[]) gv);
+    }
+
+    /**
+     * @throws NullPointerException
+     *             if <code>cmp</code> or any of <code>itrs</code> is
+     *             <code>null</code>.
+     */
+    public static <T> Iterator<T> weave(final Comparator<? super T> cmp,
+            final Iterator<T>... itrs) {
+        if (cmp == null)
+            throw new NullPointerException("cmp");
+        ItrNxtCmp<T> inxtcmp = new ItrNxtCmp<T>(cmp);
+        final SortedList<ItrNxt<T>> alive = new SortedList<ItrNxt<T>>(
+                new DyingList<ItrNxt<T>>(itrs.length), inxtcmp);
+        for (int i = 0; i < itrs.length; i++) {
+            Iterator<T> itr = itrs[i];
+            if (itr == null)
+                throw new NullPointerException("itr[" + i + "]");
+            if (!itr.hasNext()) // skips when preload.
+                continue;
+            T first = itr.next();
+            ItrNxt<T> inxt = new ItrNxt<T>(itr, first);
+            alive.add(inxt);
+        }
+
+        class WeaveIterator implements Iterator<T> {
+
+            private Iterator<T> lastItr;
+
+            @Override
+            public boolean hasNext() {
+                return !alive.isEmpty();
+            }
+
+            @Override
+            public T next() {
+                if (!hasNext())
+                    throw new NoSuchElementException();
+                ItrNxt<T> head = alive.remove(0);
+                lastItr = head.itr;
+                T nxt = head.nxt;
+                if (head.next())
+                    alive.add(head);
+                return nxt;
+            }
+
+            @Override
+            public void remove() {
+                if (lastItr != null)
+                    lastItr.remove();
+            }
+
+        }
+        return new WeaveIterator();
     }
 
 }

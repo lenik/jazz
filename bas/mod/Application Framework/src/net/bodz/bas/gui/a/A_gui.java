@@ -6,12 +6,12 @@ import net.bodz.bas.types.util.Types;
 
 public class A_gui {
 
-    public static Factory<?> getIconFactory(Icon icon) {
-        if (icon == null)
+    public static Factory<?> getIconFactory(Icon aicon) {
+        if (aicon == null)
             return null;
-        Class<? extends Factory<?>> factoryClass = icon.factory();
+        Class<? extends Factory<?>> factoryClass = aicon.factory();
         if (factoryClass == Factory.class)
-            return new Factory.Static<Object>(icon.value());
+            return new Factory.Static<Object>(aicon.value());
         try {
             return Types.getClassInstance(factoryClass);
         } catch (CreateException e) {
@@ -19,12 +19,12 @@ public class A_gui {
         }
     }
 
-    public static Factory<String> getLabelFactory(Label label) {
-        if (label == null)
+    public static Factory<String> getLabelFactory(Label alabel) {
+        if (alabel == null)
             return null;
-        Class<? extends Factory<String>> factoryClass = label.factory();
+        Class<? extends Factory<String>> factoryClass = alabel.factory();
         if (factoryClass == Factory.class)
-            return new Factory.Static<String>(label.value());
+            return new Factory.Static<String>(alabel.value());
         try {
             return Types.getClassInstance(factoryClass);
         } catch (CreateException e) {

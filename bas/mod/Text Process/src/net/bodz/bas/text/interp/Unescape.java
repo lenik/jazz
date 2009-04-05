@@ -3,7 +3,7 @@ package net.bodz.bas.text.interp;
 import java.nio.CharBuffer;
 
 import net.bodz.bas.io.CharOut;
-import net.bodz.bas.io.CharOuts.Buffer;
+import net.bodz.bas.io.CharOuts.BCharOut;
 import net.bodz.bas.text.util.BufParsers;
 
 public class Unescape {
@@ -52,7 +52,7 @@ public class Unescape {
     }
 
     public String process(String s) {
-        Buffer buf = new Buffer();
+        BCharOut buf = new BCharOut();
         process(CharBuffer.wrap(s), buf);
         return buf.toString();
     }

@@ -179,7 +179,7 @@ public abstract class _Bits implements Bits {
 
     public String draw(int width, char zero, char one) {
         int size = size();
-        CharOut out = new CharOuts.Buffer( //
+        CharOut out = new CharOuts.BCharOut( //
                 size * (width + 2) / width + 2);
         for (int i = 0; i < size; i++) {
             out.print(test(i) ? one : zero);

@@ -7,7 +7,7 @@ import java.util.Map;
 import net.bodz.bas.files.MapsFile;
 import net.bodz.bas.files.MapsFile.PartMap;
 import net.bodz.bas.io.Files;
-import net.bodz.bas.io.ByteOuts.Buffer;
+import net.bodz.bas.io.ByteOuts.BByteOut;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.types.Bits;
 
@@ -79,7 +79,7 @@ public class CharFeature {
 
     public static byte[] parseOcts(String bitmap) {
         char[] cv = bitmap.toCharArray();
-        Buffer octs = new Buffer(128);
+        BByteOut octs = new BByteOut(128);
         for (int i = 0; i < cv.length; i++) {
             char c = cv[i];
             if (Character.isWhitespace(c))

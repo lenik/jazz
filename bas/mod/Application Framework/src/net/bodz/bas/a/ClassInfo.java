@@ -44,8 +44,7 @@ public class ClassInfo {
             return;
         name = clazz.getSimpleName();
 
-        Doc docN = Ns.getN(clazz, Doc.class);
-        this.doc = A_bas.parse(docN);
+        this.doc = A_bas.getDoc(clazz);
 
         String[] iconDefs = Annotations._getValue(clazz, Icon.class);
         if (iconDefs != null)

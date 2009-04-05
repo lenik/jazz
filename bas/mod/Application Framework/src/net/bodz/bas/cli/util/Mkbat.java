@@ -24,7 +24,7 @@ import net.bodz.bas.cli.EditResult;
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.io.Files;
-import net.bodz.bas.io.CharOuts.Buffer;
+import net.bodz.bas.io.CharOuts.BCharOut;
 import net.bodz.bas.lang.Caller;
 import net.bodz.bas.lang.err.IdentifiedException;
 import net.bodz.bas.loader.DefaultBooter;
@@ -226,7 +226,7 @@ public class Mkbat extends BatchEditCLI {
         }
         varmap.put("LAUNCH", batEscape(launch));
 
-        Buffer loadlibs = new Buffer();
+        BCharOut loadlibs = new BCharOut();
         SJLibLoader libloader = SJLibLoader.DEFAULT;
         for (String lib : cplibs) {
             File f = libloader.findLibraryFile(lib);

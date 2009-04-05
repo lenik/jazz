@@ -186,19 +186,19 @@ public class CharOuts {
 
     }
 
-    public static class Buffer extends CharOut {
+    public static class BCharOut extends CharOut {
 
         private StringBuffer buffer;
 
-        public Buffer(StringBuffer buffer) {
+        public BCharOut(StringBuffer buffer) {
             this.buffer = buffer;
         }
 
-        public Buffer() {
+        public BCharOut() {
             this(new StringBuffer());
         }
 
-        public Buffer(int capacity) {
+        public BCharOut(int capacity) {
             this(new StringBuffer(capacity));
         }
 

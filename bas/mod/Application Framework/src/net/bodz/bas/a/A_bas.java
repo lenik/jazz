@@ -1,19 +1,28 @@
 package net.bodz.bas.a;
 
 import java.io.IOException;
+import java.lang.reflect.AnnotatedElement;
 import java.text.ParseException;
 
 import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.types.util.Dates;
+import net.bodz.bas.types.util.Ns;
 
 @RcsKeywords(id = "$Id$")
 public class A_bas {
 
-    public static String parse(Doc docN) {
-        if (docN == null)
+    public static String getDoc(AnnotatedElement aobject) {
+        Doc adoc = Ns.getN(aobject, Doc.class);
+        if (adoc == null)
             return null;
-        String[] doc = docN.value();
+        return getDoc(adoc);
+    }
+
+    public static String getDoc(Doc adoc) {
+        if (adoc == null)
+            return null;
+        String[] doc = adoc.value();
         if (doc.length == 0)
             return null;
         if (doc.length == 1)
