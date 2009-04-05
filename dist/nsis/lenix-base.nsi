@@ -47,6 +47,10 @@ Section "Cygwin Runtime (1.7.0)"
         File bin\unzip.exe
         File bin\wget.exe
         File bin\zip.exe
+        File /nonfatal \
+            /x brl* \
+            /x fstab \
+            etc\*
 SectionEnd
 
 Section "Java Runtime Environment (1.7.0)"
