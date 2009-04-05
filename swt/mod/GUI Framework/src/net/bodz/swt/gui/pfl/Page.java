@@ -19,6 +19,13 @@ public interface Page {
     void leave(String next);
 
     /**
+     * The page is locked and leave is forbidden.
+     */
+    boolean isLocked();
+
+    /**
+     * Can't go ahead (or submit) if validation is failed.
+     * 
      * @throws ValidateException
      */
     void validate() throws ValidateException;
@@ -28,8 +35,8 @@ public interface Page {
      */
     Object exitState();
 
-    void addExitStateChangeListener(StateChangeListener listener);
+    void addPageStateChangeListener(PageStateChangeListener listener);
 
-    void removeExitStateChangeListener(StateChangeListener listener);
+    void removePageStateChangeListener(PageStateChangeListener listener);
 
 }

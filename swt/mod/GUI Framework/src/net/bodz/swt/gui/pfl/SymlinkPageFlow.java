@@ -1,10 +1,20 @@
 package net.bodz.swt.gui.pfl;
 
+import java.io.StringReader;
 import java.util.Map.Entry;
 
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
 import net.bodz.bas.io.CharOuts.BCharOut;
+import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TextMap.TreeTextMap;
+
+import org.xml.sax.Attributes;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * @TestBy SymlinkPageFlowTest
@@ -48,15 +58,44 @@ public class SymlinkPageFlow extends PageFlow {
         symlinks.remove(name);
     }
 
+    public String dumpXML() {
+        BCharOut buf = new BCharOut(symlinks.size() * 30);
+        buf.println("<symlinks>");
+        for (Entry<String, String> e : symlinks.entrySet()) {
+            String name = e.getKey();
+            String dest = e.getValue();
+            buf.printf("<symlink name=\"%s\" dest=\"%s\" />\n", name, dest);
+        }
+        buf.println("</symlinks>");
+        return buf.toString();
+    }
+
+    public void loadXML(String s) throws ParseException {
+        class Handler extends DefaultHandler {
+            @Override
+            public void startElement(String uri, String localName,
+                    String qName, Attributes attributes) throws SAXException {
+                if (!"symlink".equals(qName))
+                    return;
+                String name = attributes.getValue("name");
+                String dest = attributes.getValue("dest");
+                putLink(name, dest);
+            }
+        }
+        SAXParserFactory saxf = SAXParserFactory.newInstance();
+        try {
+            SAXParser parser = saxf.newSAXParser();
+            StringReader src = new StringReader(s);
+            InputSource in = new InputSource(src);
+            parser.parse(in, new Handler());
+        } catch (Exception e) {
+            throw new ParseException(e);
+        }
+    }
+
     @Override
     public String toString() {
-        BCharOut buf = new BCharOut(symlinks.size() * 30);
-        buf.println("<symlink>");
-        for (Entry<String, String> e : symlinks.entrySet()) {
-            buf.println("  " + e.getKey() + " -> " + e.getValue());
-        }
-        buf.println("</symlink>");
-        return buf.toString();
+        return dumpXML();
     }
 
 }

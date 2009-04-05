@@ -5,7 +5,7 @@ import java.lang.reflect.Constructor;
 import net.bodz.bas.lang.Proc1;
 import net.bodz.bas.lang.err.ReflectException;
 import net.bodz.bas.lang.util.Reflects;
-import net.bodz.swt.controls.util.Shells;
+import net.bodz.swt.controls.util.Controls;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -64,7 +64,7 @@ public class SWTTest {
     }
 
     public void autoFit() {
-        Shells.fitToClientAreaSize(shell);
+        Controls.resizeToPreferredSize(shell);
     }
 
     public void addToolButton(String text, SelectionListener listener) {

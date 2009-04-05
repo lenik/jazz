@@ -68,6 +68,8 @@ public class JPEGImageType extends _ImageType {
     @Override
     public void save(ImageData imageData, OutputStream out, Object _params)
             throws IOException {
+        if (imageData == null)
+            throw new NullPointerException("imageData");
         // Params params = (Params) _params;
         ImageLoader loader = new ImageLoader();
         loader.data = new ImageData[] { imageData };

@@ -7,13 +7,15 @@ import net.bodz.bas.a.A_bas;
 import net.bodz.swt.gui.ValidateException;
 import net.bodz.swt.gui.a.A_gui;
 
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 
 public class PageComposite extends Composite implements Page {
 
-    private List<StateChangeListener> stateChangeListeners;
-    private Object                    exitState;
+    private Object                        exitState = getInitialState();
+    private List<PageStateChangeListener> stateChangeListeners;
 
     /**
      * The exit state is initialized to <code>null</code> in default
@@ -53,11 +55,20 @@ public class PageComposite extends Composite implements Page {
     public void leave(String next) {
     }
 
+    @Override
+    public boolean isLocked() {
+        return false;
+    }
+
     /**
      * Do nothing in default implementation.
      */
     @Override
     public void validate() throws ValidateException {
+    }
+
+    protected Object getInitialState() {
+        return "next";
     }
 
     @Override
@@ -66,34 +77,50 @@ public class PageComposite extends Composite implements Page {
     }
 
     /**
-     * if any listener throws exception, the state will not be changed.
+     * the state is changed before invoke any listener.
      */
-    protected void setExitState(Object newExitState) {
-        if (newExitState == exitState)
+    protected void setExitState(Object state) {
+        if (state == exitState)
             return;
+        Object lastState = exitState;
+        exitState = state;
         if (stateChangeListeners != null) {
-            StateChangeEvent e = new StateChangeEvent(this, exitState,
-                    newExitState);
-            for (StateChangeListener l : stateChangeListeners)
-                l.stateChange(e);
+            PageStateChangeEvent e = new PageStateChangeEvent(this, lastState,
+                    state);
+            for (PageStateChangeListener l : stateChangeListeners)
+                l.pageStateChange(e);
         }
-        exitState = newExitState;
     }
 
     @Override
-    public synchronized void addExitStateChangeListener(
-            StateChangeListener listener) {
+    public synchronized void addPageStateChangeListener(
+            PageStateChangeListener listener) {
         if (stateChangeListeners == null)
-            stateChangeListeners = new ArrayList<StateChangeListener>(1);
+            stateChangeListeners = new ArrayList<PageStateChangeListener>(1);
         stateChangeListeners.add(listener);
     }
 
     @Override
-    public synchronized void removeExitStateChangeListener(
-            StateChangeListener listener) {
+    public synchronized void removePageStateChangeListener(
+            PageStateChangeListener listener) {
         if (stateChangeListeners == null)
             return;
         stateChangeListeners.remove(listener);
+    }
+
+    protected class SetState extends SelectionAdapter {
+
+        private final Object state;
+
+        public SetState(Object state) {
+            this.state = state;
+        }
+
+        @Override
+        public void widgetSelected(SelectionEvent e) {
+            setExitState(state);
+        }
+
     }
 
 }

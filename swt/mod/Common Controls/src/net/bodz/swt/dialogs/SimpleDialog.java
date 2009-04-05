@@ -5,7 +5,7 @@ import net.bodz.bas.lang.err.CheckException;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.ref.Ref;
 import net.bodz.swt.controls.helper.FixSizeComposite;
-import net.bodz.swt.controls.util.Shells;
+import net.bodz.swt.controls.util.Controls;
 import net.bodz.swt.gui.SWTInteraction;
 import net.bodz.swt.util.SWTResources;
 
@@ -35,6 +35,8 @@ import com.swtdesigner.SWTResourceManager;
 
 public class SimpleDialog extends Dialog implements Ref<Object> {
 
+    protected Shell     parent;
+
     /**
      * no title bar if title is null
      */
@@ -55,7 +57,7 @@ public class SimpleDialog extends Dialog implements Ref<Object> {
      * @see SWT#SYSTEM_MODAL
      */
     public SimpleDialog(Shell parent, int style, String title) {
-        super(parent, style);
+        super(parent == null ? new Shell() : parent, style);
         this.title = title;
     }
 
@@ -92,13 +94,12 @@ public class SimpleDialog extends Dialog implements Ref<Object> {
         size.x = Math.max(size.x, minWidth);
         size.y = Math.max(size.y, minHeight);
         shell.setSize(size);
-        Shells.center(shell);
+        Controls.center(shell);
         shell.layout();
 
         boolean center = true;
         if (center) {
             Rectangle outer;
-            Shell parent = getParent();
             if (parent != null)
                 outer = parent.getBounds();
             else
@@ -114,7 +115,7 @@ public class SimpleDialog extends Dialog implements Ref<Object> {
 
         shell.open();
 
-        Display display = getParent().getDisplay();
+        Display display = (parent != null ? parent : shell).getDisplay();
         canceled = true;
         while (!shell.isDisposed()) {
             if (!display.readAndDispatch())

@@ -6,7 +6,7 @@ import net.bodz.bas.gui.RenderException;
 import net.bodz.bas.io.CharOuts.BCharOut;
 import net.bodz.swt.controls.helper.Empty;
 import net.bodz.swt.controls.helper.FixSizeComposite;
-import net.bodz.swt.controls.util.Shells;
+import net.bodz.swt.controls.util.Controls;
 import net.bodz.swt.gui.GUIVar;
 import net.bodz.swt.gui.RenderContext;
 import net.bodz.swt.gui.SWTRenderer;
@@ -119,7 +119,7 @@ public class R_Throwable extends SWTRenderer {
                     expanded = !expanded;
                     String icon = expanded ? expandedIcon : collapsedIcon;
                     swithcerIcon.setImage(SWTResources.getImageRes(icon));
-                    Shells.fitToClientAreaSize(comp.getShell());
+                    Controls.resizeToPreferredSize(comp.getShell());
                 }
             };
             swithcerIcon.addMouseListener(new MouseAdapter() {

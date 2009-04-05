@@ -1,8 +1,12 @@
 package net.bodz.swt.gui.pfl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.bodz.bas.gui.Interaction;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TextMap.HashTextMap;
+import net.bodz.bas.types.util.Strings;
 import net.bodz.swt.adapters.ControlAdapters;
 import net.bodz.swt.controls.helper.StackComposite;
 import net.bodz.swt.gui.SWTInteraction;
@@ -31,29 +35,31 @@ import com.swtdesigner.SWTResourceManager;
 /**
  * @TestBy WizardCompositeTest
  */
-public class WizardComposite extends Composite implements
-        LocationChangeListener {
+public class WizardComposite extends Composite {
+
+    private SymlinkPageFlow      pageFlow;
+    private TextMap<PageFactory> pageFactories;
 
     private boolean              useLegend;
-
     private Composite            legends;
     private Composite            body;
+    private Composite            navbar;
+
+    private Image                defaultPageIcon;
     private Label                pageIconLabel;
     private Label                pageTitleLabel;
-    private StackComposite       contents;
 
+    private StackComposite       contents;
+    private PageComposite        emptyPage;
+
+    private static boolean       showBegin  = true;
+    private static boolean       showFinish = false;
     private Button               beginButton;
     private Button               backButton;
     private Button               nextButton;
     private Button               finishButton;
 
-    private SymlinkPageFlow      pageFlow;
-    private TextMap<PageFactory> pageFactories;
-
     private Interaction          iact;
-
-    static boolean               showBegin  = true;
-    static boolean               showFinish = false;
 
     public WizardComposite(Composite parent, int style) {
         this(parent, style, false);
@@ -78,38 +84,15 @@ public class WizardComposite extends Composite implements
                 return page;
             }
         };
-        pageFlow.addLocationChangeListener(this);
+        pageFlow.addLocationChangeListener(new LocationChangeListener() {
+            @Override
+            public void locationChange(LocationChangeEvent e) {
+                refreshPage();
+            }
+        });
         this.iact = new SWTInteraction(getShell());
         createContents();
     }
-
-    public void definePage(String address, PageFactory factory) {
-        if (pageFactories == null)
-            pageFactories = new HashTextMap<PageFactory>();
-        pageFactories.put(address, factory);
-    }
-
-    protected boolean isPageLoadable(String address) {
-        return pageFactories.containsKey(address);
-    }
-
-    protected PageComposite loadPage(String address) {
-        if (pageFactories == null)
-            return null;
-        PageFactory factory = pageFactories.get(address);
-        if (factory == null)
-            return null;
-        Composite parent = WizardComposite.this.contents;
-        return factory.create(parent);
-    }
-
-    @Override
-    public void dispose() {
-        pageFlow.removeLocationChangeListener(this);
-        super.dispose();
-    }
-
-    private Image defaultPageIcon;
 
     void createContents() {
         defaultPageIcon = SWTResourceManager.getImage(WizardComposite.class,
@@ -152,12 +135,13 @@ public class WizardComposite extends Composite implements
 
         contents = new StackComposite(body, SWT.BORDER);
         contents.setLayoutData(BorderLayout.CENTER);
+        emptyPage = new PageComposite(contents, SWT.NONE);
 
         final Composite navbar1 = new Composite(this, SWT.NONE);
         navbar1.setLayout(new FormLayout());
         navbar1.setLayoutData(BorderLayout.SOUTH);
 
-        final Composite navbar = new Composite(navbar1, SWT.NONE);
+        navbar = new Composite(navbar1, SWT.NONE);
         final FormData fd_navbar = new FormData();
         fd_navbar.right = new FormAttachment(100, 0);
         fd_navbar.top = new FormAttachment(0, 0);
@@ -229,7 +213,15 @@ public class WizardComposite extends Composite implements
             @Override
             public void widgetSelected(SelectionEvent e) {
                 try {
-                    pageFlow.goOn();
+                    if (pageFlow.canGoOn())
+                        pageFlow.goOn();
+                    else {
+                        Page page = pageFlow.getPage();
+                        String exitName = pageFlow.getPageNext(page);
+                        String exitAddress = pageFlow.resolv(exitName);
+                        pageFlow.goOn();
+                        exit(exitAddress);
+                    }
                 } catch (ValidateException ex) {
                     exceptionHandler(ex);
                     return;
@@ -255,6 +247,42 @@ public class WizardComposite extends Composite implements
             });
     }
 
+    public Composite getLegends() {
+        return legends;
+    }
+
+    public StackComposite getContents() {
+        return contents;
+    }
+
+    public void definePage(String address, PageFactory factory) {
+        if (pageFactories == null)
+            pageFactories = new HashTextMap<PageFactory>();
+        pageFactories.put(address, factory);
+    }
+
+    protected boolean isPageLoadable(String address) {
+        return pageFactories.containsKey(address);
+    }
+
+    protected PageComposite loadPage(String address) {
+        if (pageFactories == null)
+            return null;
+        PageFactory factory = pageFactories.get(address);
+        if (factory == null)
+            return null;
+        Composite parent = WizardComposite.this.contents;
+        final PageComposite page = factory.create(parent);
+        page.addPageStateChangeListener(new PageStateChangeListener() {
+            @Override
+            public void pageStateChange(PageStateChangeEvent e) {
+                if (page == pageFlow.getPage())
+                    refreshPageState();
+            }
+        });
+        return page;
+    }
+
     /**
      * @see ControlAdapters#commit(Control, net.bodz.swt.adapters.CommitAdapter)
      */
@@ -275,41 +303,72 @@ public class WizardComposite extends Composite implements
         return pageFlow;
     }
 
-    @Override
-    public void locationChange(LocationChangeEvent e) {
-        refreshPage();
-    }
-
     protected void refreshPage() {
         Page page = pageFlow.getPage();
-        if (page == null)
-            return;
-        String title = page.getPageTitle();
+        String title = "";
+        Image pageIcon = null;
+        PageComposite pageComp = emptyPage;
+        if (page != null) {
+            title = page.getPageTitle();
+            pageIcon = page.getPageIcon();
+            assert page instanceof PageComposite;
+            pageComp = (PageComposite) page;
+        }
         pageTitleLabel.setText(title);
-        Image pageIcon = page.getPageIcon();
         if (pageIcon == null)
             pageIcon = defaultPageIcon;
         pageIconLabel.setImage(pageIcon);
-
-        assert page instanceof PageComposite;
-        PageComposite pageComp = (PageComposite) page;
         contents.bringFront(pageComp);
 
-        beginButton.setEnabled(pageFlow.canGoBack());
-        backButton.setEnabled(pageFlow.canGoBack());
-        nextButton.setEnabled(pageFlow.canGoOn());
-        if (finishButton != null)
-            finishButton.setEnabled(pageFlow.canGoOn());
+        refreshPageState();
 
         body.layout();
     }
 
-    public Composite getLegends() {
-        return legends;
+    protected void refreshPageState() {
+        Page page = pageFlow.getPage();
+        boolean locked = false;
+        String nextLabel = "";
+        if (page != null) {
+            locked = page.isLocked();
+            String nextName = pageFlow.getPageNext(page);
+            nextLabel = toLabel(nextName);
+        }
+        beginButton.setEnabled(!locked && pageFlow.canGoBack());
+        backButton.setEnabled(!locked && pageFlow.canGoBack());
+        nextButton.setEnabled(!locked);
+        if (finishButton != null)
+            finishButton.setEnabled(!locked);
+
+        nextButton.setText(nextLabel);
+
+        // navbar.layout();
     }
 
-    public StackComposite getContents() {
-        return contents;
+    protected String toLabel(String name) {
+        String label = "&" + Strings.ucfirst(name);
+        return label;
+    }
+
+    private List<WizardExitListener> exitListeners;
+
+    protected void exit(String address) {
+        if (exitListeners == null)
+            return;
+        WizardExitEvent e = new WizardExitEvent(this, address);
+        for (WizardExitListener l : exitListeners)
+            l.wizardExit(e);
+    }
+
+    public void addExitListener(WizardExitListener listener) {
+        if (exitListeners == null)
+            exitListeners = new ArrayList<WizardExitListener>();
+        exitListeners.add(listener);
+    }
+
+    public void removeWizardExitListener(WizardExitListener listener) {
+        if (exitListeners != null)
+            exitListeners.remove(listener);
     }
 
 }

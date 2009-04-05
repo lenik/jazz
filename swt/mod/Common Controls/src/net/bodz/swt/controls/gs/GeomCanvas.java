@@ -57,6 +57,7 @@ public class GeomCanvas extends Canvas {
         super(parent, style | SWT.NO_REDRAW_RESIZE | SWT.NO_BACKGROUND);
         this.gspace = space;
         this.paintBg = 0 == (style & SWT.NO_BACKGROUND);
+        this.viewOffset = new Point(0, 0);
 
         this.addControlListener(new ControlAdapter() {
             @Override

@@ -1,13 +1,14 @@
 package net.bodz.swt.gui.pfl;
 
 import static org.junit.Assert.assertEquals;
+import net.bodz.bas.lang.err.ParseException;
 
 import org.junit.Test;
 
 public class SymlinkPageFlowTest {
 
     @Test
-    public void test1() {
+    public void test1() throws ParseException {
         SymlinkPageFlow flow = new SymlinkPageFlow();
 
         flow.putLink("aaa", "xxx");
@@ -22,6 +23,14 @@ public class SymlinkPageFlowTest {
         assertEquals("ccc", flow.resolv("bbb", null));
         assertEquals("ccc/next", flow.resolv("ccc", null));
         assertEquals("zzz", flow.resolv("xxx", null));
+
+        String xml = flow.dumpXML();
+        System.out.println(xml);
+
+        SymlinkPageFlow reload = new SymlinkPageFlow();
+        reload.loadXML(xml);
+        String xml2 = reload.dumpXML();
+        assertEquals(xml, xml2);
     }
 
 }

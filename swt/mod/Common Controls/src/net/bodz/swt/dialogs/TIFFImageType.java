@@ -22,6 +22,8 @@ public class TIFFImageType extends _ImageType {
     @Override
     public void save(ImageData imageData, OutputStream out, Object params)
             throws IOException {
+        if (imageData == null)
+            throw new NullPointerException("imageData");
         ImageLoader loader = new ImageLoader();
         loader.data = new ImageData[] { imageData };
         _save(loader, out, SWT.IMAGE_TIFF);
