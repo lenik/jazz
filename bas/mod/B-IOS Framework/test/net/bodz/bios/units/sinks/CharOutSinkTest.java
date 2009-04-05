@@ -11,7 +11,7 @@ public class CharOutSinkTest {
     CharOutSink charOutSink;
 
     public CharOutSinkTest() throws IOException {
-        charOut = new CharOuts.Buffer();
+        charOut = new CharOuts.BCharOut();
         charOutSink = new CharOutSink(charOut);
     }
 

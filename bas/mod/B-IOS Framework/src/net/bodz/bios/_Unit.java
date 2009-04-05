@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.bodz.bas.io.CharOut;
-import net.bodz.bas.io.CharOuts.Buffer;
+import net.bodz.bas.io.CharOuts.BCharOut;
 import net.bodz.bas.lang.ClassLocal;
 import net.bodz.bas.mda.a.MetaClass;
 import net.bodz.bas.types.util.Annotations;
@@ -95,7 +95,7 @@ public abstract class _Unit implements Unit {
 
     @Override
     public String toString() {
-        Buffer buffer = new Buffer();
+        BCharOut buffer = new BCharOut();
         dumpGraph(buffer, 0, null);
         return buffer.toString();
     }

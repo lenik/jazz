@@ -3,10 +3,10 @@ package net.bodz.bas.text.interp;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.bodz.bas.io.CharOuts.Buffer;
+import net.bodz.bas.io.CharOuts.BCharOut;
 import net.bodz.bas.lang.a.OverrideOption;
 
-public class PatternProcessor extends Buffer {
+public class PatternProcessor extends BCharOut {
 
     protected Pattern pattern;
     protected String  source;

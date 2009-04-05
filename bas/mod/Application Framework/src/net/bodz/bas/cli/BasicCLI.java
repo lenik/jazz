@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,7 +31,6 @@ import net.bodz.bas.lang.a.OverrideOption;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.lang.err.ParseException;
-import net.bodz.bas.lang.err.UnexpectedException;
 import net.bodz.bas.lang.script.ScriptClass;
 import net.bodz.bas.lang.script.ScriptException;
 import net.bodz.bas.lang.script.ScriptType;
@@ -269,14 +267,15 @@ public class BasicCLI {
             } else {
                 verinfo = new VersionInfo();
                 URL url = Files.classData(clazz);
-                File file;
                 try {
-                    file = new File(url.toURI());
-                } catch (URISyntaxException e) {
-                    throw new UnexpectedException(e.getMessage(), e);
+                    File file = new File(url.toURI());
+                    verinfo.time = file.lastModified();
+                } catch (Exception e) {
+                    // (neither RCS.time nor File.time exists)
+                    // throw new UnexpectedException("Bad url: " + url, e);
+                    verinfo.time = System.currentTimeMillis();
                 }
                 verinfo.name = name;
-                verinfo.time = file.lastModified();
                 verinfo.revision = new int[] { 0 };
             }
 
@@ -417,7 +416,7 @@ public class BasicCLI {
     /**
      * public access: so derivations don't have to declare static main()s.
      */
-    public final synchronized void run(String... args) throws Throwable {
+    public synchronized void run(String... args) throws Throwable {
         L.x.P("cli prepare");
         _prepare();
         int preRestSize = restArgs.size(); // make climain() reentrant.

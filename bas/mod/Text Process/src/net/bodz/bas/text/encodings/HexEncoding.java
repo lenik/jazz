@@ -11,26 +11,28 @@ import net.bodz.bas.text.util.Lookups;
 
 public class HexEncoding extends _Encoding {
 
-    private final String space;
+    private final String IFS;
+    private final char   simpleIFS;
     private final char[] enctbl = Lookups.n2cl;
     private final byte[] dectbl = Lookups.c2n;
 
     private final int    width;
-    private final String sep;
+    private final String NL;
 
     public HexEncoding() {
         this(" ");
     }
 
-    public HexEncoding(String space) {
-        this(space, 0, null);
+    public HexEncoding(String IFS) {
+        this(IFS, 0, null);
     }
 
-    public HexEncoding(String space, int width, String sep) {
-        super(1, 2 + space.length());
-        this.space = space;
+    public HexEncoding(String IFS, int width, String NL) {
+        super(1, 2 + IFS.length());
+        this.IFS = IFS;
+        this.simpleIFS = IFS.length() == 0 ? 0 : IFS.charAt(0);
         this.width = width;
-        this.sep = sep;
+        this.NL = NL;
     }
 
     /** bin2hex */
@@ -43,13 +45,13 @@ public class HexEncoding extends _Encoding {
             if (first)
                 first = false;
             else
-                out.write(space);
+                out.write(IFS);
             buf[0] = enctbl[b >> 4];
             buf[1] = enctbl[b & 0xF];
             out.write(buf);
             if (width != 0) {
                 if (++col >= width) {
-                    out.write(sep);
+                    out.write(NL);
                     col = 0;
                     first = true;
                 }
@@ -62,27 +64,28 @@ public class HexEncoding extends _Encoding {
     public void decode(Reader in, OutputStream out) throws IOException,
             ParseException {
         int byt = 0;
-        boolean half = false;
+        int digits = 0;
         for (int c = in.read(); c != -1; c = in.read()) {
-            if (Character.isWhitespace((char) c)) {
-                if (half) {
+            if (c == simpleIFS || Character.isWhitespace((char) c)) {
+                if (digits != 0) {
                     out.write(byt);
                     byt = 0;
-                    half = false;
+                    digits = 0;
                 }
                 continue;
             }
             byte hexval = dectbl[c];
-            if (half) {
-                out.write((byt << 4) | hexval);
-                byt = 0;
-                half = false;
-            } else {
+            if (digits == 0) {
                 byt = hexval;
-                half = true;
+                digits = 1;
+            } else {
+                byt = (byt << 4) | hexval;
+                out.write(byt);
+                byt = 0;
+                digits = 0;
             }
         }
-        if (half)
+        if (digits != 0)
             out.write(byt);
     }
 

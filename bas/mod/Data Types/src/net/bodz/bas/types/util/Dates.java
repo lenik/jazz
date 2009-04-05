@@ -1,7 +1,11 @@
 package net.bodz.bas.types.util;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+/**
+ * @TestBy DatesTest
+ */
 public class Dates {
 
     public static final DateFormat sysDateFormat;
@@ -23,9 +27,9 @@ public class Dates {
     public static final DateFormat HHMMSS;
 
     static {
-        sysDateFormat = wrap(DateFormat.getDateInstance());
-        sysTimeFormat = wrap(DateFormat.getTimeInstance());
-        sysDateTimeFormat = wrap(DateFormat.getDateTimeInstance());
+        sysDateFormat = DateFormat.getDateInstance();
+        sysTimeFormat = DateFormat.getTimeInstance();
+        sysDateTimeFormat = DateFormat.getDateTimeInstance();
 
         YYYY_MM_DD = getFormat("yyyy-MM-dd");
         MM_DD_YYYY = getFormat("MM/dd/yyyy");
@@ -46,11 +50,7 @@ public class Dates {
     }
 
     public static DateFormat getFormat(String dateFormatString) {
-        return wrap(new SimpleDateFormat(dateFormatString));
-    }
-
-    public static DateFormat wrap(java.text.DateFormat dateFormat) {
-        return new DateFormat(dateFormat);
+        return new SimpleDateFormat(dateFormatString);
     }
 
 }

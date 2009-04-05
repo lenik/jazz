@@ -3,16 +3,53 @@ package net.bodz.bas.types.util;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Random;
 
 import net.bodz.bas.lang.Filt1;
 import net.bodz.bas.lang.Pred1;
 import net.bodz.bas.lang.err.IllegalArgumentTypeException;
+import net.bodz.bas.types.ints.IntIterator;
 
+/**
+ * @TestBy Arrays2Test
+ */
 public class Arrays2 {
 
     public static Object[] _(Object... array) {
         return array;
+    }
+
+    public static IntIterator iterator(final int[] array) {
+        return iterator(array, 0, array.length);
+    }
+
+    public static IntIterator iterator(final int[] array, final int off,
+            final int len) {
+        final int end = off + len;
+        class Iter implements IntIterator {
+            int i = off;
+
+            @Override
+            public boolean hasNext() {
+                return i < end;
+            }
+
+            @Override
+            public int next() {
+                if (i < end)
+                    return array[i++];
+                throw new NoSuchElementException();
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+        }
+        return new Iter();
     }
 
     /**
@@ -188,11 +225,57 @@ public class Arrays2 {
     }
 
     @SuppressWarnings("unchecked")
+    public static <T> T[] convert(Iterator<T> iterator) {
+        List<T> list = new ArrayList<T>();
+        while (iterator.hasNext())
+            list.add(iterator.next());
+        return (T[]) list.toArray();
+    }
+
+    public static int[] convert(IntIterator iterator, int appxSize) {
+        List<Integer> list = new ArrayList<Integer>(appxSize);
+        while (iterator.hasNext())
+            list.add(iterator.next());
+        int size = list.size();
+        int[] ints = new int[size];
+        for (int i = 0; i < size; i++)
+            ints[i] = list.get(i);
+        return ints;
+    }
+
+    public static int[] convert(IntIterator iterator) {
+        return convert(iterator, 16);
+    }
+
+    @SuppressWarnings("unchecked")
     public static <T> T[] convert(Enumeration<T> enumr) {
         List<T> list = new ArrayList<T>();
         while (enumr.hasMoreElements())
             list.add(enumr.nextElement());
         return (T[]) list.toArray();
+    }
+
+    public static <A> void shuffle(A array) {
+        int len = Array.getLength(array);
+        if (len < 2)
+            return;
+        Random rand = new Random();
+        int times = len / 2;
+        shuffle(array, 0, len, times, rand);
+    }
+
+    public static <A> void shuffle(A array, int off, int len, int times,
+            Random rand) {
+        while (times-- > 0) {
+            int n = rand.nextInt(len);
+            int m = rand.nextInt(len);
+            if (n == m)
+                continue;
+            Object a = Array.get(array, n);
+            Object b = Array.get(array, m);
+            Array.set(array, n, b);
+            Array.set(array, m, a);
+        }
     }
 
 }

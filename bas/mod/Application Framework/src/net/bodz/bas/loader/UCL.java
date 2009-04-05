@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.bodz.bas.io.CharOut;
-import net.bodz.bas.io.CharOuts.Buffer;
+import net.bodz.bas.io.CharOuts.BCharOut;
 import net.bodz.bas.lang.Caller;
 import net.bodz.bas.lang.err.Err;
 import net.bodz.bas.lang.err.IdentifiedException;
@@ -201,7 +201,7 @@ public class UCL {
     }
 
     public static String dump(ClassLoader loader) {
-        Buffer buf = new Buffer();
+        BCharOut buf = new BCharOut();
         dump(loader, buf);
         return buf.toString();
     }

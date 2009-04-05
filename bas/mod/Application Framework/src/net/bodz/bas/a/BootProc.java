@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.bodz.bas.io.CharOut;
-import net.bodz.bas.io.CharOuts.Buffer;
+import net.bodz.bas.io.CharOuts.BCharOut;
 import net.bodz.bas.lang.Caller;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.loader.DefaultBooter;
@@ -258,7 +258,7 @@ public class BootProc {
 
     @Override
     public String toString() {
-        Buffer buffer = new Buffer(10000);
+        BCharOut buffer = new BCharOut(10000);
         dump(buffer);
         return buffer.toString();
     }

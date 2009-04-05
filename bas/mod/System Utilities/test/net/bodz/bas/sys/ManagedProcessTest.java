@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import net.bodz.bas.io.CharOuts.Buffer;
+import net.bodz.bas.io.CharOuts.BCharOut;
 
 import org.junit.Test;
 
@@ -28,7 +28,7 @@ public class ManagedProcessTest {
     static class Cap extends _IOCallback {
 
         private String[] inputs;
-        private Buffer   buf = new Buffer();
+        private BCharOut   buf = new BCharOut();
 
         public Cap(String... inputs) {
             this.inputs = inputs;

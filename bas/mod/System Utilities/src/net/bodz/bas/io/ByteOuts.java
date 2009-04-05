@@ -94,13 +94,13 @@ public class ByteOuts {
 
     }
 
-    public static class Buffer extends OutputStreamByteOut {
+    public static class BByteOut extends OutputStreamByteOut {
 
-        public Buffer() {
+        public BByteOut() {
             super(new ByteArrayOutputStream());
         }
 
-        public Buffer(int initialSize) {
+        public BByteOut(int initialSize) {
             super(new ByteArrayOutputStream(initialSize));
         }
 

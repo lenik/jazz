@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
 
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.Files;
-import net.bodz.bas.io.CharOuts.Buffer;
+import net.bodz.bas.io.CharOuts.BCharOut;
 import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.text.diff.DiffComparator;
 import net.bodz.bas.text.diff.DiffComparators;
@@ -161,7 +161,7 @@ public class Strings {
     public static String hyphenatize(String words) {
         while (words.startsWith("_"))
             words = words.substring(1);
-        Buffer buf = new Buffer(words.length() * 3 / 2);
+        BCharOut buf = new BCharOut(words.length() * 3 / 2);
         boolean breakNext = false;
         for (int wordStart = 0; wordStart < words.length();) {
             int wordEnd;
@@ -820,7 +820,7 @@ public class Strings {
     }
 
     public static String diff(List<?> a, List<?> b) {
-        Buffer buffer = new Buffer();
+        BCharOut buffer = new BCharOut();
         diff(a, b, buffer);
         return buffer.toString();
     }
@@ -832,7 +832,7 @@ public class Strings {
     }
 
     public static String diff(String a, String b) {
-        Buffer buffer = new Buffer();
+        BCharOut buffer = new BCharOut();
         diff(a, b, buffer);
         return buffer.toString();
     }

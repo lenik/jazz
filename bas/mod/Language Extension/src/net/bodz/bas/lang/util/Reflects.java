@@ -36,14 +36,15 @@ public class Reflects {
         return c == void.class ? t : c;
     }
 
-    public static void bind(Class<?> declareClass, Object defineObject) {
+    public static void bind(Class<?> declareClass, Object defineObject)
+            throws ReflectException {
         assert defineObject != null;
         Class<?> defineClass = defineObject.getClass();
         bind(declareClass, defineClass, defineObject);
     }
 
     public static void bind(Class<?> declareClass, Class<?> defineClass,
-            Object defineObject) {
+            Object defineObject) throws ReflectException {
         TextMap<PropertyDescriptor> properties = null;
 
         for (Field declareField : declareClass.getDeclaredFields()) {
@@ -155,7 +156,8 @@ public class Reflects {
         }
     }
 
-    public static Field getField(Class<?> clazz, String fieldName) {
+    public static Field getField(Class<?> clazz, String fieldName)
+            throws ReflectException {
         try {
             return clazz.getField(fieldName);
         } catch (Exception e) {
@@ -163,7 +165,8 @@ public class Reflects {
         }
     }
 
-    public static Field getDeclaredField(Class<?> clazz, String fieldName) {
+    public static Field getDeclaredField(Class<?> clazz, String fieldName)
+            throws ReflectException {
         try {
             return clazz.getDeclaredField(fieldName);
         } catch (Exception e) {
@@ -172,7 +175,7 @@ public class Reflects {
     }
 
     public static Method getMethod(Class<?> clazz, String methodName,
-            Class<?>... parameterTypes) {
+            Class<?>... parameterTypes) throws ReflectException {
         try {
             return clazz.getMethod(methodName, parameterTypes);
         } catch (Exception e) {
@@ -181,7 +184,7 @@ public class Reflects {
     }
 
     public static Method getDeclaredMethod(Class<?> clazz, String methodName,
-            Class<?>... parameterTypes) {
+            Class<?>... parameterTypes) throws ReflectException {
         try {
             return clazz.getDeclaredMethod(methodName, parameterTypes);
         } catch (Exception e) {
@@ -189,7 +192,7 @@ public class Reflects {
         }
     }
 
-    public static Object get(Object obj, Field field) {
+    public static Object get(Object obj, Field field) throws ReflectException {
         try {
             return field.get(obj);
         } catch (Exception e) {
@@ -197,7 +200,8 @@ public class Reflects {
         }
     }
 
-    public static void set(Object obj, Field field, Object value) {
+    public static void set(Object obj, Field field, Object value)
+            throws ReflectException {
         try {
             field.set(obj, value);
         } catch (Exception e) {
@@ -205,7 +209,8 @@ public class Reflects {
         }
     }
 
-    public static Object get(Object obj, PropertyDescriptor property) {
+    public static Object get(Object obj, PropertyDescriptor property)
+            throws ReflectException {
         Method read = property.getReadMethod();
         if (read == null)
             throw new IllegalArgumentException("property " + property.getName()
@@ -221,7 +226,25 @@ public class Reflects {
         invoke(obj, write, value);
     }
 
-    public static <T> T newInstance(Class<T> clazz) {
+    public static <T> Constructor<T> getConstructor(Class<T> clazz,
+            Class<?>... parameterTypes) {
+        try {
+            return clazz.getConstructor(parameterTypes);
+        } catch (Exception e) {
+            throw new ReflectException(e);
+        }
+    }
+
+    public static <T> Constructor<T> getDeclaredConstructor(Class<T> clazz,
+            Class<?>... parameterTypes) {
+        try {
+            return clazz.getDeclaredConstructor(parameterTypes);
+        } catch (Exception e) {
+            throw new ReflectException(e);
+        }
+    }
+
+    public static <T> T newInstance(Class<T> clazz) throws ReflectException {
         try {
             return Control.newInstance(clazz);
         } catch (Exception e) {
@@ -229,7 +252,8 @@ public class Reflects {
         }
     }
 
-    public static <T> T newInstance(Constructor<T> ctor, Object... initargs) {
+    public static <T> T newInstance(Constructor<T> ctor, Object... initargs)
+            throws ReflectException {
         try {
             return Control.newInstance(ctor, initargs);
         } catch (Exception e) {
@@ -237,7 +261,8 @@ public class Reflects {
         }
     }
 
-    public static Object invoke(Object obj, Method method, Object... args) {
+    public static Object invoke(Object obj, Method method, Object... args)
+            throws ReflectException {
         try {
             return Control.invoke(method, obj, args);
         } catch (Exception e) {

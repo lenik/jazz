@@ -13,22 +13,22 @@ import net.bodz.bas.lang.err.IllegalUsageError;
  */
 public class Ns {
 
-    public static String getName(AnnotatedElement elm) {
-        if (elm instanceof Class<?>)
-            return ((Class<?>) elm).getName();
-        if (elm instanceof Member)
-            return ((Member) elm).getName();
+    public static String getName(AnnotatedElement aobject) {
+        if (aobject instanceof Class<?>)
+            return ((Class<?>) aobject).getName();
+        if (aobject instanceof Member)
+            return ((Member) aobject).getName();
         return null;
     }
 
-    public static AnnotatedElement getParent(AnnotatedElement elm) {
-        assert elm != null;
-        if (elm instanceof Class<?>)
-            return ((Class<?>) elm).getSuperclass();
-        if (!(elm instanceof Member))
+    public static AnnotatedElement getParent(AnnotatedElement aobject) {
+        assert aobject != null;
+        if (aobject instanceof Class<?>)
+            return ((Class<?>) aobject).getSuperclass();
+        if (!(aobject instanceof Member))
             // MethodParameter, or other user defined AnnotatedElement.
             return null;
-        Member member = ((Member) elm);
+        Member member = ((Member) aobject);
         Class<?> _super = member.getDeclaringClass().getSuperclass();
         if (_super == null)
             return null;
@@ -63,14 +63,14 @@ public class Ns {
     /**
      * Get annotation with inheritance support.
      */
-    public static <A extends Annotation> A getN(AnnotatedElement elm,
-            Class<A> nClass) {
-        A n = elm.getAnnotation(nClass);
+    public static <A extends Annotation> A getN(AnnotatedElement aobject,
+            Class<A> aclass) {
+        A n = aobject.getAnnotation(aclass);
         if (n == null) {
-            AnnotatedElement parent = getParent(elm);
+            AnnotatedElement parent = getParent(aobject);
             if (parent == null)
                 return null;
-            return getN(parent, nClass);
+            return getN(parent, aclass);
         }
         return n;
     }
@@ -78,13 +78,13 @@ public class Ns {
     /**
      * Get annotation with inheritance support.
      */
-    public static <A extends Annotation> Object getValue(AnnotatedElement elm,
-            Class<A> nClass) {
-        A n = getN(elm, nClass);
+    public static <A extends Annotation> Object getValue(
+            AnnotatedElement aobject, Class<A> aclass) {
+        A n = getN(aobject, aclass);
         if (n == null)
             return null;
         try {
-            Method valuef = nClass.getMethod("value");
+            Method valuef = aclass.getMethod("value");
             // Control.invoke: value() never throws Control.
             return valuef.invoke(n);
         } catch (NoSuchMethodException e) {
@@ -100,9 +100,9 @@ public class Ns {
      * @see #getValue(AnnotatedElement, Class)
      */
     @SuppressWarnings("unchecked")
-    public static <T, A extends Annotation> T _getValue(AnnotatedElement elm,
-            Class<A> nClass) {
-        return (T) getValue(elm, nClass);
+    public static <T, A extends Annotation> T _getValue(
+            AnnotatedElement aobject, Class<A> aclass) {
+        return (T) getValue(aobject, aclass);
     }
 
 }
