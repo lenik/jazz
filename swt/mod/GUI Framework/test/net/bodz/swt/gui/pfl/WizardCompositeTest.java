@@ -8,7 +8,7 @@ import org.eclipse.swt.widgets.Composite;
 public class WizardCompositeTest {
 
     public static void main(String[] args) {
-        SWTTest test = new SWTTest();
+        final SWTTest test = new SWTTest();
 
         final WizardComposite wizard = new WizardComposite(test.parent,
                 SWT.NONE) {
@@ -35,6 +35,13 @@ public class WizardCompositeTest {
             @Override
             public PageComposite create(Composite parent) {
                 return new TestPage2(parent, SWT.NONE);
+            }
+        });
+        wizard.addExitListener(new WizardExitListener() {
+            @Override
+            public void wizardExit(WizardExitEvent e) {
+                test.shell.dispose();
+                System.out.println("Exit: " + e.address);
             }
         });
         SymlinkPageFlow pageFlow = wizard.getPageFlow();

@@ -48,7 +48,7 @@ public class Location {
         if (prev == null)
             return next;
         if (next == null)
-            return prev + "/next"; // option?
+            return null;
         if (next.startsWith("/"))
             return next;
         if (!prev.endsWith("/"))

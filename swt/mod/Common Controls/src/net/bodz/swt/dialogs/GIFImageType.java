@@ -64,6 +64,8 @@ public class GIFImageType extends _ImageType {
     @Override
     public void save(ImageData imageData, OutputStream out, Object _params)
             throws IOException {
+        if (imageData == null)
+            throw new NullPointerException("imageData");
         Params params = (Params) _params;
         if (params.transparentPixel != -1)
             imageData.transparentPixel = params.transparentPixel;

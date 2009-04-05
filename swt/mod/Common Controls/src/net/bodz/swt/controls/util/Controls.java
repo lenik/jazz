@@ -4,51 +4,52 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Scrollable;
 
-public class Shells {
+public class Controls {
 
-    public static void center(Shell shell) {
-        center(shell, 0, 0);
+    public static void center(Control control) {
+        center(control, 0, 0);
     }
 
-    public static void center(Shell shell, double xOffset, double yOffset) {
-        Composite parent = shell.getParent();
+    public static void center(Control control, double xOffset, double yOffset) {
+        Composite parent = control.getParent();
         Rectangle outer;
-        if (parent == null || parent == shell)
-            outer = shell.getDisplay().getBounds();
+        if (parent == null || parent == control)
+            outer = control.getDisplay().getBounds();
         else
             outer = parent.getBounds();
-        Point size = shell.getSize();
+        Point size = control.getSize();
         int x = outer.x + (outer.width - size.x) / 2
                 + (int) (xOffset * outer.width);
         int y = outer.y + (outer.height - size.y) / 2
                 + (int) (yOffset * outer.height);
-        shell.setLocation(x, y);
+        control.setLocation(x, y);
     }
 
     static final Point defaultMinSize = new Point(1, 1);
     static final Point defaultMaxSize = new Point(Integer.MAX_VALUE,
                                               Integer.MAX_VALUE);
 
-    public static boolean fitToClientAreaSize(Shell shell) {
-        Point clientAreaSize = shell.computeSize(SWT.DEFAULT, SWT.DEFAULT);
-        return fitToClientAreaSize(shell, clientAreaSize, null, null);
+    public static void resizeToPreferredSize(Control control) {
+        Point trimSize = control.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+        control.setSize(trimSize);
     }
 
     /**
      * @return <code>true</code> if size changed.
      */
-    public static boolean fitToClientAreaSize(Shell shell,
+    public static boolean resizeToFit(Scrollable scrollable,
             Point clientAreaSize, Point minSize, Point maxSize) {
         if (minSize == null)
             minSize = defaultMinSize;
         if (maxSize == null)
             maxSize = defaultMaxSize;
-        Point shellSize = shell.getSize();
-        Rectangle area = shell.getClientArea();
-        int padWidth = shellSize.x - area.width;
-        int padHeight = shellSize.y - area.height;
+        Point size = scrollable.getSize();
+        Rectangle area = scrollable.getClientArea();
+        int padWidth = size.x - area.width;
+        int padHeight = size.y - area.height;
         assert padWidth >= 0;
         assert padHeight >= 0;
         if (padWidth < 0)
@@ -59,9 +60,9 @@ public class Shells {
         int height = Math.max(minSize.y, Math.min(clientAreaSize.y, maxSize.y));
         if (width == area.width && height == area.height)
             return false;
-        shellSize.x = width + padWidth;
-        shellSize.y = height + padHeight;
-        shell.setSize(shellSize);
+        size.x = width + padWidth;
+        size.y = height + padHeight;
+        scrollable.setSize(size);
         return true;
     }
 

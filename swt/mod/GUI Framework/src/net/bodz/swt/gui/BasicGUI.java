@@ -16,7 +16,7 @@ import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.types.util.Ns;
 import net.bodz.swt.controls.helper.DynamicControl;
 import net.bodz.swt.controls.util.Menus;
-import net.bodz.swt.controls.util.Shells;
+import net.bodz.swt.controls.util.Controls;
 import net.bodz.swt.util.SWTResources;
 
 import org.eclipse.swt.SWT;
@@ -58,25 +58,32 @@ public class BasicGUI extends BasicCLI {
     private Map<Object, Composite> views;
 
     @Override
+    public synchronized void run(String... args) throws Throwable {
+        try {
+            super.run(args);
+        } catch (Throwable t) {
+            SWTInteraction iact = new SWTInteraction(shell);
+            iact.alert(t.getMessage(), t);
+            throw t;
+        }
+    }
+
+    @Override
     protected void doMain(String[] args) throws Throwable {
         // this.args = args;
         views = new HashMap<Object, Composite>();
 
         final Display display = Display.getDefault();
-        shell = createShell();
+
+        shell = createShell();// throws GUIExcaption
         shell.open();
         shell.layout();
 
-        try {
-            _start();
-            while (!shell.isDisposed()) {
-                if (!display.readAndDispatch())
-                    display.sleep();
-            }
-        } catch (Throwable t) {
-            SWTInteraction iact = new SWTInteraction(shell);
-            iact.alert(t.getMessage(), t);
-            throw t;
+        _start();
+
+        while (!shell.isDisposed()) {
+            if (!display.readAndDispatch())
+                display.sleep();
         }
     }
 
@@ -97,7 +104,7 @@ public class BasicGUI extends BasicCLI {
         return images;
     }
 
-    String getTitle() {
+    protected String getTitle() {
         ClassInfo info = _loadClassInfo();
         String title = info.getName() + ": " + info.getDoc();
         String version = info.getVersionString();
@@ -107,7 +114,7 @@ public class BasicGUI extends BasicCLI {
     protected Shell createShell() throws GUIException, SWTException {
         Shell shell = new Shell();
         shell.setSize(shellWidth, shellHeight);
-        Shells.center(shell);
+        Controls.center(shell);
         shell.setText(getTitle());
         ClassInfo info = _loadClassInfo();
         Image[] icons;
@@ -174,11 +181,16 @@ public class BasicGUI extends BasicCLI {
         Composite statusBar = new Composite(parent, SWT.BORDER); // SWT.BORDER
         statusBar.setLayout(new FillLayout());
         Label label = new Label(statusBar, SWT.NONE);
+        String copyright = getCopyrightString();
+        label.setText(copyright);
+        return statusBar;
+    }
+
+    protected String getCopyrightString() {
         ClassInfo info = _loadClassInfo();
         String copyright = "(C) Copyright " + info.getAuthor() + ", "
                 + info.getDateString();
-        label.setText(copyright);
-        return statusBar;
+        return copyright;
     }
 
     protected Control createExpandBar(Composite parent) throws SWTException,

@@ -75,6 +75,8 @@ public class PageFlow extends Location {
     }
 
     protected String getPageNext(Page page) {
+        if (page == null)
+            return null;
         Object exit = page.exitState();
         if (exit == null)
             return null;
@@ -90,12 +92,11 @@ public class PageFlow extends Location {
     }
 
     public void goOn() throws ValidateException {
-        Page prevPage = getPage();
-        if (prevPage == null)
+        Page page = getPage();
+        if (page == null)
             throw new IllegalStateException("no current page");
-        prevPage.validate();
-        Object exit = prevPage.exitState();
-        String next = exit == null ? null : String.valueOf(exit);
+        page.validate();
+        String next = getPageNext(page);
         set(next);
     }
 

@@ -26,12 +26,14 @@ public abstract class _ImageType implements ImageType {
 
     static void _save(ImageLoader loader, OutputStream out, int format)
             throws IOException {
+        if (out == null)
+            throw new NullPointerException("out");
         try {
             loader.save(out, format);
         } catch (SWTException e) {
-            if (e.code == SWT.ERROR_IO) {
+            if (e.code == SWT.ERROR_IO)
                 throw new IOException(e.getMessage(), e);
-            }
+            throw e;
         }
     }
 

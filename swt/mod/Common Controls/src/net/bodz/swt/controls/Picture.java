@@ -1,5 +1,8 @@
 package net.bodz.swt.controls;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.GC;
@@ -10,18 +13,25 @@ import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
+/**
+ * @TestBy PictureTest
+ */
 public class Picture extends Canvas {
 
-    private Image image;
-
-    // private Image backBuffer;
+    private Image   image;
+    private boolean stretched;
 
     public Picture(Composite parent, int style) {
-        super(parent, style);
+        this(parent, style, false);
+    }
+
+    public Picture(Composite parent, int style, boolean stretched) {
+        super(parent, stretched ? style | SWT.NO_BACKGROUND : style);
+        this.stretched = stretched;
         addPaintListener(new PaintListener() {
             @Override
             public void paintControl(PaintEvent e) {
-                paint(e.gc, e.x, e.y, e.width, e.height, e);
+                paint(e);
             }
         });
     }
@@ -31,19 +41,49 @@ public class Picture extends Canvas {
     }
 
     public void setImage(Image image) {
-        this.image = image;
-        redraw();
+        if (this.image != image) {
+            this.image = image;
+            redraw();
+        }
     }
 
-    protected void paint(GC gc, int x, int y, int width, int height,
-            PaintEvent event) {
+    public boolean isStretched() {
+        return stretched;
+    }
+
+    public void setStretched(boolean stretched) {
+        if (this.stretched != stretched) {
+            this.stretched = stretched;
+            if (stretched)
+                super.redraw();
+        }
+    }
+
+    @Override
+    public Point computeSize(int wHint, int hHint, boolean changed) {
+        if (stretched || image == null)
+            return super.computeSize(wHint, hHint, changed);
+        Rectangle bounds = image.getBounds();
+        return new Point(bounds.width, bounds.height);
+    }
+
+    protected void paint(PaintEvent e) {
         if (image == null)
             return;
         Rectangle size = image.getBounds();
-        Point resize = getSize();
-        gc.drawImage(image, //
-                0, 0, size.width, size.height, //
-                0, 0, resize.x, resize.y);
+        GC gc = e.gc;
+        if (stretched) {
+            Point resize = getSize();
+            gc.drawImage(image, //
+                    0, 0, size.width, size.height, //
+                    0, 0, resize.x, resize.y);
+        } else {
+            if (e.x >= size.width || e.y >= size.height)
+                return;
+            int w = Math.max(0, Math.min(size.width - e.x, e.width));
+            int h = Math.max(0, Math.min(size.height - e.y, e.height));
+            gc.drawImage(image, e.x, e.y, w, h, e.x, e.y, w, h);
+        }
     }
 
     boolean copyImage(Rectangle srcBounds, GC destGC, Rectangle destBounds) {
