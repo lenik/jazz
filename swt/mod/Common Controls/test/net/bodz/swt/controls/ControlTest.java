@@ -1,6 +1,6 @@
 package net.bodz.swt.controls;
 
-import net.bodz.swt.gui.util.SWTTest;
+import net.bodz.swt.gui.util.ControlTestApp;
 
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.FillLayout;
@@ -8,7 +8,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 /**
- * @see SWTTest
+ * @see ControlTestApp
  */
 public abstract class ControlTest {
 

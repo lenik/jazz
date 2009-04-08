@@ -21,16 +21,14 @@ public class StackComposite extends Composite {
     }
 
     @Override
-    public Point computeSize(int wHint, int hHint) {
+    public Point computeSize(int wHint, int hHint, boolean changed) {
         Point size;
-        // if (stackLayout.topControl != null)
-        // size = stackLayout.topControl.computeSize(wHint, hHint);
-        // else
-        size = super.computeSize(wHint, hHint);
-        if (size.x == 0)
-            size.x = 1;
-        if (size.y == 0)
-            size.y = 1;
+        if (stackLayout.topControl != null)
+            size = stackLayout.topControl.computeSize(wHint, hHint, changed);
+        else {
+            // super.computeSize(wHint, hHint, changed); == Point(0,0)
+            size = new Point(1, 1);
+        }
         return size;
     }
 }

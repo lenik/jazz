@@ -1,6 +1,6 @@
 package net.bodz.swt.gui.pfl;
 
-import net.bodz.swt.gui.util.SWTTest;
+import net.bodz.swt.gui.util.ControlTestApp;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -8,7 +8,7 @@ import org.eclipse.swt.widgets.Composite;
 public class WizardCompositeTest {
 
     public static void main(String[] args) {
-        final SWTTest test = new SWTTest();
+        final ControlTestApp test = new ControlTestApp();
 
         final WizardComposite wizard = new WizardComposite(test.parent,
                 SWT.NONE) {

@@ -1,6 +1,7 @@
 package net.bodz.swt.gui;
 
 import net.bodz.bas.gui.GUIException;
+import net.bodz.swt.layouts.BorderLayout;
 import net.bodz.swt.layouts.LineLayout;
 
 import org.eclipse.swt.SWT;
@@ -9,8 +10,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-
-import swing2swt.layout.BorderLayout;
 
 public class SWTControls extends BasicGUI {
 

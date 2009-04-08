@@ -9,7 +9,6 @@ public class ValidateException extends CheckException {
     private static final long serialVersionUID = 4861800631957356772L;
 
     private Control           control;
-    private boolean           silent;
 
     public ValidateException() {
         super();
@@ -27,6 +26,9 @@ public class ValidateException extends CheckException {
         super(cause);
     }
 
+    /**
+     * Construct a silence validation.
+     */
     public ValidateException(Control control) {
         super();
         this.control = control;
@@ -52,11 +54,7 @@ public class ValidateException extends CheckException {
     }
 
     public boolean isSilent() {
-        return silent;
-    }
-
-    public void setSilent(boolean silent) {
-        this.silent = silent;
+        return false;
     }
 
 }

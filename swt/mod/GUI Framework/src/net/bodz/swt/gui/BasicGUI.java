@@ -15,8 +15,9 @@ import net.bodz.bas.gui.a.PreferredSize;
 import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.types.util.Ns;
 import net.bodz.swt.controls.helper.DynamicControl;
-import net.bodz.swt.controls.util.Menus;
 import net.bodz.swt.controls.util.Controls;
+import net.bodz.swt.controls.util.Menus;
+import net.bodz.swt.layouts.BorderLayout;
 import net.bodz.swt.util.SWTResources;
 
 import org.eclipse.swt.SWT;
@@ -33,7 +34,6 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.ToolBar;
 
-import swing2swt.layout.BorderLayout;
 
 @BootInfo(userlibs = { "bodz_swt", "bodz_icons" }, configs = SWTConfig.class)
 @StartMode(StartMode.GUI)
@@ -106,7 +106,10 @@ public class BasicGUI extends BasicCLI {
 
     protected String getTitle() {
         ClassInfo info = _loadClassInfo();
-        String title = info.getName() + ": " + info.getDoc();
+        String title = info.getName();
+        String doc = info.getDoc();
+        if (doc != null)
+            title += ": " + doc;
         String version = info.getVersionString();
         return title + " " + version;
     }

@@ -4,7 +4,7 @@ import java.util.EventObject;
 
 import net.bodz.bas.gui.RenderException;
 import net.bodz.bas.io.CharOuts.BCharOut;
-import net.bodz.swt.controls.helper.Empty;
+import net.bodz.swt.controls.helper.EmptyComposite;
 import net.bodz.swt.controls.helper.FixSizeComposite;
 import net.bodz.swt.controls.util.Controls;
 import net.bodz.swt.gui.GUIVar;
@@ -32,6 +32,9 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
+/**
+ * @TestBy R_ThrowableTest
+ */
 public class R_Throwable extends SWTRenderer {
 
     static final String expandedIcon  = "/icons/full/obj16/remove_correction.gif";
@@ -73,7 +76,7 @@ public class R_Throwable extends SWTRenderer {
             errbuf.println(mesg);
 
             // Empty skip =
-            new Empty(comp, SWT.NONE);
+            new EmptyComposite(comp, SWT.NONE);
 
             final FixSizeComposite callstackComp = new FixSizeComposite(comp,
                     SWT.NONE);
