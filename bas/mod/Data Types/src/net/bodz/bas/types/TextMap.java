@@ -6,6 +6,9 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import net.bodz.bas.types.der.DerHashMap;
+import net.bodz.bas.types.der.DerTreeMap;
+
 public interface TextMap<T> extends Map<String, T> {
 
     public class HashTextMap<T> extends HashMap<String, T> implements
@@ -50,6 +53,28 @@ public interface TextMap<T> extends Map<String, T> {
 
         public TreeTextMap(SortedMap<String, ? extends T> m) {
             super(m);
+        }
+
+    }
+
+    public static class DerHashTextMap<T> extends DerHashMap<String, T>
+            implements TextMap<T> {
+
+        private static final long serialVersionUID = 3740317197044614640L;
+
+        public DerHashTextMap(Map<String, T> pMap) {
+            super(pMap);
+        }
+
+    }
+
+    public static class DerTreeTextMap<T> extends DerTreeMap<String, T>
+            implements TextMap<T> {
+
+        private static final long serialVersionUID = 3740317197044614640L;
+
+        public DerTreeTextMap(TreeMap<String, T> pMap) {
+            super(pMap);
         }
 
     }

@@ -19,7 +19,10 @@ public abstract class DerMap<K, V> extends AbstractMap<K, V> implements
 
     private static final long serialVersionUID = -4599316213416843857L;
 
+    /** previous/parent, the original map */
     protected final Map<K, V> pMap;
+
+    /** the override map */
     protected final Map<K, V> qMap;
 
     /**
@@ -31,6 +34,17 @@ public abstract class DerMap<K, V> extends AbstractMap<K, V> implements
         this.pMap = pMap;
         this.qMap = createMap();
         this.pDels = null;
+    }
+
+    public DerMap(DerMap<K, V> pDerMap, boolean reduce) {
+        this(reduce ? pDerMap.reduce() : pDerMap);
+    }
+
+    private Map<K, V> reduce() {
+        if (qMap.isEmpty())
+            if (pDels != null && !pDels.isEmpty())
+                return pMap;
+        return this;
     }
 
     /**

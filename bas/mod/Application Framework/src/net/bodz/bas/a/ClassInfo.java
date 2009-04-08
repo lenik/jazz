@@ -42,9 +42,8 @@ public class ClassInfo {
     protected void load() {
         if (loaded)
             return;
-        name = clazz.getSimpleName();
-
-        this.doc = A_bas.getDoc(clazz);
+        name = A_bas.getDisplayName(clazz);
+        doc = A_bas.getDoc(clazz);
 
         String[] iconDefs = Annotations._getValue(clazz, Icon.class);
         if (iconDefs != null)

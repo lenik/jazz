@@ -92,7 +92,7 @@ public class BasicCLI {
     protected ALog    L;
 
     @Option(hidden = true)
-    String            _logPrefix     = "[" + getClass().getSimpleName() + "] ";
+    String            _logPrefix;
 
     @Option(hidden = true)
     boolean           _logWithPrefix = true;
@@ -355,8 +355,9 @@ public class BasicCLI {
         int bootLevel = loglevel == null ? ALog.INFO : Integer
                 .parseInt(loglevel);
         L = CLIConfig.getBootLog(bootLevel);
-        HashMap<String, Object> hmap = new HashMap<String, Object>();
-        _vars = new AutoTypeMap<String, Object>(hmap);
+        _logPrefix = "[" + A_bas.getDisplayName(getClass()) + "] ";
+        _vars = new AutoTypeMap<String, Object>(//
+                new HashMap<String, Object>());
     }
 
     public ScriptClass<? extends BasicCLI> getScriptClass()
