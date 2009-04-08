@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import net.bodz.bas.a.ClassInfo;
-import net.bodz.bas.a.Doc;
+import net.bodz.bas.a.DisplayName;
 import net.bodz.bas.a.RcsKeywords;
 import net.bodz.bas.a.Version;
 import net.bodz.bas.cli.a.Option;
@@ -13,6 +13,10 @@ import net.bodz.bas.gui.a.PreferredSize;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.err.IllegalUsageError;
 import net.bodz.bas.lang.err.ParseException;
+import net.bodz.dist.ins.builtins.ChooseSchemePage;
+import net.bodz.dist.ins.builtins.CustomPage;
+import net.bodz.dist.ins.builtins.LicensePage;
+import net.bodz.dist.ins.builtins.LogoPage;
 import net.bodz.swt.gui.BasicGUI;
 import net.bodz.swt.gui.pfl.PageComposite;
 import net.bodz.swt.gui.pfl.PageFactory;
@@ -25,7 +29,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.widgets.Composite;
 
-@Doc("boDz Product Installer")
+@DisplayName("boDz Product Installer")
 // @Icon("icon.gif")
 @PreferredSize(width = 500, height = 400)
 @RcsKeywords(id = "$Id: QuickTone.java 8 2009-03-29 09:01:53Z Shecti $")
@@ -36,6 +40,7 @@ public class Installer extends BasicGUI {
     Class<?>                majorClass;
 
     IProject                project;
+    ISession                session;
 
     private WizardComposite wizard;
 
@@ -50,8 +55,7 @@ public class Installer extends BasicGUI {
     protected void _boot() throws Throwable {
         if (majorClass != null) {
             if (project == null) {
-                _Project projByClass = new _Project();
-                projByClass.loadInfo(majorClass);
+                _Project projByClass = new _Project(majorClass);
                 this.project = projByClass;
             }
         }
@@ -67,43 +71,43 @@ public class Installer extends BasicGUI {
             @Override
             public PageComposite create(Composite parent) {
                 ClassInfo installInfo = Installer.this._loadClassInfo();
-                return new LogoPage(project, parent, SWT.NONE, installInfo);
+                return new LogoPage(session, parent, SWT.NONE, installInfo);
             }
         });
         wizard.definePage("license", new PageFactory() {
             @Override
             public PageComposite create(Composite parent) {
-                return new LicensePage(project, parent, SWT.NONE);
+                return new LicensePage(session, parent, SWT.NONE);
             }
         });
         wizard.definePage("type", new PageFactory() {
             @Override
             public PageComposite create(Composite parent) {
-                return new ChooseSchemePage(project, parent, SWT.NONE);
+                return new ChooseSchemePage(session, parent, SWT.NONE);
             }
         });
         wizard.definePage("components", new PageFactory() {
             @Override
             public PageComposite create(Composite parent) {
-                return new CustomPage(project, parent, SWT.NONE);
+                return new CustomPage(session, parent, SWT.NONE);
             }
         });
         wizard.definePage("progress", new PageFactory() {
             @Override
             public PageComposite create(Composite parent) {
-                return new ProgressPage(project, parent, SWT.NONE);
+                return new ProgressPage(session, parent, SWT.NONE);
             }
         });
         wizard.definePage("done", new PageFactory() {
             @Override
             public PageComposite create(Composite parent) {
-                return new DonePage(project, parent, SWT.NONE);
+                return new DonePage(session, parent, SWT.NONE);
             }
         });
         wizard.definePage("canceled", new PageFactory() {
             @Override
             public PageComposite create(Composite parent) {
-                return new CanceledPage(project, parent, SWT.NONE);
+                return new CanceledPage(session, parent, SWT.NONE);
             }
         });
         wizard.addExitListener(new WizardExitListener() {

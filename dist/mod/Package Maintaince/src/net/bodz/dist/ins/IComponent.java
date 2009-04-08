@@ -1,7 +1,5 @@
 package net.bodz.dist.ins;
 
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Collection;
 
 import org.eclipse.swt.widgets.Composite;
@@ -52,12 +50,20 @@ public interface IComponent {
      */
     String[] getDependancy();
 
-    boolean hasData();
+    void enter(ISession session);
+
+    void leave(ISession session);
+
+    int DUMP      = 0;
+    int INSTALL   = 1;
+    int UNINSTALL = 2;
+
+    int getProgressSize(int job);
 
     /**
      * This method won't be called if the component doesn't have data.
      */
-    void dump(OutputStream dataOut) throws InstallException;
+    void dump(ISession session) throws InstallException;
 
     /**
      * @param dumpedData
@@ -65,8 +71,8 @@ public interface IComponent {
      * @return <code>true</code> if component install succeeded, and should do
      *         the corresponding uninstall.
      */
-    boolean install(InputStream dumpedData) throws InstallException;
+    boolean install(ISession session) throws InstallException;
 
-    void uninstall() throws InstallException;
+    void uninstall(ISession session) throws InstallException;
 
 }
