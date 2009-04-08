@@ -1,6 +1,8 @@
-package net.bodz.dist.ins;
+package net.bodz.dist.ins.builtins;
 
-import net.bodz.swt.gui.pfl.PageComposite;
+import net.bodz.dist.ins.ConfigPage;
+import net.bodz.dist.ins.ISession;
+import net.bodz.swt.layouts.BorderLayout;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.RowLayout;
@@ -8,17 +10,15 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 
-import swing2swt.layout.BorderLayout;
+public class LicensePage extends ConfigPage {
 
-public class LicensePage extends PageComposite {
+    private ISession session;
 
-    private IProject config;
+    private Text     text;
 
-    private Text          text;
-
-    public LicensePage(IProject config, Composite parent, int style) {
+    public LicensePage(ISession session, Composite parent, int style) {
         super(parent, style);
-        this.config = config;
+        this.session = session;
         setLayout(new BorderLayout(0, 0));
 
         final Composite composite = new Composite(this, SWT.NONE);
@@ -43,7 +43,7 @@ public class LicensePage extends PageComposite {
 
     @Override
     public void enter(String prev) {
-        String license = config.getLicense();
+        String license = session.getProject().getLicense();
         text.setText(license);
     }
 

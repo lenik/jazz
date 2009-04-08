@@ -6,11 +6,11 @@ import org.eclipse.swt.widgets.Composite;
 
 public class CanceledPage extends PageComposite {
 
-    private IProject config;
+    private ISession session;
 
-    public CanceledPage(IProject config, Composite parent, int style) {
+    public CanceledPage(ISession session, Composite parent, int style) {
         super(parent, style);
-        this.config = config;
+        this.session = session;
     }
 
     @Override

@@ -1,15 +1,8 @@
 package net.bodz.dist.ins;
 
 import java.net.URL;
-import java.util.Collection;
 
-public interface IProject {
-
-    String getName();
-
-    String getCaption();
-
-    String getDescription();
+public interface IProject extends IComponent {
 
     URL getIconURL();
 
@@ -23,6 +16,6 @@ public interface IProject {
 
     Scheme[] getSchemes();
 
-    Collection<IComponent> getRootComponents();
+    BaseDir[] getBaseDirs();
 
 }

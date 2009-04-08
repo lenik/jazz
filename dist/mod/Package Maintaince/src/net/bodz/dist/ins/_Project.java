@@ -1,31 +1,51 @@
 package net.bodz.dist.ins;
 
+import java.io.File;
 import java.net.URL;
-import java.util.Collection;
 
+import net.bodz.bas.a.A_bas;
 import net.bodz.bas.a.ClassInfo;
+import net.bodz.bas.sys.SystemInfo;
 import net.bodz.dist.ins.Schemes.Custom;
 import net.bodz.dist.ins.Schemes.Maximum;
 import net.bodz.dist.ins.Schemes.Minimum;
 import net.bodz.dist.ins.Schemes.Standard;
+import net.bodz.dist.ins.builtins.Section;
 import net.bodz.dist.ins.lic.License;
 
-public class _Project implements IProject {
+public class _Project extends Section implements IProject {
 
-    private String name;
-    private String caption;
-    private String description;
-    private URL    iconURL;
-    private String version;
-    private String updateTime;
-    private String company;
+    private String  name;
+    private String  caption;
+    private String  description;
+    private URL     iconURL;
+    private String  version;
+    private String  updateTime;
+    private String  company;
 
-    // public String
+    private BaseDir programBase;
+
+    public _Project(Class<?> clazz) {
+        super(true, null, null, null);
+        if (clazz != null)
+            loadInfo(clazz);
+
+        String parent = "/usr/local";
+        String name = getName();
+        if (SystemInfo.isWin32()) {
+            parent = System.getenv("ProgramFiles");
+            if (parent == null)
+                parent = "C:/Program Files";
+        }
+        File dir = new File(parent, name);
+        programBase = new BaseDir("program", "Program Files",
+                "Where do you want to put the program files", dir);
+    }
 
     public void loadInfo(Class<?> clazz) {
         ClassInfo info = ClassInfo.get(clazz);
         name = clazz.getName();
-        caption = clazz.getSimpleName();
+        caption = A_bas.getDisplayName(getClass());
         description = info.getDoc();
         // info.getAuthor();
         version = info.getVersionString();
@@ -34,6 +54,7 @@ public class _Project implements IProject {
         company = info.getAuthor();
     }
 
+    @Override
     public String getName() {
         return name;
     }
@@ -71,8 +92,8 @@ public class _Project implements IProject {
     public Scheme[] getSchemes() {
         Scheme[] commons = {
         //
-                new Minimum(), //
                 new Standard(), //
+                new Minimum(), //
                 new Maximum(), //
                 new Custom(), //
         };
@@ -80,8 +101,21 @@ public class _Project implements IProject {
     }
 
     @Override
-    public Collection<IComponent> getRootComponents() {
-        return null;
+    public void enter(ISession session) {
+        super.enter(session);
+        // do project specific?
+    }
+
+    @Override
+    public void leave(ISession session) {
+        super.leave(session);
+        // do project specific?
+    }
+
+    @Override
+    public BaseDir[] getBaseDirs() {
+        BaseDir[] defaultBaseDirs = { programBase, };
+        return defaultBaseDirs;
     }
 
 }

@@ -10,6 +10,8 @@ Require-Bundle: net.bodz.bas;bundle-version="1.0.0",
  org.apache.ant;bundle-version="1.7.1"
 Export-Package: net.bodz.dist.customize,
  net.bodz.dist.ins,
+ net.bodz.dist.ins.builtins,
+ net.bodz.dist.ins.lic,
  net.bodz.dist.lm,
  net.bodz.dist.pcl,
  net.bodz.dist.pm,

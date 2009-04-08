@@ -1,13 +1,15 @@
 package net.bodz.dist.ins;
 
+import net.bodz.bas.a.A_bas;
+
 public class Schemes {
 
     static abstract class _Scheme implements Scheme {
 
         @Override
         public String getCaption() {
-            String simpleName = getClass().getSimpleName();
-            return simpleName;
+            String caption = A_bas.getDisplayName(getClass());
+            return caption;
         }
 
         @Override

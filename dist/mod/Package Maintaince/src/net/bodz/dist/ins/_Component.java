@@ -1,23 +1,17 @@
 package net.bodz.dist.ins;
 
-import java.io.OutputStream;
 import java.util.Collection;
 
-import net.bodz.bas.log.ALog;
+import net.bodz.bas.a.A_bas;
 
 import org.eclipse.swt.widgets.Composite;
 
 public abstract class _Component implements IComponent {
 
-    protected final _Project project;
-    protected final ALog     L;
+    private boolean visible;
+    private boolean selected;
 
-    private boolean          visible;
-    private boolean          selected;
-
-    public _Component(_Project project, boolean visible, boolean defaultSelected) {
-        this.project = project;
-        this.L = new ALog();
+    public _Component(boolean visible, boolean defaultSelected) {
         this.visible = visible;
         this.selected = defaultSelected;
     }
@@ -30,8 +24,8 @@ public abstract class _Component implements IComponent {
 
     @Override
     public String getCaption() {
-        String simpleName = getClass().getSimpleName();
-        return simpleName;
+        String caption = A_bas.getDisplayName(getClass());
+        return caption;
     }
 
     @Override
@@ -100,12 +94,15 @@ public abstract class _Component implements IComponent {
     }
 
     @Override
-    public boolean hasData() {
-        return false;
+    public void enter(ISession session) {
     }
 
     @Override
-    public void dump(OutputStream dataOut) throws InstallException {
+    public void leave(ISession session) {
+    }
+
+    @Override
+    public void dump(ISession session) throws InstallException {
     }
 
 }

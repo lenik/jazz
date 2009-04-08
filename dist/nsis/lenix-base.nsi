@@ -1,5 +1,6 @@
-!define DEBUG 1
+;!define DEBUG 1
 
+!include "EnvVarUpdate.nsh"
 !include "lenix.nsh"
 !define __HOME__ ${__DIR__}\..
 
@@ -11,6 +12,7 @@ InstallDir ${LENIX}
 Page instfiles
 
 Section "-Lenix Core Runtime"
+    ${EnvVarUpdate} $0 "LABJA_ROOT" "A" "HKLM" $INSTDIR
     !insertmacro DirRec $INSTDIR ${__HOME__} bin
     !insertmacro DirRec $INSTDIR ${__HOME__} etc
 SectionEnd
