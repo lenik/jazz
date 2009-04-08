@@ -11,6 +11,7 @@ import net.bodz.swt.adapters.ControlAdapters;
 import net.bodz.swt.controls.helper.StackComposite;
 import net.bodz.swt.gui.SWTInteraction;
 import net.bodz.swt.gui.ValidateException;
+import net.bodz.swt.layouts.BorderLayout;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -27,8 +28,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-
-import swing2swt.layout.BorderLayout;
 
 import com.swtdesigner.SWTResourceManager;
 
@@ -287,7 +286,8 @@ public class WizardComposite extends Composite {
      * @see ControlAdapters#commit(Control, net.bodz.swt.adapters.CommitAdapter)
      */
     protected void exceptionHandler(ValidateException e) {
-        iact.alert("Validate Exception", e);
+        if (!e.isSilent())
+            iact.alert("Validate Exception", e);
         Control control = e.getControl();
         if (control != null) {
             control.setFocus();

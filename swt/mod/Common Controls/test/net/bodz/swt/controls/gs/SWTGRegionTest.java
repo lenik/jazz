@@ -1,6 +1,6 @@
 package net.bodz.swt.controls.gs;
 
-import net.bodz.swt.gui.util.SWTTest;
+import net.bodz.swt.gui.util.ControlTestApp;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.PaintEvent;
@@ -18,7 +18,7 @@ public class SWTGRegionTest {
         gr.add(new Rectangle(200, 200, 100, 100));
         gr.subtract(new Rectangle(150, 150, 70, 80));
 
-        SWTTest test = new SWTTest();
+        ControlTestApp test = new ControlTestApp();
         Canvas canvas = new Canvas(test.parent, SWT.BORDER);
         canvas.addPaintListener(new PaintListener() {
             @Override

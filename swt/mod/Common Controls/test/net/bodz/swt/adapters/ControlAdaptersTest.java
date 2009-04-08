@@ -1,6 +1,6 @@
 package net.bodz.swt.adapters;
 
-import net.bodz.swt.gui.util.SWTTest;
+import net.bodz.swt.gui.util.ControlTestApp;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
@@ -8,7 +8,7 @@ import org.eclipse.swt.widgets.Button;
 public class ControlAdaptersTest {
 
     public void testMoving() {
-        SWTTest test = new SWTTest();
+        ControlTestApp test = new ControlTestApp();
         test.parent.setLayout(null);
 
         Button button = new Button(test.parent, SWT.NONE);

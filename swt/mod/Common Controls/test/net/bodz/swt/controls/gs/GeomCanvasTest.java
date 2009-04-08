@@ -1,7 +1,7 @@
 package net.bodz.swt.controls.gs;
 
 import net.bodz.swt.controls.gs.GridSpace.HFirst;
-import net.bodz.swt.gui.util.SWTTest;
+import net.bodz.swt.gui.util.ControlTestApp;
 
 import org.eclipse.swt.SWT;
 
@@ -13,7 +13,7 @@ public class GeomCanvasTest {
     static int       testMode   = LARGE;
 
     public static void main(String[] args) {
-        SWTTest test = new SWTTest();
+        ControlTestApp test = new ControlTestApp();
         HFirst space;
         if (testMode == EFFICIENCY) {
             space = new GridSpace.HFirst(10000, 100);

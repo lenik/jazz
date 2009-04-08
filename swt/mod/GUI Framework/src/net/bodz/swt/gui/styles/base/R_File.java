@@ -14,6 +14,7 @@ import net.bodz.swt.gui.GUIVar;
 import net.bodz.swt.gui.GUIVarMeta;
 import net.bodz.swt.gui.RenderContext;
 import net.bodz.swt.gui.SWTRenderer;
+import net.bodz.swt.layouts.BorderLayout;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -25,7 +26,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Text;
 
-import swing2swt.layout.BorderLayout;
 
 public class R_File extends SWTRenderer {
 

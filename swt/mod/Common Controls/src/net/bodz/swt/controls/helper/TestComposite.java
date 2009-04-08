@@ -9,6 +9,9 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
+/**
+ * @TestBy TestCompositeTest
+ */
 public class TestComposite extends Composite {
 
     private Text age;
@@ -76,11 +79,6 @@ public class TestComposite extends Composite {
         okButton.setLayoutData(fd_okButton);
         okButton.setText("&OK");
         //
-    }
-
-    @Override
-    protected void checkSubclass() {
-        // Disable the check that prevents subclassing of SWT components
     }
 
 }

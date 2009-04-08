@@ -6,6 +6,7 @@ import net.bodz.bas.lang.Proc1;
 import net.bodz.bas.lang.err.ReflectException;
 import net.bodz.bas.lang.util.Reflects;
 import net.bodz.swt.controls.util.Controls;
+import net.bodz.swt.layouts.BorderLayout;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -18,17 +19,18 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
-import swing2swt.layout.BorderLayout;
-
-public class SWTTest {
+/**
+ * @TestBy ControlTestAppTest
+ */
+public class ControlTestApp {
 
     public Display    display = Display.getDefault();
-    public String     title   = "SWT Test";
+    public String     title   = "Control Test App";
     public Shell      shell;
     public Composite  parent;
     private Composite tools;
 
-    public SWTTest() {
+    public ControlTestApp() {
         setup();
     }
 
@@ -107,7 +109,7 @@ public class SWTTest {
 
     public static <T extends Control> void test(String title,
             Class<T> controlType, Proc1<? super T> initf) {
-        SWTTest test = new SWTTest();
+        ControlTestApp test = new ControlTestApp();
         T control = test.add(controlType);
         if (initf == null) {
             System.out.println("Created test control: " + control);

@@ -1,6 +1,6 @@
 package net.bodz.swt.controls.helper;
 
-import net.bodz.swt.gui.util.SWTTest;
+import net.bodz.swt.gui.util.ControlTestApp;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -10,7 +10,7 @@ import org.eclipse.swt.layout.FillLayout;
 public class FixSizeCompositeTest {
 
     public static void main(String[] args) {
-        final SWTTest test = new SWTTest();
+        final ControlTestApp test = new ControlTestApp();
 
         final FixSizeComposite comp = new FixSizeComposite(test.parent,
                 SWT.BORDER);
