@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import net.bodz.bas.a.A_bas;
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.lang.ClassLocal;
 import net.bodz.bas.lang.Filt1;
@@ -79,7 +80,7 @@ public class ClassCLI {
         final char[] tab = new char[tabsize];
         Arrays.fill(tab, ' ');
 
-        String program = clazz.getSimpleName();
+        String program = A_bas.getProgramName(clazz);
         buffer.append("Syntax: \n");
         buffer.append(tab);
         buffer.append(program + " [OPTION] [--]");

@@ -50,6 +50,8 @@ public class DerMapTest {
         Iterator<Entry<String, String>> m1eit = m1.entrySet().iterator();
         assertTrue(m1eit.hasNext());
 
+        // the order in default hashmap implementation:
+        // color, age, ...
         Entry<String, String> m11 = m1eit.next();
         String m11k = m11.getKey();
         if ("color".equals(m11k))

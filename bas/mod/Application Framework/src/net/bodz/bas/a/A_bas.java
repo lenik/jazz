@@ -2,6 +2,7 @@ package net.bodz.bas.a;
 
 import java.io.IOException;
 import java.lang.reflect.AnnotatedElement;
+import java.lang.reflect.Member;
 import java.text.ParseException;
 
 import net.bodz.bas.io.Files;
@@ -11,6 +12,33 @@ import net.bodz.bas.types.util.Ns;
 
 @RcsKeywords(id = "$Id$")
 public class A_bas {
+
+    public static String getDisplayName(Class<?> type) {
+        DisplayName dn = Ns.getN(type, DisplayName.class);
+        String name = dn != null ? dn.value() : type.getSimpleName();
+        return name;
+    }
+
+    public static <AM extends AnnotatedElement & Member> String getDisplayName(
+            AM member) {
+        DisplayName dn = Ns.getN(member, DisplayName.class);
+        String name = dn != null ? dn.value() : member.getName();
+        return name;
+    }
+
+    public static String getProgramName(Class<?> type) {
+        return getProgramName(type, null);
+    }
+
+    public static String getProgramName(Class<?> type, Boolean toUpperCase) {
+        ProgramName pn = Ns.getN(type, ProgramName.class);
+        if (pn != null)
+            return pn.value();
+        String name = type.getSimpleName();
+        if (toUpperCase != null)
+            name = toUpperCase ? name.toUpperCase() : name.toLowerCase();
+        return name;
+    }
 
     public static String getDoc(AnnotatedElement aobject) {
         Doc adoc = Ns.getN(aobject, Doc.class);

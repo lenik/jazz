@@ -40,4 +40,22 @@ public class LinkedStack<T> extends LinkedList<T> implements Stack<T> {
         set(0, newTop);
     }
 
+    /**
+     * @param index
+     *            0 at the top
+     */
+    @Override
+    public T get(int index) {
+        return super.get(index);
+    }
+
+    /**
+     * @param index
+     *            0 at the top
+     */
+    @Override
+    public T set(int index, T element) {
+        return super.set(index, element);
+    }
+
 }

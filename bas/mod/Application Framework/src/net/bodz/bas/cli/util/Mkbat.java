@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.bodz.bas.a.A_bas;
 import net.bodz.bas.a.BootProc;
 import net.bodz.bas.a.ClassInfo;
 import net.bodz.bas.a.Doc;
@@ -36,7 +37,6 @@ import net.bodz.bas.snm.SJLibLoader;
 import net.bodz.bas.text.interp.Interps;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TextMap.HashTextMap;
-import net.bodz.bas.types.util.Annotations;
 import net.bodz.bas.types.util.Arrays2;
 import net.bodz.bas.types.util.Empty;
 import net.bodz.bas.types.util.Ns;
@@ -81,7 +81,8 @@ public class Mkbat extends BatchEditCLI {
         _userlibs.add(url);
     }
 
-    static boolean BOOT_DUMP  = false; 
+    static boolean BOOT_DUMP = false;
+
     @Override
     protected void _boot() throws Throwable {
         force = parameters().isForce();
@@ -172,12 +173,7 @@ public class Mkbat extends BatchEditCLI {
     }
 
     protected void generate(Class<?> clazz) throws IOException {
-        String batName = (String) Annotations
-                .getValue(clazz, ProgramName.class);
-        if (batName == null) {
-            batName = clazz.getSimpleName();
-            batName = batName.toLowerCase(); // option?
-        }
+        String batName = A_bas.getProgramName(clazz, false);
         File batf = getOutputFile(batName + ".bat");
         batf.getParentFile().mkdirs();
         String name = clazz.getName();

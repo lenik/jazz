@@ -1221,22 +1221,18 @@ public class Files {
      * 
      * @return the accessible file part of url
      */
-    public static File getFile(URL url) {
+    public static File getFile(URL url) throws MalformedURLException {
         if (url == null)
             return null;
         String protocol = url.getProtocol();
-        try {
-            if ("jar".equals(protocol)) {
-                String path = url.getPath();
-                int excl = path.lastIndexOf('!');
-                if (excl != -1) // assert
-                    path = path.substring(0, excl);
-                url = new URL(path);
-            }
-            return Files.canoniOf(url);
-        } catch (MalformedURLException e) {
-            throw new UnexpectedException(e);
+        if ("jar".equals(protocol)) {
+            String path = url.getPath();
+            int excl = path.lastIndexOf('!');
+            if (excl != -1) // assert
+                path = path.substring(0, excl);
+            url = new URL(path);
         }
+        return Files.canoniOf(url);
     }
 
     public static URI getURI(String path) {
