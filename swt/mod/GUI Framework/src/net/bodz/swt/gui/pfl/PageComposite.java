@@ -9,7 +9,7 @@ import net.bodz.swt.gui.a.A_gui;
 
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Composite;
 
 public class PageComposite extends Composite implements Page {
@@ -35,9 +35,9 @@ public class PageComposite extends Composite implements Page {
     }
 
     @Override
-    public Image getPageIcon() {
+    public ImageData getPageIcon() {
         Class<?> clazz = getClass();
-        Image icon = A_gui.getIcon(clazz);
+        ImageData icon = A_gui.getIcon(clazz);
         return icon;
     }
 

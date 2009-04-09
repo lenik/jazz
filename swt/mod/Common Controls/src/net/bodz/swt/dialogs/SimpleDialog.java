@@ -31,8 +31,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
-import com.swtdesigner.SWTResourceManager;
-
 public class SimpleDialog extends Dialog implements Ref<Object> {
 
     protected Shell     parent;
@@ -255,8 +253,8 @@ public class SimpleDialog extends Dialog implements Ref<Object> {
         final RowData rd_okButton = new RowData();
         rd_okButton.height = buttonHeight;
         okButton.setLayoutData(rd_okButton);
-        okButton.setImage(SWTResourceManager.getImage(SimpleDialog.class,
-                "/icons/full/obj16/lrun_obj.gif"));
+        okButton.setImage(SWTResources
+                .getImageRes("/icons/full/obj16/lrun_obj.gif"));
         okButton.setText("&OK");
         okButton.addSelectionListener(new SelectionAdapter() {
             @Override
@@ -271,8 +269,8 @@ public class SimpleDialog extends Dialog implements Ref<Object> {
         final Button cancelButton = new Button(parent, SWT.NONE);
         final RowData rd_okButton = new RowData();
         rd_okButton.height = buttonHeight;
-        cancelButton.setImage(SWTResourceManager.getImage(SimpleDialog.class,
-                "/icons/full/obj16/delete_obj.gif"));
+        cancelButton.setImage(SWTResources
+                .getImageRes("/icons/full/obj16/delete_obj.gif"));
         cancelButton.setText("&Cancel");
         cancelButton.addSelectionListener(new SelectionAdapter() {
             @Override
@@ -289,8 +287,8 @@ public class SimpleDialog extends Dialog implements Ref<Object> {
         final RowData rd_yesButton = new RowData();
         rd_yesButton.height = buttonHeight;
         yesButton.setLayoutData(rd_yesButton);
-        yesButton.setImage(SWTResourceManager.getImage(SimpleDialog.class,
-                "/icons/full/obj16/lrun_obj.gif"));
+        yesButton.setImage(SWTResources
+                .getImageRes("/icons/full/obj16/lrun_obj.gif"));
         yesButton.setText("&Yes");
         yesButton.addSelectionListener(new SelectionAdapter() {
             @Override
@@ -306,8 +304,8 @@ public class SimpleDialog extends Dialog implements Ref<Object> {
         final Button noButton = new Button(parent, SWT.NONE);
         final RowData rd_okButton = new RowData();
         rd_okButton.height = buttonHeight;
-        noButton.setImage(SWTResourceManager.getImage(SimpleDialog.class,
-                "/icons/full/obj16/delete_obj.gif"));
+        noButton.setImage(SWTResources
+                .getImageRes("/icons/full/obj16/delete_obj.gif"));
         noButton.setText("&No");
         noButton.addSelectionListener(new SelectionAdapter() {
             @Override

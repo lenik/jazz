@@ -3,6 +3,7 @@ package net.bodz.swt.gui;
 import net.bodz.bas.gui.a.Color;
 import net.bodz.bas.gui.a.Font;
 import net.bodz.bas.gui.a.Visible;
+import net.bodz.swt.util.SWTResources;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyAdapter;
@@ -21,8 +22,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-
-import com.swtdesigner.SWTResourceManager;
 
 public class HelloWorld extends BasicGUI {
 
@@ -153,7 +152,7 @@ public class HelloWorld extends BasicGUI {
         sayButton.setText("&Say: ");
 
         helloLabel = new Label(comp, SWT.WRAP);
-        helloLabel.setFont(SWTResourceManager.getFont("Tahoma", 12, SWT.NONE));
+        helloLabel.setFont(SWTResources.getFont("Tahoma", 12, SWT.NONE));
         final FormData fd_helloLabel = new FormData();
         fd_helloLabel.bottom = new FormAttachment(100, -5);
         fd_helloLabel.right = new FormAttachment(ageText, 0, SWT.RIGHT);
@@ -170,8 +169,8 @@ public class HelloWorld extends BasicGUI {
         Label greetingIcon;
         greetingIcon = new Label(comp, SWT.NONE);
         fd_greetingLabel.left = new FormAttachment(greetingIcon, 5, SWT.RIGHT);
-        greetingIcon.setImage(SWTResourceManager.getImage(HelloWorld.class,
-                "/icons/full/obj16/read_obj.gif"));
+        greetingIcon.setImage(SWTResources
+                .getImageRes("/icons/full/obj16/read_obj.gif"));
         final FormData fd_greetingIcon = new FormData();
         fd_greetingIcon.right = new FormAttachment(0, 25);
         fd_greetingIcon.bottom = new FormAttachment(greetingLabel, 0,

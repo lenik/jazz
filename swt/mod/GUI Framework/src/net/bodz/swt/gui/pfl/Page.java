@@ -2,13 +2,13 @@ package net.bodz.swt.gui.pfl;
 
 import net.bodz.swt.gui.ValidateException;
 
-import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
 
 public interface Page {
 
     String getPageTitle();
 
-    Image getPageIcon();
+    ImageData getPageIcon();
 
     /**
      * @param prev

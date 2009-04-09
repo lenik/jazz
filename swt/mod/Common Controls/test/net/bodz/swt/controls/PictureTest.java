@@ -1,5 +1,7 @@
 package net.bodz.swt.controls;
 
+import java.io.File;
+
 import net.bodz.swt.gui.util.ControlTestApp;
 import net.bodz.swt.util.SWTResources;
 
@@ -23,8 +25,8 @@ public class PictureTest {
         picture.setBackground(picBg);
 
         Image image = SWTResources.//
-                 getImage("V:/Downloads/mx/Images/02.jpg");
-//                getImageRes("icons/full/obj16/ant.gif");
+                getImage(new File("V:/Downloads/mx/Images/02.jpg"));
+        // getImageRes("icons/full/obj16/ant.gif");
         picture.setImage(image);
 
         test.run();

@@ -13,7 +13,8 @@ public class SaveImageDialogTest {
 
     static Image image;
     static {
-        image = SWTResources.getImage("V:/Downloads/mx/Images/03.jpg");
+        image = SWTResources
+                .getImage(new File("V:/Downloads/mx/Images/03.jpg"));
     }
 
     public static void main(String[] args) {

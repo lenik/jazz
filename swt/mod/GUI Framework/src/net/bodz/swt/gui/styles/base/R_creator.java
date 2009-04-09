@@ -16,6 +16,7 @@ import net.bodz.swt.gui.GUIVar;
 import net.bodz.swt.gui.RenderContext;
 import net.bodz.swt.gui.SWTRenderer;
 import net.bodz.swt.layouts.LineLayout;
+import net.bodz.swt.util.SWTResources;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -28,8 +29,6 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Text;
-
-import com.swtdesigner.SWTResourceManager;
 
 public class R_creator extends SWTRenderer {
 
@@ -119,8 +118,8 @@ public class R_creator extends SWTRenderer {
         }
         Composite comp = new Composite(parent, style);
         Button createButton = new Button(comp, SWT.FLAT);
-        createButton.setImage(SWTResourceManager.getImage(R_creator.class,
-                "/icons/full/obj16/add_obj.gif"));
+        createButton.setImage(SWTResources
+                .getImageRes("/icons/full/obj16/add_obj.gif"));
         createButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
