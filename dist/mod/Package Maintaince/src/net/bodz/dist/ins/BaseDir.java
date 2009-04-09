@@ -12,8 +12,12 @@ public class BaseDir {
     public BaseDir() {
     }
 
-    public BaseDir(String name, String displayName, String description,
-            File preferred) {
+    public BaseDir(String name, File preferred) {
+        this(name, preferred, name, null);
+    }
+
+    public BaseDir(String name, File preferred, String displayName,
+            String description) {
         this.name = name;
         this.displayName = displayName;
         this.description = description;

@@ -1,13 +1,12 @@
 package net.bodz.dist.ins.builtins;
 
-import net.bodz.bas.a.ClassInfo;
 import net.bodz.dist.ins.ConfigPage;
 import net.bodz.dist.ins.IProject;
 import net.bodz.dist.ins.ISession;
 import net.bodz.swt.controls.Picture;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -16,8 +15,7 @@ public class LogoPage extends ConfigPage {
 
     private ISession session;
 
-    public LogoPage(ISession session, Composite parent, int style,
-            ClassInfo installInfo) {
+    public LogoPage(ISession session, Composite parent, int style) {
         super(parent, style);
         setLayout(new GridLayout());
         this.session = session;
@@ -29,16 +27,16 @@ public class LogoPage extends ConfigPage {
     }
 
     @Override
-    public Image getPageIcon() {
+    public ImageData getPageIcon() {
         return super.getPageIcon();
     }
 
     @Override
     public String getPageTitle() {
         IProject project = session.getProject();
-        String caption = project.getCaption();
+        String text = project.getText();
         String version = project.getVersion();
-        return "Welcome to install " + caption + " " + version;
+        return "Welcome to install " + text + " " + version;
     }
 
 }

@@ -3,19 +3,24 @@ package net.bodz.dist.ins;
 import java.io.File;
 
 import net.bodz.bas.gui.Interaction;
+import net.bodz.bas.types.TextMap;
 
 public interface ISession {
 
     IProject getProject();
 
-    Interaction getInteraction();
-
     /**
-     * @param pos
+     * @param stackPosition
      *            position in the stack, 0 for current component, and 1 for
      *            parent, etc. The bottom of the stack should be the project.
      */
-    IComponent getStack(int pos);
+    IComponent getParentComponent(int stackPosition);
+
+    String getComponentId();
+
+    TextMap<Object> getComponentRegistry();
+
+    Interaction getInteraction();
 
     /**
      * install/uninstall process should check this flag frequently to cancel
@@ -51,6 +56,8 @@ public interface ISession {
     File getBaseDir(String name);
 
     void setBaseDir(String name, File dir);
+
+    ResourceUnion findResource(String resourcePath);
 
     /**
      * @return should always be non-<code>null</code>

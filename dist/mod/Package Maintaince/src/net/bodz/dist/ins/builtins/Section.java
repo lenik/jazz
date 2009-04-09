@@ -9,20 +9,22 @@ import net.bodz.dist.ins.ISession;
 import net.bodz.dist.ins.InstallException;
 import net.bodz.dist.ins._Component;
 
+import org.eclipse.swt.graphics.ImageData;
+
 public class Section extends _Component {
 
-    String           name;
-    String           caption;
-    String           description;
+    protected String         name;
+    protected String         text;
+    protected String         doc;
+    protected ImageData      image;
 
-    List<IComponent> children;
+    private List<IComponent> children;
 
-    public Section(boolean defaultSelected, String name, String caption,
-            String description) {
+    public Section(boolean defaultSelected, String name, String text, String doc) {
         super(true, defaultSelected);
         this.name = name;
-        this.caption = caption;
-        this.description = description;
+        this.text = text;
+        this.doc = doc;
         children = new ArrayList<IComponent>();
     }
 
@@ -31,14 +33,35 @@ public class Section extends _Component {
         return name;
     }
 
-    @Override
-    public String getCaption() {
-        return caption;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
-    public String getDescription() {
-        return description;
+    public ImageData getImage() {
+        return image;
+    }
+
+    public void setImage(ImageData image) {
+        this.image = image;
+    }
+
+    @Override
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    @Override
+    public String getDoc() {
+        return doc;
+    }
+
+    public void setDoc(String doc) {
+        this.doc = doc;
     }
 
     @Override
@@ -52,11 +75,6 @@ public class Section extends _Component {
 
     public void remove(IComponent child) {
         children.remove(child);
-    }
-
-    @Override
-    public int getProgressSize(int job) {
-        return children.size();
     }
 
     @Override
