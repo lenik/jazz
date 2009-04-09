@@ -12,6 +12,7 @@ import net.bodz.swt.controls.helper.StackComposite;
 import net.bodz.swt.gui.SWTInteraction;
 import net.bodz.swt.gui.ValidateException;
 import net.bodz.swt.layouts.BorderLayout;
+import net.bodz.swt.util.SWTResources;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -28,8 +29,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-
-import com.swtdesigner.SWTResourceManager;
 
 /**
  * @TestBy WizardCompositeTest
@@ -94,8 +93,8 @@ public class WizardComposite extends Composite {
     }
 
     void createContents() {
-        defaultPageIcon = SWTResourceManager.getImage(WizardComposite.class,
-                "/icons/full/obj16/brkp_grp.gif");
+        defaultPageIcon = SWTResources
+                .getImageRes("/icons/full/obj16/brkp_grp.gif");
 
         final BorderLayout borderLayout = new BorderLayout(0, 0);
         borderLayout.setVgap(3);
@@ -157,33 +156,31 @@ public class WizardComposite extends Composite {
 
         if (showBegin) {
             beginButton = new Button(navbar, SWT.NONE);
-            beginButton.setImage(SWTResourceManager.getImage(
-                    WizardComposite.class,
-                    "/icons/full/etool16/shift_l_edit.gif"));
+            beginButton.setImage(SWTResources
+                    .getImageRes("/icons/full/etool16/shift_l_edit.gif"));
             beginButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
                     false));
             beginButton.setText("Beg&in");
         }
 
         backButton = new Button(navbar, SWT.NONE);
-        backButton.setImage(SWTResourceManager.getImage(WizardComposite.class,
-                "/icons/elcl16/nav_backward.gif"));
+        backButton.setImage(SWTResources
+                .getImageRes("/icons/elcl16/nav_backward.gif"));
         backButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
                 false));
         backButton.setText("&Back");
 
         nextButton = new Button(navbar, SWT.NONE);
-        nextButton.setImage(SWTResourceManager.getImage(WizardComposite.class,
-                "/icons/elcl16/nav_forward.gif"));
+        nextButton.setImage(SWTResources
+                .getImageRes("/icons/elcl16/nav_forward.gif"));
         nextButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
                 false));
         nextButton.setText("&Next");
 
         if (showFinish) {
             finishButton = new Button(navbar, SWT.NONE);
-            finishButton.setImage(SWTResourceManager.getImage(
-                    WizardComposite.class,
-                    "/icons/full/etool16/shift_r_edit.gif"));
+            finishButton.setImage(SWTResources
+                    .getImageRes("/icons/full/etool16/shift_r_edit.gif"));
             finishButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
                     false, false));
             finishButton.setText("&Finish");
@@ -310,7 +307,7 @@ public class WizardComposite extends Composite {
         PageComposite pageComp = emptyPage;
         if (page != null) {
             title = page.getPageTitle();
-            pageIcon = page.getPageIcon();
+            pageIcon = SWTResources.getImage(page.getPageIcon());
             assert page instanceof PageComposite;
             pageComp = (PageComposite) page;
         }

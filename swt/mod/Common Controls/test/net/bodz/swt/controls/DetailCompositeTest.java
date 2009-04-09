@@ -1,6 +1,7 @@
 package net.bodz.swt.controls;
 
 import net.bodz.swt.gui.util.ControlTestApp;
+import net.bodz.swt.util.SWTResources;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.dnd.Clipboard;
@@ -12,8 +13,6 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolItem;
-
-import com.swtdesigner.SWTResourceManager;
 
 class DetailMessage extends DetailComposite {
 
@@ -96,8 +95,8 @@ public class DetailCompositeTest {
                 System.out.println("Shell size=" + size);
             }
         };
-        detail.setImage(SWTResourceManager.getImage(DetailCompositeTest.class,
-                "/sun/print/resources/oneside.png"));
+        detail.setImage(SWTResources
+                .getImageRes("/sun/print/resources/oneside.png"));
         detail.setText("Detail Test");
 
         detail.addDetailSwitchListener(new DetailSwitchListener() {

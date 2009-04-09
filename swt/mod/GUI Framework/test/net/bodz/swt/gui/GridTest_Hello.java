@@ -1,6 +1,7 @@
 package net.bodz.swt.gui;
 
 import net.bodz.bas.gui.GUIException;
+import net.bodz.swt.util.SWTResources;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -10,7 +11,6 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-import com.swtdesigner.SWTResourceManager;
 
 public class GridTest_Hello extends BasicGUI {
 
@@ -18,15 +18,15 @@ public class GridTest_Hello extends BasicGUI {
     private Text text;
 
     @Override
-    protected void createInitialView(Composite comp)
-            throws GUIException, SWTException {
+    protected void createInitialView(Composite comp) throws GUIException,
+            SWTException {
         final GridLayout gridLayout = new GridLayout();
         gridLayout.numColumns = 3;
         comp.setLayout(gridLayout);
 
         final Label label = new Label(comp, SWT.NONE);
-        label.setImage(SWTResourceManager.getImage(GridTest_Hello.class,
-                "/icons/full/obj16/genericvariable_obj.gif"));
+        label.setImage(SWTResources
+                .getImageRes("/icons/full/obj16/genericvariable_obj.gif"));
 
         final Label label_1 = new Label(comp, SWT.NONE);
         label_1.setText("Label");
@@ -35,8 +35,8 @@ public class GridTest_Hello extends BasicGUI {
         text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
         final Label label_2 = new Label(comp, SWT.NONE);
-        label_2.setImage(SWTResourceManager.getImage(GridTest_Hello.class,
-                "/icons/full/obj16/unknown_obj.gif"));
+        label_2.setImage(SWTResources
+                .getImageRes("/icons/full/obj16/unknown_obj.gif"));
 
         final Label label_3 = new Label(comp, SWT.NONE);
         label_3.setText("Label");

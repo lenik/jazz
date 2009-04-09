@@ -49,10 +49,10 @@ public class DetailComposite extends Composite {
         super(parent, style);
         setLayout(new BorderLayout(0, 0));
 
-        this.expandedImage = SWTResources.getImageRes(DetailComposite.class,
-                "/icons/full/elcl16/thin_min_view.gif");
-        this.collaspedImage = SWTResources.getImageRes(DetailComposite.class,
-                "/icons/full/elcl16/thin_max_view.gif");
+        this.expandedImage = SWTResources
+                .getImageRes("/icons/full/elcl16/thin_min_view.gif");
+        this.collaspedImage = SWTResources
+                .getImageRes("/icons/full/elcl16/thin_max_view.gif");
 
         topBar = new Composite(this, SWT.NONE);
         final GridLayout gridLayout = new GridLayout();

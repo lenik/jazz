@@ -1,112 +1,132 @@
 package net.bodz.swt.util;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
-import net.bodz.bas.io.CharOuts;
-import net.bodz.bas.lang.Caller;
-import net.bodz.bas.lang.err.IllegalArgumentTypeException;
-import net.bodz.bas.loader.UCL;
-
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
-
-import com.swtdesigner.SWTResourceManager;
 
 public class SWTResources {
 
-    public static Image getImage(String path) {
-        /* OPT: to reuse the existing image cache. */
-        return SWTResourceManager.getImage(path);
+    public static final StrictDeviceResources strict;
+    public static final LooseDeviceResources  loose;
+
+    static {
+        Display display = Display.getCurrent();
+        strict = new StrictDeviceResources(display, null);
+        loose = new LooseDeviceResources(display, strict);
     }
 
-    public static ImageData getImageData(String path) {
-        Image image = getImage(path);
-        if (image == null)
-            return null;
-        return image.getImageData();
+    public static Image _castImage(Object var) {
+        return loose._castImage(var);
+    }
+
+    public static ImageData _castImageData(Object var) throws IOException {
+        return loose._castImageData(var);
+    }
+
+    public static Image getErrorImage() {
+        return loose.getErrorImage();
+    }
+
+    public static Image getErrorImage(Exception e) {
+        return loose.getErrorImage(e);
+    }
+
+    public static ImageData getErrorImageData() {
+        return loose.getErrorImageData();
+    }
+
+    public static ImageData getErrorImageData(Exception e) {
+        return loose.getErrorImageData(e);
+    }
+
+    public static ImageData getImageData(InputStream in) {
+        return loose.getImageData(in);
+    }
+
+    public static ImageData getImageData(File file) {
+        return loose.getImageData(file);
+    }
+
+    public static ImageData getImageData(URL url) {
+        return loose.getImageData(url);
+    }
+
+    public static ImageData getImageDataRes(String classResPath) {
+        return loose.getImageDataRes(classResPath, 1);
+    }
+
+    public static ImageData getImageDataRes(String classResPath, int caller) {
+        return loose.getImageDataRes(classResPath, 1 + caller);
+    }
+
+    public static ImageData getImageDataRes(Class<?> clazz, String classResPath) {
+        return loose.getImageDataRes(clazz, classResPath);
+    }
+
+    public static ImageData getImageDataRes(ClassLoader loader,
+            String loaderResPath) {
+        return loose.getImageDataRes(loader, loaderResPath);
+    }
+
+    public static Image getImage(ImageData imageData) {
+        return loose.getImage(imageData);
     }
 
     public static Image getImage(InputStream in) {
-        Display display = Display.getCurrent();
-        ImageData data = new ImageData(in);
-        Image image;
-        if (data.transparentPixel > 0)
-            image = new Image(display, data, data.getTransparencyMask());
-        else
-            image = new Image(display, data);
-        return image;
+        return loose.getImage(in);
     }
 
-    public static Image getImage(URL url) throws IOException {
-        if (url == null)
-            return null;
-        return getImage(url.openStream());
+    public static Image getImage(File file) {
+        return loose.getImage(file);
     }
 
-    public static Image getImage(Object imageOrPath) {
-        if (imageOrPath == null)
-            return null;
-        if (imageOrPath instanceof Image)
-            return (Image) imageOrPath;
-        if (imageOrPath instanceof String)
-            return getImage((String) imageOrPath);
-        if (imageOrPath instanceof URL)
-            try {
-                return getImage((URL) imageOrPath);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        throw new IllegalArgumentTypeException(imageOrPath.getClass());
+    public static Image getImage(URL url) {
+        return loose.getImage(url);
     }
 
-    public static Image getImageRes(Class<?> clazz, String path) {
-        /* OPT: to reuse the existing image cache. */
-        return SWTResourceManager.getImage(clazz, path);
+    public static Image getImageRes(String classResPath) {
+        return loose.getImageRes(classResPath, 1);
     }
 
-    public static Image getImageRes(Class<?> clazz, Object imageOrPath) {
-        if (imageOrPath == null)
-            return null;
-        if (imageOrPath instanceof Image)
-            return (Image) imageOrPath;
-        assert imageOrPath instanceof String;
-        return getImageRes(clazz, (String) imageOrPath);
+    public static Image getImageRes(String classResPath, int caller) {
+        return loose.getImageRes(classResPath, 1 + caller);
     }
 
-    public static ImageData getImageDataRes(String path) {
-        if (path.startsWith("/"))
-            path = path.substring(1);
-        ClassLoader loader = Caller.getCallerClassLoader();
-        InputStream in = loader.getResourceAsStream(path);
-        if (in == null) {
-            UCL.dump(loader, CharOuts.stderr);
-            CharOuts.stderr.flush();
-            throw new IllegalArgumentException("bad path: " + path);
-        }
-        ImageData imageData = new ImageData(in);
-        return imageData;
-        // return getImageRes(Caller.getCallerClass(1), path);
+    public static Image getImageRes(Class<?> clazz, String classResPath) {
+        return loose.getImageRes(clazz, classResPath);
     }
 
-    public static Image getImageRes(String path) {
-        if (path.startsWith("/"))
-            path = path.substring(1);
-        ClassLoader loader = Caller.getCallerClassLoader();
-        InputStream in = loader.getResourceAsStream(path);
-        if (in == null) {
-            UCL.dump(loader, CharOuts.stderr);
-            CharOuts.stderr.flush();
-            throw new IllegalArgumentException("bad path: " + path);
-        }
-        return getImage(in);
-        // return getImageRes(Caller.getCallerClass(1), path);
+    public static Image getImageRes(ClassLoader loader, String loaderResPath) {
+        return loose.getImageRes(loader, loaderResPath);
     }
 
-    public static Image getImageRes(Object imageOrPath) {
-        return getImageRes(Caller.getCallerClass(1), imageOrPath);
+    public static Color getColor(int colorId) {
+        return loose.getColor(colorId);
+    }
+
+    public static Color getColor(int red, int green, int blue) {
+        return loose.getColor(red, green, blue);
+    }
+
+    public static Color getColor(RGB rgb) {
+        return loose.getColor(rgb);
+    }
+
+    public static Font getFont(FontData fd) {
+        return loose.getFont(fd);
+    }
+
+    public static Font getFont(String name, int height, int style) {
+        return loose.getFont(name, height, style);
     }
 
 }

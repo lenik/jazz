@@ -5,6 +5,7 @@ import java.lang.reflect.AnnotatedElement;
 import net.bodz.bas.gui.a.Font;
 import net.bodz.bas.gui.a.Icon;
 import net.bodz.bas.gui.a.PreferredSize;
+import net.bodz.bas.lang.Caller;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.err.IllegalUsageError;
 import net.bodz.bas.mod.Factory;
@@ -14,13 +15,13 @@ import net.bodz.bas.types.util.Types;
 import net.bodz.swt.util.SWTResources;
 
 import org.eclipse.swt.graphics.FontData;
-import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
 
 public class A_gui extends net.bodz.bas.gui.a.A_gui {
 
-    public static Image getIcon(AnnotatedElement aobject) {
+    public static ImageData getIcon(AnnotatedElement aobject) {
         Icon aicon = aobject.getAnnotation(Icon.class);
         if (aicon == null)
             return null;
@@ -30,12 +31,13 @@ public class A_gui extends net.bodz.bas.gui.a.A_gui {
             if (resPaths.length == 0)
                 return null;
             String resPath = resPaths[0];
-            Image image = SWTResources.getImage(resPath);
+            ClassLoader loader = Caller.getCallerClassLoader(1);
+            ImageData image = SWTResources.getImageDataRes(loader, resPath);
             return image;
         }
         try {
-            Image image = (Image) iconFactory.create();
-            return image;
+            ImageData imageData = (ImageData) iconFactory.create();
+            return imageData;
         } catch (CreateException e) {
             throw new RuntimeException(e);
         }

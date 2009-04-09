@@ -165,7 +165,7 @@ public class GUIHint {
         if (iconFactory == null)
             return null;
         Object icon = iconFactory.create(args);
-        return SWTResources.getImage(icon);
+        return SWTResources._castImage(icon);
     }
 
     public String getLabel(Object... args) {

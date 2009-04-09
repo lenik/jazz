@@ -6,8 +6,7 @@ Bundle-Version: 1.0.0
 Bundle-Vendor: Lenik
 Require-Bundle: org.eclipse.swt;bundle-version="3.5.0";visibility:=reexport,
  net.bodz.bas;bundle-version="1.0.0"
-Export-Package: com.swtdesigner,
- net.bodz.geom.attributes,
+Export-Package: net.bodz.geom.attributes,
  net.bodz.geom.base,
  net.bodz.geom.drawtarget,
  net.bodz.geom.drawtarget.awt,
@@ -47,8 +46,7 @@ Export-Package: com.swtdesigner,
  net.bodz.swt.presents.timeline,
  net.bodz.swt.state,
  net.bodz.swt.util,
- net.bodz.swt.widgets,
- swing2swt.layout
+ net.bodz.swt.widgets
 Bundle-ClassPath: mod/Bundled Modules/bin/,
  mod/Common Controls/bin/,
  mod/Commons/bin/,
