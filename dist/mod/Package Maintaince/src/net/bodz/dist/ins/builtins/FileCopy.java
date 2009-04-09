@@ -17,12 +17,14 @@ import net.bodz.dist.ins.ISession;
 import net.bodz.dist.ins.InstallException;
 import net.bodz.dist.ins._Component;
 
+/**
+ * @TestBy FileCopyTest
+ */
 public class FileCopy extends _Component {
 
     private String     base;
     private List<File> files;
     private String     keepDirWithin;
-    private String     attachmentName;
 
     public FileCopy(String base, String keepDirWithin, Iterable<File> files,
             int cap) {
@@ -34,21 +36,23 @@ public class FileCopy extends _Component {
         this.files = new ArrayList<File>(cap);
         for (File f : files)
             this.files.add(f);
-        this.attachmentName = base + ".jar";
     }
 
     public FileCopy(String base, String keepDirWithin, File... files) {
         this(base, keepDirWithin, Arrays.asList(files), files.length);
     }
 
-    @Override
-    public int getProgressSize(int job) {
-        return files.size();
+    IAttachment getAttachment(ISession session) {
+        String id = session.getComponentId();
+        String aname = base + "/" + id + ".jar";
+        IAttachment a = session.getAttachment(aname);
+        return a;
     }
 
     @Override
     public void dump(ISession session) throws InstallException {
-        IAttachment a = session.getAttachment(attachmentName);
+        // TextMap<Object> cr = session.getComponentRegistry();
+        IAttachment a = getAttachment(session);
         try {
             JarOutputStream jout = a.getJarOut();
             for (File f : files) {
@@ -79,7 +83,7 @@ public class FileCopy extends _Component {
     @Override
     public boolean install(ISession session) throws InstallException {
         File baseDir = session.getBaseDir(base);
-        IAttachment a = session.getAttachment(attachmentName);
+        IAttachment a = getAttachment(session);
         ZipInputStream zin = null;
         try {
             zin = a.getZipIn();
@@ -112,8 +116,7 @@ public class FileCopy extends _Component {
                 }
             }
         } catch (IOException e) {
-            throw new InstallException("Failed to extract from "
-                    + attachmentName, e);
+            throw new InstallException("Failed to extract from " + a, e);
         } finally {
             try {
                 zin.close();
@@ -135,7 +138,7 @@ public class FileCopy extends _Component {
     @Override
     public void uninstall(ISession session) throws InstallException {
         File baseDir = session.getBaseDir(base);
-        IAttachment a = session.getAttachment(attachmentName);
+        IAttachment a = getAttachment(session);
         ZipInputStream zin = null;
         try {
             zin = a.getZipIn();
@@ -151,8 +154,7 @@ public class FileCopy extends _Component {
                 }
             }
         } catch (IOException e) {
-            throw new InstallException("Failed to read from " + attachmentName,
-                    e);
+            throw new InstallException("Failed to read from " + a, e);
         } finally {
             try {
                 zin.close();
@@ -160,4 +162,5 @@ public class FileCopy extends _Component {
             }
         }
     }
+
 }

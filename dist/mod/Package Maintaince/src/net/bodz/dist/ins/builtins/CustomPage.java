@@ -9,6 +9,7 @@ import net.bodz.dist.ins.ISession;
 import net.bodz.swt.controls.DetailComposite;
 import net.bodz.swt.gui.SlientValidationException;
 import net.bodz.swt.gui.ValidateException;
+import net.bodz.swt.util.SWTResources;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -25,8 +26,6 @@ import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
-
-import com.swtdesigner.SWTResourceManager;
 
 /**
  * @TestBy CustomPageTest
@@ -80,8 +79,8 @@ public class CustomPage extends ConfigPage {
             }
         });
 
-        final Image dirImage = SWTResourceManager.getImage(CustomPage.class,
-                "/com/sun/java/swing/plaf/windows/icons/Directory.gif");
+        final Image dirImage = SWTResources
+                .getImageRes("/com/sun/java/swing/plaf/windows/icons/Directory.gif");
         basedirsComp = new DetailComposite(this, SWT.NONE, false, this) {
             @Override
             protected void createContents(Composite parent, int style) {

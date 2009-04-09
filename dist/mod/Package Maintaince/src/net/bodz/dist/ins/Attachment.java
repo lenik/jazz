@@ -29,6 +29,14 @@ public class Attachment implements IAttachment {
 
     StateBase    stated;
 
+    public Attachment(ResourceUnion res) {
+        this(res.getURL(), res.getFile());
+    }
+
+    public Attachment(ResourceUnion res, String encoding) {
+        this(res.getURL(), res.getFile(), encoding);
+    }
+
     public Attachment(URL url, File file) {
         this(url, file, null);
     }
@@ -127,6 +135,16 @@ public class Attachment implements IAttachment {
             stated.close();
             stated = null;
         }
+    }
+
+    @Override
+    public String toString() {
+        String s = "attachment ";
+        if (url != null && file == null)
+            s += url;
+        else
+            s += file;
+        return s;
     }
 
     public abstract static class StateBase implements IAttachment {

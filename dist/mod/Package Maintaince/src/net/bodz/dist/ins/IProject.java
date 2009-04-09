@@ -1,18 +1,18 @@
 package net.bodz.dist.ins;
 
-import java.net.URL;
+import org.eclipse.swt.graphics.ImageData;
 
 public interface IProject extends IComponent {
 
-    URL getIconURL();
+    ImageData getLogo();
 
     String getVersion();
-
-    String getUpdateTime();
 
     String getCompany();
 
     String getLicense();
+
+    String getUpdateTime();
 
     Scheme[] getSchemes();
 

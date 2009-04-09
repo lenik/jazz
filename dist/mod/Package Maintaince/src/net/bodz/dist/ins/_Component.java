@@ -4,12 +4,13 @@ import java.util.Collection;
 
 import net.bodz.bas.a.A_bas;
 
+import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Composite;
 
 public abstract class _Component implements IComponent {
 
-    private boolean visible;
-    private boolean selected;
+    private final boolean visible;
+    private final boolean selected;
 
     public _Component(boolean visible, boolean defaultSelected) {
         this.visible = visible;
@@ -23,14 +24,19 @@ public abstract class _Component implements IComponent {
     }
 
     @Override
-    public String getCaption() {
-        String caption = A_bas.getDisplayName(getClass());
-        return caption;
+    public ImageData getImage() {
+        return null;
     }
 
     @Override
-    public String getDescription() {
-        return getCaption();
+    public String getText() {
+        String text = A_bas.getDisplayName(getClass());
+        return text;
+    }
+
+    @Override
+    public String getDoc() {
+        return getText();
     }
 
     @Override
@@ -64,23 +70,8 @@ public abstract class _Component implements IComponent {
     }
 
     @Override
-    public boolean hasConfig() {
-        return false;
-    }
-
-    @Override
-    public ConfigPage createConfig(Composite parent, int style) {
-        return null;
-    }
-
-    @Override
     public boolean isSelected() {
         return selected;
-    }
-
-    @Override
-    public void setSelected(boolean selected) {
-        this.selected = selected;
     }
 
     @Override
@@ -94,15 +85,21 @@ public abstract class _Component implements IComponent {
     }
 
     @Override
-    public void enter(ISession session) {
+    public boolean hasConfig() {
+        return false;
     }
 
     @Override
-    public void leave(ISession session) {
+    public ConfigPage createConfig(ISession session, Composite parent, int style) {
+        return null;
     }
 
     @Override
     public void dump(ISession session) throws InstallException {
+    }
+
+    @Override
+    public void uninstall(ISession session) throws InstallException {
     }
 
 }

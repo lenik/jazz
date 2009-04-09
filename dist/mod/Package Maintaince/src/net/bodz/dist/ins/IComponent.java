@@ -2,6 +2,7 @@ package net.bodz.dist.ins;
 
 import java.util.Collection;
 
+import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Composite;
 
 public interface IComponent {
@@ -11,9 +12,11 @@ public interface IComponent {
      */
     String getName();
 
-    String getCaption();
+    ImageData getImage();
 
-    String getDescription();
+    String getText();
+
+    String getDoc();
 
     /**
      * Change the selection state of feature component will cause refresh all
@@ -31,13 +34,7 @@ public interface IComponent {
 
     int getMoreSize();
 
-    boolean hasConfig();
-
-    ConfigPage createConfig(Composite parent, int style);
-
     boolean isSelected();
-
-    void setSelected(boolean selected);
 
     /**
      * @return <code>null</code> if none.
@@ -50,15 +47,9 @@ public interface IComponent {
      */
     String[] getDependancy();
 
-    void enter(ISession session);
+    boolean hasConfig();
 
-    void leave(ISession session);
-
-    int DUMP      = 0;
-    int INSTALL   = 1;
-    int UNINSTALL = 2;
-
-    int getProgressSize(int job);
+    ConfigPage createConfig(ISession session, Composite parent, int style);
 
     /**
      * This method won't be called if the component doesn't have data.

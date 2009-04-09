@@ -1,43 +1,63 @@
 package net.bodz.dist.ins;
 
 import java.io.File;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.io.Files;
 import net.bodz.bas.types.LinkedStack;
+import net.bodz.bas.types.Stack;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TextMap.DerHashTextMap;
 import net.bodz.bas.types.TextMap.HashTextMap;
+import net.bodz.bas.types.TextMap.TreeTextMap;
 
 public abstract class _Session implements ISession {
 
-    private IProject                    project;
-    private LinkedStack<IComponent>     cstack;
+    class StackEntry {
 
-    private boolean                     canceled;
-    private List<InstallCancelListener> cancelListeners;
+        final String     id;
+        final IComponent component;
+        TextMap<Object>  componentRegistry;
 
-    private Flags                       flags;
+        public StackEntry(StackEntry parent, IComponent component) {
+            this.component = component;
+            String prefix = parent != null ? parent.id + "/" : "";
+            String name = component.getName();
+            if (name == null)
+                name = "1";
+            id = prefix + name;
+            componentRegistry = registry.get(id);
+        }
 
-    private static final int            FATAL    = 0;
-    private static final int            ERROR    = 1;
-    private static final int            WARN     = 2;
-    private static final int            INFO     = 4;
-    private static final int            DETAIL   = 5;
-    private static final int            DEBUG    = 6;
+    }
 
-    private int                         logLevel = INFO;
-    private TreeProgress                progress;
+    private IProject                 project;
+    private TextMap<TextMap<Object>> registry;
 
-    private DerHashTextMap<Object>      vars;
-    private TextMap<File>               baseDirs;
+    private Stack<StackEntry>        stack;
 
-    private List<File>                  searchPaths;
-    private List<ClassLoader>           searchLoaders;
-    private File                        attachmentDir;
+    private boolean                  canceled;
+    private List<CancelListener>     cancelListeners;
+
+    private Flags                    flags;
+
+    private static final int         FATAL    = 0;
+    private static final int         ERROR    = 1;
+    private static final int         WARN     = 2;
+    private static final int         INFO     = 4;
+    private static final int         DETAIL   = 5;
+    private static final int         DEBUG    = 6;
+
+    private int                      logLevel = INFO;
+    private TreeProgress             progress;
+
+    private DerHashTextMap<Object>   vars;
+    private TextMap<File>            baseDirs;
+
+    private List<File>               searchPaths;
+    private List<ClassLoader>        searchLoaders;
+    private File                     attachmentDir;
 
     public _Session(IProject project, TextMap<Object> env, int logLevel) {
         if (project == null)
@@ -46,7 +66,7 @@ public abstract class _Session implements ISession {
             throw new NullPointerException("env");
         this.project = project;
         this.logLevel = logLevel;
-        cstack = new LinkedStack<IComponent>();
+        stack = new LinkedStack<StackEntry>();
         flags = new Flags();
 
         vars = new DerHashTextMap<Object>(env);
@@ -71,9 +91,27 @@ public abstract class _Session implements ISession {
      *             if <code>pos</code> is invalid.
      */
     @Override
-    public IComponent getStack(int pos) {
-        IComponent component = cstack.get(pos);
-        return component;
+    public IComponent getParentComponent(int stackPosition) {
+        StackEntry stackEntry = stack.get(stackPosition);
+        return stackEntry.component;
+    }
+
+    @Override
+    public String getComponentId() {
+        StackEntry stackEntry = stack.top();
+        return stackEntry.id;
+    }
+
+    @Override
+    public TextMap<Object> getComponentRegistry() {
+        return getComponentRegistry(0);
+    }
+
+    public TextMap<Object> getComponentRegistry(int stackPosition) {
+        StackEntry stackEntry = stack.get(stackPosition);
+        if (stackEntry.componentRegistry == null)
+            stackEntry.componentRegistry = new TreeTextMap<Object>();
+        return stackEntry.componentRegistry;
     }
 
     @Override
@@ -84,19 +122,19 @@ public abstract class _Session implements ISession {
     public void setCanceled(boolean canceled) {
         this.canceled = canceled;
         if (cancelListeners != null) {
-            InstallCancelEvent e = new InstallCancelEvent(null, this);
-            for (InstallCancelListener l : cancelListeners)
-                l.installCancel(e);
+            CancelEvent e = new CancelEvent(null, this);
+            for (CancelListener l : cancelListeners)
+                l.cancel(e);
         }
     }
 
-    public void addCancelListener(InstallCancelListener l) {
+    public void addCancelListener(CancelListener l) {
         if (cancelListeners == null)
-            cancelListeners = new ArrayList<InstallCancelListener>(1);
+            cancelListeners = new ArrayList<CancelListener>(1);
         cancelListeners.add(l);
     }
 
-    public void removeCancelListener(InstallCancelListener l) {
+    public void removeCancelListener(CancelListener l) {
         if (cancelListeners != null)
             cancelListeners.remove(l);
     }
@@ -185,59 +223,55 @@ public abstract class _Session implements ISession {
     }
 
     protected void enter(IComponent component, int progressSize) {
-        cstack.push(component);
-        component.enter(this);
+        StackEntry parentEntry = stack.isEmpty() ? null : stack.top();
+        StackEntry entry = new StackEntry(parentEntry, component);
+        stack.push(entry);
         vars = new DerHashTextMap<Object>(vars);
         progress = new TreeProgress(progress, progressSize);
     }
 
     protected void leave() {
-        IComponent component = cstack.pop();
-        component.leave(this);
+        StackEntry stackEntry = stack.pop();
+        TextMap<Object> localmap = stackEntry.componentRegistry;
+        if (localmap != null && !localmap.isEmpty())
+            registry.put(stackEntry.id, localmap);
         vars = (DerHashTextMap<Object>) vars.getOrig();
         progress = progress.getParent();
         updateProgress();
     }
 
-    protected String amap(String name) {
-        return "ext/" + name;
+    @Override
+    public ResourceUnion findResource(String path) {
+        // if path.isAsbolute...
+        for (File searchPath : searchPaths) {
+            File foundFile = new File(searchPath, path);
+            if (foundFile.isFile())
+                return new ResourceUnion(foundFile);
+        }
+        for (ClassLoader loader : searchLoaders) {
+            URL resURL = loader.getResource(path);
+            if (resURL != null)
+                return new ResourceUnion(resURL);
+        }
+        File newFile = new File(attachmentDir, path);
+        return new ResourceUnion(newFile);
+    }
+
+    protected String getAttachmentPath(String name) {
+        return ".attachments/" + name;
     }
 
     @Override
     public IAttachment getAttachment(String name) {
-        String path = amap(name);
-        // if path.isAsbolute...
-
-        for (File searchPath : searchPaths) {
-            File file = new File(searchPath, path);
-            if (file.isFile()) {
-                URL url = Files.getURL(file);
-                Attachment a = new Attachment(url, file);
-                return a;
-            }
-        }
-        for (ClassLoader loader : searchLoaders) {
-            URL url = loader.getResource(path);
-            if (url != null) {
-                File file;
-                try {
-                    file = Files.getFile(url);
-                } catch (MalformedURLException e) {
-                    file = null;
-                }
-                Attachment a = new Attachment(url, file);
-                return a;
-            }
-        }
-        File file = new File(attachmentDir, path);
-        URL url = Files.getURL(file);
-        Attachment a = new Attachment(url, file);
+        String path = getAttachmentPath(name);
+        ResourceUnion res = findResource(path);
+        Attachment a = new Attachment(res, "utf-8");
         return a;
     }
 
     @Override
     public void dump(IComponent component, int pnum) throws InstallException {
-        int csize = component.getProgressSize(IComponent.DUMP);
+        int csize = 1; // component.getProgressSize(IComponent.DUMP);
         enter(component, csize);
         component.install(this);
         leave();
@@ -245,7 +279,7 @@ public abstract class _Session implements ISession {
 
     @Override
     public void install(IComponent component, int pnum) throws InstallException {
-        int csize = component.getProgressSize(IComponent.INSTALL);
+        int csize = 1; // component.getProgressSize(IComponent.INSTALL);
         enter(component, csize);
         component.install(this);
         leave();
@@ -254,7 +288,7 @@ public abstract class _Session implements ISession {
     @Override
     public void uninstall(IComponent component, int pnum)
             throws InstallException {
-        int csize = component.getProgressSize(IComponent.UNINSTALL);
+        int csize = 1; // component.getProgressSize(IComponent.UNINSTALL);
         enter(component, csize);
         component.uninstall(this);
         leave();

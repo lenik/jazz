@@ -13,10 +13,6 @@ import net.bodz.bas.gui.a.PreferredSize;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.err.IllegalUsageError;
 import net.bodz.bas.lang.err.ParseException;
-import net.bodz.dist.ins.builtins.ChooseSchemePage;
-import net.bodz.dist.ins.builtins.CustomPage;
-import net.bodz.dist.ins.builtins.LicensePage;
-import net.bodz.dist.ins.builtins.LogoPage;
 import net.bodz.swt.gui.BasicGUI;
 import net.bodz.swt.gui.pfl.PageComposite;
 import net.bodz.swt.gui.pfl.PageFactory;
@@ -67,31 +63,7 @@ public class Installer extends BasicGUI {
     protected void createInitialView(final Composite comp) throws GUIException,
             SWTException {
         wizard = new WizardComposite(comp, SWT.NONE, false);
-        wizard.definePage("logo", new PageFactory() {
-            @Override
-            public PageComposite create(Composite parent) {
-                ClassInfo installInfo = Installer.this._loadClassInfo();
-                return new LogoPage(session, parent, SWT.NONE, installInfo);
-            }
-        });
-        wizard.definePage("license", new PageFactory() {
-            @Override
-            public PageComposite create(Composite parent) {
-                return new LicensePage(session, parent, SWT.NONE);
-            }
-        });
-        wizard.definePage("type", new PageFactory() {
-            @Override
-            public PageComposite create(Composite parent) {
-                return new ChooseSchemePage(session, parent, SWT.NONE);
-            }
-        });
-        wizard.definePage("components", new PageFactory() {
-            @Override
-            public PageComposite create(Composite parent) {
-                return new CustomPage(session, parent, SWT.NONE);
-            }
-        });
+
         wizard.definePage("progress", new PageFactory() {
             @Override
             public PageComposite create(Composite parent) {
@@ -131,9 +103,9 @@ public class Installer extends BasicGUI {
 
     @Override
     protected String getTitle() {
-        String caption = project.getCaption();
+        String text = project.getText();
         String version = project.getVersion();
-        return caption + " Installer " + version;
+        return text + " Installer " + version;
     }
 
     @Override
