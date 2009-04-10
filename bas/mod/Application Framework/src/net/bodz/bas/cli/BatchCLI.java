@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.Comparator;
@@ -13,9 +12,9 @@ import java.util.regex.Pattern;
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.cli.a.OptionGroup;
 import net.bodz.bas.cli.a.ParseBy;
+import net.bodz.bas.io.FileFinder;
 import net.bodz.bas.io.FileMask;
 import net.bodz.bas.io.Files;
-import net.bodz.bas.io.FsWalk;
 import net.bodz.bas.lang.ControlBreak;
 import net.bodz.bas.lang.a.OverrideOption;
 import net.bodz.bas.lang.err.NotImplementedException;
@@ -240,15 +239,10 @@ public class BatchCLI extends BasicCLI {
     @OverrideOption(group = "batch")
     protected void doFileArgument(final File file) throws Throwable {
         currentStartFile = file;
-        FileFilter walkfilter = fileFilter;
-        FsWalk walker = new FsWalk(file, walkfilter, filterDirectories,
-                recursive, rootLast, sortComparator) {
-            @Override
-            public void process(File file) throws IOException {
-                _processFile(Files.canoniOf(file));
-            }
-        };
-        walker.walk();
+        FileFinder finder = new FileFinder(file, fileFilter, filterDirectories,
+                recursive, rootLast, sortComparator);
+        for (File f : finder)
+            _processFile(Files.canoniOf(f));
     }
 
     /**

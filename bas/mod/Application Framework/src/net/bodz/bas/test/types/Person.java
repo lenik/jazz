@@ -93,4 +93,15 @@ public class Person {
                 name, age, sex ? "girl" : "boy", location);
     }
 
+    public static final Person Tom;
+    public static final Person Jerry;
+    public static final Person Shecti;
+    public static final Person Lenik;
+    static {
+        Tom = new Person("Tom", 18, false, Address.Marks100);
+        Jerry = new Person("Jerry", 16, true, Address.Golf200);
+        Shecti = new Person("Shecti", 20, true, Address.YHLib);
+        Lenik = new Person("Lenik", 28, true, Address.HNHome);
+    }
+
 }

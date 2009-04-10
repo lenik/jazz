@@ -1,5 +1,7 @@
 package net.bodz.bas.test.types;
 
+import net.bodz.bas.types.util.Objects;
+
 public class Address {
 
     private String country;
@@ -61,9 +63,42 @@ public class Address {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Address))
+            return false;
+        Address a = (Address) obj;
+        if (postCode != a.postCode)
+            return false;
+        if (!Objects.equals(address, a.address))
+            return false;
+        if (!Objects.equals(city, a.city))
+            return false;
+        if (!Objects.equals(country, a.country))
+            return false;
+        if (!Objects.equals(phoneNumber, a.phoneNumber))
+            return false;
+        return true;
+    }
+
+    @Override
     public String toString() {
         return String.format("%s, %s, %s PO[%d] TEL[%s]", //
                 address, city, country, postCode, phoneNumber);
+    }
+
+    public static final Address Marks100;
+    public static final Address Golf200;
+    public static final Address YHLib;
+    public static final Address HNHome;
+    static {
+        Marks100 = new Address("100 Marks Street", "London", "England", 12345,
+                "123-456-789");
+        Golf200 = new Address("200 Golf Road", "New York", "USA", 23456,
+                "234-567-888");
+        YHLib = new Address("300 Culture Park", "Hangzhou", "CHINA", 34567,
+                "034-5678999");
+        HNHome = new Address("297 Changdai Rd.", "Haining", "CHINA", 314400,
+                "138-19471680");
     }
 
 }
