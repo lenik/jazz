@@ -118,7 +118,7 @@ public class FileFinder implements FileFilter, Iterable<File> {
     class RecIter extends StackedIterator<File> {
 
         public RecIter() {
-            push(new TreeIter(start, 0));
+            push(new Iter(0, start));
         }
 
         class Iter extends PrefetchedIterator<File> {
@@ -134,120 +134,29 @@ public class FileFinder implements FileFilter, Iterable<File> {
 
             @Override
             protected File fetch() {
-                if (index > files.length)
+                if (index >= files.length)
                     return end();
-                File file = files[index++];
-                if (file.isDirectory()) {
-                    File[] children = file.listFiles();
-                    Iter childrenIter = new Iter(depth + 1, children);
-                    push(childrenIter);
-                }
-                return file;
-            }
-
-        }
-
-        class ChildrenIter extends PrefetchedIterator<File> {
-
-            private final File   parent;
-            private final int    depth;
-            private final File[] children;
-            private int          index;
-
-            public ChildrenIter(File parent, int depth, File... children) {
-                this.depth = depth;
-                this.parent = parent;
-                this.children = children;
-                if (rootLast)
-                    pushIfChildDir();
-            }
-
-            void pushIfChildDir() {
-                if (index < children.length) {
-                    if (depth < MAX_DEPTH) {
-                        File child = children[index];
-                        TreeIter childIter = new TreeIter(child, depth + 1);
-                        push(childIter);
-                    }
-                }
-            }
-
-            @Override
-            protected File fetch() {
-                if (index < children.length) {
-                    File child = children[index];
-                    if (rootLast) {
-                        index++;
-                        pushIfChildDir(); // n-1 times
-                    } else {
-                        pushIfChildDir(); // n times
-                        index++;
-                    }
-                    return child;
-                }
-                return end();
-            }
-
-            @Override
-            public String toString() {
-                return "Children(" + index + ", " + parent + ")\n" + //
-                        "        " + super.toString();
-            }
-
-        }
-
-        class TreeIter extends PrefetchedIterator<File> {
-
-            private final File   root;
-            private boolean      includeRoot;
-            private ChildrenIter childrenIter;
-            private int          state;
-
-            public TreeIter(File root, int depth) {
-                assert root != null;
-                if (root == null)
-                    throw new NullPointerException("root");
-                this.root = root;
-                includeRoot = true;
-                if (!filterDirectories && root.isDirectory()) {
-                    if (filter != null)
-                        includeRoot = filter.accept(root);
-                }
-                if (root.isDirectory() && depth < maxDepth) {
-                    File[] children = root.listFiles(FileFinder.this);
+                File x = files[index++];
+                boolean included = true;
+                if (filter != null && (filterDirectories || x.isFile()))
+                    included = filter.accept(x);
+                if (x.isDirectory() && depth < maxDepth) {
+                    File[] children = x.listFiles(FileFinder.this);
                     if (children.length > 0) {
                         if (order != null)
                             Arrays.sort(children, order);
-                        childrenIter = new ChildrenIter(root, depth, children);
+                        Iter citer = new Iter(depth + 1, children);
+                        push(citer);
                     }
                 }
-                if (rootLast && childrenIter != null)
-                    push(childrenIter);
+                if (included)
+                    return x;
+                return fetch();
             }
 
-            @Override
-            protected File fetch() {
-                switch (state) {
-                case 0:
-                    state++;
-                    if (!rootLast && childrenIter != null)
-                        push(childrenIter);
-                    if (includeRoot)
-                        return root;
-                case 1:
-                }
-                return end();
-            }
+        } // Iter
 
-            @Override
-            public String toString() {
-                return "Root(" + state + ", " + root + ")\n" + //
-                        "        " + super.toString();
-            }
-
-        }
-
-    }
+    } // RecIter
 
     public Collection<String> list() throws IOException {
         List<String> list = new ArrayList<String>();
