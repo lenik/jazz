@@ -10,9 +10,13 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.types.util.PrefetchedIterator;
 import net.bodz.bas.types.util.StackedIterator;
 
+/**
+ * @test FileFinderTest
+ */
 public class FileFinder implements FileFilter, Iterable<File> {
 
     private static final int MAX_DEPTH = 256;
@@ -22,16 +26,19 @@ public class FileFinder implements FileFilter, Iterable<File> {
     private boolean          filterDirectories;
     private int              maxDepth;
     private boolean          rootLast;
-    private Comparator<File> comparator;
+    private Comparator<File> order;
 
     public FileFinder(File start, FileFilter filter, boolean filterDirectories,
-            int maxDepth, boolean rootLast, Comparator<File> comparator) {
+            int maxDepth, boolean rootLast, Comparator<File> order) {
         this.start = start;
         this.filter = filter;
         this.filterDirectories = filterDirectories;
         this.maxDepth = maxDepth;
+        if (rootLast)
+            throw new NotImplementedException(
+                    "root-last feature isn't supported. ");
         this.rootLast = rootLast;
-        this.comparator = comparator;
+        this.order = order;
     }
 
     public FileFinder(File start, FileFilter filter, int maxDepth) {
@@ -91,11 +98,11 @@ public class FileFinder implements FileFilter, Iterable<File> {
     }
 
     public Comparator<File> getComparator() {
-        return comparator;
+        return order;
     }
 
     public void setComparator(Comparator<File> comparator) {
-        this.comparator = comparator;
+        this.order = comparator;
     }
 
     @Override
@@ -108,83 +115,157 @@ public class FileFinder implements FileFilter, Iterable<File> {
         return filter.accept(file);
     }
 
-    class Iter extends StackedIterator<File> {
+    class RecIter extends StackedIterator<File> {
 
-        public Iter() {
-            push(new RecIter(start, 0));
+        public RecIter() {
+            push(new TreeIter(start, 0));
         }
 
-        class RecIter extends PrefetchedIterator<File> {
+        class Iter extends PrefetchedIterator<File> {
 
-            private final int  depth;
-            private final File root;
-            private boolean    includeRoot;
-            private File[]     children;
-            private int        index;
-            private int        state;
+            private final int    depth;
+            private final File[] files;
+            private int          index;
 
-            public RecIter(File root, int depth) {
-                this.root = root;
+            public Iter(int depth, File... files) {
                 this.depth = depth;
+                this.files = files;
             }
 
             @Override
-            protected Object fetch() {
+            protected File fetch() {
+                if (index > files.length)
+                    return end();
+                File file = files[index++];
+                if (file.isDirectory()) {
+                    File[] children = file.listFiles();
+                    Iter childrenIter = new Iter(depth + 1, children);
+                    push(childrenIter);
+                }
+                return file;
+            }
+
+        }
+
+        class ChildrenIter extends PrefetchedIterator<File> {
+
+            private final File   parent;
+            private final int    depth;
+            private final File[] children;
+            private int          index;
+
+            public ChildrenIter(File parent, int depth, File... children) {
+                this.depth = depth;
+                this.parent = parent;
+                this.children = children;
+                if (rootLast)
+                    pushIfChildDir();
+            }
+
+            void pushIfChildDir() {
+                if (index < children.length) {
+                    if (depth < MAX_DEPTH) {
+                        File child = children[index];
+                        TreeIter childIter = new TreeIter(child, depth + 1);
+                        push(childIter);
+                    }
+                }
+            }
+
+            @Override
+            protected File fetch() {
+                if (index < children.length) {
+                    File child = children[index];
+                    if (rootLast) {
+                        index++;
+                        pushIfChildDir(); // n-1 times
+                    } else {
+                        pushIfChildDir(); // n times
+                        index++;
+                    }
+                    return child;
+                }
+                return end();
+            }
+
+            @Override
+            public String toString() {
+                return "Children(" + index + ", " + parent + ")\n" + //
+                        "        " + super.toString();
+            }
+
+        }
+
+        class TreeIter extends PrefetchedIterator<File> {
+
+            private final File   root;
+            private boolean      includeRoot;
+            private ChildrenIter childrenIter;
+            private int          state;
+
+            public TreeIter(File root, int depth) {
+                assert root != null;
+                if (root == null)
+                    throw new NullPointerException("root");
+                this.root = root;
+                includeRoot = true;
+                if (!filterDirectories && root.isDirectory()) {
+                    if (filter != null)
+                        includeRoot = filter.accept(root);
+                }
+                if (root.isDirectory() && depth < maxDepth) {
+                    File[] children = root.listFiles(FileFinder.this);
+                    if (children.length > 0) {
+                        if (order != null)
+                            Arrays.sort(children, order);
+                        childrenIter = new ChildrenIter(root, depth, children);
+                    }
+                }
+                if (rootLast && childrenIter != null)
+                    push(childrenIter);
+            }
+
+            @Override
+            protected File fetch() {
                 switch (state) {
                 case 0:
-                    includeRoot = true;
-                    if (!filterDirectories && root.isDirectory()) {
-                        if (filter != null)
-                            includeRoot = filter.accept(root);
-                    }
                     state++;
-                    if (includeRoot && !rootLast)
+                    if (!rootLast && childrenIter != null)
+                        push(childrenIter);
+                    if (includeRoot)
                         return root;
                 case 1:
-                    if (root.isDirectory() && depth < maxDepth) {
-                        children = root.listFiles(FileFinder.this);
-                        if (comparator != null)
-                            Arrays.sort(children, comparator);
-                        state++;
-                    } else {
-                        state += 2;
-                        return next();
-                    }
-                case 2:
-                    if (index < children.length) {
-                        File child = children[index++];
-                        RecIter childIter = new RecIter(child, depth + 1);
-                        push(childIter);
-                        return Iter.this.next();
-                    }
-                    state++;
-                case 3:
-                    state++;
-                    if (includeRoot && rootLast)
-                        return root;
                 }
-                return END;
+                return end();
             }
+
+            @Override
+            public String toString() {
+                return "Root(" + state + ", " + root + ")\n" + //
+                        "        " + super.toString();
+            }
+
         }
 
     }
 
-    public void run(FileCallback callback) throws IOException {
-        Iter iter = new Iter();
+    public Collection<String> list() throws IOException {
+        List<String> list = new ArrayList<String>();
+        RecIter iter = new RecIter();
         while (iter.hasNext()) {
             File file = iter.next();
-            callback.found(file);
+            list.add(file.getPath());
         }
+        return list;
     }
 
     public Collection<File> listFiles() throws IOException {
-        final List<File> list = new ArrayList<File>();
-        run(new FileCallback() {
-            @Override
-            public void found(File file) {
-                list.add(file);
-            }
-        });
+        List<File> list = new ArrayList<File>();
+        RecIter iter = new RecIter();
+        while (iter.hasNext()) {
+            File file = iter.next();
+            list.add(file);
+        }
         return list;
     }
 
