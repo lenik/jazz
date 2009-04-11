@@ -67,7 +67,7 @@ public abstract class MultipartsFile<T> extends _MapFile<T> {
             }
 
             @Override
-            protected Object fetch() {
+            protected T fetch() {
                 try {
                     return _fetch();
                 } catch (ParseException e) {
@@ -75,11 +75,11 @@ public abstract class MultipartsFile<T> extends _MapFile<T> {
                 } catch (ControlContinue c) {
                     return fetch();
                 } catch (ControlBreak b) {
-                    return END;
+                    return end();
                 }
             }
 
-            protected Object _fetch() throws ParseException {
+            protected T _fetch() throws ParseException {
                 boolean preheader = true;
                 boolean header = true;
                 Object tKey = getTextKey();

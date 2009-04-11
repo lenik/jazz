@@ -3,6 +3,7 @@ package net.bodz.bas.io;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -541,10 +542,10 @@ public class Files {
 
             @_throws(IOException.class)
             @Override
-            public Object fetch() {
+            public Integer fetch() {
                 try {
                     if (index >= files.length)
-                        return END;
+                        return end();
                     if (input == null)
                         nextFile();
                     int len = input.read(buffer);
@@ -655,10 +656,10 @@ public class Files {
 
             @_throws(IOException.class)
             @Override
-            public Object fetch() {
+            public Integer fetch() {
                 try {
                     if (index >= files.length)
-                        return END;
+                        return end();
                     if (input == null)
                         nextFile();
                     int len = input.read(buffer);
@@ -769,9 +770,9 @@ public class Files {
 
             @_throws(IOException.class)
             @Override
-            public Object fetch() {
+            public String fetch() {
                 if (fileIndex >= files.length)
-                    return END;
+                    return end();
                 try {
                     if (reader == null) {
                         Object in = files[fileIndex];
@@ -987,41 +988,42 @@ public class Files {
     public static Iterable<Object> _load(final Object in) {
 
         class ObjIter extends PrefetchedIterator<Object> {
-            ObjectInput objin;
-            boolean     close;
+            final ObjectInput objin;
+            boolean           shouldClose;
 
             public ObjIter() throws IOException {
                 if (in instanceof ObjectInput)
                     objin = (ObjectInput) in;
                 else
                     objin = new ObjectInputStream(getInputStream(in));
-                close = shouldClose(in);
+                shouldClose = shouldClose(in);
             }
 
             @Override
             protected Object fetch() {
                 if (objin == null)
-                    return END;
-                Object t;
+                    return end();
                 try {
-                    t = objin.readObject();
-                    if (t == null) {
-                        if (close)
+                    Object x = objin.readObject();
+                    return x;
+                } catch (EOFException e) {
+                    if (shouldClose)
+                        try {
                             objin.close();
-                        objin = null;
-                        return END;
-                    }
+                        } catch (IOException closeEx) {
+                            throw new WrappedException(closeEx);
+                        }
+                    return end();
                 } catch (ClassNotFoundException e) {
                     throw new WrappedException(e);
                 } catch (IOException e) {
                     throw new WrappedException(e);
                 }
-                return t;
             }
 
             @Override
             protected void finalize() throws Throwable {
-                if (close && objin != null)
+                if (shouldClose && objin != null)
                     objin.close();
             }
         }

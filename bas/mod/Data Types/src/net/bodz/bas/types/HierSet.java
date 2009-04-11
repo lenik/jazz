@@ -70,9 +70,9 @@ public abstract class HierSet<E> extends TreeSet<E> implements Hier<E> {
             }
 
             @Override
-            protected Object fetch() {
+            protected E fetch() {
                 if (next == null)
-                    return END;
+                    return end();
                 E ret = next;
                 next = higher(next);
                 if (next != null && !derives(e, next))

@@ -7,7 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * @TestBy SortedListTest
+ * @test SortedListTest
  */
 public class SortedList<E> extends AbstractList<E> implements Serializable {
 

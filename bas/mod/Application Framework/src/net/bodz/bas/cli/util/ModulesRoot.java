@@ -8,32 +8,32 @@ import net.bodz.bas.io.Files;
 import net.bodz.bas.sys.SystemInfo;
 import net.bodz.bas.types.TextMap.HashTextMap;
 
-public class FindFile {
+public class ModulesRoot {
 
     private File              root;
     private Map<String, File> modules;
 
-    public FindFile(File root, Map<String, File> modules) {
+    public ModulesRoot(File root, Map<String, File> modules) {
         this.root = root;
         this.modules = modules;
     }
 
-    public FindFile(File root) {
+    public ModulesRoot(File root) {
         this(root, new HashTextMap<File>());
     }
 
     @Override
     public String toString() {
-        return "FindFile: " + root;
+        return "ModulesRoot: " + root;
     }
 
     /**
      * Max-matched prefixes & suffixes.
      */
     private static class MaxFixes implements FilenameFilter {
-        final String pattern;
-        String       prefix;
-        String       suffix;
+        final String  pattern;
+        public String maxPrefix;
+        public String maxSuffix;
 
         public MaxFixes(String pattern) {
             this.pattern = pattern;
@@ -42,15 +42,15 @@ public class FindFile {
         @Override
         public boolean accept(File dir, String name) {
             if (name.startsWith(pattern)) {
-                if (suffix == null)
-                    suffix = name;
-                else if (name.compareTo(suffix) > 0)
-                    suffix = name;
+                if (maxSuffix == null)
+                    maxSuffix = name;
+                else if (name.compareTo(maxSuffix) > 0)
+                    maxSuffix = name;
             } else if (pattern.startsWith(name)) {
-                if (prefix == null)
-                    prefix = name;
-                else if (name.length() > prefix.length())
-                    prefix = name;
+                if (maxPrefix == null)
+                    maxPrefix = name;
+                else if (name.length() > maxPrefix.length())
+                    maxPrefix = name;
             }
             return false;
         }
@@ -65,10 +65,10 @@ public class FindFile {
         // 2, find nam in root and recurse
         MaxFixes max = new MaxFixes(name);
         root.list(max);
-        if (max.suffix != null)
-            return new File(root, max.suffix);
-        if (max.prefix != null) {
-            root = new File(root, max.prefix);
+        if (max.maxSuffix != null)
+            return new File(root, max.maxSuffix);
+        if (max.maxPrefix != null) {
+            root = new File(root, max.maxPrefix);
             if (root.isDirectory())
                 return findabc(name, root);
         }
@@ -151,7 +151,7 @@ public class FindFile {
         return findexp(exp, parent);
     }
 
-    public static FindFile DEFAULT;
+    public static ModulesRoot DEFAULT;
 
     static {
         File root = new File("/");
@@ -161,7 +161,7 @@ public class FindFile {
                 programFiles = "C:/Program Files";
             root = Files.canoniOf(programFiles);
         }
-        DEFAULT = new FindFile(root);
+        DEFAULT = new ModulesRoot(root);
     }
 
 }

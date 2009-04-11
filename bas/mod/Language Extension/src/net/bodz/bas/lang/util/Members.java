@@ -19,13 +19,13 @@ public class Members {
         }
 
         @Override
-        protected Object fetch() {
+        protected Method fetch() {
             for (; index < methods.length;) {
                 Method m = methods[index++];
                 if (accept(m))
                     return m;
             }
-            return END;
+            return end();
         }
 
         protected boolean accept(Method m) {
@@ -90,7 +90,7 @@ public class Members {
         }
 
         @Override
-        protected Object fetch() {
+        protected Method fetch() {
             for (; clazz != null; clazz = nextClass(clazz), methods = null) {
                 if (methods == null) {
                     methods = clazz.getDeclaredMethods();
@@ -102,7 +102,7 @@ public class Members {
                         return m;
                 }
             }
-            return END;
+            return end();
         }
 
         protected Class<?> nextClass(Class<?> clazz) {
@@ -181,13 +181,13 @@ public class Members {
         }
 
         @Override
-        protected Object fetch() {
+        protected Constructor<?> fetch() {
             for (; index < ctors.length;) {
                 Constructor<?> ctor = ctors[index++];
                 if (accept(ctor))
                     return ctor;
             }
-            return END;
+            return end();
         }
 
         protected boolean accept(Constructor<?> ctor) {
@@ -216,13 +216,13 @@ public class Members {
         }
 
         @Override
-        protected Object fetch() {
+        protected Constructor<?> fetch() {
             for (; index < ctors.length;) {
                 Constructor<?> ctor = ctors[index++];
                 if (accept(ctor))
                     return ctor;
             }
-            return END;
+            return end();
         }
 
         protected boolean accept(Constructor<?> m) {
@@ -255,13 +255,13 @@ public class Members {
         }
 
         @Override
-        protected Object fetch() {
+        protected Field fetch() {
             for (; index < fields.length;) {
                 Field f = fields[index++];
                 if (accept(f))
                     return f;
             }
-            return END;
+            return end();
         }
 
         protected boolean accept(Field f) {
@@ -305,7 +305,7 @@ public class Members {
         }
 
         @Override
-        protected Object fetch() {
+        protected Field fetch() {
             for (; clazz != null; clazz = nextClass(clazz), fields = null) {
                 if (fields == null) {
                     fields = clazz.getDeclaredFields();
@@ -317,7 +317,7 @@ public class Members {
                         return f;
                 }
             }
-            return END;
+            return end();
         }
 
         protected Class<?> nextClass(Class<?> clazz) {

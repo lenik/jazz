@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import net.bodz.bas.cli.util.FindFile;
+import net.bodz.bas.cli.util.ModulesRoot;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.text.util.Patterns;
 
@@ -53,15 +53,15 @@ public class SJEclipse {
 
     }
 
-    static FindFile       abcd;
-    static List<FindFile> searches;
+    static ModulesRoot       abcd;
+    static List<ModulesRoot> searches;
     static {
-        searches = new ArrayList<FindFile>();
+        searches = new ArrayList<ModulesRoot>();
 
         String lapiota = System.getenv("LAPIOTA");
         if (lapiota != null) {
             File d = new File(lapiota, "abc.d");
-            abcd = new FindFile(d);
+            abcd = new ModulesRoot(d);
             d = abcd.findexp("eclipse-*");
             if (d != null) {
                 configEclipse(d);
@@ -71,7 +71,7 @@ public class SJEclipse {
 
     public static void addSearch(File dir) {
         if (dir.isDirectory())
-            searches.add(new FindFile(dir));
+            searches.add(new ModulesRoot(dir));
     }
 
     static void configEclipse(File eclipsed) {
@@ -123,10 +123,10 @@ public class SJEclipse {
      */
     public static URL findlib(String prefix, boolean errorFail) {
         String exp = prefix + "*";
-        for (FindFile find : searches) {
-            File got = find.findexp(exp);
-            if (got != null)
-                return Files.getURL(got);
+        for (ModulesRoot mroot : searches) {
+            File find = mroot.findexp(exp);
+            if (find != null)
+                return Files.getURL(find);
         }
         if (errorFail)
             throw new Error("can't find, prefix=" + prefix);

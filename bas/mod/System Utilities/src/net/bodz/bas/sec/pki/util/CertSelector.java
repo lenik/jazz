@@ -30,6 +30,9 @@ import net.bodz.bas.types.util.PrefetchedIterator;
 
 import com.sun.security.auth.callback.TextCallbackHandler;
 
+/**
+ * @test CertSelectorTest
+ */
 public class CertSelector {
 
     public static final int AUTO        = 0;
@@ -189,7 +192,7 @@ public class CertSelector {
             int        i   = 0;
 
             @Override
-            protected Object fetch() {
+            protected Provider fetch() {
                 while (i < all.length) {
                     Provider provider = all[i++];
                     for (Service service : provider.getServices()) {
@@ -204,7 +207,7 @@ public class CertSelector {
                         }
                     }
                 }
-                return END;
+                return end();
             }
         }
         return Iterates.iterate(Iter.class, this);

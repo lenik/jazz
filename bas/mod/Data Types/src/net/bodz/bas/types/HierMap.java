@@ -125,9 +125,9 @@ public abstract class HierMap<K, V> extends TreeMap<K, V> implements Hier<K> {
             }
 
             @Override
-            protected Object fetch() {
+            protected K fetch() {
                 if (next == null)
-                    return END;
+                    return end();
                 K ret = next;
                 next = higherKey(next);
                 if (next != null && !derives(key, next))
@@ -155,9 +155,9 @@ public abstract class HierMap<K, V> extends TreeMap<K, V> implements Hier<K> {
             }
 
             @Override
-            protected Object fetch() {
+            protected Entry<K, V> fetch() {
                 if (next == null)
-                    return END;
+                    return end();
                 Entry<K, V> ret = next;
                 next = higherEntry(next.getKey());
                 if (next != null && !derives(key, next.getKey()))
@@ -185,9 +185,9 @@ public abstract class HierMap<K, V> extends TreeMap<K, V> implements Hier<K> {
             }
 
             @Override
-            protected Object fetch() {
+            protected V fetch() {
                 if (next == null)
-                    return END;
+                    return end();
                 V ret = next.getValue();
                 next = higherEntry(next.getKey());
                 if (next != null && !derives(key, next.getKey()))

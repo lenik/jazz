@@ -14,7 +14,7 @@ import net.bodz.bas.lang.err.IllegalArgumentTypeException;
 import net.bodz.bas.types.ints.IntIterator;
 
 /**
- * @TestBy Arrays2Test
+ * @test Arrays2Test
  */
 public class Arrays2 {
 

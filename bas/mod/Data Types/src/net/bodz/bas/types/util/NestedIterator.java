@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 
 /**
  * @see StackedIterator
- * @TestBy NestedIteratorTest
+ * @test NestedIteratorTest
  */
 public class NestedIterator<T> implements Iterator<T> {
 

@@ -30,9 +30,9 @@ public class IteratorsTest {
             int n = 0;
 
             @Override
-            protected Object fetch() {
+            protected Integer fetch() {
                 if (n >= 100)
-                    return END;
+                    return end();
                 return ++n;
             }
         }

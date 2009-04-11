@@ -4,7 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 /**
- * @TestBy DatesTest
+ * @test DatesTest
  */
 public class Dates {
 
