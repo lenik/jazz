@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * thread-unsafe: the orig may be copy/cached.
  * 
- * @TestBy(DerListTest.class)
+ * @test DerListTest
  */
 public abstract class DerList<E> extends AbstractList<E> implements
         Derivation<List<E>> {

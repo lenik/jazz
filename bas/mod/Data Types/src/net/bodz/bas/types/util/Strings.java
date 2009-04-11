@@ -232,7 +232,7 @@ public class Strings {
     }
 
     public static String join(String separator, Enumeration<?> enumr) {
-        return join(separator, Iterators.adapt(enumr));
+        return join(separator, Iterators.iterator(enumr));
     }
 
     public static Pair<String, String> join(String separatorKey,

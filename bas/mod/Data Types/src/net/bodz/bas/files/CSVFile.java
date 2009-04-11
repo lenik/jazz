@@ -40,12 +40,12 @@ public class CSVFile implements FileSource<String[]> {
     public Iterator<String[]> iterator() {
         return new PrefetchedIterator<String[]>() {
             @Override
-            protected Object fetch() {
+            protected String[] fetch() {
                 try {
                     while (true) {
                         String line = lineReader.readLine();
                         if (line == null)
-                            return END;
+                            return end();
                         if (line.isEmpty()) // option
                             continue;
                         // if (line.startsWith("#")) // option

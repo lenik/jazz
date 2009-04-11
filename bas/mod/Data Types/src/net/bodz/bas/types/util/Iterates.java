@@ -15,7 +15,7 @@ public class Iterates {
 
             @Override
             public Iterator<T> iterator() {
-                return Iterators.EMPTY();
+                return Iterators.getEmptyIterator();
             }
 
         };
@@ -46,7 +46,7 @@ public class Iterates {
     }
 
     public static <E> Iterable<E> iterate(Enumeration<E> enumr) {
-        return new OneTimeIterable<E>(Iterators.adapt(enumr));
+        return new OneTimeIterable<E>(Iterators.iterator(enumr));
     }
 
     public static <E> Iterable<E> iterate(
@@ -100,7 +100,7 @@ public class Iterates {
     @SuppressWarnings("unchecked")
     protected static <T> Iterator<T> getIterator(Object iter) {
         if (iter.getClass().isArray())
-            return Iterators.adapt((T[]) iter);
+            return Iterators.iterator((T[]) iter);
         if (iter instanceof Iterator)
             return (Iterator<T>) iter;
         else if (iter instanceof Iterable)

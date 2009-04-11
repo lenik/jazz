@@ -72,7 +72,7 @@ public class INIFile extends _MapFile<TextMap<String>> {
             }
 
             @Override
-            protected Object fetch() {
+            protected TextMap<String> fetch() {
                 try {
                     return _fetch();
                 } catch (ParseException e) {
@@ -80,16 +80,16 @@ public class INIFile extends _MapFile<TextMap<String>> {
                 } catch (ControlContinue c) {
                     return fetch();
                 } catch (ControlBreak b) {
-                    return END;
+                    return end();
                 }
             }
 
             private String  sectionName = null;
             private boolean ended;
 
-            protected Object _fetch() throws ParseException {
+            protected TextMap<String> _fetch() throws ParseException {
                 if (ended)
-                    return END;
+                    return end();
                 MapRecordBuilder<TextMap<String>> builder;
                 builder = (MapRecordBuilder<TextMap<String>>) INIFile.this.builder;
                 builder.reset();

@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
 import net.bodz.bas.lang.Filt1;
 
 /**
- * @TestBy IteratorsTest
+ * @test IteratorsTest
  */
 public class Iterators {
 
@@ -31,11 +31,35 @@ public class Iterators {
     private static final EmptyIterator<?> EMPTY = new EmptyIterator<Object>();
 
     @SuppressWarnings("unchecked")
-    public static <T> Iterator<T> EMPTY() {
+    public static <T> Iterator<T> getEmptyIterator() {
         return (Iterator<T>) EMPTY;
     }
 
-    public static <T> Iterator<T> adapt(final Enumeration<T> enumr) {
+    public static <T> Iterator<T> iterator(final T simple) {
+        return new Iterator<T>() {
+
+            boolean ended;
+
+            @Override
+            public boolean hasNext() {
+                return !ended;
+            }
+
+            @Override
+            public T next() {
+                ended = true;
+                return simple;
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+
+        };
+    }
+
+    public static <T> Iterator<T> iterator(final Enumeration<T> enumr) {
         return new Iterator<T>() {
 
             @Override
@@ -59,7 +83,7 @@ public class Iterators {
     /**
      * @see Arrays2#convert(Iterator)
      */
-    public static <T> Iterator<T> adapt(final T[] array) {
+    public static <T> Iterator<T> iterator(final T[] array) {
         if (array == null)
             throw new NullPointerException("array");
         class ArrayIterator implements Iterator<T> {
@@ -105,10 +129,10 @@ public class Iterators {
             private Iterator<T> current;
 
             @Override
-            protected Object fetch() {
+            protected T fetch() {
                 if (current == null) {
                     if (index >= iterators.length)
-                        return END;
+                        return end();
                     current = iterators[index++];
                     return fetch();
                 }

@@ -12,7 +12,7 @@ import net.bodz.bas.types.util.Iterators;
 import net.bodz.bas.types.util.PrefetchedIterator;
 
 /**
- * @TestBy DerMapTest
+ * @test DerMapTest
  */
 public abstract class DerMap<K, V> extends AbstractMap<K, V> implements
         Derivation<Map<K, V>>, Serializable {
@@ -150,7 +150,7 @@ public abstract class DerMap<K, V> extends AbstractMap<K, V> implements
         Iterator<Entry<K, V>> pItr = pMap.entrySet().iterator();
 
         @Override
-        protected Object fetch() {
+        protected Entry<K, V> fetch() {
             while (pItr.hasNext()) {
                 Entry<K, V> pNxt = pItr.next();
                 K pNxtKey = pNxt.getKey();
@@ -158,7 +158,7 @@ public abstract class DerMap<K, V> extends AbstractMap<K, V> implements
                     continue;
                 return pNxt;
             }
-            return END;
+            return end();
         }
 
     }
