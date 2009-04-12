@@ -57,7 +57,7 @@ public class PluginTypeEx {
 
     @Override
     public String toString() {
-        return AppNLS.getString("PluginTypeEx.0") + clazz.getName() + AppNLS.getString("PluginTypeEx.1"); //$NON-NLS-1$ //$NON-NLS-2$
+        return String.format("Plugin(%s)", clazz.getName());
     }
 
 }

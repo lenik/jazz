@@ -109,8 +109,8 @@ public class CLIInteraction extends _Interaction {
                 Object value = candidates.get(key);
                 System.out.println("  " + i + ". " + keyname + " => " + value); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             }
-            System.out.println(AppNLS.getString("CLIInteraction.0") + keys.length //$NON-NLS-1$
-                    + AppNLS.getString("CLIInteraction.1")); //$NON-NLS-1$
+            System.out.println(String.format(
+                    "Enter your choice(1..%d, or name): \n", keys.length));
             try {
                 String line = lineIn.readLine();
                 if (line == null)
