@@ -66,10 +66,10 @@ public class ArrayMemory extends _Memory {
             return this;
         int len = end - start;
         if (precheck && off > len)
-            throw new OutOfDomainException("off", off, len);
+            throw new OutOfDomainException("off", off, len); //$NON-NLS-1$
         int off32 = (int) off;
         if (precheck && start + off32 < 0)
-            throw new OutOfDomainException("off", off, len);
+            throw new OutOfDomainException("off", off, len); //$NON-NLS-1$
         return new ArrayMemory(array, start + off32, len - off32);
     }
 

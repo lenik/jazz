@@ -7,6 +7,7 @@ import java.util.NavigableSet;
 import java.util.NoSuchElementException;
 import java.util.SortedSet;
 
+import net.bodz.bas.nls.TypesNLS;
 import net.bodz.bas.types.util.Comparators;
 
 public class IntRange extends AbstractSet<Integer> implements
@@ -42,7 +43,7 @@ public class IntRange extends AbstractSet<Integer> implements
             if (last == start)
                 start++; // now last<start.
             else
-                throw new UnsupportedOperationException("hole after remove");
+                throw new UnsupportedOperationException(TypesNLS.getString("IntRange.holeAfterRemove")); //$NON-NLS-1$
         }
 
     }
@@ -72,7 +73,7 @@ public class IntRange extends AbstractSet<Integer> implements
         else if (e == end)
             end++;
         else
-            throw new UnsupportedOperationException("holes after add");
+            throw new UnsupportedOperationException(TypesNLS.getString("IntRange.holeAfterAdd")); //$NON-NLS-1$
         return true;
     }
 
@@ -86,7 +87,7 @@ public class IntRange extends AbstractSet<Integer> implements
         else if (i == start)
             start++;
         else
-            throw new UnsupportedOperationException("remove remains hole");
+            throw new UnsupportedOperationException(TypesNLS.getString("IntRange.holeAfterRemove")); //$NON-NLS-1$
         return true;
     }
 
@@ -97,7 +98,7 @@ public class IntRange extends AbstractSet<Integer> implements
 
     @Override
     public String toString() {
-        return "IntRange[" + start + "," + end + ")";
+        return "IntRange[" + start + "," + end + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
     // SortedSet
@@ -145,7 +146,7 @@ public class IntRange extends AbstractSet<Integer> implements
             if (last == end - 1)
                 end--; // now last>=end.
             else
-                throw new UnsupportedOperationException("hole after remove");
+                throw new UnsupportedOperationException(TypesNLS.getString("IntRange.holeAfterRemove")); //$NON-NLS-1$
         }
     }
 

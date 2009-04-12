@@ -23,7 +23,7 @@ public class ASL {
     @Override
     public String toString() {
         char sexChar = sex ? 'm' : 'f';
-        return age + "/" + sexChar + "/" + location;
+        return age + "/" + sexChar + "/" + location; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     public static class ASLParser implements TypeParser {
@@ -36,7 +36,7 @@ public class ASL {
             slash = text.indexOf('/');
             String sex = text.substring(0, slash);
             String location = text.substring(slash + 1);
-            return new ASL(age, "m".equalsIgnoreCase(sex), location);
+            return new ASL(age, "m".equalsIgnoreCase(sex), location); //$NON-NLS-1$
         }
 
     }

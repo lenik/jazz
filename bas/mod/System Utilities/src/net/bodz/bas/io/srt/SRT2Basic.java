@@ -101,14 +101,14 @@ class SRT2Double extends SRT2Basic {
 class SRT2Boolean extends SRT2Basic {
     public String serialize2(Object o) {
         if (Boolean.TRUE.equals(o))
-            return "1";
-        return "0";
+            return "1"; //$NON-NLS-1$
+        return "0"; //$NON-NLS-1$
     }
 
     @Override
     public Boolean unserialize2(Reader s) throws IOException {
         String text = Files.readTill(s, ';');
-        return "1".equals(text);
+        return "1".equals(text); //$NON-NLS-1$
     }
 }
 
@@ -117,8 +117,8 @@ class SRT2String extends SRT2Basic {
     @Override
     public void serialize2(Writer s, Object o) throws Exception {
         String str = String.valueOf(o);
-        s.write(str.length() + ":");
-        s.write("\"" + str + "\";");
+        s.write(str.length() + ":"); //$NON-NLS-1$
+        s.write("\"" + str + "\";"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     static String repeat(String pat, int count) {
@@ -137,7 +137,7 @@ class SRT2String extends SRT2Basic {
         // assert text.charAt(text.length() - 1) == '\"';
         text = text.substring(1, text.length() - 1);
         if (text.length() < len)
-            return s + repeat(" ", len - text.length());
+            return s + repeat(" ", len - text.length()); //$NON-NLS-1$
         return text.substring(0, len);
     }
 }
@@ -161,14 +161,14 @@ class SRT2Object extends SRT2String {
         oos.writeObject(o);
         oos.flush();
         byte[] bytes = buf.toByteArray();
-        String cdata = new String(bytes, "iso-8859-1");
+        String cdata = new String(bytes, "iso-8859-1"); //$NON-NLS-1$
         super.serialize2(s, cdata);
     }
 
     @Override
     public Object unserialize2(Reader s) throws Exception {
         String cdata = (String) super.unserialize2(s);
-        byte[] bytes = cdata.getBytes("iso-8859-1");
+        byte[] bytes = cdata.getBytes("iso-8859-1"); //$NON-NLS-1$
         ByteArrayInputStream buf = new ByteArrayInputStream(bytes);
         ObjectInputStream ois = new ObjectInputStream(buf);
         return ois.readObject();
@@ -183,7 +183,7 @@ class SRT2Array extends SRT2Basic {
     public void serialize2(Writer s, Object o) throws Exception {
         Class<?> type = o.getClass().getComponentType();
         int len = Array.getLength(o);
-        s.write(type.getName() + ":" + len + ":{");
+        s.write(type.getName() + ":" + len + ":{"); //$NON-NLS-1$ //$NON-NLS-2$
         for (int i = 0; i < len; i++) {
             Object item = Array.get(o, i);
             SRTRegistry.serialize(s, item);
@@ -219,7 +219,7 @@ class SRT2Map extends SRT2Basic {
     public void serialize2(Writer s, Object o) throws Exception {
         Map<?, ?> map = (Map<?, ?>) o;
         Class<?> type = map.getClass();
-        s.write(type.getName() + ":" + map.size() + ":{");
+        s.write(type.getName() + ":" + map.size() + ":{"); //$NON-NLS-1$ //$NON-NLS-2$
         for (Entry<?, ?> entry : map.entrySet()) {
             Object key = entry.getKey();
             Object value = entry.getValue();

@@ -16,10 +16,10 @@ public class EnglishTest {
                 return English.pluralOf(input);
             }
         }, //
-                EQ("cat", "cats"), //
-                EQ("foot", "foots"), // TODO - irregular plural
-                EQ("baby", "babies"), //
-                EQ("homo", "homoes"), //
+                EQ("cat", "cats"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("foot", "foots"), // TODO - irregular plural //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("baby", "babies"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("homo", "homoes"), // //$NON-NLS-1$ //$NON-NLS-2$
                 END);
     }
 
@@ -30,12 +30,12 @@ public class EnglishTest {
                 return English.presentOf(input);
             }
         }, //
-                EQ("cry", "crying"), //
-                EQ("eat", "eating"), //
-                EQ("hob", "hobbing"), //
-                EQ("go", "going"), //
-                EQ("die", "dying"), //
-                EQ("live", "living"), //
+                EQ("cry", "crying"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("eat", "eating"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("hob", "hobbing"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("go", "going"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("die", "dying"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("live", "living"), // //$NON-NLS-1$ //$NON-NLS-2$
                 END);
     }
 
@@ -46,10 +46,10 @@ public class EnglishTest {
                 return English.pastOf(input);
             }
         }, //
-                EQ("eat", "ate"), //
+                EQ("eat", "ate"), // //$NON-NLS-1$ //$NON-NLS-2$
                 // EQ("play", "played"), //
-                EQ("late", "lated"), //
-                EQ("hob", "hobbed"), //
+                EQ("late", "lated"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("hob", "hobbed"), // //$NON-NLS-1$ //$NON-NLS-2$
                 // EQ("answer", "answered"), //
                 END);
     }
@@ -61,10 +61,10 @@ public class EnglishTest {
                 return English.perfectOf(input);
             }
         }, //
-                EQ("eat", "eaten"), //
+                EQ("eat", "eaten"), // //$NON-NLS-1$ //$NON-NLS-2$
                 // EQ("play", "played"), //
-                EQ("late", "lated"), //
-                EQ("hob", "hobbed"), //
+                EQ("late", "lated"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("hob", "hobbed"), // //$NON-NLS-1$ //$NON-NLS-2$
                 // EQ("answer", "answered"), //
                 END);
     }

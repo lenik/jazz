@@ -38,6 +38,7 @@ import net.bodz.swt.gui.GUIVars.GUIFieldMeta;
 import net.bodz.swt.gui.GUIVars.GUIFieldVar;
 import net.bodz.swt.gui.GUIVars.GUIPropertyMeta;
 import net.bodz.swt.gui.GUIVars.GUIPropertyVar;
+import net.bodz.swt.nls.GUINLS;
 
 public class GUIStructs {
 
@@ -138,7 +139,9 @@ public class GUIStructs {
         void add(String name, GUIVarMeta meta) {
             if (map != null) {
                 if (map.containsKey(name))
-                    out.P("NO-DUP: item ", name, " in is overwritten: ", meta);
+                    out
+                            .P(
+                                    GUINLS.getString("GUIStructs.nodupItem"), name, GUINLS.getString("GUIStructs.inIsOverwritten"), meta); //$NON-NLS-1$ //$NON-NLS-2$
                 map.put(name, meta);
             } else
                 list.add(meta);
@@ -153,15 +156,15 @@ public class GUIStructs {
         static final Set<MethodSignature> ignoreMethods;
         static {
             ignoreMethods = new HashSet<MethodSignature>();
-            ignoreMethods.add(new MethodSignature("toString"));
-            ignoreMethods.add(new MethodSignature("hashcode"));
-            ignoreMethods.add(new MethodSignature("equals", Object.class));
-            ignoreMethods.add(new MethodSignature("clone"));
-            ignoreMethods.add(new MethodSignature("readObject",
+            ignoreMethods.add(new MethodSignature("toString")); //$NON-NLS-1$
+            ignoreMethods.add(new MethodSignature("hashcode")); //$NON-NLS-1$
+            ignoreMethods.add(new MethodSignature("equals", Object.class)); //$NON-NLS-1$
+            ignoreMethods.add(new MethodSignature("clone")); //$NON-NLS-1$
+            ignoreMethods.add(new MethodSignature("readObject", //$NON-NLS-1$
                     ObjectInputStream.class));
-            ignoreMethods.add(new MethodSignature("writeObject",
+            ignoreMethods.add(new MethodSignature("writeObject", //$NON-NLS-1$
                     ObjectOutputStream.class));
-            ignoreMethods.add(new MethodSignature("readObjectNoDate"));
+            ignoreMethods.add(new MethodSignature("readObjectNoDate")); //$NON-NLS-1$
         }
 
         public void add(Method method) throws GUIAccessException {
@@ -238,7 +241,8 @@ public class GUIStructs {
                     GUICallVar callVar = methodMeta.newCall(object);
                     var = callVar;
                 } else {
-                    throw new UnexpectedException("unknown member meta type: "
+                    throw new UnexpectedException(GUINLS
+                            .getString("GUIStructs.unknownMemberMetaType") //$NON-NLS-1$
                             + meta);
                 }
                 add(var);
@@ -247,7 +251,7 @@ public class GUIStructs {
 
         @Override
         public String toString() {
-            return meta + "@" + object;
+            return meta + "@" + object; //$NON-NLS-1$
         }
 
     }
@@ -294,8 +298,8 @@ public class GUIStructs {
                     try {
                         paramVar.check(initArgs[i]);
                     } catch (CheckException e) {
-                        throw new IllegalUsageError(
-                                "Check failed on init arguments");
+                        throw new IllegalUsageError(GUINLS
+                                .getString("GUIStructs.checkFailOnInit")); //$NON-NLS-1$
                     }
                     paramVar.set(initArgs[i]);
                 }
@@ -470,7 +474,7 @@ public class GUIStructs {
 
         @Override
         public String getName() {
-            return ":retval";
+            return GUINLS.getString("GUIStructs._retval"); //$NON-NLS-1$
         }
 
         @Override
@@ -527,7 +531,7 @@ public class GUIStructs {
 
         @Override
         public String toString() {
-            return "(retval)";
+            return GUINLS.getString("GUIStructs.retval"); //$NON-NLS-1$
         }
 
     }
@@ -651,7 +655,8 @@ public class GUIStructs {
         public void check(Object value) throws CheckException {
             Class<?> type = getType();
             if (value != null && !Types.box(type).isInstance(value))
-                throw new CheckException("Not a instanceof " + type + ": "
+                throw new CheckException(GUINLS
+                        .getString("GUIStructs.notInstOf") + type + ": " //$NON-NLS-1$ //$NON-NLS-2$
                         + value);
             if (checker != null)
                 checker.check(value);
@@ -659,7 +664,7 @@ public class GUIStructs {
 
         @Override
         public String toString() {
-            return param + "[" + index + "]";
+            return param + "[" + index + "]"; //$NON-NLS-1$ //$NON-NLS-2$
         }
 
     }

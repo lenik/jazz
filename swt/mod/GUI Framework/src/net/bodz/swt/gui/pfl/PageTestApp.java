@@ -2,6 +2,7 @@ package net.bodz.swt.gui.pfl;
 
 import net.bodz.bas.lang.err.IllegalUsageException;
 import net.bodz.swt.gui.util.ControlTestApp;
+import net.bodz.swt.nls.GUINLS;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -16,57 +17,65 @@ public abstract class PageTestApp extends ControlTestApp {
 
     public PageTestApp() {
         wizard = new WizardComposite(parent, SWT.NONE);
-        wizard.definePage("test", new PageFactory() {
-            @Override
-            public PageComposite create(Composite parent) {
-                return createPage(parent, SWT.NONE);
-            }
-        });
-        wizard.definePage("end", new PageFactory() {
-            @Override
-            public PageComposite create(Composite parent) {
-                return new PageComposite(parent, SWT.NONE) {
-                    Label prevLabel;
-                    Label infoLabel;
-                    Text  text;
-                    {
-                        setLayout(new GridLayout(1, false));
-                        prevLabel = new Label(this, SWT.NONE);
-                        prevLabel.setText("You're come from ?");
-
-                        infoLabel = new Label(this, SWT.NONE);
-
-                        text = new Text(this, SWT.BORDER | SWT.MULTI
-                                | SWT.READ_ONLY | SWT.V_SCROLL);
-                        GridData gridData = new GridData(GridData.FILL,
-                                GridData.FILL, true, true);
-                        text.setLayoutData(gridData);
-                    }
-
+        wizard.definePage("test", new PageFactory() { //$NON-NLS-1$
                     @Override
-                    public void enter(String prev) {
-                        prevLabel.setText("You're come from `" + prev + "'. ");
-
-                        Page page = wizard.getPageFlow().getPage(prev);
-                        if (page == null)
-                            throw new IllegalUsageException("bad address: "
-                                    + prev);
-                        String type = page.getClass().getName();
-                        int hash = System.identityHashCode(page);
-                        infoLabel.setText("Page(" + type + ") @"
-                                + Integer.toHexString(hash) + ": ");
-
-                        String s = page.toString();
-                        text.setText(s);
+                    public PageComposite create(Composite parent) {
+                        return createPage(parent, SWT.NONE);
                     }
-
+                });
+        wizard.definePage("end", new PageFactory() { //$NON-NLS-1$
                     @Override
-                    protected Object getInitialState() {
-                        return "quit";
+                    public PageComposite create(Composite parent) {
+                        return new PageComposite(parent, SWT.NONE) {
+                            Label prevLabel;
+                            Label infoLabel;
+                            Text  text;
+                            {
+                                setLayout(new GridLayout(1, false));
+                                prevLabel = new Label(this, SWT.NONE);
+                                prevLabel.setText(GUINLS
+                                        .getString("PageTestApp.youFromQ")); //$NON-NLS-1$
+
+                                infoLabel = new Label(this, SWT.NONE);
+
+                                text = new Text(this, SWT.BORDER | SWT.MULTI
+                                        | SWT.READ_ONLY | SWT.V_SCROLL);
+                                GridData gridData = new GridData(GridData.FILL,
+                                        GridData.FILL, true, true);
+                                text.setLayoutData(gridData);
+                            }
+
+                            @Override
+                            public void enter(String prev) {
+                                prevLabel
+                                        .setText(GUINLS
+                                                .getString("PageTestApp.youFromA") + prev + "'. "); //$NON-NLS-1$ //$NON-NLS-2$
+
+                                Page page = wizard.getPageFlow().getPage(prev);
+                                if (page == null)
+                                    throw new IllegalUsageException(
+                                            GUINLS
+                                                    .getString("PageTestApp.badAddress") //$NON-NLS-1$
+                                                    + prev);
+                                String type = page.getClass().getName();
+                                int hash = System.identityHashCode(page);
+                                infoLabel
+                                        .setText(GUINLS
+                                                .getString("PageTestApp.page_") + type + ") @" //$NON-NLS-1$ //$NON-NLS-2$
+                                                + Integer.toHexString(hash)
+                                                + ": "); //$NON-NLS-1$
+
+                                String s = page.toString();
+                                text.setText(s);
+                            }
+
+                            @Override
+                            protected Object getInitialState() {
+                                return "quit"; //$NON-NLS-1$
+                            }
+                        };
                     }
-                };
-            }
-        });
+                });
         wizard.addExitListener(new WizardExitListener() {
             @Override
             public void wizardExit(WizardExitEvent e) {
@@ -74,8 +83,8 @@ public abstract class PageTestApp extends ControlTestApp {
             }
         });
         SymlinkPageFlow pageFlow = wizard.getPageFlow();
-        pageFlow.putLink("test/next", "end");
-        pageFlow.set("test");
+        pageFlow.putLink("test/next", "end"); //$NON-NLS-1$ //$NON-NLS-2$
+        pageFlow.set("test"); //$NON-NLS-1$
     }
 
     protected abstract PageComposite createPage(Composite parent, int style);

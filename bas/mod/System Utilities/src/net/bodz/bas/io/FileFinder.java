@@ -10,7 +10,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import net.bodz.bas.lang.err.NotImplementedException;
+import net.bodz.bas.types.util.Iterators;
 import net.bodz.bas.types.util.PrefetchedIterator;
 import net.bodz.bas.types.util.StackedIterator;
 
@@ -19,49 +19,48 @@ import net.bodz.bas.types.util.StackedIterator;
  */
 public class FileFinder implements FileFilter, Iterable<File> {
 
-    private static final int MAX_DEPTH = 256;
+    private static final int defaultMaxDepth = 256;
 
-    private File             start;
+    public static final int  FILE            = 1;
+    public static final int  DIR             = 2;
+    public static final int  DIR_POST        = 4;
+
+    private File[]           start;
     private FileFilter       filter;
-    private boolean          filterDirectories;
+    private boolean          prune;
     private int              maxDepth;
-    private boolean          rootLast;
-    private Comparator<File> order;
+    private int              order           = FILE | DIR;
+    private Comparator<File> comparator;
 
-    public FileFinder(File start, FileFilter filter, boolean filterDirectories,
-            int maxDepth, boolean rootLast, Comparator<File> order) {
+    public FileFinder(FileFilter filter, int maxDepth, boolean prune,
+            File... start) {
         this.start = start;
         this.filter = filter;
-        this.filterDirectories = filterDirectories;
         this.maxDepth = maxDepth;
-        if (rootLast)
-            throw new NotImplementedException(
-                    "root-last feature isn't supported. ");
-        this.rootLast = rootLast;
-        this.order = order;
+        this.prune = prune;
     }
 
-    public FileFinder(File start, FileFilter filter, int maxDepth) {
-        this(start, filter, false, maxDepth, false, null);
+    public FileFinder(FileFilter filter, int maxDepth, File... start) {
+        this(filter, maxDepth, false, start);
     }
 
-    public FileFinder(File start, FileFilter filter) {
-        this(start, filter, MAX_DEPTH);
+    public FileFinder(FileFilter filter, File... start) {
+        this(filter, defaultMaxDepth, start);
     }
 
-    public FileFinder(File start, int maxDepth) {
-        this(start, null, maxDepth);
+    public FileFinder(int maxDepth, File... start) {
+        this(null, maxDepth, start);
     }
 
-    public FileFinder(File start) {
-        this(start, null, MAX_DEPTH);
+    public FileFinder(File... start) {
+        this(null, defaultMaxDepth, start);
     }
 
-    public File getStart() {
+    public File[] getStart() {
         return start;
     }
 
-    public void setStart(File start) {
+    public void setStart(File... start) {
         this.start = start;
     }
 
@@ -73,12 +72,12 @@ public class FileFinder implements FileFilter, Iterable<File> {
         this.filter = filter;
     }
 
-    public boolean isFilterDirectories() {
-        return filterDirectories;
+    public boolean isPrune() {
+        return prune;
     }
 
-    public void setFilterDirectories(boolean filterDirectories) {
-        this.filterDirectories = filterDirectories;
+    public void setPrune(boolean prune) {
+        this.prune = prune;
     }
 
     public int getMaxDepth() {
@@ -89,20 +88,22 @@ public class FileFinder implements FileFilter, Iterable<File> {
         this.maxDepth = maxDepth;
     }
 
-    public boolean isRootLast() {
-        return rootLast;
-    }
-
-    public void setRootLast(boolean rootLast) {
-        this.rootLast = rootLast;
-    }
-
-    public Comparator<File> getComparator() {
+    public int getOrder() {
         return order;
     }
 
+    public void setOrder(int order) {
+        if (0 != (order & DIR_POST))
+            throw new UnsupportedOperationException("DIR_POST"); //$NON-NLS-1$
+        this.order = order;
+    }
+
+    public Comparator<File> getComparator() {
+        return comparator;
+    }
+
     public void setComparator(Comparator<File> comparator) {
-        this.order = comparator;
+        this.comparator = comparator;
     }
 
     @Override
@@ -110,51 +111,42 @@ public class FileFinder implements FileFilter, Iterable<File> {
         if (filter == null)
             return true;
         if (file.isDirectory())
-            if (!filterDirectories)
+            if (!prune)
                 return true;
         return filter.accept(file);
     }
 
-    class RecIter extends StackedIterator<File> {
+    class RecIter extends PrefetchedIterator<File> {
+
+        StackedIterator<File> stack;
 
         public RecIter() {
-            push(new Iter(0, start));
+            Iterator<File> startIter = Iterators.iterator(start);
+            stack = new StackedIterator<File>(startIter);
         }
 
-        class Iter extends PrefetchedIterator<File> {
-
-            private final int    depth;
-            private final File[] files;
-            private int          index;
-
-            public Iter(int depth, File... files) {
-                this.depth = depth;
-                this.files = files;
-            }
-
-            @Override
-            protected File fetch() {
-                if (index >= files.length)
-                    return end();
-                File x = files[index++];
-                boolean included = true;
-                if (filter != null && (filterDirectories || x.isFile()))
-                    included = filter.accept(x);
-                if (x.isDirectory() && depth < maxDepth) {
-                    File[] children = x.listFiles(FileFinder.this);
-                    if (children.length > 0) {
-                        if (order != null)
-                            Arrays.sort(children, order);
-                        Iter citer = new Iter(depth + 1, children);
-                        push(citer);
-                    }
+        @Override
+        protected File fetch() {
+            int depth = stack.size();
+            if (!stack.hasNext())
+                return end();
+            File x = stack.next();
+            boolean included = true;
+            if (!prune && filter != null && x.isDirectory())
+                included = filter.accept(x);
+            if (x.isDirectory() && depth < maxDepth) {
+                File[] children = x.listFiles(FileFinder.this);
+                if (children.length > 0) {
+                    if (comparator != null)
+                        Arrays.sort(children, comparator);
+                    Iterator<File> citer = Iterators.iterator(children);
+                    stack.push(citer);
                 }
-                if (included)
-                    return x;
-                return fetch();
             }
-
-        } // Iter
+            if (included)
+                return x;
+            return fetch();
+        }
 
     } // RecIter
 

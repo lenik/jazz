@@ -46,9 +46,9 @@ public class ArrayListl<E> extends ArrayList<E> implements Listl<E> {
         System.arraycopy(indexes, 0, order, 0, indexes.length);
         Arrays.sort(order);
         if (order[0] < 0)
-            throw new IndexOutOfBoundsException("" + order[0]);
+            throw new IndexOutOfBoundsException("" + order[0]); //$NON-NLS-1$
         if (order[order.length - 1] >= size())
-            throw new IndexOutOfBoundsException("" + order[order.length - 1]);
+            throw new IndexOutOfBoundsException("" + order[order.length - 1]); //$NON-NLS-1$
         for (int i = order.length - 1; i >= 0; i--)
             remove(i);
     }

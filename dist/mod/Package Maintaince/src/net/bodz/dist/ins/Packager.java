@@ -6,7 +6,7 @@ public class Packager {
     ISession session;
 
     public void pack() throws InstallException {
-        session.dump(project, 1);
+        session.pack(project, 0);
     }
 
 }

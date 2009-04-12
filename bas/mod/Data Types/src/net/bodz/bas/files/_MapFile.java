@@ -18,8 +18,8 @@ public abstract class _MapFile<T> extends _FileSource<T> {
     protected TypeParser valueParser;
     {
         try {
-            this.keyParser = TypeParsers.guess(getKeyClass(), "KeyClass");
-            this.valueParser = TypeParsers.guess(getValueClass(), "ValueClass");
+            this.keyParser = TypeParsers.guess(getKeyClass(), "KeyClass"); //$NON-NLS-1$
+            this.valueParser = TypeParsers.guess(getValueClass(), "ValueClass"); //$NON-NLS-1$
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }

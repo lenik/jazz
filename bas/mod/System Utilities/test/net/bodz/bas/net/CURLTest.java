@@ -17,30 +17,30 @@ public class CURLTest {
 
     @Test
     public void test1() {
-        String s = "http://user:password@host/a/b/c.ext#anchor?a=b+c&c=x%26y";
+        String s = "http://user:password@host/a/b/c.ext#anchor?a=b+c&c=x%26y"; //$NON-NLS-1$
         CURL curl = new CURL(s);
-        assertEquals("http", curl.getType());
+        assertEquals("http", curl.getType()); //$NON-NLS-1$
         Alpha[] alphas = curl.getAlphas();
         assertEquals(2, alphas.length);
 
         Alpha a = alphas[0];
         String[] ap = a.getInitParameters();
         assertEquals(2, ap.length);
-        assertEquals("user", ap[0]);
-        assertEquals("password", ap[1]);
+        assertEquals("user", ap[0]); //$NON-NLS-1$
+        assertEquals("password", ap[1]); //$NON-NLS-1$
         String[] ab = a.getBetas();
         assertEquals(4, ab.length);
-        assertEquals("host", ab[0]);
-        assertEquals("a", ab[1]);
-        assertEquals("b", ab[2]);
-        assertEquals("c.ext", ab[3]);
+        assertEquals("host", ab[0]); //$NON-NLS-1$
+        assertEquals("a", ab[1]); //$NON-NLS-1$
+        assertEquals("b", ab[2]); //$NON-NLS-1$
+        assertEquals("c.ext", ab[3]); //$NON-NLS-1$
 
         Alpha b = alphas[1];
         String[] bp = b.getInitParameters();
         assertNull(bp);
         String[] bb = b.getBetas();
         assertEquals(1, bb.length);
-        assertEquals("anchor", bb[0]);
+        assertEquals("anchor", bb[0]); //$NON-NLS-1$
 
         TextMap<String> params = curl.getParameters();
         assertEquals(2, params.size());
@@ -49,11 +49,11 @@ public class CURLTest {
                 es);
         Entry<String, String> e;
         e = list.get(0);
-        assertEquals("a", e.getKey());
-        assertEquals("b c", e.getValue()); // b+c
+        assertEquals("a", e.getKey()); //$NON-NLS-1$
+        assertEquals("b c", e.getValue()); // b+c //$NON-NLS-1$
         e = list.get(1);
-        assertEquals("c", e.getKey());
-        assertEquals("x&y", e.getValue()); // x%26y
+        assertEquals("c", e.getKey()); //$NON-NLS-1$
+        assertEquals("x&y", e.getValue()); // x%26y //$NON-NLS-1$
 
         String reformat = curl.toString();
         assertEquals(s, reformat);

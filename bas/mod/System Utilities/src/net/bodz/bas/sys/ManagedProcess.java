@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import net.bodz.bas.nls.SysNLS;
+
 public class ManagedProcess {
 
     private final String   name;
@@ -22,7 +24,7 @@ public class ManagedProcess {
     private static int     _id = 0;
 
     static String getNextId() {
-        return "MP_" + (++_id);
+        return "MP_" + (++_id); //$NON-NLS-1$
     }
 
     public ManagedProcess() {
@@ -44,7 +46,7 @@ public class ManagedProcess {
             callback = sysAdapter;
         this.callback = callback;
 
-        sender = new Thread(name + ":sender") {
+        sender = new Thread(name + SysNLS.getString("ManagedProcess._sender")) { //$NON-NLS-1$
             @Override
             public void run() {
                 try {
@@ -55,7 +57,7 @@ public class ManagedProcess {
                 }
             }
         };
-        inGrabber = new Thread(name + ":inGrabber") {
+        inGrabber = new Thread(name + SysNLS.getString("ManagedProcess._inGrabber")) { //$NON-NLS-1$
             @Override
             public void run() {
                 try {
@@ -65,7 +67,7 @@ public class ManagedProcess {
                 }
             }
         };
-        errGrabber = new Thread(name + ":errGraber") {
+        errGrabber = new Thread(name + SysNLS.getString("ManagedProcess._errGrabber")) { //$NON-NLS-1$
             @Override
             public void run() {
                 try {
@@ -79,7 +81,7 @@ public class ManagedProcess {
 
     @Override
     public String toString() {
-        return "ManagedProcess " + name;
+        return SysNLS.getString("ManagedProcess.managedProcess") + name; //$NON-NLS-1$
     }
 
     public synchronized int takeOver(Process process)

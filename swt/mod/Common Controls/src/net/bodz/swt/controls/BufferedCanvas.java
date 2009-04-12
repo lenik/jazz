@@ -65,7 +65,7 @@ public class BufferedCanvas extends Canvas {
 
     public synchronized void submit(Rectangle area) {
         if (area == null)
-            throw new NullPointerException("area");
+            throw new NullPointerException("area"); //$NON-NLS-1$
         queue.add(area);
     }
 

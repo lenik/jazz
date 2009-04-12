@@ -12,6 +12,7 @@ import net.bodz.bas.mod.Factory;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TextMap.HashTextMap;
 import net.bodz.bas.types.util.Types;
+import net.bodz.swt.nls.GUINLS;
 import net.bodz.swt.util.SWTResources;
 
 import org.eclipse.swt.graphics.FontData;
@@ -83,15 +84,15 @@ public class A_gui extends net.bodz.bas.gui.a.A_gui {
     static TextMap<RGB> colorNames;
     static {
         colorNames = new HashTextMap<RGB>();
-        colorNames.put("black", new RGB(0, 0, 0));
-        colorNames.put("white", new RGB(255, 255, 255));
-        colorNames.put("red", new RGB(255, 0, 0));
-        colorNames.put("green", new RGB(0, 255, 0));
-        colorNames.put("blue", new RGB(0, 0, 255));
-        colorNames.put("cyan", new RGB(0, 255, 255));
-        colorNames.put("magenta", new RGB(255, 0, 255)); // pink
-        colorNames.put("yellow", new RGB(255, 255, 0));
-        colorNames.put("gray", new RGB(128, 128, 128));
+        colorNames.put("black", new RGB(0, 0, 0)); //$NON-NLS-1$
+        colorNames.put("white", new RGB(255, 255, 255)); //$NON-NLS-1$
+        colorNames.put("red", new RGB(255, 0, 0)); //$NON-NLS-1$
+        colorNames.put("green", new RGB(0, 255, 0)); //$NON-NLS-1$
+        colorNames.put("blue", new RGB(0, 0, 255)); //$NON-NLS-1$
+        colorNames.put("cyan", new RGB(0, 255, 255)); //$NON-NLS-1$
+        colorNames.put("magenta", new RGB(255, 0, 255)); // pink //$NON-NLS-1$
+        colorNames.put("yellow", new RGB(255, 255, 0)); //$NON-NLS-1$
+        colorNames.put("gray", new RGB(128, 128, 128)); //$NON-NLS-1$
     }
 
     /**
@@ -109,10 +110,11 @@ public class A_gui extends net.bodz.bas.gui.a.A_gui {
         }
         // color name not exists, and the fail value isn't specified.
         if (sharp == -1)
-            throw new IllegalUsageError("Bad color name: " + colorExp);
+            throw new IllegalUsageError(
+                    GUINLS.getString("A_gui.badColor") + colorExp); //$NON-NLS-1$
         String failval = colorExp.substring(sharp + 1);
         if (failval.length() != 6)
-            throw new IllegalUsageError("color format: #rrggbb, given "
+            throw new IllegalUsageError(GUINLS.getString("A_gui.colorFormat") //$NON-NLS-1$
                     + failval);
         int rgb = Integer.parseInt(failval, 16);
         int blue = rgb & 0xff;

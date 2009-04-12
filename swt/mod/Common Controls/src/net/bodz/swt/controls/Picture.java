@@ -12,7 +12,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
 /**
- * @TestBy PictureTest
+ * @test PictureTest
  */
 public class Picture extends Canvas {
 
@@ -99,9 +99,9 @@ public class Picture extends Canvas {
 
     boolean copyView(Rectangle viewBounds, GC destGC, Rectangle destBounds) {
         if (destGC == null)
-            throw new NullPointerException("gc");
+            throw new NullPointerException("gc"); //$NON-NLS-1$
         if (destBounds == null)
-            throw new NullPointerException("bounds");
+            throw new NullPointerException("bounds"); //$NON-NLS-1$
         if (image == null)
             return false;
         if (viewBounds == null)
@@ -152,7 +152,7 @@ public class Picture extends Canvas {
 
             @Override
             public void paintControl(PaintEvent e) {
-                System.out.println("Paint");
+                System.out.println("Paint"); //$NON-NLS-1$
                 Picture pic = Picture.this;
                 Rectangle viewBounds = getBlockBounds(pic, control);
                 if (viewBounds == null)

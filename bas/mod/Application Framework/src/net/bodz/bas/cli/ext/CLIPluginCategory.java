@@ -7,8 +7,9 @@ import java.util.List;
 import net.bodz.bas.cli.CLIException;
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.lang.err.CreateException;
-import net.bodz.bas.mod.plugins.PluginTypeEx;
 import net.bodz.bas.mod.plugins.PluginCategory;
+import net.bodz.bas.mod.plugins.PluginTypeEx;
+import net.bodz.bas.nls.AppNLS;
 import net.bodz.bas.types.util.Strings;
 
 public class CLIPluginCategory extends PluginCategory {
@@ -34,7 +35,7 @@ public class CLIPluginCategory extends PluginCategory {
             String desc = pluginClass.getDescription();
             out.print(prefix);
             out.print(id);
-            out.print(": ");
+            out.print(": "); //$NON-NLS-1$
             int delta = maxlen - id.length();
             out.print(Strings.repeat(delta, ' '));
             if (desc == null) {
@@ -46,9 +47,12 @@ public class CLIPluginCategory extends PluginCategory {
 
             try {
                 CLIPlugin tmp = (CLIPlugin) pluginClass.newInstance();
-                tmp.help(out, prefix + "    ");
+                tmp.help(out, prefix + "    "); //$NON-NLS-1$
             } catch (CreateException e) {
-                out.println(prefix + "    (failed to instantiate: " + e + ")");
+                out
+                        .println(prefix
+                                + AppNLS
+                                        .getString("CLIPluginCategory.errNewInst") + e + ")"); //$NON-NLS-1$ //$NON-NLS-2$
             }
         }
     }

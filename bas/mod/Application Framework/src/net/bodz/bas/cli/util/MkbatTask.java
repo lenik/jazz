@@ -21,7 +21,7 @@ public class MkbatTask extends CLITask {
     public MkbatTask() {
         super(new Mkbat());
         mkbat = (Mkbat) super.app;
-        addArguments("-rq", "--");
+        addArguments("-rq", "--"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     public void addSrcdir(Path srcdir) {
@@ -29,16 +29,16 @@ public class MkbatTask extends CLITask {
     }
 
     public File getOutdir() {
-        return (File) get("outputDirectory");
+        return (File) get("outputDirectory"); //$NON-NLS-1$
     }
 
     public void setOutdir(File outdir) {
-        set("outputDirectory", outdir);
+        set("outputDirectory", outdir); //$NON-NLS-1$
     }
 
     static String pathSeparator;
     static {
-        pathSeparator = ";";
+        pathSeparator = ";"; //$NON-NLS-1$
     }
 
     public void addUserlibs(Path userlibs) {

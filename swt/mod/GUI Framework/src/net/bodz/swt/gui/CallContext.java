@@ -5,6 +5,7 @@ import java.beans.PropertyChangeSupport;
 
 import net.bodz.bas.lang.ref.IPropertyChangeSupport;
 import net.bodz.bas.types.util.Types;
+import net.bodz.swt.nls.GUINLS;
 
 /**
  * Property names:
@@ -35,7 +36,7 @@ public class CallContext implements IPropertyChangeSupport {
     public void setRetval(Object retval) {
         Object old = this.retval;
         this.retval = retval;
-        pcs.firePropertyChange("retval", old, retval);
+        pcs.firePropertyChange("retval", old, retval); //$NON-NLS-1$
     }
 
     public Object[] getParameters() {
@@ -45,14 +46,15 @@ public class CallContext implements IPropertyChangeSupport {
     public void setParameters(Object[] parameters) {
         if (parameters == null)
             throw new NullPointerException();
-        if (parameters.length != parameterTypes.length)
-            throw new IllegalArgumentException(
-                    "invalid number of parameters: expected "
-                            + parameterTypes.length + ", but specified "
-                            + parameters.length);
+        if (parameters.length != parameterTypes.length) {
+            String fmt = GUINLS.getString("CallContext.errParamNum_dd"); //$NON-NLS-1$
+            throw new IllegalArgumentException(String.format(fmt,
+                    parameterTypes.length, parameters.length));
+        }
+
         Object[] old = this.parameters;
         this.parameters = parameters;
-        pcs.firePropertyChange("params", old, parameters);
+        pcs.firePropertyChange("params", old, parameters); //$NON-NLS-1$
     }
 
     public int size() {
@@ -69,13 +71,15 @@ public class CallContext implements IPropertyChangeSupport {
     public void set(int parameterIndex, Object value) {
         if (value != null) {
             Class<?> type = parameterTypes[parameterIndex];
-            if (!Types.box(type).isInstance(value))
-                throw new ClassCastException("parameter[" + parameterIndex
-                        + "] is " + type + ", but set to " + value.getClass());
+            if (!Types.box(type).isInstance(value)) {
+                String fmt = GUINLS.getString("CallContext.errParamType_dss");
+                throw new ClassCastException(String.format(fmt, parameterIndex, //$NON-NLS-1$
+                        type, value.getClass()));
+            }
         }
         Object old = parameters[parameterIndex];
         parameters[parameterIndex] = value;
-        pcs.fireIndexedPropertyChange("param", parameterIndex, old, value);
+        pcs.fireIndexedPropertyChange("param", parameterIndex, old, value); //$NON-NLS-1$
     }
 
     @Override

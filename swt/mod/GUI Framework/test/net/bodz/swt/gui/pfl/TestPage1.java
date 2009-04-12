@@ -26,7 +26,7 @@ public class TestPage1 extends PageComposite {
         setLayout(gridLayout);
 
         final Label nameLabel = new Label(this, SWT.NONE);
-        nameLabel.setText("&Name: ");
+        nameLabel.setText("&Name: "); //$NON-NLS-1$
 
         nameText = new Text(this, SWT.BORDER);
         nameText.setTextLimit(100);
@@ -35,7 +35,7 @@ public class TestPage1 extends PageComposite {
         nameText.setLayoutData(gd_nameText);
 
         final Label ageLabel = new Label(this, SWT.NONE);
-        ageLabel.setText("&Age: ");
+        ageLabel.setText("&Age: "); //$NON-NLS-1$
 
         ageText = new Text(this, SWT.BORDER);
         ageText.setTextLimit(2);
@@ -52,7 +52,7 @@ public class TestPage1 extends PageComposite {
             int age = Integer.parseInt(agestr);
             if (age < 0)
                 throw new ValidateException(ageText, new OutOfDomainException(
-                        "age", age, 0));
+                        "age", age, 0)); //$NON-NLS-1$
         } catch (NumberFormatException e) {
             throw new ValidateException(ageText, e);
         }

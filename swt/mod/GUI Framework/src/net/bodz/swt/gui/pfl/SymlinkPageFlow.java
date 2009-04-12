@@ -10,6 +10,7 @@ import net.bodz.bas.io.CharOuts.BCharOut;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TextMap.TreeTextMap;
+import net.bodz.swt.nls.GUINLS;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
@@ -17,7 +18,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * @TestBy SymlinkPageFlowTest
+ * @test SymlinkPageFlowTest
  */
 public class SymlinkPageFlow extends PageFlow {
 
@@ -46,7 +47,8 @@ public class SymlinkPageFlow extends PageFlow {
             }
             return address;
         } while (++depth < maxDepth);
-        throw new IllegalStateException("exceeds the max symlink depth: "
+        throw new IllegalStateException(GUINLS
+                .getString("SymlinkPageFlow.exceedsSymDepth") //$NON-NLS-1$
                 + depth);
     }
 
@@ -60,13 +62,13 @@ public class SymlinkPageFlow extends PageFlow {
 
     public String dumpXML() {
         BCharOut buf = new BCharOut(symlinks.size() * 30);
-        buf.println("<symlinks>");
+        buf.println("<symlinks>"); //$NON-NLS-1$
         for (Entry<String, String> e : symlinks.entrySet()) {
             String name = e.getKey();
             String dest = e.getValue();
-            buf.printf("<symlink name=\"%s\" dest=\"%s\" />\n", name, dest);
+            buf.printf("<symlink name=\"%s\" dest=\"%s\" />\n", name, dest); //$NON-NLS-1$
         }
-        buf.println("</symlinks>");
+        buf.println("</symlinks>"); //$NON-NLS-1$
         return buf.toString();
     }
 
@@ -75,10 +77,10 @@ public class SymlinkPageFlow extends PageFlow {
             @Override
             public void startElement(String uri, String localName,
                     String qName, Attributes attributes) throws SAXException {
-                if (!"symlink".equals(qName))
+                if (!"symlink".equals(qName)) //$NON-NLS-1$
                     return;
-                String name = attributes.getValue("name");
-                String dest = attributes.getValue("dest");
+                String name = attributes.getValue("name"); //$NON-NLS-1$
+                String dest = attributes.getValue("dest"); //$NON-NLS-1$
                 putLink(name, dest);
             }
         }

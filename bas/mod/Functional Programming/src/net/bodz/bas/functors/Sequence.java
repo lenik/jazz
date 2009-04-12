@@ -11,6 +11,7 @@ import java.util.Map;
 import net.bodz.bas.lang.Control;
 import net.bodz.bas.lang.EvalException;
 import net.bodz.bas.lang.FunctorException;
+import net.bodz.bas.nls.FPNLS;
 
 public class Sequence<T> extends _Functor<T> implements Groupable<T>,
         List<IFunctor<T>> {
@@ -102,7 +103,7 @@ public class Sequence<T> extends _Functor<T> implements Groupable<T>,
         if (labels == null)
             labels = new HashMap<Object, Integer>();
         if (labels.containsKey(labelKey))
-            throw new RuntimeException("Label " + labelKey + " duplicated. ");
+            throw new RuntimeException(FPNLS.getString("Sequence.label") + labelKey + FPNLS.getString("Sequence.duplicated")); //$NON-NLS-1$ //$NON-NLS-2$
 
         // .build( .concat(...).label(..).concat(...) )
         labels.put(labelKey, list.size());

@@ -26,7 +26,7 @@ public class R_Object extends _R_Object {
         assert var != null;
         Object object = var.get();
         if (object == null)
-            throw new NotImplementedException("null obj: " + var);
+            throw new NotImplementedException("null obj: " + var); //$NON-NLS-1$
         GUIStruct objStruct = new GUIObjectStruct(object);
         return strategy.renderStruct(objStruct, parent, styleFx(style, var));
     }

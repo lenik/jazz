@@ -7,6 +7,7 @@ import java.io.RandomAccessFile;
 
 import net.bodz.bas.lang.IntMath;
 import net.bodz.bas.lang.err.OutOfDomainException;
+import net.bodz.bas.nls.TypesNLS;
 
 public class RandomAccessFileMemory extends _Memory {
 
@@ -17,7 +18,7 @@ public class RandomAccessFileMemory extends _Memory {
 
     public RandomAccessFileMemory(File file, long offset)
             throws FileNotFoundException {
-        this(new RandomAccessFile(file, "rw"), offset);
+        this(new RandomAccessFile(file, "rw"), offset); //$NON-NLS-1$
     }
 
     public RandomAccessFileMemory(RandomAccessFile file, long offset) {
@@ -25,11 +26,11 @@ public class RandomAccessFileMemory extends _Memory {
             throw new NullPointerException();
         if (precheck) {
             if (offset < 0)
-                throw new OutOfDomainException("offset", offset, 0);
+                throw new OutOfDomainException("offset", offset, 0); //$NON-NLS-1$
             try {
                 long len = file.length();
                 if (offset > len)
-                    throw new OutOfDomainException("offset", offset, len);
+                    throw new OutOfDomainException("offset", offset, len); //$NON-NLS-1$
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -72,7 +73,8 @@ public class RandomAccessFileMemory extends _Memory {
             file.seek(offset + addr);
             int b = file.read();
             if (b == -1)
-                throw new AccessException("end of file");
+                throw new AccessException(TypesNLS
+                        .getString("RandomAccessFileMemory.eof")); //$NON-NLS-1$
             return (byte) b;
         } catch (IOException e) {
             throw new AccessException(e);

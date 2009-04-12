@@ -31,8 +31,8 @@ public class CLILibrary {
 
     public void addMethod(String name, VMethod func) {
         if (methods.containsKey(name))
-            throw new IllegalArgumentException("cli function `" + name
-                    + "' is already existed");
+            throw new IllegalArgumentException("cli function `" + name //$NON-NLS-1$
+                    + "' is already existed"); //$NON-NLS-1$
         methods.put(name, func);
     }
 
@@ -110,23 +110,23 @@ public class CLILibrary {
     public Object invoke(String name, String... args) throws CLIException {
         VMethod m = get(name);
         if (m == null)
-            throw new CLIException("cli function " + name + " isn't existed");
+            throw new CLIException("cli function " + name + " isn't existed"); //$NON-NLS-1$ //$NON-NLS-2$
         try {
             return m._invoke(context, (Object[]) args);
         } catch (Control c) {
             throw c;
         } catch (Throwable e) {
-            throw new CLIException("libfunction fail: " + name, e);
+            throw new CLIException("libfunction fail: " + name, e); //$NON-NLS-1$
         }
     }
 
     static final Quotable spliter;
     static {
-        spliter = new Quotable("\"\'".toCharArray());
+        spliter = new Quotable("\"\'".toCharArray()); //$NON-NLS-1$
     }
 
     public Object eval(String exp) throws CLIException {
-        String[] s = spliter.splitDequote("\\s+", exp);
+        String[] s = spliter.splitDequote("\\s+", exp); //$NON-NLS-1$
         String name = s[0];
         String[] args = new String[s.length - 1];
         for (int i = 0; i < args.length; i++)
@@ -134,7 +134,7 @@ public class CLILibrary {
         try {
             return invoke(name, args);
         } catch (Exception e) {
-            throw new CLIException("failed to eval: " + exp, e);
+            throw new CLIException("failed to eval: " + exp, e); //$NON-NLS-1$
         }
     }
 

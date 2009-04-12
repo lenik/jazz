@@ -134,12 +134,12 @@ public class LAReader extends FilterReader {
 
     @Override
     public void mark(int readAheadLimit) throws IOException {
-        throw new IOException("Mark isn't supported");
+        throw new IOException("Mark isn't supported"); //$NON-NLS-1$
     }
 
     @Override
     public void reset() throws IOException {
-        throw new IOException("Mark isn't supported");
+        throw new IOException("Mark isn't supported"); //$NON-NLS-1$
     }
 
     public int look() throws IOException {
@@ -161,7 +161,7 @@ public class LAReader extends FilterReader {
 
     public int look(char[] cbuf, int off, int len) throws IOException {
         if (len > cap)
-            throw new OutOfDomainException("look-len", len, cap);
+            throw new OutOfDomainException("look-len", len, cap); //$NON-NLS-1$
         // len = Math.min(cap, len);
         int las = las();
         if (las < len && !isLabFull()) {
@@ -212,15 +212,15 @@ public class LAReader extends FilterReader {
         if (begin < current)
             return new String(lab, begin, current - begin);
         if (begin == current && !full)
-            return "";
+            return ""; //$NON-NLS-1$
         return new String(lab, begin, cap - begin)
                 + new String(lab, 0, current);
     }
 
     @Override
     public String toString() {
-        return "look-ahead(" + las() + "/" + cap + "): \"" + lookFilled()
-                + "\"";
+        return "look-ahead(" + las() + "/" + cap + "): \"" + lookFilled() //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                + "\""; //$NON-NLS-1$
     }
 
 }

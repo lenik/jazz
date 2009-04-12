@@ -28,18 +28,18 @@ public class BreakOrCutLinesUnitTest {
                     System.err.println(in);
                 Collection<Object> out;
                 if (in == null)
-                    out = WhatIf.send(nochop, "", true);
+                    out = WhatIf.send(nochop, "", true); //$NON-NLS-1$
                 else
                     out = WhatIf.send(nochop, in);
-                return Strings.join("|", out);
+                return Strings.join("|", out); //$NON-NLS-1$
             }
         }, //
-                EQ("12345", "123"), //
-                EQ("67890", "456|789"), //
-                EQ("x\n1\n12\n123\n", "0x\n|1\n|12\n|123|\n"), //
-                EQ("abcdef", "abc|def"), //
-                EQ("ghij", "ghi"),//
-                EQ(null, "j"), //
+                EQ("12345", "123"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("67890", "456|789"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("x\n1\n12\n123\n", "0x\n|1\n|12\n|123|\n"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("abcdef", "abc|def"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("ghij", "ghi"),// //$NON-NLS-1$ //$NON-NLS-2$
+                EQ(null, "j"), // //$NON-NLS-1$
                 END);
     }
 

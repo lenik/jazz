@@ -5,6 +5,7 @@ import net.bodz.bas.functors._Functor;
 import net.bodz.bas.lang.Control;
 import net.bodz.bas.lang.EvalException;
 import net.bodz.bas.lang.FunctorException;
+import net.bodz.bas.nls.FPNLS;
 
 public class If<T> extends _Functor<T> {
 
@@ -66,7 +67,7 @@ public class If<T> extends _Functor<T> {
     @Override
     public void validate() throws ValidationException {
         if (predicate == null) {
-            throw new ValidationException("Predicate of If can't be null. ");
+            throw new ValidationException(FPNLS.getString("If.nullPred")); //$NON-NLS-1$
         }
     }
 

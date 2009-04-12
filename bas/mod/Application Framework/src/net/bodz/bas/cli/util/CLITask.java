@@ -70,66 +70,67 @@ public class CLITask extends Task {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
-//
-//    @SuppressWarnings("unchecked")
-//    @Override
-//    public void maybeConfigure() throws BuildException {
-//        RuntimeConfigurable wrapper = getRuntimeConfigurableWrapper();
-//        Hashtable<?, ?> attrs = wrapper.getAttributeMap();
-//        try {
-//            ClassOptions<BasicCLI> opts = app.getOptions();
-//            List<String> rawArgs = null;
-//            for (Map.Entry<?, ?> ent : attrs.entrySet()) {
-//                String optnam = (String) ent.getKey();
-//                String optarg = (String) ent.getValue();
-//                if (optnam.startsWith("arg-")) {
-//                    int argIndex = Integer.parseInt(optnam.substring(4));
-//                    if (rawArgs == null)
-//                        rawArgs = new ArrayList<String>(argIndex + 1);
-//                    while (rawArgs.size() <= argIndex)
-//                        rawArgs.add(null);
-//                    rawArgs.set(argIndex, optarg);
-//                    continue;
-//                }
-//                try {
-//                    opts.findOption(optnam);
-//                } catch (CLIException e) {
-//                    continue;
-//                }
-//                if (optnam.length() == 1)
-//                    opts.load(app, "-" + optnam + optarg);
-//                else
-//                    opts.load(app, "--" + optnam, optarg);
-//                wrapper.removeAttribute(optnam);
-//            }
-//            if (rawArgs != null) {
-//                for (int i = rawArgs.size() - 1; i >= 0; i--)
-//                    if (rawArgs.get(i) == null)
-//                        rawArgs.remove(i);
-//                String[] argv = rawArgs.toArray(Empty.Strings);
-//                app.addArguments(argv);
-//            }
-//
-//            // children tags
-//            Enumeration<RuntimeConfigurable> children = wrapper.getChildren();
-//            while (children.hasMoreElements()) {
-//                RuntimeConfigurable child = children.nextElement();
-//                String name = child.getElementTag();
-//                String value = child.getText().toString();
-//                if ("arg".equals(name))
-//                    app.addArguments(value);
-//                else
-//                    ;
-//                // throw new BuildException("invalid child tag: " + name);
-//            }
-//        } catch (CLIException e) {
-//            throw new BuildException(e.getMessage(), e);
-//        } catch (ParseException e) {
-//            throw new BuildException(e.getMessage(), e);
-//        }
-//
-//        super.maybeConfigure();
-//    }
+
+    //
+    // @SuppressWarnings("unchecked")
+    // @Override
+    // public void maybeConfigure() throws BuildException {
+    // RuntimeConfigurable wrapper = getRuntimeConfigurableWrapper();
+    // Hashtable<?, ?> attrs = wrapper.getAttributeMap();
+    // try {
+    // ClassOptions<BasicCLI> opts = app.getOptions();
+    // List<String> rawArgs = null;
+    // for (Map.Entry<?, ?> ent : attrs.entrySet()) {
+    // String optnam = (String) ent.getKey();
+    // String optarg = (String) ent.getValue();
+    // if (optnam.startsWith("arg-")) {
+    // int argIndex = Integer.parseInt(optnam.substring(4));
+    // if (rawArgs == null)
+    // rawArgs = new ArrayList<String>(argIndex + 1);
+    // while (rawArgs.size() <= argIndex)
+    // rawArgs.add(null);
+    // rawArgs.set(argIndex, optarg);
+    // continue;
+    // }
+    // try {
+    // opts.findOption(optnam);
+    // } catch (CLIException e) {
+    // continue;
+    // }
+    // if (optnam.length() == 1)
+    // opts.load(app, "-" + optnam + optarg);
+    // else
+    // opts.load(app, "--" + optnam, optarg);
+    // wrapper.removeAttribute(optnam);
+    // }
+    // if (rawArgs != null) {
+    // for (int i = rawArgs.size() - 1; i >= 0; i--)
+    // if (rawArgs.get(i) == null)
+    // rawArgs.remove(i);
+    // String[] argv = rawArgs.toArray(Empty.Strings);
+    // app.addArguments(argv);
+    // }
+    //
+    // // children tags
+    // Enumeration<RuntimeConfigurable> children = wrapper.getChildren();
+    // while (children.hasMoreElements()) {
+    // RuntimeConfigurable child = children.nextElement();
+    // String name = child.getElementTag();
+    // String value = child.getText().toString();
+    // if ("arg".equals(name))
+    // app.addArguments(value);
+    // else
+    // ;
+    // // throw new BuildException("invalid child tag: " + name);
+    // }
+    // } catch (CLIException e) {
+    // throw new BuildException(e.getMessage(), e);
+    // } catch (ParseException e) {
+    // throw new BuildException(e.getMessage(), e);
+    // }
+    //
+    // super.maybeConfigure();
+    // }
 
     @Override
     public void execute() throws BuildException {
@@ -140,7 +141,7 @@ public class CLITask extends Task {
             }
             // adapting attributes
             if (logLevel != 0) {
-                ALog L = (ALog) sclass.get(app, "logout");
+                ALog L = (ALog) sclass.get(app, "logout"); //$NON-NLS-1$
                 L.setLevel(L.getLevel() + logLevel);
             }
         } catch (CLIException e) {
@@ -162,7 +163,7 @@ public class CLITask extends Task {
     @Override
     protected void handleErrorOutput(String output) {
         errbuf.append(output);
-        if (output.endsWith("\n")) {
+        if (output.endsWith("\n")) { //$NON-NLS-1$
             super.handleErrorOutput(errbuf.toString());
             errbuf.setLength(0);
         }

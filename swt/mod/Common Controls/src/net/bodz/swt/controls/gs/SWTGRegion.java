@@ -5,7 +5,7 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.graphics.Region;
 
 /**
- * @TestBy GRegion
+ * @test GRegion
  */
 public class SWTGRegion extends _GRegion {
 

@@ -20,6 +20,7 @@ import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
 import net.bodz.bas.lang.err.NotImplementedException;
+import net.bodz.dist.nls.PackNLS;
 
 public class Attachment implements IAttachment {
 
@@ -126,7 +127,7 @@ public class Attachment implements IAttachment {
 
     @Override
     public Object load() throws IOException {
-        throw new NotImplementedException("don't know how to load.");
+        throw new NotImplementedException("don't know how to load."); //$NON-NLS-1$
     }
 
     @Override
@@ -139,7 +140,7 @@ public class Attachment implements IAttachment {
 
     @Override
     public String toString() {
-        String s = "attachment ";
+        String s = PackNLS.getString("Attachment.attachment"); //$NON-NLS-1$
         if (url != null && file == null)
             s += url;
         else
@@ -152,7 +153,7 @@ public class Attachment implements IAttachment {
         protected String error;
 
         public StateBase(String accessType) {
-            this.error = "Currently opened using " + accessType;
+            this.error = PackNLS.getString("Attachment.currentlyAccess") + accessType; //$NON-NLS-1$
         }
 
         @Override
@@ -222,7 +223,7 @@ public class Attachment implements IAttachment {
         InputStream in;
 
         public UsingInputStream(URL url) {
-            super("InputStream");
+            super("InputStream"); //$NON-NLS-1$
             this.url = url;
         }
 
@@ -250,7 +251,7 @@ public class Attachment implements IAttachment {
         Reader       reader;
 
         public UsingReader(URL url, String encoding) {
-            super("Reader");
+            super("Reader"); //$NON-NLS-1$
             this.url = url;
             this.encoding = encoding;
         }
@@ -283,7 +284,7 @@ public class Attachment implements IAttachment {
         ObjectInputStream objin;
 
         public UsingObjectInputStream(URL url) {
-            super("ObjectInputStream");
+            super("ObjectInputStream"); //$NON-NLS-1$
             this.url = url;
         }
 
@@ -312,7 +313,7 @@ public class Attachment implements IAttachment {
         ZipInputStream zin;
 
         public UsingZipInputStream(URL url) {
-            super("ZipInputStream");
+            super("ZipInputStream"); //$NON-NLS-1$
             this.url = url;
         }
 
@@ -341,7 +342,7 @@ public class Attachment implements IAttachment {
         JarInputStream jin;
 
         public UsingJarInputStream(URL url) {
-            super("JarInputStream");
+            super("JarInputStream"); //$NON-NLS-1$
             this.url = url;
         }
 
@@ -370,7 +371,7 @@ public class Attachment implements IAttachment {
         OutputStream out;
 
         public UsingOutputStream(File file) {
-            super("OutputStream");
+            super("OutputStream"); //$NON-NLS-1$
             this.file = file;
         }
 
@@ -399,7 +400,7 @@ public class Attachment implements IAttachment {
         PrintStream  out;
 
         public UsingPrintStream(File file, String encoding) {
-            super("OutputStream");
+            super("OutputStream"); //$NON-NLS-1$
             this.file = file;
             this.encoding = encoding;
         }
@@ -433,7 +434,7 @@ public class Attachment implements IAttachment {
         Writer       writer;
 
         public UsingWriter(File file, String encoding) {
-            super("Writer");
+            super("Writer"); //$NON-NLS-1$
             this.file = file;
             this.encoding = encoding;
         }
@@ -467,7 +468,7 @@ public class Attachment implements IAttachment {
         ObjectOutputStream objout;
 
         public UsingObjectOutputStream(File file) {
-            super("ObjectOutputStream");
+            super("ObjectOutputStream"); //$NON-NLS-1$
             this.file = file;
         }
 
@@ -496,7 +497,7 @@ public class Attachment implements IAttachment {
         ZipOutputStream zout;
 
         public UsingZipOutputStream(File file) {
-            super("ZipOutputStream");
+            super("ZipOutputStream"); //$NON-NLS-1$
             this.file = file;
         }
 
@@ -525,7 +526,7 @@ public class Attachment implements IAttachment {
         JarOutputStream jout;
 
         public UsingJarOutputStream(File file) {
-            super("JarOutputStream");
+            super("JarOutputStream"); //$NON-NLS-1$
             this.file = file;
         }
 

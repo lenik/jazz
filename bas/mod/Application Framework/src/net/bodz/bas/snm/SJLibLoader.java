@@ -10,6 +10,7 @@ import java.util.Properties;
 import java.util.Map.Entry;
 
 import net.bodz.bas.io.Files;
+import net.bodz.bas.nls.AppNLS;
 import net.bodz.bas.sys.SystemInfo;
 
 public class SJLibLoader {
@@ -103,7 +104,7 @@ public class SJLibLoader {
         return lib.getTarget();
     }
 
-    public static String librariesIni = "libraries.ini";
+    public static String librariesIni = "libraries.ini"; //$NON-NLS-1$
 
     protected LibDir loadLibDir(File dir) {
         assert dir.isDirectory();
@@ -115,18 +116,21 @@ public class SJLibLoader {
                 libraries = Files.loadProperties(ini);
             } catch (IOException e) {
                 throw new Error(
-                        "failed to load " + ini + ": " + e.getMessage(), e);
+                        AppNLS.getString("SJLibLoader.failedToLoad") + ini + ": " + e.getMessage(), e); //$NON-NLS-1$ //$NON-NLS-2$
             }
             for (Entry<Object, Object> e : libraries.entrySet()) {
                 String name = (String) e.getKey();
                 if (libDir.containsKey(name))
-                    throw new IllegalArgumentException("duplicated name: "
-                            + name + " defined in " + ini);
+                    throw new IllegalArgumentException(AppNLS
+                            .getString("SJLibLoader.dupName") //$NON-NLS-1$
+                            + name
+                            + AppNLS.getString("SJLibLoader.definedIn") + ini); //$NON-NLS-1$
 
                 String value = (String) e.getValue();
 
                 File target = Files.canoniOf(dir, value);
-                assert target.isFile() : "invalid target " + target;
+                assert target.isFile() : AppNLS
+                        .getString("SJLibLoader.invalidTarget") + target; //$NON-NLS-1$
                 if (!target.isFile())
                     continue;
 
@@ -140,10 +144,10 @@ public class SJLibLoader {
     public static final SJLibLoader DEFAULT;
     static {
         DEFAULT = new SJLibLoader();
-        DEFAULT.addPath(".");
-        DEFAULT.addPath("..");
-        DEFAULT.addPath("../lib");
-        String JAVA_LIB = System.getenv("JAVA_LIB");
+        DEFAULT.addPath("."); //$NON-NLS-1$
+        DEFAULT.addPath(".."); //$NON-NLS-1$
+        DEFAULT.addPath("../lib"); //$NON-NLS-1$
+        String JAVA_LIB = System.getenv("JAVA_LIB"); //$NON-NLS-1$
         if (JAVA_LIB != null)
             DEFAULT.addPaths(JAVA_LIB);
     }

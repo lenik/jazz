@@ -24,7 +24,7 @@ public class IntSList {
 
     public int absoluteOf(int index) {
         if (index < 0 || index >= size)
-            throw new IndexOutOfBoundsException(index + "/" + size);
+            throw new IndexOutOfBoundsException(index + "/" + size); //$NON-NLS-1$
         int absoluteIndex = start;
         while (--index >= 0)
             absoluteIndex = next[absoluteIndex];
@@ -65,14 +65,14 @@ public class IntSList {
     @Override
     public String toString() {
         if (size == 0)
-            return "";
+            return ""; //$NON-NLS-1$
         StringBuffer buf = null;
         int absoluteIndex = start;
         for (int i = 0; i < size; i++) {
             if (buf == null)
                 buf = new StringBuffer();
             else
-                buf.append("-");
+                buf.append("-"); //$NON-NLS-1$
             buf.append(absoluteIndex);
             absoluteIndex = next[absoluteIndex];
         }

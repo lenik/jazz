@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.nio.charset.Charset;
 
 import net.bodz.bas.io.Files;
+import net.bodz.bas.nls.SysNLS;
 import net.bodz.bas.types.util.Arrays2;
 import net.bodz.bas.types.util.Strings;
 
@@ -16,19 +17,19 @@ public class Processes {
     private static String[] shvec;
     private static String   shprefix;
     static {
-        String os = System.getProperty("os.name");
-        if (os.startsWith("Windows")) {
-            String comspec = System.getenv("COMSPEC");
+        String os = System.getProperty("os.name"); //$NON-NLS-1$
+        if (os.startsWith("Windows")) { //$NON-NLS-1$
+            String comspec = System.getenv("COMSPEC"); //$NON-NLS-1$
             if (comspec == null)
-                comspec = "cmd";
-            shvec = new String[] { comspec, "/c" };
+                comspec = "cmd"; //$NON-NLS-1$
+            shvec = new String[] { comspec, "/c" }; //$NON-NLS-1$
         } else {
-            String shell = System.getenv("SHELL");
+            String shell = System.getenv("SHELL"); //$NON-NLS-1$
             if (shell == null)
-                shell = "sh";
+                shell = "sh"; //$NON-NLS-1$
             shvec = new String[] { shell };
         }
-        shprefix = Strings.join(" ", shvec) + " ";
+        shprefix = Strings.join(" ", shvec) + " "; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     public static Process shellExec(String command) throws IOException {
@@ -146,7 +147,7 @@ public class Processes {
         Integer code = exitCode.get();
         if (code == null)
             throw new IllegalStateException(
-                    "last exit code hasn't been set yet.");
+                    SysNLS.getString("Processes.noExitCode")); //$NON-NLS-1$
         return code;
     }
 

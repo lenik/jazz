@@ -1,6 +1,7 @@
 package net.bodz.bas.mod;
 
 import net.bodz.bas.lang.err.CreateException;
+import net.bodz.bas.nls.AppNLS;
 import net.bodz.bas.types.util.CompatMethods;
 
 public interface Factory<T> {
@@ -18,8 +19,8 @@ public interface Factory<T> {
             assert clazz != null;
             if (clazz.isMemberClass()) {
                 if (outer == null)
-                    throw new NullPointerException(
-                            "no outer specified for member " + clazz);
+                    throw new NullPointerException(AppNLS
+                            .getString("Factory.needEnclosing") + clazz); //$NON-NLS-1$
             }
             this.clazz = clazz;
             this.outer = outer;

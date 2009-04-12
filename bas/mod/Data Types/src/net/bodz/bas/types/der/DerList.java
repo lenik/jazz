@@ -22,7 +22,7 @@ public abstract class DerList<E> extends AbstractList<E> implements
      */
     public DerList(List<E> orig) {
         if (orig == null)
-            throw new NullPointerException("orig");
+            throw new NullPointerException("orig"); //$NON-NLS-1$
         this.pList = orig;
         this.delta = new DerListDelta();
         this.qList = createAllocList();
@@ -55,7 +55,7 @@ public abstract class DerList<E> extends AbstractList<E> implements
         delta.add(qNext, index);
         int pq = delta.map(index);
         int q = pq - pList.size();
-        assert q >= 0 : "should added to a new allocated unit";
+        assert q >= 0 : "should added to a new allocated unit"; //$NON-NLS-1$
         qList.add(q, e);
     }
 

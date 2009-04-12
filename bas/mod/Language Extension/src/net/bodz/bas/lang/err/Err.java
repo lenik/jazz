@@ -21,7 +21,7 @@ public class Err {
         Field field = null;
         boolean ok = false;
         try {
-            field = Throwable.class.getDeclaredField("detailMessage");
+            field = Throwable.class.getDeclaredField("detailMessage"); //$NON-NLS-1$
             field.setAccessible(true);
             ok = true;
         } catch (SecurityException e) {
@@ -46,7 +46,7 @@ public class Err {
         if (mesg == null || mesg.isEmpty())
             mesg = prefix;
         else
-            mesg = prefix + ": " + mesg;
+            mesg = prefix + ": " + mesg; //$NON-NLS-1$
         Reflects.set(t, detailMessage, mesg);
     }
 

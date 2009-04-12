@@ -14,9 +14,9 @@ public class DatesTest {
         for (int i = 0; i < 100000; i++) {
             if (i % 10000 == 0)
                 System.out.println(i);
-            Date date = Dates.YYYYMMDD.parse("19990406");
+            Date date = Dates.YYYYMMDD.parse("19990406"); //$NON-NLS-1$
             String s = Dates.MM_DD_YYYY.format(date);
-            assertEquals("04/06/1999", s);
+            assertEquals("04/06/1999", s); //$NON-NLS-1$
         }
     }
 

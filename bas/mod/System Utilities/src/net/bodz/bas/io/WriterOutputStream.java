@@ -62,7 +62,7 @@ public class WriterOutputStream extends OutputStream {
         {
             CoderResult result = decoder.decode(bytebuf, charbuf, end);
             if (result.isOverflow())
-                throw new UnexpectedException("charbuf overflow");
+                throw new UnexpectedException("charbuf overflow"); //$NON-NLS-1$
             if (result.isError()) {
                 if (result.isMalformed())
                     handleMalformed(bytebuf);

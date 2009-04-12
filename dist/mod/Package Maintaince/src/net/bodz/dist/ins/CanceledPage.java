@@ -15,7 +15,7 @@ public class CanceledPage extends PageComposite {
 
     @Override
     protected Object getInitialState() {
-        return "quit";
+        return "quit"; //$NON-NLS-1$
     }
 
 }

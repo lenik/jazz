@@ -16,7 +16,7 @@ public class SJProject {
         if (dir != null && !dir.isDirectory())
             return null;
         while (dir != null) {
-            if (new File(dir, ".project").exists())
+            if (new File(dir, ".project").exists()) //$NON-NLS-1$
                 return dir;
             dir = dir.getParentFile();
         }
@@ -72,7 +72,7 @@ public class SJProject {
     public static File findBase(Class<?> clazz) {
         URLInfo info = getInfo(clazz);
         String baseURL = info.prefix;
-        if ("jar".equals(info.protocol)) {
+        if ("jar".equals(info.protocol)) { //$NON-NLS-1$
             baseURL = Strings.chop(baseURL);
             baseURL = baseURL.substring(4); // remove "jar:"
         }
@@ -88,19 +88,19 @@ public class SJProject {
     public static URL findSrc(Class<?> clazz, String srcExt) {
         URLInfo info = getInfo(clazz);
         String base = info.prefixBase;
-        if ("jar".equals(info.protocol)) {
+        if ("jar".equals(info.protocol)) { //$NON-NLS-1$
             // trailing `!'
             int dot = base.lastIndexOf('.');
             String baseName = base.substring(0, dot);
             String baseExt = base.substring(dot);
-            base = baseName + "-src" + baseExt;
+            base = baseName + "-src" + baseExt; //$NON-NLS-1$
         } else {
-            if ("bin".equals(base))
-                base = "src";
-            else if (base.endsWith(".bin"))
+            if ("bin".equals(base)) //$NON-NLS-1$
+                base = "src"; //$NON-NLS-1$
+            else if (base.endsWith(".bin")) //$NON-NLS-1$
                 base = base.substring(0, base.length() - 4);
             else
-                base += "-src";
+                base += "-src"; //$NON-NLS-1$
         }
         String srcdir = info.prefixDir + base;
         String srcurl = srcdir + info.respath + srcExt;
@@ -112,7 +112,7 @@ public class SJProject {
     }
 
     public static URL findSrc(Class<?> clazz) {
-        return findSrc(clazz, ".java");
+        return findSrc(clazz, ".java"); //$NON-NLS-1$
     }
 
 }

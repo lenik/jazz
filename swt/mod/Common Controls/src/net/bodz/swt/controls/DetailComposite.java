@@ -20,7 +20,7 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
 /**
- * @TestBy DetailCompositeTest
+ * @test DetailCompositeTest
  */
 public class DetailComposite extends Composite {
 
@@ -50,9 +50,9 @@ public class DetailComposite extends Composite {
         setLayout(new BorderLayout(0, 0));
 
         this.expandedImage = SWTResources
-                .getImageRes("/icons/full/elcl16/thin_min_view.gif");
+                .getImageRes("/icons/full/elcl16/thin_min_view.gif"); //$NON-NLS-1$
         this.collaspedImage = SWTResources
-                .getImageRes("/icons/full/elcl16/thin_max_view.gif");
+                .getImageRes("/icons/full/elcl16/thin_max_view.gif"); //$NON-NLS-1$
 
         topBar = new Composite(this, SWT.NONE);
         final GridLayout gridLayout = new GridLayout();

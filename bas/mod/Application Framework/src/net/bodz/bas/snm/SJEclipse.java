@@ -10,11 +10,12 @@ import java.util.regex.Pattern;
 
 import net.bodz.bas.cli.util.ModulesRoot;
 import net.bodz.bas.io.Files;
+import net.bodz.bas.nls.AppNLS;
 import net.bodz.bas.text.util.Patterns;
 
 public class SJEclipse {
 
-    static PatternFilter linkFilter = new PatternFilter("*.link", true);
+    static PatternFilter linkFilter = new PatternFilter("*.link", true); //$NON-NLS-1$
 
     static class PatternFilter implements FilenameFilter {
 
@@ -27,7 +28,7 @@ public class SJEclipse {
 
         public PatternFilter(Pattern pattern, boolean not) {
             if (pattern == null)
-                throw new NullPointerException("null pattern");
+                throw new NullPointerException("null pattern"); //$NON-NLS-1$
             this.pattern = pattern;
             this.not = not;
         }
@@ -58,11 +59,11 @@ public class SJEclipse {
     static {
         searches = new ArrayList<ModulesRoot>();
 
-        String lapiota = System.getenv("LAPIOTA");
+        String lapiota = System.getenv("LAPIOTA"); //$NON-NLS-1$
         if (lapiota != null) {
-            File d = new File(lapiota, "abc.d");
+            File d = new File(lapiota, "abc.d"); //$NON-NLS-1$
             abcd = new ModulesRoot(d);
-            d = abcd.findexp("eclipse-*");
+            d = abcd.findexp("eclipse-*"); //$NON-NLS-1$
             if (d != null) {
                 configEclipse(d);
             }
@@ -76,15 +77,16 @@ public class SJEclipse {
 
     static void configEclipse(File eclipsed) {
         if (!eclipsed.isDirectory())
-            throw new IllegalArgumentException("not a directory: " + eclipsed);
+            throw new IllegalArgumentException(AppNLS
+                    .getString("SJEclipse.notDir") + eclipsed); //$NON-NLS-1$
         addEclipse(eclipsed);
     }
 
     static void addEclipse(File eclipsed) {
-        addSearch(new File(eclipsed, "plugins"));
-        addSearch(new File(eclipsed, "dropins"));
-        parseLinks(new File(eclipsed, "dropins"));
-        parseLinks(new File(eclipsed, "links"));
+        addSearch(new File(eclipsed, "plugins")); //$NON-NLS-1$
+        addSearch(new File(eclipsed, "dropins")); //$NON-NLS-1$
+        parseLinks(new File(eclipsed, "dropins")); //$NON-NLS-1$
+        parseLinks(new File(eclipsed, "links")); //$NON-NLS-1$
     }
 
     static void parseLinks(File linkDir) {
@@ -101,13 +103,13 @@ public class SJEclipse {
                 if (eq == -1)
                     continue;
                 String key = s.substring(0, eq);
-                if (!"path".equals(key))
+                if (!"path".equals(key)) //$NON-NLS-1$
                     continue;
                 String val = s.substring(eq + 1).trim();
                 File linkTarget = Files.canoniOf(base, val);
                 if (linkTarget.isDirectory()) {
                     File d = linkTarget;
-                    File d_eclipse = new File(d, "eclipse");
+                    File d_eclipse = new File(d, "eclipse"); //$NON-NLS-1$
                     if (d_eclipse.isDirectory())
                         d = d_eclipse;
                     addEclipse(d);
@@ -122,14 +124,14 @@ public class SJEclipse {
      * @example org.eclipse.swt.win32.win32.x86_
      */
     public static URL findlib(String prefix, boolean errorFail) {
-        String exp = prefix + "*";
+        String exp = prefix + "*"; //$NON-NLS-1$
         for (ModulesRoot mroot : searches) {
             File find = mroot.findexp(exp);
             if (find != null)
                 return Files.getURL(find);
         }
         if (errorFail)
-            throw new Error("can't find, prefix=" + prefix);
+            throw new Error(AppNLS.getString("SJEclipse.cantFind") + prefix); //$NON-NLS-1$
         return null;
     }
 

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import net.bodz.swt.gui.ValidateException;
+import net.bodz.swt.nls.ControlsNLS;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.ImageData;
@@ -18,12 +19,12 @@ public class JPEGImageType extends _ImageType {
 
     @Override
     public String getName() {
-        return "JPEG";
+        return ControlsNLS.getString("JPEGImageType.name"); //$NON-NLS-1$
     }
 
     @Override
     public String getExtension() {
-        return "jpg";
+        return "jpg"; //$NON-NLS-1$
     }
 
     static class Params {
@@ -46,7 +47,8 @@ public class JPEGImageType extends _ImageType {
             setLayout(gridLayout);
 
             final Label jpegQualityLabel = new Label(this, SWT.NONE);
-            jpegQualityLabel.setText("JPEG &Quality:");
+            jpegQualityLabel.setText(ControlsNLS
+                    .getString("JPEGImageType.jpegQuality")); //$NON-NLS-1$
 
             qualityScale = new Scale(this, SWT.NONE);
             qualityScale.setMinimum(10);
@@ -69,7 +71,7 @@ public class JPEGImageType extends _ImageType {
     public void save(ImageData imageData, OutputStream out, Object _params)
             throws IOException {
         if (imageData == null)
-            throw new NullPointerException("imageData");
+            throw new NullPointerException("imageData"); //$NON-NLS-1$
         // Params params = (Params) _params;
         ImageLoader loader = new ImageLoader();
         loader.data = new ImageData[] { imageData };

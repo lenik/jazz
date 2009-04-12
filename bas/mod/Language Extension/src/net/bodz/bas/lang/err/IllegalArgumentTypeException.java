@@ -1,5 +1,7 @@
 package net.bodz.bas.lang.err;
 
+import net.bodz.bas.nls.LangNLS;
+
 public class IllegalArgumentTypeException extends IllegalArgumentException {
 
     private static final long serialVersionUID = -4429030040543851015L;
@@ -42,7 +44,8 @@ public class IllegalArgumentTypeException extends IllegalArgumentException {
         if (expected == null)
             return String.valueOf(argType);
         else
-            return String.valueOf(argType) + ": expect " + expected;
+            return String.valueOf(argType)
+                    + LangNLS.getString("IllegalArgumentTypeException.expect") + expected; //$NON-NLS-1$
     }
 
 }

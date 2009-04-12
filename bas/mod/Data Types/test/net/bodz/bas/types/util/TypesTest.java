@@ -30,23 +30,23 @@ public class TypesTest {
 
     @Test
     public void testLoad() {
-        assertEquals("seq before load", 0, seq);
+        assertEquals("seq before load", 0, seq); //$NON-NLS-1$
         Types.load(A.class);
-        assertEquals("seq after load", 1, seq);
+        assertEquals("seq after load", 1, seq); //$NON-NLS-1$
         Types.load(A.class);
-        assertEquals("only load once", 1, seq);
+        assertEquals("only load once", 1, seq); //$NON-NLS-1$
     }
 
     @Test
     public void testJoinNamesClassOfQArray() {
         TestDefs.tests(new TestEval<Class<?>[]>() {
             public Object eval(Class<?>[] input) throws Throwable {
-                return Types.joinNames(", ", true, input);
+                return Types.joinNames(", ", true, input); //$NON-NLS-1$
             }
         }, //
                 EQU(new Class<?>[] { java.util.List.class,
                         java.lang.String.class }, //
-                        "List, String"), //
+                        "List, String"), // //$NON-NLS-1$
                 END);
     }
 

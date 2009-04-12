@@ -2,13 +2,13 @@ package net.bodz.swt.gui.styles.base;
 
 import java.io.File;
 
-import net.bodz.bas.gui.Interaction;
 import net.bodz.bas.gui.RenderException;
-import net.bodz.bas.gui.Renderer;
 import net.bodz.bas.gui.RenderStrategy;
+import net.bodz.bas.gui.Renderer;
 import net.bodz.bas.lang.a.ChainUsage;
 import net.bodz.bas.lang.a.OverrideOption;
 import net.bodz.bas.lang.ref.Var;
+import net.bodz.bas.rt.Interaction;
 import net.bodz.swt.gui.GUIHint;
 import net.bodz.swt.gui.GUIVar;
 import net.bodz.swt.gui.GUIVarMeta;
@@ -16,6 +16,7 @@ import net.bodz.swt.gui.GUIVars;
 import net.bodz.swt.gui.RenderContext;
 import net.bodz.swt.gui.SWTInteraction;
 import net.bodz.swt.gui.SWTRenderer;
+import net.bodz.swt.nls.GUINLS;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -31,7 +32,7 @@ public abstract class SWTStrategy extends RenderStrategy implements
     private static final long serialVersionUID = 4665944902525510516L;
 
     protected static class Config {
-        public String defaultIcon     = "/icons/full/obj16/genericvariable_obj.gif";
+        public String defaultIcon     = "/icons/full/obj16/genericvariable_obj.gif"; //$NON-NLS-1$
         public int    defaultIconSize = 16;
 
         public static Config getDefault() {
@@ -60,7 +61,8 @@ public abstract class SWTStrategy extends RenderStrategy implements
     @Override
     public SWTRenderer put(Class<?> key, Renderer value) {
         if (!(value instanceof SWTRenderer))
-            throw new IllegalArgumentException("not a SWTRenderer: " + value);
+            throw new IllegalArgumentException(GUINLS
+                    .getString("SWTStrategy.notSWTRenderer") + value); //$NON-NLS-1$
         return (SWTRenderer) super.put(key, value);
     }
 
@@ -77,7 +79,8 @@ public abstract class SWTStrategy extends RenderStrategy implements
             throws RenderException, SWTException {
         SWTRenderer renderer = findRenderer(var);
         if (renderer == null)
-            throw new RenderException("Don't know how to render "
+            throw new RenderException(GUINLS
+                    .getString("SWTStrategy.nullRenderer") //$NON-NLS-1$
                     + var.getMeta().getType());
         @SuppressWarnings("unchecked")
         GUIVar<Object> gvar = (GUIVar<Object>) var;

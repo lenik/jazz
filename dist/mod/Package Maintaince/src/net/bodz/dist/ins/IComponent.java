@@ -7,9 +7,12 @@ import org.eclipse.swt.widgets.Composite;
 
 public interface IComponent {
 
-    /**
-     * name must be unique in the project.
-     */
+    /** Instance variable */
+    String getId();
+
+    /** Instance variable */
+    void setId(String id);
+
     String getName();
 
     ImageData getImage();
@@ -34,7 +37,11 @@ public interface IComponent {
 
     int getMoreSize();
 
-    boolean isSelected();
+    /** Initial selection */
+    boolean getSelection();
+
+    /** Instance variable */
+    void setSelection(boolean selection);
 
     /**
      * @return <code>null</code> if none.
@@ -52,9 +59,21 @@ public interface IComponent {
     ConfigPage createConfig(ISession session, Composite parent, int style);
 
     /**
+     * called by packager, after {@link #pack(ISession)}, the data is then
+     * persisted.
+     */
+    Object getData();
+
+    /**
+     * called by installer/uninstaller, before {@link #install(ISession)} and
+     * {@link #uninstall(ISession)}
+     */
+    void setData(Object data);
+
+    /**
      * This method won't be called if the component doesn't have data.
      */
-    void dump(ISession session) throws InstallException;
+    void pack(ISession session) throws InstallException;
 
     /**
      * @param dumpedData

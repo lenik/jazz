@@ -18,6 +18,7 @@ import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.ControlBreak;
 import net.bodz.bas.lang.a.OverrideOption;
 import net.bodz.bas.lang.err.NotImplementedException;
+import net.bodz.bas.nls.AppNLS;
 import net.bodz.bas.types.TypeParsers.GetInstanceParser;
 import net.bodz.bas.types.parsers.WildcardsParser;
 
@@ -39,7 +40,7 @@ public class BatchCLI extends BasicCLI {
     boolean          rootLast;
 
     @Option(alias = "Im", vnam = "FILEMASK", doc = "include specified type of files, default non-hidden files")
-    FileMask         inclusiveMask = new FileMask("f/fH");
+    FileMask         inclusiveMask = new FileMask("f/fH");    //$NON-NLS-1$
     @Option(alias = "IM", vnam = "FILEMASK", doc = "exclude specified type of files")
     FileMask         exclusiveMask;
 
@@ -239,8 +240,12 @@ public class BatchCLI extends BasicCLI {
     @OverrideOption(group = "batch")
     protected void doFileArgument(final File file) throws Throwable {
         currentStartFile = file;
-        FileFinder finder = new FileFinder(file, fileFilter, filterDirectories,
-                recursive, rootLast, sortComparator);
+        FileFinder finder = new FileFinder(fileFilter, recursive,
+                filterDirectories, file);
+        if (rootLast)
+            finder.setOrder(FileFinder.FILE | FileFinder.DIR_POST);
+        if (sortComparator != null)
+            finder.setComparator(sortComparator);
         for (File f : finder)
             _processFile(Files.canoniOf(f));
     }
@@ -270,7 +275,9 @@ public class BatchCLI extends BasicCLI {
         try {
             doFile(file);
         } catch (Throwable e) {
-            L.e.P("file ", file, " error: ", e.getMessage());
+            L.e
+                    .P(
+                            AppNLS.getString("BatchCLI.file"), file, AppNLS.getString("BatchCLI.error"), e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
             if (L.showDetail())
                 e.printStackTrace();
             if (!errorContinue)

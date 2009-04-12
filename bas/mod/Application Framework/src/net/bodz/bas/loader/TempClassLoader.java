@@ -57,7 +57,7 @@ public class TempClassLoader extends URLClassLoader {
     @Override
     protected synchronized Class<?> loadClass(String name, boolean resolve)
             throws ClassNotFoundException {
-        assert name != null : "null name";
+        assert name != null : "null name"; //$NON-NLS-1$
         Class<?> c = findLoadedClass(name);
         if (c == null) {
             try {

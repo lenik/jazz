@@ -9,12 +9,12 @@ import javax.security.auth.callback.PasswordCallback;
 import javax.security.auth.callback.TextOutputCallback;
 import javax.security.auth.callback.UnsupportedCallbackException;
 
-import com.sun.security.auth.callback.TextCallbackHandler;
-
 import net.bodz.bas.io.Files;
 import net.bodz.bas.log.ALog;
 import net.bodz.bas.log.ALogs;
 import net.bodz.bas.log.LogOut;
+
+import com.sun.security.auth.callback.TextCallbackHandler;
 
 /**
  * @see TextCallbackHandler

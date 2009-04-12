@@ -14,10 +14,10 @@ public class TestDefsTest {
                 return input;
             }
         }, //
-                EQ("example +", 1 + 1, 2), //
-                EQ("example -", 1 - 1, 0), //
-                EQ("example *", 1 * 1, 1), //
-                EQ("example /", 1 / 1, 1));
+                EQ("example +", 1 + 1, 2), // //$NON-NLS-1$
+                EQ("example -", 1 - 1, 0), // //$NON-NLS-1$
+                EQ("example *", 1 * 1, 1), // //$NON-NLS-1$
+                EQ("example /", 1 / 1, 1)); //$NON-NLS-1$
     }
 
 }

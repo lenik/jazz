@@ -12,7 +12,7 @@ public class MessageDigestParser implements TypeParser {
     @Override
     public MessageDigest parse(String name) throws ParseException {
         String provider = null;
-        int d = name.indexOf("::");
+        int d = name.indexOf("::"); //$NON-NLS-1$
         if (d != -1) {
             provider = name.substring(0, d);
             name = name.substring(d + 2);

@@ -13,7 +13,7 @@ import org.junit.Test;
 
 public class SJProjectTest {
 
-    private String magic = "MaGiC-GoOd..";
+    private String magic = "MaGiC-GoOd.."; //$NON-NLS-1$
 
     @Test
     public void test1() throws IOException {
@@ -26,8 +26,8 @@ public class SJProjectTest {
     public void test2() throws IOException {
         String bin = Files.classData(Object.class).toString();
         String src = SJProject.findSrc(Object.class).toString();
-        String src0 = bin.replace(".class", ".java");
-        src0 = src0.replace("rt.jar!", "rt-src.jar!");
+        String src0 = bin.replace(".class", ".java"); //$NON-NLS-1$ //$NON-NLS-2$
+        src0 = src0.replace("rt.jar!", "rt-src.jar!"); //$NON-NLS-1$ //$NON-NLS-2$
         assertEquals(src0, src);
     }
 

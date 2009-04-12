@@ -13,7 +13,7 @@ import org.junit.Test;
 public class AnnotationsTest {
 
     static String annPrefix(Class<? extends Annotation> annotationClass) {
-        return annotationClass + " @" + annotationClass.getName();
+        return annotationClass + " @" + annotationClass.getName(); //$NON-NLS-1$
     }
 
     @Test
@@ -21,7 +21,7 @@ public class AnnotationsTest {
         BCharOut buffer = new BCharOut();
         Annotations.dumpAnnotationMap(AnnotationsTest.class, buffer);
         // @net.bodz.bas.annotations.Author(value=[TeST])
-        assertEquals(annPrefix(Author.class) + "(value=[TeST])\n", //
+        assertEquals(annPrefix(Author.class) + "(value=[TeST])\n", // //$NON-NLS-1$
                 buffer.toString());
     }
 }

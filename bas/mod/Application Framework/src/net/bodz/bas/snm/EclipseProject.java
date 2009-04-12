@@ -8,6 +8,7 @@ import java.util.List;
 
 import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.err.ParseException;
+import net.bodz.bas.nls.AppNLS;
 import net.bodz.bas.xml.XMLs;
 
 import org.xml.sax.Attributes;
@@ -19,14 +20,15 @@ public class EclipseProject {
     private File base;
 
     public EclipseProject(File base) {
-        assert base != null : "null base";
+        assert base != null : "null base"; //$NON-NLS-1$
         this.base = base;
     }
 
     public static EclipseProject findFromCWD() {
-        File base = SJProject.findProjectBase(new File("."));
+        File base = SJProject.findProjectBase(new File(".")); //$NON-NLS-1$
         if (base == null)
-            throw new RuntimeException("can't find the project");
+            throw new RuntimeException(AppNLS
+                    .getString("EclipseProject.cantFindProject")); //$NON-NLS-1$
         return new EclipseProject(base);
     }
 
@@ -39,7 +41,7 @@ public class EclipseProject {
     }
 
     public URL[] getClasspaths() throws ParseException {
-        File cpFile = new File(base, ".classpath");
+        File cpFile = new File(base, ".classpath"); //$NON-NLS-1$
         final String[] _output = new String[1];
         final List<String> outputs = new ArrayList<String>();
         try {
@@ -47,16 +49,16 @@ public class EclipseProject {
                 @Override
                 public void startElement(String uri, String localName,
                         String name, Attributes attributes) throws SAXException {
-                    if (!"classpathentry".equals(name))
+                    if (!"classpathentry".equals(name)) //$NON-NLS-1$
                         return;
-                    String kind = attributes.getValue("kind");
-                    String path = attributes.getValue("path");
-                    if ("output".equals(kind)) { // default
+                    String kind = attributes.getValue("kind"); //$NON-NLS-1$
+                    String path = attributes.getValue("path"); //$NON-NLS-1$
+                    if ("output".equals(kind)) { // default //$NON-NLS-1$
                         _output[0] = path;
                     }
-                    if (!"src".equals(kind))
+                    if (!"src".equals(kind)) //$NON-NLS-1$
                         return;
-                    String output = attributes.getValue("output");
+                    String output = attributes.getValue("output"); //$NON-NLS-1$
                     if (output != null)
                         outputs.add(output);
                 }

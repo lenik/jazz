@@ -8,6 +8,7 @@ import java.util.Comparator;
 import net.bodz.bas.lang.err.IllegalUsageError;
 import net.bodz.bas.lang.script.MethodSignature;
 import net.bodz.bas.lang.util.Reflects;
+import net.bodz.bas.nls.TypesNLS;
 import net.bodz.bas.types.Pair;
 
 public class Comparators {
@@ -32,8 +33,8 @@ public class Comparators {
                 Comparable<Object> _a = ((Comparable<Object>) a);
                 return _a.compareTo(b);
             }
-            throw new IllegalUsageError("Can't compare between " + a.getClass()
-                    + " and " + b.getClass());
+            throw new IllegalUsageError(TypesNLS.getString("Comparators.0") + a.getClass() //$NON-NLS-1$
+                    + TypesNLS.getString("Comparators.1") + b.getClass()); //$NON-NLS-1$
         }
     }
 
@@ -382,8 +383,8 @@ public class Comparators {
                 PropertyDescriptor memberProperty) {
             super(comparator, memberProperty.getReadMethod());
             if (memberMethod == null)
-                throw new IllegalArgumentException("member property "
-                        + memberProperty.getName() + " isn't readable");
+                throw new IllegalArgumentException(TypesNLS.getString("Comparators.2") //$NON-NLS-1$
+                        + memberProperty.getName() + TypesNLS.getString("Comparators.3")); //$NON-NLS-1$
         }
 
     }

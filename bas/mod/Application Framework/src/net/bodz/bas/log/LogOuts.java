@@ -10,7 +10,7 @@ public class LogOuts {
 
     public static final LogOut nil;
     static {
-        nil = new LogOut("nil") {
+        nil = new LogOut("nil") { //$NON-NLS-1$
             @Override
             public void write(char[] chars, int off, int len)
                     throws IOException {
@@ -32,8 +32,8 @@ public class LogOuts {
         };
     }
 
-    public static final LogOut stdout = get(CharOuts.stdout, "stdout");
-    public static final LogOut stderr = get(CharOuts.stderr, "stderr");
+    public static final LogOut stdout = get(CharOuts.stdout, "stdout"); //$NON-NLS-1$
+    public static final LogOut stderr = get(CharOuts.stderr, "stderr"); //$NON-NLS-1$
 
     public static final LogOut debug  = nil;
 

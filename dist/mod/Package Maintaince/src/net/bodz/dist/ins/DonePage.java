@@ -1,5 +1,6 @@
 package net.bodz.dist.ins;
 
+import net.bodz.dist.nls.PackNLS;
 import net.bodz.swt.gui.pfl.PageComposite;
 
 import org.eclipse.swt.SWT;
@@ -10,7 +11,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 
 /**
- * @TestBy DonePageTest
+ * @test DonePageTest
  */
 public class DonePage extends PageComposite {
 
@@ -22,17 +23,17 @@ public class DonePage extends PageComposite {
         setLayout(new GridLayout());
 
         final Button rebootCheck = new Button(this, SWT.CHECK);
-        rebootCheck.setText("Reboot the computer");
+        rebootCheck.setText(PackNLS.getString("DonePage.reboot")); //$NON-NLS-1$
         rebootCheck.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 boolean reboot = rebootCheck.getSelection();
                 if (reboot) {
                     session.getFlags().set(ISession.REBOOT);
-                    setExitState("reboot");
+                    setExitState("reboot"); //$NON-NLS-1$
                 } else {
                     session.getFlags().clear(ISession.REBOOT);
-                    setExitState("quit");
+                    setExitState("quit"); //$NON-NLS-1$
                 }
             }
         });
@@ -41,7 +42,7 @@ public class DonePage extends PageComposite {
     @Override
     public void enter(String prev) {
         boolean reboot = session.getFlags().isSet(ISession.REBOOT);
-        setExitState(reboot ? "reboot" : "quit");
+        setExitState(reboot ? "reboot" : "quit"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
 }

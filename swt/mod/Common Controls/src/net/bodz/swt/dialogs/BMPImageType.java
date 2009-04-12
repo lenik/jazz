@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import net.bodz.swt.gui.ValidateException;
+import net.bodz.swt.nls.ControlsNLS;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.ImageData;
@@ -16,12 +17,12 @@ public class BMPImageType extends _ImageType {
 
     @Override
     public String getName() {
-        return "Bitmap";
+        return ControlsNLS.getString("BMPImageType.name"); //$NON-NLS-1$
     }
 
     @Override
     public String getExtension() {
-        return "bmp";
+        return "bmp"; //$NON-NLS-1$
     }
 
     static class Params {
@@ -45,7 +46,8 @@ public class BMPImageType extends _ImageType {
             setLayout(gridLayout);
 
             rleCompressedButton = new Button(this, SWT.CHECK);
-            rleCompressedButton.setText("&RLE Compressed");
+            rleCompressedButton.setText(ControlsNLS
+                    .getString("BMPImageType.rleCompressed")); //$NON-NLS-1$
             rleCompressedButton.setSelection(params.compressByRLE);
         }
 
@@ -61,7 +63,7 @@ public class BMPImageType extends _ImageType {
     public void save(ImageData imageData, OutputStream out, Object _params)
             throws IOException {
         if (imageData == null)
-            throw new NullPointerException("imageData");
+            throw new NullPointerException("imageData"); //$NON-NLS-1$
         Params params = (Params) _params;
         ImageLoader loader = new ImageLoader();
         loader.data = new ImageData[] { imageData };

@@ -43,7 +43,7 @@ public class LasUnits {
 
     static LasUnit get(int n) {
         StackTraceElement stack = Caller.getStack(n + 1);
-        String id = (stack.getClassName() + "/" + stack.getMethodName());
+        String id = (stack.getClassName() + "/" + stack.getMethodName()); //$NON-NLS-1$
         LasUnit unit = registry.floor(id);
         if (unit != null)
             return unit;

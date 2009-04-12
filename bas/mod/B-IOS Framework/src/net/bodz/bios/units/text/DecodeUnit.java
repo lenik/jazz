@@ -8,6 +8,7 @@ import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CoderResult;
 
 import net.bodz.bas.lang.err.IllegalUsageError;
+import net.bodz.bios.nls.BIOSNLS;
 
 public class DecodeUnit extends BinaryProcessUnit {
 
@@ -71,7 +72,8 @@ public class DecodeUnit extends BinaryProcessUnit {
             }
             // avoid empty-loop.
             else if (result.isOverflow())
-                throw new IllegalUsageError("capacity too small");
+                throw new IllegalUsageError(BIOSNLS
+                        .getString("DecodeUnit.capacityTooSmall")); //$NON-NLS-1$
             if (result.isError()) {
                 // remove the error byte
                 byte errByte = unconv.get();

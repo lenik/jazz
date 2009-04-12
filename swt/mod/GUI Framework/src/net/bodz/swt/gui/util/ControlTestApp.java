@@ -7,6 +7,7 @@ import net.bodz.bas.lang.err.ReflectException;
 import net.bodz.bas.lang.util.Reflects;
 import net.bodz.swt.controls.util.Controls;
 import net.bodz.swt.layouts.BorderLayout;
+import net.bodz.swt.nls.GUINLS;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -20,12 +21,12 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 /**
- * @TestBy ControlTestAppTest
+ * @test ControlTestAppTest
  */
 public class ControlTestApp {
 
     public Display    display = Display.getDefault();
-    public String     title   = "Control Test App";
+    public String     title   = GUINLS.getString("ControlTestApp.title"); //$NON-NLS-1$
     public Shell      shell;
     public Composite  parent;
     private Composite tools;
@@ -56,7 +57,7 @@ public class ControlTestApp {
         tools.setLayoutData(BorderLayout.NORTH);
 
         Button autoFit = new Button(tools, SWT.NONE);
-        autoFit.setText("Auto &Fit");
+        autoFit.setText(GUINLS.getString("ControlTestApp.autoFit")); //$NON-NLS-1$
         autoFit.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -112,7 +113,8 @@ public class ControlTestApp {
         ControlTestApp test = new ControlTestApp();
         T control = test.add(controlType);
         if (initf == null) {
-            System.out.println("Created test control: " + control);
+            System.out
+                    .println(GUINLS.getString("ControlTestApp.echo") + control); //$NON-NLS-1$
         } else {
             initf.exec(control);
         }

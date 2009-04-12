@@ -14,6 +14,7 @@ import net.bodz.bas.io.CharOuts.TempCharOut;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.net.CURL;
 import net.bodz.bas.net.CURL.Alpha;
+import net.bodz.bas.nls.SysNLS;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TypeParser;
 import net.bodz.bas.types.TextMap.HashTextMap;
@@ -39,7 +40,7 @@ public class Providers {
             Provider provider = Security.getProvider(s);
             if (provider != null)
                 return provider;
-            int p = s.indexOf("://");
+            int p = s.indexOf("://"); //$NON-NLS-1$
             String type;
             if (p != -1) {
                 type = s.substring(0, p);
@@ -50,7 +51,7 @@ public class Providers {
             }
             TypeParser parser = parsers.get(type);
             if (parser == null)
-                throw new ParseException("No such provider: " + type);
+                throw new ParseException(SysNLS.getString("Providers.noProvider") + type); //$NON-NLS-1$
             return (Provider) parser.parse(s);
         }
 
@@ -59,7 +60,7 @@ public class Providers {
     static TextMap<TypeParser> parsers;
     static {
         parsers = new HashTextMap<TypeParser>();
-        parsers.put("PKCS11", new PKCS11Parser());
+        parsers.put("PKCS11", new PKCS11Parser()); //$NON-NLS-1$
     }
 
     /**
@@ -79,8 +80,8 @@ public class Providers {
     static class PKCS11Parser implements TypeParser {
 
         TempCharOut getTemp() throws IOException {
-            File tempFile = File.createTempFile("p11conf", ".ini");
-            return new TempCharOut(tempFile, "utf-8");
+            File tempFile = File.createTempFile("p11conf", ".ini"); //$NON-NLS-1$ //$NON-NLS-2$
+            return new TempCharOut(tempFile, "utf-8"); //$NON-NLS-1$
         }
 
         static Field _p11;
@@ -88,7 +89,7 @@ public class Providers {
         static PKCS11 getP11(SunPKCS11 obj) {
             try {
                 if (_p11 == null) {
-                    _p11 = SunPKCS11.class.getDeclaredField("p11");
+                    _p11 = SunPKCS11.class.getDeclaredField("p11"); //$NON-NLS-1$
                     _p11.setAccessible(true);
                 }
                 return (PKCS11) _p11.get(obj);
@@ -99,7 +100,7 @@ public class Providers {
 
         boolean hasToken(Provider provider) {
             // has any token?
-            Service service = provider.getService("KeyStore", "PKCS11");
+            Service service = provider.getService("KeyStore", "PKCS11"); //$NON-NLS-1$ //$NON-NLS-2$
             return service != null;
         }
 
@@ -107,16 +108,16 @@ public class Providers {
         public Provider parse(String s) throws ParseException {
             CURL curl = new CURL(s);
             if (curl.getType() != null)
-                throw new ParseException("the type should be stripped.");
+                throw new ParseException(SysNLS.getString("Providers.typeShouldBeStripped")); //$NON-NLS-1$
             Alpha[] alphas = curl.getAlphas();
             String path = alphas[0].formatBetas();
             Provider provider = null;
             if (alphas.length == 1) { // config-file
                 provider = new SunPKCS11(path);
             } else { // library-file
-                String name = curl.getParameter("name");
+                String name = curl.getParameter("name"); //$NON-NLS-1$
                 if (name != null) {
-                    String fname = SunPKCS11.class.getSimpleName() + "-" + name;
+                    String fname = SunPKCS11.class.getSimpleName() + "-" + name; //$NON-NLS-1$
                     provider = Security.getProvider(fname);
                     if (provider != null)
                         return provider;
@@ -126,8 +127,8 @@ public class Providers {
                 TextMap<String> parameters = curl.getParameters();
 
                 try {
-                    if ("*".equals(slot)) { // auto-search
-                        SunPKCS11 sprov = tryConfig(name, library, "0",
+                    if ("*".equals(slot)) { // auto-search //$NON-NLS-1$
+                        SunPKCS11 sprov = tryConfig(name, library, "0", //$NON-NLS-1$
                                 parameters);
                         if (!hasToken(sprov)) {
                             PKCS11 p11 = getP11(sprov);
@@ -139,10 +140,10 @@ public class Providers {
                             }
                             if (slots.length == 0)
                                 throw new ParseException(
-                                        "no slot is token available!");
+                                        SysNLS.getString("Providers.noSlot")); //$NON-NLS-1$
                             int got = -1;
                             for (int i = 0; i < slots.length; i++) {
-                                String slotId = ":" + slots[i];
+                                String slotId = ":" + slots[i]; //$NON-NLS-1$
                                 sprov = tryConfig(name, library, slotId,
                                         parameters);
                                 if (hasToken(sprov)) {
@@ -151,7 +152,7 @@ public class Providers {
                                 }
                             }
                             if (got == -1)
-                                throw new ParseException("no available slot!");
+                                throw new ParseException(SysNLS.getString("Providers.noAvailSlot")); //$NON-NLS-1$
                             provider = sprov;
                         }
                     } else
@@ -168,26 +169,26 @@ public class Providers {
                 TextMap<String> parameters) throws IOException {
             TempCharOut out = getTemp();
             if (name != null)
-                out.println("name = " + name);
+                out.println("name = " + name); //$NON-NLS-1$
             if (library != null)
-                out.println("library = " + library);
+                out.println("library = " + library); //$NON-NLS-1$
             if (slot != null) {
-                if (slot.startsWith(":")) {
+                if (slot.startsWith(":")) { //$NON-NLS-1$
                     slot = slot.substring(1);
                     long slotId = Long.parseLong(slot);
-                    out.println("slot = " + slotId);
+                    out.println("slot = " + slotId); //$NON-NLS-1$
                 } else if (!slot.isEmpty()) {
                     long slotListIndex = Long.parseLong(slot);
-                    out.println("slotListIndex = " + slotListIndex);
+                    out.println("slotListIndex = " + slotListIndex); //$NON-NLS-1$
                 }
             }
             if (parameters != null) {
                 for (Entry<String, String> e : parameters.entrySet()) {
                     String key = e.getKey();
-                    if ("name".equals(key))
+                    if ("name".equals(key)) //$NON-NLS-1$
                         continue;
                     String value = e.getValue();
-                    out.println(key + " = " + value);
+                    out.println(key + " = " + value); //$NON-NLS-1$
                 }
             }
             out.close();
@@ -196,8 +197,8 @@ public class Providers {
                 SunPKCS11 provider = new SunPKCS11(file.getPath());
                 return provider;
             } catch (ProviderException e) {
-                String config = Files.readAll(file, "utf-8");
-                System.err.println("Config error: " + e.getMessage());
+                String config = Files.readAll(file, "utf-8"); //$NON-NLS-1$
+                System.err.println(SysNLS.getString("Providers.configError") + e.getMessage()); //$NON-NLS-1$
                 System.err.println(config);
                 throw e;
             }

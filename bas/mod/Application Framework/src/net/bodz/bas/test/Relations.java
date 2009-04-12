@@ -13,6 +13,7 @@ import static org.junit.Assert.fail;
 import java.lang.reflect.Array;
 
 import net.bodz.bas.lang.err.IllegalArgumentTypeException;
+import net.bodz.bas.nls.AppNLS;
 
 public class Relations {
 
@@ -23,11 +24,11 @@ public class Relations {
             if (comment.length() > 0)
                 buffer.append(' ');
         }
-        buffer.append("(expected=");
+        buffer.append(AppNLS.getString("Relations.expected")); //$NON-NLS-1$
         buffer.append(expected);
-        buffer.append(", actual=");
+        buffer.append(AppNLS.getString("Relations.actual")); //$NON-NLS-1$
         buffer.append(actual);
-        buffer.append(")");
+        buffer.append(")"); //$NON-NLS-1$
         fail(buffer.toString());
     }
 
@@ -133,8 +134,8 @@ public class Relations {
         @SuppressWarnings("unchecked")
         @Override
         public final void test(String comment, Object expected, Object actual) {
-            assert expected != null : "use EQU/NEQ to compare with nulls";
-            assert actual != null : "use EQU/NEQ to compare with nulls";
+            assert expected != null : AppNLS.getString("Relations.useEQU"); //$NON-NLS-1$
+            assert actual != null : AppNLS.getString("Relations.useEQU"); //$NON-NLS-1$
             assert expected instanceof Comparable;
             Comparable<Object> _expected = (Comparable<Object>) expected;
             if (!test(_expected.compareTo(actual)))
@@ -261,16 +262,17 @@ public class Relations {
                 return;
             }
             if (comment == null)
-                comment = "";
+                comment = ""; //$NON-NLS-1$
             else
-                comment += ": ";
+                comment += ": "; //$NON-NLS-1$
             int expectedLength = Array.getLength(expected);
             int actualLength = Array.getLength(actual);
-            assertEquals(comment + "length", expectedLength, actualLength);
+            assertEquals(
+                    comment + AppNLS.getString("Relations.length"), expectedLength, actualLength); //$NON-NLS-1$
             for (int i = 0; i < expectedLength; i++) {
                 Object exp = Array.get(expected, i);
                 Object act = Array.get(actual, i);
-                component.test(comment + "[" + i + "]", exp, act);
+                component.test(comment + "[" + i + "]", exp, act); //$NON-NLS-1$ //$NON-NLS-2$
             }
         }
     }
@@ -289,18 +291,19 @@ public class Relations {
                 return;
             }
             if (comment == null)
-                comment = "";
+                comment = ""; //$NON-NLS-1$
             else
-                comment += ": ";
+                comment += ": "; //$NON-NLS-1$
             int expectedLength = Array.getLength(expected);
             int actualLength = Array.getLength(actual);
-            assertEquals(comment + "length", expectedLength, actualLength);
+            assertEquals(
+                    comment + AppNLS.getString("Relations.length"), expectedLength, actualLength); //$NON-NLS-1$
             AssertionError error1 = null;
             for (int i = 0; i < expectedLength; i++) {
                 Object exp = Array.get(expected, i);
                 Object act = Array.get(actual, i);
                 try {
-                    component.test(comment + "[" + i + "]", exp, act);
+                    component.test(comment + "[" + i + "]", exp, act); //$NON-NLS-1$ //$NON-NLS-2$
                     // any succeeded.
                     return;
                 } catch (AssertionError e) {

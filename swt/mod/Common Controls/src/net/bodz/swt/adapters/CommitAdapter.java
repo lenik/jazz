@@ -2,7 +2,8 @@ package net.bodz.swt.adapters;
 
 import java.util.EventObject;
 
-import net.bodz.bas.gui.Interaction;
+import net.bodz.bas.rt.Interaction;
+import net.bodz.swt.nls.ControlsNLS;
 
 import org.eclipse.swt.events.TypedEvent;
 import org.eclipse.swt.widgets.Text;
@@ -26,7 +27,8 @@ public abstract class CommitAdapter implements CommitListener,
         if (cause == null)
             cause = exception;
         TypedEvent evt = (TypedEvent) event;
-        interaction.alert("Commit Error", cause);
+        interaction.alert(
+                ControlsNLS.getString("CommitAdapter.commitError"), cause); //$NON-NLS-1$
         Widget widget = (Widget) evt.widget;
         // System.out.println("  source=" + evt.getSource());
         // System.out.println("  widget=" + evt.widget);

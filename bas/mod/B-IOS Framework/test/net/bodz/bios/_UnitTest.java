@@ -29,7 +29,7 @@ public class _UnitTest {
     void init(byte[] bin) throws IOException {
         ByteArrayInputStream in = new ByteArrayInputStream(bin);
         src = new InputStreamSource(in, BLOCKSIZE);
-        src.setDst(decoder = new DecodeUnit("utf-8"));
+        src.setDst(decoder = new DecodeUnit("utf-8")); //$NON-NLS-1$
         decoder.setDst(tee = new TeeUnit());
         tee.addOutPort(breakLines = new BreakLinesUnit());
         tee.addOutPort(breakOrCut = new BreakOrCutLinesUnit(CUTSIZE));
@@ -42,7 +42,7 @@ public class _UnitTest {
 
     @Test
     public void testDumpGraph() throws IOException {
-        byte[] bin = "hello".getBytes();
+        byte[] bin = "hello".getBytes(); //$NON-NLS-1$
         init(bin);
         String s = src.toString();
         System.out.println(s);

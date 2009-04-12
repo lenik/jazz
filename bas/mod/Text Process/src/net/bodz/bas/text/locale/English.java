@@ -41,13 +41,13 @@ public class English {
     private static final Pattern       P_aiouxs;
     static {
         // P_Ve = Pattern.compile("[aeiou]e$", Pattern.CASE_INSENSITIVE);
-        P_Ce = Pattern.compile("[^aeiou]e$", Pattern.CASE_INSENSITIVE);
-        P_VVC = Pattern.compile("[aeiou][aeiou][^aeiou]$",
+        P_Ce = Pattern.compile("[^aeiou]e$", Pattern.CASE_INSENSITIVE); //$NON-NLS-1$
+        P_VVC = Pattern.compile("[aeiou][aeiou][^aeiou]$", //$NON-NLS-1$
                 Pattern.CASE_INSENSITIVE);
-        P_CVC = Pattern.compile("[^aeiou][aeiou][^aeiou]$",
+        P_CVC = Pattern.compile("[^aeiou][aeiou][^aeiou]$", //$NON-NLS-1$
                 Pattern.CASE_INSENSITIVE);
-        P_Cy = Pattern.compile("[^aeiou]y$", Pattern.CASE_INSENSITIVE);
-        P_aiouxs = Pattern.compile("[xsaiou]$", Pattern.CASE_INSENSITIVE);
+        P_Cy = Pattern.compile("[^aeiou]y$", Pattern.CASE_INSENSITIVE); //$NON-NLS-1$
+        P_aiouxs = Pattern.compile("[xsaiou]$", Pattern.CASE_INSENSITIVE); //$NON-NLS-1$
     }
 
     private static boolean matches(String word, Pattern pattern) {
@@ -64,10 +64,10 @@ public class English {
     public static String pluralOf(String word) {
         int len = word.length();
         if (matches(word, P_Cy))
-            return word.substring(0, len - 1) + "ies";
+            return word.substring(0, len - 1) + "ies"; //$NON-NLS-1$
         if (matches(word, P_aiouxs))
-            return word + "es";
-        return word + "s";
+            return word + "es"; //$NON-NLS-1$
+        return word + "s"; //$NON-NLS-1$
     }
 
     /**
@@ -81,15 +81,15 @@ public class English {
      */
     public static String presentOf(String word) {
         int len = word.length();
-        if (word.endsWith("ie"))
-            return word.substring(0, len - 2) + "ying";
+        if (word.endsWith("ie")) //$NON-NLS-1$
+            return word.substring(0, len - 2) + "ying"; //$NON-NLS-1$
         if (matches(word, P_Ce))
-            return word.substring(0, len - 1) + "ing";
+            return word.substring(0, len - 1) + "ing"; //$NON-NLS-1$
         if (matches(word, P_VVC))
-            return word + "ing";
+            return word + "ing"; //$NON-NLS-1$
         if (matches(word, P_CVC))
-            return word + word.charAt(len - 1) + "ing";
-        return word + "ing";
+            return word + word.charAt(len - 1) + "ing"; //$NON-NLS-1$
+        return word + "ing"; //$NON-NLS-1$
     }
 
     /**
@@ -103,13 +103,13 @@ public class English {
      */
     private static String _pastOf(String word) {
         int len = word.length();
-        if (word.endsWith("e"))
-            return word + "d";
+        if (word.endsWith("e")) //$NON-NLS-1$
+            return word + "d"; //$NON-NLS-1$
         if (matches(word, P_VVC))
-            return word + "ed";
+            return word + "ed"; //$NON-NLS-1$
         if (matches(word, P_CVC))
-            return word + word.charAt(len - 1) + "ed";
-        return word + "ed";
+            return word + word.charAt(len - 1) + "ed"; //$NON-NLS-1$
+        return word + "ed"; //$NON-NLS-1$
     }
 
     public static String pastOf(String word) {

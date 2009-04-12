@@ -3,6 +3,9 @@ package net.bodz.bas.io;
 import java.io.IOException;
 import java.io.Reader;
 
+/**
+ * @test LineReaderTest
+ */
 public class LineReader extends Reader {
 
     private final Reader reader;
@@ -36,7 +39,7 @@ public class LineReader extends Reader {
      */
     public synchronized String readLine(int maxLineLength) throws IOException {
         if (maxLineLength < 1)
-            throw new IllegalArgumentException("maxLineLength=" + maxLineLength);
+            throw new IllegalArgumentException("maxLineLength=" + maxLineLength); //$NON-NLS-1$
         int len = buf.length();
         int reject = 0;
         while (len < maxLineLength) {

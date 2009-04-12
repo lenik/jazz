@@ -9,6 +9,8 @@ import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.err.CheckException;
 import net.bodz.bas.lang.err.CheckFailure;
 import net.bodz.bas.lang.err.CreateException;
+import net.bodz.bas.nls.SysNLS;
+import net.bodz.bas.nls.TypesNLS;
 import net.bodz.bas.types.util.Types;
 
 public class Checks {
@@ -38,13 +40,13 @@ public class Checks {
         for (int i = 0; i < args.length; i++) {
             if (args[i] != null) {
                 if (last != -1)
-                    throw new CheckException("only one is allowed: " + last
-                            + ", " + i);
+                    throw new CheckException(TypesNLS.getString("Checks.0") + last //$NON-NLS-1$
+                            + TypesNLS.getString("Checks.1") + i); //$NON-NLS-1$
                 last = i;
             }
         }
         if (last == -1)
-            throw new CheckException("no argument specified");
+            throw new CheckException(TypesNLS.getString("Checks.2")); //$NON-NLS-1$
     }
 
     public static class Regex implements Checker {
@@ -60,8 +62,8 @@ public class Checks {
             String s = (val instanceof String) ? (String) val : String
                     .valueOf(val);
             if (!pattern.matcher(s).matches())
-                throw new CheckFailure("string doesn't match regex "
-                        + pattern.pattern() + ": \n" + s);
+                throw new CheckFailure(TypesNLS.getString("Checks.3") //$NON-NLS-1$
+                        + pattern.pattern() + TypesNLS.getString("Checks.4") + s); //$NON-NLS-1$
         }
 
     }
@@ -107,7 +109,7 @@ public class Checks {
                     m |= READ | WRITE;
                     break;
                 default:
-                    throw new IllegalArgumentException("invalid mode char: "
+                    throw new IllegalArgumentException(TypesNLS.getString("Checks.invalidModeChar") //$NON-NLS-1$
                             + c);
                 }
             this.mode = m;
@@ -121,17 +123,17 @@ public class Checks {
         public void check(Object val) throws CheckFailure {
             File f = (File) val;
             if (set(READ) && !f.canRead())
-                throw new CheckFailure("can't read " + f);
+                throw new CheckFailure(TypesNLS.getString("Checks.cantRead") + f); //$NON-NLS-1$
             if (set(WRITE) && !f.canWrite())
-                throw new CheckFailure("can't write " + f);
+                throw new CheckFailure(TypesNLS.getString("Checks.cantWrite") + f); //$NON-NLS-1$
             if (set(EXECUTE) && !f.canExecute())
-                throw new CheckFailure("can't execute " + f);
+                throw new CheckFailure(TypesNLS.getString("Checks.cantExecute") + f); //$NON-NLS-1$
             if (set(DIRECTORY) && !f.isDirectory())
-                throw new CheckFailure("not a directory " + f);
+                throw new CheckFailure(TypesNLS.getString("Checks.notDir") + f); //$NON-NLS-1$
             if (set(FILE) && !f.isFile())
-                throw new CheckFailure("not a file " + f);
+                throw new CheckFailure(TypesNLS.getString("Checks.notFile") + f); //$NON-NLS-1$
             if (set(TEXT) && !Files.isText(f))
-                throw new CheckFailure("not a text file " + f);
+                throw new CheckFailure(TypesNLS.getString("Checks.notTextFile") + f); //$NON-NLS-1$
         }
     }
 

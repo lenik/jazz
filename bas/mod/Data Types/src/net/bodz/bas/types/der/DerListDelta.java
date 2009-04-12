@@ -1,6 +1,7 @@
 package net.bodz.bas.types.der;
 
 import net.bodz.bas.lang.err.NotImplementedException;
+import net.bodz.bas.nls.TypesNLS;
 
 public class DerListDelta {
 
@@ -17,7 +18,7 @@ public class DerListDelta {
 
         @Override
         public String toString() {
-            return "ident";
+            return TypesNLS.getString("DerListDelta.ident"); //$NON-NLS-1$
         }
 
     }
@@ -54,7 +55,7 @@ public class DerListDelta {
 
         @Override
         public String toString() {
-            return String.format("add(%d): %d(+%d)", qNext, vBefore, n);
+            return String.format(TypesNLS.getString("DerListDelta.add_ddd"), qNext, vBefore, n); //$NON-NLS-1$
         }
 
     }
@@ -84,7 +85,7 @@ public class DerListDelta {
 
         @Override
         public String toString() {
-            return String.format("list-remove: %d(+%d)", vStart, n);
+            return String.format(TypesNLS.getString("DerListDelta.remove_dd"), vStart, n); //$NON-NLS-1$
         }
 
     }

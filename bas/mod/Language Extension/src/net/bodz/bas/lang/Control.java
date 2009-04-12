@@ -4,6 +4,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import net.bodz.bas.nls.LangNLS;
+
 public class Control extends RuntimeException {
 
     private static final long serialVersionUID = 1646492794599181112L;
@@ -36,7 +38,7 @@ public class Control extends RuntimeException {
 
     @Override
     public String getMessage() {
-        return "Detail: " + String.valueOf(detail);
+        return LangNLS.getString("Control.detail") + String.valueOf(detail); //$NON-NLS-1$
     }
 
     public static <T> T newInstance(Class<T> clazz)

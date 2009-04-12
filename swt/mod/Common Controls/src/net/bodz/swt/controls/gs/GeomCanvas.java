@@ -7,6 +7,7 @@ import java.util.Random;
 import net.bodz.bas.io.CharOuts.BCharOut;
 import net.bodz.bas.types.ints.IntIterable;
 import net.bodz.bas.types.ints.IntIterator;
+import net.bodz.swt.nls.ControlsNLS;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlAdapter;
@@ -28,7 +29,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ScrollBar;
 
 /**
- * @TestBy GeomCanvasTest
+ * @test GeomCanvasTest
  */
 public class GeomCanvas extends Canvas {
 
@@ -71,7 +72,8 @@ public class GeomCanvas extends Canvas {
             @Override
             public void paintControl(PaintEvent e) {
                 if (painting)
-                    throw new IllegalStateException("paint no reentrant");
+                    throw new IllegalStateException(ControlsNLS
+                            .getString("GeomCanvas.noReentrant")); //$NON-NLS-1$
                 painting = true;
                 Rectangle viewRect = new Rectangle(e.x, e.y, e.width, e.height);
                 paintImpl(e.gc, viewRect, viewOffset);
@@ -202,7 +204,7 @@ public class GeomCanvas extends Canvas {
      */
     public void addPaintGeomListener(PaintGeomListener listener) {
         if (listener == null)
-            throw new NullPointerException("listener");
+            throw new NullPointerException("listener"); //$NON-NLS-1$
         if (pgListeners == null)
             pgListeners = new ArrayList<PaintGeomListener>(1);
         pgListeners.add(listener);
@@ -274,12 +276,12 @@ public class GeomCanvas extends Canvas {
                 if (buf == null)
                     buf = new BCharOut();
                 else
-                    buf.print(", ");
+                    buf.print(", "); //$NON-NLS-1$
                 buf.print(geom);
                 n++;
             }
             // System.out.println(e);
-            System.out.print("    Pant(" + n + "): ");
+            System.out.print("    Pant(" + n + "): "); //$NON-NLS-1$ //$NON-NLS-2$
             System.out.println(buf);
         }
         if (paintBg) {

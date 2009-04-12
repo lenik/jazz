@@ -39,7 +39,7 @@ public class TeeUnit extends SIUnit {
 
     public void addOutPort(Receiver dst) throws IOException {
         int newIndex = outPorts.size();
-        String name = "out-" + displayIndex++;
+        String name = "out-" + displayIndex++; //$NON-NLS-1$
         OutPort port = new WireOutPort(name, this, newIndex);
         port.setDst(dst);
         outPorts.add(port);

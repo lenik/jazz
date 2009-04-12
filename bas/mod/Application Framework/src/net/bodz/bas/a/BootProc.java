@@ -72,7 +72,7 @@ public class BootProc {
         }
         if (info == null)
             return prev;
-        String desc = clazz.getName() + "@" + System.identityHashCode(clazz);
+        String desc = clazz.getName() + "@" + System.identityHashCode(clazz); //$NON-NLS-1$
         return new BootProc(desc, prev, info);
     }
 
@@ -214,7 +214,7 @@ public class BootProc {
         if (prev != null)
             prev.dumpBootArgs(args);
         for (String libspec : userlibs) {
-            args.add("-l");
+            args.add("-l"); //$NON-NLS-1$
             args.add(libspec);
         }
     }
@@ -236,22 +236,22 @@ public class BootProc {
     }
 
     void dump(CharOut out) {
-        out.println("BootProc: " + description);
+        out.println("BootProc: " + description); //$NON-NLS-1$
         if (syslibs.length != 0)
-            out.println("    syslibs=" + Strings.join(", ", syslibs));
+            out.println("    syslibs=" + Strings.join(", ", syslibs)); //$NON-NLS-1$ //$NON-NLS-2$
         if (userlibs.length != 0)
-            out.println("    userlibs=" + Strings.join(", ", userlibs));
+            out.println("    userlibs=" + Strings.join(", ", userlibs)); //$NON-NLS-1$ //$NON-NLS-2$
         if (booterClassName != null)
-            out.println("    booter=" + booterClassName);
+            out.println("    booter=" + booterClassName); //$NON-NLS-1$
         if (configs != null && configs.length != 0) {
-            out.println("    Configs: ");
+            out.println("    Configs: "); //$NON-NLS-1$
             for (ConfigParam config : configs) {
-                out.print("        " + config.clazz);
-                out.println("(" + Strings.join(", ", config.args) + ")");
+                out.print("        " + config.clazz); //$NON-NLS-1$
+                out.println("(" + Strings.join(", ", config.args) + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             }
         }
         if (prev != null) {
-            out.print("prev ");
+            out.print("prev "); //$NON-NLS-1$
             prev.dump(out);
         }
     }

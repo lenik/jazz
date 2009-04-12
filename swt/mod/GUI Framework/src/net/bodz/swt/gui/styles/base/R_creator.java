@@ -16,6 +16,7 @@ import net.bodz.swt.gui.GUIVar;
 import net.bodz.swt.gui.RenderContext;
 import net.bodz.swt.gui.SWTRenderer;
 import net.bodz.swt.layouts.LineLayout;
+import net.bodz.swt.nls.GUINLS;
 import net.bodz.swt.util.SWTResources;
 
 import org.eclipse.swt.SWT;
@@ -36,8 +37,8 @@ public class R_creator extends SWTRenderer {
         super(rc);
     }
 
-    static String createIcon = "/icons/full/obj16/add_obj.gif";
-    static String deleteIcon = "/icons/full/obj16/delete_obj.gif";
+    static String createIcon = "/icons/full/obj16/add_obj.gif";   //$NON-NLS-1$
+    static String deleteIcon = "/icons/full/obj16/delete_obj.gif"; //$NON-NLS-1$
 
     Image getIcon(AnnotatedElement... tries) throws CreateException {
         for (AnnotatedElement elm : tries) {
@@ -67,7 +68,8 @@ public class R_creator extends SWTRenderer {
                     parent.clear();
                     // rerenderObject(obj);
                 } catch (ParseException pe) {
-                    rc.interact(parent).alert("Parse Failure", pe);
+                    rc.interact(parent).alert(
+                            GUINLS.getString("R_creator.parseFailure"), pe); //$NON-NLS-1$
                     text.setFocus();
                 }
             }
@@ -94,11 +96,12 @@ public class R_creator extends SWTRenderer {
             Image icon = GUIHint.get(type).getIcon();
 
         } catch (CreateException e) {
-            throw new IllegalUsageError("failed to get parser for " + type);
+            throw new IllegalUsageError(GUINLS
+                    .getString("R_creator.failedGetParser") + type); //$NON-NLS-1$
         }
         if (parser != null) {
             MenuItem menuItem = new MenuItem(createMenu, 0);
-            menuItem.setText("From Text");
+            menuItem.setText(GUINLS.getString("R_creator.fromText")); //$NON-NLS-1$
             menuItem.addSelectionListener(new SelectionAdapter() {
                 @Override
                 public void widgetSelected(SelectionEvent e) {
@@ -111,15 +114,15 @@ public class R_creator extends SWTRenderer {
             GUIHint hint = GUIHint.get(ctor);
             String label = hint.getLabel();
             if (label == null) {
-                String pt = Types.joinNames(", ", true, ctor
+                String pt = Types.joinNames(", ", true, ctor //$NON-NLS-1$
                         .getParameterTypes());
-                label = "new(" + pt + ")";
+                label = GUINLS.getString("R_creator.new_") + pt + ")"; //$NON-NLS-1$ //$NON-NLS-2$
             }
         }
         Composite comp = new Composite(parent, style);
         Button createButton = new Button(comp, SWT.FLAT);
         createButton.setImage(SWTResources
-                .getImageRes("/icons/full/obj16/add_obj.gif"));
+                .getImageRes("/icons/full/obj16/add_obj.gif")); //$NON-NLS-1$
         createButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {

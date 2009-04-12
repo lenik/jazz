@@ -22,30 +22,30 @@ public class XMLs {
 
     public static void parseXML(File file, Object... handlers)
             throws SAXException, IOException {
-        assert file != null : "null file";
+        assert file != null : "null file"; //$NON-NLS-1$
         URL url = Files.getURL(file);
         parseXML(new InputSource(url.toString()), handlers);
     }
 
     public static void parseXML(Reader reader, Object... handlers)
             throws SAXException, IOException {
-        assert reader != null : "null reader";
+        assert reader != null : "null reader"; //$NON-NLS-1$
         parseXML(new InputSource(reader), handlers);
     }
 
     public static void parseXML(InputStream in, Object... handlers)
             throws SAXException, IOException {
-        assert in != null : "null in";
+        assert in != null : "null in"; //$NON-NLS-1$
         parseXML(new InputSource(in), handlers);
     }
 
     public static void parseXML(InputSource source, Object... handlers)
             throws SAXException, IOException {
-        assert source != null : "null source";
+        assert source != null : "null source"; //$NON-NLS-1$
         XMLReader xmlReader = XMLReaderFactory.createXMLReader();
         for (Object handler : handlers) {
             if (handler == null)
-                throw new NullPointerException("null handler");
+                throw new NullPointerException("null handler"); //$NON-NLS-1$
             if (handler instanceof DefaultHandler) {
                 DefaultHandler dh = (DefaultHandler) handler;
                 xmlReader.setContentHandler(dh);

@@ -49,7 +49,7 @@ public class ComparatorsTest {
             if (buf == null)
                 buf = new StringBuffer();
             else
-                buf.append(", ");
+                buf.append(", "); //$NON-NLS-1$
             buf.append(c.getSimpleName());
         }
         return buf.toString();
@@ -63,7 +63,7 @@ public class ComparatorsTest {
                 Class<?>[] typeHierOrder = Arrays.copyOf(input, input.length);
                 Arrays.sort(typeHierOrder, Comparators.TYPE_HIER);
                 System.out.print(vstr(input));
-                System.out.print(" => ");
+                System.out.print(" => "); //$NON-NLS-1$
                 System.out.println(vstr(typeHierOrder));
                 return typeHierOrder;
             }

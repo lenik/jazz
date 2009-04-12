@@ -37,14 +37,14 @@ public class VarArgcMethodTest {
 
     VarArgcMethod playf;
     {
-        playf = new VarArgcMethod("play", Members.publicMethods(
-                VarArgcMethodTest.class, "play"));
+        playf = new VarArgcMethod("play", Members.publicMethods( //$NON-NLS-1$
+                VarArgcMethodTest.class, "play")); //$NON-NLS-1$
     }
 
     @Test
     public void test1() throws Exception {
         assertEquals(0, playf.invoke(this));
-        assertEquals(1, playf.invoke(this, "Hello"));
+        assertEquals(1, playf.invoke(this, "Hello")); //$NON-NLS-1$
         assertEquals(2, playf.invoke(this, null, 3.14));
         assertEquals(3, playf.invoke(this, 1.0f, 3.14, 100));
     }
@@ -52,15 +52,15 @@ public class VarArgcMethodTest {
     @Test
     public void testParser() throws Exception {
         assertEquals(0, playf.invoke(this));
-        assertEquals(1, playf.invoke(this, "Hello"));
-        assertEquals(2, playf.invoke(this, "java.util.List", "3.14"));
-        assertEquals(3, playf.invoke(this, "1.0", "3.14", "100"));
+        assertEquals(1, playf.invoke(this, "Hello")); //$NON-NLS-1$
+        assertEquals(2, playf.invoke(this, "java.util.List", "3.14")); //$NON-NLS-1$ //$NON-NLS-2$
+        assertEquals(3, playf.invoke(this, "1.0", "3.14", "100")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
     @Test(expected = IllegalUsageError.class)
     public void testBad() throws Exception {
-        new VarArgcMethod("bad", Members.publicMethods(//
-                VarArgcMethodTest.class, "bad"));
+        new VarArgcMethod("bad", Members.publicMethods(// //$NON-NLS-1$
+                VarArgcMethodTest.class, "bad")); //$NON-NLS-1$
     }
 
 }

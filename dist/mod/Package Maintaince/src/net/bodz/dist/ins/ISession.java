@@ -2,23 +2,14 @@ package net.bodz.dist.ins;
 
 import java.io.File;
 
-import net.bodz.bas.gui.Interaction;
-import net.bodz.bas.types.TextMap;
+import net.bodz.bas.rt.Interaction;
+import net.bodz.dist.ins.util.Flags;
 
 public interface ISession {
 
     IProject getProject();
 
-    /**
-     * @param stackPosition
-     *            position in the stack, 0 for current component, and 1 for
-     *            parent, etc. The bottom of the stack should be the project.
-     */
-    IComponent getParentComponent(int stackPosition);
-
-    String getComponentId();
-
-    TextMap<Object> getComponentRegistry();
+    IComponent getComponent(String id);
 
     Interaction getInteraction();
 
@@ -26,27 +17,36 @@ public interface ISession {
      * install/uninstall process should check this flag frequently to cancel
      * immediately.
      */
-    boolean isCanceled();
+    boolean isCanceling();
+
+    void cancel();
+
+    void addCancelListener(CancelListener listener);
+
+    void removeCancelListener(CancelListener listener);
 
     int REBOOT = 1;
 
     Flags getFlags();
 
-    /**
-     * set the progress of the current component.
-     */
-    void setComponentProgress(int progressIndex);
+    Progress getProgress();
 
+    /** increase the progress */
     void logFatal(Object... args);
 
+    /** increase the progress */
     void logError(Object... args);
 
+    /** increase the progress */
     void logWarn(Object... args);
 
+    /** increase the progress */
     void logInfo(Object... args);
 
+    /** doesn't increase the progress */
     void logDetail(Object... args);
 
+    /** doesn't increase the progress */
     void logDebug(Object... args);
 
     Object get(String attr);
@@ -64,10 +64,11 @@ public interface ISession {
      */
     IAttachment getAttachment(String name);
 
-    void dump(IComponent component, int pnum) throws InstallException;
+    void pack(IComponent component, int parentUnits) throws InstallException;
 
-    void install(IComponent component, int pnum) throws InstallException;
+    void install(IComponent component, int parentUnits) throws InstallException;
 
-    void uninstall(IComponent component, int pnum) throws InstallException;
+    void uninstall(IComponent component, int parentUnits)
+            throws InstallException;
 
 }

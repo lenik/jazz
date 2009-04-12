@@ -40,15 +40,15 @@ public class IOHack {
     }
 
     static {
-        BufferedInputStream_in = hackField(BufferedInputStream.class, "in");
-        BufferedOutputStream_out = hackField(BufferedOutputStream.class, "out");
-        InputStreamReader_in = hackField(InputStreamReader.class, "in");
-        OutputStreamWriter_out = hackField(OutputStreamWriter.class, "out");
-        BufferedReader_reader = hackField(BufferedReader.class, "reader");
-        BufferedWriter_writer = hackField(BufferedWriter.class, "writer");
-        ReaderInputStream_reader = hackField(ReaderInputStream.class, "reader");
+        BufferedInputStream_in = hackField(BufferedInputStream.class, "in"); //$NON-NLS-1$
+        BufferedOutputStream_out = hackField(BufferedOutputStream.class, "out"); //$NON-NLS-1$
+        InputStreamReader_in = hackField(InputStreamReader.class, "in"); //$NON-NLS-1$
+        OutputStreamWriter_out = hackField(OutputStreamWriter.class, "out"); //$NON-NLS-1$
+        BufferedReader_reader = hackField(BufferedReader.class, "reader"); //$NON-NLS-1$
+        BufferedWriter_writer = hackField(BufferedWriter.class, "writer"); //$NON-NLS-1$
+        ReaderInputStream_reader = hackField(ReaderInputStream.class, "reader"); //$NON-NLS-1$
         WriterOutputStream_writer = hackField(WriterOutputStream.class,
-                "writer");
+                "writer"); //$NON-NLS-1$
     }
 
     public static InputStream unwrap(InputStream in) {

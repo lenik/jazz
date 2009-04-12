@@ -1,5 +1,15 @@
 package net.bodz.bas.types;
 
+import static net.bodz.bas.types.VarCast.toBoolean;
+import static net.bodz.bas.types.VarCast.toByte;
+import static net.bodz.bas.types.VarCast.toChar;
+import static net.bodz.bas.types.VarCast.toDate;
+import static net.bodz.bas.types.VarCast.toDouble;
+import static net.bodz.bas.types.VarCast.toFloat;
+import static net.bodz.bas.types.VarCast.toInt;
+import static net.bodz.bas.types.VarCast.toLong;
+import static net.bodz.bas.types.VarCast.toShort;
+
 import java.lang.reflect.Array;
 import java.util.Date;
 import java.util.Map;
@@ -7,9 +17,9 @@ import java.util.Map;
 import net.bodz.bas.proxy.java.util.ProxyMap;
 import net.bodz.bas.types.util.Strings;
 
-public class AutoTypeMap<K, V> extends ProxyMap<K, V> {
+public class VarMap<K, V> extends ProxyMap<K, V> {
 
-    public AutoTypeMap(Map<K, V> proxy) {
+    public VarMap(Map<K, V> proxy) {
         super(proxy);
     }
 
@@ -38,7 +48,7 @@ public class AutoTypeMap<K, V> extends ProxyMap<K, V> {
     }
 
     public byte getByte(K key) {
-        return AutoType.toByte(get(key));
+        return toByte(get(key));
     }
 
     public byte getByte(K key, byte def) {
@@ -46,7 +56,7 @@ public class AutoTypeMap<K, V> extends ProxyMap<K, V> {
     }
 
     public short getShort(K key) {
-        return AutoType.toShort(get(key));
+        return toShort(get(key));
     }
 
     public short getShort(K key, short def) {
@@ -54,7 +64,7 @@ public class AutoTypeMap<K, V> extends ProxyMap<K, V> {
     }
 
     public int getInt(K key) {
-        return AutoType.toInt(get(key));
+        return toInt(get(key));
     }
 
     public int getInt(K key, int def) {
@@ -62,7 +72,7 @@ public class AutoTypeMap<K, V> extends ProxyMap<K, V> {
     }
 
     public long getLong(K key) {
-        return AutoType.toLong(get(key));
+        return toLong(get(key));
     }
 
     public long getLong(K key, long def) {
@@ -70,7 +80,7 @@ public class AutoTypeMap<K, V> extends ProxyMap<K, V> {
     }
 
     public float getFloat(K key) {
-        return AutoType.toFloat(get(key));
+        return toFloat(get(key));
     }
 
     public float getFloat(K key, float def) {
@@ -78,7 +88,7 @@ public class AutoTypeMap<K, V> extends ProxyMap<K, V> {
     }
 
     public double getDouble(K key) {
-        return AutoType.toDouble(get(key));
+        return toDouble(get(key));
     }
 
     public double getDouble(K key, double def) {
@@ -86,7 +96,7 @@ public class AutoTypeMap<K, V> extends ProxyMap<K, V> {
     }
 
     public boolean getBoolean(K key) {
-        return AutoType.toBoolean(get(key));
+        return toBoolean(get(key));
     }
 
     public boolean getBoolean(K key, boolean def) {
@@ -94,7 +104,7 @@ public class AutoTypeMap<K, V> extends ProxyMap<K, V> {
     }
 
     public char getChar(K key) {
-        return AutoType.toChar(get(key));
+        return toChar(get(key));
     }
 
     public char getChar(K key, char def) {
@@ -106,7 +116,7 @@ public class AutoTypeMap<K, V> extends ProxyMap<K, V> {
     }
 
     public Date getDate(K key) {
-        return AutoType.toDate(get(key));
+        return toDate(get(key));
     }
 
     @SuppressWarnings("unchecked")

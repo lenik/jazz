@@ -29,11 +29,11 @@ public class CSVFile implements FileSource<String[]> {
     }
 
     public CSVFile(Object in, Object charset) throws IOException {
-        this(":", in, charset);
+        this(":", in, charset); //$NON-NLS-1$
     }
 
     public CSVFile(Object in) throws IOException {
-        this(":", in);
+        this(":", in); //$NON-NLS-1$
     }
 
     @Override

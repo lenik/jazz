@@ -15,12 +15,12 @@ public class LibInstaller {
     static boolean ignoreCase;
     static String  libSuffix;
     static {
-        String osName = System.getProperty("os.name");
+        String osName = System.getProperty("os.name"); //$NON-NLS-1$
         if (osName != null) {
-            if (osName.startsWith("Windows"))
+            if (osName.startsWith("Windows")) //$NON-NLS-1$
                 ignoreCase = true;
         }
-        libSuffix = System.mapLibraryName("name").substring(4);
+        libSuffix = System.mapLibraryName("name").substring(4); //$NON-NLS-1$
         if (ignoreCase)
             libSuffix = libSuffix.toLowerCase();
     }
@@ -34,7 +34,7 @@ public class LibInstaller {
 
     private static File deflDir;
     static {
-        deflDir = new File(Files.getTmpDir(), "BundledLib");
+        deflDir = new File(Files.getTmpDir(), "BundledLib"); //$NON-NLS-1$
         deflDir.mkdirs();
     }
 

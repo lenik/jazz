@@ -19,6 +19,7 @@ import net.bodz.swt.gui.GUIVarMeta;
 import net.bodz.swt.gui.RenderContext;
 import net.bodz.swt.gui.SWTRenderer;
 import net.bodz.swt.gui.a.MaxLength;
+import net.bodz.swt.nls.GUINLS;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -75,8 +76,8 @@ public class R_Text extends SWTRenderer {
             try {
                 parser = TypeParsers.guess(type, true);
             } catch (ParseException e) {
-                throw new RenderException(
-                        "Can't guess parser for number class: " + type);
+                throw new RenderException(GUINLS
+                        .getString("R_Text.cantGuessParserForNum") + type); //$NON-NLS-1$
             }
             ControlAdapters.commit(text, new CommitAdapter(rc.interact(text)) {
                 @Override

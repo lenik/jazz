@@ -31,7 +31,7 @@ public class DerCollection<E> extends AbstractCollection<E> implements
      */
     public DerCollection(Collection<E> orig) {
         if (orig == null)
-            throw new NullPointerException("orig");
+            throw new NullPointerException("orig"); //$NON-NLS-1$
         this.orig = orig;
     }
 

@@ -63,10 +63,10 @@ public class Mkbat extends BatchEditCLI {
         varmap = new HashTextMap<String>();
         ClassInfo classInfo = _loadClassInfo();
         String generator = Mkbat.class.getSimpleName() //
-                + " " + classInfo.getVersionString(false) //
+                + " " + classInfo.getVersionString(false) // //$NON-NLS-1$
         // + ", " + classInfo.getDateString()
         ;
-        varmap.put("GENERATOR", generator);
+        varmap.put("GENERATOR", generator); //$NON-NLS-1$
     }
 
     @Option(alias = "l", vnam = "LIBSPEC", doc = "add user lib for locating the class")
@@ -101,45 +101,45 @@ public class Mkbat extends BatchEditCLI {
     @Override
     protected EditResult doEdit(File file) throws LoadException, IOException {
         String ext = Files.getExtension(file, true);
-        if (!".java".equals(ext) && !".class".equals(ext))
+        if (!".java".equals(ext) && !".class".equals(ext)) //$NON-NLS-1$ //$NON-NLS-2$
             return EditResult.pass();
         String name = Files.getName(file);
-        if (name.contains("$")) // ignore inner classes
-            return EditResult.pass("inner");
+        if (name.contains("$")) // ignore inner classes //$NON-NLS-1$
+            return EditResult.pass("inner"); //$NON-NLS-1$
 
-        File bootFile = new File(file.getParentFile(), name + "Boot." + ext);
+        File bootFile = new File(file.getParentFile(), name + "Boot." + ext); //$NON-NLS-1$
         if (bootFile.exists())
-            return EditResult.pass("boot");
+            return EditResult.pass("boot"); //$NON-NLS-1$
 
         String className = getRelativeName(file);
         className = className.substring(0, className.length() - ext.length());
         className = className.replace('\\', '/');
         className = className.replace('/', '.');
         if (generated.contains(className))
-            return EditResult.pass("repeat");
+            return EditResult.pass("repeat"); //$NON-NLS-1$
 
         Class<?> class0 = null;
         // can found by bootSysLoader?
         try {
-            L.d.P("try ", className);
+            L.d.P("try ", className); //$NON-NLS-1$
             class0 = bootSysLoader.loadClass(className);
             // class0 = Class.forName(className, false, bootSysLoader);
         } catch (ClassNotFoundException e) {
-            return EditResult.err(e, "loadc");
+            return EditResult.err(e, "loadc"); //$NON-NLS-1$
         } catch (NoClassDefFoundError e) {
-            return EditResult.err(e, "loadc");
+            return EditResult.err(e, "loadc"); //$NON-NLS-1$
         }
 
         // is public?
         int modifiers = class0.getModifiers();
         if (!Modifier.isPublic(modifiers))
-            return EditResult.pass("local");
+            return EditResult.pass("local"); //$NON-NLS-1$
 
         // has main()? [1, bootSysLoader]
         try {
-            class0.getMethod("main", String[].class);
+            class0.getMethod("main", String[].class); //$NON-NLS-1$
         } catch (NoSuchMethodException e) {
-            return EditResult.pass("notapp0");
+            return EditResult.pass("notapp0"); //$NON-NLS-1$
             // return ProcessResult.err(e, "notapp0");
         } catch (NoClassDefFoundError t) {
             // continue search.
@@ -158,32 +158,32 @@ public class Mkbat extends BatchEditCLI {
 
         // has main()? [2, configLoader]
         try {
-            class1.getMethod("main", String[].class);
-            L.i.P("    main-class: ", class1);
+            class1.getMethod("main", String[].class); //$NON-NLS-1$
+            L.i.P("    main-class: ", class1); //$NON-NLS-1$
         } catch (NoSuchMethodException e) {
-            return EditResult.pass("notapp");
+            return EditResult.pass("notapp"); //$NON-NLS-1$
             // return ProcessResult.err(e, "notapp");
         } catch (Throwable t) {
-            return EditResult.err(t, "loadf");
+            return EditResult.err(t, "loadf"); //$NON-NLS-1$
         }
 
         generate(class1);
 
-        return EditResult.pass("ok");
+        return EditResult.pass("ok"); //$NON-NLS-1$
     }
 
     protected void generate(Class<?> clazz) throws IOException {
         String batName = A_bas.getProgramName(clazz, false);
-        File batf = getOutputFile(batName + ".bat");
+        File batf = getOutputFile(batName + ".bat"); //$NON-NLS-1$
         batf.getParentFile().mkdirs();
         String name = clazz.getName();
 
         // varmap.clear();
         String templName = new File(batTempl.getPath()).getName();
-        varmap.put("TEMPLATE", batEscape(templName));
-        varmap.put("NAME", batEscape(name));
+        varmap.put("TEMPLATE", batEscape(templName)); //$NON-NLS-1$
+        varmap.put("NAME", batEscape(name)); //$NON-NLS-1$
 
-        String start = "";
+        String start = ""; //$NON-NLS-1$
 
         Integer startMode = (Integer) Ns.getValue(clazz, StartMode.class);
         if (startMode != null)
@@ -191,12 +191,12 @@ public class Mkbat extends BatchEditCLI {
             case StartMode.CLI:
                 break;
             case StartMode.GUI:
-                start = "startw";
+                start = "startw"; //$NON-NLS-1$
                 break;
             case StartMode.DAEMON:
                 break;
             }
-        varmap.put("START", start);
+        varmap.put("START", start); //$NON-NLS-1$
 
         BootProc bootProc = BootProc.get(clazz);
         String booter = null;
@@ -214,13 +214,13 @@ public class Mkbat extends BatchEditCLI {
                 bootArgs = bootProc.getBootArgs();
         }
 
-        String launch = "";
+        String launch = ""; //$NON-NLS-1$
         if (bootArgs.length != 0) {
-            launch = booter + " " + Strings.join(" ", bootArgs) + " --";
+            launch = booter + " " + Strings.join(" ", bootArgs) + " --"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         } else if (booter != null) {
-            launch = booter + " --";
+            launch = booter + " --"; //$NON-NLS-1$
         }
-        varmap.put("LAUNCH", batEscape(launch));
+        varmap.put("LAUNCH", batEscape(launch)); //$NON-NLS-1$
 
         BCharOut loadlibs = new BCharOut();
         SJLibLoader libloader = SJLibLoader.DEFAULT;
@@ -228,29 +228,29 @@ public class Mkbat extends BatchEditCLI {
             File f = libloader.findLibraryFile(lib);
             String fname;
             if (f == null) {
-                if (lib.contains("."))
+                if (lib.contains(".")) //$NON-NLS-1$
                     fname = lib;
                 else
-                    fname = lib + ".jar";
-                L.w.P("lib ", lib, " => ", fname);
+                    fname = lib + ".jar"; //$NON-NLS-1$
+                L.w.P("lib ", lib, " => ", fname); //$NON-NLS-1$ //$NON-NLS-2$
             } else
                 fname = f.getName();
-            String loadlib = "call :load " + qq(lib) + " " + qq(fname);
-            loadlibs.println("    " + loadlib);
+            String loadlib = "call :load " + qq(lib) + " " + qq(fname); //$NON-NLS-1$ //$NON-NLS-2$
+            loadlibs.println("    " + loadlib); //$NON-NLS-1$
         }
         // varmap.put("LOADLIBS_0", "");
-        varmap.put("LOADLIBS", batEscape(loadlibs.toString()));
+        varmap.put("LOADLIBS", batEscape(loadlibs.toString())); //$NON-NLS-1$
 
         String inst = Interps.dereference(batTemplBody, varmap);
         byte[] batData = inst.getBytes();
         byte[] batFixed = fix_BatBB.methods().doEditToBuffer(batData);
         if (!Bytes.equals(batData, batFixed))
-            L.m.P("bat label boundary fixed: ", batf);
+            L.m.P("bat label boundary fixed: ", batf); //$NON-NLS-1$
         if (force) {
             Files.write(batf, batFixed, batf);
-            L.m.P("write ", batf);
+            L.m.P("write ", batf); //$NON-NLS-1$
         } else if (Files.copyDiff(batFixed, batf))
-            L.m.P("save ", batf);
+            L.m.P("save ", batf); //$NON-NLS-1$
     }
 
     static URL       batTempl;
@@ -259,8 +259,8 @@ public class Mkbat extends BatchEditCLI {
 
     static {
         try {
-            batTempl = Files.classData(Mkbat.class, "batTempl");
-            batTemplBody = Files.readAll(batTempl, "utf-8");
+            batTempl = Files.classData(Mkbat.class, "batTempl"); //$NON-NLS-1$
+            batTemplBody = Files.readAll(batTempl, "utf-8"); //$NON-NLS-1$
         } catch (IOException e) {
             throw new IdentifiedException(e.getMessage(), e);
         }
@@ -268,8 +268,8 @@ public class Mkbat extends BatchEditCLI {
     }
 
     static String batEscape(String s) {
-        s = s.replace("^", "^^");
-        s = s.replace("%", "%%");
+        s = s.replace("^", "^^"); //$NON-NLS-1$ //$NON-NLS-2$
+        s = s.replace("%", "%%"); //$NON-NLS-1$ //$NON-NLS-2$
         return s;
     }
 

@@ -11,7 +11,7 @@ public class CallerTest {
     public void test1() {
         for (int i = -10; i < 10; i++) {
             Class<?> clazz = Caller.getCallerClass(i);
-            String mesg = String.format("%4d - %s", i, clazz);
+            String mesg = String.format(Messages.getString("CallerTest.0"), i, clazz); //$NON-NLS-1$
             System.out.println(mesg);
         }
 
@@ -27,7 +27,7 @@ public class CallerTest {
         StackTraceElement stack = Caller.getCallerStack();
         Class<?> clazz = getClass();
         assertEquals(clazz.getName(), stack.getClassName());
-        assertEquals("test2", stack.getMethodName());
+        assertEquals(Messages.getString("CallerTest.1"), stack.getMethodName()); //$NON-NLS-1$
     }
 
 }

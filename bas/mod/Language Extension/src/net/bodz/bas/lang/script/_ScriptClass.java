@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.lang.err.NotImplementedException;
+import net.bodz.bas.nls.LangNLS;
 
 public abstract class _ScriptClass<T> implements ScriptClass<T> {
 
@@ -119,7 +120,8 @@ public abstract class _ScriptClass<T> implements ScriptClass<T> {
     public Object get(Object object, String fieldName) throws ScriptException {
         ScriptField<Object> field = getField(fieldName);
         if (field == null)
-            throw new ScriptException("no such field: " + fieldName);
+            throw new ScriptException(
+                    LangNLS.getString("_ScriptClass.nofield") + fieldName); //$NON-NLS-1$
         return field.get(object);
     }
 
@@ -128,7 +130,8 @@ public abstract class _ScriptClass<T> implements ScriptClass<T> {
             throws ScriptException {
         ScriptField<Object> field = getField(fieldName);
         if (field == null)
-            throw new ScriptException("no such field: " + fieldName);
+            throw new ScriptException(
+                    LangNLS.getString("_ScriptClass.nofield") + fieldName); //$NON-NLS-1$
         field.set(object, newValue);
     }
 
@@ -137,7 +140,8 @@ public abstract class _ScriptClass<T> implements ScriptClass<T> {
             throws ScriptException {
         ScriptMethod<Object> method = getMethod(methodName);
         if (method == null)
-            throw new ScriptException("no such method: " + methodName);
+            throw new ScriptException(LangNLS
+                    .getString("_ScriptClass.nomethod") + methodName); //$NON-NLS-1$
         return method.invoke(object, parameters);
     }
 

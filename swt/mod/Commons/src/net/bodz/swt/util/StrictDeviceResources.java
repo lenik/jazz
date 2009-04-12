@@ -18,6 +18,7 @@ import net.bodz.bas.lang.err.IllegalArgumentTypeException;
 import net.bodz.bas.lang.err.UnexpectedException;
 import net.bodz.bas.loader.UCL;
 import net.bodz.bas.types.IndexMap;
+import net.bodz.swt.nls.CommonNLS;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -71,12 +72,13 @@ public class StrictDeviceResources {
 
     public ImageData getImageData(InputStream in) throws IOException {
         if (in == null)
-            throw new NullPointerException("in");
+            throw new NullPointerException("in"); //$NON-NLS-1$
         try {
             return new ImageData(in);
         } catch (SWTException e) {
             if (e.code == SWT.ERROR_IO)
-                throw new IOException("SWT I/O Exception", e);
+                throw new IOException(CommonNLS
+                        .getString("StrictDeviceResources.swtIOError"), e); //$NON-NLS-1$
             throw e;
         }
     }
@@ -146,7 +148,8 @@ public class StrictDeviceResources {
         URL url = clazz.getResource(classResPath);
         if (url == null) {
             diagResPath(clazz, classResPath);
-            throw new IOException("bad resource: " + classResPath);
+            throw new IOException(
+                    CommonNLS.getString("StrictDeviceResources.badResource") + classResPath); //$NON-NLS-1$
         }
         return getImageData(url);
     }
@@ -166,7 +169,8 @@ public class StrictDeviceResources {
         URL url = loader.getResource(loaderResPath);
         if (url == null) {
             diagResPath(loader, loaderResPath);
-            throw new IOException("bad resource: " + loaderResPath);
+            throw new IOException(
+                    CommonNLS.getString("StrictDeviceResources.badResource") + loaderResPath); //$NON-NLS-1$
         }
         return getImageData(url);
     }
@@ -262,7 +266,8 @@ public class StrictDeviceResources {
         URL url = clazz.getResource(classResPath);
         if (url == null) {
             diagResPath(clazz, classResPath);
-            throw new IOException("bad resource: " + classResPath);
+            throw new IOException(
+                    CommonNLS.getString("StrictDeviceResources.badResource") + classResPath); //$NON-NLS-1$
         }
         return getImage(url);
     }
@@ -275,7 +280,8 @@ public class StrictDeviceResources {
         URL url = loader.getResource(loaderResPath);
         if (url == null) {
             diagResPath(loader, loaderResPath);
-            throw new IOException("bad resource: " + loaderResPath);
+            throw new IOException(
+                    CommonNLS.getString("StrictDeviceResources.badResource") + loaderResPath); //$NON-NLS-1$
         }
         return getImage(url);
     }
@@ -338,15 +344,15 @@ public class StrictDeviceResources {
 
     static void diagResPath(ClassLoader loader, String path) {
         if (diag) {
-            System.err.println("bad resource path: " + path);
+            System.err.println(CommonNLS
+                    .getString("StrictDeviceResources.badResource") + path); //$NON-NLS-1$
             dumpLoader(loader);
         }
     }
 
     static void diagResPath(Class<?> clazz, String path) {
         if (diag) {
-            System.err.println("bad resource path: " + path //
-                    + ", class=" + clazz);
+            System.err.printf("Bad resource path: %s, class=%s\n", path, clazz);
             dumpLoader(clazz.getClassLoader());
         }
     }

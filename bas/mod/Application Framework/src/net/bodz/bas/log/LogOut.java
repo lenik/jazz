@@ -12,7 +12,7 @@ public abstract class LogOut extends CharOut implements ILogOut {
 
     public LogOut(String name) {
         if (name == null)
-            this.name = "$" + System.identityHashCode(this);
+            this.name = "$" + System.identityHashCode(this); //$NON-NLS-1$
         else
             this.name = name;
     }
@@ -23,7 +23,7 @@ public abstract class LogOut extends CharOut implements ILogOut {
         int dot = type.lastIndexOf('.');
         if (dot != -1)
             type = type.substring(dot + 1);
-        return type + "(" + name + ")";
+        return type + "(" + name + ")"; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     protected String delim() {

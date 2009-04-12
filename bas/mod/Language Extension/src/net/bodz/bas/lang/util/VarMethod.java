@@ -6,6 +6,7 @@ import java.util.Map;
 
 import net.bodz.bas.lang.Control;
 import net.bodz.bas.lang.err.IllegalUsageError;
+import net.bodz.bas.nls.LangNLS;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TypesHierMap;
 import net.bodz.bas.types.TextMap.HashTextMap;
@@ -58,15 +59,15 @@ public class VarMethod extends _VMethod {
             IllegalAccessException, InvocationTargetException {
         Method method = findMethod(paramTypes);
         if (method == null)
-            throw new NoSuchMethodException(name + "("
-                    + Types.joinNames(paramTypes) + ")");
+            throw new NoSuchMethodException(name + "(" //$NON-NLS-1$
+                    + Types.joinNames(paramTypes) + ")"); //$NON-NLS-1$
         if (obj != null) {
             Class<?> objClass = obj.getClass();
             Class<?> declClass = method.getDeclaringClass();
             if (!declClass.isAssignableFrom(objClass))
-                throw new IllegalUsageError(
-                        "invoke method of different type, obj=" + objClass
-                                + ", decl=" + declClass);
+                throw new IllegalUsageError(LangNLS
+                        .getString("VarMethod.incompatType") + objClass //$NON-NLS-1$
+                        + LangNLS.getString("VarMethod.decl") + declClass); //$NON-NLS-1$
         }
         return Control.invoke(method, obj, params);
     }

@@ -14,7 +14,7 @@ public class CLIPlugins extends Plugins {
     @Override
     public boolean registerCategory(PluginCategory category) {
         if (!(category instanceof CLIPluginCategory))
-            throw new OutOfDomainException("category class", category
+            throw new OutOfDomainException("category class", category //$NON-NLS-1$
                     .getClass(), CLIPluginCategory.class);
         return super.registerCategory(category);
     }
@@ -24,7 +24,7 @@ public class CLIPlugins extends Plugins {
     public boolean registerCategory(String name,
             Class<? extends Plugin> baseType) {
         if (!CLIPlugin.class.isAssignableFrom(baseType))
-            throw new OutOfDomainException("baseType", baseType,
+            throw new OutOfDomainException("baseType", baseType, //$NON-NLS-1$
                     CLIPlugin.class);
         CLIPluginCategory category = new CLIPluginCategory(name,
                 (Class<? extends CLIPlugin>) baseType);
@@ -52,13 +52,13 @@ public class CLIPlugins extends Plugins {
             out.println();
             out.print(prefix);
             out.print(name);
-            out.print(": ");
+            out.print(": "); //$NON-NLS-1$
             if (desc != null)
                 out.print(desc);
             out.println();
 
             CLIPluginCategory cliCategory = (CLIPluginCategory) category;
-            cliCategory.help(out, prefix + "    ");
+            cliCategory.help(out, prefix + "    "); //$NON-NLS-1$
         }
     }
 

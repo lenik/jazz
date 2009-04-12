@@ -2,6 +2,8 @@ package net.bodz.bas.lang.ref;
 
 import java.util.LinkedList;
 
+import net.bodz.bas.nls.LangNLS;
+
 /**
  * Scoped Var.
  */
@@ -12,7 +14,7 @@ public class ScopedRef<T> implements Ref<T> {
     @Override
     public T get() {
         if (stack.isEmpty())
-            throw new RuntimeException("stack underflow");
+            throw new RuntimeException(LangNLS.getString("ScopedRef.underflow")); //$NON-NLS-1$
         return stack.getLast();
     }
 
@@ -20,7 +22,7 @@ public class ScopedRef<T> implements Ref<T> {
     @Override
     public void set(Object o) {
         if (stack.isEmpty())
-            throw new RuntimeException("stack underflow");
+            throw new RuntimeException(LangNLS.getString("ScopedRef.underflow")); //$NON-NLS-1$
         stack.set(stack.size(), (T) o);
     }
 
@@ -34,7 +36,7 @@ public class ScopedRef<T> implements Ref<T> {
 
     public T end() {
         if (stack.isEmpty())
-            throw new RuntimeException("stack underflow");
+            throw new RuntimeException(LangNLS.getString("ScopedRef.underflow")); //$NON-NLS-1$
         return stack.pop();
     }
 

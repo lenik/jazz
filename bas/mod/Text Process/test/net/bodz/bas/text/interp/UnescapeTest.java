@@ -18,34 +18,34 @@ public class UnescapeTest {
                 return Unescape.unescape(input);
             }
         }, //
-                EQ("", ""), // 1
-                EQ("hello", "hello"), //
-                EQ("he\\\\llo", "he\\llo"), //
-                EQ("he\\\"llo", "he\"llo"), //
-                EQ("he\\\'llo", "he\'llo"), //
+                EQ("", ""), // 1 //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("hello", "hello"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("he\\\\llo", "he\\llo"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("he\\\"llo", "he\"llo"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("he\\\'llo", "he\'llo"), // //$NON-NLS-1$ //$NON-NLS-2$
 
-                EQ("\\thello", "\thello"), //
-                EQ("h\\tello", "h\tello"), //
-                EQ("hell\\to", "hell\to"), //
-                EQ("hello\\t", "hello\t"), //
-                EQ("\\t", "\t"), //
+                EQ("\\thello", "\thello"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("h\\tello", "h\tello"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("hell\\to", "hell\to"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("hello\\t", "hello\t"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("\\t", "\t"), // //$NON-NLS-1$ //$NON-NLS-2$
 
-                EQ("\\x9hello", "\thello"), // 11
-                EQ("hell\\x9o", "hell\to"), //
-                EQ("hello\\x9", "hello\t"), //
-                EQ("\\x9", "\t"), //
+                EQ("\\x9hello", "\thello"), // 11 //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("hell\\x9o", "hell\to"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("hello\\x9", "hello\t"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("\\x9", "\t"), // //$NON-NLS-1$ //$NON-NLS-2$
 
-                EQ("\\11hello", "\thello"), //
-                EQ("h\\11ello", "h\tello"), //
-                EQ("hell\\11o", "hell\to"), //
-                EQ("hello\\11", "hello\t"), //
-                EQ("\\11", "\t"), //
+                EQ("\\11hello", "\thello"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("h\\11ello", "h\tello"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("hell\\11o", "hell\to"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("hello\\11", "hello\t"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("\\11", "\t"), // //$NON-NLS-1$ //$NON-NLS-2$
 
-                EQ("\\x41hello", "Ahello"), //
-                EQ("h\\x41ello", "hAello"), // 21
-                EQ("hell\\x41o", "hellAo"), //
-                EQ("hello\\x41", "helloA"), //
-                EQ("\\x41", "A"), //
+                EQ("\\x41hello", "Ahello"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("h\\x41ello", "hAello"), // 21 //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("hell\\x41o", "hellAo"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("hello\\x41", "helloA"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("\\x41", "A"), // //$NON-NLS-1$ //$NON-NLS-2$
 
                 END);
     }

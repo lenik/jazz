@@ -72,7 +72,7 @@ public class Fix_BatBB extends BatchEditCLI {
         return startBlock != endBlock;
     }
 
-    static byte[] remPrefix = ":: Fix_BatBB ::".getBytes();
+    static byte[] remPrefix = ":: Fix_BatBB ::".getBytes(); //$NON-NLS-1$
 
     int fillUps(OutputStream out, int start) throws IOException {
         int fill = blockSize - start % blockSize;

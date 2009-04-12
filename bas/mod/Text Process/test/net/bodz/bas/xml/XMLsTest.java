@@ -16,11 +16,11 @@ public class XMLsTest {
 
     @Test
     public void testParseXML1() throws Exception {
-        String xml = "<root>" + //
-                "<a>A</a>" + //
-                "<b>BB</b>" + //
-                "<a>AA</a>" + //
-                "</root>";
+        String xml = "<root>" + // //$NON-NLS-1$
+                "<a>A</a>" + // //$NON-NLS-1$
+                "<b>BB</b>" + // //$NON-NLS-1$
+                "<a>AA</a>" + // //$NON-NLS-1$
+                "</root>"; //$NON-NLS-1$
         final TextMap<Integer> tagstat = new TreeTextMap<Integer>();
 
         XMLs.parseXML(new StringReader(xml), new DefaultHandler() {
@@ -36,8 +36,8 @@ public class XMLsTest {
             }
         });
 
-        assertEquals((Integer) 2, tagstat.get("a"));
-        assertEquals((Integer) 1, tagstat.get("b"));
+        assertEquals((Integer) 2, tagstat.get("a")); //$NON-NLS-1$
+        assertEquals((Integer) 1, tagstat.get("b")); //$NON-NLS-1$
     }
 
 }

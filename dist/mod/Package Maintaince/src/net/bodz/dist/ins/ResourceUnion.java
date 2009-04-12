@@ -15,6 +15,7 @@ import java.net.URL;
 
 import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.err.UnexpectedException;
+import net.bodz.dist.nls.PackNLS;
 
 public class ResourceUnion {
 
@@ -83,7 +84,7 @@ public class ResourceUnion {
 
     @Override
     public String toString() {
-        return "Res(file=" + file + ", url=" + url + ")";
+        return PackNLS.getString("ResourceUnion.0") + file + ", url=" + url + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
 }

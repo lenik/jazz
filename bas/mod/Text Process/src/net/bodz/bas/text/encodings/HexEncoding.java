@@ -20,7 +20,7 @@ public class HexEncoding extends _Encoding {
     private final String NL;
 
     public HexEncoding() {
-        this(" ");
+        this(" "); //$NON-NLS-1$
     }
 
     public HexEncoding(String IFS) {

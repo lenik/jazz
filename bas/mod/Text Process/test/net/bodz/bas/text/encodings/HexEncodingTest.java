@@ -14,12 +14,12 @@ public class HexEncodingTest {
     public void testEncode() {
         TestDefs.tests(new TestEval<String>() {
             public Object eval(String input) throws Throwable {
-                return HEX.encode(input.getBytes("ascii"));
+                return HEX.encode(input.getBytes("ascii")); //$NON-NLS-1$
             }
         }, //
-                EQ("", ""), //
-                EQ("hello", "68 65 6c 6c 6f"), //
-                EQ("[\0\n\r\t]", "5b 00 0a 0d 09 5d"), //
+                EQ("", ""), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("hello", "68 65 6c 6c 6f"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("[\0\n\r\t]", "5b 00 0a 0d 09 5d"), // //$NON-NLS-1$ //$NON-NLS-2$
                 END);
     }
 
@@ -28,12 +28,12 @@ public class HexEncodingTest {
         TestDefs.tests(new TestEval<String>() {
             public Object eval(String input) throws Throwable {
                 byte[] decode = HEX.decode(input);
-                return new String(decode, "ascii");
+                return new String(decode, "ascii"); //$NON-NLS-1$
             }
         }, //
-                EQ("", ""), //
-                EQ("68 65 6c 6c 6f", "hello"), //
-                EQ("5b 00 0a 0d 09 5d", "[\0\n\r\t]"), //
+                EQ("", ""), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("68 65 6c 6c 6f", "hello"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("5b 00 0a 0d 09 5d", "[\0\n\r\t]"), // //$NON-NLS-1$ //$NON-NLS-2$
                 END);
     }
 

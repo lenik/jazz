@@ -8,7 +8,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Scrollable;
 
 /**
- * @TestBy ControlsTest
+ * @test ControlsTest
  */
 public class Controls {
 

@@ -87,7 +87,7 @@ public class PatternProcessor extends BCharOut {
 
     @Override
     public String toString() {
-        return getClass() + "-" + System.identityHashCode(this);
+        return getClass() + "-" + System.identityHashCode(this); //$NON-NLS-1$
     }
 
 }

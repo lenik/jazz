@@ -11,6 +11,7 @@ import java.util.Random;
 import net.bodz.bas.lang.Filt1;
 import net.bodz.bas.lang.Pred1;
 import net.bodz.bas.lang.err.IllegalArgumentTypeException;
+import net.bodz.bas.nls.TypesNLS;
 import net.bodz.bas.types.ints.IntIterator;
 
 /**
@@ -58,10 +59,10 @@ public class Arrays2 {
      */
     public static <T> T copyOf(T array, int off, int len) {
         if (array == null)
-            throw new NullPointerException("array");
+            throw new NullPointerException("array"); //$NON-NLS-1$
         Class<?> type = array.getClass();
         if (!type.isArray())
-            throw new IllegalArgumentTypeException(array, "array");
+            throw new IllegalArgumentTypeException(array, "array"); //$NON-NLS-1$
         Class<?> ctype = type.getComponentType();
         int alen = Array.getLength(array);
         assert off >= 0 && len >= 0 && off + len <= alen;
@@ -100,7 +101,7 @@ public class Arrays2 {
                 n += Array.getLength(sig = arrays[i]);
         if (sig == null)
             throw new IllegalArgumentException(
-                    "don't know the component type, all arrays are null");
+                    TypesNLS.getString("Arrays2.unknownCType")); //$NON-NLS-1$
         Class<?> valtype = sig.getClass().getComponentType();
         @SuppressWarnings("unchecked")
         A cat = (A) Array.newInstance(valtype, n);
@@ -149,7 +150,7 @@ public class Arrays2 {
      */
     public static void reverse(Object array, int off, int len) {
         if (array == null)
-            throw new NullPointerException("array");
+            throw new NullPointerException("array"); //$NON-NLS-1$
         if (len < 2)
             return;
         int end = off + len - 1;

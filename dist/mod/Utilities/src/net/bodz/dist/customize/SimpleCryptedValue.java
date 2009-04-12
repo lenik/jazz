@@ -16,8 +16,8 @@ import org.eclipse.swt.widgets.Text;
 
 public class SimpleCryptedValue {
 
-    private Text txtEncrypted;
-    private Text txtPlain;
+    private Text    txtEncrypted;
+    private Text    txtPlain;
     protected Shell shell;
 
     public static void main(String[] args) {
@@ -82,8 +82,9 @@ public class SimpleCryptedValue {
 
         final Button btnEncrypt = new Button(shell, SWT.NONE);
         btnEncrypt.addSelectionListener(new SelectionAdapter() {
+            @Override
             public void widgetSelected(SelectionEvent e) {
-                encrypt(); 
+                encrypt();
             }
         });
         final FormData formData_3 = new FormData();
@@ -96,8 +97,9 @@ public class SimpleCryptedValue {
 
         final Button btnDecrypt = new Button(shell, SWT.NONE);
         btnDecrypt.addSelectionListener(new SelectionAdapter() {
+            @Override
             public void widgetSelected(SelectionEvent e) {
-                decrypt(); 
+                decrypt();
             }
         });
         final FormData formData_3_1 = new FormData();
@@ -109,78 +111,78 @@ public class SimpleCryptedValue {
         btnDecrypt.setText("&Decrypt");
     }
 
-    static byte[] cryptDict; 
+    static byte[] cryptDict;
     static {
         try {
             cryptDict = "SeCReT".getBytes("l1");
         } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e.getMessage(), e); 
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
-    
+
     static String fromHex(String string) {
         try {
-            byte[] b = string.getBytes("l1"); 
+            byte[] b = string.getBytes("l1");
             string = new String(b, "LTC-16");
-            return string; 
+            return string;
         } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e.getMessage(), e); 
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
 
     static String toHex(String string) {
         try {
-            byte[] b = string.getBytes("LTC-16"); 
+            byte[] b = string.getBytes("LTC-16");
             string = new String(b, "l1");
-            return string; 
+            return string;
         } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e.getMessage(), e); 
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
-    
+
     public static String encrypt(String plain) {
         try {
             byte[] b = plain.getBytes("utf-8");
             for (int i = 0; i < b.length; i++) {
-                b[i] ^= i + cryptDict[i % cryptDict.length]; 
+                b[i] ^= i + cryptDict[i % cryptDict.length];
             }
             // byte[] -> char *
             String encrypted = new String(b, "l1");
 
-            encrypted = toHex(encrypted); 
-            encrypted = encrypted.replace(' ', '.'); 
+            encrypted = toHex(encrypted);
+            encrypted = encrypted.replace(' ', '.');
             return encrypted;
         } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e.getMessage(), e); 
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
-    
+
     public static String decrypt(String encrypted) {
         try {
-            encrypted = encrypted.replace('.', ' '); 
-            encrypted = fromHex(encrypted); 
-            
+            encrypted = encrypted.replace('.', ' ');
+            encrypted = fromHex(encrypted);
+
             // char * -> byte[]
-            byte[] b = encrypted.getBytes("l1"); 
-            
+            byte[] b = encrypted.getBytes("l1");
+
             for (int i = 0; i < b.length; i++) {
                 b[i] ^= i + cryptDict[i % cryptDict.length];
             }
-            
+
             String plain = new String(b, "utf-8");
             return plain;
         } catch (UnsupportedEncodingException e) {
-            throw new RuntimeException(e.getMessage(), e); 
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
-    
+
     void encrypt() {
         String plain = txtPlain.getText();
         txtEncrypted.setText(encrypt(plain));
     }
-    
+
     void decrypt() {
-        String encrypted = txtEncrypted.getText(); 
-        txtPlain.setText(decrypt(encrypted)); 
+        String encrypted = txtEncrypted.getText();
+        txtPlain.setText(decrypt(encrypted));
     }
 }

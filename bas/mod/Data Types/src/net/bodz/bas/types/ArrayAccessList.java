@@ -30,7 +30,7 @@ public class ArrayAccessList<T> extends AbstractList<T> {
 
     private void checkIndex(int index) {
         if (index < 0 || index >= len)
-            throw new IndexOutOfBoundsException("" + index);
+            throw new IndexOutOfBoundsException("" + index); //$NON-NLS-1$
     }
 
     @Override

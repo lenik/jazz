@@ -12,29 +12,29 @@ public class List1sTest {
         for (int repeat = 0; repeat < 10; repeat++) {
             assertTrue(list.isEmpty());
             list.add(10);
-            assertEquals("[10]", list.toString());
+            assertEquals("[10]", list.toString()); //$NON-NLS-1$
             list.add(20);
-            assertEquals("[10, 20]", list.toString());
+            assertEquals("[10, 20]", list.toString()); //$NON-NLS-1$
             list.add(30);
-            assertEquals("[10, 20, 30]", list.toString());
+            assertEquals("[10, 20, 30]", list.toString()); //$NON-NLS-1$
             list.remove(0);
-            assertEquals("[20, 30]", list.toString());
+            assertEquals("[20, 30]", list.toString()); //$NON-NLS-1$
             list.remove(1);
-            assertEquals("[20]", list.toString());
+            assertEquals("[20]", list.toString()); //$NON-NLS-1$
             list.remove(0);
-            assertEquals("[]", list.toString());
+            assertEquals("[]", list.toString()); //$NON-NLS-1$
             list.add(0, 0);
-            assertEquals("[0]", list.toString());
+            assertEquals("[0]", list.toString()); //$NON-NLS-1$
             list.add(1, 30);
-            assertEquals("[0, 30]", list.toString());
+            assertEquals("[0, 30]", list.toString()); //$NON-NLS-1$
             list.add(1, 20);
-            assertEquals("[0, 20, 30]", list.toString());
+            assertEquals("[0, 20, 30]", list.toString()); //$NON-NLS-1$
             list.add(0, 10);
-            assertEquals("[10, 0, 20, 30]", list.toString());
+            assertEquals("[10, 0, 20, 30]", list.toString()); //$NON-NLS-1$
             list.remove(1);
-            assertEquals("[10, 20, 30]", list.toString());
+            assertEquals("[10, 20, 30]", list.toString()); //$NON-NLS-1$
             list.clear();
-            assertEquals("[]", list.toString());
+            assertEquals("[]", list.toString()); //$NON-NLS-1$
         }
     }
 

@@ -21,7 +21,7 @@ public class EncodeUnitTest {
     SISOUnit   tostr;
 
     public EncodeUnitTest() throws IOException {
-        Charset utf8 = Charset.forName("utf-8");
+        Charset utf8 = Charset.forName("utf-8"); //$NON-NLS-1$
         // bytebuf = [3]
         encode = new EncodeUnit(utf8.newEncoder(), 3);
         encode.setDst(tostr = new Binary_Hex());
@@ -36,17 +36,17 @@ public class EncodeUnitTest {
                     System.err.println(in);
                 Collection<Object> out;
                 if (in == null)
-                    out = WhatIf.send(encode, tostr, "", true);
+                    out = WhatIf.send(encode, tostr, "", true); //$NON-NLS-1$
                 else
                     out = WhatIf.send(encode, tostr, in);
-                return Strings.join("|", out);
+                return Strings.join("|", out); //$NON-NLS-1$
             }
         }, //
-                EQ("hello", "68 65 6c|6c 6f"), //
-                EQ("你好", "e4 bd a0|e5 a5 bd"), //
+                EQ("hello", "68 65 6c|6c 6f"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("你好", "e4 bd a0|e5 a5 bd"), // //$NON-NLS-1$ //$NON-NLS-2$
                 // x <overflow> 你 <underflow> 好 <underflow>
-                EQ("x你好", "78|e4 bd a0|e5 a5 bd"), //
-                EQ("αβγκκκ", "ce b1|ce b2|ce b3|ce ba|ce ba|ce ba"), //
+                EQ("x你好", "78|e4 bd a0|e5 a5 bd"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("αβγκκκ", "ce b1|ce b2|ce b3|ce ba|ce ba|ce ba"), // //$NON-NLS-1$ //$NON-NLS-2$
                 END);
     }
 

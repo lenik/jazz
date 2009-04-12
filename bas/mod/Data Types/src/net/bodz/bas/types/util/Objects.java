@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
+import net.bodz.bas.nls.TypesNLS;
+
 public class Objects {
 
     /**
@@ -85,17 +87,17 @@ public class Objects {
             return cloned;
         } catch (NoSuchMethodException e) {
             throw new CloneNotSupportedException(
-                    "No copy constructor defined in class " + cls.getName());
+                    TypesNLS.getString("Objects.noCopyCtor") + cls.getName()); //$NON-NLS-1$
         } catch (IllegalAccessException e) {
             throw new CloneNotSupportedException(
-                    "Cannot access copy constructor in class: " + cls.getName());
+                    TypesNLS.getString("Objects.cantAccessCopyCtor") + cls.getName()); //$NON-NLS-1$
         } catch (InvocationTargetException e) {
             throw new CloneNotSupportedException(
-                    "Invocation target exception when cloning: "
+                    TypesNLS.getString("Objects.errClone") //$NON-NLS-1$
                             + e.getMessage());
         } catch (InstantiationException e) {
             throw new CloneNotSupportedException(
-                    "Instantiation exception when cloning: " + e.getMessage());
+                    TypesNLS.getString("Objects.errNewInst") + e.getMessage()); //$NON-NLS-1$
         }
     }
 

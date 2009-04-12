@@ -3,6 +3,7 @@ package net.bodz.dist.ins.builtins;
 import net.bodz.dist.ins.ConfigPage;
 import net.bodz.dist.ins.IProject;
 import net.bodz.dist.ins.ISession;
+import net.bodz.dist.nls.PackNLS;
 import net.bodz.swt.controls.Picture;
 
 import org.eclipse.swt.SWT;
@@ -36,7 +37,7 @@ public class LogoPage extends ConfigPage {
         IProject project = session.getProject();
         String text = project.getText();
         String version = project.getVersion();
-        return "Welcome to install " + text + " " + version;
+        return PackNLS.getString("LogoPage.title") + text + " " + version; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
 }

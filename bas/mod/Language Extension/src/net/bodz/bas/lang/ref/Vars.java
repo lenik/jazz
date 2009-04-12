@@ -10,6 +10,7 @@ import java.lang.reflect.Modifier;
 import net.bodz.bas.lang.a.ReadOnly;
 import net.bodz.bas.lang.err.ReadOnlyException;
 import net.bodz.bas.lang.util.Reflects;
+import net.bodz.bas.nls.LangNLS;
 
 public class Vars {
 
@@ -136,7 +137,7 @@ public class Vars {
 
         @Override
         public String toString() {
-            return getMeta() + "@" + ctx;
+            return getMeta() + "@" + ctx; //$NON-NLS-1$
         }
 
     }
@@ -156,9 +157,9 @@ public class Vars {
             readf = property.getReadMethod();
             writef = property.getWriteMethod();
             if (readf == null)
-                throw new UnsupportedOperationException(
-                        "unreadable property isn't supported: "
-                                + property.getName());
+                throw new UnsupportedOperationException(LangNLS
+                        .getString("Vars.noread") //$NON-NLS-1$
+                        + property.getName());
             hasPropertyChangeSupport = IPropertyChangeSupport.class
                     .isAssignableFrom(readf.getDeclaringClass());
         }
@@ -250,7 +251,7 @@ public class Vars {
         @Override
         public void set(Object value) {
             if (meta.writef == null)
-                throw new ReadOnlyException("unwritable property: "
+                throw new ReadOnlyException(LangNLS.getString("Vars.nowrite") //$NON-NLS-1$
                         + meta.getName());
             Reflects.invoke(ctx, meta.writef, value);
         }
@@ -271,7 +272,7 @@ public class Vars {
 
         @Override
         public String toString() {
-            return getMeta() + "@" + ctx;
+            return getMeta() + "@" + ctx; //$NON-NLS-1$
         }
 
     }
@@ -351,7 +352,7 @@ public class Vars {
 
         @Override
         public String toString() {
-            return "Constant of " + type;
+            return LangNLS.getString("Vars.constof") + type; //$NON-NLS-1$
         }
 
     }
@@ -399,7 +400,7 @@ public class Vars {
 
         @Override
         public String toString() {
-            return getMeta() + ": " + value;
+            return getMeta() + ": " + value; //$NON-NLS-1$
         }
 
     }

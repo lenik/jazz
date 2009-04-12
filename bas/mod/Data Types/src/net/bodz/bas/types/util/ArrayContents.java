@@ -4,6 +4,8 @@ import java.lang.reflect.Array;
 import java.util.AbstractList;
 import java.util.Arrays;
 
+import net.bodz.bas.nls.TypesNLS;
+
 public class ArrayContents<A, E> extends AbstractList<E> {
 
     private final A          array;
@@ -20,7 +22,7 @@ public class ArrayContents<A, E> extends AbstractList<E> {
             if (array == null
                     || array.getClass().getComponentType().isPrimitive()) {
                 throw new IllegalArgumentException(
-                        "deep mode on primitive array");
+                        TypesNLS.getString("ArrayContents.deepModeOnPrimv")); //$NON-NLS-1$
             }
         }
         this.array = array;

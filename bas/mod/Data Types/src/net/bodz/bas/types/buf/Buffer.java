@@ -20,7 +20,7 @@ public class Buffer<A> {
 
     private static void _checkpow2(int n) {
         if (IntMath.ones(n) != 1)
-            throw new OutOfDomainException("n=pow2(x)", n);
+            throw new OutOfDomainException("n=pow2(x)", n); //$NON-NLS-1$
     }
 
     private final ArrayOp<A> op;
@@ -63,7 +63,7 @@ public class Buffer<A> {
 
     public void resize(int newsize) {
         if (newsize < 0)
-            throw new OutOfDomainException("newsize", newsize, 0);
+            throw new OutOfDomainException("newsize", newsize, 0); //$NON-NLS-1$
         int size = size();
         if (newsize <= size)
             end = start + size;
@@ -118,21 +118,21 @@ public class Buffer<A> {
 
     protected void _check(int off) {
         if (off < 0)
-            throw new OutOfDomainException("off", off, 0);
+            throw new OutOfDomainException("off", off, 0); //$NON-NLS-1$
         int size = size();
         if (off > size)
-            throw new OutOfDomainException("off", off, 0);
+            throw new OutOfDomainException("off", off, 0); //$NON-NLS-1$
     }
 
     protected void _check(int off, int len) {
         if (off < 0)
-            throw new OutOfDomainException("from", off, 0);
+            throw new OutOfDomainException("from", off, 0); //$NON-NLS-1$
         if (len < 0)
-            throw new OutOfDomainException("len", len, 0);
+            throw new OutOfDomainException("len", len, 0); //$NON-NLS-1$
         int size = size();
         int _end = off + len;
         if (_end > size)
-            throw new OutOfDomainException("to", _end, size);
+            throw new OutOfDomainException("to", _end, size); //$NON-NLS-1$
     }
 
     public void clear() {
@@ -249,7 +249,7 @@ public class Buffer<A> {
 
     public A copyOf(int newLength) {
         if (newLength < 0)
-            throw new OutOfDomainException("newLength", newLength, 0);
+            throw new OutOfDomainException("newLength", newLength, 0); //$NON-NLS-1$
         A copy = op.allocate(newLength);
         int copylen = size();
         if (copylen > newLength)

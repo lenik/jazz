@@ -13,16 +13,16 @@ public class CLILibraryTest {
 
     @Test
     public void test1() throws CLIException {
-        Dog dog = new Dog("CC");
+        Dog dog = new Dog("CC"); //$NON-NLS-1$
         lib.addMethods(dog);
-        assertEquals("Wang wang!!", lib.eval("bark"));
-        assertEquals("Wang wang!!", lib.eval("bark  "));
+        assertEquals("Wang wang!!", lib.eval("bark")); //$NON-NLS-1$ //$NON-NLS-2$
+        assertEquals("Wang wang!!", lib.eval("bark  ")); //$NON-NLS-1$ //$NON-NLS-2$
 
-        assertEquals("tom", lib.eval("bark tom"));
-        assertEquals("tom, lucy", lib.eval("bark   'tom, lucy'"));
-        assertEquals("d'ni", lib.eval("bark \n 'd\\'ni'"));
+        assertEquals("tom", lib.eval("bark tom")); //$NON-NLS-1$ //$NON-NLS-2$
+        assertEquals("tom, lucy", lib.eval("bark   'tom, lucy'")); //$NON-NLS-1$ //$NON-NLS-2$
+        assertEquals("d'ni", lib.eval("bark \n 'd\\'ni'")); //$NON-NLS-1$ //$NON-NLS-2$
 
-        assertEquals("TL", lib.eval("bark 'Tom, Lucy' true"));
+        assertEquals("TL", lib.eval("bark 'Tom, Lucy' true")); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
 }

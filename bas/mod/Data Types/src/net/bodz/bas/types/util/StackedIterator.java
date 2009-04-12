@@ -3,6 +3,7 @@ package net.bodz.bas.types.util;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import net.bodz.bas.nls.TypesNLS;
 import net.bodz.bas.types.LinkedStack;
 import net.bodz.bas.types.Stack;
 
@@ -29,6 +30,10 @@ public class StackedIterator<T> implements Iterator<T> {
     public StackedIterator(Iterator<T> start) {
         this();
         push(start);
+    }
+
+    public int size() {
+        return stack.size();
     }
 
     public void push(Iterator<T> iterator) {
@@ -92,15 +97,15 @@ public class StackedIterator<T> implements Iterator<T> {
     @Override
     public String toString() {
         if (currentIterator == null)
-            return "empty stack";
+            return TypesNLS.getString("StackedIterator.emptyStack"); //$NON-NLS-1$
         StringBuffer buf = new StringBuffer((1 + stack.size()) * 100);
-        buf.append("Iterators in stack: \n");
-        buf.append("  * " + currentIterator.getClass().getSimpleName() + ": "
-                + currentIterator + "\n");
+        buf.append(TypesNLS.getString("StackedIterator.iterators")); //$NON-NLS-1$
+        buf.append("  * " + currentIterator.getClass().getSimpleName() + ": " //$NON-NLS-1$ //$NON-NLS-2$
+                + currentIterator + "\n"); //$NON-NLS-1$
         for (Iterator<T> iter : stack) {
-            buf.append("    ");
+            buf.append("    "); //$NON-NLS-1$
             buf.append(iter.getClass().getSimpleName());
-            buf.append(": ");
+            buf.append(": "); //$NON-NLS-1$
             buf.append(iter);
             buf.append('\n');
         }

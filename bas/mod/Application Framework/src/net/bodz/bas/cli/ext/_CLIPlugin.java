@@ -61,7 +61,7 @@ public class _CLIPlugin extends _Plugin implements CLIPlugin {
             out.print(prefix);
             out.print(name);
             if (!doc.isEmpty()) {
-                out.print(": ");
+                out.print(": "); //$NON-NLS-1$
                 if (name.length() < maxlen)
                     out.print(Strings.repeat(maxlen - name.length(), ' '));
                 out.print(doc);

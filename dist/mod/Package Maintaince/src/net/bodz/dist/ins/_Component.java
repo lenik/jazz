@@ -9,12 +9,24 @@ import org.eclipse.swt.widgets.Composite;
 
 public abstract class _Component implements IComponent {
 
-    private final boolean visible;
-    private final boolean selected;
+    private String  id;
+
+    private boolean visible;
+    private boolean selection;
 
     public _Component(boolean visible, boolean defaultSelected) {
         this.visible = visible;
-        this.selected = defaultSelected;
+        this.selection = defaultSelected;
+    }
+
+    @Override
+    public String getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override
@@ -70,8 +82,13 @@ public abstract class _Component implements IComponent {
     }
 
     @Override
-    public boolean isSelected() {
-        return selected;
+    public boolean getSelection() {
+        return selection;
+    }
+
+    @Override
+    public void setSelection(boolean selection) {
+        this.selection = selection;
     }
 
     @Override
@@ -95,7 +112,19 @@ public abstract class _Component implements IComponent {
     }
 
     @Override
-    public void dump(ISession session) throws InstallException {
+    public Object getData() {
+        return null;
+    }
+
+    /**
+     * The default implementation ignores the data.
+     */
+    @Override
+    public void setData(Object data) {
+    }
+
+    @Override
+    public void pack(ISession session) throws InstallException {
     }
 
     @Override

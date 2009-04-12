@@ -18,7 +18,7 @@ public class RuntimizedException extends RuntimeException {
             throw type.cast(cause);
         } catch (ClassCastException e) {
             throw new UnexpectedException(
-                    "EFJG - Enhance the fucking java generics");
+                    "EFJG - Enhance the fucking java generics"); //$NON-NLS-1$
             // throw new RareException(this);
         }
     }

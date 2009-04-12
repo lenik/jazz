@@ -13,6 +13,7 @@ import net.bodz.bas.lang.Control;
 import net.bodz.bas.lang.ControlBreak;
 import net.bodz.bas.lang.EvalException;
 import net.bodz.bas.lang.FunctorException;
+import net.bodz.bas.nls.FPNLS;
 import net.bodz.bas.types.Key;
 
 public class Switch<T> extends _Functor<T> {
@@ -23,7 +24,7 @@ public class Switch<T> extends _Functor<T> {
 
     protected T                    evaluated;
 
-    public static final Key        DEFAULT  = new Key("default");
+    public static final Key        DEFAULT  = new Key("default"); //$NON-NLS-1$
 
     public Switch() {
     }
@@ -41,8 +42,8 @@ public class Switch<T> extends _Functor<T> {
 
     public Switch<T> setCase(Object caseKey, _Functor<T> caseValue) {
         if (caseMap.containsKey(caseKey))
-            throw new IllegalArgumentException("Case key " + caseKey
-                    + " already existed. ");
+            throw new IllegalArgumentException(FPNLS.getString("Switch.1") + caseKey //$NON-NLS-1$
+                    + FPNLS.getString("Switch.2")); //$NON-NLS-1$
         caseMap.put(caseKey, caseList.size());
         caseList.add(caseValue);
         return this;

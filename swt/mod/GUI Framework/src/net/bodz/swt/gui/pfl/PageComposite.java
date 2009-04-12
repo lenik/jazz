@@ -68,7 +68,7 @@ public class PageComposite extends Composite implements Page {
     }
 
     protected Object getInitialState() {
-        return "next";
+        return "next"; //$NON-NLS-1$
     }
 
     @Override
