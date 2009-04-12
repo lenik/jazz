@@ -20,6 +20,7 @@ import net.bodz.bas.lang.a.OverrideOption;
 import net.bodz.bas.lang.err.IllegalUsageError;
 import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.lang.err.UnexpectedException;
+import net.bodz.bas.nls.AppNLS;
 import net.bodz.bas.text.diff.DiffComparator;
 import net.bodz.bas.text.diff.DiffFormat;
 import net.bodz.bas.text.diff.DiffFormats;
@@ -179,16 +180,16 @@ public class BatchEditCLI extends BatchCLI {
         assert a != null;
         assert b != null;
         if (a.exists() && !b.exists()) {
-            L.i.P("[new ]", a);
+            L.i.P(AppNLS.getString("BatchEditCLI.s.new"), a); //$NON-NLS-1$
             return true;
         } else if (!a.exists() && b.exists()) {
-            L.i.P("[miss]", a);
+            L.i.P(AppNLS.getString("BatchEditCLI.s.miss"), a); //$NON-NLS-1$
             return true;
         }
         if (diffAlgorithm == null) {
             if (Files.equals(a, b))
                 return false;
-            L.i.P("[edit] ", a);
+            L.i.P(AppNLS.getString("BatchEditCLI.s.edit"), a); //$NON-NLS-1$
             return true;
         }
         List<String> al = Files.readLines(a, inputEncoding.name());
@@ -196,7 +197,7 @@ public class BatchEditCLI extends BatchCLI {
         List<DiffInfo> diffs = diffAlgorithm.diffCompare(al, bl);
         if (diffs.size() == 0)
             return false;
-        L.i.P("[edit] ", a);
+        L.i.P(AppNLS.getString("BatchEditCLI.s.edit"), a); //$NON-NLS-1$
         diffFormat.format(al, bl, diffs, diffOutput);
         return true;
     }
@@ -211,7 +212,8 @@ public class BatchEditCLI extends BatchCLI {
         File out = Files.getAbsoluteFile(outputDirectory, relative);
         File outd = out.getParentFile();
         if (outd.isFile())
-            throw new Error("invalid output directory: " + outd);
+            throw new Error(
+                    AppNLS.getString("BatchEditCLI.invalidOutDir") + outd); //$NON-NLS-1$
         return out;
     }
 
@@ -239,7 +241,7 @@ public class BatchEditCLI extends BatchCLI {
     protected void _processFile(File file) {
         Throwable err = null;
         try {
-            L.i.sig("[proc] ", file);
+            L.i.sig(AppNLS.getString("BatchEditCLI.s.proc"), file); //$NON-NLS-1$
             EditResult result = BatchEditCLI.this.doEdit(file);
             addResult(file, result);
         } catch (RuntimeException e) {
@@ -255,7 +257,9 @@ public class BatchEditCLI extends BatchCLI {
             // err before addResult() or raised inside addResult()
             if (err != null) {
                 stat.add(EditResult.err(err));
-                L.e.P("[fail] ", file + ": " + err.getMessage());
+                L.e
+                        .P(
+                                AppNLS.getString("BatchEditCLI.s.fail"), file + ": " + err.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
             }
         }
     }
@@ -398,23 +402,27 @@ public class BatchEditCLI extends BatchCLI {
     protected void addResult(File src, File dst, File edit, EditResult result)
             throws IOException {
         if (result == null) {
-            L.d.P("[skip] ", src);
+            L.d.P(AppNLS.getString("BatchEditCLI.s.skip"), src); //$NON-NLS-1$
         } else {
             if (src != null)
                 applyResult(src, dst, edit, result);
             stat.add(result);
             if (result.done)
-                L.u.P("[", result.getOperationName(), "] ", dst);
+                L.u.P("[", result.getOperationName(), "] ", dst); //$NON-NLS-1$ //$NON-NLS-2$
             if (result.error) {
                 String tags;
                 if (result.tags.length == 0)
-                    tags = "";
+                    tags = ""; //$NON-NLS-1$
                 else
-                    tags = "|" + Strings.join("|", result.tags);
+                    tags = "|" + Strings.join("|", result.tags); //$NON-NLS-1$ //$NON-NLS-2$
                 if (result.cause != null)
-                    L.e.P("[fail", tags, "] ", src, ": ", result.cause);
+                    L.e
+                            .P(
+                                    AppNLS.getString("BatchEditCLI.s.fail_"), tags, "] ", src, ": ", result.cause); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 else
-                    L.e.P("[fail", tags, "] ", src);
+                    L.e
+                            .P(
+                                    AppNLS.getString("BatchEditCLI.s.fail_"), tags, "] ", src); //$NON-NLS-1$ //$NON-NLS-2$
             }
         }
     }
@@ -427,7 +435,8 @@ public class BatchEditCLI extends BatchCLI {
         if (result.operation == EditResult.SAVE) {
             assert result.changed == null;
             if (edit == null)
-                throw new IllegalUsageError("can't save: not a batch editor");
+                throw new IllegalUsageError(AppNLS
+                        .getString("BatchEditCLI.cantSave.notBatchEditor")); //$NON-NLS-1$
             if (!diff3 && !diffWithDest) {
                 result.changed = diff(src, edit);
                 diffPrinted = true;
@@ -472,8 +481,8 @@ public class BatchEditCLI extends BatchCLI {
             boolean canOverwrite = saveLocal || force;
             if (dst.exists() && !canOverwrite) {
                 // user interaction...
-                throw new IllegalStateException("file " + dst
-                        + " already existed");
+                throw new IllegalStateException(AppNLS.getString("BatchEditCLI.0") + dst //$NON-NLS-1$
+                        + AppNLS.getString("BatchEditCLI.1")); //$NON-NLS-1$
             }
 
             File dstdir = dst.getParentFile();
@@ -496,7 +505,8 @@ public class BatchEditCLI extends BatchCLI {
 
         case EditResult.SAVE:
         default:
-            throw new UnexpectedException("invalid operation: "
+            throw new UnexpectedException(AppNLS
+                    .getString("BatchEditCLI.invalidOperation") //$NON-NLS-1$
                     + result.operation);
         }
     }
@@ -514,7 +524,7 @@ public class BatchEditCLI extends BatchCLI {
     @Override
     @OverrideOption(group = "batchEdit")
     protected void doFileArgument(final File file) throws Throwable {
-        L.i.sig("[start] ", file);
+        L.i.sig(AppNLS.getString("BatchEditCLI.s.start"), file); //$NON-NLS-1$
         super.doFileArgument(file);
     }
 

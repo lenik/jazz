@@ -5,7 +5,7 @@ import java.util.Date;
 
 import net.bodz.bas.types.util.Dates;
 
-public class AutoType {
+public class VarCast {
 
     public static byte toByte(byte a) {
         return a;

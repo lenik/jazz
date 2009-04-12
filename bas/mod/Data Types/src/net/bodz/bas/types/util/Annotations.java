@@ -27,7 +27,7 @@ public class Annotations {
         if (annotation == null)
             return null;
         try {
-            Method valuef = annotationClass.getMethod("value");
+            Method valuef = annotationClass.getMethod("value"); //$NON-NLS-1$
             return valuef.invoke(annotation);
         } catch (NoSuchMethodException e) {
             return null;
@@ -131,9 +131,9 @@ public class Annotations {
             return;
         try {
             Class_annotations = Class.class.getDeclaredField(//
-                    "annotations");
+                    "annotations"); //$NON-NLS-1$
             Class_declaredAnnotations = Class.class.getDeclaredField(//
-                    "declaredAnnotations");
+                    "declaredAnnotations"); //$NON-NLS-1$
             Class_annotations.setAccessible(true);
             Class_declaredAnnotations.setAccessible(true);
         } catch (NoSuchFieldException e) {
@@ -150,14 +150,14 @@ public class Annotations {
             Map<Class<?>, Annotation> annotations = (Map<Class<?>, Annotation>) Class_annotations
                     .get(clazz);
             for (Entry<Class<?>, Annotation> ent : annotations.entrySet())
-                out.println(indent + ent.getKey() + " " + ent.getValue());
+                out.println(indent + ent.getKey() + " " + ent.getValue()); //$NON-NLS-1$
         } catch (IllegalAccessException e) {
             throw new Error(e.getMessage(), e);
         }
     }
 
     public static void dumpAnnotationMap(Class<?> clazz, CharOut out) {
-        dumpAnnotationMap(clazz, out, "");
+        dumpAnnotationMap(clazz, out, ""); //$NON-NLS-1$
     }
 
 }

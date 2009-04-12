@@ -9,7 +9,7 @@ import net.bodz.bas.text.interp.Unescape;
 public class RegexProcessor extends Unescape {
 
     public RegexProcessor() {
-        super("\\");
+        super("\\"); //$NON-NLS-1$
     }
 
     @Override
@@ -27,23 +27,23 @@ public class RegexProcessor extends Unescape {
         }
         // in.position(in.position() - 1);
         // return super.decode(in);
-        return "\\" + String.valueOf(c);
+        return "\\" + String.valueOf(c); //$NON-NLS-1$
     }
 
     protected String matchSpace() {
-        return "\\s";
+        return "\\s"; //$NON-NLS-1$
     }
 
     protected String matchNonspace() {
-        return "\\S";
+        return "\\S"; //$NON-NLS-1$
     }
 
     protected String matchWord() {
-        return "\\w";
+        return "\\w"; //$NON-NLS-1$
     }
 
     protected String matchNonword() {
-        return "\\W";
+        return "\\W"; //$NON-NLS-1$
     }
 
     @Override
@@ -70,15 +70,15 @@ public class RegexProcessor extends Unescape {
     }
 
     protected String matchDot() {
-        return ".";
+        return "."; //$NON-NLS-1$
     }
 
     protected String matchCaret() {
-        return "^";
+        return "^"; //$NON-NLS-1$
     }
 
     protected String matchDollar() {
-        return "$";
+        return "$"; //$NON-NLS-1$
     }
 
     public Pattern compile(String regex, int flags) {
@@ -95,9 +95,9 @@ public class RegexProcessor extends Unescape {
         private String dotRegex;
 
         public SpaceOverride(String spaceRegex) {
-            this.spaceRegex = "(?:" + spaceRegex + ")";
+            this.spaceRegex = "(?:" + spaceRegex + ")"; //$NON-NLS-1$ //$NON-NLS-2$
             // this.dotRegex = "(?:(?!" + spaceRegex + ").)";
-            this.dotRegex = "(?:" + spaceRegex + "|.)";
+            this.dotRegex = "(?:" + spaceRegex + "|.)"; //$NON-NLS-1$ //$NON-NLS-2$
         }
 
         @Override
@@ -119,8 +119,8 @@ public class RegexProcessor extends Unescape {
     public static final SpaceOverride javaComments;
     public static final SpaceOverride unixComments;
     static {
-        javaComments = new SpaceOverride("\\s|//.*?\n|/\\*.*?\\*/");
-        unixComments = new SpaceOverride("\\s|#.*?\n");
+        javaComments = new SpaceOverride("\\s|//.*?\n|/\\*.*?\\*/"); //$NON-NLS-1$
+        unixComments = new SpaceOverride("\\s|#.*?\n"); //$NON-NLS-1$
     }
 
 }

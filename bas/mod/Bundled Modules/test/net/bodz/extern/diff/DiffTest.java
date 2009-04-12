@@ -36,8 +36,8 @@ import org.junit.Test;
  */
 public class DiffTest {
 
-    private static String[] f1 = { "hello" };
-    private static String[] f2 = { "hello", "bye" };
+    private static String[] f1 = { "hello" }; //$NON-NLS-1$
+    private static String[] f2 = { "hello", "bye" }; //$NON-NLS-1$ //$NON-NLS-2$
 
     @Test
     public void testReverse() {
@@ -81,10 +81,10 @@ public class DiffTest {
         // p.print_script(script);
     }
 
-    private static String[] test1 = { "aaa", "bbb", "ccc", "ddd", "eee", "fff",
-            "ggg", "hhh", "iii"  };
-    private static String[] test2 = { "aaa", "jjj", "kkk", "lll", "bbb", "ccc",
-            "hhh", "iii", "mmm", "nnn", "ppp" };
+    private static String[] test1 = { "aaa", "bbb", "ccc", "ddd", "eee", "fff", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
+            "ggg", "hhh", "iii"  }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    private static String[] test2 = { "aaa", "jjj", "kkk", "lll", "bbb", "ccc", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
+            "hhh", "iii", "mmm", "nnn", "ppp" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 
     /**
      * Test context based output. Changes past the end of old file were causing

@@ -24,21 +24,21 @@ public class ArrayContentsTest {
         Object B = Ints.contents(b);
         Object C = Ints.contents(c);
 
-        map.put(a, "a");
-        map.put(b, "b");
+        map.put(a, "a"); //$NON-NLS-1$
+        map.put(b, "b"); //$NON-NLS-1$
 
-        map.put(A, "A");
-        map.put(B, "B");
+        map.put(A, "A"); //$NON-NLS-1$
+        map.put(B, "B"); //$NON-NLS-1$
 
         TestDefs.tests(new TestEval<Object>() {
             public Object eval(Object input) throws Throwable {
                 return map.get(input);
             }
         }, //
-                EQU(a, "a"), //
+                EQU(a, "a"), // //$NON-NLS-1$
                 EQU(c, null), //
-                EQU(A, "A"), //
-                EQU(C, "A"), //
+                EQU(A, "A"), // //$NON-NLS-1$
+                EQU(C, "A"), // //$NON-NLS-1$
                 END);
     }
 

@@ -16,10 +16,10 @@ public class PrefixMapTest {
     PrefixMap<String> map = new PrefixMap<String>();
 
     public PrefixMapTest() {
-        map.put("name", "tom");
-        map.put("aa", "aa");
-        map.put("aaa", "aaa");
-        map.put("aab", "aab");
+        map.put("name", "tom"); //$NON-NLS-1$ //$NON-NLS-2$
+        map.put("aa", "aa"); //$NON-NLS-1$ //$NON-NLS-2$
+        map.put("aaa", "aaa"); //$NON-NLS-1$ //$NON-NLS-2$
+        map.put("aab", "aab"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     @Test
@@ -27,16 +27,16 @@ public class PrefixMapTest {
         TestDefs.tests(new TestEval<String>() {
             public Object eval(String input) throws Throwable {
                 Iterable<String> vals = map.ceilings(input);
-                return Strings.join(",", vals);
+                return Strings.join(",", vals); //$NON-NLS-1$
             }
         }, //
-                EQ("n", "tom"), //
-                EQ("na", "tom"), //
-                EQ("nam", "tom"), //
-                EQ("name", "tom"), //
-                EQ("a", "aa,aaa,aab"), //
-                EQ("aa", "aa,aaa,aab"), //
-                EQ("aaa", "aaa"), //
+                EQ("n", "tom"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("na", "tom"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("nam", "tom"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("name", "tom"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("a", "aa,aaa,aab"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("aa", "aa,aaa,aab"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("aaa", "aaa"), // //$NON-NLS-1$ //$NON-NLS-2$
                 END);
     }
 
@@ -50,41 +50,41 @@ public class PrefixMapTest {
                 return actu != null;
             }
         }, //
-                T(""), //
-                T("n"), //
-                T("nam"), //
-                T("name"), //
-                T("a"), //
-                T("aa"), //
-                T("aaa"), //
-                F("bb"), //
+                T(""), // //$NON-NLS-1$
+                T("n"), // //$NON-NLS-1$
+                T("nam"), // //$NON-NLS-1$
+                T("name"), // //$NON-NLS-1$
+                T("a"), // //$NON-NLS-1$
+                T("aa"), // //$NON-NLS-1$
+                T("aaa"), // //$NON-NLS-1$
+                F("bb"), // //$NON-NLS-1$
                 END);
     }
 
     @Test
     public void test_getParent() {
         final PrefixMap<String> map = new PrefixMap<String>();
-        map.put("z.bas", "%bas");
-        map.put("z.xml", "%xml");
+        map.put("z.bas", "%bas"); //$NON-NLS-1$ //$NON-NLS-2$
+        map.put("z.xml", "%xml"); //$NON-NLS-1$ //$NON-NLS-2$
         TestDefs.tests(new _TestEval<String>() {
             public Object eval(String abbr) throws Throwable {
                 if (isBreakpoint())
                     System.err.println(abbr);
                 String parent = map.floorKey(abbr);
                 if (parent == null)
-                    return "==" + abbr;
+                    return "==" + abbr; //$NON-NLS-1$
                 String expand = map.get(parent);
                 abbr = abbr.substring(parent.length());
                 return expand + abbr;
             }
         }, //
-                EQ("hello", "==hello"), //
-                EQ("z.bas", "%bas"), //
-                EQ("z.bas123", "%bas123"), //
-                EQ("z.bas/hello", "%bas/hello"), //
-                EQ("z.ba", "==z.ba"), //
-                EQ("z.xml", "%xml"), //
-                EQ("z.", "==z."), //
+                EQ("hello", "==hello"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("z.bas", "%bas"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("z.bas123", "%bas123"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("z.bas/hello", "%bas/hello"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("z.ba", "==z.ba"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("z.xml", "%xml"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("z.", "==z."), // //$NON-NLS-1$ //$NON-NLS-2$
                 END);
     }
 

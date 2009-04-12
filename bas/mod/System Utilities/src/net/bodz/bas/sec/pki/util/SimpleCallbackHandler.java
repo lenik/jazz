@@ -14,7 +14,7 @@ public class SimpleCallbackHandler implements CallbackHandler {
 
     public SimpleCallbackHandler(String password) {
         if (password == null)
-            throw new NullPointerException("password");
+            throw new NullPointerException("password"); //$NON-NLS-1$
         this.password = password.toCharArray();
     }
 

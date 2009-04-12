@@ -50,7 +50,7 @@ public class Strings {
     public static String chop(String s, int chopLen) {
         assert s != null;
         if (s.length() < chopLen)
-            return "";
+            return ""; //$NON-NLS-1$
         return s.substring(0, s.length() - chopLen);
     }
 
@@ -71,7 +71,7 @@ public class Strings {
     }
 
     public static String chomp(String s) {
-        return chomp(s, "\n");
+        return chomp(s, "\n"); //$NON-NLS-1$
     }
 
     public static String trimLeft(String s, int end) {
@@ -159,7 +159,7 @@ public class Strings {
     }
 
     public static String hyphenatize(String words) {
-        while (words.startsWith("_"))
+        while (words.startsWith("_")) //$NON-NLS-1$
             words = words.substring(1);
         BCharOut buf = new BCharOut(words.length() * 3 / 2);
         boolean breakNext = false;
@@ -176,13 +176,13 @@ public class Strings {
             wordStart = wordEnd;
         }
         String s = buf.toString();
-        if (s.startsWith("-"))
+        if (s.startsWith("-")) //$NON-NLS-1$
             s = s.substring(1);
         return s.toLowerCase();
     }
 
     public static String dehyphenatize(String hstr) {
-        String[] parts = hstr.split("-");
+        String[] parts = hstr.split("-"); //$NON-NLS-1$
         StringBuffer buf = new StringBuffer();
         for (int i = 0; i < parts.length; i++) {
             String part = parts[i];
@@ -198,7 +198,7 @@ public class Strings {
     }
 
     public static String q(String s) {
-        return "'" + s + "'";
+        return "'" + s + "'"; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     public static String qq(String s) {
@@ -216,7 +216,7 @@ public class Strings {
             Object e = Array.get(array, i);
             buffer.append(e);
         }
-        return buffer == null ? "" : buffer.toString();
+        return buffer == null ? "" : buffer.toString(); //$NON-NLS-1$
     }
 
     public static String join(String separator, Iterable<?> iterable) {
@@ -228,7 +228,7 @@ public class Strings {
                 buffer.append(separator);
             buffer.append(String.valueOf(o));
         }
-        return buffer == null ? "" : buffer.toString();
+        return buffer == null ? "" : buffer.toString(); //$NON-NLS-1$
     }
 
     public static String join(String separator, Enumeration<?> enumr) {
@@ -252,7 +252,7 @@ public class Strings {
             bufferValue.append(String.valueOf(entry.getValue()));
         }
         if (bufferKey == null)
-            return new Pair<String, String>("", "");
+            return new Pair<String, String>("", ""); //$NON-NLS-1$ //$NON-NLS-2$
         else
             return new Pair<String, String>(bufferKey.toString(), bufferValue
                     .toString());
@@ -274,7 +274,7 @@ public class Strings {
             buf.append(rev);
         }
         if (buf == null)
-            return "";
+            return ""; //$NON-NLS-1$
         return buf.toString();
     }
 
@@ -310,7 +310,7 @@ public class Strings {
         tokenizer.resetSyntax();
         tokenizer.wordChars(Character.MIN_CODE_POINT, Character.MAX_CODE_POINT);
         if (delims == null)
-            for (char sp : " \t\n\r".toCharArray())
+            for (char sp : " \t\n\r".toCharArray()) //$NON-NLS-1$
                 tokenizer.whitespaceChars(sp, sp);
         else
             for (char d : delims)
@@ -322,7 +322,7 @@ public class Strings {
         if (test(flags & QUOTE)) {
             // TODO - DEQUOTE or not.
             if (!test(flags & DEQUOTE))
-                throw new NotImplementedException("raw quote isn't impl.");
+                throw new NotImplementedException("raw quote isn't impl."); //$NON-NLS-1$
             tokenizer.quoteChar('"');
             tokenizer.quoteChar('\'');
         }
@@ -445,13 +445,13 @@ public class Strings {
         if (limit == 0)
             limit = Integer.MAX_VALUE;
         if (sizes.length < 1)
-            throw new IllegalArgumentException("empty sizes");
+            throw new IllegalArgumentException("empty sizes"); //$NON-NLS-1$
         int len = s.length();
         int _sizesum = 0;
         for (int i = 0; i < sizes.length; i++) {
             int size = sizes[i];
             if (size <= 0)
-                throw new IllegalArgumentException("illegal size [" + i + "]");
+                throw new IllegalArgumentException("illegal size [" + i + "]"); //$NON-NLS-1$ //$NON-NLS-2$
             _sizesum += size;
         }
         List<String> list = new ArrayList<String>(len / _sizesum * sizes.length
@@ -721,7 +721,7 @@ public class Strings {
     }
 
     public static String ellipse(String s, int len) {
-        return ellipse(s, len, "...");
+        return ellipse(s, len, "..."); //$NON-NLS-1$
     }
 
     public static String ellipse(String s, int len, String ellipse,
@@ -749,7 +749,7 @@ public class Strings {
 
     private static PatternProcessor escapeProcessor;
     static {
-        escapeProcessor = new PatternProcessor("[\\\\\"\'\r\n]") {
+        escapeProcessor = new PatternProcessor("[\\\\\"\'\r\n]") { //$NON-NLS-1$
             @Override
             protected void matched(String part) {
                 assert part.length() == 1;
@@ -762,20 +762,20 @@ public class Strings {
     public static String escape(char c) {
         switch (c) {
         case '\r':
-            return "\\r";
+            return "\\r"; //$NON-NLS-1$
         case '\n':
-            return "\\n";
+            return "\\n"; //$NON-NLS-1$
         case '\t':
-            return "\\t";
+            return "\\t"; //$NON-NLS-1$
         case '\0':
-            return "\\0";
+            return "\\0"; //$NON-NLS-1$
 
         case '\\': // followings: "\\"+c:
-            return "\\\\";
+            return "\\\\"; //$NON-NLS-1$
         case '\"':
-            return "\\\"";
+            return "\\\""; //$NON-NLS-1$
         case '\'':
-            return "\\\'";
+            return "\\\'"; //$NON-NLS-1$
         }
         return String.valueOf(c);
     }
@@ -826,8 +826,8 @@ public class Strings {
     }
 
     public static void diff(String a, String b, CharOut out) {
-        String[] av = a.split("\n");
-        String[] bv = b.split("\n");
+        String[] av = a.split("\n"); //$NON-NLS-1$
+        String[] bv = b.split("\n"); //$NON-NLS-1$
         diff(Arrays.asList(av), Arrays.asList(bv), out);
     }
 

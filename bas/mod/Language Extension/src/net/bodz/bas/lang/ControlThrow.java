@@ -1,6 +1,5 @@
 package net.bodz.bas.lang;
 
-
 public class ControlThrow extends Control {
 
     private static final long serialVersionUID = 8305400243392913319L;

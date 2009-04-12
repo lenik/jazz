@@ -52,12 +52,12 @@ public abstract class _InPort extends _Port implements InPort, ReceiverEx {
 
     @Override
     public void recvNull() throws IOException {
-        throw new NullPointerException("recvNull");
+        throw new NullPointerException("recvNull"); //$NON-NLS-1$
     }
 
     @Override
     public void recvUnknown(Object data) throws IOException {
-        throw new OutOfDomainException("type", data.getClass());
+        throw new OutOfDomainException("type", data.getClass()); //$NON-NLS-1$
     }
 
     @Override

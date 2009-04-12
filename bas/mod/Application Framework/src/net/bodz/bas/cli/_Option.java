@@ -12,6 +12,7 @@ import net.bodz.bas.lang.err.CheckException;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.lang.script.ScriptField;
+import net.bodz.bas.nls.AppNLS;
 import net.bodz.bas.types.Checker;
 import net.bodz.bas.types.TypeParser;
 import net.bodz.bas.types.util.Strings;
@@ -67,9 +68,8 @@ public abstract class _Option<T> implements ScriptField<T> {
         multi = valtype != null;
         if (multi) {
             if (!(isArray() || isCollection() || isMap()))
-                throw new CLIError(
-                        "valtype can only be specified on Array/Collection/Map types: "
-                                + type);
+                throw new CLIError(AppNLS.getString("_Option.errValTtype") //$NON-NLS-1$
+                        + type);
         } else
             valtype = (Class<T>) type;
 
@@ -106,11 +106,14 @@ public abstract class _Option<T> implements ScriptField<T> {
                 } else
                     check = null;
             } catch (CreateException e) {
-                throw new CLIError("can't init option " + name, e);
+                throw new CLIError(
+                        AppNLS.getString("_Option.cantInitOption") + name, e); //$NON-NLS-1$
             } catch (CLIError e) {
-                throw new CLIError("can't init option " + name, e);
+                throw new CLIError(
+                        AppNLS.getString("_Option.cantInitOption") + name, e); //$NON-NLS-1$
             } catch (ParseException e) {
-                throw new CLIError("can't init option " + name, e);
+                throw new CLIError(
+                        AppNLS.getString("_Option.cantInitOption") + name, e); //$NON-NLS-1$
             }
         }
     }

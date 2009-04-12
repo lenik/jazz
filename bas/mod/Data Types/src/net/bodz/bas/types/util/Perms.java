@@ -80,7 +80,7 @@ public class Perms {
             int srcindex = op.indexOf(src, val, srcoff);
             int mod = candidates.indexOf(srcindex);
             if (mod == -1 || mod >= srclen)
-                throw new OutOfDomainException("dst[" + (dstoff + i) + "]");
+                throw new OutOfDomainException("dst[" + (dstoff + i) + "]"); //$NON-NLS-1$ //$NON-NLS-2$
             candidates.removeAbsolute(srcindex);
 
             ord = ord * (srclen - i) + mod;

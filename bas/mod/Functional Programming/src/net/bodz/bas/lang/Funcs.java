@@ -26,7 +26,7 @@ public class Funcs {
     public static <T> Func0<T> getFunc0(Object obj, String methodName)
             throws NoSuchMethodException {
         if (obj == null)
-            throw new NullPointerException("obj");
+            throw new NullPointerException("obj"); //$NON-NLS-1$
         Method method = obj.getClass().getMethod(methodName);
         return getFunc0(method, obj);
     }

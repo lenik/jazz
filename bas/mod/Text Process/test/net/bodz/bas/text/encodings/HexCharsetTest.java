@@ -13,14 +13,14 @@ public class HexCharsetTest {
     public void testEncode() {
         TestDefs.tests(new TestEval<String>() {
             public Object eval(String input) throws Throwable {
-                byte[] bytes = input.getBytes("hex");
-                return new String(bytes, "ascii");
+                byte[] bytes = input.getBytes("hex"); //$NON-NLS-1$
+                return new String(bytes, "ascii"); //$NON-NLS-1$
             }
         }, //
-                EQ("", ""), //
-                EQ("hello", "68 65 6c 6c 6f"), //
-                EQ("汉字", "6c49 5b57"), //
-                EQ("123汉4字56", "31 32 33 6c49 34 5b57 35 36"), //
+                EQ("", ""), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("hello", "68 65 6c 6c 6f"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("汉字", "6c49 5b57"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("123汉4字56", "31 32 33 6c49 34 5b57 35 36"), // //$NON-NLS-1$ //$NON-NLS-2$
                 END);
     }
 
@@ -28,14 +28,14 @@ public class HexCharsetTest {
     public void testDecode() {
         TestDefs.tests(new TestEval<String>() {
             public Object eval(String input) throws Throwable {
-                byte[] bytes = input.getBytes("ascii");
-                return new String(bytes, "hex");
+                byte[] bytes = input.getBytes("ascii"); //$NON-NLS-1$
+                return new String(bytes, "hex"); //$NON-NLS-1$
             }
         }, //
-                EQ("", ""), //
-                EQ("68 65 6C 6c 6F", "hello"), //
-                EQ("6c49 5b57", "汉字"), //
-                EQ("31 32 33 6c49 34 5b57 35 36", "123汉4字56"), //
+                EQ("", ""), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("68 65 6C 6c 6F", "hello"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("6c49 5b57", "汉字"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("31 32 33 6c49 34 5b57 35 36", "123汉4字56"), // //$NON-NLS-1$ //$NON-NLS-2$
                 END);
     }
 

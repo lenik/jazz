@@ -16,13 +16,13 @@ public class TypeHierSetTest {
         set.add(Number.class);
         set.add(Object.class);
         set.add(String.class);
-        System.out.println(Strings.join(", ", set));
+        System.out.println(Strings.join(", ", set)); //$NON-NLS-1$
         assertEquals(Number.class, set.floor(Float.class));
         assertEquals(Object.class, set.floor(List.class));
 
         set.add(Double.class);
         set.add(Integer.class);
-        System.out.println(Strings.join(", ", set));
+        System.out.println(Strings.join(", ", set)); //$NON-NLS-1$
         assertEquals(Number.class, set.floor(Float.class));
         assertEquals(Object.class, set.floor(List.class));
     }

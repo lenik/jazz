@@ -11,10 +11,10 @@ public class ErrTest {
         try {
             throw new IllegalArgumentException();
         } catch (Throwable t) {
-            Err.setMessagePrefix(t, "world");
-            assertEquals("prefix-null", "world", t.getMessage());
-            Err.setMessagePrefix(t, "hello");
-            assertEquals("prefix-s", "hello: world", t.getMessage());
+            Err.setMessagePrefix(t, "world"); //$NON-NLS-1$
+            assertEquals("prefix-null", "world", t.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
+            Err.setMessagePrefix(t, "hello"); //$NON-NLS-1$
+            assertEquals("prefix-s", "hello: world", t.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
         }
     }
 

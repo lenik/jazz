@@ -6,6 +6,7 @@ import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.ControlBreak;
 import net.bodz.bas.lang.ControlContinue;
 import net.bodz.bas.lang.err.ParseException;
+import net.bodz.bas.nls.TypesNLS;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TextMap.TreeTextMap;
 import net.bodz.bas.types.util.PrefetchedIterator;
@@ -40,13 +41,13 @@ public class INIFile extends _MapFile<TextMap<String>> {
     public INIFile(Object in, Object charset, boolean merge) {
         super(in, charset);
         if (merge)
-            mergeDelim = ".";
+            mergeDelim = "."; //$NON-NLS-1$
     }
 
     public INIFile(Object in, boolean merge) {
         super(in);
         if (merge)
-            mergeDelim = ".";
+            mergeDelim = "."; //$NON-NLS-1$
     }
 
     public INIFile(Object in, Object charset) {
@@ -95,19 +96,19 @@ public class INIFile extends _MapFile<TextMap<String>> {
                 builder.reset();
                 while (lines.hasNext()) {
                     String line = lines.next().trim();
-                    if (line.isEmpty() || line.startsWith("#"))
+                    if (line.isEmpty() || line.startsWith("#")) //$NON-NLS-1$
                         continue;
-                    if (line.startsWith("[")) {
-                        assert line.endsWith("]");
+                    if (line.startsWith("[")) { //$NON-NLS-1$
+                        assert line.endsWith("]"); //$NON-NLS-1$
                         sectionName = line.substring(1, line.length() - 1)
                                 .trim();
                         if (mergeDelim == null) {
                             TextMap<String> section = builder.accept();
                             builder.reset();
-                            builder.add("_section", sectionName);
+                            builder.add("_section", sectionName); //$NON-NLS-1$
                             return section;
                         } else {
-                            String existKey = "exist";
+                            String existKey = "exist"; //$NON-NLS-1$
                             if (existKey != null) {
                                 String ekey = sectionName + mergeDelim
                                         + existKey;
@@ -119,7 +120,7 @@ public class INIFile extends _MapFile<TextMap<String>> {
                     int eq = line.indexOf('=');
                     if (eq == -1) {
                         // BOM test.
-                        String mesg = "invalid entry: " + line;
+                        String mesg = TypesNLS.getString("INIFile.invalidEntry") + line; //$NON-NLS-1$
                         System.err.println(mesg);
                         // throw new ParseException(mesg);
                         continue;

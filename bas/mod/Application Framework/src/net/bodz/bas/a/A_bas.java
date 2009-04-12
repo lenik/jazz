@@ -64,13 +64,13 @@ public class A_bas {
     }
 
     static String parseDocString(String doc) {
-        if (doc.startsWith("#")) {
+        if (doc.startsWith("#")) { //$NON-NLS-1$
             // #bundle.property
             throw new NotImplementedException();
-        } else if (doc.startsWith("/")) {
+        } else if (doc.startsWith("/")) { //$NON-NLS-1$
             // doc = doc.substring(1);
             try {
-                doc = Files.readAll(doc, "utf-8");
+                doc = Files.readAll(doc, "utf-8"); //$NON-NLS-1$
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -80,7 +80,7 @@ public class A_bas {
 
     public static VersionInfo parseId(String id) {
         id = id.substring(0, id.length() - 1);
-        String[] parts = id.split("\\s+");
+        String[] parts = id.split("\\s+"); //$NON-NLS-1$
         VersionInfo info = new VersionInfo();
         switch (parts.length) {
         case 7: // state
@@ -102,7 +102,7 @@ public class A_bas {
             }
             info.time += _date;
         case 3: // 784
-            String[] revs = parts[2].split("\\.");
+            String[] revs = parts[2].split("\\."); //$NON-NLS-1$
             info.revision = new int[revs.length];
             for (int i = 0; i < revs.length; i++)
                 info.revision[i] = Integer.parseInt(revs[i]);

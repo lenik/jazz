@@ -31,17 +31,17 @@ public class FilesTest {
         TestDefs.tests(new TestEval<String>() {
             public Object eval(String input) throws Throwable {
                 return Files.readAll(Files.classData(FilesTest.class, input),
-                        "utf-8");
+                        "utf-8"); //$NON-NLS-1$
             }
         }, //
-                EQ("data", "Hello, world!"));
+                EQ("data", "Hello, world!")); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     @Test
     public void testObjs() throws Exception {
         // File tmpdir = new File(System.getenv("TEMP"));
         List<Object> t = new ArrayList<Object>();
-        t.add("Hello");
+        t.add("Hello"); //$NON-NLS-1$
         t.add(new Integer(3));
         t.add('M');
         t.add('i');
@@ -67,9 +67,9 @@ public class FilesTest {
                 return Files.diff_1(src, dst);
             }
         }, //
-                EQ("abcdefghijklmopqrstuvwxyz|abcdefghijklmopqrst", 19L), //
-                EQ("abcdefghijklmopqrst|abcdefghijklmopqrst", -1L), //
-                EQ("abcdefghijklmopqrst|-bcdefghijklmopqrst", 0L));
+                EQ("abcdefghijklmopqrstuvwxyz|abcdefghijklmopqrst", 19L), // //$NON-NLS-1$
+                EQ("abcdefghijklmopqrst|abcdefghijklmopqrst", -1L), // //$NON-NLS-1$
+                EQ("abcdefghijklmopqrst|-bcdefghijklmopqrst", 0L)); //$NON-NLS-1$
     }
 
     @Test
@@ -81,10 +81,33 @@ public class FilesTest {
                 return Files.getRelativeName(file, start);
             }
         }, //
-                EQ(_("a", "a/b"), "b"), //
-                EQ(_("a/", "a/b"), "b"), //
-                EQ(_("a/b", "a/b"), ""), //
+                EQ(_("a", "a/b"), "b"), // //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                EQ(_("a/", "a/b"), "b"), // //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                EQ(_("a/b", "a/b"), ""), // //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 END);
+    }
+
+    void testFindBase(String expected, String a, String b) {
+        File fa = a == null ? null : new File(a);
+        File fb = b == null ? null : new File(b);
+        File resultf = Files.findBase(fa, fb);
+        String result = resultf == null ? null : resultf.toString(); // getPath();
+        if (result != null)
+            result = result.replace('\\', '/');
+        assertEquals(expected, result);
+    }
+
+    @Test
+    public void testFindBase() throws Exception {
+        testFindBase("a/b", "a/b/c/d", "a/b/x/y"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        testFindBase("a/b", "a/b/c/d/e/f/g/h/i/j/k", "a/b/x/c/d/e/f/g/h/i/j/k"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        testFindBase("a/b", "a/b/", "a/b/x/y"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        testFindBase("a/b", "a/b", "a/b/x/y"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        testFindBase("a/b", "a/b/c/d", "a/b/"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        testFindBase("a/b", "a/b/c/d", "a/b"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        testFindBase("a", "a/b/c/d", "a"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        testFindBase(null, "a/b/c", "d/e/f"); //$NON-NLS-1$ //$NON-NLS-2$
+        testFindBase("a", "a/b/../x", "a/x/"); // don't use canonical. //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
     File file(String path) {
@@ -99,23 +122,23 @@ public class FilesTest {
 
     @Test
     public void testDeleteTree() throws IOException {
-        create("dt/a/b/c", "1");
-        create("dt/d/e/f", "1");
-        create("dt/d/g/h", "1");
-        assertTrue("envprep", file("dt/d/e").isDirectory());
-        assertTrue("envprep", file("dt/d/g/h").isFile());
-        Files.deleteTree(file("dt"));
-        assertFalse(file("dt").exists());
+        create("dt/a/b/c", "1"); //$NON-NLS-1$ //$NON-NLS-2$
+        create("dt/d/e/f", "1"); //$NON-NLS-1$ //$NON-NLS-2$
+        create("dt/d/g/h", "1"); //$NON-NLS-1$ //$NON-NLS-2$
+        assertTrue("envprep", file("dt/d/e").isDirectory()); //$NON-NLS-1$ //$NON-NLS-2$
+        assertTrue("envprep", file("dt/d/g/h").isFile()); //$NON-NLS-1$ //$NON-NLS-2$
+        Files.deleteTree(file("dt")); //$NON-NLS-1$
+        assertFalse(file("dt").exists()); //$NON-NLS-1$
     }
 
     @Test
     public void testFind1() {
         List<File> find = Files
-                .find("K:/workspace/net.bodz/*/mod/*/src/net/bodz");
+                .find("K:/workspace/net.bodz/*/mod/*/src/net/bodz"); //$NON-NLS-1$
         if (find == null)
-            System.out.println("no match");
+            System.out.println("no match"); //$NON-NLS-1$
         else
-            System.out.println(Strings.join("\n", find));
+            System.out.println(Strings.join("\n", find)); //$NON-NLS-1$
     }
 
 }

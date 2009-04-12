@@ -14,6 +14,8 @@ import net.bodz.bas.io.CharOut;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.log.ALog;
+import net.bodz.bas.nls.SysNLS;
+import net.bodz.bas.nls.TypesNLS;
 import net.bodz.bas.types.parsers.ALogParser;
 import net.bodz.bas.types.parsers.BooleanParser;
 import net.bodz.bas.types.parsers.ByteOutParser;
@@ -51,11 +53,11 @@ public class TypeParsers {
                 Field field = registryClass.getField(entry);
                 return field.get(null);
             } catch (NoSuchFieldException e) {
-                throw new ParseException("Entry " + entry
-                        + " isn't defined in registry " + registryClass, e);
+                throw new ParseException(TypesNLS.getString("TypeParsers.0") + entry //$NON-NLS-1$
+                        + TypesNLS.getString("TypeParsers.1") + registryClass, e); //$NON-NLS-1$
             } catch (Exception e) {
-                throw new ParseException("Failed to load entry " + entry
-                        + " in registry " + registryClass);
+                throw new ParseException(TypesNLS.getString("TypeParsers.2") + entry //$NON-NLS-1$
+                        + TypesNLS.getString("TypeParsers.3") + registryClass); //$NON-NLS-1$
             }
         }
 
@@ -95,7 +97,7 @@ public class TypeParsers {
         public ArrayParser(Class<?> valtype, TypeParser valparser,
                 Pattern separator) {
             if (valparser == null)
-                throw new NullPointerException("null valparser");
+                throw new NullPointerException("null valparser"); //$NON-NLS-1$
             this.valtype = valtype;
             this.valparser = valparser;
             this.separator = separator;
@@ -170,7 +172,7 @@ public class TypeParsers {
             return parser;
 
         if (type.isArray())
-            return new ArrayParser(type.getComponentType(), ",");
+            return new ArrayParser(type.getComponentType(), ","); //$NON-NLS-1$
 
         Obtain obtain = type.getAnnotation(Obtain.class);
         if (obtain != null) {
@@ -201,15 +203,15 @@ public class TypeParsers {
             throw new ParseException(e);
         }
         if (parser == null && errname != null) {
-            throw new ParseException("can't parse " + errname
-                    + ": no suitable parser for " + type);
+            throw new ParseException(TypesNLS.getString("TypeParsers.6") + errname //$NON-NLS-1$
+                    + TypesNLS.getString("TypeParsers.7") + type); //$NON-NLS-1$
         }
         return parser;
     }
 
     public static TypeParser guess(Class<?> type, boolean fail)
             throws ParseException {
-        return guess(type, fail ? "" : null);
+        return guess(type, fail ? "" : null); //$NON-NLS-1$
     }
 
     @SuppressWarnings("unchecked")

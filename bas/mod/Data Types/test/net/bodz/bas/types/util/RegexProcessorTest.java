@@ -26,7 +26,7 @@ public class RegexProcessorTest {
             if (isBreakpoint())
                 System.err.println(input);
             String[] words = Strings.findAll(input, pattern, group);
-            return Strings.join("|", words);
+            return Strings.join("|", words); //$NON-NLS-1$
         }
     }
 
@@ -35,28 +35,28 @@ public class RegexProcessorTest {
         // new SpaceOverride("\\s|//.*?\n");
         final SpaceOverride regexProc = RegexProcessor.javaComments;
         final Pattern pwords = regexProc.compile(//
-                "(\\w+)(\\s*)", Pattern.DOTALL);
-        System.out.println("pwords=" + pwords);
+                "(\\w+)(\\s*)", Pattern.DOTALL); //$NON-NLS-1$
+        System.out.println("pwords=" + pwords); //$NON-NLS-1$
         TestDefs.tests(new FindAll(pwords, 1), //
-                EQ("hello", "hello"), //
-                EQ("hello world", "hello|world"), //
-                EQ("   a, b: @$* c   ", "a|b|c"), //
-                EQ("a // IGNORED // \n b", "a|b"), //
-                EQ("i/* lenik */ am 13/* 0-based*/year //-old! \nha ha!",
-                        "i|am|13|year|ha|ha"), //
+                EQ("hello", "hello"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("hello world", "hello|world"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("   a, b: @$* c   ", "a|b|c"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("a // IGNORED // \n b", "a|b"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("i/* lenik */ am 13/* 0-based*/year //-old! \nha ha!", //$NON-NLS-1$
+                        "i|am|13|year|ha|ha"), // //$NON-NLS-1$
                 END);
     }
 
     @Test
     public void testSpaceOverride2() {
         final SpaceOverride regexProc = RegexProcessor.javaComments;
-        final Pattern square = regexProc.compile(".*?\\[(.*?)\\]",
+        final Pattern square = regexProc.compile(".*?\\[(.*?)\\]", //$NON-NLS-1$
                 Pattern.DOTALL);
-        System.out.println("square=" + square);
+        System.out.println("square=" + square); //$NON-NLS-1$
         TestDefs.tests(new FindAll(square, 1), //
-                EQ("[hello]", "hello"), //
-                EQ("[a]/* [b]*/ [c]", "a|c"), //
-                EQ("none", ""), //
+                EQ("[hello]", "hello"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("[a]/* [b]*/ [c]", "a|c"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("none", ""), // //$NON-NLS-1$ //$NON-NLS-2$
                 // There's problem of last-match.
                 // EQ("[a /*]]]*/] [[[d] //[[e] f]]", "a /*]]]*/|[[d"), //
                 // EQ("[][/**/][//]", "|/**/"), //

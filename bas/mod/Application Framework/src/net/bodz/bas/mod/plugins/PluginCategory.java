@@ -5,6 +5,7 @@ import java.util.Map;
 
 import net.bodz.bas.a.ClassInfo;
 import net.bodz.bas.lang.err.OutOfDomainException;
+import net.bodz.bas.nls.AppNLS;
 
 /**
  * Plugin Category
@@ -56,10 +57,10 @@ public class PluginCategory {
     public void register(String pluginId, PluginTypeEx typeEx) {
         assert typeEx != null;
         if (registry.containsKey(pluginId))
-            throw new IllegalArgumentException("plugin with id=" + pluginId
-                    + " already registered");
+            throw new IllegalArgumentException(AppNLS.getString("PluginCategory.0") + pluginId //$NON-NLS-1$
+                    + AppNLS.getString("PluginCategory.1")); //$NON-NLS-1$
         if (!categoryBaseType.isAssignableFrom(typeEx.getType()))
-            throw new OutOfDomainException("wrong category");
+            throw new OutOfDomainException(AppNLS.getString("PluginCategory.wrongCategory")); //$NON-NLS-1$
         registry.put(pluginId, typeEx);
     }
 

@@ -15,6 +15,7 @@ import net.bodz.bas.lang.Caller;
 import net.bodz.bas.lang.err.Err;
 import net.bodz.bas.lang.err.IdentifiedException;
 import net.bodz.bas.lang.err.UnexpectedException;
+import net.bodz.bas.nls.AppNLS;
 import net.bodz.bas.types.util.Empty;
 
 public class UCL {
@@ -24,7 +25,7 @@ public class UCL {
         Class<?> clazz = URLClassLoader.class;
         try {
             URLClassLoader_addURL = clazz
-                    .getDeclaredMethod("addURL", URL.class);
+                    .getDeclaredMethod("addURL", URL.class); //$NON-NLS-1$
             URLClassLoader_addURL.setAccessible(true);
         } catch (SecurityException e) {
         } catch (NoSuchMethodException e) {
@@ -63,7 +64,7 @@ public class UCL {
      */
     public static int addURL(URLClassLoader ucl, URL... urls) {
         if (URLClassLoader_addURL == null)
-            throw new Error("can't access URLClassLoader.addURL()");
+            throw new Error(AppNLS.getString("UCL.cantAccessAddURL")); //$NON-NLS-1$
         int added = 0;
         try {
             for (URL url : urls) {
@@ -154,7 +155,7 @@ public class UCL {
         public static final Set<String> stops;
         static {
             stops = new HashSet<String>();
-            stops.add("sun.misc.Launcher$ExtClassLoader");
+            stops.add("sun.misc.Launcher$ExtClassLoader"); //$NON-NLS-1$
         }
 
         protected boolean filter(ClassLoader loader) {
@@ -183,13 +184,13 @@ public class UCL {
             if (cont)
                 out.println();
             cont = true;
-            out.println("; loader " + loader);
+            out.println(AppNLS.getString("UCL.loader") + loader); //$NON-NLS-1$
             if (filter(loader)) {
                 if (!(loader instanceof URLClassLoader))
-                    out.println("; (no url info)");
+                    out.println(AppNLS.getString("UCL.noURLInfo")); //$NON-NLS-1$
                 return true;
             } else {
-                out.println("; (stopped)");
+                out.println(AppNLS.getString("UCL.stopped")); //$NON-NLS-1$
                 return false;
             }
         }

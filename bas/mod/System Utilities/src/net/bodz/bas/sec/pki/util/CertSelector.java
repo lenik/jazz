@@ -24,6 +24,7 @@ import net.bodz.bas.lang.err.IllegalUsageException;
 import net.bodz.bas.lang.err.UnexpectedException;
 import net.bodz.bas.net.CURL;
 import net.bodz.bas.net.CURL.Alpha;
+import net.bodz.bas.nls.SysNLS;
 import net.bodz.bas.types.util.Iterates;
 import net.bodz.bas.types.util.Objects;
 import net.bodz.bas.types.util.PrefetchedIterator;
@@ -84,13 +85,13 @@ public class CertSelector {
         _parse(curl, type, provider);
     }
 
-    static final String defaultStoreType = "JKS";
-    static final String KS_NONE          = "-";
+    static final String defaultStoreType = "JKS"; //$NON-NLS-1$
+    static final String KS_NONE          = "-";  //$NON-NLS-1$
 
     void _parse(CURL curl, int type, Provider provider)
             throws KeyStoreException {
         if (curl == null)
-            throw new NullPointerException("certURL");
+            throw new NullPointerException("certURL"); //$NON-NLS-1$
         int detType = NONE;
         storeType = curl.getType();
         if (storeType != null)
@@ -107,7 +108,7 @@ public class CertSelector {
             if (!storePath.isEmpty()) {
                 if (KS_NONE.equals(storePath)) {
                     storeFile = null;
-                } else if (storePath.contains("://"))
+                } else if (storePath.contains("://")) //$NON-NLS-1$
                     try {
                         URL url = new URL(storePath);
                         // create a temp file when necessary?
@@ -140,8 +141,8 @@ public class CertSelector {
             }
         }
         if (type > detType)
-            throw new IllegalArgumentException("type(" + type
-                    + ") not completed: " + curl);
+            throw new IllegalArgumentException(String.format(
+                    SysNLS.getString("CertSelector.typeIsntCompleted_ss"), type, curl)); //$NON-NLS-1$
         this.type = type == AUTO ? detType : type;
         if (provider != null) {
             this.provider = provider;
@@ -202,7 +203,7 @@ public class CertSelector {
                             if (storeType.equals(service.getAlgorithm()))
                                 return provider;
                         } else {
-                            if ("KeyStore".equals(service.getType()))
+                            if ("KeyStore".equals(service.getType())) //$NON-NLS-1$
                                 return provider;
                         }
                     }
@@ -237,7 +238,7 @@ public class CertSelector {
                 if (storeFile != null)
                     in = Files.getInputStream(storeFile);
                 else
-                    throw new IllegalStateException("no key store specified?");
+                    throw new IllegalStateException(SysNLS.getString("CertSelector.noKeyStore")); //$NON-NLS-1$
                 keyStore.load(in, storePassword.toCharArray());
             } catch (Exception e) {
                 throw new KeyStoreException(e);
@@ -324,17 +325,17 @@ public class CertSelector {
     String getTypeString() {
         switch (type) {
         case AUTO:
-            return "AUTO";
+            return "AUTO"; //$NON-NLS-1$
         case NONE:
-            return "NONE";
+            return "NONE"; //$NON-NLS-1$
         case STORETYPE:
-            return "STORETYPE";
+            return "STORETYPE"; //$NON-NLS-1$
         case KEYSTORE:
-            return "KEYSTORE";
+            return "KEYSTORE"; //$NON-NLS-1$
         case CERTIFICATE:
-            return "CERTIFICATE";
+            return "CERTIFICATE"; //$NON-NLS-1$
         case SUBENTRY:
-            return "SUBENTRY";
+            return "SUBENTRY"; //$NON-NLS-1$
         }
         throw new UnexpectedException();
     }
@@ -353,7 +354,7 @@ public class CertSelector {
                 String[] params2 = null;
                 if (certPassword != null)
                     params2 = new String[] { certPassword };
-                String s = certAlias == null ? "" : certAlias;
+                String s = certAlias == null ? "" : certAlias; //$NON-NLS-1$
                 String[] betas2 = Alpha.parseBetas(s);
                 Alpha alpha2 = new Alpha(params2, betas2);
                 list.add(alpha2);
@@ -379,7 +380,7 @@ public class CertSelector {
 
     public void dump(CharOut out, int detail) throws KeyStoreException {
         if (type == NONE) {
-            out.println("NONE");
+            out.println("NONE"); //$NON-NLS-1$
             return;
         }
         PKIDumper dumper = new PKIDumper(out, detail);
@@ -389,26 +390,26 @@ public class CertSelector {
             if (provider == null) {
                 // dump all providers
                 for (Provider provider : getStoreTypeProviders()) {
-                    out.println("Provider " + provider.getName());
+                    out.println("Provider " + provider.getName()); //$NON-NLS-1$
                     keyStore = getKeyStore(provider);
-                    dumper.dumpKeyStore("", keyStore);
+                    dumper.dumpKeyStore("", keyStore); //$NON-NLS-1$
                 }
             } else {
                 keyStore = getKeyStore();
                 // dump keystore of specified provider
-                dumper.dumpKeyStore("", keyStore);
+                dumper.dumpKeyStore("", keyStore); //$NON-NLS-1$
             }
             break;
         case KEYSTORE:
             keyStore = getKeyStore();
-            dumper.dumpKeyStore("", keyStore);
+            dumper.dumpKeyStore("", keyStore); //$NON-NLS-1$
             break;
         case CERTIFICATE:
             keyStore = getKeyStore();
-            dumper.dumpStoreEntry("", keyStore, certAlias, certPassword);
+            dumper.dumpStoreEntry("", keyStore, certAlias, certPassword); //$NON-NLS-1$
             break;
         case SUBENTRY:
-            out.println("Not implemented.");
+            out.println("Not implemented."); //$NON-NLS-1$
             break;
         default:
             throw new IllegalStateException();

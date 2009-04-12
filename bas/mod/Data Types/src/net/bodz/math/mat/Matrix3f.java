@@ -65,10 +65,10 @@ public class Matrix3f extends javax.vecmath.Matrix3f {
 
     @Override
     public String toString() {
-        return String.format("" + //
-                "[ %10.4f %10.4f %10.4f ]\n" + //
-                "[ %10.4f %10.4f %10.4f ]\n" + //
-                "[ %10.4f %10.4f %10.4f ]\n", //
+        return String.format("" + // //$NON-NLS-1$
+                "[ %10.4f %10.4f %10.4f ]\n" + // //$NON-NLS-1$
+                "[ %10.4f %10.4f %10.4f ]\n" + // //$NON-NLS-1$
+                "[ %10.4f %10.4f %10.4f ]\n", // //$NON-NLS-1$
                 m00, m01, m02, //
                 m10, m11, m12, //
                 m20, m21, m22);

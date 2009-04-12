@@ -11,7 +11,7 @@ public class KeyObject {
     public KeyObject(String name, boolean unique) {
         if (unique) {
             if (namedKeys.containsKey(name))
-                throw new IllegalArgumentException("Key " + name + "is existed");
+                throw new IllegalArgumentException("Key " + name + "is existed"); //$NON-NLS-1$ //$NON-NLS-2$
         }
         namedKeys.put(this, name);
     }
@@ -29,8 +29,8 @@ public class KeyObject {
     public String toString() {
         String name = namedKeys.get(this);
         if (name == null)
-            name = "" + hashCode();
-        return "<Key:" + name + ">";
+            name = "" + hashCode(); //$NON-NLS-1$
+        return "<Key:" + name + ">"; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     static Map<KeyObject, String> namedKeys = new HashMap<KeyObject, String>();

@@ -1,20 +1,21 @@
 package net.bodz.bas.io;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class ReaderInputStreamTest {
 
     @Test
     public void testRead() throws IOException {
         // E4 BD A0 E5 A5 BD
-        String s = "abc你好";
+        String s = "abc你好"; //$NON-NLS-1$
         Reader reader = new StringReader(s);
-        ReaderInputStream in = new ReaderInputStream(reader, "utf-8");
+        ReaderInputStream in = new ReaderInputStream(reader, "utf-8"); //$NON-NLS-1$
 
         assertEquals((int) 'a', in.read());
         assertEquals((int) 'b', in.read());

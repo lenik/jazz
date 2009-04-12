@@ -55,7 +55,7 @@ public class MethodEx {
 
     protected Object invokeOnUnknownType(Object obj, Class<?> argType,
             Object arg) {
-        throw new OutOfDomainException("argType", argType);
+        throw new OutOfDomainException("argType", argType); //$NON-NLS-1$
     }
 
     public boolean isEmpty() {

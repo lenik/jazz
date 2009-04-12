@@ -7,6 +7,7 @@ import java.security.NoSuchAlgorithmException;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.err.RuntimizedException;
 import net.bodz.bas.lang.err.UnexpectedException;
+import net.bodz.bas.nls.SysNLS;
 
 public class Cryptos {
 
@@ -15,17 +16,17 @@ public class Cryptos {
             MessageDigest digest = MessageDigest.getInstance(alg);
             return digest;
         } catch (NoSuchAlgorithmException e) {
-            throw new UnexpectedException("message digest " + alg
-                    + " isn't installed");
+            throw new UnexpectedException(String.format(SysNLS
+                    .getString("Cryptos.0"), alg)); //$NON-NLS-1$
         }
     }
 
     public static MessageDigest getMD5() {
-        return newDigest("MD5");
+        return newDigest("MD5"); //$NON-NLS-1$
     }
 
     public static MessageDigest getSHA1() {
-        return newDigest("SHA1");
+        return newDigest("SHA1"); //$NON-NLS-1$
     }
 
     static byte[] calc(Object in, MessageDigest digest) throws IOException {

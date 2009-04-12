@@ -11,6 +11,7 @@ import java.util.Random;
 
 import net.bodz.bas.lang.err.IllegalArgumentTypeException;
 import net.bodz.bas.lang.err.NotImplementedException;
+import net.bodz.bas.nls.TypesNLS;
 
 public class ArrayOps {
 
@@ -112,13 +113,13 @@ public class ArrayOps {
 
         @Override
         public void sort(A array, Comparator<?> comparator) {
-            throw new UnsupportedOperationException("comparator isn't used");
+            throw new UnsupportedOperationException(TypesNLS.getString("ArrayOps.cmpIsntUsed")); //$NON-NLS-1$
         }
 
         @Override
         public void sort(A array, int fromIndex, int toIndex,
                 Comparator<?> comparator) {
-            throw new UnsupportedOperationException("comparator isn't used");
+            throw new UnsupportedOperationException(TypesNLS.getString("ArrayOps.cmpIsntUsed")); //$NON-NLS-1$
         }
 
         @Override
@@ -1246,7 +1247,7 @@ public class ArrayOps {
 
         @Override
         public void fill(T[] array, int fromIndex, int toIndex, Random rands) {
-            throw new UnsupportedOperationException("only random numbers");
+            throw new UnsupportedOperationException(TypesNLS.getString("ArrayOps.onlyRandoms")); //$NON-NLS-1$
         }
 
         @Override
@@ -1332,7 +1333,7 @@ public class ArrayOps {
     @SuppressWarnings("unchecked")
     public static <A> ArrayOp<A> get(Class<A> arrayType) {
         if (!arrayType.isArray())
-            throw new IllegalArgumentTypeException(arrayType, "array");
+            throw new IllegalArgumentTypeException(arrayType, TypesNLS.getString("ArrayOps.array")); //$NON-NLS-1$
         Class<?> componentType = arrayType.getComponentType();
         if (componentType.isPrimitive())
             return (ArrayOp<A>) ops.get(componentType);

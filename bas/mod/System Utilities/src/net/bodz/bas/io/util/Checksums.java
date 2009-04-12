@@ -19,7 +19,7 @@ public class Checksums {
 
         @Override
         public String toString() {
-            return getClass().getSimpleName() + ":" + getValue();
+            return getClass().getSimpleName() + ":" + getValue(); //$NON-NLS-1$
         }
 
     }

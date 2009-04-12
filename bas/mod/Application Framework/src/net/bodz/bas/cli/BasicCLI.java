@@ -40,9 +40,10 @@ import net.bodz.bas.log.LogOut;
 import net.bodz.bas.log.LogOuts;
 import net.bodz.bas.mod.plugins.PluginException;
 import net.bodz.bas.mod.plugins.PluginTypeEx;
-import net.bodz.bas.types.AutoTypeMap;
+import net.bodz.bas.nls.AppNLS;
 import net.bodz.bas.types.TypeParser;
 import net.bodz.bas.types.TypeParsers;
+import net.bodz.bas.types.VarMap;
 import net.bodz.bas.types.parsers.ALogParser;
 import net.bodz.bas.types.parsers.CharOutParser;
 import net.bodz.bas.types.util.Dates;
@@ -110,7 +111,7 @@ public class BasicCLI {
         L.setLevel(L.getLevel() - 1);
     }
 
-    protected AutoTypeMap<String, Object> _vars;
+    protected VarMap<String, Object> _vars;
 
     @Option(name = "define", alias = ".D", vnam = "NAM=VAL", doc = "define variables")
     void _define(String exp) throws ParseException {
@@ -164,7 +165,8 @@ public class BasicCLI {
                 throws CreateException, PluginException, ParseException {
             PluginTypeEx typeEx = plugins.getTypeEx(CLIPlugin.class, pluginId);
             if (typeEx == null)
-                throw new PluginException("no plugin of " + pluginId);
+                throw new PluginException(
+                        AppNLS.getString("BasicCLI.noPlugin") + pluginId); //$NON-NLS-1$
             Class<?> clazz = typeEx.getType();
             Constructor<?>[] ctors = clazz.getConstructors(); // only get public
             Constructor<?> ctor = null;
@@ -177,7 +179,8 @@ public class BasicCLI {
                 }
             }
             if (ctor == null)
-                throw new PluginException("no constructor in " + clazz);
+                throw new PluginException(
+                        AppNLS.getString("BasicCLI.noCtor") + clazz); //$NON-NLS-1$
             int len = sigMaxLen.length;
             int off = 0;
             if (clazz.isMemberClass()) {
@@ -189,7 +192,8 @@ public class BasicCLI {
                 return (CLIPlugin) typeEx.newInstance();
             }
             if (len != 1)
-                throw new PluginException("no suitable constructor to use: "
+                throw new PluginException(AppNLS
+                        .getString("BasicCLI.noSuitableCtor") //$NON-NLS-1$
                         + typeEx);
 
             Class<?> sig0 = sigMaxLen[off];
@@ -203,7 +207,7 @@ public class BasicCLI {
             // ctor(E[] array)
             String[] args = {};
             if (ctorArg != null)
-                args = ctorArg.split(",");
+                args = ctorArg.split(","); //$NON-NLS-1$
             Class<?> valtype = sig0.getComponentType();
             if (valtype == String.class)
                 return (CLIPlugin) typeEx.newInstance((Object) args);
@@ -228,13 +232,13 @@ public class BasicCLI {
         protected void register(String name, final LogOut out0) {
             LogOut out = out0;
             if (_logWithPrefix) {
-                out = new LogOuts.Proxy(out0, "prefix-" + name) {
+                out = new LogOuts.Proxy(out0, "prefix-" + name) { //$NON-NLS-1$
                     @Override
                     protected String prefix() {
                         if (_logWithDate) {
                             String time = Dates.dateTimeFormat.format(System
                                     .currentTimeMillis());
-                            return _logPrefix + "[" + time + "]";
+                            return _logPrefix + "[" + time + "]"; //$NON-NLS-1$ //$NON-NLS-2$
                         }
                         return _logPrefix;
                     }
@@ -290,9 +294,9 @@ public class BasicCLI {
             else
                 author = verinfo.author;
             if (author == null)
-                author = "Caynoh";
+                author = AppNLS.getString("BasicCLI.def.author"); //$NON-NLS-1$
             if (verinfo.state == null)
-                verinfo.state = "UNKNOWN";
+                verinfo.state = AppNLS.getString("BasicCLI.def.state"); //$NON-NLS-1$
 
             info.setName(name);
             info.setDoc(doc);
@@ -313,8 +317,8 @@ public class BasicCLI {
 
     protected void _version(CharOut out) {
         ClassInfo info = _loadClassInfo();
-        out.printf("[%s] %s\n", info.getName(), info.getDoc());
-        out.printf("Written by %s,  Version %s,  Last updated at %s\n", //
+        out.printf("[%s] %s\n", info.getName(), info.getDoc()); //$NON-NLS-1$
+        out.printf(AppNLS.getString("BasicCLI.fmt.ver_sss"), // //$NON-NLS-1$
                 info.getAuthor(), //
                 Strings.joinDot(info.getVersion()), //
                 info.getDateString());
@@ -335,13 +339,13 @@ public class BasicCLI {
         out.print(hlp_opts);
 
         if (plugins != null)
-            plugins.help(out, "");
+            plugins.help(out, ""); //$NON-NLS-1$
 
         out.flush();
     }
 
     protected String _helpRestSyntax() {
-        return "FILES";
+        return AppNLS.getString("BasicCLI.help.FILES"); //$NON-NLS-1$
     }
 
     private boolean                prepared;
@@ -355,8 +359,8 @@ public class BasicCLI {
         int bootLevel = loglevel == null ? ALog.INFO : Integer
                 .parseInt(loglevel);
         L = CLIConfig.getBootLog(bootLevel);
-        _logPrefix = "[" + A_bas.getDisplayName(getClass()) + "] ";
-        _vars = new AutoTypeMap<String, Object>(//
+        _logPrefix = "[" + A_bas.getDisplayName(getClass()) + "] "; //$NON-NLS-1$ //$NON-NLS-2$
+        _vars = new VarMap<String, Object>(//
                 new HashMap<String, Object>());
     }
 
@@ -389,10 +393,10 @@ public class BasicCLI {
         // }
         // }
 
-        L.x.P("cli get options");
+        L.x.P("cli get options"); //$NON-NLS-1$
         opts = getOptions();
 
-        L.x.P("drop the boot logger");
+        L.x.P("drop the boot logger"); //$NON-NLS-1$
         L = new CLILog(L.getLevel());
 
         restArgs = new ArrayList<String>();
@@ -418,14 +422,14 @@ public class BasicCLI {
      * public access: so derivations don't have to declare static main()s.
      */
     public synchronized void run(String... args) throws Throwable {
-        L.x.P("cli prepare");
+        L.x.P("cli prepare"); //$NON-NLS-1$
         _prepare();
         int preRestSize = restArgs.size(); // make climain() reentrant.
 
         try {
             addArguments(args);
 
-            L.x.P("cli boot");
+            L.x.P("cli boot"); //$NON-NLS-1$
             _postInit();
             _boot();
 
@@ -448,20 +452,20 @@ public class BasicCLI {
                     Object optval = opt.get(this);
                     if (optval instanceof CallInfo)
                         continue;
-                    L.d.P(optnam, " = ", Util.dispval(optval));
+                    L.d.P(optnam, " = ", Util.dispval(optval)); //$NON-NLS-1$
                 }
                 for (Entry<String, Object> entry : _vars.entrySet()) {
                     String name = entry.getKey();
                     Object value = entry.getValue();
-                    L.d.P("var ", name, " = ", value);
+                    L.d.P("var ", name, " = ", value); //$NON-NLS-1$ //$NON-NLS-2$
                 }
             }
             String[] rest = restArgs.toArray(Empty.Strings);
 
-            L.x.P("cli main");
+            L.x.P("cli main"); //$NON-NLS-1$
             doMain(rest);
 
-            L.x.P("cli exit");
+            L.x.P("cli exit"); //$NON-NLS-1$
             _exit();
         } catch (ControlBreak b) {
             return;
@@ -484,7 +488,7 @@ public class BasicCLI {
      * @throws ControlBreak
      */
     protected void _exit() throws Throwable {
-        throw new ControlBreak("exit");
+        throw new ControlBreak("exit"); //$NON-NLS-1$
     }
 
     /**

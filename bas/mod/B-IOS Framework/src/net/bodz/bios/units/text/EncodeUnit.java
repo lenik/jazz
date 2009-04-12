@@ -8,6 +8,7 @@ import java.nio.charset.CharsetEncoder;
 import java.nio.charset.CoderResult;
 
 import net.bodz.bas.lang.err.IllegalUsageError;
+import net.bodz.bios.nls.BIOSNLS;
 
 public class EncodeUnit extends TextProcessUnit {
 
@@ -71,7 +72,7 @@ public class EncodeUnit extends TextProcessUnit {
             }
             // avoid empty-loop.
             else if (result.isOverflow())
-                throw new IllegalUsageError("capacity too small");
+                throw new IllegalUsageError(BIOSNLS.getString("EncodeUnit.capacityTooSmall")); //$NON-NLS-1$
             if (result.isError()) {
                 // remove the error char
                 char errChar = unconv.get();

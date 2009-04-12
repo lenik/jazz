@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.bodz.bas.io.CharOut;
+import net.bodz.bas.nls.AppNLS;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TypeMap;
 import net.bodz.bas.types.TextMap.TreeTextMap;
@@ -62,7 +63,8 @@ public class ProcessResultStat {
                 copied++;
                 break;
             default:
-                throw new IllegalArgumentException("unknown operation: "
+                throw new IllegalArgumentException(AppNLS
+                        .getString("ProcessResultStat.unknownOperation") //$NON-NLS-1$
                         + result.operation);
             }
 
@@ -86,11 +88,11 @@ public class ProcessResultStat {
     }
 
     public void dumpBrief(CharOut out) {
-        String ignores = "";
+        String ignores = ""; //$NON-NLS-1$
         if (ignored > 0)
-            ignores = "(" + ignored + " ignored)";
-        out.printf("Total %d/%d" + ignores
-                + " files changed, %d saved, %d error. \n", // 
+            ignores = "(" + ignored + AppNLS.getString("ProcessResultStat.ignored_"); //$NON-NLS-1$ //$NON-NLS-2$
+        out.printf(AppNLS.getString("ProcessResultStat.0") + ignores //$NON-NLS-1$
+                + AppNLS.getString("ProcessResultStat.1"), //  //$NON-NLS-1$
                 changed, total, saved, errorred);
     }
 
@@ -100,11 +102,12 @@ public class ProcessResultStat {
             Integer value2) {
         String tab = Strings.repeat(indent, ' ');
         out.print(tab);
-        out.printf("%" + (NAMECOLUMN - indent) + "s: %8d file", name, value);
+        out.printf("%" + (NAMECOLUMN - indent) + AppNLS.getString("ProcessResultStat.2"), name, value); //$NON-NLS-1$ //$NON-NLS-2$
         if (value > 1)
             out.print('s');
         if (value2 != null) {
-            out.printf("%8d file", value2);
+            out.printf(
+                    AppNLS.getString("ProcessResultStat.fmt.8d_file"), value2); //$NON-NLS-1$
             if (value2 > 1)
                 out.print('s');
         }
@@ -116,7 +119,10 @@ public class ProcessResultStat {
     }
 
     public void dumpDetail(CharOut out) {
-        dumpField(out, 4, "Total/Ignored", total, ignored);
+        dumpField(
+                out,
+                4,
+                AppNLS.getString("ProcessResultStat.total_Ignored"), total, ignored); //$NON-NLS-1$
 
         List<String> tags = new ArrayList<String>(tagStat.keySet());
         Collections.sort(tags);
@@ -126,19 +132,40 @@ public class ProcessResultStat {
         }
 
         if (changed > 0)
-            dumpField(out, 4, "Changed", changed, total - changed);
+            dumpField(
+                    out,
+                    4,
+                    AppNLS.getString("ProcessResultStat.changed"), changed, total - changed); //$NON-NLS-1$
         if (saved > 0)
-            dumpField(out, 4, "Saved", saved, total - saved);
+            dumpField(
+                    out,
+                    4,
+                    AppNLS.getString("ProcessResultStat.saved"), saved, total - saved); //$NON-NLS-1$
         if (deleted > 0)
-            dumpField(out, 4, "Deleted", deleted, total - deleted);
+            dumpField(
+                    out,
+                    4,
+                    AppNLS.getString("ProcessResultStat.deleted"), deleted, total - deleted); //$NON-NLS-1$
         if (renamed > 0)
-            dumpField(out, 4, "Renamed", renamed, total - renamed);
+            dumpField(
+                    out,
+                    4,
+                    AppNLS.getString("ProcessResultStat.renamed"), renamed, total - renamed); //$NON-NLS-1$
         if (moved > 0)
-            dumpField(out, 4, "Moved", moved, total - moved);
+            dumpField(
+                    out,
+                    4,
+                    AppNLS.getString("ProcessResultStat.moved"), moved, total - moved); //$NON-NLS-1$
         if (copied > 0)
-            dumpField(out, 4, "Copied", copied, total - copied);
+            dumpField(
+                    out,
+                    4,
+                    AppNLS.getString("ProcessResultStat.copied"), copied, total - copied); //$NON-NLS-1$
         if (errorred > 0)
-            dumpField(out, 4, "Errors", errorred, total - errorred);
+            dumpField(
+                    out,
+                    4,
+                    AppNLS.getString("ProcessResultStat.errors"), errorred, total - errorred); //$NON-NLS-1$
 
         List<Class<?>> errTypes = new ArrayList<Class<?>>(errStat.keySet());
         Collections.sort(errTypes, Comparators.TYPE);

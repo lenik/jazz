@@ -56,38 +56,38 @@ public class IteratorsTest {
             Object v = it.next();
             if (buf == null) {
                 buf = new StringBuffer();
-                buf.append("[");
+                buf.append("["); //$NON-NLS-1$
             } else
-                buf.append(", ");
+                buf.append(", "); //$NON-NLS-1$
             buf.append(v);
         }
         if (buf == null)
-            return "[]";
-        buf.append("]");
+            return "[]"; //$NON-NLS-1$
+        buf.append("]"); //$NON-NLS-1$
         return buf.toString();
     }
 
     @SuppressWarnings("unchecked")
     public void testConcat() {
         Iterator<Number> ad = Iterators.concat(al.iterator(), dl.iterator());
-        assertEquals("[10, 20, 30, 40, 50, 60]", scan(ad));
+        assertEquals("[10, 20, 30, 40, 50, 60]", scan(ad)); //$NON-NLS-1$
         Iterator<Number> ade = Iterators.concat(al.iterator(), dl.iterator(),
                 el.iterator());
-        assertEquals("[10, 20, 30, 40, 50, 60]", scan(ade));
+        assertEquals("[10, 20, 30, 40, 50, 60]", scan(ade)); //$NON-NLS-1$
         Iterator<Number> de = Iterators.concat(dl.iterator(), el.iterator());
-        assertEquals("[60]", scan(de));
+        assertEquals("[60]", scan(de)); //$NON-NLS-1$
         Iterator<Number> f = Iterators.concat(fl.iterator());
-        assertEquals("[31, 53, 22, 15, 5]", scan(f));
+        assertEquals("[31, 53, 22, 15, 5]", scan(f)); //$NON-NLS-1$
     }
 
     @SuppressWarnings("unchecked")
     @Test
     public void testWeave() {
         Iterator<Number> w1 = Iterators.weave(al.iterator());
-        assertEquals("[10, 20, 30, 40, 50]", scan(w1));
+        assertEquals("[10, 20, 30, 40, 50]", scan(w1)); //$NON-NLS-1$
 
         Iterator<Number> w3 = Iterators.weave(al.iterator(), cl.iterator());
-        assertEquals("[5, 10, 15, 20, 25, 26, 28, 30, 40, 45, 50, 55]",
+        assertEquals("[5, 10, 15, 20, 25, 26, 28, 30, 40, 45, 50, 55]", //$NON-NLS-1$
                 scan(w3));
 
         Iterator<Number> w5 = Iterators.weave(//
@@ -98,7 +98,7 @@ public class IteratorsTest {
                 el.iterator()//
                 );
         assertEquals(
-                "[5, 10, 15, 20, 22, 23, 24, 25, 25, 26, 28, 30, 40, 45, 50, 55, 60]",
+                "[5, 10, 15, 20, 22, 23, 24, 25, 25, 26, 28, 30, 40, 45, 50, 55, 60]", //$NON-NLS-1$
                 scan(w5));
 
         // 31, 53, 22, 15, 5
@@ -106,13 +106,13 @@ public class IteratorsTest {
                 al.iterator(),//
                 fl.iterator()//
                 );
-        assertEquals("[10, 20, 30, 31, 40, 50, 53, 22, 15, 5]", scan(wf1));
+        assertEquals("[10, 20, 30, 31, 40, 50, 53, 22, 15, 5]", scan(wf1)); //$NON-NLS-1$
 
         Iterator<Number> wf2 = Iterators.weave(//
                 fl.iterator(),//
                 al.iterator()//
                 );
-        assertEquals("[10, 20, 30, 31, 40, 50, 53, 22, 15, 5]", scan(wf2));
+        assertEquals("[10, 20, 30, 31, 40, 50, 53, 22, 15, 5]", scan(wf2)); //$NON-NLS-1$
     }
 
 }

@@ -111,7 +111,7 @@ public class BitSetIntSet extends _IntSet {
         int i = -1;
         int j = 0;
         while ((i = bits.nextSetBit(i + 1)) >= 0) {
-            assert j < cardinality : "inconsistency";
+            assert j < cardinality : "inconsistency"; //$NON-NLS-1$
             array[j++] = i;
         }
         return array;

@@ -13,6 +13,7 @@ import net.bodz.bas.lang.a.ReflectField;
 import net.bodz.bas.lang.a.ReflectMethod;
 import net.bodz.bas.lang.a.ReflectProperty;
 import net.bodz.bas.lang.err.ReflectException;
+import net.bodz.bas.nls.LangNLS;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TextMap.HashTextMap;
 
@@ -53,7 +54,7 @@ public class Reflects {
             if (f != null) {
                 if (!Field.class.isAssignableFrom(declareField.getType()))
                     throw new Error(ReflectField.class
-                            + " must be declared on Field field");
+                            + LangNLS.getString("Reflects.notField")); //$NON-NLS-1$
                 Class<?> _class = ifvoid(f._class(), defineClass);
                 String name = f.value();
                 if (name.isEmpty())
@@ -213,16 +214,18 @@ public class Reflects {
             throws ReflectException {
         Method read = property.getReadMethod();
         if (read == null)
-            throw new IllegalArgumentException("property " + property.getName()
-                    + " isn't readable");
+            throw new IllegalArgumentException(LangNLS
+                    .getString("Reflects.property") + property.getName() //$NON-NLS-1$
+                    + LangNLS.getString("Reflects.noread")); //$NON-NLS-1$
         return invoke(obj, read);
     }
 
     public static void set(Object obj, PropertyDescriptor property, Object value) {
         Method write = property.getWriteMethod();
         if (write == null)
-            throw new IllegalArgumentException("property " + property.getName()
-                    + " isn't writable");
+            throw new IllegalArgumentException(LangNLS
+                    .getString("Reflects.property") + property.getName() //$NON-NLS-1$
+                    + LangNLS.getString("Reflects.nowrite")); //$NON-NLS-1$
         invoke(obj, write, value);
     }
 

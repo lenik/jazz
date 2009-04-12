@@ -16,10 +16,10 @@ public class PrefixSetTest {
     PrefixSet set = new PrefixSet();
 
     public PrefixSetTest() {
-        set.add("name");
-        set.add("aa");
-        set.add("aaa");
-        set.add("aab");
+        set.add("name"); //$NON-NLS-1$
+        set.add("aa"); //$NON-NLS-1$
+        set.add("aaa"); //$NON-NLS-1$
+        set.add("aab"); //$NON-NLS-1$
     }
 
     @Test
@@ -27,16 +27,16 @@ public class PrefixSetTest {
         TestDefs.tests(new TestEval<String>() {
             public Object eval(String input) throws Throwable {
                 Iterable<String> ceilings = set.ceilings(input);
-                return Strings.join(",", ceilings);
+                return Strings.join(",", ceilings); //$NON-NLS-1$
             }
         }, //
-                EQ("n", "name"), //
-                EQ("na", "name"), //
-                EQ("nam", "name"), //
-                EQ("name", "name"), //
-                EQ("a", "aa,aaa,aab"), //
-                EQ("aa", "aa,aaa,aab"), //
-                EQ("aaa", "aaa"), //
+                EQ("n", "name"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("na", "name"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("nam", "name"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("name", "name"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("a", "aa,aaa,aab"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("aa", "aa,aaa,aab"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("aaa", "aaa"), // //$NON-NLS-1$ //$NON-NLS-2$
                 END);
     }
 
@@ -47,25 +47,25 @@ public class PrefixSetTest {
                 return set.ceiling(input) != null;
             }
         }, //
-                T(""), //
-                T("n"), //
-                T("nam"), //
-                T("name"), //
-                T("a"), //
-                T("aa"), //
-                T("aaa"), //
-                F("bb"), //
+                T(""), // //$NON-NLS-1$
+                T("n"), // //$NON-NLS-1$
+                T("nam"), // //$NON-NLS-1$
+                T("name"), // //$NON-NLS-1$
+                T("a"), // //$NON-NLS-1$
+                T("aa"), // //$NON-NLS-1$
+                T("aaa"), // //$NON-NLS-1$
+                F("bb"), // //$NON-NLS-1$
                 END);
     }
 
     @Test
     public void testCrossParent() {
         PrefixSet set = new PrefixSet();
-        set.add("cat");
-        set.add("catx");
-        set.add("catz");
-        assertEquals("catx", set.floor("catxy"));
-        assertEquals("cat", set.floor("caty"));
+        set.add("cat"); //$NON-NLS-1$
+        set.add("catx"); //$NON-NLS-1$
+        set.add("catz"); //$NON-NLS-1$
+        assertEquals("catx", set.floor("catxy")); //$NON-NLS-1$ //$NON-NLS-2$
+        assertEquals("cat", set.floor("caty")); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
 }

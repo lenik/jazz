@@ -24,7 +24,7 @@ public class ModulesRoot {
 
     @Override
     public String toString() {
-        return "ModulesRoot: " + root;
+        return "ModulesRoot: " + root; //$NON-NLS-1$
     }
 
     /**
@@ -97,8 +97,8 @@ public class ModulesRoot {
         boolean first = parent == null;
         if (parent == null) {
             // absolute path?
-            if (exp.startsWith("/"))
-                return findexp(exp.substring(1), Files.canoniOf("/"));
+            if (exp.startsWith("/")) //$NON-NLS-1$
+                return findexp(exp.substring(1), Files.canoniOf("/")); //$NON-NLS-1$
             if (SystemInfo.isWin32() && exp.length() > 2
                     && exp.charAt(1) == ':') {
                 File driveRoot = Files.canoniOf(exp.substring(0, 2));
@@ -119,12 +119,12 @@ public class ModulesRoot {
         // @named-root
         if (first) {
             File newParent = null;
-            if (component.startsWith("@")) {
+            if (component.startsWith("@")) { //$NON-NLS-1$
                 String mod = component.substring(1);
                 newParent = modules.get(mod);
                 if (newParent == null)
                     return null;
-            } else if (component.startsWith("$")) {
+            } else if (component.startsWith("$")) { //$NON-NLS-1$
                 String env = System.getenv(component.substring(1));
                 if (env == null)
                     return null;
@@ -137,7 +137,7 @@ public class ModulesRoot {
             }
         }
         // fuzzy*
-        if (component.endsWith("*")) {
+        if (component.endsWith("*")) { //$NON-NLS-1$
             String prefix = component.substring(0, component.length() - 1);
             File expanded = findabc(prefix, parent);
             if (expanded == null || !expanded.exists())
@@ -154,11 +154,11 @@ public class ModulesRoot {
     public static ModulesRoot DEFAULT;
 
     static {
-        File root = new File("/");
+        File root = new File("/"); //$NON-NLS-1$
         if (SystemInfo.isWin32()) {
-            String programFiles = System.getenv("ProgramFiles");
+            String programFiles = System.getenv("ProgramFiles"); //$NON-NLS-1$
             if (programFiles == null)
-                programFiles = "C:/Program Files";
+                programFiles = "C:/Program Files"; //$NON-NLS-1$
             root = Files.canoniOf(programFiles);
         }
         DEFAULT = new ModulesRoot(root);

@@ -69,7 +69,7 @@ public class PKIDumper {
 
     public PKIDumper(CharOut out, int detail) {
         if (out == null)
-            throw new NullPointerException("out");
+            throw new NullPointerException("out"); //$NON-NLS-1$
         // if (out instanceof LogOut)
         this.out = out;
         // else
@@ -100,10 +100,10 @@ public class PKIDumper {
     public void dumpProvider(String prefix, Provider provider, String password,
             int detail) {
         out.print(prefix);
-        out.printf("Provider %s (%.2f): %s\n", provider.getName(), provider
+        out.printf("Provider %s (%.2f): %s\n", provider.getName(), provider //$NON-NLS-1$
                 .getVersion(), provider.getInfo());
         if (detail >= 1)
-            dumpProperties(prefix + "  ", provider.getName(), provider);
+            dumpProperties(prefix + "  ", provider.getName(), provider); //$NON-NLS-1$
 
         List<Service> services = new ArrayList<Service>(provider.getServices());
         Collections.sort(services, serviceComp);
@@ -111,7 +111,7 @@ public class PKIDumper {
         for (Service service : services) {
             String type = service.getType();
             String alg = service.getAlgorithm();
-            out.printf(prefix, "  Service %s(%s): %s\n", type, alg, service
+            out.printf(prefix, "  Service %s(%s): %s\n", type, alg, service //$NON-NLS-1$
                     .getClassName());
             Set<Service> servsInType = types.get(type);
             if (servsInType == null)
@@ -119,42 +119,42 @@ public class PKIDumper {
             servsInType.add(service);
         }
 
-        Set<Service> certStores = types.get("CertStore");
+        Set<Service> certStores = types.get("CertStore"); //$NON-NLS-1$
         if (certStores != null)
             for (Service storeServ : certStores) {
                 assert provider == storeServ.getProvider();
                 String storeType = storeServ.getAlgorithm();
-                out.print(prefix, "  CertStore ", storeType, ": ");
+                out.print(prefix, "  CertStore ", storeType, ": "); //$NON-NLS-1$ //$NON-NLS-2$
                 if (detail >= 1) {
                     CertStore store;
                     CertStoreParameters params = null;
                     // if (password != null)
-                    if ("Collection".equals(storeType)) {
+                    if ("Collection".equals(storeType)) { //$NON-NLS-1$
                         params = new CollectionCertStoreParameters();
-                    } else if ("com.sun.security.IndexedCollection"
-                            .equals(storeType)) {
+                    } else if ("com.sun.security.IndexedCollection" //$NON-NLS-1$
+                    .equals(storeType)) {
                         params = new CollectionCertStoreParameters();
-                    } else if ("LDAP".equals(storeType)) {
+                    } else if ("LDAP".equals(storeType)) { //$NON-NLS-1$
                         params = new LDAPCertStoreParameters();
                     }
                     try {
                         store = CertStore.getInstance(storeType, params,
                                 provider);
-                        dumpCertStore(prefix + "  ", store, detail - 1);
+                        dumpCertStore(prefix + "  ", store, detail - 1); //$NON-NLS-1$
                     } catch (Exception e) {
-                        dumpError(prefix + "  ", e, detail);
+                        dumpError(prefix + "  ", e, detail); //$NON-NLS-1$
                     }
                 } else
                     out.println();
             }
 
-        Set<Service> keyStores = types.get("KeyStore");
+        Set<Service> keyStores = types.get("KeyStore"); //$NON-NLS-1$
         if (keyStores != null)
             for (Service storeServ : keyStores) {
                 assert provider == storeServ.getProvider();
                 String storeType = storeServ.getAlgorithm();
                 // String storeClass = storeServ.getClassName();
-                out.print(prefix, "  KeyStore ", storeType, ": ");
+                out.print(prefix, "  KeyStore ", storeType, ": "); //$NON-NLS-1$ //$NON-NLS-2$
                 if (detail >= 1) {
                     KeyStore store = null;
                     try {
@@ -170,38 +170,38 @@ public class PKIDumper {
                             store = builder.getKeyStore();
                         }
                     } catch (Exception e) {
-                        dumpError(prefix + "  ", e, detail);
+                        dumpError(prefix + "  ", e, detail); //$NON-NLS-1$
                     }
                     if (store != null) {
                         try {
-                            out.println(store.size(), " entries");
+                            out.println(store.size(), " entries"); //$NON-NLS-1$
                             for (String alias : Iterates.iterate(store
                                     .aliases())) {
-                                dumpStoreEntry(prefix + "  ", store, alias,
+                                dumpStoreEntry(prefix + "  ", store, alias, //$NON-NLS-1$
                                         null, detail - 1);
                             }
                         } catch (KeyStoreException e) {
-                            dumpError(prefix + "  ", e, detail);
+                            dumpError(prefix + "  ", e, detail); //$NON-NLS-1$
                         }
                     }
                 } else
                     out.println();
             }
 
-        Set<Service> ciphers = types.get("Cipher");
+        Set<Service> ciphers = types.get("Cipher"); //$NON-NLS-1$
         if (ciphers != null)
             for (Service cipherServ : ciphers) {
                 assert provider == cipherServ.getProvider();
                 String cipherAlg = cipherServ.getAlgorithm();
                 // String cipherClass = cipherServ.getClassName();
-                out.println("  Cipher ", cipherAlg, ": ");
+                out.println("  Cipher ", cipherAlg, ": "); //$NON-NLS-1$ //$NON-NLS-2$
                 if (detail >= 1) {
                     Cipher cipher = null;
                     try {
                         cipher = Cipher.getInstance(cipherAlg, provider);
                         dumpCipher(cipher, detail - 1);
                     } catch (GeneralSecurityException e) {
-                        dumpError(prefix + "  ", e, detail);
+                        dumpError(prefix + "  ", e, detail); //$NON-NLS-1$
                     }
                 }
             }
@@ -217,11 +217,11 @@ public class PKIDumper {
     public void dumpCertStore(String prefix, CertStore store, int detail)
             throws CertStoreException {
         Collection<? extends Certificate> certs = store.getCertificates(null);
-        out.println(certs.size(), " entries");
+        out.println(certs.size(), " entries"); //$NON-NLS-1$
         if (detail <= 0)
             return;
         for (Certificate cert : certs) {
-            dumpCert("    ", cert, detail);
+            dumpCert("    ", cert, detail); //$NON-NLS-1$
         }
     }
 
@@ -233,28 +233,28 @@ public class PKIDumper {
     public void dumpKeyStore(String prefix, KeyStore keyStore, int detail)
             throws KeyStoreException {
         for (String alias : Iterates.iterate(keyStore.aliases()))
-            dumpStoreEntry(prefix + "  ", keyStore, alias, null, detail);
+            dumpStoreEntry(prefix + "  ", keyStore, alias, null, detail); //$NON-NLS-1$
     }
 
     public void dumpProperties(String prefix, String title,
             Properties properties) {
-        out.println(prefix, title, " properties: ");
+        out.println(prefix, title, " properties: "); //$NON-NLS-1$
         List<Object> keys = new ArrayList<Object>(properties.keySet());
         Collections.sort(keys, Comparators.STD);
         for (Object key : keys) {
             Object value = properties.get(key);
-            out.println(prefix, "  ", key, " = ", value);
+            out.println(prefix, "  ", key, " = ", value); //$NON-NLS-1$ //$NON-NLS-2$
         }
     }
 
     void dumpCert(String prefix, Certificate cert, int detail) {
         String certType = cert.getType();
-        out.print(prefix + certType + ": ");
+        out.print(prefix + certType + ": "); //$NON-NLS-1$
         if (cert instanceof X509Certificate)
-            dumpX509Cert(prefix + "  ", (X509Certificate) cert, detail);
+            dumpX509Cert(prefix + "  ", (X509Certificate) cert, detail); //$NON-NLS-1$
         else {
-            out.println(prefix + "(value of " + cert.getClass() + ")");
-            out.println(prefix + "  " + cert);
+            out.println(prefix + "(value of " + cert.getClass() + ")"); //$NON-NLS-1$ //$NON-NLS-2$
+            out.println(prefix + "  " + cert); //$NON-NLS-1$
         }
     }
 
@@ -269,172 +269,172 @@ public class PKIDumper {
             return;
 
         int basicCons = x509.getBasicConstraints();
-        out.printf(prefix + "basic-constraints: %d (%h)\n", basicCons,
+        out.printf(prefix + "basic-constraints: %d (%h)\n", basicCons, //$NON-NLS-1$
                 basicCons);
 
         Set<String> critSet = x509.getCriticalExtensionOIDs();
         if (critSet != null && !critSet.isEmpty()) {
-            out.println(prefix + "critical-extensions: ");
+            out.println(prefix + "critical-extensions: "); //$NON-NLS-1$
             for (String oid : critSet)
-                out.println(prefix + "  " + formatOID(oid));
+                out.println(prefix + "  " + formatOID(oid)); //$NON-NLS-1$
         }
 
         try {
             byte[] encoded = x509.getEncoded();
-            out.print(prefix + "encoded: ");
-            dumpBytes(prefix + "  ", encoded, detail);
+            out.print(prefix + "encoded: "); //$NON-NLS-1$
+            dumpBytes(prefix + "  ", encoded, detail); //$NON-NLS-1$
 
             byte[] md5 = Cryptos.md5(encoded);
-            out.print(prefix + "  md5: ");
-            dumpBytes(prefix + "    ", md5, detail + 1); // full dump
+            out.print(prefix + "  md5: "); //$NON-NLS-1$
+            dumpBytes(prefix + "    ", md5, detail + 1); // full dump //$NON-NLS-1$
 
             byte[] sha1 = Cryptos.sha1(encoded);
-            out.print(prefix + "  sha1: ");
-            dumpBytes(prefix + "    ", sha1, detail + 1); // full dump
+            out.print(prefix + "  sha1: "); //$NON-NLS-1$
+            dumpBytes(prefix + "    ", sha1, detail + 1); // full dump //$NON-NLS-1$
         } catch (CertificateEncodingException e) {
-            dumpError(prefix + "  ", e, detail);
+            dumpError(prefix + "  ", e, detail); //$NON-NLS-1$
         }
 
         try {
             List<String> extendedKeyUsage = x509.getExtendedKeyUsage();
             if (extendedKeyUsage != null && !extendedKeyUsage.isEmpty()) {
-                out.println(prefix + "extended-key-usage: ");
+                out.println(prefix + "extended-key-usage: "); //$NON-NLS-1$
                 for (String oid : extendedKeyUsage) {
                     byte[] val = x509.getExtensionValue(oid);
-                    out.print(prefix + "  " + formatOID(oid) + " = ");
-                    dumpBytes(prefix + "    ", val, detail);
+                    out.print(prefix + "  " + formatOID(oid) + " = "); //$NON-NLS-1$ //$NON-NLS-2$
+                    dumpBytes(prefix + "    ", val, detail); //$NON-NLS-1$
                 }
             }
         } catch (CertificateParsingException e) {
-            dumpError(prefix + "  ", e, detail);
+            dumpError(prefix + "  ", e, detail); //$NON-NLS-1$
         }
 
         try {
             Collection<List<?>> issAltNames = x509.getIssuerAlternativeNames();
             if (issAltNames != null && !issAltNames.isEmpty()) {
-                out.println(prefix + "issuer-alternative-names: ");
-                _dumpAltNames(prefix + "  ", issAltNames);
+                out.println(prefix + "issuer-alternative-names: "); //$NON-NLS-1$
+                _dumpAltNames(prefix + "  ", issAltNames); //$NON-NLS-1$
             }
         } catch (CertificateParsingException e) {
-            dumpError(prefix + "  ", e, detail);
+            dumpError(prefix + "  ", e, detail); //$NON-NLS-1$
         }
 
         // Principal issuerDN = x509.getIssuerDN();
 
         boolean[] issuerUniqueID = x509.getIssuerUniqueID();
         if (issuerUniqueID != null) {
-            out.print(prefix + "issuer-unique-id: ");
-            dumpBits(prefix + "  ", issuerUniqueID);
+            out.print(prefix + "issuer-unique-id: "); //$NON-NLS-1$
+            dumpBits(prefix + "  ", issuerUniqueID); //$NON-NLS-1$
         }
 
         X500Principal issuer = x509.getIssuerX500Principal();
         if (issuer != null) {
-            out.println(prefix + "issuer: (X500)");
-            dumpX500Key(prefix + "  ", issuer);
+            out.println(prefix + "issuer: (X500)"); //$NON-NLS-1$
+            dumpX500Key(prefix + "  ", issuer); //$NON-NLS-1$
         }
 
         boolean[] keyUsage = x509.getKeyUsage();
         if (keyUsage != null) {
-            out.print(prefix + "key-usage: ");
-            dumpBits(prefix + "  ", keyUsage);
+            out.print(prefix + "key-usage: "); //$NON-NLS-1$
+            dumpBits(prefix + "  ", keyUsage); //$NON-NLS-1$
             out.println();
         }
 
         Set<String> nonCritSet = x509.getNonCriticalExtensionOIDs();
         if (nonCritSet != null && !nonCritSet.isEmpty()) {
-            out.println(prefix + "non-critical-extensions: ");
+            out.println(prefix + "non-critical-extensions: "); //$NON-NLS-1$
             for (String oid : nonCritSet)
-                out.println(prefix + "  " + formatOID(oid));
+                out.println(prefix + "  " + formatOID(oid)); //$NON-NLS-1$
         }
 
         Date notBefore = x509.getNotBefore();
         if (notBefore != null)
-            out.println(prefix + "not-before: " + notBefore);
+            out.println(prefix + "not-before: " + notBefore); //$NON-NLS-1$
         Date notAfter = x509.getNotAfter();
         if (notAfter != null)
-            out.println(prefix + "not-after: " + notAfter);
+            out.println(prefix + "not-after: " + notAfter); //$NON-NLS-1$
 
         PublicKey publicKey = x509.getPublicKey();
         if (publicKey != null) {
-            out.print(prefix + "public-key: ");
-            dumpKey(prefix + "  ", publicKey, detail);
+            out.print(prefix + "public-key: "); //$NON-NLS-1$
+            dumpKey(prefix + "  ", publicKey, detail); //$NON-NLS-1$
         }
 
         BigInteger serialNumber = x509.getSerialNumber();
         if (serialNumber != null)
-            out.printf(prefix + "serial-number: %x (%d)\n", serialNumber,
+            out.printf(prefix + "serial-number: %x (%d)\n", serialNumber, //$NON-NLS-1$
                     serialNumber);
 
         String sigAlgName = x509.getSigAlgName();
         if (sigAlgName != null)
-            out.println(prefix + "sig-alg-name: " + sigAlgName);
+            out.println(prefix + "sig-alg-name: " + sigAlgName); //$NON-NLS-1$
 
         String sigAlgOID = x509.getSigAlgOID();
         if (sigAlgOID != null)
-            out.println(prefix + "sig-alg-oid: " + formatOID(sigAlgOID));
+            out.println(prefix + "sig-alg-oid: " + formatOID(sigAlgOID)); //$NON-NLS-1$
 
         byte[] sigAlgParams = x509.getSigAlgParams();
         if (sigAlgParams != null) {
-            out.print(prefix + "sig-alg-params: ");
-            dumpBytes(prefix + "  ", sigAlgParams, detail);
+            out.print(prefix + "sig-alg-params: "); //$NON-NLS-1$
+            dumpBytes(prefix + "  ", sigAlgParams, detail); //$NON-NLS-1$
         }
 
         byte[] signature = x509.getSignature();
         if (signature != null) {
-            out.print(prefix + "signature: ");
-            dumpSignature(prefix + "  ", signature, detail);
+            out.print(prefix + "signature: "); //$NON-NLS-1$
+            dumpSignature(prefix + "  ", signature, detail); //$NON-NLS-1$
         }
 
         try {
             Collection<List<?>> subjAltNames = x509
                     .getSubjectAlternativeNames();
             if (subjAltNames != null && !subjAltNames.isEmpty()) {
-                out.print(prefix + "subject-alternative-names: ");
-                _dumpAltNames(prefix + "  ", subjAltNames);
+                out.print(prefix + "subject-alternative-names: "); //$NON-NLS-1$
+                _dumpAltNames(prefix + "  ", subjAltNames); //$NON-NLS-1$
             }
         } catch (CertificateParsingException e) {
-            dumpError(prefix + "  ", e, detail);
+            dumpError(prefix + "  ", e, detail); //$NON-NLS-1$
         }
 
         // x509.getSubjectDN();
 
         boolean[] subjectUniqueID = x509.getSubjectUniqueID();
         if (subjectUniqueID != null) {
-            out.print(prefix + "subject-unique-id: ");
-            dumpBits(prefix + "  ", subjectUniqueID);
+            out.print(prefix + "subject-unique-id: "); //$NON-NLS-1$
+            dumpBits(prefix + "  ", subjectUniqueID); //$NON-NLS-1$
             out.println();
         }
 
         X500Principal subject = x509.getSubjectX500Principal();
         if (subject != null) {
-            out.println(prefix + "subject: (X500)");
-            dumpX500Key(prefix + "  ", subject);
+            out.println(prefix + "subject: (X500)"); //$NON-NLS-1$
+            dumpX500Key(prefix + "  ", subject); //$NON-NLS-1$
         }
 
         try {
             byte[] tbsCert = x509.getTBSCertificate();
             if (tbsCert != null) {
-                out.print(prefix + "TBS-certificate: ");
-                dumpBytes(prefix + "  ", tbsCert, detail);
+                out.print(prefix + "TBS-certificate: "); //$NON-NLS-1$
+                dumpBytes(prefix + "  ", tbsCert, detail); //$NON-NLS-1$
             }
         } catch (CertificateEncodingException e) {
-            dumpError(prefix + "  ", e, detail);
+            dumpError(prefix + "  ", e, detail); //$NON-NLS-1$
         }
 
         int version = x509.getVersion();
-        out.println(prefix + "version: " + version);
+        out.println(prefix + "version: " + version); //$NON-NLS-1$
     }
 
     void _dumpAltNames(String prefix, Collection<List<?>> altNames) {
         for (List<?> list : altNames) {
             int nt = (Integer) list.get(0);
             if (nt >= 0 && nt < nameTypes.length)
-                out.print(prefix + "  " + nameTypes[nt] + " = ");
+                out.print(prefix + "  " + nameTypes[nt] + " = "); //$NON-NLS-1$ //$NON-NLS-2$
             else
-                out.print(prefix + "  (" + nt + ") = ");
+                out.print(prefix + "  (" + nt + ") = "); //$NON-NLS-1$ //$NON-NLS-2$
             Object name = list.get(1);
             if (name instanceof byte[])
-                dumpBytes(prefix + "    ", (byte[]) name, 1); // full dump
+                dumpBytes(prefix + "    ", (byte[]) name, 1); // full dump //$NON-NLS-1$
             else
                 out.println(name);
         }
@@ -444,17 +444,17 @@ public class PKIDumper {
         String canonical = x500.getName(X500Principal.CANONICAL);
         String rfc1779 = x500.getName(X500Principal.RFC1779);
         String rfc2253 = x500.getName(X500Principal.RFC2253);
-        out.println(prefix + "canonical = " + canonical);
+        out.println(prefix + "canonical = " + canonical); //$NON-NLS-1$
         if (--detail < 0)
             return;
 
-        out.println(prefix + "rfc1779 = " + rfc1779);
-        out.println(prefix + "rfc2253 = " + rfc2253);
+        out.println(prefix + "rfc1779 = " + rfc1779); //$NON-NLS-1$
+        out.println(prefix + "rfc2253 = " + rfc2253); //$NON-NLS-1$
 
         byte[] encoded = x500.getEncoded();
         if (encoded != null) {
-            out.print(prefix + "encoded: ");
-            dumpBytes(prefix + "  ", encoded, detail);
+            out.print(prefix + "encoded: "); //$NON-NLS-1$
+            dumpBytes(prefix + "  ", encoded, detail); //$NON-NLS-1$
         }
     }
 
@@ -465,11 +465,11 @@ public class PKIDumper {
 
     void dumpStoreEntry(String prefix, KeyStore keyStore, String alias,
             String password, int detail) throws KeyStoreException {
-        out.println(prefix + "* " + alias + ": ");
+        out.println(prefix + "* " + alias + ": "); //$NON-NLS-1$ //$NON-NLS-2$
 
         Certificate cert = keyStore.getCertificate(alias);
         if (cert == null) {
-            out.println(prefix + "    (not found)");
+            out.println(prefix + "    (not found)"); //$NON-NLS-1$
             return;
         }
 
@@ -477,11 +477,11 @@ public class PKIDumper {
             try {
                 Date creationDate = keyStore.getCreationDate(alias);
                 if (creationDate != null)
-                    out.println(prefix + "    creation-date: " + creationDate);
+                    out.println(prefix + "    creation-date: " + creationDate); //$NON-NLS-1$
             } catch (UnsupportedOperationException e) {
-                dumpError(prefix + "    ", e, detail);
+                dumpError(prefix + "    ", e, detail); //$NON-NLS-1$
             } catch (ProviderException e) {
-                dumpError(prefix + "    ", e, detail);
+                dumpError(prefix + "    ", e, detail); //$NON-NLS-1$
             }
 
             try {
@@ -496,14 +496,14 @@ public class PKIDumper {
                 Entry entry = keyStore.getEntry(alias, protParams);
                 if (entry != null) {
                     String entryType = entry.getClass().getName();
-                    out.println(prefix + "    entry: " + entryType);
+                    out.println(prefix + "    entry: " + entryType); //$NON-NLS-1$
                 }
             } catch (UnsupportedOperationException e) {
-                dumpError(prefix + "    ", e, detail);
+                dumpError(prefix + "    ", e, detail); //$NON-NLS-1$
             } catch (UnrecoverableEntryException e) {
-                dumpError(prefix + "    ", e, detail);
+                dumpError(prefix + "    ", e, detail); //$NON-NLS-1$
             } catch (NoSuchAlgorithmException e) {
-                dumpError(prefix + "    ", e, detail);
+                dumpError(prefix + "    ", e, detail); //$NON-NLS-1$
             }
         }
 
@@ -511,24 +511,24 @@ public class PKIDumper {
             try {
                 Key key = keyStore.getKey(alias, password.toCharArray());
                 if (key != null) {
-                    out.print(prefix + "    key: ");
-                    dumpKey(prefix + "      ", key, detail - 1);
+                    out.print(prefix + "    key: "); //$NON-NLS-1$
+                    dumpKey(prefix + "      ", key, detail - 1); //$NON-NLS-1$
                 }
             } catch (UnrecoverableKeyException e) {
-                dumpError(prefix + "    ", e, detail);
+                dumpError(prefix + "    ", e, detail); //$NON-NLS-1$
             } catch (NoSuchAlgorithmException e) {
-                dumpError(prefix + "    ", e, detail);
+                dumpError(prefix + "    ", e, detail); //$NON-NLS-1$
             }
         }
 
-        dumpCert(prefix + "  ", cert, detail);
+        dumpCert(prefix + "  ", cert, detail); //$NON-NLS-1$
 
         if (detail >= 2) {
             Certificate[] chain = keyStore.getCertificateChain(alias);
             if (chain != null)
                 for (Certificate cc : chain) {
-                    out.print(prefix, "> ");
-                    dumpCert(prefix + "  ", cc, detail);
+                    out.print(prefix, "> "); //$NON-NLS-1$
+                    dumpCert(prefix + "  ", cc, detail); //$NON-NLS-1$
                 }
         }
     }
@@ -540,52 +540,52 @@ public class PKIDumper {
 
         String format = key.getFormat();
         if (format != null)
-            out.println(prefix + "format: " + format);
+            out.println(prefix + "format: " + format); //$NON-NLS-1$
 
         String algorithm = key.getAlgorithm();
         if (algorithm != null)
-            out.println(prefix + "algorithm: " + algorithm);
+            out.println(prefix + "algorithm: " + algorithm); //$NON-NLS-1$
 
         byte[] encoded = key.getEncoded();
         if (encoded != null) {
-            out.print(prefix + "encoded: ");
-            dumpBytes(prefix + "  ", encoded, detail);
+            out.print(prefix + "encoded: "); //$NON-NLS-1$
+            dumpBytes(prefix + "  ", encoded, detail); //$NON-NLS-1$
         }
         if (key instanceof X509Key) {
             X509Key x509 = (X509Key) key;
             AlgorithmId algorithmId = x509.getAlgorithmId();
             if (algorithmId != null)
-                out.println(prefix + "algorithm-id: " + algorithmId);
+                out.println(prefix + "algorithm-id: " + algorithmId); //$NON-NLS-1$
             try {
                 byte[] encodedInternal = x509.getEncodedInternal();
                 if (encodedInternal != null) {
-                    out.print(prefix + "encoded-internal: ");
+                    out.print(prefix + "encoded-internal: "); //$NON-NLS-1$
                     if (Bytes.equals(encoded, encodedInternal))
-                        out.println("(same)");
+                        out.println("(same)"); //$NON-NLS-1$
                     else
-                        dumpBytes(prefix + "  ", encodedInternal, detail);
+                        dumpBytes(prefix + "  ", encodedInternal, detail); //$NON-NLS-1$
                 }
             } catch (InvalidKeyException e) {
-                dumpError(prefix + "  ", e, detail);
+                dumpError(prefix + "  ", e, detail); //$NON-NLS-1$
             }
         }
     }
 
     public void dumpCipher(Cipher cipher, int detail) {
         int blockSize = cipher.getBlockSize();
-        out.println("    block-size = ", blockSize);
+        out.println("    block-size = ", blockSize); //$NON-NLS-1$
 
         byte[] iv = cipher.getIV();
         if (iv != null)
-            dumpBytes("    IV = ", iv, detail);
+            dumpBytes("    IV = ", iv, detail); //$NON-NLS-1$
 
         AlgorithmParameters params = cipher.getParameters();
         if (params != null)
-            out.println("    parameters = ", params);
+            out.println("    parameters = ", params); //$NON-NLS-1$
 
         ExemptionMechanism mech = cipher.getExemptionMechanism();
         if (mech != null)
-            out.println("    exemption = ", mech.getName());
+            out.println("    exemption = ", mech.getName()); //$NON-NLS-1$
     }
 
     void _dumpSignature(String prefix, byte[] signature) {
@@ -595,12 +595,12 @@ public class PKIDumper {
     void dumpSignature(String prefix, byte[] signature, int detail) {
         assert signature != null;
         // out.print(prefix + "raw-bytes: ");
-        dumpBytes(prefix + "    ", signature, detail);
+        dumpBytes(prefix + "    ", signature, detail); //$NON-NLS-1$
     }
 
     void dumpError(String prefix, Throwable t, int detail) {
         String errType = t.getClass().getSimpleName();
-        if (errType.endsWith("Exception"))
+        if (errType.endsWith("Exception")) //$NON-NLS-1$
             errType = errType.substring(0, errType.length() - 9);
         String mesg = Strings.hyphenatize(errType);
         dumpError(prefix, mesg, t, detail);
@@ -609,13 +609,13 @@ public class PKIDumper {
     void dumpError(String prefix, String mesg, Throwable t, int detail) {
         assert t != null;
         out.print(prefix);
-        out.print("Error");
+        out.print("Error"); //$NON-NLS-1$
         if (mesg != null) {
-            out.print(" (");
+            out.print(" ("); //$NON-NLS-1$
             out.print(mesg);
-            out.print(")");
+            out.print(")"); //$NON-NLS-1$
         }
-        out.println(": " + t.getMessage());
+        out.println(": " + t.getMessage()); //$NON-NLS-1$
         if (detail >= 2)
             t.printStackTrace(new PrintWriter(out.toWriter()));
     }
@@ -624,14 +624,14 @@ public class PKIDumper {
     static final int dumpWidth = 16;
 
     void dumpBits(String prefix, boolean[] bits) {
-        String sep = "\n" + prefix;
+        String sep = "\n" + prefix; //$NON-NLS-1$
         if (bits.length > bitsWidth)
             out.print(sep);
         for (int i = 0; i < bits.length; i++) {
             if (bits[i])
-                out.print("1");
+                out.print("1"); //$NON-NLS-1$
             else
-                out.print("0");
+                out.print("0"); //$NON-NLS-1$
             if (i % bitsWidth == (bitsWidth - 1))
                 out.print(sep);
         }
@@ -643,19 +643,19 @@ public class PKIDumper {
 
     void dumpBytes(String prefix, byte[] bytes, int detail) {
         if (bytes == null) {
-            out.println("null");
+            out.println("null"); //$NON-NLS-1$
             return;
         }
-        out.print(" (" + bytes.length + " bytes) ");
+        out.print(" (" + bytes.length + " bytes) "); //$NON-NLS-1$ //$NON-NLS-2$
         if (detail < 1) {
             int part = Math.min(dumpWidth, bytes.length);
             String hex = Encodings.HEX.encode(bytes, 0, part);
             if (part < bytes.length)
-                hex += " ...";
+                hex += " ..."; //$NON-NLS-1$
             out.println(hex);
         } else {
-            String sep = "\n" + prefix;
-            HexEncoding hexEnc = new HexEncoding(" ", 16, sep);
+            String sep = "\n" + prefix; //$NON-NLS-1$
+            HexEncoding hexEnc = new HexEncoding(" ", 16, sep); //$NON-NLS-1$
             if (bytes.length > dumpWidth)
                 out.print(sep);
             String hex = hexEnc.encode(bytes).trim();
@@ -668,29 +668,28 @@ public class PKIDumper {
     private static String[]        nameTypes;
     static {
         oids = new TreeTextMap<String>();
-        oids.put("2.5.29.14", "SubjectKeyIdentifier");
-        oids.put("2.5.29.15", "KeyUsage");
-        oids.put("2.5.29.16", "PrivateKeyUsage");
-        oids.put("2.5.29.17", "SubjectAlternativeName");
-        oids.put("2.5.29.18", "IssuerAlternativeName");
-        oids.put("2.5.29.19", "BasicConstraints");
-        oids.put("2.5.29.30", "NameConstraints");
-        oids.put("2.5.29.33", "PolicyMappings");
-        oids.put("2.5.29.35", "AuthorityKeyIdentifier");
-        oids.put("2.5.29.36", "PolicyConstraints");
-        oids.put("1.2.840.10040.4.3", "SHA-1");
+        oids.put("2.5.29.14", "SubjectKeyIdentifier"); //$NON-NLS-1$ //$NON-NLS-2$
+        oids.put("2.5.29.15", "KeyUsage"); //$NON-NLS-1$ //$NON-NLS-2$
+        oids.put("2.5.29.16", "PrivateKeyUsage"); //$NON-NLS-1$ //$NON-NLS-2$
+        oids.put("2.5.29.17", "SubjectAlternativeName"); //$NON-NLS-1$ //$NON-NLS-2$
+        oids.put("2.5.29.18", "IssuerAlternativeName"); //$NON-NLS-1$ //$NON-NLS-2$
+        oids.put("2.5.29.19", "BasicConstraints"); //$NON-NLS-1$ //$NON-NLS-2$
+        oids.put("2.5.29.30", "NameConstraints"); //$NON-NLS-1$ //$NON-NLS-2$
+        oids.put("2.5.29.33", "PolicyMappings"); //$NON-NLS-1$ //$NON-NLS-2$
+        oids.put("2.5.29.35", "AuthorityKeyIdentifier"); //$NON-NLS-1$ //$NON-NLS-2$
+        oids.put("2.5.29.36", "PolicyConstraints"); //$NON-NLS-1$ //$NON-NLS-2$
+        oids.put("1.2.840.10040.4.3", "SHA-1"); //$NON-NLS-1$ //$NON-NLS-2$
         // oids.put("1.2.840.113549.1.1.5", "??");
-        nameTypes = new String[] {
-        //
-            "otherName", // [0] OtherName
-            "rfc822-name", // [1] IA5String
-            "DNS-name", // [2] IA5String
-            "x400-address", // [3] ORAddress
-            "directory-name", // [4] Name
-            "edi-party-name", // [5] EDIPartyName
-            "URI", // [6] IA5String
-            "ip-address", // [7] OCTET STRING
-            "registered-id", // [8] OBJECT IDENTIFIER
+        nameTypes = new String[] { //
+            "otherName", // [0] OtherName //$NON-NLS-1$
+            "rfc822-name", // [1] IA5String //$NON-NLS-1$
+            "DNS-name", // [2] IA5String //$NON-NLS-1$
+            "x400-address", // [3] ORAddress //$NON-NLS-1$
+            "directory-name", // [4] Name //$NON-NLS-1$
+            "edi-party-name", // [5] EDIPartyName //$NON-NLS-1$
+            "URI", // [6] IA5String //$NON-NLS-1$
+            "ip-address", // [7] OCTET STRING //$NON-NLS-1$
+            "registered-id", // [8] OBJECT IDENTIFIER //$NON-NLS-1$
         };
     }
 
@@ -699,7 +698,7 @@ public class PKIDumper {
         if (disp == null)
             disp = oid;
         else
-            disp = disp + " (" + oid + ")";
+            disp = disp + " (" + oid + ")"; //$NON-NLS-1$ //$NON-NLS-2$
         return disp;
     }
 

@@ -28,12 +28,12 @@ public class DiffFormats {
 
             @Override
             protected void edit0(char op, int index) {
-                out.printf(" %6d%c%s\n", index, op, al.get(index));
+                out.printf(" %6d%c%s\n", index, op, al.get(index)); //$NON-NLS-1$
             }
 
             @Override
             protected void edit1(char op, int index) {
-                out.printf("*%6d%c%s\n", index, op, bl.get(index));
+                out.printf("*%6d%c%s\n", index, op, bl.get(index)); //$NON-NLS-1$
             }
         };
 

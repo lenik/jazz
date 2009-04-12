@@ -11,7 +11,7 @@ public class _LoadConfig implements LoadConfig {
 
     protected ClassLoader addLibs(ClassLoader parent, String... libspecs) {
         URL[] urls = LoadUtil.find(libspecs);
-        assert urls != null : "findLibs returns null";
+        assert urls != null : "findLibs returns null"; //$NON-NLS-1$
         return UCL.addOrCreate(parent, urls);
     }
 

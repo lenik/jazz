@@ -1,5 +1,7 @@
 package net.bodz.bas.lang.err;
 
+import net.bodz.bas.nls.LangNLS;
+
 public class ParseException extends Exception {
 
     private static final long serialVersionUID = 7260313523533602858L;
@@ -21,8 +23,9 @@ public class ParseException extends Exception {
     }
 
     public ParseException(Class<?> unparsableType, String unparsableText) {
-        this("don't know how to parse " + unparsableType + ": "
-                + unparsableText);
+        this(
+                LangNLS.getString("ParseException.unknownParse") + unparsableType + ": " //$NON-NLS-1$ //$NON-NLS-2$
+                        + unparsableText);
     }
 
 }

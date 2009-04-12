@@ -9,6 +9,7 @@ import net.bodz.bas.lang.util.Members.AllConstructors;
 import net.bodz.bas.lang.util.Members.AllMethods;
 import net.bodz.bas.lang.util.Members.PublicConstructors;
 import net.bodz.bas.lang.util.Members.PublicMethods;
+import net.bodz.bas.nls.LangNLS;
 import net.bodz.bas.types.util.CompatMethods;
 import net.bodz.bas.types.util.Objects;
 import net.bodz.bas.types.util.Types;
@@ -46,7 +47,7 @@ public class MethodSignature {
 
     @Override
     public String toString() {
-        return "signature " + name + "(" + Types.joinNames(types) + ")";
+        return LangNLS.getString("MethodSignature.sig") + name + "(" + Types.joinNames(types) + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
     private transient Integer hash;

@@ -9,6 +9,7 @@ import net.bodz.bas.lang.Caller;
 import net.bodz.bas.loader.UCL;
 import net.bodz.bas.log.LogOut;
 import net.bodz.bas.log.LogOuts;
+import net.bodz.bas.nls.LangNLS;
 
 public class Classpath {
 
@@ -19,7 +20,8 @@ public class Classpath {
      */
     public static int addURL(ClassLoader loader, URL... urls) {
         if (!(loader instanceof URLClassLoader))
-            throw new UnsupportedOperationException("can't addURL to "
+            throw new UnsupportedOperationException(LangNLS
+                    .getString("Classpath.cantAddURL") //$NON-NLS-1$
                     + loader.getClass());
         URLClassLoader ucl = (URLClassLoader) loader;
         int count = 0;
@@ -27,7 +29,7 @@ public class Classpath {
             int added = UCL.addURL(ucl, url);
             if (added != 0) {
                 count += added;
-                out.P("addURL ", url, " -> ", ucl);
+                out.P("addURL ", url, " -> ", ucl); //$NON-NLS-1$ //$NON-NLS-2$
             }
         }
         return count;

@@ -1,5 +1,7 @@
 package net.bodz.bas.lang.err;
 
+import net.bodz.bas.nls.LangNLS;
+
 public class OutOfDomainException extends IllegalArgumentException {
 
     private static final long serialVersionUID = -673378255529233385L;
@@ -23,13 +25,14 @@ public class OutOfDomainException extends IllegalArgumentException {
     }
 
     public static String getMesg(String arg, Object actualval, Object boundval) {
-        return String.valueOf(actualval) + //
-                " (boundary " + arg + " at " + boundval + ")";
+        return String.valueOf(actualval)
+                + //
+                LangNLS.getString("OutOfDomainException.boundary") + arg + LangNLS.getString("OutOfDomainException.at") + boundval + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
     public static String getMesg(String arg, Object actualval) {
         return String.valueOf(actualval) + //
-                " (" + arg + ")";
+                " (" + arg + ")"; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
 }

@@ -16,7 +16,7 @@ public class ArrayParser implements TypeParser {
 
     public ArrayParser(Class<?> valtype, TypeParser valparser, Pattern separator) {
         if (valparser == null)
-            throw new NullPointerException("null valparser");
+            throw new NullPointerException("null valparser"); //$NON-NLS-1$
         this.valtype = valtype;
         this.valparser = valparser;
         this.separator = separator;

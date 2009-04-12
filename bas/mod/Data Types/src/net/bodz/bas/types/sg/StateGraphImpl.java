@@ -4,6 +4,7 @@ import java.util.EmptyStackException;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.bodz.bas.nls.TypesNLS;
 import net.bodz.bas.types.Stack;
 
 public class StateGraphImpl implements StateGraph {
@@ -145,15 +146,15 @@ public class StateGraphImpl implements StateGraph {
         assert key != null;
         assert state != null;
         if (registry.containsKey(key))
-            throw new IllegalArgumentException("Key " + key
-                    + " is already existed.");
+            throw new IllegalArgumentException(TypesNLS.getString("StateGraphImpl.0") + key //$NON-NLS-1$
+                    + TypesNLS.getString("StateGraphImpl.1")); //$NON-NLS-1$
         registry.put(key, state);
     }
 
     public void remove(Object key) {
         assert key != null;
         if (!registry.containsKey(key))
-            throw new IllegalArgumentException("Key " + key + " isn't existed.");
+            throw new IllegalArgumentException(TypesNLS.getString("StateGraphImpl.2") + key + TypesNLS.getString("StateGraphImpl.3")); //$NON-NLS-1$ //$NON-NLS-2$
         registry.remove(key);
     }
 

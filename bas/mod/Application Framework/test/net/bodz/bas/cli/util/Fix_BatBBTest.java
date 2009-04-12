@@ -14,33 +14,33 @@ public class Fix_BatBBTest {
     @Test
     public void testDoFileEditInputStreamOutputStream() throws Throwable {
         Fix_BatBB app = new Fix_BatBB();
-        Fix_BatBB.remPrefix = "::F".getBytes();
+        Fix_BatBB.remPrefix = "::F".getBytes(); //$NON-NLS-1$
         app.blockSize = 10;
         app.fillChar = '*';
 
-        String src = ("" + // 
-                "123456789/" + //
-                ":l/" + //
-                ":la/" + //
-                ":lab/" + //
-                ":labe/" + //
-                ":label/" + //
-                ":label6/" + //
-                " :label7/" + //
-                "  :label8/" + //
-                "   :label9/" + //
-                "   :label10/" + //
-                "").replace('/', '\n');
+        String src = ("" + //  //$NON-NLS-1$
+                "123456789/" + // //$NON-NLS-1$
+                ":l/" + // //$NON-NLS-1$
+                ":la/" + // //$NON-NLS-1$
+                ":lab/" + // //$NON-NLS-1$
+                ":labe/" + // //$NON-NLS-1$
+                ":label/" + // //$NON-NLS-1$
+                ":label6/" + // //$NON-NLS-1$
+                " :label7/" + // //$NON-NLS-1$
+                "  :label8/" + // //$NON-NLS-1$
+                "   :label9/" + // //$NON-NLS-1$
+                "   :label10/" + // //$NON-NLS-1$
+                "").replace('/', '\n'); //$NON-NLS-1$
         System.out.println(src);
-        System.out.println("------------------------------");
+        System.out.println("------------------------------"); //$NON-NLS-1$
         ByteArrayInputStream in = new ByteArrayInputStream(src.getBytes());
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         app.doEditByIO(in, out);
         String dst = new String(out.toByteArray());
         dst = dst.replace(' ', '_');
         System.out.println(dst);
-        System.out.println("------------------------------");
-        System.out.println("Block: ");
+        System.out.println("------------------------------"); //$NON-NLS-1$
+        System.out.println("Block: "); //$NON-NLS-1$
         dst = dst.replace('\n', '/');
         String[] oblks = Strings.splitBySize(dst, app.blockSize);
         for (String oblk : oblks) {
@@ -48,7 +48,7 @@ public class Fix_BatBBTest {
         }
 
         assertEquals(
-                "123456789/:l/:la/::F/:lab/::F/:labe/::F/:label/::F/:label6/::F/_:label7/::F****/__:label8/::F******/___:label9/::F*****/___:label10/",
+                "123456789/:l/:la/::F/:lab/::F/:labe/::F/:label/::F/:label6/::F/_:label7/::F****/__:label8/::F******/___:label9/::F*****/___:label10/", //$NON-NLS-1$
                 dst);
     }
 

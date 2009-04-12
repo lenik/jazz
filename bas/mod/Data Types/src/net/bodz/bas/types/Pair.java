@@ -84,7 +84,7 @@ public class Pair<K, V> implements Map<K, V>, Entry<K, V>, Serializable {
 
     public boolean containsKey(Object key) {
         if (key == null)
-            throw new NullPointerException("null key");
+            throw new NullPointerException("null key"); //$NON-NLS-1$
         return key.equals(first);
     }
 
@@ -105,7 +105,7 @@ public class Pair<K, V> implements Map<K, V>, Entry<K, V>, Serializable {
 
     public V get(Object key) {
         if (key == null)
-            throw new NullPointerException("null key");
+            throw new NullPointerException("null key"); //$NON-NLS-1$
         if (key.equals(first))
             return second;
         return null;
@@ -124,7 +124,7 @@ public class Pair<K, V> implements Map<K, V>, Entry<K, V>, Serializable {
 
     public V put(K key, V value) {
         if (key == null)
-            throw new NullPointerException("null key");
+            throw new NullPointerException("null key"); //$NON-NLS-1$
         first = key;
         second = value;
         return null;
@@ -141,7 +141,7 @@ public class Pair<K, V> implements Map<K, V>, Entry<K, V>, Serializable {
 
     public V remove(Object key) {
         if (key == null)
-            throw new NullPointerException("Null key");
+            throw new NullPointerException("Null key"); //$NON-NLS-1$
         if (key.equals(first)) {
             first = null;
             return second;

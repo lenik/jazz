@@ -3,6 +3,7 @@ package net.bodz.bas.io;
 import java.io.File;
 
 import net.bodz.bas.lang.err.IllegalArgumentTypeException;
+import net.bodz.bas.nls.SysNLS;
 import net.bodz.bas.test.Relation;
 import net.bodz.bas.test.Relations;
 
@@ -32,8 +33,8 @@ public class FileMask {
     public static final int BINARY    = 0x00020000;
     public static final int CNTTYPE   = TEXT | BINARY;
 
-    private static char[]   bitchars  = "rwx-HAS-zseEfd--TB--------------"
-                                              .toCharArray();
+    private static char[]   bitchars  = "rwx-HAS-zseEfd--TB--------------" //$NON-NLS-1$
+                                      .toCharArray();
 
     private final int       mask;
     private final int       bits;
@@ -92,7 +93,7 @@ public class FileMask {
                 if (file.isHidden())
                     bits |= HIDDEN;
                 else {
-                    if (file.getName().startsWith("."))
+                    if (file.getName().startsWith(".")) //$NON-NLS-1$
                         bits |= HIDDEN;
                 }
             // if (check(ARCHIVE | SYSTEM)) ; // not supported
@@ -135,7 +136,7 @@ public class FileMask {
 
     @Override
     public String toString() {
-        return format(bits) + "/" + format(mask);
+        return format(bits) + "/" + format(mask); //$NON-NLS-1$
     }
 
     public static int parse(String str) {
@@ -187,8 +188,8 @@ public class FileMask {
                 bits |= BINARY;
                 break;
             default:
-                throw new IllegalArgumentException("illegal mask char: '"
-                        + (char) c + "' (" + c + ")");
+                throw new IllegalArgumentException(String.format(
+                        SysNLS.getString("FileMask.errMask_cd"), c, c)); //$NON-NLS-1$
             }
         }
         return bits;
@@ -241,7 +242,7 @@ public class FileMask {
                 return parse((String) o);
             else
                 throw new IllegalArgumentTypeException(o,
-                        "int bits or string flags");
+                        SysNLS.getString("FileMask.errType")); //$NON-NLS-1$
         }
 
         @Override

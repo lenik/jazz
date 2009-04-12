@@ -118,7 +118,7 @@ public class Unescape {
 
     private static final Unescape cUnescape;
     static {
-        cUnescape = new Unescape("\\");
+        cUnescape = new Unescape("\\"); //$NON-NLS-1$
     }
 
     public static String unescape(String s) {

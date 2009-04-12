@@ -15,15 +15,15 @@ public class CertSelectorTest {
     static File cacerts;
     static {
         if (secdir == null) {
-            String javaHome = System.getenv("JAVA_HOME");
+            String javaHome = System.getenv("JAVA_HOME"); //$NON-NLS-1$
             if (javaHome != null) {
-                File f = new File(javaHome, "jre/lib/security");
+                File f = new File(javaHome, "jre/lib/security"); //$NON-NLS-1$
                 if (f.isDirectory())
                     secdir = f;
             }
         }
         if (secdir != null) {
-            cacerts = Files.canoniOf(secdir, "cacerts");
+            cacerts = Files.canoniOf(secdir, "cacerts"); //$NON-NLS-1$
         }
     }
 
@@ -31,7 +31,7 @@ public class CertSelectorTest {
         if (secdir == null)
             return null;
         String cacertsPath = cacerts.getPath();
-        String s = "JKS://changeit@" + cacertsPath;
+        String s = "JKS://changeit@" + cacertsPath; //$NON-NLS-1$
         CertSelector cs = new CertSelector(s);
         return cs;
     }
@@ -40,7 +40,7 @@ public class CertSelectorTest {
         if (secdir == null)
             return null;
         String cacertsPath = cacerts.getPath();
-        String s = "JKS://changeit@" + cacertsPath + "#" + alias;
+        String s = "JKS://changeit@" + cacertsPath + "#" + alias; //$NON-NLS-1$ //$NON-NLS-2$
         CertSelector cs = new CertSelector(s);
         return cs;
     }
@@ -63,13 +63,13 @@ public class CertSelectorTest {
      */
     @Test
     public void test1() {
-        String alias = "globalsignca";
+        String alias = "globalsignca"; //$NON-NLS-1$
         CertSelector cs = get(alias);
         if (cs == null)
             return;
 
-        assertEquals("JKS", cs.getStoreType());
-        assertEquals("changeit", cs.getStorePassword());
+        assertEquals("JKS", cs.getStoreType()); //$NON-NLS-1$
+        assertEquals("changeit", cs.getStorePassword()); //$NON-NLS-1$
         assertEquals(cacerts, cs.getStoreFile());
 
         assertNull(cs.getCertPassword());

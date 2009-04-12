@@ -31,15 +31,15 @@ public class BreakLinesUnitTest {
                 if (isBreakpoint())
                     System.err.println(in);
                 Collection<Object> out = WhatIf.clearSend(chop, in, true);
-                return Strings.join("|", out);
+                return Strings.join("|", out); //$NON-NLS-1$
             }
         }, //
-                EQ("a", "a"), //
-                EQ("a\n", "a"), //
-                EQ("a\nb", "a|b"), //
-                EQ("a\r\nb", "a|b"), //
-                EQ("a\n\nb\n\rc", "a||b|\rc"), //
-                EQ("a\n\n\n", "a||"), //
+                EQ("a", "a"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("a\n", "a"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("a\nb", "a|b"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("a\r\nb", "a|b"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("a\n\nb\n\rc", "a||b|\rc"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("a\n\n\n", "a||"), // //$NON-NLS-1$ //$NON-NLS-2$
                 END);
     }
 
@@ -48,15 +48,15 @@ public class BreakLinesUnitTest {
         TestDefs.tests(new TestEval<String>() {
             public Object eval(String in) throws Throwable {
                 Collection<Object> out = WhatIf.clearSend(nochop, in, true);
-                return Strings.join("|", out);
+                return Strings.join("|", out); //$NON-NLS-1$
             }
         }, //
-                EQ("a", "a"), //
-                EQ("a\n", "a\n"), //
-                EQ("a\nb", "a\n|b"), //
-                EQ("a\r\nb", "a\r\n|b"), //
-                EQ("a\n\nb\n\rc", "a\n|\n|b\n|\rc"), //
-                EQ("a\n\n\n", "a\n|\n|\n"), //
+                EQ("a", "a"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("a\n", "a\n"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("a\nb", "a\n|b"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("a\r\nb", "a\r\n|b"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("a\n\nb\n\rc", "a\n|\n|b\n|\rc"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("a\n\n\n", "a\n|\n|\n"), // //$NON-NLS-1$ //$NON-NLS-2$
                 END);
     }
 
@@ -67,15 +67,15 @@ public class BreakLinesUnitTest {
                 if (isBreakpoint())
                     System.err.println(in);
                 Collection<Object> out = WhatIf.send(chop, in);
-                return Strings.join("|", out);
+                return Strings.join("|", out); //$NON-NLS-1$
             }
         }, //
-                EQ("a", ""), //
-                EQ("a\n", "aa"), //
-                EQ("a\nb", "a"), //
-                EQ("a\r\nb", "ba"), //
-                EQ("a\n\nb\n\rc", "ba||b"), //
-                EQ("a\n\n\n", "\rca||"), //
+                EQ("a", ""), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("a\n", "aa"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("a\nb", "a"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("a\r\nb", "ba"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("a\n\nb\n\rc", "ba||b"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("a\n\n\n", "\rca||"), // //$NON-NLS-1$ //$NON-NLS-2$
                 END);
     }
 
@@ -86,15 +86,15 @@ public class BreakLinesUnitTest {
                 if (isBreakpoint())
                     System.err.println(in);
                 Collection<Object> out = WhatIf.send(nochop, in);
-                return Strings.join("|", out);
+                return Strings.join("|", out); //$NON-NLS-1$
             }
         }, //
-                EQ("a", ""), //
-                EQ("a\n", "aa\n"), //
-                EQ("a\nb", "a\n"), //
-                EQ("a\r\nb", "ba\r\n"), //
-                EQ("a\n\nb\n\rc", "ba\n|\n|b\n"), //
-                EQ("a\n\n\n", "\rca\n|\n|\n"), //
+                EQ("a", ""), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("a\n", "aa\n"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("a\nb", "a\n"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("a\r\nb", "ba\r\n"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("a\n\nb\n\rc", "ba\n|\n|b\n"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("a\n\n\n", "\rca\n|\n|\n"), // //$NON-NLS-1$ //$NON-NLS-2$
                 END);
     }
 

@@ -18,10 +18,10 @@ public class ProvidersTest extends TestCase {
     boolean usbkey;
 
     public ProvidersTest() {
-        String lap = System.getenv("LAPIOTA");
+        String lap = System.getenv("LAPIOTA"); //$NON-NLS-1$
         if (lap != null) {
             lapiota = new File(lap);
-            library = new File(lap, "local/lib/ngp11v211.dll");
+            library = new File(lap, "local/lib/ngp11v211.dll"); //$NON-NLS-1$
             if (library.exists())
                 usbkey = true;
         }
@@ -30,11 +30,11 @@ public class ProvidersTest extends TestCase {
     @Test
     public void testUsbkey() throws Exception {
         if (!usbkey) {
-            System.err.println("Ignored.");
+            System.err.println("Ignored."); //$NON-NLS-1$
             return;
         }
-        String name = "ft11";
-        String curl = "PKCS11://" + library + "#*?name=" + name;
+        String name = "ft11"; //$NON-NLS-1$
+        String curl = "PKCS11://" + library + "#*?name=" + name; //$NON-NLS-1$ //$NON-NLS-2$
         Provider provider;
         try {
             provider = Providers.parse(curl);
@@ -44,23 +44,23 @@ public class ProvidersTest extends TestCase {
         }
         assertNotNull(provider);
 
-        Provider reuse1 = Security.getProvider("SunPKCS11-" + name);
+        Provider reuse1 = Security.getProvider("SunPKCS11-" + name); //$NON-NLS-1$
         assertEquals(provider, reuse1);
 
         Provider reuse2 = Providers.parse(curl);
         assertEquals(provider, reuse2);
 
         PKIDumper dumper = new PKIDumper(CharOuts.stdout, 4);
-        dumper.dumpProvider("", provider, "kl");
+        dumper.dumpProvider("", provider, "kl"); //$NON-NLS-1$ //$NON-NLS-2$
         CharOuts.stdout.flush();
 
         // // get keystore using builder
         // sprov.load((InputStream) null);
         // sprov.login(subject, handler)
 
-        System.out.println("-- dump keystore thru CertSelector --");
-        String password = "kl";
-        curl = "PKCS11://" + password + "@";
+        System.out.println("-- dump keystore thru CertSelector --"); //$NON-NLS-1$
+        String password = "kl"; //$NON-NLS-1$
+        curl = "PKCS11://" + password + "@"; //$NON-NLS-1$ //$NON-NLS-2$
         CertSelector cs = new CertSelector(curl, provider);
         cs.dump(CharOuts.stdout, 2);
 

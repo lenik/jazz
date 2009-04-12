@@ -23,14 +23,14 @@ public abstract class SISOUnit extends SIUnit implements OutPort {
     @TypeNote(Unit.class)
     public OutPort getOutPort(int portIndex) {
         if (portIndex != 0)
-            throw new IndexOutOfBoundsException("out " + portIndex);
+            throw new IndexOutOfBoundsException("out " + portIndex); //$NON-NLS-1$
         return this;
     }
 
     @Override
     @TypeNote(OutPort.class)
     public PortMeta getOutPortMeta() {
-        return new STPortMeta("out", Object.class);
+        return new STPortMeta("out", Object.class); //$NON-NLS-1$
     }
 
     @Override

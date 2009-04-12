@@ -85,7 +85,7 @@ public class Iterators {
      */
     public static <T> Iterator<T> iterator(final T[] array) {
         if (array == null)
-            throw new NullPointerException("array");
+            throw new NullPointerException("array"); //$NON-NLS-1$
         class ArrayIterator implements Iterator<T> {
 
             int next = 0;
@@ -182,7 +182,7 @@ public class Iterators {
         T           nxt;
 
         public ItrNxt(Iterator<T> itr, T first) {
-            assert itr != null : "null itr";
+            assert itr != null : "null itr"; //$NON-NLS-1$
             this.itr = itr;
             this.nxt = first;
         }
@@ -235,14 +235,14 @@ public class Iterators {
     public static <T> Iterator<T> weave(final Comparator<? super T> cmp,
             final Iterator<T>... itrs) {
         if (cmp == null)
-            throw new NullPointerException("cmp");
+            throw new NullPointerException("cmp"); //$NON-NLS-1$
         ItrNxtCmp<T> inxtcmp = new ItrNxtCmp<T>(cmp);
         final SortedList<ItrNxt<T>> alive = new SortedList<ItrNxt<T>>(
                 new DyingList<ItrNxt<T>>(itrs.length), inxtcmp);
         for (int i = 0; i < itrs.length; i++) {
             Iterator<T> itr = itrs[i];
             if (itr == null)
-                throw new NullPointerException("itr[" + i + "]");
+                throw new NullPointerException("itr[" + i + "]"); //$NON-NLS-1$ //$NON-NLS-2$
             if (!itr.hasNext()) // skips when preload.
                 continue;
             T first = itr.next();

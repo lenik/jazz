@@ -90,8 +90,8 @@ public class CompatMethods {
         Class<?>[] types = Types.getTypes(args);
         Constructor<?> ctor = getConstructor(clazz, types, true);
         if (ctor == null)
-            throw new NoSuchMethodException(clazz.getName() + "("
-                    + Types.joinNames(types) + ")");
+            throw new NoSuchMethodException(clazz.getName() + "(" //$NON-NLS-1$
+                    + Types.joinNames(types) + ")"); //$NON-NLS-1$
         boolean prevState = ctor.isAccessible();
         if (!prevState)
             ctor.setAccessible(true);
@@ -128,8 +128,8 @@ public class CompatMethods {
         Class<?>[] types = Types.getTypes(args);
         Method method = getMethod(clazz, methodName, types);
         if (method == null)
-            throw new NoSuchMethodException(clazz.getName() + "." + methodName
-                    + "(" + Types.joinNames(types) + ")");
+            throw new NoSuchMethodException(clazz.getName() + "." + methodName //$NON-NLS-1$
+                    + "(" + Types.joinNames(types) + ")"); //$NON-NLS-1$ //$NON-NLS-2$
         return (T) Control.invoke(method, obj, args);
     }
 

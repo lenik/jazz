@@ -84,7 +84,7 @@ public class Ns {
         if (n == null)
             return null;
         try {
-            Method valuef = aclass.getMethod("value");
+            Method valuef = aclass.getMethod("value"); //$NON-NLS-1$
             // Control.invoke: value() never throws Control.
             return valuef.invoke(n);
         } catch (NoSuchMethodException e) {

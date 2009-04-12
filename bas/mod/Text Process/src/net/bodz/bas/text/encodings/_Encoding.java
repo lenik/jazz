@@ -29,7 +29,7 @@ public abstract class _Encoding implements Encoding {
 
     @Override
     public String preferredStringCharset() {
-        return "ascii";
+        return "ascii"; //$NON-NLS-1$
     }
 
     protected boolean streamOnlyImplementation() {

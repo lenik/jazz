@@ -7,6 +7,7 @@ import java.util.Iterator;
 import net.bodz.bas.lang.Filt1;
 import net.bodz.bas.lang.err.IllegalArgumentTypeException;
 import net.bodz.bas.lang.err.IllegalUsageError;
+import net.bodz.bas.nls.TypesNLS;
 
 public class Iterates {
 
@@ -33,7 +34,7 @@ public class Iterates {
         @Override
         public Iterator<E> iterator() {
             if (this.iter == null)
-                throw new IllegalStateException("already been iterated");
+                throw new IllegalStateException(TypesNLS.getString("Iterates.alreadyBeenIterated")); //$NON-NLS-1$
             Iterator<E> iter = this.iter;
             this.iter = null;
             return iter;
@@ -52,7 +53,7 @@ public class Iterates {
     public static <E> Iterable<E> iterate(
             final Class<? extends Iterator<E>> iterType) {
         if (iterType == null)
-            throw new NullPointerException("iterType");
+            throw new NullPointerException("iterType"); //$NON-NLS-1$
         return new Iterable<E>() {
 
             @Override
@@ -72,12 +73,12 @@ public class Iterates {
     public static <E> Iterable<E> iterate(
             final Class<? extends Iterator<E>> iterType, final Object enclosing) {
         if (enclosing == null)
-            throw new NullPointerException("encldoing");
+            throw new NullPointerException("enclosing"); //$NON-NLS-1$
         final Constructor<? extends Iterator<E>> ctor;
         try {
             ctor = iterType.getDeclaredConstructor(enclosing.getClass());
         } catch (NoSuchMethodException e) {
-            System.err.println("Constructors: ");
+            System.err.println(TypesNLS.getString("Iterates.ctors")); //$NON-NLS-1$
             for (Constructor<?> c : iterType.getDeclaredConstructors())
                 System.err.println(c);
             throw new IllegalUsageError(e);
@@ -106,12 +107,12 @@ public class Iterates {
         else if (iter instanceof Iterable)
             return ((Iterable<T>) iter).iterator();
         else
-            throw new IllegalArgumentTypeException(iter, "iterator or iterable");
+            throw new IllegalArgumentTypeException(iter, "iterator or iterable"); //$NON-NLS-1$
     }
 
     static <T> Iterable<T> _concat(final Object... iters) {
         if (iters == null)
-            throw new NullPointerException("iters");
+            throw new NullPointerException("iters"); //$NON-NLS-1$
         final int n = iters.length;
         if (n == 0)
             return EMPTY();

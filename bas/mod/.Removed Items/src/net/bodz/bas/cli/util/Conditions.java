@@ -21,7 +21,7 @@ public class Conditions {
      * there is no preq for libspec in file.jar format.
      */
     public boolean fortype(String typeName) {
-        if (typeName.startsWith("%")) {
+        if (typeName.startsWith("%")) { //$NON-NLS-1$
             String alias = typeName.substring(1);
             typeName = typealiases.get(alias);
             if (typeName == null)

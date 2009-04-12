@@ -3,6 +3,7 @@ package net.bodz.bas.types.parsers;
 import java.lang.reflect.Field;
 
 import net.bodz.bas.lang.err.ParseException;
+import net.bodz.bas.nls.TypesNLS;
 import net.bodz.bas.types.TypeParser;
 
 public class GetFromRegistryParser implements TypeParser {
@@ -19,11 +20,11 @@ public class GetFromRegistryParser implements TypeParser {
             Field field = registryClass.getField(entry);
             return field.get(null);
         } catch (NoSuchFieldException e) {
-            throw new ParseException("Entry " + entry
-                    + " isn't defined in registry " + registryClass, e);
+            throw new ParseException(TypesNLS.getString("GetFromRegistryParser.0") + entry //$NON-NLS-1$
+                    + TypesNLS.getString("GetFromRegistryParser.1") + registryClass, e); //$NON-NLS-1$
         } catch (Exception e) {
-            throw new ParseException("Failed to load entry " + entry
-                    + " in registry " + registryClass);
+            throw new ParseException(TypesNLS.getString("GetFromRegistryParser.2") + entry //$NON-NLS-1$
+                    + TypesNLS.getString("GetFromRegistryParser.3") + registryClass); //$NON-NLS-1$
         }
     }
 

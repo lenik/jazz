@@ -17,7 +17,7 @@ public abstract class _FileSource<T> implements FileSource<T> {
         this.charset = charset;
         builder = getRecordBuilder();
         if (builder == null)
-            throw new NullPointerException("builder");
+            throw new NullPointerException("builder"); //$NON-NLS-1$
     }
 
     protected _FileSource(Object in) {

@@ -20,14 +20,14 @@ public class WildcardsParser implements TypeParser {
     private static final Pattern QUOTE;
     static {
         QUOTE = Pattern.compile(//
-                "([.+^$\\[\\](){}\\\\])");
+                "([.+^$\\[\\](){}\\\\])"); //$NON-NLS-1$
     }
 
     @Override
     public Pattern parse(String wildcards) throws ParseException {
-        String regexp = QUOTE.matcher(wildcards).replaceAll("\\$1");
-        regexp = regexp.replace("*", ".*");
-        regexp = regexp.replace("?", ".");
+        String regexp = QUOTE.matcher(wildcards).replaceAll("\\$1"); //$NON-NLS-1$
+        regexp = regexp.replace("*", ".*"); //$NON-NLS-1$ //$NON-NLS-2$
+        regexp = regexp.replace("?", "."); //$NON-NLS-1$ //$NON-NLS-2$
         return Pattern.compile(regexp, flags);
     }
 

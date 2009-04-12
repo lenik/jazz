@@ -30,7 +30,7 @@ public class PrettyLogger extends _LasUnit {
 
     public DateFormat            dateFormat  = Dates.dateTimeFormat;
     public String                prefix;
-    public String                tabChar     = "\t";
+    public String                tabChar     = "\t"; //$NON-NLS-1$
     public Filt1<String, Object> valueFormat = toString;
     public boolean               printClassName;
     public boolean               dumpFullStack;
@@ -52,7 +52,7 @@ public class PrettyLogger extends _LasUnit {
         if (tabChar != null)
             for (int i = 0; i < level; i++)
                 out.print(tabChar);
-        out.print(" ");
+        out.print(" "); //$NON-NLS-1$
     }
 
     @Override
@@ -61,18 +61,18 @@ public class PrettyLogger extends _LasUnit {
         StackTraceElement stack = Caller.getStack(2);
         if (printClassName) {
             out.print(stack.getClassName());
-            out.print(".");
+            out.print("."); //$NON-NLS-1$
         }
         out.print(stack.getMethodName());
         if (valueFormat != null) {
-            out.print("(");
+            out.print("("); //$NON-NLS-1$
             for (int i = 0; i < args.length; i++) {
                 String arg = valueFormat.eval(args[i]);
                 if (i != 0)
-                    out.print(", ");
+                    out.print(", "); //$NON-NLS-1$
                 out.print(arg);
             }
-            out.print(")");
+            out.print(")"); //$NON-NLS-1$
         }
         out.println();
         out.flush();
@@ -89,12 +89,12 @@ public class PrettyLogger extends _LasUnit {
     protected <T> T _leave(T returnValue) throws IllegalUsageError {
         level--;
         printHeader();
-        out.print("return");
+        out.print("return"); //$NON-NLS-1$
         if (valueFormat != null) {
-            out.print("(");
+            out.print("("); //$NON-NLS-1$
             String s = valueFormat.filter(returnValue);
             out.print(s);
-            out.print(")");
+            out.print(")"); //$NON-NLS-1$
         }
         out.println();
         out.flush();
@@ -106,10 +106,10 @@ public class PrettyLogger extends _LasUnit {
         assert t != null;
         level--;
         printHeader();
-        out.print("throws ");
+        out.print("throws "); //$NON-NLS-1$
         String extype = t.getClass().getName();
         out.print(extype);
-        out.print(": ");
+        out.print(": "); //$NON-NLS-1$
         out.print(t.getMessage());
         if (dumpFullStack) {
             StringWriter buf = new StringWriter();

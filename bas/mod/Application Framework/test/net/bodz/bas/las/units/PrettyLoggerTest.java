@@ -27,12 +27,12 @@ public class PrettyLoggerTest extends CharOut {
     int hello(int age, boolean sex, String loc) throws Error {
         if (enter(age, sex, loc))
             try {
-                printf("hello, %s. you are %d and live in %s!\n", sex ? "girl"
-                        : "boy", age, loc);
+                printf("hello, %s. you are %d and live in %s!\n", sex ? "girl" //$NON-NLS-1$ //$NON-NLS-2$
+                        : "boy", age, loc); //$NON-NLS-1$
                 try {
-                    say("wonderful");
+                    say("wonderful"); //$NON-NLS-1$
                 } catch (Error e) {
-                    println("just fine.");
+                    println("just fine."); //$NON-NLS-1$
                 }
             } finally {
                 leave();
@@ -42,16 +42,16 @@ public class PrettyLoggerTest extends CharOut {
 
     int say(String s) throws Error {
         if (enter(s)) {
-            println("Wonderful? No!");
-            throw leave(new Error("Not wonderful."));
+            println("Wonderful? No!"); //$NON-NLS-1$
+            throw leave(new Error("Not wonderful.")); //$NON-NLS-1$
         }
         return 0;
     }
 
     @Test
     public void test1() {
-        hello(10, false, "a cave");
-        hello(20, true, "heaven");
+        hello(10, false, "a cave"); //$NON-NLS-1$
+        hello(20, true, "heaven"); //$NON-NLS-1$
     }
 
 }

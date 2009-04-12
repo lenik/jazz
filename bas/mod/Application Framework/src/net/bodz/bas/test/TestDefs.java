@@ -20,6 +20,7 @@ import static net.bodz.bas.test.Relations.OK;
 import static net.bodz.bas.test.Relations.T;
 import static net.bodz.bas.test.Relations._EQ;
 import static net.bodz.bas.test.Relations._NE;
+import net.bodz.bas.nls.AppNLS;
 
 /**
  * Recommend code template `tst':
@@ -39,7 +40,7 @@ import static net.bodz.bas.test.Relations._NE;
  * );
  * </pre>
  * 
- * And also add {@code net.bodz.bas.test.*} to stack filter. 
+ * And also add {@code net.bodz.bas.test.*} to stack filter.
  */
 public class TestDefs {
 
@@ -49,7 +50,7 @@ public class TestDefs {
     private boolean              failBP;
     private ThreadLocal<Boolean> inBreakpoint;
     {
-        failBP = "1".equals(System.getProperty("failBP"));
+        failBP = "1".equals(System.getProperty("failBP")); //$NON-NLS-1$ //$NON-NLS-2$
         inBreakpoint = new ThreadLocal<Boolean>();
         inBreakpoint.set(false);
     }
@@ -66,11 +67,11 @@ public class TestDefs {
     private TestDef[] wrapDefs(TestDef[] defs) {
         for (int i = 0; i < defs.length; i++) {
             TestDef def = defs[i];
-            String comment = "[" + (1 + i) + "]";
+            String comment = "[" + (1 + i) + "]"; //$NON-NLS-1$ //$NON-NLS-2$
             if (groupName != null)
                 comment = groupName + comment;
             if (def.comment != null)
-                comment += " " + def.comment;
+                comment += " " + def.comment; //$NON-NLS-1$
             def.comment = comment;
         }
         return defs;
@@ -112,7 +113,7 @@ public class TestDefs {
     }
 
     private static String hi(Object input) {
-        return input + " => ";
+        return input + " => "; //$NON-NLS-1$
     }
 
     public static TestDef entry(String comment, Relation relation,
@@ -133,7 +134,7 @@ public class TestDefs {
 
             @Override
             public String toString() {
-                return "(END)";
+                return AppNLS.getString("TestDefs.end"); //$NON-NLS-1$
             }
         };
     }

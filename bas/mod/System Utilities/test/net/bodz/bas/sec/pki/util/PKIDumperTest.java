@@ -12,7 +12,7 @@ public class PKIDumperTest {
     }
 
     public void testDumpEntry() throws KeyStoreException {
-        String alias = "globalsignca";
+        String alias = "globalsignca"; //$NON-NLS-1$
         CertSelector cs = CertSelectorTest.get(alias);
         cs.dump(CharOuts.stdout, 2);
     }

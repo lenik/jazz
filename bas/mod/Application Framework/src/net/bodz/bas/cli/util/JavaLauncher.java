@@ -94,8 +94,8 @@ public abstract class JavaLauncher implements Launcher {
         System.exit(status);
     }
 
-    static boolean LOAD_DUMP = false; 
-    
+    static boolean LOAD_DUMP = false;
+
     protected void load() throws Exception {
         ClassLoader initSysLoader = Caller.getCallerClassLoader();
         ClassLoader sysLoader = initSysLoader;
@@ -112,7 +112,7 @@ public abstract class JavaLauncher implements Launcher {
 
         String targetName = getMainClassName();
         Class<?> targetClass = DefaultBooter.loadFix(sysLoader, targetName);
-        mainf = targetClass.getMethod("main", String[].class);
+        mainf = targetClass.getMethod("main", String[].class); //$NON-NLS-1$
     }
 
     public void setRedirectIn(InputStream redirectIn) {
@@ -157,7 +157,7 @@ public abstract class JavaLauncher implements Launcher {
             outbuf = errbuf = new ByteArrayOutputStream();
             break;
         default:
-            throw new OutOfDomainException("mode", mode);
+            throw new OutOfDomainException("mode", mode); //$NON-NLS-1$
         }
         if (outbuf != null)
             setRedirectOut(outbuf);
@@ -185,7 +185,7 @@ public abstract class JavaLauncher implements Launcher {
 
     public static void main(String[] args) throws Exception {
         if (args.length < 1)
-            throw new IllegalArgumentException("classname expected");
+            throw new IllegalArgumentException("classname expected"); //$NON-NLS-1$
         final String className = args[0];
         final String[] _args = Strings.shift(args);
         new JavaLauncher() {

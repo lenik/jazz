@@ -45,33 +45,54 @@ public class ALog extends LogStore {
 
     private static final Object defaultTree;
     static {
-        defaultTree = new Object[] {
-            "vroot",
-            "user",
-            new Object[] { "mesg", new Object[] { "warn", "error" },
-            new Object[] { "info", "detail" } },
-            new Object[] { "debug", "debug-2" } };
-        leveldef.put("user", USER);
-        leveldef.put("error", ERROR);
-        leveldef.put("warn", WARN);
-        leveldef.put("mesg", MESG);
-        leveldef.put("info", INFO);
-        leveldef.put("detail", DETAIL);
-        leveldef.put("debug", DEBUG);
-        leveldef.put("debug-2", DEBUG_2);
+        defaultTree = new Object[] { "vroot", //$NON-NLS-1$
+            "user", //$NON-NLS-1$
+            new Object[] { "mesg", new Object[] { "warn", "error" }, //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            new Object[] { "info", "detail" } }, //$NON-NLS-1$ //$NON-NLS-2$
+            new Object[] { "debug", "debug-2" } }; //$NON-NLS-1$ //$NON-NLS-2$
+        leveldef.put("user", USER); //$NON-NLS-1$
+        leveldef.put("error", ERROR); //$NON-NLS-1$
+        leveldef.put("warn", WARN); //$NON-NLS-1$
+        leveldef.put("mesg", MESG); //$NON-NLS-1$
+        leveldef.put("info", INFO); //$NON-NLS-1$
+        leveldef.put("detail", DETAIL); //$NON-NLS-1$
+        leveldef.put("debug", DEBUG); //$NON-NLS-1$
+        leveldef.put("debug-2", DEBUG_2); //$NON-NLS-1$
     }
 
     @Override
     public void reset() {
         setGraph(defaultTree);
-        u = g("user");
-        e = g("error");
-        w = g("warn");
-        m = g("mesg");
-        i = g("info");
-        d = g("detail");
-        x = g("debug");
-        xx = g("debug-2");
+        u = g("user"); //$NON-NLS-1$
+        e = g("error"); //$NON-NLS-1$
+        w = g("warn"); //$NON-NLS-1$
+        m = g("mesg"); //$NON-NLS-1$
+        i = g("info"); //$NON-NLS-1$
+        d = g("detail"); //$NON-NLS-1$
+        x = g("debug"); //$NON-NLS-1$
+        xx = g("debug-2"); //$NON-NLS-1$
+    }
+
+    public LogOut get(int level) {
+        switch (level) {
+        // case USER:
+        // return u;
+        case ERROR:
+            return e;
+        case WARN:
+            return w;
+        case MESG:
+            return m;
+        case INFO:
+            return i;
+        case DETAIL:
+            return d;
+        case DEBUG:
+            return x;
+        case DEBUG_2:
+            return xx;
+        }
+        throw new IllegalStateException();
     }
 
     public boolean showUser() {

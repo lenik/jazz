@@ -16,53 +16,53 @@ public class StringsTest {
 
     @Test
     public void testEllipseStringIntString() {
-        String s = "abcdefghijklmnopqrstuvwxyz";
-        assertEquals("..", Strings.ellipse(s, 2, "..."));
-        assertEquals("a...", Strings.ellipse(s, 4, "..."));
+        String s = "abcdefghijklmnopqrstuvwxyz"; //$NON-NLS-1$
+        assertEquals("..", Strings.ellipse(s, 2, "...")); //$NON-NLS-1$ //$NON-NLS-2$
+        assertEquals("a...", Strings.ellipse(s, 4, "...")); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     @Test
     public void testEllipseStringIntStringStringString() {
-        String s = "a/b/c/d/e/f/g/h/i";
-        assertEquals("a...", Strings.ellipse(s, 4, "...", "/", "/"));
-        assertEquals("a/b/...", Strings.ellipse(s, 7, "...", "/", "/"));
-        assertEquals("a/b.../i", Strings.ellipse(s, 8, "...", "/", "/"));
-        assertEquals("a/b/c.../i", Strings.ellipse(s, 10, "...", "/", "/"));
+        String s = "a/b/c/d/e/f/g/h/i"; //$NON-NLS-1$
+        assertEquals("a...", Strings.ellipse(s, 4, "...", "/", "/")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+        assertEquals("a/b/...", Strings.ellipse(s, 7, "...", "/", "/")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+        assertEquals("a/b.../i", Strings.ellipse(s, 8, "...", "/", "/")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+        assertEquals("a/b/c.../i", Strings.ellipse(s, 10, "...", "/", "/")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
     }
 
     @Test
     public void testCount() throws Exception {
-        TestDefs.tests("(char pattern)", new TestEval<String>() {
+        TestDefs.tests("(char pattern)", new TestEval<String>() { //$NON-NLS-1$
             public Object eval(String input) throws Throwable {
                 return Strings.count(input, '.');
             }
         }, //
-                EQ("empty", 0), //
-                EQ("hello.world", 1), //
-                EQ("oh... my god! ", 3), //
-                EQ(". dot .. everywhere .", 4) //
+                EQ("empty", 0), // //$NON-NLS-1$
+                EQ("hello.world", 1), // //$NON-NLS-1$
+                EQ("oh... my god! ", 3), // //$NON-NLS-1$
+                EQ(". dot .. everywhere .", 4) // //$NON-NLS-1$
                 );
 
-        TestDefs.tests("(string pattern /1)", new TestEval<String>() {
+        TestDefs.tests("(string pattern /1)", new TestEval<String>() { //$NON-NLS-1$
             public Object eval(String input) throws Throwable {
-                return Strings.count(input, ".");
+                return Strings.count(input, "."); //$NON-NLS-1$
             }
         }, //
-                EQ("empty", 0), //
-                EQ("hello.world", 1), //
-                EQ("oh... my god! ", 3), //
-                EQ(". dot .. everywhere .", 4) //
+                EQ("empty", 0), // //$NON-NLS-1$
+                EQ("hello.world", 1), // //$NON-NLS-1$
+                EQ("oh... my god! ", 3), // //$NON-NLS-1$
+                EQ(". dot .. everywhere .", 4) // //$NON-NLS-1$
                 );
 
-        TestDefs.tests("(string pattern /2)", new TestEval<String>() {
+        TestDefs.tests("(string pattern /2)", new TestEval<String>() { //$NON-NLS-1$
             public Object eval(String input) throws Throwable {
-                return Strings.count(input, "..");
+                return Strings.count(input, ".."); //$NON-NLS-1$
             }
         }, //
-                EQ("empty", 0), //
-                EQ("hello.world", 0), //
-                EQ("oh... my god! ", 1), //
-                EQ(". dot .. everywhere .", 1) //
+                EQ("empty", 0), // //$NON-NLS-1$
+                EQ("hello.world", 0), // //$NON-NLS-1$
+                EQ("oh... my god! ", 1), // //$NON-NLS-1$
+                EQ(". dot .. everywhere .", 1) // //$NON-NLS-1$
                 );
     }
 
@@ -73,38 +73,38 @@ public class StringsTest {
                 return Strings.escape(input);
             }
         }, //
-                EQ("", ""), //
-                EQ("hello", "hello"), //
-                EQ("a\"b\'c", "a\\\"b\\'c"), //
-                EQ("a\nb\rc", "a\\nb\\rc"), //
-                EQ("a\\b\\\\c\\\\\\d", "a\\\\b\\\\\\\\c\\\\\\\\\\\\d"), //
+                EQ("", ""), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("hello", "hello"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("a\"b\'c", "a\\\"b\\'c"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("a\nb\rc", "a\\nb\\rc"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("a\\b\\\\c\\\\\\d", "a\\\\b\\\\\\\\c\\\\\\\\\\\\d"), // //$NON-NLS-1$ //$NON-NLS-2$
                 END);
     }
 
     @Test
     public void testFindAll() {
-        final Pattern square = Pattern.compile("\\[(.*?)\\]");
+        final Pattern square = Pattern.compile("\\[(.*?)\\]"); //$NON-NLS-1$
         TestDefs.tests(new TestEval<String>() {
             public Object eval(String input) throws Throwable {
-                return Strings.join("|", Strings.findAll(input, square, 1));
+                return Strings.join("|", Strings.findAll(input, square, 1)); //$NON-NLS-1$
             }
         }, //
-                EQ("[hello]", "hello"), //
-                EQ("[a] [b] [c]", "a|b|c"), //
-                EQ("[a [b [c]]] [[d] [[e] f]]", "a [b [c|[d|[e"), //
-                EQ("none", ""), //
-                EQ("[][][]", "||"), //
+                EQ("[hello]", "hello"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("[a] [b] [c]", "a|b|c"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("[a [b [c]]] [[d] [[e] f]]", "a [b [c|[d|[e"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("none", ""), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("[][][]", "||"), // //$NON-NLS-1$ //$NON-NLS-2$
                 END);
 
-        final Pattern names = Pattern.compile("(\\w+)\\.(\\w+)");
+        final Pattern names = Pattern.compile("(\\w+)\\.(\\w+)"); //$NON-NLS-1$
         TestDefs.tests(new TestEval<String>() {
             public Object eval(String input) throws Throwable {
-                return Strings.join("|", Strings.findAll(input, names,
-                        "<$1-$2>"));
+                return Strings.join("|", Strings.findAll(input, names, //$NON-NLS-1$
+                        "<$1-$2>")); //$NON-NLS-1$
             }
         }, //
-                EQ("bill.gates", "<bill-gates>"), //
-                EQ("a.b, c.d,...  e.f", "<a-b>|<c-d>|<e-f>"), //
+                EQ("bill.gates", "<bill-gates>"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("a.b, c.d,...  e.f", "<a-b>|<c-d>|<e-f>"), // //$NON-NLS-1$ //$NON-NLS-2$
                 END);
     }
 
@@ -112,7 +112,7 @@ public class StringsTest {
     public void testSplit_Comma() {
         TestDefs.tests(new _TestEval<String>() {
             public Object eval(String input) throws Throwable {
-                String[] args = input.split("\\|", 3);
+                String[] args = input.split("\\|", 3); //$NON-NLS-1$
                 char[] delim = args[0].toCharArray();
                 int limit = Integer.parseInt(args[1]);
                 input = args[2];
@@ -120,23 +120,23 @@ public class StringsTest {
                     System.out.println(input);
                 String[] result = Strings.split((Object) input, delim, limit,
                         Strings.TRIM | Strings.QUOTE);
-                return Strings.join("|", result);
+                return Strings.join("|", result); //$NON-NLS-1$
             }
         }, //
-                EQ(",|0|a,b,c", "a|b|c"), // 1
-                EQ(",|0|a,b,c,,,", "a|b|c"), //
-                EQ(",|1|a,b,c", "a,b,c"), //
-                EQ(",|2|a,b,c", "a|b,c"), //
-                EQ(",|3|a,b,c", "a|b|c"), //
-                EQ(",|4|a,b,c", "a|b|c"), //
-                EQ(",|2| a , b , c", "a|b , c"), //
-                EQ(",|2| a \t\n ,\nb,\n c\n\n", "a|b,\n c"), //
-                EQ(",|2|,,", "|,"), //
-                EQ(",|2|,   ,\n\n", "|,"), //
+                EQ(",|0|a,b,c", "a|b|c"), // 1 //$NON-NLS-1$ //$NON-NLS-2$
+                EQ(",|0|a,b,c,,,", "a|b|c"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ(",|1|a,b,c", "a,b,c"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ(",|2|a,b,c", "a|b,c"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ(",|3|a,b,c", "a|b|c"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ(",|4|a,b,c", "a|b|c"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ(",|2| a , b , c", "a|b , c"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ(",|2| a \t\n ,\nb,\n c\n\n", "a|b,\n c"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ(",|2|,,", "|,"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ(",|2|,   ,\n\n", "|,"), // //$NON-NLS-1$ //$NON-NLS-2$
 
-                EQ(",|0|a,\"b\",c", "a|b|c"), // 11
-                EQ(",|0|a,\"b, \\\"j,k,l\\\", bb\",c,,,",
-                        "a|b, \"j,k,l\", bb|c"), //
+                EQ(",|0|a,\"b\",c", "a|b|c"), // 11 //$NON-NLS-1$ //$NON-NLS-2$
+                EQ(",|0|a,\"b, \\\"j,k,l\\\", bb\",c,,,", //$NON-NLS-1$
+                        "a|b, \"j,k,l\", bb|c"), // //$NON-NLS-1$
                 END);
     }
 
@@ -145,30 +145,30 @@ public class StringsTest {
         TestDefs
                 .tests(new _TestEval<String>() {
                     public Object eval(String input) throws Throwable {
-                        String[] args = input.split("\\|", 2);
+                        String[] args = input.split("\\|", 2); //$NON-NLS-1$
                         int limit = Integer.parseInt(args[0]);
                         input = args[1];
                         if (isBreakpoint())
                             System.out.println(input);
                         String[] result = Strings.split((Object) input, null,
                                 limit, Strings.QUOTE);
-                        return Strings.join("|", result);
+                        return Strings.join("|", result); //$NON-NLS-1$
                     }
                 }, //
-                        EQ("0|a b c", "a|b|c"), // 1
-                        EQ("0|a b c   ", "a|b|c"), //
-                        EQ("1|a b c", "a b c"), //
-                        EQ("2|a b c", "a|b c"), //
-                        EQ("3|a b c", "a|b|c"), //
-                        EQ("4|a b c", "a|b|c"), //
-                        EQ("2| a   b   c", "a|b   c"), //
-                        EQ("2| a \t\n  \nb \n c\n\n", "a|b \n c"), //
-                        EQ("2|  ", ""), //
-                        EQ("2|  x  \n\n", "x"), //
+                        EQ("0|a b c", "a|b|c"), // 1 //$NON-NLS-1$ //$NON-NLS-2$
+                        EQ("0|a b c   ", "a|b|c"), // //$NON-NLS-1$ //$NON-NLS-2$
+                        EQ("1|a b c", "a b c"), // //$NON-NLS-1$ //$NON-NLS-2$
+                        EQ("2|a b c", "a|b c"), // //$NON-NLS-1$ //$NON-NLS-2$
+                        EQ("3|a b c", "a|b|c"), // //$NON-NLS-1$ //$NON-NLS-2$
+                        EQ("4|a b c", "a|b|c"), // //$NON-NLS-1$ //$NON-NLS-2$
+                        EQ("2| a   b   c", "a|b   c"), // //$NON-NLS-1$ //$NON-NLS-2$
+                        EQ("2| a \t\n  \nb \n c\n\n", "a|b \n c"), // //$NON-NLS-1$ //$NON-NLS-2$
+                        EQ("2|  ", ""), // //$NON-NLS-1$ //$NON-NLS-2$
+                        EQ("2|  x  \n\n", "x"), // //$NON-NLS-1$ //$NON-NLS-2$
 
-                        EQ("0|a \"b\" c", "a|b|c"), // 11
-                        EQ("0|a \"b  \\\"j k l\\\"  bb\" c   ",
-                                "a|b  \"j k l\"  bb|c"), //
+                        EQ("0|a \"b\" c", "a|b|c"), // 11 //$NON-NLS-1$ //$NON-NLS-2$
+                        EQ("0|a \"b  \\\"j k l\\\"  bb\" c   ", //$NON-NLS-1$
+                                "a|b  \"j k l\"  bb|c"), // //$NON-NLS-1$
                         END);
     }
 
@@ -176,23 +176,23 @@ public class StringsTest {
     public void testSplitBySize() {
         TestDefs.tests(new TestEval<String>() {
             public Object eval(String input) throws Throwable {
-                String[] args = input.split("\\|", 2);
+                String[] args = input.split("\\|", 2); //$NON-NLS-1$
                 int limit = Integer.parseInt(args[0]);
                 String s = args[1];
                 String[] v = Strings.splitBySize(s, 3, limit);
-                return Strings.join("|", v);
+                return Strings.join("|", v); //$NON-NLS-1$
             }
         }, //
-                EQ("1|aaabbbccc", "aaabbbccc"), //
-                EQ("2|aaabbbccc", "aaa|bbbccc"), //
-                EQ("3|aaabbbccc", "aaa|bbb|ccc"), //
-                EQ("4|aaabbbccc", "aaa|bbb|ccc"), //
-                EQ("3|aaabbbcc", "aaa|bbb|cc"), //
-                EQ("3|aaabbbc", "aaa|bbb|c"), //
-                EQ("3|aaa", "aaa"), //
-                EQ("3|aa", "aa"), //
-                EQ("3|a", "a"), //
-                EQ("3|", ""), //
+                EQ("1|aaabbbccc", "aaabbbccc"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("2|aaabbbccc", "aaa|bbbccc"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("3|aaabbbccc", "aaa|bbb|ccc"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("4|aaabbbccc", "aaa|bbb|ccc"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("3|aaabbbcc", "aaa|bbb|cc"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("3|aaabbbc", "aaa|bbb|c"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("3|aaa", "aaa"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("3|aa", "aa"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("3|a", "a"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("3|", ""), // //$NON-NLS-1$ //$NON-NLS-2$
                 END);
     }
 
@@ -203,12 +203,12 @@ public class StringsTest {
                 return Strings.hyphenatize(input);
             }
         }, //
-                EQ("hello", "hello"), //
-                EQ("helloWorld", "hello-world"), //
-                EQ("HelloWorld", "hello-world"), //
-                EQ("ABC", "abc"), //
-                EQ("UUEncode", "uuencode"), //
-                EQ("FFTestAndRTest", "fftest-and-rtest"), //
+                EQ("hello", "hello"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("helloWorld", "hello-world"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("HelloWorld", "hello-world"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("ABC", "abc"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("UUEncode", "uuencode"), // //$NON-NLS-1$ //$NON-NLS-2$
+                EQ("FFTestAndRTest", "fftest-and-rtest"), // //$NON-NLS-1$ //$NON-NLS-2$
                 END);
     }
 

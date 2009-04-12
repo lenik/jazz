@@ -22,15 +22,15 @@ public class List1s<E> extends AbstractList<E> {
 
     private void checkIndex(int index) {
         if (index < 0)
-            throw new IndexOutOfBoundsException(getMesg("index", index, 0));
+            throw new IndexOutOfBoundsException(getMesg("index", index, 0)); //$NON-NLS-1$
         if (first == null)
-            throw new IndexOutOfBoundsException(getMesg("index", index, 0));
+            throw new IndexOutOfBoundsException(getMesg("index", index, 0)); //$NON-NLS-1$
         if (index == 0)
             return;
         if (more == null)
-            throw new IndexOutOfBoundsException(getMesg("index", index, 1));
+            throw new IndexOutOfBoundsException(getMesg("index", index, 1)); //$NON-NLS-1$
         else if (index >= more.size() + 1)
-            throw new IndexOutOfBoundsException(getMesg("index", index, more
+            throw new IndexOutOfBoundsException(getMesg("index", index, more //$NON-NLS-1$
                     .size() + 1));
     }
 

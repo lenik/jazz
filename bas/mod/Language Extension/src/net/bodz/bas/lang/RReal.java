@@ -10,7 +10,7 @@ public class RReal extends Number {
     private final double      max;
 
     public RReal(double min, double max) {
-        assert min <= max : "min<=max";
+        assert min <= max : "min<=max"; //$NON-NLS-1$
         this.min = min;
         this.max = max;
     }
@@ -55,7 +55,7 @@ public class RReal extends Number {
 
     @Override
     public String toString() {
-        return "[" + min + "," + max + "]";
+        return "[" + min + "," + max + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
     public double dia() {

@@ -7,6 +7,7 @@ import net.bodz.bas.lang.ControlBreak;
 import net.bodz.bas.lang.ControlContinue;
 import net.bodz.bas.lang.EvalException;
 import net.bodz.bas.lang.FunctorException;
+import net.bodz.bas.nls.FPNLS;
 
 public class ForRange<T> extends _Functor<T> {
 
@@ -230,13 +231,13 @@ public class ForRange<T> extends _Functor<T> {
     public void validate() throws ValidationException {
         if (!isValidated()) {
             if (Math.abs(step.floatValue()) <= Float.MIN_VALUE)
-                throw new ValidationException("Step is too small: " + step);
+                throw new ValidationException(FPNLS.getString("ForRange.stepTooSmall") + step); //$NON-NLS-1$
             if (step instanceof Float)
                 if (((Float) step).isNaN())
-                    throw new ValidationException("Step is not a number. ");
+                    throw new ValidationException(FPNLS.getString("ForRange.stepIsntNum")); //$NON-NLS-1$
             if (step instanceof Double)
                 if (((Double) step).isNaN())
-                    throw new ValidationException("Step is not a number. ");
+                    throw new ValidationException(FPNLS.getString("ForRange.stepIsntNum")); //$NON-NLS-1$
             if (from != null)
                 from.validate();
             if (to != null)

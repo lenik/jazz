@@ -29,7 +29,7 @@ public class VersionInfo implements Comparable<VersionInfo> {
 
     @Override
     public String toString() {
-        return name + "-" + getVersion();
+        return name + "-" + getVersion(); //$NON-NLS-1$
     }
 
     @Override

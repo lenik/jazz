@@ -36,7 +36,7 @@ public class ClassInfo {
     protected String join(String[] components) {
         if (components == null || components.length == 0)
             return null;
-        return Strings.join(", ", components);
+        return Strings.join(", ", components); //$NON-NLS-1$
     }
 
     protected void load() {
@@ -50,7 +50,7 @@ public class ClassInfo {
             for (String iconDef : iconDefs) {
                 int sep = iconDef.indexOf('|');
                 if (sep == -1) {
-                    assert this.icon == null : "default icon duplicate";
+                    assert this.icon == null : "default icon duplicate"; //$NON-NLS-1$
                     this.icon = loadIcon(iconDef);
                 } else {
                     String usage = iconDef.substring(0, sep);
@@ -58,7 +58,7 @@ public class ClassInfo {
                     if (iconMap == null)
                         iconMap = new HashMap<String, URL>();
                     else
-                        assert !iconMap.containsKey(usage) : "duplicate icon usage: "
+                        assert !iconMap.containsKey(usage) : "duplicate icon usage: " //$NON-NLS-1$
                                 + usage;
                     iconMap.put(usage, loadIcon(iconDef));
                 }
@@ -76,7 +76,7 @@ public class ClassInfo {
     protected URL loadIcon(String name) {
         URL url = loader.getResource(name);
         if (url == null)
-            throw new IllegalArgumentException("res isn't existed: " + name);
+            throw new IllegalArgumentException("res isn't existed: " + name); //$NON-NLS-1$
         return url;
     }
 
@@ -149,7 +149,7 @@ public class ClassInfo {
     }
 
     public void setVersionString(String version) {
-        String[] parts = version.split("\\.");
+        String[] parts = version.split("\\."); //$NON-NLS-1$
         this.version = new int[parts.length];
         for (int i = 0; i < parts.length; i++)
             this.version[i] = Integer.parseInt(parts[i]);

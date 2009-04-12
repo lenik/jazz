@@ -233,24 +233,24 @@ public class PKCS11Config {
 
     public void dump(CharOut out) {
         if (name != null)
-            out.println("name = " + name);
+            out.println("name = " + name); //$NON-NLS-1$
         if (library != null)
-            out.println("library = " + library.getPath());
+            out.println("library = " + library.getPath()); //$NON-NLS-1$
         if (slot != null)
-            out.println("slot = " + slot);
+            out.println("slot = " + slot); //$NON-NLS-1$
         else if (slotListIndex != null)
-            out.println("slotListIndex = " + slotListIndex);
+            out.println("slotListIndex = " + slotListIndex); //$NON-NLS-1$
         if (enabledMechanisms != null)
-            out.println("enabledMechanisms = "
+            out.println("enabledMechanisms = " //$NON-NLS-1$
                     + dumpMechanisms(enabledMechanisms));
         if (disabledMechanisms != null)
-            out.println("disabledMechanisms = "
+            out.println("disabledMechanisms = " //$NON-NLS-1$
                     + dumpMechanisms(disabledMechanisms));
         if (attributes != null)
             for (Entry<String, String> e : attributes.entrySet()) {
                 String name = e.getKey();
                 String value = e.getValue();
-                out.println(name + " = " + value);
+                out.println(name + " = " + value); //$NON-NLS-1$
             }
     }
 
@@ -264,7 +264,7 @@ public class PKCS11Config {
                 if ((modifiers & PSF) != PSF)
                     continue;
                 String name = field.getName();
-                if (!name.startsWith("CKM_"))
+                if (!name.startsWith("CKM_")) //$NON-NLS-1$
                     continue;
                 Object value = field.get(null);
                 assert value instanceof Long;
@@ -278,14 +278,14 @@ public class PKCS11Config {
     private String dumpMechanisms(Collection<Long> mechanisms) {
         assert mechanisms != null;
         StringBuffer buf = new StringBuffer(mechanisms.size() * 30);
-        buf.append("{");
+        buf.append("{"); //$NON-NLS-1$
         for (Long mechanism : mechanisms) {
             assert mechanism != null;
             String mechanismName = mechanismNames.get(mechanism);
-            buf.append("\n  ");
+            buf.append("\n  "); //$NON-NLS-1$
             buf.append(mechanismName);
         }
-        buf.append("\n}");
+        buf.append("\n}"); //$NON-NLS-1$
         return buf.toString();
     }
 

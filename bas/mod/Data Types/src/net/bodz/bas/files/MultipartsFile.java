@@ -6,12 +6,13 @@ import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.ControlBreak;
 import net.bodz.bas.lang.ControlContinue;
 import net.bodz.bas.lang.err.ParseException;
+import net.bodz.bas.nls.TypesNLS;
 import net.bodz.bas.types.util.PrefetchedIterator;
 
 public abstract class MultipartsFile<T> extends _MapFile<T> {
 
     private Object   textKey;
-    protected String partTerm = ".";
+    protected String partTerm = "."; //$NON-NLS-1$
 
     public MultipartsFile(Object in, Object charset) {
         super(in, charset);
@@ -24,9 +25,10 @@ public abstract class MultipartsFile<T> extends _MapFile<T> {
     public Object getTextKey() {
         if (textKey == null)
             try {
-                textKey = keyParser.parse(".");
+                textKey = keyParser.parse("."); //$NON-NLS-1$
             } catch (ParseException e) {
-                throw new Error("error body key", e);
+                throw new Error(TypesNLS
+                        .getString("MultipartsFile.errorBodyKey"), e); //$NON-NLS-1$
             }
         return textKey;
     }
@@ -41,15 +43,15 @@ public abstract class MultipartsFile<T> extends _MapFile<T> {
     }
 
     protected boolean isPreHeaderComment(String line) {
-        return line.startsWith("#");
+        return line.startsWith("#"); //$NON-NLS-1$
     }
 
     protected boolean isHeaderComment(String line) {
-        return line.startsWith("--");
+        return line.startsWith("--"); //$NON-NLS-1$
     }
 
     protected boolean isTextValue(String value) {
-        return "<<<".equals(value);
+        return "<<<".equals(value); //$NON-NLS-1$
     }
 
     protected boolean isIndentChar(char c) {

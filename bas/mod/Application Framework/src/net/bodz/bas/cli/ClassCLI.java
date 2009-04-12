@@ -18,6 +18,7 @@ import net.bodz.bas.lang.Filt1;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.lang.util.Members;
 import net.bodz.bas.lang.util.Reflects;
+import net.bodz.bas.nls.AppNLS;
 import net.bodz.bas.types.util.Comparators;
 import net.bodz.bas.types.util.Ns;
 import net.bodz.bas.types.util.Strings;
@@ -81,9 +82,9 @@ public class ClassCLI {
         Arrays.fill(tab, ' ');
 
         String program = A_bas.getProgramName(clazz);
-        buffer.append("Syntax: \n");
+        buffer.append(AppNLS.getString("ClassCLI.help.syntax")); //$NON-NLS-1$
         buffer.append(tab);
-        buffer.append(program + " [OPTION] [--]");
+        buffer.append(program + AppNLS.getString("ClassCLI.help.option_")); //$NON-NLS-1$
         if (copt.specfiles != null) {
             int ifile = 0;
             while (true) {
@@ -96,15 +97,15 @@ public class ClassCLI {
             }
         }
 
-        buffer.append(" ");
+        buffer.append(" "); //$NON-NLS-1$
         if (restSyntax == null) {
             boolean usingRestSyntax = false;
             if (usingRestSyntax) {
                 // getRestSyntax();
                 Method restf = Members.findDeclaredMethod(clazz,
-                        "getRestSyntax");
+                        "getRestSyntax"); //$NON-NLS-1$
                 if (restf == null)
-                    buffer.append("...");
+                    buffer.append("..."); //$NON-NLS-1$
                 else {
                     restSyntax = (String) Reflects.invoke(null, restf);
                     buffer.append(restSyntax);
@@ -116,9 +117,9 @@ public class ClassCLI {
             }
         }
         buffer.append(restSyntax);
-        buffer.append("\n");
+        buffer.append("\n"); //$NON-NLS-1$
 
-        buffer.append("\n");
+        buffer.append("\n"); //$NON-NLS-1$
 
         Map<String, Set<_Option<?>>> groups = new HashMap<String, Set<_Option<?>>>();
         Comparator<_Option<?>> optnamsort = new Comparator<_Option<?>>() {
@@ -169,7 +170,7 @@ public class ClassCLI {
                             hasshort = true;
                             col += 2;
                         } else {
-                            line.append("--" + nam);
+                            line.append("--" + nam); //$NON-NLS-1$
                             col += 3 + nam.length();
                         }
                     }
@@ -208,10 +209,11 @@ public class ClassCLI {
             if (first)
                 first = false;
             else
-                buffer.append("\n");
+                buffer.append("\n"); //$NON-NLS-1$
             String name = group.getKey();
             Set<_Option<?>> grpopts = group.getValue();
-            buffer.append(Strings.ucfirst(name) + " options: \n");
+            buffer.append(Strings.ucfirst(name)
+                    + AppNLS.getString("ClassCLI.help.options")); //$NON-NLS-1$
             buffer.append(groupfmt.filter(grpopts));
         }
         return buffer.toString();

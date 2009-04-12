@@ -10,23 +10,23 @@ public class CWD {
 
     private static File       cwd;
     static {
-        String userDir = System.getProperty("user.dir");
+        String userDir = System.getProperty("user.dir"); //$NON-NLS-1$
         if (userDir == null)
-            userDir = ".";
+            userDir = "."; //$NON-NLS-1$
         cwd = new File(userDir);
     }
 
     public static boolean isAbsolutePath(String path) {
         if (path == null)
-            throw new NullPointerException("path");
+            throw new NullPointerException("path"); //$NON-NLS-1$
         if (SystemInfo.isWin32())
             path = path.replace('\\', '/');
-        if (path.startsWith("/"))
+        if (path.startsWith("/")) //$NON-NLS-1$
             return true;
         if (SystemInfo.isWin32()) {
             if (path.length() >= 2 && path.charAt(1) == ':') {
                 String diskpath = path.substring(2);
-                if (diskpath.startsWith("/"))
+                if (diskpath.startsWith("/")) //$NON-NLS-1$
                     return true;
             }
         }

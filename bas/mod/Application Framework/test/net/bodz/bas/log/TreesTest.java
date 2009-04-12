@@ -18,13 +18,13 @@ public class TreesTest {
     @Test
     public void testConvert() {
         Object tree = new Object[] {
-                "hello",
-                "world",
-                "america",
-                "pond",
-                new Object[] { "big", new Object[] { "cat", "dog", }, "sexy",
-                        new Object[] { "fish", "girl", }, },
-                new Object[] { "small", "baby", }, };
+                "hello", //$NON-NLS-1$
+                "world", //$NON-NLS-1$
+                "america", //$NON-NLS-1$
+                "pond", //$NON-NLS-1$
+                new Object[] { "big", new Object[] { "cat", "dog", }, "sexy", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+                        new Object[] { "fish", "girl", }, }, //$NON-NLS-1$ //$NON-NLS-2$
+                new Object[] { "small", "baby", }, }; //$NON-NLS-1$ //$NON-NLS-2$
         Object expand = Trees.convert(tree, new JoinConvert());
         System.out.println(expand);
     }

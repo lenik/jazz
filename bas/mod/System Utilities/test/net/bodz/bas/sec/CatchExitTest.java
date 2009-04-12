@@ -1,6 +1,6 @@
 package net.bodz.bas.sec;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import net.bodz.bas.lang.ControlExit;
 
 import org.junit.Test;

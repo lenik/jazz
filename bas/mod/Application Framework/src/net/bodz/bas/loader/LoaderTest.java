@@ -9,7 +9,7 @@ public class LoaderTest {
     }
 
     static {
-        System.out.println("! loaded " + LoaderTest.class);
+        System.out.println("! loaded " + LoaderTest.class); //$NON-NLS-1$
     }
 
     public static Class<?> findClass(String className)

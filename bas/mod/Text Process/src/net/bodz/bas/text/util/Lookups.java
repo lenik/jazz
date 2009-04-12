@@ -24,7 +24,7 @@ public class Lookups {
 			-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,
 		}; 
     
-    private static final String alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final String alphabet = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"; //$NON-NLS-1$
     public static final char[]  n2cu     = alphabet.toCharArray();
     public static final char[]  n2cl     = alphabet.toLowerCase().toCharArray();
 

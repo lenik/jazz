@@ -40,9 +40,9 @@ public class CURL {
 
     public CURL(String type, Alpha[] alphas, TextMap<String> parameters) {
         if (alphas == null)
-            throw new NullPointerException("alphas");
+            throw new NullPointerException("alphas"); //$NON-NLS-1$
         if (alphas.length == 0)
-            throw new NullPointerException("alphas is empty");
+            throw new NullPointerException("alphas is empty"); //$NON-NLS-1$
         this.type = type;
         this.alphas = alphas;
         this.parameters = parameters;
@@ -50,8 +50,8 @@ public class CURL {
 
     public CURL(String s) {
         if (s == null)
-            throw new NullPointerException("s");
-        int p = s.indexOf("://");
+            throw new NullPointerException("s"); //$NON-NLS-1$
+        int p = s.indexOf("://"); //$NON-NLS-1$
         if (p != -1) {
             type = s.substring(0, p);
             s = s.substring(p + 3);
@@ -85,7 +85,7 @@ public class CURL {
 
     public void setAlphas(String[] alphas) {
         if (alphas == null)
-            throw new NullPointerException("alphas");
+            throw new NullPointerException("alphas"); //$NON-NLS-1$
         Alpha[] parsed = new Alpha[alphas.length];
         for (int i = 0; i < alphas.length; i++)
             parsed[i] = Alpha.parse(alphas[i]);
@@ -95,7 +95,7 @@ public class CURL {
     public String formatAlphas() {
         assert alphas != null;
         // already encoded in Alpha.toString.
-        String s = Strings.join("#", alphas);
+        String s = Strings.join("#", alphas); //$NON-NLS-1$
         return s;
     }
 
@@ -148,12 +148,12 @@ public class CURL {
             if (buf == null)
                 buf = new StringBuffer(parameters.size() * 30);
             else
-                buf.append("&");
+                buf.append("&"); //$NON-NLS-1$
             String name = e.getKey();
             String value = e.getValue();
             buf.append(encode(name));
             if (value != null) {
-                buf.append("=");
+                buf.append("="); //$NON-NLS-1$
                 buf.append(encode(value));
             }
         }
@@ -162,7 +162,7 @@ public class CURL {
 
     public static TextMap<String> parseParameters(String s) {
         if (s == null)
-            throw new NullPointerException("s");
+            throw new NullPointerException("s"); //$NON-NLS-1$
         TextMap<String> parameters = new TreeTextMap<String>();
         int p;
         while (true) {
@@ -195,7 +195,7 @@ public class CURL {
         StringBuffer buf = new StringBuffer(cap);
         if (type != null) {
             buf.append(type);
-            buf.append("://");
+            buf.append("://"); //$NON-NLS-1$
         }
         for (int i = 0; i < alphas.length; i++) {
             if (i != 0)
@@ -255,7 +255,7 @@ public class CURL {
 
         public Alpha(String[] initParameters, String[] betas) {
             if (betas == null)
-                throw new NullPointerException("betas");
+                throw new NullPointerException("betas"); //$NON-NLS-1$
             this.initParameters = initParameters;
             this.betas = betas;
         }
@@ -266,7 +266,7 @@ public class CURL {
 
         public Alpha(String initParameters, String betas) {
             if (betas == null)
-                throw new NullPointerException("betas");
+                throw new NullPointerException("betas"); //$NON-NLS-1$
             if (initParameters == null)
                 this.initParameters = null;
             else
@@ -294,13 +294,13 @@ public class CURL {
             if (initParameters == null || initParameters.length == 0)
                 return null;
             String[] encoded = Arrays2.map(initParameters, ENCODER);
-            return Strings.join(":", encoded);
+            return Strings.join(":", encoded); //$NON-NLS-1$
         }
 
         public static String[] parseInitParameters(String s) {
             if (s == null)
-                throw new NullPointerException("s");
-            String[] v = s.split(":");
+                throw new NullPointerException("s"); //$NON-NLS-1$
+            String[] v = s.split(":"); //$NON-NLS-1$
             v = Arrays2.map(v, DECODER);
             return v;
         }
@@ -308,13 +308,13 @@ public class CURL {
         public String formatBetas() {
             assert betas != null;
             String[] encoded = Arrays2.map(betas, ENCODER);
-            return Strings.join("/", encoded);
+            return Strings.join("/", encoded); //$NON-NLS-1$
         }
 
         public static String[] parseBetas(String s) {
             if (s == null)
-                throw new NullPointerException("s");
-            String[] v = s.split("/");
+                throw new NullPointerException("s"); //$NON-NLS-1$
+            String[] v = s.split("/"); //$NON-NLS-1$
             return Arrays2.map(v, DECODER);
         }
 
@@ -322,12 +322,12 @@ public class CURL {
             if (initParameters == null)
                 return formatBetas();
             else
-                return formatInitParameters() + "@" + formatBetas();
+                return formatInitParameters() + "@" + formatBetas(); //$NON-NLS-1$
         }
 
         public static Alpha parse(String s) {
             if (s == null)
-                throw new NullPointerException("s");
+                throw new NullPointerException("s"); //$NON-NLS-1$
             String initParameters = null;
             int p = s.indexOf('@');
             if (p != -1) {
@@ -368,9 +368,9 @@ public class CURL {
 
     public static String encode(String s) {
         try {
-            s = URLEncoder.encode(s, "utf-8");
-            s = s.replace("%3A", ":");
-            s = s.replace("%5C", "/");
+            s = URLEncoder.encode(s, "utf-8"); //$NON-NLS-1$
+            s = s.replace("%3A", ":"); //$NON-NLS-1$ //$NON-NLS-2$
+            s = s.replace("%5C", "/"); //$NON-NLS-1$ //$NON-NLS-2$
         } catch (UnsupportedEncodingException e) {
             throw new UnexpectedException(e);
         }
@@ -379,7 +379,7 @@ public class CURL {
 
     public static String decode(String s) {
         try {
-            s = URLDecoder.decode(s, "utf-8");
+            s = URLDecoder.decode(s, "utf-8"); //$NON-NLS-1$
         } catch (UnsupportedEncodingException e) {
             throw new UnexpectedException(e);
         }

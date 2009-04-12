@@ -10,7 +10,7 @@ public class CLILauncher {
         String cliClassName = args[0];
         Class<?> cliClass = Class.forName(cliClassName);
         if (!BasicCLI.class.isAssignableFrom(cliClass))
-            throw new IllegalArgumentException("Not a CLI class: " + cliClass);
+            throw new IllegalArgumentException("Not a CLI class: " + cliClass); //$NON-NLS-1$
         BasicCLI cli = (BasicCLI) Reflects.newInstance(cliClass);
 
         args = ArrayOps.Strings.shift(args);

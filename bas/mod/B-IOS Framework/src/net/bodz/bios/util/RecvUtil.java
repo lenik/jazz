@@ -20,7 +20,7 @@ public class RecvUtil {
     }
 
     public static MethodEx getRecvEx(Class<?> clazz) {
-        return getMethodEx(clazz, "recv");
+        return getMethodEx(clazz, "recv"); //$NON-NLS-1$
     }
 
     private static final ClassLocal<MethodEx> recvExLocal;

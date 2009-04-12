@@ -12,6 +12,7 @@ import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.lang.script.ScriptException;
 import net.bodz.bas.lang.script.ScriptMethod;
+import net.bodz.bas.nls.AppNLS;
 import net.bodz.bas.types.TypeParser;
 import net.bodz.bas.types.TypeParsers;
 import net.bodz.bas.types.util.Types;
@@ -60,7 +61,8 @@ public class MethodOption extends _Option<CallInfo> implements
 
     private static final Class<? extends TypeParser>[] _c0;
     static {
-        @SuppressWarnings("unchecked")//
+        @SuppressWarnings("unchecked")
+        //
         Class<? extends TypeParser>[] c0 = (Class<? extends TypeParser>[]) new Class<?>[0];
         _c0 = c0;
     }
@@ -77,7 +79,7 @@ public class MethodOption extends _Option<CallInfo> implements
     public Object parseParameter(String param, int paramIndex)
             throws ParseException {
         if (parsers == null || paramIndex < 0 || paramIndex >= argc)
-            throw new CLIError("param index out of bounds");
+            throw new CLIError(AppNLS.getString("MethodOption.paramIdxOut")); //$NON-NLS-1$
         Object val = parsers[paramIndex].parse(param);
         return val;
     }

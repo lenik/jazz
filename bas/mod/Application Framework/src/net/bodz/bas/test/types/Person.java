@@ -1,6 +1,7 @@
 package net.bodz.bas.test.types;
 
 import net.bodz.bas.lang.err.OutOfDomainException;
+import net.bodz.bas.nls.AppNLS;
 import net.bodz.bas.types.util.Objects;
 
 public class Person {
@@ -38,7 +39,8 @@ public class Person {
 
     public void setAge(int age) {
         if (age < 0 || age > 1000)
-            throw new OutOfDomainException("Not a valid age: " + age);
+            throw new OutOfDomainException(
+                    AppNLS.getString("Person.badAge") + age); //$NON-NLS-1$
         this.age = age;
     }
 
@@ -89,19 +91,27 @@ public class Person {
 
     @Override
     public String toString() {
-        return String.format("<Person name=%s age=%d %s location=\"%s\">", //
-                name, age, sex ? "girl" : "boy", location);
+        return String
+                .format(
+                        AppNLS.getString("Person.xml_sdss"), // //$NON-NLS-1$
+                        name,
+                        age,
+                        sex ? AppNLS.getString("Person.girl") : AppNLS.getString("Person.boy"), location); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     public static final Person Tom;
-    public static final Person Jerry;
+    public static final Person Lucy;
     public static final Person Shecti;
     public static final Person Lenik;
     static {
-        Tom = new Person("Tom", 18, false, Address.Marks100);
-        Jerry = new Person("Jerry", 16, true, Address.Golf200);
-        Shecti = new Person("Shecti", 20, true, Address.YHLib);
-        Lenik = new Person("Lenik", 28, true, Address.HNHome);
+        Tom = new Person(
+                AppNLS.getString("Person.a"), 18, false, Address.Marks100); //$NON-NLS-1$
+        Lucy = new Person(
+                AppNLS.getString("Person.b"), 16, true, Address.Golf200); //$NON-NLS-1$
+        Shecti = new Person(
+                AppNLS.getString("Person.c"), 20, true, Address.YHLib); //$NON-NLS-1$
+        Lenik = new Person(
+                AppNLS.getString("Person.d"), 28, true, Address.HNHome); //$NON-NLS-1$
     }
 
 }
