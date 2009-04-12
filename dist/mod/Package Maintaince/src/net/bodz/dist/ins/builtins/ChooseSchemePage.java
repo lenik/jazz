@@ -3,6 +3,7 @@ package net.bodz.dist.ins.builtins;
 import net.bodz.dist.ins.ConfigPage;
 import net.bodz.dist.ins.ISession;
 import net.bodz.dist.ins.Scheme;
+import net.bodz.dist.nls.PackNLS;
 import net.bodz.swt.gui.ValidateException;
 
 import org.eclipse.swt.SWT;
@@ -15,7 +16,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
 /**
- * @TestBy ChooseSchemePageTest
+ * @test ChooseSchemePageTest
  */
 public class ChooseSchemePage extends ConfigPage {
 
@@ -59,7 +60,7 @@ public class ChooseSchemePage extends ConfigPage {
     @Override
     public void validate() throws ValidateException {
         if (selectedIndex == -1)
-            throw new ValidateException("Scheme isn't selected");
+            throw new ValidateException(PackNLS.getString("ChooseSchemePage.notSelected")); //$NON-NLS-1$
     }
 
     public int getSelectedIndex() {
@@ -68,7 +69,7 @@ public class ChooseSchemePage extends ConfigPage {
 
     @Override
     public String toString() {
-        return "selected scheme " + selectedIndex;
+        return PackNLS.getString("ChooseSchemePage.selected") + selectedIndex; //$NON-NLS-1$
     }
 
 }

@@ -1,6 +1,8 @@
 package net.bodz.dist.ins;
 
 import net.bodz.bas.types.util.Strings;
+import net.bodz.dist.ins.builtins.GUISession;
+import net.bodz.dist.nls.PackNLS;
 import net.bodz.swt.controls.DetailComposite;
 import net.bodz.swt.controls.DetailSwitchEvent;
 import net.bodz.swt.controls.DetailSwitchListener;
@@ -24,11 +26,11 @@ import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.ToolItem;
 
 /**
- * @TestBy ProgressPageTest
+ * @test ProgressPageTest
  */
 public class ProgressPage extends PageComposite {
 
-    private ISession        session;
+    private GUISession      session;
     private boolean         done;
 
     private Label           imageLabel;
@@ -38,14 +40,15 @@ public class ProgressPage extends PageComposite {
     private ProgressBar     progressBar;
     private Label           progressInfo;
 
-    private DetailComposite detail;
-    private List            logsList;
+    private int             logMax       = 10000;
+    private DetailComposite logDetail;
+    private List            logList;
 
     private Composite       counterbar;
     private Label           elapsedLabel;
     private Label           remainingLabel;
 
-    public ProgressPage(ISession session, Composite parent, int style) {
+    public ProgressPage(GUISession session, Composite parent, int style) {
         super(parent, style);
         this.session = session;
 
@@ -67,16 +70,16 @@ public class ProgressPage extends PageComposite {
         progressInfo = new Label(this, SWT.NONE);
         progressInfo.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
                 false, 2, 1));
-        progressInfo.setText("0%");
+        progressInfo.setText("0%"); //$NON-NLS-1$
 
-        detail = new DetailComposite(this, SWT.NONE) {
+        logDetail = new DetailComposite(this, SWT.NONE) {
             @Override
             protected void createContents(Composite parent, int style) {
-                logsList = new List(parent, style);
+                logList = new List(parent, style);
 
                 final ToolItem copyItem = addToolItem(SWT.PUSH);
                 copyItem.setImage(null);
-                copyItem.setToolTipText("Copy");
+                copyItem.setToolTipText(PackNLS.getString("ProgressPage.copyClipboard")); //$NON-NLS-1$
                 copyItem.addSelectionListener(new SelectionAdapter() {
                     @Override
                     public void widgetSelected(SelectionEvent e) {
@@ -95,16 +98,16 @@ public class ProgressPage extends PageComposite {
                 cancelItem.addSelectionListener(new SelectionAdapter() {
                     @Override
                     public void widgetSelected(SelectionEvent e) {
-                        boolean cancelling = cancelItem.getSelection();
-                        setCancelling(cancelling);
+                        boolean canceling = cancelItem.getSelection();
+                        setCanceling(canceling);
                     }
                 });
             }
         };
         GridData gd_detail = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
-        detail.setLayoutData(gd_detail);
-        detail.setText("Install Logs: ");
-        detail.addDetailSwitchListener(new DetailSwitchListener() {
+        logDetail.setLayoutData(gd_detail);
+        logDetail.setText(PackNLS.getString("ProgressPage.logsLabel")); //$NON-NLS-1$
+        logDetail.addDetailSwitchListener(new DetailSwitchListener() {
             @Override
             public void detailSwitch(DetailSwitchEvent e) {
                 layout();
@@ -133,10 +136,10 @@ public class ProgressPage extends PageComposite {
         timebar.setLayout(gridLayout_2);
 
         final Label _elapsedLabel = new Label(timebar, SWT.NONE);
-        _elapsedLabel.setText("Elapsed Time: ");
+        _elapsedLabel.setText(PackNLS.getString("ProgressPage.elapsedTime")); //$NON-NLS-1$
 
         elapsedLabel = new Label(timebar, SWT.NONE);
-        elapsedLabel.setText("-:-:-");
+        elapsedLabel.setText("-:-:-"); //$NON-NLS-1$
 
         final Label sep = new Label(timebar, SWT.SEPARATOR);
         final GridData gd_sep = new GridData(SWT.LEFT, SWT.FILL, false, false);
@@ -144,10 +147,10 @@ public class ProgressPage extends PageComposite {
         sep.setLayoutData(gd_sep);
 
         final Label _remainingLabel = new Label(timebar, SWT.NONE);
-        _remainingLabel.setText("Remaining Time:");
+        _remainingLabel.setText(PackNLS.getString("ProgressPage.remainingTime")); //$NON-NLS-1$
 
         remainingLabel = new Label(timebar, SWT.NONE);
-        remainingLabel.setText("-:-:-");
+        remainingLabel.setText("-:-:-"); //$NON-NLS-1$
     }
 
     @Override
@@ -159,14 +162,23 @@ public class ProgressPage extends PageComposite {
         imageLabel.setImage(image);
     }
 
-    int maxLogs = 1000;
+    public void setText(String s) {
+        actionLabel.setText(s);
+    }
 
-    public void setText(String actionText) {
-        actionLabel.setText(actionText);
-        logsList.add(actionText);
-        int count = logsList.getItemCount();
-        if (count > maxLogs)
-            logsList.remove(0, count - maxLogs);
+    public void setTextLog(int level, String s) {
+        setText(s);
+        log(level, s);
+    }
+
+    public void log(int level, String s) {
+        // enhanced list:
+        // Image icon = getLevelIcon(level);
+        // logsList.add(icon, s);
+        logList.add(s);
+        int count = logList.getItemCount();
+        if (count > logMax)
+            logList.remove(0, count - logMax);
         // logsList.scrollTo(end);
     }
 
@@ -183,8 +195,8 @@ public class ProgressPage extends PageComposite {
         Clipboard clipboard = new Clipboard(display);
 
         String s = null;
-        String[] logs = logsList.getItems();
-        s = Strings.join("\n", logs);
+        String[] logs = logList.getItems();
+        s = Strings.join("\n", logs); //$NON-NLS-1$
 
         if (s == null || s.isEmpty())
             clipboard.clearContents();
@@ -196,11 +208,10 @@ public class ProgressPage extends PageComposite {
     }
 
     void setPausing(boolean pausing) {
-        // project, session...
     }
 
-    void setCancelling(boolean cancelling) {
-        // project, session...
+    void setCanceling(boolean canceling) {
+        session.setCanceling(canceling);
     }
 
 }

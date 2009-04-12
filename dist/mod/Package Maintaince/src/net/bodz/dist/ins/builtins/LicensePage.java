@@ -2,6 +2,7 @@ package net.bodz.dist.ins.builtins;
 
 import net.bodz.dist.ins.ConfigPage;
 import net.bodz.dist.ins.ISession;
+import net.bodz.dist.nls.PackNLS;
 import net.bodz.swt.layouts.BorderLayout;
 
 import org.eclipse.swt.SWT;
@@ -28,13 +29,13 @@ public class LicensePage extends ConfigPage {
         composite.setLayoutData(BorderLayout.SOUTH);
 
         final Button agreeButton = new Button(composite, SWT.RADIO);
-        agreeButton.setText("&Agree");
-        agreeButton.addSelectionListener(new SetState("next"));
+        agreeButton.setText(PackNLS.getString("LicensePage.agree")); //$NON-NLS-1$
+        agreeButton.addSelectionListener(new SetState("next")); //$NON-NLS-1$
 
         final Button disagreeButton = new Button(composite, SWT.RADIO);
         disagreeButton.setSelection(true);
-        disagreeButton.setText("&Disagree");
-        disagreeButton.addSelectionListener(new SetState("cancel"));
+        disagreeButton.setText(PackNLS.getString("LicensePage.disagree")); //$NON-NLS-1$
+        disagreeButton.addSelectionListener(new SetState("cancel")); //$NON-NLS-1$
 
         text = new Text(this, SWT.V_SCROLL | SWT.READ_ONLY | SWT.MULTI
                 | SWT.BORDER);
@@ -49,7 +50,7 @@ public class LicensePage extends ConfigPage {
 
     @Override
     protected Object getInitialState() {
-        return "cancel";
+        return "cancel"; //$NON-NLS-1$
     }
 
 }

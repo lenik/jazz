@@ -5,68 +5,50 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bodz.bas.log.ALog;
 import net.bodz.bas.types.LinkedStack;
 import net.bodz.bas.types.Stack;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TextMap.DerHashTextMap;
 import net.bodz.bas.types.TextMap.HashTextMap;
-import net.bodz.bas.types.TextMap.TreeTextMap;
+import net.bodz.dist.ins.util.Flags;
 
-public abstract class _Session implements ISession {
+public abstract class _Session implements ISession, ProgressChangeListener {
 
-    class StackEntry {
+    private IProject               project;
+    private Components             components;
+    private Stack<IComponent>      stack;
 
-        final String     id;
-        final IComponent component;
-        TextMap<Object>  componentRegistry;
+    private Flags                  flags;
+    private boolean                canceling;
+    private List<CancelListener>   cancelListeners;
 
-        public StackEntry(StackEntry parent, IComponent component) {
-            this.component = component;
-            String prefix = parent != null ? parent.id + "/" : "";
-            String name = component.getName();
-            if (name == null)
-                name = "1";
-            id = prefix + name;
-            componentRegistry = registry.get(id);
-        }
+    private DerHashTextMap<Object> vars;
+    private TextMap<File>          baseDirs;
 
-    }
+    private List<File>             searchPaths;
+    private List<ClassLoader>      searchLoaders;
+    private File                   attachmentDir;
 
-    private IProject                 project;
-    private TextMap<TextMap<Object>> registry;
+    public static final int        FATAL    = ALog.ERROR - 1;
+    public static final int        ERROR    = ALog.ERROR;
+    public static final int        WARN     = ALog.WARN;
+    public static final int        INFO     = ALog.INFO;
+    public static final int        DETAIL   = ALog.DETAIL;
+    public static final int        DEBUG    = ALog.DEBUG;
 
-    private Stack<StackEntry>        stack;
-
-    private boolean                  canceled;
-    private List<CancelListener>     cancelListeners;
-
-    private Flags                    flags;
-
-    private static final int         FATAL    = 0;
-    private static final int         ERROR    = 1;
-    private static final int         WARN     = 2;
-    private static final int         INFO     = 4;
-    private static final int         DETAIL   = 5;
-    private static final int         DEBUG    = 6;
-
-    private int                      logLevel = INFO;
-    private TreeProgress             progress;
-
-    private DerHashTextMap<Object>   vars;
-    private TextMap<File>            baseDirs;
-
-    private List<File>               searchPaths;
-    private List<ClassLoader>        searchLoaders;
-    private File                     attachmentDir;
+    protected int                  logLevel = INFO;
+    private TreeProgress           progress;
 
     public _Session(IProject project, TextMap<Object> env, int logLevel) {
         if (project == null)
-            throw new NullPointerException("project");
+            throw new NullPointerException("project"); //$NON-NLS-1$
         if (env == null)
-            throw new NullPointerException("env");
+            throw new NullPointerException("env"); //$NON-NLS-1$
         this.project = project;
         this.logLevel = logLevel;
-        stack = new LinkedStack<StackEntry>();
+        components = Components.collect(project);
+        stack = new LinkedStack<IComponent>();
         flags = new Flags();
 
         vars = new DerHashTextMap<Object>(env);
@@ -75,10 +57,13 @@ public abstract class _Session implements ISession {
             baseDirs.put(baseDir.getName(), baseDir.getPreferred());
 
         searchPaths = new ArrayList<File>();
-        searchPaths.add(new File("."));
+        searchPaths.add(new File(".")); //$NON-NLS-1$
         searchLoaders = new ArrayList<ClassLoader>();
         searchLoaders.add(ClassLoader.getSystemClassLoader());
-        attachmentDir = new File(".");
+        attachmentDir = new File("."); //$NON-NLS-1$
+
+        progress = new TreeProgress(1);
+        progress.addProgressChangeListener(this);
     }
 
     @Override
@@ -86,41 +71,26 @@ public abstract class _Session implements ISession {
         return project;
     }
 
-    /**
-     * @throws IndexOutOfBoundsException
-     *             if <code>pos</code> is invalid.
-     */
     @Override
-    public IComponent getParentComponent(int stackPosition) {
-        StackEntry stackEntry = stack.get(stackPosition);
-        return stackEntry.component;
+    public IComponent getComponent(String id) {
+        return components.get(id);
     }
 
     @Override
-    public String getComponentId() {
-        StackEntry stackEntry = stack.top();
-        return stackEntry.id;
+    public boolean isCanceling() {
+        return canceling;
     }
 
-    @Override
-    public TextMap<Object> getComponentRegistry() {
-        return getComponentRegistry(0);
+    public void setCanceling(boolean canceling) {
+        this.canceling = canceling;
     }
 
-    public TextMap<Object> getComponentRegistry(int stackPosition) {
-        StackEntry stackEntry = stack.get(stackPosition);
-        if (stackEntry.componentRegistry == null)
-            stackEntry.componentRegistry = new TreeTextMap<Object>();
-        return stackEntry.componentRegistry;
+    public void cancel() {
+        setCanceling(true);
     }
 
-    @Override
-    public boolean isCanceled() {
-        return canceled;
-    }
-
-    public void setCanceled(boolean canceled) {
-        this.canceled = canceled;
+    public void setCanceled() {
+        canceling = false;
         if (cancelListeners != null) {
             CancelEvent e = new CancelEvent(null, this);
             for (CancelListener l : cancelListeners)
@@ -128,12 +98,14 @@ public abstract class _Session implements ISession {
         }
     }
 
+    @Override
     public void addCancelListener(CancelListener l) {
         if (cancelListeners == null)
             cancelListeners = new ArrayList<CancelListener>(1);
         cancelListeners.add(l);
     }
 
+    @Override
     public void removeCancelListener(CancelListener l) {
         if (cancelListeners != null)
             cancelListeners.remove(l);
@@ -145,58 +117,46 @@ public abstract class _Session implements ISession {
     }
 
     @Override
-    public void setComponentProgress(int progressIndex) {
-        progress.setIndex(progressIndex);
+    public Progress getProgress() {
+        return progress;
     }
 
-    protected float getProgress() {
-        return progress.get();
+    protected void log(int level, Object... args) {
+        if (level <= logLevel)
+            _log(level, args);
+        if (level <= INFO)
+            progress.incr();
     }
 
-    protected abstract void updateProgress();
-
-    void log(int level, Object... args) {
-        if (logLevel >= level)
-            _log(args);
-        progress.incr();
-        updateProgress();
-    }
-
-    protected void _log(Object... args) {
-        for (int i = 0; i < args.length; i++) {
-            Object arg = args[i];
-            System.out.print(arg);
-        }
-        System.out.println();
-    }
+    protected abstract void _log(int level, Object... args);
 
     @Override
-    public void logFatal(Object... args) {
+    public final void logFatal(Object... args) {
         log(FATAL, args);
     }
 
     @Override
-    public void logError(Object... args) {
+    public final void logError(Object... args) {
         log(ERROR, args);
     }
 
     @Override
-    public void logWarn(Object... args) {
+    public final void logWarn(Object... args) {
         log(WARN, args);
     }
 
     @Override
-    public void logInfo(Object... args) {
+    public final void logInfo(Object... args) {
         log(INFO, args);
     }
 
     @Override
-    public void logDetail(Object... args) {
+    public final void logDetail(Object... args) {
         log(DETAIL, args);
     }
 
     @Override
-    public void logDebug(Object... args) {
+    public final void logDebug(Object... args) {
         log(DEBUG, args);
     }
 
@@ -218,26 +178,8 @@ public abstract class _Session implements ISession {
     @Override
     public void setBaseDir(String name, File dir) {
         if (dir == null)
-            throw new NullPointerException("null dir for base=" + name);
+            throw new NullPointerException("null dir for base=" + name); //$NON-NLS-1$
         baseDirs.put(name, dir);
-    }
-
-    protected void enter(IComponent component, int progressSize) {
-        StackEntry parentEntry = stack.isEmpty() ? null : stack.top();
-        StackEntry entry = new StackEntry(parentEntry, component);
-        stack.push(entry);
-        vars = new DerHashTextMap<Object>(vars);
-        progress = new TreeProgress(progress, progressSize);
-    }
-
-    protected void leave() {
-        StackEntry stackEntry = stack.pop();
-        TextMap<Object> localmap = stackEntry.componentRegistry;
-        if (localmap != null && !localmap.isEmpty())
-            registry.put(stackEntry.id, localmap);
-        vars = (DerHashTextMap<Object>) vars.getOrig();
-        progress = progress.getParent();
-        updateProgress();
     }
 
     @Override
@@ -258,38 +200,51 @@ public abstract class _Session implements ISession {
     }
 
     protected String getAttachmentPath(String name) {
-        return ".attachments/" + name;
+        return ".attachments/" + name; //$NON-NLS-1$
     }
 
     @Override
     public IAttachment getAttachment(String name) {
         String path = getAttachmentPath(name);
         ResourceUnion res = findResource(path);
-        Attachment a = new Attachment(res, "utf-8");
+        Attachment a = new Attachment(res, "utf-8"); //$NON-NLS-1$
         return a;
     }
 
-    @Override
-    public void dump(IComponent component, int pnum) throws InstallException {
-        int csize = 1; // component.getProgressSize(IComponent.DUMP);
-        enter(component, csize);
-        component.install(this);
-        leave();
+    protected void enter(IComponent component, int parentUnits) {
+        stack.push(component);
+        vars = new DerHashTextMap<Object>(vars);
+        progress = new TreeProgress(progress, parentUnits, 0);
+    }
+
+    protected void leave() {
+        stack.pop();
+        vars = (DerHashTextMap<Object>) vars.getOrig();
+        int parentUnits = progress.getParentUnits();
+        progress = progress.getParent();
+        progress.incr(parentUnits);
     }
 
     @Override
-    public void install(IComponent component, int pnum) throws InstallException {
-        int csize = 1; // component.getProgressSize(IComponent.INSTALL);
-        enter(component, csize);
-        component.install(this);
-        leave();
-    }
-
-    @Override
-    public void uninstall(IComponent component, int pnum)
+    public void pack(IComponent component, int parentUnits)
             throws InstallException {
-        int csize = 1; // component.getProgressSize(IComponent.UNINSTALL);
-        enter(component, csize);
+        enter(component, parentUnits);
+        component.install(this);
+        leave();
+    }
+
+    @Override
+    public void install(IComponent component, int parentUnits)
+            throws InstallException {
+        enter(component, parentUnits);
+        component.install(this);
+        leave();
+    }
+
+    @Override
+    public void uninstall(IComponent component, int parentUnits)
+            throws InstallException {
+        enter(component, parentUnits);
         component.uninstall(this);
         leave();
     }

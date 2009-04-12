@@ -1,4 +1,4 @@
-package net.bodz.dist.ins;
+package net.bodz.dist.ins.util;
 
 public class Flags {
 

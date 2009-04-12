@@ -1,6 +1,7 @@
 package net.bodz.dist.ins;
 
 import net.bodz.bas.a.A_bas;
+import net.bodz.dist.nls.PackNLS;
 
 public class Schemes {
 
@@ -23,12 +24,12 @@ public class Schemes {
 
         @Override
         public String getDescription() {
-            return "Only installs the required components";
+            return PackNLS.getString("Schemes.min"); //$NON-NLS-1$
         }
 
         @Override
         public boolean isIncluded(IComponent component) {
-            return component.isSelected() && component.isReadOnly();
+            return component.getSelection() && component.isReadOnly();
         }
 
     }
@@ -37,12 +38,12 @@ public class Schemes {
 
         @Override
         public String getDescription() {
-            return "Installs most recommended components";
+            return PackNLS.getString("Schemes.std"); //$NON-NLS-1$
         }
 
         @Override
         public boolean isIncluded(IComponent component) {
-            return component.isSelected();
+            return component.getSelection();
         }
 
     }
@@ -51,7 +52,7 @@ public class Schemes {
 
         @Override
         public String getDescription() {
-            return "Install all components";
+            return PackNLS.getString("Schemes.full"); //$NON-NLS-1$
         }
 
         @Override
@@ -65,7 +66,7 @@ public class Schemes {
 
         @Override
         public String getDescription() {
-            return "Custom";
+            return PackNLS.getString("Schemes.custom"); //$NON-NLS-1$
         }
 
         @Override

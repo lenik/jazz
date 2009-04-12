@@ -13,6 +13,8 @@ import net.bodz.bas.gui.a.PreferredSize;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.err.IllegalUsageError;
 import net.bodz.bas.lang.err.ParseException;
+import net.bodz.dist.ins.builtins.GUISession;
+import net.bodz.dist.nls.PackNLS;
 import net.bodz.swt.gui.BasicGUI;
 import net.bodz.swt.gui.pfl.PageComposite;
 import net.bodz.swt.gui.pfl.PageFactory;
@@ -36,7 +38,7 @@ public class Installer extends BasicGUI {
     Class<?>                majorClass;
 
     IProject                project;
-    ISession                session;
+    GUISession              session;
 
     private WizardComposite wizard;
 
@@ -56,7 +58,7 @@ public class Installer extends BasicGUI {
             }
         }
         if (project == null)
-            throw new IllegalUsageError("no config specified");
+            throw new IllegalUsageError(PackNLS.getString("Installer.noConfig")); //$NON-NLS-1$
     }
 
     @Override
@@ -64,19 +66,19 @@ public class Installer extends BasicGUI {
             SWTException {
         wizard = new WizardComposite(comp, SWT.NONE, false);
 
-        wizard.definePage("progress", new PageFactory() {
+        wizard.definePage("progress", new PageFactory() { //$NON-NLS-1$
             @Override
             public PageComposite create(Composite parent) {
                 return new ProgressPage(session, parent, SWT.NONE);
             }
         });
-        wizard.definePage("done", new PageFactory() {
+        wizard.definePage("done", new PageFactory() { //$NON-NLS-1$
             @Override
             public PageComposite create(Composite parent) {
                 return new DonePage(session, parent, SWT.NONE);
             }
         });
-        wizard.definePage("canceled", new PageFactory() {
+        wizard.definePage("canceled", new PageFactory() { //$NON-NLS-1$
             @Override
             public PageComposite create(Composite parent) {
                 return new CanceledPage(session, parent, SWT.NONE);
@@ -89,29 +91,29 @@ public class Installer extends BasicGUI {
             }
         });
         SymlinkPageFlow pageFlow = wizard.getPageFlow();
-        URL sfl = Files.classData(getClass(), "sfl");
+        URL sfl = Files.classData(getClass(), "sfl"); //$NON-NLS-1$
         try {
-            String xml = Files.readAll(sfl, "utf-8");
+            String xml = Files.readAll(sfl, "utf-8"); //$NON-NLS-1$
             pageFlow.loadXML(xml);
         } catch (IOException e) {
             throw new GUIException(e);
         } catch (ParseException e) {
             throw new GUIException(e);
         }
-        pageFlow.set("logo");
+        pageFlow.set("logo"); //$NON-NLS-1$
     }
 
     @Override
     protected String getTitle() {
         String text = project.getText();
         String version = project.getVersion();
-        return text + " Installer " + version;
+        return text + PackNLS.getString("Installer.installer") + version; //$NON-NLS-1$
     }
 
     @Override
     protected String getCopyrightString() {
         ClassInfo info = _loadClassInfo();
-        return "boDz Product Installer " + info.getVersionString();
+        return PackNLS.getString("Installer.copyright") + info.getVersionString(); //$NON-NLS-1$
     }
 
     public static void main(String[] args) throws Throwable {

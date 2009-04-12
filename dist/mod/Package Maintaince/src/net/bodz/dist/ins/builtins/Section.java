@@ -78,9 +78,9 @@ public class Section extends _Component {
     }
 
     @Override
-    public void dump(ISession session) throws InstallException {
+    public void pack(ISession session) throws InstallException {
         for (IComponent c : children)
-            c.dump(session);
+            c.pack(session);
     }
 
     @Override

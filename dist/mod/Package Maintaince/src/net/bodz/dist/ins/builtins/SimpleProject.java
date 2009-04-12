@@ -7,6 +7,7 @@ import net.bodz.dist.ins.BaseDir;
 import net.bodz.dist.ins.ConfigPage;
 import net.bodz.dist.ins.ISession;
 import net.bodz.dist.ins._Project;
+import net.bodz.dist.nls.PackNLS;
 
 import org.eclipse.swt.widgets.Composite;
 
@@ -53,7 +54,7 @@ public class SimpleProject extends _Project {
     }
 
     /** base dir */
-    public static final String PROGRAMS = "programs";
+    public static final String PROGRAMS = "programs"; //$NON-NLS-1$
 
     public SimpleProject(Class<?> clazz) {
         super(clazz);
@@ -64,17 +65,17 @@ public class SimpleProject extends _Project {
         add(new CustomConfig());
 
         BaseDir programBase = new BaseDir(PROGRAMS, findProgramsDir(), //
-                "Program Files", "Where do you want to put the program files");
+                "Program Files", PackNLS.getString("SimpleProject.doc.programs")); //$NON-NLS-1$ //$NON-NLS-2$
         addBaseDir(programBase);
     }
 
     File findProgramsDir() {
-        String parent = "/usr/local";
+        String parent = "/usr/local"; //$NON-NLS-1$
         String name = getName();
         if (SystemInfo.isWin32()) {
-            parent = System.getenv("ProgramFiles");
+            parent = System.getenv("ProgramFiles"); //$NON-NLS-1$
             if (parent == null)
-                parent = "C:/Program Files";
+                parent = "C:/Program Files"; //$NON-NLS-1$
         }
         File dir = new File(parent, name);
         return dir;

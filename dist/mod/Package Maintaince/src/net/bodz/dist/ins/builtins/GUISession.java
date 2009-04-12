@@ -1,7 +1,9 @@
 package net.bodz.dist.ins.builtins;
 
-import net.bodz.bas.gui.Interaction;
+import net.bodz.bas.rt.Interaction;
 import net.bodz.bas.types.TextMap;
+import net.bodz.bas.types.util.Strings;
+import net.bodz.dist.ins.ProgressChangeEvent;
 import net.bodz.dist.ins.ProgressPage;
 import net.bodz.dist.ins._Project;
 import net.bodz.dist.ins._Session;
@@ -26,9 +28,23 @@ public class GUISession extends _Session {
     }
 
     @Override
-    protected void updateProgress() {
-        float p = getProgress();
-        // progressPage.getP
+    protected void _log(int level, Object... args) {
+        String s = Strings.join("", args); //$NON-NLS-1$
+        switch (level) {
+        case INFO:
+        case DETAIL:
+            progressPage.setText(s);
+        case FATAL:
+        case ERROR:
+        case WARN:
+        case DEBUG:
+            progressPage.log(level, s);
+        }
+    }
+
+    @Override
+    public void progressChange(ProgressChangeEvent e) {
+        progressPage.setProgress(e.p);
     }
 
 }

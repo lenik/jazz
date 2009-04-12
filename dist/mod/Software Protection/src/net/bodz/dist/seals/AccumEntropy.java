@@ -1,7 +1,7 @@
 package net.bodz.dist.seals;
 
 /**
- * @TestBy AccumEntropyTest
+ * @test AccumEntropyTest
  */
 public class AccumEntropy extends _Entropy {
 
