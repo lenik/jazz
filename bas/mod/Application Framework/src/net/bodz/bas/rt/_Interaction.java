@@ -1,4 +1,4 @@
-package net.bodz.bas.gui;
+package net.bodz.bas.rt;
 
 import java.util.List;
 import java.util.Map;
@@ -20,7 +20,7 @@ public abstract class _Interaction implements Interaction {
 
     @Override
     public String prompt(String title) {
-        return prompt(title, title, "");
+        return prompt(title, title, ""); //$NON-NLS-1$
     }
 
     @Override
@@ -30,7 +30,7 @@ public abstract class _Interaction implements Interaction {
 
     @Override
     public String prompt(String title, Object detail) {
-        return prompt(title, detail, "");
+        return prompt(title, detail, ""); //$NON-NLS-1$
     }
 
     @Override
