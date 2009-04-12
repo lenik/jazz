@@ -22,7 +22,7 @@ public abstract class GridSpace extends _GeomSpace {
     }
 
     public void setSize(int size) {
-        throw new ReadOnlyException("size");
+        throw new ReadOnlyException("size"); //$NON-NLS-1$
     }
 
     public abstract Point getOrig(int index);
@@ -42,7 +42,7 @@ public abstract class GridSpace extends _GeomSpace {
 
     public void setCellWidth(int cellw) {
         if (cellw < 0)
-            throw new OutOfDomainException("cellWidth", cellw, 0);
+            throw new OutOfDomainException("cellWidth", cellw, 0); //$NON-NLS-1$
         this.cellw = cellw;
     }
 
@@ -52,13 +52,13 @@ public abstract class GridSpace extends _GeomSpace {
 
     public void setCellHeight(int cellh) {
         if (cellh < 0)
-            throw new OutOfDomainException("cellHeight", cellh, 0);
+            throw new OutOfDomainException("cellHeight", cellh, 0); //$NON-NLS-1$
         this.cellh = cellh;
     }
 
     public int getCellSize() {
         if (cellw != cellh)
-            throw new IllegalStateException("different cellw/cellh");
+            throw new IllegalStateException("different cellw/cellh"); //$NON-NLS-1$
         return cellw;
     }
 
@@ -97,7 +97,7 @@ public abstract class GridSpace extends _GeomSpace {
 
         public void setRows(int rows) {
             if (rows <= 0)
-                throw new OutOfDomainException("rows", rows, 0);
+                throw new OutOfDomainException("rows", rows, 0); //$NON-NLS-1$
             this.rows = rows;
         }
 
@@ -107,7 +107,7 @@ public abstract class GridSpace extends _GeomSpace {
 
         public void setColumns(int columns) {
             if (columns <= 0)
-                throw new OutOfDomainException("columns", columns, 0);
+                throw new OutOfDomainException("columns", columns, 0); //$NON-NLS-1$
             this.columns = columns;
         }
 
@@ -117,7 +117,7 @@ public abstract class GridSpace extends _GeomSpace {
 
         public void setHPadding(int padding) {
             if (padding < 0)
-                throw new OutOfDomainException("hpad", padding, 0);
+                throw new OutOfDomainException("hpad", padding, 0); //$NON-NLS-1$
             this.hpad = padding;
         }
 
@@ -127,13 +127,13 @@ public abstract class GridSpace extends _GeomSpace {
 
         public void setVPadding(int padding) {
             if (padding < 0)
-                throw new OutOfDomainException("vpad", padding, 0);
+                throw new OutOfDomainException("vpad", padding, 0); //$NON-NLS-1$
             this.vpad = padding;
         }
 
         public int getPadding() {
             if (hpad != vpad)
-                throw new IllegalStateException("different hpad/vpad");
+                throw new IllegalStateException("different hpad/vpad"); //$NON-NLS-1$
             return hpad;
         }
 
@@ -227,8 +227,8 @@ public abstract class GridSpace extends _GeomSpace {
                 return -1;
             int row = y / dy;
             int col = x / dx;
-            assert row >= 0 : "bad row: " + row;
-            assert col >= 0 && col < columns : "bad column: " + col;
+            assert row >= 0 : "bad row: " + row; //$NON-NLS-1$
+            assert col >= 0 && col < columns : "bad column: " + col; //$NON-NLS-1$
             int index = row * columns + col;
             if (index >= size)
                 return -1;

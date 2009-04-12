@@ -7,6 +7,7 @@ import net.bodz.bas.lang.ref.Ref;
 import net.bodz.swt.controls.helper.FixSizeComposite;
 import net.bodz.swt.controls.util.Controls;
 import net.bodz.swt.gui.SWTInteraction;
+import net.bodz.swt.nls.ControlsNLS;
 import net.bodz.swt.util.SWTResources;
 
 import org.eclipse.swt.SWT;
@@ -120,7 +121,8 @@ public class SimpleDialog extends Dialog implements Ref<Object> {
                 display.sleep();
         }
         if (canceled)
-            throw new CancelException("user canceled");
+            throw new CancelException(ControlsNLS
+                    .getString("SimpleDialog.userCanceled")); //$NON-NLS-1$
         return get();
     }
 
@@ -132,7 +134,7 @@ public class SimpleDialog extends Dialog implements Ref<Object> {
     }
 
     protected Image getImage() {
-        return SWTResources.getImageRes("/icons/full/obj16/read_obj.gif");
+        return SWTResources.getImageRes("/icons/full/obj16/read_obj.gif"); //$NON-NLS-1$
     }
 
     public Object get() {
@@ -240,7 +242,8 @@ public class SimpleDialog extends Dialog implements Ref<Object> {
         try {
             execute();
         } catch (CheckException ex) {
-            interact.alert("Check Failure", ex);
+            interact.alert(
+                    ControlsNLS.getString("SimpleDialog.checkFailure"), ex); //$NON-NLS-1$
             return;
         }
         shell.dispose();
@@ -254,8 +257,8 @@ public class SimpleDialog extends Dialog implements Ref<Object> {
         rd_okButton.height = buttonHeight;
         okButton.setLayoutData(rd_okButton);
         okButton.setImage(SWTResources
-                .getImageRes("/icons/full/obj16/lrun_obj.gif"));
-        okButton.setText("&OK");
+                .getImageRes("/icons/full/obj16/lrun_obj.gif")); //$NON-NLS-1$
+        okButton.setText(ControlsNLS.getString("SimpleDialog.ok")); //$NON-NLS-1$
         okButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -270,8 +273,8 @@ public class SimpleDialog extends Dialog implements Ref<Object> {
         final RowData rd_okButton = new RowData();
         rd_okButton.height = buttonHeight;
         cancelButton.setImage(SWTResources
-                .getImageRes("/icons/full/obj16/delete_obj.gif"));
-        cancelButton.setText("&Cancel");
+                .getImageRes("/icons/full/obj16/delete_obj.gif")); //$NON-NLS-1$
+        cancelButton.setText(ControlsNLS.getString("SimpleDialog.cancel")); //$NON-NLS-1$
         cancelButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -288,8 +291,8 @@ public class SimpleDialog extends Dialog implements Ref<Object> {
         rd_yesButton.height = buttonHeight;
         yesButton.setLayoutData(rd_yesButton);
         yesButton.setImage(SWTResources
-                .getImageRes("/icons/full/obj16/lrun_obj.gif"));
-        yesButton.setText("&Yes");
+                .getImageRes("/icons/full/obj16/lrun_obj.gif")); //$NON-NLS-1$
+        yesButton.setText(ControlsNLS.getString("SimpleDialog.yes")); //$NON-NLS-1$
         yesButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -305,8 +308,8 @@ public class SimpleDialog extends Dialog implements Ref<Object> {
         final RowData rd_okButton = new RowData();
         rd_okButton.height = buttonHeight;
         noButton.setImage(SWTResources
-                .getImageRes("/icons/full/obj16/delete_obj.gif"));
-        noButton.setText("&No");
+                .getImageRes("/icons/full/obj16/delete_obj.gif")); //$NON-NLS-1$
+        noButton.setText(ControlsNLS.getString("SimpleDialog.no")); //$NON-NLS-1$
         noButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {

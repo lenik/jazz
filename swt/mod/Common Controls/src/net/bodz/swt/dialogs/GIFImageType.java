@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import net.bodz.swt.gui.ValidateException;
+import net.bodz.swt.nls.ControlsNLS;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.ImageData;
@@ -19,12 +20,12 @@ public class GIFImageType extends _ImageType {
 
     @Override
     public String getName() {
-        return "GIF";
+        return ControlsNLS.getString("GIFImageType.name"); //$NON-NLS-1$
     }
 
     @Override
     public String getExtension() {
-        return "gif";
+        return "gif"; //$NON-NLS-1$
     }
 
     static class Params {
@@ -44,14 +45,16 @@ public class GIFImageType extends _ImageType {
             this.params = params;
 
             final Label transparentcyLabel = new Label(this, SWT.NONE);
-            transparentcyLabel.setText("&Transparency: ");
+            transparentcyLabel.setText(ControlsNLS
+                    .getString("GIFImageType.transparency")); //$NON-NLS-1$
 
             final Canvas colorBlock = new Canvas(this, SWT.NONE);
             final GridData gd_colorBlock = new GridData(16, 16);
             colorBlock.setLayoutData(gd_colorBlock);
 
             final Link selectTransLink = new Link(this, SWT.NONE);
-            selectTransLink.setText("<a>select</a>");
+            selectTransLink.setText(ControlsNLS
+                    .getString("GIFImageType.selectLink")); //$NON-NLS-1$
         }
 
         @Override
@@ -65,7 +68,7 @@ public class GIFImageType extends _ImageType {
     public void save(ImageData imageData, OutputStream out, Object _params)
             throws IOException {
         if (imageData == null)
-            throw new NullPointerException("imageData");
+            throw new NullPointerException("imageData"); //$NON-NLS-1$
         Params params = (Params) _params;
         if (params.transparentPixel != -1)
             imageData.transparentPixel = params.transparentPixel;

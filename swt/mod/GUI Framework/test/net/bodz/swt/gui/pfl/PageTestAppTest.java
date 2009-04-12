@@ -14,7 +14,7 @@ public class PageTestAppTest {
                 PageComposite page = new PageComposite(parent, style);
                 page.setLayout(new FillLayout());
                 Label label = new Label(page, SWT.NONE);
-                label.setText("Test Page");
+                label.setText("Test Page"); //$NON-NLS-1$
                 return page;
             }
         };

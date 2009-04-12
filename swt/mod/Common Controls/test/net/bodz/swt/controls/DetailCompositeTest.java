@@ -33,7 +33,7 @@ class DetailMessage extends DetailComposite {
         // new FixSizeComposite(parent, SWT.BORDER, 10, 10);
 
         ToolItem copyItem = addToolItem(SWT.PUSH);
-        copyItem.setText("&Copy");
+        copyItem.setText("&Copy"); //$NON-NLS-1$
         copyItem.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -47,7 +47,7 @@ class DetailMessage extends DetailComposite {
             }
         });
         ToolItem debugItem = addToolItem(SWT.PUSH);
-        debugItem.setText("&Debug");
+        debugItem.setText("&Debug"); //$NON-NLS-1$
         debugItem.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -77,27 +77,27 @@ public class DetailCompositeTest {
                 Point size;
                 System.out.println();
                 size = topBar.computeSize(wHint, hHint);
-                System.out.println("Top bar=" + size);
+                System.out.println("Top bar=" + size); //$NON-NLS-1$
 
                 size = stack.computeSize(wHint, hHint);
-                System.out.println("Stack size=" + size);
+                System.out.println("Stack size=" + size); //$NON-NLS-1$
 
                 size = computeSize(wHint, hHint);
-                System.out.println("Detail size=" + size);
+                System.out.println("Detail size=" + size); //$NON-NLS-1$
 
                 size = getParent().computeSize(wHint, hHint);
-                System.out.println("Parent size=" + size);
+                System.out.println("Parent size=" + size); //$NON-NLS-1$
 
                 size = test.parent.computeSize(wHint, hHint);
-                System.out.println("Test.parent=" + size);
+                System.out.println("Test.parent=" + size); //$NON-NLS-1$
 
                 size = test.shell.computeSize(wHint, hHint);
-                System.out.println("Shell size=" + size);
+                System.out.println("Shell size=" + size); //$NON-NLS-1$
             }
         };
         detail.setImage(SWTResources
-                .getImageRes("/sun/print/resources/oneside.png"));
-        detail.setText("Detail Test");
+                .getImageRes("/sun/print/resources/oneside.png")); //$NON-NLS-1$
+        detail.setText("Detail Test"); //$NON-NLS-1$
 
         detail.addDetailSwitchListener(new DetailSwitchListener() {
             @Override

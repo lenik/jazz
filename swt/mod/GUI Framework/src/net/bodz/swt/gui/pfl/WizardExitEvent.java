@@ -2,6 +2,8 @@ package net.bodz.swt.gui.pfl;
 
 import java.util.EventObject;
 
+import net.bodz.swt.nls.GUINLS;
+
 public class WizardExitEvent extends EventObject {
 
     private static final long serialVersionUID = 2285635185383477276L;
@@ -15,7 +17,7 @@ public class WizardExitEvent extends EventObject {
 
     @Override
     public String toString() {
-        return "Exit from" + address;
+        return GUINLS.getString("WizardExitEvent.exitFrom") + address; //$NON-NLS-1$
     }
 
 }

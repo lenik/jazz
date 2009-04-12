@@ -18,7 +18,7 @@ import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Control;
 
 /**
- * @TestBy ControlAdaptersTest
+ * @test ControlAdaptersTest
  */
 public class ControlAdapters {
 

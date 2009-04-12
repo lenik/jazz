@@ -17,20 +17,20 @@ public class FixSizeCompositeTest {
         comp.setLayout(new FillLayout());
         new TestComposite(comp, SWT.NONE);
 
-        test.addToolButton("Fix", new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                comp.setFixedSize(100, 100);
-                test.autoFit();
-            }
-        });
-        test.addToolButton("Free", new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                comp.unsetFixedSize();
-                test.autoFit();
-            }
-        });
+        test.addToolButton("Fix", new SelectionAdapter() { //$NON-NLS-1$
+                    @Override
+                    public void widgetSelected(SelectionEvent e) {
+                        comp.setFixedSize(100, 100);
+                        test.autoFit();
+                    }
+                });
+        test.addToolButton("Free", new SelectionAdapter() { //$NON-NLS-1$
+                    @Override
+                    public void widgetSelected(SelectionEvent e) {
+                        comp.unsetFixedSize();
+                        test.autoFit();
+                    }
+                });
 
         test.run();
     }

@@ -10,7 +10,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 /**
- * @TestBy TestCompositeTest
+ * @test TestCompositeTest
  */
 public class TestComposite extends Composite {
 
@@ -34,7 +34,7 @@ public class TestComposite extends Composite {
         fd_nameLabel.top = new FormAttachment(0, 40);
         fd_nameLabel.left = new FormAttachment(0, 20);
         nameLabel.setLayoutData(fd_nameLabel);
-        nameLabel.setText("&Name");
+        nameLabel.setText("&Name"); //$NON-NLS-1$
 
         name = new Text(this, SWT.BORDER);
         final FormData fd_name = new FormData();
@@ -51,7 +51,7 @@ public class TestComposite extends Composite {
         fd_ageLabel.top = new FormAttachment(nameLabel, 5, SWT.BOTTOM);
         fd_ageLabel.left = new FormAttachment(nameLabel, 0, SWT.LEFT);
         ageLabel.setLayoutData(fd_ageLabel);
-        ageLabel.setText("&Age");
+        ageLabel.setText("&Age"); //$NON-NLS-1$
 
         age = new Text(this, SWT.BORDER);
         final FormData fd_age = new FormData();
@@ -68,7 +68,7 @@ public class TestComposite extends Composite {
         fd_cancelButton.bottom = new FormAttachment(100, -5);
         fd_cancelButton.right = new FormAttachment(100, -5);
         cancelButton.setLayoutData(fd_cancelButton);
-        cancelButton.setText("&Cancel");
+        cancelButton.setText("&Cancel"); //$NON-NLS-1$
 
         final Button okButton = new Button(this, SWT.NONE);
         final FormData fd_okButton = new FormData();
@@ -77,7 +77,7 @@ public class TestComposite extends Composite {
         fd_okButton.bottom = new FormAttachment(cancelButton, 0, SWT.BOTTOM);
         fd_okButton.right = new FormAttachment(cancelButton, -5, SWT.LEFT);
         okButton.setLayoutData(fd_okButton);
-        okButton.setText("&OK");
+        okButton.setText("&OK"); //$NON-NLS-1$
         //
     }
 

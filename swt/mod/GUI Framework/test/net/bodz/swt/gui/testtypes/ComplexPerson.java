@@ -24,7 +24,7 @@ public class ComplexPerson {
 
     @Override
     public String toString() {
-        return "<" + name + ": " + asl + ">";
+        return "<" + name + ": " + asl + ">"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
 
 }

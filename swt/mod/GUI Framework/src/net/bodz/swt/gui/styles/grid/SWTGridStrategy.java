@@ -15,6 +15,7 @@ import net.bodz.swt.gui.GUIStructs.RetvalMeta;
 import net.bodz.swt.gui.GUIVars.GUIFieldMeta;
 import net.bodz.swt.gui.GUIVars.GUIPropertyMeta;
 import net.bodz.swt.gui.styles.base.SWTStrategy;
+import net.bodz.swt.nls.GUINLS;
 import net.bodz.swt.util.SWTResources;
 
 import org.eclipse.swt.SWT;
@@ -66,21 +67,19 @@ public class SWTGridStrategy extends SWTStrategy {
     private static MIcon parameterIcons;
     private static MIcon retvalIcons;
     static {
-        fieldIcons = new MIcon(
-                //
-                "/icons/full/obj16/field_default_obj.gif",
-                "/icons/full/obj16/field_public_obj.gif",
-                "/icons/full/obj16/field_protected_obj.gif",
-                "/icons/full/obj16/field_private_obj.gif");
-        methodIcons = new MIcon(
-                //
-                "/icons/full/obj16/methdef_obj.gif",
-                "/icons/full/obj16/methpub_obj.gif",
-                "/icons/full/obj16/methpro_obj.gif",
-                "/icons/full/obj16/methpri_obj.gif");
+        fieldIcons = new MIcon(//
+                "/icons/full/obj16/field_default_obj.gif", //$NON-NLS-1$
+                "/icons/full/obj16/field_public_obj.gif", //$NON-NLS-1$
+                "/icons/full/obj16/field_protected_obj.gif", //$NON-NLS-1$
+                "/icons/full/obj16/field_private_obj.gif"); //$NON-NLS-1$
+        methodIcons = new MIcon(//
+                "/icons/full/obj16/methdef_obj.gif", //$NON-NLS-1$
+                "/icons/full/obj16/methpub_obj.gif", //$NON-NLS-1$
+                "/icons/full/obj16/methpro_obj.gif", //$NON-NLS-1$
+                "/icons/full/obj16/methpri_obj.gif"); //$NON-NLS-1$
         propertyIcons = methodIcons;
-        parameterIcons = new MIcon("/icons/full/eview16/variable_view.gif");
-        retvalIcons = new MIcon("/icons/full/obj16/field_default_obj.gif");
+        parameterIcons = new MIcon("/icons/full/eview16/variable_view.gif"); //$NON-NLS-1$
+        retvalIcons = new MIcon("/icons/full/obj16/field_default_obj.gif"); //$NON-NLS-1$
     }
 
     public Composite renderStruct(GUIStruct struct, Composite parent, int style)
@@ -123,7 +122,8 @@ public class SWTGridStrategy extends SWTStrategy {
             }
             iconLabel.setImage(icon);
         } catch (CreateException e) {
-            throw new RenderException("Failed to render icon", e);
+            throw new RenderException(GUINLS
+                    .getString("SWTGridStrategy.failedToRenderIcon"), e); //$NON-NLS-1$
         }
 
         // Column #2

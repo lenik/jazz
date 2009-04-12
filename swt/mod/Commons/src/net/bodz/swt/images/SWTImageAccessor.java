@@ -26,15 +26,15 @@ public abstract class SWTImageAccessor extends _ImageAccessor {
     }
 
     public void checkIntegrity() {
-        assert pointer >= 0 : "bad pointer";
-        assert pointer < image.data.length : "bad pointer";
+        assert pointer >= 0 : "bad pointer"; //$NON-NLS-1$
+        assert pointer < image.data.length : "bad pointer"; //$NON-NLS-1$
         int offset = pointer % bytesPerLine;
-        assert offset % depthBytes == 0 : "offset alignment: "
+        assert offset % depthBytes == 0 : "offset alignment: " //$NON-NLS-1$
                 + (offset % depthBytes);
         int x = offset / depthBytes;
-        assert x >= 0 && x < image.width : "x";
+        assert x >= 0 && x < image.width : "x"; //$NON-NLS-1$
         int y = pointer / bytesPerLine;
-        assert y >= 0 && y < image.height : "y";
+        assert y >= 0 && y < image.height : "y"; //$NON-NLS-1$
     }
 
     @Override
@@ -85,7 +85,7 @@ public abstract class SWTImageAccessor extends _ImageAccessor {
 
     @Override
     public final void getXY(int[] xy) {
-        assert xy != null && xy.length >= 2 : "output xy[]";
+        assert xy != null && xy.length >= 2 : "output xy[]"; //$NON-NLS-1$
         int y = pointer / bytesPerLine;
         int offset = pointer % bytesPerLine;
         int x = offset / depthBytes;
@@ -192,9 +192,9 @@ public abstract class SWTImageAccessor extends _ImageAccessor {
 
         @Override
         public void setRGB(RGB rgb) {
-            assert rgb.red >= 0 && rgb.red < 256 : "red";
-            assert rgb.green >= 0 && rgb.green < 256 : "green";
-            assert rgb.blue >= 0 && rgb.blue < 256 : "blue";
+            assert rgb.red >= 0 && rgb.red < 256 : "red"; //$NON-NLS-1$
+            assert rgb.green >= 0 && rgb.green < 256 : "green"; //$NON-NLS-1$
+            assert rgb.blue >= 0 && rgb.blue < 256 : "blue"; //$NON-NLS-1$
             data[pointer + 1] = (byte) rgb.red;
             data[pointer + 2] = (byte) rgb.green;
             data[pointer + 3] = (byte) rgb.blue;
@@ -204,7 +204,7 @@ public abstract class SWTImageAccessor extends _ImageAccessor {
         public void getRGB(int[] rgbv) {
             int p = pointer + 1;
             for (int i = 0; i < 3; i++) {
-                assert p < data.length : "pointer overflow: " + p;
+                assert p < data.length : "pointer overflow: " + p; //$NON-NLS-1$
                 rgbv[i] = data[p++] & 0xff;
             }
         }
@@ -214,7 +214,7 @@ public abstract class SWTImageAccessor extends _ImageAccessor {
             int p = pointer + 1;
             for (int i = 0; i < 3; i++) {
                 int c = rgbv[i];
-                assert c >= 0 && c < 256 : "rgbv[" + i + "]=" + c;
+                assert c >= 0 && c < 256 : "rgbv[" + i + "]=" + c; //$NON-NLS-1$ //$NON-NLS-2$
                 data[p++] = (byte) c;
             }
         }
@@ -312,9 +312,9 @@ public abstract class SWTImageAccessor extends _ImageAccessor {
 
         @Override
         public void setRGB(RGB rgb) {
-            assert rgb.red >= 0 && rgb.red < 256 : "red";
-            assert rgb.green >= 0 && rgb.green < 256 : "green";
-            assert rgb.blue >= 0 && rgb.blue < 256 : "blue";
+            assert rgb.red >= 0 && rgb.red < 256 : "red"; //$NON-NLS-1$
+            assert rgb.green >= 0 && rgb.green < 256 : "green"; //$NON-NLS-1$
+            assert rgb.blue >= 0 && rgb.blue < 256 : "blue"; //$NON-NLS-1$
             data[pointer + 2] = (byte) rgb.red;
             data[pointer + 1] = (byte) rgb.green;
             data[pointer + 0] = (byte) rgb.blue;
@@ -324,7 +324,7 @@ public abstract class SWTImageAccessor extends _ImageAccessor {
         public void getRGB(int[] rgbv) {
             int p = pointer + 3;
             for (int i = 0; i < 3; i++) {
-                assert p < data.length : "pointer overflow: " + p;
+                assert p < data.length : "pointer overflow: " + p; //$NON-NLS-1$
                 rgbv[i] = data[--p] & 0xff;
             }
         }
@@ -334,7 +334,7 @@ public abstract class SWTImageAccessor extends _ImageAccessor {
             int p = pointer + 3;
             for (int i = 0; i < 3; i++) {
                 int c = rgbv[i];
-                assert c >= 0 && c < 256 : "rgbv[" + i + "]=" + c;
+                assert c >= 0 && c < 256 : "rgbv[" + i + "]=" + c; //$NON-NLS-1$ //$NON-NLS-2$
                 data[--p] = (byte) c;
             }
         }
@@ -434,9 +434,9 @@ public abstract class SWTImageAccessor extends _ImageAccessor {
 
         @Override
         public void setRGB(RGB rgb) {
-            assert rgb.red >= 0 && rgb.red < 256 : "red";
-            assert rgb.green >= 0 && rgb.green < 256 : "green";
-            assert rgb.blue >= 0 && rgb.blue < 256 : "blue";
+            assert rgb.red >= 0 && rgb.red < 256 : "red"; //$NON-NLS-1$
+            assert rgb.green >= 0 && rgb.green < 256 : "green"; //$NON-NLS-1$
+            assert rgb.blue >= 0 && rgb.blue < 256 : "blue"; //$NON-NLS-1$
             data[pointer + 0] = (byte) rgb.red;
             data[pointer + 1] = (byte) rgb.green;
             data[pointer + 2] = (byte) rgb.blue;
@@ -446,7 +446,7 @@ public abstract class SWTImageAccessor extends _ImageAccessor {
         public void getRGB(int[] rgbv) {
             int p = pointer;
             for (int i = 0; i < 3; i++) {
-                assert p < data.length : "pointer overflow: " + p;
+                assert p < data.length : "pointer overflow: " + p; //$NON-NLS-1$
                 rgbv[i] = data[p++] & 0xff;
             }
         }
@@ -456,7 +456,7 @@ public abstract class SWTImageAccessor extends _ImageAccessor {
             int p = pointer;
             for (int i = 0; i < 3; i++) {
                 int c = rgbv[i];
-                assert c >= 0 && c < 256 : "rgbv[" + i + "]=" + c;
+                assert c >= 0 && c < 256 : "rgbv[" + i + "]=" + c; //$NON-NLS-1$ //$NON-NLS-2$
                 data[p++] = (byte) c;
             }
         }

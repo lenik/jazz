@@ -49,10 +49,10 @@ public class Location {
             return next;
         if (next == null)
             return null;
-        if (next.startsWith("/"))
+        if (next.startsWith("/")) //$NON-NLS-1$
             return next;
-        if (!prev.endsWith("/"))
-            prev += "/";
+        if (!prev.endsWith("/")) //$NON-NLS-1$
+            prev += "/"; //$NON-NLS-1$
         return prev + next;
     }
 
@@ -74,7 +74,7 @@ public class Location {
     public String go(int relativeIndex) {
         int i = index + relativeIndex;
         if (i < 0 || i >= history.size())
-            throw new IndexOutOfBoundsException("absolute index=" + i);
+            throw new IndexOutOfBoundsException("absolute index=" + i); //$NON-NLS-1$
         String prev = get();
         index = i;
         String next = get();

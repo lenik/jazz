@@ -18,6 +18,7 @@ import net.bodz.swt.controls.helper.DynamicControl;
 import net.bodz.swt.controls.util.Controls;
 import net.bodz.swt.controls.util.Menus;
 import net.bodz.swt.layouts.BorderLayout;
+import net.bodz.swt.nls.GUINLS;
 import net.bodz.swt.util.SWTResources;
 
 import org.eclipse.swt.SWT;
@@ -33,7 +34,6 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.ToolBar;
-
 
 @BootInfo(userlibs = { "bodz_swt", "bodz_icons" }, configs = SWTConfig.class)
 @StartMode(StartMode.GUI)
@@ -109,9 +109,9 @@ public class BasicGUI extends BasicCLI {
         String title = info.getName();
         String doc = info.getDoc();
         if (doc != null)
-            title += ": " + doc;
+            title += ": " + doc; //$NON-NLS-1$
         String version = info.getVersionString();
-        return title + " " + version;
+        return title + " " + version; //$NON-NLS-1$
     }
 
     protected Shell createShell() throws GUIException, SWTException {
@@ -163,9 +163,10 @@ public class BasicGUI extends BasicCLI {
             return null;
         final Menu menu = new Menu(parent, SWT.BAR);
 
-        final Menu fileMenu = Menus.newSubMenu(menu, "&File");
+        final Menu fileMenu = Menus.newSubMenu(menu, GUINLS
+                .getString("BasicGUI.menu.file")); //$NON-NLS-1$
         final MenuItem fileExit = new MenuItem(fileMenu, SWT.NONE);
-        fileExit.setText("E&xit");
+        fileExit.setText(GUINLS.getString("BasicGUI.menu.exit")); //$NON-NLS-1$
 
         return menu;
     }
@@ -191,7 +192,7 @@ public class BasicGUI extends BasicCLI {
 
     protected String getCopyrightString() {
         ClassInfo info = _loadClassInfo();
-        String copyright = "(C) Copyright " + info.getAuthor() + ", "
+        String copyright = GUINLS.getString("BasicGUI.copyright") + info.getAuthor() + ", " //$NON-NLS-1$ //$NON-NLS-2$
                 + info.getDateString();
         return copyright;
     }
@@ -209,7 +210,7 @@ public class BasicGUI extends BasicCLI {
             SWTException {
         comp.setLayout(new FillLayout());
         Label welcomeLabel = new Label(comp, SWT.NONE);
-        welcomeLabel.setText("Welcome BasicGUI!");
+        welcomeLabel.setText(GUINLS.getString("BasicGUI.welcome")); //$NON-NLS-1$
     }
 
     protected void createView(Composite comp, Object key) throws SWTException,
@@ -218,7 +219,7 @@ public class BasicGUI extends BasicCLI {
             createInitialView(comp);
             return;
         }
-        throw new NotImplementedException("key: " + key);
+        throw new NotImplementedException("key: " + key); //$NON-NLS-1$
     }
 
     protected void openView(Composite parent, Object key) throws SWTException,

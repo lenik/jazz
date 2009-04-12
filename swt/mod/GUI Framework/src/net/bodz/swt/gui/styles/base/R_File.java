@@ -15,6 +15,7 @@ import net.bodz.swt.gui.GUIVarMeta;
 import net.bodz.swt.gui.RenderContext;
 import net.bodz.swt.gui.SWTRenderer;
 import net.bodz.swt.layouts.BorderLayout;
+import net.bodz.swt.nls.GUINLS;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -25,7 +26,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Text;
-
 
 public class R_File extends SWTRenderer {
 
@@ -46,7 +46,7 @@ public class R_File extends SWTRenderer {
         fileText.setText(val.getPath());
         fileText.setLayoutData(BorderLayout.CENTER);
         final Button browseButton = new Button(comp, SWT.NONE);
-        browseButton.setText("Browse");
+        browseButton.setText(GUINLS.getString("R_File.browse")); //$NON-NLS-1$
         browseButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {

@@ -10,6 +10,7 @@ import net.bodz.swt.controls.util.Controls;
 import net.bodz.swt.gui.GUIVar;
 import net.bodz.swt.gui.RenderContext;
 import net.bodz.swt.gui.SWTRenderer;
+import net.bodz.swt.nls.GUINLS;
 import net.bodz.swt.util.EventHandler;
 import net.bodz.swt.util.SWTResources;
 
@@ -33,12 +34,12 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 
 /**
- * @TestBy R_ThrowableTest
+ * @test R_ThrowableTest
  */
 public class R_Throwable extends SWTRenderer {
 
-    static final String expandedIcon  = "/icons/full/obj16/remove_correction.gif";
-    static final String collapsedIcon = "/icons/full/obj16/add_correction.gif";
+    static final String expandedIcon  = "/icons/full/obj16/remove_correction.gif"; //$NON-NLS-1$
+    static final String collapsedIcon = "/icons/full/obj16/add_correction.gif";   //$NON-NLS-1$
 
     static boolean      usingColors   = false;
     static boolean      showTools     = false;
@@ -64,9 +65,9 @@ public class R_Throwable extends SWTRenderer {
         while (th != null) {
             String mesg = String.valueOf(th); // th.getMessage();
             if (mesg == null)
-                mesg = "(n/a)";
+                mesg = GUINLS.getString("R_Throwable.n_a"); //$NON-NLS-1$
             if (causeLevel++ != 0)
-                mesg = "Caused by: " + mesg;
+                mesg = GUINLS.getString("R_Throwable.causedBy") + mesg; //$NON-NLS-1$
             final Label swithcerIcon = new Label(comp, SWT.NONE);
             swithcerIcon.setImage(SWTResources.getImageRes(collapsedIcon));
 
@@ -93,7 +94,7 @@ public class R_Throwable extends SWTRenderer {
                 Label entry = new Label(callstackComp, SWT.NONE);
                 String textline = traceElement.toString();
                 entry.setText(textline);
-                errbuf.print("    ");
+                errbuf.print("    "); //$NON-NLS-1$
                 errbuf.println(textline);
                 if (usingColors) {
                     Color bg = entry.getBackground();
@@ -152,7 +153,7 @@ public class R_Throwable extends SWTRenderer {
             final String mailBody = errbuf.toString();
 
             Button copyButton = new Button(tools, SWT.NONE);
-            copyButton.setText("&Copy");
+            copyButton.setText(GUINLS.getString("R_Throwable.copy")); //$NON-NLS-1$
             copyButton.addSelectionListener(new SelectionAdapter() {
                 @Override
                 public void widgetSelected(SelectionEvent e) {
@@ -165,7 +166,7 @@ public class R_Throwable extends SWTRenderer {
                 }
             });
             Button mailButton = new Button(tools, SWT.NONE);
-            mailButton.setText("&Report");
+            mailButton.setText(GUINLS.getString("R_Throwable.report")); //$NON-NLS-1$
             mailButton.addSelectionListener(new SelectionAdapter() {
                 @Override
                 public void widgetSelected(SelectionEvent e) {

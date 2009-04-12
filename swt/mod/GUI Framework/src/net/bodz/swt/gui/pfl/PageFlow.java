@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TextMap.TreeTextMap;
 import net.bodz.swt.gui.ValidateException;
+import net.bodz.swt.nls.GUINLS;
 
 public class PageFlow extends Location {
 
@@ -70,7 +71,8 @@ public class PageFlow extends Location {
 
     public void goBack() {
         if (!has(-1))
-            throw new NoSuchElementException("previous");
+            throw new NoSuchElementException(GUINLS
+                    .getString("PageFlow.noPrevious")); //$NON-NLS-1$
         go(-1);
     }
 
@@ -94,7 +96,8 @@ public class PageFlow extends Location {
     public void goOn() throws ValidateException {
         Page page = getPage();
         if (page == null)
-            throw new IllegalStateException("no current page");
+            throw new IllegalStateException(GUINLS
+                    .getString("PageFlow.noCurrentPage")); //$NON-NLS-1$
         page.validate();
         String next = getPageNext(page);
         set(next);

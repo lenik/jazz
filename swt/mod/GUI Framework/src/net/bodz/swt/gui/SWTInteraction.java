@@ -6,7 +6,6 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 import net.bodz.bas.gui.RenderException;
-import net.bodz.bas.gui._Interaction;
 import net.bodz.bas.lang.err.CancelException;
 import net.bodz.bas.lang.err.CheckException;
 import net.bodz.bas.lang.err.CreateException;
@@ -14,6 +13,7 @@ import net.bodz.bas.lang.err.IllegalUsageError;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.lang.err.ReadOnlyException;
 import net.bodz.bas.lang.ref.Ref;
+import net.bodz.bas.rt._Interaction;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TypeParser;
 import net.bodz.bas.types.TypeParsers;
@@ -23,6 +23,7 @@ import net.bodz.swt.controls.helper.StackComposite;
 import net.bodz.swt.dialogs.SimpleDialog;
 import net.bodz.swt.gui.styles.base.SWTStrategy;
 import net.bodz.swt.gui.styles.grid.SWTGridStrategy;
+import net.bodz.swt.nls.GUINLS;
 import net.bodz.swt.util.SWTResources;
 
 import org.eclipse.swt.SWT;
@@ -42,13 +43,16 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+/**
+ * @test SWTInteractionTest
+ */
 public class SWTInteraction extends _Interaction {
 
-    public static final String ERROR       = "error";
-    public static final String INFORMATION = "information";
-    public static final String QUESTION    = "question";
-    public static final String WARNING     = "warning";
-    public static final String WORKING     = "working";
+    public static final String ERROR       = "error";      //$NON-NLS-1$
+    public static final String INFORMATION = "information"; //$NON-NLS-1$
+    public static final String QUESTION    = "question";   //$NON-NLS-1$
+    public static final String WARNING     = "warning";    //$NON-NLS-1$
+    public static final String WORKING     = "working";    //$NON-NLS-1$
 
     static class Params {
         Object  detail;
@@ -83,17 +87,18 @@ public class SWTInteraction extends _Interaction {
         static final TextMap<String> aliases;
         static {
             aliases = new HashTextMap<String>();
-            aliases.put(ERROR, "");
-            aliases.put(INFORMATION, "");
-            aliases.put(QUESTION, "");
-            aliases.put(WARNING, "");
-            aliases.put(WORKING, "");
+            aliases.put(ERROR, ""); //$NON-NLS-1$
+            aliases.put(INFORMATION, ""); //$NON-NLS-1$
+            aliases.put(QUESTION, ""); //$NON-NLS-1$
+            aliases.put(WARNING, ""); //$NON-NLS-1$
+            aliases.put(WORKING, ""); //$NON-NLS-1$
         }
 
         public void setIcon(String alias) {
             String respath = aliases.get(alias);
             if (respath == null)
-                throw new IllegalArgumentException("invalid icon alias: "
+                throw new IllegalArgumentException(GUINLS
+                        .getString("SWTInteraction.badicon") //$NON-NLS-1$
                         + alias);
             Image image = SWTResources.getImageRes(respath);
             setIcon(image);
@@ -220,7 +225,8 @@ public class SWTInteraction extends _Interaction {
         try {
             parser = TypeParsers.guess(type, true);
         } catch (ParseException e) {
-            throw new IllegalUsageError("non-parsable type: " + type);
+            throw new IllegalUsageError(GUINLS
+                    .getString("SWTInteraction.errparse") + type); //$NON-NLS-1$
         }
         SimpleDialog dialog = new IADialog(parent, style, title) {
             private Text text;

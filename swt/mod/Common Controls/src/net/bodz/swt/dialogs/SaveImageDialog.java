@@ -10,6 +10,7 @@ import net.bodz.bas.lang.err.CreateException;
 import net.bodz.swt.controls.helper.FixSizeComposite;
 import net.bodz.swt.controls.helper.StackComposite;
 import net.bodz.swt.gui.ValidateException;
+import net.bodz.swt.nls.ControlsNLS;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -27,7 +28,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 /**
- * @TestBy SaveImageDialogTest
+ * @test SaveImageDialogTest
  */
 public class SaveImageDialog extends SimpleDialog {
 
@@ -49,7 +50,7 @@ public class SaveImageDialog extends SimpleDialog {
     }
 
     public SaveImageDialog(Shell parent, int style, ImageData image) {
-        super(parent, style, "Save image as...");
+        super(parent, style, ControlsNLS.getString("SaveImageDialog.title")); //$NON-NLS-1$
         this.imageData = image;
     }
 
@@ -62,7 +63,7 @@ public class SaveImageDialog extends SimpleDialog {
         composite.setLayout(gridLayout);
 
         final Label typeLabel = new Label(composite, SWT.NONE);
-        typeLabel.setText("Image &Type:");
+        typeLabel.setText(ControlsNLS.getString("SaveImageDialog.imageType")); //$NON-NLS-1$
 
         imageTypeCombo = new Combo(composite, SWT.READ_ONLY);
         final GridData gd_imageTypeCombo = new GridData();
@@ -77,7 +78,7 @@ public class SaveImageDialog extends SimpleDialog {
         paramsStack.setLayoutData(gd_optionsComposite);
 
         final Label pathLabel = new Label(composite, SWT.NONE);
-        pathLabel.setText("File path: ");
+        pathLabel.setText(ControlsNLS.getString("SaveImageDialog.filePath")); //$NON-NLS-1$
 
         pathText = new Text(composite, SWT.BORDER);
         final GridData gd_pathText = new GridData(SWT.FILL, SWT.CENTER, true,
@@ -85,7 +86,7 @@ public class SaveImageDialog extends SimpleDialog {
         pathText.setLayoutData(gd_pathText);
 
         final Button browseButton = new Button(composite, SWT.NONE);
-        browseButton.setText("&Browse");
+        browseButton.setText(ControlsNLS.getString("SaveImageDialog.browse")); //$NON-NLS-1$
         browseButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -93,8 +94,8 @@ public class SaveImageDialog extends SimpleDialog {
                 assert typeIndex != -1;
                 ImageType type = imageTypes[typeIndex];
                 String ext = type.getExtension();
-                String[] names = { type.getName() + " (*." + ext + ")" };
-                String[] extensions = { "*." + ext };
+                String[] names = { type.getName() + " (*." + ext + ")" }; //$NON-NLS-1$ //$NON-NLS-2$
+                String[] extensions = { "*." + ext }; //$NON-NLS-1$
 
                 FileDialog saveDialog = new FileDialog(getParent(), SWT.SAVE);
                 saveDialog.setFilterNames(names);

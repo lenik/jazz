@@ -6,6 +6,7 @@ import net.bodz.swt.gui.GUIVar;
 import net.bodz.swt.gui.GUIVarMeta;
 import net.bodz.swt.gui.RenderContext;
 import net.bodz.swt.gui.SWTRenderer;
+import net.bodz.swt.nls.GUINLS;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -29,7 +30,7 @@ public abstract class _R_Object extends SWTRenderer {
                 Object value = var.get();
                 if (value == null) {
                     Label label = new Label(parent, style);
-                    label.setText("(null)");
+                    label.setText(GUINLS.getString("_R_Object.null")); //$NON-NLS-1$
                     return control = label;
                 } else {
                     return control = renderObject(var, parent, style);

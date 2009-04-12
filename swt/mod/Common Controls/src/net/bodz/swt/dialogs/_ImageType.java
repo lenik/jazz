@@ -27,7 +27,7 @@ public abstract class _ImageType implements ImageType {
     static void _save(ImageLoader loader, OutputStream out, int format)
             throws IOException {
         if (out == null)
-            throw new NullPointerException("out");
+            throw new NullPointerException("out"); //$NON-NLS-1$
         try {
             loader.save(out, format);
         } catch (SWTException e) {

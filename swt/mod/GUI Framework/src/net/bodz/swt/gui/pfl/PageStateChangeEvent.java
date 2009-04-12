@@ -2,6 +2,8 @@ package net.bodz.swt.gui.pfl;
 
 import java.util.EventObject;
 
+import net.bodz.swt.nls.GUINLS;
+
 public class PageStateChangeEvent extends EventObject {
 
     private static final long serialVersionUID = 6144420226013373314L;
@@ -17,7 +19,7 @@ public class PageStateChangeEvent extends EventObject {
 
     @Override
     public String toString() {
-        return "state changed: " + lastState + " -> " + state;
+        return GUINLS.getString("PageStateChangeEvent.stateChanged") + lastState + " -> " + state; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
 }

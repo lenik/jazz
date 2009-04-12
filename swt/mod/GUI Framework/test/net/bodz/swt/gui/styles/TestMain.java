@@ -31,7 +31,7 @@ public class TestMain extends BasicGUI {
         try {
             main.run();
         } catch (Throwable e) {
-            new SWTInteraction().alert("Error", e);
+            new SWTInteraction().alert("Error", e); //$NON-NLS-1$
         }
     }
 

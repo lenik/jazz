@@ -7,6 +7,7 @@ import net.bodz.swt.gui.GUIVar;
 import net.bodz.swt.gui.SWTRenderer;
 import net.bodz.swt.gui.GUIStructs.GUICallMeta;
 import net.bodz.swt.gui.GUIStructs.GUICallVar;
+import net.bodz.swt.nls.GUINLS;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -32,7 +33,8 @@ public class R_CallObject extends SWTRenderer {
     public Control render(GUIVar<?> var, Composite parent, int style)
             throws RenderException, SWTException {
         if (!(var instanceof GUICallVar))
-            throw new IllegalArgumentException("not GUICallVar: " + var);
+            throw new IllegalArgumentException(GUINLS
+                    .getString("R_CallObject.notGUICallVar") + var); //$NON-NLS-1$
         final GUICallVar callVar = (GUICallVar) var;
         GUICallMeta meta = callVar.getMeta();
         GUIHint hint = meta.getHint();
@@ -64,7 +66,11 @@ public class R_CallObject extends SWTRenderer {
                             opbar.layout();
                         }
                     } catch (ReflectException re) {
-                        rc.interact(button).alert("Failed to invoke call", re);
+                        rc
+                                .interact(button)
+                                .alert(
+                                        GUINLS
+                                                .getString("R_CallObject.failedToCall"), re); //$NON-NLS-1$
                     }
                 }
             });

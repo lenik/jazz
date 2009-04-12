@@ -14,6 +14,7 @@ import net.bodz.bas.lang.ref.Vars.PropertyVar;
 import net.bodz.bas.types.Checker;
 import net.bodz.bas.types.Checks;
 import net.bodz.bas.types.util.Types;
+import net.bodz.swt.nls.GUINLS;
 
 public class GUIVars {
 
@@ -38,8 +39,9 @@ public class GUIVars {
         public void check(Object value) throws CheckException {
             Class<?> type = getType();
             if (value != null && !Types.box(type).isInstance(value))
-                throw new CheckException("Not a instanceof " + type + ": "
-                        + value);
+                throw new CheckException(
+                        GUINLS.getString("GUIVars.notInstOf") + type + ": " //$NON-NLS-1$ //$NON-NLS-2$
+                                + value);
             if (checker != null)
                 checker.check(value);
         }
@@ -90,8 +92,9 @@ public class GUIVars {
         public void check(Object value) throws CheckException {
             Class<?> type = getType();
             if (value != null && !Types.box(type).isInstance(value))
-                throw new CheckException("Not a instanceof " + type + ": "
-                        + value);
+                throw new CheckException(
+                        GUINLS.getString("GUIVars.notInstOf") + type + ": " //$NON-NLS-1$ //$NON-NLS-2$
+                                + value);
             if (checker != null)
                 checker.check(value);
         }
@@ -156,8 +159,9 @@ public class GUIVars {
         public void check(Object value) throws CheckException {
             Class<?> type = getType();
             if (value != null && !Types.box(type).isInstance(value))
-                throw new CheckException("Not a instanceof " + type + ": "
-                        + value);
+                throw new CheckException(
+                        GUINLS.getString("GUIVars.notInstOf") + type + ": " //$NON-NLS-1$ //$NON-NLS-2$
+                                + value);
             if (checker != null)
                 checker.check(value);
         }

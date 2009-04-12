@@ -9,12 +9,12 @@ public class ControlTestAppTest {
 
     public static void main(String[] args) {
         ControlTestApp.test(TestComposite.class);
-        ControlTestApp.test("Button", Button.class, new Proc1<Button>() {
-            @Override
-            public void exec(Button a) {
-                a.setText("Hello, World!");
-            }
-        });
+        ControlTestApp.test("Button", Button.class, new Proc1<Button>() { //$NON-NLS-1$
+                    @Override
+                    public void exec(Button a) {
+                        a.setText("Hello, World!"); //$NON-NLS-1$
+                    }
+                });
     }
 
 }

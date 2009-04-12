@@ -31,7 +31,7 @@ public class SafeButton extends Composite {
             @Override
             public void widgetSelected(final SelectionEvent e) {
                 if (SafeButton.DEBUG)
-                    System.out.println("S enter");
+                    System.out.println("S enter"); //$NON-NLS-1$
                 synchronized (button) {
                     final boolean orig = button.isEnabled();
                     if (orig == false)
@@ -53,7 +53,7 @@ public class SafeButton extends Composite {
                     }.start();
                 }
                 if (DEBUG)
-                    System.out.println("S leave");
+                    System.out.println("S leave"); //$NON-NLS-1$
             }
 
             @Override

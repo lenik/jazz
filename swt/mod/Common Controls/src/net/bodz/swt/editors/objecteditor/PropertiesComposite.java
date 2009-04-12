@@ -26,11 +26,11 @@ public class PropertiesComposite extends Composite {
         button
                 .setImage(SWTResources
                         .getImageRes(PropertiesComposite.class,
-                                "/com/sun/java/swing/plaf/motif/icons/ScrollRightArrowActive.gif"));
-        button.setText("Toggle Button");
+                                "/com/sun/java/swing/plaf/motif/icons/ScrollRightArrowActive.gif")); //$NON-NLS-1$
+        button.setText("Toggle Button"); //$NON-NLS-1$
 
         final Label label = new Label(this, SWT.NONE);
-        label.setText("Label");
+        label.setText("Label"); //$NON-NLS-1$
 
         final Composite composite = new Composite(this, SWT.NONE);
         composite.setLayout(new GridLayout());
@@ -38,7 +38,7 @@ public class PropertiesComposite extends Composite {
         final Composite composite_1 = new Composite(this, SWT.NONE);
 
         final Button button_1 = new Button(composite_1, SWT.NONE);
-        button_1.setText("button");
+        button_1.setText("button"); //$NON-NLS-1$
         new Label(this, SWT.NONE);
         new Label(this, SWT.NONE);
     }
