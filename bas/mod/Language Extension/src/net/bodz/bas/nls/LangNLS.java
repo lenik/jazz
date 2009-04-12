@@ -1,22 +1,18 @@
 package net.bodz.bas.nls;
 
-import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-public class LangNLS {
-    private static final String         BUNDLE_NAME     = "net.bodz.bas.LangNLS";       //$NON-NLS-1$
+import net.bodz.bas.text.locale.NLSAccessor;
 
-    private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
-                                                                .getBundle(BUNDLE_NAME);
+public class LangNLS extends NLSAccessor {
 
-    private LangNLS() {
+    private static final ResourceBundle bundle;
+    static {
+        bundle = ResourceBundle.getBundle(LangNLS.class.getName());
     }
 
     public static String getString(String key) {
-        try {
-            return RESOURCE_BUNDLE.getString(key);
-        } catch (MissingResourceException e) {
-            return '!' + key + '!';
-        }
+        return getString(bundle, key);
     }
+
 }

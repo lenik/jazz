@@ -369,9 +369,9 @@ public class ClassOptions<CT> {
             try {
                 optval = opt.parse(optarg, key);
             } catch (ParseException e) {
-                throw new ParseException(AppNLS.getString("ClassOptions.0") //$NON-NLS-1$
-                        + opt.getCLIName() + AppNLS.getString("ClassOptions.1") + valtype //$NON-NLS-1$
-                        + AppNLS.getString("ClassOptions.2") + optarg, e); //$NON-NLS-1$
+                throw new ParseException(String.format(
+                        "Can't parse option %s of %s with argument %s", opt
+                                .getCLIName(), valtype, optarg), e);
             }
         if (key != null)
             optval = new Pair<String, Object>(key, optval);

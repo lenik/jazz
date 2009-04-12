@@ -481,8 +481,8 @@ public class BatchEditCLI extends BatchCLI {
             boolean canOverwrite = saveLocal || force;
             if (dst.exists() && !canOverwrite) {
                 // user interaction...
-                throw new IllegalStateException(AppNLS.getString("BatchEditCLI.0") + dst //$NON-NLS-1$
-                        + AppNLS.getString("BatchEditCLI.1")); //$NON-NLS-1$
+                throw new IllegalStateException(String.format(
+                        "File %s is already existed. ", dst));
             }
 
             File dstdir = dst.getParentFile();
