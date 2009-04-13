@@ -13,7 +13,7 @@ public class FileFinderTest {
 
     static File srcDir;
     static {
-        srcDir = SJProject.findBase(FileFinderTest.class);
+        srcDir = SJProject.getSrcBase(FileFinderTest.class);
     }
 
     int dump(String title, Iterable<File> files) {

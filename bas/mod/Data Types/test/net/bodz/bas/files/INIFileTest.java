@@ -1,7 +1,8 @@
 package net.bodz.bas.files;
 
 import static net.bodz.bas.files.MapsFileTest.map2str;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import java.net.URL;
 import java.util.Iterator;

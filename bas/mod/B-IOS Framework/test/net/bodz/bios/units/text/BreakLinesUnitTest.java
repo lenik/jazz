@@ -9,7 +9,6 @@ import net.bodz.bas.test.TestDefs;
 import net.bodz.bas.test.TestEval;
 import net.bodz.bas.test._TestEval;
 import net.bodz.bas.types.util.Strings;
-import net.bodz.bios.units.text.BreakLinesUnit;
 import net.bodz.bios.util.WhatIf;
 
 import org.junit.Test;

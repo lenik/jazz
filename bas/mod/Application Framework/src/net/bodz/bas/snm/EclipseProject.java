@@ -45,7 +45,7 @@ public class EclipseProject {
         final String[] _output = new String[1];
         final List<String> outputs = new ArrayList<String>();
         try {
-            XMLs.parseXML(cpFile, new DefaultHandler() {
+            XMLs.parse(cpFile, new DefaultHandler() {
                 @Override
                 public void startElement(String uri, String localName,
                         String name, Attributes attributes) throws SAXException {

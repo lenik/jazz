@@ -1,12 +1,22 @@
 package net.bodz.bas.xml;
 
+import java.beans.ExceptionListener;
+import java.beans.XMLDecoder;
+import java.beans.XMLEncoder;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Reader;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 
 import net.bodz.bas.io.Files;
+import net.bodz.bas.lang.err.DecodeException;
+import net.bodz.bas.lang.err.EncodeException;
+import net.bodz.bas.lang.err.UnexpectedException;
 
 import org.xml.sax.ContentHandler;
 import org.xml.sax.DTDHandler;
@@ -20,26 +30,28 @@ import org.xml.sax.helpers.XMLReaderFactory;
 
 public class XMLs {
 
-    public static void parseXML(File file, Object... handlers)
+    // SAX Parsers
+
+    public static void parse(File file, Object... handlers)
             throws SAXException, IOException {
         assert file != null : "null file"; //$NON-NLS-1$
         URL url = Files.getURL(file);
-        parseXML(new InputSource(url.toString()), handlers);
+        parse(new InputSource(url.toString()), handlers);
     }
 
-    public static void parseXML(Reader reader, Object... handlers)
+    public static void parse(Reader reader, Object... handlers)
             throws SAXException, IOException {
         assert reader != null : "null reader"; //$NON-NLS-1$
-        parseXML(new InputSource(reader), handlers);
+        parse(new InputSource(reader), handlers);
     }
 
-    public static void parseXML(InputStream in, Object... handlers)
+    public static void parse(InputStream in, Object... handlers)
             throws SAXException, IOException {
         assert in != null : "null in"; //$NON-NLS-1$
-        parseXML(new InputSource(in), handlers);
+        parse(new InputSource(in), handlers);
     }
 
-    public static void parseXML(InputSource source, Object... handlers)
+    public static void parse(InputSource source, Object... handlers)
             throws SAXException, IOException {
         assert source != null : "null source"; //$NON-NLS-1$
         XMLReader xmlReader = XMLReaderFactory.createXMLReader();
@@ -64,6 +76,88 @@ public class XMLs {
             }
         }
         xmlReader.parse(source);
+    }
+
+    // XMLEncoder/XMLDecoder
+
+    public static void encode(Object obj, OutputStream out, String encoding,
+            ExceptionListener exceptionListener) {
+        XMLEncoder enc = new XMLEncoder(out, encoding, true, 0);
+        enc.setExceptionListener(exceptionListener);
+        enc.writeObject(obj);
+        enc.close();
+    }
+
+    public static void encode(Object obj, OutputStream out,
+            ExceptionListener exceptionListener) {
+        encode(obj, out, "utf-8", exceptionListener);
+    }
+
+    public static String encode(Object obj, ExceptionListener exceptionListener) {
+        ByteArrayOutputStream buf = new ByteArrayOutputStream();
+        encode(obj, buf, "utf-8", exceptionListener);
+        String xml;
+        try {
+            xml = buf.toString("utf-8"); //$NON-NLS-1$
+        } catch (UnsupportedEncodingException e) {
+            throw new UnexpectedException(e);
+        }
+        return xml;
+    }
+
+    public static void encode(Object obj, OutputStream out)
+            throws EncodeException {
+        ExceptionBuffer eb = new ExceptionBuffer();
+        encode(obj, out, eb);
+        String errmesg = eb.summary();
+        if (errmesg != null)
+            throw new EncodeException(errmesg);
+    }
+
+    public static String encode(Object obj) throws EncodeException {
+        ExceptionBuffer eb = new ExceptionBuffer();
+        String xml = encode(obj, eb);
+        String errmesg = eb.summary();
+        if (errmesg != null)
+            throw new EncodeException(errmesg);
+        return xml;
+    }
+
+    public static Object decode(InputStream in,
+            ExceptionListener exceptionListener) {
+        XMLDecoder decoder = new XMLDecoder(in, exceptionListener);
+        Object obj = decoder.readObject();
+        decoder.close();
+        return obj;
+    }
+
+    public static Object decode(InputStream in) throws DecodeException {
+        ExceptionBuffer eb = new ExceptionBuffer();
+        Object obj = decode(in, eb);
+        String errmesg = eb.summary();
+        if (errmesg != null)
+            throw new DecodeException(errmesg);
+        return obj;
+    }
+
+    public static Object decode(String xml, ExceptionListener exceptionListener) {
+        byte[] bytes;
+        try {
+            bytes = xml.getBytes("utf-8");
+        } catch (UnsupportedEncodingException e) {
+            throw new UnexpectedException(e);
+        }
+        ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+        return decode(in, exceptionListener);
+    }
+
+    public static Object decode(String xml) throws DecodeException {
+        ExceptionBuffer eb = new ExceptionBuffer();
+        Object obj = decode(xml, eb);
+        String errmesg = eb.summary();
+        if (errmesg != null)
+            throw new DecodeException(errmesg);
+        return obj;
     }
 
 }

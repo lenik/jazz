@@ -9,6 +9,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -139,6 +140,21 @@ public class FilesTest {
             System.out.println("no match"); //$NON-NLS-1$
         else
             System.out.println(Strings.join("\n", find)); //$NON-NLS-1$
+    }
+
+    @Test
+    public void testGetFile2() throws IOException {
+        Class<?>[] classes = {
+        //
+                getClass(),// 
+                String.class, //
+        };
+        for (Class<?> clazz : classes) {
+            String p = clazz.getName().replace('.', '/') + ".class";
+            URL url = Files.classData(clazz);
+            File file = Files.getFile(url, p);
+            System.out.println(clazz + " -> " + file);
+        }
     }
 
 }
