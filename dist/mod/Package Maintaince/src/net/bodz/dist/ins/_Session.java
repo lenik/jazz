@@ -1,16 +1,26 @@
 package net.bodz.dist.ins;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import net.bodz.bas.io.FileResFolder;
+import net.bodz.bas.io.FileResLink;
+import net.bodz.bas.io.Files;
+import net.bodz.bas.io.ResFolder;
+import net.bodz.bas.io.ResLink;
+import net.bodz.bas.io.URLResLink;
+import net.bodz.bas.lang.err.UnexpectedException;
 import net.bodz.bas.log.ALog;
 import net.bodz.bas.types.LinkedStack;
 import net.bodz.bas.types.Stack;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TextMap.DerHashTextMap;
 import net.bodz.bas.types.TextMap.HashTextMap;
+import net.bodz.bas.types.TextMap.TreeTextMap;
 import net.bodz.dist.ins.util.Flags;
 
 public abstract class _Session implements ISession, ProgressChangeListener {
@@ -26,6 +36,7 @@ public abstract class _Session implements ISession, ProgressChangeListener {
     private DerHashTextMap<Object> vars;
     private TextMap<File>          baseDirs;
 
+    private ResFolder              resFolder;
     private List<File>             searchPaths;
     private List<ClassLoader>      searchLoaders;
     private File                   attachmentDir;
@@ -43,8 +54,9 @@ public abstract class _Session implements ISession, ProgressChangeListener {
     public _Session(IProject project, TextMap<Object> env, int logLevel) {
         if (project == null)
             throw new NullPointerException("project"); //$NON-NLS-1$
-        if (env == null)
-            throw new NullPointerException("env"); //$NON-NLS-1$
+        if (env == null) {
+            env = new TreeTextMap<Object>();
+        }
         this.project = project;
         this.logLevel = logLevel;
         components = Components.collect(project);
@@ -56,6 +68,7 @@ public abstract class _Session implements ISession, ProgressChangeListener {
         for (BaseDir baseDir : project.getBaseDirs())
             baseDirs.put(baseDir.getName(), baseDir.getPreferred());
 
+        setResFolder(Files.canoniOf("."));
         searchPaths = new ArrayList<File>();
         searchPaths.add(new File(".")); //$NON-NLS-1$
         searchLoaders = new ArrayList<ClassLoader>();
@@ -183,20 +196,46 @@ public abstract class _Session implements ISession, ProgressChangeListener {
     }
 
     @Override
-    public ResourceUnion findResource(String path) {
+    public ResFolder getResFolder() {
+        return resFolder;
+    }
+
+    @Override
+    public void setResFolder(ResFolder resFolder) {
+        this.resFolder = resFolder;
+    }
+
+    public void setResFolder(File dir) {
+        if (dir == null)
+            throw new NullPointerException("dir");
+        FileResFolder folder = new FileResFolder(dir);
+        folder.setAutoMkdirs(true);
+        setResFolder(folder);
+    }
+
+    @Override
+    public ResLink newResource(String resPath) throws IOException {
+        return resFolder.get(resPath);
+    }
+
+    @Override
+    public ResLink findResource(String path) throws IOException {
         // if path.isAsbolute...
+        ResLink link = resFolder.get(path);
+        if (link.exists() == Boolean.TRUE)
+            return link;
         for (File searchPath : searchPaths) {
             File foundFile = new File(searchPath, path);
             if (foundFile.isFile())
-                return new ResourceUnion(foundFile);
+                return new FileResLink(foundFile);
         }
         for (ClassLoader loader : searchLoaders) {
             URL resURL = loader.getResource(path);
             if (resURL != null)
-                return new ResourceUnion(resURL);
+                return new URLResLink(resURL);
         }
         File newFile = new File(attachmentDir, path);
-        return new ResourceUnion(newFile);
+        return new FileResLink(newFile);
     }
 
     protected String getAttachmentPath(String name) {
@@ -204,20 +243,52 @@ public abstract class _Session implements ISession, ProgressChangeListener {
     }
 
     @Override
-    public IAttachment getAttachment(String name) {
+    public IAttachment getAttachment(String name) throws IOException {
         String path = getAttachmentPath(name);
-        ResourceUnion res = findResource(path);
+        ResLink res = findResource(path);
         Attachment a = new Attachment(res, "utf-8"); //$NON-NLS-1$
         return a;
     }
 
-    protected void enter(IComponent component, int parentUnits) {
-        stack.push(component);
-        vars = new DerHashTextMap<Object>(vars);
-        progress = new TreeProgress(progress, parentUnits, 0);
+    static final int PACK      = 1;
+    static final int INSTALL   = 2;
+    static final int UNINSTALL = 3;
+
+    synchronized void execute(int action) throws InstallException {
+        execute(action, project);
     }
 
-    protected void leave() {
+    void execute(int action, IComponent node) throws InstallException {
+        // enter
+        stack.push(node);
+        vars = new DerHashTextMap<Object>(vars);
+        progress = new TreeProgress(progress, 1, 0);
+
+        node.pack(this);
+        switch (action) {
+        case PACK:
+            node.pack(this);
+            break;
+        case INSTALL:
+            boolean succeeded = node.install(this);
+            if (succeeded) {
+                // included for next time uninstall.
+            }
+            break;
+        case UNINSTALL:
+            node.uninstall(this);
+            break;
+        default:
+            throw new UnexpectedException("Bad action: " + action);
+        }
+        Collection<IComponent> children = node.getChildren();
+        if (children == null)
+            throw new NullPointerException("children");
+        for (IComponent child : children) {
+            execute(action, child);
+        }
+
+        // leave
         stack.pop();
         vars = (DerHashTextMap<Object>) vars.getOrig();
         int parentUnits = progress.getParentUnits();
@@ -226,27 +297,18 @@ public abstract class _Session implements ISession, ProgressChangeListener {
     }
 
     @Override
-    public void pack(IComponent component, int parentUnits)
-            throws InstallException {
-        enter(component, parentUnits);
-        component.install(this);
-        leave();
+    public void pack() throws InstallException {
+        execute(PACK);
     }
 
     @Override
-    public void install(IComponent component, int parentUnits)
-            throws InstallException {
-        enter(component, parentUnits);
-        component.install(this);
-        leave();
+    public void install() throws InstallException {
+        execute(INSTALL);
     }
 
     @Override
-    public void uninstall(IComponent component, int parentUnits)
-            throws InstallException {
-        enter(component, parentUnits);
-        component.uninstall(this);
-        leave();
+    public void uninstall() throws InstallException {
+        execute(UNINSTALL);
     }
 
 }

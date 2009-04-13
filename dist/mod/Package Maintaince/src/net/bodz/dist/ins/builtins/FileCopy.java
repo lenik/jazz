@@ -69,7 +69,12 @@ public class FileCopy extends _Component {
     IAttachment getAttachment(ISession session) {
         String id = getId();
         String aname = base + "/" + id + ".jar"; //$NON-NLS-1$ //$NON-NLS-2$
-        IAttachment a = session.getAttachment(aname);
+        IAttachment a;
+        try {
+            a = session.getAttachment(aname);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return a;
     }
 
@@ -117,7 +122,10 @@ public class FileCopy extends _Component {
                 File dest = new File(baseDir, name);
                 File destdir = dest.getParentFile();
                 if (!destdir.isDirectory()) {
-                    session.logDetail(PackNLS.getString("FileCopy.createDirectory"), destdir, "/"); //$NON-NLS-1$ //$NON-NLS-2$
+                    session
+                            .logDetail(
+                                    PackNLS
+                                            .getString("FileCopy.createDirectory"), destdir, "/"); //$NON-NLS-1$ //$NON-NLS-2$
                     destdir.mkdirs();
                 }
                 session.logInfo(PackNLS.getString("FileCopy.extract"), dest); //$NON-NLS-1$
@@ -130,7 +138,8 @@ public class FileCopy extends _Component {
                         int cb = (int) Math.min(blockSize, remaining);
                         cb = zin.read(block, 0, cb);
                         if (cb == -1)
-                            throw new IOException(PackNLS.getString("FileCopy.unexpectedEOF") //$NON-NLS-1$
+                            throw new IOException(PackNLS
+                                    .getString("FileCopy.unexpectedEOF") //$NON-NLS-1$
                                     + name);
                         out.write(block, 0, cb);
                         remaining -= cb;
@@ -140,7 +149,8 @@ public class FileCopy extends _Component {
                 }
             }
         } catch (IOException e) {
-            throw new InstallException(PackNLS.getString("FileCopy.errorExtract") + a, e); //$NON-NLS-1$
+            throw new InstallException(PackNLS
+                    .getString("FileCopy.errorExtract") + a, e); //$NON-NLS-1$
         } finally {
             try {
                 zin.close();
@@ -169,7 +179,8 @@ public class FileCopy extends _Component {
                 }
             }
         } catch (IOException e) {
-            throw new InstallException(PackNLS.getString("FileCopy.errorRead") + a, e); //$NON-NLS-1$
+            throw new InstallException(
+                    PackNLS.getString("FileCopy.errorRead") + a, e); //$NON-NLS-1$
         } finally {
             try {
                 zin.close();

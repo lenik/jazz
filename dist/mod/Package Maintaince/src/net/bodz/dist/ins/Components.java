@@ -1,19 +1,11 @@
 package net.bodz.dist.ins;
 
-import java.beans.XMLDecoder;
-import java.beans.XMLEncoder;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.Collection;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import net.bodz.bas.lang.err.UnexpectedException;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TextMap.TreeTextMap;
-import net.bodz.dist.ins.util.ExceptionBuffer;
 import net.bodz.dist.nls.PackNLS;
 
 /**
@@ -78,10 +70,11 @@ public class Components extends TreeTextMap<IComponent> {
             Object data = e.getValue();
             IComponent component = get(id);
             if (component != null)
-                component.setData(data);
-            else if (strict)
-                throw new NoSuchElementException(PackNLS.getString("Components.compNotExist") + id //$NON-NLS-1$
-                        + ") isn't existed"); //$NON-NLS-1$
+                component.setRegistryData(data);
+            else if (strict) {
+                throw new NoSuchElementException(String.format(PackNLS
+                        .getString("Components.compNotDefined"), id)); //$NON-NLS-1$
+            }
         }
     }
 
@@ -90,49 +83,11 @@ public class Components extends TreeTextMap<IComponent> {
         for (Map.Entry<String, IComponent> e : entrySet()) {
             String id = e.getKey();
             IComponent component = e.getValue();
-            Object data = component.getData();
+            Object data = component.getRegistryData();
             if (data != null)
                 registry.put(id, data);
         }
         return registry;
-    }
-
-    public Collection<Exception> load(InputStream in) {
-        XMLDecoder decoder = new XMLDecoder(in);
-        ExceptionBuffer eb = new ExceptionBuffer();
-        decoder.setExceptionListener(eb);
-        Object obj = decoder.readObject();
-        decoder.close();
-        @SuppressWarnings("unchecked")
-        Map<String, Object> registry = (Map<String, Object>) obj;
-        importRegistry(registry);
-        return eb.getExceptions();
-    }
-
-    public Collection<Exception> dump(OutputStream out) {
-        TextMap<Object> registry = exportRegistry();
-        XMLEncoder enc = new XMLEncoder(out, "utf-8", true, 4); //$NON-NLS-1$
-        ExceptionBuffer eb = new ExceptionBuffer();
-        enc.setExceptionListener(eb);
-        enc.writeObject(registry);
-        enc.close();
-        return eb.getExceptions();
-    }
-
-    public String dump() throws InstallException {
-        ByteArrayOutputStream buf = new ByteArrayOutputStream();
-        Collection<Exception> ex = dump(buf);
-        if (!ex.isEmpty()) {
-            String summary = ExceptionBuffer.summary(ex);
-            throw new InstallException(summary);
-        }
-        String xml;
-        try {
-            xml = buf.toString("utf-8"); //$NON-NLS-1$
-        } catch (UnsupportedEncodingException e) {
-            throw new UnexpectedException(e);
-        }
-        return xml;
     }
 
 }

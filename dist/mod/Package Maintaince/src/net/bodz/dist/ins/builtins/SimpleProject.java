@@ -64,7 +64,9 @@ public class SimpleProject extends _Project {
         add(new ChooseScheme());
         add(new CustomConfig());
 
-        BaseDir programBase = new BaseDir(PROGRAMS, findProgramsDir(), //
+        BaseDir programBase = new BaseDir(
+                PROGRAMS,
+                findProgramsDir(),
                 "Program Files", PackNLS.getString("SimpleProject.doc.programs")); //$NON-NLS-1$ //$NON-NLS-2$
         addBaseDir(programBase);
     }

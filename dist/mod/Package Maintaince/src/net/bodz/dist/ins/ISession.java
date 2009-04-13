@@ -1,7 +1,10 @@
 package net.bodz.dist.ins;
 
 import java.io.File;
+import java.io.IOException;
 
+import net.bodz.bas.io.ResFolder;
+import net.bodz.bas.io.ResLink;
 import net.bodz.bas.rt.Interaction;
 import net.bodz.dist.ins.util.Flags;
 
@@ -57,18 +60,23 @@ public interface ISession {
 
     void setBaseDir(String name, File dir);
 
-    ResourceUnion findResource(String resourcePath);
+    ResFolder getResFolder();
+
+    void setResFolder(ResFolder resFolder);
+
+    ResLink newResource(String resPath) throws IOException;
+
+    ResLink findResource(String resPath) throws IOException;
 
     /**
      * @return should always be non-<code>null</code>
      */
-    IAttachment getAttachment(String name);
+    IAttachment getAttachment(String name) throws IOException;
 
-    void pack(IComponent component, int parentUnits) throws InstallException;
+    void pack() throws InstallException;
 
-    void install(IComponent component, int parentUnits) throws InstallException;
+    void install() throws InstallException;
 
-    void uninstall(IComponent component, int parentUnits)
-            throws InstallException;
+    void uninstall() throws InstallException;
 
 }
