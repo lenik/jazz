@@ -11,13 +11,13 @@ import net.bodz.dist.ins.Schemes.Custom;
 import net.bodz.dist.ins.Schemes.Maximum;
 import net.bodz.dist.ins.Schemes.Minimum;
 import net.bodz.dist.ins.Schemes.Standard;
-import net.bodz.dist.ins.builtins.Section;
+import net.bodz.dist.ins.builtins.RequiredSection;
 import net.bodz.dist.ins.lic.License;
 import net.bodz.swt.util.SWTResources;
 
 import org.eclipse.swt.graphics.ImageData;
 
-public class _Project extends Section implements IProject {
+public class _Project extends RequiredSection implements IProject {
 
     private ImageData     logo;
     private String        version;
@@ -26,8 +26,8 @@ public class _Project extends Section implements IProject {
 
     private List<BaseDir> baseDirs;
 
-    public _Project(Class<?> clazz) {
-        super(true, null, null, null);
+    public _Project(Class<?> clazz, IComponent... children) {
+        super("root", "Project Root", children);
         if (clazz != null)
             loadInfo(clazz);
         this.baseDirs = new ArrayList<BaseDir>();
@@ -40,12 +40,14 @@ public class _Project extends Section implements IProject {
             logo = SWTResources.getImageDataRes(clazz, respath);
         }
         ClassInfo info = ClassInfo.get(clazz);
-        name = clazz.getName();
-        text = A_bas.getDisplayName(getClass());
-        doc = info.getDoc();
+        setName(clazz.getName());
+        setText(A_bas.getDisplayName(getClass()));
+        setDoc(info.getDoc());
         URL iconURL = info.getIcon();
-        if (iconURL != null)
-            image = SWTResources.getImageData(iconURL);
+        if (iconURL != null) {
+            ImageData icon = SWTResources.getImageData(iconURL);
+            setImage(icon);
+        }
         version = info.getVersionString();
         company = info.getAuthor();
         updateTime = info.getDateString();
@@ -87,13 +89,22 @@ public class _Project extends Section implements IProject {
         return commons;
     }
 
-    protected void addBaseDir(BaseDir baseDir) {
-        baseDirs.add(baseDir);
-    }
-
     @Override
     public BaseDir[] getBaseDirs() {
         return baseDirs.toArray(new BaseDir[0]);
+    }
+
+    protected BaseDir getBaseDir(String base) {
+        assert base != null : "base";
+        for (BaseDir baseDir : baseDirs) {
+            if (base.equals(baseDir.getName()))
+                return baseDir;
+        }
+        return null;
+    }
+
+    protected void addBaseDir(BaseDir baseDir) {
+        baseDirs.add(baseDir);
     }
 
 }

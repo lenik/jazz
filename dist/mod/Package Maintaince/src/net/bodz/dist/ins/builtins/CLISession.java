@@ -16,6 +16,10 @@ public class CLISession extends _Session {
     LogOut         out = LogOuts.stdout;
     LogOut         err = LogOuts.stderr;
 
+    public CLISession(IProject project) {
+        this(project, null, INFO);
+    }
+
     public CLISession(IProject project, TextMap<Object> env, int logLevel) {
         super(project, env, logLevel);
         iact = new CLIInteraction();

@@ -1,127 +1,112 @@
 package net.bodz.dist.ins;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.io.Reader;
 import java.io.Writer;
-import java.net.URL;
 import java.util.jar.JarInputStream;
 import java.util.jar.JarOutputStream;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
+import net.bodz.bas.io.ResLink;
 import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.dist.nls.PackNLS;
 
 public class Attachment implements IAttachment {
 
-    final URL    url;
-    final File   file;
-    final String encoding;
+    final ResLink link;
+    final String  encoding;
 
-    StateBase    stated;
+    StateBase     stated;
 
-    public Attachment(ResourceUnion res) {
-        this(res.getURL(), res.getFile());
+    public Attachment(ResLink link) {
+        this(link, null);
     }
 
-    public Attachment(ResourceUnion res, String encoding) {
-        this(res.getURL(), res.getFile(), encoding);
-    }
-
-    public Attachment(URL url, File file) {
-        this(url, file, null);
-    }
-
-    public Attachment(URL url, File file, String encoding) {
-        this.url = url;
-        this.file = file;
+    public Attachment(ResLink link, String encoding) {
+        this.link = link;
         this.encoding = encoding;
     }
 
     @Override
     public Reader getReader() throws IOException {
         if (stated == null)
-            stated = new UsingReader(url, encoding);
+            stated = new UsingReader(link, encoding);
         return stated.getReader();
     }
 
     @Override
     public Writer getWriter() throws IOException {
         if (stated == null)
-            stated = new UsingWriter(file, encoding);
+            stated = new UsingWriter(link, encoding);
         return stated.getWriter();
     }
 
     @Override
     public InputStream getIn() throws IOException {
         if (stated == null)
-            stated = new UsingInputStream(url);
+            stated = new UsingInputStream(link);
         return stated.getIn();
     }
 
     @Override
     public PrintStream getOut() throws IOException {
         if (stated == null)
-            stated = new UsingPrintStream(file, encoding);
+            stated = new UsingPrintStream(link, encoding);
         return stated.getOut();
     }
 
     @Override
     public OutputStream _getOut() throws IOException {
         if (stated == null)
-            stated = new UsingOutputStream(file);
+            stated = new UsingOutputStream(link);
         return stated._getOut();
     }
 
     @Override
     public ObjectInputStream getObjectIn() throws IOException {
         if (stated == null)
-            stated = new UsingObjectInputStream(url);
+            stated = new UsingObjectInputStream(link);
         return stated.getObjectIn();
     }
 
     @Override
     public ObjectOutputStream getObjectOut() throws IOException {
         if (stated == null)
-            stated = new UsingObjectOutputStream(file);
+            stated = new UsingObjectOutputStream(link);
         return stated.getObjectOut();
     }
 
     @Override
     public ZipInputStream getZipIn() throws IOException {
         if (stated == null)
-            stated = new UsingZipInputStream(url);
+            stated = new UsingZipInputStream(link);
         return stated.getZipIn();
     }
 
     @Override
     public ZipOutputStream getZipOut() throws IOException {
         if (stated == null)
-            stated = new UsingZipOutputStream(file);
+            stated = new UsingZipOutputStream(link);
         return stated.getZipOut();
     }
 
     @Override
     public JarInputStream getJarIn() throws IOException {
         if (stated == null)
-            stated = new UsingJarInputStream(url);
+            stated = new UsingJarInputStream(link);
         return stated.getJarIn();
     }
 
     @Override
     public JarOutputStream getJarOut() throws IOException {
         if (stated == null)
-            stated = new UsingJarOutputStream(file);
+            stated = new UsingJarOutputStream(link);
         return stated.getJarOut();
     }
 
@@ -141,18 +126,17 @@ public class Attachment implements IAttachment {
     @Override
     public String toString() {
         String s = PackNLS.getString("Attachment.attachment"); //$NON-NLS-1$
-        if (url != null && file == null)
-            s += url;
-        else
-            s += file;
+        s += link.toString();
         return s;
     }
 
     public abstract static class StateBase implements IAttachment {
 
-        protected String error;
+        protected final ResLink link;
+        protected final String  error;
 
-        public StateBase(String accessType) {
+        public StateBase(ResLink link, String accessType) {
+            this.link = link;
             this.error = PackNLS.getString("Attachment.currentlyAccess") + accessType; //$NON-NLS-1$
         }
 
@@ -219,18 +203,16 @@ public class Attachment implements IAttachment {
 
     static class UsingInputStream extends StateBase {
 
-        final URL   url;
         InputStream in;
 
-        public UsingInputStream(URL url) {
-            super("InputStream"); //$NON-NLS-1$
-            this.url = url;
+        public UsingInputStream(ResLink link) {
+            super(link, "InputStream"); //$NON-NLS-1$
         }
 
         @Override
         public InputStream getIn() throws IOException {
             if (in == null)
-                in = url.openStream();
+                in = link.openInputStream();
             return in;
         }
 
@@ -246,25 +228,18 @@ public class Attachment implements IAttachment {
 
     static class UsingReader extends StateBase {
 
-        final URL    url;
         final String encoding;
         Reader       reader;
 
-        public UsingReader(URL url, String encoding) {
-            super("Reader"); //$NON-NLS-1$
-            this.url = url;
+        public UsingReader(ResLink link, String encoding) {
+            super(link, "Reader"); //$NON-NLS-1$
             this.encoding = encoding;
         }
 
         @Override
         public Reader getReader() throws IOException {
-            if (reader == null) {
-                InputStream in = url.openStream();
-                if (encoding == null)
-                    reader = new InputStreamReader(in);
-                else
-                    reader = new InputStreamReader(in, encoding);
-            }
+            if (reader == null)
+                reader = link.openReader(encoding);
             return reader;
         }
 
@@ -280,18 +255,16 @@ public class Attachment implements IAttachment {
 
     static class UsingObjectInputStream extends StateBase {
 
-        final URL         url;
         ObjectInputStream objin;
 
-        public UsingObjectInputStream(URL url) {
-            super("ObjectInputStream"); //$NON-NLS-1$
-            this.url = url;
+        public UsingObjectInputStream(ResLink link) {
+            super(link, "ObjectInputStream"); //$NON-NLS-1$
         }
 
         @Override
         public ObjectInputStream getObjectIn() throws IOException {
             if (objin == null) {
-                InputStream in = url.openStream();
+                InputStream in = link.openInputStream();
                 objin = new ObjectInputStream(in);
             }
             return objin;
@@ -309,18 +282,16 @@ public class Attachment implements IAttachment {
 
     static class UsingZipInputStream extends StateBase {
 
-        final URL      url;
         ZipInputStream zin;
 
-        public UsingZipInputStream(URL url) {
-            super("ZipInputStream"); //$NON-NLS-1$
-            this.url = url;
+        public UsingZipInputStream(ResLink link) {
+            super(link, "ZipInputStream"); //$NON-NLS-1$
         }
 
         @Override
         public ZipInputStream getZipIn() throws IOException {
             if (zin == null) {
-                InputStream in = url.openStream();
+                InputStream in = link.openInputStream();
                 zin = new ZipInputStream(in);
             }
             return zin;
@@ -338,18 +309,16 @@ public class Attachment implements IAttachment {
 
     static class UsingJarInputStream extends StateBase {
 
-        final URL      url;
         JarInputStream jin;
 
-        public UsingJarInputStream(URL url) {
-            super("JarInputStream"); //$NON-NLS-1$
-            this.url = url;
+        public UsingJarInputStream(ResLink link) {
+            super(link, "JarInputStream"); //$NON-NLS-1$
         }
 
         @Override
         public JarInputStream getJarIn() throws IOException {
             if (jin == null) {
-                InputStream in = url.openStream();
+                InputStream in = link.openInputStream();
                 jin = new JarInputStream(in);
             }
             return jin;
@@ -367,19 +336,16 @@ public class Attachment implements IAttachment {
 
     static class UsingOutputStream extends StateBase {
 
-        final File   file;
         OutputStream out;
 
-        public UsingOutputStream(File file) {
-            super("OutputStream"); //$NON-NLS-1$
-            this.file = file;
+        public UsingOutputStream(ResLink link) {
+            super(link, "OutputStream"); //$NON-NLS-1$
         }
 
         @Override
         public OutputStream _getOut() throws IOException {
-            if (out == null) {
-                out = new FileOutputStream(file);
-            }
+            if (out == null)
+                out = link.openOutputStream(false);
             return out;
         }
 
@@ -395,20 +361,18 @@ public class Attachment implements IAttachment {
 
     static class UsingPrintStream extends StateBase {
 
-        final File   file;
         final String encoding;
         PrintStream  out;
 
-        public UsingPrintStream(File file, String encoding) {
-            super("OutputStream"); //$NON-NLS-1$
-            this.file = file;
+        public UsingPrintStream(ResLink link, String encoding) {
+            super(link, "OutputStream"); //$NON-NLS-1$
             this.encoding = encoding;
         }
 
         @Override
         public PrintStream getOut() throws IOException {
             if (out == null) {
-                OutputStream _out = new FileOutputStream(file);
+                OutputStream _out = link.openOutputStream(false);
                 if (encoding == null)
                     out = new PrintStream(_out);
                 else
@@ -429,26 +393,18 @@ public class Attachment implements IAttachment {
 
     static class UsingWriter extends StateBase {
 
-        final File   file;
         final String encoding;
         Writer       writer;
 
-        public UsingWriter(File file, String encoding) {
-            super("Writer"); //$NON-NLS-1$
-            this.file = file;
+        public UsingWriter(ResLink link, String encoding) {
+            super(link, "Writer"); //$NON-NLS-1$
             this.encoding = encoding;
         }
 
         @Override
         public Writer getWriter() throws IOException {
-            if (writer == null) {
-                if (encoding == null)
-                    writer = new FileWriter(file);
-                else {
-                    OutputStream out = new FileOutputStream(file);
-                    writer = new OutputStreamWriter(out, encoding);
-                }
-            }
+            if (writer == null)
+                writer = link.openWriter(false, encoding);
             return writer;
         }
 
@@ -464,18 +420,16 @@ public class Attachment implements IAttachment {
 
     static class UsingObjectOutputStream extends StateBase {
 
-        final File         file;
         ObjectOutputStream objout;
 
-        public UsingObjectOutputStream(File file) {
-            super("ObjectOutputStream"); //$NON-NLS-1$
-            this.file = file;
+        public UsingObjectOutputStream(ResLink link) {
+            super(link, "ObjectOutputStream"); //$NON-NLS-1$
         }
 
         @Override
         public ObjectOutputStream getObjectOut() throws IOException {
             if (objout == null) {
-                OutputStream out = new FileOutputStream(file);
+                OutputStream out = link.openOutputStream(false);
                 objout = new ObjectOutputStream(out);
             }
             return objout;
@@ -493,18 +447,16 @@ public class Attachment implements IAttachment {
 
     static class UsingZipOutputStream extends StateBase {
 
-        final File      file;
         ZipOutputStream zout;
 
-        public UsingZipOutputStream(File file) {
-            super("ZipOutputStream"); //$NON-NLS-1$
-            this.file = file;
+        public UsingZipOutputStream(ResLink link) {
+            super(link, "ZipOutputStream"); //$NON-NLS-1$
         }
 
         @Override
         public ZipOutputStream getZipOut() throws IOException {
             if (zout == null) {
-                OutputStream out = new FileOutputStream(file);
+                OutputStream out = link.openOutputStream(false);
                 zout = new ZipOutputStream(out);
             }
             return zout;
@@ -522,18 +474,16 @@ public class Attachment implements IAttachment {
 
     static class UsingJarOutputStream extends StateBase {
 
-        final File      file;
         JarOutputStream jout;
 
-        public UsingJarOutputStream(File file) {
-            super("JarOutputStream"); //$NON-NLS-1$
-            this.file = file;
+        public UsingJarOutputStream(ResLink link) {
+            super(link, "JarOutputStream"); //$NON-NLS-1$
         }
 
         @Override
         public ZipOutputStream getZipOut() throws IOException {
             if (jout == null) {
-                OutputStream out = new FileOutputStream(file);
+                OutputStream out = link.openOutputStream(false);
                 jout = new JarOutputStream(out);
             }
             return jout;

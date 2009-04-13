@@ -13,9 +13,9 @@ public interface IComponent {
     /** Instance variable */
     void setId(String id);
 
-    String getName();
-
     ImageData getImage();
+
+    String getName();
 
     String getText();
 
@@ -33,15 +33,15 @@ public interface IComponent {
 
     boolean isReadOnly();
 
-    int getSize();
-
-    int getMoreSize();
-
     /** Initial selection */
     boolean getSelection();
 
     /** Instance variable */
     void setSelection(boolean selection);
+
+    int getSize();
+
+    int getMoreSize();
 
     /**
      * @return <code>null</code> if none.
@@ -52,23 +52,23 @@ public interface IComponent {
      * @return component names this component required. <code>null</code> if
      *         none.
      */
-    String[] getDependancy();
-
-    boolean hasConfig();
-
-    ConfigPage createConfig(ISession session, Composite parent, int style);
+    Collection<IComponent> getDependancy();
 
     /**
      * called by packager, after {@link #pack(ISession)}, the data is then
      * persisted.
      */
-    Object getData();
+    Object getRegistryData();
 
     /**
      * called by installer/uninstaller, before {@link #install(ISession)} and
      * {@link #uninstall(ISession)}
      */
-    void setData(Object data);
+    void setRegistryData(Object data);
+
+    boolean hasConfig();
+
+    ConfigPage createConfig(ISession session, Composite parent, int style);
 
     /**
      * This method won't be called if the component doesn't have data.
