@@ -5,12 +5,12 @@ import static net.bodz.bas.test.TestDefs.EQ;
 
 import java.util.Collection;
 
-import org.junit.Test;
-
 import net.bodz.bas.test.TestDefs;
 import net.bodz.bas.test._TestEval;
 import net.bodz.bas.types.util.Strings;
 import net.bodz.bios.util.WhatIf;
+
+import org.junit.Test;
 
 public class BreakOrCutLinesUnitTest {
 

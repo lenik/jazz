@@ -1,5 +1,7 @@
 package net.bodz.bas.text.encodings;
 
+import static net.bodz.bas.types.util.ArrayOps.Bytes;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,7 +13,6 @@ import java.io.Writer;
 
 import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.err.ParseException;
-import static net.bodz.bas.types.util.ArrayOps.Bytes;
 
 public abstract class _Encoding implements Encoding {
 

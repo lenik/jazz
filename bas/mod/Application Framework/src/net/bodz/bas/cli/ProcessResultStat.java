@@ -91,7 +91,7 @@ public class ProcessResultStat {
         String ignores = ""; //$NON-NLS-1$
         if (ignored > 0)
             ignores = "(" + ignored + AppNLS.getString("ProcessResultStat.ignored_"); //$NON-NLS-1$ //$NON-NLS-2$
-        out.printf("Total %d/%d%s files changed, %d saved, %d error. \n",
+        out.printf(AppNLS.getString("ProcessResultStat.stat_ddsdd"), //$NON-NLS-1$
                 changed, total, ignores, saved, errorred);
     }
 
@@ -103,7 +103,7 @@ public class ProcessResultStat {
         out.print(tab);
         out
                 .printf(
-                        "%"     + (NAMECOLUMN - indent) + AppNLS.getString("ProcessResultStat.2"), name, value); //$NON-NLS-1$ //$NON-NLS-2$
+                        "%"     + (NAMECOLUMN - indent) + "", name, value); //$NON-NLS-1$ //$NON-NLS-2$
         if (value > 1)
             out.print('s');
         if (value2 != null) {

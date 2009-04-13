@@ -370,7 +370,7 @@ public class ClassOptions<CT> {
                 optval = opt.parse(optarg, key);
             } catch (ParseException e) {
                 throw new ParseException(String.format(
-                        "Can't parse option %s of %s with argument %s", opt
+                        AppNLS.getString("ClassOptions.cantPartOption_sss"), opt //$NON-NLS-1$
                                 .getCLIName(), valtype, optarg), e);
             }
         if (key != null)

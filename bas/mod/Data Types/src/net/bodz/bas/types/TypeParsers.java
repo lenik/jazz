@@ -14,7 +14,6 @@ import net.bodz.bas.io.CharOut;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.log.ALog;
-import net.bodz.bas.nls.SysNLS;
 import net.bodz.bas.nls.TypesNLS;
 import net.bodz.bas.types.parsers.ALogParser;
 import net.bodz.bas.types.parsers.BooleanParser;

@@ -1222,25 +1222,6 @@ public class Files {
         return canoniOf(new File(_parent, child));
     }
 
-    /**
-     * if url is entry of jar file, then the jar file is returned.
-     * 
-     * @return the accessible file part of url
-     */
-    public static File getFile(URL url) throws MalformedURLException {
-        if (url == null)
-            return null;
-        String protocol = url.getProtocol();
-        if ("jar".equals(protocol)) { //$NON-NLS-1$
-            String path = url.getPath();
-            int excl = path.lastIndexOf('!');
-            if (excl != -1) // assert
-                path = path.substring(0, excl);
-            url = new URL(path);
-        }
-        return Files.canoniOf(url);
-    }
-
     public static URI getURI(String path) {
         if (path == null)
             return null;
@@ -1275,6 +1256,61 @@ public class Files {
         } catch (MalformedURLException e) {
             throw new UnexpectedException(e);
         }
+    }
+
+    static File getJarFile(URL jarURL) {
+        assert "jar".equals(jarURL.getProtocol());
+        String s = jarURL.getPath(); // path = file:/...!...
+        assert s.startsWith("file:");
+        int excl = s.lastIndexOf('!');
+        if (excl != -1) // assert
+            s = s.substring(0, excl); // path = file:/...
+        try {
+            URL truncatedURL = new URL(s);
+            return canoniOf(truncatedURL);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * if url is an entry of a jar file, then the jar file is returned.
+     * 
+     * @return the accessible file part of url
+     */
+    public static File getFile(URL url) throws MalformedURLException {
+        if (url == null)
+            return null;
+        String protocol = url.getProtocol();
+        if ("jar".equals(protocol)) //$NON-NLS-1$
+            return getJarFile(url);
+        return canoniOf(url);
+    }
+
+    public static File getFile(URL url, String removeSubPath)
+            throws MalformedURLException {
+        if (removeSubPath == null || removeSubPath.isEmpty())
+            return getFile(url);
+        // jar:file:/C:/abc/dir/example.jar!/com/example/Name.class
+        // String _url = url.toExternalForm();
+
+        // s=file:/C:/abc/dir/example.jar!/com/example/Name.class
+        String s = url.toExternalForm();
+        if (!s.endsWith(removeSubPath)) {
+            throw new IllegalArgumentException(String.format(
+                    "URL isn't end with %s: %s", removeSubPath, url));
+        }
+        int rlen = removeSubPath.length();
+        // s=file:/C:/abc/dir/example.jar!/, or file:/C:/abc/dir/
+        s = s.substring(0, s.length() - rlen);
+
+        String protocol = url.getProtocol();
+        if ("jar".equals(protocol)) {
+            // the jar URL is verified by above. so now can safely return.
+            return getJarFile(url);
+        }
+        URL truncatedURL = new URL(s);
+        return canoniOf(truncatedURL);
     }
 
     private static File TMPDIR;
@@ -1312,8 +1348,8 @@ public class Files {
         List<String> tails = new ArrayList<String>();
         for (File look = file;; look = look.getParentFile()) {
             if (look == null)
-                throw new UnexpectedException(String.format(
-                        SysNLS.getString("Files.fileNotInStart_ss"), file, start)); //$NON-NLS-1$
+                throw new UnexpectedException(String.format(SysNLS
+                        .getString("Files.fileNotInStart_ss"), file, start)); //$NON-NLS-1$
             if (look.equals(start))
                 break;
             tails.add(look.getName());

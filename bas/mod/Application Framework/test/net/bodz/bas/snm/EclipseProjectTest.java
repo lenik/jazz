@@ -1,6 +1,6 @@
 package net.bodz.bas.snm;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 import java.net.URL;
 

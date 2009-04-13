@@ -110,7 +110,7 @@ public class CLIInteraction extends _Interaction {
                 System.out.println("  " + i + ". " + keyname + " => " + value); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             }
             System.out.println(String.format(
-                    "Enter your choice(1..%d, or name): \n", keys.length));
+                    AppNLS.getString("CLIInteraction.enterYourChoice_d"), keys.length)); //$NON-NLS-1$
             try {
                 String line = lineIn.readLine();
                 if (line == null)

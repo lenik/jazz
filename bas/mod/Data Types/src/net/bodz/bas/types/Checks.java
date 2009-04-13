@@ -9,7 +9,6 @@ import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.err.CheckException;
 import net.bodz.bas.lang.err.CheckFailure;
 import net.bodz.bas.lang.err.CreateException;
-import net.bodz.bas.nls.SysNLS;
 import net.bodz.bas.nls.TypesNLS;
 import net.bodz.bas.types.util.Types;
 
