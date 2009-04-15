@@ -12,8 +12,11 @@ import java.util.jar.JarOutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.FileFinder;
 import net.bodz.bas.io.Files;
+import net.bodz.bas.io.CharOuts.BCharOut;
+import net.bodz.bas.log.LogTerm;
 import net.bodz.dist.ins.IAttachment;
 import net.bodz.dist.ins.ISession;
 import net.bodz.dist.ins.InstallException;
@@ -26,33 +29,29 @@ import net.bodz.dist.nls.PackNLS;
  */
 public class FileCopy extends _Component {
 
-    private String     base;
-    private List<File> files;
-    private String     keepDirWithin;
-
-    public FileCopy(String base, String keepDirWithin, Collection<File> files) {
-        this(base, keepDirWithin, files, 0);
-    }
+    private String           base;
+    private Collection<File> files;
+    private String           removal;
+    private boolean          dirStruct = true;
 
     /**
      * @param keepDirWithin
      *            using {@link File#getPath()} to get the path with correct path
      *            separator.
      */
-    public FileCopy(String base, String keepDirWithin, Iterable<File> files,
-            int cap) {
+    public FileCopy(String base, String keepDirWithin, Collection<File> files) {
         super(false, true);
         if (base == null)
             throw new NullPointerException("base"); //$NON-NLS-1$
+        if (files == null)
+            throw new NullPointerException("files");
         this.base = base;
-        this.keepDirWithin = keepDirWithin;
-        this.files = new ArrayList<File>(cap);
-        for (File f : files)
-            this.files.add(f);
+        this.removal = keepDirWithin;
+        this.files = files;
     }
 
     public FileCopy(String base, String keepDirWithin, File... files) {
-        this(base, keepDirWithin, Arrays.asList(files), files.length);
+        this(base, keepDirWithin, Arrays.asList(files));
     }
 
     static String _findBase(FileFinder finder) {
@@ -64,6 +63,18 @@ public class FileCopy extends _Component {
 
     public FileCopy(String base, FileFinder finder) throws IOException {
         this(base, _findBase(finder), finder.listFiles());
+    }
+
+    @Override
+    public String toString() {
+        CharOut buf = new BCharOut(files.size() * 50);
+        buf.println("FileCopy(" + getName() + ")");
+        buf.println("  base=", base);
+        buf.println("  removal=", removal);
+        int i = 0;
+        for (File f : files)
+            buf.println("  ", ++i, ". ", f);
+        return buf.toString();
     }
 
     IAttachment getAttachment(ISession session) {
@@ -80,37 +91,63 @@ public class FileCopy extends _Component {
 
     @Override
     public void pack(ISession session) throws InstallException {
-        // TextMap<Object> cr = session.getComponentRegistry();
+        LogTerm logger = session.getLogger();
+        List<String> regList = new ArrayList<String>(files.size());
         IAttachment a = getAttachment(session);
         try {
             JarOutputStream jout = a.getJarOut();
             for (File f : files) {
+                String path = f.getPath();
+                if (f.isDirectory())
+                    if (!dirStruct)
+                        continue;
+                    else
+                        path += File.separator;
                 String dest;
-                if (keepDirWithin == null)
+                if (removal == null)
                     dest = f.getName();
                 else {
-                    String path = f.getPath();
-                    if (!path.startsWith(keepDirWithin))
+                    // fix: see "path += File.separator" above.
+                    if (!path.startsWith(removal))
                         throw new InstallException(
-                                PackNLS.getString("FileCopy.notWithinPrefix") + keepDirWithin //$NON-NLS-1$
+                                PackNLS.getString("FileCopy.notWithinPrefix") + removal //$NON-NLS-1$
                                         + ": " + path); //$NON-NLS-1$
-                    dest = path.substring(keepDirWithin.length());
+                    dest = path.substring(removal.length());
+                    // zip entry is dir-entry, only if path ends with '/'.
+                    // but escapes..?
+                    dest = dest.replace(File.separatorChar, '/');
                 }
-                JarEntry entry = new JarEntry(dest);
-                jout.putNextEntry(entry);
-                entry.setSize(f.length());
-                for (byte[] block : Files.readByBlock(Files.blockSize, f)) {
-                    jout.write(block);
+                if (f.isDirectory()) {
+                    logger.info("Put entry ", dest);
+                    JarEntry entry = new JarEntry(dest);
+                    jout.putNextEntry(entry);
+                    jout.closeEntry();
+                } else if (f.isFile()) {
+                    long fileSize = f.length();
+                    logger.info("Put entry ", dest, " (size=", fileSize, ")");
+                    JarEntry entry = new JarEntry(dest);
+                    jout.putNextEntry(entry);
+                    entry.setSize(fileSize);
+                    for (byte[] block : Files.readByBlock(Files.blockSize, f)) {
+                        jout.write(block);
+                    }
+                    jout.closeEntry();
+                } else {
+                    logger.warn("Ignored file of unknown type: ", f);
+                    continue;
                 }
-                // jout.closeEntry();
+                regList.add(dest);
             }
         } catch (IOException e) {
             throw new InstallException(e);
         }
+        String[] registry = regList.toArray(new String[0]);
+        setRegistryData(registry);
     }
 
     @Override
     public boolean install(ISession session) throws InstallException {
+        LogTerm logger = session.getLogger();
         File baseDir = session.getBaseDir(base);
         IAttachment a = getAttachment(session);
         ZipInputStream zin = null;
@@ -122,13 +159,11 @@ public class FileCopy extends _Component {
                 File dest = new File(baseDir, name);
                 File destdir = dest.getParentFile();
                 if (!destdir.isDirectory()) {
-                    session
-                            .logDetail(
-                                    PackNLS
-                                            .getString("FileCopy.createDirectory"), destdir, "/"); //$NON-NLS-1$ //$NON-NLS-2$
+                    logger.detail(
+                            PackNLS.getString("FileCopy.mkdir"), destdir, "/"); //$NON-NLS-1$ //$NON-NLS-2$
                     destdir.mkdirs();
                 }
-                session.logInfo(PackNLS.getString("FileCopy.extract"), dest); //$NON-NLS-1$
+                logger.detail(PackNLS.getString("FileCopy.extract"), dest); //$NON-NLS-1$
                 FileOutputStream out = new FileOutputStream(dest);
                 try {
                     long remaining = entry.getSize();

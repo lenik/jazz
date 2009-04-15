@@ -33,7 +33,7 @@ public abstract class _Component implements IComponent {
     private Set<IComponent>  dependancy;
 
     public _Component(boolean visible, boolean defaultSelection) {
-        this.name = getClass().getName();
+        this.name = getClass().getSimpleName();
         this.text = A_bas.getDisplayName(getClass());
         this.doc = text;
         this.visible = visible;

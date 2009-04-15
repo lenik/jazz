@@ -9,6 +9,7 @@ import net.bodz.bas.a.Doc;
 import net.bodz.bas.a.RcsKeywords;
 import net.bodz.bas.a.Version;
 import net.bodz.bas.io.FileFinder;
+import net.bodz.bas.io.PruneFileFilter;
 import net.bodz.bas.snm.SJProject;
 import net.bodz.dist.ins.builtins.DefaultSection;
 import net.bodz.dist.ins.builtins.FileCopy;
@@ -31,7 +32,8 @@ public class TestProject extends SimpleProject {
 
     public FileCopy copyClassFiles;
     public FileCopy copySrcFiles;
-    public FileCopy copyTestFiles;
+    public FileCopy copyTestClassesFiles;
+    public FileCopy copyTestSrcFiles;
 
     public TestProject() throws IOException {
         super(TestProject.class);
@@ -42,7 +44,7 @@ public class TestProject extends SimpleProject {
                 "A place to put test related files.");
         addBaseDir(testBase);
 
-        FileFilter filter = null;// new NoSVN();
+        FileFilter filter = new NoSVN();
 
         classesSection = new RequiredSection("classes", "Java Class Files");
         {
@@ -62,11 +64,15 @@ public class TestProject extends SimpleProject {
 
         testSection = new OptionalSection("test", "Test source and classes");
         {
-            File testDir = SJProject.getBase(TestProject.class);
-            testDir = testDir.getParentFile();
-            FileFinder testfiles = new FileFinder(filter, testDir);
-            copyTestFiles = new FileCopy(TEST, testfiles);
-            testSection.add(copyTestFiles);
+            File testBinDir = SJProject.getBase(TestProject.class);
+            File testSrcDir = SJProject.getSrcBase(TestProject.class);
+
+            FileFinder testbin = new FileFinder(filter, testBinDir);
+            FileFinder testsrc = new FileFinder(filter, testSrcDir);
+            copyTestClassesFiles = new FileCopy(TEST, testbin);
+            copyTestSrcFiles = new FileCopy(TEST, testsrc);
+            testSection.add(copyTestClassesFiles);
+            testSection.add(copyTestSrcFiles);
         }
 
         add(classesSection);
@@ -74,7 +80,7 @@ public class TestProject extends SimpleProject {
         add(testSection);
     }
 
-    class NoSVN implements FileFilter {
+    class NoSVN implements PruneFileFilter {
         @Override
         public boolean accept(File pathname) {
             if (".svn".equals(pathname.getName().toLowerCase()))

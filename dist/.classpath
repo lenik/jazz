@@ -9,6 +9,5 @@
 	<classpathentry kind="src" output="mod/Software Protection/test.bin" path="mod/Software Protection/test"/>
 	<classpathentry kind="src" output="mod/Utilities/bin" path="mod/Utilities/src"/>
 	<classpathentry kind="src" output="mod/Utilities/test.bin" path="mod/Utilities/test"/>
-	<classpathentry kind="var" path="JAVA_LIB/log4j-1.3alpha-8.jar"/>
 	<classpathentry kind="output" path="mod/bin"/>
 </classpath>

@@ -5,6 +5,7 @@ import java.io.IOException;
 
 import net.bodz.bas.io.ResFolder;
 import net.bodz.bas.io.ResLink;
+import net.bodz.bas.log.LogTerm;
 import net.bodz.bas.rt.Interaction;
 import net.bodz.dist.ins.util.Flags;
 
@@ -34,23 +35,7 @@ public interface ISession {
 
     Progress getProgress();
 
-    /** increase the progress */
-    void logFatal(Object... args);
-
-    /** increase the progress */
-    void logError(Object... args);
-
-    /** increase the progress */
-    void logWarn(Object... args);
-
-    /** increase the progress */
-    void logInfo(Object... args);
-
-    /** doesn't increase the progress */
-    void logDetail(Object... args);
-
-    /** doesn't increase the progress */
-    void logDebug(Object... args);
+    LogTerm getLogger();
 
     Object get(String attr);
 
@@ -64,12 +49,21 @@ public interface ISession {
 
     void setResFolder(ResFolder resFolder);
 
+    void setResFolder(File dir);
+
     ResLink newResource(String resPath) throws IOException;
 
     ResLink findResource(String resPath) throws IOException;
 
     /**
-     * @return should always be non-<code>null</code>
+     * @param name
+     *            name of the attachment to use
+     * @return {@link IAttachment} which can be opened later. After used the
+     *         attachment, it can be left opened for next time use, all unclosed
+     *         attachments are auto closed at the end of the session. The return
+     *         value is never be <code>null</code>.
+     * @throws IOException
+     *             if the name is invalid or failed to get the attachment.
      */
     IAttachment getAttachment(String name) throws IOException;
 

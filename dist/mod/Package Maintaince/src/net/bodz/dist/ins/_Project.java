@@ -6,6 +6,8 @@ import java.util.List;
 
 import net.bodz.bas.a.A_bas;
 import net.bodz.bas.a.ClassInfo;
+import net.bodz.bas.types.TextMap;
+import net.bodz.bas.types.TextMap.TreeTextMap;
 import net.bodz.bas.types.util.Ns;
 import net.bodz.dist.ins.Schemes.Custom;
 import net.bodz.dist.ins.Schemes.Maximum;
@@ -19,18 +21,20 @@ import org.eclipse.swt.graphics.ImageData;
 
 public class _Project extends RequiredSection implements IProject {
 
-    private ImageData     logo;
-    private String        version;
-    private String        updateTime;
-    private String        company;
+    private ImageData       logo;
+    private String          version;
+    private String          updateTime;
+    private String          company;
 
-    private List<BaseDir> baseDirs;
+    private List<BaseDir>   baseDirs;
+    private TextMap<Object> env;
 
     public _Project(Class<?> clazz, IComponent... children) {
         super("root", "Project Root", children);
         if (clazz != null)
             loadInfo(clazz);
         this.baseDirs = new ArrayList<BaseDir>();
+        this.env = new TreeTextMap<Object>();
     }
 
     protected void loadInfo(Class<?> clazz) {
@@ -105,6 +109,15 @@ public class _Project extends RequiredSection implements IProject {
 
     protected void addBaseDir(BaseDir baseDir) {
         baseDirs.add(baseDir);
+    }
+
+    @Override
+    public TextMap<Object> getEnv() {
+        return env;
+    }
+
+    public void setEnv(String key, Object defaultValue) {
+        env.put(key, defaultValue);
     }
 
 }
