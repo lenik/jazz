@@ -17,13 +17,17 @@ import net.bodz.bas.types.util.Ns;
 import net.bodz.swt.controls.helper.DynamicControl;
 import net.bodz.swt.controls.util.Controls;
 import net.bodz.swt.controls.util.Menus;
+import net.bodz.swt.gui.util.ThreadsMonitor;
 import net.bodz.swt.layouts.BorderLayout;
 import net.bodz.swt.nls.GUINLS;
 import net.bodz.swt.util.SWTResources;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -40,10 +44,10 @@ import org.eclipse.swt.widgets.ToolBar;
 public class BasicGUI extends BasicCLI {
 
     @Option(alias = "Xw")
-    private int                    shellWidth  = 320;
+    private int                    shellWidth  = SWT.DEFAULT;
 
     @Option(alias = "Xh")
-    private int                    shellHeight = 240;
+    private int                    shellHeight = SWT.DEFAULT;
 
     {
         PreferredSize size = Ns.getN(getClass(), PreferredSize.class);
@@ -61,11 +65,32 @@ public class BasicGUI extends BasicCLI {
     public synchronized void run(String... args) throws Throwable {
         try {
             super.run(args);
+        } catch (net.bodz.bas.lang.Control c) {
+            throw c;
         } catch (Throwable t) {
             SWTInteraction iact = new SWTInteraction(shell);
             iact.alert(t.getMessage(), t);
             throw t;
         }
+    }
+
+    @Override
+    protected void _exit() throws Throwable {
+        int activeThreads = Thread.activeCount();
+        Thread[] threads = new Thread[activeThreads];
+        int n = Thread.enumerate(threads);
+        int fg = 0;
+        for (int i = 0; i < n; i++) {
+            Thread t = threads[i];
+            if (!t.isDaemon())
+                fg++;
+        }
+        if (fg >= 2) {
+            ThreadsMonitor monitor = new ThreadsMonitor(null, SWT.NONE);
+            // monitor.setText("There stills running threads");
+            monitor.open();
+        }
+        super._exit();
     }
 
     @Override
@@ -85,6 +110,7 @@ public class BasicGUI extends BasicCLI {
             if (!display.readAndDispatch())
                 display.sleep();
         }
+        _exit();
     }
 
     /**
@@ -116,8 +142,6 @@ public class BasicGUI extends BasicCLI {
 
     protected Shell createShell() throws GUIException, SWTException {
         Shell shell = new Shell();
-        shell.setSize(shellWidth, shellHeight);
-        Controls.center(shell);
         shell.setText(getTitle());
         ClassInfo info = _loadClassInfo();
         Image[] icons;
@@ -134,6 +158,12 @@ public class BasicGUI extends BasicCLI {
             shell.setMenuBar(menu);
 
         shell.setLayout(new BorderLayout(0, 0));
+        shell.addDisposeListener(new DisposeListener() {
+            @Override
+            public void widgetDisposed(DisposeEvent e) {
+                // _exit();
+            }
+        });
 
         Control toolBar = createToolBar(shell);
         if (toolBar != null)
@@ -154,6 +184,11 @@ public class BasicGUI extends BasicCLI {
         homeView.setLayout(new FillLayout());
         createInitialView(homeView);
 
+        Point size = shell.computeSize(shellWidth, shellHeight);
+        int width = shellWidth == SWT.DEFAULT ? size.x : shellWidth;
+        int height = shellHeight == SWT.DEFAULT ? size.y : shellHeight;
+        shell.setSize(width, height);
+        Controls.center(shell);
         return shell;
     }
 

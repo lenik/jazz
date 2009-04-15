@@ -9,6 +9,7 @@ import net.bodz.swt.gui.GUIStruct;
 import net.bodz.swt.gui.GUIVar;
 import net.bodz.swt.gui.GUIVarMeta;
 import net.bodz.swt.gui.MIcon;
+import net.bodz.swt.gui.SWTRenderContext;
 import net.bodz.swt.gui.GUIStructs.GUICallMeta;
 import net.bodz.swt.gui.GUIStructs.ParameterMeta;
 import net.bodz.swt.gui.GUIStructs.RetvalMeta;
@@ -82,19 +83,19 @@ public class SWTGridStrategy extends SWTStrategy {
         retvalIcons = new MIcon("/icons/full/obj16/field_default_obj.gif"); //$NON-NLS-1$
     }
 
-    public Composite renderStruct(GUIStruct struct, Composite parent, int style)
-            throws RenderException, SWTException {
+    public Composite renderStruct(final SWTRenderContext rc, GUIStruct struct,
+            Composite parent, int style) throws RenderException, SWTException {
         Composite grid = new Composite(parent, style);
         // icon label control
         GridLayout gridLayout = new GridLayout(3, false);
         grid.setLayout(gridLayout);
         for (GUIVar<?> childvar : struct)
-            renderChild(grid, childvar);
+            renderChild(rc, grid, childvar);
         return grid;
     }
 
-    void renderChild(Composite grid, GUIVar<?> var) throws RenderException,
-            SWTException {
+    void renderChild(final SWTRenderContext rc, Composite grid, GUIVar<?> var)
+            throws RenderException, SWTException {
         GUIVarMeta meta = var.getMeta();
         String name = meta.getName();
         GUIHint hint = meta.getHint();
@@ -136,7 +137,8 @@ public class SWTGridStrategy extends SWTStrategy {
 
         // Column #3
         Control child;
-        child = SWTGridStrategy.this.render(var, grid, styleFx(SWT.NONE, hint));
+        child = SWTGridStrategy.this.render(rc, var, grid, styleFx(SWT.NONE,
+                hint));
 
         Point iconz = iconLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
         Point labelz = label.computeSize(SWT.DEFAULT, SWT.DEFAULT);
@@ -156,7 +158,7 @@ public class SWTGridStrategy extends SWTStrategy {
         label.setLayoutData(labeld);
         child.setLayoutData(childd);
 
-        addEffects(child, var);
+        rc.addEffects(child, var);
     }
 
 }

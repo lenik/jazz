@@ -58,10 +58,9 @@ public class GridTest_SimpleObject extends BasicGUI {
     protected void createInitialView(Composite comp) throws GUIException,
             SWTException {
         GUIVar<School> schoolVar = GUIVars.wrap(school);
-
         SWTGridStrategy style = new SWTGridStrategy();
         try {
-            style.render(schoolVar, comp, SWT.BORDER);
+            style.render(null, schoolVar, comp, SWT.BORDER);
         } catch (RenderException e) {
             throw new GUIException(e);
         } catch (SWTException e) {

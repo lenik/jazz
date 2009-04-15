@@ -1,15 +1,20 @@
 package net.bodz.swt.gui.styles.base;
 
+import java.io.IOException;
 import java.util.EventObject;
 
 import net.bodz.bas.gui.RenderException;
 import net.bodz.bas.io.CharOuts.BCharOut;
+import net.bodz.bas.sys.DesktopApps;
 import net.bodz.swt.controls.helper.EmptyComposite;
 import net.bodz.swt.controls.helper.FixSizeComposite;
 import net.bodz.swt.controls.util.Controls;
 import net.bodz.swt.gui.GUIVar;
-import net.bodz.swt.gui.RenderContext;
+import net.bodz.swt.gui.IAction;
+import net.bodz.swt.gui.SWTInteraction;
+import net.bodz.swt.gui.SWTRenderContext;
 import net.bodz.swt.gui.SWTRenderer;
+import net.bodz.swt.gui._Action;
 import net.bodz.swt.nls.GUINLS;
 import net.bodz.swt.util.EventHandler;
 import net.bodz.swt.util.SWTResources;
@@ -21,13 +26,9 @@ import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.layout.RowLayout;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -38,20 +39,21 @@ import org.eclipse.swt.widgets.Label;
  */
 public class R_Throwable extends SWTRenderer {
 
-    static final String expandedIcon  = "/icons/full/obj16/remove_correction.gif"; //$NON-NLS-1$
-    static final String collapsedIcon = "/icons/full/obj16/add_correction.gif";   //$NON-NLS-1$
+    static final String  expandedIcon  = "/icons/full/obj16/remove_correction.gif";  //$NON-NLS-1$
+    static final String  collapsedIcon = "/icons/full/obj16/add_correction.gif";     //$NON-NLS-1$
 
-    static boolean      usingColors   = false;
-    static boolean      showTools     = false;
+    public static String mailAddress   = GUINLS
+                                               .getString("R_Throwable.mailAddress"); //$NON-NLS-1$
 
-    public R_Throwable(RenderContext rc) {
-        super(rc);
-    }
+    static boolean       usingColors   = false;
+    static boolean       showTools     = true;
 
     @Override
-    public Control render(GUIVar<?> var, Composite parent, int style)
-            throws RenderException, SWTException {
-        final Display display = parent.getDisplay();
+    public Control render(final SWTRenderContext rc, final GUIVar<?> var,
+            final Composite parent, final int style) throws RenderException,
+            SWTException {
+        final Display display = parent == null ? Display.getCurrent() // 
+                : parent.getDisplay();
         final Composite comp = new Composite(parent, style);
         GridLayout layout = new GridLayout(2, false);
         layout.verticalSpacing = 0;
@@ -143,36 +145,42 @@ public class R_Throwable extends SWTRenderer {
         }
 
         if (showTools) {
-            Composite tools = new Composite(comp, SWT.NONE);
-            GridData gd_tools = new GridData();
-            gd_tools.horizontalAlignment = GridData.END;
-            gd_tools.horizontalSpan = 2;
-            tools.setLayoutData(gd_tools);
-            tools.setLayout(new RowLayout());
-
-            final String mailBody = errbuf.toString();
-
-            Button copyButton = new Button(tools, SWT.NONE);
-            copyButton.setText(GUINLS.getString("R_Throwable.copy")); //$NON-NLS-1$
-            copyButton.addSelectionListener(new SelectionAdapter() {
+            final String errorText = errbuf.toString();
+            Image copyImage = SWTResources
+                    .getImageRes("/icons/full/etool16/copy_edit.gif"); //$NON-NLS-1$
+            IAction copyAction = new _Action(
+                    copyImage,
+                    GUINLS.getString("R_Throwable.copy"), GUINLS.getString("R_Throwable.copy.doc")) {//$NON-NLS-1$ //$NON-NLS-2$
                 @Override
-                public void widgetSelected(SelectionEvent e) {
+                public void execute() {
                     Clipboard clipboard = new Clipboard(display);
                     clipboard.clearContents();
-                    Object[] data = { mailBody };
+                    Object[] data = { errorText };
                     Transfer[] dataTypes = { TextTransfer.getInstance() };
                     clipboard.setContents(data, dataTypes);
                     clipboard.dispose();
                 }
-            });
-            Button mailButton = new Button(tools, SWT.NONE);
-            mailButton.setText(GUINLS.getString("R_Throwable.report")); //$NON-NLS-1$
-            mailButton.addSelectionListener(new SelectionAdapter() {
+            };
+            final Image mailImage = SWTResources
+                    .getImageRes("/icons/full/obj16/text_edit.gif"); //$NON-NLS-1$
+            final String mailSubject = GUINLS
+                    .getString("R_Throwable.errorReport"); //$NON-NLS-1$
+            IAction mailAction = new _Action(mailImage, //
+                    GUINLS.getString("R_Throwable.report"), //$NON-NLS-1$
+                    GUINLS.getString("R_Throwable.sendMail")) {//$NON-NLS-1$ 
                 @Override
-                public void widgetSelected(SelectionEvent e) {
-                    // JavaMail...
+                public void execute() {
+                    try {
+                        DesktopApps.openMailer(mailAddress, mailSubject,
+                                errorText);
+                    } catch (IOException e) {
+                        SWTInteraction iact = rc.interact(parent);
+                        iact.alert(GUINLS.getString("R_Throwable.cantSend"), e); //$NON-NLS-1$
+                    }
                 }
-            });
+            };
+            rc.addAction(copyAction);
+            rc.addAction(mailAction);
         }
         return comp;
     }

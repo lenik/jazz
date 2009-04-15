@@ -352,7 +352,7 @@ public class StrictDeviceResources {
 
     static void diagResPath(Class<?> clazz, String path) {
         if (diag) {
-            System.err.printf("Bad resource path: %s, class=%s\n", path, clazz);
+            System.err.printf(CommonNLS.getString("StrictDeviceResources.badpath_ss"), path, clazz); //$NON-NLS-1$
             dumpLoader(clazz.getClassLoader());
         }
     }

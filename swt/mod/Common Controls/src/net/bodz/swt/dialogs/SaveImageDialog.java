@@ -166,7 +166,7 @@ public class SaveImageDialog extends SimpleDialog {
         } else {
             paramsStack.bringFront(voidParamsComp);
         }
-        body.layout();
+        getBody().layout();
     }
 
     @Override

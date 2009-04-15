@@ -9,6 +9,7 @@ import java.awt.image.IndexColorModel;
 import java.awt.image.WritableRaster;
 
 import net.bodz.bas.lang.err.NotImplementedException;
+import net.bodz.swt.nls.CommonNLS;
 
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.PaletteData;
@@ -144,12 +145,12 @@ public class AWTBridge {
             int[] componentSize = ccm.getComponentSize();
             for (int i = 0; i < componentSize.length; i++)
                 if (componentSize[i] != 8)
-                    throw new NotImplementedException("color component bits: "
+                    throw new NotImplementedException(CommonNLS.getString("AWTBridge.errBits") //$NON-NLS-1$
                             + componentSize[i]);
             int transferType = ccm.getTransferType();
             if (transferType != DataBuffer.TYPE_BYTE)
                 throw new NotImplementedException(
-                        "ccm transferType isn't BYTE: " + transferType);
+                        CommonNLS.getString("AWTBridge.errTransType") + transferType); //$NON-NLS-1$
             // XXX - ??
             PaletteData palette = new PaletteData(0x0000ff, 0x00ff00, 0xff0000);
             ImageData data = new ImageData(width, height, pixelSize, palette);
@@ -165,7 +166,7 @@ public class AWTBridge {
             }
             return data;
         } else
-            throw new UnsupportedOperationException("colorModel: "
+            throw new UnsupportedOperationException(CommonNLS.getString("AWTBridge.errColorModel") //$NON-NLS-1$
                     + cm.getClass().getName());
     }
 

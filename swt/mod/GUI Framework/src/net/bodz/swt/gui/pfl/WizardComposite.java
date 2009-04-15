@@ -346,7 +346,7 @@ public class WizardComposite extends Composite {
     }
 
     protected String toLabel(String name) {
-        String label = GUINLS.getString("WizardComposite." + name);
+        String label = GUINLS.getString("WizardComposite." + name); //$NON-NLS-1$
         if (label == null)
             label = "&" + Strings.ucfirst(name); //$NON-NLS-1$
         return label;
