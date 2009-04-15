@@ -35,6 +35,7 @@ public abstract class SimpleDialog extends Dialog implements Ref<Object> {
     private Shell          parent;
 
     private Shell          shell;
+    private Composite      detailBar;
     private Composite      body;
     private Composite      userBar;
     private Composite      basicBar;
@@ -166,6 +167,12 @@ public abstract class SimpleDialog extends Dialog implements Ref<Object> {
         basicLayout.pack = false; // don't pack basic buttons
         basicBar.setLayout(basicLayout);
 
+        if (detailBar != null)
+            try {
+                createDetail(detailBar);
+            } catch (CreateException ex) {
+                createException(detailBar, ex);
+            }
         try {
             createBody(body);
         } catch (CreateException ex) {
@@ -202,17 +209,11 @@ public abstract class SimpleDialog extends Dialog implements Ref<Object> {
         final GridData imageData = new GridData(GridData.BEGINNING,
                 GridData.BEGINNING);
         imageLabel.setLayoutData(imageData);
-        final Composite detailComposite = new Composite(topBar, _diagstyle);
+        detailBar = new Composite(topBar, _diagstyle);
         GridData detailData = new GridData(GridData.FILL, GridData.FILL, true,
                 true);
-        detailComposite.setLayoutData(detailData);
-        detailComposite.setLayout(new FillLayout());
-
-        try {
-            createDetail(detailComposite);
-        } catch (CreateException ex) {
-            createException(detailComposite, ex);
-        }
+        detailBar.setLayoutData(detailData);
+        detailBar.setLayout(new FillLayout());
     }
 
     protected void createDetail(Composite parent) throws CreateException {

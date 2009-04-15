@@ -30,7 +30,7 @@ import org.eclipse.swt.widgets.Composite;
 @DisplayName("boDz Product Installer")
 // @Icon("icon.gif")
 @PreferredSize(width = 500, height = 400)
-@RcsKeywords(id = "$Id: QuickTone.java 8 2009-03-29 09:01:53Z Shecti $")
+@RcsKeywords(id = "$Id$")
 @Version( { 1, 0 })
 public class Installer extends BasicGUI {
 
