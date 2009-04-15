@@ -20,7 +20,7 @@ import net.bodz.dist.ins.builtins.SimpleProject;
 
 @DisplayName("ABC Program")
 @Doc("A test program for z.dist")
-@RcsKeywords(id = "$Id: TestProject.java 10 2009-04-05 04:00:52Z Shecti $")
+@RcsKeywords(id = "$Id$")
 @Version( { 1, 2, 3 })
 public class TestProject extends SimpleProject {
 

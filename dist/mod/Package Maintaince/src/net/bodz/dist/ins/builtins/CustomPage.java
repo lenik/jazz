@@ -18,6 +18,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.TreeEvent;
 import org.eclipse.swt.events.TreeListener;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -73,10 +74,12 @@ public class CustomPage extends ConfigPage {
         tree.addTreeListener(new TreeListener() {
             @Override
             public void treeExpanded(TreeEvent e) {
+                // Pre-loaded
             }
 
             @Override
             public void treeCollapsed(TreeEvent e) {
+                // Pre-loaded
             }
         });
 
@@ -121,7 +124,8 @@ public class CustomPage extends ConfigPage {
                         public void widgetSelected(SelectionEvent e) {
                             DirectoryDialog dialog = new DirectoryDialog(
                                     getShell(), SWT.NONE);
-                            dialog.setText(PackNLS.getString("CustomPage.selectDirFor") //$NON-NLS-1$
+                            dialog.setText(PackNLS
+                                    .getString("CustomPage.selectDirFor") //$NON-NLS-1$
                                     + baseDir.getDisplayName());
                             String dir = dialog.open();
                             if (dir != null)
@@ -149,12 +153,20 @@ public class CustomPage extends ConfigPage {
         installSizeLabel.setText(PackNLS.getString("CustomPage.installSize")); //$NON-NLS-1$
 
         sizeLabel = new Label(statusbar, SWT.NONE);
-        sizeLabel.setText("SIZE"); //$NON-NLS-1$
-
     }
 
     protected void setSizeBytes(long size) {
         sizeLabel.setText(size + PackNLS.getString("CustomPage.bytes")); //$NON-NLS-1$
+    }
+
+    @Override
+    public ImageData getPageIcon() {
+        return super.getPageIcon();
+    }
+
+    @Override
+    public String getPageTitle() {
+        return "Custom Components";
     }
 
     @Override
@@ -166,16 +178,19 @@ public class CustomPage extends ConfigPage {
             String dir = dirText.getText();
             File dirFile = new File(dir);
             if (dirFile.isFile())
-                throw new ValidateException(dirText, PackNLS.getString("CustomPage.fileExists")); //$NON-NLS-1$
+                throw new ValidateException(dirText, PackNLS
+                        .getString("CustomPage.fileExists")); //$NON-NLS-1$
             else if (!dirFile.exists()) {
                 Interaction iact = session.getInteraction();
-                boolean confirmed = iact.confirm(PackNLS.getString("CustomPage.createDirQ"), //$NON-NLS-1$
+                boolean confirmed = iact.confirm(PackNLS
+                        .getString("CustomPage.createDirQ"), //$NON-NLS-1$
                         PackNLS.getString("CustomPage.11") + dirFile //$NON-NLS-1$
                                 + " isn't existed, shall I create it?"); //$NON-NLS-1$
                 if (!confirmed) {
                     throw new SlientValidationException(dirText);
                 } else if (!dirFile.mkdirs())
-                    throw new ValidateException(dirText, PackNLS.getString("CustomPage.cantMkdir") //$NON-NLS-1$
+                    throw new ValidateException(dirText, PackNLS
+                            .getString("CustomPage.cantMkdir") //$NON-NLS-1$
                             + dirFile);
             }
             session.setBaseDir(baseName, dirFile);
