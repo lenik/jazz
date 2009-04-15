@@ -7,7 +7,8 @@ Bundle-Vendor: Lenik
 Require-Bundle: net.bodz.bas;bundle-version="1.0.0",
  net.bodz.swt;bundle-version="1.0.0",
  net.bodz.jna;bundle-version="1.0.0",
- org.apache.ant;bundle-version="1.7.1"
+ org.apache.ant;bundle-version="1.7.1",
+ org.apache.log4j;bundle-version="1.2.13"
 Export-Package: net.bodz.dist.customize,
  net.bodz.dist.ins,
  net.bodz.dist.ins.builtins,

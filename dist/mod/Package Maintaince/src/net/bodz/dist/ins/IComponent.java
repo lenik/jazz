@@ -7,10 +7,15 @@ import org.eclipse.swt.widgets.Composite;
 
 public interface IComponent {
 
-    /** Instance variable */
+    /**
+     * <code>null</code> id and duplicated id must be filled with a unique one,
+     * with {@link #setId(String)}.
+     */
     String getId();
 
-    /** Instance variable */
+    /**
+     * This is mostly called by unique-id generators.
+     */
     void setId(String id);
 
     ImageData getImage();

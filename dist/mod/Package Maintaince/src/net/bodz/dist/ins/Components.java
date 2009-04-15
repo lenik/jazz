@@ -32,18 +32,29 @@ public class Components extends TreeTextMap<IComponent> {
             start.setId(prefix);
         } else
             prefix = startId + "."; //$NON-NLS-1$
+        int childIndex = 0;
         for (IComponent child : children) {
+            childIndex++;
+            if (child == null)
+                throw new NullPointerException("child[" + childIndex + "]");
             String id = child.getId();
             if (id == null) {
                 String name = child.getName();
                 if (name == null)
+                    // 1, 2, 3, ...
                     id = searchUnusedKey(map, prefix, 1);
                 else {
                     id = prefix + name;
                     if (map.containsKey(id))
-                        id = searchUnusedKey(map, id + "_" + start, 1); //$NON-NLS-1$
+                        // x_1, x_2, ...
+                        id = searchUnusedKey(map, id + "_", 1); //$NON-NLS-1$
                 }
+                assert id != null;
                 child.setId(id);
+            } else if (map.containsKey(id)) {
+                String mesg = String.format("Dupliated id(%s): old=%s, new=%s",
+                        id, map.get(id), child);
+                throw new IllegalStateException(mesg);
             }
             map.put(id, child);
             collectChildren(map, child);
@@ -51,8 +62,14 @@ public class Components extends TreeTextMap<IComponent> {
     }
 
     static String searchUnusedKey(TextMap<?> map, String s, int startIndex) {
-        String key = null;
-        return key;
+        while (true) {
+            if (startIndex >= Integer.MAX_VALUE)
+                throw new RuntimeException("Index used out for: " + s);
+            String key = s + startIndex;
+            if (!map.containsKey(key))
+                return key;
+            startIndex++;
+        }
     }
 
     public void importRegistry(Map<String, Object> registry) {

@@ -481,7 +481,7 @@ public class Attachment implements IAttachment {
         }
 
         @Override
-        public ZipOutputStream getZipOut() throws IOException {
+        public JarOutputStream getJarOut() throws IOException {
             if (jout == null) {
                 OutputStream out = link.openOutputStream(false);
                 jout = new JarOutputStream(out);

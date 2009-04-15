@@ -6,6 +6,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import net.bodz.bas.io.FileResFolder;
 import net.bodz.bas.io.FileResLink;
@@ -14,7 +16,8 @@ import net.bodz.bas.io.ResFolder;
 import net.bodz.bas.io.ResLink;
 import net.bodz.bas.io.URLResLink;
 import net.bodz.bas.lang.err.UnexpectedException;
-import net.bodz.bas.log.ALog;
+import net.bodz.bas.log.LogTerm;
+import net.bodz.bas.log.LogTerms;
 import net.bodz.bas.types.LinkedStack;
 import net.bodz.bas.types.Stack;
 import net.bodz.bas.types.TextMap;
@@ -27,43 +30,41 @@ public abstract class _Session implements ISession, ProgressChangeListener {
 
     private IProject               project;
     private Components             components;
-    private Stack<IComponent>      stack;
 
     private Flags                  flags;
-    private boolean                canceling;
     private List<CancelListener>   cancelListeners;
 
+    private Map<String, Object>    env;
     private DerHashTextMap<Object> vars;
     private TextMap<File>          baseDirs;
 
     private ResFolder              resFolder;
     private List<File>             searchPaths;
     private List<ClassLoader>      searchLoaders;
-    private File                   attachmentDir;
 
-    public static final int        FATAL    = ALog.ERROR - 1;
-    public static final int        ERROR    = ALog.ERROR;
-    public static final int        WARN     = ALog.WARN;
-    public static final int        INFO     = ALog.INFO;
-    public static final int        DETAIL   = ALog.DETAIL;
-    public static final int        DEBUG    = ALog.DEBUG;
+    protected final LogTerm        logger;
 
-    protected int                  logLevel = INFO;
+    // Execution Variables
+
+    private boolean                canceling;
+    private Stack<IComponent>      stack;
+    private TextMap<Attachment>    apool;
+
     private TreeProgress           progress;
 
-    public _Session(IProject project, TextMap<Object> env, int logLevel) {
+    public _Session(IProject project) {
         if (project == null)
             throw new NullPointerException("project"); //$NON-NLS-1$
-        if (env == null) {
-            env = new TreeTextMap<Object>();
-        }
         this.project = project;
-        this.logLevel = logLevel;
         components = Components.collect(project);
-        stack = new LinkedStack<IComponent>();
         flags = new Flags();
 
-        vars = new DerHashTextMap<Object>(env);
+        Map<String, Object> _env = project.getEnv();
+        if (_env == null)
+            env = new TreeTextMap<Object>();
+        else
+            env = new TreeTextMap<Object>(_env);
+        vars = null;
         baseDirs = new HashTextMap<File>();
         for (BaseDir baseDir : project.getBaseDirs())
             baseDirs.put(baseDir.getName(), baseDir.getPreferred());
@@ -73,7 +74,12 @@ public abstract class _Session implements ISession, ProgressChangeListener {
         searchPaths.add(new File(".")); //$NON-NLS-1$
         searchLoaders = new ArrayList<ClassLoader>();
         searchLoaders.add(ClassLoader.getSystemClassLoader());
-        attachmentDir = new File("."); //$NON-NLS-1$
+
+        logger = LogTerms.get(getClass());
+        if (logger == null)
+            throw new NullPointerException("logger");
+
+        apool = new TreeTextMap<Attachment>();
 
         progress = new TreeProgress(1);
         progress.addProgressChangeListener(this);
@@ -134,52 +140,35 @@ public abstract class _Session implements ISession, ProgressChangeListener {
         return progress;
     }
 
-    protected void log(int level, Object... args) {
-        if (level <= logLevel)
-            _log(level, args);
-        if (level <= INFO)
-            progress.incr();
+    @Override
+    public LogTerm getLogger() {
+        return logger;
     }
 
-    protected abstract void _log(int level, Object... args);
-
-    @Override
-    public final void logFatal(Object... args) {
-        log(FATAL, args);
+    protected Stack<IComponent> getStack() {
+        return stack;
     }
 
-    @Override
-    public final void logError(Object... args) {
-        log(ERROR, args);
+    public Map<String, Object> getEnv() {
+        return env;
     }
 
-    @Override
-    public final void logWarn(Object... args) {
-        log(WARN, args);
-    }
-
-    @Override
-    public final void logInfo(Object... args) {
-        log(INFO, args);
-    }
-
-    @Override
-    public final void logDetail(Object... args) {
-        log(DETAIL, args);
-    }
-
-    @Override
-    public final void logDebug(Object... args) {
-        log(DEBUG, args);
+    public void setEnv(Map<String, Object> env) {
+        this.env = env;
     }
 
     @Override
     public Object get(String attr) {
+        if (vars == null)
+            return env.get(attr);
         return vars.get(attr);
     }
 
     @Override
     public void set(String attr, Object value) {
+        if (vars == null)
+            throw new IllegalStateException(
+                    "Set to the session env using setEnv.");
         vars.put(attr, value);
     }
 
@@ -205,6 +194,7 @@ public abstract class _Session implements ISession, ProgressChangeListener {
         this.resFolder = resFolder;
     }
 
+    @Override
     public void setResFolder(File dir) {
         if (dir == null)
             throw new NullPointerException("dir");
@@ -222,20 +212,19 @@ public abstract class _Session implements ISession, ProgressChangeListener {
     public ResLink findResource(String path) throws IOException {
         // if path.isAsbolute...
         ResLink link = resFolder.get(path);
-        if (link.exists() == Boolean.TRUE)
-            return link;
-        for (File searchPath : searchPaths) {
-            File foundFile = new File(searchPath, path);
-            if (foundFile.isFile())
-                return new FileResLink(foundFile);
+        if (link.exists() != Boolean.TRUE) {
+            for (File searchPath : searchPaths) {
+                File foundFile = new File(searchPath, path);
+                if (foundFile.isFile())
+                    return new FileResLink(foundFile);
+            }
+            for (ClassLoader loader : searchLoaders) {
+                URL resURL = loader.getResource(path);
+                if (resURL != null)
+                    return new URLResLink(resURL);
+            }
         }
-        for (ClassLoader loader : searchLoaders) {
-            URL resURL = loader.getResource(path);
-            if (resURL != null)
-                return new URLResLink(resURL);
-        }
-        File newFile = new File(attachmentDir, path);
-        return new FileResLink(newFile);
+        return link;
     }
 
     protected String getAttachmentPath(String name) {
@@ -245,8 +234,12 @@ public abstract class _Session implements ISession, ProgressChangeListener {
     @Override
     public IAttachment getAttachment(String name) throws IOException {
         String path = getAttachmentPath(name);
-        ResLink res = findResource(path);
-        Attachment a = new Attachment(res, "utf-8"); //$NON-NLS-1$
+        Attachment a = apool.get(path);
+        if (a == null) {
+            ResLink res = findResource(path);
+            a = new Attachment(res, "utf-8"); //$NON-NLS-1$
+            apool.put(path, a);
+        }
         return a;
     }
 
@@ -255,27 +248,45 @@ public abstract class _Session implements ISession, ProgressChangeListener {
     static final int UNINSTALL = 3;
 
     synchronized void execute(int action) throws InstallException {
+        stack = new LinkedStack<IComponent>();
+        canceling = false;
         execute(action, project);
+        for (Entry<String, Attachment> entry : apool.entrySet()) {
+            Attachment a = entry.getValue();
+            logger.debug("Close attachment ", a);
+            try {
+                a.close();
+            } catch (IOException e) {
+                logger.warn("Can't close attachment: ", a);
+            }
+        }
+        assert stack.isEmpty() : "stack corrupted";
+        stack = null;
+        apool.clear();
     }
 
     void execute(int action, IComponent node) throws InstallException {
         // enter
         stack.push(node);
-        vars = new DerHashTextMap<Object>(vars);
+        vars = new DerHashTextMap<Object>(vars == null ? env : vars);
         progress = new TreeProgress(progress, 1, 0);
 
-        node.pack(this);
         switch (action) {
         case PACK:
+            logger.debug("Pack ", node);
             node.pack(this);
             break;
         case INSTALL:
+            logger.debug("Install ", node);
             boolean succeeded = node.install(this);
             if (succeeded) {
                 // included for next time uninstall.
+            } else {
+                logger.warn("Failed to install ", node);
             }
             break;
         case UNINSTALL:
+            logger.debug("Uninstall ", node);
             node.uninstall(this);
             break;
         default:
@@ -290,7 +301,15 @@ public abstract class _Session implements ISession, ProgressChangeListener {
 
         // leave
         stack.pop();
-        vars = (DerHashTextMap<Object>) vars.getOrig();
+        Map<String, Object> orig = vars.getOrig();
+        if (stack.isEmpty()) {
+            assert orig == env;
+            vars = null;
+        } else {
+            assert orig instanceof DerHashTextMap<?>;
+            vars = (DerHashTextMap<Object>) orig;
+        }
+
         int parentUnits = progress.getParentUnits();
         progress = progress.getParent();
         progress.incr(parentUnits);
