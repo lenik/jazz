@@ -29,8 +29,8 @@ import net.bodz.bas.lang.err.ReflectException;
 import net.bodz.bas.lang.err.UnexpectedException;
 import net.bodz.bas.lang.script.MethodSignature;
 import net.bodz.bas.lang.util.MethodParameter;
-import net.bodz.bas.log.LogOut;
-import net.bodz.bas.log.LogOuts;
+import net.bodz.bas.log.LogTerm;
+import net.bodz.bas.log.LogTerms;
 import net.bodz.bas.types.Checker;
 import net.bodz.bas.types.Checks;
 import net.bodz.bas.types.util.Types;
@@ -41,6 +41,8 @@ import net.bodz.swt.gui.GUIVars.GUIPropertyVar;
 import net.bodz.swt.nls.GUINLS;
 
 public class GUIStructs {
+
+    static LogTerm logger = LogTerms.get(1);
 
     public static class ClassMeta {
 
@@ -68,8 +70,6 @@ public class GUIStructs {
 
         private List<GUIVarMeta>        list;
         private Map<String, GUIVarMeta> map;
-
-        private static LogOut           out          = LogOuts.debug;
 
         protected ClassMeta(ClassMeta prev, Class<?> clazz)
                 throws GUIAccessException {
@@ -139,8 +139,8 @@ public class GUIStructs {
         void add(String name, GUIVarMeta meta) {
             if (map != null) {
                 if (map.containsKey(name))
-                    out
-                            .P(
+                    logger
+                            .warn(
                                     GUINLS.getString("GUIStructs.nodupItem"), name, GUINLS.getString("GUIStructs.inIsOverwritten"), meta); //$NON-NLS-1$ //$NON-NLS-2$
                 map.put(name, meta);
             } else

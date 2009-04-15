@@ -5,7 +5,7 @@ import org.eclipse.swt.widgets.Composite;
 
 public class EmptyComposite extends FixSizeComposite {
 
-    static final Point empty = new Point(0, 0);
+    static final Point empty = new Point(1, 1);
 
     public EmptyComposite(Composite parent, int style) {
         super(parent, style, empty);

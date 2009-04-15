@@ -11,7 +11,7 @@ import net.bodz.swt.adapters.CommitException;
 import net.bodz.swt.adapters.ControlAdapters;
 import net.bodz.swt.gui.GUIVar;
 import net.bodz.swt.gui.GUIVarMeta;
-import net.bodz.swt.gui.RenderContext;
+import net.bodz.swt.gui.SWTRenderContext;
 import net.bodz.swt.gui.SWTRenderer;
 
 import org.eclipse.swt.SWT;
@@ -24,13 +24,9 @@ import org.eclipse.swt.widgets.Control;
 
 public class R_Boolean extends SWTRenderer {
 
-    public R_Boolean(RenderContext rc) {
-        super(rc);
-    }
-
     @Override
-    public Control render(final GUIVar<?> var, final Composite parent, int style)
-            throws RenderException, SWTException {
+    public Control render(final SWTRenderContext rc, final GUIVar<?> var,
+            Composite parent, int style) throws RenderException, SWTException {
         GUIVarMeta meta = var.getMeta();
         Boolean _val = (Boolean) var.get();
         boolean val = _val == null ? false : _val;

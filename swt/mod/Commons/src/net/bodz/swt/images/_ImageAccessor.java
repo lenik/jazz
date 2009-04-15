@@ -1,5 +1,7 @@
 package net.bodz.swt.images;
 
+import net.bodz.swt.nls.ControlsNLS;
+
 import org.eclipse.swt.graphics.RGB;
 
 public abstract class _ImageAccessor implements ImageAccessor {
@@ -47,7 +49,7 @@ public abstract class _ImageAccessor implements ImageAccessor {
 
     @Override
     public void getRGB(int[] rgbv) {
-        assert rgbv != null && rgbv.length >= 3 : "output rgb[]";
+        assert rgbv != null && rgbv.length >= 3 : "output rgb[]"; //$NON-NLS-1$
         RGB rgb = getRGB();
         rgbv[0] = rgb.red;
         rgbv[1] = rgb.green;
@@ -56,7 +58,7 @@ public abstract class _ImageAccessor implements ImageAccessor {
 
     @Override
     public void setRGB(int[] rgbv) {
-        assert rgbv != null && rgbv.length >= 3 : "rgb";
+        assert rgbv != null && rgbv.length >= 3 : "rgb"; //$NON-NLS-1$
         RGB rgb = new RGB(rgbv[0], rgbv[1], rgbv[2]);
         setRGB(rgb);
     }
@@ -83,7 +85,7 @@ public abstract class _ImageAccessor implements ImageAccessor {
 
     @Override
     public void setAlpha(int alpha) {
-        throw new UnsupportedOperationException("alpha");
+        throw new UnsupportedOperationException("alpha"); //$NON-NLS-1$
     }
 
     @Override

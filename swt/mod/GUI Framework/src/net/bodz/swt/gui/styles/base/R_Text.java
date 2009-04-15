@@ -16,7 +16,7 @@ import net.bodz.swt.adapters.CommitException;
 import net.bodz.swt.adapters.ControlAdapters;
 import net.bodz.swt.gui.GUIVar;
 import net.bodz.swt.gui.GUIVarMeta;
-import net.bodz.swt.gui.RenderContext;
+import net.bodz.swt.gui.SWTRenderContext;
 import net.bodz.swt.gui.SWTRenderer;
 import net.bodz.swt.gui.a.MaxLength;
 import net.bodz.swt.nls.GUINLS;
@@ -30,13 +30,9 @@ import org.eclipse.swt.widgets.Text;
 
 public class R_Text extends SWTRenderer {
 
-    public R_Text(RenderContext rc) {
-        super(rc);
-    }
-
     @Override
-    public Control render(final GUIVar<?> var, Composite parent, int style)
-            throws RenderException, SWTException {
+    public Control render(final SWTRenderContext rc, final GUIVar<?> var,
+            Composite parent, int style) throws RenderException, SWTException {
         GUIVarMeta meta = var.getMeta();
         boolean readOnly = meta.isReadOnly();
         String val = String.valueOf(var.get());

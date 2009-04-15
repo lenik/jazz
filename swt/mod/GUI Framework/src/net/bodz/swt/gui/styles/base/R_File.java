@@ -12,7 +12,7 @@ import net.bodz.swt.adapters.CommitException;
 import net.bodz.swt.adapters.ControlAdapters;
 import net.bodz.swt.gui.GUIVar;
 import net.bodz.swt.gui.GUIVarMeta;
-import net.bodz.swt.gui.RenderContext;
+import net.bodz.swt.gui.SWTRenderContext;
 import net.bodz.swt.gui.SWTRenderer;
 import net.bodz.swt.layouts.BorderLayout;
 import net.bodz.swt.nls.GUINLS;
@@ -29,13 +29,10 @@ import org.eclipse.swt.widgets.Text;
 
 public class R_File extends SWTRenderer {
 
-    public R_File(RenderContext rc) {
-        super(rc);
-    }
-
     @Override
-    public Control render(final GUIVar<?> var, final Composite parent, int style)
-            throws RenderException, SWTException {
+    public Control render(final SWTRenderContext rc, final GUIVar<?> var,
+            final Composite parent, final int style) throws RenderException,
+            SWTException {
         GUIVarMeta meta = var.getMeta();
         File val = (File) var.get();
         assert val != null;

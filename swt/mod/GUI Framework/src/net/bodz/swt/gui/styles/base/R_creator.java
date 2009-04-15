@@ -13,7 +13,7 @@ import net.bodz.bas.types.util.Types;
 import net.bodz.swt.controls.helper.DynamicControl;
 import net.bodz.swt.gui.GUIHint;
 import net.bodz.swt.gui.GUIVar;
-import net.bodz.swt.gui.RenderContext;
+import net.bodz.swt.gui.SWTRenderContext;
 import net.bodz.swt.gui.SWTRenderer;
 import net.bodz.swt.layouts.LineLayout;
 import net.bodz.swt.nls.GUINLS;
@@ -33,10 +33,6 @@ import org.eclipse.swt.widgets.Text;
 
 public class R_creator extends SWTRenderer {
 
-    public R_creator(RenderContext rc) {
-        super(rc);
-    }
-
     static String createIcon = "/icons/full/obj16/add_obj.gif";   //$NON-NLS-1$
     static String deleteIcon = "/icons/full/obj16/delete_obj.gif"; //$NON-NLS-1$
 
@@ -52,8 +48,9 @@ public class R_creator extends SWTRenderer {
         return null;
     }
 
-    public Control renderTextParserCreator(final DynamicControl parent,
-            final int style, final TypeParser parser) {
+    public Control renderTextParserCreator(final SWTRenderContext rc,
+            final DynamicControl parent, final int style,
+            final TypeParser parser) {
         Composite comp = new Composite(parent, style);
         comp.setLayout(new LineLayout());
         final Text text = new Text(comp, SWT.BORDER);
@@ -85,8 +82,8 @@ public class R_creator extends SWTRenderer {
     }
 
     @Override
-    public Control render(GUIVar<?> var, Composite parent, int style)
-            throws RenderException, SWTException {
+    public Control render(final SWTRenderContext rc, GUIVar<?> var,
+            Composite parent, int style) throws RenderException, SWTException {
         Menu createMenu = new Menu(parent);
         Class<?> type = var.getMeta().getType();
         TypeParser parser;

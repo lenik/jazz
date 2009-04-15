@@ -3,7 +3,6 @@ package net.bodz.swt.controls.util;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Scrollable;
 
@@ -16,8 +15,16 @@ public class Controls {
         center(control, 0, 0);
     }
 
+    public static void center(Control control, Control parent) {
+        center(control, parent, 0, 0);
+    }
+
     public static void center(Control control, double xOffset, double yOffset) {
-        Composite parent = control.getParent();
+        center(control, control.getParent(), xOffset, yOffset);
+    }
+
+    public static void center(Control control, Control parent, double xOffset,
+            double yOffset) {
         Rectangle outer;
         if (parent == null || parent == control)
             outer = control.getDisplay().getBounds();
@@ -36,7 +43,20 @@ public class Controls {
                                               Integer.MAX_VALUE);
 
     public static void resizeToPreferredSize(Control control) {
+        resizeToPreferredSize(control, defaultMinSize, defaultMaxSize);
+    }
+
+    public static void resizeToPreferredSize(Control control, Point minSize,
+            Point maxSize) {
         Point trimSize = control.computeSize(SWT.DEFAULT, SWT.DEFAULT);
+        if (minSize != null) {
+            trimSize.x = Math.max(trimSize.x, minSize.x);
+            trimSize.y = Math.max(trimSize.y, minSize.y);
+        }
+        if (maxSize != null) {
+            trimSize.x = Math.min(trimSize.x, maxSize.x);
+            trimSize.y = Math.min(trimSize.y, maxSize.y);
+        }
         control.setSize(trimSize);
     }
 

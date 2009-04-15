@@ -72,7 +72,7 @@ public class CallContext implements IPropertyChangeSupport {
         if (value != null) {
             Class<?> type = parameterTypes[parameterIndex];
             if (!Types.box(type).isInstance(value)) {
-                String fmt = GUINLS.getString("CallContext.errParamType_dss");
+                String fmt = GUINLS.getString("CallContext.errParamType_dss"); //$NON-NLS-1$
                 throw new ClassCastException(String.format(fmt, parameterIndex, //$NON-NLS-1$
                         type, value.getClass()));
             }

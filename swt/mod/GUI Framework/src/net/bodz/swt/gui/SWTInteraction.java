@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
+import net.bodz.bas.a.A_bas;
 import net.bodz.bas.gui.RenderException;
 import net.bodz.bas.lang.err.CancelException;
 import net.bodz.bas.lang.err.CheckException;
@@ -113,15 +114,55 @@ public class SWTInteraction extends _Interaction {
         return params;
     }
 
-    class IADialog extends SimpleDialog {
+    abstract class IADialog extends SimpleDialog {
+
+        class RC extends SWTRenderContext {
+            @Override
+            public void addAction(final IAction action) {
+                if (action == null)
+                    throw new NullPointerException("action"); //$NON-NLS-1$
+                Composite userBar = getUserBar();
+                if (userBar == null)
+                    throw new IllegalStateException("no user bar"); //$NON-NLS-1$
+                final Button button = new Button(userBar, SWT.NONE);
+                button.setEnabled(action.isEnabled());
+                button.setVisible(action.isVisible());
+                String text = action.getText();
+                String doc = action.getDoc();
+                Image image = action.getImage();
+                if (text == null)
+                    text = A_bas.getDisplayName(action.getClass());
+                button.setText(text);
+                if (doc != null)
+                    button.setToolTipText(doc);
+                if (image != null)
+                    button.setImage(image);
+                button.addSelectionListener(new SelectionAdapter() {
+                    @Override
+                    public void widgetSelected(SelectionEvent e) {
+                        action.execute();
+                    }
+                });
+            }
+        }
 
         public IADialog(Shell parent, int style, String title) {
             super(parent, style, title);
         }
 
         @Override
+        protected void createUserButtons(Composite parent)
+                throws CreateException {
+            // already created.
+        }
+
+        @Override
         protected void addEffects() {
-            SWTInteraction.this.addEffects(shell);
+            SWTInteraction.this.addEffects(getShell());
+        }
+
+        public SWTRenderContext getRenderContext() {
+            return new RC();
         }
 
     }
@@ -168,8 +209,9 @@ public class SWTInteraction extends _Interaction {
             @Override
             protected void createDetail(Composite parent)
                     throws CreateException {
+                SWTRenderContext rc = getRenderContext();
                 try {
-                    strategy.render(params.getDetail(), parent, SWT.NONE);
+                    strategy.render(rc, params.getDetail(), parent, SWT.NONE);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -192,11 +234,13 @@ public class SWTInteraction extends _Interaction {
     public boolean confirm(String title, Object detail) {
         final Params params = getParams(detail);
         SimpleDialog dialog = new IADialog(parent, style, title) {
+            SWTRenderContext rc = getRenderContext();
+
             @Override
             protected void createDetail(Composite parent)
                     throws CreateException {
                 try {
-                    strategy.render(params.getDetail(), parent, SWT.NONE);
+                    strategy.render(rc, params.getDetail(), parent, SWT.NONE);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
@@ -234,16 +278,16 @@ public class SWTInteraction extends _Interaction {
             @Override
             protected void createDetail(Composite parent) throws SWTException,
                     CreateException {
+                SWTRenderContext rc = getRenderContext();
                 try {
-                    strategy.render(params.getDetail(), parent, SWT.NONE);
+                    strategy.render(rc, params.getDetail(), parent, SWT.NONE);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
             }
 
             @Override
-            protected void createBody(Composite parent) throws SWTException,
-                    CreateException {
+            protected void createBody(Composite parent) throws CreateException {
                 text = new Text(parent, SWT.BORDER);
                 String initialStr = String.valueOf(initial);
                 text.setText(initialStr);
@@ -283,19 +327,22 @@ public class SWTInteraction extends _Interaction {
     private static int FLATMAX = 3;
 
     static class PreRenderred {
-        private SWTStrategy    style;
-        private StackComposite stack;
-        private Control[]      controls;
-        private int            next;
+        private final SWTRenderContext rc;
+        private final SWTStrategy      style;
+        private final StackComposite   stack;
+        private final Control[]        controls;
+        private int                    next;
 
-        public PreRenderred(Composite parent, SWTStrategy style, int size) {
+        public PreRenderred(SWTRenderContext rc, Composite parent,
+                SWTStrategy style, int size) {
+            this.rc = rc;
             this.stack = new StackComposite(parent, SWT.BORDER);
             this.style = style;
             this.controls = new Control[size];
         }
 
         public int render(Object value) throws RenderException, SWTException {
-            Control control = style.render(value, stack, SWT.NONE);
+            Control control = style.render(rc, value, stack, SWT.NONE);
             controls[next] = control;
             return next++;
         }
@@ -324,23 +371,20 @@ public class SWTInteraction extends _Interaction {
             final Map<K, ?> candidates, final K initial) {
         final Params params = getParams(detail);
         SimpleDialog dialog = new IADialog(parent, style, title) {
-            {
-                set(initial);
-            }
+            SWTRenderContext rc = getRenderContext();
 
             @Override
-            protected void createDetail(Composite parent) throws SWTException,
-                    CreateException {
+            protected void createDetail(Composite parent)
+                    throws CreateException {
                 try {
-                    strategy.render(params.getDetail(), parent, SWT.NONE);
+                    strategy.render(rc, params.getDetail(), parent, SWT.NONE);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
             }
 
             @Override
-            protected void createBody(Composite parent) throws SWTException,
-                    CreateException {
+            protected void createBody(Composite parent) throws CreateException {
                 if (candidates.size() <= FLATMAX)
                     createRadios(parent, this, candidates, initial);
                 else
@@ -358,7 +402,7 @@ public class SWTInteraction extends _Interaction {
                     Button radio = new Button(parent, SWT.RADIO);
                     radio.setSelection(selected);
                     try {
-                        strategy.render(value, parent, SWT.NONE);
+                        strategy.render(rc, value, parent, SWT.NONE);
                     } catch (RenderException e) {
                         throw new CreateException(e);
                     }
@@ -385,7 +429,7 @@ public class SWTInteraction extends _Interaction {
                 final Object[] keys = new Object[size];
                 boolean hasDetail = hasDetail(candidates.values());
                 final PreRenderred preRenderred = hasDetail ? new PreRenderred(
-                        parent, strategy, size) : null;
+                        rc, parent, strategy, size) : null;
                 try {
                     int index = 0;
                     for (Entry<?, ?> entry : candidates.entrySet()) {
@@ -425,8 +469,8 @@ public class SWTInteraction extends _Interaction {
                         combo.select(insertIndex);
                 }
             }
-
         };
+        dialog.set(initial);
         try {
             @SuppressWarnings("unchecked")
             K key = (K) dialog.open();
@@ -445,21 +489,21 @@ public class SWTInteraction extends _Interaction {
         for (K k : initial)
             initials.add(k);
         SimpleDialog dialog = new IADialog(parent, style, title) {
-            Ref<Set<K>> selection;
+            SWTRenderContext rc = getRenderContext();
+            Ref<Set<K>>      selection;
 
             @Override
-            protected void createDetail(Composite parent) throws SWTException,
-                    CreateException {
+            protected void createDetail(Composite parent)
+                    throws CreateException {
                 try {
-                    strategy.render(params.getDetail(), parent, SWT.NONE);
+                    strategy.render(rc, params.getDetail(), parent, SWT.NONE);
                 } catch (Exception e) {
                     throw new CreateException(e);
                 }
             }
 
             @Override
-            protected void createBody(Composite parent) throws SWTException,
-                    CreateException {
+            protected void createBody(Composite parent) throws CreateException {
                 if (candidates.size() <= FLATMAX) {
                     selection = createChecks(parent, candidates, initials);
                 } else
@@ -497,7 +541,7 @@ public class SWTInteraction extends _Interaction {
                     check.setSelection(selected);
                     checks[index++] = new KB(key, check);
                     try {
-                        strategy.render(value, parent, SWT.NONE);
+                        strategy.render(rc, value, parent, SWT.NONE);
                     } catch (RenderException e) {
                         throw new CreateException(e);
                     }
@@ -539,7 +583,7 @@ public class SWTInteraction extends _Interaction {
                 final int size = candidates.size();
                 boolean hasDetail = hasDetail(candidates.values());
                 final PreRenderred preRenderred = hasDetail ? new PreRenderred(
-                        parent, strategy, size) : null;
+                        rc, parent, strategy, size) : null;
                 final _K[] keys = new _K[size];
                 int index = 0;
                 for (Entry<K, ?> entry : candidates.entrySet()) {

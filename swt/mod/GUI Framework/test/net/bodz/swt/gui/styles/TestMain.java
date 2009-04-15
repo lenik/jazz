@@ -22,7 +22,7 @@ public class TestMain extends BasicGUI {
             SWTException {
         SWTGridStrategy strategy = new SWTGridStrategy();
         GUIVar<Object> var = GUIVars.wrap(obj);
-        strategy.render(var, comp, SWT.NONE);
+        strategy.render(null, var, comp, SWT.NONE);
     }
 
     public static void test(Object obj) {

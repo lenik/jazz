@@ -4,6 +4,7 @@ import net.bodz.bas.gui.RenderException;
 import net.bodz.bas.lang.err.ReflectException;
 import net.bodz.swt.gui.GUIHint;
 import net.bodz.swt.gui.GUIVar;
+import net.bodz.swt.gui.SWTRenderContext;
 import net.bodz.swt.gui.SWTRenderer;
 import net.bodz.swt.gui.GUIStructs.GUICallMeta;
 import net.bodz.swt.gui.GUIStructs.GUICallVar;
@@ -25,20 +26,20 @@ public class R_CallObject extends SWTRenderer {
     protected final SWTGridStrategy gridStyle;
 
     public R_CallObject(SWTGridStrategy gridStyle) {
-        super(gridStyle);
         this.gridStyle = gridStyle;
     }
 
     @Override
-    public Control render(GUIVar<?> var, Composite parent, int style)
-            throws RenderException, SWTException {
+    public Control render(final SWTRenderContext rc, GUIVar<?> var,
+            Composite parent, int style) throws RenderException, SWTException {
         if (!(var instanceof GUICallVar))
             throw new IllegalArgumentException(GUINLS
                     .getString("R_CallObject.notGUICallVar") + var); //$NON-NLS-1$
         final GUICallVar callVar = (GUICallVar) var;
         GUICallMeta meta = callVar.getMeta();
         GUIHint hint = meta.getHint();
-        final Composite comp = gridStyle.renderStruct(callVar, parent, style);
+        final Composite comp = gridStyle.renderStruct(rc, callVar, parent,
+                style);
         final Composite opbar = new Composite(comp, SWT.NONE);
         opbar.setLayoutData(new GridData(//
                 SWT.FILL, SWT.CENTER, true, false, 3, 1));
@@ -65,12 +66,10 @@ public class R_CallObject extends SWTRenderer {
                             retLabel.setText(String.valueOf(retval));
                             opbar.layout();
                         }
-                    } catch (ReflectException re) {
-                        rc
-                                .interact(button)
-                                .alert(
-                                        GUINLS
-                                                .getString("R_CallObject.failedToCall"), re); //$NON-NLS-1$
+                    } catch (ReflectException ex) {
+                        String mesg = GUINLS
+                                .getString("R_CallObject.failedToCall"); //$NON-NLS-1$
+                        rc.interact(button).alert(mesg, ex);
                     }
                 }
             });
