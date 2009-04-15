@@ -16,13 +16,13 @@ public abstract class RenderStrategy extends TypeHierMap<Renderer> {
      * @throws NullPointerException
      *             if obj is <code>null</code>.
      */
-    public Object render(Var<?> var) throws RenderException {
+    public Object render(Object context, Var<?> var) throws RenderException {
         Renderer renderer = findRenderer(var);
         if (renderer == null)
             throw new RenderException(AppNLS
                     .getString("RenderStrategy.unkRender") //$NON-NLS-1$
                     + var.getMeta().getType());
-        return renderer.render(var);
+        return renderer.render(context, var);
     }
 
     /**

@@ -50,8 +50,8 @@ public class FileFinderTest {
             }
         };
 
-        int nFiles = dump("fileOnly", new FileFinder(fileOnly, srcDir)); //$NON-NLS-1$
-        int nDirs = dump("dirOnly", new FileFinder(dirOnly, srcDir)); //$NON-NLS-1$
+        int nFiles = dump("fileOnly", new FileFinder(fileOnly, false, srcDir)); //$NON-NLS-1$
+        int nDirs = dump("dirOnly", new FileFinder(dirOnly, false, srcDir)); //$NON-NLS-1$
         assertEquals(n, nFiles + nDirs);
     }
 

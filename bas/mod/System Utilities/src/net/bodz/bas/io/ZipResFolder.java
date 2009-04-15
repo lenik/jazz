@@ -14,6 +14,7 @@ import java.util.zip.ZipOutputStream;
 public class ZipResFolder implements ResFolder {
 
     private File            file_zip;
+    private boolean         autoMkdirs;
 
     private ZipFile         zipFile;
     private ZipOutputStream zipOut;
@@ -22,6 +23,22 @@ public class ZipResFolder implements ResFolder {
         if (zipfile == null)
             throw new NullPointerException("zipfile");
         this.file_zip = zipfile;
+    }
+
+    public boolean isAutoMkdirs() {
+        return autoMkdirs;
+    }
+
+    public void setAutoMkdirs(boolean autoMkdirs) {
+        this.autoMkdirs = autoMkdirs;
+    }
+
+    void autoMkdirs() {
+        if (autoMkdirs) {
+            File parentDir = file_zip.getParentFile();
+            if (parentDir != null)
+                parentDir.mkdirs();
+        }
     }
 
     @Override
@@ -42,6 +59,7 @@ public class ZipResFolder implements ResFolder {
             return;
         if (zipFile != null)
             throw new IOException("currently opened for reading: " + file_zip);
+        autoMkdirs();
         FileOutputStream out = new FileOutputStream(file_zip, true);
         zipOut = new ZipOutputStream(out);
     }
