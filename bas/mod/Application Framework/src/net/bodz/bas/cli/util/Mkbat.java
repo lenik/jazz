@@ -121,7 +121,7 @@ public class Mkbat extends BatchEditCLI {
         Class<?> class0 = null;
         // can found by bootSysLoader?
         try {
-            L.d.P("try ", className); //$NON-NLS-1$
+            L.detail("try " + className); //$NON-NLS-1$
             class0 = bootSysLoader.loadClass(className);
             // class0 = Class.forName(className, false, bootSysLoader);
         } catch (ClassNotFoundException e) {
@@ -159,7 +159,7 @@ public class Mkbat extends BatchEditCLI {
         // has main()? [2, configLoader]
         try {
             class1.getMethod("main", String[].class); //$NON-NLS-1$
-            L.i.P("    main-class: ", class1); //$NON-NLS-1$
+            L.info("    main-class: " + class1); //$NON-NLS-1$
         } catch (NoSuchMethodException e) {
             return EditResult.pass("notapp"); //$NON-NLS-1$
             // return ProcessResult.err(e, "notapp");
@@ -232,7 +232,7 @@ public class Mkbat extends BatchEditCLI {
                     fname = lib;
                 else
                     fname = lib + ".jar"; //$NON-NLS-1$
-                L.w.P("lib ", lib, " => ", fname); //$NON-NLS-1$ //$NON-NLS-2$
+                L.warn("lib ", lib, " => ", fname); //$NON-NLS-1$ //$NON-NLS-2$
             } else
                 fname = f.getName();
             String loadlib = "call :load " + qq(lib) + " " + qq(fname); //$NON-NLS-1$ //$NON-NLS-2$
@@ -245,12 +245,12 @@ public class Mkbat extends BatchEditCLI {
         byte[] batData = inst.getBytes();
         byte[] batFixed = fix_BatBB.methods().doEditToBuffer(batData);
         if (!Bytes.equals(batData, batFixed))
-            L.m.P("bat label boundary fixed: ", batf); //$NON-NLS-1$
+            L.info("bat label boundary fixed: ", batf); //$NON-NLS-1$
         if (force) {
             Files.write(batf, batFixed, batf);
-            L.m.P("write ", batf); //$NON-NLS-1$
+            L.info("write ", batf); //$NON-NLS-1$
         } else if (Files.copyDiff(batFixed, batf))
-            L.m.P("save ", batf); //$NON-NLS-1$
+            L.info("save ", batf); //$NON-NLS-1$
     }
 
     static URL       batTempl;

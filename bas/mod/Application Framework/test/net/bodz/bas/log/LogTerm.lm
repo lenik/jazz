@@ -1,0 +1,49 @@
+    public Terminal $name() {
+        return filter(FATAL);
+    }
+ 
+    public boolean show$Name() {
+        return level >= FATAL;
+    }
+    
+    public void $name(Object o) {
+        if (level >= $NAME) {
+            $name().p(o);
+        }
+    }
+
+    public void n$name(Object o) {
+        if (level >= $NAME) {
+            $name().n(o);
+        }
+    }
+
+    public void t$name(Object o) {
+        if (level >= $NAME) {
+            $name().t(o);
+        }
+    }
+
+    public void $name(Object... args) {
+        if (level >= $NAME) {
+            $name().p(args);
+        }
+    }
+    
+    public void n$name(Object... args) {
+        if (level >= $NAME) {
+            $name().n(args);
+        }
+    }
+    
+    public void t$name(Object... args) {
+        if (level >= $NAME) {
+            $name().t(args);
+        }
+    }
+    
+    public void f$name(String format, Object... args) {
+        if (level >= $NAME) {
+            $name().f(format, args);
+        }
+    }

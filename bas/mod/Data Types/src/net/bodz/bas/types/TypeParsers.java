@@ -13,9 +13,8 @@ import net.bodz.bas.io.ByteOut;
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.err.ParseException;
-import net.bodz.bas.log.ALog;
+import net.bodz.bas.log.LogTerm;
 import net.bodz.bas.nls.TypesNLS;
-import net.bodz.bas.types.parsers.ALogParser;
 import net.bodz.bas.types.parsers.BooleanParser;
 import net.bodz.bas.types.parsers.ByteOutParser;
 import net.bodz.bas.types.parsers.ByteParser;
@@ -28,6 +27,7 @@ import net.bodz.bas.types.parsers.DoubleParser;
 import net.bodz.bas.types.parsers.FileParser;
 import net.bodz.bas.types.parsers.FloatParser;
 import net.bodz.bas.types.parsers.IntegerParser;
+import net.bodz.bas.types.parsers.LoggerParser;
 import net.bodz.bas.types.parsers.LongParser;
 import net.bodz.bas.types.parsers.MessageDigestParser;
 import net.bodz.bas.types.parsers.PatternParser;
@@ -52,11 +52,13 @@ public class TypeParsers {
                 Field field = registryClass.getField(entry);
                 return field.get(null);
             } catch (NoSuchFieldException e) {
-                throw new ParseException(TypesNLS.getString("TypeParsers.0") + entry //$NON-NLS-1$
-                        + TypesNLS.getString("TypeParsers.1") + registryClass, e); //$NON-NLS-1$
+                throw new ParseException(
+                        TypesNLS.getString("TypeParsers.0") + entry //$NON-NLS-1$
+                                + TypesNLS.getString("TypeParsers.1") + registryClass, e); //$NON-NLS-1$
             } catch (Exception e) {
-                throw new ParseException(TypesNLS.getString("TypeParsers.2") + entry //$NON-NLS-1$
-                        + TypesNLS.getString("TypeParsers.3") + registryClass); //$NON-NLS-1$
+                throw new ParseException(
+                        TypesNLS.getString("TypeParsers.2") + entry //$NON-NLS-1$
+                                + TypesNLS.getString("TypeParsers.3") + registryClass); //$NON-NLS-1$
             }
         }
 
@@ -202,8 +204,9 @@ public class TypeParsers {
             throw new ParseException(e);
         }
         if (parser == null && errname != null) {
-            throw new ParseException(TypesNLS.getString("TypeParsers.6") + errname //$NON-NLS-1$
-                    + TypesNLS.getString("TypeParsers.7") + type); //$NON-NLS-1$
+            throw new ParseException(
+                    TypesNLS.getString("TypeParsers.6") + errname //$NON-NLS-1$
+                            + TypesNLS.getString("TypeParsers.7") + type); //$NON-NLS-1$
         }
         return parser;
     }
@@ -247,7 +250,7 @@ public class TypeParsers {
         registry.put(File.class, new FileParser());
         registry.put(ByteOut.class, new ByteOutParser());
         registry.put(CharOut.class, new CharOutParser());
-        registry.put(ALog.class, new ALogParser());
+        registry.put(LogTerm.class, new LoggerParser());
         registry.put(Pattern.class, new PatternParser());
         registry.put(MessageDigest.class, new MessageDigestParser());
     }

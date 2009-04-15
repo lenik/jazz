@@ -18,7 +18,6 @@ import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.ControlBreak;
 import net.bodz.bas.lang.a.OverrideOption;
 import net.bodz.bas.lang.err.NotImplementedException;
-import net.bodz.bas.nls.AppNLS;
 import net.bodz.bas.types.TypeParsers.GetInstanceParser;
 import net.bodz.bas.types.parsers.WildcardsParser;
 
@@ -56,8 +55,8 @@ public class BatchCLI extends BasicCLI {
     @Option(alias = "IP", vnam = "REGEXP", doc = "exclude these pathnames")
     Pattern          pathExclusivePattern;
 
-    @Option(alias = "Id", doc = "also apply filters on directories")
-    boolean          filterDirectories;
+    @Option(alias = "rp", doc = "don't recurse into excluded directories")
+    boolean          prune;
 
     @Option(alias = "Ic", vnam = "CLASS(FileFilter)", doc = "using custom file filter, this will override other --I* options")
     @ParseBy(GetInstanceParser.class)
@@ -158,11 +157,11 @@ public class BatchCLI extends BasicCLI {
         }
 
         public boolean isFilterDirectories() {
-            return filterDirectories;
+            return prune;
         }
 
         public void setFilterDirectories(boolean filterDirectories) {
-            BatchCLI.this.filterDirectories = filterDirectories;
+            BatchCLI.this.prune = filterDirectories;
         }
 
         public FileFilter getFileFilter() {
@@ -240,8 +239,7 @@ public class BatchCLI extends BasicCLI {
     @OverrideOption(group = "batch")
     protected void doFileArgument(final File file) throws Throwable {
         currentStartFile = file;
-        FileFinder finder = new FileFinder(fileFilter, recursive,
-                filterDirectories, file);
+        FileFinder finder = new FileFinder(fileFilter, prune, recursive, file);
         if (rootLast)
             finder.setOrder(FileFinder.FILE | FileFinder.DIR_POST);
         if (sortComparator != null)
@@ -275,11 +273,9 @@ public class BatchCLI extends BasicCLI {
         try {
             doFile(file);
         } catch (Throwable e) {
-            L.e
-                    .P(
-                            AppNLS.getString("BatchCLI.file"), file, AppNLS.getString("BatchCLI.error"), e.getMessage()); //$NON-NLS-1$ //$NON-NLS-2$
+            L.ferror("Failed to process %s: \n", file, e);
             if (L.showDetail())
-                e.printStackTrace();
+                e.printStackTrace(L.error().getPrintStream());
             if (!errorContinue)
                 throw new ControlBreak();
         } finally {

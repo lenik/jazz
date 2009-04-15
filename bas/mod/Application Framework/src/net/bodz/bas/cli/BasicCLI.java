@@ -25,6 +25,7 @@ import net.bodz.bas.io.CWD;
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.io.Files;
+import net.bodz.bas.io.term.Terminal;
 import net.bodz.bas.lang.ControlBreak;
 import net.bodz.bas.lang.a.ChainUsage;
 import net.bodz.bas.lang.a.OverrideOption;
@@ -35,18 +36,16 @@ import net.bodz.bas.lang.script.ScriptClass;
 import net.bodz.bas.lang.script.ScriptException;
 import net.bodz.bas.lang.script.ScriptType;
 import net.bodz.bas.lang.script.Scripts;
-import net.bodz.bas.log.ALog;
-import net.bodz.bas.log.LogOut;
-import net.bodz.bas.log.LogOuts;
+import net.bodz.bas.log.LogTerm;
+import net.bodz.bas.log.LogTerms;
 import net.bodz.bas.mod.plugins.PluginException;
 import net.bodz.bas.mod.plugins.PluginTypeEx;
 import net.bodz.bas.nls.AppNLS;
 import net.bodz.bas.types.TypeParser;
 import net.bodz.bas.types.TypeParsers;
 import net.bodz.bas.types.VarMap;
-import net.bodz.bas.types.parsers.ALogParser;
 import net.bodz.bas.types.parsers.CharOutParser;
-import net.bodz.bas.types.util.Dates;
+import net.bodz.bas.types.parsers.LoggerParser;
 import net.bodz.bas.types.util.Empty;
 import net.bodz.bas.types.util.Strings;
 
@@ -88,12 +87,9 @@ public class BasicCLI {
     @ParseBy(CharOutParser.class)
     protected CharOut _stdout        = CharOuts.stdout;
 
-    @Option(name = "logout", hidden = true)
-    @ParseBy(ALogParser.class)
-    protected ALog    L;
-
-    @Option(hidden = true)
-    String            _logPrefix;
+    @Option(name = "logger", hidden = true)
+    @ParseBy(LoggerParser.class)
+    protected LogTerm L              = LogTerms.get(1);
 
     @Option(hidden = true)
     boolean           _logWithPrefix = true;
@@ -222,32 +218,6 @@ public class BasicCLI {
         }
     }
 
-    protected class CLILog extends ALog {
-
-        public CLILog(int level) {
-            super(level);
-        }
-
-        @Override
-        protected void register(String name, final LogOut out0) {
-            LogOut out = out0;
-            if (_logWithPrefix) {
-                out = new LogOuts.Proxy(out0, "prefix-" + name) { //$NON-NLS-1$
-                    @Override
-                    protected String prefix() {
-                        if (_logWithDate) {
-                            String time = Dates.dateTimeFormat.format(System
-                                    .currentTimeMillis());
-                            return _logPrefix + "[" + time + "]"; //$NON-NLS-1$ //$NON-NLS-2$
-                        }
-                        return _logPrefix;
-                    }
-                };
-            }
-            super.register(name, out);
-        }
-    }
-
     private ClassInfo _classInfo;
 
     protected ClassInfo _loadClassInfo() {
@@ -355,11 +325,6 @@ public class BasicCLI {
 
     public BasicCLI() {
         TypeParsers.register(CLIPlugin.class, new PluginParser());
-        String loglevel = System.getProperty(CLIConfig.PROPERTY_LOGLEVEL);
-        int bootLevel = loglevel == null ? ALog.INFO : Integer
-                .parseInt(loglevel);
-        L = CLIConfig.getBootLog(bootLevel);
-        _logPrefix = "[" + A_bas.getDisplayName(getClass()) + "] "; //$NON-NLS-1$ //$NON-NLS-2$
         _vars = new VarMap<String, Object>(//
                 new HashMap<String, Object>());
     }
@@ -381,11 +346,12 @@ public class BasicCLI {
         if (prepared)
             return;
 
-        // L.x.P("parse boot info");
+        Terminal dbg = L.debug();
+        // dbg.p("parse boot info");
         // bootProc = BootProc.get(getClass());
-        //
+        //        
         // if (bootProc != null) {
-        // L.x.P("load-config PRE");
+        // dbg.p("load-config PRE");
         // try {
         // bootProc.load(Integer.MIN_VALUE, 0);
         // } catch (LoadException e) {
@@ -393,11 +359,8 @@ public class BasicCLI {
         // }
         // }
 
-        L.x.P("cli get options"); //$NON-NLS-1$
+        dbg.p("cli get options"); //$NON-NLS-1$
         opts = getOptions();
-
-        L.x.P("drop the boot logger"); //$NON-NLS-1$
-        L = new CLILog(L.getLevel());
 
         restArgs = new ArrayList<String>();
         prepared = true;
@@ -422,19 +385,20 @@ public class BasicCLI {
      * public access: so derivations don't have to declare static main()s.
      */
     public synchronized void run(String... args) throws Throwable {
-        L.x.P("cli prepare"); //$NON-NLS-1$
+        Terminal dbg = L.debug();
+        dbg.p("cli prepare"); //$NON-NLS-1$
         _prepare();
         int preRestSize = restArgs.size(); // make climain() reentrant.
 
         try {
             addArguments(args);
 
-            L.x.P("cli boot"); //$NON-NLS-1$
+            dbg.p("cli boot"); //$NON-NLS-1$
             _postInit();
             _boot();
 
             // if (bootProc != null) {
-            // L.x.P("load-config post");
+            // t.p("load-config post");
             // try {
             // bootProc.load(0, Integer.MAX_VALUE);
             // } catch (LoadException e) {
@@ -452,21 +416,20 @@ public class BasicCLI {
                     Object optval = opt.get(this);
                     if (optval instanceof CallInfo)
                         continue;
-                    L.d.P(optnam, " = ", Util.dispval(optval)); //$NON-NLS-1$
+                    dbg.p(optnam, " = ", Util.dispval(optval)); //$NON-NLS-1$
                 }
                 for (Entry<String, Object> entry : _vars.entrySet()) {
                     String name = entry.getKey();
                     Object value = entry.getValue();
-                    L.d.P("var ", name, " = ", value); //$NON-NLS-1$ //$NON-NLS-2$
+                    dbg.p("var ", name, " = ", value); //$NON-NLS-1$ //$NON-NLS-2$
                 }
             }
             String[] rest = restArgs.toArray(Empty.Strings);
 
-            L.x.P("cli main"); //$NON-NLS-1$
+            dbg.p("cli main"); //$NON-NLS-1$
             doMain(rest);
 
-            L.x.P("cli exit"); //$NON-NLS-1$
-            _exit();
+            dbg.p("cli exit"); //$NON-NLS-1$
         } catch (ControlBreak b) {
             return;
         } finally {

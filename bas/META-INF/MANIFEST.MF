@@ -19,6 +19,7 @@ Export-Package: net.bodz.bas.a,
  net.bodz.bas.gui.a,
  net.bodz.bas.io,
  net.bodz.bas.io.srt,
+ net.bodz.bas.io.term,
  net.bodz.bas.io.util,
  net.bodz.bas.lang,
  net.bodz.bas.lang.a,
@@ -86,3 +87,4 @@ Bundle-ClassPath: mod/_MODEL/bin/,
  mod/System Utilities/bin/,
  mod/Text Process/bin/,
  mod/Wrapper Classes/bin/
+Require-Bundle: org.apache.ant;bundle-version="1.7.1"

@@ -10,9 +10,9 @@ import javax.security.auth.callback.TextOutputCallback;
 import javax.security.auth.callback.UnsupportedCallbackException;
 
 import net.bodz.bas.io.Files;
-import net.bodz.bas.log.ALog;
-import net.bodz.bas.log.ALogs;
-import net.bodz.bas.log.LogOut;
+import net.bodz.bas.io.term.Terminal;
+import net.bodz.bas.log.LogTerm;
+import net.bodz.bas.log.LogTerms;
 
 import com.sun.security.auth.callback.TextCallbackHandler;
 
@@ -22,15 +22,15 @@ import com.sun.security.auth.callback.TextCallbackHandler;
 @Deprecated
 public class ConsoleCallbackHandler implements CallbackHandler {
 
-    private ALog   L;
-    private char[] password;
+    private LogTerm logger;
+    private char[]  password;
 
-    public ConsoleCallbackHandler(ALog L) {
-        this.L = L;
+    public ConsoleCallbackHandler(LogTerm logger) {
+        this.logger = logger;
     }
 
     public ConsoleCallbackHandler() {
-        this(ALogs.stderr);
+        this(LogTerms.console);
     }
 
     public void clearPassword() {
@@ -54,7 +54,7 @@ public class ConsoleCallbackHandler implements CallbackHandler {
             PasswordCallback pwdCall = (PasswordCallback) callback;
             if (password == null) {
                 String prompt = pwdCall.getPrompt();
-                L.m.P(prompt);
+                logger.info(prompt);
                 BufferedReader lineIn = Files.getBufferedReader(System.in);
                 String line = lineIn.readLine();
                 password = line.toCharArray();
@@ -63,19 +63,19 @@ public class ConsoleCallbackHandler implements CallbackHandler {
 
         } else if (callback instanceof TextOutputCallback) {
             TextOutputCallback textOutCall = (TextOutputCallback) callback;
-            LogOut out = L.d;
+            Terminal out = logger.detail();
             switch (textOutCall.getMessageType()) {
             case TextOutputCallback.INFORMATION:
-                out = L.m;
+                out = logger.info();
                 break;
             case TextOutputCallback.WARNING:
-                out = L.w;
+                out = logger.warn();
                 break;
             case TextOutputCallback.ERROR:
-                out = L.e;
+                out = logger.error();
                 break;
             }
-            out.P(textOutCall.getMessage());
+            out.p(textOutCall.getMessage());
         }
     }
 

@@ -5,15 +5,15 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 import net.bodz.bas.io.CharOut;
+import net.bodz.bas.io.term.Terminal;
+import net.bodz.bas.io.term.Terminals;
 import net.bodz.bas.lang.Caller;
 import net.bodz.bas.loader.UCL;
-import net.bodz.bas.log.LogOut;
-import net.bodz.bas.log.LogOuts;
 import net.bodz.bas.nls.LangNLS;
 
 public class Classpath {
 
-    static LogOut out = LogOuts.debug;
+    static Terminal out = Terminals.nil;
 
     /**
      * @return <code>false</code> if url is existed.
@@ -29,7 +29,7 @@ public class Classpath {
             int added = UCL.addURL(ucl, url);
             if (added != 0) {
                 count += added;
-                out.P("addURL ", url, " -> ", ucl); //$NON-NLS-1$ //$NON-NLS-2$
+                out.p("addURL ", url, " -> ", ucl); //$NON-NLS-1$ //$NON-NLS-2$
             }
         }
         return count;
