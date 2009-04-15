@@ -17,7 +17,7 @@ import net.bodz.bas.types.util.StackedIterator;
 /**
  * @test FileFinderTest
  */
-public class FileFinder implements FileFilter, Iterable<File> {
+public class FileFinder implements Iterable<File> {
 
     private static final int defaultMaxDepth = 256;
 
@@ -26,22 +26,43 @@ public class FileFinder implements FileFilter, Iterable<File> {
     public static final int  DIR_POST        = 4;
 
     private File[]           start;
-    private FileFilter       filter;
+    private FileFilter       userFilter;
     private boolean          prune;
+    private FileFilter       filter;
+
     private int              maxDepth;
     private int              order           = FILE | DIR;
     private Comparator<File> comparator;
 
-    public FileFinder(FileFilter filter, int maxDepth, boolean prune,
+    class Filter implements FileFilter {
+
+        @Override
+        public boolean accept(File file) {
+            if (userFilter == null)
+                return true;
+            if (file.isDirectory())
+                if (!prune)
+                    return true;
+            return userFilter.accept(file);
+        }
+
+    }
+
+    public FileFinder(FileFilter filter, boolean prune, int maxDepth,
             File... start) {
         this.start = start;
-        this.filter = filter;
-        this.maxDepth = maxDepth;
+        this.userFilter = filter;
         this.prune = prune;
+        this.maxDepth = maxDepth;
+        this.filter = new Filter();
+    }
+
+    public FileFinder(FileFilter filter, boolean prune, File... start) {
+        this(filter, false, defaultMaxDepth, start);
     }
 
     public FileFinder(FileFilter filter, int maxDepth, File... start) {
-        this(filter, maxDepth, false, start);
+        this(filter, filter instanceof PruneFileFilter, defaultMaxDepth, start);
     }
 
     public FileFinder(FileFilter filter, File... start) {
@@ -49,11 +70,11 @@ public class FileFinder implements FileFilter, Iterable<File> {
     }
 
     public FileFinder(int maxDepth, File... start) {
-        this(null, maxDepth, start);
+        this(null, false, maxDepth, start);
     }
 
     public FileFinder(File... start) {
-        this(null, defaultMaxDepth, start);
+        this(defaultMaxDepth, start);
     }
 
     public File[] getStart() {
@@ -65,11 +86,11 @@ public class FileFinder implements FileFilter, Iterable<File> {
     }
 
     public FileFilter getFilter() {
-        return filter;
+        return userFilter;
     }
 
     public void setFilter(FileFilter filter) {
-        this.filter = filter;
+        this.userFilter = filter;
     }
 
     public boolean isPrune() {
@@ -106,16 +127,6 @@ public class FileFinder implements FileFilter, Iterable<File> {
         this.comparator = comparator;
     }
 
-    @Override
-    public boolean accept(File file) {
-        if (filter == null)
-            return true;
-        if (file.isDirectory())
-            if (!prune)
-                return true;
-        return filter.accept(file);
-    }
-
     class RecIter extends PrefetchedIterator<File> {
 
         StackedIterator<File> stack;
@@ -132,10 +143,10 @@ public class FileFinder implements FileFilter, Iterable<File> {
                 return end();
             File x = stack.next();
             boolean included = true;
-            if (!prune && filter != null && x.isDirectory())
-                included = filter.accept(x);
+            if (!prune && userFilter != null && x.isDirectory())
+                included = userFilter.accept(x);
             if (x.isDirectory() && depth < maxDepth) {
-                File[] children = x.listFiles(FileFinder.this);
+                File[] children = x.listFiles(filter);
                 if (children.length > 0) {
                     if (comparator != null)
                         Arrays.sort(children, comparator);

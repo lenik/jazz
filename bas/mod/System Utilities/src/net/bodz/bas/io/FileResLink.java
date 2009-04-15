@@ -30,6 +30,14 @@ public class FileResLink extends _ResLink {
         this.autoMkdirs = autoMkdirs;
     }
 
+    void autoMkdirs() {
+        if (autoMkdirs) {
+            File parentDir = file.getParentFile();
+            if (parentDir != null)
+                parentDir.mkdirs();
+        }
+    }
+
     @Override
     public File getFile() {
         return file;
@@ -52,6 +60,7 @@ public class FileResLink extends _ResLink {
 
     @Override
     public OutputStream openOutputStream(boolean append) throws IOException {
+        autoMkdirs();
         return new FileOutputStream(file, append);
     }
 

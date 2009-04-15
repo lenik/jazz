@@ -28,9 +28,7 @@ public class NLSAccessor {
         try {
             return bundle.getString(key);
         } catch (MissingResourceException e) {
-            if (diag)
-                throw e;
-            return '!' + key + '!';
+            return null;
         }
     }
 

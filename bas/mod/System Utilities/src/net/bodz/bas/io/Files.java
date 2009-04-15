@@ -1076,6 +1076,10 @@ public class Files {
 
     // data associated with a class
 
+    /**
+     * @param extension
+     *            should not contain the dot(.)
+     */
     public static URL classData(Class<?> clazz, String extension) {
         ClassLoader loader = clazz.getClassLoader();
         if (loader == null)
