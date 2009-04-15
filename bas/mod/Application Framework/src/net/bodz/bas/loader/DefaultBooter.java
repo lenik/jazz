@@ -7,6 +7,7 @@ import java.util.List;
 
 import net.bodz.bas.a.BootInfo;
 import net.bodz.bas.a.BootProc;
+import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.lang.Caller;
 import net.bodz.bas.lang.ControlBreak;
@@ -14,8 +15,6 @@ import net.bodz.bas.lang.ControlContinue;
 import net.bodz.bas.lang.ControlExit;
 import net.bodz.bas.lang.Pred1;
 import net.bodz.bas.lang.util.Classpath;
-import net.bodz.bas.log.LogOut;
-import net.bodz.bas.log.LogOuts;
 import net.bodz.bas.nls.AppNLS;
 import net.bodz.bas.types.util.Arrays2;
 import net.bodz.bas.types.util.Empty;
@@ -25,9 +24,9 @@ import net.bodz.bas.types.util.Empty;
  */
 public class DefaultBooter {
 
-    private static LogOut out          = LogOuts.stderr;
+    private static CharOut out          = CharOuts.stderr;
 
-    static boolean        LOADFIX_DUMP = false;
+    static boolean         LOADFIX_DUMP = false;
 
     public static Class<?> loadFix(ClassLoader initSysLoader, String className,
             URL... userlibs) throws LoadException {

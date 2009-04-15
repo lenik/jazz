@@ -8,7 +8,7 @@ import net.bodz.bas.cli.CLIException;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.lang.script.ScriptClass;
 import net.bodz.bas.lang.script.ScriptException;
-import net.bodz.bas.log.ALog;
+import net.bodz.bas.log.LogTerm;
 import net.bodz.bas.types.util.Empty;
 
 import org.apache.tools.ant.BuildException;
@@ -141,7 +141,7 @@ public class CLITask extends Task {
             }
             // adapting attributes
             if (logLevel != 0) {
-                ALog L = (ALog) sclass.get(app, "logout"); //$NON-NLS-1$
+                LogTerm L = (LogTerm) sclass.get(app, "logger"); //$NON-NLS-1$
                 L.setLevel(L.getLevel() + logLevel);
             }
         } catch (CLIException e) {

@@ -101,9 +101,7 @@ public class ProcessResultStat {
             Integer value2) {
         String tab = Strings.repeat(indent, ' ');
         out.print(tab);
-        out
-                .printf(
-                        "%"     + (NAMECOLUMN - indent) + "", name, value); //$NON-NLS-1$ //$NON-NLS-2$
+        out.printf("%" + (NAMECOLUMN - indent) + "", name, value); //$NON-NLS-1$ //$NON-NLS-2$
         if (value > 1)
             out.print('s');
         if (value2 != null) {

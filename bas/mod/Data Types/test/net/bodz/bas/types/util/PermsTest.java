@@ -12,10 +12,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.bodz.bas.io.term.Terminal;
 import net.bodz.bas.lang.IntMath;
 import net.bodz.bas.lang.Proc1;
-import net.bodz.bas.log.ALog;
-import net.bodz.bas.log.ALogs;
+import net.bodz.bas.log.LogTerm;
+import net.bodz.bas.log.LogTerms;
 import net.bodz.bas.test.TestDefs;
 import net.bodz.bas.test._TestEval;
 
@@ -23,11 +24,11 @@ import org.junit.Test;
 
 public class PermsTest {
 
-    ALog L     = ALogs.stdout;
-    int  count = 0;
+    static LogTerm logger = LogTerms.get(1);
+    int            count  = 0;
 
     public PermsTest() {
-        L.setLevel(ALog.INFO);
+        logger.setLevel(LogTerm.INFO);
     }
 
     @Test
@@ -47,7 +48,8 @@ public class PermsTest {
                 int pos = s.indexOf('1');
                 s = s.replaceAll("[^1]", "0"); //$NON-NLS-1$ //$NON-NLS-2$
                 int bin = Integer.parseInt(s, 2);
-                L.x.PF("%8d - %8d - %8d", count, pos, bin); //$NON-NLS-1$
+                Terminal dbg = logger.debug();
+                dbg.f("%8d - %8d - %8d\n", count, pos, bin); //$NON-NLS-1$
             }
         });
         int expectedCount = IntMath.fac(orig.length()).intValue();

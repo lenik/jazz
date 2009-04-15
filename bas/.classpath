@@ -28,6 +28,5 @@
 	<classpathentry kind="src" output="mod/_MODEL/s0.bin" path="mod/_MODEL/s0"/>
 	<classpathentry kind="src" output="mod/_MODEL/bin" path="mod/_MODEL/src"/>
 	<classpathentry kind="src" output="mod/_MODEL/test.bin" path="mod/_MODEL/test"/>
-	<classpathentry kind="var" path="JAVA_LIB/ant.jar" sourcepath="/JAVA_SRC/ant-1.7.0-src.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
