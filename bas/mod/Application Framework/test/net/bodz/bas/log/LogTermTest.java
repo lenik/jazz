@@ -5,8 +5,8 @@ import java.net.URL;
 
 import net.bodz.bas.io.Files;
 import net.bodz.bas.text.interp.Interps;
+import net.bodz.bas.types.HashTextMap;
 import net.bodz.bas.types.TextMap;
-import net.bodz.bas.types.TextMap.HashTextMap;
 import net.bodz.bas.types.util.Strings;
 
 public class LogTermTest {

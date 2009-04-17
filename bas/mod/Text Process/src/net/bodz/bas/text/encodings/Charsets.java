@@ -9,7 +9,7 @@ import java.util.Iterator;
 import net.bodz.bas.lang.err.IllegalArgumentTypeException;
 import net.bodz.bas.nls.TextNLS;
 import net.bodz.bas.types.TextMap;
-import net.bodz.bas.types.TextMap.TreeTextMap;
+import net.bodz.bas.types.TreeTextMap;
 
 /**
  * Literal Charset Provider Literal charset is designed for debug or special

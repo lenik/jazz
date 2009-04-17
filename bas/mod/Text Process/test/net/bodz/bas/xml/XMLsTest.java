@@ -9,7 +9,7 @@ import java.io.StringReader;
 import net.bodz.bas.lang.err.DecodeException;
 import net.bodz.bas.lang.err.EncodeException;
 import net.bodz.bas.types.TextMap;
-import net.bodz.bas.types.TextMap.TreeTextMap;
+import net.bodz.bas.types.TreeTextMap;
 
 import org.junit.Test;
 import org.xml.sax.Attributes;

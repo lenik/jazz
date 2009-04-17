@@ -7,9 +7,9 @@ import java.util.Map;
 import net.bodz.bas.lang.Control;
 import net.bodz.bas.lang.err.IllegalUsageError;
 import net.bodz.bas.nls.LangNLS;
+import net.bodz.bas.types.HashTextMap;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TypesHierMap;
-import net.bodz.bas.types.TextMap.HashTextMap;
 import net.bodz.bas.types.util.Types;
 
 public class VarMethod extends _VMethod {

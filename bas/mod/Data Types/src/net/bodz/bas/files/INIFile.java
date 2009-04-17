@@ -8,7 +8,7 @@ import net.bodz.bas.lang.ControlContinue;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.nls.TypesNLS;
 import net.bodz.bas.types.TextMap;
-import net.bodz.bas.types.TextMap.TreeTextMap;
+import net.bodz.bas.types.TreeTextMap;
 import net.bodz.bas.types.util.PrefetchedIterator;
 
 public class INIFile extends _MapFile<TextMap<String>> {

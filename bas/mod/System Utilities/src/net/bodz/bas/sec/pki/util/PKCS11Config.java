@@ -13,7 +13,7 @@ import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.err.UnexpectedException;
 import net.bodz.bas.types.TextMap;
-import net.bodz.bas.types.TextMap.TreeTextMap;
+import net.bodz.bas.types.TreeTextMap;
 import sun.security.pkcs11.wrapper.PKCS11Constants;
 
 public class PKCS11Config {

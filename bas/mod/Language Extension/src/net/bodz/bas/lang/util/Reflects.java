@@ -14,8 +14,8 @@ import net.bodz.bas.lang.a.ReflectMethod;
 import net.bodz.bas.lang.a.ReflectProperty;
 import net.bodz.bas.lang.err.ReflectException;
 import net.bodz.bas.nls.LangNLS;
+import net.bodz.bas.types.HashTextMap;
 import net.bodz.bas.types.TextMap;
-import net.bodz.bas.types.TextMap.HashTextMap;
 
 public class Reflects {
 

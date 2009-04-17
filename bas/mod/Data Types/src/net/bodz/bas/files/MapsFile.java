@@ -4,7 +4,7 @@ import java.nio.charset.Charset;
 
 import net.bodz.bas.lang.ControlBreak;
 import net.bodz.bas.lang.ControlContinue;
-import net.bodz.bas.types.TextMap.TreeTextMap;
+import net.bodz.bas.types.TreeTextMap;
 
 /**
  * Preferred file name: *.maps

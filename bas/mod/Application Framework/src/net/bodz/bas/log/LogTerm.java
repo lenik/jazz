@@ -38,56 +38,6 @@ public abstract class LogTerm {
      */
     static String generator = "class net.bodz.bas.log.LogTermTest";
 
-    public Terminal user() {
-        return filter(FATAL);
-    }
-
-    public boolean showUser() {
-        return level >= FATAL;
-    }
-
-    public void user(Object o) {
-        if (level >= USER) {
-            user().p(o);
-        }
-    }
-
-    public void nuser(Object o) {
-        if (level >= USER) {
-            user().n(o);
-        }
-    }
-
-    public void tuser(Object o) {
-        if (level >= USER) {
-            user().t(o);
-        }
-    }
-
-    public void user(Object... args) {
-        if (level >= USER) {
-            user().p(args);
-        }
-    }
-
-    public void nuser(Object... args) {
-        if (level >= USER) {
-            user().n(args);
-        }
-    }
-
-    public void tuser(Object... args) {
-        if (level >= USER) {
-            user().t(args);
-        }
-    }
-
-    public void fuser(String format, Object... args) {
-        if (level >= USER) {
-            user().f(format, args);
-        }
-    }
-
     public Terminal fatal() {
         return filter(FATAL);
     }
@@ -188,6 +138,56 @@ public abstract class LogTerm {
         }
     }
 
+    public Terminal user() {
+        return filter(FATAL);
+    }
+
+    public boolean showUser() {
+        return level >= FATAL;
+    }
+
+    public void user(Object o) {
+        if (level >= USER) {
+            user().p(o);
+        }
+    }
+
+    public void nuser(Object o) {
+        if (level >= USER) {
+            user().n(o);
+        }
+    }
+
+    public void tuser(Object o) {
+        if (level >= USER) {
+            user().t(o);
+        }
+    }
+
+    public void user(Object... args) {
+        if (level >= USER) {
+            user().p(args);
+        }
+    }
+
+    public void nuser(Object... args) {
+        if (level >= USER) {
+            user().n(args);
+        }
+    }
+
+    public void tuser(Object... args) {
+        if (level >= USER) {
+            user().t(args);
+        }
+    }
+
+    public void fuser(String format, Object... args) {
+        if (level >= USER) {
+            user().f(format, args);
+        }
+    }
+
     public Terminal warn() {
         return filter(FATAL);
     }
@@ -235,6 +235,56 @@ public abstract class LogTerm {
     public void fwarn(String format, Object... args) {
         if (level >= WARN) {
             warn().f(format, args);
+        }
+    }
+
+    public Terminal mesg() {
+        return filter(FATAL);
+    }
+
+    public boolean showMesg() {
+        return level >= FATAL;
+    }
+
+    public void mesg(Object o) {
+        if (level >= MESG) {
+            mesg().p(o);
+        }
+    }
+
+    public void nmesg(Object o) {
+        if (level >= MESG) {
+            mesg().n(o);
+        }
+    }
+
+    public void tmesg(Object o) {
+        if (level >= MESG) {
+            mesg().t(o);
+        }
+    }
+
+    public void mesg(Object... args) {
+        if (level >= MESG) {
+            mesg().p(args);
+        }
+    }
+
+    public void nmesg(Object... args) {
+        if (level >= MESG) {
+            mesg().n(args);
+        }
+    }
+
+    public void tmesg(Object... args) {
+        if (level >= MESG) {
+            mesg().t(args);
+        }
+    }
+
+    public void fmesg(String format, Object... args) {
+        if (level >= MESG) {
+            mesg().f(format, args);
         }
     }
 

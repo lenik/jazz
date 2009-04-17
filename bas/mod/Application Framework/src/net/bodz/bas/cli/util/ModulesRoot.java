@@ -6,7 +6,7 @@ import java.util.Map;
 
 import net.bodz.bas.io.Files;
 import net.bodz.bas.sys.SystemInfo;
-import net.bodz.bas.types.TextMap.HashTextMap;
+import net.bodz.bas.types.HashTextMap;
 
 public class ModulesRoot {
 
