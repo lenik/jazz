@@ -5,6 +5,11 @@ import java.util.List;
 
 public class Location {
 
+    public static int    REFRESH  = 0;
+    public static int    FORWARD  = 1;
+    public static int    BACKWARD = 2;
+    public static int    QUIT     = 3;
+
     private List<String> history;
     private int          index;
 
@@ -28,7 +33,7 @@ public class Location {
         int len = history.size();
         while (len > keeplen)
             history.remove(--len);
-        locationChange(prev, resolved);
+        locationChange(prev, resolved, FORWARD);
         return resolved;
     }
 
@@ -44,6 +49,9 @@ public class Location {
         return normalized;
     }
 
+    /**
+     * Join prev and next parts, but don't normalize it.
+     */
     protected String _resolv(String prev, String next) {
         if (prev == null)
             return next;
@@ -78,7 +86,9 @@ public class Location {
         String prev = get();
         index = i;
         String next = get();
-        locationChange(prev, next);
+        int reason = relativeIndex == 0 ? REFRESH : relativeIndex > 0 ? FORWARD
+                : BACKWARD;
+        locationChange(prev, next, reason);
         return next;
     }
 
@@ -114,10 +124,11 @@ public class Location {
         locationChangeListeners.remove(listener);
     }
 
-    protected void locationChange(String prev, String next) {
+    protected void locationChange(String prev, String next, int reason) {
         if (locationChangeListeners == null)
             return;
-        LocationChangeEvent e = new LocationChangeEvent(this, prev, next);
+        LocationChangeEvent e = new LocationChangeEvent(this, prev, next,
+                reason);
         for (LocationChangeListener l : locationChangeListeners)
             l.locationChange(e);
     }

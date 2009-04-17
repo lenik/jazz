@@ -14,9 +14,9 @@ public interface Page {
      * @param prev
      *            full path of previous page
      */
-    void enter(String prev);
+    void enter(String prev, int reason);
 
-    void leave(String next);
+    void leave(String next, int reason);
 
     /**
      * The page is locked and leave is forbidden.

@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.ToolItem;
 
-class DetailMessage extends DetailComposite {
+class DetailMessage extends WindowComposite {
 
     private Text text;
 
@@ -61,7 +61,7 @@ class DetailMessage extends DetailComposite {
 
 }
 
-public class DetailCompositeTest {
+public class WindowCompositeTest {
 
     private ControlTestApp test;
     private DetailMessage  detail;
@@ -76,11 +76,11 @@ public class DetailCompositeTest {
                 int hHint = SWT.DEFAULT;
                 Point size;
                 System.out.println();
-                size = topBar.computeSize(wHint, hHint);
-                System.out.println("Top bar=" + size); //$NON-NLS-1$
-
-                size = stack.computeSize(wHint, hHint);
-                System.out.println("Stack size=" + size); //$NON-NLS-1$
+                // size = titleBar.computeSize(wHint, hHint);
+                //                System.out.println("Title bar=" + size); //$NON-NLS-1$
+                //
+                // size = stack.computeSize(wHint, hHint);
+                //                System.out.println("Stack size=" + size); //$NON-NLS-1$
 
                 size = computeSize(wHint, hHint);
                 System.out.println("Detail size=" + size); //$NON-NLS-1$
@@ -109,7 +109,7 @@ public class DetailCompositeTest {
     }
 
     public static void main(String[] args) {
-        new DetailCompositeTest().run();
+        new WindowCompositeTest().run();
     }
 
 }

@@ -11,10 +11,10 @@ public class WizardCompositeTest {
         final ControlTestApp test = new ControlTestApp();
 
         final WizardComposite wizard = new WizardComposite(test.parent,
-                SWT.NONE) {
+                SWT.BORDER) {
             @Override
-            protected boolean isPageLoadable(String address) {
-                if (super.isPageLoadable(address))
+            public boolean isPageDefined(String address) {
+                if (super.isPageDefined(address))
                     return true;
                 if ("aaa".equals(address)) //$NON-NLS-1$
                     return true;

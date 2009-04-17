@@ -47,6 +47,8 @@ public class StrictDeviceResources {
     IndexMap<Color>       indexedColors;
 
     public StrictDeviceResources(Device device, StrictDeviceResources reuse) {
+        if (device == null)
+            throw new NullPointerException("device");
         this.device = device;
         if (reuse == null) {
             if (weakCache) {
@@ -352,7 +354,10 @@ public class StrictDeviceResources {
 
     static void diagResPath(Class<?> clazz, String path) {
         if (diag) {
-            System.err.printf(CommonNLS.getString("StrictDeviceResources.badpath_ss"), path, clazz); //$NON-NLS-1$
+            System.err
+                    .printf(
+                            CommonNLS
+                                    .getString("StrictDeviceResources.badpath_ss"), path, clazz); //$NON-NLS-1$
             dumpLoader(clazz.getClassLoader());
         }
     }

@@ -46,26 +46,27 @@ public abstract class PageTestApp extends ControlTestApp {
                             }
 
                             @Override
-                            public void enter(String prev) {
-                                prevLabel
-                                        .setText(GUINLS
-                                                .getString("PageTestApp.youFromA") + prev + "'. "); //$NON-NLS-1$ //$NON-NLS-2$
+                            public void enter(String prev, int reason) {
+                                prevLabel.setText(String.format(GUINLS
+                                        .getString("PageTestApp.youFromA_ss"),
+                                        prev, reason)); //$NON-NLS-1$ 
 
-                                Page page = wizard.getPageFlow().getPage(prev);
-                                if (page == null)
+                                Page prevPage = wizard.getPageFlow().getPage(
+                                        prev);
+                                if (prevPage == null)
                                     throw new IllegalUsageException(
                                             GUINLS
                                                     .getString("PageTestApp.badAddress") //$NON-NLS-1$
                                                     + prev);
-                                String type = page.getClass().getName();
-                                int hash = System.identityHashCode(page);
+                                String type = prevPage.getClass().getName();
+                                int hash = System.identityHashCode(prevPage);
                                 infoLabel
                                         .setText(GUINLS
                                                 .getString("PageTestApp.page_") + type + ") @" //$NON-NLS-1$ //$NON-NLS-2$
                                                 + Integer.toHexString(hash)
                                                 + ": "); //$NON-NLS-1$
 
-                                String s = page.toString();
+                                String s = prevPage.toString();
                                 text.setText(s);
                             }
 

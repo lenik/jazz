@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.NoSuchElementException;
 
 import net.bodz.bas.types.TextMap;
-import net.bodz.bas.types.TextMap.TreeTextMap;
+import net.bodz.bas.types.TreeTextMap;
 import net.bodz.swt.gui.ValidateException;
 import net.bodz.swt.nls.GUINLS;
 
@@ -104,16 +104,16 @@ public class PageFlow extends Location {
     }
 
     @Override
-    protected void locationChange(String prev, String next) {
+    protected void locationChange(String prev, String next, int reason) {
         Page prevPage = getPage(prev);
         if (prevPage != null)
-            prevPage.leave(next);
+            prevPage.leave(next, reason);
 
         Page nextPage = getPage(next);
         if (nextPage != null)
-            nextPage.enter(prev);
+            nextPage.enter(prev, reason);
 
-        super.locationChange(prev, next);
+        super.locationChange(prev, next, reason);
     }
 
 }

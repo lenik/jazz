@@ -4,14 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.rt.Interaction;
+import net.bodz.bas.types.HashTextMap;
 import net.bodz.bas.types.TextMap;
-import net.bodz.bas.types.TextMap.HashTextMap;
 import net.bodz.bas.types.util.Strings;
 import net.bodz.swt.adapters.ControlAdapters;
 import net.bodz.swt.controls.helper.StackComposite;
 import net.bodz.swt.gui.SWTInteraction;
 import net.bodz.swt.gui.ValidateException;
-import net.bodz.swt.layouts.BorderLayout;
 import net.bodz.swt.nls.GUINLS;
 import net.bodz.swt.util.SWTResources;
 
@@ -20,11 +19,10 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -32,7 +30,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
 /**
- * @test WizardCompositeTest
+ * @test {@link WizardCompositeTest}
  */
 public class WizardComposite extends Composite {
 
@@ -41,15 +39,16 @@ public class WizardComposite extends Composite {
 
     private boolean              useLegend;
     private Composite            legends;
-    private Composite            body;
-    private Composite            navbar;
 
+    private Composite            titleBar;
     private Image                defaultPageIcon;
     private Label                pageIconLabel;
     private Label                pageTitleLabel;
 
-    private StackComposite       contents;
+    private StackComposite       body;
     private PageComposite        emptyPage;
+
+    private Composite            navBar;
 
     private static boolean       showBegin  = true;
     private static boolean       showFinish = false;
@@ -72,7 +71,7 @@ public class WizardComposite extends Composite {
             public boolean isPageLoadable(String address) {
                 if (super.isPageLoadable(address))
                     return true;
-                return WizardComposite.this.isPageLoadable(address);
+                return WizardComposite.this.isPageDefined(address);
             }
 
             @Override
@@ -97,93 +96,78 @@ public class WizardComposite extends Composite {
         defaultPageIcon = SWTResources
                 .getImageRes("/icons/full/obj16/brkp_grp.gif"); //$NON-NLS-1$
 
-        final BorderLayout borderLayout = new BorderLayout(0, 0);
-        borderLayout.setVgap(3);
-        setLayout(borderLayout);
+        final GridLayout gridLayout = new GridLayout(1, false);
+        gridLayout.marginWidth = 5;
+        gridLayout.marginHeight = 5;
+        gridLayout.horizontalSpacing = 0;
+        gridLayout.verticalSpacing = 0;
+        setLayout(gridLayout);
 
         if (useLegend) {
             legends = new Composite(this, SWT.NONE);
             legends.setLayout(new FillLayout());
-            legends.setLayoutData(BorderLayout.NORTH);
+            final Label legendHr = new Label(this, SWT.SEPARATOR
+                    | SWT.HORIZONTAL);
+            legendHr.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
+                    false));
         }
 
-        body = new Composite(this, SWT.NONE);
-        final BorderLayout bodyLayout = new BorderLayout(0, 0);
-        bodyLayout.setVgap(3);
-        body.setLayout(bodyLayout);
-        body.setLayoutData(BorderLayout.CENTER);
+        titleBar = new Composite(this, SWT.NONE);
+        final GridData titleData = new GridData(SWT.FILL, SWT.CENTER, true,
+                false);
+        titleBar.setLayoutData(titleData);
+        final GridLayout titleLayout = new GridLayout(2, false);
+        titleBar.setLayout(titleLayout);
 
-        final Composite titlebar = new Composite(body, SWT.NONE);
-        titlebar.setLayout(new FormLayout());
-        titlebar.setLayoutData(BorderLayout.NORTH);
-
-        pageIconLabel = new Label(titlebar, SWT.NONE);
-        final FormData fd_titleImage = new FormData();
-        fd_titleImage.top = new FormAttachment(0, 3);
-        fd_titleImage.left = new FormAttachment(0, 3);
-        pageIconLabel.setLayoutData(fd_titleImage);
+        pageIconLabel = new Label(titleBar, SWT.NONE);
         pageIconLabel.setImage(defaultPageIcon);
 
-        pageTitleLabel = new Label(titlebar, SWT.WRAP);
-        final FormData fd_titleLabel = new FormData();
-        fd_titleLabel.right = new FormAttachment(100, -5);
-        fd_titleLabel.top = new FormAttachment(pageIconLabel, 0, SWT.TOP);
-        fd_titleLabel.left = new FormAttachment(pageIconLabel, 5, SWT.RIGHT);
-        pageTitleLabel.setLayoutData(fd_titleLabel);
+        pageTitleLabel = new Label(titleBar, SWT.WRAP);
         pageTitleLabel.setText(GUINLS.getString("WizardComposite.pageTitle")); //$NON-NLS-1$
+        pageTitleLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
+                false));
 
-        contents = new StackComposite(body, SWT.BORDER);
-        contents.setLayoutData(BorderLayout.CENTER);
-        emptyPage = new PageComposite(contents, SWT.NONE);
+        final Label titleHr = new Label(this, SWT.SEPARATOR | SWT.HORIZONTAL);
+        titleHr.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+
+        body = new StackComposite(this, SWT.NONE);
+        final GridData bodyData = new GridData(SWT.FILL, SWT.FILL, true, true);
+        body.setLayoutData(bodyData);
+
+        emptyPage = new PageComposite(body, SWT.NONE);
+
+        final Label navHr = new Label(this, SWT.SEPARATOR | SWT.HORIZONTAL);
+        navHr.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
         final Composite navbar1 = new Composite(this, SWT.NONE);
         navbar1.setLayout(new FormLayout());
-        navbar1.setLayoutData(BorderLayout.SOUTH);
+        navbar1.setLayoutData(new GridData(SWT.END, SWT.CENTER, true, false));
 
-        navbar = new Composite(navbar1, SWT.NONE);
-        final FormData fd_navbar = new FormData();
-        fd_navbar.right = new FormAttachment(100, 0);
-        fd_navbar.top = new FormAttachment(0, 0);
-        navbar.setLayoutData(fd_navbar);
-        final GridLayout gridLayout = new GridLayout();
-        gridLayout.marginHeight = 0;
-        gridLayout.makeColumnsEqualWidth = true;
-        gridLayout.numColumns = 2;
-        if (showBegin)
-            gridLayout.numColumns++;
-        if (showFinish)
-            gridLayout.numColumns++;
-        navbar.setLayout(gridLayout);
+        navBar = new Composite(navbar1, SWT.NONE);
+        final RowLayout navLayout = new RowLayout();
+        navBar.setLayout(navLayout);
 
         if (showBegin) {
-            beginButton = new Button(navbar, SWT.NONE);
+            beginButton = new Button(navBar, SWT.NONE);
             beginButton.setImage(SWTResources
                     .getImageRes("/icons/full/etool16/shift_l_edit.gif")); //$NON-NLS-1$
-            beginButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
-                    false));
             beginButton.setText(GUINLS.getString("WizardComposite.begin")); //$NON-NLS-1$
         }
 
-        backButton = new Button(navbar, SWT.NONE);
+        backButton = new Button(navBar, SWT.NONE);
         backButton.setImage(SWTResources
                 .getImageRes("/icons/elcl16/nav_backward.gif")); //$NON-NLS-1$
-        backButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
-                false));
         backButton.setText(GUINLS.getString("WizardComposite.back")); //$NON-NLS-1$
 
-        nextButton = new Button(navbar, SWT.NONE);
+        nextButton = new Button(navBar, SWT.NONE);
         nextButton.setImage(SWTResources
                 .getImageRes("/icons/elcl16/nav_forward.gif")); //$NON-NLS-1$
-        nextButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false,
-                false));
         nextButton.setText(GUINLS.getString("WizardComposite.next")); //$NON-NLS-1$
 
         if (showFinish) {
-            finishButton = new Button(navbar, SWT.NONE);
+            finishButton = new Button(navBar, SWT.NONE);
             finishButton.setImage(SWTResources
                     .getImageRes("/icons/full/etool16/shift_r_edit.gif")); //$NON-NLS-1$
-            finishButton.setLayoutData(new GridData(SWT.FILL, SWT.CENTER,
-                    false, false));
             finishButton.setText(GUINLS.getString("WizardComposite.finish")); //$NON-NLS-1$
         }
 
@@ -238,7 +222,7 @@ public class WizardComposite extends Composite {
                         }
                     Page lastPage = pageFlow.getPage();
                     assert lastPage != null;
-                    lastPage.leave(null);
+                    lastPage.leave(null, Location.QUIT);
                     dispose();
                 }
             });
@@ -249,7 +233,7 @@ public class WizardComposite extends Composite {
     }
 
     public StackComposite getContents() {
-        return contents;
+        return body;
     }
 
     public void definePage(String address, PageFactory factory) {
@@ -258,7 +242,13 @@ public class WizardComposite extends Composite {
         pageFactories.put(address, factory);
     }
 
-    protected boolean isPageLoadable(String address) {
+    /**
+     * There may be page instances which isn't defined, but exist.
+     * 
+     * Override this method, and {@link #loadPage(String)} to implement dynamic
+     * address pages.
+     */
+    public boolean isPageDefined(String address) {
         return pageFactories.containsKey(address);
     }
 
@@ -268,7 +258,7 @@ public class WizardComposite extends Composite {
         PageFactory factory = pageFactories.get(address);
         if (factory == null)
             return null;
-        Composite parent = WizardComposite.this.contents;
+        Composite parent = WizardComposite.this.body;
         final PageComposite page = factory.create(parent);
         page.addPageStateChangeListener(new PageStateChangeListener() {
             @Override
@@ -318,7 +308,7 @@ public class WizardComposite extends Composite {
         if (pageIcon == null)
             pageIcon = defaultPageIcon;
         pageIconLabel.setImage(pageIcon);
-        contents.bringFront(pageComp);
+        body.bringFront(pageComp);
 
         refreshPageState();
 

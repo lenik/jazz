@@ -8,11 +8,14 @@ public class LocationChangeEvent extends EventObject {
 
     public String             prev;
     public String             next;
+    public int                reason;
 
-    public LocationChangeEvent(Location loc, String prev, String next) {
+    public LocationChangeEvent(Location loc, String prev, String next,
+            int reason) {
         super(loc);
         this.prev = prev;
         this.next = next;
+        this.reason = reason;
     }
 
     @Override
