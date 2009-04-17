@@ -52,7 +52,7 @@ import net.bodz.bas.sec.crypto.Cryptos;
 import net.bodz.bas.text.encodings.Encodings;
 import net.bodz.bas.text.encodings.HexEncoding;
 import net.bodz.bas.types.TextMap;
-import net.bodz.bas.types.TextMap.TreeTextMap;
+import net.bodz.bas.types.TreeTextMap;
 import net.bodz.bas.types.util.Comparators;
 import net.bodz.bas.types.util.Iterates;
 import net.bodz.bas.types.util.Strings;

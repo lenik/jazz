@@ -14,6 +14,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URL;
 
 import net.bodz.bas.io.Files;
+import net.bodz.bas.lang.Caller;
 import net.bodz.bas.lang.err.DecodeException;
 import net.bodz.bas.lang.err.EncodeException;
 import net.bodz.bas.lang.err.UnexpectedException;
@@ -28,6 +29,9 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.helpers.XMLReaderFactory;
 
+/**
+ * @test {@link XMLsTest}
+ */
 public class XMLs {
 
     // SAX Parsers
@@ -80,22 +84,53 @@ public class XMLs {
 
     // XMLEncoder/XMLDecoder
 
-    public static void encode(Object obj, OutputStream out, String encoding,
-            ExceptionListener exceptionListener) {
+    static Object readObject(XMLDecoder decoder, int caller) {
+        Thread thread = Thread.currentThread();
+        ClassLoader orig = thread.getContextClassLoader();
+        ClassLoader loader = Caller.getCallerClassLoader(caller + 1);
+        if (orig == loader)
+            return decoder.readObject();
+        else
+            try {
+                thread.setContextClassLoader(loader);
+                return decoder.readObject();
+            } finally {
+                thread.setContextClassLoader(orig);
+            }
+    }
+
+    static void writeObject(XMLEncoder encoder, Object obj, int caller) {
+        Thread thread = Thread.currentThread();
+        ClassLoader orig = thread.getContextClassLoader();
+        ClassLoader loader = Caller.getCallerClassLoader(caller + 1);
+        if (orig == loader)
+            encoder.writeObject(obj);
+        else
+            try {
+                thread.setContextClassLoader(loader);
+                encoder.writeObject(obj);
+            } finally {
+                thread.setContextClassLoader(orig);
+            }
+    }
+
+    public static void encode(int caller, Object obj, OutputStream out,
+            String encoding, ExceptionListener exceptionListener) {
         XMLEncoder enc = new XMLEncoder(out, encoding, true, 0);
         enc.setExceptionListener(exceptionListener);
-        enc.writeObject(obj);
+        writeObject(enc, obj, caller + 1);
         enc.close();
     }
 
-    public static void encode(Object obj, OutputStream out,
+    public static void encode(int caller, Object obj, OutputStream out,
             ExceptionListener exceptionListener) {
-        encode(obj, out, "utf-8", exceptionListener);
+        encode(caller + 1, obj, out, "utf-8", exceptionListener);
     }
 
-    public static String encode(Object obj, ExceptionListener exceptionListener) {
+    public static String encode(int caller, Object obj,
+            ExceptionListener exceptionListener) {
         ByteArrayOutputStream buf = new ByteArrayOutputStream();
-        encode(obj, buf, "utf-8", exceptionListener);
+        encode(caller + 1, obj, buf, "utf-8", exceptionListener);
         String xml;
         try {
             xml = buf.toString("utf-8"); //$NON-NLS-1$
@@ -105,42 +140,44 @@ public class XMLs {
         return xml;
     }
 
-    public static void encode(Object obj, OutputStream out)
+    public static void encode(int caller, Object obj, OutputStream out)
             throws EncodeException {
         ExceptionBuffer eb = new ExceptionBuffer();
-        encode(obj, out, eb);
+        encode(caller + 1, obj, out, eb);
         String errmesg = eb.summary();
         if (errmesg != null)
             throw new EncodeException(errmesg);
     }
 
-    public static String encode(Object obj) throws EncodeException {
+    public static String encode(int caller, Object obj) throws EncodeException {
         ExceptionBuffer eb = new ExceptionBuffer();
-        String xml = encode(obj, eb);
+        String xml = encode(caller + 1, obj, eb);
         String errmesg = eb.summary();
         if (errmesg != null)
             throw new EncodeException(errmesg);
         return xml;
     }
 
-    public static Object decode(InputStream in,
+    public static Object decode(int caller, InputStream in,
             ExceptionListener exceptionListener) {
         XMLDecoder decoder = new XMLDecoder(in, exceptionListener);
-        Object obj = decoder.readObject();
+        Object obj = readObject(decoder, caller + 1);
         decoder.close();
         return obj;
     }
 
-    public static Object decode(InputStream in) throws DecodeException {
+    public static Object decode(int caller, InputStream in)
+            throws DecodeException {
         ExceptionBuffer eb = new ExceptionBuffer();
-        Object obj = decode(in, eb);
+        Object obj = decode(caller + 1, in, eb);
         String errmesg = eb.summary();
         if (errmesg != null)
             throw new DecodeException(errmesg);
         return obj;
     }
 
-    public static Object decode(String xml, ExceptionListener exceptionListener) {
+    public static Object decode(int caller, String xml,
+            ExceptionListener exceptionListener) {
         byte[] bytes;
         try {
             bytes = xml.getBytes("utf-8");
@@ -148,16 +185,58 @@ public class XMLs {
             throw new UnexpectedException(e);
         }
         ByteArrayInputStream in = new ByteArrayInputStream(bytes);
-        return decode(in, exceptionListener);
+        return decode(caller + 1, in, exceptionListener);
     }
 
-    public static Object decode(String xml) throws DecodeException {
+    public static Object decode(int caller, String xml) throws DecodeException {
         ExceptionBuffer eb = new ExceptionBuffer();
-        Object obj = decode(xml, eb);
+        Object obj = decode(caller + 1, xml, eb);
         String errmesg = eb.summary();
         if (errmesg != null)
             throw new DecodeException(errmesg);
         return obj;
+    }
+
+    // Using implicit callers:
+
+    public static Object decode(InputStream in,
+            ExceptionListener exceptionListener) {
+        return decode(1, in, exceptionListener);
+    }
+
+    public static Object decode(InputStream in) throws DecodeException {
+        return decode(1, in);
+    }
+
+    public static Object decode(String xml, ExceptionListener exceptionListener) {
+        return decode(1, xml, exceptionListener);
+    }
+
+    public static Object decode(String xml) throws DecodeException {
+        return decode(1, xml);
+    }
+
+    public static String encode(Object obj, ExceptionListener exceptionListener) {
+        return encode(1, obj, exceptionListener);
+    }
+
+    public static void encode(Object obj, OutputStream out,
+            ExceptionListener exceptionListener) {
+        encode(1, obj, out, exceptionListener);
+    }
+
+    public static void encode(Object obj, OutputStream out, String encoding,
+            ExceptionListener exceptionListener) {
+        encode(1, obj, out, encoding, exceptionListener);
+    }
+
+    public static void encode(Object obj, OutputStream out)
+            throws EncodeException {
+        encode(1, obj, out);
+    }
+
+    public static String encode(Object obj) throws EncodeException {
+        return encode(1, obj);
     }
 
 }

@@ -11,7 +11,7 @@ import java.util.Map.Entry;
 import net.bodz.bas.lang.Filt1;
 import net.bodz.bas.lang.err.UnexpectedException;
 import net.bodz.bas.types.TextMap;
-import net.bodz.bas.types.TextMap.TreeTextMap;
+import net.bodz.bas.types.TreeTextMap;
 import net.bodz.bas.types.util.Arrays2;
 import net.bodz.bas.types.util.Objects;
 import net.bodz.bas.types.util.Strings;

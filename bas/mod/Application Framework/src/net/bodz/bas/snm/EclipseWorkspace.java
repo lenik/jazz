@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.util.Properties;
 
 import net.bodz.bas.io.Files;
+import net.bodz.bas.types.HashTextMap;
 import net.bodz.bas.types.TextMap;
-import net.bodz.bas.types.TextMap.HashTextMap;
 
 public class EclipseWorkspace {
 

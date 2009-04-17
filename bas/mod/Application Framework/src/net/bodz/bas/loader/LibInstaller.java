@@ -7,8 +7,8 @@ import java.io.InputStream;
 import java.net.URL;
 
 import net.bodz.bas.io.Files;
+import net.bodz.bas.types.HashTextMap;
 import net.bodz.bas.types.TextMap;
-import net.bodz.bas.types.TextMap.HashTextMap;
 
 public class LibInstaller {
 
