@@ -20,6 +20,8 @@ public class SWTResources {
 
     static {
         Display display = Display.getCurrent();
+        if (display == null)
+            display = Display.getDefault();
         strict = new StrictDeviceResources(display, null);
         loose = new LooseDeviceResources(display, strict);
     }

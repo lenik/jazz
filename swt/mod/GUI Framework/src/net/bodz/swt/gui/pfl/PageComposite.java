@@ -45,14 +45,14 @@ public class PageComposite extends Composite implements Page {
      * Do nothing in default implementation.
      */
     @Override
-    public void enter(String prev) {
+    public void enter(String prev, int reason) {
     }
 
     /**
      * Do nothing in default implementation..
      */
     @Override
-    public void leave(String next) {
+    public void leave(String next, int reason) {
     }
 
     @Override

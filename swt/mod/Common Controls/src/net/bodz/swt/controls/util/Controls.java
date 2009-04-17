@@ -1,6 +1,8 @@
 package net.bodz.swt.controls.util;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Control;
@@ -87,6 +89,50 @@ public class Controls {
         size.y = height + padHeight;
         scrollable.setSize(size);
         return true;
+    }
+
+    public static void setFontName(Control control, String fontName) {
+        Font font = control.getFont();
+        FontData[] fontData = font.getFontData();
+        for (FontData fd : fontData)
+            fd.setName(fontName);
+        font = new Font(control.getDisplay(), fontData);
+        control.setFont(font);
+    }
+
+    public static void setFontHeight(Control control, int fontHeight) {
+        Font font = control.getFont();
+        FontData[] fontData = font.getFontData();
+        for (FontData fd : fontData)
+            fd.setHeight(fontHeight);
+        font = new Font(control.getDisplay(), fontData);
+        control.setFont(font);
+    }
+
+    public static void setFontStyle(Control control, int style) {
+        setFontStyle(control, style, -1);
+    }
+
+    public static void setFontStyle(Control control, int style, int styleMask) {
+        style &= styleMask;
+        Font font = control.getFont();
+        FontData[] fontData = font.getFontData();
+        for (FontData fd : fontData) {
+            int oldStyle = fd.getStyle();
+            int newStyle = (oldStyle & ~styleMask) | style;
+            fd.setStyle(newStyle);
+        }
+        font = new Font(control.getDisplay(), fontData);
+        control.setFont(font);
+    }
+
+    public static void setFontLocale(Control control, String locale) {
+        Font font = control.getFont();
+        FontData[] fontData = font.getFontData();
+        for (FontData fd : fontData)
+            fd.setLocale(locale);
+        font = new Font(control.getDisplay(), fontData);
+        control.setFont(font);
     }
 
 }

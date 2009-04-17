@@ -33,8 +33,12 @@ public abstract class SimpleDialog extends Dialog implements Ref<Object> {
     static final Point     minSize    = new Point(150, 30);
 
     private Shell          parent;
+    private String         title;
+    private Image          icon;
+    private Image          image;
 
     private Shell          shell;
+    private Label          imageLabel;
     private Composite      detailBar;
     private Composite      body;
     private Composite      userBar;
@@ -50,12 +54,14 @@ public abstract class SimpleDialog extends Dialog implements Ref<Object> {
      * @see SWT#APPLICATION_MODAL
      * @see SWT#SYSTEM_MODAL
      */
-    public SimpleDialog(Shell parent, int style, String text) {
+    public SimpleDialog(Shell parent, int style, String title) {
         super(parent == null ? new Shell() : parent, style);
         this.parent = parent;
-        if (text == null)
-            text = "(no title)";
-        setText(text);
+        setTitle(title);
+        if (title != null)
+            setText(title);
+        icon = SWTResources.getImageRes("/icons/full/obj16/read_obj.gif"); //$NON-NLS-1$
+        image = icon;
         interact = new SWTInteraction(parent, SWT.APPLICATION_MODAL);
     }
 
@@ -90,11 +96,11 @@ public abstract class SimpleDialog extends Dialog implements Ref<Object> {
         return get();
     }
 
-    public Object get() {
+    public final Object get() {
         return result;
     }
 
-    public void set(Object result) {
+    public final void set(Object result) {
         this.result = result;
     }
 
@@ -125,7 +131,7 @@ public abstract class SimpleDialog extends Dialog implements Ref<Object> {
         shell.setLayout(shellGrid);
 
         shell.setImage(getIcon());
-        String title = getText();
+        String title = getTitle();
         if (title != null)
             shell.setText(title);
 
@@ -204,7 +210,7 @@ public abstract class SimpleDialog extends Dialog implements Ref<Object> {
         topGrid.marginHeight = 0;
         topBar.setLayout(topGrid);
 
-        final Label imageLabel = new Label(topBar, SWT.NONE);
+        imageLabel = new Label(topBar, SWT.NONE);
         imageLabel.setImage(getImage());
         final GridData imageData = new GridData(GridData.BEGINNING,
                 GridData.BEGINNING);
@@ -300,16 +306,40 @@ public abstract class SimpleDialog extends Dialog implements Ref<Object> {
     protected void addEffects() {
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        if (title == null)
+            title = "(no title)";
+        this.title = title;
+        if (shell != null)
+            shell.setText(title);
+    }
+
+    public Image getIcon() {
+        return icon;
+    }
+
+    public void setIcon(Image icon) {
+        this.icon = icon;
+        if (shell != null)
+            shell.setImage(icon);
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+        if (imageLabel != null)
+            imageLabel.setImage(image);
+    }
+
     public Shell getShell() {
         return shell;
-    }
-
-    protected Image getIcon() {
-        return getImage();
-    }
-
-    protected Image getImage() {
-        return SWTResources.getImageRes("/icons/full/obj16/read_obj.gif"); //$NON-NLS-1$
     }
 
     public Composite getBody() {

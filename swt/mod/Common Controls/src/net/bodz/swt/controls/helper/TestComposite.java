@@ -1,83 +1,111 @@
 package net.bodz.swt.controls.helper;
 
+import net.bodz.swt.util.SWTResources;
+
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.CoolBar;
+import org.eclipse.swt.widgets.CoolItem;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
 
 /**
- * @test TestCompositeTest
+ * @test {@link TestCompositeTest}
  */
 public class TestComposite extends Composite {
 
     private Text age;
     private Text name;
 
-    /**
-     * Create the composite
-     * 
-     * @param parent
-     * @param style
-     */
     public TestComposite(Composite parent, int style) {
         super(parent, style);
-        setLayout(new FormLayout());
+        final GridLayout gridLayout = new GridLayout();
+        gridLayout.numColumns = 2;
+        setLayout(gridLayout);
+
+        final ToolBar toolBar = new ToolBar(this, SWT.FLAT);
+        toolBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,
+                2, 1));
+
+        final ToolItem helloItem = new ToolItem(toolBar, SWT.PUSH);
+        helloItem.setImage(SWTResources
+                .getImageRes("/icons/full/obj16/quickfix_warning_obj.gif"));
+        helloItem.setText("Hello");
+
+        final ToolItem sep = new ToolItem(toolBar, SWT.SEPARATOR);
+        sep.setText("New item");
+
+        final ToolItem worldItem = new ToolItem(toolBar, SWT.PUSH);
+        worldItem.setImage(SWTResources
+                .getImageRes("/icons/full/obj16/innerclass_public_obj.gif"));
+        worldItem.setText("Big Big World");
+
+        final CoolBar coolBar = new CoolBar(this, SWT.NONE);
+        coolBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false,
+                2, 1));
+
+        final CoolItem cool1 = new CoolItem(coolBar, SWT.PUSH);
+        cool1.setText("New item");
+
+        final Button wowButton = new Button(coolBar, SWT.NONE);
+        wowButton.setText("Wow");
+        cool1.setControl(wowButton);
+
+        final CoolItem cool2 = new CoolItem(coolBar, SWT.PUSH);
+        cool2.setText("New item");
+
+        final Composite composite_1 = new Composite(coolBar, SWT.NONE);
+        final RowLayout rowLayout = new RowLayout();
+        rowLayout.marginBottom = 0;
+        rowLayout.marginRight = 0;
+        rowLayout.marginTop = 0;
+        rowLayout.marginLeft = 0;
+        composite_1.setLayout(rowLayout);
+        cool2.setControl(composite_1);
+
+        final Button morningButton = new Button(composite_1, SWT.TOGGLE);
+        morningButton.setText("Morning");
+
+        final Button eveningButton = new Button(composite_1, SWT.TOGGLE);
+        eveningButton.setText("Evening");
+
+        final Label hr = new Label(this, SWT.SEPARATOR | SWT.HORIZONTAL);
+        hr.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
         final Label nameLabel = new Label(this, SWT.NONE);
-        final FormData fd_nameLabel = new FormData();
-        fd_nameLabel.bottom = new FormAttachment(0, 65);
-        fd_nameLabel.right = new FormAttachment(0, 105);
-        fd_nameLabel.top = new FormAttachment(0, 40);
-        fd_nameLabel.left = new FormAttachment(0, 20);
-        nameLabel.setLayoutData(fd_nameLabel);
+        nameLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
+                false));
         nameLabel.setText("&Name"); //$NON-NLS-1$
 
         name = new Text(this, SWT.BORDER);
-        final FormData fd_name = new FormData();
-        fd_name.bottom = new FormAttachment(nameLabel, 0, SWT.BOTTOM);
-        fd_name.right = new FormAttachment(0, 255);
-        fd_name.top = new FormAttachment(nameLabel, 0, SWT.TOP);
-        fd_name.left = new FormAttachment(nameLabel, 0, SWT.RIGHT);
-        name.setLayoutData(fd_name);
+        name.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 
         final Label ageLabel = new Label(this, SWT.NONE);
-        final FormData fd_ageLabel = new FormData();
-        fd_ageLabel.bottom = new FormAttachment(0, 95);
-        fd_ageLabel.right = new FormAttachment(nameLabel, 0, SWT.RIGHT);
-        fd_ageLabel.top = new FormAttachment(nameLabel, 5, SWT.BOTTOM);
-        fd_ageLabel.left = new FormAttachment(nameLabel, 0, SWT.LEFT);
-        ageLabel.setLayoutData(fd_ageLabel);
+        ageLabel
+                .setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
         ageLabel.setText("&Age"); //$NON-NLS-1$
 
         age = new Text(this, SWT.BORDER);
-        final FormData fd_age = new FormData();
-        fd_age.bottom = new FormAttachment(ageLabel, 0, SWT.BOTTOM);
-        fd_age.right = new FormAttachment(name, 0, SWT.RIGHT);
-        fd_age.top = new FormAttachment(nameLabel, 5, SWT.BOTTOM);
-        fd_age.left = new FormAttachment(ageLabel, 0, SWT.RIGHT);
-        age.setLayoutData(fd_age);
+        age.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 
-        final Button cancelButton = new Button(this, SWT.NONE);
-        final FormData fd_cancelButton = new FormData();
-        fd_cancelButton.left = new FormAttachment(100, -95);
-        fd_cancelButton.top = new FormAttachment(100, -41);
-        fd_cancelButton.bottom = new FormAttachment(100, -5);
-        fd_cancelButton.right = new FormAttachment(100, -5);
-        cancelButton.setLayoutData(fd_cancelButton);
-        cancelButton.setText("&Cancel"); //$NON-NLS-1$
+        final Composite composite = new Composite(this, SWT.NONE);
+        composite.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, false,
+                true, 2, 1));
+        final RowLayout rowLayout_1 = new RowLayout();
+        rowLayout_1.pack = false;
+        composite.setLayout(rowLayout_1);
 
-        final Button okButton = new Button(this, SWT.NONE);
-        final FormData fd_okButton = new FormData();
-        fd_okButton.left = new FormAttachment(100, -185);
-        fd_okButton.top = new FormAttachment(100, -41);
-        fd_okButton.bottom = new FormAttachment(cancelButton, 0, SWT.BOTTOM);
-        fd_okButton.right = new FormAttachment(cancelButton, -5, SWT.LEFT);
-        okButton.setLayoutData(fd_okButton);
+        final Button okButton = new Button(composite, SWT.NONE);
         okButton.setText("&OK"); //$NON-NLS-1$
+
+        final Button cancelButton = new Button(composite, SWT.NONE);
+        cancelButton.setText("&Cancel"); //$NON-NLS-1$
         //
     }
 

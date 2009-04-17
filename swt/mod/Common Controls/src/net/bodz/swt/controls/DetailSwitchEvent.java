@@ -8,7 +8,7 @@ public class DetailSwitchEvent extends EventObject {
 
     public boolean            expanded;
 
-    public DetailSwitchEvent(DetailComposite dc, boolean expanded) {
+    public DetailSwitchEvent(WindowComposite dc, boolean expanded) {
         super(dc);
         this.expanded = expanded;
     }

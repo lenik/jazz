@@ -32,10 +32,10 @@ public class ControlTestApp {
     private Composite tools;
 
     public ControlTestApp() {
-        setup();
+        createContents();
     }
 
-    protected void setup() {
+    void createContents() {
         display = Display.getDefault();
         shell = new Shell();
         shell.setSize(320, 240);
@@ -68,6 +68,7 @@ public class ControlTestApp {
 
     public void autoFit() {
         Controls.resizeToPreferredSize(shell);
+        Controls.center(shell);
     }
 
     public void addToolButton(String text, SelectionListener listener) {
@@ -96,8 +97,10 @@ public class ControlTestApp {
     }
 
     public void run() {
-        shell.open();
         shell.layout();
+        Controls.center(shell);
+
+        shell.open();
         while (!shell.isDisposed()) {
             if (!display.readAndDispatch())
                 display.sleep();

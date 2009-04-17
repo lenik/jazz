@@ -22,6 +22,11 @@ public class LooseDeviceResources extends StrictDeviceResources {
 
     public LooseDeviceResources(Device device, StrictDeviceResources reuse) {
         super(device, reuse);
+    }
+
+    void createErrorImages() {
+        if (errorImage != null)
+            return;
         errorImage = new Image(device, 10, 10);
         errorImageData = errorImage.getImageData();
         GC gc = new GC(errorImage);
@@ -31,34 +36,36 @@ public class LooseDeviceResources extends StrictDeviceResources {
     }
 
     public ImageData getErrorImageData() {
+        createErrorImages();
         return errorImageData;
     }
 
     public ImageData getErrorImageData(RuntimeException e) {
         if (displayError)
-            return errorImageData;
+            return getErrorImageData();
         throw e;
     }
 
     public ImageData getErrorImageData(Exception e) {
         if (displayError)
-            return errorImageData;
+            return getErrorImageData();
         throw new RuntimeException(e);
     }
 
     public Image getErrorImage() {
+        createErrorImages();
         return errorImage;
     }
 
     public Image getErrorImage(RuntimeException e) {
         if (displayError)
-            return errorImage;
+            return getErrorImage();
         throw e;
     }
 
     public Image getErrorImage(Exception e) {
         if (displayError)
-            return errorImage;
+            return getErrorImage();
         throw new RuntimeException(e);
     }
 

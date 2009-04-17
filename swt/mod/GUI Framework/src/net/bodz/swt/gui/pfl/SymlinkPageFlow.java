@@ -9,7 +9,7 @@ import javax.xml.parsers.SAXParserFactory;
 import net.bodz.bas.io.CharOuts.BCharOut;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.types.TextMap;
-import net.bodz.bas.types.TextMap.TreeTextMap;
+import net.bodz.bas.types.TreeTextMap;
 import net.bodz.swt.nls.GUINLS;
 
 import org.xml.sax.Attributes;
@@ -18,16 +18,16 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * @test SymlinkPageFlowTest
+ * @test {@link SymlinkPageFlowTest}
  */
 public class SymlinkPageFlow extends PageFlow {
 
     public static final int maxDepth = 16;
 
-    private TextMap<String> symlinks;
+    private TextMap<Object> symlinks;
 
     public SymlinkPageFlow() {
-        symlinks = new TreeTextMap<String>();
+        symlinks = new TreeTextMap<Object>();
     }
 
     @Override
@@ -40,7 +40,8 @@ public class SymlinkPageFlow extends PageFlow {
                 return address;
             if (isPageLoadable(address))
                 return address;
-            String symlink = symlinks.get(address);
+            Object _symlink = symlinks.get(address);
+            String symlink = _symlink == null ? null : String.valueOf(_symlink);
             if (symlink != null) {
                 address = symlink;
                 continue;
@@ -52,8 +53,26 @@ public class SymlinkPageFlow extends PageFlow {
                 + depth);
     }
 
-    public void putLink(String name, String address) {
-        symlinks.put(name, address);
+    public Object getLink(String name) {
+        return symlinks.get(name);
+    }
+
+    /**
+     * @param name
+     *            address of the link itself.
+     * @param target
+     *            target address, its {@link Object#toString() toString} method
+     *            is evaluated to get the real-time target address.
+     * @see #getLink(String) Get the link itself.
+     * @see Location#resolv(String) Resolve the link.
+     */
+    public void putLink(String name, Object target) {
+        symlinks.put(name, target);
+    }
+
+    public void putLink(String name, String next, Object target) {
+        String joined = _resolv(name, next);
+        putLink(joined, target);
     }
 
     public void removeLink(String name) {
@@ -63,9 +82,9 @@ public class SymlinkPageFlow extends PageFlow {
     public String dumpXML() {
         BCharOut buf = new BCharOut(symlinks.size() * 30);
         buf.println("<symlinks>"); //$NON-NLS-1$
-        for (Entry<String, String> e : symlinks.entrySet()) {
+        for (Entry<String, Object> e : symlinks.entrySet()) {
             String name = e.getKey();
-            String dest = e.getValue();
+            Object dest = e.getValue();
             buf.printf("<symlink name=\"%s\" dest=\"%s\" />\n", name, dest); //$NON-NLS-1$
         }
         buf.println("</symlinks>"); //$NON-NLS-1$

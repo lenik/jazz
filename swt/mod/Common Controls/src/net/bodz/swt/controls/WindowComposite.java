@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.swt.controls.helper.StackComposite;
-import net.bodz.swt.layouts.BorderLayout;
 import net.bodz.swt.util.SWTResources;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
@@ -20,69 +21,104 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.swt.widgets.ToolItem;
 
 /**
- * @test DetailCompositeTest
+ * @test {@link WindowCompositeTest}
  */
-public class DetailComposite extends Composite {
+public class WindowComposite extends Composite {
 
     private boolean            expanded;
     private Image              expandedImage;
     private Image              collaspedImage;
 
-    protected Composite        topBar;
+    private boolean            useSystemStyle = false;
+    private Composite          titleBar;
     protected Label            imageLabel;
-    protected Label            textLabel;
+    protected Label            titleLabel;
     protected ToolBar          toolBar;
     private ToolItem           switcherItem;
 
-    protected StackComposite   stack;
-    protected Composite        hidden;
+    private StackComposite     stack;
+    private Composite          hidden;
+    private Composite          visible;
     protected Composite        body;
 
     List<DetailSwitchListener> switchListeners;
 
-    public DetailComposite(Composite parent, int style) {
+    public WindowComposite(Composite parent, int style) {
         this(parent, style, false, null);
     }
 
-    public DetailComposite(Composite parent, int style, boolean expanded,
+    public WindowComposite(Composite parent, int style, boolean expanded,
             final Composite fitParent) {
-        super(parent, style);
-        setLayout(new BorderLayout(0, 0));
+        super(parent, style | SWT.BORDER);
+        GridLayout gridLayout = new GridLayout(1, false);
+        gridLayout.marginWidth = 0;
+        gridLayout.marginHeight = 0;
+        gridLayout.horizontalSpacing = 0;
+        gridLayout.verticalSpacing = 0;
+        setLayout(gridLayout);
 
         this.expandedImage = SWTResources
                 .getImageRes("/icons/full/elcl16/thin_min_view.gif"); //$NON-NLS-1$
         this.collaspedImage = SWTResources
                 .getImageRes("/icons/full/elcl16/thin_max_view.gif"); //$NON-NLS-1$
 
-        topBar = new Composite(this, SWT.NONE);
-        final GridLayout gridLayout = new GridLayout();
-        gridLayout.horizontalSpacing = 3;
-        gridLayout.marginWidth = 0;
-        gridLayout.marginHeight = 0;
-        gridLayout.numColumns = 3;
-        topBar.setLayout(gridLayout);
-        topBar.setLayoutData(BorderLayout.NORTH);
+        titleBar = new Composite(this, SWT.NONE);
+        final GridLayout titleLayout = new GridLayout();
+        titleLayout.horizontalSpacing = 2;
+        titleLayout.marginWidth = 2;
+        titleLayout.marginHeight = 2;
+        titleLayout.numColumns = 4;
+        titleBar.setLayout(titleLayout);
+        titleBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
-        imageLabel = new Label(topBar, SWT.NONE);
-        textLabel = new Label(topBar, SWT.NONE);
+        imageLabel = new Label(titleBar, SWT.NONE);
+        titleLabel = new Label(titleBar, SWT.NONE);
 
-        toolBar = new ToolBar(topBar, SWT.WRAP | SWT.FLAT);
+        if (useSystemStyle) {
+            titleBar.setBackgroundMode(SWT.INHERIT_DEFAULT);
+            titleBar.setBackground(getDisplay().getSystemColor(
+                    SWT.COLOR_TITLE_BACKGROUND));
+            titleLabel.setForeground(getDisplay().getSystemColor(
+                    SWT.COLOR_TITLE_FOREGROUND));
+            Font titleFont = titleLabel.getFont();
+            FontData[] fontData = titleFont.getFontData();
+            for (FontData fd : fontData)
+                fd.setStyle(fd.getStyle() | SWT.BOLD);
+            titleFont.dispose();
+            titleLabel.setFont(new Font(getDisplay(), fontData));
+        }
+
+        toolBar = new ToolBar(titleBar, SWT.FLAT); // SWT.WRAP
         toolBar.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, true, false));
 
-        switcherItem = new ToolItem(toolBar, SWT.PUSH);
+        final ToolBar _toolBar = new ToolBar(titleBar, SWT.FLAT);
+        switcherItem = new ToolItem(_toolBar, SWT.PUSH);
         switcherItem.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                setExpanded(!DetailComposite.this.expanded);
+                setExpanded(!WindowComposite.this.expanded);
             }
         });
 
-        stack = new StackComposite(this, SWT.BORDER);
-        stack.setLayoutData(BorderLayout.CENTER);
+        stack = new StackComposite(this, SWT.NONE);
+        stack.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 
         hidden = null; // new EmptyComposite(stack, SWT.NONE);
 
-        body = new Composite(stack, SWT.NONE);
+        visible = new Composite(stack, SWT.NONE);
+        GridLayout contentsLayout = new GridLayout(1, false);
+        contentsLayout.marginWidth = 0;
+        contentsLayout.marginHeight = 0;
+        contentsLayout.horizontalSpacing = 0;
+        contentsLayout.verticalSpacing = 0;
+        visible.setLayout(contentsLayout);
+
+        final Label hr = new Label(visible, SWT.SEPARATOR | SWT.HORIZONTAL);
+        GridData hrData = new GridData(SWT.FILL, SWT.CENTER, true, false);
+        hr.setLayoutData(hrData);
+
+        body = new Composite(visible, SWT.NONE);
+        body.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         body.setLayout(new FillLayout());
 
         createContents(body, SWT.NONE);
@@ -116,11 +152,11 @@ public class DetailComposite extends Composite {
     }
 
     public String getText() {
-        return textLabel.getText();
+        return titleLabel.getText();
     }
 
     public void setText(String caption) {
-        textLabel.setText(caption);
+        titleLabel.setText(caption);
     }
 
     public void setExpanded(boolean expanded) {
@@ -128,7 +164,7 @@ public class DetailComposite extends Composite {
             this.expanded = expanded;
             if (expanded) {
                 switcherItem.setImage(expandedImage);
-                stack.bringFront(body);
+                stack.bringFront(visible);
             } else {
                 switcherItem.setImage(collaspedImage);
                 stack.bringFront(hidden);

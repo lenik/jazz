@@ -187,6 +187,7 @@ public class SaveImageDialog extends SimpleDialog {
         try {
             out = new FileOutputStream(file);
             type.save(imageData, out, params);
+            set(file);
         } catch (IOException e) {
             throw new CheckException(e.getMessage(), e);
         } finally {
@@ -205,11 +206,6 @@ public class SaveImageDialog extends SimpleDialog {
         } catch (CancelException e) {
             return null;
         }
-    }
-
-    @Override
-    public File get() {
-        return file;
     }
 
 }
