@@ -3,6 +3,9 @@ package net.bodz.bas.types;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.bodz.bas.lang.a.Typedef;
+
+@Typedef
 public class HashTextMap<T> extends HashMap<String, T> implements TextMap<T> {
 
     private static final long serialVersionUID = 6592220579601421664L;

@@ -1,4 +1,4 @@
-package net.bodz.bas.rt;
+package net.bodz.bas.util;
 
 import net.bodz.bas.lang.err.IllegalUsageException;
 import net.bodz.bas.lang.err.OutOfDomainException;

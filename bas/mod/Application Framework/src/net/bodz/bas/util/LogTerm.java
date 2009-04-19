@@ -1,6 +1,7 @@
-package net.bodz.bas.log;
+package net.bodz.bas.util;
 
 import net.bodz.bas.io.term.Terminal;
+import net.bodz.bas.log.LogTermTest;
 
 /**
  * @test {@link LogTermTest}

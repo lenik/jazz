@@ -5,7 +5,7 @@ import java.util.Map;
 import net.bodz.bas.cli.CLIException;
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.lang.err.ParseException;
-import net.bodz.bas.mod.plugins.Plugin;
+import net.bodz.bas.util.Plugin;
 
 /**
  * Implementations must have at least a default constructor, while more

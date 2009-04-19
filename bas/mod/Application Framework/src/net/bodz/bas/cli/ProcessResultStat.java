@@ -95,18 +95,17 @@ public class ProcessResultStat {
                 changed, total, ignores, saved, errorred);
     }
 
-    static final int NAMECOLUMN = 40;
+    static final int nameWidth = 40;
 
     void dumpField(CharOut out, int indent, String name, int value,
             Integer value2) {
         String tab = Strings.repeat(indent, ' ');
         out.print(tab);
-        out.printf("%" + (NAMECOLUMN - indent) + "", name, value); //$NON-NLS-1$ //$NON-NLS-2$
+        out.printf("%" + (nameWidth - indent) + "s: %8d file", name, value);
         if (value > 1)
             out.print('s');
         if (value2 != null) {
-            out.printf(
-                    AppNLS.getString("ProcessResultStat.fmt.8d_file"), value2); //$NON-NLS-1$
+            out.printf("%8d file", value2);
             if (value2 > 1)
                 out.print('s');
         }

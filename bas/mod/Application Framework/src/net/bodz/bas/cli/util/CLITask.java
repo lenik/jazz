@@ -8,8 +8,8 @@ import net.bodz.bas.cli.CLIException;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.lang.script.ScriptClass;
 import net.bodz.bas.lang.script.ScriptException;
-import net.bodz.bas.log.LogTerm;
 import net.bodz.bas.types.util.Empty;
+import net.bodz.bas.util.LogTerm;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;

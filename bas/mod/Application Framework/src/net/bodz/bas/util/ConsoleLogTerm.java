@@ -1,4 +1,4 @@
-package net.bodz.bas.log;
+package net.bodz.bas.util;
 
 import net.bodz.bas.io.term.Terminal;
 import net.bodz.bas.io.term.Terminals;

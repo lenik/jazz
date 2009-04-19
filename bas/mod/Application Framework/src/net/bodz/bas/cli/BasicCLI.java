@@ -36,10 +36,6 @@ import net.bodz.bas.lang.script.ScriptClass;
 import net.bodz.bas.lang.script.ScriptException;
 import net.bodz.bas.lang.script.ScriptType;
 import net.bodz.bas.lang.script.Scripts;
-import net.bodz.bas.log.LogTerm;
-import net.bodz.bas.log.LogTerms;
-import net.bodz.bas.mod.plugins.PluginException;
-import net.bodz.bas.mod.plugins.PluginTypeEx;
 import net.bodz.bas.nls.AppNLS;
 import net.bodz.bas.types.TypeParser;
 import net.bodz.bas.types.TypeParsers;
@@ -48,6 +44,10 @@ import net.bodz.bas.types.parsers.CharOutParser;
 import net.bodz.bas.types.parsers.LoggerParser;
 import net.bodz.bas.types.util.Empty;
 import net.bodz.bas.types.util.Strings;
+import net.bodz.bas.util.LogTerm;
+import net.bodz.bas.util.LogTerms;
+import net.bodz.bas.util.PluginException;
+import net.bodz.bas.util.PluginTypeEx;
 
 /**
  * Recommend eclipse template `cli':

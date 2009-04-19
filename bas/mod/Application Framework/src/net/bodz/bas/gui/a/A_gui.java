@@ -1,8 +1,8 @@
 package net.bodz.bas.gui.a;
 
 import net.bodz.bas.lang.err.CreateException;
-import net.bodz.bas.mod.Factory;
 import net.bodz.bas.types.util.Types;
+import net.bodz.bas.util.Factory;
 
 public class A_gui {
 

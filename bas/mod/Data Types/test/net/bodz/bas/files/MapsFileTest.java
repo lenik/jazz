@@ -40,7 +40,7 @@ public class MapsFileTest {
 
     @Test
     public void test1() {
-        URL f = Files.getDataURL(this, "1"); //$NON-NLS-1$
+        URL f = Files.classData(getClass(), "1"); //$NON-NLS-1$
         MapsFile maps = new MapsFile(f);
         Iterator<PartMap> it = maps.iterator();
         PartMap part;

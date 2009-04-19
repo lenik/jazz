@@ -15,10 +15,10 @@ import java.util.Set;
 import net.bodz.bas.io.term.Terminal;
 import net.bodz.bas.lang.IntMath;
 import net.bodz.bas.lang.Proc1;
-import net.bodz.bas.log.LogTerm;
-import net.bodz.bas.log.LogTerms;
 import net.bodz.bas.test.TestDefs;
 import net.bodz.bas.test._TestEval;
+import net.bodz.bas.util.LogTerm;
+import net.bodz.bas.util.LogTerms;
 
 import org.junit.Test;
 

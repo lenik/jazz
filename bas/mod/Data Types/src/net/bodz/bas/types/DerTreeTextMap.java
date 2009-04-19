@@ -2,8 +2,10 @@ package net.bodz.bas.types;
 
 import java.util.TreeMap;
 
+import net.bodz.bas.lang.a.Typedef;
 import net.bodz.bas.types.der.DerTreeMap;
 
+@Typedef
 public class DerTreeTextMap<T> extends DerTreeMap<String, T> implements
         TextMap<T> {
 

@@ -1,4 +1,4 @@
-package net.bodz.bas.rt;
+package net.bodz.bas.util;
 
 import java.util.List;
 import java.util.Map;

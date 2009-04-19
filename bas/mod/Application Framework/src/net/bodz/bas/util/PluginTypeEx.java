@@ -1,8 +1,7 @@
-package net.bodz.bas.mod.plugins;
+package net.bodz.bas.util;
 
 import net.bodz.bas.a.ClassInfo;
 import net.bodz.bas.lang.err.CreateException;
-import net.bodz.bas.mod.Factory;
 import net.bodz.bas.nls.AppNLS;
 
 /**

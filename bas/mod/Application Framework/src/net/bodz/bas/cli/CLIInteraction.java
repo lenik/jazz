@@ -11,10 +11,10 @@ import net.bodz.bas.lang.err.IllegalUsageException;
 import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.nls.AppNLS;
-import net.bodz.bas.rt._Interaction;
 import net.bodz.bas.types.HashTextMap;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TypeParsers;
+import net.bodz.bas.util._Interaction;
 
 public class CLIInteraction extends _Interaction {
 

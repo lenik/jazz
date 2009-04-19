@@ -7,10 +7,10 @@ import java.util.List;
 import net.bodz.bas.cli.CLIException;
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.lang.err.CreateException;
-import net.bodz.bas.mod.plugins.PluginCategory;
-import net.bodz.bas.mod.plugins.PluginTypeEx;
 import net.bodz.bas.nls.AppNLS;
 import net.bodz.bas.types.util.Strings;
+import net.bodz.bas.util.PluginCategory;
+import net.bodz.bas.util.PluginTypeEx;
 
 public class CLIPluginCategory extends PluginCategory {
 

@@ -9,8 +9,8 @@ import net.bodz.bas.cli.ClassOptions;
 import net.bodz.bas.cli._Option;
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.lang.err.ParseException;
-import net.bodz.bas.mod.plugins._Plugin;
 import net.bodz.bas.types.util.Strings;
+import net.bodz.bas.util._Plugin;
 
 public class _CLIPlugin extends _Plugin implements CLIPlugin {
 
