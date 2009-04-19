@@ -2,6 +2,10 @@ package net.bodz.bas.log;
 
 import static org.junit.Assert.assertEquals;
 
+import net.bodz.bas.util.ConsoleLogTerm;
+import net.bodz.bas.util.LogTerm;
+import net.bodz.bas.util.LogTerms;
+
 import org.junit.Test;
 
 public class LogTermsTest {

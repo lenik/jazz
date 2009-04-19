@@ -14,7 +14,7 @@ import org.junit.Test;
 
 public class INIFileTest {
 
-    URL f = Files.getDataURL(this, "1"); //$NON-NLS-1$
+    URL f = Files.classData(getClass(), "1"); //$NON-NLS-1$
 
     @Test
     public void testMerge() {

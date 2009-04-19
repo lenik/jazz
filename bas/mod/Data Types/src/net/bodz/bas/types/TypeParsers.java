@@ -13,7 +13,6 @@ import net.bodz.bas.io.ByteOut;
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.err.ParseException;
-import net.bodz.bas.log.LogTerm;
 import net.bodz.bas.nls.TypesNLS;
 import net.bodz.bas.types.parsers.BooleanParser;
 import net.bodz.bas.types.parsers.ByteOutParser;
@@ -35,6 +34,7 @@ import net.bodz.bas.types.parsers.ShortParser;
 import net.bodz.bas.types.parsers.StringCtorParser;
 import net.bodz.bas.types.parsers.StringParser;
 import net.bodz.bas.types.util.Types;
+import net.bodz.bas.util.LogTerm;
 
 public class TypeParsers {
 

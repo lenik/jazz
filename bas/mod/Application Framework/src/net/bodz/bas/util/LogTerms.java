@@ -1,4 +1,4 @@
-package net.bodz.bas.log;
+package net.bodz.bas.util;
 
 import net.bodz.bas.lang.Caller;
 import net.bodz.bas.types.PrefixMap;

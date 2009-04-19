@@ -11,8 +11,8 @@ import javax.security.auth.callback.UnsupportedCallbackException;
 
 import net.bodz.bas.io.Files;
 import net.bodz.bas.io.term.Terminal;
-import net.bodz.bas.log.LogTerm;
-import net.bodz.bas.log.LogTerms;
+import net.bodz.bas.util.LogTerm;
+import net.bodz.bas.util.LogTerms;
 
 import com.sun.security.auth.callback.TextCallbackHandler;
 

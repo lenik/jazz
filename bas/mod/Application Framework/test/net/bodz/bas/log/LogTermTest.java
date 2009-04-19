@@ -8,6 +8,7 @@ import net.bodz.bas.text.interp.Interps;
 import net.bodz.bas.types.HashTextMap;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.util.Strings;
+import net.bodz.bas.util.LogTerm;
 
 public class LogTermTest {
 

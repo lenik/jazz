@@ -1,7 +1,7 @@
 package net.bodz.bas.gui.a;
 
 import net.bodz.bas.lang.null_class;
-import net.bodz.bas.mod.Factory;
+import net.bodz.bas.util.Factory;
 
 class Factory_Object_null extends Factory.Static<Object> implements null_class {
 

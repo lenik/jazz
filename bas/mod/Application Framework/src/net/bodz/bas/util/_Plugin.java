@@ -1,4 +1,4 @@
-package net.bodz.bas.mod.plugins;
+package net.bodz.bas.util;
 
 import net.bodz.bas.a.ClassInfo;
 

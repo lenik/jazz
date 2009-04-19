@@ -3,7 +3,7 @@ package net.bodz.bas.gui.a;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import net.bodz.bas.mod.Factory;
+import net.bodz.bas.util.Factory;
 
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Icon {

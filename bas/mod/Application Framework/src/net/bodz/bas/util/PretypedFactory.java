@@ -1,15 +1,15 @@
-package net.bodz.bas.mod;
+package net.bodz.bas.util;
 
-public abstract class _Factory<T> implements Factory<T> {
+public abstract class PretypedFactory<T> extends _Factory<T> {
 
     private final Class<T> type;
 
     @SuppressWarnings("unchecked")
-    public _Factory() {
+    public PretypedFactory() {
         this((Class<T>) Object.class);
     }
 
-    public _Factory(Class<T> type) {
+    public PretypedFactory(Class<T> type) {
         this.type = type;
     }
 

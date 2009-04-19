@@ -206,9 +206,8 @@ public class BatchEditCLI extends BatchCLI {
     private String tmpPrefix = getClass().getSimpleName();
 
     private File _getOutputFile(String relative, File in) {
-        if (outputDirectory == null) {
+        if (outputDirectory == null)
             return in;
-        }
         File out = Files.getAbsoluteFile(outputDirectory, relative);
         File outd = out.getParentFile();
         if (outd.isFile())
@@ -401,9 +400,9 @@ public class BatchEditCLI extends BatchCLI {
 
     protected void addResult(File src, File dst, File edit, EditResult result)
             throws IOException {
-        if (result == null) {
+        if (result == null)
             L.detail(AppNLS.getString("BatchEditCLI.s.skip"), src); //$NON-NLS-1$
-        } else {
+        else {
             if (src != null)
                 applyResult(src, dst, edit, result);
             stat.add(result);
@@ -479,25 +478,22 @@ public class BatchEditCLI extends BatchCLI {
             if (!result.changed && saveLocal)
                 return;
             boolean canOverwrite = saveLocal || force;
-            if (dst.exists() && !canOverwrite) {
+            if (dst.exists() && !canOverwrite)
                 // user interaction...
                 throw new IllegalStateException(String.format(AppNLS
                         .getString("BatchEditCLI.fileExisted_s"), dst)); //$NON-NLS-1$
-            }
 
             File dstdir = dst.getParentFile();
             if (dstdir != null)
                 psh.mkdirs(dstdir);
-            if (!diffPrinted) {
+            if (!diffPrinted)
                 if (diff3) {
                     diff(src, edit);
                     diff(dst, edit);
-                } else if (diffWithDest) {
+                } else if (diffWithDest)
                     diff(dst, edit);
-                } else {
+                else
                     diff(src, edit);
-                }
-            }
             psh.copy(edit, dst);
 
             result.setDone();

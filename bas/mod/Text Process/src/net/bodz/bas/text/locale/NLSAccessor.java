@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import net.bodz.bas.mod.Factory;
+import net.bodz.bas.util.Factory;
 
 public class NLSAccessor {
 

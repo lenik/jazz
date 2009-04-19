@@ -1,4 +1,4 @@
-package net.bodz.bas.rt;
+package net.bodz.bas.util;
 
 public class OperationException extends Exception {
 

@@ -6,8 +6,8 @@ import java.io.PrintStream;
 import net.bodz.bas.io.term.StreamTerminal;
 import net.bodz.bas.io.term.Terminal;
 import net.bodz.bas.lang.err.ParseException;
-import net.bodz.bas.log.LogTerm;
 import net.bodz.bas.types.TypeParser;
+import net.bodz.bas.util.LogTerm;
 
 public class LoggerParser implements TypeParser {
 

@@ -10,7 +10,7 @@ public class CWDTest {
 
     @Test
     public void test1() throws Exception {
-        File cwd = CWD.current();
+        File cwd = CWD.getcwd();
 
         File rel = CWD.get("abc"); //$NON-NLS-1$
         assertEquals(new File(cwd, "abc"), rel); //$NON-NLS-1$
