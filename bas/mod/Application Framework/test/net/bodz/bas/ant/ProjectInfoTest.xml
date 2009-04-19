@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<project name="test" default="default">
+
+    <import file="testdef.xml" />
+
+    <target name="default">
+        <propertybean name="proj"
+                      classname="net.bodz.bas.ant.ProjectInfo"
+                      expandproperties="true" />
+        <path id="cp" refid="proj.classpath" />
+        <echo>Project Base: ${proj.base}</echo>
+        <echoproperties />
+        <echoreferences />
+    </target>
+
+</project>
