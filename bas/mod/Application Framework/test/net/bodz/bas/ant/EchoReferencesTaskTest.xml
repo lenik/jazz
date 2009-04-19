@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<project name="net.bodz.bas.ant.BuildInfoTest" default="default">
+
+    <import file="testdef.xml" />
+
+    <target name="default">
+        <echoreferences />
+    </target>
+
+</project>

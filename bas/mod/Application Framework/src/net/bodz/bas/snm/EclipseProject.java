@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.io.Files;
+import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.nls.AppNLS;
 import net.bodz.bas.xml.XMLs;
@@ -40,7 +41,7 @@ public class EclipseProject {
         this.base = base;
     }
 
-    public URL[] getClasspaths() throws ParseException {
+    public File[] getFileClasspath() throws ParseException {
         File cpFile = new File(base, ".classpath"); //$NON-NLS-1$
         final String[] _output = new String[1];
         final List<String> outputs = new ArrayList<String>();
@@ -72,19 +73,28 @@ public class EclipseProject {
         int n = outputs.size();
         if (output != null)
             n++;
-        URL[] urls = new URL[n];
+        File[] files = new File[n];
         int i = 0;
         for (String s : outputs) {
-            URL url = Files.getURL(new File(base, s));
-            urls[i++] = url;
+            files[i++] = new File(base, s);
         }
         if (output != null)
-            urls[i] = Files.getURL(new File(base, output));
+            files[i] = new File(base, output);
+        return files;
+    }
+
+    public URL[] getClasspaths() throws ParseException {
+        File[] files = getFileClasspath();
+        URL[] urls = new URL[files.length];
+        for (int i = 0; i < files.length; i++) {
+            URL url = Files.getURL(files[i]);
+            urls[i] = url;
+        }
         return urls;
     }
 
     public EclipseWorkspace findWorkspace() {
-        return null;
+        throw new NotImplementedException();
     }
 
 }

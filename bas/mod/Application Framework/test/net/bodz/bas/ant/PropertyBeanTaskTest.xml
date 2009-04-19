@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<project name="test" default="default">
+
+    <import file="testdef.xml" />
+
+    <target name="default">
+        <propertybean name="myfile"
+                      classname="java.io.File"
+                      expandproperties="true">
+            <parameter type="java.lang.String" value="C:/" />
+            <stoptypeprefix>java.lang</stoptypeprefix>
+        </propertybean>
+
+        <echoproperties prefix="my" />
+    </target>
+
+</project>

@@ -37,7 +37,7 @@ public class CWD {
         return !isAbsolutePath(path);
     }
 
-    public static File current() {
+    public static File getcwd() {
         return cwd;
     }
 

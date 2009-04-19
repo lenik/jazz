@@ -37,7 +37,6 @@ import net.bodz.bas.lang.IntMath;
 import net.bodz.bas.lang.Pred2;
 import net.bodz.bas.lang.err.IdentifiedException;
 import net.bodz.bas.lang.err.IllegalArgumentTypeException;
-import net.bodz.bas.lang.err.IllegalUsageError;
 import net.bodz.bas.lang.err.RuntimizedException;
 import net.bodz.bas.lang.err.UnexpectedException;
 import net.bodz.bas.lang.err.WrappedException;
@@ -1077,49 +1076,38 @@ public class Files {
     // data associated with a class
 
     /**
-     * @param extension
-     *            should not contain the dot(.)
-     */
-    public static URL classData(Class<?> clazz, String extension) {
-        ClassLoader loader = clazz.getClassLoader();
-        if (loader == null)
-            loader = ClassLoader.getSystemClassLoader();
-        String className = clazz.getName();
-        String fileName = className.replace('.', '/') + "." + extension; //$NON-NLS-1$
-        return loader.getResource(fileName);
-    }
-
-    /**
-     * @param addDot
-     *            default is <code>true</code>.
-     */
-    public static URL classDataURL(Class<?> clazz, String extension,
-            boolean addDot) {
-        String classURL = classData(clazz).toString();
-        int dot = classURL.lastIndexOf('.');
-        int add = addDot ? 1 : 0;
-        String url = classURL.substring(0, dot + add) + extension;
-        try {
-            return new URL(url);
-        } catch (MalformedURLException e) {
-            throw new IllegalUsageError(SysNLS.getString("Files.errURL")); //$NON-NLS-1$
-        }
-    }
-
-    public static URL classDataURL(Class<?> clazz, String extension) {
-        return classDataURL(clazz, extension, !extension.startsWith("/")); //$NON-NLS-1$
-    }
-
-    /**
-     * Same as {@link #classData(Class, String)} with ".class" as
+     * Same as {@link #_classData(Class, String)} with ".class" as
      * <code>extension</code>.
      */
     public static URL classData(Class<?> clazz) {
-        return classData(clazz, "class"); //$NON-NLS-1$
+        String thisName = clazz.getSimpleName();
+        return clazz.getResource(thisName + ".class");
     }
 
-    public static URL getDataURL(Object object, String name) {
-        return classData(object.getClass(), name);
+    /**
+     * @param extension
+     *            don't include the dot(.)
+     */
+    public static URL classData(Class<?> clazz, String extension) {
+        return _classData(clazz, "." + extension);
+    }
+
+    /**
+     * @param extension
+     *            must include the dot(.), if necessary
+     */
+    public static URL _classData(Class<?> clazz, String extension) {
+        String thisName = clazz.getSimpleName();
+        // the resource may not exist.
+        // clazz.getResource(thisName + extension);
+        URL self = classData(clazz);
+        String spec = thisName + extension;
+        try {
+            URL url = new URL(self, spec);
+            return url;
+        } catch (MalformedURLException e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 
     public static URL getRootResource(Class<?> clazz) {
