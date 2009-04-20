@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,22 +30,41 @@ import net.bodz.bas.text.interp.Interps;
 import net.bodz.bas.text.interp.PatternProcessor;
 import net.bodz.bas.types.Pair;
 
+/**
+ * @test {@link StringsTest}
+ */
 public class Strings {
 
     /**
      * @see Objects#equals(Object, Object)
      */
     @Deprecated
-    public static final boolean equals(String a, String b) {
+    public static boolean equals(String a, String b) {
         if (a == null || b == null)
             return a == b;
         return a.equals(b);
     }
 
-    public static final boolean equalsIgnoreCase(String a, String b) {
+    public static boolean equalsIgnoreCase(String a, String b) {
         if (a == null || b == null)
             return a == b;
         return a.equalsIgnoreCase(b);
+    }
+
+    public static int indexOfIgnoreCase(String s, String needle, Locale locale) {
+        return s.toLowerCase(locale).indexOf(needle.toLowerCase(locale));
+    }
+
+    public static int indexOfIgnoreCase(String s, String needle) {
+        return s.toLowerCase().indexOf(needle.toLowerCase());
+    }
+
+    public static int indexOfIgnoreCase(String s, char needle, Locale locale) {
+        return s.toLowerCase(locale).indexOf(Character.toLowerCase(needle));
+    }
+
+    public static int indexOfIgnoreCase(String s, char needle) {
+        return s.toLowerCase().indexOf(Character.toLowerCase(needle));
     }
 
     public static String chop(String s, int chopLen) {
@@ -158,6 +178,20 @@ public class Strings {
         return lcfirst + s.substring(1);
     }
 
+    static Pattern words = Pattern.compile("\\w+");
+
+    public static String ucfirstWords(String s) {
+        return new PatternProcessor(words) {
+            @Override
+            protected void matched(String part) {
+                print(ucfirst(part));
+            }
+        }.process(s);
+    }
+
+    /**
+     * helloWorld => hello-world
+     */
     public static String hyphenatize(String words) {
         while (words.startsWith("_")) //$NON-NLS-1$
             words = words.substring(1);
@@ -181,6 +215,9 @@ public class Strings {
         return s.toLowerCase();
     }
 
+    /**
+     * hello-world => helloWorld
+     */
     public static String dehyphenatize(String hstr) {
         String[] parts = hstr.split("-"); //$NON-NLS-1$
         StringBuffer buf = new StringBuffer();

@@ -28,11 +28,14 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.DataType;
+import org.apache.tools.ant.types.Path;
 
-public class PropertyBeanTask extends Task {
+public class PropertyBeanTask extends Task implements IPureTask {
 
     private String         baseName;
     private ValueConstruct vCtor;
+
+    private boolean        smartExpand      = false;
 
     private boolean        expandArray      = true;
     private boolean        expandList       = true;
@@ -288,7 +291,8 @@ public class PropertyBeanTask extends Task {
                         String name = String.valueOf(i++);
                         traverse(join(_name, name), value, level + 1);
                     }
-                    break X;
+                    if (smartExpand)
+                        break X;
                 }
 
                 if (expandMap) {
@@ -299,7 +303,8 @@ public class PropertyBeanTask extends Task {
                             Object value = e.getValue();
                             traverse(join(_name, name), value, level + 1);
                         }
-                        break X;
+                        if (smartExpand)
+                            break X;
                     }
                     if (node instanceof Dictionary<?, ?>) {
                         Dictionary<?, ?> dict = (Dictionary<?, ?>) node;
@@ -310,7 +315,8 @@ public class PropertyBeanTask extends Task {
                             String name = String.valueOf(key);
                             traverse(join(_name, name), value, level + 1);
                         }
-                        break X;
+                        if (smartExpand)
+                            break X;
                     }
                 }
 
@@ -340,17 +346,18 @@ public class PropertyBeanTask extends Task {
                         }
                         traverse(join(_name, name), value, level + 1);
                     }
-                    break X;
+                    // break X;
                 }
 
                 if (expandFields) {
                     Field[] fields = clazz.getFields();
                     for (Field field : fields) {
                         String name = field.getName();
+                        // for static field, node is ignored
                         Object value = field.get(node);
                         traverse(join(_name, name), value, level + 1);
                     }
-                    break X;
+                    // break X;
                 }
             } while (false);
         } // traverse()
@@ -365,7 +372,7 @@ public class PropertyBeanTask extends Task {
     }
 
     public void setClassName(String className) {
-        vCtor.setClassName(className);
+        vCtor.setClassName(0, className); // XXX ?
     }
 
     public void setObject(Object obj) {
@@ -378,6 +385,10 @@ public class PropertyBeanTask extends Task {
 
     public void setXmlFile(File xmlFile) {
         vCtor.setXmlFile(xmlFile);
+    }
+
+    public void addConfiguredClasspath(Path path) {
+        vCtor.addConfiguredClasspath(path);
     }
 
 }

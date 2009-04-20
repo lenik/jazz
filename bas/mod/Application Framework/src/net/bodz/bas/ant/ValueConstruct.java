@@ -1,15 +1,28 @@
 package net.bodz.bas.ant;
 
 import java.io.File;
+import java.net.URL;
+import java.net.URLClassLoader;
 
+import net.bodz.bas.io.Files;
+import net.bodz.bas.lang.Caller;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.err.IllegalUsageException;
+import net.bodz.bas.loader.UCL;
 import net.bodz.bas.types.util.Empty;
 import net.bodz.bas.util.Factory;
+
+import org.apache.tools.ant.types.Path;
 
 public class ValueConstruct extends WithParameters {
 
     private Factory<Object> factory;
+    private URLClassLoader  loader;
+
+    public ValueConstruct() {
+        ClassLoader parent = Caller.getCallerClassLoader(0);
+        loader = new URLClassLoader(new URL[0], parent);
+    }
 
     void setFactory(Factory<Object> factory) {
         if (this.factory != null)
@@ -27,8 +40,8 @@ public class ValueConstruct extends WithParameters {
      *            Must be visible to the classloader of this task class. That
      *            means, bodz_bas should not in the bootstrap classpath,
      */
-    public void setClassName(String className) {
-        setFactory(new Factory.ByClassName(0, className));
+    public void setClassName(int caller, String className) {
+        setFactory(new Factory.ByClassName(loader, className));
     }
 
     public void setXml(String xml) { // logger...
@@ -37,6 +50,17 @@ public class ValueConstruct extends WithParameters {
 
     public void setXmlFile(File xmlFile) { // logger
         setFactory(new Factory.ByXMLFile(xmlFile, null));
+    }
+
+    public void addConfiguredClasspath(Path path) {
+        String[] paths = path.list();
+        URL[] urls = new URL[paths.length];
+        for (int i = 0; i < paths.length; i++) {
+            File loc = new File(paths[i]);
+            URL url = Files.getURL(loc);
+            urls[i] = url;
+        }
+        UCL.addURL(loader, urls);
     }
 
     public Object create() throws CreateException {

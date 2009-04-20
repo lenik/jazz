@@ -5,6 +5,7 @@
 
     <path id="classpath">
         <path path="${project.base}/mod/Application Framework/bin" />
+        <path path="${project.base}/mod/Application Framework/test.bin" />
         <path path="${project.base}/mod/Data Types/bin" />
         <path path="${project.base}/mod/Functional Programming/bin" />
         <path path="${project.base}/mod/Language Extension/bin" />

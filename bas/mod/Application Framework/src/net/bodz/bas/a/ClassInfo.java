@@ -6,11 +6,11 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.gui.a.Icon;
 import net.bodz.bas.lang.ClassLocal;
 import net.bodz.bas.types.util.Annotations;
 import net.bodz.bas.types.util.Ns;
 import net.bodz.bas.types.util.Strings;
+import net.bodz.bas.ui.a.Icon;
 
 public class ClassInfo {
 

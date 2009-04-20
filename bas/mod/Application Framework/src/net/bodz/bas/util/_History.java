@@ -6,7 +6,7 @@ import net.bodz.bas.nls.AppNLS;
 
 public abstract class _History implements History {
 
-    protected abstract Operation get(int position);
+    protected abstract OperationRecord get(int position);
 
     @Override
     public void moveTo(int p) {

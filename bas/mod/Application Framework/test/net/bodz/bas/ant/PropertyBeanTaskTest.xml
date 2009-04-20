@@ -3,6 +3,8 @@
 
     <import file="testdef.xml" />
 
+    <property name="pbase" location="${basedir}/../../../../../../.." />
+
     <target name="default">
         <propertybean name="myfile"
                       classname="java.io.File"
@@ -10,8 +12,18 @@
             <parameter type="java.lang.String" value="C:/" />
             <stoptypeprefix>java.lang</stoptypeprefix>
         </propertybean>
-
+        <echo>My File = ${myfile}</echo>
         <echoproperties prefix="my" />
+
+        <propertybean name="testenv"
+                      classname="net.bodz.extern.testbeans.Environ"
+                      expandmap="false"
+                      expandfields="true"
+                      expandproperties="true">
+            <classpath path="${pbase}/mod/Bundled Modules/test.bin" />
+        </propertybean>
+        <echo>Property: ${testenv.simpleProperty}</echo>
+        <echoproperties prefix="testenv" />
     </target>
 
 </project>

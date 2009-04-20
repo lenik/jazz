@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<project name="test" default="default">
+
+    <import file="testdef.xml" />
+
+    <target name="default">
+        <counters name="count"
+                  classhint="net.bodz.bas.util.CountersTest"
+                  update="true">
+            <incr>packid</incr>
+        </counters>
+        <echo>$count</echo>
+        <echoproperties prefix="count" />
+    </target>
+
+</project>
