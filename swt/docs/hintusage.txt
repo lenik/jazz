@@ -1,0 +1,9 @@
+
+GUIHint:
+
+SWTStyle: addEffects()
+    tooltip, visible, enabled, fg/bg, font, size/pref
+    
+SWTGridStyle: renderChild()
+    *icon(:@), label(:@)
+
