@@ -1,8 +1,8 @@
 package net.bodz.swt.gui;
 
-import net.bodz.bas.gui.a.Color;
-import net.bodz.bas.gui.a.Font;
-import net.bodz.bas.gui.a.Visible;
+import net.bodz.bas.ui.a.Color;
+import net.bodz.bas.ui.a.Font;
+import net.bodz.bas.ui.a.Visible;
 import net.bodz.swt.util.SWTResources;
 
 import org.eclipse.swt.SWT;
@@ -22,6 +22,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.junit.Test;
 
 public class HelloWorld extends BasicGUI {
 
@@ -180,8 +181,13 @@ public class HelloWorld extends BasicGUI {
         greetingIcon.setLayoutData(fd_greetingIcon);
     }
 
-    public static void main(String[] args) throws Throwable {
-        new HelloWorld().run(args);
+    @Test
+    public void test() throws Throwable {
+        run();
+    }
+
+    @Override
+    protected void checkHangOns() {
     }
 
 }

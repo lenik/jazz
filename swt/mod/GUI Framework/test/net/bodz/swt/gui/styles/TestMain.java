@@ -1,11 +1,11 @@
 package net.bodz.swt.gui.styles;
 
-import net.bodz.bas.gui.GUIException;
-import net.bodz.bas.gui.a.PreferredSize;
+import net.bodz.bas.ui.UIException;
+import net.bodz.bas.ui.a.PreferredSize;
 import net.bodz.swt.gui.BasicGUI;
 import net.bodz.swt.gui.GUIVar;
 import net.bodz.swt.gui.GUIVars;
-import net.bodz.swt.gui.SWTInteraction;
+import net.bodz.swt.gui.DialogInteraction;
 import net.bodz.swt.gui.styles.grid.SWTGridStrategy;
 
 import org.eclipse.swt.SWT;
@@ -18,7 +18,7 @@ public class TestMain extends BasicGUI {
     Object obj;
 
     @Override
-    protected void createInitialView(Composite comp) throws GUIException,
+    protected void createInitialView(Composite comp) throws UIException,
             SWTException {
         SWTGridStrategy strategy = new SWTGridStrategy();
         GUIVar<Object> var = GUIVars.wrap(obj);
@@ -31,7 +31,7 @@ public class TestMain extends BasicGUI {
         try {
             main.run();
         } catch (Throwable e) {
-            new SWTInteraction().alert("Error", e); //$NON-NLS-1$
+            new DialogInteraction().alert("Error", e); //$NON-NLS-1$
         }
     }
 

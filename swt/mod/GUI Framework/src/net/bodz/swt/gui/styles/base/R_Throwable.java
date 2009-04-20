@@ -3,15 +3,15 @@ package net.bodz.swt.gui.styles.base;
 import java.io.IOException;
 import java.util.EventObject;
 
-import net.bodz.bas.gui.RenderException;
 import net.bodz.bas.io.CharOuts.BCharOut;
 import net.bodz.bas.sys.DesktopApps;
+import net.bodz.bas.ui.RenderException;
 import net.bodz.swt.controls.helper.EmptyComposite;
 import net.bodz.swt.controls.helper.FixSizeComposite;
 import net.bodz.swt.controls.util.Controls;
 import net.bodz.swt.gui.GUIVar;
 import net.bodz.swt.gui.IAction;
-import net.bodz.swt.gui.SWTInteraction;
+import net.bodz.swt.gui.DialogInteraction;
 import net.bodz.swt.gui.SWTRenderContext;
 import net.bodz.swt.gui.SWTRenderer;
 import net.bodz.swt.gui._Action;
@@ -174,7 +174,7 @@ public class R_Throwable extends SWTRenderer {
                         DesktopApps.openMailer(mailAddress, mailSubject,
                                 errorText);
                     } catch (IOException e) {
-                        SWTInteraction iact = rc.interact(parent);
+                        DialogInteraction iact = rc.interact(parent);
                         iact.alert(GUINLS.getString("R_Throwable.cantSend"), e); //$NON-NLS-1$
                     }
                 }

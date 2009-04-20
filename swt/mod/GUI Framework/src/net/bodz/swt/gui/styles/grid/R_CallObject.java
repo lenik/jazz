@@ -1,7 +1,7 @@
 package net.bodz.swt.gui.styles.grid;
 
-import net.bodz.bas.gui.RenderException;
 import net.bodz.bas.lang.err.ReflectException;
+import net.bodz.bas.ui.RenderException;
 import net.bodz.swt.gui.GUIHint;
 import net.bodz.swt.gui.GUIVar;
 import net.bodz.swt.gui.SWTRenderContext;

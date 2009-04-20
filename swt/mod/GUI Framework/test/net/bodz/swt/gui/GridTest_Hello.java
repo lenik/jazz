@@ -1,6 +1,6 @@
 package net.bodz.swt.gui;
 
-import net.bodz.bas.gui.GUIException;
+import net.bodz.bas.ui.UIException;
 import net.bodz.swt.util.SWTResources;
 
 import org.eclipse.swt.SWT;
@@ -11,6 +11,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.junit.Test;
 
 public class GridTest_Hello extends BasicGUI {
 
@@ -18,7 +19,7 @@ public class GridTest_Hello extends BasicGUI {
     private Text text;
 
     @Override
-    protected void createInitialView(Composite comp) throws GUIException,
+    protected void createInitialView(Composite comp) throws UIException,
             SWTException {
         final GridLayout gridLayout = new GridLayout();
         gridLayout.numColumns = 3;
@@ -78,8 +79,13 @@ public class GridTest_Hello extends BasicGUI {
         button_1.setText("Check Button"); //$NON-NLS-1$
     }
 
-    public static void main(String[] args) throws Throwable {
-        new GridTest_Hello().run(args);
+    @Override
+    protected void checkHangOns() {
+    }
+
+    @Test
+    public void test1() throws Throwable {
+        run();
     }
 
 }

@@ -2,7 +2,7 @@ package net.bodz.swt.adapters;
 
 import java.util.EventObject;
 
-import net.bodz.bas.rt.Interaction;
+import net.bodz.bas.ui.Interaction;
 import net.bodz.swt.nls.ControlsNLS;
 
 import org.eclipse.swt.events.TypedEvent;

@@ -1,6 +1,6 @@
 package net.bodz.swt.gui;
 
-import net.bodz.bas.gui.RenderException;
+import net.bodz.bas.ui.RenderException;
 
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Device;
@@ -9,8 +9,8 @@ import org.eclipse.swt.widgets.Control;
 
 public class SWTRenderContext {
 
-    public SWTInteraction interact(Control active) {
-        return new SWTInteraction(active.getShell());
+    public DialogInteraction interact(Control active) {
+        return new DialogInteraction(active.getShell());
     }
 
     public void addEffects(Control control, GUIVar<?> var)

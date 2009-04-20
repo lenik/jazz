@@ -3,13 +3,13 @@ package net.bodz.swt.gui.pfl;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.rt.Interaction;
 import net.bodz.bas.types.HashTextMap;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.util.Strings;
+import net.bodz.bas.ui.Interaction;
 import net.bodz.swt.adapters.ControlAdapters;
 import net.bodz.swt.controls.helper.StackComposite;
-import net.bodz.swt.gui.SWTInteraction;
+import net.bodz.swt.gui.DialogInteraction;
 import net.bodz.swt.gui.ValidateException;
 import net.bodz.swt.nls.GUINLS;
 import net.bodz.swt.util.SWTResources;
@@ -88,7 +88,7 @@ public class WizardComposite extends Composite {
                 refreshPage();
             }
         });
-        this.iact = new SWTInteraction(getShell());
+        this.iact = new DialogInteraction(getShell());
         createContents();
     }
 

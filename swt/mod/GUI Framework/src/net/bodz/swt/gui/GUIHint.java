@@ -5,12 +5,12 @@ import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Method;
 
 import net.bodz.bas.a.A_bas;
-import net.bodz.bas.gui.a.Border;
-import net.bodz.bas.gui.a.PreferredSize;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.err.IllegalUsageError;
-import net.bodz.bas.mod.Factory;
 import net.bodz.bas.types.util.Ns;
+import net.bodz.bas.ui.a.Border;
+import net.bodz.bas.ui.a.PreferredSize;
+import net.bodz.bas.util.Factory;
 import net.bodz.swt.gui.a.A_gui;
 import net.bodz.swt.gui.a.MenuContrib;
 import net.bodz.swt.gui.a.View;
@@ -78,42 +78,42 @@ public class GUIHint {
         this.doc = A_bas.getDoc(aobject);
 
         Boolean enabled = (Boolean) Ns.getValue(aobject,
-                net.bodz.bas.gui.a.Enabled.class);
+                net.bodz.bas.ui.a.Enabled.class);
         if (enabled != null)
             this.enabled = enabled;
 
         Boolean visible = (Boolean) Ns.getValue(aobject,
-                net.bodz.bas.gui.a.Visible.class);
+                net.bodz.bas.ui.a.Visible.class);
         if (visible != null)
             this.visible = visible;
 
         Integer order = (Integer) Ns.getValue(aobject,
-                net.bodz.bas.gui.a.Order.class);
+                net.bodz.bas.ui.a.Order.class);
         if (order != null)
             this.order = order;
 
         Integer tabOrder = (Integer) Ns.getValue(aobject,
-                net.bodz.bas.gui.a.TabOrder.class);
+                net.bodz.bas.ui.a.TabOrder.class);
         if (tabOrder != null)
             this.tabOrder = tabOrder;
 
         Factory<?> iconFactory = A_gui.getIconFactory(Ns.getN(aobject,
-                net.bodz.bas.gui.a.Icon.class));
+                net.bodz.bas.ui.a.Icon.class));
         if (iconFactory != null)
             this.iconFactory = iconFactory;
 
         Factory<String> labelFactory = A_gui.getLabelFactory(Ns.getN(aobject,
-                net.bodz.bas.gui.a.Label.class));
+                net.bodz.bas.ui.a.Label.class));
         if (labelFactory != null)
             this.labelFactory = labelFactory;
 
         Factory<?> fontFactory = A_gui.getFontFactory(Ns.getN(aobject,
-                net.bodz.bas.gui.a.Font.class));
+                net.bodz.bas.ui.a.Font.class));
         if (fontFactory != null)
             this.fontFactory = fontFactory;
 
-        net.bodz.bas.gui.a.Color colorN = Ns.getN(aobject,
-                net.bodz.bas.gui.a.Color.class);
+        net.bodz.bas.ui.a.Color colorN = Ns.getN(aobject,
+                net.bodz.bas.ui.a.Color.class);
         if (colorN != null) {
             RGB color = A_gui.parseColor(colorN.value());
             RGB back = A_gui.parseColor(colorN.back());

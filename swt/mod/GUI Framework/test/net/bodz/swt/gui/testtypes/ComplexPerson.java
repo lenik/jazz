@@ -1,7 +1,7 @@
 package net.bodz.swt.gui.testtypes;
 
-import net.bodz.bas.gui.a.Color;
-import net.bodz.bas.gui.a.Label;
+import net.bodz.bas.ui.a.Color;
+import net.bodz.bas.ui.a.Label;
 import net.bodz.swt.gui.a.MaxLength;
 
 public class ComplexPerson {

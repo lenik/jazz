@@ -2,16 +2,16 @@ package net.bodz.swt.gui.a;
 
 import java.lang.reflect.AnnotatedElement;
 
-import net.bodz.bas.gui.a.Font;
-import net.bodz.bas.gui.a.Icon;
-import net.bodz.bas.gui.a.PreferredSize;
 import net.bodz.bas.lang.Caller;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.err.IllegalUsageError;
-import net.bodz.bas.mod.Factory;
 import net.bodz.bas.types.HashTextMap;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.util.Types;
+import net.bodz.bas.ui.a.Font;
+import net.bodz.bas.ui.a.Icon;
+import net.bodz.bas.ui.a.PreferredSize;
+import net.bodz.bas.util.Factory;
 import net.bodz.swt.nls.GUINLS;
 import net.bodz.swt.util.SWTResources;
 
@@ -20,7 +20,7 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.RGB;
 
-public class A_gui extends net.bodz.bas.gui.a.A_gui {
+public class A_gui extends net.bodz.bas.ui.a.A_ui {
 
     public static ImageData getIcon(AnnotatedElement aobject) {
         Icon aicon = aobject.getAnnotation(Icon.class);

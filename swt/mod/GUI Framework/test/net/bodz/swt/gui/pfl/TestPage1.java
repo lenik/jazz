@@ -1,8 +1,8 @@
 package net.bodz.swt.gui.pfl;
 
 import net.bodz.bas.a.Doc;
-import net.bodz.bas.gui.a.Icon;
 import net.bodz.bas.lang.err.OutOfDomainException;
+import net.bodz.bas.ui.a.Icon;
 import net.bodz.swt.gui.ValidateException;
 
 import org.eclipse.swt.SWT;
