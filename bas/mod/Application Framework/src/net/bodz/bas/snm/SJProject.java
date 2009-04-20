@@ -22,14 +22,14 @@ public class SJProject {
     }
 
     public static File findProjectBase(Class<?> clazz) {
-        File base = getBase(clazz);
+        File base = getOutputBase(clazz);
         return findProjectBase(base);
     }
 
     /**
      * jar file or the classpath directory.
      */
-    public static File getBase(Class<?> clazz) {
+    public static File getOutputBase(Class<?> clazz) {
         String p = clazz.getName().replace('.', '/') + ".class";
         URL url = Files.classData(clazz);
         try {
@@ -45,7 +45,7 @@ public class SJProject {
     }
 
     public static File getSrcBase(Class<?> clazz, String... srcNames) {
-        File cp = getBase(clazz);
+        File cp = getOutputBase(clazz);
         File parent = cp.getParentFile();
         File fallback = null;
         if (cp.isFile()) {
