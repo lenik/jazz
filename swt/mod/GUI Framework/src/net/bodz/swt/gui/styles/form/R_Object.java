@@ -1,6 +1,6 @@
 package net.bodz.swt.gui.styles.form;
 
-import net.bodz.bas.gui.RenderException;
+import net.bodz.bas.ui.RenderException;
 import net.bodz.swt.gui.GUIVar;
 import net.bodz.swt.gui.SWTRenderContext;
 import net.bodz.swt.gui.styles.base._R_Object;

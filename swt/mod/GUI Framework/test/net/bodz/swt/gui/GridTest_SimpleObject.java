@@ -1,12 +1,12 @@
 package net.bodz.swt.gui;
 
 import net.bodz.bas.a.Doc;
-import net.bodz.bas.gui.GUIException;
-import net.bodz.bas.gui.RenderException;
-import net.bodz.bas.gui.a.Border;
-import net.bodz.bas.gui.a.Color;
-import net.bodz.bas.gui.a.Label;
-import net.bodz.bas.gui.a.PreferredSize;
+import net.bodz.bas.ui.RenderException;
+import net.bodz.bas.ui.UIException;
+import net.bodz.bas.ui.a.Border;
+import net.bodz.bas.ui.a.Color;
+import net.bodz.bas.ui.a.Label;
+import net.bodz.bas.ui.a.PreferredSize;
 import net.bodz.swt.controls.Timer;
 import net.bodz.swt.gui.styles.grid.SWTGridStrategy;
 import net.bodz.swt.gui.testtypes.ComplexPerson;
@@ -16,6 +16,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.junit.Test;
 
 @PreferredSize(width = 500, height = 400)
 public class GridTest_SimpleObject extends BasicGUI {
@@ -55,16 +56,17 @@ public class GridTest_SimpleObject extends BasicGUI {
     }
 
     @Override
-    protected void createInitialView(Composite comp) throws GUIException,
+    protected void createInitialView(Composite comp) throws UIException,
             SWTException {
+        SWTRenderContext rc = new SWTRenderContext();
         GUIVar<School> schoolVar = GUIVars.wrap(school);
         SWTGridStrategy style = new SWTGridStrategy();
         try {
-            style.render(null, schoolVar, comp, SWT.BORDER);
+            style.render(rc, schoolVar, comp, SWT.BORDER);
         } catch (RenderException e) {
-            throw new GUIException(e);
+            throw new UIException(e);
         } catch (SWTException e) {
-            throw new GUIException(e);
+            throw new UIException(e);
         }
     }
 
@@ -88,8 +90,13 @@ public class GridTest_SimpleObject extends BasicGUI {
         return bar;
     }
 
-    public static void main(String[] args) throws Throwable {
-        new GridTest_SimpleObject().run(args);
+    @Test
+    public void test() throws Throwable {
+        run();
+    }
+
+    @Override
+    protected void checkHangOns() {
     }
 
 }

@@ -2,12 +2,12 @@ package net.bodz.swt.gui.styles.base;
 
 import java.io.File;
 
-import net.bodz.bas.gui.RenderException;
-import net.bodz.bas.gui.RenderStrategy;
-import net.bodz.bas.gui.Renderer;
 import net.bodz.bas.lang.a.ChainUsage;
 import net.bodz.bas.lang.a.OverrideOption;
 import net.bodz.bas.lang.ref.Var;
+import net.bodz.bas.ui.RenderException;
+import net.bodz.bas.ui.RenderStrategy;
+import net.bodz.bas.ui.Renderer;
 import net.bodz.swt.gui.GUIVar;
 import net.bodz.swt.gui.GUIVars;
 import net.bodz.swt.gui.SWTRenderContext;
@@ -69,6 +69,8 @@ public abstract class SWTStrategy extends RenderStrategy {
 
     public Control render(SWTRenderContext rc, GUIVar<?> var, Composite parent,
             int style) throws RenderException, SWTException {
+        if (rc == null)
+            throw new NullPointerException("rc");
         SWTRenderer renderer = findRenderer(var);
         if (renderer == null)
             throw new RenderException(GUINLS
@@ -81,6 +83,8 @@ public abstract class SWTStrategy extends RenderStrategy {
 
     public Control render(SWTRenderContext rc, Object constantValue,
             Composite parent, int style) throws RenderException, SWTException {
+        if (rc == null)
+            throw new NullPointerException("rc");
         GUIVar<Object> var = GUIVars.wrap(constantValue);
         return render(rc, var, parent, style);
     }

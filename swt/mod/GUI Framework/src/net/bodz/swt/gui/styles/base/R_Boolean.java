@@ -4,8 +4,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.EventObject;
 
-import net.bodz.bas.gui.RenderException;
 import net.bodz.bas.lang.err.CheckException;
+import net.bodz.bas.ui.RenderException;
 import net.bodz.swt.adapters.CommitAdapter;
 import net.bodz.swt.adapters.CommitException;
 import net.bodz.swt.adapters.ControlAdapters;

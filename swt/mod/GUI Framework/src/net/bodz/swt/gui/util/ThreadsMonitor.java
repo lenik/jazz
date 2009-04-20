@@ -5,10 +5,10 @@ import java.util.Map;
 
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.err.UnexpectedException;
-import net.bodz.bas.rt.Interaction;
+import net.bodz.bas.ui.Interaction;
 import net.bodz.swt.controls.helper.EmptyComposite;
 import net.bodz.swt.dialogs.SimpleDialog;
-import net.bodz.swt.gui.SWTInteraction;
+import net.bodz.swt.gui.DialogInteraction;
 import net.bodz.swt.util.SWTResources;
 
 import org.eclipse.swt.SWT;
@@ -39,7 +39,7 @@ public class ThreadsMonitor extends SimpleDialog {
     public ThreadsMonitor(Shell parent, int style) {
         super(parent, style, "Threads Monitor");
         threadMap = new HashMap<Long, Thread>();
-        iact = new SWTInteraction(parent);
+        iact = new DialogInteraction(parent);
     }
 
     @Override

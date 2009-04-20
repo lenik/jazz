@@ -6,7 +6,7 @@ import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.ref.Ref;
 import net.bodz.swt.controls.helper.EmptyComposite;
 import net.bodz.swt.controls.util.Controls;
-import net.bodz.swt.gui.SWTInteraction;
+import net.bodz.swt.gui.DialogInteraction;
 import net.bodz.swt.nls.ControlsNLS;
 import net.bodz.swt.util.SWTResources;
 
@@ -29,25 +29,25 @@ import org.eclipse.swt.widgets.Shell;
 
 public abstract class SimpleDialog extends Dialog implements Ref<Object> {
 
-    static final int       _diagstyle = SWT.NONE;          // SWT.BORDER;
-    static final Point     minSize    = new Point(150, 30);
+    static final int          _diagstyle = SWT.NONE;          // SWT.BORDER;
+    static final Point        minSize    = new Point(150, 30);
 
-    private Shell          parent;
-    private String         title;
-    private Image          icon;
-    private Image          image;
+    private Shell             parent;
+    private String            title;
+    private Image             icon;
+    private Image             image;
 
-    private Shell          shell;
-    private Label          imageLabel;
-    private Composite      detailBar;
-    private Composite      body;
-    private Composite      userBar;
-    private Composite      basicBar;
+    private Shell             shell;
+    private Label             imageLabel;
+    private Composite         detailBar;
+    private Composite         body;
+    private Composite         userBar;
+    private Composite         basicBar;
 
-    private SWTInteraction interact;
+    private DialogInteraction interact;
 
-    private Object         result;
-    private boolean        canceled;
+    private Object            result;
+    private boolean           canceled;
 
     /**
      * @see SWT#PRIMARY_MODAL
@@ -62,7 +62,7 @@ public abstract class SimpleDialog extends Dialog implements Ref<Object> {
             setText(title);
         icon = SWTResources.getImageRes("/icons/full/obj16/read_obj.gif"); //$NON-NLS-1$
         image = icon;
-        interact = new SWTInteraction(parent, SWT.APPLICATION_MODAL);
+        interact = new DialogInteraction(parent, SWT.APPLICATION_MODAL);
     }
 
     /**
@@ -242,65 +242,62 @@ public abstract class SimpleDialog extends Dialog implements Ref<Object> {
         addCancelButton(parent);
     }
 
-    protected Button addOKButton(Composite parent) throws SWTException {
-        final Button okButton = new Button(parent, SWT.NONE);
-        okButton.setSelection(true);
-        okButton.setImage(SWTResources
-                .getImageRes("/icons/full/obj16/translate.gif")); //$NON-NLS-1$
-        okButton.setText(ControlsNLS.getString("SimpleDialog.ok")); //$NON-NLS-1$
-        okButton.addSelectionListener(new SelectionAdapter() {
+    protected static final Object NO_CHANGE = new Object();
+
+    /**
+     * @param value
+     *            {@value #NO_CHANGE} if the button won't change the current
+     *            value.
+     */
+    protected Button addButton(Composite parent, int style, Image image,
+            String text, final Object value, final boolean dispose) {
+        final Button button = new Button(parent, style);
+        if (image != null)
+            button.setImage(image);
+        if (text != null)
+            button.setText(text);
+        button.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                accept();
+                if (value != NO_CHANGE)
+                    set(value);
+                if (dispose)
+                    shell.dispose();
+                else
+                    accept();
             }
         });
+        return button;
+    }
+
+    protected Button addOKButton(Composite parent) throws SWTException {
+        Button okButton = addButton(parent, SWT.NONE, SWTResources
+                .getImageRes("/icons/full/obj16/translate.gif"), //$NON-NLS-1$
+                ControlsNLS.getString("SimpleDialog.ok"), //$NON-NLS-1$
+                NO_CHANGE, false);
+        okButton.setSelection(true);
         return okButton;
     }
 
     protected Button addCancelButton(Composite parent) throws SWTException {
-        final Button cancelButton = new Button(parent, SWT.NONE);
-        // rd_okButton.height = buttonHeight;
-        cancelButton.setImage(SWTResources
-                .getImageRes("/icons/full/obj16/delete_obj.gif")); //$NON-NLS-1$
-        cancelButton.setText(ControlsNLS.getString("SimpleDialog.cancel")); //$NON-NLS-1$
-        cancelButton.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                shell.dispose();
-            }
-        });
-        return cancelButton;
+        return addButton(parent, SWT.NONE, SWTResources
+                .getImageRes("/icons/full/obj16/delete_obj.gif"), //$NON-NLS-1$
+                ControlsNLS.getString("SimpleDialog.cancel"), //$NON-NLS-1$
+                NO_CHANGE, true);
     }
 
     protected Button addYesButton(Composite parent) throws SWTException {
-        final Button yesButton = new Button(parent, SWT.NONE);
-        yesButton.setSelection(true);
-        yesButton.setImage(SWTResources
-                .getImageRes("/icons/full/obj16/lrun_obj.gif")); //$NON-NLS-1$
-        yesButton.setText(ControlsNLS.getString("SimpleDialog.yes")); //$NON-NLS-1$
-        yesButton.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                set(true);
-                accept();
-            }
-        });
-        return yesButton;
+        return addButton(parent, SWT.NONE, SWTResources
+                .getImageRes("/icons/full/obj16/lrun_obj.gif"), //$NON-NLS-1$
+                ControlsNLS.getString("SimpleDialog.yes"), //$NON-NLS-1$
+                true, false);
     }
 
     protected Button addNoButton(Composite parent) throws SWTException {
-        final Button noButton = new Button(parent, SWT.NONE);
-        noButton.setImage(SWTResources
-                .getImageRes("/icons/full/obj16/delete_obj.gif")); //$NON-NLS-1$
-        noButton.setText(ControlsNLS.getString("SimpleDialog.no")); //$NON-NLS-1$
-        noButton.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                set(false);
-                accept();
-            }
-        });
-        return noButton;
+        return addButton(parent, SWT.NONE, SWTResources
+                .getImageRes("/icons/full/obj16/delete_obj.gif"), //$NON-NLS-1$
+                ControlsNLS.getString("SimpleDialog.no"), //$NON-NLS-1$
+                false, false);
     }
 
     protected void addEffects() {

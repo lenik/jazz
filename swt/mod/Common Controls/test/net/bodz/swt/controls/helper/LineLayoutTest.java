@@ -1,6 +1,6 @@
 package net.bodz.swt.controls.helper;
 
-import net.bodz.bas.gui.GUIException;
+import net.bodz.bas.ui.UIException;
 import net.bodz.swt.gui.BasicGUI;
 import net.bodz.swt.layouts.BorderLayout;
 import net.bodz.swt.layouts.LineLayout;
@@ -15,7 +15,7 @@ import org.eclipse.swt.widgets.Text;
 public class LineLayoutTest extends BasicGUI {
 
     @Override
-    protected void createInitialView(Composite comp) throws GUIException,
+    protected void createInitialView(Composite comp) throws UIException,
             SWTException {
         comp.setLayout(new BorderLayout(0, 0));
 

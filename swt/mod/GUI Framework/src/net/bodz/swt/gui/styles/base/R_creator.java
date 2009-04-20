@@ -3,13 +3,13 @@ package net.bodz.swt.gui.styles.base;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Constructor;
 
-import net.bodz.bas.gui.RenderException;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.err.IllegalUsageError;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.types.TypeParser;
 import net.bodz.bas.types.TypeParsers;
 import net.bodz.bas.types.util.Types;
+import net.bodz.bas.ui.RenderException;
 import net.bodz.swt.controls.helper.DynamicControl;
 import net.bodz.swt.gui.GUIHint;
 import net.bodz.swt.gui.GUIVar;

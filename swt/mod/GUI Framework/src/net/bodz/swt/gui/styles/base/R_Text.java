@@ -4,13 +4,13 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.EventObject;
 
-import net.bodz.bas.gui.RenderException;
-import net.bodz.bas.gui.a.Border;
 import net.bodz.bas.lang.err.CheckException;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.types.TypeParser;
 import net.bodz.bas.types.TypeParsers;
 import net.bodz.bas.types.util.Ns;
+import net.bodz.bas.ui.RenderException;
+import net.bodz.bas.ui.a.Border;
 import net.bodz.swt.adapters.CommitAdapter;
 import net.bodz.swt.adapters.CommitException;
 import net.bodz.swt.adapters.ControlAdapters;

@@ -1,6 +1,6 @@
 package net.bodz.swt.gui;
 
-import net.bodz.bas.gui.GUIException;
+import net.bodz.bas.ui.UIException;
 import net.bodz.swt.layouts.BorderLayout;
 import net.bodz.swt.layouts.LineLayout;
 
@@ -10,11 +10,12 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.junit.Test;
 
 public class SWTControls extends BasicGUI {
 
     @Override
-    protected void createInitialView(Composite comp) throws GUIException,
+    protected void createInitialView(Composite comp) throws UIException,
             SWTException {
         comp.setLayout(new BorderLayout(0, 0));
 
@@ -49,8 +50,13 @@ public class SWTControls extends BasicGUI {
         button1.setText("B"); //$NON-NLS-1$
     }
 
-    public static void main(String[] args) throws Throwable {
-        new SWTControls().run(args);
+    @Override
+    protected void checkHangOns() {
+    }
+
+    @Test
+    public void test() throws Throwable {
+        run();
     }
 
 }

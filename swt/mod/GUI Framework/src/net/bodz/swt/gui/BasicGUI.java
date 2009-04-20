@@ -10,10 +10,10 @@ import net.bodz.bas.a.ClassInfo;
 import net.bodz.bas.a.StartMode;
 import net.bodz.bas.cli.BasicCLI;
 import net.bodz.bas.cli.a.Option;
-import net.bodz.bas.gui.GUIException;
-import net.bodz.bas.gui.a.PreferredSize;
 import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.types.util.Ns;
+import net.bodz.bas.ui.UIException;
+import net.bodz.bas.ui.a.PreferredSize;
 import net.bodz.swt.controls.helper.DynamicControl;
 import net.bodz.swt.controls.util.Controls;
 import net.bodz.swt.controls.util.Menus;
@@ -68,7 +68,7 @@ public class BasicGUI extends BasicCLI {
         } catch (net.bodz.bas.lang.Control c) {
             throw c;
         } catch (Throwable t) {
-            SWTInteraction iact = new SWTInteraction(shell);
+            DialogInteraction iact = new DialogInteraction(shell);
             iact.alert(t.getMessage(), t);
             throw t;
         }
@@ -76,6 +76,11 @@ public class BasicGUI extends BasicCLI {
 
     @Override
     protected void _exit() throws Throwable {
+        checkHangOns();
+        super._exit();
+    }
+
+    protected void checkHangOns() {
         int activeThreads = Thread.activeCount();
         Thread[] threads = new Thread[activeThreads];
         int n = Thread.enumerate(threads);
@@ -90,7 +95,6 @@ public class BasicGUI extends BasicCLI {
             // monitor.setText("There stills running threads");
             monitor.open();
         }
-        super._exit();
     }
 
     @Override
@@ -106,10 +110,9 @@ public class BasicGUI extends BasicCLI {
 
         _start();
 
-        while (!shell.isDisposed()) {
+        while (!shell.isDisposed())
             if (!display.readAndDispatch())
                 display.sleep();
-        }
         _exit();
     }
 
@@ -140,7 +143,7 @@ public class BasicGUI extends BasicCLI {
         return title + " " + version; //$NON-NLS-1$
     }
 
-    protected Shell createShell() throws GUIException, SWTException {
+    protected Shell createShell() throws UIException, SWTException {
         Shell shell = new Shell();
         shell.setText(getTitle());
         ClassInfo info = _loadClassInfo();
@@ -148,7 +151,7 @@ public class BasicGUI extends BasicCLI {
         try {
             icons = loadImages(info.getIcons());
         } catch (IOException e) {
-            throw new GUIException(e);
+            throw new UIException(e);
         }
         if (icons != null)
             shell.setImages(icons);
@@ -192,7 +195,7 @@ public class BasicGUI extends BasicCLI {
         return shell;
     }
 
-    protected Menu createMenu(Shell parent) throws SWTException, GUIException {
+    protected Menu createMenu(Shell parent) throws SWTException, UIException {
         boolean TODO = true;
         if (TODO)
             return null;
@@ -207,7 +210,7 @@ public class BasicGUI extends BasicCLI {
     }
 
     protected Control createToolBar(Composite parent) throws SWTException,
-            GUIException {
+            UIException {
         boolean TODO = true;
         if (TODO)
             return null;
@@ -216,7 +219,7 @@ public class BasicGUI extends BasicCLI {
     }
 
     protected Control createStatusBar(Composite parent) throws SWTException,
-            GUIException {
+            UIException {
         Composite statusBar = new Composite(parent, SWT.BORDER); // SWT.BORDER
         statusBar.setLayout(new FillLayout());
         Label label = new Label(statusBar, SWT.NONE);
@@ -233,7 +236,7 @@ public class BasicGUI extends BasicCLI {
     }
 
     protected Control createExpandBar(Composite parent) throws SWTException,
-            GUIException {
+            UIException {
         boolean TODO = true;
         if (TODO)
             return null;
@@ -241,7 +244,7 @@ public class BasicGUI extends BasicCLI {
         return expandBar;
     }
 
-    protected void createInitialView(Composite comp) throws GUIException,
+    protected void createInitialView(Composite comp) throws UIException,
             SWTException {
         comp.setLayout(new FillLayout());
         Label welcomeLabel = new Label(comp, SWT.NONE);
@@ -249,7 +252,7 @@ public class BasicGUI extends BasicCLI {
     }
 
     protected void createView(Composite comp, Object key) throws SWTException,
-            GUIException {
+            UIException {
         if (key == null) {
             createInitialView(comp);
             return;
@@ -258,7 +261,7 @@ public class BasicGUI extends BasicCLI {
     }
 
     protected void openView(Composite parent, Object key) throws SWTException,
-            GUIException {
+            UIException {
         Composite view = views.get(key);
         if (view == null) {
             view = new Composite(parent, SWT.NONE);

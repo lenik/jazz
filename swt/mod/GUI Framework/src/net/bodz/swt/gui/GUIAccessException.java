@@ -1,8 +1,8 @@
 package net.bodz.swt.gui;
 
-import net.bodz.bas.gui.GUIRuntimeException;
+import net.bodz.bas.ui.UIRuntimeException;
 
-public class GUIAccessException extends GUIRuntimeException {
+public class GUIAccessException extends UIRuntimeException {
 
     private static final long serialVersionUID = -8443681027647625075L;
 

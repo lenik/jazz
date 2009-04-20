@@ -1,6 +1,6 @@
 package net.bodz.swt.gui.testtypes;
 
-import net.bodz.bas.gui.a.Label;
+import net.bodz.bas.ui.a.Label;
 
 public class SimplePerson {
 

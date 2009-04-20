@@ -2,10 +2,10 @@ package net.bodz.swt.gui;
 
 import java.beans.PropertyChangeListener;
 
-import net.bodz.bas.gui.RenderException;
-import net.bodz.bas.gui.Renderer;
 import net.bodz.bas.lang.err.OutOfDomainException;
 import net.bodz.bas.lang.ref.Var;
+import net.bodz.bas.ui.RenderException;
+import net.bodz.bas.ui.Renderer;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;

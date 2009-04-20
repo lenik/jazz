@@ -6,29 +6,33 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import net.bodz.bas.lang.err.ExpectedException;
 import net.bodz.bas.test.types.Address;
 import net.bodz.bas.test.types.Person;
 import net.bodz.bas.types.util.Strings;
+import net.bodz.bas.ui.Proposals;
 
 import org.eclipse.swt.widgets.Shell;
+import org.junit.Test;
 
-public class SWTInteractionTest {
+public class DialogInteractionTest {
 
-    SWTInteraction ia;
-    Person         person;
+    DialogInteraction ia;
+    Person            person;
     {
         person = new Person("Lily", 12, true); //$NON-NLS-1$
         person.setLocation(new Address("12 River", "Z.J.", "CN", 12345, //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 "999-888-777")); //$NON-NLS-1$
     }
 
-    String         lily  = "LiLY"; //$NON-NLS-1$
-    Person         lily2 = person;
+    String            lily  = "LiLY"; //$NON-NLS-1$
+    Person            lily2 = person;
 
-    public SWTInteractionTest() {
-        ia = new SWTInteraction(new Shell());
+    public DialogInteractionTest() {
+        ia = new DialogInteraction(new Shell());
     }
 
+    @Test
     public void testAlert() {
         ia.alert("Hello", "World"); //$NON-NLS-1$ //$NON-NLS-2$
         ia.alert("Hello", lily); //$NON-NLS-1$
@@ -36,6 +40,7 @@ public class SWTInteractionTest {
         ia.alert("Exception Sample", ex); //$NON-NLS-1$
     }
 
+    @Test
     public void testConfirm() {
         boolean b = ia.confirm("Continue?", //$NON-NLS-1$
                 "Do you want to continue the operation?"); //$NON-NLS-1$
@@ -46,6 +51,14 @@ public class SWTInteractionTest {
         }
     }
 
+    @Test
+    public void testAsk() {
+        int answer = ia.ask("Error happens", new ExpectedException(), //
+                Proposals.retry, Proposals.ignore, Proposals.cancel);
+        System.out.println("Answer: " + answer);
+    }
+
+    @Test
     public void testPrompt() {
         String yourName = ia.prompt("What's your name?"); //$NON-NLS-1$
         System.out.println("Your name = " + yourName); //$NON-NLS-1$
@@ -103,6 +116,7 @@ public class SWTInteractionTest {
         numbers.put(50, "Five apples grows on an big tall arabic tree."); //$NON-NLS-1$
     }
 
+    @Test
     public void testChoice() {
         int choice = ia.choice("Choice an animal: ", Arrays.asList(animals)); //$NON-NLS-1$
         if (choice == -1)
@@ -117,6 +131,7 @@ public class SWTInteractionTest {
             System.out.println("Choiced: " + k); //$NON-NLS-1$
     }
 
+    @Test
     public void testChoices() {
         int[] choices = ia.choices("Choice animals: ", Arrays.asList(animals)); //$NON-NLS-1$
         if (choices == null)
@@ -129,15 +144,6 @@ public class SWTInteractionTest {
             System.out.println("nothing choiced"); //$NON-NLS-1$
         else
             System.out.println("Choiced: " + Strings.join(", ", kv)); //$NON-NLS-1$ //$NON-NLS-2$
-    }
-
-    public static void main(String[] args) {
-        SWTInteractionTest test = new SWTInteractionTest();
-        test.testAlert();
-        // test.testConfirm();
-        // test.testPrompt();
-        // test.testChoice();
-        // test.testChoices();
     }
 
 }
