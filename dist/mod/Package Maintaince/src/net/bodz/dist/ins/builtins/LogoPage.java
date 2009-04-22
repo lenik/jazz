@@ -1,7 +1,7 @@
 package net.bodz.dist.ins.builtins;
 
 import net.bodz.dist.ins.ConfigPage;
-import net.bodz.dist.ins.IProject;
+import net.bodz.dist.ins.Project;
 import net.bodz.dist.ins.ISession;
 import net.bodz.dist.nls.PackNLS;
 import net.bodz.swt.controls.Picture;
@@ -34,7 +34,7 @@ public class LogoPage extends ConfigPage {
 
     @Override
     public String getPageTitle() {
-        IProject project = session.getProject();
+        Project project = session.getProject();
         String text = project.getText();
         String version = project.getVersion();
         return PackNLS.getString("LogoPage.title") + text + " " + version; //$NON-NLS-1$ //$NON-NLS-2$

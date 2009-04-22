@@ -2,7 +2,7 @@ package net.bodz.dist.ins.builtins;
 
 import net.bodz.dist.ins.ConfigPage;
 import net.bodz.dist.ins.ISession;
-import net.bodz.dist.ins.InstallException;
+import net.bodz.dist.ins.SessionJob;
 import net.bodz.dist.ins._Component;
 
 import org.eclipse.swt.widgets.Composite;
@@ -23,8 +23,8 @@ public abstract class ConfigComponent extends _Component {
             int style);
 
     @Override
-    public boolean install(ISession session) throws InstallException {
-        return false;
+    public SessionJob install(ISession session) {
+        return null;
     }
 
 }

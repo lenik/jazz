@@ -6,6 +6,7 @@ import net.bodz.dist.nls.PackNLS;
 import net.bodz.swt.layouts.BorderLayout;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.layout.RowLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -15,7 +16,7 @@ public class LicensePage extends ConfigPage {
 
     private ISession session;
 
-    private Text     text;
+    private Text    text;
 
     public LicensePage(ISession session, Composite parent, int style) {
         super(parent, style);
@@ -43,7 +44,7 @@ public class LicensePage extends ConfigPage {
     }
 
     @Override
-    public void enter(String prev) {
+    public void enter(String prev, int reason) {
         String license = session.getProject().getLicense();
         text.setText(license);
     }
@@ -51,6 +52,16 @@ public class LicensePage extends ConfigPage {
     @Override
     protected Object getInitialState() {
         return "cancel"; //$NON-NLS-1$
+    }
+
+    @Override
+    public ImageData getPageIcon() {
+        return super.getPageIcon();
+    }
+
+    @Override
+    public String getPageTitle() {
+        return "License";
     }
 
 }

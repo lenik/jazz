@@ -1,7 +1,6 @@
 package net.bodz.dist.ins;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -12,25 +11,26 @@ import net.bodz.bas.a.A_bas;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Composite;
 
-public abstract class _Component implements IComponent {
+public abstract class _Component implements Component {
 
-    private String           id;
-    private Object           registryData;
+    private String          id;
+    private Object          viewData;
+    private Object          registryData;
 
-    private ImageData        image;
-    private String           name;
-    private String           text;
-    private String           doc;
+    private ImageData       image;
+    private String          name;
+    private String          text;
+    private String          doc;
 
-    private boolean          enabled  = true;
-    private boolean          visible;
-    private boolean          readOnly = false;
-    private boolean          selection;
-    private int              size;
-    private int              moreSize;
+    private boolean         enabled  = true;
+    private boolean         visible;
+    private boolean         readOnly = false;
+    private boolean         selection;
+    private int             size;
+    private int             moreSize;
 
-    private List<IComponent> children;
-    private Set<IComponent>  dependancy;
+    private List<Component> children;
+    private Set<Component>  dependancy;
 
     public _Component(boolean visible, boolean defaultSelection) {
         this.name = getClass().getSimpleName();
@@ -135,35 +135,43 @@ public abstract class _Component implements IComponent {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Collection<IComponent> getChildren() {
+    public List<Component> getChildren() {
         if (children == null)
             return Collections.EMPTY_LIST;
         return children;
     }
 
-    public void add(IComponent child) {
+    public void add(Component child) {
         if (children == null)
-            children = new ArrayList<IComponent>();
+            children = new ArrayList<Component>();
         children.add(child);
     }
 
-    public void remove(IComponent child) {
+    public void remove(Component child) {
         if (children != null)
             children.remove(child);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public Collection<IComponent> getDependancy() {
+    public Set<Component> getDependancy() {
         if (dependancy == null)
-            return Collections.EMPTY_LIST;
+            return Collections.EMPTY_SET;
         return dependancy;
     }
 
-    public void addDependancy(IComponent dependant) {
+    public void addDependancy(Component dependant) {
         if (dependancy == null)
-            dependancy = new HashSet<IComponent>();
+            dependancy = new HashSet<Component>();
         dependancy.add(dependant);
+    }
+
+    public Object getViewData() {
+        return viewData;
+    }
+
+    public void setViewData(Object viewData) {
+        this.viewData = viewData;
     }
 
     @Override
@@ -187,11 +195,51 @@ public abstract class _Component implements IComponent {
     }
 
     @Override
-    public void pack(ISession session) throws InstallException {
+    public final SessionJob execute(int type, ISession session) {
+        SessionJob job;
+        switch (type) {
+        case PACK:
+            job = pack(session);
+            break;
+        case INSTALL:
+            job = install(session);
+            break;
+        case UNINSTALL:
+            job = uninstall(session);
+            break;
+        default:
+            throw new IllegalArgumentException("Invalid type: " + type);
+        }
+        List<Component> children = getChildren();
+        if (children == null || children.isEmpty())
+            return job;
+        else {
+            if (job == null)
+                job = new SessionJob(session) {
+                    @Override
+                    protected void _run() {
+                    }
+                };
+            Scheme scheme = session.getScheme();
+            for (Component child : children) {
+                if (!scheme.isIncluded(child))
+                    continue;
+                SessionJob childJob = child.execute(type, session);
+                if (childJob != null)
+                    job.addChildJob(childJob, 0);
+            }
+        }
+        return job;
     }
 
-    @Override
-    public void uninstall(ISession session) throws InstallException {
+    protected SessionJob pack(ISession session) {
+        return null;
+    }
+
+    protected abstract SessionJob install(ISession session);
+
+    protected SessionJob uninstall(ISession session) {
+        return null;
     }
 
 }

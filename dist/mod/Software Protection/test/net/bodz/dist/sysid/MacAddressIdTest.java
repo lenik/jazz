@@ -1,7 +1,6 @@
 package net.bodz.dist.sysid;
 
 import net.bodz.bas.lang.err.SystemException;
-import net.bodz.dist.sysid.MacAddressId;
 
 public class MacAddressIdTest {
 

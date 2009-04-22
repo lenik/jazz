@@ -2,8 +2,6 @@ package net.bodz.dist.seals;
 
 import static org.junit.Assert.assertEquals;
 
-import net.bodz.dist.seals.CodeSet;
-
 import org.junit.Test;
 
 public class CodeSetTest {

@@ -2,9 +2,11 @@ package net.bodz.dist.ins;
 
 import java.util.Map;
 
+import net.bodz.bas.types.TreeCallback;
+
 import org.eclipse.swt.graphics.ImageData;
 
-public interface IProject extends IComponent {
+public interface Project extends Component {
 
     /**
      * This should be a bigger logo image compared to {@link #getImage()}.
@@ -35,5 +37,29 @@ public interface IProject extends IComponent {
      * session.
      */
     Map<String, Object> getEnv();
+
+    /**
+     * @throws IllegalStateException
+     *             if loop detected
+     */
+    void refreshDependants();
+
+    /**
+     * @throws IllegalStateException
+     *             if loop detected
+     */
+    void findDependents(Component c, TreeCallback<Component> callback);
+
+    /**
+     * @throws IllegalStateException
+     *             if loop detected
+     */
+    void findDependentsBy(Component c, TreeCallback<Component> callback);
+
+    /**
+     * @throws IllegalStateException
+     *             if loop detected
+     */
+    void analyseDependency(TreeCallback<Component> missingCallback);
 
 }

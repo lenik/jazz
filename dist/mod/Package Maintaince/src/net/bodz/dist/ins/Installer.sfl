@@ -1,9 +1,0 @@
-<symlinks>
-<symlink name="logo/next" dest="license" />
-<symlink name="license/next" dest="type" />
-<symlink name="license/cancel" dest="canceled" />
-<symlink name="type/next" dest="components" />
-<symlink name="components/next" dest="progress" />
-<symlink name="progress/next" dest="done" />
-<symlink name="progress/cancel" dest="canceled" />
-</symlinks>

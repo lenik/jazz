@@ -2,12 +2,14 @@ package net.bodz.dist.ins;
 
 public interface Scheme {
 
+    String getName();
+
     String getCaption();
 
     String getDescription();
 
-    boolean isIncluded(IComponent component);
+    boolean isIncluded(Component component);
 
-    boolean isAutomatic();
+    boolean showConfig(Component component);
 
 }

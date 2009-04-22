@@ -14,7 +14,8 @@ public class License {
             String license = Files.readAll(licenseURL, "utf-8"); //$NON-NLS-1$
             return license;
         } catch (IOException e) {
-            throw new IllegalArgumentException(PackNLS.getString("License.badLicense") + name); //$NON-NLS-1$
+            throw new IllegalArgumentException(PackNLS
+                    .getString("License.badLicense") + name); //$NON-NLS-1$
         }
     }
 

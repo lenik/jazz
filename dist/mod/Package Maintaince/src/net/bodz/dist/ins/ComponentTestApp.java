@@ -1,32 +1,20 @@
 package net.bodz.dist.ins;
 
-import java.io.File;
-
-import net.bodz.bas.io.Files;
-import net.bodz.dist.ins.builtins.CLISession;
+import net.bodz.bas.a.DisplayName;
+import net.bodz.bas.a.Doc;
+import net.bodz.bas.a.RcsKeywords;
+import net.bodz.bas.a.Version;
+import net.bodz.bas.util.LogTerms;
 import net.bodz.dist.ins.builtins.SimpleProject;
-import net.bodz.dist.nls.PackNLS;
 
-public class ComponentTestApp {
-
-    static class CTAProject extends SimpleProject {
-
-        public CTAProject() {
-            super(ComponentTestApp.class);
-            setDoc(PackNLS.getString("ComponentTestApp.doc")); //$NON-NLS-1$
-        }
-
-    }
-
-    public CTAProject project;
-    public _Session   session;
+@DisplayName("Component Test Application")
+@Doc("A test program for z.dist components")
+@RcsKeywords(id = "$Id$")
+@Version( { 1, 2, 3 })
+public class ComponentTestApp extends ConsoleExecutor {
 
     public ComponentTestApp() {
-        project = new CTAProject();
-        session = new CLISession(project);
-
-        File tmpdir = Files.getTmpDir();
-        session.setBaseDir(TestProject.PROGRAMS, new File(tmpdir, "testprog")); //$NON-NLS-1$
+        super(new SimpleProject(ComponentTestApp.class), LogTerms.console);
     }
 
 }

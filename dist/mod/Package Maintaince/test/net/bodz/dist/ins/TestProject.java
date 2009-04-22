@@ -9,7 +9,6 @@ import net.bodz.bas.a.Doc;
 import net.bodz.bas.a.RcsKeywords;
 import net.bodz.bas.a.Version;
 import net.bodz.bas.io.FileFinder;
-import net.bodz.bas.io.PruneFileFilter;
 import net.bodz.bas.snm.SJProject;
 import net.bodz.dist.ins.builtins.DefaultSection;
 import net.bodz.dist.ins.builtins.FileCopy;
@@ -44,11 +43,11 @@ public class TestProject extends SimpleProject {
                 "A place to put test related files.");
         addBaseDir(testBase);
 
-        FileFilter filter = new NoSVN();
+        FileFilter filter = FileCopy.NoSVN;
 
         classesSection = new RequiredSection("classes", "Java Class Files");
         {
-            File binDir = SJProject.getBase(IComponent.class);
+            File binDir = SJProject.getOutputBase(Component.class);
             FileFinder binfiles = new FileFinder(filter, binDir);
             copyClassFiles = new FileCopy(PROGRAMS, binfiles);
             classesSection.add(copyClassFiles);
@@ -56,7 +55,7 @@ public class TestProject extends SimpleProject {
 
         sourceSection = new DefaultSection("src", "Source Files");
         {
-            File srcDir = SJProject.getSrcBase(IComponent.class);
+            File srcDir = SJProject.getSrcBase(Component.class);
             FileFinder srcfiles = new FileFinder(filter, srcDir);
             copySrcFiles = new FileCopy(PROGRAMS, srcfiles);
             sourceSection.add(copySrcFiles);
@@ -64,7 +63,7 @@ public class TestProject extends SimpleProject {
 
         testSection = new OptionalSection("test", "Test source and classes");
         {
-            File testBinDir = SJProject.getBase(TestProject.class);
+            File testBinDir = SJProject.getOutputBase(TestProject.class);
             File testSrcDir = SJProject.getSrcBase(TestProject.class);
 
             FileFinder testbin = new FileFinder(filter, testBinDir);
@@ -78,15 +77,6 @@ public class TestProject extends SimpleProject {
         add(classesSection);
         add(sourceSection);
         add(testSection);
-    }
-
-    class NoSVN implements PruneFileFilter {
-        @Override
-        public boolean accept(File pathname) {
-            if (".svn".equals(pathname.getName().toLowerCase()))
-                return false;
-            return true;
-        }
     }
 
 }
