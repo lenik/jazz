@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.bodz.bas.lang.RunnableThrows;
+
 /**
  * may throw exceptions in future:
  * <ul>
@@ -11,7 +13,7 @@ import java.util.Set;
  * <li>UserCanceledException
  * </ul>
  */
-public interface Interaction {
+public interface UserInterface {
 
     void alert(String title);
 
@@ -118,5 +120,22 @@ public interface Interaction {
      */
     int[] choices(String title, Object detail, List<?> candidates,
             int... initial);
+
+    int tryBlock(RunnableThrows<? extends Exception> runnable);
+
+    /**
+     * @param maxRetry
+     *            retry any times if {@link TryBlock#INFINITE}.
+     * @return
+     * @see TryBlock#DONE
+     * @see TryBlock#MAXRETRIED
+     * @see TryBlock#IGNORED
+     * @see TryBlock#CANCELED
+     */
+    int tryBlock(RunnableThrows<? extends Exception> runnable, int maxRetry);
+
+    // void showProgress(Runnable runnable);
+
+    void showBusy(Runnable runnable);
 
 }

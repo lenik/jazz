@@ -21,16 +21,12 @@ import net.bodz.bas.types.util.Strings;
 /**
  * @test {@link ConsoleInteractionTest}
  */
-public class ConsoleInteraction extends _Interaction {
+public class ConsoleUI extends _UserInterface {
 
     private LineReader  lineIn;
     private PrintStream out;
 
-    public ConsoleInteraction() {
-        this(System.in, System.out);
-    }
-
-    public ConsoleInteraction(InputStream in, PrintStream out) {
+    public ConsoleUI(InputStream in, PrintStream out) {
         if (in == null)
             throw new NullPointerException("in");
         if (out == null)
@@ -38,6 +34,13 @@ public class ConsoleInteraction extends _Interaction {
         InputStreamReader isr = new InputStreamReader(System.in);
         lineIn = new LineReader(isr);
         this.out = out;
+    }
+
+    public static final ConsoleUI stdout;
+    public static final ConsoleUI stderr;
+    static {
+        stdout = new ConsoleUI(System.in, System.out);
+        stderr = new ConsoleUI(System.in, System.err);
     }
 
     void print(String title, Object detail) {

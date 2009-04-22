@@ -1,9 +1,9 @@
     public Terminal $name() {
-        return filter(FATAL);
+        return filter($NAME);
     }
  
     public boolean show$Name() {
-        return level >= FATAL;
+        return level >= $NAME;
     }
     
     public void $name(Object o) {

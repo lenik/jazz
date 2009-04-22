@@ -2,8 +2,14 @@ package net.bodz.bas.types;
 
 import java.util.List;
 
-public interface TreeNode<T extends TreeNode<? extends T>> {
+public interface TreeNode<N extends TreeNode<? extends N>> {
 
-    List<? extends T> getChildren();
+    /**
+     * Returned list should not be modified, that is, it may be a copy of the
+     * actual children.
+     * 
+     * @return may <code>null</code> if no child.
+     */
+    List<? extends N> getChildren();
 
 }

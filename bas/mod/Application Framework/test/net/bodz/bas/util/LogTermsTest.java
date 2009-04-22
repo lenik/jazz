@@ -1,4 +1,4 @@
-package net.bodz.bas.log;
+package net.bodz.bas.util;
 
 import static org.junit.Assert.assertEquals;
 

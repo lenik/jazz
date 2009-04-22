@@ -7,30 +7,31 @@ import net.bodz.bas.lang.err.UnexpectedException;
  */
 public abstract class _TryBlock extends TryBlock {
 
-    protected final Interaction interaction;
+    protected final UserInterface UI;
 
-    public _TryBlock(Interaction interaction, int maxRetry,
-            boolean tryImmediately) {
+    public _TryBlock(UserInterface ui, int maxRetry, boolean tryImmediately) {
         super(maxRetry, false);
-        if (interaction == null)
+        if (ui == null)
             throw new NullPointerException("interaction");
-        this.interaction = interaction;
+        this.UI = ui;
         if (tryImmediately)
             _run();
     }
 
-    public _TryBlock(Interaction interaction) {
-        this(interaction, INFINITE, true);
+    public _TryBlock(UserInterface ui) {
+        this(ui, INFINITE, true);
     }
 
-    public _TryBlock(Interaction interaction, int maxRetry) {
-        this(interaction, maxRetry, true);
+    public _TryBlock(UserInterface ui, int maxRetry) {
+        this(ui, maxRetry, true);
     }
 
     @Override
     protected int ask(Exception e) {
-        int answer = interaction.ask(e.getMessage(), e, //
-                Proposals.retry, Proposals.ignore, Proposals.cancel);
+        int answer = UI.ask(e.getMessage(),
+                e, //
+                Proposals.retry, Proposals.ignore, Proposals.cancel,
+                Proposals.debug);
         switch (answer) {
         case 0:
             return RETRY;
@@ -38,6 +39,8 @@ public abstract class _TryBlock extends TryBlock {
             return IGNORE;
         case 2:
             return CANCEL;
+        case 3:
+            throw new RuntimeException("Debug");
         }
         throw new UnexpectedException();
     }
