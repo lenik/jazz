@@ -4,9 +4,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.bodz.bas.lang.RunnableThrows;
 import net.bodz.bas.types.IndexMap;
 
-public abstract class _Interaction implements Interaction {
+public abstract class _UserInterface implements UserInterface {
 
     @Override
     public void alert(String title) {
@@ -105,6 +106,28 @@ public abstract class _Interaction implements Interaction {
                 box(initial));
         return unbox(choices);
     }
+
+    public int tryBlock(final RunnableThrows<? extends Exception> runnable) {
+        return tryBlock(runnable, TryBlock.INFINITE);
+    }
+
+    @Override
+    public int tryBlock(final RunnableThrows<? extends Exception> runnable,
+            int maxRetry) {
+        return new _TryBlock(this, maxRetry, false) {
+            @Override
+            protected void body() throws Exception {
+                runnable.run();
+            }
+        }._run();
+    }
+
+    @Override
+    public void showBusy(Runnable runnable) {
+        runnable.run();
+    }
+
+    // Utilities Functions
 
     private Map<Integer, Object> list2map(List<?> list) {
         assert list != null;

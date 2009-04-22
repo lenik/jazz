@@ -11,22 +11,22 @@ import net.bodz.bas.types.util.PrefetchedIterator;
 /**
  * @test {@link TreePositionTest}
  */
-public class TreePosition<T extends TreeNode<? extends T>> implements
-        Iterable<T> {
+public class TreePosition<N extends TreeNode<? extends N>> implements
+        Iterable<N> {
 
-    static class Dim<T extends TreeNode<? extends T>> implements Cloneable {
+    static class Dim<N extends TreeNode<? extends N>> implements Cloneable {
 
-        public final T   node;
+        public final N   node;
         public final int index;
 
-        public Dim(T node, int index) {
+        public Dim(N node, int index) {
             this.node = node;
             this.index = index;
         }
 
         @Override
-        protected Dim<T> clone() {
-            return new Dim<T>(node, index);
+        protected Dim<N> clone() {
+            return new Dim<N>(node, index);
         }
 
         @Override
@@ -57,105 +57,112 @@ public class TreePosition<T extends TreeNode<? extends T>> implements
 
     }
 
-    private List<Dim<T>> list;
+    private List<Dim<N>> list;
 
     public TreePosition() {
         this(null, 0);
     }
 
-    static <T extends TreeNode<? extends T>> List<Dim<T>> toDims(T parent,
+    static <N extends TreeNode<? extends N>> List<Dim<N>> toDims(N parent,
             int... childIndices) throws IndexOutOfBoundsException {
-        List<Dim<T>> list = new ArrayList<Dim<T>>(childIndices.length);
+        List<Dim<N>> list = new ArrayList<Dim<N>>(childIndices.length);
         for (int childIndex : childIndices) {
-            Dim<T> dim = new Dim<T>(parent, childIndex);
+            Dim<N> dim = new Dim<N>(parent, childIndex);
             list.add(dim);
-            List<? extends T> children = parent.getChildren();
-            // throws IndexOutOfBoundsException
+            List<? extends N> children = parent.getChildren();
+            if (children == null)
+                throw new IllegalArgumentException(
+                        "Null children, can't go deeper");
             parent = children.get(childIndex);
         }
         return list;
     }
 
-    public TreePosition(T parent, int... childIndices) {
+    public TreePosition(N parent, int... childIndices) {
         this(toDims(parent, childIndices));
     }
 
-    public TreePosition(Dim<T> dim) {
-        list = new ArrayList<Dim<T>>(1);
+    public TreePosition(Dim<N> dim) {
+        list = new ArrayList<Dim<N>>(1);
         list.add(dim);
     }
 
-    public TreePosition(List<Dim<T>> dims) {
-        list = new ArrayList<Dim<T>>(dims);
+    public TreePosition(List<Dim<N>> dims) {
+        list = new ArrayList<Dim<N>>(dims);
     }
 
-    public TreePosition(TreePosition<T> ancestors, T parent,
+    public TreePosition(TreePosition<N> ancestors, N parent,
             int... childIndices) {
         this(ancestors, toDims(parent, childIndices));
     }
 
-    public TreePosition(TreePosition<T> ancestors, Dim<T> dim) {
-        list = new ArrayList<Dim<T>>(ancestors.list);
+    public TreePosition(TreePosition<N> ancestors, Dim<N> dim) {
+        list = new ArrayList<Dim<N>>(ancestors.list);
         list.add(dim);
     }
 
-    public TreePosition(TreePosition<T> ancestors, List<Dim<T>> dims) {
-        list = new ArrayList<Dim<T>>(ancestors.list);
+    public TreePosition(TreePosition<N> ancestors, List<Dim<N>> dims) {
+        list = new ArrayList<Dim<N>>(ancestors.list);
         list.addAll(dims);
     }
 
-    static class Iter<T extends TreeNode<? extends T>> extends
-            PrefetchedIterator<T> {
+    static class Iter<N extends TreeNode<? extends N>> extends
+            PrefetchedIterator<N> {
 
-        private final ArrayStack<Dim<T>>    stack;
-        private final Pred1<? super T>      pred;
-        private final List<TreePosition<T>> posBuf;
+        private final ArrayStack<Dim<N>>    stack;
+        private final Pred1<? super N>      pred;
+        private final List<TreePosition<N>> posBuf;
 
-        public Iter(List<Dim<T>> dims, Pred1<? super T> pred,
-                List<TreePosition<T>> posBuf) {
+        public Iter(List<Dim<N>> dims, Pred1<? super N> pred,
+                List<TreePosition<N>> posBuf) {
             if (dims == null)
                 throw new NullPointerException("dims");
-            this.stack = new ArrayStack<Dim<T>>();
-            for (Dim<T> dim : dims)
+            this.stack = new ArrayStack<Dim<N>>();
+            for (Dim<N> dim : dims)
                 stack.push(dim); // top -> dims[last]
             this.pred = pred;
             this.posBuf = posBuf;
         }
 
         @Override
-        protected T fetch() {
+        protected N fetch() {
             while (!stack.isEmpty()) {
-                Dim<T> top = stack.top();
-                T topNode = top.node;
+                Dim<N> top = stack.top();
+                N topNode = top.node;
                 int topIndex = top.index;
-                List<? extends T> children = topNode.getChildren();
+                List<? extends N> children = topNode.getChildren();
+                assert children != null : "term-node should not be iterated";
                 int size = children.size();
-                if (topIndex < size) {
-                    T current = children.get(topIndex);
-                    List<? extends T> cc = current.getChildren();
-                    if (cc != null && !cc.isEmpty()) {
-                        stack.push(new Dim<T>(current, 0));
+                if (topIndex < size) { // there is current or more siblings
+                    N current = children.get(topIndex);
+                    List<? extends N> cc = current.getChildren();
+                    if (cc != null && !cc.isEmpty()) { // current node have
+                        // children
+                        // recurse into children of the current node
+                        stack.push(new Dim<N>(current, 0));
                         continue;
                     }
                 }
-                while (topIndex < size) {
-                    T nextChild = children.get(top.index);
-                    if (pred != null)
-                        if (!pred.eval(nextChild)) {
-                            stack.top(new Dim<T>(topNode, ++topIndex));
-                            continue;
+                while (topIndex < size) { // iterate over the rest siblings
+                    N nextChild = children.get(top.index);
+                    if (pred != null && !pred.eval(nextChild)) {
+                        // test failed, move to next sibling
+                        stack.top(new Dim<N>(topNode, ++topIndex));
+                        continue;
+                    } else {
+                        if (posBuf != null) { // copy on demand
+                            TreePosition<N> posCopy = new TreePosition<N>(stack);
+                            posBuf.add(posCopy);
                         }
-                    if (posBuf != null) {
-                        TreePosition<T> posCopy = new TreePosition<T>(stack);
-                        posBuf.add(posCopy);
+                        // move to next sibling
+                        stack.top(new Dim<N>(topNode, ++topIndex));
+                        return nextChild;
                     }
-                    stack.top(new Dim<T>(topNode, ++topIndex));
-                    return nextChild;
                 }
                 stack.pop();
-                if (!stack.isEmpty()) {
+                if (!stack.isEmpty()) { // move to next parent
                     top = stack.top();
-                    stack.top(new Dim<T>(top.node, top.index + 1));
+                    stack.top(new Dim<N>(top.node, top.index + 1));
                 }
             }
             return end();
@@ -166,7 +173,7 @@ public class TreePosition<T extends TreeNode<? extends T>> implements
      * Iterate all nodes include or after the node at this position.
      */
     @Override
-    public Iterator<T> iterator() {
+    public Iterator<N> iterator() {
         return iterator(null, null);
     }
 
@@ -178,9 +185,9 @@ public class TreePosition<T extends TreeNode<? extends T>> implements
      *            save a copy of position of previous node just returned by
      *            {@link Iterator#next()}.
      */
-    public Iterator<T> iterator(Pred1<? super T> pred,
-            List<TreePosition<T>> posBuf) {
-        return new Iter<T>(list, pred, posBuf);
+    public Iterator<N> iterator(Pred1<? super N> pred,
+            List<TreePosition<N>> posBuf) {
+        return new Iter<N>(list, pred, posBuf);
     }
 
     @Override
