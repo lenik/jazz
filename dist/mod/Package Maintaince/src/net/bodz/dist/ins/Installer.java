@@ -1,30 +1,19 @@
 package net.bodz.dist.ins;
 
-import java.io.IOException;
-import java.net.URL;
-
 import net.bodz.bas.a.ClassInfo;
 import net.bodz.bas.a.DisplayName;
 import net.bodz.bas.a.RcsKeywords;
 import net.bodz.bas.a.Version;
 import net.bodz.bas.cli.a.Option;
-import net.bodz.bas.gui.GUIException;
-import net.bodz.bas.gui.a.PreferredSize;
-import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.err.IllegalUsageError;
-import net.bodz.bas.lang.err.ParseException;
-import net.bodz.dist.ins.builtins.GUISession;
+import net.bodz.bas.ui.UIException;
+import net.bodz.bas.ui.a.PreferredSize;
 import net.bodz.dist.nls.PackNLS;
 import net.bodz.swt.gui.BasicGUI;
-import net.bodz.swt.gui.pfl.PageComposite;
-import net.bodz.swt.gui.pfl.PageFactory;
-import net.bodz.swt.gui.pfl.SymlinkPageFlow;
-import net.bodz.swt.gui.pfl.WizardComposite;
 import net.bodz.swt.gui.pfl.WizardExitEvent;
 import net.bodz.swt.gui.pfl.WizardExitListener;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.SWTException;
 import org.eclipse.swt.widgets.Composite;
 
 @DisplayName("boDz Product Installer")
@@ -35,17 +24,17 @@ import org.eclipse.swt.widgets.Composite;
 public class Installer extends BasicGUI {
 
     @Option(alias = "c")
-    Class<?>                majorClass;
+    Class<?>         majorClass;
 
-    IProject                project;
-    GUISession              session;
+    private Project  project;
+    private ISession session;
 
-    private WizardComposite wizard;
+    // private InstallComposite installComposite;
 
     public Installer() {
     }
 
-    public Installer(IProject project) {
+    public Installer(Project project) {
         this.project = project;
     }
 
@@ -62,45 +51,18 @@ public class Installer extends BasicGUI {
     }
 
     @Override
-    protected void createInitialView(final Composite comp) throws GUIException,
-            SWTException {
-        wizard = new WizardComposite(comp, SWT.NONE, false);
-
-        wizard.definePage("progress", new PageFactory() { //$NON-NLS-1$
-            @Override
-            public PageComposite create(Composite parent) {
-                return new ProgressPage(session, parent, SWT.NONE);
-            }
-        });
-        wizard.definePage("done", new PageFactory() { //$NON-NLS-1$
-            @Override
-            public PageComposite create(Composite parent) {
-                return new DonePage(session, parent, SWT.NONE);
-            }
-        });
-        wizard.definePage("canceled", new PageFactory() { //$NON-NLS-1$
-            @Override
-            public PageComposite create(Composite parent) {
-                return new CanceledPage(session, parent, SWT.NONE);
-            }
-        });
-        wizard.addExitListener(new WizardExitListener() {
+    protected void createInitialView(final Composite parent) throws UIException {
+        ISession session = new Session(project, UI, L);
+        setSession(session);
+        InstallComposite installComposite = new InstallComposite(session,
+                parent, SWT.NONE);
+        installComposite.addExitListener(new WizardExitListener() {
             @Override
             public void wizardExit(WizardExitEvent e) {
-                comp.getShell().dispose();
+                shell.dispose();
+                System.out.println("Exit address: " + e.address);
             }
         });
-        SymlinkPageFlow pageFlow = wizard.getPageFlow();
-        URL sfl = Files.classData(getClass(), "sfl"); //$NON-NLS-1$
-        try {
-            String xml = Files.readAll(sfl, "utf-8"); //$NON-NLS-1$
-            pageFlow.loadXML(xml);
-        } catch (IOException e) {
-            throw new GUIException(e);
-        } catch (ParseException e) {
-            throw new GUIException(e);
-        }
-        pageFlow.set("logo"); //$NON-NLS-1$
     }
 
     @Override
@@ -116,8 +78,12 @@ public class Installer extends BasicGUI {
         return PackNLS.getString("Installer.copyright") + info.getVersionString(); //$NON-NLS-1$
     }
 
-    public static void main(String[] args) throws Throwable {
-        new Installer().run(args);
+    public ISession getSession() {
+        return session;
+    }
+
+    public void setSession(ISession session) {
+        this.session = session;
     }
 
 }

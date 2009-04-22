@@ -3,39 +3,32 @@ package net.bodz.dist.ins;
 import java.io.File;
 import java.io.IOException;
 
+import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.ResFolder;
 import net.bodz.bas.io.ResLink;
-import net.bodz.bas.log.LogTerm;
-import net.bodz.bas.rt.Interaction;
+import net.bodz.bas.ui.UserInterface;
+import net.bodz.bas.util.LogTerm;
 import net.bodz.dist.ins.util.Flags;
 
 public interface ISession {
 
-    IProject getProject();
+    Project getProject();
 
-    IComponent getComponent(String id);
+    Component getComponent(String id);
 
-    Interaction getInteraction();
+    Scheme getScheme();
 
-    /**
-     * install/uninstall process should check this flag frequently to cancel
-     * immediately.
-     */
-    boolean isCanceling();
+    void setScheme(String schemeName);
 
-    void cancel();
+    void setScheme(Scheme scheme);
 
-    void addCancelListener(CancelListener listener);
+    UserInterface getUserInterface();
 
-    void removeCancelListener(CancelListener listener);
+    LogTerm getLogger();
 
     int REBOOT = 1;
 
     Flags getFlags();
-
-    Progress getProgress();
-
-    LogTerm getLogger();
 
     Object get(String attr);
 
@@ -58,19 +51,30 @@ public interface ISession {
     /**
      * @param name
      *            name of the attachment to use
-     * @return {@link IAttachment} which can be opened later. After used the
+     * @return {@link Attachment} which can be opened later. After used the
      *         attachment, it can be left opened for next time use, all unclosed
      *         attachments are auto closed at the end of the session. The return
      *         value is never be <code>null</code>.
      * @throws IOException
      *             if the name is invalid or failed to get the attachment.
      */
-    IAttachment getAttachment(String name) throws IOException;
+    Attachment getAttachment(String name) throws IOException;
 
-    void pack() throws InstallException;
+    /**
+     * Close all attachments.
+     */
+    void closeAttachments();
 
-    void install() throws InstallException;
+    /**
+     * Load and scatter registry data into components.
+     */
+    void loadRegistry() throws SessionException;
 
-    void uninstall() throws InstallException;
+    /**
+     * Gather and persist registry data from components.
+     */
+    void saveRegistry() throws SessionException;
+
+    void dump(CharOut out);
 
 }

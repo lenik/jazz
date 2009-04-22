@@ -1,11 +1,14 @@
 package net.bodz.dist.ins;
 
-import java.util.Collection;
+import java.util.List;
+import java.util.Set;
+
+import net.bodz.bas.types.TreeNode;
 
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Composite;
 
-public interface IComponent {
+public interface Component extends TreeNode<Component> {
 
     /**
      * <code>null</code> id and duplicated id must be filled with a unique one,
@@ -51,13 +54,24 @@ public interface IComponent {
     /**
      * @return <code>null</code> if none.
      */
-    Collection<IComponent> getChildren();
+    @Override
+    List<? extends Component> getChildren();
 
     /**
      * @return component names this component required. <code>null</code> if
      *         none.
      */
-    Collection<IComponent> getDependancy();
+    Set<Component> getDependancy();
+
+    /**
+     * called by component tree viewer
+     */
+    Object getViewData();
+
+    /**
+     * called by component tree viewer
+     */
+    void setViewData(Object viewData);
 
     /**
      * called by packager, after {@link #pack(ISession)}, the data is then
@@ -75,19 +89,10 @@ public interface IComponent {
 
     ConfigPage createConfig(ISession session, Composite parent, int style);
 
-    /**
-     * This method won't be called if the component doesn't have data.
-     */
-    void pack(ISession session) throws InstallException;
+    int PACK      = 0;
+    int INSTALL   = 1;
+    int UNINSTALL = 2;
 
-    /**
-     * @param dumpedData
-     *            <code>null</code> if no data.
-     * @return <code>true</code> if component install succeeded, and should do
-     *         the corresponding uninstall.
-     */
-    boolean install(ISession session) throws InstallException;
-
-    void uninstall(ISession session) throws InstallException;
+    SessionJob execute(int type, ISession session);
 
 }

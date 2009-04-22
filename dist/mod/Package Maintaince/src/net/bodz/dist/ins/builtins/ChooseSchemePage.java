@@ -4,11 +4,13 @@ import net.bodz.dist.ins.ConfigPage;
 import net.bodz.dist.ins.ISession;
 import net.bodz.dist.ins.Scheme;
 import net.bodz.dist.nls.PackNLS;
+import net.bodz.swt.controls.util.Controls;
 import net.bodz.swt.gui.ValidateException;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -16,22 +18,24 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
 /**
- * @test ChooseSchemePageTest
+ * @test {@link ChooseSchemePageTest}
  */
 public class ChooseSchemePage extends ConfigPage {
 
     private ISession session;
+    private Scheme[] schemes;
 
     private int      selectedIndex = -1;
 
     public ChooseSchemePage(ISession session, Composite parent, int style) {
         super(parent, style);
         this.session = session;
+
         final GridLayout gridLayout = new GridLayout();
         gridLayout.numColumns = 2;
         setLayout(gridLayout);
 
-        Scheme[] schemes = session.getProject().getSchemes();
+        schemes = session.getProject().getSchemes();
         SelectionAdapter selector = new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -50,17 +54,33 @@ public class ChooseSchemePage extends ConfigPage {
             schemeButton.setText(caption);
             schemeButton.setData(i);
             schemeButton.addSelectionListener(selector);
+            Controls.setFontStyle(schemeButton, SWT.BOLD);
+            Controls.setFontHeight(schemeButton, 12);
 
             final Label label = new Label(this, SWT.NONE);
             label.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true));
             label.setText(description);
+            Controls.setFontHeight(label, 12);
         }
+    }
+
+    @Override
+    public ImageData getPageIcon() {
+        return super.getPageIcon();
+    }
+
+    @Override
+    public String getPageTitle() {
+        return "Choose Install Type: ";
     }
 
     @Override
     public void validate() throws ValidateException {
         if (selectedIndex == -1)
-            throw new ValidateException(PackNLS.getString("ChooseSchemePage.notSelected")); //$NON-NLS-1$
+            throw new ValidateException(PackNLS
+                    .getString("ChooseSchemePage.notSelected")); //$NON-NLS-1$
+        Scheme scheme = schemes[selectedIndex];
+        session.setScheme(scheme);
     }
 
     public int getSelectedIndex() {

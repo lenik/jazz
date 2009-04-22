@@ -1,29 +1,27 @@
 #!/bin/bash
 
-JAVA="${JAVA=/opt/jre/bin/java}"
-
-if [ ! -x "$JAVA" ]; then
+function findJava() { #
+    _JAVA="${_JAVA=java}"
+    JAVA=
+    for c in \
+            "${JAVA=/opt/jre/bin/$_JAVA}" \
+            "$JAVA_HOME/jre/bin/$_JAVA" \
+            "$JAVA_HOME/bin/$_JAVA" \
+            ; do
+        if [ -x "$c" ]; then
+            JAVA="$c"
+            return 0
+        fi
+    done
+    if which "$_JAVA" >/dev/null; then
+        JAVA="$_JAVA"
+        return 0
+    fi
     echo "No Java Runtime Environment found, please reinstall JRE (For Lenix)"
     exit 1
-fi
+}
 
-if [ $# -lt 2 ]; then
-    echo "Usage: "
-    echo "    java.sh <jarfile> <main-class> arguments"
-    exit 1
-fi
-
-jarFile="$1"
-mainClass="$2"
-bootClass=
-shift 2
-
-if [ -z "$LIBPATH" ]; then
-    LIBPATH=/lib:./lib
-fi
-LIBS=$jarFile
-
-function loadLibraries() {
+function loadLibraries() { #
     local k v
     if [ -z "$_lib_loaded" ]; then
         if [ -f /lib/libraries.ini ]; then
@@ -35,8 +33,8 @@ function loadLibraries() {
     fi
 }
 
-function addLibrary() {
-    local ext path var
+function addLibrary() { # (libfile | libname)
+    local ext path ref val
     for f in "$@"; do
         ext="${f##*.}"
         if [ -f "$f" ]; then
@@ -50,12 +48,13 @@ function addLibrary() {
                 done
             else
                 loadLibraries
-                var="lib_$f"
-                if [ -n "${!var}" ]; then
-                    pvar="libadded_$f"
-                    if [ -z "${!pvar}" ]; then
-                        addLibrary "${!var}"
-                        eval "$pvar=1"
+                ref="lib_$f"
+                val="${!ref}"
+                if [ -n "$val" ]; then
+                    added="libadded_$f"
+                    if [ -z "${!added}" ]; then
+                        addLibrary "$val"
+                        eval "$added=1"
                     fi
                 fi
                 return
@@ -68,7 +67,7 @@ function addLibrary() {
     done
 }
 
-function collectClassPath() {
+function collectClassPath() { # (PI-FILE | jar | dir)
     local PI
     local k nk v
     if [ -f "$1.PI" ]; then
@@ -77,6 +76,7 @@ function collectClassPath() {
         PI=/tmp/PACKINFO-$$.PI
         unzip -p "$1" META-INF/PACKINFO.PI >$PI
     elif [ -f "$1/META-INF/PACKINFO.PI" ]; then
+        # assert [ -d $1 ]
         PI="$1/META-INF/PACKINFO.PI"
     else
         return
@@ -103,9 +103,33 @@ function collectClassPath() {
     done <"$PI"
 }
 
-collectClassPath "$jarFile"
+function loadManifest() { # (PI-FILE | jar | dir)
+}
 
-# echo "LIBS=$LIBS"
-export CLASSPATH="$LIBS"
+function main() {
+    if [ $# -lt 2 ]; then
+        echo "Usage: "
+        echo "    xj PROGRAM.xj [ARGS]"
+        exit 1
+    fi
+    
+    findJava
+    
+    xjFile="$1"
+    shift
+    
+    mainClass=
+    bootClass=
+    loadManifest "$xjFile"
+    
+    if [ -z "$LIBPATH" ]; then
+        LIBPATH=/lib:./lib
+    fi
+    LIBS=$xjFile
 
-"$JAVA" $JAVA_OPTS $bootClass $mainClass $*
+    collectClassPath "$xjFile"
+
+    # echo "LIBS=$LIBS"
+    export CLASSPATH="$LIBS"
+
+    "$JAVA" $JAVA_OPTS $bootClass $mainClass $*

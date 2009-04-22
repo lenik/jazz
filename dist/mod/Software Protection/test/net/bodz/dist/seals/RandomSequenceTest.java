@@ -6,7 +6,6 @@ import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
 import net.bodz.bas.lang.err.NotImplementedException;
-import net.bodz.dist.seals.RandomSequence;
 
 import org.junit.Test;
 

@@ -1,21 +1,34 @@
 package net.bodz.dist.ins;
 
-import net.bodz.bas.a.Doc;
-import net.bodz.bas.a.RcsKeywords;
-import net.bodz.bas.a.Version;
+import org.junit.Test;
 
-@Doc("TestApp")
-// @Icon("icon.gif")
-@RcsKeywords(id = "$Id$")
-@Version( { 5, 6, 7, 8, })
 public class InstallerTest {
 
-    public static void main(String[] args) throws Throwable {
-        String[] installerArgs = {
-        //
-                "-c", InstallerTest.class.getName(), //
+    @Test
+    public void testFromDir() throws Throwable {
+        TestProject project = new TestProject();
+        Installer installer = new Installer(project) {
+            @Override
+            public void setSession(ISession session) {
+                super.setSession(session);
+                session.setResFolder(TestConfig.outDir);
+                TestConfig.setTestBaseDir(session);
+            }
         };
-        Installer.main(installerArgs);
+        installer.run();
+    }
+
+    public void testFromJar() throws Throwable {
+        TestProject project = new TestProject();
+        Installer installer = new Installer(project) {
+            @Override
+            public void setSession(ISession session) {
+                super.setSession(session);
+                session.setResFolder(TestConfig.outJar);
+                TestConfig.setTestBaseDir(session);
+            }
+        };
+        installer.run();
     }
 
 }

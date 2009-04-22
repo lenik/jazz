@@ -1,8 +1,8 @@
 package net.bodz.dist.ins.builtins;
 
-import net.bodz.dist.ins.IComponent;
+import net.bodz.dist.ins.Component;
 import net.bodz.dist.ins.ISession;
-import net.bodz.dist.ins.InstallException;
+import net.bodz.dist.ins.SessionJob;
 import net.bodz.dist.ins._Component;
 
 import org.eclipse.swt.graphics.ImageData;
@@ -13,7 +13,7 @@ public class Section extends _Component {
 
     public Section(boolean visible, boolean readOnly, boolean selection,
             String name, ImageData image, String text, String doc,
-            IComponent... children) {
+            Component... children) {
         super(true, selection);
         if (image == null)
             image = sectionImage;
@@ -28,13 +28,13 @@ public class Section extends _Component {
         setName(name);
         setText(text);
         setDoc(doc);
-        for (IComponent child : children)
+        for (Component child : children)
             add(child);
     }
 
     @Override
-    public boolean install(ISession session) throws InstallException {
-        return false;
+    public SessionJob install(ISession session) {
+        return null;
     }
 
 }

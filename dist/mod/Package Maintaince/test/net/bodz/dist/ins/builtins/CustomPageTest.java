@@ -1,19 +1,24 @@
 package net.bodz.dist.ins.builtins;
 
-import java.io.IOException;
-
+import net.bodz.bas.io.CharOuts;
+import net.bodz.bas.ui.ConsoleUI;
+import net.bodz.bas.util.LogTerms;
 import net.bodz.dist.ins.ISession;
+import net.bodz.dist.ins.Session;
 import net.bodz.dist.ins.TestProject;
 import net.bodz.swt.gui.pfl.PageComposite;
 import net.bodz.swt.gui.pfl.PageTestApp;
 
 import org.eclipse.swt.widgets.Composite;
+import org.junit.Test;
 
 public class CustomPageTest {
 
-    public static void main(String[] args) throws IOException {
+    @Test
+    public void test() throws Exception {
         TestProject project = new TestProject();
-        final ISession session = new GUISession(project, null);
+        final ISession session = new Session(project, ConsoleUI.stdout,
+                LogTerms.console);
         PageTestApp app = new PageTestApp() {
             @Override
             protected PageComposite createPage(Composite parent, int style) {
@@ -21,6 +26,7 @@ public class CustomPageTest {
             }
         };
         app.run();
+        session.dump(CharOuts.stdout);
     }
 
 }

@@ -46,6 +46,12 @@ public class SimpleProject extends _Project {
     static class CustomConfig extends ConfigComponent {
 
         @Override
+        public boolean hasConfig() {
+            // XXX - if scheme==custom return false..
+            return super.hasConfig();
+        }
+
+        @Override
         public ConfigPage createConfig(ISession session, Composite parent,
                 int style) {
             return new CustomPage(session, parent, style);
