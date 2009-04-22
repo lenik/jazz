@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.a.A_bas;
+import net.bodz.bas.types.util.Objects;
 import net.bodz.swt.gui.ValidateException;
 import net.bodz.swt.gui.a.A_gui;
 
@@ -15,7 +16,7 @@ import org.eclipse.swt.widgets.Composite;
 public class PageComposite extends Composite implements Page {
 
     private Object                        exitState = getInitialState();
-    private List<PageStateChangeListener> stateChangeListeners;
+    private List<PageStateChangeListener> pageStateChangeListeners;
 
     /**
      * The exit state is initialized to <code>null</code> in default
@@ -79,33 +80,35 @@ public class PageComposite extends Composite implements Page {
     /**
      * the state is changed before invoke any listener.
      */
-    protected void setExitState(Object state) {
-        if (state == exitState)
+    protected void setExitState(Object newExitState) {
+        if (Objects.equals(exitState, newExitState))
             return;
-        Object lastState = exitState;
-        exitState = state;
-        if (stateChangeListeners != null) {
-            PageStateChangeEvent e = new PageStateChangeEvent(this, lastState,
-                    state);
-            for (PageStateChangeListener l : stateChangeListeners)
-                l.pageStateChange(e);
-        }
+        exitState = newExitState;
+        firePageStateChange();
     }
 
     @Override
     public synchronized void addPageStateChangeListener(
             PageStateChangeListener listener) {
-        if (stateChangeListeners == null)
-            stateChangeListeners = new ArrayList<PageStateChangeListener>(1);
-        stateChangeListeners.add(listener);
+        if (pageStateChangeListeners == null)
+            pageStateChangeListeners = new ArrayList<PageStateChangeListener>(1);
+        pageStateChangeListeners.add(listener);
     }
 
     @Override
     public synchronized void removePageStateChangeListener(
             PageStateChangeListener listener) {
-        if (stateChangeListeners == null)
+        if (pageStateChangeListeners == null)
             return;
-        stateChangeListeners.remove(listener);
+        pageStateChangeListeners.remove(listener);
+    }
+
+    protected final void firePageStateChange() {
+        if (pageStateChangeListeners != null) {
+            PageStateChangeEvent event = new PageStateChangeEvent(this);
+            for (PageStateChangeListener listener : pageStateChangeListeners)
+                listener.pageStateChange(event);
+        }
     }
 
     protected class SetState extends SelectionAdapter {

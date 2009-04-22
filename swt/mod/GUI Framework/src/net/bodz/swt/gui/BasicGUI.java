@@ -3,7 +3,9 @@ package net.bodz.swt.gui;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import net.bodz.bas.a.BootInfo;
 import net.bodz.bas.a.ClassInfo;
@@ -13,6 +15,7 @@ import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.types.util.Ns;
 import net.bodz.bas.ui.UIException;
+import net.bodz.bas.ui.UserInterface;
 import net.bodz.bas.ui.a.PreferredSize;
 import net.bodz.swt.controls.helper.DynamicControl;
 import net.bodz.swt.controls.util.Controls;
@@ -61,6 +64,8 @@ public class BasicGUI extends BasicCLI {
     private DynamicControl         viewArea;
     private Map<Object, Composite> views;
 
+    protected UserInterface        UI          = new DialogUI();
+
     @Override
     public synchronized void run(String... args) throws Throwable {
         try {
@@ -68,7 +73,7 @@ public class BasicGUI extends BasicCLI {
         } catch (net.bodz.bas.lang.Control c) {
             throw c;
         } catch (Throwable t) {
-            DialogInteraction iact = new DialogInteraction(shell);
+            DialogUI iact = new DialogUI(shell);
             iact.alert(t.getMessage(), t);
             throw t;
         }
@@ -80,6 +85,12 @@ public class BasicGUI extends BasicCLI {
         super._exit();
     }
 
+    private static Set<String> ignoredThreads;
+    static {
+        ignoredThreads = new HashSet<String>();
+        ignoredThreads.add("ReaderThread"); // JUnit thread
+    }
+
     protected void checkHangOns() {
         int activeThreads = Thread.activeCount();
         Thread[] threads = new Thread[activeThreads];
@@ -87,8 +98,12 @@ public class BasicGUI extends BasicCLI {
         int fg = 0;
         for (int i = 0; i < n; i++) {
             Thread t = threads[i];
-            if (!t.isDaemon())
-                fg++;
+            if (t.isDaemon())
+                continue;
+            String displayName = t.getName();
+            if (ignoredThreads.contains(displayName))
+                continue;
+            fg++;
         }
         if (fg >= 2) {
             ThreadsMonitor monitor = new ThreadsMonitor(null, SWT.NONE);
@@ -105,6 +120,8 @@ public class BasicGUI extends BasicCLI {
         final Display display = Display.getDefault();
 
         shell = createShell();// throws GUIExcaption
+        UI = new DialogUI(shell);
+
         shell.open();
         shell.layout();
 
@@ -244,17 +261,17 @@ public class BasicGUI extends BasicCLI {
         return expandBar;
     }
 
-    protected void createInitialView(Composite comp) throws UIException,
+    protected void createInitialView(Composite parent) throws UIException,
             SWTException {
-        comp.setLayout(new FillLayout());
-        Label welcomeLabel = new Label(comp, SWT.NONE);
+        parent.setLayout(new FillLayout());
+        Label welcomeLabel = new Label(parent, SWT.NONE);
         welcomeLabel.setText(GUINLS.getString("BasicGUI.welcome")); //$NON-NLS-1$
     }
 
-    protected void createView(Composite comp, Object key) throws SWTException,
-            UIException {
+    protected void createView(Composite parent, Object key)
+            throws SWTException, UIException {
         if (key == null) {
-            createInitialView(comp);
+            createInitialView(parent);
             return;
         }
         throw new NotImplementedException("key: " + key); //$NON-NLS-1$

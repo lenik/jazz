@@ -16,7 +16,5 @@
 	<classpathentry kind="src" output="mod/Presentation/bin" path="mod/Presentation/src"/>
 	<classpathentry kind="src" output="mod/Presentation/test.bin" path="mod/Presentation/test"/>
 	<classpathentry kind="var" path="JAVA_LIB/net.bodz.icons.jar"/>
-	<classpathentry kind="lib" path="swt-grouplayout.jar"/>
-	<classpathentry kind="lib" path="baseline.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

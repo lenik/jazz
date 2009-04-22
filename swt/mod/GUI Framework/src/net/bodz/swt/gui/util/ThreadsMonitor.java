@@ -5,10 +5,10 @@ import java.util.Map;
 
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.err.UnexpectedException;
-import net.bodz.bas.ui.Interaction;
+import net.bodz.bas.ui.UserInterface;
 import net.bodz.swt.controls.helper.EmptyComposite;
 import net.bodz.swt.dialogs.SimpleDialog;
-import net.bodz.swt.gui.DialogInteraction;
+import net.bodz.swt.gui.DialogUI;
 import net.bodz.swt.util.SWTResources;
 
 import org.eclipse.swt.SWT;
@@ -34,12 +34,12 @@ public class ThreadsMonitor extends SimpleDialog {
 
     private List              threadList;
 
-    private Interaction       iact;
+    private UserInterface     UI;
 
     public ThreadsMonitor(Shell parent, int style) {
         super(parent, style, "Threads Monitor");
         threadMap = new HashMap<Long, Thread>();
-        iact = new DialogInteraction(parent);
+        UI = new DialogUI(parent);
     }
 
     @Override
@@ -188,7 +188,7 @@ public class ThreadsMonitor extends SimpleDialog {
         Thread thread = getSelection();
         if (thread == null)
             return;
-        if (iact.confirm("Are you really want to kill " + thread + "?")) {
+        if (UI.confirm("Are you really want to kill " + thread + "?")) {
             thread.interrupt();
             try {
                 Thread.sleep(100);
@@ -206,7 +206,7 @@ public class ThreadsMonitor extends SimpleDialog {
         Thread thread = getSelection();
         StackTraceElement[] stackTrace = thread.getStackTrace();
         // StringBuffer buf = new StringBuffer(stackTrace.length * 50);
-        iact.alert("Stack trace of " + thread, stackTrace);
+        UI.alert("Stack trace of " + thread, stackTrace);
     }
 
     void sendMail() {
