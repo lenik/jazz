@@ -17,7 +17,7 @@ import org.junit.Test;
 
 public class DialogInteractionTest {
 
-    DialogInteraction ia;
+    DialogUI ia;
     Person            person;
     {
         person = new Person("Lily", 12, true); //$NON-NLS-1$
@@ -29,7 +29,7 @@ public class DialogInteractionTest {
     Person            lily2 = person;
 
     public DialogInteractionTest() {
-        ia = new DialogInteraction(new Shell());
+        ia = new DialogUI(new Shell());
     }
 
     @Test

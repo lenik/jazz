@@ -5,7 +5,7 @@ import net.bodz.bas.ui.a.PreferredSize;
 import net.bodz.swt.gui.BasicGUI;
 import net.bodz.swt.gui.GUIVar;
 import net.bodz.swt.gui.GUIVars;
-import net.bodz.swt.gui.DialogInteraction;
+import net.bodz.swt.gui.DialogUI;
 import net.bodz.swt.gui.styles.grid.SWTGridStrategy;
 
 import org.eclipse.swt.SWT;
@@ -31,7 +31,7 @@ public class TestMain extends BasicGUI {
         try {
             main.run();
         } catch (Throwable e) {
-            new DialogInteraction().alert("Error", e); //$NON-NLS-1$
+            new DialogUI().alert("Error", e); //$NON-NLS-1$
         }
     }
 

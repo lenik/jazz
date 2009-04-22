@@ -31,14 +31,12 @@
     <target name=":bin.jar">
         <mkdir dir="lib" />
         <jar destfile="lib/net.bodz.swt.jar" update="true">
-            <fileset>
-                <fileset dir="mod/Bundled Modules/bin" />
-                <fileset dir="mod/Common Controls/bin" />
-                <fileset dir="mod/Commons/bin" />
-                <fileset dir="mod/GUI Framework/bin" />
-                <fileset dir="mod/Geom Shapes/bin" />
-                <fileset dir="mod/Presentation/bin" />
-            </fileset>
+            <fileset dir="mod/Bundled Modules/bin" />
+            <fileset dir="mod/Common Controls/bin" />
+            <fileset dir="mod/Commons/bin" />
+            <fileset dir="mod/GUI Framework/bin" />
+            <fileset dir="mod/Geom Shapes/bin" />
+            <fileset dir="mod/Presentation/bin" />
         </jar>
     </target>
 

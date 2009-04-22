@@ -6,7 +6,7 @@ import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.ref.Ref;
 import net.bodz.swt.controls.helper.EmptyComposite;
 import net.bodz.swt.controls.util.Controls;
-import net.bodz.swt.gui.DialogInteraction;
+import net.bodz.swt.gui.DialogUI;
 import net.bodz.swt.nls.ControlsNLS;
 import net.bodz.swt.util.SWTResources;
 
@@ -44,7 +44,7 @@ public abstract class SimpleDialog extends Dialog implements Ref<Object> {
     private Composite         userBar;
     private Composite         basicBar;
 
-    private DialogInteraction interact;
+    private DialogUI interact;
 
     private Object            result;
     private boolean           canceled;
@@ -62,7 +62,7 @@ public abstract class SimpleDialog extends Dialog implements Ref<Object> {
             setText(title);
         icon = SWTResources.getImageRes("/icons/full/obj16/read_obj.gif"); //$NON-NLS-1$
         image = icon;
-        interact = new DialogInteraction(parent, SWT.APPLICATION_MODAL);
+        interact = new DialogUI(parent, SWT.APPLICATION_MODAL);
     }
 
     /**

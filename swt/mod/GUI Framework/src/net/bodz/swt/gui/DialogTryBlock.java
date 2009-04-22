@@ -1,8 +1,8 @@
 package net.bodz.swt.gui;
 
 import net.bodz.bas.lang.err.UnexpectedException;
-import net.bodz.bas.ui.Interaction;
 import net.bodz.bas.ui.Proposals;
+import net.bodz.bas.ui.UserInterface;
 import net.bodz.bas.ui._TryBlock;
 
 /**
@@ -10,21 +10,21 @@ import net.bodz.bas.ui._TryBlock;
  */
 public abstract class DialogTryBlock extends _TryBlock {
 
-    public DialogTryBlock(Interaction interaction, int maxRetry,
+    public DialogTryBlock(UserInterface userInterface, int maxRetry,
             boolean tryImmediately) {
-        super(interaction, maxRetry, tryImmediately);
+        super(userInterface, maxRetry, tryImmediately);
     }
 
-    public DialogTryBlock(Interaction interaction, int maxRetry) {
-        super(interaction, maxRetry);
+    public DialogTryBlock(UserInterface userInterface, int maxRetry) {
+        super(userInterface, maxRetry);
     }
 
-    public DialogTryBlock(Interaction interaction) {
-        super(interaction);
+    public DialogTryBlock(UserInterface userInterface) {
+        super(userInterface);
     }
 
     public DialogTryBlock(int maxRetry, boolean tryImmediately) {
-        this(new DialogInteraction(), maxRetry, tryImmediately);
+        this(new DialogUI(), maxRetry, tryImmediately);
     }
 
     public DialogTryBlock(boolean tryImmediately) {
@@ -41,8 +41,10 @@ public abstract class DialogTryBlock extends _TryBlock {
 
     @Override
     protected int ask(Exception e) {
-        int answer = interaction.ask(e.getMessage(), e, //
-                Proposals.retry, Proposals.ignore, Proposals.cancel);
+        int answer = UI.ask(e.getMessage(),
+                e, //
+                Proposals.retry, Proposals.ignore, Proposals.cancel,
+                Proposals.debug);
         switch (answer) {
         case 0:
             return RETRY;
@@ -50,6 +52,8 @@ public abstract class DialogTryBlock extends _TryBlock {
             return IGNORE;
         case 2:
             return CANCEL;
+        case 3:
+            throw new RuntimeException("Debug");
         }
         throw new UnexpectedException();
     }

@@ -6,10 +6,10 @@ import java.util.List;
 import net.bodz.bas.types.HashTextMap;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.util.Strings;
-import net.bodz.bas.ui.Interaction;
+import net.bodz.bas.ui.UserInterface;
 import net.bodz.swt.adapters.ControlAdapters;
 import net.bodz.swt.controls.helper.StackComposite;
-import net.bodz.swt.gui.DialogInteraction;
+import net.bodz.swt.gui.DialogUI;
 import net.bodz.swt.gui.ValidateException;
 import net.bodz.swt.nls.GUINLS;
 import net.bodz.swt.util.SWTResources;
@@ -57,7 +57,7 @@ public class WizardComposite extends Composite {
     private Button               nextButton;
     private Button               finishButton;
 
-    private Interaction          iact;
+    private final UserInterface  UI;
 
     public WizardComposite(Composite parent, int style) {
         this(parent, style, false);
@@ -88,7 +88,7 @@ public class WizardComposite extends Composite {
                 refreshPage();
             }
         });
-        this.iact = new DialogInteraction(getShell());
+        this.UI = new DialogUI(getShell());
         createContents();
     }
 
@@ -275,9 +275,7 @@ public class WizardComposite extends Composite {
      */
     protected void exceptionHandler(ValidateException e) {
         if (!e.isSilent())
-            iact
-                    .alert(GUINLS
-                            .getString("WizardComposite.validateException"), e); //$NON-NLS-1$
+            UI.alert(GUINLS.getString("WizardComposite.validateException"), e); //$NON-NLS-1$
         Control control = e.getControl();
         if (control != null) {
             control.setFocus();

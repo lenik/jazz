@@ -21,7 +21,7 @@ import net.bodz.bas.types.util.Objects;
 import net.bodz.bas.types.util.Strings;
 import net.bodz.bas.ui.IProposal;
 import net.bodz.bas.ui.RenderException;
-import net.bodz.bas.ui._Interaction;
+import net.bodz.bas.ui._UserInterface;
 import net.bodz.swt.controls.helper.StackComposite;
 import net.bodz.swt.dialogs.SimpleDialog;
 import net.bodz.swt.gui.styles.base.SWTStrategy;
@@ -49,7 +49,7 @@ import org.eclipse.swt.widgets.Text;
 /**
  * @test {@link DialogInteractionTest}
  */
-public class DialogInteraction extends _Interaction {
+public class DialogUI extends _UserInterface {
 
     static SWTGridStrategy strategy = new SWTGridStrategy();
 
@@ -64,7 +64,7 @@ public class DialogInteraction extends _Interaction {
      * @see SWT#APPLICATION_MODAL
      * @see SWT#SYSTEM_MODAL
      */
-    public DialogInteraction(Shell parent, int style) {
+    public DialogUI(Shell parent, int style) {
         this.parent = parent;
         this.style = style;
     }
@@ -74,15 +74,15 @@ public class DialogInteraction extends _Interaction {
      * @see SWT#APPLICATION_MODAL
      * @see SWT#SYSTEM_MODAL
      */
-    public DialogInteraction(int style) {
+    public DialogUI(int style) {
         this(new Shell(), style);
     }
 
-    public DialogInteraction(Shell parent) {
+    public DialogUI(Shell parent) {
         this(parent, SWT.NONE);
     }
 
-    public DialogInteraction() {
+    public DialogUI() {
         this(SWT.NONE);
     }
 
@@ -173,7 +173,7 @@ public class DialogInteraction extends _Interaction {
 
         @Override
         protected void addEffects() {
-            DialogInteraction.this.addEffects(getShell());
+            DialogUI.this.addEffects(getShell());
         }
 
         public SWTRenderContext getRenderContext() {

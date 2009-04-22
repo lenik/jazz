@@ -9,8 +9,8 @@ import org.eclipse.swt.widgets.Control;
 
 public class SWTRenderContext {
 
-    public DialogInteraction interact(Control active) {
-        return new DialogInteraction(active.getShell());
+    public DialogUI interact(Control active) {
+        return new DialogUI(active.getShell());
     }
 
     public void addEffects(Control control, GUIVar<?> var)

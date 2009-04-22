@@ -11,7 +11,7 @@ import net.bodz.swt.controls.helper.FixSizeComposite;
 import net.bodz.swt.controls.util.Controls;
 import net.bodz.swt.gui.GUIVar;
 import net.bodz.swt.gui.IAction;
-import net.bodz.swt.gui.DialogInteraction;
+import net.bodz.swt.gui.DialogUI;
 import net.bodz.swt.gui.SWTRenderContext;
 import net.bodz.swt.gui.SWTRenderer;
 import net.bodz.swt.gui._Action;
@@ -174,7 +174,7 @@ public class R_Throwable extends SWTRenderer {
                         DesktopApps.openMailer(mailAddress, mailSubject,
                                 errorText);
                     } catch (IOException e) {
-                        DialogInteraction iact = rc.interact(parent);
+                        DialogUI iact = rc.interact(parent);
                         iact.alert(GUINLS.getString("R_Throwable.cantSend"), e); //$NON-NLS-1$
                     }
                 }
