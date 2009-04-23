@@ -89,6 +89,8 @@ public interface Component extends TreeNode<Component> {
 
     ConfigPage createConfig(ISession session, Composite parent, int style);
 
+    double getProgressScaleToParent();
+
     int PACK      = 0;
     int INSTALL   = 1;
     int UNINSTALL = 2;

@@ -10,8 +10,7 @@ import net.bodz.geom.shape.AbstractShape2f;
 import net.bodz.geom.shape.Shape2f;
 import net.bodz.math.mat.Vector2f;
 
-public abstract class AbstractCircle2f extends AbstractShape2f implements
-        Circle2f, Serializable {
+public abstract class AbstractCircle2f extends AbstractShape2f implements Circle2f, Serializable {
 
     protected final class PtCenter extends AbstractPoint2f {
 
@@ -73,14 +72,13 @@ public abstract class AbstractCircle2f extends AbstractShape2f implements
         float centerX = centerX();
         float centerY = centerY();
         float radius = radius();
-        return new Rectangle2f.StaticLeft(centerX - radius, centerY - radius,
-                centerX + radius, centerY + radius);
+        return new Rectangle2f.StaticLeft(centerX - radius, centerY - radius, centerX + radius,
+                centerY + radius);
     }
 
     @Override
     public String toString() {
-        return String.format("<Circle x='%f' y='%f' r='%f' />", centerX(),
-                centerY(), radius());
+        return String.format("<Circle x='%f' y='%f' r='%f' />", centerX(), centerY(), radius());
     }
 
     // -o Pick

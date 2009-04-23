@@ -25,8 +25,8 @@ import org.eclipse.swt.widgets.Control;
 public class R_Boolean extends SWTRenderer {
 
     @Override
-    public Control render(final SWTRenderContext rc, final GUIVar<?> var,
-            Composite parent, int style) throws RenderException, SWTException {
+    public Control render(final SWTRenderContext rc, final GUIVar<?> var, Composite parent,
+            int style) throws RenderException, SWTException {
         GUIVarMeta meta = var.getMeta();
         Boolean _val = (Boolean) var.get();
         boolean val = _val == null ? false : _val;
@@ -51,20 +51,18 @@ public class R_Boolean extends SWTRenderer {
                 }
             });
         if (!meta.isReadOnly()) {
-            ControlAdapters.commit(check,
-                    new CommitAdapter(rc.interact(check)) {
-                        @Override
-                        public void commit(EventObject event)
-                                throws CommitException {
-                            boolean val = check.getSelection();
-                            try {
-                                var.check(val);
-                                var.set(val);
-                            } catch (CheckException e) {
-                                throw new CommitException(e);
-                            }
-                        }
-                    });
+            ControlAdapters.commit(check, new CommitAdapter(rc.interact(check)) {
+                @Override
+                public void commit(EventObject event) throws CommitException {
+                    boolean val = check.getSelection();
+                    try {
+                        var.check(val);
+                        var.set(val);
+                    } catch (CheckException e) {
+                        throw new CommitException(e);
+                    }
+                }
+            });
         }
         rc.addEffects(check, var);
         return check;

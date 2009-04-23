@@ -48,8 +48,7 @@ public class SymlinkPageFlow extends PageFlow {
             }
             return address;
         } while (++depth < maxDepth);
-        throw new IllegalStateException(GUINLS
-                .getString("SymlinkPageFlow.exceedsSymDepth") //$NON-NLS-1$
+        throw new IllegalStateException(GUINLS.getString("SymlinkPageFlow.exceedsSymDepth") //$NON-NLS-1$
                 + depth);
     }
 
@@ -94,8 +93,8 @@ public class SymlinkPageFlow extends PageFlow {
     public void loadXML(String s) throws ParseException {
         class Handler extends DefaultHandler {
             @Override
-            public void startElement(String uri, String localName,
-                    String qName, Attributes attributes) throws SAXException {
+            public void startElement(String uri, String localName, String qName,
+                    Attributes attributes) throws SAXException {
                 if (!"symlink".equals(qName)) //$NON-NLS-1$
                     return;
                 String name = attributes.getValue("name"); //$NON-NLS-1$

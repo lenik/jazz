@@ -199,8 +199,7 @@ public interface Rectangle2f extends Shape2f, ShapeAmount2f {
         }
 
         public StaticLeft(Rectangle2f rectangle) {
-            super(rectangle.x0(), rectangle.y0(), rectangle.y2(), rectangle
-                    .y2());
+            super(rectangle.x0(), rectangle.y0(), rectangle.y2(), rectangle.y2());
         }
 
         public StaticLeft(Point2f p0, Vector2f d2) {
@@ -270,8 +269,7 @@ public interface Rectangle2f extends Shape2f, ShapeAmount2f {
         }
 
         public StaticRight(Rectangle2f rectangle) {
-            super(rectangle.x0(), rectangle.y0(), rectangle.y2(), rectangle
-                    .y2());
+            super(rectangle.x0(), rectangle.y0(), rectangle.y2(), rectangle.y2());
         }
 
         public StaticRight(Point2f p0, Vector2f d2) {

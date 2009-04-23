@@ -17,8 +17,7 @@ public interface ImageType {
 
     ImageData load(InputStream in) throws IOException;
 
-    void save(ImageData imageData, OutputStream out, Object params)
-            throws IOException;
+    void save(ImageData imageData, OutputStream out, Object params) throws IOException;
 
     ParametersComposite createParametersComposite(Composite parent, int style);
 

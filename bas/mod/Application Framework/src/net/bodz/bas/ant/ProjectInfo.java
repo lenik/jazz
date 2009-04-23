@@ -35,17 +35,14 @@ public class ProjectInfo {
         this(antProject, CWD.getcwd());
     }
 
-    public ProjectInfo(Project antProject, File searchStart)
-            throws ParseException {
+    public ProjectInfo(Project antProject, File searchStart) throws ParseException {
         if (antProject == null)
             throw new NullPointerException("project");
         this.antProject = antProject;
 
         base = SJProject.findProjectBase(searchStart);
         if (base == null)
-            throw new RuntimeException(
-                    "Can't find the eclipse project, search from "
-                            + searchStart);
+            throw new RuntimeException("Can't find the eclipse project, search from " + searchStart);
 
         parse();
     }

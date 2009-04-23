@@ -31,8 +31,7 @@ public class ConsoleExecutor extends ProjectExecutor {
     @Override
     public void recoverException(RecoverableExceptionEvent e) {
         Exception ex = e.getException();
-        int answer = UI.ask(ex.getMessage(), e, Proposals.ignore,
-                Proposals.cancel);
+        int answer = UI.ask(ex.getMessage(), e, Proposals.ignore, Proposals.cancel);
         if (answer == 0) // ignore
             e.setRecovered(true);
     }
@@ -44,7 +43,9 @@ public class ConsoleExecutor extends ProjectExecutor {
 
     @Override
     public void progressChange(ProgressChangeEvent e) {
-        L.tdetail("Progress %.1f%%", e.getProgress());
+        double progress = 100 * e.getProgress();
+        String mesg = String.format("Progress %.2f%%", progress);
+        L.tinfo(mesg);
     }
 
     @Override
@@ -52,7 +53,8 @@ public class ConsoleExecutor extends ProjectExecutor {
         // getTimeBegin();
         // long d = job.getDuration()
         // ...
-        L.tdetail("Duration Changed: %d", e.getIncrement());
+        String mesg = String.format("Duration Changed: %d", e.getIncrement());
+        L.tinfo(mesg);
     }
 
 }

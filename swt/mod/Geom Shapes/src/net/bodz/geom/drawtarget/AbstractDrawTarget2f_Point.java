@@ -17,12 +17,10 @@ public abstract class AbstractDrawTarget2f_Point extends AbstractDrawTarget2f {
     }
 
     @Override
-    public abstract void drawLine(Point2f start, Point2f end)
-            throws DrawException;
+    public abstract void drawLine(Point2f start, Point2f end) throws DrawException;
 
     @Override
-    public void drawLine(float x0, float y0, float x1, float y1)
-            throws DrawException {
+    public void drawLine(float x0, float y0, float x1, float y1) throws DrawException {
         drawLine(new Point2f.Static(x0, y0), new Point2f.Static(x1, y1));
     }
 
@@ -32,12 +30,10 @@ public abstract class AbstractDrawTarget2f_Point extends AbstractDrawTarget2f {
     }
 
     @Override
-    public abstract void drawRectangle(Point2f p0, Point2f p1)
-            throws DrawException;
+    public abstract void drawRectangle(Point2f p0, Point2f p1) throws DrawException;
 
     @Override
-    public void drawRectangle(float x0, float y0, float x1, float y1)
-            throws DrawException {
+    public void drawRectangle(float x0, float y0, float x1, float y1) throws DrawException {
         super.drawRectangle(x0, y0, x1, y1);
     }
 
@@ -47,14 +43,13 @@ public abstract class AbstractDrawTarget2f_Point extends AbstractDrawTarget2f {
     }
 
     @Override
-    public abstract void drawTriangle(Point2f p0, Point2f p1, Point2f p2)
-            throws DrawException;
+    public abstract void drawTriangle(Point2f p0, Point2f p1, Point2f p2) throws DrawException;
 
     @Override
-    public void drawTriangle(float x0, float y0, float x1, float y1, float x2,
-            float y2) throws DrawException {
-        super.drawTriangle(new Point2f.Static(x0, y0), new Point2f.Static(x1,
-                y1), new Point2f.Static(x2, y2));
+    public void drawTriangle(float x0, float y0, float x1, float y1, float x2, float y2)
+            throws DrawException {
+        super.drawTriangle(new Point2f.Static(x0, y0), new Point2f.Static(x1, y1),
+                new Point2f.Static(x2, y2));
     }
 
     @Override
@@ -67,18 +62,16 @@ public abstract class AbstractDrawTarget2f_Point extends AbstractDrawTarget2f {
             throws DrawException;
 
     @Override
-    public final void drawCircle(float centerX, float centerY, float radiusX,
-            float radiusY) throws DrawException {
+    public final void drawCircle(float centerX, float centerY, float radiusX, float radiusY)
+            throws DrawException {
         drawCircle(new Point2f.Static(centerX, centerY), radiusX, radiusY);
     }
 
     @Override
-    public abstract void drawEllipse(Point2f p0, Point2f p1)
-            throws DrawException;
+    public abstract void drawEllipse(Point2f p0, Point2f p1) throws DrawException;
 
     @Override
-    public void drawEllipse(float x0, float y0, float x1, float y1)
-            throws DrawException {
+    public void drawEllipse(float x0, float y0, float x1, float y1) throws DrawException {
         drawEllipse(new Point2f.Static(x0, y0), new Point2f.Static(x1, y1));
     }
 
@@ -86,8 +79,7 @@ public abstract class AbstractDrawTarget2f_Point extends AbstractDrawTarget2f {
     public abstract void drawPolygon(Point2f[] points) throws DrawException;
 
     @Override
-    public void drawPolygon(float[] x, float[] y, int offset, int count)
-            throws DrawException {
+    public void drawPolygon(float[] x, float[] y, int offset, int count) throws DrawException {
         Point2f[] points = new Point2f[count];
         for (int i = 0; i < count; i++)
             points[i] = new Point2f.Static(x[i + offset], y[i + offset]);
@@ -102,12 +94,10 @@ public abstract class AbstractDrawTarget2f_Point extends AbstractDrawTarget2f {
     // Fill...
 
     @Override
-    public abstract void fillRectangle(Point2f p0, Point2f p1)
-            throws DrawException;
+    public abstract void fillRectangle(Point2f p0, Point2f p1) throws DrawException;
 
     @Override
-    public void fillRectangle(float x0, float y0, float x1, float y1)
-            throws DrawException {
+    public void fillRectangle(float x0, float y0, float x1, float y1) throws DrawException {
         super.fillRectangle(x0, y0, x1, y1);
     }
 
@@ -117,14 +107,13 @@ public abstract class AbstractDrawTarget2f_Point extends AbstractDrawTarget2f {
     }
 
     @Override
-    public abstract void fillTriangle(Point2f p0, Point2f p1, Point2f p2)
-            throws DrawException;
+    public abstract void fillTriangle(Point2f p0, Point2f p1, Point2f p2) throws DrawException;
 
     @Override
-    public void fillTriangle(float x0, float y0, float x1, float y1, float x2,
-            float y2) throws DrawException {
-        super.fillTriangle(new Point2f.Static(x0, y0), new Point2f.Static(x1,
-                y1), new Point2f.Static(x2, y2));
+    public void fillTriangle(float x0, float y0, float x1, float y1, float x2, float y2)
+            throws DrawException {
+        super.fillTriangle(new Point2f.Static(x0, y0), new Point2f.Static(x1, y1),
+                new Point2f.Static(x2, y2));
     }
 
     @Override
@@ -137,18 +126,16 @@ public abstract class AbstractDrawTarget2f_Point extends AbstractDrawTarget2f {
             throws DrawException;
 
     @Override
-    public final void fillCircle(float centerX, float centerY, float radiusX,
-            float radiusY) throws DrawException {
+    public final void fillCircle(float centerX, float centerY, float radiusX, float radiusY)
+            throws DrawException {
         fillCircle(new Point2f.Static(centerX, centerY), radiusX, radiusY);
     }
 
     @Override
-    public abstract void fillEllipse(Point2f p0, Point2f p1)
-            throws DrawException;
+    public abstract void fillEllipse(Point2f p0, Point2f p1) throws DrawException;
 
     @Override
-    public void fillEllipse(float x0, float y0, float x1, float y1)
-            throws DrawException {
+    public void fillEllipse(float x0, float y0, float x1, float y1) throws DrawException {
         fillEllipse(new Point2f.Static(x0, y0), new Point2f.Static(x1, y1));
     }
 
@@ -156,8 +143,7 @@ public abstract class AbstractDrawTarget2f_Point extends AbstractDrawTarget2f {
     public abstract void fillPolygon(Point2f[] points) throws DrawException;
 
     @Override
-    public void fillPolygon(float[] x, float[] y, int offset, int count)
-            throws DrawException {
+    public void fillPolygon(float[] x, float[] y, int offset, int count) throws DrawException {
         Point2f[] points = new Point2f[count];
         for (int i = 0; i < count; i++)
             points[i] = new Point2f.Static(x[i + offset], y[i + offset]);

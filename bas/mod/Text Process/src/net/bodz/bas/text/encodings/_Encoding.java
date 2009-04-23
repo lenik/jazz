@@ -107,14 +107,12 @@ public abstract class _Encoding implements Encoding {
         return encode(copy);
     }
 
-    protected void _decode(InputStream in, OutputStream out)
-            throws IOException, ParseException {
+    protected void _decode(InputStream in, OutputStream out) throws IOException, ParseException {
         decode(Files.getReader(in, charset), out);
     }
 
     @Override
-    public void decode(Object charIn, Object byteOut) throws IOException,
-            ParseException {
+    public void decode(Object charIn, Object byteOut) throws IOException, ParseException {
         OutputStream out = Files.getOutputStream(byteOut);
         boolean closeOut = Files.shouldClose(byteOut);
         try {
@@ -137,8 +135,7 @@ public abstract class _Encoding implements Encoding {
     }
 
     @Override
-    public byte[] decode(Object charIn, int cc) throws IOException,
-            ParseException {
+    public byte[] decode(Object charIn, int cc) throws IOException, ParseException {
         if (charIn == null)
             return null;
         int cb = cc == 0 ? 0 : (int) (cc * bpc);

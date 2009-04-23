@@ -16,13 +16,11 @@ public class ChooseSchemePageTest {
     @Test
     public void test1() throws Exception {
         final TestProject project = new TestProject();
-        final ISession session = new Session(project, ConsoleUI.stdout,
-                LogTerms.console);
+        final ISession session = new Session(project, ConsoleUI.stdout, LogTerms.console);
         PageTestApp app = new PageTestApp() {
             @Override
             protected PageComposite createPage(Composite parent, int style) {
-                ChooseSchemePage csp = new ChooseSchemePage(session, parent,
-                        style);
+                ChooseSchemePage csp = new ChooseSchemePage(session, parent, style);
                 return csp;
             }
         };

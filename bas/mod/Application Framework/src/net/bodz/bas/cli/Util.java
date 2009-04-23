@@ -42,14 +42,12 @@ class Util {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> T addmulti(Class<?> type, T fieldobj, Object val)
-            throws ScriptException {
+    public static <T> T addmulti(Class<?> type, T fieldobj, Object val) throws ScriptException {
         if (type.isArray())
             return addarray(type, fieldobj, val);
         if (fieldobj == null)
             try {
-                if (type.isInterface()
-                        || Modifier.isAbstract(type.getModifiers())) {
+                if (type.isInterface() || Modifier.isAbstract(type.getModifiers())) {
                     if (List.class.isAssignableFrom(type))
                         type = ArrayList.class;
                     else if (SortedSet.class.isAssignableFrom(type))
@@ -63,8 +61,7 @@ class Util {
                     else if (Map.class.isAssignableFrom(type))
                         type = HashMap.class;
                     else
-                        throw new ScriptException(AppNLS
-                                .getString("Util.cantNewInst") //$NON-NLS-1$
+                        throw new ScriptException(AppNLS.getString("Util.cantNewInst") //$NON-NLS-1$
                                 + type);
                 }
                 fieldobj = (T) type.newInstance();
@@ -77,15 +74,13 @@ class Util {
             ((Collection<Object>) fieldobj).add(val);
         } else if (fieldobj instanceof Map) {
             Entry<Object, Object> entry = (Entry<Object, Object>) val;
-            ((Map<Object, Object>) fieldobj).put(entry.getKey(), entry
-                    .getValue());
+            ((Map<Object, Object>) fieldobj).put(entry.getKey(), entry.getValue());
 
         }
         return fieldobj;
     }
 
-    public static TypeParser guessParser(TypeParser parser, Class<?> clazz)
-            throws ParseException {
+    public static TypeParser guessParser(TypeParser parser, Class<?> clazz) throws ParseException {
         if (parser == null)
             parser = (TypeParser) TypeParsers.guess(clazz, true);
         return parser;

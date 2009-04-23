@@ -16,8 +16,7 @@ public class Cryptos {
             MessageDigest digest = MessageDigest.getInstance(alg);
             return digest;
         } catch (NoSuchAlgorithmException e) {
-            throw new UnexpectedException(String.format(SysNLS
-                    .getString("Cryptos.0"), alg)); //$NON-NLS-1$
+            throw new UnexpectedException(String.format(SysNLS.getString("Cryptos.0"), alg)); //$NON-NLS-1$
         }
     }
 

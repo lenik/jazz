@@ -39,9 +39,8 @@ public class GUIVars {
         public void check(Object value) throws CheckException {
             Class<?> type = getType();
             if (value != null && !Types.box(type).isInstance(value))
-                throw new CheckException(
-                        GUINLS.getString("GUIVars.notInstOf") + type + ": " //$NON-NLS-1$ //$NON-NLS-2$
-                                + value);
+                throw new CheckException(GUINLS.getString("GUIVars.notInstOf") + type + ": " //$NON-NLS-1$ //$NON-NLS-2$
+                        + value);
             if (checker != null)
                 checker.check(value);
         }
@@ -70,8 +69,7 @@ public class GUIVars {
 
     }
 
-    public static class GUIPropertyMeta extends PropertyMeta implements
-            GUIVarMeta {
+    public static class GUIPropertyMeta extends PropertyMeta implements GUIVarMeta {
 
         protected final Checker checker;
 
@@ -92,17 +90,15 @@ public class GUIVars {
         public void check(Object value) throws CheckException {
             Class<?> type = getType();
             if (value != null && !Types.box(type).isInstance(value))
-                throw new CheckException(
-                        GUINLS.getString("GUIVars.notInstOf") + type + ": " //$NON-NLS-1$ //$NON-NLS-2$
-                                + value);
+                throw new CheckException(GUINLS.getString("GUIVars.notInstOf") + type + ": " //$NON-NLS-1$ //$NON-NLS-2$
+                        + value);
             if (checker != null)
                 checker.check(value);
         }
 
     }
 
-    public static class GUIPropertyVar<T> extends PropertyVar<T> implements
-            GUIVar<T> {
+    public static class GUIPropertyVar<T> extends PropertyVar<T> implements GUIVar<T> {
 
         public GUIPropertyVar(PropertyMeta meta, Object object) {
             super(meta, object);
@@ -125,8 +121,7 @@ public class GUIVars {
 
     }
 
-    public static class GUIConstantMeta extends ConstantMeta implements
-            GUIVarMeta {
+    public static class GUIConstantMeta extends ConstantMeta implements GUIVarMeta {
 
         private final GUIHint   hint;
         protected final Checker checker;
@@ -159,17 +154,15 @@ public class GUIVars {
         public void check(Object value) throws CheckException {
             Class<?> type = getType();
             if (value != null && !Types.box(type).isInstance(value))
-                throw new CheckException(
-                        GUINLS.getString("GUIVars.notInstOf") + type + ": " //$NON-NLS-1$ //$NON-NLS-2$
-                                + value);
+                throw new CheckException(GUINLS.getString("GUIVars.notInstOf") + type + ": " //$NON-NLS-1$ //$NON-NLS-2$
+                        + value);
             if (checker != null)
                 checker.check(value);
         }
 
     }
 
-    public static class GUIConstantVar<T> extends ConstantVar<T> implements
-            GUIVar<T> {
+    public static class GUIConstantVar<T> extends ConstantVar<T> implements GUIVar<T> {
 
         public GUIConstantVar(String name, T value, GUIHint hint) {
             super(new GUIConstantMeta(name, value.getClass(), hint), value);

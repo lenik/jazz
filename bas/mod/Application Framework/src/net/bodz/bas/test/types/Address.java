@@ -14,8 +14,7 @@ public class Address {
     public Address() {
     }
 
-    public Address(String address, String city, String country, int postCode,
-            String phoneNumber) {
+    public Address(String address, String city, String country, int postCode, String phoneNumber) {
         this.address = address;
         this.city = city;
         this.country = country;

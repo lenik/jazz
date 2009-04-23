@@ -110,8 +110,7 @@ public class A_gui extends net.bodz.bas.ui.a.A_ui {
         }
         // color name not exists, and the fail value isn't specified.
         if (sharp == -1)
-            throw new IllegalUsageError(
-                    GUINLS.getString("A_gui.badColor") + colorExp); //$NON-NLS-1$
+            throw new IllegalUsageError(GUINLS.getString("A_gui.badColor") + colorExp); //$NON-NLS-1$
         String failval = colorExp.substring(sharp + 1);
         if (failval.length() != 6)
             throw new IllegalUsageError(GUINLS.getString("A_gui.colorFormat") //$NON-NLS-1$

@@ -12,8 +12,7 @@ public class ImageOp {
         PaletteData palette = image.palette;
         if (palette.isDirect) {
             RGB rgb = palette.getRGB(0x12345678);
-            int magic = ((rgb.red & 0xff) << 16) | ((rgb.green & 0xff) << 8)
-                    | (rgb.blue & 0xff);
+            int magic = ((rgb.red & 0xff) << 16) | ((rgb.green & 0xff) << 8) | (rgb.blue & 0xff);
             switch (image.depth) {
             case 32:
                 switch (magic) {
@@ -83,8 +82,7 @@ public class ImageOp {
             hsbPalette = new PaletteData(hsbColors);
             int scanlinePad = rgbImage.scanlinePad;
             byte[] data = rgbImage.data;
-            hsbImage = new ImageData(width, height, depth, hsbPalette,
-                    scanlinePad, data);
+            hsbImage = new ImageData(width, height, depth, hsbPalette, scanlinePad, data);
         }
         return hsbImage;
     }
@@ -129,8 +127,7 @@ public class ImageOp {
             rgbPalette = new PaletteData(rgbColors);
             int scanlinePad = hsbImage.scanlinePad;
             byte[] data = hsbImage.data;
-            rgbImage = new ImageData(width, height, depth, rgbPalette,
-                    scanlinePad, data);
+            rgbImage = new ImageData(width, height, depth, rgbPalette, scanlinePad, data);
         }
         return rgbImage;
     }

@@ -15,8 +15,7 @@ public class Ieee754FloatBE extends _Type {
     }
 
     @Override
-    public void put(Memory memory, int offset, Object value)
-            throws AccessException {
+    public void put(Memory memory, int offset, Object value) throws AccessException {
         byte[] mem = new byte[4];
         int bits = Float.floatToRawIntBits((Float) value);
         Int32BE.write(mem, bits);

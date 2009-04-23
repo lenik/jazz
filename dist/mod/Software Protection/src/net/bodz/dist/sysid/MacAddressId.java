@@ -23,8 +23,7 @@ public class MacAddressId extends _SysIdProvider {
 
     public static byte[] getMac(int nicIndex) throws SystemException {
         try {
-            Enumeration<NetworkInterface> nics = NetworkInterface
-                    .getNetworkInterfaces();
+            Enumeration<NetworkInterface> nics = NetworkInterface.getNetworkInterfaces();
             int i = 0;
             while (nics.hasMoreElements()) {
                 NetworkInterface n = nics.nextElement();
@@ -41,8 +40,7 @@ public class MacAddressId extends _SysIdProvider {
         }
     }
 
-    public static String getMacString(int nicIndex, String separator)
-            throws SystemException {
+    public static String getMacString(int nicIndex, String separator) throws SystemException {
         byte[] mac = getMac(nicIndex);
         if (mac == null)
             return null;

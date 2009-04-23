@@ -26,8 +26,7 @@ public class Perms {
         _iterate(copy, off, len, closure);
     }
 
-    public static <A> void iterateInPlace(A array, int off, int len,
-            Proc1<A> closure) {
+    public static <A> void iterateInPlace(A array, int off, int len, Proc1<A> closure) {
         _iterate(array, off, len, closure);
         Arrays2.reverse(array, off, len);
     }
@@ -40,8 +39,8 @@ public class Perms {
         iterateInPlace(array, 0, Array.getLength(array), closure);
     }
 
-    public static <A> void perm(int ord, A src, int srcoff, int srclen, A dst,
-            int dstoff, int dstlen) {
+    public static <A> void perm(int ord, A src, int srcoff, int srclen, A dst, int dstoff,
+            int dstlen) {
         ArrayOp<A> op = ArrayOps.get(src);
 
         int[] ordv = new int[dstlen];
@@ -67,8 +66,7 @@ public class Perms {
         perm(ord, src, 0, srclen, dst, 0, dstlen);
     }
 
-    public static <A> int ord(A src, int srcoff, int srclen, A dst, int dstoff,
-            int dstlen) {
+    public static <A> int ord(A src, int srcoff, int srclen, A dst, int dstoff, int dstlen) {
         ArrayOp<A> op = ArrayOps.get(src);
 
         IntSList candidates = new IntSList(srclen);

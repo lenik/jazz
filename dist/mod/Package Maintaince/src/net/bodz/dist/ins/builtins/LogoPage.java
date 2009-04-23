@@ -22,8 +22,7 @@ public class LogoPage extends ConfigPage {
         this.session = session;
 
         final Picture logoPicture = new Picture(this, SWT.NONE);
-        logoPicture.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true,
-                true));
+        logoPicture.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true));
         // logoPicture.setImage(null);
     }
 

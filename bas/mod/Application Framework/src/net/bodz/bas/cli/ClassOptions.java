@@ -78,8 +78,7 @@ public class ClassOptions<CT> {
                 continue;
             if (!readf.isAnnotationPresent(Option.class))
                 continue;
-            OptionGroup optgrp = readf.getDeclaringClass().getAnnotation(
-                    OptionGroup.class);
+            OptionGroup optgrp = readf.getDeclaringClass().getAnnotation(OptionGroup.class);
             PropertyOption<Object> propopt = new PropertyOption<Object>( //
                     property.getName(), property, optgrp);
             addOption(propopt);
@@ -99,8 +98,7 @@ public class ClassOptions<CT> {
             importMethod(optgrp, method);
     }
 
-    protected void importMethods(OptionGroup optgrp,
-            MethodDescriptor... methods) {
+    protected void importMethods(OptionGroup optgrp, MethodDescriptor... methods) {
         for (MethodDescriptor _method : methods)
             importMethod(optgrp, _method.getMethod());
     }
@@ -109,8 +107,7 @@ public class ClassOptions<CT> {
         String optnam = copt.getCLIName();
         _Option<?> prev = options.get(optnam);
         if (prev != null)
-            throw new IllegalArgumentException(AppNLS
-                    .getString("ClassOptions.optionName") + optnam //$NON-NLS-1$
+            throw new IllegalArgumentException(AppNLS.getString("ClassOptions.optionName") + optnam //$NON-NLS-1$
                     + AppNLS.getString("ClassOptions.isAlreadyExisted")); //$NON-NLS-1$
         options.put(optnam, copt);
         for (String alias : copt.o.alias()) {
@@ -119,9 +116,9 @@ public class ClassOptions<CT> {
                 alias = alias.substring(1);
             prev = options.get(alias);
             if (prev != null && !weak)
-                throw new IllegalArgumentException(AppNLS
-                        .getString("ClassOptions.optionAlias") + alias //$NON-NLS-1$
-                        + AppNLS.getString("ClassOptions.isAlreadyExisted")); //$NON-NLS-1$
+                throw new IllegalArgumentException(
+                        AppNLS.getString("ClassOptions.optionAlias") + alias //$NON-NLS-1$
+                                + AppNLS.getString("ClassOptions.isAlreadyExisted")); //$NON-NLS-1$
             if (weak)
                 if (prev == null)
                     weakAliases.add(alias);
@@ -176,8 +173,7 @@ public class ClassOptions<CT> {
             return (_Option<Object>) options.get(name);
         List<String> fullnames = Collections2.toList(options.ceilingKeys(name));
         if (fullnames.isEmpty())
-            throw new CLIException(
-                    AppNLS.getString("ClassOptions.noOption") + name); //$NON-NLS-1$
+            throw new CLIException(AppNLS.getString("ClassOptions.noOption") + name); //$NON-NLS-1$
         if (fullnames.size() > 1) {
             StringBuffer cands = new StringBuffer();
             for (String nam : fullnames) {
@@ -187,9 +183,8 @@ public class ClassOptions<CT> {
                 if (nam == null || !nam.startsWith(name))
                     break;
             }
-            throw new CLIException(
-                    AppNLS.getString("ClassOptions.ambigOption") + name + ": \n" //$NON-NLS-1$ //$NON-NLS-2$
-                            + cands.toString());
+            throw new CLIException(AppNLS.getString("ClassOptions.ambigOption") + name + ": \n" //$NON-NLS-1$ //$NON-NLS-2$
+                    + cands.toString());
         }
         String fullname = fullnames.get(0);
         return (_Option<Object>) options.get(fullname);
@@ -208,8 +203,7 @@ public class ClassOptions<CT> {
         return aliases.toArray(String_0);
     }
 
-    public String[] load(CT classobj, String... args) throws CLIException,
-            ParseException {
+    public String[] load(CT classobj, String... args) throws CLIException, ParseException {
         List<String> list = new ArrayList<String>(args.length);
         for (String arg : args)
             list.add(arg);
@@ -217,8 +211,7 @@ public class ClassOptions<CT> {
         return list.toArray(new String[0]);
     }
 
-    public void load(CT classobj, List<String> args) throws CLIException,
-            ParseException {
+    public void load(CT classobj, List<String> args) throws CLIException, ParseException {
         Set<?> missing = required == null ? null : (Set<?>) required.clone();
 
         boolean optionsEnd = false;
@@ -246,8 +239,7 @@ public class ClassOptions<CT> {
                 } else if (optnam.startsWith("-")) { //$NON-NLS-1$
                     String chr = optnam.substring(1, 2);
                     opt = findOption(chr);
-                    if (opt.getParameterCount() == 0
-                            || !opt.o.optional().isEmpty()) {
+                    if (opt.getParameterCount() == 0 || !opt.o.optional().isEmpty()) {
                         if (optnam.length() > 2)
                             args.set(i, "-" + optnam.substring(2)); //$NON-NLS-1$
                         else
@@ -308,8 +300,7 @@ public class ClassOptions<CT> {
     }
 
     @SuppressWarnings("unchecked")
-    public void load(CT classobj, Map<String, ?> argmap) throws CLIException,
-            ParseException {
+    public void load(CT classobj, Map<String, ?> argmap) throws CLIException, ParseException {
         Set<?> missing = required == null ? null : (Set<?>) required.clone();
 
         for (Map.Entry<String, ?> entry : argmap.entrySet()) {
@@ -343,8 +334,7 @@ public class ClassOptions<CT> {
         _checkMissings(missing);
     }
 
-    private Object _parseOptVal(_Option<?> opt, String optarg)
-            throws ParseException {
+    private Object _parseOptVal(_Option<?> opt, String optarg) throws ParseException {
         Class<?> valtype = opt.getType();
         Object optval = null;
 
@@ -369,9 +359,9 @@ public class ClassOptions<CT> {
             try {
                 optval = opt.parse(optarg, key);
             } catch (ParseException e) {
-                throw new ParseException(String.format(
-                        AppNLS.getString("ClassOptions.cantPartOption_sss"), opt //$NON-NLS-1$
-                                .getCLIName(), valtype, optarg), e);
+                throw new ParseException(String.format(AppNLS
+                        .getString("ClassOptions.cantPartOption_sss"), opt //$NON-NLS-1$
+                        .getCLIName(), valtype, optarg), e);
             }
         if (key != null)
             optval = new Pair<String, Object>(key, optval);
@@ -385,13 +375,12 @@ public class ClassOptions<CT> {
                 _Option<?> mopt = (_Option<?>) m;
                 buf.append("    " + mopt.getCLIName() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
             }
-            throw new CLIException(AppNLS
-                    .getString("ClassOptions.missRequired") + buf); //$NON-NLS-1$
+            throw new CLIException(AppNLS.getString("ClassOptions.missRequired") + buf); //$NON-NLS-1$
         }
     }
 
-    private int loadCall(CT object, MethodOption optcall, List<String> args,
-            int off) throws CLIException, ParseException {
+    private int loadCall(CT object, MethodOption optcall, List<String> args, int off)
+            throws CLIException, ParseException {
         int argc = optcall.getParameterCount();
         int rest = args.size() - off;
         if (argc > rest)

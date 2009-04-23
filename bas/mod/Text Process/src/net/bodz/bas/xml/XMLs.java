@@ -36,27 +36,24 @@ public class XMLs {
 
     // SAX Parsers
 
-    public static void parse(File file, Object... handlers)
-            throws SAXException, IOException {
+    public static void parse(File file, Object... handlers) throws SAXException, IOException {
         assert file != null : "null file"; //$NON-NLS-1$
         URL url = Files.getURL(file);
         parse(new InputSource(url.toString()), handlers);
     }
 
-    public static void parse(Reader reader, Object... handlers)
-            throws SAXException, IOException {
+    public static void parse(Reader reader, Object... handlers) throws SAXException, IOException {
         assert reader != null : "null reader"; //$NON-NLS-1$
         parse(new InputSource(reader), handlers);
     }
 
-    public static void parse(InputStream in, Object... handlers)
-            throws SAXException, IOException {
+    public static void parse(InputStream in, Object... handlers) throws SAXException, IOException {
         assert in != null : "null in"; //$NON-NLS-1$
         parse(new InputSource(in), handlers);
     }
 
-    public static void parse(InputSource source, Object... handlers)
-            throws SAXException, IOException {
+    public static void parse(InputSource source, Object... handlers) throws SAXException,
+            IOException {
         assert source != null : "null source"; //$NON-NLS-1$
         XMLReader xmlReader = XMLReaderFactory.createXMLReader();
         for (Object handler : handlers) {
@@ -114,8 +111,8 @@ public class XMLs {
             }
     }
 
-    public static void encode(int caller, Object obj, OutputStream out,
-            String encoding, ExceptionListener exceptionListener) {
+    public static void encode(int caller, Object obj, OutputStream out, String encoding,
+            ExceptionListener exceptionListener) {
         XMLEncoder enc = new XMLEncoder(out, encoding, true, 0);
         enc.setExceptionListener(exceptionListener);
         writeObject(enc, obj, caller + 1);
@@ -127,8 +124,7 @@ public class XMLs {
         encode(caller + 1, obj, out, "utf-8", exceptionListener);
     }
 
-    public static String encode(int caller, Object obj,
-            ExceptionListener exceptionListener) {
+    public static String encode(int caller, Object obj, ExceptionListener exceptionListener) {
         ByteArrayOutputStream buf = new ByteArrayOutputStream();
         encode(caller + 1, obj, buf, "utf-8", exceptionListener);
         String xml;
@@ -140,8 +136,7 @@ public class XMLs {
         return xml;
     }
 
-    public static void encode(int caller, Object obj, OutputStream out)
-            throws EncodeException {
+    public static void encode(int caller, Object obj, OutputStream out) throws EncodeException {
         ExceptionBuffer eb = new ExceptionBuffer();
         encode(caller + 1, obj, out, eb);
         String errmesg = eb.summary();
@@ -158,16 +153,14 @@ public class XMLs {
         return xml;
     }
 
-    public static Object decode(int caller, InputStream in,
-            ExceptionListener exceptionListener) {
+    public static Object decode(int caller, InputStream in, ExceptionListener exceptionListener) {
         XMLDecoder decoder = new XMLDecoder(in, exceptionListener);
         Object obj = readObject(decoder, caller + 1);
         decoder.close();
         return obj;
     }
 
-    public static Object decode(int caller, InputStream in)
-            throws DecodeException {
+    public static Object decode(int caller, InputStream in) throws DecodeException {
         ExceptionBuffer eb = new ExceptionBuffer();
         Object obj = decode(caller + 1, in, eb);
         String errmesg = eb.summary();
@@ -176,8 +169,7 @@ public class XMLs {
         return obj;
     }
 
-    public static Object decode(int caller, String xml,
-            ExceptionListener exceptionListener) {
+    public static Object decode(int caller, String xml, ExceptionListener exceptionListener) {
         byte[] bytes;
         try {
             bytes = xml.getBytes("utf-8");
@@ -199,8 +191,7 @@ public class XMLs {
 
     // Using implicit callers:
 
-    public static Object decode(InputStream in,
-            ExceptionListener exceptionListener) {
+    public static Object decode(InputStream in, ExceptionListener exceptionListener) {
         return decode(1, in, exceptionListener);
     }
 
@@ -220,8 +211,7 @@ public class XMLs {
         return encode(1, obj, exceptionListener);
     }
 
-    public static void encode(Object obj, OutputStream out,
-            ExceptionListener exceptionListener) {
+    public static void encode(Object obj, OutputStream out, ExceptionListener exceptionListener) {
         encode(1, obj, out, exceptionListener);
     }
 
@@ -230,8 +220,7 @@ public class XMLs {
         encode(1, obj, out, encoding, exceptionListener);
     }
 
-    public static void encode(Object obj, OutputStream out)
-            throws EncodeException {
+    public static void encode(Object obj, OutputStream out) throws EncodeException {
         encode(1, obj, out);
     }
 

@@ -1,11 +1,9 @@
 package net.bodz.dist.ins;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -28,20 +26,21 @@ import org.eclipse.swt.graphics.ImageData;
 
 public class _Project extends RequiredSection implements Project {
 
-    private ImageData       logo;
-    private String          version;
-    private String          updateTime;
-    private String          company;
-
-    private List<BaseDir>   baseDirs;
-    private TextMap<Object> env;
+    private ImageData logo;
+    private String    version;
+    private String    updateTime;
+    private String    company;
 
     public _Project(Class<?> clazz, Component... children) {
         super("root", "Project Root", children);
         if (clazz != null)
             loadInfo(clazz);
-        this.baseDirs = new ArrayList<BaseDir>();
-        this.env = new TreeTextMap<Object>();
+        this.variables = new TreeTextMap<Variable>();
+    }
+
+    @Override
+    public double getProgressScaleToParent() {
+        return super.getProgressScaleToParent();
     }
 
     protected void loadInfo(Class<?> clazz) {
@@ -92,42 +91,30 @@ public class _Project extends RequiredSection implements Project {
     public Scheme[] getSchemes() {
         Scheme[] commons = {
         //
-                new Minimum(), //
                 new Default(), //
+                new Minimum(), //
                 new Maximum(), //
                 new Custom(), //
         };
         return commons;
     }
 
+    private TextMap<Variable>              variables;
+    private Map<Component, Set<Component>> bydeps;
+
     @Override
-    public BaseDir[] getBaseDirs() {
-        return baseDirs.toArray(new BaseDir[0]);
-    }
-
-    protected BaseDir getBaseDir(String base) {
-        assert base != null : "base";
-        for (BaseDir baseDir : baseDirs) {
-            if (base.equals(baseDir.getName()))
-                return baseDir;
-        }
-        return null;
-    }
-
-    protected void addBaseDir(BaseDir baseDir) {
-        baseDirs.add(baseDir);
+    public TextMap<Variable> getVariables() {
+        return variables;
     }
 
     @Override
-    public TextMap<Object> getEnv() {
-        return env;
+    public Variable get(String variableName) {
+        return variables.get(variableName);
     }
 
-    public void setEnv(String key, Object defaultValue) {
-        env.put(key, defaultValue);
+    public void define(String name, Variable variable) {
+        variables.put(name, variable);
     }
-
-    Map<Component, Set<Component>> bydeps;
 
     @Override
     public void refreshDependants() {
@@ -149,14 +136,13 @@ public class _Project extends RequiredSection implements Project {
     }
 
     @Override
-    public void findDependents(Component parent,
-            TreeCallback<Component> callback) {
+    public void findDependents(Component parent, TreeCallback<Component> callback) {
         IdentSet uniq = new IdentSet();
         findDependents(parent, callback, 0, uniq);
     }
 
-    boolean findDependents(Component parent, TreeCallback<Component> callback,
-            int level, IdentSet uniq) {
+    boolean findDependents(Component parent, TreeCallback<Component> callback, int level,
+            IdentSet uniq) {
         if (parent == null)
             throw new NullPointerException("null component in level " + level);
         if (uniq.contains(parent))
@@ -181,19 +167,17 @@ public class _Project extends RequiredSection implements Project {
     }
 
     @Override
-    public void findDependentsBy(Component child,
-            TreeCallback<Component> callback) {
+    public void findDependentsBy(Component child, TreeCallback<Component> callback) {
         if (bydeps == null)
             refreshDependants();
         IdentSet uniq = new IdentSet();
         findDependentsBy(child, callback, 0, uniq);
     }
 
-    boolean findDependentsBy(Component child, TreeCallback<Component> callback,
-            int level, IdentSet uniq) {
+    boolean findDependentsBy(Component child, TreeCallback<Component> callback, int level,
+            IdentSet uniq) {
         if (child == null)
-            throw new NullPointerException("null component in rev-level "
-                    + level);
+            throw new NullPointerException("null component in rev-level " + level);
         if (uniq.contains(child))
             throw new IllegalStateException("Loop detected: " + child);
         uniq.add(child);
@@ -221,8 +205,8 @@ public class _Project extends RequiredSection implements Project {
         analyseDependency(this, missingCallback, 0, uniq);
     }
 
-    boolean analyseDependency(Component child,
-            TreeCallback<Component> missingCallback, int level, IdentSet uniq) {
+    boolean analyseDependency(Component child, TreeCallback<Component> missingCallback, int level,
+            IdentSet uniq) {
         if (uniq.contains(child))
             throw new IllegalStateException("Loop detected: " + child);
         uniq.add(child);

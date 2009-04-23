@@ -35,7 +35,7 @@ public class Vector2f extends javax.vecmath.Vector2f implements Cloneable {
         // if (l == 0.0f) return;
         float S = (float) Math.sin(angle);
         float C = (float) Math.cos(angle);
-        x = C  * l;
+        x = C * l;
         y = S * l;
     }
 

@@ -7,27 +7,30 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
+import java.util.jar.JarFile;
+import java.util.zip.ZipFile;
 
 public class FileResLink extends _ResLink {
 
-    private File    file;
-    private boolean autoMkdirs;
+    private final File    file;
+    private final boolean autoMkdirs;
 
     public FileResLink(File file) {
+        this(file, false);
+    }
+
+    public FileResLink(File file, boolean autoMkdirs) {
         if (file == null)
             throw new NullPointerException("file");
         if (file.exists() && !file.isFile())
-            throw new IllegalStateException(
-                    "Non-file with the same path is already existed: " + file);
+            throw new IllegalStateException("Non-file with the same path is already existed: "
+                    + file);
         this.file = file;
+        this.autoMkdirs = autoMkdirs;
     }
 
     public boolean isAutoMkdirs() {
         return autoMkdirs;
-    }
-
-    public void setAutoMkdirs(boolean autoMkdirs) {
-        this.autoMkdirs = autoMkdirs;
     }
 
     void autoMkdirs() {
@@ -62,6 +65,16 @@ public class FileResLink extends _ResLink {
     public OutputStream openOutputStream(boolean append) throws IOException {
         autoMkdirs();
         return new FileOutputStream(file, append);
+    }
+
+    @Override
+    public ZipFile openZipFile() throws IOException {
+        return new ZipFile(file);
+    }
+
+    @Override
+    public JarFile openJarFile() throws IOException {
+        return new JarFile(file);
     }
 
 }

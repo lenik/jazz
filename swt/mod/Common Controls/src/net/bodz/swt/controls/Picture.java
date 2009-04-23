@@ -91,9 +91,8 @@ public class Picture extends Canvas {
             return false;
         if (srcBounds == null)
             srcBounds = image.getBounds();
-        destGC.drawImage(image, srcBounds.x, srcBounds.y, srcBounds.width,
-                srcBounds.height, destBounds.x, destBounds.y, destBounds.width,
-                destBounds.height);
+        destGC.drawImage(image, srcBounds.x, srcBounds.y, srcBounds.width, srcBounds.height,
+                destBounds.x, destBounds.y, destBounds.width, destBounds.height);
         return true;
     }
 
@@ -120,8 +119,7 @@ public class Picture extends Canvas {
         int cropY = imageHeight * viewBounds.y / viewHeight;
         int cropWidth = imageWidth * viewBounds.width / viewWidth;
         int copyHeight = imageHeight * viewBounds.height / viewHeight;
-        return copyImage(new Rectangle(cropX, cropY, cropWidth, copyHeight),
-                destGC, destBounds);
+        return copyImage(new Rectangle(cropX, cropY, cropWidth, copyHeight), destGC, destBounds);
     }
 
     static Rectangle getBlockBounds(Composite outer, Control inner) {

@@ -12,26 +12,23 @@ public abstract class AbstractDrawTarget2f implements DrawTarget2f {
 
     public abstract void drawPixel(float x, float y) throws DrawException;
 
-    public abstract void drawLine(float x0, float y0, float x1, float y1)
-            throws DrawException;
+    public abstract void drawLine(float x0, float y0, float x1, float y1) throws DrawException;
 
-    public void drawTriangle(float x0, float y0, float x1, float y1, float x2,
-            float y2) throws DrawException {
+    public void drawTriangle(float x0, float y0, float x1, float y1, float x2, float y2)
+            throws DrawException {
         drawLine(x0, y0, x1, y1);
         drawLine(x1, y1, x2, y2);
         drawLine(x2, y2, x0, y0);
     }
 
-    public void drawRectangle(float x0, float y0, float x1, float y1)
-            throws DrawException {
+    public void drawRectangle(float x0, float y0, float x1, float y1) throws DrawException {
         drawLine(x0, y0, x1, y0);
         drawLine(x1, y0, x1, y1);
         drawLine(x1, y1, x0, y1);
         drawLine(x0, y1, x0, y0);
     }
 
-    public void drawEllipse(float x0, float y0, float x1, float y1)
-            throws DrawException {
+    public void drawEllipse(float x0, float y0, float x1, float y1) throws DrawException {
         Polygon2f sampled = new Polygon2f.SampleEllipse(x0, y0, x1, y1);
         drawPolygon(sampled);
     }
@@ -54,17 +51,15 @@ public abstract class AbstractDrawTarget2f implements DrawTarget2f {
         }
     }
 
-    public abstract void fillTriangle(float x0, float y0, float x1, float y1,
-            float x2, float y2) throws DrawException;
+    public abstract void fillTriangle(float x0, float y0, float x1, float y1, float x2, float y2)
+            throws DrawException;
 
-    public void fillRectangle(float x0, float y0, float x1, float y1)
-            throws DrawException {
+    public void fillRectangle(float x0, float y0, float x1, float y1) throws DrawException {
         fillTriangle(x0, y0, x1, y0, x1, y1);
         fillTriangle(x1, y0, x1, y1, x0, y1);
     }
 
-    public void fillEllipse(float x0, float y0, float x1, float y1)
-            throws DrawException {
+    public void fillEllipse(float x0, float y0, float x1, float y1) throws DrawException {
         Polygon2f sampled = new Polygon2f.SampleEllipse(x0, y0, x1, y1);
         fillPolygon(sampled);
     }
@@ -89,14 +84,13 @@ public abstract class AbstractDrawTarget2f implements DrawTarget2f {
         drawLine(line.x0(), line.y0(), line.x1(), line.y1());
     }
 
-    public void drawTriangle(Point2f p0, Point2f p1, Point2f p2)
-            throws DrawException {
+    public void drawTriangle(Point2f p0, Point2f p1, Point2f p2) throws DrawException {
         drawTriangle(p0.x(), p0.y(), p1.x(), p1.y(), p2.x(), p2.y());
     }
 
     public void drawTriangle(Triangle2f triangle) throws DrawException {
-        drawTriangle(triangle.x0(), triangle.y0(), triangle.x1(),
-                triangle.y1(), triangle.x2(), triangle.y2());
+        drawTriangle(triangle.x0(), triangle.y0(), triangle.x1(), triangle.y1(), triangle.x2(),
+                triangle.y2());
     }
 
     public void drawRectangle(Point2f p0, Point2f p1) throws DrawException {
@@ -112,24 +106,19 @@ public abstract class AbstractDrawTarget2f implements DrawTarget2f {
     }
 
     public void drawEllipse(Rectangle2f boundingBox) throws DrawException {
-        drawEllipse(boundingBox.x0(), boundingBox.y0(), boundingBox.x2(),
-                boundingBox.y2());
+        drawEllipse(boundingBox.x0(), boundingBox.y0(), boundingBox.x2(), boundingBox.y2());
     }
 
-    public void drawCircle(float centerX, float centerY, float radiusX,
-            float radiusY) throws DrawException {
-        drawEllipse(centerX - radiusX, centerY - radiusY, centerX + radiusX,
-                centerY + radiusY);
-    }
-
-    public void drawCircle(float centerX, float centerY, float radius)
+    public void drawCircle(float centerX, float centerY, float radiusX, float radiusY)
             throws DrawException {
-        drawEllipse(centerX - radius, centerY - radius, centerX + radius,
-                centerY + radius);
+        drawEllipse(centerX - radiusX, centerY - radiusY, centerX + radiusX, centerY + radiusY);
     }
 
-    public void drawCircle(Point2f center, float radiusX, float radiusY)
-            throws DrawException {
+    public void drawCircle(float centerX, float centerY, float radius) throws DrawException {
+        drawEllipse(centerX - radius, centerY - radius, centerX + radius, centerY + radius);
+    }
+
+    public void drawCircle(Point2f center, float radiusX, float radiusY) throws DrawException {
         drawCircle(center.x(), center.y(), radiusX, radiusY);
     }
 
@@ -137,14 +126,12 @@ public abstract class AbstractDrawTarget2f implements DrawTarget2f {
         drawCircle(center.x(), center.y(), radius, radius);
     }
 
-    public void drawPolygon(float[] x, float[] y, int offset, int count)
-            throws DrawException {
+    public void drawPolygon(float[] x, float[] y, int offset, int count) throws DrawException {
         Polygon2f polygon = new Polygon2f.StaticFixed(x, y, offset, count);
         drawPolygon(polygon);
     }
 
-    public void drawPolygon(float[] x, float[] y, int size)
-            throws DrawException {
+    public void drawPolygon(float[] x, float[] y, int size) throws DrawException {
         drawPolygon(x, y, size, 0);
     }
 
@@ -162,14 +149,13 @@ public abstract class AbstractDrawTarget2f implements DrawTarget2f {
         // drawPolygon(polygon);
     }
 
-    public void fillTriangle(Point2f p0, Point2f p1, Point2f p2)
-            throws DrawException {
+    public void fillTriangle(Point2f p0, Point2f p1, Point2f p2) throws DrawException {
         fillTriangle(p0.x(), p0.y(), p1.x(), p1.y(), p2.x(), p2.y());
     }
 
     public void fillTriangle(Triangle2f triangle) throws DrawException {
-        fillTriangle(triangle.x0(), triangle.y0(), triangle.x1(),
-                triangle.y1(), triangle.x2(), triangle.y2());
+        fillTriangle(triangle.x0(), triangle.y0(), triangle.x1(), triangle.y1(), triangle.x2(),
+                triangle.y2());
     }
 
     public void fillRectangle(Point2f p0, Point2f p1) throws DrawException {
@@ -177,8 +163,7 @@ public abstract class AbstractDrawTarget2f implements DrawTarget2f {
     }
 
     public void fillRectangle(Rectangle2f boundingBox) throws DrawException {
-        fillRectangle(boundingBox.x0(), boundingBox.y0(), boundingBox.x2(),
-                boundingBox.y2());
+        fillRectangle(boundingBox.x0(), boundingBox.y0(), boundingBox.x2(), boundingBox.y2());
     }
 
     public void fillEllipse(Point2f p0, Point2f p1) throws DrawException {
@@ -186,24 +171,19 @@ public abstract class AbstractDrawTarget2f implements DrawTarget2f {
     }
 
     public void fillEllipse(Rectangle2f boundingBox) throws DrawException {
-        fillEllipse(boundingBox.x0(), boundingBox.y0(), boundingBox.x2(),
-                boundingBox.y2());
+        fillEllipse(boundingBox.x0(), boundingBox.y0(), boundingBox.x2(), boundingBox.y2());
     }
 
-    public void fillCircle(float centerX, float centerY, float radiusX,
-            float radiusY) throws DrawException {
-        fillEllipse(centerX - radiusX, centerY - radiusY, centerX + radiusX,
-                centerY + radiusY);
-    }
-
-    public void fillCircle(float centerX, float centerY, float radius)
+    public void fillCircle(float centerX, float centerY, float radiusX, float radiusY)
             throws DrawException {
-        fillEllipse(centerX - radius, centerY - radius, centerX + radius,
-                centerY + radius);
+        fillEllipse(centerX - radiusX, centerY - radiusY, centerX + radiusX, centerY + radiusY);
     }
 
-    public void fillCircle(Point2f center, float radiusX, float radiusY)
-            throws DrawException {
+    public void fillCircle(float centerX, float centerY, float radius) throws DrawException {
+        fillEllipse(centerX - radius, centerY - radius, centerX + radius, centerY + radius);
+    }
+
+    public void fillCircle(Point2f center, float radiusX, float radiusY) throws DrawException {
         fillCircle(center.x(), center.y(), radiusX, radiusY);
     }
 
@@ -218,8 +198,7 @@ public abstract class AbstractDrawTarget2f implements DrawTarget2f {
         // fillPolygon(polygon);
     }
 
-    public void fillPolygon(float[] x, float[] y, int offset, int count)
-            throws DrawException {
+    public void fillPolygon(float[] x, float[] y, int offset, int count) throws DrawException {
         Polygon2f polygon = new Polygon2f.StaticFixed(x, y, offset, count);
         fillPolygon(polygon);
     }

@@ -15,8 +15,7 @@ public class Ieee754DoubleLE extends _Type {
     }
 
     @Override
-    public void put(Memory memory, int offset, Object value)
-            throws AccessException {
+    public void put(Memory memory, int offset, Object value) throws AccessException {
         byte[] mem = new byte[8];
         long bits = Double.doubleToRawLongBits((Double) value);
         Int64LE.write(mem, bits);

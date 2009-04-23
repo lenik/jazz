@@ -47,13 +47,11 @@ public class JPEGImageType extends _ImageType {
             setLayout(gridLayout);
 
             final Label jpegQualityLabel = new Label(this, SWT.NONE);
-            jpegQualityLabel.setText(ControlsNLS
-                    .getString("JPEGImageType.jpegQuality")); //$NON-NLS-1$
+            jpegQualityLabel.setText(ControlsNLS.getString("JPEGImageType.jpegQuality")); //$NON-NLS-1$
 
             qualityScale = new Scale(this, SWT.NONE);
             qualityScale.setMinimum(10);
-            final GridData gd_qualityScale = new GridData(SWT.FILL, SWT.CENTER,
-                    true, false);
+            final GridData gd_qualityScale = new GridData(SWT.FILL, SWT.CENTER, true, false);
             qualityScale.setLayoutData(gd_qualityScale);
 
             qualityScale.setSelection(params.quantity);
@@ -68,8 +66,7 @@ public class JPEGImageType extends _ImageType {
     }
 
     @Override
-    public void save(ImageData imageData, OutputStream out, Object _params)
-            throws IOException {
+    public void save(ImageData imageData, OutputStream out, Object _params) throws IOException {
         if (imageData == null)
             throw new NullPointerException("imageData"); //$NON-NLS-1$
         // Params params = (Params) _params;
@@ -79,8 +76,7 @@ public class JPEGImageType extends _ImageType {
     }
 
     @Override
-    public ParametersComposite createParametersComposite(Composite parent,
-            int style) {
+    public ParametersComposite createParametersComposite(Composite parent, int style) {
         return new ParamsComp(parent, style, new Params());
     }
 

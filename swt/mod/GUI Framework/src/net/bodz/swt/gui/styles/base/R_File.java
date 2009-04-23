@@ -30,9 +30,8 @@ import org.eclipse.swt.widgets.Text;
 public class R_File extends SWTRenderer {
 
     @Override
-    public Control render(final SWTRenderContext rc, final GUIVar<?> var,
-            final Composite parent, final int style) throws RenderException,
-            SWTException {
+    public Control render(final SWTRenderContext rc, final GUIVar<?> var, final Composite parent,
+            final int style) throws RenderException, SWTException {
         GUIVarMeta meta = var.getMeta();
         File val = (File) var.get();
         assert val != null;

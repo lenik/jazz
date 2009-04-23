@@ -23,9 +23,8 @@ public class ParseException extends Exception {
     }
 
     public ParseException(Class<?> unparsableType, String unparsableText) {
-        this(
-                LangNLS.getString("ParseException.unknownParse") + unparsableType + ": " //$NON-NLS-1$ //$NON-NLS-2$
-                        + unparsableText);
+        this(LangNLS.getString("ParseException.unknownParse") + unparsableType + ": " //$NON-NLS-1$ //$NON-NLS-2$
+                + unparsableText);
     }
 
 }

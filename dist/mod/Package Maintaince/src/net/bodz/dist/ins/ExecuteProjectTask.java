@@ -3,16 +3,18 @@ package net.bodz.dist.ins;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
+import java.util.Map;
 
+import net.bodz.bas.ant.NamedParameter;
 import net.bodz.bas.ant.TaskLogTerm;
+import net.bodz.bas.ant.WithNamedParameters;
 import net.bodz.bas.io.FileResFolder;
 import net.bodz.bas.io.ResFolder;
 import net.bodz.bas.io.ZipResFolder;
 import net.bodz.bas.lang.RecoverableExceptionEvent;
+import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.lang.err.UnexpectedException;
 import net.bodz.bas.types.TextMap;
-import net.bodz.bas.types.TreeTextMap;
 import net.bodz.bas.xml.ExceptionBuffer;
 
 import org.apache.tools.ant.BuildException;
@@ -20,19 +22,18 @@ import org.apache.tools.ant.Task;
 
 public abstract class ExecuteProjectTask extends Task {
 
-    private Project       project;
-    private String        scheme;
-    private ResFolder     resFolder;
-    private TextMap<File> baseDirs;
-    private int           logLevel;
+    private Project             project;
+    private String              scheme;
+    private ResFolder           resFolder;
+    private WithNamedParameters parameters;
+    private int                 logLevel;
 
     public ExecuteProjectTask() {
-        baseDirs = new TreeTextMap<File>();
+        parameters = new WithNamedParameters();
     }
 
-    public void setProjectClass(String projectClassName)
-            throws ClassNotFoundException, InstantiationException,
-            IllegalAccessException {
+    public void setProjectClass(String projectClassName) throws ClassNotFoundException,
+            InstantiationException, IllegalAccessException {
         Class<?> projectClass = Class.forName(projectClassName);
         project = (Project) projectClass.newInstance();
     }
@@ -43,21 +44,18 @@ public abstract class ExecuteProjectTask extends Task {
 
     public void setResFolder(ResFolder resFolder) {
         if (this.resFolder != null)
-            throw new BuildException("ResFolder is already specified: "
-                    + resFolder);
+            throw new BuildException("ResFolder is already specified: " + resFolder);
         this.resFolder = resFolder;
     }
 
     public void setPackDir(File outdir) {
-        FileResFolder folder = new FileResFolder(outdir);
-        folder.setAutoMkdirs(false);
-        setResFolder(folder);
+        FileResFolder src = new FileResFolder(outdir);
+        setResFolder(src);
     }
 
     public void setPackJar(File zipFile) {
-        ZipResFolder outjar = new ZipResFolder(zipFile);
-        outjar.setAutoMkdirs(false);
-        setResFolder(outjar);
+        ZipResFolder src = new ZipResFolder(zipFile);
+        setResFolder(src);
     }
 
     public int getLogLevel() {
@@ -68,19 +66,8 @@ public abstract class ExecuteProjectTask extends Task {
         this.logLevel = logLevel;
     }
 
-    public void addConfiguredBaseDir(BaseDirElement e) {
-        if (e == null)
-            throw new NullPointerException("e");
-        if (e.name == null)
-            throw new IllegalArgumentException(
-                    "Name of the base dir isn't specified");
-        if (e.location == null)
-            throw new IllegalArgumentException(
-                    "Location of the base dir isn't specified");
-        if (baseDirs.containsKey(e.name))
-            throw new IllegalArgumentException("Base dir " + e.name
-                    + " is already defined");
-        baseDirs.put(e.name, e.location);
+    public void addConfiguredParameter(NamedParameter parameter) throws ParseException {
+        parameters.addConfiguredParameter(parameter);
     }
 
     protected abstract int getType();
@@ -108,10 +95,18 @@ public abstract class ExecuteProjectTask extends Task {
         ISession session = executor.getSession();
         if (scheme != null)
             session.setScheme(scheme);
-        session.setResFolder(resFolder);
-        for (Entry<String, File> e : baseDirs.entrySet()) {
-            session.setBaseDir(e.getKey(), e.getValue());
+        session.addResFolder(resFolder);
+
+        Map<String, Variable> vardef = project.getVariables();
+        TextMap<Object> map = parameters.getMap();
+        for (Map.Entry<String, Object> e : map.entrySet()) {
+            String name = e.getKey();
+            if (!vardef.containsKey(name))
+                throw new IllegalArgumentException("Undefined variable: " + name);
+            Object value = e.getValue();
+            session.set(name, value);
         }
+
         try {
             switch (getType()) {
             case Component.INSTALL:

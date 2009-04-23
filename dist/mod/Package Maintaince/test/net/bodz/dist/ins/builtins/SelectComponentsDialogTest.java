@@ -16,16 +16,14 @@ public class SelectComponentsDialogTest {
         TestProject project = new TestProject();
         Components components = Components.collect(project);
         Component[] cv = components.values().toArray(new Component[0]);
-        SelectComponentsDialog dialog = new SelectComponentsDialog(null,
-                SWT.NONE, "Select Components Test",
-                "Please select components:", cv);
+        SelectComponentsDialog dialog = new SelectComponentsDialog(null, SWT.NONE,
+                "Select Components Test", "Please select components:", cv);
         Collection<Component> selection = dialog.open();
         if (selection == null)
             System.out.println("Canceled");
         else
             for (Component c : selection) {
-                System.out
-                        .printf("Selected: %s - %s\n", c.getId(), c.getText());
+                System.out.printf("Selected: %s - %s\n", c.getId(), c.getText());
             }
     }
 

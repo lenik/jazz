@@ -27,7 +27,7 @@ public abstract class BufferedTerminal extends _Terminal {
     public void p() {
         String s = started ? buf.toString() : "";
         started = false;
-        p(s);
+        _p(s);
     }
 
     @Override
@@ -36,11 +36,23 @@ public abstract class BufferedTerminal extends _Terminal {
             p();
         // state: shall erase?
         eraseLast();
-        p(s);
+        _t(s);
     }
 
     @Override
-    public abstract void p(String s);
+    public void p(String s) {
+        if (started) {
+            s = buf.toString() + s;
+            started = false;
+        }
+        _p(s);
+    }
+
+    protected abstract void _p(String s);
+
+    protected void _t(String s) {
+        _p(s);
+    }
 
     protected void eraseLast() {
     }

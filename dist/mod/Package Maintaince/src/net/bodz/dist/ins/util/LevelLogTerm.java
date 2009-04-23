@@ -19,7 +19,7 @@ public class LevelLogTerm extends ArrayLogTerm {
         }
 
         @Override
-        public void p(String s) {
+        protected void _p(String s) {
             int n = getIndentLevel();
             if (n > 0)
                 s = Strings.repeat(n, tab) + s;

@@ -44,8 +44,7 @@ public class StateGraphImpl implements StateGraph {
         this(registry, startKey, null);
     }
 
-    public StateGraphImpl(Map<Object, State> registry, Object startKey,
-            Object context) {
+    public StateGraphImpl(Map<Object, State> registry, Object startKey, Object context) {
         assert registry != null;
         assert startKey != null;
 
@@ -154,7 +153,8 @@ public class StateGraphImpl implements StateGraph {
     public void remove(Object key) {
         assert key != null;
         if (!registry.containsKey(key))
-            throw new IllegalArgumentException(TypesNLS.getString("StateGraphImpl.2") + key + TypesNLS.getString("StateGraphImpl.3")); //$NON-NLS-1$ //$NON-NLS-2$
+            throw new IllegalArgumentException(
+                    TypesNLS.getString("StateGraphImpl.2") + key + TypesNLS.getString("StateGraphImpl.3")); //$NON-NLS-1$ //$NON-NLS-2$
         registry.remove(key);
     }
 

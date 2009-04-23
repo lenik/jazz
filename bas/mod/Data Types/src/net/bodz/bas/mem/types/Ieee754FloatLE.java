@@ -15,8 +15,7 @@ public class Ieee754FloatLE extends _Type {
     }
 
     @Override
-    public void put(Memory memory, int offset, Object value)
-            throws AccessException {
+    public void put(Memory memory, int offset, Object value) throws AccessException {
         byte[] mem = new byte[4];
         int bits = Float.floatToRawIntBits((Float) value);
         Int32LE.write(mem, bits);

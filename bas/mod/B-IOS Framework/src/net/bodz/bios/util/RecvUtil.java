@@ -12,8 +12,7 @@ import net.bodz.bios.ReceiverEx;
 public class RecvUtil {
 
     public static MethodEx getMethodEx(Class<?> clazz, String methodName) {
-        MethodEx ex = new MethodEx(publicMethods(clazz, methodName),
-                Object.class);
+        MethodEx ex = new MethodEx(publicMethods(clazz, methodName), Object.class);
         if (ex.isEmpty())
             return null;
         return ex;
@@ -28,8 +27,7 @@ public class RecvUtil {
         recvExLocal = new ClassLocal<MethodEx>();
     }
 
-    public static void recvEx(ReceiverEx exReceiver, Object data)
-            throws IOException {
+    public static void recvEx(ReceiverEx exReceiver, Object data) throws IOException {
         Class<? extends ReceiverEx> clazz = exReceiver.getClass();
         MethodEx recvEx = recvExLocal.get(clazz);
         if (recvEx == null) {

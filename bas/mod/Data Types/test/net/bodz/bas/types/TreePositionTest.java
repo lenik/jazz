@@ -16,8 +16,7 @@ public class TreePositionTest {
     @Test
     public void test1() throws Exception {
         ArrayTreeNode tree = ArrayTreeNodeTest.helloTree;
-        TreePosition<ArrayTreeNode> pos = new TreePosition<ArrayTreeNode>(tree,
-                1, 2);
+        TreePosition<ArrayTreeNode> pos = new TreePosition<ArrayTreeNode>(tree, 1, 2);
         List<Object> buf = new ArrayList<Object>();
         LinkedStack<TreePosition<ArrayTreeNode>> posBuf = new LinkedStack<TreePosition<ArrayTreeNode>>();
         Iterator<ArrayTreeNode> iter = pos.iterator(null, posBuf);

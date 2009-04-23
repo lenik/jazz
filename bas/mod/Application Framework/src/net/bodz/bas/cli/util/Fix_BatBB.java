@@ -25,8 +25,7 @@ public class Fix_BatBB extends BatchEditCLI {
     char fillChar  = ':';
 
     @Override
-    protected EditResult doEditByIO(InputStream in, OutputStream out)
-            throws Throwable {
+    protected EditResult doEditByIO(InputStream in, OutputStream out) throws Throwable {
         int start = 0; // out
 
         ByteBuffer lineBuf = ByteBuffer.allocate(1024);

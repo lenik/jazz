@@ -10,8 +10,7 @@ import net.bodz.bas.ui._TryBlock;
  */
 public abstract class DialogTryBlock extends _TryBlock {
 
-    public DialogTryBlock(UserInterface userInterface, int maxRetry,
-            boolean tryImmediately) {
+    public DialogTryBlock(UserInterface userInterface, int maxRetry, boolean tryImmediately) {
         super(userInterface, maxRetry, tryImmediately);
     }
 
@@ -41,10 +40,8 @@ public abstract class DialogTryBlock extends _TryBlock {
 
     @Override
     protected int ask(Exception e) {
-        int answer = UI.ask(e.getMessage(),
-                e, //
-                Proposals.retry, Proposals.ignore, Proposals.cancel,
-                Proposals.debug);
+        int answer = UI.ask(e.getMessage(), e, //
+                Proposals.retry, Proposals.ignore, Proposals.cancel, Proposals.debug);
         switch (answer) {
         case 0:
             return RETRY;

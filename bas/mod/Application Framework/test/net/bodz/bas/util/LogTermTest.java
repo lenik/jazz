@@ -15,8 +15,7 @@ public class LogTermTest {
         URL url = LogTermTest.class.getResource("LogTerm.lm");
         String levelTempl = Files.readAll(url);
 
-        System.out.println("static String generator = \"" + LogTermTest.class
-                + "\";");
+        System.out.println("static String generator = \"" + LogTermTest.class + "\";");
         TextMap<String> vars = new HashTextMap<String>();
         for (String level : levels) {
             vars.put("name", level.toLowerCase());

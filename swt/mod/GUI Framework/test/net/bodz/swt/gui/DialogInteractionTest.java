@@ -18,15 +18,15 @@ import org.junit.Test;
 public class DialogInteractionTest {
 
     DialogUI ia;
-    Person            person;
+    Person   person;
     {
         person = new Person("Lily", 12, true); //$NON-NLS-1$
         person.setLocation(new Address("12 River", "Z.J.", "CN", 12345, //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 "999-888-777")); //$NON-NLS-1$
     }
 
-    String            lily  = "LiLY"; //$NON-NLS-1$
-    Person            lily2 = person;
+    String   lily  = "LiLY"; //$NON-NLS-1$
+    Person   lily2 = person;
 
     public DialogInteractionTest() {
         ia = new DialogUI(new Shell());

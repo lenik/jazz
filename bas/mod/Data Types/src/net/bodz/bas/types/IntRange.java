@@ -10,8 +10,7 @@ import java.util.SortedSet;
 import net.bodz.bas.nls.TypesNLS;
 import net.bodz.bas.types.util.Comparators;
 
-public class IntRange extends AbstractSet<Integer> implements
-        NavigableSet<Integer> {
+public class IntRange extends AbstractSet<Integer> implements NavigableSet<Integer> {
 
     private int start;
     private int end;
@@ -43,7 +42,8 @@ public class IntRange extends AbstractSet<Integer> implements
             if (last == start)
                 start++; // now last<start.
             else
-                throw new UnsupportedOperationException(TypesNLS.getString("IntRange.holeAfterRemove")); //$NON-NLS-1$
+                throw new UnsupportedOperationException(TypesNLS
+                        .getString("IntRange.holeAfterRemove")); //$NON-NLS-1$
         }
 
     }
@@ -146,7 +146,8 @@ public class IntRange extends AbstractSet<Integer> implements
             if (last == end - 1)
                 end--; // now last>=end.
             else
-                throw new UnsupportedOperationException(TypesNLS.getString("IntRange.holeAfterRemove")); //$NON-NLS-1$
+                throw new UnsupportedOperationException(TypesNLS
+                        .getString("IntRange.holeAfterRemove")); //$NON-NLS-1$
         }
     }
 
@@ -242,8 +243,8 @@ public class IntRange extends AbstractSet<Integer> implements
     }
 
     @Override
-    public NavigableSet<Integer> subSet(Integer fromElement,
-            boolean fromInclusive, Integer toElement, boolean toInclusive) {
+    public NavigableSet<Integer> subSet(Integer fromElement, boolean fromInclusive,
+            Integer toElement, boolean toInclusive) {
         if (!fromInclusive)
             fromElement++;
         if (toInclusive)

@@ -2,6 +2,8 @@ package net.bodz.dist.ins;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.ResFolder;
@@ -26,31 +28,47 @@ public interface ISession {
 
     LogTerm getLogger();
 
+    // XXX - ...
+    void setLogger(LogTerm logger);
+
     int REBOOT = 1;
 
     Flags getFlags();
 
-    Object get(String attr);
+    void set(String variableName, Object variableValue);
 
-    void set(String attr, Object value);
+    Object get(String variableName);
 
-    File getBaseDir(String name);
+    File getFile(String variableName);
 
-    void setBaseDir(String name, File dir);
+    String expand(String s);
 
-    ResFolder getResFolder();
+    List<ResFolder> getResFolders();
 
-    void setResFolder(ResFolder resFolder);
+    void addResFolder(ResFolder resFolder);
 
-    void setResFolder(File dir);
+    /**
+     * @param beforeIndex
+     *            set to 0 if you want to make the resFolder as default output.
+     */
+    void addResFolder(int beforeIndex, ResFolder resFolder);
 
     ResLink newResource(String resPath) throws IOException;
 
-    ResLink findResource(String resPath) throws IOException;
+    /**
+     * @throws NoSuchElementException
+     *             if specified resource isn't existed.
+     */
+    ResLink findResource(String resPath, boolean autoCreate) throws IOException,
+            NoSuchElementException;
 
     /**
+     * Return attachment from pool, or get a new one.
+     * 
      * @param name
      *            name of the attachment to use
+     * @param autoCreate
+     *            create new attachment resource if not existed
      * @return {@link Attachment} which can be opened later. After used the
      *         attachment, it can be left opened for next time use, all unclosed
      *         attachments are auto closed at the end of the session. The return
@@ -58,7 +76,7 @@ public interface ISession {
      * @throws IOException
      *             if the name is invalid or failed to get the attachment.
      */
-    Attachment getAttachment(String name) throws IOException;
+    Attachment getAttachment(String name, boolean autoCreate) throws IOException;
 
     /**
      * Close all attachments.

@@ -141,8 +141,7 @@ public class PropertyBeanTask extends Task implements IPureTask {
         this.expandMap = expandMap;
     }
 
-    public void addConfiguredRefType(TextElement refTypeText)
-            throws ClassNotFoundException {
+    public void addConfiguredRefType(TextElement refTypeText) throws ClassNotFoundException {
         String typeName = refTypeText.getText();
         Class<?> type = Class.forName(typeName);
         refTypes.add(type);
@@ -234,8 +233,7 @@ public class PropertyBeanTask extends Task implements IPureTask {
                 stp = defaultStopTypePrefixes;
         }
 
-        public void traverse(String _name, Object node, int level)
-                throws Exception {
+        public void traverse(String _name, Object node, int level) throws Exception {
             if (verbose) {
                 String abbr = Strings.ellipse(String.valueOf(node), 30);
                 logger.detail(Strings.repeat(level, ' '), _name, " = " + abbr);
@@ -326,10 +324,8 @@ public class PropertyBeanTask extends Task implements IPureTask {
                     break;
 
                 if (expandProperties) {
-                    BeanInfo beanInfo = Introspector.getBeanInfo(clazz,
-                            Object.class, 0);
-                    for (PropertyDescriptor property : beanInfo
-                            .getPropertyDescriptors()) {
+                    BeanInfo beanInfo = Introspector.getBeanInfo(clazz, Object.class, 0);
+                    for (PropertyDescriptor property : beanInfo.getPropertyDescriptors()) {
                         Method readf = property.getReadMethod();
                         if (readf == null)
                             continue;
@@ -341,8 +337,7 @@ public class PropertyBeanTask extends Task implements IPureTask {
                         try {
                             value = readf.invoke(node);
                         } catch (Exception e) {
-                            value = "Can't read bean property " + name + ": "
-                                    + e;
+                            value = "Can't read bean property " + name + ": " + e;
                         }
                         traverse(join(_name, name), value, level + 1);
                     }
@@ -366,8 +361,7 @@ public class PropertyBeanTask extends Task implements IPureTask {
 
     // delegates
 
-    public void addConfiguredParameter(TypedParameter param)
-            throws ParseException {
+    public void addConfiguredParameter(Parameter param) throws ParseException {
         vCtor.addConfiguredParameter(param);
     }
 

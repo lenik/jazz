@@ -19,7 +19,7 @@ public class RandomSequenceTest {
         int n = seq.next();
         System.out.println(n);
         assertEquals(-1188957731, n);
-        
+
         seq.reset();
         ByteBuffer bb = ByteBuffer.allocate(10);
         seq.next(bb);

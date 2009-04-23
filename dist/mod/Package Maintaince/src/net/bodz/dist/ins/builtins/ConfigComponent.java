@@ -19,8 +19,12 @@ public abstract class ConfigComponent extends _Component {
     }
 
     @Override
-    public abstract ConfigPage createConfig(ISession session, Composite parent,
-            int style);
+    public abstract ConfigPage createConfig(ISession session, Composite parent, int style);
+
+    @Override
+    public double getProgressScaleToParent() {
+        return 0.0;
+    }
 
     @Override
     public SessionJob install(ISession session) {

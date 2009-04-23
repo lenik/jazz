@@ -22,8 +22,7 @@ class DetailMessage extends WindowComposite {
         super(parent, style);
     }
 
-    public DetailMessage(Composite parent, int style, boolean expanded,
-            Composite fitParent) {
+    public DetailMessage(Composite parent, int style, boolean expanded, Composite fitParent) {
         super(parent, style, expanded, fitParent);
     }
 
@@ -95,8 +94,7 @@ public class WindowCompositeTest {
                 System.out.println("Shell size=" + size); //$NON-NLS-1$
             }
         };
-        detail.setImage(SWTResources
-                .getImageRes("/sun/print/resources/oneside.png")); //$NON-NLS-1$
+        detail.setImage(SWTResources.getImageRes("/sun/print/resources/oneside.png")); //$NON-NLS-1$
         detail.setText("Detail Test"); //$NON-NLS-1$
 
         detail.addDetailSwitchListener(new DetailSwitchListener() {

@@ -83,8 +83,8 @@ public class SWTGridStrategy extends SWTStrategy {
         retvalIcons = new MIcon("/icons/full/obj16/field_default_obj.gif"); //$NON-NLS-1$
     }
 
-    public Composite renderStruct(final SWTRenderContext rc, GUIStruct struct,
-            Composite parent, int style) throws RenderException, SWTException {
+    public Composite renderStruct(final SWTRenderContext rc, GUIStruct struct, Composite parent,
+            int style) throws RenderException, SWTException {
         Composite grid = new Composite(parent, style);
         // icon label control
         GridLayout gridLayout = new GridLayout(3, false);
@@ -123,8 +123,7 @@ public class SWTGridStrategy extends SWTStrategy {
             }
             iconLabel.setImage(icon);
         } catch (CreateException e) {
-            throw new RenderException(GUINLS
-                    .getString("SWTGridStrategy.failedToRenderIcon"), e); //$NON-NLS-1$
+            throw new RenderException(GUINLS.getString("SWTGridStrategy.failedToRenderIcon"), e); //$NON-NLS-1$
         }
 
         // Column #2
@@ -137,8 +136,7 @@ public class SWTGridStrategy extends SWTStrategy {
 
         // Column #3
         Control child;
-        child = SWTGridStrategy.this.render(rc, var, grid, styleFx(SWT.NONE,
-                hint));
+        child = SWTGridStrategy.this.render(rc, var, grid, styleFx(SWT.NONE, hint));
 
         Point iconz = iconLabel.computeSize(SWT.DEFAULT, SWT.DEFAULT);
         Point labelz = label.computeSize(SWT.DEFAULT, SWT.DEFAULT);

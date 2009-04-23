@@ -47,8 +47,8 @@ public class AWTDrawTarget2f extends AbstractDrawTarget2f {
     }
 
     @Override
-    public void fillTriangle(float x0, float y0, float x1, float y1, float x2,
-            float y2) throws DrawException {
+    public void fillTriangle(float x0, float y0, float x1, float y1, float x2, float y2)
+            throws DrawException {
         int[] x = new int[3];
         int[] y = new int[3];
         x[0] = (int) x0;
@@ -61,8 +61,7 @@ public class AWTDrawTarget2f extends AbstractDrawTarget2f {
     }
 
     @Override
-    public void fillEllipse(float x0, float y0, float x1, float y1)
-            throws DrawException {
+    public void fillEllipse(float x0, float y0, float x1, float y1) throws DrawException {
         g.fillOval((int) x0, (int) y0, (int) (x1 - x0), (int) (y1 - y0));
     }
 

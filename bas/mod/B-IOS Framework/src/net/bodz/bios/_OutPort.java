@@ -24,8 +24,7 @@ public abstract class _OutPort extends _Port implements OutPort {
         Class<? extends _Port> clazz = getClass();
         PortMeta meta = metas.get(clazz);
         if (meta == null) {
-            Class<?> metaClass = (Class<?>) Annotations.getValue(clazz,
-                    MetaClass.class);
+            Class<?> metaClass = (Class<?>) Annotations.getValue(clazz, MetaClass.class);
             if (metaClass != null)
                 meta = (PortMeta) Types.newInstance(metaClass);
             else

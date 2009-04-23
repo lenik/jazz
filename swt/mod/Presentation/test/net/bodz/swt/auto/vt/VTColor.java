@@ -30,8 +30,7 @@ public class VTColor extends AbstractVisualType {
                 return;
             label.setBackground(new Color(label.getDisplay(), rgb));
             label.setText(rgb.toString());
-            RGB inversedRgb = new RGB(255 - rgb.red, 255 - rgb.green,
-                    255 - rgb.blue);
+            RGB inversedRgb = new RGB(255 - rgb.red, 255 - rgb.green, 255 - rgb.blue);
             label.setForeground(new Color(label.getDisplay(), inversedRgb));
         }
     }

@@ -27,8 +27,7 @@ public abstract class MultipartsFile<T> extends _MapFile<T> {
             try {
                 textKey = keyParser.parse("."); //$NON-NLS-1$
             } catch (ParseException e) {
-                throw new Error(TypesNLS
-                        .getString("MultipartsFile.errorBodyKey"), e); //$NON-NLS-1$
+                throw new Error(TypesNLS.getString("MultipartsFile.errorBodyKey"), e); //$NON-NLS-1$
             }
         return textKey;
     }

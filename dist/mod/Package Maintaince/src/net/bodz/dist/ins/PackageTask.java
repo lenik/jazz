@@ -20,35 +20,31 @@ import org.apache.tools.ant.Task;
 public class PackageTask extends Task {
 
     private Project   project;
-    private ResFolder resFolder;
+    private ResFolder output;
     private int       logLevel;
 
     public PackageTask() {
     }
 
-    public void setProjectClass(String projectClassName)
-            throws ClassNotFoundException, InstantiationException,
-            IllegalAccessException {
+    public void setProjectClass(String projectClassName) throws ClassNotFoundException,
+            InstantiationException, IllegalAccessException {
         Class<?> projectClass = Class.forName(projectClassName);
         project = (Project) projectClass.newInstance();
     }
 
     public void setResFolder(ResFolder resFolder) {
-        if (this.resFolder != null)
-            throw new BuildException("ResFolder is already specified: "
-                    + resFolder);
-        this.resFolder = resFolder;
+        if (this.output != null)
+            throw new BuildException("Output is already specified: " + output);
+        this.output = resFolder;
     }
 
     public void setOutDir(File outdir) {
-        FileResFolder folder = new FileResFolder(outdir);
-        folder.setAutoMkdirs(true);
+        FileResFolder folder = new FileResFolder(outdir, true);
         setResFolder(folder);
     }
 
     public void setOutJar(File zipFile) {
-        ZipResFolder outjar = new ZipResFolder(zipFile);
-        outjar.setAutoMkdirs(true);
+        ZipResFolder outjar = new ZipResFolder(zipFile, true);
         setResFolder(outjar);
     }
 
@@ -64,7 +60,7 @@ public class PackageTask extends Task {
     public void execute() throws BuildException {
         if (project == null)
             throw new BuildException("Project isn't specified");
-        if (resFolder == null)
+        if (output == null)
             throw new BuildException("Resource folder isn't specified");
         TaskLogTerm logger = new TaskLogTerm(this);
         logger.setLevel(logger.getLevel() + logLevel);
@@ -81,7 +77,7 @@ public class PackageTask extends Task {
             }
         };
         ISession session = executor.getSession();
-        session.setResFolder(resFolder);
+        session.addResFolder(0, output);
         try {
             executor.pack();
         } catch (SessionException e) {

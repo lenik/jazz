@@ -15,15 +15,13 @@ public abstract class _Ptr32 extends _RefType {
     /**
      * @return absolute or relative address
      */
-    public abstract int getAddress(Memory memory, int offset)
-            throws AccessException;
+    public abstract int getAddress(Memory memory, int offset) throws AccessException;
 
     /**
      * @param addr
      *            absolute or relative address
      */
-    public abstract void putAddress(Memory memory, int offset, int addr)
-            throws AccessException;
+    public abstract void putAddress(Memory memory, int offset, int addr) throws AccessException;
 
     @Override
     public MemoryWrapOffset get(Memory memory, int offset) throws AccessException {
@@ -36,8 +34,7 @@ public abstract class _Ptr32 extends _RefType {
      *            absolute address
      */
     @Override
-    protected void putLocal(Memory memory, int offset, int targetOffset)
-            throws AccessException {
+    protected void putLocal(Memory memory, int offset, int targetOffset) throws AccessException {
         putAddress(memory, offset, targetOffset);
     }
 
@@ -46,8 +43,8 @@ public abstract class _Ptr32 extends _RefType {
      *            absolute address
      */
     @Override
-    protected void putRemote(Memory memory, int offset, Memory targetMemory,
-            int targetOffset) throws AccessException {
+    protected void putRemote(Memory memory, int offset, Memory targetMemory, int targetOffset)
+            throws AccessException {
         throw new UnsupportedOperationException();
     }
 

@@ -6,7 +6,6 @@ public interface ScriptMethod<T> {
 
     Class<?>[] getParameterTypes();
 
-    T invoke(Object object, Object... parameters)
-            throws IllegalArgumentException, ScriptException;
+    T invoke(Object object, Object... parameters) throws IllegalArgumentException, ScriptException;
 
 }

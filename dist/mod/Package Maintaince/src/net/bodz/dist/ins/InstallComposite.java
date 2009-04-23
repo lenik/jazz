@@ -21,8 +21,7 @@ public class InstallComposite extends WizardComposite {
 
     protected final ISession session;
 
-    public InstallComposite(ISession session, Composite parent, int style)
-            throws UIException {
+    public InstallComposite(ISession session, Composite parent, int style) throws UIException {
         super(parent, style, false);
         this.session = session;
         createPages();
@@ -114,8 +113,7 @@ public class InstallComposite extends WizardComposite {
                 definePage(pageId, new PageFactory() {
                     @Override
                     public PageComposite create(Composite parent) {
-                        return nextComponent.createConfig(session, parent,
-                                SWT.NONE);
+                        return nextComponent.createConfig(session, parent, SWT.NONE);
                     }
                 });
 

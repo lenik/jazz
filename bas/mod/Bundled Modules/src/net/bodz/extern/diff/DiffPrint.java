@@ -146,8 +146,7 @@ public class DiffPrint {
         protected void print_header(String filea, String fileb) {
         }
 
-        protected abstract void print_hunk(List<DiffInfo> list, int start,
-                int end);
+        protected abstract void print_hunk(List<DiffInfo> list, int start, int end);
 
         protected void print_1_line(String pre, Object linbuf) {
             outfile.println(pre + linbuf.toString());
@@ -269,8 +268,7 @@ public class DiffPrint {
                         outfile.println(".."); //$NON-NLS-1$
                         outfile.println("."); //$NON-NLS-1$
                         /* Now change that double dot to the desired single dot. */
-                        outfile.println(i - first1 + first0 + 1
-                                + "s/^\\.\\././"); //$NON-NLS-1$
+                        outfile.println(i - first1 + first0 + 1 + "s/^\\.\\././"); //$NON-NLS-1$
                         inserting = false;
                     } else
                         /* Line is not `.', so output it unmodified. */
@@ -322,8 +320,7 @@ public class DiffPrint {
             String function = find_function(file0, first0);
             if (function != null) {
                 outfile.print(" "); //$NON-NLS-1$
-                outfile.print((function.length() < 40) ? function : function
-                        .substring(0, 40));
+                outfile.print((function.length() < 40) ? function : function.substring(0, 40));
             }
         }
 

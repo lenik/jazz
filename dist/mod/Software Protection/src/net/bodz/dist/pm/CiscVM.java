@@ -29,7 +29,6 @@ public abstract class CiscVM {
         return null;
     }
 
-    protected abstract void execute(int opcode, Object parameter)
-            throws VMException;
+    protected abstract void execute(int opcode, Object parameter) throws VMException;
 
 }

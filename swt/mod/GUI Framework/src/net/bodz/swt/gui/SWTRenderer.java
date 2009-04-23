@@ -38,8 +38,8 @@ public abstract class SWTRenderer implements Renderer {
         }
     }
 
-    public abstract Control render(SWTRenderContext rc, GUIVar<?> var,
-            Composite parent, int style) throws RenderException, SWTException;
+    public abstract Control render(SWTRenderContext rc, GUIVar<?> var, Composite parent, int style)
+            throws RenderException, SWTException;
 
     protected void bindProperty(final GUIVar<?> var, final Control control,
             final PropertyChangeListener listener) {

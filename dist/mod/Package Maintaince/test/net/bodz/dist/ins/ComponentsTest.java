@@ -1,5 +1,6 @@
 package net.bodz.dist.ins;
 
+import net.bodz.bas.io.FileResFolder;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.xml.XMLs;
 
@@ -15,7 +16,7 @@ public class ComponentsTest {
 
         ProjectExecutor executor = new ConsoleExecutor(project);
         ISession session = executor.getSession();
-        session.setResFolder(TestConfig.outDir);
+        session.addResFolder(0, new FileResFolder(TestConfig.outDir, true));
         executor.pack();
 
         TextMap<Object> registry = components.exportRegistry();

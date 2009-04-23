@@ -16,13 +16,11 @@ public class Interps {
         return dereference(format, list, null);
     }
 
-    public static String dereference(String format, List<String> list,
-            String missing) {
+    public static String dereference(String format, List<String> list, String missing) {
         return dereference(format, 0, list, missing);
     }
 
-    public static String dereference(String format, int indexBase,
-            List<String> list, String missing) {
+    public static String dereference(String format, int indexBase, List<String> list, String missing) {
         int len = format.length();
         StringBuffer buffer = new StringBuffer(len);
         for (int i = 0; i < len; i++) {
@@ -68,8 +66,7 @@ public class Interps {
                     continue;
                 }
                 index -= indexBase;
-                String s = (missing != null && index >= list.size()) ? missing
-                        : list.get(index);
+                String s = (missing != null && index >= list.size()) ? missing : list.get(index);
                 buffer.append(s);
                 continue;
             }
@@ -103,8 +100,7 @@ public class Interps {
         return dereference(format, new MatcherGroupList(matcher));
     }
 
-    public static String dereference(String format, Matcher matcher,
-            String missing) {
+    public static String dereference(String format, Matcher matcher, String missing) {
         return dereference(format, new MatcherGroupList(matcher), missing);
     }
 

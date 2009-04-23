@@ -139,13 +139,11 @@ public class Providers {
                                 throw new ParseException(e);
                             }
                             if (slots.length == 0)
-                                throw new ParseException(
-                                        SysNLS.getString("Providers.noSlot")); //$NON-NLS-1$
+                                throw new ParseException(SysNLS.getString("Providers.noSlot")); //$NON-NLS-1$
                             int got = -1;
                             for (int i = 0; i < slots.length; i++) {
                                 String slotId = ":" + slots[i]; //$NON-NLS-1$
-                                sprov = tryConfig(name, library, slotId,
-                                        parameters);
+                                sprov = tryConfig(name, library, slotId, parameters);
                                 if (hasToken(sprov)) {
                                     got = i;
                                     break;
@@ -165,8 +163,8 @@ public class Providers {
             return provider;
         }
 
-        SunPKCS11 tryConfig(String name, String library, String slot,
-                TextMap<String> parameters) throws IOException {
+        SunPKCS11 tryConfig(String name, String library, String slot, TextMap<String> parameters)
+                throws IOException {
             TempCharOut out = getTemp();
             if (name != null)
                 out.println("name = " + name); //$NON-NLS-1$

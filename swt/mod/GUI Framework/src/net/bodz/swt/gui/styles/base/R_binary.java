@@ -13,8 +13,8 @@ import org.eclipse.swt.widgets.Control;
 public class R_binary extends SWTRenderer {
 
     @Override
-    public Control render(final SWTRenderContext rc, GUIVar<?> var,
-            Composite parent, int style) throws RenderException, SWTException {
+    public Control render(final SWTRenderContext rc, GUIVar<?> var, Composite parent, int style)
+            throws RenderException, SWTException {
         throw new NotImplementedException();
     }
 

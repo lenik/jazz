@@ -8,8 +8,10 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.Reader;
 import java.io.Writer;
+import java.util.jar.JarFile;
 import java.util.jar.JarInputStream;
 import java.util.jar.JarOutputStream;
+import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
@@ -29,9 +31,13 @@ public interface Attachment {
 
     ObjectOutputStream getObjectOut() throws IOException;
 
+    ZipFile getZipFile() throws IOException;
+
     ZipInputStream getZipIn() throws IOException;
 
     ZipOutputStream getZipOut() throws IOException;
+
+    JarFile getJarFile() throws IOException;
 
     JarInputStream getJarIn() throws IOException;
 

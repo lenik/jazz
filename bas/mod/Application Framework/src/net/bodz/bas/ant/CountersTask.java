@@ -34,15 +34,13 @@ public class CountersTask extends Task implements IPureTask {
 
     public void setFile(File file) throws IOException {
         if (classHint != null)
-            throw new IllegalUsageException("already specified to load from "
-                    + classHint);
+            throw new IllegalUsageException("already specified to load from " + classHint);
         this.loadFile = file;
     }
 
     public void setClassHint(String classHint) {
         if (loadFile != null)
-            throw new IllegalUsageException("already specified to load from "
-                    + loadFile);
+            throw new IllegalUsageException("already specified to load from " + loadFile);
         this.classHint = classHint;
     }
 

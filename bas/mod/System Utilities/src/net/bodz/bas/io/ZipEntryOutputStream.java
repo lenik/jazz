@@ -15,14 +15,12 @@ public class ZipEntryOutputStream extends OutputStream {
         this.out = out;
     }
 
-    public ZipEntryOutputStream(ZipOutputStream out, ZipEntry entry)
-            throws IOException {
+    public ZipEntryOutputStream(ZipOutputStream out, ZipEntry entry) throws IOException {
         this(out);
         out.putNextEntry(entry);
     }
 
-    public ZipEntryOutputStream(ZipOutputStream out, String name)
-            throws IOException {
+    public ZipEntryOutputStream(ZipOutputStream out, String name) throws IOException {
         this(out, new ZipEntry(name));
     }
 

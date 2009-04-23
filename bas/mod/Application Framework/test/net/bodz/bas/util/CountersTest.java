@@ -10,8 +10,7 @@ public class CountersTest {
 
     @Test
     public void test1() throws Exception {
-        net.bodz.bas.util.Counters counters = new net.bodz.bas.util.Counters(
-                getClass());
+        net.bodz.bas.util.Counters counters = new net.bodz.bas.util.Counters(getClass());
         System.out.println(counters);
         Counter buildid = counters.get("buildid");
         Counter packid = counters.get("packid");

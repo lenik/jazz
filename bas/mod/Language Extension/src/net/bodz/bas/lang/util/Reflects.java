@@ -7,6 +7,7 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
 import net.bodz.bas.lang.Control;
 import net.bodz.bas.lang.a.ReflectField;
@@ -17,6 +18,9 @@ import net.bodz.bas.nls.LangNLS;
 import net.bodz.bas.types.HashTextMap;
 import net.bodz.bas.types.TextMap;
 
+/**
+ * @test ReflT
+ */
 public class Reflects {
 
     private static void setField(Object o, Field field, Object value) {
@@ -37,15 +41,14 @@ public class Reflects {
         return c == void.class ? t : c;
     }
 
-    public static void bind(Class<?> declareClass, Object defineObject)
-            throws ReflectException {
+    public static void bind(Class<?> declareClass, Object defineObject) throws ReflectException {
         assert defineObject != null;
         Class<?> defineClass = defineObject.getClass();
         bind(declareClass, defineClass, defineObject);
     }
 
-    public static void bind(Class<?> declareClass, Class<?> defineClass,
-            Object defineObject) throws ReflectException {
+    public static void bind(Class<?> declareClass, Class<?> defineClass, Object defineObject)
+            throws ReflectException {
         TextMap<PropertyDescriptor> properties = null;
 
         for (Field declareField : declareClass.getDeclaredFields()) {
@@ -53,8 +56,7 @@ public class Reflects {
             ReflectField f = declareField.getAnnotation(ReflectField.class);
             if (f != null) {
                 if (!Field.class.isAssignableFrom(declareField.getType()))
-                    throw new Error(ReflectField.class
-                            + LangNLS.getString("Reflects.notField")); //$NON-NLS-1$
+                    throw new Error(ReflectField.class + LangNLS.getString("Reflects.notField")); //$NON-NLS-1$
                 Class<?> _class = ifvoid(f._class(), defineClass);
                 String name = f.value();
                 if (name.isEmpty())
@@ -103,8 +105,7 @@ public class Reflects {
                 } else {
                     do {
                         try {
-                            Method defMethod = _class.getDeclaredMethod(name,
-                                    parameters);
+                            Method defMethod = _class.getDeclaredMethod(name, parameters);
                             defMethod.setAccessible(true);
                             def = defMethod;
                             break;
@@ -121,8 +122,7 @@ public class Reflects {
                 continue;
             }
 
-            ReflectProperty p = declareField
-                    .getAnnotation(ReflectProperty.class);
+            ReflectProperty p = declareField.getAnnotation(ReflectProperty.class);
             if (p != null) {
                 if (properties == null) {
                     Class<?> _class = ifvoid(p._class(), defineClass);
@@ -133,8 +133,7 @@ public class Reflects {
                         throw new Error(e.getMessage(), e);
                     }
                     properties = new HashTextMap<PropertyDescriptor>();
-                    for (PropertyDescriptor property : beanInfo
-                            .getPropertyDescriptors())
+                    for (PropertyDescriptor property : beanInfo.getPropertyDescriptors())
                         properties.put(property.getName(), property);
                 }
                 String name = p.value();
@@ -157,8 +156,7 @@ public class Reflects {
         }
     }
 
-    public static Field getField(Class<?> clazz, String fieldName)
-            throws ReflectException {
+    public static Field getField(Class<?> clazz, String fieldName) throws ReflectException {
         try {
             return clazz.getField(fieldName);
         } catch (Exception e) {
@@ -166,8 +164,7 @@ public class Reflects {
         }
     }
 
-    public static Field getDeclaredField(Class<?> clazz, String fieldName)
-            throws ReflectException {
+    public static Field getDeclaredField(Class<?> clazz, String fieldName) throws ReflectException {
         try {
             return clazz.getDeclaredField(fieldName);
         } catch (Exception e) {
@@ -175,8 +172,8 @@ public class Reflects {
         }
     }
 
-    public static Method getMethod(Class<?> clazz, String methodName,
-            Class<?>... parameterTypes) throws ReflectException {
+    public static Method getMethod(Class<?> clazz, String methodName, Class<?>... parameterTypes)
+            throws ReflectException {
         try {
             return clazz.getMethod(methodName, parameterTypes);
         } catch (Exception e) {
@@ -201,8 +198,7 @@ public class Reflects {
         }
     }
 
-    public static void set(Object obj, Field field, Object value)
-            throws ReflectException {
+    public static void set(Object obj, Field field, Object value) throws ReflectException {
         try {
             field.set(obj, value);
         } catch (Exception e) {
@@ -210,27 +206,25 @@ public class Reflects {
         }
     }
 
-    public static Object get(Object obj, PropertyDescriptor property)
-            throws ReflectException {
+    public static Object get(Object obj, PropertyDescriptor property) throws ReflectException {
         Method read = property.getReadMethod();
         if (read == null)
-            throw new IllegalArgumentException(LangNLS
-                    .getString("Reflects.property") + property.getName() //$NON-NLS-1$
-                    + LangNLS.getString("Reflects.noread")); //$NON-NLS-1$
+            throw new IllegalArgumentException(
+                    LangNLS.getString("Reflects.property") + property.getName() //$NON-NLS-1$
+                            + LangNLS.getString("Reflects.noread")); //$NON-NLS-1$
         return invoke(obj, read);
     }
 
     public static void set(Object obj, PropertyDescriptor property, Object value) {
         Method write = property.getWriteMethod();
         if (write == null)
-            throw new IllegalArgumentException(LangNLS
-                    .getString("Reflects.property") + property.getName() //$NON-NLS-1$
-                    + LangNLS.getString("Reflects.nowrite")); //$NON-NLS-1$
+            throw new IllegalArgumentException(
+                    LangNLS.getString("Reflects.property") + property.getName() //$NON-NLS-1$
+                            + LangNLS.getString("Reflects.nowrite")); //$NON-NLS-1$
         invoke(obj, write, value);
     }
 
-    public static <T> Constructor<T> getConstructor(Class<T> clazz,
-            Class<?>... parameterTypes) {
+    public static <T> Constructor<T> getConstructor(Class<T> clazz, Class<?>... parameterTypes) {
         try {
             return clazz.getConstructor(parameterTypes);
         } catch (Exception e) {
@@ -264,12 +258,38 @@ public class Reflects {
         }
     }
 
-    public static Object invoke(Object obj, Method method, Object... args)
-            throws ReflectException {
+    public static Object invoke(Object obj, Method method, Object... args) throws ReflectException {
         try {
             return Control.invoke(method, obj, args);
         } catch (Exception e) {
             throw new ReflectException(e.getMessage(), e);
+        }
+    }
+
+    public static Class<?> getNamedSuperclass(Class<?> start) {
+        while (start.isAnonymousClass())
+            start = start.getSuperclass();
+        return start;
+    }
+
+    public static Object getEnclosingInstance(Object innerInstance) {
+        Class<? extends Object> innerClass = innerInstance.getClass();
+        int modifiers = innerClass.getModifiers();
+        if (Modifier.isStatic(modifiers))
+            return null;
+        // Field[] fields = innerClass.getDeclaredFields();
+        // for (Field field : fields)
+        // System.out.println("Field: " + field.getName());
+        int i = 0;
+        while (true) {
+            try {
+                Field outerField = innerClass.getDeclaredField("this$" + i);
+                outerField.setAccessible(true);
+                return get(innerInstance, outerField);
+            } catch (NoSuchFieldException e) {
+                i++;
+                continue;
+            }
         }
     }
 

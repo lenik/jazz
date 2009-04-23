@@ -15,8 +15,7 @@ public class If<T> extends _Functor<T> {
 
     protected T                 evaluated;
 
-    public If(_Functor<Boolean> predicate, _Functor<T> truePart,
-            _Functor<T> falsePart) {
+    public If(_Functor<Boolean> predicate, _Functor<T> truePart, _Functor<T> falsePart) {
         this.predicate = predicate;
         this.truePart = truePart;
         this.falsePart = falsePart;

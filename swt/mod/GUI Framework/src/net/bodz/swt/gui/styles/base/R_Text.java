@@ -31,8 +31,8 @@ import org.eclipse.swt.widgets.Text;
 public class R_Text extends SWTRenderer {
 
     @Override
-    public Control render(final SWTRenderContext rc, final GUIVar<?> var,
-            Composite parent, int style) throws RenderException, SWTException {
+    public Control render(final SWTRenderContext rc, final GUIVar<?> var, Composite parent,
+            int style) throws RenderException, SWTException {
         GUIVarMeta meta = var.getMeta();
         boolean readOnly = meta.isReadOnly();
         String val = String.valueOf(var.get());
@@ -72,8 +72,7 @@ public class R_Text extends SWTRenderer {
             try {
                 parser = TypeParsers.guess(type, true);
             } catch (ParseException e) {
-                throw new RenderException(GUINLS
-                        .getString("R_Text.cantGuessParserForNum") + type); //$NON-NLS-1$
+                throw new RenderException(GUINLS.getString("R_Text.cantGuessParserForNum") + type); //$NON-NLS-1$
             }
             ControlAdapters.commit(text, new CommitAdapter(rc.interact(text)) {
                 @Override

@@ -72,8 +72,7 @@ public class GeomCanvas extends Canvas {
             @Override
             public void paintControl(PaintEvent e) {
                 if (painting)
-                    throw new IllegalStateException(ControlsNLS
-                            .getString("GeomCanvas.noReentrant")); //$NON-NLS-1$
+                    throw new IllegalStateException(ControlsNLS.getString("GeomCanvas.noReentrant")); //$NON-NLS-1$
                 painting = true;
                 Rectangle viewRect = new Rectangle(e.x, e.y, e.width, e.height);
                 paintImpl(e.gc, viewRect, viewOffset);
@@ -326,8 +325,7 @@ public class GeomCanvas extends Canvas {
                         geomRect.y + (geomRect.height - strExt.y) / 2);
                 // gc.setBackground(bg0);
             } else {
-                PaintGeomEvent paintGeomEvent = new PaintGeomEvent(this, gc,
-                        geom, geomRect);
+                PaintGeomEvent paintGeomEvent = new PaintGeomEvent(this, gc, geom, geomRect);
                 for (PaintGeomListener l : pgListeners)
                     l.paintGeom(paintGeomEvent);
             }

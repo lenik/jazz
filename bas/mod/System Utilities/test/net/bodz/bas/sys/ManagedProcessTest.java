@@ -28,7 +28,7 @@ public class ManagedProcessTest {
     static class Cap extends _IOCallback {
 
         private String[] inputs;
-        private BCharOut   buf = new BCharOut();
+        private BCharOut buf = new BCharOut();
 
         public Cap(String... inputs) {
             this.inputs = inputs;
@@ -68,12 +68,10 @@ public class ManagedProcessTest {
 
     static int INTERVAL = 40;
 
-    void test(String cmd, String expected, int expectedExit, String... inputs)
-            throws Exception {
+    void test(String cmd, String expected, int expectedExit, String... inputs) throws Exception {
         if (mtpulse == null) // skip
             return;
-        Process process = Runtime.getRuntime().exec(
-                "mtpulse I" + INTERVAL + " " + cmd); //$NON-NLS-1$ //$NON-NLS-2$
+        Process process = Runtime.getRuntime().exec("mtpulse I" + INTERVAL + " " + cmd); //$NON-NLS-1$ //$NON-NLS-2$
         Cap cap = new Cap(inputs);
         ManagedProcess mp = new ManagedProcess(cap);
         int retval = mp.takeOver(process);

@@ -8,8 +8,7 @@ import java.util.List;
  * 
  * @test DerListTest
  */
-public abstract class DerList<E> extends AbstractList<E> implements
-        Derivation<List<E>> {
+public abstract class DerList<E> extends AbstractList<E> implements Derivation<List<E>> {
 
     private final List<E> pList;
     private final List<E> qList;

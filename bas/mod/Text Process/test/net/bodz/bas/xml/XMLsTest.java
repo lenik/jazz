@@ -44,8 +44,7 @@ public class XMLsTest {
         assertEquals((Integer) 1, tagstat.get("b")); //$NON-NLS-1$
     }
 
-    void testXmlCodec(String name, Object val) throws EncodeException,
-            DecodeException {
+    void testXmlCodec(String name, Object val) throws EncodeException, DecodeException {
         System.out.println("XML encode/decode test of " + name);
         String xml = XMLs.encode(val);
         System.out.println("  Encoded to" + name + ": \n" + xml);

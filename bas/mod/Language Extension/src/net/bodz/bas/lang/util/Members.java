@@ -47,16 +47,14 @@ public class Members {
      * @param stopClass
      *            exclude methods from stop-class and its super classes.
      */
-    public static Iterable<Method> publicMethods(final Class<?> clazz,
-            final Class<?> stopClass) {
+    public static Iterable<Method> publicMethods(final Class<?> clazz, final Class<?> stopClass) {
         return new Iterable<Method>() {
             @Override
             public Iterator<Method> iterator() {
                 return new PublicMethods(clazz) {
                     @Override
                     protected boolean accept(Method m) {
-                        boolean superOfStop = m.getDeclaringClass()
-                                .isAssignableFrom(stopClass);
+                        boolean superOfStop = m.getDeclaringClass().isAssignableFrom(stopClass);
                         return !superOfStop;
                     }
                 };
@@ -64,8 +62,7 @@ public class Members {
         };
     }
 
-    public static Iterable<Method> publicMethods(final Class<?> clazz,
-            final String methodName) {
+    public static Iterable<Method> publicMethods(final Class<?> clazz, final String methodName) {
         assert methodName != null;
         return new Iterable<Method>() {
             @Override
@@ -115,8 +112,7 @@ public class Members {
 
     }
 
-    public static Iterable<Method> allMethods(final Class<?> clazz,
-            final boolean allTree) {
+    public static Iterable<Method> allMethods(final Class<?> clazz, final boolean allTree) {
         return new Iterable<Method>() {
             @Override
             public Iterator<Method> iterator() {
@@ -134,8 +130,8 @@ public class Members {
         return allMethods(clazz, false);
     }
 
-    public static Iterable<Method> allMethods(final Class<?> clazz,
-            final String methodName, final boolean allTree) {
+    public static Iterable<Method> allMethods(final Class<?> clazz, final String methodName,
+            final boolean allTree) {
         assert methodName != null;
         return new Iterable<Method>() {
             @Override
@@ -155,8 +151,7 @@ public class Members {
         };
     }
 
-    public static Iterable<Method> allMethods(final Class<?> clazz,
-            final String methodName) {
+    public static Iterable<Method> allMethods(final Class<?> clazz, final String methodName) {
         return allMethods(clazz, methodName, false);
     }
 
@@ -164,14 +159,12 @@ public class Members {
         return all ? allMethods(clazz) : publicMethods(clazz);
     }
 
-    public static Iterable<Method> methods(final Class<?> clazz,
-            final String methodName, boolean all) {
-        return all ? allMethods(clazz, methodName) : publicMethods(clazz,
-                methodName);
+    public static Iterable<Method> methods(final Class<?> clazz, final String methodName,
+            boolean all) {
+        return all ? allMethods(clazz, methodName) : publicMethods(clazz, methodName);
     }
 
-    public static class PublicConstructors extends
-            PrefetchedIterator<Constructor<?>> {
+    public static class PublicConstructors extends PrefetchedIterator<Constructor<?>> {
 
         private final Constructor<?>[] ctors;
         private int                    index;
@@ -196,8 +189,7 @@ public class Members {
 
     }
 
-    public static Iterable<Constructor<?>> publicConstructors(
-            final Class<?> clazz) {
+    public static Iterable<Constructor<?>> publicConstructors(final Class<?> clazz) {
         return new Iterable<Constructor<?>>() {
             @Override
             public Iterator<Constructor<?>> iterator() {
@@ -206,8 +198,7 @@ public class Members {
         };
     }
 
-    public static class AllConstructors extends
-            PrefetchedIterator<Constructor<?>> {
+    public static class AllConstructors extends PrefetchedIterator<Constructor<?>> {
         private Constructor<?>[] ctors;
         private int              index;
 
@@ -240,8 +231,7 @@ public class Members {
         };
     }
 
-    public static Iterable<Constructor<?>> constructors(final Class<?> clazz,
-            boolean all) {
+    public static Iterable<Constructor<?>> constructors(final Class<?> clazz, boolean all) {
         return all ? allConstructors(clazz) : publicConstructors(clazz);
     }
 
@@ -279,8 +269,7 @@ public class Members {
         };
     }
 
-    public static Iterable<Field> publicFields(final Class<?> clazz,
-            final String fieldName) {
+    public static Iterable<Field> publicFields(final Class<?> clazz, final String fieldName) {
         assert fieldName != null;
         return new Iterable<Field>() {
             @Override
@@ -330,8 +319,7 @@ public class Members {
 
     }
 
-    public static Iterable<Field> allFields(final Class<?> clazz,
-            final boolean allTree) {
+    public static Iterable<Field> allFields(final Class<?> clazz, final boolean allTree) {
         return new Iterable<Field>() {
             @Override
             public Iterator<Field> iterator() {
@@ -349,8 +337,8 @@ public class Members {
         return allFields(clazz, false);
     }
 
-    public static Iterable<Field> allFields(final Class<?> clazz,
-            final String fieldName, final boolean allTree) {
+    public static Iterable<Field> allFields(final Class<?> clazz, final String fieldName,
+            final boolean allTree) {
         assert fieldName != null;
         return new Iterable<Field>() {
             @Override
@@ -370,8 +358,7 @@ public class Members {
         };
     }
 
-    public static Iterable<Field> allFields(final Class<?> clazz,
-            final String fieldName) {
+    public static Iterable<Field> allFields(final Class<?> clazz, final String fieldName) {
         return allFields(clazz, fieldName, false);
     }
 
@@ -379,14 +366,11 @@ public class Members {
         return all ? allFields(clazz) : publicFields(clazz);
     }
 
-    public static Iterable<Field> fields(final Class<?> clazz,
-            final String fieldName, boolean all) {
-        return all ? allFields(clazz, fieldName) : publicFields(clazz,
-                fieldName);
+    public static Iterable<Field> fields(final Class<?> clazz, final String fieldName, boolean all) {
+        return all ? allFields(clazz, fieldName) : publicFields(clazz, fieldName);
     }
 
-    public static Method findDeclaredMethod(Class<?> clazz, String name,
-            Class<?>... parameterTypes) {
+    public static Method findDeclaredMethod(Class<?> clazz, String name, Class<?>... parameterTypes) {
         while (clazz != null) {
             try {
                 Method method = clazz.getDeclaredMethod(name, parameterTypes);

@@ -11,8 +11,7 @@ public class Runnables {
         };
     }
 
-    public static Runnable cast(
-            final RunnableThrows<? extends Throwable> runnable) {
+    public static Runnable cast(final RunnableThrows<? extends Throwable> runnable) {
         return new Runnable() {
             @Override
             public void run() {

@@ -70,8 +70,7 @@ public class SWTShape2f implements Shape2f {
         return delegatee.convertTo(shapeClass);
     }
 
-    public Shape2f crop(float x0, float y0, float x1, float y1, float x2,
-            float y2) {
+    public Shape2f crop(float x0, float y0, float x1, float y1, float x2, float y2) {
         return delegatee.crop(x0, y0, x1, y1, x2, y2);
     }
 

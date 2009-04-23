@@ -28,8 +28,7 @@ public class EclipseProject {
     public static EclipseProject findFromCWD() {
         File base = SJProject.findProjectBase(new File(".")); //$NON-NLS-1$
         if (base == null)
-            throw new RuntimeException(AppNLS
-                    .getString("EclipseProject.cantFindProject")); //$NON-NLS-1$
+            throw new RuntimeException(AppNLS.getString("EclipseProject.cantFindProject")); //$NON-NLS-1$
         return new EclipseProject(base);
     }
 
@@ -48,8 +47,8 @@ public class EclipseProject {
         try {
             XMLs.parse(cpFile, new DefaultHandler() {
                 @Override
-                public void startElement(String uri, String localName,
-                        String name, Attributes attributes) throws SAXException {
+                public void startElement(String uri, String localName, String name,
+                        Attributes attributes) throws SAXException {
                     if (!"classpathentry".equals(name)) //$NON-NLS-1$
                         return;
                     String kind = attributes.getValue("kind"); //$NON-NLS-1$

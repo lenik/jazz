@@ -36,7 +36,7 @@ import org.junit.Test;
  */
 public class DiffTest {
 
-    private static String[] f1 = { "hello" }; //$NON-NLS-1$
+    private static String[] f1 = { "hello" };       //$NON-NLS-1$
     private static String[] f2 = { "hello", "bye" }; //$NON-NLS-1$ //$NON-NLS-2$
 
     @Test
@@ -59,10 +59,8 @@ public class DiffTest {
      * Oellinger.
      */
     public void testSwap() {
-        final Integer[] l1 = loadArray(new int[] { 1, 2, 4, 7, 9, 35, 56, 58,
-                76 });
-        final Integer[] l2 = loadArray(new int[] { 1, 2, 4, 76, 9, 35, 56, 58,
-                7 });
+        final Integer[] l1 = loadArray(new int[] { 1, 2, 4, 7, 9, 35, 56, 58, 76 });
+        final Integer[] l2 = loadArray(new int[] { 1, 2, 4, 76, 9, 35, 56, 58, 7 });
         _GNUDiff diff = new _GNUDiff(Arrays.asList(l1), Arrays.asList(l2));
         List<DiffInfo> script = diff.diff_2(false);
         // script should have two changes
@@ -82,7 +80,7 @@ public class DiffTest {
     }
 
     private static String[] test1 = { "aaa", "bbb", "ccc", "ddd", "eee", "fff", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
-            "ggg", "hhh", "iii"  }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            "ggg", "hhh", "iii"  };            //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     private static String[] test2 = { "aaa", "jjj", "kkk", "lll", "bbb", "ccc", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
             "hhh", "iii", "mmm", "nnn", "ppp" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 
@@ -96,8 +94,8 @@ public class DiffTest {
         _GNUDiff diff = new _GNUDiff(Arrays.asList(test1), Arrays.asList(test2));
         List<DiffInfo> script = diff.diff_2(false);
         StringWriter wtr = new StringWriter();
-        DiffPrint.Base p = new DiffPrint.UnifiedPrint(Arrays.asList(test1),
-                Arrays.asList(test2), CharOuts.get(wtr));
+        DiffPrint.Base p = new DiffPrint.UnifiedPrint(Arrays.asList(test1), Arrays.asList(test2),
+                CharOuts.get(wtr));
         // p.print_header("test1","test2");
         p.print_script(script);
         /*

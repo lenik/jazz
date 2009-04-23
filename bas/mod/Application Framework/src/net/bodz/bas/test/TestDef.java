@@ -7,8 +7,7 @@ public class TestDef {
     public final Relation relation;
     public final Object   expected;
 
-    public TestDef(String comment, Object input, Relation relation,
-            Object expected) {
+    public TestDef(String comment, Object input, Relation relation, Object expected) {
         this.relation = relation;
         this.input = input;
         this.expected = expected;

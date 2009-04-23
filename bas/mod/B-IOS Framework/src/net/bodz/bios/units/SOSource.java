@@ -23,8 +23,7 @@ public abstract class SOSource extends SOUnit implements Source {
     }
 
     @Override
-    public abstract boolean pump(int timeout) throws IOException,
-            InterruptedException;
+    public abstract boolean pump(int timeout) throws IOException, InterruptedException;
 
     @Override
     public boolean pump() throws IOException {

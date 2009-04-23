@@ -17,8 +17,7 @@ public interface ScriptClass<T> extends Meta {
 
     Object get(Object object, String fieldName) throws ScriptException;
 
-    void set(Object object, String fieldName, Object newValue)
-            throws ScriptException;
+    void set(Object object, String fieldName, Object newValue) throws ScriptException;
 
     ScriptMethod<?>[] getMethods();
 
@@ -27,8 +26,7 @@ public interface ScriptClass<T> extends Meta {
     /** return null if not exists */
     <R> ScriptMethod<R> getMethod(String name);
 
-    Object invoke(Object object, String methodName, Object... parameters)
-            throws ScriptException;
+    Object invoke(Object object, String methodName, Object... parameters) throws ScriptException;
 
     T cast(Object object) throws ScriptException;
 

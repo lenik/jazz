@@ -17,8 +17,8 @@ import org.eclipse.swt.widgets.Label;
 public abstract class _R_Object extends SWTRenderer {
 
     @Override
-    public Control render(final SWTRenderContext rc, GUIVar<?> var,
-            Composite parent, int style) throws RenderException, SWTException {
+    public Control render(final SWTRenderContext rc, GUIVar<?> var, Composite parent, int style)
+            throws RenderException, SWTException {
         GUIVarMeta meta = var.getMeta();
         Control control = null;
         try {
@@ -42,8 +42,7 @@ public abstract class _R_Object extends SWTRenderer {
         }
     }
 
-    protected abstract Control renderObject(final SWTRenderContext rc,
-            GUIVar<?> var, Composite parent, int style) throws RenderException,
-            SWTException;
+    protected abstract Control renderObject(final SWTRenderContext rc, GUIVar<?> var,
+            Composite parent, int style) throws RenderException, SWTException;
 
 }

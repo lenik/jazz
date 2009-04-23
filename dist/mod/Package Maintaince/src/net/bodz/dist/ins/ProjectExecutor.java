@@ -1,10 +1,11 @@
 package net.bodz.dist.ins;
 
+import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.ui.UserInterface;
-import net.bodz.bas.util.JobAdaptor;
+import net.bodz.bas.util.JobObserver;
 import net.bodz.bas.util.LogTerm;
 
-public abstract class ProjectExecutor extends JobAdaptor {
+public abstract class ProjectExecutor extends JobObserver {
 
     protected final Project       project;
     protected final ISession      session;
@@ -12,8 +13,7 @@ public abstract class ProjectExecutor extends JobAdaptor {
     protected final UserInterface UI;
     protected final LogTerm       L;
 
-    public ProjectExecutor(Project project, UserInterface userInterface,
-            LogTerm logger) {
+    public ProjectExecutor(Project project, UserInterface userInterface, LogTerm logger) {
         if (project == null)
             throw new NullPointerException("project");
         if (userInterface == null)
@@ -28,8 +28,7 @@ public abstract class ProjectExecutor extends JobAdaptor {
         this.L = logger;
     }
 
-    public ProjectExecutor(ISession session, UserInterface userInterface,
-            LogTerm logger) {
+    public ProjectExecutor(ISession session, UserInterface userInterface, LogTerm logger) {
         if (session == null)
             throw new NullPointerException("session");
         this.project = session.getProject();
@@ -55,20 +54,32 @@ public abstract class ProjectExecutor extends JobAdaptor {
     public void install() throws SessionException {
         session.loadRegistry();
         execute(Component.INSTALL, session);
+        session.closeAttachments();
     }
 
     public void uninstall() throws SessionException {
         session.loadRegistry();
         execute(Component.UNINSTALL, session);
+        session.closeAttachments();
     }
 
     void execute(int type, ISession session) throws SessionException {
-        SessionJob job = project.execute(type, session);
-        bind(job);
+        LogTerm _logger = session.getLogger();
         try {
-            job.run();
+            session.setLogger(L);
+            SessionJob job = project.execute(type, session);
+            if (job == null)
+                return;
+            if (L.showDebug())
+                job.dump(CharOuts.stdout);
+            bind(job);
+            try {
+                job.run();
+            } finally {
+                unbind(job);
+            }
         } finally {
-            unbind(job);
+            session.setLogger(_logger);
         }
     }
 

@@ -13,8 +13,7 @@ public class MapBinding {
     private final ScriptClass<?> sclass;
     private final Object         instance;
 
-    public MapBinding(Class<?> clazz, Object instance, boolean forceAccess)
-            throws ScriptException {
+    public MapBinding(Class<?> clazz, Object instance, boolean forceAccess) throws ScriptException {
         assert clazz != null;
         this.sclass = Scripts.convertClass(clazz, forceAccess);
         this.instance = instance;
@@ -24,8 +23,7 @@ public class MapBinding {
         this(clazz, instance, false);
     }
 
-    public MapBinding(Object object, boolean forceAccess)
-            throws ScriptException {
+    public MapBinding(Object object, boolean forceAccess) throws ScriptException {
         this(object.getClass(), object, forceAccess);
     }
 

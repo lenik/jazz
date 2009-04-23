@@ -266,13 +266,11 @@ public interface Polygon2f extends Shape2f, ShapeAmount2f, EditablePointSet2f {
         static final long serialVersionUID = -3404181840736093596L;
         static final int  DEFAULT_SEGMENTS = 100;
 
-        public SampleEllipse(float x0, float y0, float x1, float y1,
-                int segments, float angleOffset) {
+        public SampleEllipse(float x0, float y0, float x1, float y1, int segments, float angleOffset) {
             super(sample(x0, y0, x1, y1, segments, angleOffset));
         }
 
-        public SampleEllipse(float x0, float y0, float x1, float y1,
-                int segments) {
+        public SampleEllipse(float x0, float y0, float x1, float y1, int segments) {
             this(x0, y0, x1, y1, segments, 0.0f);
         }
 
@@ -280,8 +278,8 @@ public interface Polygon2f extends Shape2f, ShapeAmount2f, EditablePointSet2f {
             this(x0, y0, x1, y1, DEFAULT_SEGMENTS, 0.0f);
         }
 
-        static Pair<float[], float[]> sample(float x0, float y0, float x1,
-                float y1, int segments, float angleOffset) {
+        static Pair<float[], float[]> sample(float x0, float y0, float x1, float y1, int segments,
+                float angleOffset) {
             float cx = (x0 + x1) / 2;
             float cy = (y0 + y1) / 2;
             float rx = Math.abs((x1 - x0) / 2);

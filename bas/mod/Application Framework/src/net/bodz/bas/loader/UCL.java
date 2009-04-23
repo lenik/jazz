@@ -24,8 +24,7 @@ public class UCL {
     static {
         Class<?> clazz = URLClassLoader.class;
         try {
-            URLClassLoader_addURL = clazz
-                    .getDeclaredMethod("addURL", URL.class); //$NON-NLS-1$
+            URLClassLoader_addURL = clazz.getDeclaredMethod("addURL", URL.class); //$NON-NLS-1$
             URLClassLoader_addURL.setAccessible(true);
         } catch (SecurityException e) {
         } catch (NoSuchMethodException e) {
@@ -37,8 +36,7 @@ public class UCL {
      * @return {@link URLClassLoader} which contains the specified url, or
      *         <code>null</code> if not found.
      */
-    public static URLClassLoader exists(ClassLoader cl, URL url,
-            boolean findParents) {
+    public static URLClassLoader exists(ClassLoader cl, URL url, boolean findParents) {
         if (url == null)
             throw new NullPointerException();
         while (cl != null) {

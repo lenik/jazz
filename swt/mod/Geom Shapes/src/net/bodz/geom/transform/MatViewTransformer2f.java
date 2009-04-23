@@ -7,8 +7,7 @@ import net.bodz.math.mat.Matrix2f;
 import net.bodz.math.mat.Matrix3f;
 import net.bodz.math.mat.Mats;
 
-public class MatViewTransformer2f extends AbstractTransformer2f implements
-        ViewTransformer2f {
+public class MatViewTransformer2f extends AbstractTransformer2f implements ViewTransformer2f {
 
     public Matrix3f matrix;
 
@@ -27,14 +26,14 @@ public class MatViewTransformer2f extends AbstractTransformer2f implements
             matrix = matrix3f;
     }
 
-    public MatViewTransformer2f(float x00, float x01, float x02, float x10,
-            float x11, float x12, float x20, float x21, float x22) {
+    public MatViewTransformer2f(float x00, float x01, float x02, float x10, float x11, float x12,
+            float x20, float x21, float x22) {
         matrix = new Matrix3f(x00, x01, x02, x10, x11, x12, x20, x21, x22);
     }
 
     public MatViewTransformer2f(Matrix2f matrix2f) {
-        matrix = new Matrix3f(matrix2f.x00, matrix2f.x01, 0.0f, matrix2f.x10,
-                matrix2f.x11, 0.0f, 0.0f, 0.0f, 1.0f);
+        matrix = new Matrix3f(matrix2f.x00, matrix2f.x01, 0.0f, matrix2f.x10, matrix2f.x11, 0.0f,
+                0.0f, 0.0f, 1.0f);
     }
 
     public MatViewTransformer2f(float x00, float x01, float x10, float x11) {

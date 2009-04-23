@@ -2,7 +2,6 @@ package net.bodz.bas.functors;
 
 import net.bodz.bas.lang.FunctorException;
 
-
 public class ValidationException extends FunctorException {
 
     private static final long serialVersionUID = 3536130039204718545L;

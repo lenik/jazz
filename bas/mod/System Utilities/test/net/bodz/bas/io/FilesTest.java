@@ -31,8 +31,7 @@ public class FilesTest {
     public void testGetClassFile() throws Exception {
         TestDefs.tests(new TestEval<String>() {
             public Object eval(String input) throws Throwable {
-                return Files.readAll(Files.classData(FilesTest.class, input),
-                        "utf-8"); //$NON-NLS-1$
+                return Files.readAll(Files.classData(FilesTest.class, input), "utf-8"); //$NON-NLS-1$
             }
         }, //
                 EQ("data", "Hello, world!")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -134,8 +133,7 @@ public class FilesTest {
 
     @Test
     public void testFind1() {
-        List<File> find = Files
-                .find("K:/workspace/net.bodz/*/mod/*/src/net/bodz"); //$NON-NLS-1$
+        List<File> find = Files.find("K:/workspace/net.bodz/*/mod/*/src/net/bodz"); //$NON-NLS-1$
         if (find == null)
             System.out.println("no match"); //$NON-NLS-1$
         else

@@ -22,8 +22,7 @@ public abstract class _ResLink implements ResLink {
     }
 
     @Override
-    public Writer openWriter(boolean append, String encoding)
-            throws IOException {
+    public Writer openWriter(boolean append, String encoding) throws IOException {
         OutputStream out = openOutputStream(append);
         Writer writer;
         if (encoding == null)

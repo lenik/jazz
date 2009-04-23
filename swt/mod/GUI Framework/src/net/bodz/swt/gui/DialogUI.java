@@ -122,8 +122,7 @@ public class DialogUI extends _UserInterface {
     public void setIcon(String alias) {
         String respath = aliases.get(alias);
         if (respath == null)
-            throw new IllegalArgumentException(GUINLS
-                    .getString("SWTInteraction.badicon") //$NON-NLS-1$
+            throw new IllegalArgumentException(GUINLS.getString("SWTInteraction.badicon") //$NON-NLS-1$
                     + alias);
         Image image = SWTResources.getImageRes(respath);
         setIcon(image);
@@ -166,8 +165,7 @@ public class DialogUI extends _UserInterface {
         }
 
         @Override
-        protected void createUserButtons(Composite parent)
-                throws CreateException {
+        protected void createUserButtons(Composite parent) throws CreateException {
             // already created.
         }
 
@@ -189,8 +187,7 @@ public class DialogUI extends _UserInterface {
     public void alert(String title, final Object detail) {
         SimpleDialog dialog = new _Dialog(parent, style, title) {
             @Override
-            protected void createDetail(Composite parent)
-                    throws CreateException {
+            protected void createDetail(Composite parent) throws CreateException {
                 SWTRenderContext rc = getRenderContext();
                 try {
                     strategy.render(rc, detail, parent, SWT.NONE);
@@ -200,8 +197,7 @@ public class DialogUI extends _UserInterface {
             }
 
             @Override
-            protected void createButtons(Composite parent) throws SWTException,
-                    CreateException {
+            protected void createButtons(Composite parent) throws SWTException, CreateException {
                 addOKButton(parent);
             }
         };
@@ -218,8 +214,7 @@ public class DialogUI extends _UserInterface {
             SWTRenderContext rc = getRenderContext();
 
             @Override
-            protected void createDetail(Composite parent)
-                    throws CreateException {
+            protected void createDetail(Composite parent) throws CreateException {
                 try {
                     strategy.render(rc, detail, parent, SWT.NONE);
                 } catch (Exception e) {
@@ -228,8 +223,7 @@ public class DialogUI extends _UserInterface {
             }
 
             @Override
-            protected void createButtons(Composite parent) throws SWTException,
-                    CreateException {
+            protected void createButtons(Composite parent) throws SWTException, CreateException {
                 addYesButton(parent);
                 addNoButton(parent);
             }
@@ -243,14 +237,12 @@ public class DialogUI extends _UserInterface {
     }
 
     @Override
-    public int ask(String title, final Object detail,
-            final IProposal... proposals) {
+    public int ask(String title, final Object detail, final IProposal... proposals) {
         SimpleDialog dialog = new _Dialog(parent, style, title) {
             SWTRenderContext rc = getRenderContext();
 
             @Override
-            protected void createDetail(Composite parent)
-                    throws CreateException {
+            protected void createDetail(Composite parent) throws CreateException {
                 try {
                     strategy.render(rc, detail, parent, SWT.NONE);
                 } catch (Exception e) {
@@ -259,8 +251,7 @@ public class DialogUI extends _UserInterface {
             }
 
             @Override
-            protected void createButtons(Composite parent) throws SWTException,
-                    CreateException {
+            protected void createButtons(Composite parent) throws SWTException, CreateException {
                 for (int i = 0; i < proposals.length; i++) {
                     IProposal p = proposals[i];
                     Image image = null;
@@ -272,8 +263,7 @@ public class DialogUI extends _UserInterface {
                     int m = Strings.indexOfIgnoreCase(text, c);
                     if (m != -1)
                         text = text.substring(0, m) + "&" + text.substring(m);
-                    Button button = addButton(parent, SWT.NONE, image, text, i,
-                            false);
+                    Button button = addButton(parent, SWT.NONE, image, text, i, false);
                     String description = p.getDescription();
                     if (description != null)
                         button.setToolTipText(description);
@@ -291,21 +281,18 @@ public class DialogUI extends _UserInterface {
     }
 
     @Override
-    public <T> T prompt(String title, final Object detail, final Class<T> type,
-            final T initial) {
+    public <T> T prompt(String title, final Object detail, final Class<T> type, final T initial) {
         final TypeParser parser;
         try {
             parser = TypeParsers.guess(type, true);
         } catch (ParseException e) {
-            throw new IllegalUsageError(GUINLS
-                    .getString("SWTInteraction.errparse") + type); //$NON-NLS-1$
+            throw new IllegalUsageError(GUINLS.getString("SWTInteraction.errparse") + type); //$NON-NLS-1$
         }
         SimpleDialog dialog = new _Dialog(parent, style, title) {
             private Text text;
 
             @Override
-            protected void createDetail(Composite parent) throws SWTException,
-                    CreateException {
+            protected void createDetail(Composite parent) throws SWTException, CreateException {
                 SWTRenderContext rc = getRenderContext();
                 try {
                     strategy.render(rc, detail, parent, SWT.NONE);
@@ -361,8 +348,7 @@ public class DialogUI extends _UserInterface {
         private final Control[]        controls;
         private int                    next;
 
-        public PreRenderred(SWTRenderContext rc, Composite parent,
-                SWTStrategy style, int size) {
+        public PreRenderred(SWTRenderContext rc, Composite parent, SWTStrategy style, int size) {
             this.rc = rc;
             this.stack = new StackComposite(parent, SWT.BORDER);
             this.style = style;
@@ -395,14 +381,13 @@ public class DialogUI extends _UserInterface {
     }
 
     @Override
-    public <K> K choice(String title, final Object detail,
-            final Map<K, ?> candidates, final K initial) {
+    public <K> K choice(String title, final Object detail, final Map<K, ?> candidates,
+            final K initial) {
         SimpleDialog dialog = new _Dialog(parent, style, title) {
             SWTRenderContext rc = getRenderContext();
 
             @Override
-            protected void createDetail(Composite parent)
-                    throws CreateException {
+            protected void createDetail(Composite parent) throws CreateException {
                 try {
                     strategy.render(rc, detail, parent, SWT.NONE);
                 } catch (Exception e) {
@@ -418,9 +403,8 @@ public class DialogUI extends _UserInterface {
                     createCombo(parent, this, candidates, initial);
             }
 
-            void createRadios(Composite parent, final Ref<Object> result,
-                    Map<?, ?> candidates, Object initial)
-                    throws CreateException {
+            void createRadios(Composite parent, final Ref<Object> result, Map<?, ?> candidates,
+                    Object initial) throws CreateException {
                 parent.setLayout(new GridLayout(2, false));
                 for (Entry<?, ?> entry : candidates.entrySet()) {
                     final Object key = entry.getKey();
@@ -442,9 +426,8 @@ public class DialogUI extends _UserInterface {
                 }
             }
 
-            void createCombo(Composite parent, final Ref<Object> result,
-                    Map<?, ?> candidates, final Object initial)
-                    throws CreateException {
+            void createCombo(Composite parent, final Ref<Object> result, Map<?, ?> candidates,
+                    final Object initial) throws CreateException {
                 FillLayout fillLayout = new FillLayout();
                 fillLayout.type = SWT.VERTICAL;
                 parent.setLayout(fillLayout);
@@ -455,8 +438,8 @@ public class DialogUI extends _UserInterface {
                 int size = candidates.size();
                 final Object[] keys = new Object[size];
                 boolean hasDetail = hasDetail(candidates.values());
-                final PreRenderred preRenderred = hasDetail ? new PreRenderred(
-                        rc, parent, strategy, size) : null;
+                final PreRenderred preRenderred = hasDetail ? new PreRenderred(rc, parent,
+                        strategy, size) : null;
                 try {
                     int index = 0;
                     for (Entry<?, ?> entry : candidates.entrySet()) {
@@ -508,8 +491,8 @@ public class DialogUI extends _UserInterface {
     }
 
     @Override
-    public <K> Set<K> choices(String title, final Object detail,
-            final Map<K, ?> candidates, K... initial) {
+    public <K> Set<K> choices(String title, final Object detail, final Map<K, ?> candidates,
+            K... initial) {
         final Set<K> initials = new HashSet<K>(initial.length);
 
         for (K k : initial)
@@ -519,8 +502,7 @@ public class DialogUI extends _UserInterface {
             Ref<Set<K>>      selection;
 
             @Override
-            protected void createDetail(Composite parent)
-                    throws CreateException {
+            protected void createDetail(Composite parent) throws CreateException {
                 try {
                     strategy.render(rc, detail, parent, SWT.NONE);
                 } catch (Exception e) {
@@ -542,8 +524,8 @@ public class DialogUI extends _UserInterface {
                 set(set);
             }
 
-            Ref<Set<K>> createChecks(Composite parent, Map<K, ?> candidates,
-                    Set<K> initial) throws CreateException {
+            Ref<Set<K>> createChecks(Composite parent, Map<K, ?> candidates, Set<K> initial)
+                    throws CreateException {
                 parent.setLayout(new GridLayout(2, false));
 
                 class KB {
@@ -589,8 +571,8 @@ public class DialogUI extends _UserInterface {
                 };
             }
 
-            Ref<Set<K>> createList(Composite parent, Map<K, ?> candidates,
-                    Set<K> initial) throws CreateException {
+            Ref<Set<K>> createList(Composite parent, Map<K, ?> candidates, Set<K> initial)
+                    throws CreateException {
                 FillLayout fillLayout = new FillLayout();
                 fillLayout.type = SWT.VERTICAL;
                 parent.setLayout(fillLayout);
@@ -608,8 +590,8 @@ public class DialogUI extends _UserInterface {
 
                 final int size = candidates.size();
                 boolean hasDetail = hasDetail(candidates.values());
-                final PreRenderred preRenderred = hasDetail ? new PreRenderred(
-                        rc, parent, strategy, size) : null;
+                final PreRenderred preRenderred = hasDetail ? new PreRenderred(rc, parent,
+                        strategy, size) : null;
                 final _K[] keys = new _K[size];
                 int index = 0;
                 for (Entry<K, ?> entry : candidates.entrySet())

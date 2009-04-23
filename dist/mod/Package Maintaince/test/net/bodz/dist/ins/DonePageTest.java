@@ -13,8 +13,7 @@ public class DonePageTest {
 
     public static void main(String[] args) throws IOException {
         final Project project = new TestProject();
-        final ISession session = new Session(project, ConsoleUI.stdout,
-                LogTerms.console);
+        final ISession session = new Session(project, ConsoleUI.stdout, LogTerms.console);
         PageTestApp app = new PageTestApp() {
             @Override
             protected PageComposite createPage(Composite parent, int style) {

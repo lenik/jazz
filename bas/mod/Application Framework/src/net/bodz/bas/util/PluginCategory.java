@@ -57,11 +57,10 @@ public class PluginCategory {
     public void register(String pluginId, PluginTypeEx typeEx) {
         assert typeEx != null;
         if (registry.containsKey(pluginId))
-            throw new IllegalArgumentException(String.format(
-                    AppNLS.getString("PluginCategory.pluginAlreadyRegistered_s"), pluginId)); //$NON-NLS-1$
+            throw new IllegalArgumentException(String.format(AppNLS
+                    .getString("PluginCategory.pluginAlreadyRegistered_s"), pluginId)); //$NON-NLS-1$
         if (!categoryBaseType.isAssignableFrom(typeEx.getType()))
-            throw new OutOfDomainException(AppNLS
-                    .getString("PluginCategory.wrongCategory")); //$NON-NLS-1$
+            throw new OutOfDomainException(AppNLS.getString("PluginCategory.wrongCategory")); //$NON-NLS-1$
         registry.put(pluginId, typeEx);
     }
 
@@ -69,8 +68,7 @@ public class PluginCategory {
         register(pluginId, new PluginTypeEx(type));
     }
 
-    public void register(String pluginId, Class<? extends Plugin> type,
-            Object outer) {
+    public void register(String pluginId, Class<? extends Plugin> type, Object outer) {
         register(pluginId, new PluginTypeEx(type, outer));
     }
 

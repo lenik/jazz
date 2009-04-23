@@ -7,8 +7,7 @@ import net.bodz.bios.units.SISink;
 
 public abstract class ByteProcessSink extends SISink {
 
-    public abstract void recv(byte[] bytes, int start, int end)
-            throws IOException;
+    public abstract void recv(byte[] bytes, int start, int end) throws IOException;
 
     public void recv(byte[] bytes) throws IOException {
         recv(bytes, 0, bytes.length);

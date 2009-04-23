@@ -48,8 +48,7 @@ public abstract class _Overlay implements Overlay {
      * @throws InterruptedException
      *             可能是系统引起的，或者是因为设计的某个状态变量因为后来的 _paint 调用而取消先前的调用。
      */
-    protected abstract void _paint(GC gc, Rectangle region)
-            throws InterruptedException;
+    protected abstract void _paint(GC gc, Rectangle region) throws InterruptedException;
 
     @Override
     public void invalidate(Rectangle region) {

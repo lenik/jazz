@@ -63,8 +63,7 @@ public class CertSelector {
         this(curl, AUTO);
     }
 
-    public CertSelector(String curl, Provider provider)
-            throws KeyStoreException {
+    public CertSelector(String curl, Provider provider) throws KeyStoreException {
         this(new CURL(curl), provider);
     }
 
@@ -80,16 +79,14 @@ public class CertSelector {
         }
     }
 
-    public CertSelector(CURL curl, int type, Provider provider)
-            throws KeyStoreException {
+    public CertSelector(CURL curl, int type, Provider provider) throws KeyStoreException {
         _parse(curl, type, provider);
     }
 
     static final String defaultStoreType = "JKS"; //$NON-NLS-1$
     static final String KS_NONE          = "-";  //$NON-NLS-1$
 
-    void _parse(CURL curl, int type, Provider provider)
-            throws KeyStoreException {
+    void _parse(CURL curl, int type, Provider provider) throws KeyStoreException {
         if (curl == null)
             throw new NullPointerException("certURL"); //$NON-NLS-1$
         int detType = NONE;
@@ -141,8 +138,8 @@ public class CertSelector {
             }
         }
         if (type > detType)
-            throw new IllegalArgumentException(String.format(
-                    SysNLS.getString("CertSelector.typeIsntCompleted_ss"), type, curl)); //$NON-NLS-1$
+            throw new IllegalArgumentException(String.format(SysNLS
+                    .getString("CertSelector.typeIsntCompleted_ss"), type, curl)); //$NON-NLS-1$
         this.type = type == AUTO ? detType : type;
         if (provider != null) {
             this.provider = provider;
@@ -269,8 +266,7 @@ public class CertSelector {
         return getCertificate(keyStore);
     }
 
-    public Certificate getCertificate(Provider provider)
-            throws KeyStoreException {
+    public Certificate getCertificate(Provider provider) throws KeyStoreException {
         if (type < CERTIFICATE)
             throw new IllegalUsageException();
         KeyStore keyStore = getKeyStore(provider);

@@ -57,8 +57,7 @@ public class LibInstaller {
         });
         for (File file : files) {
             String name = file.getName();
-            String libname = name.substring(0, name.length()
-                    - libSuffix.length());
+            String libname = name.substring(0, name.length() - libSuffix.length());
             installedLibraries.put(libname, file);
         }
     }

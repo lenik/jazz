@@ -45,8 +45,7 @@ public class CURLTest {
         TextMap<String> params = curl.getParameters();
         assertEquals(2, params.size());
         Set<Entry<String, String>> es = params.entrySet();
-        List<Entry<String, String>> list = new ArrayList<Entry<String, String>>(
-                es);
+        List<Entry<String, String>> list = new ArrayList<Entry<String, String>>(es);
         Entry<String, String> e;
         e = list.get(0);
         assertEquals("a", e.getKey()); //$NON-NLS-1$

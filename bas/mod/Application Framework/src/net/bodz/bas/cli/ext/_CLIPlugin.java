@@ -20,8 +20,7 @@ public class _CLIPlugin extends _Plugin implements CLIPlugin {
     }
 
     @Override
-    public void setParameters(Map<String, Object> parameters)
-            throws CLIException, ParseException {
+    public void setParameters(Map<String, Object> parameters) throws CLIException, ParseException {
         if (parameters.isEmpty())
             return;
         ClassOptions<_CLIPlugin> opts = getOptions();

@@ -62,8 +62,7 @@ public class TaskTestApp {
             // if callerClass is in a jar, the default project helper is failed
             // to setBaseDir.
             File altBaseDir = SJProject.getOutputBase(callerClass);
-            project.log("Using alternated base dir: " + altBaseDir,
-                    Project.MSG_WARN);
+            project.log("Using alternated base dir: " + altBaseDir, Project.MSG_WARN);
             project.setBaseDir(altBaseDir);
         }
 
@@ -75,8 +74,7 @@ public class TaskTestApp {
         URL xmlURL = Files.classData(callerClass, "xml");
         File buildFile = Files.getFile(xmlURL);
         if (!buildFile.exists())
-            throw new IllegalUsageException(
-                    "The build file for test isn't existed: " + buildFile);
+            throw new IllegalUsageException("The build file for test isn't existed: " + buildFile);
         load(buildFile);
     }
 
@@ -87,8 +85,7 @@ public class TaskTestApp {
     public void run() {
         String defaultTarget = project.getDefaultTarget();
         if (defaultTarget == null)
-            throw new IllegalUsageError("No default target in the project "
-                    + project);
+            throw new IllegalUsageError("No default target in the project " + project);
         project.executeTarget(defaultTarget);
     }
 

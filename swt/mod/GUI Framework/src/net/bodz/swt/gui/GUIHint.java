@@ -77,28 +77,24 @@ public class GUIHint {
         this(copy);
         this.doc = A_bas.getDoc(aobject);
 
-        Boolean enabled = (Boolean) Ns.getValue(aobject,
-                net.bodz.bas.ui.a.Enabled.class);
+        Boolean enabled = (Boolean) Ns.getValue(aobject, net.bodz.bas.ui.a.Enabled.class);
         if (enabled != null)
             this.enabled = enabled;
 
-        Boolean visible = (Boolean) Ns.getValue(aobject,
-                net.bodz.bas.ui.a.Visible.class);
+        Boolean visible = (Boolean) Ns.getValue(aobject, net.bodz.bas.ui.a.Visible.class);
         if (visible != null)
             this.visible = visible;
 
-        Integer order = (Integer) Ns.getValue(aobject,
-                net.bodz.bas.ui.a.Order.class);
+        Integer order = (Integer) Ns.getValue(aobject, net.bodz.bas.ui.a.Order.class);
         if (order != null)
             this.order = order;
 
-        Integer tabOrder = (Integer) Ns.getValue(aobject,
-                net.bodz.bas.ui.a.TabOrder.class);
+        Integer tabOrder = (Integer) Ns.getValue(aobject, net.bodz.bas.ui.a.TabOrder.class);
         if (tabOrder != null)
             this.tabOrder = tabOrder;
 
-        Factory<?> iconFactory = A_gui.getIconFactory(Ns.getN(aobject,
-                net.bodz.bas.ui.a.Icon.class));
+        Factory<?> iconFactory = A_gui.getIconFactory(Ns
+                .getN(aobject, net.bodz.bas.ui.a.Icon.class));
         if (iconFactory != null)
             this.iconFactory = iconFactory;
 
@@ -107,13 +103,12 @@ public class GUIHint {
         if (labelFactory != null)
             this.labelFactory = labelFactory;
 
-        Factory<?> fontFactory = A_gui.getFontFactory(Ns.getN(aobject,
-                net.bodz.bas.ui.a.Font.class));
+        Factory<?> fontFactory = A_gui.getFontFactory(Ns
+                .getN(aobject, net.bodz.bas.ui.a.Font.class));
         if (fontFactory != null)
             this.fontFactory = fontFactory;
 
-        net.bodz.bas.ui.a.Color colorN = Ns.getN(aobject,
-                net.bodz.bas.ui.a.Color.class);
+        net.bodz.bas.ui.a.Color colorN = Ns.getN(aobject, net.bodz.bas.ui.a.Color.class);
         if (colorN != null) {
             RGB color = A_gui.parseColor(colorN.value());
             RGB back = A_gui.parseColor(colorN.back());
@@ -123,8 +118,7 @@ public class GUIHint {
                 this.backColor = back;
         }
 
-        Point preferredSize = A_gui.parseSize(Ns.getN(aobject,
-                PreferredSize.class));
+        Point preferredSize = A_gui.parseSize(Ns.getN(aobject, PreferredSize.class));
         if (preferredSize != null)
             this.preferredSize = preferredSize;
 

@@ -100,8 +100,7 @@ public class INIFile extends _MapFile<TextMap<String>> {
                         continue;
                     if (line.startsWith("[")) { //$NON-NLS-1$
                         assert line.endsWith("]"); //$NON-NLS-1$
-                        sectionName = line.substring(1, line.length() - 1)
-                                .trim();
+                        sectionName = line.substring(1, line.length() - 1).trim();
                         if (mergeDelim == null) {
                             TextMap<String> section = builder.accept();
                             builder.reset();
@@ -110,8 +109,7 @@ public class INIFile extends _MapFile<TextMap<String>> {
                         } else {
                             String existKey = "exist"; //$NON-NLS-1$
                             if (existKey != null) {
-                                String ekey = sectionName + mergeDelim
-                                        + existKey;
+                                String ekey = sectionName + mergeDelim + existKey;
                                 builder.add(ekey, true);
                             }
                         }

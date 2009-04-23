@@ -18,8 +18,7 @@ public class TestMain extends BasicGUI {
     Object obj;
 
     @Override
-    protected void createInitialView(Composite comp) throws UIException,
-            SWTException {
+    protected void createInitialView(Composite comp) throws UIException, SWTException {
         SWTGridStrategy strategy = new SWTGridStrategy();
         GUIVar<Object> var = GUIVars.wrap(obj);
         strategy.render(null, var, comp, SWT.NONE);

@@ -81,8 +81,7 @@ public abstract class _UserInterface implements UserInterface {
     }
 
     @Override
-    public int choice(String title, Object detail, List<?> candidates,
-            int initial) {
+    public int choice(String title, Object detail, List<?> candidates, int initial) {
         Integer index = choice(title, detail, list2map(candidates), initial);
         return index == null ? -1 : index;
     }
@@ -94,16 +93,13 @@ public abstract class _UserInterface implements UserInterface {
 
     @Override
     public int[] choices(String title, List<?> candidates, int... initial) {
-        Set<Integer> choices = choices(title, list2map(candidates),
-                box(initial));
+        Set<Integer> choices = choices(title, list2map(candidates), box(initial));
         return unbox(choices);
     }
 
     @Override
-    public int[] choices(String title, Object detail, List<?> candidates,
-            int... initial) {
-        Set<Integer> choices = choices(title, detail, list2map(candidates),
-                box(initial));
+    public int[] choices(String title, Object detail, List<?> candidates, int... initial) {
+        Set<Integer> choices = choices(title, detail, list2map(candidates), box(initial));
         return unbox(choices);
     }
 
@@ -112,8 +108,7 @@ public abstract class _UserInterface implements UserInterface {
     }
 
     @Override
-    public int tryBlock(final RunnableThrows<? extends Exception> runnable,
-            int maxRetry) {
+    public int tryBlock(final RunnableThrows<? extends Exception> runnable, int maxRetry) {
         return new _TryBlock(this, maxRetry, false) {
             @Override
             protected void body() throws Exception {

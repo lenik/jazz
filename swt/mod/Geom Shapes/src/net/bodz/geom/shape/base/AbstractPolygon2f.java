@@ -11,8 +11,8 @@ import net.bodz.geom.shape.AbstractShape2f;
 import net.bodz.geom.shape.Shape2f;
 import net.bodz.math.mat.Vector2f;
 
-public abstract class AbstractPolygon2f extends AbstractShape2f implements
-        Polygon2f, Cloneable, Serializable {
+public abstract class AbstractPolygon2f extends AbstractShape2f implements Polygon2f, Cloneable,
+        Serializable {
 
     static final long serialVersionUID = 2318246123146564098L;
 
@@ -175,8 +175,7 @@ public abstract class AbstractPolygon2f extends AbstractShape2f implements
         int end = (int) Math.ceil(index);
         if (start == end)
             return;
-        Point2f point = pointRef(start).lineTo(pointRef(end)).point(
-                index - start);
+        Point2f point = pointRef(start).lineTo(pointRef(end)).point(index - start);
         addPoint(end, point);
     }
 
@@ -420,8 +419,8 @@ public abstract class AbstractPolygon2f extends AbstractShape2f implements
                 continue;
             }
             skips = 0;
-            Triangle2f t = new Triangle2f.Static(temp.pointRef(i), temp
-                    .pointRef(j), temp.pointRef((j + 1) % n));
+            Triangle2f t = new Triangle2f.Static(temp.pointRef(i), temp.pointRef(j), temp
+                    .pointRef((j + 1) % n));
             if (t.area() > 0)
                 ts.add(t);
             temp.removePoint(j);

@@ -9,13 +9,11 @@ public class ShapeIsNotSupported extends RuntimeException {
     }
 
     public ShapeIsNotSupported(String operationName, String className) {
-        super("Shape of " + className + " is not supported by" + operationName
-                + ". ");
+        super("Shape of " + className + " is not supported by" + operationName + ". ");
     }
 
     public ShapeIsNotSupported(String operationName, Class<?> shapeClass) {
-        this(operationName, shapeClass == null ? Object.class : shapeClass
-                .getName());
+        this(operationName, shapeClass == null ? Object.class : shapeClass.getName());
     }
 
     public ShapeIsNotSupported(String operationName, Object shape) {

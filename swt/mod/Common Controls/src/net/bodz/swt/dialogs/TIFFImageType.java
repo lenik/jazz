@@ -22,8 +22,7 @@ public class TIFFImageType extends _ImageType {
     }
 
     @Override
-    public void save(ImageData imageData, OutputStream out, Object params)
-            throws IOException {
+    public void save(ImageData imageData, OutputStream out, Object params) throws IOException {
         if (imageData == null)
             throw new NullPointerException("imageData"); //$NON-NLS-1$
         ImageLoader loader = new ImageLoader();

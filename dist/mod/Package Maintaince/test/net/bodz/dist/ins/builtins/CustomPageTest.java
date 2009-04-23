@@ -17,8 +17,7 @@ public class CustomPageTest {
     @Test
     public void test() throws Exception {
         TestProject project = new TestProject();
-        final ISession session = new Session(project, ConsoleUI.stdout,
-                LogTerms.console);
+        final ISession session = new Session(project, ConsoleUI.stdout, LogTerms.console);
         PageTestApp app = new PageTestApp() {
             @Override
             protected PageComposite createPage(Composite parent, int style) {

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarOutputStream;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
 import net.bodz.bas.io.CharOut;
@@ -32,25 +34,18 @@ import net.bodz.dist.nls.PackNLS;
  */
 public class FileCopy extends _Component {
 
-    private String           baseName;
-
-    /** maybe null, exclude the starting /. */
-    private String           basePath;
+    private final String           baseName;
+    private final String           basePath;
 
     // private File localBase;
-    private String           removal;
-    private Collection<File> files;
+    private final String           removal;
+    private final Collection<File> files;
 
     /** pre-construct the full path to the base dir. */
-    private boolean          preConstruct = true;
+    private final boolean          preConstruct = true;
 
     /** <code>false</code> to exclude empty parent directories */
-    private boolean          dirStruct    = true;
-
-    public FileCopy(String baseName, String basePath, File localBase,
-            Collection<File> files) {
-        this(joinBase(baseName, basePath), localBase, files);
-    }
+    private final boolean          dirStruct    = true;
 
     /**
      * @param basePath
@@ -61,64 +56,53 @@ public class FileCopy extends _Component {
      *            localBase from local paths. using <code>null</code> to ignore
      *            the directory names.
      */
-    public FileCopy(String basePath, File localBase, Collection<File> files) {
+    public FileCopy(String baseName, String basePath, File localBase, Collection<File> files) {
         super(false, true);
-        if (basePath == null)
-            throw new NullPointerException("base"); //$NON-NLS-1$
+        if (baseName == null)
+            throw new NullPointerException("baseName");
         if (files == null)
             throw new NullPointerException("files");
-
-        int slash = basePath.indexOf('/');
-        if (slash == -1) {
-            this.baseName = basePath;
-            this.basePath = null;
-        } else {
-            this.baseName = basePath.substring(0, slash);
-            this.basePath = basePath.substring(slash + 1);
-        }
-
+        this.baseName = baseName;
+        this.basePath = basePath;
         // this.localBase = localBase;
+        String removal = null;
         if (localBase != null) {
-            this.removal = localBase.getPath();
+            removal = localBase.getPath();
             if (localBase.isDirectory())
                 removal += File.separator;
         }
+        this.removal = removal;
         this.files = files;
     }
 
-    public FileCopy(String baseName, String basePath, File localBase,
-            File... files) {
-        this(joinBase(baseName, basePath), localBase, Arrays.asList(files));
-    }
-
-    public FileCopy(String basePath, File localBase, File... files) {
-        this(basePath, localBase, Arrays.asList(files));
+    public FileCopy(String baseName, String basePath, File localBase, File... files) {
+        this(baseName, basePath, localBase, Arrays.asList(files));
     }
 
     public FileCopy(String baseName, String basePath, File... files) {
-        this(joinBase(baseName, basePath), null, Arrays.asList(files));
+        this(baseName, basePath, null, Arrays.asList(files));
     }
 
-    public FileCopy(String basePath, File... files) {
-        this(basePath, null, Arrays.asList(files));
+    public FileCopy(String baseName, String basePath, FileFinder finder) throws IOException {
+        this(baseName, basePath, Files.findBase(finder.getStart()), finder.listFiles());
     }
 
-    public FileCopy(String baseName, String basePath, FileFinder finder)
-            throws IOException {
-        this(joinBase(baseName, basePath), Files.findBase(finder.getStart()),
-                finder.listFiles());
+    private static final String ROOT = null;
+
+    public FileCopy(String baseName, File localBase, Collection<File> files) {
+        this(baseName, ROOT, localBase, files);
     }
 
-    public FileCopy(String basePath, FileFinder finder) throws IOException {
-        this(basePath, Files.findBase(finder.getStart()), finder.listFiles());
+    public FileCopy(String baseName, File localBase, File... files) {
+        this(baseName, ROOT, localBase, files);
     }
 
-    private static String joinBase(String name, String path) {
-        if (path == null)
-            return name;
-        while (path.startsWith("/"))
-            path = path.substring(1);
-        return path + "/" + path;
+    public FileCopy(String baseName, File... files) {
+        this(baseName, ROOT, null, files);
+    }
+
+    public FileCopy(String baseName, FileFinder finder) throws IOException {
+        this(baseName, ROOT, finder);
     }
 
     @Override
@@ -132,12 +116,12 @@ public class FileCopy extends _Component {
         return buf.toString();
     }
 
-    Attachment getAttachment(ISession session) {
+    Attachment getAttachment(ISession session, boolean autoCreate) {
         String id = getId();
         String aname = baseName + "/" + id + ".jar"; //$NON-NLS-1$ //$NON-NLS-2$
         Attachment a;
         try {
-            a = session.getAttachment(aname);
+            a = session.getAttachment(aname, autoCreate);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -173,13 +157,14 @@ public class FileCopy extends _Component {
     class PackJob extends SessionJob {
 
         public PackJob(ISession session) {
-            super(session);
+            super(session, FileCopy.this);
         }
 
         @Override
         protected void _run() {
-            List<String> regList = new ArrayList<String>(files.size());
-            Attachment a = getAttachment(session);
+            int count = files.size();
+            List<String> regList = new ArrayList<String>(count);
+            Attachment a = getAttachment(session, true);
             L.finfo("Pack %s files to %s\n", getId(), a);
 
             JarOutputStream jout;
@@ -189,7 +174,11 @@ public class FileCopy extends _Component {
                 throwException(e);
                 return;
             }
+
+            setProgressSize(count);
+            int index = 0;
             for (File f : files) {
+                setProgressIndex(index++);
                 String path = f.getPath();
                 if (f.isDirectory())
                     if (!dirStruct)
@@ -202,8 +191,7 @@ public class FileCopy extends _Component {
                 else {
                     // fix: see "path += File.separator" above.
                     if (!path.startsWith(removal)) {
-                        String mesg = PackNLS
-                                .getString("FileCopy.notWithinPrefix") + removal //$NON-NLS-1$
+                        String mesg = PackNLS.getString("FileCopy.notWithinPrefix") + removal //$NON-NLS-1$
                                 + ": " + path;
                         if (recoverException(new InstallException(mesg)))
                             continue; // next file
@@ -233,8 +221,7 @@ public class FileCopy extends _Component {
                         JarEntry entry = new JarEntry(dest);
                         jout.putNextEntry(entry);
                         entry.setSize(fileSize);
-                        for (byte[] block : Files.readByBlock(Files.blockSize,
-                                f)) {
+                        for (byte[] block : Files.readByBlock(Files.blockSize, f)) {
                             jout.write(block);
                         }
                         jout.closeEntry();
@@ -259,37 +246,40 @@ public class FileCopy extends _Component {
     class InstallJob extends SessionJob {
 
         public InstallJob(ISession session) {
-            super(session);
+            super(session, FileCopy.this);
         }
 
         @Override
         protected void _run() {
-            File baseDir = session.getBaseDir(baseName);
+            File baseDir = session.getFile(baseName);
             if (!preConstruct)
                 if (basePath != null)
                     baseDir = new File(baseDir, basePath);
             L.finfo("Install %s files to %s\n", getId(), baseDir);
-            Attachment a = getAttachment(session);
-            ZipInputStream zin;
+            String[] regList = (String[]) getRegistryData();
+            if (regList == null)
+                throw new NullPointerException("regList");
+            setProgressSize(regList.length);
+
+            Attachment a = getAttachment(session, false);
+            ZipFile zipFile;
             try {
-                zin = a.getZipIn();
+                zipFile = a.getZipFile();
             } catch (IOException e) {
                 throwException(e);
                 return;
             }
+            int index = 0;
             try {
-                while (true) {
-                    ZipEntry entry;
-                    try {
-                        entry = zin.getNextEntry();
-                    } catch (IOException e) {
-                        if (recoverException(e))
+                for (String name : regList) {
+                    setProgressIndex(index++);
+                    ZipEntry entry = zipFile.getEntry(name);
+                    if (entry == null) {
+                        InstallException ex = new InstallException("Entry isn't existed: " + name);
+                        if (recoverException(ex))
                             continue;
                         break;
                     }
-                    if (entry == null)
-                        break;
-                    String name = entry.getName();
                     boolean isdir = false;
                     if (name.endsWith("/")) {
                         isdir = true;
@@ -306,9 +296,7 @@ public class FileCopy extends _Component {
                     if (autoMkdirs) {
                         File destParentDir = destFile.getParentFile();
                         if (!destParentDir.isDirectory()) {
-                            L
-                                    .detail(
-                                            PackNLS.getString("FileCopy.mkdir"), destParentDir, "/"); //$NON-NLS-1$ //$NON-NLS-2$
+                            L.detail(PackNLS.getString("FileCopy.mkdir"), destParentDir, "/"); //$NON-NLS-1$ //$NON-NLS-2$
                             destParentDir.mkdirs();
                         }
                     }
@@ -321,10 +309,10 @@ public class FileCopy extends _Component {
                         byte[] block = new byte[blockSize];
                         while (remaining > 0) {
                             int cb = (int) Math.min(blockSize, remaining);
-                            cb = zin.read(block, 0, cb);
+                            InputStream entryIn = zipFile.getInputStream(entry);
+                            cb = entryIn.read(block, 0, cb);
                             if (cb == -1)
-                                throw new IOException(PackNLS
-                                        .getString("FileCopy.unexpectedEOF") //$NON-NLS-1$
+                                throw new IOException(PackNLS.getString("FileCopy.unexpectedEOF") //$NON-NLS-1$
                                         + name);
                             destOut.write(block, 0, cb);
                             remaining -= cb;
@@ -343,7 +331,7 @@ public class FileCopy extends _Component {
                 }
             } finally {
                 try {
-                    zin.close();
+                    zipFile.close();
                 } catch (IOException e) {
                 }
             }
@@ -353,24 +341,23 @@ public class FileCopy extends _Component {
     class UninstallJob extends SessionJob {
 
         public UninstallJob(ISession session) {
-            super(session);
+            super(session, FileCopy.this);
         }
 
         @Override
         protected void _run() {
-            File baseDir = session.getBaseDir(baseName);
+            File baseDir = session.getFile(baseName);
             if (!preConstruct) {
                 if (basePath != null)
                     baseDir = new File(baseDir, basePath);
             }
             L.finfo("Remove %s files from %s\n", getId(), baseDir);
-            Attachment a = getAttachment(session);
+            Attachment a = getAttachment(session, false);
             ZipInputStream zin = null;
             try {
                 zin = a.getZipIn();
             } catch (IOException e) {
-                throwException(new InstallException(PackNLS
-                        .getString("FileCopy.errorRead") + a, e)); //$NON-NLS-1$
+                throwException(new InstallException(PackNLS.getString("FileCopy.errorRead") + a, e)); //$NON-NLS-1$
                 return;
             }
             List<String> names = new ArrayList<String>();
@@ -380,8 +367,7 @@ public class FileCopy extends _Component {
                     names.add(entry.getName());
                 zin.close();
             } catch (IOException e) {
-                throwException(new InstallException(
-                        "Failed to list the archive", e));
+                throwException(new InstallException("Failed to list the archive", e));
                 return;
             } finally {
                 try {

@@ -41,15 +41,14 @@ public class Control extends RuntimeException {
         return LangNLS.getString("Control.detail") + String.valueOf(detail); //$NON-NLS-1$
     }
 
-    public static <T> T newInstance(Class<T> clazz)
-            throws IllegalArgumentException, IllegalAccessException,
-            InvocationTargetException, InstantiationException {
+    public static <T> T newInstance(Class<T> clazz) throws IllegalArgumentException,
+            IllegalAccessException, InvocationTargetException, InstantiationException {
         return clazz.newInstance();
     }
 
     public static <T> T newInstance(Constructor<T> ctor, Object... initargs)
-            throws IllegalArgumentException, IllegalAccessException,
-            InvocationTargetException, InstantiationException {
+            throws IllegalArgumentException, IllegalAccessException, InvocationTargetException,
+            InstantiationException {
         try {
             return ctor.newInstance(initargs);
         } catch (InvocationTargetException et) {
@@ -61,8 +60,7 @@ public class Control extends RuntimeException {
     }
 
     public static Object invoke(Method method, Object obj, Object... args)
-            throws IllegalArgumentException, IllegalAccessException,
-            InvocationTargetException {
+            throws IllegalArgumentException, IllegalAccessException, InvocationTargetException {
         try {
             return method.invoke(obj, args);
         } catch (InvocationTargetException et) {

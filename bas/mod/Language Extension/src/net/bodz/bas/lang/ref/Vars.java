@@ -24,8 +24,8 @@ public class Vars {
             assert field != null;
             this.field = field;
             this.readOnly = readOnly || Modifier.isFinal(field.getModifiers());
-            hasPropertyChangeSupport = IPropertyChangeSupport.class
-                    .isAssignableFrom(field.getDeclaringClass());
+            hasPropertyChangeSupport = IPropertyChangeSupport.class.isAssignableFrom(field
+                    .getDeclaringClass());
         }
 
         public FieldMeta(Field field) {
@@ -79,8 +79,7 @@ public class Vars {
         }
 
         @Override
-        public boolean isAnnotationPresent(
-                Class<? extends Annotation> annotationClass) {
+        public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
             return field.isAnnotationPresent(annotationClass);
         }
 
@@ -157,11 +156,10 @@ public class Vars {
             readf = property.getReadMethod();
             writef = property.getWriteMethod();
             if (readf == null)
-                throw new UnsupportedOperationException(LangNLS
-                        .getString("Vars.noread") //$NON-NLS-1$
+                throw new UnsupportedOperationException(LangNLS.getString("Vars.noread") //$NON-NLS-1$
                         + property.getName());
-            hasPropertyChangeSupport = IPropertyChangeSupport.class
-                    .isAssignableFrom(readf.getDeclaringClass());
+            hasPropertyChangeSupport = IPropertyChangeSupport.class.isAssignableFrom(readf
+                    .getDeclaringClass());
         }
 
         public PropertyDescriptor getProperty() {
@@ -210,8 +208,7 @@ public class Vars {
         }
 
         @Override
-        public boolean isAnnotationPresent(
-                Class<? extends Annotation> annotationClass) {
+        public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
             return readf.isAnnotationPresent(annotationClass);
         }
 
@@ -340,8 +337,7 @@ public class Vars {
         }
 
         @Override
-        public boolean isAnnotationPresent(
-                Class<? extends Annotation> annotationClass) {
+        public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
             for (int i = 0; i < annotations.length; i++) {
                 Annotation a = annotations[i];
                 if (annotationClass.isInstance(a))

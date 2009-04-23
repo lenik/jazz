@@ -8,8 +8,7 @@ import net.bodz.bas.types.util.Arrays2;
 
 public class TempClassLoader extends URLClassLoader {
 
-    private TempClassLoader(URL[] urls, ClassLoader parent,
-            URLStreamHandlerFactory factory) {
+    private TempClassLoader(URL[] urls, ClassLoader parent, URLStreamHandlerFactory factory) {
         super(urls, parent, factory);
     }
 

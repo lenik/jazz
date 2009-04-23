@@ -41,11 +41,9 @@ public class XorMatrix implements Cloneable {
 
     void checkSameSize(XorMatrix m) {
         if (cols != m.cols)
-            throw new IllegalArgumentException("diff cols: " + cols + "/"
-                    + m.cols);
+            throw new IllegalArgumentException("diff cols: " + cols + "/" + m.cols);
         if (rows != m.rows)
-            throw new IllegalArgumentException("diff rows: " + rows + "/"
-                    + m.rows);
+            throw new IllegalArgumentException("diff rows: " + rows + "/" + m.rows);
     }
 
     void checkMultiplyWith(XorMatrix m) {

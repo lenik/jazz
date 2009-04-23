@@ -17,8 +17,7 @@ public class PrimariesTest {
 
     Random rands = new Random();
 
-    void test(Class<? extends Type> typeClass, Object val, String memHex)
-            throws Exception {
+    void test(Class<? extends Type> typeClass, Object val, String memHex) throws Exception {
         String tnam = typeClass.getSimpleName();
         byte[] mem0 = HEX.decode(memHex);
         byte[] memv = Bytes.copyOf(mem0);

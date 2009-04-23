@@ -52,9 +52,7 @@ public class ProtectedShell {
     }
 
     public boolean setLastModified(File f, long time) {
-        out
-                .p(
-                        AppNLS.getString("ProtectedShell.touch"), f, ": ", new Date(time)); //$NON-NLS-1$ //$NON-NLS-2$
+        out.p(AppNLS.getString("ProtectedShell.touch"), f, ": ", new Date(time)); //$NON-NLS-1$ //$NON-NLS-2$
         if (enabled)
             return f.setLastModified(time);
         return false;
@@ -88,8 +86,7 @@ public class ProtectedShell {
         return false;
     }
 
-    public boolean copy(Object src, Object dst, boolean append)
-            throws IOException {
+    public boolean copy(Object src, Object dst, boolean append) throws IOException {
         out.p(AppNLS.getString("ProtectedShell.copyAppend"), src, " -> ", dst); //$NON-NLS-1$ //$NON-NLS-2$
         if (enabled)
             return Files.copy(src, dst, append);

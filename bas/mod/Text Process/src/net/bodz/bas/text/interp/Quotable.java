@@ -93,8 +93,7 @@ public class Quotable extends PatternProcessor {
     /**
      * @see Strings#split(String, char[], int)
      */
-    public String[] _split(final boolean dequote, final String delim, String s,
-            int limit) {
+    public String[] _split(final boolean dequote, final String delim, String s, int limit) {
         boolean trim = limit == 0;
         final List<String> parts;
         if (limit <= 0) {

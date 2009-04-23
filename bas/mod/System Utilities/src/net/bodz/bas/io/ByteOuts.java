@@ -121,8 +121,7 @@ public class ByteOuts {
             return getBuffer().toString();
         }
 
-        public String toString(String charset)
-                throws UnsupportedEncodingException {
+        public String toString(String charset) throws UnsupportedEncodingException {
             return getBuffer().toString(charset);
         }
 

@@ -18,8 +18,7 @@ class CanceledPage extends PageComposite {
         this.session = session;
 
         final Label youHaveCanceledLabel = new Label(this, SWT.WRAP);
-        final GridData gd_youHaveCanceledLabel = new GridData(SWT.LEFT,
-                SWT.CENTER, true, false);
+        final GridData gd_youHaveCanceledLabel = new GridData(SWT.LEFT, SWT.CENTER, true, false);
         youHaveCanceledLabel.setLayoutData(gd_youHaveCanceledLabel);
         youHaveCanceledLabel.setText("You have canceled the installation. ");
     }

@@ -7,6 +7,8 @@ import net.bodz.bas.types.HashTextMap;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.util.Strings;
 import net.bodz.bas.ui.UserInterface;
+import net.bodz.bas.util.StateChangeEvent;
+import net.bodz.bas.util.StateChangeListener;
 import net.bodz.swt.adapters.ControlAdapters;
 import net.bodz.swt.controls.helper.StackComposite;
 import net.bodz.swt.gui.DialogUI;
@@ -93,8 +95,7 @@ public class WizardComposite extends Composite {
     }
 
     void createContents() {
-        defaultPageIcon = SWTResources
-                .getImageRes("/icons/full/obj16/brkp_grp.gif"); //$NON-NLS-1$
+        defaultPageIcon = SWTResources.getImageRes("/icons/full/obj16/brkp_grp.gif"); //$NON-NLS-1$
 
         final GridLayout gridLayout = new GridLayout(1, false);
         gridLayout.marginWidth = 5;
@@ -106,15 +107,12 @@ public class WizardComposite extends Composite {
         if (useLegend) {
             legends = new Composite(this, SWT.NONE);
             legends.setLayout(new FillLayout());
-            final Label legendHr = new Label(this, SWT.SEPARATOR
-                    | SWT.HORIZONTAL);
-            legendHr.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
-                    false));
+            final Label legendHr = new Label(this, SWT.SEPARATOR | SWT.HORIZONTAL);
+            legendHr.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         }
 
         titleBar = new Composite(this, SWT.NONE);
-        final GridData titleData = new GridData(SWT.FILL, SWT.CENTER, true,
-                false);
+        final GridData titleData = new GridData(SWT.FILL, SWT.CENTER, true, false);
         titleBar.setLayoutData(titleData);
         final GridLayout titleLayout = new GridLayout(2, false);
         titleBar.setLayout(titleLayout);
@@ -124,8 +122,7 @@ public class WizardComposite extends Composite {
 
         pageTitleLabel = new Label(titleBar, SWT.WRAP);
         pageTitleLabel.setText(GUINLS.getString("WizardComposite.pageTitle")); //$NON-NLS-1$
-        pageTitleLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
-                false));
+        pageTitleLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
         final Label titleHr = new Label(this, SWT.SEPARATOR | SWT.HORIZONTAL);
         titleHr.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -149,25 +146,21 @@ public class WizardComposite extends Composite {
 
         if (showBegin) {
             beginButton = new Button(navBar, SWT.NONE);
-            beginButton.setImage(SWTResources
-                    .getImageRes("/icons/full/etool16/shift_l_edit.gif")); //$NON-NLS-1$
+            beginButton.setImage(SWTResources.getImageRes("/icons/full/etool16/shift_l_edit.gif")); //$NON-NLS-1$
             beginButton.setText(GUINLS.getString("WizardComposite.begin")); //$NON-NLS-1$
         }
 
         backButton = new Button(navBar, SWT.NONE);
-        backButton.setImage(SWTResources
-                .getImageRes("/icons/elcl16/nav_backward.gif")); //$NON-NLS-1$
+        backButton.setImage(SWTResources.getImageRes("/icons/elcl16/nav_backward.gif")); //$NON-NLS-1$
         backButton.setText(GUINLS.getString("WizardComposite.back")); //$NON-NLS-1$
 
         nextButton = new Button(navBar, SWT.NONE);
-        nextButton.setImage(SWTResources
-                .getImageRes("/icons/elcl16/nav_forward.gif")); //$NON-NLS-1$
+        nextButton.setImage(SWTResources.getImageRes("/icons/elcl16/nav_forward.gif")); //$NON-NLS-1$
         nextButton.setText(GUINLS.getString("WizardComposite.next")); //$NON-NLS-1$
 
         if (showFinish) {
             finishButton = new Button(navBar, SWT.NONE);
-            finishButton.setImage(SWTResources
-                    .getImageRes("/icons/full/etool16/shift_r_edit.gif")); //$NON-NLS-1$
+            finishButton.setImage(SWTResources.getImageRes("/icons/full/etool16/shift_r_edit.gif")); //$NON-NLS-1$
             finishButton.setText(GUINLS.getString("WizardComposite.finish")); //$NON-NLS-1$
         }
 
@@ -260,11 +253,11 @@ public class WizardComposite extends Composite {
             return null;
         Composite parent = WizardComposite.this.body;
         final PageComposite page = factory.create(parent);
-        page.addPageStateChangeListener(new PageStateChangeListener() {
+        page.addStateChangeListener(new StateChangeListener() {
             @Override
-            public void pageStateChange(PageStateChangeEvent e) {
+            public void stateChange(StateChangeEvent e) {
                 if (page == pageFlow.getPage())
-                    refreshPageState();
+                    refresh();
             }
         });
         return page;
@@ -307,13 +300,11 @@ public class WizardComposite extends Composite {
             pageIcon = defaultPageIcon;
         pageIconLabel.setImage(pageIcon);
         body.bringFront(pageComp);
-
-        refreshPageState();
-
         body.layout();
+        refresh();
     }
 
-    protected void refreshPageState() {
+    protected void refresh() {
         Page page = pageFlow.getPage();
         boolean locked = false;
         String nextLabel = ""; //$NON-NLS-1$

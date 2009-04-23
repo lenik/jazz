@@ -7,8 +7,8 @@ import net.bodz.geom.transform.MatViewTransformer2f;
 import net.bodz.geom.transform.Transformer2f;
 import net.bodz.geom.transform.ViewTransformer2f;
 
-public class TransformedDrawTarget2f extends AbstractDrawTarget2f_Point
-        implements DelegateDrawTarget2f, ViewTransformer2f {
+public class TransformedDrawTarget2f extends AbstractDrawTarget2f_Point implements
+        DelegateDrawTarget2f, ViewTransformer2f {
 
     DrawTarget2f      delegatee;
     ViewTransformer2f matTransformmer;
@@ -121,8 +121,7 @@ public class TransformedDrawTarget2f extends AbstractDrawTarget2f_Point
     // -o DrawTarget
 
     @Override
-    public void drawCircle(Point2f center, float radiusX, float radiusY)
-            throws DrawException {
+    public void drawCircle(Point2f center, float radiusX, float radiusY) throws DrawException {
         delegatee.drawCircle(transformTo(center), radiusX, radiusY);
     }
 
@@ -155,15 +154,12 @@ public class TransformedDrawTarget2f extends AbstractDrawTarget2f_Point
     }
 
     @Override
-    public void drawTriangle(Point2f p0, Point2f p1, Point2f p2)
-            throws DrawException {
-        delegatee.drawTriangle(transformTo(p0), transformTo(p1),
-                transformTo(p2));
+    public void drawTriangle(Point2f p0, Point2f p1, Point2f p2) throws DrawException {
+        delegatee.drawTriangle(transformTo(p0), transformTo(p1), transformTo(p2));
     }
 
     @Override
-    public void fillCircle(Point2f center, float radiusX, float radiusY)
-            throws DrawException {
+    public void fillCircle(Point2f center, float radiusX, float radiusY) throws DrawException {
         delegatee.fillCircle(transformTo(center), radiusX, radiusY);
     }
 
@@ -186,10 +182,8 @@ public class TransformedDrawTarget2f extends AbstractDrawTarget2f_Point
     }
 
     @Override
-    public void fillTriangle(Point2f p0, Point2f p1, Point2f p2)
-            throws DrawException {
-        delegatee.fillTriangle(transformTo(p0), transformTo(p1),
-                transformTo(p2));
+    public void fillTriangle(Point2f p0, Point2f p1, Point2f p2) throws DrawException {
+        delegatee.fillTriangle(transformTo(p0), transformTo(p1), transformTo(p2));
     }
 
 }

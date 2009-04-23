@@ -78,8 +78,7 @@ public class HelloWorld extends BasicGUI {
         });
         greetingText.setText(greeting);
         final FormData fd_greetingText = new FormData();
-        fd_greetingText.bottom = new FormAttachment(greetingLabel, 0,
-                SWT.BOTTOM);
+        fd_greetingText.bottom = new FormAttachment(greetingLabel, 0, SWT.BOTTOM);
         fd_greetingText.right = new FormAttachment(100, -5);
         fd_greetingText.top = new FormAttachment(greetingLabel, 0, SWT.TOP);
         fd_greetingText.left = new FormAttachment(greetingLabel, 5, SWT.RIGHT);
@@ -170,12 +169,10 @@ public class HelloWorld extends BasicGUI {
         Label greetingIcon;
         greetingIcon = new Label(comp, SWT.NONE);
         fd_greetingLabel.left = new FormAttachment(greetingIcon, 5, SWT.RIGHT);
-        greetingIcon.setImage(SWTResources
-                .getImageRes("/icons/full/obj16/read_obj.gif")); //$NON-NLS-1$
+        greetingIcon.setImage(SWTResources.getImageRes("/icons/full/obj16/read_obj.gif")); //$NON-NLS-1$
         final FormData fd_greetingIcon = new FormData();
         fd_greetingIcon.right = new FormAttachment(0, 25);
-        fd_greetingIcon.bottom = new FormAttachment(greetingLabel, 0,
-                SWT.BOTTOM);
+        fd_greetingIcon.bottom = new FormAttachment(greetingLabel, 0, SWT.BOTTOM);
         fd_greetingIcon.top = new FormAttachment(greetingLabel, 0, SWT.TOP);
         fd_greetingIcon.left = new FormAttachment(0, 5);
         greetingIcon.setLayoutData(fd_greetingIcon);

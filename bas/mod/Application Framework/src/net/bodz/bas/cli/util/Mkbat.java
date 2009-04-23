@@ -153,8 +153,7 @@ public class Mkbat extends BatchEditCLI {
             realSysLoader = bootProc.configSysLoader(realSysLoader);
 
         // realSysLoader -> configLoader
-        Class<?> class1 = DefaultBooter
-                .load(realSysLoader, className, userlibs);
+        Class<?> class1 = DefaultBooter.load(realSysLoader, className, userlibs);
 
         // has main()? [2, configLoader]
         try {

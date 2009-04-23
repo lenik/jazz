@@ -75,7 +75,7 @@ public class VTNumber extends AbstractVisualType {
         return SUPPORT_TYPES;
     }
 
-    static Class<?>[] SUPPORT_TYPES = { byte.class, short.class, int.class,
-            long.class, float.class, double.class, Number.class, Byte.class,
-            Short.class, Integer.class, Long.class, Float.class, Double.class, };
+    static Class<?>[] SUPPORT_TYPES = { byte.class, short.class, int.class, long.class,
+            float.class, double.class, Number.class, Byte.class, Short.class, Integer.class,
+            Long.class, Float.class, Double.class, };
 }

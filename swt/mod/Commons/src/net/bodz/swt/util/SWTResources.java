@@ -74,8 +74,7 @@ public class SWTResources {
         return loose.getImageDataRes(clazz, classResPath);
     }
 
-    public static ImageData getImageDataRes(ClassLoader loader,
-            String loaderResPath) {
+    public static ImageData getImageDataRes(ClassLoader loader, String loaderResPath) {
         return loose.getImageDataRes(loader, loaderResPath);
     }
 

@@ -101,8 +101,7 @@ public class TestDefs {
         }
     }
 
-    public static <T> void tests(String groupName, TestEval<T> eval,
-            TestDef... defs) {
+    public static <T> void tests(String groupName, TestEval<T> eval, TestDef... defs) {
         TestDefs _defs = new TestDefs(groupName, defs);
         _defs.test(eval);
     }
@@ -116,8 +115,7 @@ public class TestDefs {
         return input + " => "; //$NON-NLS-1$
     }
 
-    public static TestDef entry(String comment, Relation relation,
-            Object input, Object expected) {
+    public static TestDef entry(String comment, Relation relation, Object input, Object expected) {
         return new TestDef(comment, input, relation, expected);
     }
 
@@ -316,8 +314,7 @@ public class TestDefs {
         };
     }
 
-    public static TestDef Throws(Object input,
-            Class<? extends Throwable> expected) {
+    public static TestDef Throws(Object input, Class<? extends Throwable> expected) {
         return Throws(hi(input), input, expected);
     }
 

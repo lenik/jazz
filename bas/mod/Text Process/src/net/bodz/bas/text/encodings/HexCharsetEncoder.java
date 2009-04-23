@@ -40,8 +40,8 @@ public class HexCharsetEncoder extends CharsetEncoder {
             this.transtbl[i] = (byte) transtbl[i];
     }
 
-    public HexCharsetEncoder(Charset cs, float averageBytesPerChar,
-            float maxBytesPerChar, byte[] replacement) {
+    public HexCharsetEncoder(Charset cs, float averageBytesPerChar, float maxBytesPerChar,
+            byte[] replacement) {
         super(cs, averageBytesPerChar, maxBytesPerChar, replacement);
     }
 

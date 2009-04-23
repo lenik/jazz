@@ -36,14 +36,13 @@ public class Vector3f extends javax.vecmath.Vector3f {
     public Vector3f(javax.vecmath.Vector3f init) {
         super(init);
     }
-    
+
     public Vector3f(Vector2f vector2f) {
         super(vector2f.x, vector2f.y, 1.0f);
     }
-    
+
     /*
-    public Vector3f(Point2f point2f) {
-        super(point2f.x(), point2f.y(), 1.0f);
-    }
-    */
+     * public Vector3f(Point2f point2f) { super(point2f.x(), point2f.y(), 1.0f);
+     * }
+     */
 }

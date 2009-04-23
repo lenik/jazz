@@ -23,8 +23,7 @@ import org.eclipse.swt.widgets.Control;
 public class ControlAdapters {
 
     // ...?
-    public static void loseFocus(final Control control,
-            final LoseFocusListener loseFocusListener) {
+    public static void loseFocus(final Control control, final LoseFocusListener loseFocusListener) {
         control.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
@@ -36,8 +35,7 @@ public class ControlAdapters {
         });
     }
 
-    public static void commit(final Control control,
-            final CommitListener commitListener,
+    public static void commit(final Control control, final CommitListener commitListener,
             final CommitFailListener commitFailListener) {
         control.addFocusListener(new FocusAdapter() {
             @Override
@@ -119,8 +117,7 @@ public class ControlAdapters {
         makeMoveable(control, getMaskEnabler(mask));
     }
 
-    public static void makeMoveable(final Control control,
-            final Pred1<MouseEvent> enabler) {
+    public static void makeMoveable(final Control control, final Pred1<MouseEvent> enabler) {
         class Moving extends MouseAdapter implements MouseMoveListener {
             int     x0;
             int     y0;
@@ -164,8 +161,7 @@ public class ControlAdapters {
         makePannable(view, getMaskEnabler(mask));
     }
 
-    public static void makePannable(final ViewportCanvas view,
-            final Pred1<MouseEvent> enabler) {
+    public static void makePannable(final ViewportCanvas view, final Pred1<MouseEvent> enabler) {
         class Panning extends MouseAdapter implements MouseMoveListener {
             int     x0;
             int     y0;
@@ -197,8 +193,7 @@ public class ControlAdapters {
         view.addMouseMoveListener(panning);
     }
 
-    public static void makeWheelPannable(ViewportCanvas view, int hMask,
-            int vMask) {
+    public static void makeWheelPannable(ViewportCanvas view, int hMask, int vMask) {
         makeWheelPannable(view, getMaskEnabler(hMask), getMaskEnabler(vMask));
     }
 

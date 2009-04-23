@@ -71,8 +71,7 @@ public class IteratorsTest {
     public void testConcat() {
         Iterator<Number> ad = Iterators.concat(al.iterator(), dl.iterator());
         assertEquals("[10, 20, 30, 40, 50, 60]", scan(ad)); //$NON-NLS-1$
-        Iterator<Number> ade = Iterators.concat(al.iterator(), dl.iterator(),
-                el.iterator());
+        Iterator<Number> ade = Iterators.concat(al.iterator(), dl.iterator(), el.iterator());
         assertEquals("[10, 20, 30, 40, 50, 60]", scan(ade)); //$NON-NLS-1$
         Iterator<Number> de = Iterators.concat(dl.iterator(), el.iterator());
         assertEquals("[60]", scan(de)); //$NON-NLS-1$
@@ -97,8 +96,7 @@ public class IteratorsTest {
                 dl.iterator(),//
                 el.iterator()//
                 );
-        assertEquals(
-                "[5, 10, 15, 20, 22, 23, 24, 25, 25, 26, 28, 30, 40, 45, 50, 55, 60]", //$NON-NLS-1$
+        assertEquals("[5, 10, 15, 20, 22, 23, 24, 25, 25, 26, 28, 30, 40, 45, 50, 55, 60]", //$NON-NLS-1$
                 scan(w5));
 
         // 31, 53, 22, 15, 5

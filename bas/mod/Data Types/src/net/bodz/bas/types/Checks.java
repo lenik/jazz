@@ -58,8 +58,7 @@ public class Checks {
 
         @Override
         public void check(Object val) throws CheckFailure {
-            String s = (val instanceof String) ? (String) val : String
-                    .valueOf(val);
+            String s = (val instanceof String) ? (String) val : String.valueOf(val);
             if (!pattern.matcher(s).matches())
                 throw new CheckFailure(TypesNLS.getString("Checks.3") //$NON-NLS-1$
                         + pattern.pattern() + TypesNLS.getString("Checks.4") + s); //$NON-NLS-1$

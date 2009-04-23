@@ -15,8 +15,8 @@ public class Annotations {
     /**
      * @return Object returned by value() of annotation instance
      */
-    public static <A extends Annotation> Object getValue(Class<?> clazz,
-            Class<A> annotationClass, boolean inherits) {
+    public static <A extends Annotation> Object getValue(Class<?> clazz, Class<A> annotationClass,
+            boolean inherits) {
         A annotation = null;
         do {
             annotation = clazz.getAnnotation(annotationClass);
@@ -39,25 +39,23 @@ public class Annotations {
     /**
      * @return Object returned by value() of annotation instance
      */
-    public static <A extends Annotation> Object getValue(Class<?> clazz,
-            Class<A> annotationClass) {
+    public static <A extends Annotation> Object getValue(Class<?> clazz, Class<A> annotationClass) {
         return getValue(clazz, annotationClass, false);
     }
 
     @SuppressWarnings("unchecked")
-    public static <T, A extends Annotation> T _getValue(Class<?> clazz,
-            Class<A> annotationClass, boolean inherits) {
+    public static <T, A extends Annotation> T _getValue(Class<?> clazz, Class<A> annotationClass,
+            boolean inherits) {
         return (T) getValue(clazz, annotationClass, inherits);
     }
 
     @SuppressWarnings("unchecked")
-    public static <T, A extends Annotation> T _getValue(Class<?> clazz,
-            Class<A> annotationClass) {
+    public static <T, A extends Annotation> T _getValue(Class<?> clazz, Class<A> annotationClass) {
         return (T) getValue(clazz, annotationClass, false);
     }
 
-    public static <A extends Annotation> A getFieldAnnotation(Class<?> clazz,
-            String fieldName, Class<A> annotationClass) {
+    public static <A extends Annotation> A getFieldAnnotation(Class<?> clazz, String fieldName,
+            Class<A> annotationClass) {
         assert clazz != null;
         assert fieldName != null;
         assert annotationClass != null;
@@ -108,8 +106,8 @@ public class Annotations {
         return null;
     }
 
-    public static <A extends Annotation> A getConstructorAnnotation(
-            Class<?> clazz, MethodSignature msig, Class<A> annotationClass) {
+    public static <A extends Annotation> A getConstructorAnnotation(Class<?> clazz,
+            MethodSignature msig, Class<A> annotationClass) {
         assert clazz != null;
         assert msig != null;
         assert annotationClass != null;
@@ -143,8 +141,7 @@ public class Annotations {
     }
 
     @SuppressWarnings("unchecked")
-    public static void dumpAnnotationMap(Class<?> clazz, CharOut out,
-            String indent) {
+    public static void dumpAnnotationMap(Class<?> clazz, CharOut out, String indent) {
         initAccessors();
         try {
             Map<Class<?>, Annotation> annotations = (Map<Class<?>, Annotation>) Class_annotations

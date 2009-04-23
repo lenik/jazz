@@ -21,8 +21,7 @@ public class CLIPlugins extends Plugins {
 
     @SuppressWarnings("unchecked")
     @Override
-    public boolean registerCategory(String name,
-            Class<? extends Plugin> baseType) {
+    public boolean registerCategory(String name, Class<? extends Plugin> baseType) {
         if (!CLIPlugin.class.isAssignableFrom(baseType))
             throw new OutOfDomainException("baseType", baseType, //$NON-NLS-1$
                     CLIPlugin.class);

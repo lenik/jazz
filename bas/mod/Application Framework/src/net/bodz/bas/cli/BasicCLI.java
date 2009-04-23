@@ -157,12 +157,11 @@ public class BasicCLI {
             }
         }
 
-        private CLIPlugin create(String pluginId, String ctorArg)
-                throws CreateException, PluginException, ParseException {
+        private CLIPlugin create(String pluginId, String ctorArg) throws CreateException,
+                PluginException, ParseException {
             PluginTypeEx typeEx = plugins.getTypeEx(CLIPlugin.class, pluginId);
             if (typeEx == null)
-                throw new PluginException(
-                        AppNLS.getString("BasicCLI.noPlugin") + pluginId); //$NON-NLS-1$
+                throw new PluginException(AppNLS.getString("BasicCLI.noPlugin") + pluginId); //$NON-NLS-1$
             Class<?> clazz = typeEx.getType();
             Constructor<?>[] ctors = clazz.getConstructors(); // only get public
             Constructor<?> ctor = null;
@@ -175,8 +174,7 @@ public class BasicCLI {
                 }
             }
             if (ctor == null)
-                throw new PluginException(
-                        AppNLS.getString("BasicCLI.noCtor") + clazz); //$NON-NLS-1$
+                throw new PluginException(AppNLS.getString("BasicCLI.noCtor") + clazz); //$NON-NLS-1$
             int len = sigMaxLen.length;
             int off = 0;
             if (clazz.isMemberClass()) {
@@ -188,8 +186,7 @@ public class BasicCLI {
                 return (CLIPlugin) typeEx.newInstance();
             }
             if (len != 1)
-                throw new PluginException(AppNLS
-                        .getString("BasicCLI.noSuitableCtor") //$NON-NLS-1$
+                throw new PluginException(AppNLS.getString("BasicCLI.noSuitableCtor") //$NON-NLS-1$
                         + typeEx);
 
             Class<?> sig0 = sigMaxLen[off];
@@ -255,8 +252,9 @@ public class BasicCLI {
 
             int[] verjoin = new int[majorver.length + verinfo.revision.length];
             System.arraycopy(majorver, 0, verjoin, 0, majorver.length);
-            System.arraycopy(verinfo.revision, 0, verjoin, majorver.length,
-                    verinfo.revision.length);
+            System
+                    .arraycopy(verinfo.revision, 0, verjoin, majorver.length,
+                            verinfo.revision.length);
 
             String author = info.getAuthor();
             if (author != null)
@@ -304,8 +302,7 @@ public class BasicCLI {
         _version(out);
         out.println();
 
-        String hlp_opts = ClassCLI.helpOptions(getClass(), _helpRestSyntax(),
-                4, 29);
+        String hlp_opts = ClassCLI.helpOptions(getClass(), _helpRestSyntax(), 4, 29);
         out.print(hlp_opts);
 
         if (plugins != null)
@@ -329,14 +326,12 @@ public class BasicCLI {
                 new HashMap<String, Object>());
     }
 
-    public ScriptClass<? extends BasicCLI> getScriptClass()
-            throws ScriptException {
+    public ScriptClass<? extends BasicCLI> getScriptClass() throws ScriptException {
         return Scripts.getScriptClass(this);
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends BasicCLI> ClassOptions<T> getOptions()
-            throws CLIException {
+    public <T extends BasicCLI> ClassOptions<T> getOptions() throws CLIException {
         Class<T> clazz = (Class<T>) this.getClass();
         ClassOptions<T> opts = ClassCLI.getClassOptions(clazz);
         return opts;
@@ -366,8 +361,7 @@ public class BasicCLI {
         prepared = true;
     }
 
-    public void addArguments(String... args) throws CLIException,
-            ParseException {
+    public void addArguments(String... args) throws CLIException, ParseException {
         _prepare();
         String[] rest = opts.load(this, args);
         for (String arg : rest)
@@ -407,8 +401,7 @@ public class BasicCLI {
             // }
 
             if (L.showDebug()) {
-                for (Entry<String, _Option<?>> entry : opts.getOptions()
-                        .entrySet()) {
+                for (Entry<String, _Option<?>> entry : opts.getOptions().entrySet()) {
                     _Option<?> opt = entry.getValue();
                     String optnam = opt.getCLIName();
                     if (!optnam.equals(entry.getKey()))

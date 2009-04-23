@@ -99,8 +99,7 @@ public class ModulesRoot {
             // absolute path?
             if (exp.startsWith("/")) //$NON-NLS-1$
                 return findexp(exp.substring(1), Files.canoniOf("/")); //$NON-NLS-1$
-            if (SystemInfo.isWin32() && exp.length() > 2
-                    && exp.charAt(1) == ':') {
+            if (SystemInfo.isWin32() && exp.length() > 2 && exp.charAt(1) == ':') {
                 File driveRoot = Files.canoniOf(exp.substring(0, 2));
                 return findexp(exp.substring(2), driveRoot);
             }

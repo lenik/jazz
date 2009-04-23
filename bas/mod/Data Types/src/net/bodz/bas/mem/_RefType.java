@@ -12,12 +12,10 @@ public abstract class _RefType extends _Type implements RefType {
      * @return memory position of the referent
      */
     @Override
-    public abstract MemoryWrapOffset get(Memory memory, int offset)
-            throws AccessException;
+    public abstract MemoryWrapOffset get(Memory memory, int offset) throws AccessException;
 
     @Override
-    public void put(Memory memory, int offset, Object targetAddr)
-            throws AccessException {
+    public void put(Memory memory, int offset, Object targetAddr) throws AccessException {
         MemoryWrapOffset target = (MemoryWrapOffset) targetAddr;
         Memory targetMemory = target.getOrig();
         int targetOffset = target.getOffset();
@@ -27,13 +25,12 @@ public abstract class _RefType extends _Type implements RefType {
             putRemote(memory, offset, targetMemory, targetOffset);
     }
 
-    protected void putLocal(Memory memory, int offset, int targetOffset)
-            throws AccessException {
+    protected void putLocal(Memory memory, int offset, int targetOffset) throws AccessException {
         putRemote(memory, offset, memory, targetOffset);
     }
 
-    protected abstract void putRemote(Memory memory, int offset,
-            Memory targetMemory, int targetOffset) throws AccessException;
+    protected abstract void putRemote(Memory memory, int offset, Memory targetMemory,
+            int targetOffset) throws AccessException;
 
     @Override
     public Object getTarget(Memory memory, int offset) throws AccessException {
@@ -42,8 +39,7 @@ public abstract class _RefType extends _Type implements RefType {
     }
 
     @Override
-    public void putTarget(Memory memory, int offset, Object value)
-            throws AccessException {
+    public void putTarget(Memory memory, int offset, Object value) throws AccessException {
         MemoryWrapOffset target = get(memory, offset);
         targetType.put(target.getOrig(), target.getOffset(), value);
     }

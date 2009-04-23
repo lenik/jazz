@@ -22,7 +22,7 @@ public class MkbatTest {
         File moddir = Files.canoniOf(lapiBase, "mod/GUI Utilities"); //$NON-NLS-1$
         File indir = new File(moddir, "bin"); //$NON-NLS-1$
         String[] mkbatArgs = { //
-                "-O", outdir.getPath(), // //$NON-NLS-1$
+        "-O", outdir.getPath(), // //$NON-NLS-1$
                 "-l", "bodz_swt", //  //$NON-NLS-1$ //$NON-NLS-2$
                 "-l", "bodz_lapiota", //  //$NON-NLS-1$ //$NON-NLS-2$
                 "-rq", "--", // recursive, quiet //$NON-NLS-1$ //$NON-NLS-2$

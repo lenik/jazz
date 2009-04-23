@@ -45,16 +45,14 @@ public class GIFImageType extends _ImageType {
             this.params = params;
 
             final Label transparentcyLabel = new Label(this, SWT.NONE);
-            transparentcyLabel.setText(ControlsNLS
-                    .getString("GIFImageType.transparency")); //$NON-NLS-1$
+            transparentcyLabel.setText(ControlsNLS.getString("GIFImageType.transparency")); //$NON-NLS-1$
 
             final Canvas colorBlock = new Canvas(this, SWT.NONE);
             final GridData gd_colorBlock = new GridData(16, 16);
             colorBlock.setLayoutData(gd_colorBlock);
 
             final Link selectTransLink = new Link(this, SWT.NONE);
-            selectTransLink.setText(ControlsNLS
-                    .getString("GIFImageType.selectLink")); //$NON-NLS-1$
+            selectTransLink.setText(ControlsNLS.getString("GIFImageType.selectLink")); //$NON-NLS-1$
         }
 
         @Override
@@ -65,8 +63,7 @@ public class GIFImageType extends _ImageType {
     }
 
     @Override
-    public void save(ImageData imageData, OutputStream out, Object _params)
-            throws IOException {
+    public void save(ImageData imageData, OutputStream out, Object _params) throws IOException {
         if (imageData == null)
             throw new NullPointerException("imageData"); //$NON-NLS-1$
         Params params = (Params) _params;
@@ -78,8 +75,7 @@ public class GIFImageType extends _ImageType {
     }
 
     @Override
-    public ParametersComposite createParametersComposite(Composite parent,
-            int style) {
+    public ParametersComposite createParametersComposite(Composite parent, int style) {
         return new ParamsComp(parent, style, new Params());
     }
 

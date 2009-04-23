@@ -29,25 +29,25 @@ import org.eclipse.swt.widgets.Shell;
 
 public abstract class SimpleDialog extends Dialog implements Ref<Object> {
 
-    static final int          _diagstyle = SWT.NONE;          // SWT.BORDER;
-    static final Point        minSize    = new Point(150, 30);
+    static final int   _diagstyle = SWT.NONE;          // SWT.BORDER;
+    static final Point minSize    = new Point(150, 30);
 
-    private Shell             parent;
-    private String            title;
-    private Image             icon;
-    private Image             image;
+    private Shell      parent;
+    private String     title;
+    private Image      icon;
+    private Image      image;
 
-    private Shell             shell;
-    private Label             imageLabel;
-    private Composite         detailBar;
-    private Composite         body;
-    private Composite         userBar;
-    private Composite         basicBar;
+    private Shell      shell;
+    private Label      imageLabel;
+    private Composite  detailBar;
+    private Composite  body;
+    private Composite  userBar;
+    private Composite  basicBar;
 
-    private DialogUI interact;
+    private DialogUI   interact;
 
-    private Object            result;
-    private boolean           canceled;
+    private Object     result;
+    private boolean    canceled;
 
     /**
      * @see SWT#PRIMARY_MODAL
@@ -91,8 +91,7 @@ public abstract class SimpleDialog extends Dialog implements Ref<Object> {
                 display.sleep();
         }
         if (canceled)
-            throw new CancelException(ControlsNLS
-                    .getString("SimpleDialog.userCanceled")); //$NON-NLS-1$
+            throw new CancelException(ControlsNLS.getString("SimpleDialog.userCanceled")); //$NON-NLS-1$
         return get();
     }
 
@@ -108,8 +107,7 @@ public abstract class SimpleDialog extends Dialog implements Ref<Object> {
         try {
             execute();
         } catch (CheckException ex) {
-            interact.alert(
-                    ControlsNLS.getString("SimpleDialog.checkFailure"), ex); //$NON-NLS-1$
+            interact.alert(ControlsNLS.getString("SimpleDialog.checkFailure"), ex); //$NON-NLS-1$
             return;
         }
         shell.dispose();
@@ -142,8 +140,7 @@ public abstract class SimpleDialog extends Dialog implements Ref<Object> {
         body.setLayout(new FillLayout());
 
         final Composite bottomBar = new Composite(shell, SWT.NONE);
-        bottomBar
-                .setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+        bottomBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         final GridLayout bottomGrid = new GridLayout(2, false);
         bottomGrid.marginHeight = 0;
         bottomGrid.marginWidth = 0;
@@ -152,10 +149,8 @@ public abstract class SimpleDialog extends Dialog implements Ref<Object> {
         userBar = new Composite(bottomBar, _diagstyle);
         basicBar = new Composite(bottomBar, _diagstyle);
 
-        final GridData userData = new GridData(SWT.FILL, SWT.CENTER, true,
-                false);
-        final GridData basicData = new GridData(SWT.RIGHT, SWT.CENTER, false,
-                false);
+        final GridData userData = new GridData(SWT.FILL, SWT.CENTER, true, false);
+        final GridData basicData = new GridData(SWT.RIGHT, SWT.CENTER, false, false);
         userBar.setLayoutData(userData);
         basicBar.setLayoutData(basicData);
 
@@ -198,8 +193,7 @@ public abstract class SimpleDialog extends Dialog implements Ref<Object> {
 
     void createException(Composite parent, Exception e) {
         Label errorLabel = new Label(parent, SWT.NONE);
-        errorLabel
-                .setText(ControlsNLS.getString("SimpleDialog.createError") + e.toString()); //$NON-NLS-1$
+        errorLabel.setText(ControlsNLS.getString("SimpleDialog.createError") + e.toString()); //$NON-NLS-1$
     }
 
     protected void createTopBar(Composite parent) {
@@ -212,12 +206,10 @@ public abstract class SimpleDialog extends Dialog implements Ref<Object> {
 
         imageLabel = new Label(topBar, SWT.NONE);
         imageLabel.setImage(getImage());
-        final GridData imageData = new GridData(GridData.BEGINNING,
-                GridData.BEGINNING);
+        final GridData imageData = new GridData(GridData.BEGINNING, GridData.BEGINNING);
         imageLabel.setLayoutData(imageData);
         detailBar = new Composite(topBar, _diagstyle);
-        GridData detailData = new GridData(GridData.FILL, GridData.FILL, true,
-                true);
+        GridData detailData = new GridData(GridData.FILL, GridData.FILL, true, true);
         detailBar.setLayoutData(detailData);
         detailBar.setLayout(new FillLayout());
     }
@@ -249,8 +241,8 @@ public abstract class SimpleDialog extends Dialog implements Ref<Object> {
      *            {@value #NO_CHANGE} if the button won't change the current
      *            value.
      */
-    protected Button addButton(Composite parent, int style, Image image,
-            String text, final Object value, final boolean dispose) {
+    protected Button addButton(Composite parent, int style, Image image, String text,
+            final Object value, final boolean dispose) {
         final Button button = new Button(parent, style);
         if (image != null)
             button.setImage(image);

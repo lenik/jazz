@@ -106,8 +106,7 @@ public class While<T> extends _Functor<T> {
 
     private static ThreadLocal<While<?>> tlBuilt = new ThreadLocal<While<?>>();
 
-    public static <U> While<U> build(_Functor<Boolean> predicate,
-            _Functor<U> body) {
+    public static <U> While<U> build(_Functor<Boolean> predicate, _Functor<U> body) {
         While<U> built = built();
         tlBuilt.set(null);
         built.setPredicate(predicate);

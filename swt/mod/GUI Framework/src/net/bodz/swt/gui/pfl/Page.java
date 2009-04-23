@@ -1,5 +1,6 @@
 package net.bodz.swt.gui.pfl;
 
+import net.bodz.bas.util.StateChangeListener;
 import net.bodz.swt.gui.ValidateException;
 
 import org.eclipse.swt.graphics.ImageData;
@@ -35,8 +36,8 @@ public interface Page {
      */
     Object exitState();
 
-    void addPageStateChangeListener(PageStateChangeListener listener);
+    void addStateChangeListener(StateChangeListener listener);
 
-    void removePageStateChangeListener(PageStateChangeListener listener);
+    void removeStateChangeListener(StateChangeListener listener);
 
 }

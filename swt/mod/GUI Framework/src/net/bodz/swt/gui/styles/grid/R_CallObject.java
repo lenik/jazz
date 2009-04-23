@@ -30,16 +30,14 @@ public class R_CallObject extends SWTRenderer {
     }
 
     @Override
-    public Control render(final SWTRenderContext rc, GUIVar<?> var,
-            Composite parent, int style) throws RenderException, SWTException {
+    public Control render(final SWTRenderContext rc, GUIVar<?> var, Composite parent, int style)
+            throws RenderException, SWTException {
         if (!(var instanceof GUICallVar))
-            throw new IllegalArgumentException(GUINLS
-                    .getString("R_CallObject.notGUICallVar") + var); //$NON-NLS-1$
+            throw new IllegalArgumentException(GUINLS.getString("R_CallObject.notGUICallVar") + var); //$NON-NLS-1$
         final GUICallVar callVar = (GUICallVar) var;
         GUICallMeta meta = callVar.getMeta();
         GUIHint hint = meta.getHint();
-        final Composite comp = gridStyle.renderStruct(rc, callVar, parent,
-                style);
+        final Composite comp = gridStyle.renderStruct(rc, callVar, parent, style);
         final Composite opbar = new Composite(comp, SWT.NONE);
         opbar.setLayoutData(new GridData(//
                 SWT.FILL, SWT.CENTER, true, false, 3, 1));
@@ -67,8 +65,7 @@ public class R_CallObject extends SWTRenderer {
                             opbar.layout();
                         }
                     } catch (ReflectException ex) {
-                        String mesg = GUINLS
-                                .getString("R_CallObject.failedToCall"); //$NON-NLS-1$
+                        String mesg = GUINLS.getString("R_CallObject.failedToCall"); //$NON-NLS-1$
                         rc.interact(button).alert(mesg, ex);
                     }
                 }

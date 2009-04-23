@@ -62,8 +62,7 @@ public class Objects {
     }
 
     @Deprecated
-    public static boolean equalsWithWrap(Object[] pattern, Object[] objs,
-            int off) {
+    public static boolean equalsWithWrap(Object[] pattern, Object[] objs, int off) {
         for (int i = 0; i < pattern.length; i++) {
             if (off >= objs.length)
                 off = 0;
@@ -92,17 +91,15 @@ public class Objects {
             throw new CloneNotSupportedException(
                     TypesNLS.getString("Objects.cantAccessCopyCtor") + cls.getName()); //$NON-NLS-1$
         } catch (InvocationTargetException e) {
-            throw new CloneNotSupportedException(
-                    TypesNLS.getString("Objects.errClone") //$NON-NLS-1$
-                            + e.getMessage());
+            throw new CloneNotSupportedException(TypesNLS.getString("Objects.errClone") //$NON-NLS-1$
+                    + e.getMessage());
         } catch (InstantiationException e) {
             throw new CloneNotSupportedException(
                     TypesNLS.getString("Objects.errNewInst") + e.getMessage()); //$NON-NLS-1$
         }
     }
 
-    public static Object cloneByPersistency(Serializable object)
-            throws CloneNotSupportedException {
+    public static Object cloneByPersistency(Serializable object) throws CloneNotSupportedException {
         return null;
     }
 
