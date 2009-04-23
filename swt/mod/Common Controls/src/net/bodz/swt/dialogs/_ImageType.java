@@ -19,13 +19,11 @@ public abstract class _ImageType implements ImageType {
     }
 
     @Override
-    public ParametersComposite createParametersComposite(Composite parent,
-            int style) {
+    public ParametersComposite createParametersComposite(Composite parent, int style) {
         return null;
     }
 
-    static void _save(ImageLoader loader, OutputStream out, int format)
-            throws IOException {
+    static void _save(ImageLoader loader, OutputStream out, int format) throws IOException {
         if (out == null)
             throw new NullPointerException("out"); //$NON-NLS-1$
         try {

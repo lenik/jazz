@@ -9,8 +9,8 @@ import net.bodz.geom.shape.AbstractShape2f;
 import net.bodz.geom.shape.Shape2f;
 import net.bodz.math.mat.Vector2f;
 
-public abstract class AbstractTriangle2f extends AbstractShape2f implements
-        Triangle2f, Serializable {
+public abstract class AbstractTriangle2f extends AbstractShape2f implements Triangle2f,
+        Serializable {
 
     private static final long serialVersionUID = -1486259130919044343L;
     public static final int   CCW              = 1;

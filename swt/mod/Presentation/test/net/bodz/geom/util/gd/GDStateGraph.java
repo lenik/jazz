@@ -30,8 +30,7 @@ public class GDStateGraph extends SWTStateGraphImpl {
         super(registry, startKey);
     }
 
-    public GDStateGraph(Map<Object, State> registry, Object startKey,
-            GDContext context) {
+    public GDStateGraph(Map<Object, State> registry, Object startKey, GDContext context) {
         super(registry, startKey, context);
     }
 

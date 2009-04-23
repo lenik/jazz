@@ -54,8 +54,7 @@ public class Installer extends BasicGUI {
     protected void createInitialView(final Composite parent) throws UIException {
         ISession session = new Session(project, UI, L);
         setSession(session);
-        InstallComposite installComposite = new InstallComposite(session,
-                parent, SWT.NONE);
+        InstallComposite installComposite = new InstallComposite(session, parent, SWT.NONE);
         installComposite.addExitListener(new WizardExitListener() {
             @Override
             public void wizardExit(WizardExitEvent e) {

@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -13,14 +12,12 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.Map.Entry;
 
+import net.bodz.bas.io.CWD;
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.FileResFolder;
-import net.bodz.bas.io.FileResLink;
-import net.bodz.bas.io.Files;
 import net.bodz.bas.io.ResFolder;
 import net.bodz.bas.io.ResLink;
-import net.bodz.bas.io.URLResLink;
-import net.bodz.bas.types.HashTextMap;
+import net.bodz.bas.text.interp.VariableExpand;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TreeTextMap;
 import net.bodz.bas.ui.UserInterface;
@@ -35,17 +32,15 @@ public class Session implements ISession {
 
     private final Project             project;
     protected final UserInterface     UI;
-    protected final LogTerm           L;
+    protected LogTerm                 L;
 
     private Components                components;
     private Scheme                    scheme;
 
     private Flags                     flags;
-    private TextMap<Object>           attributes;
-    private TextMap<File>             baseDirs;
+    private TextMap<Object>           variables;
 
-    private ResFolder                 resFolder;
-    private List<File>                searchPaths;
+    private List<ResFolder>           resFolders;
     private List<ClassLoader>         searchLoaders;
 
     // Execution Variables
@@ -68,23 +63,20 @@ public class Session implements ISession {
         scheme = new Schemes.Default();
         flags = new Flags();
 
-        Map<String, Object> _env = project.getEnv();
-        if (_env == null)
-            attributes = new TreeTextMap<Object>();
-        else
-            attributes = new TreeTextMap<Object>(_env);
-        attributes = null;
-        baseDirs = new HashTextMap<File>();
-        for (BaseDir baseDir : project.getBaseDirs()) {
-            String name = baseDir.getName();
-            File preferred = baseDir.getPreferred();
-            logger.fdebug("Preferred base dir %s: %s\n", name, preferred);
-            baseDirs.put(name, preferred);
+        Map<String, Variable> vardef = project.getVariables();
+        assert vardef != null;
+        variables = new TreeTextMap<Object>();
+        for (Map.Entry<String, Variable> e : vardef.entrySet()) {
+            String name = e.getKey();
+            Variable var = e.getValue();
+            assert var != null;
+            Object defaultValue = var.getDefaultValue();
+            variables.put(name, defaultValue);
         }
 
-        setResFolder(Files.canoniOf("."));
-        searchPaths = new ArrayList<File>();
-        searchPaths.add(new File(".")); //$NON-NLS-1$
+        resFolders = new ArrayList<ResFolder>();
+        addResFolder(new FileResFolder(CWD.getcwd(), true));
+
         searchLoaders = new ArrayList<ClassLoader>();
         searchLoaders.add(ClassLoader.getSystemClassLoader());
 
@@ -135,78 +127,87 @@ public class Session implements ISession {
     }
 
     @Override
+    public void setLogger(LogTerm logger) {
+        this.L = logger;
+    }
+
+    @Override
     public Flags getFlags() {
         return flags;
     }
 
     @Override
-    public Object get(String attr) {
-        if (attributes == null)
-            return attributes.get(attr);
-        return attributes.get(attr);
+    public Object get(String name) {
+        if (variables == null)
+            return variables.get(name);
+        return variables.get(name);
     }
 
     @Override
-    public void set(String attr, Object value) {
-        if (attributes == null)
-            throw new IllegalStateException(
-                    "Set to the session env using setEnv.");
-        attributes.put(attr, value);
+    public File getFile(String name) {
+        Object value = get(name);
+        if (value == null)
+            return null;
+        if (value instanceof File)
+            return (File) value;
+        return new File(value.toString());
     }
 
     @Override
-    public File getBaseDir(String name) {
-        return baseDirs.get(name);
+    public void set(String name, Object value) {
+        if (variables == null)
+            throw new IllegalStateException("Set to the session env using setEnv.");
+        variables.put(name, value);
     }
 
     @Override
-    public void setBaseDir(String name, File dir) {
-        if (dir == null)
-            throw new NullPointerException("null dir for base=" + name); //$NON-NLS-1$
-        baseDirs.put(name, dir);
+    public String expand(String s) {
+        VariableExpand expander = new VariableExpand(variables);
+        String expansion = expander.process(s);
+        return expansion;
     }
 
     @Override
-    public ResFolder getResFolder() {
-        return resFolder;
+    public List<ResFolder> getResFolders() {
+        return resFolders;
     }
 
     @Override
-    public void setResFolder(ResFolder resFolder) {
-        this.resFolder = resFolder;
+    public void addResFolder(ResFolder resFolder) {
+        resFolders.add(resFolder);
     }
 
     @Override
-    public void setResFolder(File dir) {
-        if (dir == null)
-            throw new NullPointerException("dir");
-        FileResFolder folder = new FileResFolder(dir);
-        folder.setAutoMkdirs(true);
-        setResFolder(folder);
+    public void addResFolder(int index, ResFolder resFolder) {
+        resFolders.add(index, resFolder);
     }
 
     @Override
     public ResLink newResource(String resPath) throws IOException {
-        return resFolder.get(resPath);
+        assert !resFolders.isEmpty();
+        ResFolder output = resFolders.get(0);
+        return output.get(resPath);
     }
 
     @Override
-    public ResLink findResource(String path) throws IOException {
-        // if path.isAsbolute...
-        ResLink link = resFolder.get(path);
-        if (link.exists() != Boolean.TRUE) {
-            for (File searchPath : searchPaths) {
-                File foundFile = new File(searchPath, path);
-                if (foundFile.isFile())
-                    return new FileResLink(foundFile);
-            }
-            for (ClassLoader loader : searchLoaders) {
-                URL resURL = loader.getResource(path);
-                if (resURL != null)
-                    return new URLResLink(resURL);
-            }
+    public ResLink findResource(String path, boolean autoCreate) throws IOException {
+        ResLink firstUnknownLink = null;
+        for (ResFolder resFolder : resFolders) {
+            // if path.isAsbolute...
+            ResLink link = resFolder.get(path);
+            Boolean exists = link.exists();
+            if (exists == Boolean.TRUE)
+                return link;
+            if (exists == null && firstUnknownLink == null)
+                firstUnknownLink = link;
         }
-        return link;
+        if (autoCreate)
+            return newResource(path);
+        else {
+            if (firstUnknownLink == null)
+                throw new NoSuchElementException("Resource isn't existed: " + path);
+            return firstUnknownLink;
+        }
     }
 
     protected String getAttachmentPath(String name) {
@@ -214,11 +215,11 @@ public class Session implements ISession {
     }
 
     @Override
-    public Attachment getAttachment(String name) throws IOException {
+    public Attachment getAttachment(String name, boolean autoCreate) throws IOException {
         String path = getAttachmentPath(name);
         StatedAttachment a = apool.get(path);
         if (a == null) {
-            ResLink res = findResource(path);
+            ResLink res = findResource(path, autoCreate);
             a = new StatedAttachment(res, "utf-8"); //$NON-NLS-1$
             apool.put(path, a);
         }
@@ -250,7 +251,7 @@ public class Session implements ISession {
     public void loadRegistry() throws SessionException {
         try {
             // load registry before install/uinstall
-            ResLink registryLink = findResource(registryPath);
+            ResLink registryLink = findResource(registryPath, false);
             if (registryLink.exists() == Boolean.TRUE) {
                 L.info("Loading registry from ", registryLink);
                 InputStream in = registryLink.openInputStream();
@@ -293,14 +294,11 @@ public class Session implements ISession {
         out.println("Session ", this, ": ");
         out.println("  Project = ", project);
         out.println("  Scheme = ", scheme);
-        out.println("  ResFolder = ", resFolder);
-        for (Map.Entry<String, File> e : baseDirs.entrySet())
-            out.printf("  BaseDir[%s] = %s\n", e.getKey(), e.getValue());
+        for (ResFolder resFolder : resFolders)
+            out.println("  Resource Folder = ", resFolder);
+        for (Map.Entry<String, Object> e : variables.entrySet())
+            out.printf("  Var %s = %s\n", e.getKey(), e.getValue());
         int i = 0;
-        for (File searchPath : searchPaths) {
-            searchPath = Files.canoniOf(searchPath);
-            out.printf("  Search Path[%d] = %s\n", i++, searchPath);
-        }
         i = 0;
         for (ClassLoader searchLoader : searchLoaders)
             out.printf("  Search Loader[%d] = %s\n", i++, searchLoader);
@@ -317,8 +315,12 @@ public class Session implements ISession {
     }
 
     void dump(CharOut out, Component c, String prefix) {
-        out.printf(prefix + "%s: %s\n", //
-                c.getId(), c.getClass().getSimpleName());
+        boolean included = getScheme().isIncluded(c);
+        String flags = "";
+        if (included)
+            flags += "x";
+        out.printf(prefix + "(%s) %s: %s\n", //
+                flags, c.getId(), c.getClass().getSimpleName());
         List<? extends Component> children = c.getChildren();
         if (children != null) {
             for (Component child : children)

@@ -58,8 +58,7 @@ public class PropertyEntry2f extends Composite {
         assert fieldName != null;
         this.data = dataInit;
         this.fieldName = fieldName;
-        dataType = AbstractVisualType.getFieldType(dataInit.getClass(),
-                fieldName);
+        dataType = AbstractVisualType.getFieldType(dataInit.getClass(), fieldName);
 
         createContents();
 
@@ -77,8 +76,7 @@ public class PropertyEntry2f extends Composite {
 
         vt = VisualTypes.getVisualType(dataType);
         if (vt == null) {
-            throw new RuntimeException(
-                    "The data type doesn't support visual feature.");
+            throw new RuntimeException("The data type doesn't support visual feature.");
         }
 
         visual = vt.createControl(valueHolder);

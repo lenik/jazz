@@ -26,8 +26,7 @@ public class MIcon {
     }
 
     private int modIndex(int modifiers) {
-        switch (modifiers
-                & (Modifier.PUBLIC | Modifier.PROTECTED | Modifier.PRIVATE)) {
+        switch (modifiers & (Modifier.PUBLIC | Modifier.PROTECTED | Modifier.PRIVATE)) {
         case Modifier.PUBLIC:
             return PUBLIC;
         case Modifier.PROTECTED:

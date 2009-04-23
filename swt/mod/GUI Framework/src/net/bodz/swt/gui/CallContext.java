@@ -48,8 +48,8 @@ public class CallContext implements IPropertyChangeSupport {
             throw new NullPointerException();
         if (parameters.length != parameterTypes.length) {
             String fmt = GUINLS.getString("CallContext.errParamNum_dd"); //$NON-NLS-1$
-            throw new IllegalArgumentException(String.format(fmt,
-                    parameterTypes.length, parameters.length));
+            throw new IllegalArgumentException(String.format(fmt, parameterTypes.length,
+                    parameters.length));
         }
 
         Object[] old = this.parameters;
@@ -88,8 +88,7 @@ public class CallContext implements IPropertyChangeSupport {
     }
 
     @Override
-    public void addPropertyChangeListener(String propertyName,
-            PropertyChangeListener listener) {
+    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
         pcs.addPropertyChangeListener(propertyName, listener);
     }
 
@@ -99,8 +98,7 @@ public class CallContext implements IPropertyChangeSupport {
     }
 
     @Override
-    public void removePropertyChangeListener(String propertyName,
-            PropertyChangeListener listener) {
+    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
         pcs.removePropertyChangeListener(propertyName, listener);
     }
 

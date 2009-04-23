@@ -30,25 +30,21 @@ public class TestComposite extends Composite {
         setLayout(gridLayout);
 
         final ToolBar toolBar = new ToolBar(this, SWT.FLAT);
-        toolBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false,
-                2, 1));
+        toolBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
         final ToolItem helloItem = new ToolItem(toolBar, SWT.PUSH);
-        helloItem.setImage(SWTResources
-                .getImageRes("/icons/full/obj16/quickfix_warning_obj.gif"));
+        helloItem.setImage(SWTResources.getImageRes("/icons/full/obj16/quickfix_warning_obj.gif"));
         helloItem.setText("Hello");
 
         final ToolItem sep = new ToolItem(toolBar, SWT.SEPARATOR);
         sep.setText("New item");
 
         final ToolItem worldItem = new ToolItem(toolBar, SWT.PUSH);
-        worldItem.setImage(SWTResources
-                .getImageRes("/icons/full/obj16/innerclass_public_obj.gif"));
+        worldItem.setImage(SWTResources.getImageRes("/icons/full/obj16/innerclass_public_obj.gif"));
         worldItem.setText("Big Big World");
 
         final CoolBar coolBar = new CoolBar(this, SWT.NONE);
-        coolBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false,
-                2, 1));
+        coolBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
 
         final CoolItem cool1 = new CoolItem(coolBar, SWT.PUSH);
         cool1.setText("New item");
@@ -79,24 +75,21 @@ public class TestComposite extends Composite {
         hr.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
         final Label nameLabel = new Label(this, SWT.NONE);
-        nameLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false,
-                false));
+        nameLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
         nameLabel.setText("&Name"); //$NON-NLS-1$
 
         name = new Text(this, SWT.BORDER);
         name.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 
         final Label ageLabel = new Label(this, SWT.NONE);
-        ageLabel
-                .setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
+        ageLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
         ageLabel.setText("&Age"); //$NON-NLS-1$
 
         age = new Text(this, SWT.BORDER);
         age.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
 
         final Composite composite = new Composite(this, SWT.NONE);
-        composite.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, false,
-                true, 2, 1));
+        composite.setLayoutData(new GridData(SWT.RIGHT, SWT.BOTTOM, false, true, 2, 1));
         final RowLayout rowLayout_1 = new RowLayout();
         rowLayout_1.pack = false;
         composite.setLayout(rowLayout_1);

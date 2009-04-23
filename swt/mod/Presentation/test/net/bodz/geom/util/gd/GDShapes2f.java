@@ -126,8 +126,8 @@ public class GDShapes2f extends AbstractShape2f {
 
     @Override
     public Rectangle2f boundingBox() {
-        AbstractRectangle2f b = new Rectangle2f.LeftPositive(Float.MAX_VALUE,
-                Float.MAX_VALUE, -Float.MAX_VALUE, -Float.MAX_VALUE);
+        AbstractRectangle2f b = new Rectangle2f.LeftPositive(Float.MAX_VALUE, Float.MAX_VALUE,
+                -Float.MAX_VALUE, -Float.MAX_VALUE);
         int n = shapes.size();
         for (int i = 0; i < n; i++) {
             Shape2f shape = shapes.get(i);

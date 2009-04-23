@@ -21,15 +21,14 @@ public class R_Object extends _R_Object {
     }
 
     @Override
-    protected Composite renderObject(final SWTRenderContext rc, GUIVar<?> var,
-            Composite parent, int style) throws RenderException, SWTException {
+    protected Composite renderObject(final SWTRenderContext rc, GUIVar<?> var, Composite parent,
+            int style) throws RenderException, SWTException {
         assert var != null;
         Object object = var.get();
         if (object == null)
             throw new NotImplementedException("null obj: " + var); //$NON-NLS-1$
         GUIStruct objStruct = new GUIObjectStruct(object);
-        return strategy
-                .renderStruct(rc, objStruct, parent, styleFx(style, var));
+        return strategy.renderStruct(rc, objStruct, parent, styleFx(style, var));
     }
 
 }

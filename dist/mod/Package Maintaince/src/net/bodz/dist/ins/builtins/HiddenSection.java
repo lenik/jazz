@@ -11,8 +11,7 @@ public class HiddenSection extends Section {
         super(false, false, true, name, image, text, doc, children);
     }
 
-    public HiddenSection(String name, String text, String doc,
-            Component... children) {
+    public HiddenSection(String name, String text, String doc, Component... children) {
         super(false, false, true, name, null, text, doc, children);
     }
 

@@ -9,8 +9,7 @@ import net.bodz.geom.drawtarget.DrawTarget2f;
 import net.bodz.geom.shape.AbstractShape2f;
 import net.bodz.math.mat.Vector2f;
 
-public abstract class AbstractPoint2f extends AbstractShape2f implements
-        Point2f, Serializable {
+public abstract class AbstractPoint2f extends AbstractShape2f implements Point2f, Serializable {
 
     private static final long serialVersionUID = 7812541709920528959L;
 

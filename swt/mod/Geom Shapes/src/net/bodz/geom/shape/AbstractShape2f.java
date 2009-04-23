@@ -308,8 +308,7 @@ public abstract class AbstractShape2f implements Shape2f {
         return cropConvexPolygon(triangle);
     }
 
-    public Shape2f crop(float x0, float y0, float x1, float y1, float x2,
-            float y2) {
+    public Shape2f crop(float x0, float y0, float x1, float y1, float x2, float y2) {
         return cropConvexPolygon(new Triangle2f.Static(x0, y0, x1, y1, x2, y2));
     }
 
@@ -362,8 +361,8 @@ public abstract class AbstractShape2f implements Shape2f {
         if (n == 0)
             return new Rectangle2f.StaticLeft(0, 0, 0, 0);
 
-        Rectangle2f r = new Rectangle2f.StaticLeft(pointRef(0), new Vector2f(
-                Float.MIN_VALUE, Float.MIN_VALUE));
+        Rectangle2f r = new Rectangle2f.StaticLeft(pointRef(0), new Vector2f(Float.MIN_VALUE,
+                Float.MIN_VALUE));
 
         for (int i = 1; i < n; i++)
             ; // r.addWithScale(points.point(i));
@@ -376,8 +375,7 @@ public abstract class AbstractShape2f implements Shape2f {
         if (n == 0)
             return new Circle2f.Static_Cr(0, 0, 0);
 
-        Circle2f.Static_Cr c = new Circle2f.Static_Cr(pointRef(0),
-                Float.MIN_VALUE);
+        Circle2f.Static_Cr c = new Circle2f.Static_Cr(pointRef(0), Float.MIN_VALUE);
 
         for (int i = 1; i < n; i++)
             ; // c.addWithScale(points.point(i));
@@ -437,8 +435,7 @@ public abstract class AbstractShape2f implements Shape2f {
 
     static {
         PkgPrefix = AbstractShape2f.class.getName();
-        PkgPrefix = PkgPrefix.substring(0, PkgPrefix.length()
-                - ".AbstractShape2f".length());
+        PkgPrefix = PkgPrefix.substring(0, PkgPrefix.length() - ".AbstractShape2f".length());
         shapeClasses = new HashMap<Class<?>, ShapeClassInfo>();
     }
 }

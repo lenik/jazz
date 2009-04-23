@@ -47,9 +47,8 @@ public class WindowComposite extends Composite {
         this(parent, style, false, null);
     }
 
-    public WindowComposite(Composite parent, int style, boolean expanded,
-            final Composite fitParent) {
-        super(parent, style | SWT.BORDER);
+    public WindowComposite(Composite parent, int style, boolean expanded, final Composite fitParent) {
+        super(parent, style);
         GridLayout gridLayout = new GridLayout(1, false);
         gridLayout.marginWidth = 0;
         gridLayout.marginHeight = 0;
@@ -57,10 +56,8 @@ public class WindowComposite extends Composite {
         gridLayout.verticalSpacing = 0;
         setLayout(gridLayout);
 
-        this.expandedImage = SWTResources
-                .getImageRes("/icons/full/elcl16/thin_min_view.gif"); //$NON-NLS-1$
-        this.collaspedImage = SWTResources
-                .getImageRes("/icons/full/elcl16/thin_max_view.gif"); //$NON-NLS-1$
+        this.expandedImage = SWTResources.getImageRes("/icons/full/elcl16/thin_min_view.gif"); //$NON-NLS-1$
+        this.collaspedImage = SWTResources.getImageRes("/icons/full/elcl16/thin_max_view.gif"); //$NON-NLS-1$
 
         titleBar = new Composite(this, SWT.NONE);
         final GridLayout titleLayout = new GridLayout();
@@ -76,10 +73,8 @@ public class WindowComposite extends Composite {
 
         if (useSystemStyle) {
             titleBar.setBackgroundMode(SWT.INHERIT_DEFAULT);
-            titleBar.setBackground(getDisplay().getSystemColor(
-                    SWT.COLOR_TITLE_BACKGROUND));
-            titleLabel.setForeground(getDisplay().getSystemColor(
-                    SWT.COLOR_TITLE_FOREGROUND));
+            titleBar.setBackground(getDisplay().getSystemColor(SWT.COLOR_TITLE_BACKGROUND));
+            titleLabel.setForeground(getDisplay().getSystemColor(SWT.COLOR_TITLE_FOREGROUND));
             Font titleFont = titleLabel.getFont();
             FontData[] fontData = titleFont.getFontData();
             for (FontData fd : fontData)

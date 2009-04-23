@@ -15,8 +15,7 @@ import org.eclipse.swt.widgets.Text;
 public class LineLayoutTest extends BasicGUI {
 
     @Override
-    protected void createInitialView(Composite comp) throws UIException,
-            SWTException {
+    protected void createInitialView(Composite comp) throws UIException, SWTException {
         comp.setLayout(new BorderLayout(0, 0));
 
         final Button button = new Button(comp, SWT.NONE);

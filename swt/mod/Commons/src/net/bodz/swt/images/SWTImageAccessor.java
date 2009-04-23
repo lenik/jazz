@@ -265,10 +265,8 @@ public abstract class SWTImageAccessor extends _ImageAccessor {
 
         @Override
         public int getPixel() {
-            return ((data[pointer + 0] & 0xFF) << 24)
-                    | ((data[pointer + 1] & 0xFF) << 16)
-                    | ((data[pointer + 2] & 0xFF) << 8)
-                    | (data[pointer + 3] & 0xFF);
+            return ((data[pointer + 0] & 0xFF) << 24) | ((data[pointer + 1] & 0xFF) << 16)
+                    | ((data[pointer + 2] & 0xFF) << 8) | (data[pointer + 3] & 0xFF);
         }
 
         @Override
@@ -385,10 +383,8 @@ public abstract class SWTImageAccessor extends _ImageAccessor {
 
         @Override
         public int getPixel() {
-            return ((data[pointer + 0] & 0xFF) << 24)
-                    | ((data[pointer + 1] & 0xFF) << 16)
-                    | ((data[pointer + 2] & 0xFF) << 8)
-                    | (data[pointer + 3] & 0xFF);
+            return ((data[pointer + 0] & 0xFF) << 24) | ((data[pointer + 1] & 0xFF) << 16)
+                    | ((data[pointer + 2] & 0xFF) << 8) | (data[pointer + 3] & 0xFF);
         }
 
         @Override
@@ -496,8 +492,7 @@ public abstract class SWTImageAccessor extends _ImageAccessor {
 
         @Override
         public int getPixel() {
-            return ((data[pointer] & 0xFF) << 16)
-                    | ((data[pointer + 1] & 0xFF) << 8)
+            return ((data[pointer] & 0xFF) << 16) | ((data[pointer + 1] & 0xFF) << 8)
                     | (data[pointer + 2] & 0xFF);
         }
 

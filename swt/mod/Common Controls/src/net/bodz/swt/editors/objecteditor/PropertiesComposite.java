@@ -23,10 +23,8 @@ public class PropertiesComposite extends Composite {
         setLayout(gridLayout);
 
         final Button button = new Button(this, SWT.TOGGLE);
-        button
-                .setImage(SWTResources
-                        .getImageRes(PropertiesComposite.class,
-                                "/com/sun/java/swing/plaf/motif/icons/ScrollRightArrowActive.gif")); //$NON-NLS-1$
+        button.setImage(SWTResources.getImageRes(PropertiesComposite.class,
+                "/com/sun/java/swing/plaf/motif/icons/ScrollRightArrowActive.gif")); //$NON-NLS-1$
         button.setText("Toggle Button"); //$NON-NLS-1$
 
         final Label label = new Label(this, SWT.NONE);

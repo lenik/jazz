@@ -52,8 +52,8 @@ public abstract class SWTStrategy extends RenderStrategy {
     @Override
     public SWTRenderer put(Class<?> key, Renderer value) {
         if (!(value instanceof SWTRenderer))
-            throw new IllegalArgumentException(GUINLS
-                    .getString("SWTStrategy.notSWTRenderer") + value); //$NON-NLS-1$
+            throw new IllegalArgumentException(
+                    GUINLS.getString("SWTStrategy.notSWTRenderer") + value); //$NON-NLS-1$
         return (SWTRenderer) super.put(key, value);
     }
 
@@ -67,22 +67,21 @@ public abstract class SWTStrategy extends RenderStrategy {
         }
     }
 
-    public Control render(SWTRenderContext rc, GUIVar<?> var, Composite parent,
-            int style) throws RenderException, SWTException {
+    public Control render(SWTRenderContext rc, GUIVar<?> var, Composite parent, int style)
+            throws RenderException, SWTException {
         if (rc == null)
             throw new NullPointerException("rc");
         SWTRenderer renderer = findRenderer(var);
         if (renderer == null)
-            throw new RenderException(GUINLS
-                    .getString("SWTStrategy.nullRenderer") //$NON-NLS-1$
+            throw new RenderException(GUINLS.getString("SWTStrategy.nullRenderer") //$NON-NLS-1$
                     + var.getMeta().getType());
         @SuppressWarnings("unchecked")
         GUIVar<Object> gvar = (GUIVar<Object>) var;
         return renderer.render(rc, gvar, parent, style);
     }
 
-    public Control render(SWTRenderContext rc, Object constantValue,
-            Composite parent, int style) throws RenderException, SWTException {
+    public Control render(SWTRenderContext rc, Object constantValue, Composite parent, int style)
+            throws RenderException, SWTException {
         if (rc == null)
             throw new NullPointerException("rc");
         GUIVar<Object> var = GUIVars.wrap(constantValue);

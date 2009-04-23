@@ -19,15 +19,13 @@ public class GridTest_Hello extends BasicGUI {
     private Text text;
 
     @Override
-    protected void createInitialView(Composite comp) throws UIException,
-            SWTException {
+    protected void createInitialView(Composite comp) throws UIException, SWTException {
         final GridLayout gridLayout = new GridLayout();
         gridLayout.numColumns = 3;
         comp.setLayout(gridLayout);
 
         final Label label = new Label(comp, SWT.NONE);
-        label.setImage(SWTResources
-                .getImageRes("/icons/full/obj16/genericvariable_obj.gif")); //$NON-NLS-1$
+        label.setImage(SWTResources.getImageRes("/icons/full/obj16/genericvariable_obj.gif")); //$NON-NLS-1$
 
         final Label label_1 = new Label(comp, SWT.NONE);
         label_1.setText("Label"); //$NON-NLS-1$
@@ -36,8 +34,7 @@ public class GridTest_Hello extends BasicGUI {
         text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
         final Label label_2 = new Label(comp, SWT.NONE);
-        label_2.setImage(SWTResources
-                .getImageRes("/icons/full/obj16/unknown_obj.gif")); //$NON-NLS-1$
+        label_2.setImage(SWTResources.getImageRes("/icons/full/obj16/unknown_obj.gif")); //$NON-NLS-1$
 
         final Label label_3 = new Label(comp, SWT.NONE);
         label_3.setText("Label"); //$NON-NLS-1$
@@ -52,8 +49,7 @@ public class GridTest_Hello extends BasicGUI {
         label_5.setText("Label"); //$NON-NLS-1$
 
         final Composite composite = new Composite(comp, SWT.NONE);
-        composite
-                .setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
+        composite.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false));
         final GridLayout gridLayout_1 = new GridLayout();
         gridLayout_1.numColumns = 3;
         composite.setLayout(gridLayout_1);
@@ -65,8 +61,7 @@ public class GridTest_Hello extends BasicGUI {
         label_1_1.setText("Label"); //$NON-NLS-1$
 
         text_2 = new Text(composite, SWT.BORDER);
-        final GridData gd_text_2 = new GridData(SWT.FILL, SWT.CENTER, true,
-                false);
+        final GridData gd_text_2 = new GridData(SWT.FILL, SWT.CENTER, true, false);
         text_2.setLayoutData(gd_text_2);
 
         final Label label_2_1 = new Label(composite, SWT.NONE);

@@ -21,8 +21,7 @@ public class PaintGeomEvent extends EventObject {
 
     public Rectangle          viewRect;
 
-    public PaintGeomEvent(GeomCanvas canvas, GC gc, int index,
-            Rectangle viewRect) {
+    public PaintGeomEvent(GeomCanvas canvas, GC gc, int index, Rectangle viewRect) {
         super(canvas);
         this.canvas = canvas;
         this.gc = gc;

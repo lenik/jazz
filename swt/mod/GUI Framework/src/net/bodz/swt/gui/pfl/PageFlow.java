@@ -71,8 +71,7 @@ public class PageFlow extends Location {
 
     public void goBack() {
         if (!has(-1))
-            throw new NoSuchElementException(GUINLS
-                    .getString("PageFlow.noPrevious")); //$NON-NLS-1$
+            throw new NoSuchElementException(GUINLS.getString("PageFlow.noPrevious")); //$NON-NLS-1$
         go(-1);
     }
 
@@ -96,8 +95,7 @@ public class PageFlow extends Location {
     public void goOn() throws ValidateException {
         Page page = getPage();
         if (page == null)
-            throw new IllegalStateException(GUINLS
-                    .getString("PageFlow.noCurrentPage")); //$NON-NLS-1$
+            throw new IllegalStateException(GUINLS.getString("PageFlow.noCurrentPage")); //$NON-NLS-1$
         page.validate();
         String next = getPageNext(page);
         set(next);

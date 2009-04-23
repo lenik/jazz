@@ -25,8 +25,7 @@ public class PNGImageType extends _ImageType {
     }
 
     @Override
-    public void save(ImageData imageData, OutputStream out, Object _params)
-            throws IOException {
+    public void save(ImageData imageData, OutputStream out, Object _params) throws IOException {
         if (imageData == null)
             throw new NullPointerException("imageData"); //$NON-NLS-1$
         // Params params = (Params) _params;

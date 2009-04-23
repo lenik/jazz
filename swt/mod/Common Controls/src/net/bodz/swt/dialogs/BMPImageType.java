@@ -46,8 +46,7 @@ public class BMPImageType extends _ImageType {
             setLayout(gridLayout);
 
             rleCompressedButton = new Button(this, SWT.CHECK);
-            rleCompressedButton.setText(ControlsNLS
-                    .getString("BMPImageType.rleCompressed")); //$NON-NLS-1$
+            rleCompressedButton.setText(ControlsNLS.getString("BMPImageType.rleCompressed")); //$NON-NLS-1$
             rleCompressedButton.setSelection(params.compressByRLE);
         }
 
@@ -60,8 +59,7 @@ public class BMPImageType extends _ImageType {
     }
 
     @Override
-    public void save(ImageData imageData, OutputStream out, Object _params)
-            throws IOException {
+    public void save(ImageData imageData, OutputStream out, Object _params) throws IOException {
         if (imageData == null)
             throw new NullPointerException("imageData"); //$NON-NLS-1$
         Params params = (Params) _params;
@@ -75,8 +73,7 @@ public class BMPImageType extends _ImageType {
     }
 
     @Override
-    public ParametersComposite createParametersComposite(Composite parent,
-            int style) {
+    public ParametersComposite createParametersComposite(Composite parent, int style) {
         return new ParamsComp(parent, style, new Params());
     }
 

@@ -27,16 +27,15 @@ public interface Project extends Component {
     Scheme[] getSchemes();
 
     /**
-     * The base directories and their default values, they are cloned for each
-     * session.
+     * Get the variable definitions.
+     * 
+     * A session should copy this map using the default values.
+     * 
+     * @return must be non-<code>null</code>
      */
-    BaseDir[] getBaseDirs();
+    Map<String, Variable> getVariables();
 
-    /**
-     * The initial environment, the returned {@link Map} will be cloned for each
-     * session.
-     */
-    Map<String, Object> getEnv();
+    Variable get(String variableName);
 
     /**
      * @throws IllegalStateException

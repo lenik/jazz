@@ -47,8 +47,7 @@ public class H_PointSet2f {
         }
     }
 
-    public static class PointIterator extends _PointIterator implements
-            Iterator<Point2f.Static> {
+    public static class PointIterator extends _PointIterator implements Iterator<Point2f.Static> {
 
         public PointIterator(PointSet2f ps) {
             super(ps);
@@ -68,8 +67,7 @@ public class H_PointSet2f {
 
     }
 
-    public static class PointRefIterator extends _PointIterator implements
-            Iterator<Point2f> {
+    public static class PointRefIterator extends _PointIterator implements Iterator<Point2f> {
 
         public PointRefIterator(PointSet2f ps) {
             super(ps);

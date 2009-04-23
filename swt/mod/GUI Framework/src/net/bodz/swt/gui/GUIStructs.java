@@ -61,8 +61,7 @@ public class GUIStructs {
 
         private static final int        DEFAULT;
         static {
-            DEFAULT = FIELDS | PROPERTIES | METHODS | ALL_DECL | FORCE_ACCESS
-                    | NO_DUP_PROPS;
+            DEFAULT = FIELDS | PROPERTIES | METHODS | ALL_DECL | FORCE_ACCESS | NO_DUP_PROPS;
         }
 
         private final ClassMeta         prev;
@@ -71,13 +70,11 @@ public class GUIStructs {
         private List<GUIVarMeta>        list;
         private Map<String, GUIVarMeta> map;
 
-        protected ClassMeta(ClassMeta prev, Class<?> clazz)
-                throws GUIAccessException {
+        protected ClassMeta(ClassMeta prev, Class<?> clazz) throws GUIAccessException {
             this(prev, clazz, DEFAULT);
         }
 
-        protected ClassMeta(ClassMeta prev, Class<?> clazz, int flags)
-                throws GUIAccessException {
+        protected ClassMeta(ClassMeta prev, Class<?> clazz, int flags) throws GUIAccessException {
             this.prev = prev;
             this.hint = new GUIHint(//
                     prev == null ? null : prev.hint, clazz);
@@ -127,8 +124,7 @@ public class GUIStructs {
                 return new ClassMeta(get(p), clazz);
         }
 
-        public static ClassMeta get(Class<?> clazz, int flags)
-                throws GUIAccessException {
+        public static ClassMeta get(Class<?> clazz, int flags) throws GUIAccessException {
             Class<?> p = clazz.getSuperclass();
             if (p == Object.class || p == null)
                 return new ClassMeta(null, clazz, flags);
@@ -286,8 +282,7 @@ public class GUIStructs {
 
         private CallContext       cc;
 
-        public ParametersStruct(ParametersMeta meta, CallContext cc,
-                Object... initArgs) {
+        public ParametersStruct(ParametersMeta meta, CallContext cc, Object... initArgs) {
             super(meta.size());
             this.cc = cc;
             int n = meta.size();
@@ -298,8 +293,7 @@ public class GUIStructs {
                     try {
                         paramVar.check(initArgs[i]);
                     } catch (CheckException e) {
-                        throw new IllegalUsageError(GUINLS
-                                .getString("GUIStructs.checkFailOnInit")); //$NON-NLS-1$
+                        throw new IllegalUsageError(GUINLS.getString("GUIStructs.checkFailOnInit")); //$NON-NLS-1$
                     }
                     paramVar.set(initArgs[i]);
                 }
@@ -377,8 +371,7 @@ public class GUIStructs {
         }
 
         @Override
-        public boolean isAnnotationPresent(
-                Class<? extends Annotation> annotationClass) {
+        public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
             return method.isAnnotationPresent(annotationClass);
         }
 
@@ -399,8 +392,7 @@ public class GUIStructs {
 
     }
 
-    public static class GUICallVar extends ParametersStruct implements
-            GUIVar<CallObject> {
+    public static class GUICallVar extends ParametersStruct implements GUIVar<CallObject> {
 
         private static final long   serialVersionUID = 7447549523460668389L;
 
@@ -515,8 +507,7 @@ public class GUIStructs {
         }
 
         @Override
-        public boolean isAnnotationPresent(
-                Class<? extends Annotation> annotationClass) {
+        public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
             return false;
         }
 
@@ -642,8 +633,7 @@ public class GUIStructs {
         }
 
         @Override
-        public boolean isAnnotationPresent(
-                Class<? extends Annotation> annotationClass) {
+        public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
             return param.isAnnotationPresent(annotationClass);
         }
 
@@ -655,8 +645,7 @@ public class GUIStructs {
         public void check(Object value) throws CheckException {
             Class<?> type = getType();
             if (value != null && !Types.box(type).isInstance(value))
-                throw new CheckException(GUINLS
-                        .getString("GUIStructs.notInstOf") + type + ": " //$NON-NLS-1$ //$NON-NLS-2$
+                throw new CheckException(GUINLS.getString("GUIStructs.notInstOf") + type + ": " //$NON-NLS-1$ //$NON-NLS-2$
                         + value);
             if (checker != null)
                 checker.check(value);

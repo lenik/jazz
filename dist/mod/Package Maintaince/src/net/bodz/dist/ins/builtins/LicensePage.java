@@ -1,8 +1,10 @@
 package net.bodz.dist.ins.builtins;
 
+import net.bodz.bas.sys.SystemProperties;
 import net.bodz.dist.ins.ConfigPage;
 import net.bodz.dist.ins.ISession;
 import net.bodz.dist.nls.PackNLS;
+import net.bodz.swt.controls.util.Playback;
 import net.bodz.swt.layouts.BorderLayout;
 
 import org.eclipse.swt.SWT;
@@ -16,7 +18,7 @@ public class LicensePage extends ConfigPage {
 
     private ISession session;
 
-    private Text    text;
+    private Text     text;
 
     public LicensePage(ISession session, Composite parent, int style) {
         super(parent, style);
@@ -34,12 +36,15 @@ public class LicensePage extends ConfigPage {
         agreeButton.addSelectionListener(new SetState("next")); //$NON-NLS-1$
 
         final Button disagreeButton = new Button(composite, SWT.RADIO);
-        disagreeButton.setSelection(true);
         disagreeButton.setText(PackNLS.getString("LicensePage.disagree")); //$NON-NLS-1$
         disagreeButton.addSelectionListener(new SetState("cancel")); //$NON-NLS-1$
 
-        text = new Text(this, SWT.V_SCROLL | SWT.READ_ONLY | SWT.MULTI
-                | SWT.BORDER);
+        if (SystemProperties.isDevelopMode())
+            Playback.click(agreeButton);
+        else
+            disagreeButton.setSelection(true);
+
+        text = new Text(this, SWT.V_SCROLL | SWT.READ_ONLY | SWT.MULTI | SWT.BORDER);
         text.setLayoutData(BorderLayout.CENTER);
     }
 

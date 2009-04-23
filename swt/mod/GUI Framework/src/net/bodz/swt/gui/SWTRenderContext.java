@@ -13,8 +13,7 @@ public class SWTRenderContext {
         return new DialogUI(active.getShell());
     }
 
-    public void addEffects(Control control, GUIVar<?> var)
-            throws RenderException {
+    public void addEffects(Control control, GUIVar<?> var) throws RenderException {
         GUIVarMeta meta = var.getMeta();
         GUIHint hint = meta.getHint();
         if (hint == null)

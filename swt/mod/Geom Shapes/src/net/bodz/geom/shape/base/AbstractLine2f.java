@@ -9,8 +9,7 @@ import net.bodz.geom.drawtarget.DrawTarget2f;
 import net.bodz.geom.shape.AbstractShape2f;
 import net.bodz.math.mat.Vector2f;
 
-public abstract class AbstractLine2f extends AbstractShape2f implements Line2f,
-        Serializable {
+public abstract class AbstractLine2f extends AbstractShape2f implements Line2f, Serializable {
 
     private static final long serialVersionUID = 4549850040626555777L;
 
@@ -255,8 +254,7 @@ public abstract class AbstractLine2f extends AbstractShape2f implements Line2f,
 
     @Override
     public String toString() {
-        return String.format("<Line x0='%f' y0='%f' x1='%f' y1='%f' />", x0(),
-                y0(), x1(), y1());
+        return String.format("<Line x0='%f' y0='%f' x1='%f' y1='%f' />", x0(), y0(), x1(), y1());
     }
 
     // -o Pick

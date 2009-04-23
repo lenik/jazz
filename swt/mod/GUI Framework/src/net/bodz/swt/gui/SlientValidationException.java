@@ -22,8 +22,7 @@ public class SlientValidationException extends ValidateException {
         super(cause);
     }
 
-    public SlientValidationException(Control control, String message,
-            Throwable cause) {
+    public SlientValidationException(Control control, String message, Throwable cause) {
         super(control, message, cause);
     }
 

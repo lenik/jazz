@@ -12,8 +12,8 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseMoveListener;
 
-public class SWTStateGraphImpl extends StateGraphImpl implements SWTStateGraph,
-        MouseListener, MouseMoveListener, KeyListener {
+public class SWTStateGraphImpl extends StateGraphImpl implements SWTStateGraph, MouseListener,
+        MouseMoveListener, KeyListener {
 
     private static final long serialVersionUID = 2084698255485360902L;
 
@@ -38,8 +38,7 @@ public class SWTStateGraphImpl extends StateGraphImpl implements SWTStateGraph,
         super(registry, startKey);
     }
 
-    public SWTStateGraphImpl(Map<Object, State> registry, Object startKey,
-            SWTContext context) {
+    public SWTStateGraphImpl(Map<Object, State> registry, Object startKey, SWTContext context) {
         super(registry, startKey, context);
     }
 
@@ -76,22 +75,17 @@ public class SWTStateGraphImpl extends StateGraphImpl implements SWTStateGraph,
 
                                         @Override
                                         protected void mouseDown2(MouseEvent e) {
-                                            SWTStateGraphImpl.this
-                                                    .mouseDown2(e);
+                                            SWTStateGraphImpl.this.mouseDown2(e);
                                         }
 
                                         @Override
-                                        protected void mouseUp2(MouseEvent e,
-                                                MouseEvent d) {
-                                            SWTStateGraphImpl.this.mouseUp2(e,
-                                                    d);
+                                        protected void mouseUp2(MouseEvent e, MouseEvent d) {
+                                            SWTStateGraphImpl.this.mouseUp2(e, d);
                                         }
 
                                         @Override
-                                        public void mouseDoubleClick(
-                                                MouseEvent e) {
-                                            SWTStateGraphImpl.this
-                                                    .mouseDoubleClick2(e);
+                                        public void mouseDoubleClick(MouseEvent e) {
+                                            SWTStateGraphImpl.this.mouseDoubleClick2(e);
                                         }
 
                                     };

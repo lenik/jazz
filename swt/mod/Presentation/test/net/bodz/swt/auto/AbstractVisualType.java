@@ -47,9 +47,8 @@ public abstract class AbstractVisualType implements VisualType {
 
         Method method = getGetMethod(clazz, fieldName);
         if (method == null)
-            throw new IllegalArgumentException(
-                    "Neither fieldName nor getFieldName exists: "
-                            + clazz.getName() + "::" + fieldName);
+            throw new IllegalArgumentException("Neither fieldName nor getFieldName exists: "
+                    + clazz.getName() + "::" + fieldName);
 
         Object getResult;
         try {
@@ -109,9 +108,8 @@ public abstract class AbstractVisualType implements VisualType {
 
         method = getSetMethod(clazz, fieldName, type);
         if (method == null)
-            throw new IllegalArgumentException(
-                    "Neither fieldName nor setFieldName exists: "
-                            + clazz.getName() + "::" + fieldName);
+            throw new IllegalArgumentException("Neither fieldName nor setFieldName exists: "
+                    + clazz.getName() + "::" + fieldName);
 
         try {
             method.invoke(data, new Object[] { o });
@@ -135,11 +133,9 @@ public abstract class AbstractVisualType implements VisualType {
         }
     }
 
-    public static Method getSetMethod(Class<?> clazz, String fieldName,
-            Class<?> retType) {
+    public static Method getSetMethod(Class<?> clazz, String fieldName, Class<?> retType) {
         try {
-            return clazz.getMethod("set" + capFirst(fieldName),
-                    new Class[] { retType });
+            return clazz.getMethod("set" + capFirst(fieldName), new Class[] { retType });
         } catch (NoSuchMethodException e) {
             return null;
         }
@@ -148,9 +144,8 @@ public abstract class AbstractVisualType implements VisualType {
     public static Class<?> getFieldType(Class<?> clazz, String fieldName) {
         Method method = getGetMethod(clazz, fieldName);
         if (method == null)
-            throw new IllegalArgumentException(
-                    "Neither fieldName nor getFieldName exists: "
-                            + clazz.getName() + "::" + fieldName);
+            throw new IllegalArgumentException("Neither fieldName nor getFieldName exists: "
+                    + clazz.getName() + "::" + fieldName);
 
         Class<?> type = method.getReturnType();
         return type;

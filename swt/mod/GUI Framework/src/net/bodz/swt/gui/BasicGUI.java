@@ -218,16 +218,14 @@ public class BasicGUI extends BasicCLI {
             return null;
         final Menu menu = new Menu(parent, SWT.BAR);
 
-        final Menu fileMenu = Menus.newSubMenu(menu, GUINLS
-                .getString("BasicGUI.menu.file")); //$NON-NLS-1$
+        final Menu fileMenu = Menus.newSubMenu(menu, GUINLS.getString("BasicGUI.menu.file")); //$NON-NLS-1$
         final MenuItem fileExit = new MenuItem(fileMenu, SWT.NONE);
         fileExit.setText(GUINLS.getString("BasicGUI.menu.exit")); //$NON-NLS-1$
 
         return menu;
     }
 
-    protected Control createToolBar(Composite parent) throws SWTException,
-            UIException {
+    protected Control createToolBar(Composite parent) throws SWTException, UIException {
         boolean TODO = true;
         if (TODO)
             return null;
@@ -235,8 +233,7 @@ public class BasicGUI extends BasicCLI {
         return toolBar;
     }
 
-    protected Control createStatusBar(Composite parent) throws SWTException,
-            UIException {
+    protected Control createStatusBar(Composite parent) throws SWTException, UIException {
         Composite statusBar = new Composite(parent, SWT.BORDER); // SWT.BORDER
         statusBar.setLayout(new FillLayout());
         Label label = new Label(statusBar, SWT.NONE);
@@ -252,8 +249,7 @@ public class BasicGUI extends BasicCLI {
         return copyright;
     }
 
-    protected Control createExpandBar(Composite parent) throws SWTException,
-            UIException {
+    protected Control createExpandBar(Composite parent) throws SWTException, UIException {
         boolean TODO = true;
         if (TODO)
             return null;
@@ -261,15 +257,13 @@ public class BasicGUI extends BasicCLI {
         return expandBar;
     }
 
-    protected void createInitialView(Composite parent) throws UIException,
-            SWTException {
+    protected void createInitialView(Composite parent) throws UIException, SWTException {
         parent.setLayout(new FillLayout());
         Label welcomeLabel = new Label(parent, SWT.NONE);
         welcomeLabel.setText(GUINLS.getString("BasicGUI.welcome")); //$NON-NLS-1$
     }
 
-    protected void createView(Composite parent, Object key)
-            throws SWTException, UIException {
+    protected void createView(Composite parent, Object key) throws SWTException, UIException {
         if (key == null) {
             createInitialView(parent);
             return;
@@ -277,8 +271,7 @@ public class BasicGUI extends BasicCLI {
         throw new NotImplementedException("key: " + key); //$NON-NLS-1$
     }
 
-    protected void openView(Composite parent, Object key) throws SWTException,
-            UIException {
+    protected void openView(Composite parent, Object key) throws SWTException, UIException {
         Composite view = views.get(key);
         if (view == null) {
             view = new Composite(parent, SWT.NONE);

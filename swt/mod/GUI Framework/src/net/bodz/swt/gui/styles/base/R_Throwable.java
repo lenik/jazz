@@ -4,14 +4,16 @@ import java.io.IOException;
 import java.util.EventObject;
 
 import net.bodz.bas.io.CharOuts.BCharOut;
+import net.bodz.bas.lang.err.ExpectedException;
 import net.bodz.bas.sys.DesktopApps;
+import net.bodz.bas.sys.SystemProperties;
 import net.bodz.bas.ui.RenderException;
 import net.bodz.swt.controls.helper.EmptyComposite;
 import net.bodz.swt.controls.helper.FixSizeComposite;
 import net.bodz.swt.controls.util.Controls;
+import net.bodz.swt.gui.DialogUI;
 import net.bodz.swt.gui.GUIVar;
 import net.bodz.swt.gui.IAction;
-import net.bodz.swt.gui.DialogUI;
 import net.bodz.swt.gui.SWTRenderContext;
 import net.bodz.swt.gui.SWTRenderer;
 import net.bodz.swt.gui._Action;
@@ -42,17 +44,16 @@ public class R_Throwable extends SWTRenderer {
     static final String  expandedIcon  = "/icons/full/obj16/remove_correction.gif";  //$NON-NLS-1$
     static final String  collapsedIcon = "/icons/full/obj16/add_correction.gif";     //$NON-NLS-1$
 
-    public static String mailAddress   = GUINLS
-                                               .getString("R_Throwable.mailAddress"); //$NON-NLS-1$
+    public static String mailAddress   = GUINLS.getString("R_Throwable.mailAddress"); //$NON-NLS-1$
 
     static boolean       usingColors   = false;
     static boolean       showTools     = true;
+    static boolean       showDebug     = SystemProperties.isDevelopMode();
 
     @Override
-    public Control render(final SWTRenderContext rc, final GUIVar<?> var,
-            final Composite parent, final int style) throws RenderException,
-            SWTException {
-        final Display display = parent == null ? Display.getCurrent() // 
+    public Control render(final SWTRenderContext rc, final GUIVar<?> var, final Composite parent,
+            final int style) throws RenderException, SWTException {
+        final Display display = parent == null ? Display.getCurrent() //
                 : parent.getDisplay();
         final Composite comp = new Composite(parent, style);
         GridLayout layout = new GridLayout(2, false);
@@ -81,8 +82,7 @@ public class R_Throwable extends SWTRenderer {
             // Empty skip =
             new EmptyComposite(comp, SWT.NONE);
 
-            final FixSizeComposite callstackComp = new FixSizeComposite(comp,
-                    SWT.NONE);
+            final FixSizeComposite callstackComp = new FixSizeComposite(comp, SWT.NONE);
             GridLayout gridLayout = new GridLayout(1, false);
             gridLayout.marginHeight = 0;
             gridLayout.marginBottom = 2;
@@ -101,8 +101,7 @@ public class R_Throwable extends SWTRenderer {
                 if (usingColors) {
                     Color bg = entry.getBackground();
                     int red = Math.min(255, (bg.getRed() * (9 + i % 3)) / 10);
-                    int green = Math.min(255,
-                            (bg.getGreen() * (9 + i % 3)) / 10);
+                    int green = Math.min(255, (bg.getGreen() * (9 + i % 3)) / 10);
                     int blue = Math.min(255, (bg.getBlue() * (9 + i % 3)) / 10);
                     bg = new Color(parent.getDisplay(), red, green, blue);
                     entry.setBackground(bg);
@@ -146,10 +145,8 @@ public class R_Throwable extends SWTRenderer {
 
         if (showTools) {
             final String errorText = errbuf.toString();
-            Image copyImage = SWTResources
-                    .getImageRes("/icons/full/etool16/copy_edit.gif"); //$NON-NLS-1$
-            IAction copyAction = new _Action(
-                    copyImage,
+            Image copyImage = SWTResources.getImageRes("/icons/full/etool16/copy_edit.gif"); //$NON-NLS-1$
+            IAction copyAction = new _Action(copyImage,
                     GUINLS.getString("R_Throwable.copy"), GUINLS.getString("R_Throwable.copy.doc")) {//$NON-NLS-1$ //$NON-NLS-2$
                 @Override
                 public void execute() {
@@ -161,27 +158,40 @@ public class R_Throwable extends SWTRenderer {
                     clipboard.dispose();
                 }
             };
-            final Image mailImage = SWTResources
-                    .getImageRes("/icons/full/obj16/text_edit.gif"); //$NON-NLS-1$
-            final String mailSubject = GUINLS
-                    .getString("R_Throwable.errorReport"); //$NON-NLS-1$
+
+            final Image mailImage = SWTResources.getImageRes("/icons/full/obj16/text_edit.gif"); //$NON-NLS-1$
+            final String mailSubject = GUINLS.getString("R_Throwable.errorReport"); //$NON-NLS-1$
             IAction mailAction = new _Action(mailImage, //
                     GUINLS.getString("R_Throwable.report"), //$NON-NLS-1$
-                    GUINLS.getString("R_Throwable.sendMail")) {//$NON-NLS-1$ 
+                    GUINLS.getString("R_Throwable.sendMail")) {//$NON-NLS-1$
                 @Override
                 public void execute() {
                     try {
-                        DesktopApps.openMailer(mailAddress, mailSubject,
-                                errorText);
+                        DesktopApps.openMailer(mailAddress, mailSubject, errorText);
                     } catch (IOException e) {
                         DialogUI iact = rc.interact(parent);
                         iact.alert(GUINLS.getString("R_Throwable.cantSend"), e); //$NON-NLS-1$
                     }
                 }
             };
+
             rc.addAction(copyAction);
             rc.addAction(mailAction);
         }
+
+        if (showDebug) {
+            final Image debugImage = SWTResources.getImageRes("/icons/full/eview16/debug_view.gif"); //$NON-NLS-1$
+            IAction debugAction = new _Action(debugImage, //
+                    GUINLS.getString("R_Throwable.debug"), //$NON-NLS-1$
+                    GUINLS.getString("R_Throwable.debug.doc")) {//$NON-NLS-1$
+                @Override
+                public void execute() {
+                    throw new ExpectedException("debug");
+                }
+            };
+            rc.addAction(debugAction);
+        }
+
         return comp;
     }
 

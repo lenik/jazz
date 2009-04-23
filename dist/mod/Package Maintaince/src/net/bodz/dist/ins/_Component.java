@@ -33,9 +33,12 @@ public abstract class _Component implements Component {
     private Set<Component>  dependancy;
 
     public _Component(boolean visible, boolean defaultSelection) {
-        this.name = getClass().getSimpleName();
-        this.text = A_bas.getDisplayName(getClass());
-        this.doc = text;
+        Class<?> clazz = getClass();
+        name = clazz.getSimpleName();
+        text = A_bas.getDisplayName(clazz);
+        doc = A_bas.getDoc(clazz);
+        if (doc == null)
+            doc = text;
         this.visible = visible;
         this.selection = defaultSelection;
     }
@@ -194,6 +197,39 @@ public abstract class _Component implements Component {
         return null;
     }
 
+    /**
+     * @return slightly bigger then a single progress index (1.00), in default
+     *         implementation.
+     */
+    @Override
+    public double getProgressScaleToParent() {
+        return 1.01;
+    }
+
+    static class JobConcat extends SessionJob {
+
+        public JobConcat(ISession session, Component component) {
+            super(session, component);
+        }
+
+        @Override
+        protected void _run() {
+            List<? extends SessionJob> list = getChildren();
+            if (list == null || list.isEmpty())
+                return;
+            int jobCount = list.size();
+            setProgress(0, jobCount);
+            double progressIndex = 0;
+            for (SessionJob job : list) {
+                setStatus(job.getDescription());
+                job.run();
+                progressIndex += job.progressIncrement;
+                setProgressIndex(progressIndex);
+            }
+        }
+
+    }
+
     @Override
     public final SessionJob execute(int type, ISession session) {
         SessionJob job;
@@ -210,26 +246,52 @@ public abstract class _Component implements Component {
         default:
             throw new IllegalArgumentException("Invalid type: " + type);
         }
+
         List<Component> children = getChildren();
         if (children == null || children.isEmpty())
             return job;
-        else {
-            if (job == null)
-                job = new SessionJob(session) {
-                    @Override
-                    protected void _run() {
-                    }
-                };
-            Scheme scheme = session.getScheme();
-            for (Component child : children) {
+
+        JobConcat concat = new JobConcat(session, this);
+        List<SessionJob> q = new ArrayList<SessionJob>();
+        double psum = 0;
+        if (job != null) {
+            q.add(job);
+            psum += 1;
+        }
+
+        Scheme scheme = session.getScheme();
+        for (Component child : children) {
+            switch (type) {
+            case PACK:
+                break;
+            case INSTALL:
+            case UNINSTALL:
                 if (!scheme.isIncluded(child))
                     continue;
-                SessionJob childJob = child.execute(type, session);
-                if (childJob != null)
-                    job.addChildJob(childJob, 0);
             }
+            SessionJob childJob = child.execute(type, session);
+            if (childJob == null)
+                continue;
+            q.add(childJob);
+            psum += child.getProgressScaleToParent();
         }
-        return job;
+        if (q.isEmpty())
+            return job;
+
+        for (SessionJob childJob : q) {
+            double progressIncrement;
+            Component child = childJob.getComponent();
+            double c = child.getProgressScaleToParent();
+            if (psum == 0) {
+                progressIncrement = 1.0 / q.size();
+            } else
+                progressIncrement = c / psum;
+            // this make the offset
+            childJob.progressIncrement = progressIncrement;
+            // this make the scale
+            concat.addChildJob(childJob, progressIncrement);
+        }
+        return concat;
     }
 
     protected SessionJob pack(ISession session) {

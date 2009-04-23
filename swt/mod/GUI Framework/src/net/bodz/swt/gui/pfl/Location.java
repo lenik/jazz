@@ -86,8 +86,7 @@ public class Location {
         String prev = get();
         index = i;
         String next = get();
-        int reason = relativeIndex == 0 ? REFRESH : relativeIndex > 0 ? FORWARD
-                : BACKWARD;
+        int reason = relativeIndex == 0 ? REFRESH : relativeIndex > 0 ? FORWARD : BACKWARD;
         locationChange(prev, next, reason);
         return next;
     }
@@ -127,8 +126,7 @@ public class Location {
     protected void locationChange(String prev, String next, int reason) {
         if (locationChangeListeners == null)
             return;
-        LocationChangeEvent e = new LocationChangeEvent(this, prev, next,
-                reason);
+        LocationChangeEvent e = new LocationChangeEvent(this, prev, next, reason);
         for (LocationChangeListener l : locationChangeListeners)
             l.locationChange(e);
     }

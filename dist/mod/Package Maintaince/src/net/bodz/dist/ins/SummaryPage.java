@@ -24,8 +24,7 @@ class SummaryPage extends ConfigPage {
         final Label sessionConfigurationLabel = new Label(this, SWT.NONE);
         sessionConfigurationLabel.setText("Session Configuration: ");
 
-        text = new Text(this, SWT.WRAP | SWT.V_SCROLL | SWT.READ_ONLY
-                | SWT.MULTI | SWT.BORDER);
+        text = new Text(this, SWT.WRAP | SWT.V_SCROLL | SWT.READ_ONLY | SWT.MULTI | SWT.BORDER);
         text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
     }
 

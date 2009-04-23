@@ -1,6 +1,7 @@
 package net.bodz.dist.ins;
 
 import java.io.File;
+import java.util.Map;
 
 import net.bodz.bas.io.Files;
 import net.bodz.bas.util.LogTerm;
@@ -19,11 +20,15 @@ public class TestConfig {
     public static void setTestBaseDir(ISession session) {
         Project project = session.getProject();
         LogTerm L = session.getLogger();
-        for (BaseDir baseDir : project.getBaseDirs()) {
-            String name = baseDir.getName();
-            File testbase = new File(TestConfig.targetHome, name);
-            L.finfo("Set test basedir %s => %s\n", name, testbase);
-            session.setBaseDir(name, testbase);
+        Map<String, Variable> variables = project.getVariables();
+        for (Map.Entry<String, Variable> e : variables.entrySet()) {
+            String name = e.getKey();
+            Variable variable = e.getValue();
+            if (variable.getType() == Variable.BASE_DIR) {
+                File testbase = new File(TestConfig.targetHome, name);
+                L.finfo("Set test basedir %s => %s\n", name, testbase);
+                session.set(name, testbase);
+            }
         }
     }
 

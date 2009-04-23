@@ -9,8 +9,7 @@ import org.eclipse.swt.events.TypedEvent;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Widget;
 
-public abstract class CommitAdapter implements CommitListener,
-        CommitFailListener {
+public abstract class CommitAdapter implements CommitListener, CommitFailListener {
 
     private UserInterface UI;
 
@@ -27,8 +26,7 @@ public abstract class CommitAdapter implements CommitListener,
         if (cause == null)
             cause = exception;
         TypedEvent evt = (TypedEvent) event;
-        UI.alert(
-                ControlsNLS.getString("CommitAdapter.commitError"), cause); //$NON-NLS-1$
+        UI.alert(ControlsNLS.getString("CommitAdapter.commitError"), cause); //$NON-NLS-1$
         Widget widget = (Widget) evt.widget;
         // System.out.println("  source=" + evt.getSource());
         // System.out.println("  widget=" + evt.widget);

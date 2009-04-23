@@ -25,8 +25,7 @@ class DonePage extends PageComposite {
         setLayout(new GridLayout());
 
         final Label thsInstallationProcessLabel = new Label(this, SWT.WRAP);
-        thsInstallationProcessLabel.setLayoutData(new GridData(SWT.FILL,
-                SWT.CENTER, true, false));
+        thsInstallationProcessLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         thsInstallationProcessLabel
                 .setText("Ths installation process is completed, you may choose to reboot the computer. ");
 

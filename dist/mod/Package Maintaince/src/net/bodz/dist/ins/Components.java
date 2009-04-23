@@ -87,8 +87,8 @@ public class Components extends TreeTextMap<Component> {
                 assert id != null;
                 child.setId(id);
             } else if (map.containsKey(id)) {
-                String mesg = String.format("Dupliated id(%s): old=%s, new=%s",
-                        id, map.get(id), child);
+                String mesg = String.format("Dupliated id(%s): old=%s, new=%s", id, map.get(id),
+                        child);
                 throw new IllegalStateException(mesg);
             }
             map.put(id, child);

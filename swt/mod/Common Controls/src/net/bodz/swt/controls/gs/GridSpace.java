@@ -187,8 +187,8 @@ public abstract class GridSpace extends _GeomSpace {
             return iteratorCells(r0, c0, rn, cn);
         }
 
-        protected abstract IntIterator iteratorCells(final int r0,
-                final int c0, final int rn, final int cn);
+        protected abstract IntIterator iteratorCells(final int r0, final int c0, final int rn,
+                final int cn);
 
     }
 
@@ -236,8 +236,7 @@ public abstract class GridSpace extends _GeomSpace {
         }
 
         @Override
-        protected IntIterator iteratorCells(final int r0, final int c0,
-                final int rn, final int cn) {
+        protected IntIterator iteratorCells(final int r0, final int c0, final int rn, final int cn) {
             assert rn >= 0 && cn >= 0;
             final int r1 = r0 + rn;
             final int c1 = c0 + cn;

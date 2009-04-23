@@ -11,9 +11,8 @@ public class Section extends _Component {
 
     private static ImageData sectionImage = null;
 
-    public Section(boolean visible, boolean readOnly, boolean selection,
-            String name, ImageData image, String text, String doc,
-            Component... children) {
+    public Section(boolean visible, boolean readOnly, boolean selection, String name,
+            ImageData image, String text, String doc, Component... children) {
         super(true, selection);
         if (image == null)
             image = sectionImage;

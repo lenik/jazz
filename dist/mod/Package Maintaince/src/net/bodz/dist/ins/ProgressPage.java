@@ -1,7 +1,7 @@
 package net.bodz.dist.ins;
 
+import net.bodz.bas.io.term.BufferedTerminal;
 import net.bodz.bas.io.term.Terminal;
-import net.bodz.bas.io.term._Terminal;
 import net.bodz.bas.lang.RecoverableExceptionEvent;
 import net.bodz.bas.types.util.Strings;
 import net.bodz.bas.ui.Proposals;
@@ -50,13 +50,14 @@ class ProgressPage extends PageComposite {
     private final UserInterface UI;
 
     private int                 state        = BLOCK;
+    private Thread              installThread;
 
     private Label               imageLabel;
-    private Label               actionLabel;
+    private Label               statusLabel;
 
     private int                 progressSize = 1000;
     private ProgressBar         progressBar;
-    private Label               progressInfo;
+    private Label               progressText;
 
     private int                 logMax       = 10000;
     private WindowComposite     logDetail;
@@ -77,31 +78,30 @@ class ProgressPage extends PageComposite {
         setLayout(gridLayout);
 
         imageLabel = new Label(this, SWT.NONE);
+        imageLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
 
-        actionLabel = new Label(this, SWT.WRAP);
-        actionLabel.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true,
-                false));
+        statusLabel = new Label(this, SWT.NONE); // SWT.WRAP);
+        statusLabel.setText("STATUS");
+        GridData statusData = new GridData(SWT.FILL, SWT.CENTER, true, false);
+        // statusData.heightHint = 50;
+        statusLabel.setLayoutData(statusData);
 
         progressBar = new ProgressBar(this, SWT.NONE);
         progressBar.setMaximum(progressSize);
-        progressBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true,
-                false, 2, 1));
+        progressBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
-        progressInfo = new Label(this, SWT.NONE);
-        progressInfo.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false,
-                false, 2, 1));
-        progressInfo.setText("0%"); //$NON-NLS-1$
+        progressText = new Label(this, SWT.NONE);
+        progressText.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 2, 1));
+        progressText.setText("0%"); //$NON-NLS-1$
 
-        logDetail = new WindowComposite(this, SWT.NONE) {
+        logDetail = new WindowComposite(this, SWT.NONE, true, this) {
             @Override
             protected void createContents(Composite parent, int style) {
-                logList = new List(parent, style);
+                logList = new List(parent, SWT.H_SCROLL | SWT.V_SCROLL);
 
                 final ToolItem copyItem = addToolItem(SWT.PUSH);
-                copyItem.setImage(SWTResources
-                        .getImageRes("/icons/full/etool16/copy_edit.gif"));
-                copyItem.setToolTipText(PackNLS
-                        .getString("ProgressPage.copyClipboard")); //$NON-NLS-1$
+                copyItem.setImage(SWTResources.getImageRes("/icons/full/etool16/copy_edit.gif"));
+                copyItem.setToolTipText(PackNLS.getString("ProgressPage.copyClipboard")); //$NON-NLS-1$
                 copyItem.addSelectionListener(new SelectionAdapter() {
                     @Override
                     public void widgetSelected(SelectionEvent e) {
@@ -109,8 +109,8 @@ class ProgressPage extends PageComposite {
                     }
                 });
                 final ToolItem pauseItem = addToolItem(SWT.CHECK);
-                pauseItem.setImage(SWTResources
-                        .getImageRes("/icons/full/etool16/term_restart.gif"));
+                pauseItem
+                        .setImage(SWTResources.getImageRes("/icons/full/etool16/term_restart.gif"));
                 pauseItem.addSelectionListener(new SelectionAdapter() {
                     @Override
                     public void widgetSelected(SelectionEvent e) {
@@ -119,8 +119,8 @@ class ProgressPage extends PageComposite {
                     }
                 });
                 final ToolItem cancelItem = addToolItem(SWT.CHECK);
-                cancelItem.setImage(SWTResources
-                        .getImageRes("/icons/full/elcl16/terminate_co.gif"));
+                cancelItem
+                        .setImage(SWTResources.getImageRes("/icons/full/elcl16/terminate_co.gif"));
                 cancelItem.addSelectionListener(new SelectionAdapter() {
                     @Override
                     public void widgetSelected(SelectionEvent e) {
@@ -130,7 +130,7 @@ class ProgressPage extends PageComposite {
                 });
             }
         };
-        GridData gd_detail = new GridData(SWT.FILL, SWT.FILL, true, false, 2, 1);
+        GridData gd_detail = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
         logDetail.setLayoutData(gd_detail);
         logDetail.setText(PackNLS.getString("ProgressPage.logsLabel")); //$NON-NLS-1$
         logDetail.addDetailSwitchListener(new DetailSwitchListener() {
@@ -148,8 +148,7 @@ class ProgressPage extends PageComposite {
         gridLayout_1.marginHeight = 0;
         gridLayout_1.horizontalSpacing = 0;
         statusbar.setLayout(gridLayout_1);
-        final GridData gd_statusbar = new GridData(SWT.FILL, SWT.CENTER, false,
-                false, 2, 1);
+        final GridData gd_statusbar = new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1);
         statusbar.setLayoutData(gd_statusbar);
 
         counterbar = new Composite(statusbar, SWT.NONE);
@@ -173,8 +172,7 @@ class ProgressPage extends PageComposite {
         sep.setLayoutData(gd_sep);
 
         final Label _remainingLabel = new Label(timebar, SWT.NONE);
-        _remainingLabel
-                .setText(PackNLS.getString("ProgressPage.remainingTime")); //$NON-NLS-1$
+        _remainingLabel.setText(PackNLS.getString("ProgressPage.remainingTime")); //$NON-NLS-1$
 
         remainingLabel = new Label(timebar, SWT.NONE);
         remainingLabel.setText("-:-:-"); //$NON-NLS-1$
@@ -215,41 +213,72 @@ class ProgressPage extends PageComposite {
     public void enter(String prev, int reason) {
         if (reason != PageFlow.FORWARD)
             return;
-        PPExecutor executor = new PPExecutor();
-        try {
-            setState(BLOCK);
-            executor.install();
-            setState(DONE);
-        } catch (SessionException e) {
-            session.getUserInterface();
-        } finally {
-            if (state == BLOCK)
-                setState(CANCELED);
-        }
+        logList.removeAll();
+        final PPExecutor executor = new PPExecutor();
+        setState(BLOCK);
+        installThread = new Thread() {
+            @Override
+            public void run() {
+                int state = CANCELED;
+                try {
+                    executor.install();
+                    state = DONE;
+                } catch (SessionException e) {
+                    UserInterface UI = session.getUserInterface();
+                    UI.alert("Install Error", e);
+                } finally {
+                    final int newState = state;
+                    getDisplay().asyncExec(new Runnable() {
+                        @Override
+                        public void run() {
+                            setState(newState);
+                        }
+                    });
+                }
+            }
+        };
+        installThread.start();
     }
 
     class PPExecutor extends ProjectExecutor {
 
         public PPExecutor() {
-            super(ProgressPage.this.session, ProgressPage.this.UI,
-                    new PLogTerm());
+            super(ProgressPage.this.session, ProgressPage.this.UI, new PLogTerm());
         }
 
         @Override
-        public void progressChange(ProgressChangeEvent e) {
-            setProgress(e.getProgress());
+        public void progressChange(final ProgressChangeEvent e) {
+            final double progress = e.getProgress();
+            final Object source = e.getSource();
+            System.err.printf("%.3f: %s\n", progress, source);
+            getDisplay().asyncExec(new Runnable() {
+                @Override
+                public void run() {
+                    setProgress(progress);
+                }
+            });
         }
 
         @Override
         public void durationChange(DurationChangeEvent e) {
-            // setDu...
+            getDisplay().asyncExec(new Runnable() {
+                @Override
+                public void run() {
+                    // setDu...
+                }
+            });
         }
 
         @Override
         public void statusChange(StatusChangeEvent e) {
             Object status = e.getStatus();
-            String text = String.valueOf(status);
-            setText(text);
+            final String text = String.valueOf(status);
+            getDisplay().asyncExec(new Runnable() {
+                @Override
+                public void run() {
+                    setText(text);
+                }
+            });
         }
 
         @Override
@@ -260,9 +289,8 @@ class ProgressPage extends PageComposite {
         @Override
         public void recoverException(RecoverableExceptionEvent e) {
             Exception ex = e.getException();
-            int answer = UI.ask("Error happens: " + ex.getMessage()
-                    + ", continue?", e, Proposals.ignore, Proposals.cancel,
-                    Proposals.debug);
+            int answer = UI.ask("Error happens: " + ex.getMessage() + ", continue?", e,
+                    Proposals.ignore, Proposals.cancel, Proposals.debug);
             switch (answer) {
             case 0:
                 e.setRecovered(true);
@@ -278,10 +306,12 @@ class ProgressPage extends PageComposite {
 
     public void setImage(Image image) {
         imageLabel.setImage(image);
+        layout();
     }
 
     public void setText(String s) {
-        actionLabel.setText(s);
+        statusLabel.setText(s);
+        // layout();
     }
 
     public void setTextLog(int level, String s) {
@@ -295,9 +325,12 @@ class ProgressPage extends PageComposite {
         // logsList.add(icon, s);
         logList.add(s);
         int count = logList.getItemCount();
-        if (count > logMax)
+        if (count > logMax) {
             logList.remove(0, count - logMax);
-        // logsList.scrollTo(end);
+            count -= logMax;
+        }
+        logList.select(count - 1);
+        logList.showSelection();
     }
 
     public void setProgress(double k) {
@@ -332,46 +365,49 @@ class ProgressPage extends PageComposite {
         // XXX - session.setCanceling(canceling);
     }
 
-    class PTerminal extends _Terminal {
+    class PTerminal extends BufferedTerminal {
 
         final int level;
-        boolean   nend;
 
         public PTerminal(int level) {
             this.level = level;
         }
 
         @Override
-        public void n(String s) {
-            if (!nend) {
-                String prefix = actionLabel.getText();
-                s = prefix + s;
-            }
-            actionLabel.setText(s);
+        protected void _p(final String s) {
+            getDisplay().asyncExec(new Runnable() {
+                @Override
+                public void run() {
+                    setText(s);
+                    log(level, s);
+                }
+            });
         }
 
         @Override
-        public void p() {
-            String s = actionLabel.getText();
-            log(level, s);
-            nend = true;
-        }
-
-        @Override
-        public void t(String s) {
-            if (!nend)
-                p();
-            actionLabel.setText(s);
-            nend = true;
+        protected void _t(final String s) {
+            getDisplay().asyncExec(new Runnable() {
+                @Override
+                public void run() {
+                    setText(s);
+                }
+            });
         }
 
     }
 
     class PLogTerm extends LogTerm {
+
+        public PLogTerm() {
+            int level = session.getLogger().getLevel();
+            setLevel(level);
+        }
+
         @Override
         public Terminal filter(int level) {
             return new PTerminal(level);
         }
+
     }
 
 }

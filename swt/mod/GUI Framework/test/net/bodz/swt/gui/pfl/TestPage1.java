@@ -30,8 +30,7 @@ public class TestPage1 extends PageComposite {
 
         nameText = new Text(this, SWT.BORDER);
         nameText.setTextLimit(100);
-        final GridData gd_nameText = new GridData(SWT.FILL, SWT.CENTER, true,
-                false);
+        final GridData gd_nameText = new GridData(SWT.FILL, SWT.CENTER, true, false);
         nameText.setLayoutData(gd_nameText);
 
         final Label ageLabel = new Label(this, SWT.NONE);
@@ -39,8 +38,7 @@ public class TestPage1 extends PageComposite {
 
         ageText = new Text(this, SWT.BORDER);
         ageText.setTextLimit(2);
-        final GridData gd_ageText = new GridData(SWT.FILL, SWT.CENTER, true,
-                false);
+        final GridData gd_ageText = new GridData(SWT.FILL, SWT.CENTER, true, false);
         ageText.setLayoutData(gd_ageText);
         //
     }
@@ -51,8 +49,7 @@ public class TestPage1 extends PageComposite {
         try {
             int age = Integer.parseInt(agestr);
             if (age < 0)
-                throw new ValidateException(ageText, new OutOfDomainException(
-                        "age", age, 0)); //$NON-NLS-1$
+                throw new ValidateException(ageText, new OutOfDomainException("age", age, 0)); //$NON-NLS-1$
         } catch (NumberFormatException e) {
             throw new ValidateException(ageText, e);
         }

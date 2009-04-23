@@ -1,5 +1,9 @@
 package net.bodz.dist.ins;
 
+import net.bodz.bas.io.FileResFolder;
+import net.bodz.bas.io.ZipResFolder;
+import net.bodz.bas.util.LogTerm;
+
 import org.junit.Test;
 
 public class InstallerTest {
@@ -11,7 +15,8 @@ public class InstallerTest {
             @Override
             public void setSession(ISession session) {
                 super.setSession(session);
-                session.setResFolder(TestConfig.outDir);
+                session.getLogger().setLevel(LogTerm.DEBUG);
+                session.addResFolder(new FileResFolder(TestConfig.outDir));
                 TestConfig.setTestBaseDir(session);
             }
         };
@@ -24,7 +29,7 @@ public class InstallerTest {
             @Override
             public void setSession(ISession session) {
                 super.setSession(session);
-                session.setResFolder(TestConfig.outJar);
+                session.addResFolder(new ZipResFolder(TestConfig.outJar));
                 TestConfig.setTestBaseDir(session);
             }
         };

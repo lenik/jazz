@@ -12,8 +12,8 @@ import org.eclipse.swt.widgets.Control;
 public class R_Number extends SWTRenderer {
 
     @Override
-    public Control render(SWTRenderContext rc, GUIVar<?> var, Composite parent,
-            int style) throws RenderException, SWTException {
+    public Control render(SWTRenderContext rc, GUIVar<?> var, Composite parent, int style)
+            throws RenderException, SWTException {
         // GUIVarMeta meta = var.getMeta();
         // if min/max then render in slider...
         return new R_Text().render(rc, var, parent, style);

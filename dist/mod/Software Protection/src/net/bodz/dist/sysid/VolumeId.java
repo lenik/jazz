@@ -17,8 +17,7 @@ public class VolumeId extends _SysIdProvider {
     @Override
     public byte[] getId() throws SystemException {
         IntByReference pSerial = new IntByReference();
-        kernel32.GetVolumeInformationA(path, null, 0, pSerial, null, null,
-                null, 0);
+        kernel32.GetVolumeInformationA(path, null, 0, pSerial, null, null, null, 0);
         int serial = pSerial.getValue();
         byte[] bytes = new byte[4];
         bytes[0] = (byte) (serial >> 24);

@@ -9,8 +9,8 @@ import net.bodz.geom.shape.AbstractShape2f;
 import net.bodz.geom.shape.Shape2f;
 import net.bodz.math.mat.Vector2f;
 
-public abstract class AbstractRectangle2f extends AbstractShape2f implements
-        Rectangle2f, Serializable {
+public abstract class AbstractRectangle2f extends AbstractShape2f implements Rectangle2f,
+        Serializable {
 
     private static final long serialVersionUID = -7287160250280344587L;
 
@@ -419,8 +419,7 @@ public abstract class AbstractRectangle2f extends AbstractShape2f implements
 
     public void normalize() {
         if (width() == 0.0f && height() == 0.0f)
-            throw new RuntimeException(
-                    "Cannot normalize a rectangle with zero-width/height. ");
+            throw new RuntimeException("Cannot normalize a rectangle with zero-width/height. ");
         float k;
         float w = Math.abs(width());
         float h = Math.abs(height());
@@ -460,8 +459,8 @@ public abstract class AbstractRectangle2f extends AbstractShape2f implements
 
     @Override
     public String toString() {
-        return String.format("<Rectangle x0='%f' y0='%f' x2='%f' y2='%f' />",
-                x0(), y0(), x1(), y1());
+        return String.format("<Rectangle x0='%f' y0='%f' x2='%f' y2='%f' />", x0(), y0(), x1(),
+                y1());
     }
 
     // -o Pick

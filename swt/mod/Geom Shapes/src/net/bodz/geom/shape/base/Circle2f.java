@@ -158,14 +158,12 @@ public interface Circle2f extends Shape2f, ShapeAmount2f {
 
         @Override
         public Static_C_POB snapshot() {
-            return new Static_C_POB(centerX, centerY, centerX + pobDX, centerY
-                    + pobDY);
+            return new Static_C_POB(centerX, centerY, centerX + pobDX, centerY + pobDY);
         }
 
         @Override
         public Static_C_POB clone() {
-            return new Static_C_POB(centerX, centerY, centerX + pobDX, centerY
-                    + pobDY);
+            return new Static_C_POB(centerX, centerY, centerX + pobDX, centerY + pobDY);
         }
 
         public float centerX() {
@@ -358,8 +356,7 @@ public interface Circle2f extends Shape2f, ShapeAmount2f {
         }
 
         public P3(float aX, float aY, float bX, float bY, float cX, float cY) {
-            this(new Point2f.Static(aX, aY), new Point2f.Static(bX, bY),
-                    new Point2f.Static(cX, cY));
+            this(new Point2f.Static(aX, aY), new Point2f.Static(bX, bY), new Point2f.Static(cX, cY));
         }
 
         public P3(float x[], float y[]) {

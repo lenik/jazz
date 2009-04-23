@@ -25,31 +25,26 @@ public class Controls {
         center(control, control.getParent(), xOffset, yOffset);
     }
 
-    public static void center(Control control, Control parent, double xOffset,
-            double yOffset) {
+    public static void center(Control control, Control parent, double xOffset, double yOffset) {
         Rectangle outer;
         if (parent == null || parent == control)
             outer = control.getDisplay().getBounds();
         else
             outer = parent.getBounds();
         Point size = control.getSize();
-        int x = outer.x + (outer.width - size.x) / 2
-                + (int) (xOffset * outer.width);
-        int y = outer.y + (outer.height - size.y) / 2
-                + (int) (yOffset * outer.height);
+        int x = outer.x + (outer.width - size.x) / 2 + (int) (xOffset * outer.width);
+        int y = outer.y + (outer.height - size.y) / 2 + (int) (yOffset * outer.height);
         control.setLocation(x, y);
     }
 
     static final Point defaultMinSize = new Point(1, 1);
-    static final Point defaultMaxSize = new Point(Integer.MAX_VALUE,
-                                              Integer.MAX_VALUE);
+    static final Point defaultMaxSize = new Point(Integer.MAX_VALUE, Integer.MAX_VALUE);
 
     public static void resizeToPreferredSize(Control control) {
         resizeToPreferredSize(control, defaultMinSize, defaultMaxSize);
     }
 
-    public static void resizeToPreferredSize(Control control, Point minSize,
-            Point maxSize) {
+    public static void resizeToPreferredSize(Control control, Point minSize, Point maxSize) {
         Point trimSize = control.computeSize(SWT.DEFAULT, SWT.DEFAULT);
         if (minSize != null) {
             trimSize.x = Math.max(trimSize.x, minSize.x);
@@ -65,8 +60,8 @@ public class Controls {
     /**
      * @return <code>true</code> if size changed.
      */
-    public static boolean resizeToFit(Scrollable scrollable,
-            Point clientAreaSize, Point minSize, Point maxSize) {
+    public static boolean resizeToFit(Scrollable scrollable, Point clientAreaSize, Point minSize,
+            Point maxSize) {
         if (minSize == null)
             minSize = defaultMinSize;
         if (maxSize == null)

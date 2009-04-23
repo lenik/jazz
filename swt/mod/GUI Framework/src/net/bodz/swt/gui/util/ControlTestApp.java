@@ -111,13 +111,12 @@ public class ControlTestApp {
         test(null, controlType, null);
     }
 
-    public static <T extends Control> void test(String title,
-            Class<T> controlType, Proc1<? super T> initf) {
+    public static <T extends Control> void test(String title, Class<T> controlType,
+            Proc1<? super T> initf) {
         ControlTestApp test = new ControlTestApp();
         T control = test.add(controlType);
         if (initf == null) {
-            System.out
-                    .println(GUINLS.getString("ControlTestApp.echo") + control); //$NON-NLS-1$
+            System.out.println(GUINLS.getString("ControlTestApp.echo") + control); //$NON-NLS-1$
         } else {
             initf.exec(control);
         }

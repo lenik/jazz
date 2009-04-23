@@ -33,10 +33,10 @@
         <install projectclass="net.bodz.dist.ins.TestProject"
                  packdir="${test.outDir}"
                  loglevel="2">
-            <basedir name="programs"
-                     location="${test.targetHome}/fromdirTest/programs" />
-            <basedir name="test"
-                     location="${test.targetHome}/fromdirTest/test" />
+            <parameter name="BASE_PROGRAMS"
+                       value="${test.targetHome}/fromdirTest/programs" />
+            <parameter name="BASE_TEST"
+                       value="${test.targetHome}/fromdirTest/test" />
         </install>
     </target>
 

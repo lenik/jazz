@@ -67,8 +67,7 @@ public class ThreadsMonitor extends SimpleDialog {
         });
 
         final Label intervalImage = new Label(parent, SWT.NONE);
-        intervalImage.setImage(SWTResources
-                .getImageRes("/icons/full/obj16/refresh_tab.gif"));
+        intervalImage.setImage(SWTResources.getImageRes("/icons/full/obj16/refresh_tab.gif"));
 
         final Label intervalLabel = new Label(parent, SWT.NONE);
         intervalLabel.setText("Refresh &Interval");
@@ -85,8 +84,7 @@ public class ThreadsMonitor extends SimpleDialog {
         });
 
         threadList = new List(parent, SWT.V_SCROLL | SWT.BORDER);
-        GridData listData = new GridData(GridData.FILL, GridData.FILL, true,
-                true, 4, 1);
+        GridData listData = new GridData(GridData.FILL, GridData.FILL, true, true, 4, 1);
         listData.heightHint = 240;
         threadList.setLayoutData(listData);
         refresh();
@@ -96,18 +94,15 @@ public class ThreadsMonitor extends SimpleDialog {
     protected void createButtons(Composite parent) throws CreateException {
         Button button = addOKButton(parent);
         button.setText("Close");
-        button
-                .setToolTipText("Close this dialog only, all threads are continue to run");
-        button.setImage(SWTResources
-                .getImageRes("/icons/elcl16/nav_forward.gif"));
+        button.setToolTipText("Close this dialog only, all threads are continue to run");
+        button.setImage(SWTResources.getImageRes("/icons/elcl16/nav_forward.gif"));
     }
 
     @Override
     protected void createUserButtons(Composite parent) throws CreateException {
         Button killAllButton = new Button(parent, SWT.NONE);
         killAllButton.setText("Kill All");
-        killAllButton.setImage(SWTResources
-                .getImageRes("/icons/full/elcl16/terminate_all_co.gif"));
+        killAllButton.setImage(SWTResources.getImageRes("/icons/full/elcl16/terminate_all_co.gif"));
         killAllButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -117,8 +112,7 @@ public class ThreadsMonitor extends SimpleDialog {
 
         Button killButton = new Button(parent, SWT.NONE);
         killButton.setText("Kill");
-        killButton.setImage(SWTResources
-                .getImageRes("/icons/full/elcl16/terminate_co.gif"));
+        killButton.setImage(SWTResources.getImageRes("/icons/full/elcl16/terminate_co.gif"));
         killButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -139,8 +133,7 @@ public class ThreadsMonitor extends SimpleDialog {
 
         Button mailButton = new Button(parent, SWT.NONE);
         mailButton.setText("Mail");
-        mailButton.setImage(SWTResources
-                .getImageRes("/icons/full/obj16/text_edit.gif")); //$NON-NLS-1$
+        mailButton.setImage(SWTResources.getImageRes("/icons/full/obj16/text_edit.gif")); //$NON-NLS-1$
         mailButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {

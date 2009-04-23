@@ -59,8 +59,7 @@ public class SWTDrawTarget2f extends AbstractDrawTarget2f {
     }
 
     @Override
-    public void fillTriangle(float x0, float y0, float x1, float y1, float x2,
-            float y2) {
+    public void fillTriangle(float x0, float y0, float x1, float y1, float x2, float y2) {
         int[] xy = new int[6];
         xy[0] = (int) x0;
         xy[1] = (int) y0;
@@ -72,8 +71,7 @@ public class SWTDrawTarget2f extends AbstractDrawTarget2f {
     }
 
     @Override
-    public void fillEllipse(float x0, float y0, float x1, float y1)
-            throws DrawException {
+    public void fillEllipse(float x0, float y0, float x1, float y1) throws DrawException {
         gc.fillOval((int) x0, (int) y0, (int) (x1 - x0), (int) (y1 - y0));
     }
 

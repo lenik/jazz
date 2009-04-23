@@ -79,8 +79,7 @@ public class StrictDeviceResources {
             return new ImageData(in);
         } catch (SWTException e) {
             if (e.code == SWT.ERROR_IO)
-                throw new IOException(CommonNLS
-                        .getString("StrictDeviceResources.swtIOError"), e); //$NON-NLS-1$
+                throw new IOException(CommonNLS.getString("StrictDeviceResources.swtIOError"), e); //$NON-NLS-1$
             throw e;
         }
     }
@@ -127,8 +126,7 @@ public class StrictDeviceResources {
         return getImageDataRes(classResPath, 1);
     }
 
-    public ImageData getImageDataRes(String classResPath, int caller)
-            throws IOException {
+    public ImageData getImageDataRes(String classResPath, int caller) throws IOException {
         Class<?> callerClass = Caller.getCallerClass(1 + caller);
         return getImageDataRes(callerClass, classResPath);
     }
@@ -145,8 +143,7 @@ public class StrictDeviceResources {
      *            within the package this <code>clazz</code> belongs to, then
      *            the path should precede with '/'.
      */
-    public ImageData getImageDataRes(Class<?> clazz, String classResPath)
-            throws IOException {
+    public ImageData getImageDataRes(Class<?> clazz, String classResPath) throws IOException {
         URL url = clazz.getResource(classResPath);
         if (url == null) {
             diagResPath(clazz, classResPath);
@@ -166,8 +163,7 @@ public class StrictDeviceResources {
      * @param loaderResPath
      *            absolute resource path, don't start with '/'.
      */
-    public ImageData getImageDataRes(ClassLoader loader, String loaderResPath)
-            throws IOException {
+    public ImageData getImageDataRes(ClassLoader loader, String loaderResPath) throws IOException {
         URL url = loader.getResource(loaderResPath);
         if (url == null) {
             diagResPath(loader, loaderResPath);
@@ -254,8 +250,7 @@ public class StrictDeviceResources {
         return getImageRes(classResPath, 1);
     }
 
-    public Image getImageRes(String classResPath, int caller)
-            throws IOException {
+    public Image getImageRes(String classResPath, int caller) throws IOException {
         Class<?> callerClass = Caller.getCallerClass(1 + caller);
         return getImageRes(callerClass, classResPath);
     }
@@ -263,8 +258,7 @@ public class StrictDeviceResources {
     /**
      * @see #getImageDataRes(Class, String)
      */
-    public Image getImageRes(Class<?> clazz, String classResPath)
-            throws IOException {
+    public Image getImageRes(Class<?> clazz, String classResPath) throws IOException {
         URL url = clazz.getResource(classResPath);
         if (url == null) {
             diagResPath(clazz, classResPath);
@@ -277,8 +271,7 @@ public class StrictDeviceResources {
     /**
      * @see #getImageDataRes(ClassLoader, String)
      */
-    public Image getImageRes(ClassLoader loader, String loaderResPath)
-            throws IOException {
+    public Image getImageRes(ClassLoader loader, String loaderResPath) throws IOException {
         URL url = loader.getResource(loaderResPath);
         if (url == null) {
             diagResPath(loader, loaderResPath);
@@ -346,18 +339,14 @@ public class StrictDeviceResources {
 
     static void diagResPath(ClassLoader loader, String path) {
         if (diag) {
-            System.err.println(CommonNLS
-                    .getString("StrictDeviceResources.badResource") + path); //$NON-NLS-1$
+            System.err.println(CommonNLS.getString("StrictDeviceResources.badResource") + path); //$NON-NLS-1$
             dumpLoader(loader);
         }
     }
 
     static void diagResPath(Class<?> clazz, String path) {
         if (diag) {
-            System.err
-                    .printf(
-                            CommonNLS
-                                    .getString("StrictDeviceResources.badpath_ss"), path, clazz); //$NON-NLS-1$
+            System.err.printf(CommonNLS.getString("StrictDeviceResources.badpath_ss"), path, clazz); //$NON-NLS-1$
             dumpLoader(clazz.getClassLoader());
         }
     }

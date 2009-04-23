@@ -52,8 +52,7 @@ public class VisualTypes {
         Class<?>[] supportTypes = visualType.supportTypes();
         for (Class<?> supportType : supportTypes) {
             if (registeredTypes.containsKey(supportType)) {
-                throw new RuntimeException(
-                        "One more data type has already been registered.");
+                throw new RuntimeException("One more data type has already been registered.");
             }
             registeredTypes.put(supportType, visualTypeClass);
         }
@@ -91,8 +90,7 @@ public class VisualTypes {
     private static Map<Class<?>, Class<?>> registeredTypes;
 
     static {
-        builtins = new Class<?>[] { VTNumber.class, VTString.class,
-            VTColor.class, };
+        builtins = new Class<?>[] { VTNumber.class, VTString.class, VTColor.class, };
         registeredTypes = new HashMap<Class<?>, Class<?>>();
         for (Class<?> builtin : builtins) {
             register(builtin);

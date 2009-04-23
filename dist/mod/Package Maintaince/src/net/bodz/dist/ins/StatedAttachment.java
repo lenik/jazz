@@ -8,8 +8,10 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.Reader;
 import java.io.Writer;
+import java.util.jar.JarFile;
 import java.util.jar.JarInputStream;
 import java.util.jar.JarOutputStream;
+import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
@@ -19,16 +21,18 @@ import net.bodz.dist.nls.PackNLS;
 
 public class StatedAttachment implements Attachment {
 
-    final ResLink link;
-    final String  encoding;
+    private final ResLink link;
+    private final String  encoding;
 
-    StateBase     stated;
+    private StateBase     stated;
 
     public StatedAttachment(ResLink link) {
         this(link, null);
     }
 
     public StatedAttachment(ResLink link, String encoding) {
+        if (link == null)
+            throw new NullPointerException("link");
         this.link = link;
         this.encoding = encoding;
     }
@@ -83,6 +87,13 @@ public class StatedAttachment implements Attachment {
     }
 
     @Override
+    public ZipFile getZipFile() throws IOException {
+        if (stated == null)
+            stated = new UsingZipFile(link);
+        return stated.getZipFile();
+    }
+
+    @Override
     public ZipInputStream getZipIn() throws IOException {
         if (stated == null)
             stated = new UsingZipInputStream(link);
@@ -94,6 +105,13 @@ public class StatedAttachment implements Attachment {
         if (stated == null)
             stated = new UsingZipOutputStream(link);
         return stated.getZipOut();
+    }
+
+    @Override
+    public JarFile getJarFile() throws IOException {
+        if (stated == null)
+            stated = new UsingJarFile(link);
+        return stated.getJarFile();
     }
 
     @Override
@@ -176,12 +194,22 @@ public class StatedAttachment implements Attachment {
         }
 
         @Override
+        public ZipFile getZipFile() throws IOException {
+            throw new IllegalStateException(error);
+        }
+
+        @Override
         public ZipInputStream getZipIn() throws IOException {
             throw new IllegalStateException(error);
         }
 
         @Override
         public ZipOutputStream getZipOut() throws IOException {
+            throw new IllegalStateException(error);
+        }
+
+        @Override
+        public JarFile getJarFile() throws IOException {
             throw new IllegalStateException(error);
         }
 
@@ -494,6 +522,58 @@ public class StatedAttachment implements Attachment {
             if (jout != null) {
                 jout.close();
                 jout = null;
+            }
+        }
+
+    }
+
+    static class UsingZipFile extends StateBase {
+
+        ZipFile zipFile;
+
+        public UsingZipFile(ResLink link) {
+            super(link, "ZipFile"); //$NON-NLS-1$
+        }
+
+        @Override
+        public ZipFile getZipFile() throws IOException {
+            if (zipFile == null) {
+                zipFile = link.openZipFile();
+            }
+            return zipFile;
+        }
+
+        @Override
+        public void close() throws IOException {
+            if (zipFile != null) {
+                zipFile.close();
+                zipFile = null;
+            }
+        }
+
+    }
+
+    static class UsingJarFile extends StateBase {
+
+        JarFile jarFile;
+
+        public UsingJarFile(ResLink link) {
+            super(link, "JarFile"); //$NON-NLS-1$
+        }
+
+        @Override
+        public JarFile getJarFile() throws IOException {
+            if (jarFile == null) {
+                jarFile = link.openJarFile();
+            }
+            return jarFile;
+        }
+
+        @Override
+        public void close() throws IOException {
+            if (jarFile != null) {
+                jarFile.close();
+                jarFile = null;
             }
         }
 

@@ -43,8 +43,7 @@ public class SaveImageDialog extends SimpleDialog {
 
     private File                  file;
 
-    public SaveImageDialog(Shell parent, int style, ImageData image,
-            String title) {
+    public SaveImageDialog(Shell parent, int style, ImageData image, String title) {
         super(parent, style, title);
         this.imageData = image;
     }
@@ -55,8 +54,7 @@ public class SaveImageDialog extends SimpleDialog {
     }
 
     @Override
-    protected void createBody(Composite parent) throws SWTException,
-            CreateException {
+    protected void createBody(Composite parent) throws SWTException, CreateException {
         Composite composite = new Composite(parent, SWT.NONE);
         final GridLayout gridLayout = new GridLayout();
         gridLayout.numColumns = 3;
@@ -73,16 +71,14 @@ public class SaveImageDialog extends SimpleDialog {
         new Label(composite, SWT.NONE);
 
         paramsStack = new StackComposite(composite, SWT.NONE);
-        final GridData gd_optionsComposite = new GridData(SWT.FILL, SWT.CENTER,
-                true, false, 2, 1);
+        final GridData gd_optionsComposite = new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1);
         paramsStack.setLayoutData(gd_optionsComposite);
 
         final Label pathLabel = new Label(composite, SWT.NONE);
         pathLabel.setText(ControlsNLS.getString("SaveImageDialog.filePath")); //$NON-NLS-1$
 
         pathText = new Text(composite, SWT.BORDER);
-        final GridData gd_pathText = new GridData(SWT.FILL, SWT.CENTER, true,
-                false);
+        final GridData gd_pathText = new GridData(SWT.FILL, SWT.CENTER, true, false);
         pathText.setLayoutData(gd_pathText);
 
         final Button browseButton = new Button(composite, SWT.NONE);
@@ -142,8 +138,7 @@ public class SaveImageDialog extends SimpleDialog {
         for (int i = 0; i < imageTypes.length; i++) {
             ImageType type = imageTypes[i];
             imageTypeCombo.add(type.getName());
-            ParametersComposite paramsComp = type.createParametersComposite(
-                    paramsStack, SWT.NONE);
+            ParametersComposite paramsComp = type.createParametersComposite(paramsStack, SWT.NONE);
             paramsComps[i] = paramsComp;
         }
 

@@ -36,8 +36,7 @@ public class LineLayout extends Layout {
     }
 
     @Override
-    protected Point computeSize(Composite composite, int wHint, int hHint,
-            boolean flushCache) {
+    protected Point computeSize(Composite composite, int wHint, int hHint, boolean flushCache) {
         int lsize = 0;
         int hmax = 0;
         Control[] children = composite.getChildren();

@@ -12,8 +12,7 @@ public class FixSizeCompositeTest {
     public static void main(String[] args) {
         final ControlTestApp test = new ControlTestApp();
 
-        final FixSizeComposite comp = new FixSizeComposite(test.parent,
-                SWT.BORDER);
+        final FixSizeComposite comp = new FixSizeComposite(test.parent, SWT.BORDER);
         comp.setLayout(new FillLayout());
         new TestComposite(comp, SWT.NONE);
 

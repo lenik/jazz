@@ -31,8 +31,8 @@ public class SelectComponentsDialog extends SimpleDialog {
 
     private List        list;
 
-    public SelectComponentsDialog(Shell parent, int style, String title,
-            String text, Collection<Entry> entries) {
+    public SelectComponentsDialog(Shell parent, int style, String title, String text,
+            Collection<Entry> entries) {
         super(parent, style, title);
         setText(text);
         if (entries == null)
@@ -48,8 +48,8 @@ public class SelectComponentsDialog extends SimpleDialog {
         }
     }
 
-    public SelectComponentsDialog(Shell parent, int style, String title,
-            String text, Component... components) {
+    public SelectComponentsDialog(Shell parent, int style, String title, String text,
+            Component... components) {
         super(parent, style, title);
         setText(text);
         if (components == null)

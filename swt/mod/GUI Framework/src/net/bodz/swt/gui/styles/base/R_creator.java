@@ -48,9 +48,8 @@ public class R_creator extends SWTRenderer {
         return null;
     }
 
-    public Control renderTextParserCreator(final SWTRenderContext rc,
-            final DynamicControl parent, final int style,
-            final TypeParser parser) {
+    public Control renderTextParserCreator(final SWTRenderContext rc, final DynamicControl parent,
+            final int style, final TypeParser parser) {
         Composite comp = new Composite(parent, style);
         comp.setLayout(new LineLayout());
         final Text text = new Text(comp, SWT.BORDER);
@@ -65,8 +64,7 @@ public class R_creator extends SWTRenderer {
                     parent.clear();
                     // rerenderObject(obj);
                 } catch (ParseException pe) {
-                    rc.interact(parent).alert(
-                            GUINLS.getString("R_creator.parseFailure"), pe); //$NON-NLS-1$
+                    rc.interact(parent).alert(GUINLS.getString("R_creator.parseFailure"), pe); //$NON-NLS-1$
                     text.setFocus();
                 }
             }
@@ -74,16 +72,15 @@ public class R_creator extends SWTRenderer {
         return comp;
     }
 
-    public Control renderCtorCreator(final DynamicControl parent,
-            final int style, final Constructor<?> ctor,
-            final Object... ctorArgs) {
+    public Control renderCtorCreator(final DynamicControl parent, final int style,
+            final Constructor<?> ctor, final Object... ctorArgs) {
         ctor.getParameterAnnotations();
         return null;
     }
 
     @Override
-    public Control render(final SWTRenderContext rc, GUIVar<?> var,
-            Composite parent, int style) throws RenderException, SWTException {
+    public Control render(final SWTRenderContext rc, GUIVar<?> var, Composite parent, int style)
+            throws RenderException, SWTException {
         Menu createMenu = new Menu(parent);
         Class<?> type = var.getMeta().getType();
         TypeParser parser;
@@ -93,8 +90,7 @@ public class R_creator extends SWTRenderer {
             Image icon = GUIHint.get(type).getIcon();
 
         } catch (CreateException e) {
-            throw new IllegalUsageError(GUINLS
-                    .getString("R_creator.failedGetParser") + type); //$NON-NLS-1$
+            throw new IllegalUsageError(GUINLS.getString("R_creator.failedGetParser") + type); //$NON-NLS-1$
         }
         if (parser != null) {
             MenuItem menuItem = new MenuItem(createMenu, 0);
@@ -118,8 +114,7 @@ public class R_creator extends SWTRenderer {
         }
         Composite comp = new Composite(parent, style);
         Button createButton = new Button(comp, SWT.FLAT);
-        createButton.setImage(SWTResources
-                .getImageRes("/icons/full/obj16/add_obj.gif")); //$NON-NLS-1$
+        createButton.setImage(SWTResources.getImageRes("/icons/full/obj16/add_obj.gif")); //$NON-NLS-1$
         createButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {

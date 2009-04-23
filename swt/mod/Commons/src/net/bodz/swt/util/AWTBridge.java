@@ -24,12 +24,11 @@ public class AWTBridge {
         ColorModel colorModel = null;
         PaletteData palette = data.palette;
         if (palette.isDirect) {
-            colorModel = new DirectColorModel(data.depth, palette.redMask,
-                    palette.greenMask, palette.blueMask);
+            colorModel = new DirectColorModel(data.depth, palette.redMask, palette.greenMask,
+                    palette.blueMask);
             BufferedImage bufferedImage = new BufferedImage(//
                     colorModel, // 
-                    colorModel.createCompatibleWritableRaster(data.width,
-                            data.height), // raster
+                    colorModel.createCompatibleWritableRaster(data.width, data.height), // raster
                     false, // is raster pre-multipled
                     null // properties
             );
@@ -60,16 +59,14 @@ public class AWTBridge {
                 blue[i] = (byte) rgb.blue;
             }
             if (data.transparentPixel != -1) {
-                colorModel = new IndexColorModel(data.depth, rgbs.length, red,
-                        green, blue, data.transparentPixel);
+                colorModel = new IndexColorModel(data.depth, rgbs.length, red, green, blue,
+                        data.transparentPixel);
             } else {
-                colorModel = new IndexColorModel(data.depth, rgbs.length, red,
-                        green, blue);
+                colorModel = new IndexColorModel(data.depth, rgbs.length, red, green, blue);
             }
             BufferedImage bufferedImage = new BufferedImage(//
                     colorModel, //
-                    colorModel.createCompatibleWritableRaster(data.width,
-                            data.height), //
+                    colorModel.createCompatibleWritableRaster(data.width, data.height), //
                     false, //
                     null //
             );
@@ -98,8 +95,8 @@ public class AWTBridge {
         int pixelSize = cm.getPixelSize();
         if (cm instanceof DirectColorModel) {
             DirectColorModel dcm = (DirectColorModel) cm;
-            PaletteData palette = new PaletteData(dcm.getRedMask(), dcm
-                    .getGreenMask(), dcm.getBlueMask());
+            PaletteData palette = new PaletteData(dcm.getRedMask(), dcm.getGreenMask(), dcm
+                    .getBlueMask());
             ImageData data = new ImageData(width, height, pixelSize, palette);
             WritableRaster raster = bufferedImage.getRaster();
             // XXX - optimize...
@@ -107,8 +104,8 @@ public class AWTBridge {
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
                     raster.getPixel(x, y, pixelArray);
-                    int pixel = palette.getPixel(new RGB(pixelArray[0],
-                            pixelArray[1], pixelArray[2]));
+                    int pixel = palette.getPixel(new RGB(pixelArray[0], pixelArray[1],
+                            pixelArray[2]));
                     data.setPixel(x, y, pixel);
                 }
             }
@@ -124,8 +121,7 @@ public class AWTBridge {
             icm.getBlues(blues);
             RGB[] rgbs = new RGB[size];
             for (int i = 0; i < rgbs.length; i++) {
-                rgbs[i] = new RGB(reds[i] & 0xFF, greens[i] & 0xFF,
-                        blues[i] & 0xFF);
+                rgbs[i] = new RGB(reds[i] & 0xFF, greens[i] & 0xFF, blues[i] & 0xFF);
             }
             PaletteData palette = new PaletteData(rgbs);
             ImageData data = new ImageData(width, height, pixelSize, palette);
@@ -159,8 +155,8 @@ public class AWTBridge {
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
                     raster.getPixel(x, y, pixelArray);
-                    int pixel = palette.getPixel(new RGB(pixelArray[0],
-                            pixelArray[1], pixelArray[2]));
+                    int pixel = palette.getPixel(new RGB(pixelArray[0], pixelArray[1],
+                            pixelArray[2]));
                     data.setPixel(x, y, pixel);
                 }
             }

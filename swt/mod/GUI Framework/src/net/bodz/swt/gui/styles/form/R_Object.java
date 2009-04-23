@@ -18,8 +18,8 @@ public class R_Object extends _R_Object {
     }
 
     @Override
-    protected Control renderObject(final SWTRenderContext rc, GUIVar<?> var,
-            Composite parent, int style) throws RenderException, SWTException {
+    protected Control renderObject(final SWTRenderContext rc, GUIVar<?> var, Composite parent,
+            int style) throws RenderException, SWTException {
         assert var != null;
         // GUIVarMeta meta = var.getMeta();
         return null;

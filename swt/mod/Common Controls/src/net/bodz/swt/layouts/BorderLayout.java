@@ -37,8 +37,7 @@ public class BorderLayout extends Layout {
     }
 
     @Override
-    protected Point computeSize(Composite composite, int wHint, int hHint,
-            boolean flushCache) {
+    protected Point computeSize(Composite composite, int wHint, int hHint, boolean flushCache) {
         readLayoutData(composite);
         Point size = new Point(0, 0);
 
@@ -87,14 +86,12 @@ public class BorderLayout extends Layout {
 
         Point pref;
         if (northChild != null) {
-            pref = northChild.computeSize(clientArea.width, SWT.DEFAULT,
-                    flushCache);
+            pref = northChild.computeSize(clientArea.width, SWT.DEFAULT, flushCache);
             northChild.setBounds(left, top, right - left, pref.y);
             top += pref.y + vgap;
         }
         if (southChild != null) {
-            pref = southChild.computeSize(clientArea.width, SWT.DEFAULT,
-                    flushCache);
+            pref = southChild.computeSize(clientArea.width, SWT.DEFAULT, flushCache);
             southChild.setBounds(left, bottom - pref.y, right - left, pref.y);
             bottom -= pref.y + vgap;
         }

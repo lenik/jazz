@@ -56,8 +56,7 @@ public class GridTest_SimpleObject extends BasicGUI {
     }
 
     @Override
-    protected void createInitialView(Composite comp) throws UIException,
-            SWTException {
+    protected void createInitialView(Composite comp) throws UIException, SWTException {
         SWTRenderContext rc = new SWTRenderContext();
         GUIVar<School> schoolVar = GUIVars.wrap(school);
         SWTGridStrategy style = new SWTGridStrategy();
@@ -72,8 +71,8 @@ public class GridTest_SimpleObject extends BasicGUI {
 
     @Override
     protected Control createStatusBar(Composite parent) {
-        final org.eclipse.swt.widgets.Label bar = new org.eclipse.swt.widgets.Label(
-                parent, SWT.NONE);
+        final org.eclipse.swt.widgets.Label bar = new org.eclipse.swt.widgets.Label(parent,
+                SWT.NONE);
         new Timer(100) {
 
             @Override

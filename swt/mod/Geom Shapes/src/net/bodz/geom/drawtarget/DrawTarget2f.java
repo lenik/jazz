@@ -18,8 +18,7 @@ public interface DrawTarget2f {
 
     void drawLine(Line2f line) throws DrawException;
 
-    void drawRectangle(float x0, float y0, float x1, float y1)
-            throws DrawException;
+    void drawRectangle(float x0, float y0, float x1, float y1) throws DrawException;
 
     void drawRectangle(Point2f p0, Point2f p1) throws DrawException;
 
@@ -32,8 +31,7 @@ public interface DrawTarget2f {
 
     void drawTriangle(Triangle2f triangle) throws DrawException;
 
-    void drawEllipse(float x0, float y0, float x1, float y1)
-            throws DrawException;
+    void drawEllipse(float x0, float y0, float x1, float y1) throws DrawException;
 
     void drawEllipse(Point2f p0, Point2f p1) throws DrawException;
 
@@ -43,11 +41,9 @@ public interface DrawTarget2f {
     void drawCircle(float centerX, float centerY, float radiusX, float radiusY)
             throws DrawException;
 
-    void drawCircle(float centerX, float centerY, float radius)
-            throws DrawException;
+    void drawCircle(float centerX, float centerY, float radius) throws DrawException;
 
-    void drawCircle(Point2f center, float radiusX, float radiusY)
-            throws DrawException;
+    void drawCircle(Point2f center, float radiusX, float radiusY) throws DrawException;
 
     void drawCircle(Point2f center, float radius) throws DrawException;
 
@@ -55,8 +51,7 @@ public interface DrawTarget2f {
 
     void drawPolygon(Point2f[] points) throws DrawException;
 
-    void drawPolygon(float[] x, float[] y, int offset, int count)
-            throws DrawException;
+    void drawPolygon(float[] x, float[] y, int offset, int count) throws DrawException;
 
     void drawPolygon(float[] x, float[] y) throws DrawException;
 
@@ -67,15 +62,13 @@ public interface DrawTarget2f {
 
     void fillTriangle(Triangle2f triangle) throws DrawException;
 
-    void fillRectangle(float x0, float y0, float x1, float y1)
-            throws DrawException;
+    void fillRectangle(float x0, float y0, float x1, float y1) throws DrawException;
 
     void fillRectangle(Point2f p0, Point2f p1) throws DrawException;
 
     void fillRectangle(Rectangle2f boundingBox) throws DrawException;
 
-    void fillEllipse(float x0, float y0, float x1, float y1)
-            throws DrawException;
+    void fillEllipse(float x0, float y0, float x1, float y1) throws DrawException;
 
     void fillEllipse(Point2f p0, Point2f p1) throws DrawException;
 
@@ -85,11 +78,9 @@ public interface DrawTarget2f {
     void fillCircle(float centerX, float centerY, float radiusX, float radiusY)
             throws DrawException;
 
-    void fillCircle(float centerX, float centerY, float radius)
-            throws DrawException;
+    void fillCircle(float centerX, float centerY, float radius) throws DrawException;
 
-    void fillCircle(Point2f center, float radiusX, float radiusY)
-            throws DrawException;
+    void fillCircle(Point2f center, float radiusX, float radiusY) throws DrawException;
 
     void fillCircle(Point2f center, float radius) throws DrawException;
 
@@ -97,8 +88,7 @@ public interface DrawTarget2f {
 
     void fillPolygon(Point2f[] points) throws DrawException;
 
-    void fillPolygon(float[] x, float[] y, int offset, int count)
-            throws DrawException;
+    void fillPolygon(float[] x, float[] y, int offset, int count) throws DrawException;
 
     void fillPolygon(float[] x, float[] y) throws DrawException;
 

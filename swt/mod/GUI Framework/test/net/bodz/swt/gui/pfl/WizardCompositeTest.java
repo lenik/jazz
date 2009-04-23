@@ -10,8 +10,7 @@ public class WizardCompositeTest {
     public static void main(String[] args) {
         final ControlTestApp test = new ControlTestApp();
 
-        final WizardComposite wizard = new WizardComposite(test.parent,
-                SWT.BORDER) {
+        final WizardComposite wizard = new WizardComposite(test.parent, SWT.BORDER) {
             @Override
             public boolean isPageDefined(String address) {
                 if (super.isPageDefined(address))

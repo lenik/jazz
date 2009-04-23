@@ -1,5 +1,6 @@
 package net.bodz.dist.ins.builtins;
 
+import net.bodz.bas.sys.SystemProperties;
 import net.bodz.dist.ins.ConfigPage;
 import net.bodz.dist.ins.ISession;
 import net.bodz.dist.ins.Scheme;
@@ -31,6 +32,9 @@ public class ChooseSchemePage extends ConfigPage {
         super(parent, style);
         this.session = session;
 
+        if (SystemProperties.isDevelopMode())
+            selectedIndex = 0;
+
         final GridLayout gridLayout = new GridLayout();
         gridLayout.numColumns = 2;
         setLayout(gridLayout);
@@ -56,12 +60,15 @@ public class ChooseSchemePage extends ConfigPage {
             schemeButton.addSelectionListener(selector);
             Controls.setFontStyle(schemeButton, SWT.BOLD);
             Controls.setFontHeight(schemeButton, 12);
+            if (selectedIndex == i)
+                schemeButton.setSelection(true);
 
             final Label label = new Label(this, SWT.NONE);
             label.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true));
             label.setText(description);
             Controls.setFontHeight(label, 12);
         }
+
     }
 
     @Override
@@ -77,8 +84,7 @@ public class ChooseSchemePage extends ConfigPage {
     @Override
     public void validate() throws ValidateException {
         if (selectedIndex == -1)
-            throw new ValidateException(PackNLS
-                    .getString("ChooseSchemePage.notSelected")); //$NON-NLS-1$
+            throw new ValidateException(PackNLS.getString("ChooseSchemePage.notSelected")); //$NON-NLS-1$
         Scheme scheme = schemes[selectedIndex];
         session.setScheme(scheme);
     }

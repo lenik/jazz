@@ -23,25 +23,26 @@ import net.bodz.dist.ins.builtins.SimpleProject;
 @Version( { 1, 2, 3 })
 public class TestProject extends SimpleProject {
 
-    static String   TEST = "test";
+    public static final String BASE_TEST = "BASE_TEST";
 
-    public Section  classesSection;
-    public Section  sourceSection;
-    public Section  testSection;
+    public Section             classesSection;
+    public Section             sourceSection;
+    public Section             testSection;
 
-    public FileCopy copyClassFiles;
-    public FileCopy copySrcFiles;
-    public FileCopy copyTestClassesFiles;
-    public FileCopy copyTestSrcFiles;
+    public FileCopy            copyClassFiles;
+    public FileCopy            copySrcFiles;
+    public FileCopy            copyTestClassesFiles;
+    public FileCopy            copyTestSrcFiles;
 
     public TestProject() throws IOException {
         super(TestProject.class);
 
-        BaseDir progdir = getBaseDir(PROGRAMS);
-        File defaultTestDir = new File(progdir.getPreferred(), "tests");
-        BaseDir testBase = new BaseDir(TEST, defaultTestDir, "Test Files",
-                "A place to put test related files.");
-        addBaseDir(testBase);
+        File parent = (File) get(BASE_PROGRAMS).getDefaultValue();
+        Variable var = new BasedirVariable(//
+                "Test Files", //
+                "A place to put test related files.", //
+                new File(parent, "tests"));
+        define("BASE_TEST", var);
 
         FileFilter filter = FileCopy.NoSVN;
 
@@ -49,7 +50,7 @@ public class TestProject extends SimpleProject {
         {
             File binDir = SJProject.getOutputBase(Component.class);
             FileFinder binfiles = new FileFinder(filter, binDir);
-            copyClassFiles = new FileCopy(PROGRAMS, binfiles);
+            copyClassFiles = new FileCopy(BASE_PROGRAMS, binfiles);
             classesSection.add(copyClassFiles);
         }
 
@@ -57,7 +58,7 @@ public class TestProject extends SimpleProject {
         {
             File srcDir = SJProject.getSrcBase(Component.class);
             FileFinder srcfiles = new FileFinder(filter, srcDir);
-            copySrcFiles = new FileCopy(PROGRAMS, srcfiles);
+            copySrcFiles = new FileCopy(BASE_PROGRAMS, srcfiles);
             sourceSection.add(copySrcFiles);
         }
 
@@ -68,8 +69,8 @@ public class TestProject extends SimpleProject {
 
             FileFinder testbin = new FileFinder(filter, testBinDir);
             FileFinder testsrc = new FileFinder(filter, testSrcDir);
-            copyTestClassesFiles = new FileCopy(TEST, testbin);
-            copyTestSrcFiles = new FileCopy(TEST, testsrc);
+            copyTestClassesFiles = new FileCopy(BASE_TEST, testbin);
+            copyTestSrcFiles = new FileCopy(BASE_TEST, testsrc);
             testSection.add(copyTestClassesFiles);
             testSection.add(copyTestSrcFiles);
         }
