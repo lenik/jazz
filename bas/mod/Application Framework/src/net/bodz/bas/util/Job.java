@@ -6,8 +6,24 @@ import net.bodz.bas.ui.UserInterface;
 
 public interface Job extends ExceptionSourceRunnable {
 
+    int STOPPED  = 0;
+    int STOPPING = 1;
+    int RUNNING  = 2;
+    int PAUSING  = 3;
+    int PAUSED   = 4;
+
     @Override
     void run();
+
+    void stop();
+
+    void pause();
+
+    int getState();
+
+    void addStateChangeListener(StateChangeListener listener);
+
+    void removeStateChangeListener(StateChangeListener listener);
 
     @Override
     void addExceptionListener(RecoverableExceptionListener listener);

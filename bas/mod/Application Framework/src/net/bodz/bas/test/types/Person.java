@@ -39,8 +39,7 @@ public class Person {
 
     public void setAge(int age) {
         if (age < 0 || age > 1000)
-            throw new OutOfDomainException(
-                    AppNLS.getString("Person.badAge") + age); //$NON-NLS-1$
+            throw new OutOfDomainException(AppNLS.getString("Person.badAge") + age); //$NON-NLS-1$
         this.age = age;
     }
 
@@ -91,12 +90,10 @@ public class Person {
 
     @Override
     public String toString() {
-        return String
-                .format(
-                        AppNLS.getString("Person.xml_sdss"), // //$NON-NLS-1$
-                        name,
-                        age,
-                        sex ? AppNLS.getString("Person.girl") : AppNLS.getString("Person.boy"), location); //$NON-NLS-1$ //$NON-NLS-2$
+        return String.format(
+                AppNLS.getString("Person.xml_sdss"), // //$NON-NLS-1$
+                name, age,
+                sex ? AppNLS.getString("Person.girl") : AppNLS.getString("Person.boy"), location); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     public static final Person Tom;
@@ -104,14 +101,10 @@ public class Person {
     public static final Person Shecti;
     public static final Person Lenik;
     static {
-        Tom = new Person(
-                AppNLS.getString("Person.a"), 18, false, Address.Marks100); //$NON-NLS-1$
-        Lucy = new Person(
-                AppNLS.getString("Person.b"), 16, true, Address.Golf200); //$NON-NLS-1$
-        Shecti = new Person(
-                AppNLS.getString("Person.c"), 20, true, Address.YHLib); //$NON-NLS-1$
-        Lenik = new Person(
-                AppNLS.getString("Person.d"), 28, true, Address.HNHome); //$NON-NLS-1$
+        Tom = new Person(AppNLS.getString("Person.a"), 18, false, Address.Marks100); //$NON-NLS-1$
+        Lucy = new Person(AppNLS.getString("Person.b"), 16, true, Address.Golf200); //$NON-NLS-1$
+        Shecti = new Person(AppNLS.getString("Person.c"), 20, true, Address.YHLib); //$NON-NLS-1$
+        Lenik = new Person(AppNLS.getString("Person.d"), 28, true, Address.HNHome); //$NON-NLS-1$
     }
 
 }

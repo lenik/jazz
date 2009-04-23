@@ -47,8 +47,7 @@ public class Ns {
         if (member instanceof Method) {
             Method m = (Method) member;
             try {
-                Method parent = _super.getDeclaredMethod(m.getName(), m
-                        .getParameterTypes());
+                Method parent = _super.getDeclaredMethod(m.getName(), m.getParameterTypes());
                 return parent;
             } catch (SecurityException e) {
                 throw new RuntimeException(e);
@@ -63,8 +62,7 @@ public class Ns {
     /**
      * Get annotation with inheritance support.
      */
-    public static <A extends Annotation> A getN(AnnotatedElement aobject,
-            Class<A> aclass) {
+    public static <A extends Annotation> A getN(AnnotatedElement aobject, Class<A> aclass) {
         A n = aobject.getAnnotation(aclass);
         if (n == null) {
             AnnotatedElement parent = getParent(aobject);
@@ -78,8 +76,7 @@ public class Ns {
     /**
      * Get annotation with inheritance support.
      */
-    public static <A extends Annotation> Object getValue(
-            AnnotatedElement aobject, Class<A> aclass) {
+    public static <A extends Annotation> Object getValue(AnnotatedElement aobject, Class<A> aclass) {
         A n = getN(aobject, aclass);
         if (n == null)
             return null;
@@ -100,8 +97,7 @@ public class Ns {
      * @see #getValue(AnnotatedElement, Class)
      */
     @SuppressWarnings("unchecked")
-    public static <T, A extends Annotation> T _getValue(
-            AnnotatedElement aobject, Class<A> aclass) {
+    public static <T, A extends Annotation> T _getValue(AnnotatedElement aobject, Class<A> aclass) {
         return (T) getValue(aobject, aclass);
     }
 

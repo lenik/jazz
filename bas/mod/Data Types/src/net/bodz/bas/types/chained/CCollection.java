@@ -6,8 +6,7 @@ import java.util.Set;
 
 import net.bodz.bas.types.util.Iterators;
 
-public abstract class CCollection<E> extends _ChainedScope<Collection<E>>
-        implements Collection<E> {
+public abstract class CCollection<E> extends _ChainedScope<Collection<E>> implements Collection<E> {
 
     public CCollection() throws InstantiationException {
         super();

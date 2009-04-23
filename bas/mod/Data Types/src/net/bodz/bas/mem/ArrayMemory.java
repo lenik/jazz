@@ -38,8 +38,7 @@ public class ArrayMemory extends _Memory {
     }
 
     @Override
-    public void read(int addr, byte[] buf, int off, int len)
-            throws AccessException {
+    public void read(int addr, byte[] buf, int off, int len) throws AccessException {
         int actualEnd = start + addr + len;
         if (actualEnd > end)
             throw new BadAddressException(actualEnd, end);
@@ -47,8 +46,7 @@ public class ArrayMemory extends _Memory {
     }
 
     @Override
-    public void write(int addr, byte[] buf, int off, int len)
-            throws BadAddressException {
+    public void write(int addr, byte[] buf, int off, int len) throws BadAddressException {
         int actualEnd = start + addr + len;
         if (actualEnd > end)
             throw new BadAddressException(actualEnd, end);

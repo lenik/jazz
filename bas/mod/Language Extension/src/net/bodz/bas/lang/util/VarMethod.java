@@ -55,8 +55,8 @@ public class VarMethod extends _VMethod {
 
     @Override
     public Object invokel(Object obj, Class<?>[] paramTypes, Object... params)
-            throws NoSuchMethodException, IllegalArgumentException,
-            IllegalAccessException, InvocationTargetException {
+            throws NoSuchMethodException, IllegalArgumentException, IllegalAccessException,
+            InvocationTargetException {
         Method method = findMethod(paramTypes);
         if (method == null)
             throw new NoSuchMethodException(name + "(" //$NON-NLS-1$
@@ -65,15 +65,13 @@ public class VarMethod extends _VMethod {
             Class<?> objClass = obj.getClass();
             Class<?> declClass = method.getDeclaringClass();
             if (!declClass.isAssignableFrom(objClass))
-                throw new IllegalUsageError(LangNLS
-                        .getString("VarMethod.incompatType") + objClass //$NON-NLS-1$
+                throw new IllegalUsageError(LangNLS.getString("VarMethod.incompatType") + objClass //$NON-NLS-1$
                         + LangNLS.getString("VarMethod.decl") + declClass); //$NON-NLS-1$
         }
         return Control.invoke(method, obj, params);
     }
 
-    public static void classify(Iterable<Method> methods,
-            Map<String, VarMethod> map) {
+    public static void classify(Iterable<Method> methods, Map<String, VarMethod> map) {
         TextMap<VarMethod> tmp = new HashTextMap<VarMethod>();
         for (Method m : methods) {
             String name = m.getName();

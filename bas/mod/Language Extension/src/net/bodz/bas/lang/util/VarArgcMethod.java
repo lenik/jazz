@@ -43,8 +43,7 @@ public class VarArgcMethod extends _VMethod {
         int index = paramTypes.length;
         if (argcMap.contains(index)) {
             Method m1 = argcMap.get(index);
-            throw new IllegalUsageError(LangNLS
-                    .getString("VarArgcMethod.methodsWithSameArgc") // //$NON-NLS-1$
+            throw new IllegalUsageError(LangNLS.getString("VarArgcMethod.methodsWithSameArgc") // //$NON-NLS-1$
                     + m1 + "\n" + method); //$NON-NLS-1$
         }
         argcMap.set(index, method);
@@ -54,9 +53,8 @@ public class VarArgcMethod extends _VMethod {
      * if parameter type incompat, TypeParser on the toString value is used.
      */
     @Override
-    public Object invoke(Object obj, Object... params)
-            throws NoSuchMethodException, IllegalArgumentException,
-            IllegalAccessException, InvocationTargetException {
+    public Object invoke(Object obj, Object... params) throws NoSuchMethodException,
+            IllegalArgumentException, IllegalAccessException, InvocationTargetException {
         int argc = params.length;
         Method method = get(argc);
         if (method == null)
@@ -98,12 +96,11 @@ public class VarArgcMethod extends _VMethod {
      */
     @Override
     public Object invokel(Object obj, Class<?>[] paramTypes, Object... params)
-            throws NoSuchMethodException, IllegalArgumentException,
-            IllegalAccessException, InvocationTargetException {
+            throws NoSuchMethodException, IllegalArgumentException, IllegalAccessException,
+            InvocationTargetException {
         if (paramTypes != null)
             if (paramTypes.length != params.length)
-                throw new IllegalArgumentException(LangNLS
-                        .getString("VarArgcMethod.diffParamTV")); //$NON-NLS-1$
+                throw new IllegalArgumentException(LangNLS.getString("VarArgcMethod.diffParamTV")); //$NON-NLS-1$
         int argc = params.length;
         Method method = get(argc);
         if (method == null)
@@ -121,8 +118,7 @@ public class VarArgcMethod extends _VMethod {
         return invoke(obj, params);
     }
 
-    public static void classify(Iterable<Method> methods,
-            Map<String, VarArgcMethod> map) {
+    public static void classify(Iterable<Method> methods, Map<String, VarArgcMethod> map) {
         for (Method m : methods) {
             String name = m.getName();
             VarArgcMethod varm = map.get(name);

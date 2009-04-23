@@ -120,18 +120,15 @@ public abstract class _ScriptClass<T> implements ScriptClass<T> {
     public Object get(Object object, String fieldName) throws ScriptException {
         ScriptField<Object> field = getField(fieldName);
         if (field == null)
-            throw new ScriptException(
-                    LangNLS.getString("_ScriptClass.nofield") + fieldName); //$NON-NLS-1$
+            throw new ScriptException(LangNLS.getString("_ScriptClass.nofield") + fieldName); //$NON-NLS-1$
         return field.get(object);
     }
 
     @Override
-    public void set(Object object, String fieldName, Object newValue)
-            throws ScriptException {
+    public void set(Object object, String fieldName, Object newValue) throws ScriptException {
         ScriptField<Object> field = getField(fieldName);
         if (field == null)
-            throw new ScriptException(
-                    LangNLS.getString("_ScriptClass.nofield") + fieldName); //$NON-NLS-1$
+            throw new ScriptException(LangNLS.getString("_ScriptClass.nofield") + fieldName); //$NON-NLS-1$
         field.set(object, newValue);
     }
 
@@ -140,8 +137,7 @@ public abstract class _ScriptClass<T> implements ScriptClass<T> {
             throws ScriptException {
         ScriptMethod<Object> method = getMethod(methodName);
         if (method == null)
-            throw new ScriptException(LangNLS
-                    .getString("_ScriptClass.nomethod") + methodName); //$NON-NLS-1$
+            throw new ScriptException(LangNLS.getString("_ScriptClass.nomethod") + methodName); //$NON-NLS-1$
         return method.invoke(object, parameters);
     }
 

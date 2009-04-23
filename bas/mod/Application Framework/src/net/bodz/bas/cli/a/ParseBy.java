@@ -11,8 +11,7 @@ import net.bodz.bas.types.TypeParser;
  * field or bean accessors
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.TYPE, ElementType.FIELD, ElementType.METHOD,
-        ElementType.PARAMETER })
+@Target( { ElementType.TYPE, ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER })
 public @interface ParseBy {
 
     Class<? extends TypeParser> value() default TypeParser.class;

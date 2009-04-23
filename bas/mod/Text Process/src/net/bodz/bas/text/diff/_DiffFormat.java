@@ -11,8 +11,7 @@ public abstract class _DiffFormat implements DiffFormat {
     protected CharOut out;
 
     @Override
-    public synchronized void format(List<?> al, List<?> bl,
-            List<DiffInfo> diffs, CharOut out) {
+    public synchronized void format(List<?> al, List<?> bl, List<DiffInfo> diffs, CharOut out) {
         assert al != null;
         assert bl != null;
         assert diffs != null;

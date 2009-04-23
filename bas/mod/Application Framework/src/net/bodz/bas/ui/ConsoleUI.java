@@ -84,8 +84,8 @@ public class ConsoleUI extends _UserInterface {
         String s = Strings.ucfirstWords(name);
         int occur = Strings.indexOfIgnoreCase(s, c);
         if (occur != -1) {
-            s = s.substring(0, occur) + '(' + s.substring(occur, occur + 1)
-                    + ')' + s.substring(occur + 1);
+            s = s.substring(0, occur) + '(' + s.substring(occur, occur + 1) + ')'
+                    + s.substring(occur + 1);
         }
         return s;
     }
@@ -137,8 +137,7 @@ public class ConsoleUI extends _UserInterface {
     @Override
     public <T> T prompt(String title, Object detail, Class<T> type, T initial) {
         print(title, detail);
-        out
-                .println(AppNLS.getString("CLIInteraction.enterDefault_") + initial + ")"); //$NON-NLS-1$ //$NON-NLS-2$
+        out.println(AppNLS.getString("CLIInteraction.enterDefault_") + initial + ")"); //$NON-NLS-1$ //$NON-NLS-2$
         for (int ntry = 0; ntry < 3; ntry++)
             try {
                 String line = lineIn.readLine();
@@ -147,8 +146,7 @@ public class ConsoleUI extends _UserInterface {
                 T val = TypeParsers.parse(type, line);
                 return val;
             } catch (ParseException e) {
-                System.err
-                        .println(AppNLS.getString("CLIInteraction.parseError") + e.getMessage()); //$NON-NLS-1$
+                System.err.println(AppNLS.getString("CLIInteraction.parseError") + e.getMessage()); //$NON-NLS-1$
                 continue;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -159,11 +157,9 @@ public class ConsoleUI extends _UserInterface {
     }
 
     @Override
-    public <K> K choice(String title, Object detail, Map<K, ?> candidates,
-            K initial) {
+    public <K> K choice(String title, Object detail, Map<K, ?> candidates, K initial) {
         if (candidates.isEmpty())
-            throw new IllegalUsageException(AppNLS
-                    .getString("CLIInteraction.nothingToChoice")); //$NON-NLS-1$
+            throw new IllegalUsageException(AppNLS.getString("CLIInteraction.nothingToChoice")); //$NON-NLS-1$
         @SuppressWarnings("unchecked")
         K[] keys = (K[]) candidates.keySet().toArray();
         TextMap<K> keynames = new HashTextMap<K>();
@@ -183,11 +179,8 @@ public class ConsoleUI extends _UserInterface {
                 Object value = candidates.get(key);
                 out.println("  " + i + ". " + keyname + " => " + value); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             }
-            out
-                    .println(String
-                            .format(
-                                    AppNLS
-                                            .getString("CLIInteraction.enterYourChoice_d"), keys.length)); //$NON-NLS-1$
+            out.println(String.format(
+                    AppNLS.getString("CLIInteraction.enterYourChoice_d"), keys.length)); //$NON-NLS-1$
             try {
                 String line = lineIn.readLine();
                 if (line == null)
@@ -204,8 +197,7 @@ public class ConsoleUI extends _UserInterface {
                             AppNLS.getString("CLIInteraction.dupEntry")); //$NON-NLS-1$
                 if (keynames.containsKey(line))
                     return keynames.get(line);
-                System.err
-                        .println(AppNLS.getString("CLIInteraction.badChoice")); //$NON-NLS-1$
+                System.err.println(AppNLS.getString("CLIInteraction.badChoice")); //$NON-NLS-1$
             } catch (IOException e) {
                 e.printStackTrace();
                 return null;
@@ -214,8 +206,7 @@ public class ConsoleUI extends _UserInterface {
     }
 
     @Override
-    public <K> Set<K> choices(String title, Object detail,
-            Map<K, ?> candidates, K... initial) {
+    public <K> Set<K> choices(String title, Object detail, Map<K, ?> candidates, K... initial) {
         throw new NotImplementedException("multiple choice"); //$NON-NLS-1$
     }
 

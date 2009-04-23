@@ -41,8 +41,7 @@ public abstract class _History implements History {
     public void undo() throws OperationException {
         int p = getPosition();
         if (p <= 0)
-            throw new IllegalUsageException(AppNLS
-                    .getString("_History.cantUndoMore")); //$NON-NLS-1$
+            throw new IllegalUsageException(AppNLS.getString("_History.cantUndoMore")); //$NON-NLS-1$
         moveTo(p - 1);
     }
 
@@ -50,8 +49,7 @@ public abstract class _History implements History {
     public void redo() throws OperationException {
         int p = getPosition();
         if (p >= size())
-            throw new IllegalUsageException(AppNLS
-                    .getString("_History.cantRedoMore")); //$NON-NLS-1$
+            throw new IllegalUsageException(AppNLS.getString("_History.cantRedoMore")); //$NON-NLS-1$
         moveTo(p + 1);
     }
 

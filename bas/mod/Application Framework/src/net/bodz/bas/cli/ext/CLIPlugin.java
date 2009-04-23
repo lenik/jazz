@@ -22,7 +22,6 @@ public interface CLIPlugin extends Plugin {
     /**
      * @see #boot()
      */
-    void setParameters(Map<String, Object> parameters) throws CLIException,
-            ParseException;
+    void setParameters(Map<String, Object> parameters) throws CLIException, ParseException;
 
 }

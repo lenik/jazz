@@ -17,8 +17,7 @@ import net.bodz.bas.types.TypeParser;
 import net.bodz.bas.types.TypeParsers;
 import net.bodz.bas.types.util.Types;
 
-public class MethodOption extends _Option<CallInfo> implements
-        ScriptMethod<Object> {
+public class MethodOption extends _Option<CallInfo> implements ScriptMethod<Object> {
 
     private final Method       method;
     private final int          argc;
@@ -76,16 +75,14 @@ public class MethodOption extends _Option<CallInfo> implements
         return argc;
     }
 
-    public Object parseParameter(String param, int paramIndex)
-            throws ParseException {
+    public Object parseParameter(String param, int paramIndex) throws ParseException {
         if (parsers == null || paramIndex < 0 || paramIndex >= argc)
             throw new CLIError(AppNLS.getString("MethodOption.paramIdxOut")); //$NON-NLS-1$
         Object val = parsers[paramIndex].parse(param);
         return val;
     }
 
-    public Object call(Object object, String[] argv) throws ParseException,
-            ScriptException {
+    public Object call(Object object, String[] argv) throws ParseException, ScriptException {
         Object[] parameters = new Object[argc];
         for (int i = 0; i < argc; i++) {
             String arg = argv[i];
@@ -135,8 +132,7 @@ public class MethodOption extends _Option<CallInfo> implements
     }
 
     @Override
-    public Object invoke(Object object, Object... parameters)
-            throws ScriptException {
+    public Object invoke(Object object, Object... parameters) throws ScriptException {
         String[] argv = new String[argc];
         Objects.copy(parameters, 0, argv, 0, argc);
         try {

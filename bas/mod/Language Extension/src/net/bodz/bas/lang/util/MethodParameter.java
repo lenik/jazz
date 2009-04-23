@@ -12,16 +12,14 @@ public class MethodParameter extends AccessibleObject {
     // private Method declaringMethod;
     private final Annotation[] annotations;
 
-    public MethodParameter(int paramIndex, String paramName, Class<?> type,
-            Annotation[] annotations) {
+    public MethodParameter(int paramIndex, String paramName, Class<?> type, Annotation[] annotations) {
         this.index = paramIndex;
         this.name = paramName;
         this.type = type;
         this.annotations = annotations;
     }
 
-    public MethodParameter(int paramIndex, Class<?> type,
-            Annotation[] annotations) {
+    public MethodParameter(int paramIndex, Class<?> type, Annotation[] annotations) {
         this(paramIndex, // "$" +
                 String.valueOf(paramIndex), type, annotations);
     }
@@ -55,8 +53,7 @@ public class MethodParameter extends AccessibleObject {
     }
 
     @Override
-    public boolean isAnnotationPresent(
-            Class<? extends Annotation> annotationClass) {
+    public boolean isAnnotationPresent(Class<? extends Annotation> annotationClass) {
         for (int i = 0; i < annotations.length; i++) {
             Annotation a = annotations[i];
             if (annotationClass.isInstance(a))
@@ -79,8 +76,7 @@ public class MethodParameter extends AccessibleObject {
     public static MethodParameter getParameter(Method method, int paramIndex) {
         Class<?>[] ptv = method.getParameterTypes();
         Annotation[][] pav = method.getParameterAnnotations();
-        MethodParameter param = new MethodParameter(paramIndex,
-                ptv[paramIndex], pav[paramIndex]);
+        MethodParameter param = new MethodParameter(paramIndex, ptv[paramIndex], pav[paramIndex]);
         return param;
     }
 

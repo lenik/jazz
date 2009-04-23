@@ -25,14 +25,12 @@ public class Plugins {
         return true;
     }
 
-    public boolean registerCategory(String name,
-            Class<? extends Plugin> baseType) {
+    public boolean registerCategory(String name, Class<? extends Plugin> baseType) {
         PluginCategory category = new PluginCategory(name, baseType);
         return registerCategory(category);
     }
 
-    public PluginCategory getOrCreateCategory(Class<? extends Plugin> type,
-            boolean strict) {
+    public PluginCategory getOrCreateCategory(Class<? extends Plugin> type, boolean strict) {
         PluginCategory pluginType;
         if (strict)
             pluginType = categories.get(type);
@@ -45,8 +43,7 @@ public class Plugins {
         return (PluginCategory) pluginType;
     }
 
-    public PluginCategory getOrCreateCategory(
-            Class<? extends Plugin> pluginTypeClass) {
+    public PluginCategory getOrCreateCategory(Class<? extends Plugin> pluginTypeClass) {
         return getOrCreateCategory(pluginTypeClass, false);
     }
 
@@ -70,8 +67,7 @@ public class Plugins {
         category.register(pluginId, type);
     }
 
-    public void register(String pluginId, Class<? extends Plugin> type,
-            Object outer) {
+    public void register(String pluginId, Class<? extends Plugin> type, Object outer) {
         PluginCategory category = getOrCreateCategory(type);
         category.register(pluginId, type, outer);
     }
@@ -82,12 +78,10 @@ public class Plugins {
         category.register(pluginId, staticInstance);
     }
 
-    PluginTypeEx find(Class<?> type, final String pluginId)
-            throws PluginException {
+    PluginTypeEx find(Class<?> type, final String pluginId) throws PluginException {
         PluginTypeEx found = null;
         StringBuffer errmsg = null;
-        for (Entry<Class<?>, PluginCategory> e : categories
-                .ceilingEntries(type)) {
+        for (Entry<Class<?>, PluginCategory> e : categories.ceilingEntries(type)) {
             PluginCategory category = e.getValue();
             PluginTypeEx typeEx = category.get(pluginId);
             if (typeEx != null) {
@@ -96,9 +90,7 @@ public class Plugins {
                 } else {
                     if (errmsg == null) {
                         errmsg = new StringBuffer();
-                        errmsg
-                                .append(AppNLS
-                                        .getString("Plugins.ambigPluginId") + pluginId); //$NON-NLS-1$
+                        errmsg.append(AppNLS.getString("Plugins.ambigPluginId") + pluginId); //$NON-NLS-1$
                         errmsg.append(AppNLS.getString("Plugins._candidates")); //$NON-NLS-1$
                         errmsg.append(found);
                     }
@@ -113,13 +105,12 @@ public class Plugins {
     }
 
     // ???
-    public PluginTypeEx getTypeEx(Class<?> type, String pluginId)
-            throws PluginException {
+    public PluginTypeEx getTypeEx(Class<?> type, String pluginId) throws PluginException {
         return find(type, pluginId);
     }
 
-    public Plugin load(Class<? extends Plugin> type, String pluginId,
-            Object... args) throws PluginException {
+    public Plugin load(Class<? extends Plugin> type, String pluginId, Object... args)
+            throws PluginException {
         PluginTypeEx typeEx = find(type, pluginId);
         if (typeEx == null)
             return null;

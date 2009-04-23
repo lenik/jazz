@@ -30,11 +30,10 @@ public class Counters extends TreeTextMap<Counter> {
     private ResourceBundle    bundle;
 
     public Counters(Class<?> clazz) {
-//        ClassDiag.
+        // ClassDiag.
         if (clazz == null)
             throw new NullPointerException("clazz");
-        net.bodz.bas.a.Counts a = clazz
-                .getAnnotation(net.bodz.bas.a.Counts.class);
+        net.bodz.bas.a.Counts a = clazz.getAnnotation(net.bodz.bas.a.Counts.class);
         if (a != null) {
             URL resourceURL = clazz.getResource(a.value());
             if ("file".equals(resourceURL.getProtocol()))
@@ -44,8 +43,7 @@ public class Counters extends TreeTextMap<Counter> {
                     throw new RuntimeException(e);
                 }
             try {
-                Properties properties = Files.loadProperties(resourceURL,
-                        "utf-8");
+                Properties properties = Files.loadProperties(resourceURL, "utf-8");
                 parse(properties);
             } catch (IOException e) {
                 throw new RuntimeException(e);
@@ -154,8 +152,7 @@ public class Counters extends TreeTextMap<Counter> {
                     counter.setCodec(parseCodec(codecdef));
             }
 
-            boolean precoded = "1".equals(properties.getProperty(key
-                    + ATTR_PRECODED));
+            boolean precoded = "1".equals(properties.getProperty(key + ATTR_PRECODED));
             counter.setPrecoded(precoded);
 
             String value = properties.getProperty(key);
@@ -191,8 +188,7 @@ public class Counters extends TreeTextMap<Counter> {
             String name = entry.getKey();
             Counter counter = entry.getValue();
             boolean precoded = counter.isPrecoded();
-            String value = precoded ? counter.format() : String.valueOf(counter
-                    .get());
+            String value = precoded ? counter.format() : String.valueOf(counter.get());
             properties.setProperty(name, value);
             properties.setProperty(name + ATTR_TIMESTAMP, //
                     String.valueOf(counter.getTimestamp()));
@@ -223,8 +219,8 @@ public class Counters extends TreeTextMap<Counter> {
             if (colon == -1)
                 return (TextCodec<Long>) Class.forName(name).newInstance();
             else
-                return (TextCodec<Long>) Class.forName(name).getConstructor(
-                        String.class).newInstance(s.substring(colon));
+                return (TextCodec<Long>) Class.forName(name).getConstructor(String.class)
+                        .newInstance(s.substring(colon));
         } catch (Exception e) {
             throw new ParseException(e);
         }

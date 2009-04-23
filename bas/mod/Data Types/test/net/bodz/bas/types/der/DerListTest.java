@@ -12,8 +12,7 @@ public class DerListTest {
 
     @Test
     public void test1() {
-        String[] numbers = {
-        //
+        String[] numbers = { //
                 "one", "two", "three" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         List<String> orig = new ArrayList<String>();
         for (String n : numbers)

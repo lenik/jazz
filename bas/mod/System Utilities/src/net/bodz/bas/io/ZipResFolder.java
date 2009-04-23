@@ -7,30 +7,32 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
 public class ZipResFolder implements ResFolder {
 
-    private File            file_zip;
-    private boolean         autoMkdirs;
+    private final File      file_zip;
+    private final boolean   autoMkdirs;
 
     private ZipFile         zipFile;
     private ZipOutputStream zipOut;
 
     public ZipResFolder(File zipfile) {
+        this(zipfile, false);
+    }
+
+    public ZipResFolder(File zipfile, boolean autoMkdirs) {
         if (zipfile == null)
             throw new NullPointerException("zipfile");
         this.file_zip = zipfile;
+        this.autoMkdirs = autoMkdirs;
     }
 
     public boolean isAutoMkdirs() {
         return autoMkdirs;
-    }
-
-    public void setAutoMkdirs(boolean autoMkdirs) {
-        this.autoMkdirs = autoMkdirs;
     }
 
     void autoMkdirs() {
@@ -135,22 +137,40 @@ public class ZipResFolder implements ResFolder {
             ZipEntry zipEntry = zipFile.getEntry(entryName);
             if (zipEntry == null)
                 return null;
-            InputStream zin = zipFile.getInputStream(zipEntry);
-            return zin;
+            InputStream entryIn = zipFile.getInputStream(zipEntry);
+            return entryIn;
         }
 
         @Override
         public OutputStream openOutputStream(boolean append) throws IOException {
             if (append)
-                throw new UnsupportedOperationException(
-                        "Can't append to entries in a zip file");
+                throw new UnsupportedOperationException("Can't append to entries in a zip file");
             openZipForWrite();
             assert zipOut != null;
             ZipEntry zipEntry = new ZipEntry(entryName);
-            ZipEntryOutputStream entryOut = new ZipEntryOutputStream(zipOut,
-                    zipEntry);
+            ZipEntryOutputStream entryOut = new ZipEntryOutputStream(zipOut, zipEntry);
             entryCreated = true;
             return entryOut;
+        }
+
+        /**
+         * XXX - can't open jar file from URL
+         */
+        @Override
+        public JarFile openJarFile() throws IOException {
+            InputStream entryIn = openInputStream();
+            File file = Files.convertToFile(null, entryIn);
+            return new JarFile(file);
+        }
+
+        /**
+         * XXX - can't open zip file from URL
+         */
+        @Override
+        public ZipFile openZipFile() throws IOException {
+            InputStream entryIn = openInputStream();
+            File file = Files.convertToFile(null, entryIn);
+            return new ZipFile(file);
         }
 
         @Override

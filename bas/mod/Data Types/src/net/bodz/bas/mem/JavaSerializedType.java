@@ -20,8 +20,7 @@ public class JavaSerializedType extends _Type {
     }
 
     @Override
-    public void put(Memory memory, int offset, Object value)
-            throws AccessException {
+    public void put(Memory memory, int offset, Object value) throws AccessException {
         MemoryOutputStream mout = new MemoryOutputStream(memory, offset, -1);
         try {
             ObjectOutputStream out = new ObjectOutputStream(mout);

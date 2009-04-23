@@ -49,10 +49,7 @@ public class CLIPluginCategory extends PluginCategory {
                 CLIPlugin tmp = (CLIPlugin) pluginClass.newInstance();
                 tmp.help(out, prefix + "    "); //$NON-NLS-1$
             } catch (CreateException e) {
-                out
-                        .println(prefix
-                                + AppNLS
-                                        .getString("CLIPluginCategory.errNewInst") + e + ")"); //$NON-NLS-1$ //$NON-NLS-2$
+                out.println(prefix + AppNLS.getString("CLIPluginCategory.errNewInst") + e + ")"); //$NON-NLS-1$ //$NON-NLS-2$
             }
         }
     }

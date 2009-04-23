@@ -14,8 +14,7 @@ public class PropertyOption<T> extends _Option<T> {
     private final Method             writef;
 
     @SuppressWarnings("unchecked")
-    public PropertyOption(String name, PropertyDescriptor property,
-            OptionGroup optgrp) {
+    public PropertyOption(String name, PropertyDescriptor property, OptionGroup optgrp) {
         super(name, property.getReadMethod(), // AnnotatedElement
                 (Class<T>) property.getPropertyType(), optgrp);
         this.property = property;
@@ -45,8 +44,7 @@ public class PropertyOption<T> extends _Option<T> {
         try {
             if (multi) {
                 propval = readf.invoke(classobj);
-                Object newprop = Util.addmulti(property.getPropertyType(),
-                        propval, optval);
+                Object newprop = Util.addmulti(property.getPropertyType(), propval, optval);
                 if (newprop == propval)
                     return;
                 propval = newprop;

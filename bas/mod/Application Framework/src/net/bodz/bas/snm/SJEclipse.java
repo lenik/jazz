@@ -33,8 +33,7 @@ public class SJEclipse {
             this.not = not;
         }
 
-        public PatternFilter(String wildcards, boolean caseInsensitive,
-                boolean not) {
+        public PatternFilter(String wildcards, boolean caseInsensitive, boolean not) {
             this(Patterns.fromWildcards(wildcards, caseInsensitive), not);
         }
 
@@ -77,8 +76,7 @@ public class SJEclipse {
 
     static void configEclipse(File eclipsed) {
         if (!eclipsed.isDirectory())
-            throw new IllegalArgumentException(AppNLS
-                    .getString("SJEclipse.notDir") + eclipsed); //$NON-NLS-1$
+            throw new IllegalArgumentException(AppNLS.getString("SJEclipse.notDir") + eclipsed); //$NON-NLS-1$
         addEclipse(eclipsed);
     }
 

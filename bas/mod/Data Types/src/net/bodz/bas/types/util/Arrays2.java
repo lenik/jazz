@@ -27,8 +27,7 @@ public class Arrays2 {
         return iterator(array, 0, array.length);
     }
 
-    public static IntIterator iterator(final int[] array, final int off,
-            final int len) {
+    public static IntIterator iterator(final int[] array, final int off, final int len) {
         final int end = off + len;
         class Iter implements IntIterator {
             int i = off;
@@ -100,8 +99,7 @@ public class Arrays2 {
             if (arrays[i] != null)
                 n += Array.getLength(sig = arrays[i]);
         if (sig == null)
-            throw new IllegalArgumentException(
-                    TypesNLS.getString("Arrays2.unknownCType")); //$NON-NLS-1$
+            throw new IllegalArgumentException(TypesNLS.getString("Arrays2.unknownCType")); //$NON-NLS-1$
         Class<?> valtype = sig.getClass().getComponentType();
         @SuppressWarnings("unchecked")
         A cat = (A) Array.newInstance(valtype, n);
@@ -123,8 +121,7 @@ public class Arrays2 {
             if (tails == null)
                 return (A) new Object[] { null, null };
             Class<?> tailType = tails.getClass();
-            Class<?> type = tailType.isArray() ? tailType.getComponentType()
-                    : tailType;
+            Class<?> type = tailType.isArray() ? tailType.getComponentType() : tailType;
             A headsArray = (A) Array.newInstance(type, 1);
             Array.set(headsArray, 0, heads);
             return concatv(headsArray, tails);
@@ -265,8 +262,7 @@ public class Arrays2 {
         shuffle(array, 0, len, times, rand);
     }
 
-    public static <A> void shuffle(A array, int off, int len, int times,
-            Random rand) {
+    public static <A> void shuffle(A array, int off, int len, int times, Random rand) {
         while (times-- > 0) {
             int n = rand.nextInt(len);
             int m = rand.nextInt(len);

@@ -35,8 +35,7 @@ public interface Encoding {
 
     void decode(Reader in, OutputStream out) throws IOException, ParseException;
 
-    void decode(Object charIn, Object byteOut) throws IOException,
-            ParseException;
+    void decode(Object charIn, Object byteOut) throws IOException, ParseException;
 
     /**
      * @return <code>null</code> if <code>charIn</code> is null.

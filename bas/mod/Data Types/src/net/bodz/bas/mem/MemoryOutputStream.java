@@ -31,8 +31,7 @@ public class MemoryOutputStream extends OutputStream {
     @Override
     public void write(int b) throws IOException {
         if (size == 0)
-            throw new IOException(TypesNLS
-                    .getString("MemoryOutputStream.overflow")); //$NON-NLS-1$
+            throw new IOException(TypesNLS.getString("MemoryOutputStream.overflow")); //$NON-NLS-1$
         buf1[0] = (byte) b;
         try {
             memory.write(start++, buf1);
@@ -47,8 +46,7 @@ public class MemoryOutputStream extends OutputStream {
     @Override
     public void write(byte[] b, int off, int len) throws IOException {
         if (size == 0)
-            throw new IOException(TypesNLS
-                    .getString("MemoryOutputStream.overflow")); //$NON-NLS-1$
+            throw new IOException(TypesNLS.getString("MemoryOutputStream.overflow")); //$NON-NLS-1$
         try {
             if (size == -1) {
                 memory.write(start, b, off, len);

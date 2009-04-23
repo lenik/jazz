@@ -11,8 +11,7 @@ public class DesktopApps {
 
     static boolean _encode = false;
 
-    public static void openMailer(String recipient, String subject, String body)
-            throws IOException {
+    public static void openMailer(String recipient, String subject, String body) throws IOException {
         StringBuffer buf = new StringBuffer();
         buf.append("mailto:"); //$NON-NLS-1$
         buf.append(recipient);

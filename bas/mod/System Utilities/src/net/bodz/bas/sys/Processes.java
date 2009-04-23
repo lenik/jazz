@@ -37,14 +37,12 @@ public class Processes {
         return runtime.exec(shprefix + command);
     }
 
-    public static Process shellExec(String command, String[] envp)
-            throws IOException {
+    public static Process shellExec(String command, String[] envp) throws IOException {
         Runtime runtime = Runtime.getRuntime();
         return runtime.exec(shprefix + command, envp);
     }
 
-    public static Process shellExec(String command, String[] envp, File dir)
-            throws IOException {
+    public static Process shellExec(String command, String[] envp, File dir) throws IOException {
         Runtime runtime = Runtime.getRuntime();
         return runtime.exec(shprefix + command, envp, dir);
     }
@@ -54,14 +52,12 @@ public class Processes {
         return runtime.exec(Arrays2.concat(shvec, cmdarray));
     }
 
-    public static Process shellExec(String[] cmdarray, String[] envp)
-            throws IOException {
+    public static Process shellExec(String[] cmdarray, String[] envp) throws IOException {
         Runtime runtime = Runtime.getRuntime();
         return runtime.exec(Arrays2.concat(shvec, cmdarray), envp);
     }
 
-    public static Process shellExec(String[] cmdarray, String[] envp, File dir)
-            throws IOException {
+    public static Process shellExec(String[] cmdarray, String[] envp, File dir) throws IOException {
         Runtime runtime = Runtime.getRuntime();
         return runtime.exec(Arrays2.concat(shvec, cmdarray), envp, dir);
     }
@@ -71,9 +67,8 @@ public class Processes {
      * 
      * @return exit code returned by the <code>process</code>.
      */
-    public static int iocap(Process process, final InputStream sendSrc,
-            final OutputStream outSink, final OutputStream errSink)
-            throws InterruptedException {
+    public static int iocap(Process process, final InputStream sendSrc, final OutputStream outSink,
+            final OutputStream errSink) throws InterruptedException {
         ManagedProcess mp = new ManagedProcess(new _IOCallback() {
 
             @Override
@@ -91,8 +86,7 @@ public class Processes {
             }
 
             @Override
-            public void recvErr(byte[] buf, int off, int len)
-                    throws IOException {
+            public void recvErr(byte[] buf, int off, int len) throws IOException {
                 if (errSink != null)
                     errSink.write(buf, off, len);
             }
@@ -100,8 +94,8 @@ public class Processes {
         return mp.takeOver(process);
     }
 
-    public static int iocap(Process process, Object sendSrc, Object outSink,
-            Object errSink) throws InterruptedException, IOException {
+    public static int iocap(Process process, Object sendSrc, Object outSink, Object errSink)
+            throws InterruptedException, IOException {
         InputStream send = Files.getInputStream(sendSrc);
         boolean sendc = Files.shouldClose(send);
         try {
@@ -126,8 +120,8 @@ public class Processes {
         }
     }
 
-    public static int iocap(Process process, Object outerrSink)
-            throws InterruptedException, IOException {
+    public static int iocap(Process process, Object outerrSink) throws InterruptedException,
+            IOException {
         OutputStream outerr = Files.getOutputStream(outerrSink);
         boolean outerrc = Files.shouldClose(outerrSink);
         try {
@@ -146,8 +140,7 @@ public class Processes {
     public static int getLastExitCode() {
         Integer code = exitCode.get();
         if (code == null)
-            throw new IllegalStateException(
-                    SysNLS.getString("Processes.noExitCode")); //$NON-NLS-1$
+            throw new IllegalStateException(SysNLS.getString("Processes.noExitCode")); //$NON-NLS-1$
         return code;
     }
 
@@ -158,8 +151,7 @@ public class Processes {
         return buf.toByteArray();
     }
 
-    public static String iocap(Process process, String charsetName)
-            throws InterruptedException {
+    public static String iocap(Process process, String charsetName) throws InterruptedException {
         byte[] out = iocap(process);
         Charset charset = Charset.forName(charsetName);
         return new String(out, charset);

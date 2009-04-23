@@ -45,8 +45,7 @@ public class MemoryWrapOffset extends _Memory {
     }
 
     @Override
-    public void read(int addr, byte[] buf, int off, int len)
-            throws AccessException {
+    public void read(int addr, byte[] buf, int off, int len) throws AccessException {
         orig.read(addr + offset, buf, off, len);
     }
 
@@ -56,8 +55,7 @@ public class MemoryWrapOffset extends _Memory {
     }
 
     @Override
-    public void write(int addr, byte[] buf, int off, int len)
-            throws AccessException {
+    public void write(int addr, byte[] buf, int off, int len) throws AccessException {
         orig.write(addr + offset, buf, off, len);
     }
 

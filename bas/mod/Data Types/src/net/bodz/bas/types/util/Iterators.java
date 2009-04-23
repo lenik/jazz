@@ -152,8 +152,7 @@ public class Iterators {
         return new ConcatIterator();
     }
 
-    public static <T> Iterator<T> map(final Iterator<T> iterator,
-            final Filt1<T, T> filter) {
+    public static <T> Iterator<T> map(final Iterator<T> iterator, final Filt1<T, T> filter) {
         class FilterIterator implements Iterator<T> {
 
             @Override
@@ -221,8 +220,8 @@ public class Iterators {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> Iterator<T> weave(Comparator<? super T> cmp,
-            Iterator<T> itr1, Iterator<T> itr2) {
+    public static <T> Iterator<T> weave(Comparator<? super T> cmp, Iterator<T> itr1,
+            Iterator<T> itr2) {
         Iterator<?> gv[] = { itr1, itr2 };
         return weave(cmp, (Iterator<T>[]) gv);
     }
@@ -232,13 +231,12 @@ public class Iterators {
      *             if <code>cmp</code> or any of <code>itrs</code> is
      *             <code>null</code>.
      */
-    public static <T> Iterator<T> weave(final Comparator<? super T> cmp,
-            final Iterator<T>... itrs) {
+    public static <T> Iterator<T> weave(final Comparator<? super T> cmp, final Iterator<T>... itrs) {
         if (cmp == null)
             throw new NullPointerException("cmp"); //$NON-NLS-1$
         ItrNxtCmp<T> inxtcmp = new ItrNxtCmp<T>(cmp);
-        final SortedList<ItrNxt<T>> alive = new SortedList<ItrNxt<T>>(
-                new DyingList<ItrNxt<T>>(itrs.length), inxtcmp);
+        final SortedList<ItrNxt<T>> alive = new SortedList<ItrNxt<T>>(new DyingList<ItrNxt<T>>(
+                itrs.length), inxtcmp);
         for (int i = 0; i < itrs.length; i++) {
             Iterator<T> itr = itrs[i];
             if (itr == null)

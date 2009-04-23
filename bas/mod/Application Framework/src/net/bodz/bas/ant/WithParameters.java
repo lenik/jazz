@@ -17,13 +17,8 @@ public class WithParameters {
         this.values = new ArrayList<Object>();
     }
 
-    public void addConfiguredParameter(TypedParameter param)
-            throws ParseException {
+    public void addConfiguredParameter(Parameter param) throws ParseException {
         Class<?> type = param.type;
-        if (type == null)
-            type = String.class;
-        // throw new IllegalArgumentException("parameter type isn't specified");
-
         String valueText = param.valueText;
         TypeParser typeParser = TypeParsers.get(type);
         Object value = valueText == null ? null : typeParser.parse(valueText);
@@ -39,8 +34,7 @@ public class WithParameters {
     public List<Class<?>> prependTypes(Class<?>... prependTypes) {
         if (prependTypes == null || prependTypes.length == 0)
             return getTypes();
-        ArrayList<Class<?>> list = new ArrayList<Class<?>>(prependTypes.length
-                + types.size());
+        ArrayList<Class<?>> list = new ArrayList<Class<?>>(prependTypes.length + types.size());
         for (Class<?> t : prependTypes)
             list.add(t);
         list.addAll(types);
@@ -54,8 +48,7 @@ public class WithParameters {
     public List<Object> prependValues(Object... prependValues) {
         if (prependValues == null || prependValues.length == 0)
             return getValues();
-        ArrayList<Object> list = new ArrayList<Object>(prependValues.length
-                + values.size());
+        ArrayList<Object> list = new ArrayList<Object>(prependValues.length + values.size());
         for (Object v : prependValues)
             list.add(v);
         list.addAll(values);

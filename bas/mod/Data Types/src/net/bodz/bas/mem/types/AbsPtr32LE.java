@@ -19,8 +19,7 @@ public class AbsPtr32LE extends _Ptr32 {
     }
 
     @Override
-    public void putAddress(Memory memory, int offset, int addr)
-            throws AccessException {
+    public void putAddress(Memory memory, int offset, int addr) throws AccessException {
         byte[] mem = new byte[4];
         Int32LE.write(mem, addr);
         memory.write(offset, mem);
@@ -33,8 +32,7 @@ public class AbsPtr32LE extends _Ptr32 {
     }
 
     @Override
-    public void putTarget(Memory memory, int offset, Object value)
-            throws AccessException {
+    public void putTarget(Memory memory, int offset, Object value) throws AccessException {
         int addr = getAddress(memory, offset);
         targetType.put(memory, addr, value);
     }

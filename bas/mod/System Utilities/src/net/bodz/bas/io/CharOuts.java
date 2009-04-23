@@ -15,8 +15,7 @@ public class CharOuts {
     static {
         nil = new CharOut() {
             @Override
-            public void write(char[] chars, int off, int len)
-                    throws IOException {
+            public void write(char[] chars, int off, int len) throws IOException {
             }
 
             @Override
@@ -24,13 +23,11 @@ public class CharOuts {
             }
 
             @Override
-            public void _write(CharSequence chars, int off, int len)
-                    throws IOException {
+            public void _write(CharSequence chars, int off, int len) throws IOException {
             }
 
             @Override
-            public void _write(String string, int off, int len)
-                    throws IOException {
+            public void _write(String string, int off, int len) throws IOException {
             }
         };
     }
@@ -41,15 +38,13 @@ public class CharOuts {
     public static CharOut get(final ICharOut out) {
         return new CharOut() {
             @Override
-            public void write(char[] chars, int off, int len)
-                    throws IOException {
+            public void write(char[] chars, int off, int len) throws IOException {
                 out.write(chars, off, len);
             }
         };
     }
 
-    public static CharOut get(OutputStream out, String charset)
-            throws UnsupportedEncodingException {
+    public static CharOut get(OutputStream out, String charset) throws UnsupportedEncodingException {
         return get(new OutputStreamWriter(out, charset));
     }
 
@@ -109,8 +104,7 @@ public class CharOuts {
         }
 
         @Override
-        public void _write(CharSequence chars, int off, int len)
-                throws IOException {
+        public void _write(CharSequence chars, int off, int len) throws IOException {
             ps.print(chars.subSequence(off, off + len).toString());
         }
 
@@ -222,8 +216,7 @@ public class CharOuts {
         }
 
         @Override
-        public void _write(CharSequence chars, int off, int len)
-                throws IOException {
+        public void _write(CharSequence chars, int off, int len) throws IOException {
             buffer.append(chars, off, off + len);
         }
 
@@ -261,8 +254,7 @@ public class CharOuts {
         }
 
         @Override
-        public void _write(CharSequence chars, int off, int len)
-                throws IOException {
+        public void _write(CharSequence chars, int off, int len) throws IOException {
             sb.append(chars, off, off + len);
         }
     }

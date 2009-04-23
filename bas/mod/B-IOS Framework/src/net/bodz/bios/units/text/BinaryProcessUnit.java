@@ -7,8 +7,7 @@ import net.bodz.bios.units.SISOUnit;
 
 public abstract class BinaryProcessUnit extends SISOUnit {
 
-    public abstract void recv(byte[] bytes, int start, int end)
-            throws IOException;
+    public abstract void recv(byte[] bytes, int start, int end) throws IOException;
 
     public void recv(byte[] bytes) throws IOException {
         recv(bytes, 0, bytes.length);

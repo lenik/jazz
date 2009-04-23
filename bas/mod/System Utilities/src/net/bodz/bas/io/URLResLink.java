@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.jar.JarFile;
+import java.util.zip.ZipFile;
 
 public class URLResLink extends _ResLink {
 
@@ -44,6 +46,24 @@ public class URLResLink extends _ResLink {
     @Override
     public OutputStream openOutputStream(boolean append) throws IOException {
         throw new UnsupportedOperationException("URL resource is read-only");
+    }
+
+    /**
+     * XXX - can't open jar file from URL
+     */
+    @Override
+    public JarFile openJarFile() throws IOException {
+        File file = Files.convertToFile(url, url);
+        return new JarFile(file);
+    }
+
+    /**
+     * XXX - can't open zip file from URL
+     */
+    @Override
+    public ZipFile openZipFile() throws IOException {
+        File file = Files.convertToFile(url, url);
+        return new ZipFile(file);
     }
 
     @Override

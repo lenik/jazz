@@ -16,8 +16,7 @@ public class RandomAccessFileMemory extends _Memory {
 
     private static boolean   precheck = false;
 
-    public RandomAccessFileMemory(File file, long offset)
-            throws FileNotFoundException {
+    public RandomAccessFileMemory(File file, long offset) throws FileNotFoundException {
         this(new RandomAccessFile(file, "rw"), offset); //$NON-NLS-1$
     }
 
@@ -57,8 +56,7 @@ public class RandomAccessFileMemory extends _Memory {
     }
 
     @Override
-    public void read(int addr, byte[] buf, int off, int len)
-            throws AccessException {
+    public void read(int addr, byte[] buf, int off, int len) throws AccessException {
         try {
             file.seek(offset + addr);
             file.readFully(buf, off, len);
@@ -73,8 +71,7 @@ public class RandomAccessFileMemory extends _Memory {
             file.seek(offset + addr);
             int b = file.read();
             if (b == -1)
-                throw new AccessException(TypesNLS
-                        .getString("RandomAccessFileMemory.eof")); //$NON-NLS-1$
+                throw new AccessException(TypesNLS.getString("RandomAccessFileMemory.eof")); //$NON-NLS-1$
             return (byte) b;
         } catch (IOException e) {
             throw new AccessException(e);
@@ -92,8 +89,7 @@ public class RandomAccessFileMemory extends _Memory {
     }
 
     @Override
-    public void write(int addr, byte[] buf, int off, int len)
-            throws AccessException {
+    public void write(int addr, byte[] buf, int off, int len) throws AccessException {
         try {
             file.seek(offset + addr);
             file.write(buf, off, len);

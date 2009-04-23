@@ -121,16 +121,13 @@ public class SJLibLoader {
             for (Entry<Object, Object> e : libraries.entrySet()) {
                 String name = (String) e.getKey();
                 if (libDir.containsKey(name))
-                    throw new IllegalArgumentException(AppNLS
-                            .getString("SJLibLoader.dupName") //$NON-NLS-1$
-                            + name
-                            + AppNLS.getString("SJLibLoader.definedIn") + ini); //$NON-NLS-1$
+                    throw new IllegalArgumentException(AppNLS.getString("SJLibLoader.dupName") //$NON-NLS-1$
+                            + name + AppNLS.getString("SJLibLoader.definedIn") + ini); //$NON-NLS-1$
 
                 String value = (String) e.getValue();
 
                 File target = Files.canoniOf(dir, value);
-                assert target.isFile() : AppNLS
-                        .getString("SJLibLoader.invalidTarget") + target; //$NON-NLS-1$
+                assert target.isFile() : AppNLS.getString("SJLibLoader.invalidTarget") + target; //$NON-NLS-1$
                 if (!target.isFile())
                     continue;
 

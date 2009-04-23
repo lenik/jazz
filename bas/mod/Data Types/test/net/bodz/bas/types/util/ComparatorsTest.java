@@ -69,11 +69,9 @@ public class ComparatorsTest {
             }
         };
 
-        final Class<?>[] correct = { Root.class, Bar.class, ZBar.class,
-                Foo.class, AFoo.class };
+        final Class<?>[] correct = { Root.class, Bar.class, ZBar.class, Foo.class, AFoo.class };
 
-        final Class<?>[] iv = { RootI.class, BarI.class, ZBarI.class,
-                FooI.class, AFooI.class };
+        final Class<?>[] iv = { RootI.class, BarI.class, ZBarI.class, FooI.class, AFooI.class };
         Perms.iterate(correct, new Proc1<Class<?>[]>() {
             @Override
             public void exec(Class<?>[] everyCondition) {

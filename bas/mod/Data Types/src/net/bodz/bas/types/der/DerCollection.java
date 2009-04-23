@@ -6,8 +6,7 @@ import java.util.Iterator;
 
 import net.bodz.bas.types.util.Iterators;
 
-public class DerCollection<E> extends AbstractCollection<E> implements
-        Derivation<Collection<E>> {
+public class DerCollection<E> extends AbstractCollection<E> implements Derivation<Collection<E>> {
 
     private final Collection<E> orig;
 

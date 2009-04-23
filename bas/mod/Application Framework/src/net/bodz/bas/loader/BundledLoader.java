@@ -11,8 +11,7 @@ public class BundledLoader extends URLClassLoader {
 
     private LibInstaller installer = new LibInstaller();
 
-    public BundledLoader(URL[] urls, ClassLoader parent,
-            URLStreamHandlerFactory factory) {
+    public BundledLoader(URL[] urls, ClassLoader parent, URLStreamHandlerFactory factory) {
         super(urls, parent, factory);
     }
 
@@ -44,8 +43,8 @@ public class BundledLoader extends URLClassLoader {
             ClassLoader parent = ucl.getParent();
             return new BundledLoader(urls, parent);
         }
-        throw new UnsupportedOperationException(String.format(
-                AppNLS.getString("BundledLoader.cantReplaceLoader_s"), loader)); //$NON-NLS-1$
+        throw new UnsupportedOperationException(String.format(AppNLS
+                .getString("BundledLoader.cantReplaceLoader_s"), loader)); //$NON-NLS-1$
     }
 
 }

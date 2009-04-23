@@ -5,7 +5,9 @@ import java.util.List;
 
 import net.bodz.bas.lang.RecoverableExceptionEvent;
 import net.bodz.bas.lang.RecoverableExceptionListener;
+import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.lang.err.OutOfDomainException;
+import net.bodz.bas.sys.SystemProperties;
 import net.bodz.bas.types.TreeNode;
 import net.bodz.bas.types.util.Objects;
 import net.bodz.bas.ui.ConsoleUI;
@@ -16,8 +18,10 @@ public abstract class _Job implements Job, TreeNode<_Job> {
     protected UserInterface                    UI = ConsoleUI.stdout;
     protected LogTerm                          L  = LogTerms.console;
 
+    private int                                state;
+
     private List<_Job>                         children;
-    private List<ChildJobAdapter>              linkers;
+    private List<ChildObserver>                observers;
 
     private Object                             status;
     private int                                progressIndex;
@@ -28,6 +32,109 @@ public abstract class _Job implements Job, TreeNode<_Job> {
     private List<StatusChangeListener>         statusChangeListeners;
     private List<ProgressChangeListener>       progressChangeListeners;
     private List<DurationChangeListener>       durationChangeListeners;
+
+    protected abstract void _run();
+
+    @Override
+    public void run() {
+        switch (state) {
+        case RUNNING:
+            return;
+        case STOPPED:
+            setState(RUNNING);
+            break;
+        case STOPPING: // synchronized??
+            setState(RUNNING);
+            return;
+        case PAUSED:
+        case PAUSING:
+            throw new NotImplementedException();
+        }
+        runTree();
+    }
+
+    /**
+     * Override this method to specify your own run order, and set progress
+     * indexes for child jobs.
+     */
+    protected void runTree() {
+        _run();
+        if (children != null)
+            for (_Job child : children) {
+                child.run();
+            }
+    }
+
+    @Override
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        if (this.state != state) {
+            this.state = state;
+            fireStateChange();
+        }
+    }
+
+    @Override
+    public void pause() {
+        switch (state) {
+        case RUNNING:
+            setState(PAUSING);
+            break;
+        case STOPPING:
+            // setState(STOPPING | PAUSING);
+            break;
+        case STOPPED:
+        case PAUSING:
+        case PAUSED:
+            return;
+        }
+    }
+
+    @Override
+    public void stop() {
+        switch (state) {
+        case STOPPED:
+            break;
+        case STOPPING:
+            return;
+        default:
+            setState(STOPPING);
+        }
+    }
+
+    static int slowdown = 0;
+    static {
+        if (SystemProperties.isDevelopMode())
+            slowdown = 100;
+    }
+
+    protected final boolean isStopping() {
+        if (slowdown != 0)
+            try {
+                Thread.sleep(slowdown);
+            } catch (InterruptedException e) {
+            }
+        return getState() == STOPPING;
+    }
+
+    protected final void setStopped() {
+        setState(STOPPED);
+    }
+
+    protected void execute(Job child, double progressIncrement) {
+        if (progressIncrement < 0)
+            throw new OutOfDomainException("progressIncrement", progressIncrement, 0);
+        ChildObserver childObserver = new ChildObserver(progressIncrement);
+        childObserver.bind(child);
+        try {
+            child.run();
+        } finally {
+            childObserver.unbind(child);
+        }
+    }
 
     @Override
     public void setUserInterface(UserInterface userInterface) {
@@ -68,9 +175,15 @@ public abstract class _Job implements Job, TreeNode<_Job> {
         return (progressIndex + progressIncrement) / progressSize;
     }
 
+    protected void setProgress(double progress) {
+        progressIndex = (int) (progress * progressSize);
+        fireProgressChange(progress);
+    }
+
     protected void setProgress(int progressIndex, int progressSize) {
-        setProgressIndex(progressIndex);
-        setProgressSize(progressSize);
+        this.progressIndex = progressIndex;
+        this.progressSize = progressSize;
+        fireProgressChange();
     }
 
     @Override
@@ -81,8 +194,14 @@ public abstract class _Job implements Job, TreeNode<_Job> {
     protected void setProgressIndex(int progressIndex) {
         if (this.progressIndex != progressIndex) {
             this.progressIndex = progressIndex;
-            fireProgressChange(new ProgressChangeEvent(this, getProgress()));
+            fireProgressChange();
         }
+    }
+
+    protected void setProgressIndex(double progressIndex) {
+        this.progressIndex = (int) progressIndex;
+        double progress = progressSize == 0 ? 0 : progressIndex / progressSize;
+        fireProgressChange(progress);
     }
 
     public int getProgressSize() {
@@ -92,7 +211,7 @@ public abstract class _Job implements Job, TreeNode<_Job> {
     protected void setProgressSize(int progressSize) {
         if (this.progressSize != progressSize) {
             this.progressSize = progressSize;
-            fireProgressChange(new ProgressChangeEvent(this, getProgress()));
+            fireProgressChange();
         }
     }
 
@@ -124,8 +243,7 @@ public abstract class _Job implements Job, TreeNode<_Job> {
         long oldDuration = getDuration();
         if (oldDuration != duration) {
             this.durationSum = duration;
-            DurationChangeEvent e = new DurationChangeEvent(this, oldDuration,
-                    duration);
+            DurationChangeEvent e = new DurationChangeEvent(this, oldDuration, duration);
             fireDurationChange(e);
         }
     }
@@ -143,51 +261,30 @@ public abstract class _Job implements Job, TreeNode<_Job> {
     public void addChildJob(_Job job, double progressIncrement) {
         if (children == null) {
             children = new ArrayList<_Job>();
-            linkers = new ArrayList<ChildJobAdapter>();
+            observers = new ArrayList<ChildObserver>();
         }
         children.add(job);
-        ChildJobAdapter linker = new ChildJobAdapter(progressIncrement);
-        linker.bind(job);
-        linkers.add(linker);
+        ChildObserver observer = new ChildObserver(progressIncrement);
+        observer.bind(job);
+        observers.add(observer);
     }
 
-    public void removeChildJob(_Job job) {
-        if (children != null) {
-            int index = children.indexOf(job);
-            children.remove(index);
-            linkers.remove(index);
-        }
+    public boolean removeChildJob(_Job job) {
+        if (children == null)
+            return false;
+        int index = children.indexOf(job);
+        if (index == -1)
+            return false;
+        ChildObserver observer = observers.remove(index);
+        observer.unbind(job);
+        return true;
     }
 
-    protected void execute(Job child, double progressIncrement) {
-        if (progressIncrement < 0)
-            throw new OutOfDomainException("progressIncrement",
-                    progressIncrement, 0);
-        ChildJobAdapter linker = new ChildJobAdapter(progressIncrement);
-        linker.bind(child);
-        try {
-            child.run();
-        } finally {
-            linker.unbind(child);
-        }
-    }
-
-    @Override
-    public void run() {
-        _run();
-        if (children != null)
-            for (_Job child : children) {
-                child.run();
-            }
-    }
-
-    protected abstract void _run();
-
-    protected class ChildJobAdapter extends JobAdaptor {
+    protected class ChildObserver extends JobObserver {
 
         private double progressIncrement;
 
-        public ChildJobAdapter(double progressIncrement) {
+        public ChildObserver(double progressIncrement) {
             this.progressIncrement = progressIncrement;
         }
 
@@ -222,8 +319,8 @@ public abstract class _Job implements Job, TreeNode<_Job> {
          */
         @Override
         public void progressChange(ProgressChangeEvent e) {
-            double localProgress = e.getProgress();
-            double progress = getProgress(progressIncrement * localProgress);
+            double childLocal = e.getProgress();
+            double progress = getProgress(progressIncrement * childLocal);
             fireProgressChange(new ProgressChangeEvent(e.getSource(), progress));
         }
 
@@ -233,6 +330,29 @@ public abstract class _Job implements Job, TreeNode<_Job> {
             setDuration(newDuration);
         }
 
+    }
+
+    private List<StateChangeListener> StateChangeListeners;
+
+    @Override
+    public void addStateChangeListener(StateChangeListener listener) {
+        if (StateChangeListeners == null)
+            StateChangeListeners = new ArrayList<StateChangeListener>(1);
+        StateChangeListeners.add(listener);
+    }
+
+    @Override
+    public void removeStateChangeListener(StateChangeListener listener) {
+        if (StateChangeListeners != null)
+            StateChangeListeners.remove(listener);
+    }
+
+    protected final void fireStateChange() {
+        if (StateChangeListeners != null) {
+            StateChangeEvent event = new StateChangeEvent(this);
+            for (StateChangeListener listener : StateChangeListeners)
+                listener.stateChange(event);
+        }
     }
 
     @Override
@@ -259,18 +379,16 @@ public abstract class _Job implements Job, TreeNode<_Job> {
      * 
      * @return <code>true</code> if the exception is recovered.
      */
-    protected boolean defaultExceptionHandler(Exception exception,
-            boolean recoverable, boolean discarded) {
+    protected boolean defaultExceptionHandler(Exception exception, boolean recoverable,
+            boolean discarded) {
         exception.printStackTrace();
         return discarded;
     }
 
-    protected final boolean recoverException(Exception exception,
-            boolean discarded) {
+    protected final boolean recoverException(Exception exception, boolean discarded) {
         if (exceptionListeners == null)
             return defaultExceptionHandler(exception, true, discarded);
-        RecoverableExceptionEvent event = new RecoverableExceptionEvent(this,
-                exception);
+        RecoverableExceptionEvent event = new RecoverableExceptionEvent(this, exception);
         event.setRecovered(discarded);
         for (RecoverableExceptionListener listener : exceptionListeners)
             listener.recoverException(event);
@@ -324,10 +442,20 @@ public abstract class _Job implements Job, TreeNode<_Job> {
             progressChangeListeners.remove(listener);
     }
 
+    protected final void fireProgressChange() {
+        fireProgressChange(getProgress());
+    }
+
+    protected final void fireProgressChange(double progress) {
+        ProgressChangeEvent event = new ProgressChangeEvent(this, progress);
+        fireProgressChange(event);
+    }
+
     protected final void fireProgressChange(ProgressChangeEvent event) {
-        if (progressChangeListeners != null)
+        if (progressChangeListeners != null) {
             for (ProgressChangeListener listener : progressChangeListeners)
                 listener.progressChange(event);
+        }
     }
 
     @Override

@@ -7,8 +7,7 @@ import net.bodz.bios.units.SISOUnit;
 
 public abstract class TextProcessUnit extends SISOUnit {
 
-    public abstract void recv(char[] chars, int start, int end)
-            throws IOException;
+    public abstract void recv(char[] chars, int start, int end) throws IOException;
 
     public void recv(char[] chars) throws IOException {
         recv(chars, 0, chars.length);

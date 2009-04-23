@@ -21,7 +21,7 @@ public class TaskLogTerm extends LogTerm {
     public Terminal filter(final int level) {
         return new BufferedTerminal() {
             @Override
-            public void p(String s) {
+            public void _p(String s) {
                 int msgLevel = getAntLevel(level);
                 task.log(s, msgLevel);
             }

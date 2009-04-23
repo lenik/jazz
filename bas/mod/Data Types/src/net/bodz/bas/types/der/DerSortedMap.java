@@ -8,8 +8,7 @@ import java.util.TreeMap;
 
 import net.bodz.bas.types.util.Iterators;
 
-public abstract class DerSortedMap<K, V> extends DerMap<K, V> implements
-        SortedMap<K, V> {
+public abstract class DerSortedMap<K, V> extends DerMap<K, V> implements SortedMap<K, V> {
 
     private static final long serialVersionUID = -4142737182766452892L;
 

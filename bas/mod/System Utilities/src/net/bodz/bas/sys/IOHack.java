@@ -47,8 +47,7 @@ public class IOHack {
         BufferedReader_reader = hackField(BufferedReader.class, "reader"); //$NON-NLS-1$
         BufferedWriter_writer = hackField(BufferedWriter.class, "writer"); //$NON-NLS-1$
         ReaderInputStream_reader = hackField(ReaderInputStream.class, "reader"); //$NON-NLS-1$
-        WriterOutputStream_writer = hackField(WriterOutputStream.class,
-                "writer"); //$NON-NLS-1$
+        WriterOutputStream_writer = hackField(WriterOutputStream.class, "writer"); //$NON-NLS-1$
     }
 
     public static InputStream unwrap(InputStream in) {

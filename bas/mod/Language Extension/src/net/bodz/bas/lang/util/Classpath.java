@@ -20,8 +20,7 @@ public class Classpath {
      */
     public static int addURL(ClassLoader loader, URL... urls) {
         if (!(loader instanceof URLClassLoader))
-            throw new UnsupportedOperationException(LangNLS
-                    .getString("Classpath.cantAddURL") //$NON-NLS-1$
+            throw new UnsupportedOperationException(LangNLS.getString("Classpath.cantAddURL") //$NON-NLS-1$
                     + loader.getClass());
         URLClassLoader ucl = (URLClassLoader) loader;
         int count = 0;

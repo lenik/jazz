@@ -50,8 +50,7 @@ public class TryUtil {
 
     }
 
-    public static void rethrow(ExceptionSourceRunnable runnable)
-            throws Exception {
+    public static void rethrow(ExceptionSourceRunnable runnable) throws Exception {
         CatchFirst catchFirst = new CatchFirst();
         runnable.addExceptionListener(catchFirst);
         try {

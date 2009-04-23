@@ -22,13 +22,11 @@ public class ArrayParser implements TypeParser {
         this.separator = separator;
     }
 
-    public ArrayParser(Class<?> valtype, Pattern separator)
-            throws CreateException {
+    public ArrayParser(Class<?> valtype, Pattern separator) throws CreateException {
         this(valtype, TypeParsers.guess(valtype), separator);
     }
 
-    public ArrayParser(Class<?> valtype, String separator)
-            throws CreateException {
+    public ArrayParser(Class<?> valtype, String separator) throws CreateException {
         this(valtype, Pattern.compile(separator));
     }
 

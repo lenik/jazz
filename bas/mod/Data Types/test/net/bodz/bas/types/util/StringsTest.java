@@ -118,8 +118,8 @@ public class StringsTest {
                 input = args[2];
                 if (isBreakpoint())
                     System.out.println(input);
-                String[] result = Strings.split((Object) input, delim, limit,
-                        Strings.TRIM | Strings.QUOTE);
+                String[] result = Strings.split((Object) input, delim, limit, Strings.TRIM
+                        | Strings.QUOTE);
                 return Strings.join("|", result); //$NON-NLS-1$
             }
         }, //
@@ -149,8 +149,7 @@ public class StringsTest {
                 input = args[1];
                 if (isBreakpoint())
                     System.out.println(input);
-                String[] result = Strings.split((Object) input, null, limit,
-                        Strings.QUOTE);
+                String[] result = Strings.split((Object) input, null, limit, Strings.QUOTE);
                 return Strings.join("|", result); //$NON-NLS-1$
             }
         }, //

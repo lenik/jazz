@@ -19,8 +19,7 @@ public abstract class RenderStrategy extends TypeHierMap<Renderer> {
     public Object render(Object context, Var<?> var) throws RenderException {
         Renderer renderer = findRenderer(var);
         if (renderer == null)
-            throw new RenderException(AppNLS
-                    .getString("RenderStrategy.unkRender") //$NON-NLS-1$
+            throw new RenderException(AppNLS.getString("RenderStrategy.unkRender") //$NON-NLS-1$
                     + var.getMeta().getType());
         return renderer.render(context, var);
     }

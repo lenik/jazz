@@ -17,8 +17,7 @@ public class Bool32 extends _Type {
     }
 
     @Override
-    public void put(Memory memory, int offset, Object value)
-            throws AccessException {
+    public void put(Memory memory, int offset, Object value) throws AccessException {
         if ((Boolean) value)
             memory.write(offset, TRUE);
         else

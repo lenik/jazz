@@ -18,8 +18,7 @@ public class IllegalArgumentTypeException extends IllegalArgumentException {
         super(mesgOf(argType, null));
     }
 
-    public IllegalArgumentTypeException(Class<?> argType,
-            Object expectedTypeString) {
+    public IllegalArgumentTypeException(Class<?> argType, Object expectedTypeString) {
         super(mesgOf(argType, expectedTypeString));
     }
 

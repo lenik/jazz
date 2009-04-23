@@ -84,8 +84,7 @@ public class ManagedProcess {
         return SysNLS.getString("ManagedProcess.managedProcess") + name; //$NON-NLS-1$
     }
 
-    public synchronized int takeOver(Process process)
-            throws InterruptedException {
+    public synchronized int takeOver(Process process) throws InterruptedException {
         this.out = process.getOutputStream();
         this.in = process.getInputStream();
         this.err = process.getErrorStream();

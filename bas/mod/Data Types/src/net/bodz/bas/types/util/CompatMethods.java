@@ -38,8 +38,7 @@ public class CompatMethods {
         return distsum;
     }
 
-    public static Method getMethod(Class<?> clazz, String name,
-            Class<?>[] argtypes, boolean all) {
+    public static Method getMethod(Class<?> clazz, String name, Class<?>[] argtypes, boolean all) {
         int mindist = -1;
         Method min = null;
         for (Method method : methods(clazz, name, all)) {
@@ -55,13 +54,11 @@ public class CompatMethods {
         return min;
     }
 
-    public static Method getMethod(Class<?> clazz, String name,
-            Class<?>[] argtypes) {
+    public static Method getMethod(Class<?> clazz, String name, Class<?>[] argtypes) {
         return getMethod(clazz, name, argtypes, false);
     }
 
-    public static Constructor<?> getConstructor(Class<?> clazz,
-            Class<?>[] argtypes, boolean all) {
+    public static Constructor<?> getConstructor(Class<?> clazz, Class<?>[] argtypes, boolean all) {
         int mindist = -1;
         Constructor<?> min = null;
         for (Constructor<?> ctor : constructors(clazz, all)) {
@@ -77,15 +74,13 @@ public class CompatMethods {
         return min;
     }
 
-    public static Constructor<?> getConstructor(Class<?> clazz,
-            Class<?>[] argtypes) {
+    public static Constructor<?> getConstructor(Class<?> clazz, Class<?>[] argtypes) {
         return getConstructor(clazz, argtypes, false);
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> T newInstance(Class<T> clazz, Object... args)
-            throws NoSuchMethodException, IllegalArgumentException,
-            InstantiationException, IllegalAccessException,
+    public static <T> T newInstance(Class<T> clazz, Object... args) throws NoSuchMethodException,
+            IllegalArgumentException, InstantiationException, IllegalAccessException,
             InvocationTargetException {
         Class<?>[] types = Types.getTypes(args);
         Constructor<?> ctor = getConstructor(clazz, types, true);
@@ -103,9 +98,8 @@ public class CompatMethods {
         }
     }
 
-    public static <T> T newMemberInstance(Class<T> clazz, Object _this,
-            Object... args) throws NoSuchMethodException,
-            IllegalArgumentException, InstantiationException,
+    public static <T> T newMemberInstance(Class<T> clazz, Object _this, Object... args)
+            throws NoSuchMethodException, IllegalArgumentException, InstantiationException,
             IllegalAccessException, InvocationTargetException {
         Object[] concat = Arrays2.concatv(_this, args);
         return newInstance(clazz, concat);
@@ -113,17 +107,15 @@ public class CompatMethods {
 
     @SuppressWarnings("unchecked")
     public static <T> T newInstance(String className, Object... args)
-            throws ClassNotFoundException, IllegalArgumentException,
-            NoSuchMethodException, InstantiationException,
-            IllegalAccessException, InvocationTargetException {
+            throws ClassNotFoundException, IllegalArgumentException, NoSuchMethodException,
+            InstantiationException, IllegalAccessException, InvocationTargetException {
         Class<T> clazz = (Class<T>) Class.forName(className);
         return newInstance(clazz, args);
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> T invoke(Class<?> clazz, Object obj, String methodName,
-            Object... args) throws NoSuchMethodException,
-            IllegalArgumentException, IllegalAccessException,
+    public static <T> T invoke(Class<?> clazz, Object obj, String methodName, Object... args)
+            throws NoSuchMethodException, IllegalArgumentException, IllegalAccessException,
             InvocationTargetException {
         Class<?>[] types = Types.getTypes(args);
         Method method = getMethod(clazz, methodName, types);
@@ -133,16 +125,15 @@ public class CompatMethods {
         return (T) Control.invoke(method, obj, args);
     }
 
-    public static <T> T invoke(Class<?> clazz, String methodName,
-            Object... args) throws NoSuchMethodException,
-            IllegalArgumentException, IllegalAccessException,
+    public static <T> T invoke(Class<?> clazz, String methodName, Object... args)
+            throws NoSuchMethodException, IllegalArgumentException, IllegalAccessException,
             InvocationTargetException {
         return invoke(clazz, null, methodName, args);
     }
 
     public static <T> T invoke(Object obj, String methodName, Object... args)
-            throws NoSuchMethodException, IllegalArgumentException,
-            IllegalAccessException, InvocationTargetException {
+            throws NoSuchMethodException, IllegalArgumentException, IllegalAccessException,
+            InvocationTargetException {
         return invoke(obj.getClass(), obj, methodName, args);
     }
 

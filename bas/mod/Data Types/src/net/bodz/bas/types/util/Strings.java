@@ -152,8 +152,7 @@ public class Strings {
             return s;
         int padLeft = padLen / 2; // slightly left-ward
         int padRight = padLen - padLeft;
-        return Strings.repeat(padLeft, padChar) + s
-                + Strings.repeat(padRight, padChar);
+        return Strings.repeat(padLeft, padChar) + s + Strings.repeat(padRight, padChar);
     }
 
     public static String padMiddle(String s, int len) {
@@ -272,8 +271,8 @@ public class Strings {
         return join(separator, Iterators.iterator(enumr));
     }
 
-    public static Pair<String, String> join(String separatorKey,
-            String separatorValue, Map<?, ?> map) {
+    public static Pair<String, String> join(String separatorKey, String separatorValue,
+            Map<?, ?> map) {
         StringBuffer bufferKey = null;
         StringBuffer bufferValue = null;
         for (Object o : map.entrySet()) {
@@ -291,8 +290,7 @@ public class Strings {
         if (bufferKey == null)
             return new Pair<String, String>("", ""); //$NON-NLS-1$ //$NON-NLS-2$
         else
-            return new Pair<String, String>(bufferKey.toString(), bufferValue
-                    .toString());
+            return new Pair<String, String>(bufferKey.toString(), bufferValue.toString());
     }
 
     public static Pair<String, String> join(String separator, Map<?, ?> map) {
@@ -373,8 +371,7 @@ public class Strings {
         int token;
         StringBuffer buf = null;
         try {
-            while (got < limit
-                    && (token = tokenizer.nextToken()) != StreamTokenizer.TT_EOF) {
+            while (got < limit && (token = tokenizer.nextToken()) != StreamTokenizer.TT_EOF) {
                 // boolean quote = false;
                 switch (token) {
                 case '"':
@@ -491,8 +488,7 @@ public class Strings {
                 throw new IllegalArgumentException("illegal size [" + i + "]"); //$NON-NLS-1$ //$NON-NLS-2$
             _sizesum += size;
         }
-        List<String> list = new ArrayList<String>(len / _sizesum * sizes.length
-                + 1);
+        List<String> list = new ArrayList<String>(len / _sizesum * sizes.length + 1);
         int start = 0;
         int index = 0;
         while (start < len) {
@@ -761,8 +757,7 @@ public class Strings {
         return ellipse(s, len, "..."); //$NON-NLS-1$
     }
 
-    public static String ellipse(String s, int len, String ellipse,
-            String epstart, String epend) {
+    public static String ellipse(String s, int len, String ellipse, String epstart, String epend) {
         int estart = 0;
         if (epstart != null)
             if ((estart = s.indexOf(epstart)) == -1)
@@ -777,9 +772,7 @@ public class Strings {
         String prefix = s.substring(0, estart);
         String suffix = s.substring(eend);
         if (len > trims + ellipse.length())
-            return prefix
-                    + ellipse(s.substring(estart, eend), len - trims, ellipse)
-                    + suffix;
+            return prefix + ellipse(s.substring(estart, eend), len - trims, ellipse) + suffix;
         else
             return ellipse(s, len, ellipse);
     }
@@ -796,6 +789,9 @@ public class Strings {
         };
     }
 
+    /**
+     * Escape literal character in C/Java language.
+     */
     public static String escape(char c) {
         switch (c) {
         case '\r':
@@ -817,6 +813,9 @@ public class Strings {
         return String.valueOf(c);
     }
 
+    /**
+     * Escape literal string in C/Java language.
+     */
     public static String escape(String s) {
         if (s == null)
             return s;

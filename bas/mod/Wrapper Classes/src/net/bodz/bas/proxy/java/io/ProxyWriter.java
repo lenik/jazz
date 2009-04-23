@@ -22,8 +22,7 @@ public class ProxyWriter extends Writer {
     }
 
     @Override
-    public Writer append(CharSequence csq, int start, int end)
-            throws IOException {
+    public Writer append(CharSequence csq, int start, int end) throws IOException {
         return proxy.append(csq, start, end);
     }
 

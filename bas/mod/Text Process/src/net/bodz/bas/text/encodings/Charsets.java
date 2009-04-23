@@ -56,7 +56,8 @@ public class Charsets extends CharsetProvider {
             return (Charset) charset;
         if (charset instanceof String)
             return Charset.forName((String) charset);
-        throw new IllegalArgumentTypeException(charset, TextNLS.getString("Charsets.stringOrCharset")); //$NON-NLS-1$
+        throw new IllegalArgumentTypeException(charset, TextNLS
+                .getString("Charsets.stringOrCharset")); //$NON-NLS-1$
     }
 
     public static CharsetEncoder getEncoder(Object charset) {

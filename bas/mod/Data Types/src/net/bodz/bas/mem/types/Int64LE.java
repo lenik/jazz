@@ -18,8 +18,7 @@ public class Int64LE extends _Type {
 
     @ThreadUnsafe
     @Override
-    public void put(Memory memory, int offset, Object value)
-            throws AccessException {
+    public void put(Memory memory, int offset, Object value) throws AccessException {
         byte[] mem = new byte[8];
         write(mem, (Long) value);
         memory.write(offset, mem);

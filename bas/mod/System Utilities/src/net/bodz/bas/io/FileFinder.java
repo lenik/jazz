@@ -48,8 +48,7 @@ public class FileFinder implements Iterable<File> {
 
     }
 
-    public FileFinder(FileFilter filter, boolean prune, int maxDepth,
-            File... start) {
+    public FileFinder(FileFilter filter, boolean prune, int maxDepth, File... start) {
         this.start = start;
         this.userFilter = filter;
         this.prune = prune;

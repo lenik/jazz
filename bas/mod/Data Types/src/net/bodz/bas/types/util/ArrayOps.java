@@ -117,8 +117,7 @@ public class ArrayOps {
         }
 
         @Override
-        public void sort(A array, int fromIndex, int toIndex,
-                Comparator<?> comparator) {
+        public void sort(A array, int fromIndex, int toIndex, Comparator<?> comparator) {
             throw new UnsupportedOperationException(TypesNLS.getString("ArrayOps.cmpIsntUsed")); //$NON-NLS-1$
         }
 
@@ -228,8 +227,7 @@ public class ArrayOps {
         }
 
         @Override
-        public int lastIndexOf(byte[] array, int from, int to, Object key,
-                int start) {
+        public int lastIndexOf(byte[] array, int from, int to, Object key, int start) {
             if (start >= to)
                 start = to - 1;
             byte v = (Byte) key;
@@ -247,10 +245,8 @@ public class ArrayOps {
         }
 
         @Override
-        public int binarySearch(byte[] array, int fromIndex, int toIndex,
-                Object key) {
-            return Arrays.binarySearch(array, fromIndex, toIndex,
-                    (java.lang.Byte) key);
+        public int binarySearch(byte[] array, int fromIndex, int toIndex, Object key) {
+            return Arrays.binarySearch(array, fromIndex, toIndex, (java.lang.Byte) key);
         }
 
         @Override
@@ -348,8 +344,7 @@ public class ArrayOps {
         }
 
         @Override
-        public int indexOf(short[] array, int from, int to, Object key,
-                int start) {
+        public int indexOf(short[] array, int from, int to, Object key, int start) {
             if (start < from)
                 start = from;
             short v = (Short) key;
@@ -362,8 +357,7 @@ public class ArrayOps {
         }
 
         @Override
-        public int lastIndexOf(short[] array, int from, int to, Object key,
-                int start) {
+        public int lastIndexOf(short[] array, int from, int to, Object key, int start) {
             if (start >= to)
                 start = to - 1;
             short v = (Short) key;
@@ -381,10 +375,8 @@ public class ArrayOps {
         }
 
         @Override
-        public int binarySearch(short[] array, int fromIndex, int toIndex,
-                Object key) {
-            return Arrays.binarySearch(array, fromIndex, toIndex,
-                    (java.lang.Short) key);
+        public int binarySearch(short[] array, int fromIndex, int toIndex, Object key) {
+            return Arrays.binarySearch(array, fromIndex, toIndex, (java.lang.Short) key);
         }
 
         @Override
@@ -482,8 +474,7 @@ public class ArrayOps {
         }
 
         @Override
-        public int lastIndexOf(int[] array, int from, int to, Object key,
-                int start) {
+        public int lastIndexOf(int[] array, int from, int to, Object key, int start) {
             if (start >= to)
                 start = to - 1;
             int v = (Integer) key;
@@ -501,10 +492,8 @@ public class ArrayOps {
         }
 
         @Override
-        public int binarySearch(int[] array, int fromIndex, int toIndex,
-                Object key) {
-            return Arrays.binarySearch(array, fromIndex, toIndex,
-                    (java.lang.Integer) key);
+        public int binarySearch(int[] array, int fromIndex, int toIndex, Object key) {
+            return Arrays.binarySearch(array, fromIndex, toIndex, (java.lang.Integer) key);
         }
 
         @Override
@@ -602,8 +591,7 @@ public class ArrayOps {
         }
 
         @Override
-        public int lastIndexOf(long[] array, int from, int to, Object key,
-                int start) {
+        public int lastIndexOf(long[] array, int from, int to, Object key, int start) {
             if (start >= to)
                 start = to - 1;
             long v = (Long) key;
@@ -621,10 +609,8 @@ public class ArrayOps {
         }
 
         @Override
-        public int binarySearch(long[] array, int fromIndex, int toIndex,
-                Object key) {
-            return Arrays.binarySearch(array, fromIndex, toIndex,
-                    (java.lang.Long) key);
+        public int binarySearch(long[] array, int fromIndex, int toIndex, Object key) {
+            return Arrays.binarySearch(array, fromIndex, toIndex, (java.lang.Long) key);
         }
 
         @Override
@@ -709,8 +695,7 @@ public class ArrayOps {
         }
 
         @Override
-        public int indexOf(float[] array, int from, int to, Object key,
-                int start) {
+        public int indexOf(float[] array, int from, int to, Object key, int start) {
             if (start < from)
                 start = from;
             float v = (Float) key;
@@ -723,8 +708,7 @@ public class ArrayOps {
         }
 
         @Override
-        public int lastIndexOf(float[] array, int from, int to, Object key,
-                int start) {
+        public int lastIndexOf(float[] array, int from, int to, Object key, int start) {
             if (start >= to)
                 start = to - 1;
             float v = (Float) key;
@@ -742,10 +726,8 @@ public class ArrayOps {
         }
 
         @Override
-        public int binarySearch(float[] array, int fromIndex, int toIndex,
-                Object key) {
-            return Arrays.binarySearch(array, fromIndex, toIndex,
-                    (java.lang.Float) key);
+        public int binarySearch(float[] array, int fromIndex, int toIndex, Object key) {
+            return Arrays.binarySearch(array, fromIndex, toIndex, (java.lang.Float) key);
         }
 
         @Override
@@ -830,8 +812,7 @@ public class ArrayOps {
         }
 
         @Override
-        public int indexOf(double[] array, int from, int to, Object key,
-                int start) {
+        public int indexOf(double[] array, int from, int to, Object key, int start) {
             if (start < from)
                 start = from;
             double v = (Double) key;
@@ -844,8 +825,7 @@ public class ArrayOps {
         }
 
         @Override
-        public int lastIndexOf(double[] array, int from, int to, Object key,
-                int start) {
+        public int lastIndexOf(double[] array, int from, int to, Object key, int start) {
             if (start >= to)
                 start = to - 1;
             double v = (Double) key;
@@ -863,10 +843,8 @@ public class ArrayOps {
         }
 
         @Override
-        public int binarySearch(double[] array, int fromIndex, int toIndex,
-                Object key) {
-            return Arrays.binarySearch(array, fromIndex, toIndex,
-                    (java.lang.Double) key);
+        public int binarySearch(double[] array, int fromIndex, int toIndex, Object key) {
+            return Arrays.binarySearch(array, fromIndex, toIndex, (java.lang.Double) key);
         }
 
         @Override
@@ -880,8 +858,7 @@ public class ArrayOps {
         }
 
         @Override
-        public void fill(double[] array, int fromIndex, int toIndex,
-                Random rands) {
+        public void fill(double[] array, int fromIndex, int toIndex, Random rands) {
             while (fromIndex < toIndex)
                 array[fromIndex++] = rands.nextDouble();
         }
@@ -952,8 +929,7 @@ public class ArrayOps {
         }
 
         @Override
-        public int indexOf(boolean[] array, int from, int to, Object key,
-                int start) {
+        public int indexOf(boolean[] array, int from, int to, Object key, int start) {
             if (start < from)
                 start = from;
             boolean v = (Boolean) key;
@@ -966,8 +942,7 @@ public class ArrayOps {
         }
 
         @Override
-        public int lastIndexOf(boolean[] array, int from, int to, Object key,
-                int start) {
+        public int lastIndexOf(boolean[] array, int from, int to, Object key, int start) {
             if (start >= to)
                 start = to - 1;
             boolean v = (Boolean) key;
@@ -986,8 +961,7 @@ public class ArrayOps {
         }
 
         @Override
-        public int binarySearch(boolean[] array, int fromIndex, int toIndex,
-                Object key) {
+        public int binarySearch(boolean[] array, int fromIndex, int toIndex, Object key) {
             throw new NotImplementedException();
             // return Arrays.binarySearch(array, fromIndex, toIndex,
             // (java.lang.Boolean) key);
@@ -1004,8 +978,7 @@ public class ArrayOps {
         }
 
         @Override
-        public void fill(boolean[] array, int fromIndex, int toIndex,
-                Random rands) {
+        public void fill(boolean[] array, int fromIndex, int toIndex, Random rands) {
             while (fromIndex < toIndex)
                 array[fromIndex++] = rands.nextBoolean();
         }
@@ -1089,8 +1062,7 @@ public class ArrayOps {
         }
 
         @Override
-        public int lastIndexOf(char[] array, int from, int to, Object key,
-                int start) {
+        public int lastIndexOf(char[] array, int from, int to, Object key, int start) {
             if (start >= to)
                 start = to - 1;
             char v = (Character) key;
@@ -1108,10 +1080,8 @@ public class ArrayOps {
         }
 
         @Override
-        public int binarySearch(char[] array, int fromIndex, int toIndex,
-                Object key) {
-            return Arrays.binarySearch(array, fromIndex, toIndex,
-                    (java.lang.Character) key);
+        public int binarySearch(char[] array, int fromIndex, int toIndex, Object key) {
+            return Arrays.binarySearch(array, fromIndex, toIndex, (java.lang.Character) key);
         }
 
         @Override
@@ -1211,8 +1181,7 @@ public class ArrayOps {
 
         @SuppressWarnings("unchecked")
         @Override
-        public int lastIndexOf(T[] array, int from, int to, Object key,
-                int start) {
+        public int lastIndexOf(T[] array, int from, int to, Object key, int start) {
             if (start >= to)
                 start = to - 1;
             T v = (T) key;
@@ -1230,8 +1199,7 @@ public class ArrayOps {
         }
 
         @Override
-        public int binarySearch(T[] array, int fromIndex, int toIndex,
-                Object key) {
+        public int binarySearch(T[] array, int fromIndex, int toIndex, Object key) {
             return Arrays.binarySearch(array, fromIndex, toIndex, key);
         }
 
@@ -1268,10 +1236,8 @@ public class ArrayOps {
 
         @SuppressWarnings("unchecked")
         @Override
-        public void sort(T[] array, int fromIndex, int toIndex,
-                Comparator<?> comparator) {
-            Arrays.sort(array, fromIndex, toIndex,
-                    (Comparator<? super T>) comparator);
+        public void sort(T[] array, int fromIndex, int toIndex, Comparator<?> comparator) {
+            Arrays.sort(array, fromIndex, toIndex, (Comparator<? super T>) comparator);
         }
 
         @Override

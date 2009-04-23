@@ -17,6 +17,11 @@ public class VariableExpand extends PatternProcessor {
         super(variableRefPattern);
     }
 
+    /**
+     * @param map
+     *            is referenced, any changes to the map are reflected by this
+     *            class.
+     */
     public VariableExpand(Map<String, ?> map) {
         super(variableRefPattern);
         this.map = map;

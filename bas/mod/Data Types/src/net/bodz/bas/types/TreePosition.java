@@ -11,8 +11,7 @@ import net.bodz.bas.types.util.PrefetchedIterator;
 /**
  * @test {@link TreePositionTest}
  */
-public class TreePosition<N extends TreeNode<? extends N>> implements
-        Iterable<N> {
+public class TreePosition<N extends TreeNode<? extends N>> implements Iterable<N> {
 
     static class Dim<N extends TreeNode<? extends N>> implements Cloneable {
 
@@ -63,16 +62,15 @@ public class TreePosition<N extends TreeNode<? extends N>> implements
         this(null, 0);
     }
 
-    static <N extends TreeNode<? extends N>> List<Dim<N>> toDims(N parent,
-            int... childIndices) throws IndexOutOfBoundsException {
+    static <N extends TreeNode<? extends N>> List<Dim<N>> toDims(N parent, int... childIndices)
+            throws IndexOutOfBoundsException {
         List<Dim<N>> list = new ArrayList<Dim<N>>(childIndices.length);
         for (int childIndex : childIndices) {
             Dim<N> dim = new Dim<N>(parent, childIndex);
             list.add(dim);
             List<? extends N> children = parent.getChildren();
             if (children == null)
-                throw new IllegalArgumentException(
-                        "Null children, can't go deeper");
+                throw new IllegalArgumentException("Null children, can't go deeper");
             parent = children.get(childIndex);
         }
         return list;
@@ -91,8 +89,7 @@ public class TreePosition<N extends TreeNode<? extends N>> implements
         list = new ArrayList<Dim<N>>(dims);
     }
 
-    public TreePosition(TreePosition<N> ancestors, N parent,
-            int... childIndices) {
+    public TreePosition(TreePosition<N> ancestors, N parent, int... childIndices) {
         this(ancestors, toDims(parent, childIndices));
     }
 
@@ -106,15 +103,13 @@ public class TreePosition<N extends TreeNode<? extends N>> implements
         list.addAll(dims);
     }
 
-    static class Iter<N extends TreeNode<? extends N>> extends
-            PrefetchedIterator<N> {
+    static class Iter<N extends TreeNode<? extends N>> extends PrefetchedIterator<N> {
 
         private final ArrayStack<Dim<N>>    stack;
         private final Pred1<? super N>      pred;
         private final List<TreePosition<N>> posBuf;
 
-        public Iter(List<Dim<N>> dims, Pred1<? super N> pred,
-                List<TreePosition<N>> posBuf) {
+        public Iter(List<Dim<N>> dims, Pred1<? super N> pred, List<TreePosition<N>> posBuf) {
             if (dims == null)
                 throw new NullPointerException("dims");
             this.stack = new ArrayStack<Dim<N>>();
@@ -185,8 +180,7 @@ public class TreePosition<N extends TreeNode<? extends N>> implements
      *            save a copy of position of previous node just returned by
      *            {@link Iterator#next()}.
      */
-    public Iterator<N> iterator(Pred1<? super N> pred,
-            List<TreePosition<N>> posBuf) {
+    public Iterator<N> iterator(Pred1<? super N> pred, List<TreePosition<N>> posBuf) {
         return new Iter<N>(list, pred, posBuf);
     }
 

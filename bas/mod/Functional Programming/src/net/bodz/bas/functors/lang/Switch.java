@@ -24,7 +24,7 @@ public class Switch<T> extends _Functor<T> {
 
     protected T                    evaluated;
 
-    public static final Key        DEFAULT  = new Key("default"); //$NON-NLS-1$
+    public static final Key        DEFAULT  = new Key("default");            //$NON-NLS-1$
 
     public Switch() {
     }

@@ -61,8 +61,7 @@ public class HexEncoding extends _Encoding {
 
     /** hex2bin */
     @Override
-    public void decode(Reader in, OutputStream out) throws IOException,
-            ParseException {
+    public void decode(Reader in, OutputStream out) throws IOException, ParseException {
         int byt = 0;
         int digits = 0;
         for (int c = in.read(); c != -1; c = in.read()) {

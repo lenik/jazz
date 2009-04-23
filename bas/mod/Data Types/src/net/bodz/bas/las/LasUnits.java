@@ -66,8 +66,7 @@ public class LasUnits {
         return get(1).leave(returnValue);
     }
 
-    public static <T extends Throwable> T leave(T t) throws IllegalUsageError,
-            T {
+    public static <T extends Throwable> T leave(T t) throws IllegalUsageError, T {
         return get(1).leave(t);
     }
 

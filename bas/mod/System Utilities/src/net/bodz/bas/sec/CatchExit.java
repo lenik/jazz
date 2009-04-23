@@ -19,8 +19,7 @@ public class CatchExit extends _SecurityManager {
     }
 
     @SuppressWarnings("unchecked")
-    public <E extends Throwable> void doCatch(RunnableThrows<E> runnable)
-            throws E, ControlExit {
+    public <E extends Throwable> void doCatch(RunnableThrows<E> runnable) throws E, ControlExit {
         SecurityManager security0 = System.getSecurityManager();
         SecurityControl control = null;
 
@@ -52,8 +51,7 @@ public class CatchExit extends _SecurityManager {
         throw new ControlExit(status);
     }
 
-    public static <E extends Throwable> void run(RunnableThrows<E> runnable)
-            throws ControlExit, E {
+    public static <E extends Throwable> void run(RunnableThrows<E> runnable) throws ControlExit, E {
         CatchExit s = new CatchExit(System.getSecurityManager());
         s.doCatch(runnable);
     }

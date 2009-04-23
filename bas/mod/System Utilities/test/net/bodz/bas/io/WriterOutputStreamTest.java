@@ -27,14 +27,12 @@ public class WriterOutputStreamTest {
         buf = new StringWriter();
         out = new WriterOutputStream(buf, "ascii") { //$NON-NLS-1$
             @Override
-            protected void handleMalformed(ByteBuffer buffer)
-                    throws IOException {
+            protected void handleMalformed(ByteBuffer buffer) throws IOException {
                 writer.write('M');
             }
 
             @Override
-            protected void handleUnmappable(ByteBuffer buffer)
-                    throws IOException {
+            protected void handleUnmappable(ByteBuffer buffer) throws IOException {
                 writer.write('U');
             }
         };

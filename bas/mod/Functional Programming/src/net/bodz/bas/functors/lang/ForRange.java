@@ -13,10 +13,10 @@ public class ForRange<T> extends _Functor<T> {
 
     _Functor<Number> from;
     _Functor<Number> to;
-    Number          step;
+    Number           step;
     _Functor<?>      body;
 
-    Object          index;
+    Object           index;
 
     public class Index extends TransientConstant<Object> {
         @Override
@@ -29,8 +29,7 @@ public class ForRange<T> extends _Functor<T> {
         this.step = 1;
     }
 
-    public ForRange(_Functor<Number> from, _Functor<Number> to, Number step,
-            _Functor<T> body) {
+    public ForRange(_Functor<Number> from, _Functor<Number> to, Number step, _Functor<T> body) {
         setFrom(from);
         setTo(to);
         setStep(step);
@@ -250,8 +249,7 @@ public class ForRange<T> extends _Functor<T> {
 
     private static ThreadLocal<ForRange<?>> tlBuilt = new ThreadLocal<ForRange<?>>();
 
-    public static <T> ForRange<T> build(_Functor<Number> from,
-            _Functor<Number> to, _Functor<T> body) {
+    public static <T> ForRange<T> build(_Functor<Number> from, _Functor<Number> to, _Functor<T> body) {
         ForRange<T> built = built();
         tlBuilt.set(null);
         built.setFrom(from);

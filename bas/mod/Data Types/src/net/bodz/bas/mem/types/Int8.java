@@ -15,8 +15,7 @@ public class Int8 extends _Type {
 
     @ThreadUnsafe
     @Override
-    public void put(Memory memory, int offset, Object value)
-            throws AccessException {
+    public void put(Memory memory, int offset, Object value) throws AccessException {
         memory.write(offset, (Byte) value);
     }
 

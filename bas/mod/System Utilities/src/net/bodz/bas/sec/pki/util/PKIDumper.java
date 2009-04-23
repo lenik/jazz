@@ -97,8 +97,7 @@ public class PKIDumper {
         dumpProvider(prefix, provider, password, detail);
     }
 
-    public void dumpProvider(String prefix, Provider provider, String password,
-            int detail) {
+    public void dumpProvider(String prefix, Provider provider, String password, int detail) {
         out.print(prefix);
         out.printf("Provider %s (%.2f): %s\n", provider.getName(), provider //$NON-NLS-1$
                 .getVersion(), provider.getInfo());
@@ -138,8 +137,7 @@ public class PKIDumper {
                         params = new LDAPCertStoreParameters();
                     }
                     try {
-                        store = CertStore.getInstance(storeType, params,
-                                provider);
+                        store = CertStore.getInstance(storeType, params, provider);
                         dumpCertStore(prefix + "  ", store, detail - 1); //$NON-NLS-1$
                     } catch (Exception e) {
                         dumpError(prefix + "  ", e, detail); //$NON-NLS-1$
@@ -163,9 +161,8 @@ public class PKIDumper {
                             store.load(null, password.toCharArray());
                         } else {
                             CallbackHandler ch = new TextCallbackHandler();
-                            Builder builder = Builder
-                                    .newInstance(storeType, provider,
-                                            new CallbackHandlerProtection(ch));
+                            Builder builder = Builder.newInstance(storeType, provider,
+                                    new CallbackHandlerProtection(ch));
                             // will ask password here.
                             store = builder.getKeyStore();
                         }
@@ -175,8 +172,7 @@ public class PKIDumper {
                     if (store != null) {
                         try {
                             out.println(store.size(), " entries"); //$NON-NLS-1$
-                            for (String alias : Iterates.iterate(store
-                                    .aliases())) {
+                            for (String alias : Iterates.iterate(store.aliases())) {
                                 dumpStoreEntry(prefix + "  ", store, alias, //$NON-NLS-1$
                                         null, detail - 1);
                             }
@@ -209,13 +205,11 @@ public class PKIDumper {
         out.println();
     }
 
-    public void dumpCertStore(String prefix, CertStore store)
-            throws CertStoreException {
+    public void dumpCertStore(String prefix, CertStore store) throws CertStoreException {
         dumpCertStore(prefix, store, detail);
     }
 
-    public void dumpCertStore(String prefix, CertStore store, int detail)
-            throws CertStoreException {
+    public void dumpCertStore(String prefix, CertStore store, int detail) throws CertStoreException {
         Collection<? extends Certificate> certs = store.getCertificates(null);
         out.println(certs.size(), " entries"); //$NON-NLS-1$
         if (detail <= 0)
@@ -225,19 +219,16 @@ public class PKIDumper {
         }
     }
 
-    public void dumpKeyStore(String prefix, KeyStore keyStore)
-            throws KeyStoreException {
+    public void dumpKeyStore(String prefix, KeyStore keyStore) throws KeyStoreException {
         dumpKeyStore(prefix, keyStore, detail);
     }
 
-    public void dumpKeyStore(String prefix, KeyStore keyStore, int detail)
-            throws KeyStoreException {
+    public void dumpKeyStore(String prefix, KeyStore keyStore, int detail) throws KeyStoreException {
         for (String alias : Iterates.iterate(keyStore.aliases()))
             dumpStoreEntry(prefix + "  ", keyStore, alias, null, detail); //$NON-NLS-1$
     }
 
-    public void dumpProperties(String prefix, String title,
-            Properties properties) {
+    public void dumpProperties(String prefix, String title, Properties properties) {
         out.println(prefix, title, " properties: "); //$NON-NLS-1$
         List<Object> keys = new ArrayList<Object>(properties.keySet());
         Collections.sort(keys, Comparators.STD);
@@ -386,8 +377,7 @@ public class PKIDumper {
         }
 
         try {
-            Collection<List<?>> subjAltNames = x509
-                    .getSubjectAlternativeNames();
+            Collection<List<?>> subjAltNames = x509.getSubjectAlternativeNames();
             if (subjAltNames != null && !subjAltNames.isEmpty()) {
                 out.print(prefix + "subject-alternative-names: "); //$NON-NLS-1$
                 _dumpAltNames(prefix + "  ", subjAltNames); //$NON-NLS-1$
@@ -458,13 +448,13 @@ public class PKIDumper {
         }
     }
 
-    void dumpStoreEntry(String prefix, KeyStore keyStore, String alias,
-            String password) throws KeyStoreException {
+    void dumpStoreEntry(String prefix, KeyStore keyStore, String alias, String password)
+            throws KeyStoreException {
         dumpStoreEntry(prefix, keyStore, alias, password, detail);
     }
 
-    void dumpStoreEntry(String prefix, KeyStore keyStore, String alias,
-            String password, int detail) throws KeyStoreException {
+    void dumpStoreEntry(String prefix, KeyStore keyStore, String alias, String password, int detail)
+            throws KeyStoreException {
         out.println(prefix + "* " + alias + ": "); //$NON-NLS-1$ //$NON-NLS-2$
 
         Certificate cert = keyStore.getCertificate(alias);
@@ -681,7 +671,7 @@ public class PKIDumper {
         oids.put("1.2.840.10040.4.3", "SHA-1"); //$NON-NLS-1$ //$NON-NLS-2$
         // oids.put("1.2.840.113549.1.1.5", "??");
         nameTypes = new String[] { //
-            "otherName", // [0] OtherName //$NON-NLS-1$
+        "otherName", // [0] OtherName //$NON-NLS-1$
             "rfc822-name", // [1] IA5String //$NON-NLS-1$
             "DNS-name", // [2] IA5String //$NON-NLS-1$
             "x400-address", // [3] ORAddress //$NON-NLS-1$

@@ -17,8 +17,7 @@ public class GrabberUnit extends SISOUnit {
     private OutPort            srcPort;
     private Collection<Object> buffer;
 
-    GrabberUnit(OutPort outPort, Collection<Object> collection)
-            throws IOException {
+    GrabberUnit(OutPort outPort, Collection<Object> collection) throws IOException {
         Receiver dst0 = outPort.getDst();
         outPort.setDst(this);
         this.setDst(dst0);
@@ -76,8 +75,7 @@ public class GrabberUnit extends SISOUnit {
         return buffer;
     }
 
-    public static GrabberUnit connect(OutPort src, InPort dst)
-            throws IOException {
+    public static GrabberUnit connect(OutPort src, InPort dst) throws IOException {
         src.setDst(dst);
         return new GrabberUnit(src);
     }

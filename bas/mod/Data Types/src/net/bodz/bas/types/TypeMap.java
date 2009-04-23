@@ -8,8 +8,7 @@ import java.util.TreeMap;
 
 public interface TypeMap<T> extends Map<Class<?>, T> {
 
-    public class HashTypeMap<T> extends HashMap<Class<?>, T> implements
-            TypeMap<T> {
+    public class HashTypeMap<T> extends HashMap<Class<?>, T> implements TypeMap<T> {
 
         private static final long serialVersionUID = 6588832879702158986L;
 
@@ -31,8 +30,7 @@ public interface TypeMap<T> extends Map<Class<?>, T> {
 
     }
 
-    public class TreeTypeMap<T> extends TreeMap<Class<?>, T> implements
-            TypeMap<T> {
+    public class TreeTypeMap<T> extends TreeMap<Class<?>, T> implements TypeMap<T> {
 
         private static final long serialVersionUID = -4910446627162409067L;
 

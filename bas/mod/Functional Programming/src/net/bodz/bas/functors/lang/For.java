@@ -19,16 +19,15 @@ public class For<T> extends _Functor<T> {
     public For() {
     }
 
-    public For(_Functor<?> initor, _Functor<Boolean> predicate,
-            _Functor<?> incrementor, _Functor<T> body) {
+    public For(_Functor<?> initor, _Functor<Boolean> predicate, _Functor<?> incrementor,
+            _Functor<T> body) {
         setInitor(initor);
         setPredicate(predicate);
         setIncrementor(incrementor);
         setBody(body);
     }
 
-    public For(_Functor<?> initor, _Functor<Boolean> predicate,
-            _Functor<?> incrementor) {
+    public For(_Functor<?> initor, _Functor<Boolean> predicate, _Functor<?> incrementor) {
         this(initor, predicate, incrementor, null);
     }
 
@@ -120,8 +119,7 @@ public class For<T> extends _Functor<T> {
 
         if (body == null)
             if (predicate instanceof _Functor && incrementor instanceof _Functor) {
-                if (((_Functor<?>) predicate).isClosed()
-                        && ((_Functor<?>) incrementor).isClosed())
+                if (((_Functor<?>) predicate).isClosed() && ((_Functor<?>) incrementor).isClosed())
                     return (_Functor<?>) initor;
             }
         return this;
@@ -144,9 +142,8 @@ public class For<T> extends _Functor<T> {
 
     static ThreadLocal<For<?>> tlBuilt = new ThreadLocal<For<?>>();
 
-    public static <ValueType> For<ValueType> build(_Functor<?> initor,
-            _Functor<Boolean> predicate, _Functor<?> incrementor,
-            _Functor<ValueType> body) {
+    public static <ValueType> For<ValueType> build(_Functor<?> initor, _Functor<Boolean> predicate,
+            _Functor<?> incrementor, _Functor<ValueType> body) {
         For<ValueType> built = built();
         tlBuilt.set(null);
         built.setInitor(initor);

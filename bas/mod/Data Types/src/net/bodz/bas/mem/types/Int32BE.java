@@ -18,8 +18,7 @@ public class Int32BE extends _Type {
 
     @ThreadUnsafe
     @Override
-    public void put(Memory memory, int offset, Object value)
-            throws AccessException {
+    public void put(Memory memory, int offset, Object value) throws AccessException {
         byte[] mem = new byte[4];
         write(mem, (Integer) value);
         memory.write(offset, mem);

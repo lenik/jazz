@@ -13,8 +13,7 @@ public class CSVFile implements FileSource<String[]> {
     private int        limit;
     private LineReader lineReader;
 
-    public CSVFile(String delim, int maxColumns, Object in, Object charset)
-            throws IOException {
+    public CSVFile(String delim, int maxColumns, Object in, Object charset) throws IOException {
         this.delim = delim;
         this.limit = maxColumns;
         this.lineReader = Files.getLineReader(in, charset);

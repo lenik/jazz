@@ -4,43 +4,49 @@ import java.io.File;
 
 public class FileResFolder implements ResFolder {
 
-    private File    dir;
-    private boolean autoMkdirs;
+    private final File    dir;
+    private final boolean mkdirsWhenAccess;
+    private final boolean mkdirsWhenWrite;
 
     public FileResFolder(File dir) {
+        this(dir, false, false);
+    }
+
+    public FileResFolder(File dir, boolean autoMkdirs) {
+        this(dir, false, true);
+    }
+
+    public FileResFolder(File dir, boolean mkdirsWhenAccess, boolean mkdirsWhenWrite) {
         if (dir == null)
             throw new NullPointerException("dir");
         if (dir.exists()) {
             if (!dir.isDirectory())
                 throw new IllegalStateException(
-                        "Non-directory with the same path is already existed: "
-                                + dir);
+                        "Non-directory with the same path is already existed: " + dir);
         }
         this.dir = dir;
-    }
-
-    public boolean isAutoMkdirs() {
-        return autoMkdirs;
-    }
-
-    public void setAutoMkdirs(boolean autoMkdirs) {
-        this.autoMkdirs = autoMkdirs;
+        this.mkdirsWhenAccess = mkdirsWhenAccess;
+        this.mkdirsWhenWrite = mkdirsWhenWrite;
     }
 
     @Override
     public FileResLink get(String path) {
         File file = new File(dir, path);
-        FileResLink link = new FileResLink(file);
-        link.setAutoMkdirs(autoMkdirs);
+        if (mkdirsWhenAccess) {
+            File parentFile = file.getParentFile();
+            if (parentFile != null)
+                parentFile.mkdirs();
+        }
+        FileResLink link = new FileResLink(file, mkdirsWhenWrite);
         return link;
     }
 
     @Override
     public int hashCode() {
-        int hash = dir.hashCode();
-        if (autoMkdirs)
+        int hash = 0x5bf62476 ^ dir.hashCode();
+        if (mkdirsWhenAccess)
             hash ^= 0x3755c28d;
-        else
+        if (mkdirsWhenWrite)
             hash ^= 0x002468b4;
         return hash;
     }
@@ -50,7 +56,8 @@ public class FileResFolder implements ResFolder {
         if (obj instanceof FileResFolder) {
             FileResFolder a = (FileResFolder) obj;
             if (dir.equals(a.dir))
-                return autoMkdirs == a.autoMkdirs;
+                return mkdirsWhenAccess == a.mkdirsWhenAccess
+                        && mkdirsWhenWrite == a.mkdirsWhenWrite;
         }
         return false;
     }
@@ -58,7 +65,9 @@ public class FileResFolder implements ResFolder {
     @Override
     public String toString() {
         String s = dir.toString();
-        if (autoMkdirs)
+        if (mkdirsWhenAccess)
+            s = "* " + s;
+        if (mkdirsWhenWrite)
             s = "* " + s;
         return s;
     }

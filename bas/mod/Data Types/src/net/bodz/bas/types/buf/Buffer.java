@@ -343,8 +343,7 @@ public class Buffer<A> {
             return new String(array, start, end - start);
         }
 
-        public String toString(String charsetName)
-                throws UnsupportedEncodingException {
+        public String toString(String charsetName) throws UnsupportedEncodingException {
             return new String(array, start, end - start, charsetName);
         }
 

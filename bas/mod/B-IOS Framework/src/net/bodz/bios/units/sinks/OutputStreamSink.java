@@ -8,8 +8,7 @@ public class OutputStreamSink extends ByteProcessSink {
     private OutputStream out;
     private boolean      autoFlush;
 
-    public OutputStreamSink(OutputStream out, boolean autoFlush)
-            throws IOException {
+    public OutputStreamSink(OutputStream out, boolean autoFlush) throws IOException {
         this.out = out;
         this.autoFlush = autoFlush;
     }

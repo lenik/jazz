@@ -107,8 +107,7 @@ public interface UserInterface {
     /**
      * @return <code>null</code> if canceled
      */
-    <K> Set<K> choices(String title, Object detail, Map<K, ?> candidates,
-            K... initial);
+    <K> Set<K> choices(String title, Object detail, Map<K, ?> candidates, K... initial);
 
     /**
      * @return <code>null</code> if canceled
@@ -118,8 +117,7 @@ public interface UserInterface {
     /**
      * @return <code>null</code> if canceled
      */
-    int[] choices(String title, Object detail, List<?> candidates,
-            int... initial);
+    int[] choices(String title, Object detail, List<?> candidates, int... initial);
 
     int tryBlock(RunnableThrows<? extends Exception> runnable);
 

@@ -52,13 +52,11 @@ public class TypeParsers {
                 Field field = registryClass.getField(entry);
                 return field.get(null);
             } catch (NoSuchFieldException e) {
-                throw new ParseException(
-                        TypesNLS.getString("TypeParsers.0") + entry //$NON-NLS-1$
-                                + TypesNLS.getString("TypeParsers.1") + registryClass, e); //$NON-NLS-1$
+                throw new ParseException(TypesNLS.getString("TypeParsers.0") + entry //$NON-NLS-1$
+                        + TypesNLS.getString("TypeParsers.1") + registryClass, e); //$NON-NLS-1$
             } catch (Exception e) {
-                throw new ParseException(
-                        TypesNLS.getString("TypeParsers.2") + entry //$NON-NLS-1$
-                                + TypesNLS.getString("TypeParsers.3") + registryClass); //$NON-NLS-1$
+                throw new ParseException(TypesNLS.getString("TypeParsers.2") + entry //$NON-NLS-1$
+                        + TypesNLS.getString("TypeParsers.3") + registryClass); //$NON-NLS-1$
             }
         }
 
@@ -95,8 +93,7 @@ public class TypeParsers {
         private TypeParser valparser;
         private Pattern    separator;
 
-        public ArrayParser(Class<?> valtype, TypeParser valparser,
-                Pattern separator) {
+        public ArrayParser(Class<?> valtype, TypeParser valparser, Pattern separator) {
             if (valparser == null)
                 throw new NullPointerException("null valparser"); //$NON-NLS-1$
             this.valtype = valtype;
@@ -104,13 +101,11 @@ public class TypeParsers {
             this.separator = separator;
         }
 
-        public ArrayParser(Class<?> valtype, Pattern separator)
-                throws CreateException {
+        public ArrayParser(Class<?> valtype, Pattern separator) throws CreateException {
             this(valtype, TypeParsers.guess(valtype), separator);
         }
 
-        public ArrayParser(Class<?> valtype, String separator)
-                throws CreateException {
+        public ArrayParser(Class<?> valtype, String separator) throws CreateException {
             this(valtype, Pattern.compile(separator));
         }
 
@@ -195,8 +190,7 @@ public class TypeParsers {
         return null;
     }
 
-    public static TypeParser guess(Class<?> type, String errname)
-            throws ParseException {
+    public static TypeParser guess(Class<?> type, String errname) throws ParseException {
         TypeParser parser;
         try {
             parser = guess(type);
@@ -204,15 +198,13 @@ public class TypeParsers {
             throw new ParseException(e);
         }
         if (parser == null && errname != null) {
-            throw new ParseException(
-                    TypesNLS.getString("TypeParsers.6") + errname //$NON-NLS-1$
-                            + TypesNLS.getString("TypeParsers.7") + type); //$NON-NLS-1$
+            throw new ParseException(TypesNLS.getString("TypeParsers.6") + errname //$NON-NLS-1$
+                    + TypesNLS.getString("TypeParsers.7") + type); //$NON-NLS-1$
         }
         return parser;
     }
 
-    public static TypeParser guess(Class<?> type, boolean fail)
-            throws ParseException {
+    public static TypeParser guess(Class<?> type, boolean fail) throws ParseException {
         return guess(type, fail ? "" : null); //$NON-NLS-1$
     }
 

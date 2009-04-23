@@ -28,8 +28,10 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
@@ -78,8 +80,7 @@ public class Files {
      *            <li><code>byte[]</code> -> {@link ByteArrayInputStream}
      *            </ul>
      */
-    public static InputStream getInputStream(Object in, Object charset)
-            throws IOException {
+    public static InputStream getInputStream(Object in, Object charset) throws IOException {
         if (in == null)
             return null;
         if (in instanceof InputStream)
@@ -118,8 +119,8 @@ public class Files {
      *            <li><code>URL</code> -> {@link File#File(URI)}
      *            </ul>
      */
-    public static OutputStream getOutputStream(Object out, Object charset,
-            boolean append) throws IOException {
+    public static OutputStream getOutputStream(Object out, Object charset, boolean append)
+            throws IOException {
         if (out == null)
             return null;
         if (out instanceof OutputStream)
@@ -132,8 +133,7 @@ public class Files {
             return new FileOutputStream((String) out, append);
         if (out instanceof URL)
             try {
-                return new FileOutputStream(new File(((URL) out).toURI()),
-                        append);
+                return new FileOutputStream(new File(((URL) out).toURI()), append);
             } catch (URISyntaxException e) {
                 throw new IllegalArgumentException(e.getMessage(), e);
             }
@@ -145,16 +145,14 @@ public class Files {
     /**
      * @see #getOutputStream(Object, Object, boolean)
      */
-    public static OutputStream getOutputStream(Object out, boolean append)
-            throws IOException {
+    public static OutputStream getOutputStream(Object out, boolean append) throws IOException {
         return getOutputStream(out, Charsets.DEFAULT, append);
     }
 
     /**
      * @see #getOutputStream(Object, Object, boolean)
      */
-    public static OutputStream getOutputStream(Object out, Object charset)
-            throws IOException {
+    public static OutputStream getOutputStream(Object out, Object charset) throws IOException {
         return getOutputStream(out, charset, false);
     }
 
@@ -176,8 +174,7 @@ public class Files {
      *            <li><code>char[]</code> -> {@link StringReader}
      *            </ul>
      */
-    public static Reader getReader(Object in, Object charset)
-            throws IOException {
+    public static Reader getReader(Object in, Object charset) throws IOException {
         if (in == null)
             return null;
         if (in instanceof Reader)
@@ -197,8 +194,7 @@ public class Files {
         return getReader(in, Charsets.DEFAULT);
     }
 
-    public static BufferedReader getBufferedReader(Object in, Object charset)
-            throws IOException {
+    public static BufferedReader getBufferedReader(Object in, Object charset) throws IOException {
         if (in == null)
             return null;
         if (in instanceof BufferedReader)
@@ -206,13 +202,11 @@ public class Files {
         return new BufferedReader(getReader(in, charset));
     }
 
-    public static BufferedReader getBufferedReader(Object in)
-            throws IOException {
+    public static BufferedReader getBufferedReader(Object in) throws IOException {
         return getBufferedReader(in, Charsets.DEFAULT);
     }
 
-    public static LineReader getLineReader(Object in, Object charset)
-            throws IOException {
+    public static LineReader getLineReader(Object in, Object charset) throws IOException {
         if (in == null)
             return null;
         if (in instanceof LineReader)
@@ -233,8 +227,7 @@ public class Files {
      *            <li><code>Writer</code>
      *            </ul>
      */
-    public static Writer getWriter(Object out, Object charset, boolean append)
-            throws IOException {
+    public static Writer getWriter(Object out, Object charset, boolean append) throws IOException {
         if (out == null)
             return null;
         if (out instanceof Writer)
@@ -243,13 +236,11 @@ public class Files {
         return new OutputStreamWriter(outs, Charsets.get(charset));
     }
 
-    public static Writer getWriter(Object out, boolean append)
-            throws IOException {
+    public static Writer getWriter(Object out, boolean append) throws IOException {
         return getWriter(out, Charsets.DEFAULT, append);
     }
 
-    public static Writer getWriter(Object out, Object charset)
-            throws IOException {
+    public static Writer getWriter(Object out, Object charset) throws IOException {
         return getWriter(out, charset, false);
     }
 
@@ -265,8 +256,8 @@ public class Files {
         return false;
     }
 
-    public static byte[] readBytes(Object in, long size, Object charset,
-            boolean close) throws IOException {
+    public static byte[] readBytes(Object in, long size, Object charset, boolean close)
+            throws IOException {
         InputStream ins = getInputStream(in, charset);
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         byte block[] = new byte[blockSize];
@@ -290,14 +281,12 @@ public class Files {
 
     }
 
-    public static byte[] readBytes(Object in, long size, Object charset)
-            throws IOException {
+    public static byte[] readBytes(Object in, long size, Object charset) throws IOException {
         boolean close = shouldClose(in);
         return readBytes(in, size, close);
     }
 
-    public static byte[] readBytes(Object in, long size, boolean close)
-            throws IOException {
+    public static byte[] readBytes(Object in, long size, boolean close) throws IOException {
         return readBytes(in, size, Charsets.DEFAULT, close);
     }
 
@@ -305,13 +294,11 @@ public class Files {
         return readBytes(in, size, Charsets.DEFAULT);
     }
 
-    public static byte[] readBytes(Object in, Object charset, boolean close)
-            throws IOException {
+    public static byte[] readBytes(Object in, Object charset, boolean close) throws IOException {
         return readBytes(in, -1, charset, close);
     }
 
-    public static byte[] readBytes(Object in, Object charset)
-            throws IOException {
+    public static byte[] readBytes(Object in, Object charset) throws IOException {
         boolean close = shouldClose(in);
         return readBytes(in, close);
     }
@@ -324,8 +311,7 @@ public class Files {
         return readBytes(in, Charsets.DEFAULT);
     }
 
-    public static String readAll(Object in, Object charset, boolean close)
-            throws IOException {
+    public static String readAll(Object in, Object charset, boolean close) throws IOException {
         Reader reader = getReader(in, charset);
         StringBuffer buffer = new StringBuffer();
         try {
@@ -360,8 +346,8 @@ public class Files {
      * 
      * @see LineReader#readLine()
      */
-    public static List<String> readLines(Object in, Object charset,
-            boolean close) throws IOException {
+    public static List<String> readLines(Object in, Object charset, boolean close)
+            throws IOException {
         LineReader reader = getLineReader(in, charset);
         List<String> lines = new ArrayList<String>();
         String line;
@@ -380,8 +366,7 @@ public class Files {
      * 
      * @see LineReader#readLine()
      */
-    public static List<String> readLines(Object in, Object charset)
-            throws IOException {
+    public static List<String> readLines(Object in, Object charset) throws IOException {
         boolean close = shouldClose(in);
         return readLines(in, charset, close);
     }
@@ -391,8 +376,7 @@ public class Files {
      * 
      * @see LineReader#readLine()
      */
-    public static List<String> readLines(Object in, boolean close)
-            throws IOException {
+    public static List<String> readLines(Object in, boolean close) throws IOException {
         return readLines(in, Charsets.DEFAULT, close);
     }
 
@@ -410,8 +394,8 @@ public class Files {
      * 
      * @see LineReader#readLine()
      */
-    public static String readLine(Object in, Object charset, boolean close,
-            int index, Pattern pattern) throws IOException {
+    public static String readLine(Object in, Object charset, boolean close, int index,
+            Pattern pattern) throws IOException {
         assert index > 0;
         LineReader reader = getLineReader(in, charset);
         String line = null;
@@ -435,8 +419,7 @@ public class Files {
      * 
      * @see LineReader#readLine()
      */
-    public static String readLine(Object in, Object charset, boolean close)
-            throws IOException {
+    public static String readLine(Object in, Object charset, boolean close) throws IOException {
         return readLine(in, charset, close, 1, null);
     }
 
@@ -468,8 +451,8 @@ public class Files {
         return readLine(in, Charsets.DEFAULT);
     }
 
-    public static String readTill(Object in, char term, Charset charset,
-            boolean close) throws IOException {
+    public static String readTill(Object in, char term, Charset charset, boolean close)
+            throws IOException {
         Reader reader = getReader(in, charset);
         StringBuffer buffer = new StringBuffer();
         int c;
@@ -486,14 +469,12 @@ public class Files {
         return buffer.toString();
     }
 
-    public static String readTill(Object in, char term, Charset charset)
-            throws IOException {
+    public static String readTill(Object in, char term, Charset charset) throws IOException {
         boolean close = shouldClose(in);
         return readTill(in, term, charset, close);
     }
 
-    public static String readTill(Object in, char term, boolean close)
-            throws IOException {
+    public static String readTill(Object in, char term, boolean close) throws IOException {
         return readTill(in, term, Charsets.DEFAULT, close);
     }
 
@@ -501,8 +482,8 @@ public class Files {
         return readTill(in, term, Charsets.DEFAULT);
     }
 
-    public static String readLen(Object in, int length, Charset charset,
-            boolean close) throws IOException {
+    public static String readLen(Object in, int length, Charset charset, boolean close)
+            throws IOException {
         Reader reader = getReader(in, charset);
         try {
             char[] buf = new char[length];
@@ -514,14 +495,12 @@ public class Files {
         }
     }
 
-    public static String readLen(Object in, int length, Charset charset)
-            throws IOException {
+    public static String readLen(Object in, int length, Charset charset) throws IOException {
         boolean close = shouldClose(in);
         return readLen(in, length, charset, close);
     }
 
-    public static String readLen(Object in, int length, boolean close)
-            throws IOException {
+    public static String readLen(Object in, int length, boolean close) throws IOException {
         return readLen(in, length, Charsets.DEFAULT, close);
     }
 
@@ -532,8 +511,7 @@ public class Files {
     /**
      * {@link Iterator#next()} throws {@link RuntimizedException}.
      */
-    protected static Iterator<Integer> _readByBlock(final Object[] files,
-            final byte[] buffer) {
+    protected static Iterator<Integer> _readByBlock(final Object[] files, final byte[] buffer) {
         assert files != null : "null files[]"; //$NON-NLS-1$
         assert buffer != null : "null buffer"; //$NON-NLS-1$
 
@@ -583,8 +561,7 @@ public class Files {
     /**
      * {@link Iterator#next()} throws {@link RuntimizedException}.
      */
-    public static Iterable<Integer> readByBlock(final byte[] buffer,
-            final Object... files) {
+    public static Iterable<Integer> readByBlock(final byte[] buffer, final Object... files) {
         return new Iterable<Integer>() {
 
             @Override
@@ -598,8 +575,7 @@ public class Files {
     /**
      * {@link Iterator#next()} throws {@link RuntimizedException}.
      */
-    public static Iterable<byte[]> readByBlock(final int blockSize,
-            final Object... files) {
+    public static Iterable<byte[]> readByBlock(final int blockSize, final Object... files) {
         final byte[] buffer = new byte[blockSize];
         final Iterator<Integer> it = _readByBlock(files, buffer);
         return new Iterable<byte[]>() {
@@ -646,8 +622,7 @@ public class Files {
     /**
      * {@link Iterator#next()} throws {@link RuntimizedException}.
      */
-    protected static Iterator<Integer> _readByLen(final Object[] files,
-            final char[] buffer) {
+    protected static Iterator<Integer> _readByLen(final Object[] files, final char[] buffer) {
         assert files != null : "null files[]"; //$NON-NLS-1$
         assert buffer != null : "null buffer"; //$NON-NLS-1$
 
@@ -697,8 +672,7 @@ public class Files {
     /**
      * {@link Iterator#next()} throws {@link RuntimizedException}.
      */
-    public static Iterable<Integer> readByLen(final char[] buffer,
-            final Object... files) {
+    public static Iterable<Integer> readByLen(final char[] buffer, final Object... files) {
         return new Iterable<Integer>() {
 
             @Override
@@ -712,8 +686,7 @@ public class Files {
     /**
      * {@link Iterator#next()} throws {@link RuntimizedException}.
      */
-    public static Iterable<char[]> readByLen(final int blockSize,
-            final Object... files) {
+    public static Iterable<char[]> readByLen(final int blockSize, final Object... files) {
         final char[] buffer = new char[blockSize];
         final Iterator<Integer> it = _readByLen(files, buffer);
         return new Iterable<char[]>() {
@@ -764,8 +737,7 @@ public class Files {
      * 
      * @see LineReader#readLine()
      */
-    protected static Iterator<String> _readByLine(final Object[] files,
-            final Charset charset) {
+    protected static Iterator<String> _readByLine(final Object[] files, final Charset charset) {
         return new PrefetchedIterator<String>() {
 
             private int        fileIndex = 0;
@@ -831,8 +803,7 @@ public class Files {
      * 
      * @see LineReader#readLine()
      */
-    public static Iterable<String> readByLine2(final Object charset,
-            final Object... files) {
+    public static Iterable<String> readByLine2(final Object charset, final Object... files) {
         return new Iterable<String>() {
 
             @Override
@@ -845,8 +816,8 @@ public class Files {
 
     // loadProperties
 
-    public static Properties loadProperties(Object in, Object charset,
-            boolean close) throws IOException {
+    public static Properties loadProperties(Object in, Object charset, boolean close)
+            throws IOException {
         Reader reader = getReader(in, charset);
         try {
             Properties properties = new Properties();
@@ -858,14 +829,12 @@ public class Files {
         }
     }
 
-    public static Properties loadProperties(Object in, Object charset)
-            throws IOException {
+    public static Properties loadProperties(Object in, Object charset) throws IOException {
         boolean close = shouldClose(in);
         return loadProperties(in, charset, close);
     }
 
-    public static Properties loadProperties(Object in, boolean close)
-            throws IOException {
+    public static Properties loadProperties(Object in, boolean close) throws IOException {
         return loadProperties(in, Charsets.DEFAULT, close);
     }
 
@@ -875,8 +844,7 @@ public class Files {
 
     // printTo
 
-    public static PrintStream printTo(Object out, Object charset)
-            throws IOException {
+    public static PrintStream printTo(Object out, Object charset) throws IOException {
         boolean autoFlush = false;
         String cs = Charsets.get(charset).name();
         return new PrintStream(getOutputStream(out), autoFlush, cs);
@@ -888,8 +856,7 @@ public class Files {
 
     // outputTo
 
-    public static OutputStream outputTo(Object out, Object charset)
-            throws IOException {
+    public static OutputStream outputTo(Object out, Object charset) throws IOException {
         String cs = Charsets.get(charset).name();
         return getOutputStream(out, cs);
     }
@@ -911,8 +878,8 @@ public class Files {
 
     // write
 
-    public static <T> void write(Object out, T data, Object charset,
-            boolean append) throws IOException {
+    public static <T> void write(Object out, T data, Object charset, boolean append)
+            throws IOException {
         boolean close = shouldClose(out);
         if (data instanceof byte[]) {
             OutputStream outs = getOutputStream(out, charset, append);
@@ -930,8 +897,7 @@ public class Files {
         }
     }
 
-    public static <T> void write(Object out, T data, Object charset)
-            throws IOException {
+    public static <T> void write(Object out, T data, Object charset) throws IOException {
         write(out, data, charset, false);
     }
 
@@ -939,8 +905,7 @@ public class Files {
         write(out, data, Charsets.DEFAULT);
     }
 
-    public static <T> void write(Object out, byte[] data, int off, int len)
-            throws IOException {
+    public static <T> void write(Object out, byte[] data, int off, int len) throws IOException {
         OutputStream outs = getOutputStream(out);
         boolean close = shouldClose(out);
         outs.write(data, off, len);
@@ -948,8 +913,7 @@ public class Files {
             outs.close();
     }
 
-    public static PrintStream appendTo(Object out, Object charset)
-            throws IOException {
+    public static PrintStream appendTo(Object out, Object charset) throws IOException {
         if (out instanceof File)
             return appendTo(new FileOutputStream((File) out, true), charset);
         if (out instanceof String)
@@ -964,8 +928,7 @@ public class Files {
         return appendTo(out, Charsets.DEFAULT);
     }
 
-    public static <T> void append(Object out, T data, Object charset)
-            throws IOException {
+    public static <T> void append(Object out, T data, Object charset) throws IOException {
         write(out, data, charset, true);
     }
 
@@ -973,8 +936,7 @@ public class Files {
         write(out, data, Charsets.DEFAULT, true);
     }
 
-    public static <T> void append(Object out, byte[] data, int off, int len)
-            throws IOException {
+    public static <T> void append(Object out, byte[] data, int off, int len) throws IOException {
         OutputStream outs = getOutputStream(out, true);
         boolean close = shouldClose(out);
         outs.write(data, off, len);
@@ -1065,8 +1027,7 @@ public class Files {
         } catch (WrappedException e) {
             e.rethrow(IOException.class);
         }
-        throw new IndexOutOfBoundsException(SysNLS
-                .getString("Files.scanOverEnd") + index); //$NON-NLS-1$
+        throw new IndexOutOfBoundsException(SysNLS.getString("Files.scanOverEnd") + index); //$NON-NLS-1$
     }
 
     public static Object load(Object in) throws IOException {
@@ -1125,8 +1086,7 @@ public class Files {
         URL url = classLoader.getResource(hintPath);
         String s = url.toString();
         if (!s.endsWith(hintPath))
-            throw new UnexpectedException(SysNLS
-                    .getString("Files.gotBadResURL")); //$NON-NLS-1$
+            throw new UnexpectedException(SysNLS.getString("Files.gotBadResURL")); //$NON-NLS-1$
         s = s.substring(0, s.length() - hintPath.length());
         try {
             url = new URL(s);
@@ -1279,8 +1239,7 @@ public class Files {
         return canoniOf(url);
     }
 
-    public static File getFile(URL url, String removeSubPath)
-            throws MalformedURLException {
+    public static File getFile(URL url, String removeSubPath) throws MalformedURLException {
         if (removeSubPath == null || removeSubPath.isEmpty())
             return getFile(url);
         // jar:file:/C:/abc/dir/example.jar!/com/example/Name.class
@@ -1289,8 +1248,8 @@ public class Files {
         // s=file:/C:/abc/dir/example.jar!/com/example/Name.class
         String s = url.toExternalForm();
         if (!s.endsWith(removeSubPath)) {
-            throw new IllegalArgumentException(String.format(
-                    "URL isn't end with %s: %s", removeSubPath, url));
+            throw new IllegalArgumentException(String.format("URL isn't end with %s: %s",
+                    removeSubPath, url));
         }
         int rlen = removeSubPath.length();
         // s=file:/C:/abc/dir/example.jar!/, or file:/C:/abc/dir/
@@ -1330,6 +1289,44 @@ public class Files {
      */
     public static File getTmpDir() {
         return TMPDIR;
+    }
+
+    static Map<Object, File> temps;
+    static Pattern           invalidFilenameChars;
+    static {
+        invalidFilenameChars = Pattern.compile("[^a-zA-Z0-9-_]");
+    }
+
+    public static File convertToFile(Object key, Object in) throws IOException {
+        String name = String.valueOf(key);
+        name = invalidFilenameChars.matcher(name).replaceAll("_");
+        return convertToFile(key, in, "CTF-" + name, ".tmp", TMPDIR);
+    }
+
+    public static File convertToFile(Object key, Object in, String prefix, String suffix,
+            File tmpdir) throws IOException {
+        if (temps == null)
+            temps = new HashMap<Object, File>();
+        if (key != null) {
+            File file = temps.get(key);
+            if (file != null)
+                return file;
+        }
+        File tmpFile = File.createTempFile(prefix, suffix, tmpdir);
+        try {
+            FileOutputStream out = new FileOutputStream(tmpFile);
+            for (byte[] block : readByBlock(in)) {
+                out.write(block);
+            }
+            out.close();
+            tmpFile.deleteOnExit();
+            if (key != null)
+                temps.put(key, tmpFile);
+            return tmpFile;
+        } catch (IOException e) {
+            tmpFile.delete();
+            throw e;
+        }
     }
 
     public static String getRelativeName(File file, File start) {
@@ -1514,31 +1511,26 @@ public class Files {
         return succ;
     }
 
-    public static boolean move(File src, File dst, boolean force)
-            throws IOException {
+    public static boolean move(File src, File dst, boolean force) throws IOException {
         if (dst.exists())
             if (force) {
                 if (dst.delete())
                     return move(src, dst, false);
-                throw new IOException(
-                        SysNLS.getString("Files.cantDelete") + dst); //$NON-NLS-1$
+                throw new IOException(SysNLS.getString("Files.cantDelete") + dst); //$NON-NLS-1$
             } else
-                throw new IOException(String.format(SysNLS
-                        .getString("Files.destExisted_s"), dst)); //$NON-NLS-1$
+                throw new IOException(String.format(SysNLS.getString("Files.destExisted_s"), dst)); //$NON-NLS-1$
         if (src.renameTo(dst))
             return true;
         if (copy(src, dst))
             return src.delete();
-        throw new IOException(String.format(SysNLS
-                .getString("Files.cantCopy_ss"), src, dst)); //$NON-NLS-1$
+        throw new IOException(String.format(SysNLS.getString("Files.cantCopy_ss"), src, dst)); //$NON-NLS-1$
     }
 
     public static boolean move(File src, File dst) throws IOException {
         return move(src, dst, false);
     }
 
-    public static boolean copy(Object src, Object dst, boolean append)
-            throws IOException {
+    public static boolean copy(Object src, Object dst, boolean append) throws IOException {
         assert src != null : "null src"; //$NON-NLS-1$
         assert dst != null : "null dst"; //$NON-NLS-1$
         boolean closeIn = shouldClose(src);
@@ -1639,8 +1631,7 @@ public class Files {
      * 
      * @return <code>null</code> if the same
      */
-    public static Object copyDiff(Object src, Object dst, DiffComparator diff)
-            throws IOException {
+    public static Object copyDiff(Object src, Object dst, DiffComparator diff) throws IOException {
         Object ret;
         if (diff != null) {
             List<String> al = Files.readLines(src);
@@ -1702,8 +1693,7 @@ public class Files {
             } else
                 throw new IllegalArgumentTypeException(input);
             if (!inputf.exists())
-                throw new IllegalArgumentException(SysNLS
-                        .getString("Files.inputNotExist") //$NON-NLS-1$
+                throw new IllegalArgumentException(SysNLS.getString("Files.inputNotExist") //$NON-NLS-1$
                         + inputf);
             files.add(inputf);
             if (inputf.lastModified() > mostRecent)
@@ -1732,8 +1722,7 @@ public class Files {
         } else {
             int estart = wildPath.lastIndexOf('/', ast);
             if (estart == -1)
-                throw new IllegalArgumentException(SysNLS
-                        .getString("Files.invalidWildExp") //$NON-NLS-1$
+                throw new IllegalArgumentException(SysNLS.getString("Files.invalidWildExp") //$NON-NLS-1$
                         + wildPath);
             estart++;
             int eend = wildPath.indexOf('/', ast);

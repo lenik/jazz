@@ -16,7 +16,7 @@ public class CharOutSinkTest {
     }
 
     public void test1() {
-        
+
     }
 
 }

@@ -50,8 +50,7 @@ public class Iterates {
         return new OneTimeIterable<E>(Iterators.iterator(enumr));
     }
 
-    public static <E> Iterable<E> iterate(
-            final Class<? extends Iterator<E>> iterType) {
+    public static <E> Iterable<E> iterate(final Class<? extends Iterator<E>> iterType) {
         if (iterType == null)
             throw new NullPointerException("iterType"); //$NON-NLS-1$
         return new Iterable<E>() {
@@ -70,8 +69,8 @@ public class Iterates {
         };
     }
 
-    public static <E> Iterable<E> iterate(
-            final Class<? extends Iterator<E>> iterType, final Object enclosing) {
+    public static <E> Iterable<E> iterate(final Class<? extends Iterator<E>> iterType,
+            final Object enclosing) {
         if (enclosing == null)
             throw new NullPointerException("enclosing"); //$NON-NLS-1$
         final Constructor<? extends Iterator<E>> ctor;
@@ -154,8 +153,7 @@ public class Iterates {
         };
     }
 
-    public static <T> Iterable<T> map(Iterable<T> iterable,
-            final Filt1<T, T> filter) {
+    public static <T> Iterable<T> map(Iterable<T> iterable, final Filt1<T, T> filter) {
         return _map(iterable, filter);
     }
 

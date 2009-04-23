@@ -161,8 +161,7 @@ public class BootProc {
             Class<?>[] lv = new Class<?>[args.length];
             Arrays.fill(lv, String.class);
             try {
-                Constructor<? extends LoadConfig> lctor = clazz
-                        .getConstructor(lv);
+                Constructor<? extends LoadConfig> lctor = clazz.getConstructor(lv);
                 return lctor.newInstance((Object[]) args);
             } catch (NoSuchMethodException e) {
                 return createv();
@@ -173,8 +172,7 @@ public class BootProc {
 
         LoadConfig createv() throws CreateException {
             try {
-                Constructor<? extends LoadConfig> vctor = clazz
-                        .getConstructor(String[].class);
+                Constructor<? extends LoadConfig> vctor = clazz.getConstructor(String[].class);
                 return vctor.newInstance((Object) args);
             } catch (Exception e) {
                 throw new CreateException(e);

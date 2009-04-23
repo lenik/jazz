@@ -19,10 +19,9 @@ public class ArrayContents<A, E> extends AbstractList<E> {
     @SuppressWarnings("unchecked")
     public ArrayContents(A array, boolean deep, ArrayOp<A> op) {
         if (deep) {
-            if (array == null
-                    || array.getClass().getComponentType().isPrimitive()) {
-                throw new IllegalArgumentException(
-                        TypesNLS.getString("ArrayContents.deepModeOnPrimv")); //$NON-NLS-1$
+            if (array == null || array.getClass().getComponentType().isPrimitive()) {
+                throw new IllegalArgumentException(TypesNLS
+                        .getString("ArrayContents.deepModeOnPrimv")); //$NON-NLS-1$
             }
         }
         this.array = array;

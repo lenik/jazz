@@ -37,8 +37,7 @@ public class SJProject {
             return base;
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException(
-                    "The java class maybe not loaded in a normal way: URL="
-                            + url, e);
+                    "The java class maybe not loaded in a normal way: URL=" + url, e);
         } catch (MalformedURLException e) {
             throw new UnexpectedException(e);
         }
@@ -100,8 +99,7 @@ public class SJProject {
             File srcFile = new File(srcBase, srcEntry);
             return Files.getURL(srcFile);
         } else {
-            String jarURL = "jar:" + srcBase.toURI().toString() + "!/"
-                    + srcEntry;
+            String jarURL = "jar:" + srcBase.toURI().toString() + "!/" + srcEntry;
             try {
                 return new URL(jarURL);
             } catch (MalformedURLException e) {

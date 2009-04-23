@@ -22,8 +22,7 @@ class ReflectedScriptClass<T> extends _ScriptClass<T> {
         this(origClass, false);
     }
 
-    public ReflectedScriptClass(Class<T> origClass, boolean forceAccess)
-            throws ScriptException {
+    public ReflectedScriptClass(Class<T> origClass, boolean forceAccess) throws ScriptException {
         super(origClass, _get(origClass.getSuperclass(), forceAccess));
         this.forceAccess = forceAccess;
 
@@ -78,8 +77,7 @@ class ReflectedScriptClass<T> extends _ScriptClass<T> {
                 }
 
                 @Override
-                public void set(Object object, Object value)
-                        throws ScriptException {
+                public void set(Object object, Object value) throws ScriptException {
                     boolean orig = field.isAccessible();
                     try {
                         if (forceAccess && !orig)
@@ -127,8 +125,7 @@ class ReflectedScriptClass<T> extends _ScriptClass<T> {
                 }
 
                 @Override
-                public void set(Object object, Object value)
-                        throws ScriptException {
+                public void set(Object object, Object value) throws ScriptException {
                     if (write == null)
                         throw new ReadOnlyException();
                     try {
@@ -223,8 +220,7 @@ class ReflectedScriptClass<T> extends _ScriptClass<T> {
                                 m.setAccessible(false);
                         }
                     }
-                    throw new UnsupportedOperationException(
-                            new NoSuchMethodException());
+                    throw new UnsupportedOperationException(new NoSuchMethodException());
                 }
             };
             putMethod(method.getName(), smethod);
@@ -232,12 +228,11 @@ class ReflectedScriptClass<T> extends _ScriptClass<T> {
     }
 
     @SuppressWarnings("unchecked")
-    private static <R> ReflectedScriptClass<R> _get(Class<R> clazz,
-            boolean forceAccess) throws ScriptException {
+    private static <R> ReflectedScriptClass<R> _get(Class<R> clazz, boolean forceAccess)
+            throws ScriptException {
         if (clazz == null)
             return null;
-        return (ReflectedScriptClass<R>) Scripts.convertClass(clazz,
-                forceAccess);
+        return (ReflectedScriptClass<R>) Scripts.convertClass(clazz, forceAccess);
     }
 
 }

@@ -211,8 +211,7 @@ public class BatchEditCLI extends BatchCLI {
         File out = Files.getAbsoluteFile(outputDirectory, relative);
         File outd = out.getParentFile();
         if (outd.isFile())
-            throw new Error(
-                    AppNLS.getString("BatchEditCLI.invalidOutDir") + outd); //$NON-NLS-1$
+            throw new Error(AppNLS.getString("BatchEditCLI.invalidOutDir") + outd); //$NON-NLS-1$
         return out;
     }
 
@@ -256,9 +255,7 @@ public class BatchEditCLI extends BatchCLI {
             // err before addResult() or raised inside addResult()
             if (err != null) {
                 stat.add(EditResult.err(err));
-                L
-                        .error(
-                                AppNLS.getString("BatchEditCLI.s.fail"), file, ": ", err); //$NON-NLS-1$ //$NON-NLS-2$
+                L.error(AppNLS.getString("BatchEditCLI.s.fail"), file, ": ", err); //$NON-NLS-1$ //$NON-NLS-2$
             }
         }
     }
@@ -302,8 +299,7 @@ public class BatchEditCLI extends BatchCLI {
      *            canonical file
      */
     @OverrideOption(group = "batchEdit")
-    protected EditResult doEditWithTemp(File file, File editTmp)
-            throws Throwable {
+    protected EditResult doEditWithTemp(File file, File editTmp) throws Throwable {
         EditResult result = doEdit(file, editTmp);
         if (result == null) // ignored
             return null;
@@ -352,8 +348,7 @@ public class BatchEditCLI extends BatchCLI {
      *         PROCESS_EDIT: have the result written to the output
      */
     @OverrideOption(group = "batchEdit")
-    protected EditResult doEditByIO(InputStream in, OutputStream out)
-            throws Throwable {
+    protected EditResult doEditByIO(InputStream in, OutputStream out) throws Throwable {
         Iterable<String> lines = Files.readByLine2(inputEncoding.name(), in);
         CharOut cout = CharOuts.stdout;
         if (out != null)
@@ -368,8 +363,7 @@ public class BatchEditCLI extends BatchCLI {
      *         PROCESS_EDIT: have the result written to the output
      */
     @OverrideOption(group = "batchEdit")
-    protected EditResult doEditByLine(Iterable<String> lines, CharOut out)
-            throws Throwable {
+    protected EditResult doEditByLine(Iterable<String> lines, CharOut out) throws Throwable {
         throw new NotImplementedException();
     }
 
@@ -388,18 +382,15 @@ public class BatchEditCLI extends BatchCLI {
         addResult(null, null, null, result);
     }
 
-    protected void addResult(File src, EditResult result) throws IOException,
-            CLIException {
+    protected void addResult(File src, EditResult result) throws IOException, CLIException {
         addResult(src, getOutputFile(src), result);
     }
 
-    protected void addResult(File src, File dst, EditResult result)
-            throws IOException {
+    protected void addResult(File src, File dst, EditResult result) throws IOException {
         addResult(src, dst, null, result);
     }
 
-    protected void addResult(File src, File dst, File edit, EditResult result)
-            throws IOException {
+    protected void addResult(File src, File dst, File edit, EditResult result) throws IOException {
         if (result == null)
             L.detail(AppNLS.getString("BatchEditCLI.s.skip"), src); //$NON-NLS-1$
         else {
@@ -419,15 +410,12 @@ public class BatchEditCLI extends BatchCLI {
                             .error(
                                     AppNLS.getString("BatchEditCLI.s.fail_"), tags, "] ", src, ": ", result.cause); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 else
-                    L
-                            .error(
-                                    AppNLS.getString("BatchEditCLI.s.fail_"), tags, "] ", src); //$NON-NLS-1$ //$NON-NLS-2$
+                    L.error(AppNLS.getString("BatchEditCLI.s.fail_"), tags, "] ", src); //$NON-NLS-1$ //$NON-NLS-2$
             }
         }
     }
 
-    private void applyResult(File src, File dst, File edit, EditResult result)
-            throws IOException {
+    private void applyResult(File src, File dst, File edit, EditResult result) throws IOException {
         assert result != null;
 
         boolean diffPrinted = false;
@@ -501,8 +489,7 @@ public class BatchEditCLI extends BatchCLI {
 
         case EditResult.SAVE:
         default:
-            throw new UnexpectedException(AppNLS
-                    .getString("BatchEditCLI.invalidOperation") //$NON-NLS-1$
+            throw new UnexpectedException(AppNLS.getString("BatchEditCLI.invalidOperation") //$NON-NLS-1$
                     + result.operation);
         }
     }
@@ -534,13 +521,11 @@ public class BatchEditCLI extends BatchCLI {
             return BatchEditCLI.this.doEdit(in, out);
         }
 
-        public EditResult doEditByIO(InputStream in, OutputStream out)
-                throws Throwable {
+        public EditResult doEditByIO(InputStream in, OutputStream out) throws Throwable {
             return BatchEditCLI.this.doEditByIO(in, out);
         }
 
-        public EditResult doEditByLine(Iterable<String> lines, CharOut out)
-                throws Throwable {
+        public EditResult doEditByLine(Iterable<String> lines, CharOut out) throws Throwable {
             return BatchEditCLI.this.doEditByLine(lines, out);
         }
 

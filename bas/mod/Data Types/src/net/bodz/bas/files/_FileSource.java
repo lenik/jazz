@@ -1,6 +1,5 @@
 package net.bodz.bas.files;
 
-
 public abstract class _FileSource<T> implements FileSource<T> {
 
     protected final RecordBuilder<T> builder;

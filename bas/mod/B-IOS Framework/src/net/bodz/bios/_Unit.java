@@ -32,8 +32,7 @@ public abstract class _Unit implements Unit {
         Class<? extends _Unit> clazz = getClass();
         UnitMeta meta = metas.get(clazz);
         if (meta == null) {
-            Class<?> metaClass = (Class<?>) Annotations.getValue(clazz,
-                    MetaClass.class);
+            Class<?> metaClass = (Class<?>) Annotations.getValue(clazz, MetaClass.class);
             if (metaClass != null)
                 meta = (UnitMeta) Types.newInstance(metaClass);
             else

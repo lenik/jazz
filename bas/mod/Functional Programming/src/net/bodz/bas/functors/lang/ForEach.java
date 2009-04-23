@@ -22,7 +22,7 @@ public class ForEach<T> extends _Functor<T> {
     protected _Functor<Collection<?>> coll;
     protected _Functor<T>             body;
 
-    protected Object                 index;
+    protected Object                  index;
 
     public ForEach() {
     }
@@ -127,8 +127,7 @@ public class ForEach<T> extends _Functor<T> {
 
     static ThreadLocal<ForEach<?>> tlBuilt = new ThreadLocal<ForEach<?>>();
 
-    public static <U> ForEach<U> build(_Functor<Collection<?>> coll,
-            _Functor<U> body) {
+    public static <U> ForEach<U> build(_Functor<Collection<?>> coll, _Functor<U> body) {
         ForEach<U> built = built();
         tlBuilt.set(null);
         built.setColl(coll);

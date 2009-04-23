@@ -7,7 +7,6 @@ public interface RefType extends Type {
 
     Object getTarget(Memory memory, int offset) throws AccessException;
 
-    void putTarget(Memory memory, int offset, Object value)
-            throws AccessException;
+    void putTarget(Memory memory, int offset, Object value) throws AccessException;
 
 }

@@ -213,8 +213,7 @@ public class LAReader extends FilterReader {
             return new String(lab, begin, current - begin);
         if (begin == current && !full)
             return ""; //$NON-NLS-1$
-        return new String(lab, begin, cap - begin)
-                + new String(lab, 0, current);
+        return new String(lab, begin, cap - begin) + new String(lab, 0, current);
     }
 
     @Override

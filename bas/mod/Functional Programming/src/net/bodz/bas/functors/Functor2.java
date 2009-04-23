@@ -21,43 +21,35 @@ public abstract class Functor2<T> implements IFunctor<T>, Groupable<T> {
         eval();
     }
 
-    public byte evalByte() throws Control, EvalException,
-            ClassCastException {
+    public byte evalByte() throws Control, EvalException, ClassCastException {
         return ((Number) eval()).byteValue();
     }
 
-    public short evalShort() throws Control, EvalException,
-            ClassCastException {
+    public short evalShort() throws Control, EvalException, ClassCastException {
         return ((Number) eval()).shortValue();
     }
 
-    public int evalInt() throws Control, EvalException,
-            ClassCastException {
+    public int evalInt() throws Control, EvalException, ClassCastException {
         return ((Number) eval()).intValue();
     }
 
-    public long evalLong() throws Control, EvalException,
-            ClassCastException {
+    public long evalLong() throws Control, EvalException, ClassCastException {
         return ((Number) eval()).longValue();
     }
 
-    public float evalFloat() throws Control, EvalException,
-            ClassCastException {
+    public float evalFloat() throws Control, EvalException, ClassCastException {
         return ((Number) eval()).floatValue();
     }
 
-    public double evalDouble() throws Control, EvalException,
-            ClassCastException {
+    public double evalDouble() throws Control, EvalException, ClassCastException {
         return ((Number) eval()).doubleValue();
     }
 
-    public boolean evalBoolean() throws Control, EvalException,
-            ClassCastException {
+    public boolean evalBoolean() throws Control, EvalException, ClassCastException {
         return ((Boolean) eval()).booleanValue();
     }
 
-    public char evalChar() throws Control, EvalException,
-            ClassCastException {
+    public char evalChar() throws Control, EvalException, ClassCastException {
         return ((Character) eval()).charValue();
     }
 

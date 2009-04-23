@@ -7,6 +7,8 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
 import java.net.URL;
+import java.util.jar.JarFile;
+import java.util.zip.ZipFile;
 
 public interface ResLink {
 
@@ -52,5 +54,9 @@ public interface ResLink {
      *             If target resource can't be opened as {@link Writer},
      */
     Writer openWriter(boolean append, String encoding) throws IOException;
+
+    ZipFile openZipFile() throws IOException;
+
+    JarFile openJarFile() throws IOException;
 
 }

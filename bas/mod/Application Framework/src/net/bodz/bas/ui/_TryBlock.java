@@ -28,10 +28,8 @@ public abstract class _TryBlock extends TryBlock {
 
     @Override
     protected int ask(Exception e) {
-        int answer = UI.ask(e.getMessage(),
-                e, //
-                Proposals.retry, Proposals.ignore, Proposals.cancel,
-                Proposals.debug);
+        int answer = UI.ask(e.getMessage(), e, //
+                Proposals.retry, Proposals.ignore, Proposals.cancel, Proposals.debug);
         switch (answer) {
         case 0:
             return RETRY;

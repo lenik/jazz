@@ -203,18 +203,16 @@ public class Comparators {
 
             boolean lsig = l instanceof MethodSignature;
             boolean rsig = r instanceof MethodSignature;
-            String ln = lsig ? ((MethodSignature) l).getName() : ((Method) l)
-                    .getName();
-            String rn = rsig ? ((MethodSignature) r).getName() : ((Method) r)
-                    .getName();
+            String ln = lsig ? ((MethodSignature) l).getName() : ((Method) l).getName();
+            String rn = rsig ? ((MethodSignature) r).getName() : ((Method) r).getName();
             int cmp = ln.compareTo(rn);
             if (cmp != 0)
                 return cmp;
 
-            Class<?>[] lt = lsig ? ((MethodSignature) l).getParameterTypes()
-                    : ((Method) l).getParameterTypes();
-            Class<?>[] rt = rsig ? ((MethodSignature) r).getParameterTypes()
-                    : ((Method) r).getParameterTypes();
+            Class<?>[] lt = lsig ? ((MethodSignature) l).getParameterTypes() : ((Method) l)
+                    .getParameterTypes();
+            Class<?>[] rt = rsig ? ((MethodSignature) r).getParameterTypes() : ((Method) r)
+                    .getParameterTypes();
             cmp = lt.length - rt.length;
             if (cmp != 0)
                 return cmp;
@@ -277,8 +275,7 @@ public class Comparators {
                 return -1;
             if (b == null)
                 return 1;
-            return STD
-                    .compare(((Pair<?, ?>) a).second, ((Pair<?, ?>) b).second);
+            return STD.compare(((Pair<?, ?>) a).second, ((Pair<?, ?>) b).second);
         }
     }
 
@@ -324,8 +321,7 @@ public class Comparators {
         private final Comparator<Object> comparator;
         protected final Field            memberField;
 
-        public MemberFieldComparator(Comparator<Object> comparator,
-                Field memberField) {
+        public MemberFieldComparator(Comparator<Object> comparator, Field memberField) {
             assert memberField != null;
             assert comparator != null;
             this.comparator = comparator;
@@ -353,8 +349,8 @@ public class Comparators {
         protected final Object[]         args;
         private final Comparator<Object> comparator;
 
-        public MemberMethodComparator(Comparator<Object> comparator,
-                Method memberMethod, Object... args) {
+        public MemberMethodComparator(Comparator<Object> comparator, Method memberMethod,
+                Object... args) {
             assert comparator != null;
             assert memberMethod != null;
             this.comparator = comparator;
@@ -389,13 +385,12 @@ public class Comparators {
 
     }
 
-    public static Comparator<Object> member(Comparator<Object> comparator,
-            Field memberField) {
+    public static Comparator<Object> member(Comparator<Object> comparator, Field memberField) {
         return new MemberFieldComparator(comparator, memberField);
     }
 
-    public static Comparator<Object> member(Comparator<Object> comparator,
-            Method memberMethod, Object... args) {
+    public static Comparator<Object> member(Comparator<Object> comparator, Method memberMethod,
+            Object... args) {
         return new MemberMethodComparator(comparator, memberMethod, args);
     }
 

@@ -19,8 +19,7 @@ public class A_bas {
         return name;
     }
 
-    public static <AM extends AnnotatedElement & Member> String getDisplayName(
-            AM member) {
+    public static <AM extends AnnotatedElement & Member> String getDisplayName(AM member) {
         DisplayName dn = Ns.getN(member, DisplayName.class);
         String name = dn != null ? dn.value() : member.getName();
         return name;

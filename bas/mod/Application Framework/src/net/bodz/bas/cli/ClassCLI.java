@@ -42,8 +42,7 @@ public class ClassCLI {
         return copt;
     }
 
-    public static String[] loadOptions(Object classobj, String[] args)
-            throws CLIException {
+    public static String[] loadOptions(Object classobj, String[] args) throws CLIException {
         List<String> list = new ArrayList<String>(args.length);
         for (String arg : args)
             list.add(arg);
@@ -52,8 +51,7 @@ public class ClassCLI {
     }
 
     @SuppressWarnings("unchecked")
-    public static void loadOptions(Object classobj, List<String> args)
-            throws CLIException {
+    public static void loadOptions(Object classobj, List<String> args) throws CLIException {
         assert classobj != null;
         Class<Object> clazz = (Class<Object>) classobj.getClass();
         ClassOptions<Object> copt = getClassOptions(clazz);
@@ -64,8 +62,7 @@ public class ClassCLI {
         }
     }
 
-    protected static abstract class OptionFormat extends
-            Filt1<String, Set<_Option<?>>> {
+    protected static abstract class OptionFormat extends Filt1<String, Set<_Option<?>>> {
 
         @Override
         public abstract String filter(Set<_Option<?>> a);
@@ -73,8 +70,8 @@ public class ClassCLI {
     }
 
     @SuppressWarnings("unchecked")
-    public static String helpOptions(Class<?> clazz, String restSyntax,
-            final int tabsize, final int docColumn) throws CLIException {
+    public static String helpOptions(Class<?> clazz, String restSyntax, final int tabsize,
+            final int docColumn) throws CLIException {
         final ClassOptions<Object> copt = (ClassOptions<Object>) getClassOptions(clazz);
         TreeMap<String, _Option<?>> options = copt.getOptions();
         StringBuffer buffer = new StringBuffer(options.size() * 80);
@@ -102,8 +99,7 @@ public class ClassCLI {
             boolean usingRestSyntax = false;
             if (usingRestSyntax) {
                 // getRestSyntax();
-                Method restf = Members.findDeclaredMethod(clazz,
-                        "getRestSyntax"); //$NON-NLS-1$
+                Method restf = Members.findDeclaredMethod(clazz, "getRestSyntax"); //$NON-NLS-1$
                 if (restf == null)
                     buffer.append("..."); //$NON-NLS-1$
                 else {
@@ -212,8 +208,7 @@ public class ClassCLI {
                 buffer.append("\n"); //$NON-NLS-1$
             String name = group.getKey();
             Set<_Option<?>> grpopts = group.getValue();
-            buffer.append(Strings.ucfirst(name)
-                    + AppNLS.getString("ClassCLI.help.options")); //$NON-NLS-1$
+            buffer.append(Strings.ucfirst(name) + AppNLS.getString("ClassCLI.help.options")); //$NON-NLS-1$
             buffer.append(groupfmt.filter(grpopts));
         }
         return buffer.toString();

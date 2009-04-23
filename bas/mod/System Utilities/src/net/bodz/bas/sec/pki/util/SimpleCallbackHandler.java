@@ -19,8 +19,7 @@ public class SimpleCallbackHandler implements CallbackHandler {
     }
 
     @Override
-    public void handle(Callback[] callbacks) throws IOException,
-            UnsupportedCallbackException {
+    public void handle(Callback[] callbacks) throws IOException, UnsupportedCallbackException {
         for (Callback callback : callbacks) {
             handle(callback);
         }

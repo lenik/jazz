@@ -14,8 +14,8 @@ import net.bodz.bas.types.util.PrefetchedIterator;
 /**
  * @test DerMapTest
  */
-public abstract class DerMap<K, V> extends AbstractMap<K, V> implements
-        Derivation<Map<K, V>>, Serializable {
+public abstract class DerMap<K, V> extends AbstractMap<K, V> implements Derivation<Map<K, V>>,
+        Serializable {
 
     private static final long serialVersionUID = -4599316213416843857L;
 

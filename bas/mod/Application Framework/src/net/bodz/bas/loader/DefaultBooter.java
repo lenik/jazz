@@ -28,8 +28,8 @@ public class DefaultBooter {
 
     static boolean         LOADFIX_DUMP = false;
 
-    public static Class<?> loadFix(ClassLoader initSysLoader, String className,
-            URL... userlibs) throws LoadException {
+    public static Class<?> loadFix(ClassLoader initSysLoader, String className, URL... userlibs)
+            throws LoadException {
         ClassLoader bootSysLoader;
         if (userlibs == null)
             bootSysLoader = initSysLoader;
@@ -57,8 +57,7 @@ public class DefaultBooter {
         return load(initSysLoader, className, userlibs);
     }
 
-    public static Class<?> load(String className, URL... userlibs)
-            throws LoadException {
+    public static Class<?> load(String className, URL... userlibs) throws LoadException {
         ClassLoader sysLoader = Caller.getCallerClassLoader();
         return load(sysLoader, className, userlibs);
     }
@@ -69,8 +68,8 @@ public class DefaultBooter {
      * @param userlibs
      *            use {@link BootInfo#userlibs()}
      */
-    public static Class<?> load(ClassLoader sysLoader, String className,
-            URL... userlibs) throws LoadException {
+    public static Class<?> load(ClassLoader sysLoader, String className, URL... userlibs)
+            throws LoadException {
         // get class0
         // WORKAROUND: let the boot bit more smooth.
         ClassLoader bootLoader = TempClassLoader.get(userlibs, sysLoader);
@@ -205,8 +204,7 @@ public class DefaultBooter {
             }
         }
         if (index == args.length)
-            throw new IllegalArgumentException(AppNLS
-                    .getString("DefaultBooter.noMainClass")); //$NON-NLS-1$
+            throw new IllegalArgumentException(AppNLS.getString("DefaultBooter.noMainClass")); //$NON-NLS-1$
         String className = args[index++];
         args = Arrays2.copyOf(args, index, args.length - index);
 

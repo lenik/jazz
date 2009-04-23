@@ -188,8 +188,8 @@ public class FileMask {
                 bits |= BINARY;
                 break;
             default:
-                throw new IllegalArgumentException(String.format(
-                        SysNLS.getString("FileMask.errMask_cd"), c, c)); //$NON-NLS-1$
+                throw new IllegalArgumentException(String.format(SysNLS
+                        .getString("FileMask.errMask_cd"), c, c)); //$NON-NLS-1$
             }
         }
         return bits;
@@ -211,8 +211,7 @@ public class FileMask {
     }
 
     public static final FileMask ALL   = new FileMask(-1);
-    public static final FileMask BASIC = new FileMask(ACCESS | FILEINFO
-                                               | OBJTYPE);
+    public static final FileMask BASIC = new FileMask(ACCESS | FILEINFO | OBJTYPE);
 
     public static int getFileBits(File file) {
         int allBits = ALL.check(file);
@@ -241,8 +240,7 @@ public class FileMask {
             else if (o instanceof String)
                 return parse((String) o);
             else
-                throw new IllegalArgumentTypeException(o,
-                        SysNLS.getString("FileMask.errType")); //$NON-NLS-1$
+                throw new IllegalArgumentTypeException(o, SysNLS.getString("FileMask.errType")); //$NON-NLS-1$
         }
 
         @Override

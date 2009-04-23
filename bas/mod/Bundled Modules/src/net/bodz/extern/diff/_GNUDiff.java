@@ -53,8 +53,7 @@ public class _GNUDiff {
      * results of the comparison as an edit script, if desired.
      */
     public _GNUDiff(List<?> a, List<?> b) {
-        Map<Object, Integer> h = new HashMap<Object, Integer>(a.size()
-                + b.size());
+        Map<Object, Integer> h = new HashMap<Object, Integer>(a.size() + b.size());
         filevec[0] = new file_data(a, h);
         filevec[1] = new file_data(b, h);
     }
@@ -160,8 +159,7 @@ public class _GNUDiff {
             else
                 --fmax;
             for (d = fmax; d >= fmin; d -= 2) {
-                int x, y, oldx, tlo = fd[fdiagoff + d - 1], thi = fd[fdiagoff
-                        + d + 1];
+                int x, y, oldx, tlo = fd[fdiagoff + d - 1], thi = fd[fdiagoff + d + 1];
 
                 if (tlo >= thi)
                     x = tlo + 1;
@@ -176,8 +174,7 @@ public class _GNUDiff {
                 if (x - oldx > 20)
                     big_snake = true;
                 fd[fdiagoff + d] = x;
-                if (odd && bmin <= d && d <= bmax
-                        && bd[bdiagoff + d] <= fd[fdiagoff + d]) {
+                if (odd && bmin <= d && d <= bmax && bd[bdiagoff + d] <= fd[fdiagoff + d]) {
                     cost = 2 * c - 1;
                     return d;
                 }
@@ -193,8 +190,7 @@ public class _GNUDiff {
             else
                 --bmax;
             for (d = bmax; d >= bmin; d -= 2) {
-                int x, y, oldx, tlo = bd[bdiagoff + d - 1], thi = bd[bdiagoff
-                        + d + 1];
+                int x, y, oldx, tlo = bd[bdiagoff + d - 1], thi = bd[bdiagoff + d + 1];
 
                 if (tlo < thi)
                     x = tlo;
@@ -209,8 +205,7 @@ public class _GNUDiff {
                 if (oldx - x > 20)
                     big_snake = true;
                 bd[bdiagoff + d] = x;
-                if (!odd && fmin <= d && d <= fmax
-                        && bd[bdiagoff + d] <= fd[fdiagoff + d]) {
+                if (!odd && fmin <= d && d <= fmax && bd[bdiagoff + d] <= fd[fdiagoff + d]) {
                     cost = 2 * c;
                     return d;
                 }
@@ -232,10 +227,8 @@ public class _GNUDiff {
 
                 for (d = fmax; d >= fmin; d -= 2) {
                     int dd = d - fmid;
-                    if ((fd[fdiagoff + d] - xoff) * 2 - dd > 12 * (c + (dd > 0 ? dd
-                            : -dd))) {
-                        if (fd[fdiagoff + d] * 2 - dd > best
-                                && fd[fdiagoff + d] - xoff > 20
+                    if ((fd[fdiagoff + d] - xoff) * 2 - dd > 12 * (c + (dd > 0 ? dd : -dd))) {
+                        if (fd[fdiagoff + d] * 2 - dd > best && fd[fdiagoff + d] - xoff > 20
                                 && fd[fdiagoff + d] - d - yoff > 20) {
                             int k;
                             int x = fd[fdiagoff + d];
@@ -263,8 +256,7 @@ public class _GNUDiff {
                 best = 0;
                 for (d = bmax; d >= bmin; d -= 2) {
                     int dd = d - bmid;
-                    if ((xlim - bd[bdiagoff + d]) * 2 + dd > 12 * (c + (dd > 0 ? dd
-                            : -dd))) {
+                    if ((xlim - bd[bdiagoff + d]) * 2 + dd > 12 * (c + (dd > 0 ? dd : -dd))) {
                         if ((xlim - bd[bdiagoff + d]) * 2 + dd > best
                                 && xlim - bd[bdiagoff + d] > 20
                                 && ylim - (bd[bdiagoff + d] - d) > 20) {
@@ -340,8 +332,7 @@ public class _GNUDiff {
                  * two subsequences is empty, and that case was handled above
                  * without calling `diag'. Let's verify that this is true.
                  */
-                throw new IllegalArgumentException(BundledNLS
-                        .getString("_GNUDiff.emptySubseq")); //$NON-NLS-1$
+                throw new IllegalArgumentException(BundledNLS.getString("_GNUDiff.emptySubseq")); //$NON-NLS-1$
             } else {
                 /* Use that point to split this problem into two subproblems. */
                 compareseq(xoff, b, yoff, b - d);
@@ -393,8 +384,8 @@ public class _GNUDiff {
          *            number of lines in 2nd file
          * @return a linked list of changes - or null
          */
-        public List<DiffInfo> build_script(boolean[] changed0, int len0,
-                boolean[] changed1, int len1);
+        public List<DiffInfo> build_script(boolean[] changed0, int len0, boolean[] changed1,
+                int len1);
     }
 
     /**
@@ -418,8 +409,7 @@ public class _GNUDiff {
                         ++i1;
 
                     /* Record this change. */
-                    script.add(new DiffInfo(line0, line1, i0 - line0, i1
-                            - line1));
+                    script.add(new DiffInfo(line0, line1, i0 - line0, i1 - line1));
                 }
 
                 /* We have reached lines in the two files that match each other. */
@@ -504,15 +494,13 @@ public class _GNUDiff {
         xvec = filevec[0].undiscarded;
         yvec = filevec[1].undiscarded;
 
-        int diags = filevec[0].nondiscarded_lines
-                + filevec[1].nondiscarded_lines + 3;
+        int diags = filevec[0].nondiscarded_lines + filevec[1].nondiscarded_lines + 3;
         fdiag = new int[diags];
         fdiagoff = filevec[1].nondiscarded_lines + 1;
         bdiag = new int[diags];
         bdiagoff = filevec[1].nondiscarded_lines + 1;
 
-        compareseq(0, filevec[0].nondiscarded_lines, 0,
-                filevec[1].nondiscarded_lines);
+        compareseq(0, filevec[0].nondiscarded_lines, 0, filevec[1].nondiscarded_lines);
         fdiag = null;
         bdiag = null;
 
@@ -527,9 +515,8 @@ public class _GNUDiff {
          * Get the results of comparison in the form of a chain of `struct
          * change's -- an edit script.
          */
-        return bld.build_script(filevec[0].changed_flag,
-                filevec[0].buffered_lines, filevec[1].changed_flag,
-                filevec[1].buffered_lines);
+        return bld.build_script(filevec[0].changed_flag, filevec[0].buffered_lines,
+                filevec[1].changed_flag, filevec[1].buffered_lines);
 
     }
 

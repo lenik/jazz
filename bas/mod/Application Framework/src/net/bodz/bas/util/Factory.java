@@ -62,8 +62,8 @@ public interface Factory<T> {
             assert clazz != null;
             if (clazz.isMemberClass()) {
                 if (outer == null)
-                    throw new NullPointerException(AppNLS
-                            .getString("Factory.needEnclosing") + clazz); //$NON-NLS-1$
+                    throw new NullPointerException(
+                            AppNLS.getString("Factory.needEnclosing") + clazz); //$NON-NLS-1$
             }
             this.clazz = clazz;
             this.outer = outer;
@@ -79,8 +79,7 @@ public interface Factory<T> {
         }
 
         @Override
-        public T _create(Class<?>[] argTypes, Object... args)
-                throws CreateException {
+        public T _create(Class<?>[] argTypes, Object... args) throws CreateException {
             try {
                 if (clazz.isMemberClass())
                     return CompatMethods.newMemberInstance(clazz, outer, args);
@@ -116,8 +115,7 @@ public interface Factory<T> {
         }
 
         @Override
-        public Object _create(Class<?>[] argTypes, Object... args)
-                throws CreateException {
+        public Object _create(Class<?>[] argTypes, Object... args) throws CreateException {
             try {
                 Class<?> clazz = Class.forName(name, true, loader);
                 if (argTypes == null)
@@ -154,8 +152,7 @@ public interface Factory<T> {
         }
 
         @Override
-        public Object _create(Class<?>[] argTypes, Object... args)
-                throws CreateException {
+        public Object _create(Class<?>[] argTypes, Object... args) throws CreateException {
             if (listener == null)
                 try {
                     return XMLs.decode(xml);
@@ -187,8 +184,7 @@ public interface Factory<T> {
         }
 
         @Override
-        public Object _create(Class<?>[] argTypes, Object... args)
-                throws CreateException {
+        public Object _create(Class<?>[] argTypes, Object... args) throws CreateException {
             FileInputStream in = null;
             try {
                 in = new FileInputStream(xmlFile);

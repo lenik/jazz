@@ -15,8 +15,7 @@ public class Int16LE extends _Type {
     }
 
     @Override
-    public void put(Memory memory, int offset, Object value)
-            throws AccessException {
+    public void put(Memory memory, int offset, Object value) throws AccessException {
         byte[] mem = new byte[2];
         write(mem, (Short) value);
         memory.write(offset, mem);

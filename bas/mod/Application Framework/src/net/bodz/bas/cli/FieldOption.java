@@ -34,8 +34,7 @@ public class FieldOption<T> extends _Option<T> {
         try {
             if (multi) {
                 fieldval = field.get(classobj);
-                Object newfield = Util.addmulti(field.getType(), fieldval,
-                        optval);
+                Object newfield = Util.addmulti(field.getType(), fieldval, optval);
                 if (newfield == fieldval)
                     return;
                 fieldval = newfield;

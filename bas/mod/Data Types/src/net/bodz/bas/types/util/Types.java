@@ -95,8 +95,7 @@ public class Types {
         return classes;
     }
 
-    public static String joinNames(String delim, boolean simpleNames,
-            Class<?>... types) {
+    public static String joinNames(String delim, boolean simpleNames, Class<?>... types) {
         StringBuffer b = null;
         for (Class<?> t : types) {
             if (b == null)
@@ -201,8 +200,7 @@ public class Types {
         return igcd.trueSet.toArray(Empty.Classes);
     }
 
-    public static <T> T newInstance(Class<T> clazz, Class<?>[] argtypes,
-            Object... args) {
+    public static <T> T newInstance(Class<T> clazz, Class<?>[] argtypes, Object... args) {
         try {
             Constructor<T> ctor = clazz.getConstructor(argtypes);
             return ctor.newInstance(args);
@@ -233,8 +231,7 @@ public class Types {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> T getClassInstance(Class<T> clazz, Object... args)
-            throws CreateException {
+    public static <T> T getClassInstance(Class<T> clazz, Object... args) throws CreateException {
         if (clazz == null)
             return null;
         if (clazz.isInterface())

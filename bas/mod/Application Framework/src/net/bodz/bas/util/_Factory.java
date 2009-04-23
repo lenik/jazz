@@ -6,8 +6,7 @@ import net.bodz.bas.types.util.Empty;
 public abstract class _Factory<T> implements Factory<T> {
 
     @Override
-    public abstract T _create(Class<?>[] argTypes, Object... args)
-            throws CreateException;
+    public abstract T _create(Class<?>[] argTypes, Object... args) throws CreateException;
 
     @Override
     public T create(Object... args) throws CreateException {

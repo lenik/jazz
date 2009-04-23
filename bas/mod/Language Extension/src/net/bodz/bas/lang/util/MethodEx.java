@@ -53,8 +53,7 @@ public class MethodEx {
         return Reflects.invoke(obj, method, arg);
     }
 
-    protected Object invokeOnUnknownType(Object obj, Class<?> argType,
-            Object arg) {
+    protected Object invokeOnUnknownType(Object obj, Class<?> argType, Object arg) {
         throw new OutOfDomainException("argType", argType); //$NON-NLS-1$
     }
 

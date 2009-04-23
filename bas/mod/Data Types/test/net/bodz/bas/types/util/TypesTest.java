@@ -44,8 +44,7 @@ public class TypesTest {
                 return Types.joinNames(", ", true, input); //$NON-NLS-1$
             }
         }, //
-                EQU(new Class<?>[] { java.util.List.class,
-                        java.lang.String.class }, //
+                EQU(new Class<?>[] { java.util.List.class, java.lang.String.class }, //
                         "List, String"), // //$NON-NLS-1$
                 END);
     }

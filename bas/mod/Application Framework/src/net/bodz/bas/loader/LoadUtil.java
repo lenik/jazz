@@ -40,8 +40,7 @@ public class LoadUtil {
             libfile = _findLib(libspec);
         if (libfile == null)
             if (errorFail)
-                throw new Error(
-                        AppNLS.getString("LoadUtil.cantResolveLib") + libspec); //$NON-NLS-1$
+                throw new Error(AppNLS.getString("LoadUtil.cantResolveLib") + libspec); //$NON-NLS-1$
             else
                 return null;
         return new URL[] { Files.getURL(libfile) };
@@ -83,8 +82,7 @@ public class LoadUtil {
             File start = Files.canoniOf("."); //$NON-NLS-1$
             File base = SJProject.findProjectBase(start);
             if (base == null)
-                throw new IllegalArgumentException(AppNLS
-                        .getString("LoadUtil.cantFindProjectBase") //$NON-NLS-1$
+                throw new IllegalArgumentException(AppNLS.getString("LoadUtil.cantFindProjectBase") //$NON-NLS-1$
                         + start);
             try {
                 return new EclipseProject(base).getClasspaths();
@@ -92,8 +90,8 @@ public class LoadUtil {
                 throw new RuntimeException(e);
             }
         } else
-            throw new IllegalArgumentException(AppNLS
-                    .getString("LoadUtil.unsupportedPackName") + name); //$NON-NLS-1$
+            throw new IllegalArgumentException(
+                    AppNLS.getString("LoadUtil.unsupportedPackName") + name); //$NON-NLS-1$
     }
 
     static File _findLib(String name) {
@@ -104,14 +102,13 @@ public class LoadUtil {
         return sjlibs.findFile(jar);
     }
 
-    public static void execMain(ClassLoader realLoader, String className,
-            String... args) throws Throwable {
+    public static void execMain(ClassLoader realLoader, String className, String... args)
+            throws Throwable {
         Class<?> clazz = Class.forName(className, true, realLoader);
         execMain(clazz, args);
     }
 
-    public static void execMain(Class<?> clazz, String... args)
-            throws Throwable {
+    public static void execMain(Class<?> clazz, String... args) throws Throwable {
         Method mainf = clazz.getMethod("main", String[].class); //$NON-NLS-1$
         try {
             Control.invoke(mainf, null, (Object) args);

@@ -12,8 +12,7 @@ public class LoaderTest {
         System.out.println("! loaded " + LoaderTest.class); //$NON-NLS-1$
     }
 
-    public static Class<?> findClass(String className)
-            throws ClassNotFoundException {
+    public static Class<?> findClass(String className) throws ClassNotFoundException {
         return Class.forName(className);
     }
 
