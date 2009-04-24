@@ -37,6 +37,8 @@ public interface Project extends Component {
 
     Variable get(String variableName);
 
+    BaseDirVariable getBaseDir(String variableName);
+
     /**
      * @throws IllegalStateException
      *             if loop detected

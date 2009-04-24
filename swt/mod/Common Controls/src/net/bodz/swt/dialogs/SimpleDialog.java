@@ -84,7 +84,8 @@ public abstract class SimpleDialog extends Dialog implements Ref<Object> {
         shell.layout();
         shell.open();
 
-        Display display = (parent != null ? parent : shell).getDisplay();
+        Display display = Display.getCurrent(); // (parent != null ? parent :
+                                                // shell).getDisplay();
         canceled = true;
         while (!shell.isDisposed()) {
             if (!display.readAndDispatch())
@@ -301,7 +302,7 @@ public abstract class SimpleDialog extends Dialog implements Ref<Object> {
 
     public void setTitle(String title) {
         if (title == null)
-            title = "(no title)";
+            title = ControlsNLS.getString("SimpleDialog.noTitle"); //$NON-NLS-1$
         this.title = title;
         if (shell != null)
             shell.setText(title);

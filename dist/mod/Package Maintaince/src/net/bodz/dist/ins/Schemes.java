@@ -16,7 +16,7 @@ public class Schemes {
 
         public _Scheme(String name, String caption, Component... autoComponents) {
             if (name == null)
-                throw new NullPointerException("name");
+                throw new NullPointerException("name"); //$NON-NLS-1$
             this.name = name;
             if (caption == null)
                 caption = Strings.ucfirst(name);
@@ -45,15 +45,15 @@ public class Schemes {
 
     }
 
-    public static final String MINIMUM = "minimum";
-    public static final String DEFAULT = "default";
-    public static final String MAXIMUM = "maximum";
-    public static final String CUSTOM  = "custom";
+    public static final String MINIMUM = "minimum"; //$NON-NLS-1$
+    public static final String DEFAULT = "default"; //$NON-NLS-1$
+    public static final String MAXIMUM = "maximum"; //$NON-NLS-1$
+    public static final String CUSTOM  = "custom"; //$NON-NLS-1$
 
     public static class Minimum extends _Scheme {
 
         public Minimum(Component... autoComponents) {
-            super(MINIMUM, "Minimum", autoComponents);
+            super(MINIMUM, PackNLS.getString("Schemes.minimum"), autoComponents); //$NON-NLS-1$
         }
 
         @Override
@@ -71,7 +71,7 @@ public class Schemes {
     public static class Default extends _Scheme {
 
         public Default(Component... autoComponents) {
-            super(DEFAULT, "Standard", autoComponents);
+            super(DEFAULT, PackNLS.getString("Schemes.standard"), autoComponents); //$NON-NLS-1$
         }
 
         @Override
@@ -89,7 +89,7 @@ public class Schemes {
     public static class Maximum extends _Scheme {
 
         public Maximum(Component... autoComponents) {
-            super(MAXIMUM, "Maximum", autoComponents);
+            super(MAXIMUM, PackNLS.getString("Schemes.maximum"), autoComponents); //$NON-NLS-1$
         }
 
         @Override
@@ -107,7 +107,7 @@ public class Schemes {
     public static class Custom extends _Scheme {
 
         public Custom(Component... autoComponents) {
-            super(CUSTOM, "Custom", autoComponents);
+            super(CUSTOM, PackNLS.getString("Schemes.custom2"), autoComponents); //$NON-NLS-1$
         }
 
         @Override

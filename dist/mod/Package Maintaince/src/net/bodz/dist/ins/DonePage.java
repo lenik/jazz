@@ -6,6 +6,7 @@ import net.bodz.swt.gui.pfl.PageComposite;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -27,7 +28,7 @@ class DonePage extends PageComposite {
         final Label thsInstallationProcessLabel = new Label(this, SWT.WRAP);
         thsInstallationProcessLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
         thsInstallationProcessLabel
-                .setText("Ths installation process is completed, you may choose to reboot the computer. ");
+                .setText(PackNLS.getString("DonePage.installCompleted")); //$NON-NLS-1$
 
         final Button rebootCheck = new Button(this, SWT.CHECK);
         rebootCheck.setText(PackNLS.getString("DonePage.reboot")); //$NON-NLS-1$
@@ -50,6 +51,16 @@ class DonePage extends PageComposite {
     public void enter(String prev, int reason) {
         boolean reboot = session.getFlags().isSet(ISession.REBOOT);
         setExitState(reboot ? "reboot" : "quit"); //$NON-NLS-1$ //$NON-NLS-2$
+    }
+
+    @Override
+    public ImageData getPageIcon() {
+        return super.getPageIcon();
+    }
+
+    @Override
+    public String getPageTitle() {
+        return PackNLS.getString("DonePage.done"); //$NON-NLS-1$
     }
 
 }

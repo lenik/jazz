@@ -2,13 +2,19 @@ package net.bodz.dist.ins;
 
 import net.bodz.bas.io.FileResFolder;
 import net.bodz.bas.io.ZipResFolder;
+import net.bodz.bas.lang.util.Reflects;
 import net.bodz.bas.util.LogTerm;
+import net.bodz.bas.util._Job;
 
 import org.junit.Test;
 
 public class InstallerTest {
 
-    @Test
+    static {
+        Reflects.setStatic(_Job.class, "slowdown", 10); //$NON-NLS-1$
+    }
+
+    // @Test
     public void testFromDir() throws Throwable {
         TestProject project = new TestProject();
         Installer installer = new Installer(project) {
@@ -23,13 +29,15 @@ public class InstallerTest {
         installer.run();
     }
 
-    public void testFromJar() throws Throwable {
+    @Test
+    public void testFromZip() throws Throwable {
         TestProject project = new TestProject();
         Installer installer = new Installer(project) {
             @Override
             public void setSession(ISession session) {
                 super.setSession(session);
-                session.addResFolder(new ZipResFolder(TestConfig.outJar));
+                session.getLogger().setLevel(LogTerm.DEBUG);
+                session.addResFolder(new ZipResFolder(TestConfig.outDirZip));
                 TestConfig.setTestBaseDir(session);
             }
         };

@@ -154,7 +154,7 @@ public class CustomPage extends ConfigPage {
                     dirText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
                     File sessionFileValue = (File) session.get(name);
                     if (sessionFileValue == null)
-                        throw new NullPointerException("file variable is set to null in session: "
+                        throw new NullPointerException(PackNLS.getString("CustomPage.varSetToNull") //$NON-NLS-1$
                                 + name);
 
                     dirText.setData(name);
@@ -274,7 +274,7 @@ public class CustomPage extends ConfigPage {
 
     @Override
     public String getPageTitle() {
-        return "Custom Components";
+        return PackNLS.getString("CustomPage.title"); //$NON-NLS-1$
     }
 
     @Override
@@ -285,8 +285,8 @@ public class CustomPage extends ConfigPage {
         List<Entry> missingList = missingBuffer.getList();
         if (!missingList.isEmpty()) {
             SelectComponentsDialog dialog = new SelectComponentsDialog(getShell(), SWT.NONE,
-                    "Check missing components",
-                    "The following missing components are required due to dependancy:", missingList);
+                    PackNLS.getString("CustomPage.checkMissings"), //$NON-NLS-1$
+                    PackNLS.getString("CustomPage.checkMissings.caption"), missingList); //$NON-NLS-1$
             Collection<Component> add = dialog.open();
             if (add == null)
                 throw new SlientValidationException(tree);
@@ -306,8 +306,7 @@ public class CustomPage extends ConfigPage {
             else if (!dirFile.exists()) {
                 UserInterface UI = session.getUserInterface();
                 boolean confirmed = UI.confirm(PackNLS.getString("CustomPage.createDirQ"), //$NON-NLS-1$
-                        PackNLS.getString("CustomPage.11") + dirFile //$NON-NLS-1$
-                                + " isn't existed, shall I create it?"); //$NON-NLS-1$
+                        PackNLS.format("CustomPage.confirmMkdir", dirFile));//$NON-NLS-1$
                 if (!confirmed) {
                     throw new SlientValidationException(dirText);
                 } else if (!dirFile.mkdirs())

@@ -28,7 +28,7 @@ public class InstallCompositeTest {
                 app.shell.dispose();
             }
         });
-        System.out.println("Created: " + c);
+        System.out.println("Created: " + c); //$NON-NLS-1$
 
         app.run();
     }

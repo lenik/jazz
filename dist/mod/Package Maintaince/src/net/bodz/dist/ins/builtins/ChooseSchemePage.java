@@ -78,7 +78,7 @@ public class ChooseSchemePage extends ConfigPage {
 
     @Override
     public String getPageTitle() {
-        return "Choose Install Type: ";
+        return PackNLS.getString("ChooseSchemePage.title"); //$NON-NLS-1$
     }
 
     @Override

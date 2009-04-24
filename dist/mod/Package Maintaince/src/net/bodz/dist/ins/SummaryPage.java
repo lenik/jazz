@@ -1,6 +1,7 @@
 package net.bodz.dist.ins;
 
 import net.bodz.bas.io.CharOuts.BCharOut;
+import net.bodz.dist.nls.PackNLS;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.ImageData;
@@ -22,7 +23,7 @@ class SummaryPage extends ConfigPage {
         this.session = session;
 
         final Label sessionConfigurationLabel = new Label(this, SWT.NONE);
-        sessionConfigurationLabel.setText("Session Configuration: ");
+        sessionConfigurationLabel.setText(PackNLS.getString("SummaryPage.sessionConfig")); //$NON-NLS-1$
 
         text = new Text(this, SWT.WRAP | SWT.V_SCROLL | SWT.READ_ONLY | SWT.MULTI | SWT.BORDER);
         text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
@@ -35,7 +36,7 @@ class SummaryPage extends ConfigPage {
 
     @Override
     public String getPageTitle() {
-        return "Summary";
+        return PackNLS.getString("SummaryPage.summary"); //$NON-NLS-1$
     }
 
     @Override

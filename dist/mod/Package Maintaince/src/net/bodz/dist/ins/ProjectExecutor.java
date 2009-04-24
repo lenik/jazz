@@ -15,13 +15,13 @@ public abstract class ProjectExecutor extends JobObserver {
 
     public ProjectExecutor(Project project, UserInterface userInterface, LogTerm logger) {
         if (project == null)
-            throw new NullPointerException("project");
+            throw new NullPointerException("project"); //$NON-NLS-1$
         if (userInterface == null)
-            throw new NullPointerException("userInterface");
+            throw new NullPointerException("userInterface"); //$NON-NLS-1$
         if (userInterface == null)
-            throw new NullPointerException("userInterface");
+            throw new NullPointerException("userInterface"); //$NON-NLS-1$
         if (logger == null)
-            throw new NullPointerException("logger");
+            throw new NullPointerException("logger"); //$NON-NLS-1$
         this.project = project;
         this.session = new Session(project, userInterface, logger);
         this.UI = userInterface;
@@ -30,7 +30,7 @@ public abstract class ProjectExecutor extends JobObserver {
 
     public ProjectExecutor(ISession session, UserInterface userInterface, LogTerm logger) {
         if (session == null)
-            throw new NullPointerException("session");
+            throw new NullPointerException("session"); //$NON-NLS-1$
         this.project = session.getProject();
         this.session = session;
         this.UI = userInterface;
@@ -65,11 +65,14 @@ public abstract class ProjectExecutor extends JobObserver {
 
     void execute(int type, ISession session) throws SessionException {
         LogTerm _logger = session.getLogger();
+        SessionJob job;
         try {
             session.setLogger(L);
-            SessionJob job = project.execute(type, session);
-            if (job == null)
-                return;
+            job = project.execute(type, session);
+        } finally {
+            session.setLogger(_logger);
+        }
+        if (job != null) {
             if (L.showDebug())
                 job.dump(CharOuts.stdout);
             bind(job);
@@ -78,8 +81,6 @@ public abstract class ProjectExecutor extends JobObserver {
             } finally {
                 unbind(job);
             }
-        } finally {
-            session.setLogger(_logger);
         }
     }
 

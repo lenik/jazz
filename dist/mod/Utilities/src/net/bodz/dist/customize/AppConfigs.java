@@ -71,4 +71,5 @@ public class AppConfigs {
         System.out.println("SWTPath: " + getSWTPath());
         System.out.println("ConfigPath: " + getConfigPath());
     }
+
 }

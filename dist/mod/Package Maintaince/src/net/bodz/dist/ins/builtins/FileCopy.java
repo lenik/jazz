@@ -59,9 +59,9 @@ public class FileCopy extends _Component {
     public FileCopy(String baseName, String basePath, File localBase, Collection<File> files) {
         super(false, true);
         if (baseName == null)
-            throw new NullPointerException("baseName");
+            throw new NullPointerException("baseName"); //$NON-NLS-1$
         if (files == null)
-            throw new NullPointerException("files");
+            throw new NullPointerException("files"); //$NON-NLS-1$
         this.baseName = baseName;
         this.basePath = basePath;
         // this.localBase = localBase;
@@ -108,11 +108,11 @@ public class FileCopy extends _Component {
     @Override
     public String toString() {
         CharOut buf = new BCharOut(files.size() * 50);
-        buf.println("FileCopy(" + getName() + ")");
-        buf.println("  base=", baseName, //
-                basePath == null ? "" : ("::" + basePath));
-        buf.println("  removal=", removal);
-        buf.println("  count=", files.size());
+        buf.println("FileCopy(" + getName() + ")"); //$NON-NLS-1$ //$NON-NLS-2$
+        buf.println("  base=", baseName, // //$NON-NLS-1$
+                basePath == null ? "" : ("::" + basePath)); //$NON-NLS-1$ //$NON-NLS-2$
+        buf.println("  removal=", removal); //$NON-NLS-1$
+        buf.println("  count=", files.size()); //$NON-NLS-1$
         return buf.toString();
     }
 
@@ -146,7 +146,7 @@ public class FileCopy extends _Component {
     private static class NoSVN implements PruneFileFilter {
         @Override
         public boolean accept(File pathname) {
-            if (".svn".equals(pathname.getName().toLowerCase()))
+            if (".svn".equals(pathname.getName().toLowerCase())) //$NON-NLS-1$
                 return false;
             return true;
         }
@@ -165,7 +165,7 @@ public class FileCopy extends _Component {
             int count = files.size();
             List<String> regList = new ArrayList<String>(count);
             Attachment a = getAttachment(session, true);
-            L.finfo("Pack %s files to %s\n", getId(), a);
+            L.finfo(PackNLS.getString("FileCopy.packFiles_ss"), getId(), a); //$NON-NLS-1$
 
             JarOutputStream jout;
             try {
@@ -178,7 +178,8 @@ public class FileCopy extends _Component {
             setProgressSize(count);
             int index = 0;
             for (File f : files) {
-                setProgressIndex(index++);
+                if (!moveOn(index++))
+                    break;
                 String path = f.getPath();
                 if (f.isDirectory())
                     if (!dirStruct)
@@ -192,7 +193,7 @@ public class FileCopy extends _Component {
                     // fix: see "path += File.separator" above.
                     if (!path.startsWith(removal)) {
                         String mesg = PackNLS.getString("FileCopy.notWithinPrefix") + removal //$NON-NLS-1$
-                                + ": " + path;
+                                + ": " + path; //$NON-NLS-1$
                         if (recoverException(new InstallException(mesg)))
                             continue; // next file
                         return;
@@ -202,22 +203,22 @@ public class FileCopy extends _Component {
                     // but escapes..?
                     dest = dest.replace(File.separatorChar, '/');
                     if (dest.isEmpty())
-                        dest = "/";
+                        dest = "/"; //$NON-NLS-1$
                 }
                 if (preConstruct) {
                     if (basePath != null)
-                        dest = basePath + "/" + dest;
+                        dest = basePath + "/" + dest; //$NON-NLS-1$
                 }
                 try {
                     if (f.isDirectory()) {
-                        assert dest.endsWith("/");
-                        L.detail("Put entry ", dest);
+                        assert dest.endsWith("/"); //$NON-NLS-1$
+                        L.detail(PackNLS.getString("FileCopy.putEntry"), dest); //$NON-NLS-1$
                         JarEntry entry = new JarEntry(dest);
                         jout.putNextEntry(entry);
                         jout.closeEntry();
                     } else if (f.isFile()) {
                         long fileSize = f.length();
-                        L.detail("Put entry ", dest, " (size=", fileSize, ")");
+                        L.detail(PackNLS.getString("FileCopy.putEntry"), dest, PackNLS.getString("FileCopy.size_"), fileSize, ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                         JarEntry entry = new JarEntry(dest);
                         jout.putNextEntry(entry);
                         entry.setSize(fileSize);
@@ -226,7 +227,7 @@ public class FileCopy extends _Component {
                         }
                         jout.closeEntry();
                     } else {
-                        L.warn("Ignored file of unknown type: ", f);
+                        L.warn(PackNLS.getString("FileCopy.unknownFileType"), f); //$NON-NLS-1$
                         continue;
                     }
                     regList.add(dest);
@@ -255,10 +256,10 @@ public class FileCopy extends _Component {
             if (!preConstruct)
                 if (basePath != null)
                     baseDir = new File(baseDir, basePath);
-            L.finfo("Install %s files to %s\n", getId(), baseDir);
+            L.finfo(PackNLS.getString("FileCopy.installFiles_ss"), getId(), baseDir); //$NON-NLS-1$
             String[] regList = (String[]) getRegistryData();
             if (regList == null)
-                throw new NullPointerException("regList");
+                throw new NullPointerException("regList"); //$NON-NLS-1$
             setProgressSize(regList.length);
 
             Attachment a = getAttachment(session, false);
@@ -272,16 +273,17 @@ public class FileCopy extends _Component {
             int index = 0;
             try {
                 for (String name : regList) {
-                    setProgressIndex(index++);
+                    if (!moveOn(index++))
+                        break;
                     ZipEntry entry = zipFile.getEntry(name);
                     if (entry == null) {
-                        InstallException ex = new InstallException("Entry isn't existed: " + name);
+                        InstallException ex = new InstallException(PackNLS.getString("FileCopy.entryIsntExisted") + name); //$NON-NLS-1$
                         if (recoverException(ex))
                             continue;
                         break;
                     }
                     boolean isdir = false;
-                    if (name.endsWith("/")) {
+                    if (name.endsWith("/")) { //$NON-NLS-1$
                         isdir = true;
                         name = name.substring(0, name.length() - 1);
                     }
@@ -325,7 +327,7 @@ public class FileCopy extends _Component {
                             try {
                                 destOut.close();
                             } catch (IOException e) {
-                                L.warn("Can't close dest file ", destFile);
+                                L.warn(PackNLS.getString("FileCopy.cantCloseDest"), destFile); //$NON-NLS-1$
                             }
                     }
                 }
@@ -351,7 +353,7 @@ public class FileCopy extends _Component {
                 if (basePath != null)
                     baseDir = new File(baseDir, basePath);
             }
-            L.finfo("Remove %s files from %s\n", getId(), baseDir);
+            L.finfo(PackNLS.getString("FileCopy.removeFiles_ss"), getId(), baseDir); //$NON-NLS-1$
             Attachment a = getAttachment(session, false);
             ZipInputStream zin = null;
             try {
@@ -367,7 +369,7 @@ public class FileCopy extends _Component {
                     names.add(entry.getName());
                 zin.close();
             } catch (IOException e) {
-                throwException(new InstallException("Failed to list the archive", e));
+                throwException(new InstallException(PackNLS.getString("FileCopy.failedToListArchive"), e)); //$NON-NLS-1$
                 return;
             } finally {
                 try {
@@ -378,20 +380,20 @@ public class FileCopy extends _Component {
             }
             Collections.reverse(names);
             for (String name : names) {
-                boolean isdir = name.endsWith("/");
+                boolean isdir = name.endsWith("/"); //$NON-NLS-1$
                 if (isdir)
                     name = name.substring(0, name.length() - 1);
                 File dest = new File(baseDir, name);
                 if (isdir) {
-                    L.detail("Delete directory ", dest);
+                    L.detail(PackNLS.getString("FileCopy.deleteDir"), dest); //$NON-NLS-1$
                     dest.delete();
                     continue;
                 }
-                L.detail("Delete file ", dest);
+                L.detail(PackNLS.getString("FileCopy.deleteFile"), dest); //$NON-NLS-1$
                 if (dest.delete())
                     Utils.removeEmptyParents(dest.getParentFile(), baseDir);
                 else {
-                    L.fdetail("Can't delete file %s, try at exit\n", dest);
+                    L.fdetail(PackNLS.getString("FileCopy.cantDelete_s"), dest); //$NON-NLS-1$
                     dest.deleteOnExit();
                     session.getFlags().set(ISession.REBOOT);
                 }

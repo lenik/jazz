@@ -11,6 +11,7 @@ import net.bodz.bas.types.util.Strings;
 import net.bodz.dist.ins.Component;
 import net.bodz.dist.ins.util.Indices;
 import net.bodz.dist.ins.util.MissingDependancyBuffer.Entry;
+import net.bodz.dist.nls.PackNLS;
 import net.bodz.swt.dialogs.SimpleDialog;
 
 import org.eclipse.swt.SWT;
@@ -36,7 +37,7 @@ public class SelectComponentsDialog extends SimpleDialog {
         super(parent, style, title);
         setText(text);
         if (entries == null)
-            throw new NullPointerException("entries");
+            throw new NullPointerException("entries"); //$NON-NLS-1$
         int size = entries.size();
         indents = new String[size];
         components = new Component[size];
@@ -53,7 +54,7 @@ public class SelectComponentsDialog extends SimpleDialog {
         super(parent, style, title);
         setText(text);
         if (components == null)
-            throw new NullPointerException("components");
+            throw new NullPointerException("components"); //$NON-NLS-1$
         this.components = components;
     }
 
@@ -86,11 +87,11 @@ public class SelectComponentsDialog extends SimpleDialog {
             if (indents != null)
                 indent = indents[i];
             Component c = components[i];
-            String s = indent == null ? "" : indent;
+            String s = indent == null ? "" : indent; //$NON-NLS-1$
             s += c.getText();
             String doc = c.getDoc();
             if (doc != null)
-                s += " - " + doc;
+                s += " - " + doc; //$NON-NLS-1$
             list.add(s);
         }
     }
@@ -104,7 +105,7 @@ public class SelectComponentsDialog extends SimpleDialog {
     @Override
     protected void createUserButtons(Composite parent) throws CreateException {
         Button selectAll = new Button(parent, SWT.NONE);
-        selectAll.setText("Select &All");
+        selectAll.setText(PackNLS.getString("SelectComponentsDialog.selectAll")); //$NON-NLS-1$
         selectAll.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -112,7 +113,7 @@ public class SelectComponentsDialog extends SimpleDialog {
             }
         });
         Button selectInverse = new Button(parent, SWT.NONE);
-        selectInverse.setText("&Inverse");
+        selectInverse.setText(PackNLS.getString("SelectComponentsDialog.selectInverse")); //$NON-NLS-1$
         selectInverse.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {

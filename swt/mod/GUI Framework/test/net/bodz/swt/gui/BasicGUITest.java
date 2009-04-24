@@ -24,7 +24,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 import org.junit.Test;
 
-public class HelloWorld extends BasicGUI {
+public class BasicGUITest extends BasicGUI {
 
     @Visible(false)
     String        greeting = "Hello"; //$NON-NLS-1$

@@ -17,13 +17,13 @@ public class SelectComponentsDialogTest {
         Components components = Components.collect(project);
         Component[] cv = components.values().toArray(new Component[0]);
         SelectComponentsDialog dialog = new SelectComponentsDialog(null, SWT.NONE,
-                "Select Components Test", "Please select components:", cv);
+                "Select Components Test", "Please select components:", cv); //$NON-NLS-1$ //$NON-NLS-2$
         Collection<Component> selection = dialog.open();
         if (selection == null)
-            System.out.println("Canceled");
+            System.out.println("Canceled"); //$NON-NLS-1$
         else
             for (Component c : selection) {
-                System.out.printf("Selected: %s - %s\n", c.getId(), c.getText());
+                System.out.printf("Selected: %s - %s\n", c.getId(), c.getText()); //$NON-NLS-1$
             }
     }
 

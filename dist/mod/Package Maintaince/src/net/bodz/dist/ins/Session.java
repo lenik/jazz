@@ -15,8 +15,10 @@ import java.util.Map.Entry;
 import net.bodz.bas.io.CWD;
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.FileResFolder;
+import net.bodz.bas.io.Files;
 import net.bodz.bas.io.ResFolder;
 import net.bodz.bas.io.ResLink;
+import net.bodz.bas.snm.SJProject;
 import net.bodz.bas.text.interp.VariableExpand;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TreeTextMap;
@@ -24,11 +26,12 @@ import net.bodz.bas.ui.UserInterface;
 import net.bodz.bas.util.LogTerm;
 import net.bodz.bas.xml.XMLs;
 import net.bodz.dist.ins.util.Flags;
+import net.bodz.dist.nls.PackNLS;
 
 public class Session implements ISession {
 
-    static final String               attachmentsPath = ".attachments";
-    static final String               registryPath    = "registry.xml";
+    static final String               attachmentsPath = ".attachments"; //$NON-NLS-1$
+    static final String               registryPath    = "registry.xml"; //$NON-NLS-1$
 
     private final Project             project;
     protected final UserInterface     UI;
@@ -51,14 +54,14 @@ public class Session implements ISession {
         if (project == null)
             throw new NullPointerException("project"); //$NON-NLS-1$
         if (userInterface == null)
-            throw new NullPointerException("userInterface");
+            throw new NullPointerException("userInterface"); //$NON-NLS-1$
         if (logger == null)
             throw new NullPointerException("logger"); //$NON-NLS-1$
         this.project = project;
         this.UI = userInterface;
         this.L = logger;
 
-        logger.info("Collect components");
+        logger.info(PackNLS.getString("Session.collectComponents")); //$NON-NLS-1$
         components = Components.collect(project);
         scheme = new Schemes.Default();
         flags = new Flags();
@@ -75,7 +78,13 @@ public class Session implements ISession {
         }
 
         resFolders = new ArrayList<ResFolder>();
+        addResFolder(new FileResFolder(Files.canoniOf("."), true)); //$NON-NLS-1$
         addResFolder(new FileResFolder(CWD.getcwd(), true));
+        Class<?> projectClass = project.getClass();
+        ResFolder projectResBase = SJProject.getResBase(projectClass);
+        addResFolder(projectResBase);
+        ResFolder installerResBase = SJProject.getResBase(Installer.class);
+        addResFolder(installerResBase);
 
         searchLoaders = new ArrayList<ClassLoader>();
         searchLoaders.add(ClassLoader.getSystemClassLoader());
@@ -99,7 +108,7 @@ public class Session implements ISession {
 
     public void setScheme(String schemeName) {
         if (schemeName == null)
-            throw new NullPointerException("schemeName");
+            throw new NullPointerException("schemeName"); //$NON-NLS-1$
         Scheme[] schemes = project.getSchemes();
         assert schemes != null;
         for (Scheme scheme : schemes) {
@@ -156,7 +165,7 @@ public class Session implements ISession {
     @Override
     public void set(String name, Object value) {
         if (variables == null)
-            throw new IllegalStateException("Set to the session env using setEnv.");
+            throw new IllegalStateException("Set to the session env using setEnv."); //$NON-NLS-1$
         variables.put(name, value);
     }
 
@@ -173,8 +182,11 @@ public class Session implements ISession {
     }
 
     @Override
-    public void addResFolder(ResFolder resFolder) {
+    public boolean addResFolder(ResFolder resFolder) {
+        if (resFolders.contains(resFolder))
+            return false;
         resFolders.add(resFolder);
+        return true;
     }
 
     @Override
@@ -205,7 +217,7 @@ public class Session implements ISession {
             return newResource(path);
         else {
             if (firstUnknownLink == null)
-                throw new NoSuchElementException("Resource isn't existed: " + path);
+                throw new NoSuchElementException(PackNLS.getString("Session.resIsntExisted") + path); //$NON-NLS-1$
             return firstUnknownLink;
         }
     }
@@ -237,11 +249,11 @@ public class Session implements ISession {
     public void closeAttachments() {
         for (Entry<String, StatedAttachment> entry : apool.entrySet()) {
             StatedAttachment a = entry.getValue();
-            L.debug("Close attachment ", a);
+            L.debug(PackNLS.getString("Session.closeAttachment"), a); //$NON-NLS-1$
             try {
                 a.close();
             } catch (IOException e) {
-                L.warn("Can't close attachment: ", a);
+                L.warn(PackNLS.getString("Session.cantCloseAttachment"), a); //$NON-NLS-1$
             }
         }
         apool.clear();
@@ -253,20 +265,20 @@ public class Session implements ISession {
             // load registry before install/uinstall
             ResLink registryLink = findResource(registryPath, false);
             if (registryLink.exists() == Boolean.TRUE) {
-                L.info("Loading registry from ", registryLink);
+                L.info(PackNLS.getString("Session.loadRegistry"), registryLink); //$NON-NLS-1$
                 InputStream in = registryLink.openInputStream();
                 Object obj = XMLs.decode(in, new ExWarn());
                 in.close();
                 if (!(obj instanceof Map<?, ?>))
-                    throw new SessionException("bad decoded registry: " + obj);
+                    throw new SessionException(PackNLS.getString("Session.registryIsntMap") + obj); //$NON-NLS-1$
                 @SuppressWarnings("unchecked")
                 Map<String, Object> registry = (Map<String, Object>) obj;
-                L.info("Registry data to load: ", registry);
+                L.info(PackNLS.getString("Session.registryToLoad"), registry); //$NON-NLS-1$
                 components.importRegistry(registry);
-                L.info("Registry loaded");
+                L.info(PackNLS.getString("Session.registryLoaded")); //$NON-NLS-1$
             }
         } catch (IOException e) {
-            throw new SessionException("Failed to load registry", e);
+            throw new SessionException(PackNLS.getString("Session.failedToLoadRegistry"), e); //$NON-NLS-1$
         }
     }
 
@@ -276,55 +288,55 @@ public class Session implements ISession {
             // save registry after packed
             TextMap<Object> registry = components.exportRegistry();
             if (registry != null) {
-                L.info("Registry data to save: ", registry);
+                L.info(PackNLS.getString("Session.registryToSave"), registry); //$NON-NLS-1$
                 ResLink registryLink = newResource(registryPath);
-                L.info("Saving registry to ", registryLink);
+                L.info(PackNLS.getString("Session.saveRegistryTo"), registryLink); //$NON-NLS-1$
                 OutputStream out = registryLink.openOutputStream(false);
                 XMLs.encode(registry, out, new ExWarn());
                 out.close();
-                L.info("Registry saved");
+                L.info(PackNLS.getString("Session.registrySaved")); //$NON-NLS-1$
             }
         } catch (IOException e) {
-            throw new SessionException("Failed to save registry", e);
+            throw new SessionException(PackNLS.getString("Session.failedToSaveRegistry"), e); //$NON-NLS-1$
         }
     }
 
     @Override
     public void dump(CharOut out) {
-        out.println("Session ", this, ": ");
-        out.println("  Project = ", project);
-        out.println("  Scheme = ", scheme);
+        out.println(PackNLS.getString("Session.session_"), this, ": "); //$NON-NLS-1$ //$NON-NLS-2$
+        out.println(PackNLS.getString("Session._project"), project); //$NON-NLS-1$
+        out.println(PackNLS.getString("Session._scheme"), scheme); //$NON-NLS-1$
         for (ResFolder resFolder : resFolders)
-            out.println("  Resource Folder = ", resFolder);
+            out.println(PackNLS.getString("Session._resFolder"), resFolder); //$NON-NLS-1$
         for (Map.Entry<String, Object> e : variables.entrySet())
-            out.printf("  Var %s = %s\n", e.getKey(), e.getValue());
+            out.printf(PackNLS.getString("Session._var_ss"), e.getKey(), e.getValue()); //$NON-NLS-1$
         int i = 0;
         i = 0;
         for (ClassLoader searchLoader : searchLoaders)
-            out.printf("  Search Loader[%d] = %s\n", i++, searchLoader);
+            out.printf(PackNLS.getString("Session._searchLoader_ds"), i++, searchLoader); //$NON-NLS-1$
         if (apool != null) {
             Set<Entry<String, StatedAttachment>> entrySet = apool.entrySet();
             for (Entry<String, StatedAttachment> entry : entrySet) {
                 String name = entry.getKey();
                 StatedAttachment a = entry.getValue();
-                out.printf("  Pool Attachment[%s] = %s\n", name, a);
+                out.printf(PackNLS.getString("Session._poolAttachment_ss"), name, a); //$NON-NLS-1$
             }
         }
-        out.println("  Component Tree: ");
-        dump(out, project, "    ");
+        out.println(PackNLS.getString("Session._componentTree")); //$NON-NLS-1$
+        dump(out, project, "    "); //$NON-NLS-1$
     }
 
     void dump(CharOut out, Component c, String prefix) {
         boolean included = getScheme().isIncluded(c);
-        String flags = "";
+        String flags = ""; //$NON-NLS-1$
         if (included)
-            flags += "x";
-        out.printf(prefix + "(%s) %s: %s\n", //
+            flags += "x"; //$NON-NLS-1$
+        out.printf(prefix + "(%s) %s: %s\n", // //$NON-NLS-1$
                 flags, c.getId(), c.getClass().getSimpleName());
         List<? extends Component> children = c.getChildren();
         if (children != null) {
             for (Component child : children)
-                dump(out, child, prefix + "  ");
+                dump(out, child, prefix + "  "); //$NON-NLS-1$
         }
     }
 }

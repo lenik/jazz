@@ -17,7 +17,7 @@ public class Section extends _Component {
         if (image == null)
             image = sectionImage;
         if (text == null)
-            throw new NullPointerException("text");
+            throw new NullPointerException("text"); //$NON-NLS-1$
         if (doc == null)
             doc = text;
         setVisible(visible);

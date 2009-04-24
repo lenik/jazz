@@ -61,10 +61,11 @@ public class R_Throwable extends SWTRenderer {
         comp.setLayout(layout);
         // assert var.getMeta().isReadOnly();
         Color errorColor = new Color(display, 0xCC, 0, 0);
-        Throwable th = (Throwable) var.get();
+        final Throwable throwable = (Throwable) var.get();
         int causeLevel = 0;
         int traceSkipped = 0;
         BCharOut errbuf = new BCharOut(4000);
+        Throwable th = throwable;
         while (th != null) {
             String mesg = String.valueOf(th); // th.getMessage();
             if (mesg == null)
@@ -186,7 +187,7 @@ public class R_Throwable extends SWTRenderer {
                     GUINLS.getString("R_Throwable.debug.doc")) {//$NON-NLS-1$
                 @Override
                 public void execute() {
-                    throw new ExpectedException("debug");
+                    throw new ExpectedException("debug", throwable); //$NON-NLS-1$
                 }
             };
             rc.addAction(debugAction);

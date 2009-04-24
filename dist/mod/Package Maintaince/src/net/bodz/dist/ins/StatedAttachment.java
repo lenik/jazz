@@ -32,7 +32,7 @@ public class StatedAttachment implements Attachment {
 
     public StatedAttachment(ResLink link, String encoding) {
         if (link == null)
-            throw new NullPointerException("link");
+            throw new NullPointerException("link"); //$NON-NLS-1$
         this.link = link;
         this.encoding = encoding;
     }
@@ -484,7 +484,7 @@ public class StatedAttachment implements Attachment {
         @Override
         public ZipOutputStream getZipOut() throws IOException {
             if (zout == null) {
-                OutputStream out = link.openOutputStream(false);
+                OutputStream out = link.openOutputStream(true); // false);
                 zout = new ZipOutputStream(out);
             }
             return zout;
@@ -511,7 +511,7 @@ public class StatedAttachment implements Attachment {
         @Override
         public JarOutputStream getJarOut() throws IOException {
             if (jout == null) {
-                OutputStream out = link.openOutputStream(false);
+                OutputStream out = link.openOutputStream(true); // XXX - false);
                 jout = new JarOutputStream(out);
             }
             return jout;

@@ -59,7 +59,7 @@ public class Installer extends BasicGUI {
             @Override
             public void wizardExit(WizardExitEvent e) {
                 shell.dispose();
-                System.out.println("Exit address: " + e.address);
+                System.out.println("Exit address: " + e.address); //$NON-NLS-1$
             }
         });
     }
@@ -72,7 +72,7 @@ public class Installer extends BasicGUI {
     }
 
     @Override
-    protected String getCopyrightString() {
+    protected String getBannerString() {
         ClassInfo info = _loadClassInfo();
         return PackNLS.getString("Installer.copyright") + info.getVersionString(); //$NON-NLS-1$
     }

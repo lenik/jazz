@@ -12,7 +12,7 @@ public class ComponentsTest {
     public void test1() throws Exception {
         Project project = new TestProject();
         Components components = Components.collect(project);
-        System.out.println("Components Count: " + components.size());
+        System.out.println("Components Count: " + components.size()); //$NON-NLS-1$
 
         ProjectExecutor executor = new ConsoleExecutor(project);
         ISession session = executor.getSession();

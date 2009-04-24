@@ -14,6 +14,11 @@ public class Serial {
      * <li>module: encoded int
      * <li>section: encoded int
      * </ul>
+     * Examples:
+     * <ul>
+     * <li>
+     * <code>A2QT1-Verification-Decryption-TrapDoor-Activation</code>
+     * </ul>
      */
     private String          modelName;
     private ProtectionModel model;

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.bodz.bas.a.A_bas;
+import net.bodz.dist.nls.PackNLS;
 
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Composite;
@@ -213,7 +214,7 @@ public abstract class _Component implements Component {
         }
 
         @Override
-        protected void _run() {
+        protected void runTree() {
             List<? extends SessionJob> list = getChildren();
             if (list == null || list.isEmpty())
                 return;
@@ -221,11 +222,12 @@ public abstract class _Component implements Component {
             setProgress(0, jobCount);
             double progressIndex = 0;
             for (SessionJob job : list) {
-                setStatus(job.getDescription());
+                if (!moveOn(progressIndex, job.getDescription()))
+                    return;
                 job.run();
                 progressIndex += job.progressIncrement;
-                setProgressIndex(progressIndex);
             }
+            setProgressIndex(jobCount);
         }
 
     }
@@ -244,7 +246,7 @@ public abstract class _Component implements Component {
             job = uninstall(session);
             break;
         default:
-            throw new IllegalArgumentException("Invalid type: " + type);
+            throw new IllegalArgumentException(PackNLS.getString("_Component.invalidType") + type); //$NON-NLS-1$
         }
 
         List<Component> children = getChildren();
@@ -277,15 +279,17 @@ public abstract class _Component implements Component {
         }
         if (q.isEmpty())
             return job;
+        // if (q.size() == 1)
+        // return q.get(0);
 
         for (SessionJob childJob : q) {
             double progressIncrement;
             Component child = childJob.getComponent();
             double c = child.getProgressScaleToParent();
             if (psum == 0) {
-                progressIncrement = 1.0 / q.size();
+                progressIncrement = 1.0; // / q.size();
             } else
-                progressIncrement = c / psum;
+                progressIncrement = q.size() * c / psum;
             // this make the offset
             childJob.progressIncrement = progressIncrement;
             // this make the scale

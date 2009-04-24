@@ -1,5 +1,6 @@
 package net.bodz.dist.ins;
 
+import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.io.term.BufferedTerminal;
 import net.bodz.bas.io.term.Terminal;
 import net.bodz.bas.lang.RecoverableExceptionEvent;
@@ -7,6 +8,8 @@ import net.bodz.bas.types.util.Strings;
 import net.bodz.bas.ui.Proposals;
 import net.bodz.bas.ui.UserInterface;
 import net.bodz.bas.util.DurationChangeEvent;
+import net.bodz.bas.util.Job;
+import net.bodz.bas.util.JobObserver;
 import net.bodz.bas.util.LogTerm;
 import net.bodz.bas.util.ProgressChangeEvent;
 import net.bodz.bas.util.StatusChangeEvent;
@@ -35,43 +38,42 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.ProgressBar;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.ToolItem;
 
-/**
- * @test ProgressPageTest
- */
 class ProgressPage extends PageComposite {
 
-    private static final int    BLOCK        = 0;
-    private static final int    DONE         = 1;
-    private static final int    CANCELED     = 2;
+    private static final int BLOCK        = 0;
+    private static final int DONE         = 1;
+    private static final int CANCELED     = 2;
 
-    private final ISession      session;
-    private final UserInterface UI;
+    private final ISession   session;
 
-    private int                 state        = BLOCK;
-    private Thread              installThread;
+    private int              state        = BLOCK;
+    private SessionJob       rootJob;
+    private Thread           jobThread;
 
-    private Label               imageLabel;
-    private Label               statusLabel;
+    private Label            imageLabel;
+    private Label            statusLabel;
 
-    private int                 progressSize = 1000;
-    private ProgressBar         progressBar;
-    private Label               progressText;
+    private int              progressSize = 1000;
+    private ProgressBar      progressBar;
+    private Label            progressText;
 
-    private int                 logMax       = 10000;
-    private WindowComposite     logDetail;
-    private List                logList;
+    private int              logMax       = 10000;
+    private WindowComposite  logDetail;
+    private ToolItem         pauseItem;
+    private ToolItem         cancelItem;
+    private List             logList;
 
-    private Composite           counterbar;
-    private Label               elapsedLabel;
-    private Label               remainingLabel;
+    private Composite        counterbar;
+    private Label            elapsedLabel;
+    private Label            remainingLabel;
 
     public ProgressPage(ISession session, Composite parent, int style) {
         super(parent, style);
 
         this.session = session;
-        this.UI = new DialogUI(getShell());
 
         final GridLayout gridLayout = new GridLayout();
         gridLayout.numColumns = 2;
@@ -81,7 +83,7 @@ class ProgressPage extends PageComposite {
         imageLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
 
         statusLabel = new Label(this, SWT.NONE); // SWT.WRAP);
-        statusLabel.setText("STATUS");
+        statusLabel.setText("STATUS"); //$NON-NLS-1$
         GridData statusData = new GridData(SWT.FILL, SWT.CENTER, true, false);
         // statusData.heightHint = 50;
         statusLabel.setLayoutData(statusData);
@@ -91,16 +93,18 @@ class ProgressPage extends PageComposite {
         progressBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
         progressText = new Label(this, SWT.NONE);
-        progressText.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 2, 1));
+        progressText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
+        progressText.setAlignment(SWT.CENTER);
         progressText.setText("0%"); //$NON-NLS-1$
 
         logDetail = new WindowComposite(this, SWT.NONE, true, this) {
+
             @Override
             protected void createContents(Composite parent, int style) {
                 logList = new List(parent, SWT.H_SCROLL | SWT.V_SCROLL);
 
                 final ToolItem copyItem = addToolItem(SWT.PUSH);
-                copyItem.setImage(SWTResources.getImageRes("/icons/full/etool16/copy_edit.gif"));
+                copyItem.setImage(SWTResources.getImageRes("/icons/full/etool16/copy_edit.gif")); //$NON-NLS-1$
                 copyItem.setToolTipText(PackNLS.getString("ProgressPage.copyClipboard")); //$NON-NLS-1$
                 copyItem.addSelectionListener(new SelectionAdapter() {
                     @Override
@@ -108,24 +112,40 @@ class ProgressPage extends PageComposite {
                         copyLogs();
                     }
                 });
-                final ToolItem pauseItem = addToolItem(SWT.CHECK);
+                pauseItem = addToolItem(SWT.CHECK);
                 pauseItem
-                        .setImage(SWTResources.getImageRes("/icons/full/etool16/term_restart.gif"));
+                        .setImage(SWTResources.getImageRes("/icons/full/etool16/term_restart.gif")); //$NON-NLS-1$
                 pauseItem.addSelectionListener(new SelectionAdapter() {
+                    @SuppressWarnings("deprecation")
                     @Override
                     public void widgetSelected(SelectionEvent e) {
                         boolean pausing = pauseItem.getSelection();
-                        setPausing(pausing);
+                        Thread thread = jobThread; // sync to below
+                        if (thread != null) {
+                            if (pausing)
+                                thread.suspend();
+                            else
+                                thread.resume();
+                        } else {
+                            pauseItem.setSelection(false);
+                        }
                     }
                 });
-                final ToolItem cancelItem = addToolItem(SWT.CHECK);
+                cancelItem = addToolItem(SWT.CHECK);
                 cancelItem
-                        .setImage(SWTResources.getImageRes("/icons/full/elcl16/terminate_co.gif"));
+                        .setImage(SWTResources.getImageRes("/icons/full/elcl16/terminate_co.gif")); //$NON-NLS-1$
                 cancelItem.addSelectionListener(new SelectionAdapter() {
                     @Override
                     public void widgetSelected(SelectionEvent e) {
                         boolean canceling = cancelItem.getSelection();
-                        setCanceling(canceling);
+                        SessionJob job = rootJob; // for synchronization.
+                        if (job != null) {
+                            if (canceling)
+                                job.stop();
+                            else
+                                job.run();
+                        } else
+                            cancelItem.setSelection(false);
                     }
                 });
             }
@@ -185,7 +205,7 @@ class ProgressPage extends PageComposite {
 
     @Override
     public String getPageTitle() {
-        return "Installing Software";
+        return PackNLS.getString("ProgressPage.installing"); //$NON-NLS-1$
     }
 
     @Override
@@ -197,10 +217,10 @@ class ProgressPage extends PageComposite {
         this.state = state;
         switch (state) {
         case DONE:
-            setExitState("next");
+            setExitState("next"); //$NON-NLS-1$
             break;
         case CANCELED:
-            setExitState("cancel");
+            setExitState("cancel"); //$NON-NLS-1$
             break;
         }
         firePageStateChange();
@@ -214,43 +234,65 @@ class ProgressPage extends PageComposite {
         if (reason != PageFlow.FORWARD)
             return;
         logList.removeAll();
-        final PPExecutor executor = new PPExecutor();
         setState(BLOCK);
-        installThread = new Thread() {
+
+        final LogTerm logger0 = session.getLogger();
+        session.setLogger(new PLogTerm());
+        rootJob = session.getProject().execute(Component.INSTALL, session);
+        jobThread = new Thread() {
             @Override
             public void run() {
                 int state = CANCELED;
+                DialogUI _UI = new DialogUI(new Shell(new Display()));
                 try {
-                    executor.install();
-                    state = DONE;
+                    session.loadRegistry();
+                    if (rootJob != null) {
+                        if (logger0.showDebug())
+                            rootJob.dump(CharOuts.stdout);
+                        Observer observer = new Observer(_UI);
+                        rootJob.setUserInterface(_UI);
+                        observer.bind(rootJob);
+                        rootJob.run();
+                    }
+                    int jobState = rootJob.getState();
+                    if (jobState == Job.TERMINATED)
+                        state = DONE;
                 } catch (SessionException e) {
-                    UserInterface UI = session.getUserInterface();
-                    UI.alert("Install Error", e);
+                    _UI.alert(PackNLS.getString("ProgressPage.installError"), e); //$NON-NLS-1$
                 } finally {
+                    rootJob = null;
+                    jobThread = null;
+                    session.closeAttachments();
+                    session.setLogger(logger0);
                     final int newState = state;
                     getDisplay().asyncExec(new Runnable() {
                         @Override
                         public void run() {
                             setState(newState);
+                            cancelItem.setSelection(false);
                         }
                     });
                 }
             }
         };
-        installThread.start();
+        jobThread.start();
     }
 
-    class PPExecutor extends ProjectExecutor {
+    class Observer extends JobObserver {
 
-        public PPExecutor() {
-            super(ProgressPage.this.session, ProgressPage.this.UI, new PLogTerm());
+        final UserInterface UI;
+
+        public Observer(UserInterface UI) {
+            if (UI == null)
+                throw new NullPointerException("UI"); //$NON-NLS-1$
+            this.UI = UI;
         }
 
         @Override
         public void progressChange(final ProgressChangeEvent e) {
             final double progress = e.getProgress();
             final Object source = e.getSource();
-            System.err.printf("%.3f: %s\n", progress, source);
+            System.err.printf("%.3f: %s\n", progress, source); //$NON-NLS-1$
             getDisplay().asyncExec(new Runnable() {
                 @Override
                 public void run() {
@@ -283,14 +325,16 @@ class ProgressPage extends PageComposite {
 
         @Override
         public void exceptionThrown(Exception ex) {
-            UI.alert("Failed to install: " + ex.getMessage(), ex);
+            UI.alert(PackNLS.getString("ProgressPage.failedToInstall") + ex.getMessage(), ex); //$NON-NLS-1$
         }
 
         @Override
         public void recoverException(RecoverableExceptionEvent e) {
             Exception ex = e.getException();
-            int answer = UI.ask("Error happens: " + ex.getMessage() + ", continue?", e,
-                    Proposals.ignore, Proposals.cancel, Proposals.debug);
+            int answer = UI
+                    .ask(
+                            PackNLS.getString("ProgressPage.errorHappens") + ex.getMessage() + PackNLS.getString("ProgressPage._continue"), e, //$NON-NLS-1$ //$NON-NLS-2$
+                            Proposals.ignore, Proposals.cancel, Proposals.debug);
             switch (answer) {
             case 0:
                 e.setRecovered(true);
@@ -333,9 +377,11 @@ class ProgressPage extends PageComposite {
         logList.showSelection();
     }
 
-    public void setProgress(double k) {
-        int index = (int) (k * progressSize);
+    public void setProgress(double progress) {
+        int index = (int) (progress * progressSize);
         progressBar.setSelection(index);
+        String s = String.format("%.0f%%", progress * 100); //$NON-NLS-1$
+        progressText.setText(s);
     }
 
     public void beginTiming() {
@@ -356,13 +402,6 @@ class ProgressPage extends PageComposite {
             Transfer[] dataTypes = { TextTransfer.getInstance() };
             clipboard.setContents(data, dataTypes);
         }
-    }
-
-    void setPausing(boolean pausing) {
-    }
-
-    void setCanceling(boolean canceling) {
-        // XXX - session.setCanceling(canceling);
     }
 
     class PTerminal extends BufferedTerminal {

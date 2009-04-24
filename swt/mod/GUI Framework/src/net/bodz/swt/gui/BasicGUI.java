@@ -1,6 +1,9 @@
 package net.bodz.swt.gui;
 
+import java.awt.Desktop;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,6 +15,7 @@ import net.bodz.bas.a.ClassInfo;
 import net.bodz.bas.a.StartMode;
 import net.bodz.bas.cli.BasicCLI;
 import net.bodz.bas.cli.a.Option;
+import net.bodz.bas.lang.err.IllegalUsageError;
 import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.types.util.Ns;
 import net.bodz.bas.ui.UIException;
@@ -29,14 +33,19 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.ExpandBar;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
@@ -88,7 +97,7 @@ public class BasicGUI extends BasicCLI {
     private static Set<String> ignoredThreads;
     static {
         ignoredThreads = new HashSet<String>();
-        ignoredThreads.add("ReaderThread"); // JUnit thread
+        ignoredThreads.add("ReaderThread"); // JUnit thread //$NON-NLS-1$
     }
 
     protected void checkHangOns() {
@@ -235,18 +244,48 @@ public class BasicGUI extends BasicCLI {
 
     protected Control createStatusBar(Composite parent) throws SWTException, UIException {
         Composite statusBar = new Composite(parent, SWT.BORDER); // SWT.BORDER
-        statusBar.setLayout(new FillLayout());
-        Label label = new Label(statusBar, SWT.NONE);
-        String copyright = getCopyrightString();
-        label.setText(copyright);
+        statusBar.setLayout(new GridLayout(2, false));
+
+        String banner = getBannerString();
+        Link link = new Link(statusBar, SWT.NONE);
+        link.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
+        link.setText(banner);
+        link.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                String s = e.text;
+                URI uri;
+                try {
+                    uri = new URI(s);
+                } catch (URISyntaxException ex) {
+                    throw new IllegalUsageError(GUINLS.getString("BasicGUI.badBannerLink") + s, ex); //$NON-NLS-1$
+                }
+                try {
+                    Desktop.getDesktop().browse(uri);
+                } catch (IOException ex) {
+                    UI.alert(GUINLS.getString("BasicGUI.cantOpenBrowser"), ex); //$NON-NLS-1$
+                }
+            }
+        });
+
+        Label updateTime = new Label(statusBar, SWT.NONE);
+        updateTime.setLayoutData(new GridData(SWT.END, SWT.CENTER, true, false));
+        updateTime.setAlignment(SWT.RIGHT);
+        String dateString = _loadClassInfo().getDateString();
+        if (dateString != null) {
+            updateTime.setText(GUINLS.getString("BasicGUI.lastUpdated") + dateString); //$NON-NLS-1$
+        }
         return statusBar;
     }
 
-    protected String getCopyrightString() {
+    protected String getBannerString() {
         ClassInfo info = _loadClassInfo();
-        String copyright = GUINLS.getString("BasicGUI.copyright") + info.getAuthor() + ", " //$NON-NLS-1$ //$NON-NLS-2$
-                + info.getDateString();
-        return copyright;
+        String author = info.getAuthor();
+        String webSite = info.getWebSite();
+        if (webSite == null)
+            webSite = "http://www.bodz.net/products/net.bodz.swt"; //$NON-NLS-1$
+        String banner = GUINLS.format("BasicGUI.banner", author, webSite, webSite); //$NON-NLS-1$
+        return banner;
     }
 
     protected Control createExpandBar(Composite parent) throws SWTException, UIException {
