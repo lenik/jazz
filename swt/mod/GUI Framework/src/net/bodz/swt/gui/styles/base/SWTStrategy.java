@@ -70,7 +70,7 @@ public abstract class SWTStrategy extends RenderStrategy {
     public Control render(SWTRenderContext rc, GUIVar<?> var, Composite parent, int style)
             throws RenderException, SWTException {
         if (rc == null)
-            throw new NullPointerException("rc");
+            throw new NullPointerException("rc"); //$NON-NLS-1$
         SWTRenderer renderer = findRenderer(var);
         if (renderer == null)
             throw new RenderException(GUINLS.getString("SWTStrategy.nullRenderer") //$NON-NLS-1$
@@ -83,7 +83,7 @@ public abstract class SWTStrategy extends RenderStrategy {
     public Control render(SWTRenderContext rc, Object constantValue, Composite parent, int style)
             throws RenderException, SWTException {
         if (rc == null)
-            throw new NullPointerException("rc");
+            throw new NullPointerException("rc"); //$NON-NLS-1$
         GUIVar<Object> var = GUIVars.wrap(constantValue);
         return render(rc, var, parent, style);
     }

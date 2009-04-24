@@ -224,6 +224,21 @@ public class Reflects {
         invoke(obj, write, value);
     }
 
+    public static void set(Object obj, String fieldName, Object value) throws ReflectException {
+        if (obj == null)
+            throw new NullPointerException("obj"); //$NON-NLS-1$
+        Class<?> clazz = obj.getClass();
+        Field field = getDeclaredField(clazz, fieldName);
+        set(obj, field, value);
+    }
+
+    public static void setStatic(Class<?> clazz, String fieldName, Object value)
+            throws ReflectException {
+        Field field = getDeclaredField(clazz, fieldName);
+        field.setAccessible(true);
+        set(null, field, value);
+    }
+
     public static <T> Constructor<T> getConstructor(Class<T> clazz, Class<?>... parameterTypes) {
         try {
             return clazz.getConstructor(parameterTypes);
@@ -283,7 +298,7 @@ public class Reflects {
         int i = 0;
         while (true) {
             try {
-                Field outerField = innerClass.getDeclaredField("this$" + i);
+                Field outerField = innerClass.getDeclaredField("this$" + i); //$NON-NLS-1$
                 outerField.setAccessible(true);
                 return get(innerInstance, outerField);
             } catch (NoSuchFieldException e) {

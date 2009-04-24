@@ -10,6 +10,7 @@ import net.bodz.bas.io.ResFolder;
 import net.bodz.bas.io.ZipResFolder;
 import net.bodz.bas.lang.RecoverableExceptionEvent;
 import net.bodz.bas.xml.ExceptionBuffer;
+import net.bodz.dist.nls.PackNLS;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
@@ -34,7 +35,7 @@ public class PackageTask extends Task {
 
     public void setResFolder(ResFolder resFolder) {
         if (this.output != null)
-            throw new BuildException("Output is already specified: " + output);
+            throw new BuildException(PackNLS.getString("PackageTask.outputIsSpecified") + output); //$NON-NLS-1$
         this.output = resFolder;
     }
 
@@ -59,9 +60,9 @@ public class PackageTask extends Task {
     @Override
     public void execute() throws BuildException {
         if (project == null)
-            throw new BuildException("Project isn't specified");
+            throw new BuildException(PackNLS.getString("PackageTask.projectIsntSpecified")); //$NON-NLS-1$
         if (output == null)
-            throw new BuildException("Resource folder isn't specified");
+            throw new BuildException(PackNLS.getString("PackageTask.resFolderIsntSpecified")); //$NON-NLS-1$
         TaskLogTerm logger = new TaskLogTerm(this);
         logger.setLevel(logger.getLevel() + logLevel);
         final List<Exception> exceptions = new ArrayList<Exception>();

@@ -57,13 +57,13 @@ public class InstallComposite extends WizardComposite {
                     }
                 });
         SymlinkPageFlow pageFlow = getPageFlow();
-        pageFlow.putLink("summary/next", "progress");
-        pageFlow.putLink("progress/next", "done");
-        pageFlow.putLink("progress/cancel", "canceled");
+        pageFlow.putLink("summary/next", "progress"); //$NON-NLS-1$ //$NON-NLS-2$
+        pageFlow.putLink("progress/next", "done"); //$NON-NLS-1$ //$NON-NLS-2$
+        pageFlow.putLink("progress/cancel", "canceled"); //$NON-NLS-1$ //$NON-NLS-2$
 
         Project start = session.getProject();
-        pageFlow.putLink("start", new NextPage(start));
-        pageFlow.set("start");
+        pageFlow.putLink("start", new NextPage(start)); //$NON-NLS-1$
+        pageFlow.set("start"); //$NON-NLS-1$
     }
 
     class HasConfigPred extends Pred1<Component> {
@@ -103,11 +103,11 @@ public class InstallComposite extends WizardComposite {
             iter.next(); // skip start itself.
             posBuf.pop(); // skip start address
             if (!iter.hasNext())
-                return "summary";
+                return "summary"; //$NON-NLS-1$
 
             final Component nextComponent = iter.next();
             final TreePosition<Component> nextPosition = posBuf.pop();
-            String pageId = "Config(" + nextComponent.getId() + ")";
+            String pageId = "Config(" + nextComponent.getId() + ")"; //$NON-NLS-1$ //$NON-NLS-2$
 
             if (!isPageDefined(pageId))
                 definePage(pageId, new PageFactory() {
@@ -118,7 +118,7 @@ public class InstallComposite extends WizardComposite {
                 });
 
             SymlinkPageFlow pageFlow = getPageFlow();
-            pageFlow.putLink(pageId, "next", new NextPage(nextPosition));
+            pageFlow.putLink(pageId, "next", new NextPage(nextPosition)); //$NON-NLS-1$
             return pageId;
         }
 

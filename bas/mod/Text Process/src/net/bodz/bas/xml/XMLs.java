@@ -121,12 +121,12 @@ public class XMLs {
 
     public static void encode(int caller, Object obj, OutputStream out,
             ExceptionListener exceptionListener) {
-        encode(caller + 1, obj, out, "utf-8", exceptionListener);
+        encode(caller + 1, obj, out, "utf-8", exceptionListener); //$NON-NLS-1$
     }
 
     public static String encode(int caller, Object obj, ExceptionListener exceptionListener) {
         ByteArrayOutputStream buf = new ByteArrayOutputStream();
-        encode(caller + 1, obj, buf, "utf-8", exceptionListener);
+        encode(caller + 1, obj, buf, "utf-8", exceptionListener); //$NON-NLS-1$
         String xml;
         try {
             xml = buf.toString("utf-8"); //$NON-NLS-1$
@@ -172,7 +172,7 @@ public class XMLs {
     public static Object decode(int caller, String xml, ExceptionListener exceptionListener) {
         byte[] bytes;
         try {
-            bytes = xml.getBytes("utf-8");
+            bytes = xml.getBytes("utf-8"); //$NON-NLS-1$
         } catch (UnsupportedEncodingException e) {
             throw new UnexpectedException(e);
         }

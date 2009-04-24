@@ -14,9 +14,13 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import net.bodz.bas.a.Counts;
 import net.bodz.bas.codec.TextCodec;
 import net.bodz.bas.io.Files;
+import net.bodz.bas.lang.err.IllegalUsageException;
 import net.bodz.bas.lang.err.ParseException;
+import net.bodz.bas.nls.AppNLS;
+import net.bodz.bas.snm.SJProject;
 import net.bodz.bas.types.TreeTextMap;
 
 /**
@@ -26,51 +30,32 @@ public class Counters extends TreeTextMap<Counter> {
 
     private static final long serialVersionUID = 8717426735620703383L;
 
-    private File              propertyFile;
+    private File              propertyFileToSave;
     private ResourceBundle    bundle;
 
     public Counters(Class<?> clazz) {
-        // ClassDiag.
+        this(clazz, null, false);
+    }
+
+    public Counters(Class<?> clazz, String resourceName, boolean srcSide) {
         if (clazz == null)
-            throw new NullPointerException("clazz");
-        net.bodz.bas.a.Counts a = clazz.getAnnotation(net.bodz.bas.a.Counts.class);
-        if (a != null) {
-            URL resourceURL = clazz.getResource(a.value());
-            if ("file".equals(resourceURL.getProtocol()))
-                try {
-                    propertyFile = Files.getFile(resourceURL);
-                } catch (MalformedURLException e) {
-                    throw new RuntimeException(e);
-                }
-            try {
-                Properties properties = Files.loadProperties(resourceURL, "utf-8");
-                parse(properties);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            } catch (ParseException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        try {
-            bundle = ResourceBundle.getBundle(clazz.getName());
-        } catch (MissingResourceException e) {
-            // just ignore.
-        }
+            throw new NullPointerException("clazz"); //$NON-NLS-1$
+        parse(clazz, resourceName, srcSide);
     }
 
     public Counters(File propertyFile) throws IOException, ParseException {
-        this.propertyFile = propertyFile;
-        Properties properties = Files.loadProperties(propertyFile, "utf-8");
+        this.propertyFileToSave = propertyFile;
+        Properties properties = Files.loadProperties(propertyFile, "utf-8"); //$NON-NLS-1$
         parse(properties);
     }
 
-    static final String ATTR_PARENTS   = ".parents";
-    static final String ATTR_CODEC     = ".codec";
-    static final String ATTR_FORMAT    = ".format";
-    static final String ATTR_PRECODED  = ".precoded";
-    static final String ATTR_INIT      = ".init";
-    static final String ATTR_INCR      = ".incr";
-    static final String ATTR_TIMESTAMP = ".t";
+    static final String ATTR_PARENTS   = ".parents"; //$NON-NLS-1$
+    static final String ATTR_CODEC     = ".codec"; //$NON-NLS-1$
+    static final String ATTR_FORMAT    = ".format"; //$NON-NLS-1$
+    static final String ATTR_PRECODED  = ".precoded"; //$NON-NLS-1$
+    static final String ATTR_INIT      = ".init"; //$NON-NLS-1$
+    static final String ATTR_INCR      = ".incr"; //$NON-NLS-1$
+    static final String ATTR_TIMESTAMP = ".t"; //$NON-NLS-1$
 
     class Refs extends AbstractSet<Counter> {
 
@@ -119,6 +104,44 @@ public class Counters extends TreeTextMap<Counter> {
 
     }
 
+    void parse(Class<?> clazz, String resourceName, boolean srcSide) {
+        // ClassDiag...
+        if (clazz == null)
+            throw new NullPointerException("clazz"); //$NON-NLS-1$
+        if (resourceName == null) {
+            Counts a = clazz.getAnnotation(Counts.class);
+            resourceName = a.value();
+            if (resourceName == null)
+                throw new IllegalUsageException(AppNLS.getString("Counters.noCounterInfo") + clazz); //$NON-NLS-1$
+        }
+
+        URL url;
+        if (srcSide) {
+            url = SJProject.getSrcURLWithName(clazz, resourceName);
+        } else
+            url = clazz.getResource(resourceName);
+        if ("file".equals(url.getProtocol())) //$NON-NLS-1$
+            try {
+                propertyFileToSave = Files.getFile(url);
+            } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
+            }
+        try {
+            Properties properties = Files.loadProperties(url, "utf-8"); //$NON-NLS-1$
+            parse(properties);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+        // find and load NLS.
+        try {
+            bundle = ResourceBundle.getBundle(clazz.getName());
+        } catch (MissingResourceException e) {
+            // just ignore.
+        }
+    }
+
     void parse(Properties properties) throws ParseException {
         for (Map.Entry<Object, Object> entry : properties.entrySet()) {
             String key = String.valueOf(entry.getKey());
@@ -135,7 +158,7 @@ public class Counters extends TreeTextMap<Counter> {
             String parentNames = properties.getProperty(key + ATTR_PARENTS);
             Refs parents = new Refs();
             if (parentNames != null)
-                for (String parentName : parentNames.split(","))
+                for (String parentName : parentNames.split(",")) //$NON-NLS-1$
                     parents.addRef(parentName.trim());
             counter.setParents(parents);
 
@@ -152,7 +175,7 @@ public class Counters extends TreeTextMap<Counter> {
                     counter.setCodec(parseCodec(codecdef));
             }
 
-            boolean precoded = "1".equals(properties.getProperty(key + ATTR_PRECODED));
+            boolean precoded = "1".equals(properties.getProperty(key + ATTR_PRECODED)); //$NON-NLS-1$
             counter.setPrecoded(precoded);
 
             String value = properties.getProperty(key);
@@ -196,16 +219,16 @@ public class Counters extends TreeTextMap<Counter> {
     }
 
     public void save() throws IOException {
-        if (propertyFile == null)
-            throw new IOException("No property file specified");
-        Properties properties = Files.loadProperties(propertyFile, "utf-8");
+        if (propertyFileToSave == null)
+            throw new IOException(AppNLS.getString("Counters.noPropertyFile")); //$NON-NLS-1$
+        Properties properties = Files.loadProperties(propertyFileToSave, "utf-8"); //$NON-NLS-1$
         try {
             save(properties);
         } catch (ParseException e) {
             throw new IOException(e);
         }
-        FileOutputStream out = new FileOutputStream(propertyFile);
-        properties.store(out, "Auto generated file, please don't edit");
+        FileOutputStream out = new FileOutputStream(propertyFileToSave);
+        properties.store(out, AppNLS.getString("Counters.autoGenerated")); //$NON-NLS-1$
         out.close();
     }
 

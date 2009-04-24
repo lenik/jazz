@@ -15,7 +15,7 @@ public class ArrayTreeNodeTest {
     static {
         helloVar = array(
         //
-                "Hello", //
+                "Hello", // //$NON-NLS-1$
                 array(10, 20, 30), // 
                 array(40, array(41, 42)), //
                 50);
@@ -27,7 +27,7 @@ public class ArrayTreeNodeTest {
         TreeNodes.traverse(helloTree, new TreeCallback<ArrayTreeNode>() {
             @Override
             public int each(ArrayTreeNode node, int level) {
-                String indent = Strings.repeat(level, "    ");
+                String indent = Strings.repeat(level, "    "); //$NON-NLS-1$
                 System.out.println(indent + node);
                 return OK;
             }

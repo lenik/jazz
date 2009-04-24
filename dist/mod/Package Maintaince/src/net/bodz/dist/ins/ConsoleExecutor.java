@@ -8,6 +8,7 @@ import net.bodz.bas.util.LogTerm;
 import net.bodz.bas.util.LogTerms;
 import net.bodz.bas.util.ProgressChangeEvent;
 import net.bodz.bas.util.StatusChangeEvent;
+import net.bodz.dist.nls.PackNLS;
 
 /**
  * @test {@link PackageTaskTest}
@@ -44,7 +45,7 @@ public class ConsoleExecutor extends ProjectExecutor {
     @Override
     public void progressChange(ProgressChangeEvent e) {
         double progress = 100 * e.getProgress();
-        String mesg = String.format("Progress %.2f%%", progress);
+        String mesg = String.format(PackNLS.getString("ConsoleExecutor.progress_f"), progress); //$NON-NLS-1$
         L.tinfo(mesg);
     }
 
@@ -53,7 +54,7 @@ public class ConsoleExecutor extends ProjectExecutor {
         // getTimeBegin();
         // long d = job.getDuration()
         // ...
-        String mesg = String.format("Duration Changed: %d", e.getIncrement());
+        String mesg = String.format(PackNLS.getString("ConsoleExecutor.durationChanged_d"), e.getIncrement()); //$NON-NLS-1$
         L.tinfo(mesg);
     }
 

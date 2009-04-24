@@ -7,13 +7,13 @@ public class Parameter {
 
     public void setType(Class<?> type) {
         if (type == null)
-            throw new NullPointerException("type");
+            throw new NullPointerException("type"); //$NON-NLS-1$
         this.type = type;
     }
 
     public void setTypeName(String typeName) throws ClassNotFoundException {
         if (typeName == null)
-            throw new NullPointerException("typeName");
+            throw new NullPointerException("typeName"); //$NON-NLS-1$
         this.type = Class.forName(typeName);
     }
 

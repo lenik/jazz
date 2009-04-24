@@ -53,7 +53,7 @@ import net.bodz.bas.types.util.Empty;
 import net.bodz.bas.types.util.PrefetchedIterator;
 
 /**
- * @test FilesTest
+ * @test {@link FilesTest}
  */
 public class Files {
 
@@ -577,12 +577,11 @@ public class Files {
      */
     public static Iterable<byte[]> readByBlock(final int blockSize, final Object... files) {
         final byte[] buffer = new byte[blockSize];
-        final Iterator<Integer> it = _readByBlock(files, buffer);
         return new Iterable<byte[]>() {
-
             @Override
             public Iterator<byte[]> iterator() {
                 return new Iterator<byte[]>() {
+                    final Iterator<Integer> it = _readByBlock(files, buffer);
 
                     @Override
                     public boolean hasNext() {
@@ -605,10 +604,8 @@ public class Files {
                     public void remove() {
                         it.remove();
                     }
-
                 };
             }
-
         };
     }
 
@@ -1042,7 +1039,7 @@ public class Files {
      */
     public static URL classData(Class<?> clazz) {
         String thisName = clazz.getSimpleName();
-        return clazz.getResource(thisName + ".class");
+        return clazz.getResource(thisName + ".class"); //$NON-NLS-1$
     }
 
     /**
@@ -1050,7 +1047,7 @@ public class Files {
      *            don't include the dot(.)
      */
     public static URL classData(Class<?> clazz, String extension) {
-        return _classData(clazz, "." + extension);
+        return _classData(clazz, "." + extension); //$NON-NLS-1$
     }
 
     /**
@@ -1211,9 +1208,9 @@ public class Files {
     }
 
     static File getJarFile(URL jarURL) {
-        assert "jar".equals(jarURL.getProtocol());
+        assert "jar".equals(jarURL.getProtocol()); //$NON-NLS-1$
         String s = jarURL.getPath(); // path = file:/...!...
-        assert s.startsWith("file:");
+        assert s.startsWith("file:"); //$NON-NLS-1$
         int excl = s.lastIndexOf('!');
         if (excl != -1) // assert
             s = s.substring(0, excl); // path = file:/...
@@ -1240,15 +1237,29 @@ public class Files {
     }
 
     public static File getFile(URL url, String removeSubPath) throws MalformedURLException {
+        ResFolder resFolder = getResFolder(url, removeSubPath);
+        if (resFolder instanceof FileResFolder)
+            return ((FileResFolder) resFolder).getFile();
+        if (resFolder instanceof ZipResFolder)
+            return ((ZipResFolder) resFolder).getFile();
+        if (resFolder instanceof URLResFolder) {
+            URL context = ((URLResFolder) resFolder).getContext();
+            return Files.getFile(context);
+        }
+        throw new UnsupportedOperationException("Can't get file from ResFolder " + resFolder); //$NON-NLS-1$
+    }
+
+    public static ResFolder getResFolder(URL url, String removeSubPath)
+            throws MalformedURLException {
         if (removeSubPath == null || removeSubPath.isEmpty())
-            return getFile(url);
+            return new URLResFolder(url);
         // jar:file:/C:/abc/dir/example.jar!/com/example/Name.class
         // String _url = url.toExternalForm();
 
         // s=file:/C:/abc/dir/example.jar!/com/example/Name.class
         String s = url.toExternalForm();
         if (!s.endsWith(removeSubPath)) {
-            throw new IllegalArgumentException(String.format("URL isn't end with %s: %s",
+            throw new IllegalArgumentException(String.format(SysNLS.getString("Files.urlIsntEndWith_ss"), //$NON-NLS-1$
                     removeSubPath, url));
         }
         int rlen = removeSubPath.length();
@@ -1256,12 +1267,14 @@ public class Files {
         s = s.substring(0, s.length() - rlen);
 
         String protocol = url.getProtocol();
-        if ("jar".equals(protocol)) {
+        if ("jar".equals(protocol)) { //$NON-NLS-1$
             // the jar URL is verified by above. so now can safely return.
-            return getJarFile(url);
+            File jarFile = getJarFile(url);
+            return new ZipResFolder(jarFile);
         }
         URL truncatedURL = new URL(s);
-        return canoniOf(truncatedURL);
+        File dir = canoniOf(truncatedURL);
+        return new FileResFolder(dir);
     }
 
     private static File TMPDIR;
@@ -1294,13 +1307,13 @@ public class Files {
     static Map<Object, File> temps;
     static Pattern           invalidFilenameChars;
     static {
-        invalidFilenameChars = Pattern.compile("[^a-zA-Z0-9-_]");
+        invalidFilenameChars = Pattern.compile("[^a-zA-Z0-9-_]"); //$NON-NLS-1$
     }
 
     public static File convertToFile(Object key, Object in) throws IOException {
         String name = String.valueOf(key);
-        name = invalidFilenameChars.matcher(name).replaceAll("_");
-        return convertToFile(key, in, "CTF-" + name, ".tmp", TMPDIR);
+        name = invalidFilenameChars.matcher(name).replaceAll("_"); //$NON-NLS-1$
+        return convertToFile(key, in, "CTF-" + name, ".tmp", TMPDIR); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     public static File convertToFile(Object key, Object in, String prefix, String suffix,

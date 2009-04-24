@@ -66,7 +66,7 @@ public class LicensePage extends ConfigPage {
 
     @Override
     public String getPageTitle() {
-        return "License";
+        return PackNLS.getString("LicensePage.title"); //$NON-NLS-1$
     }
 
 }

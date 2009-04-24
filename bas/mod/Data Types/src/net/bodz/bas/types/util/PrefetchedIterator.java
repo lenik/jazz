@@ -37,7 +37,8 @@ public abstract class PrefetchedIterator<T> implements Iterator<T> {
             return x;
         case CACHED:
             T t = cache;
-            cache = fetch();
+            // cache = fetch();
+            _state = UNKNOWN;
             return t;
         case END:
             throw new NoSuchElementException();

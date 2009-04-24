@@ -23,6 +23,7 @@ public class ClassInfo {
     private URL               icon;
     private Map<String, URL>  iconMap;
     private String            author;
+    private String            webSite;
     private int[]             version;
     private String            dateString;
 
@@ -67,6 +68,10 @@ public class ClassInfo {
         String[] author = Ns._getValue(clazz, Author.class);
         if (author != null)
             this.author = join(author);
+
+        String[] webSites = Ns._getValue(clazz, WebSite.class);
+        if (webSites != null && webSites.length != 0)
+            this.webSite = webSites[0];
 
         int[] version = Ns._getValue(clazz, Version.class);
         if (version != null)
@@ -127,6 +132,14 @@ public class ClassInfo {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public String getWebSite() {
+        return webSite;
+    }
+
+    public void setWebSite(String webSite) {
+        this.webSite = webSite;
     }
 
     public int[] getVersion() {

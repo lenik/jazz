@@ -23,7 +23,7 @@ public class TreePositionTest {
         while (iter.hasNext()) {
             ArrayTreeNode succ = iter.next();
             TreePosition<ArrayTreeNode> succPos = posBuf.pop();
-            System.out.println(succPos + " => " + succ);
+            System.out.println(succPos + " => " + succ); //$NON-NLS-1$
             buf.add(succ.get());
         }
         Object[] expected = { 30, 40, 41, 42, 50 };

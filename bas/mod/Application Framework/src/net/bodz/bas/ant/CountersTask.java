@@ -20,6 +20,8 @@ public class CountersTask extends Task implements IPureTask {
 
     private File         loadFile;
     private String       classHint;
+    private String       resourceName;
+    private boolean      srcSide;
 
     private List<String> incrs;
     private boolean      update = true;
@@ -34,14 +36,24 @@ public class CountersTask extends Task implements IPureTask {
 
     public void setFile(File file) throws IOException {
         if (classHint != null)
-            throw new IllegalUsageException("already specified to load from " + classHint);
+            throw new IllegalUsageException("already specified to load from class " + classHint); //$NON-NLS-1$
         this.loadFile = file;
     }
 
     public void setClassHint(String classHint) {
         if (loadFile != null)
-            throw new IllegalUsageException("already specified to load from " + loadFile);
+            throw new IllegalUsageException("already specified to load from file " + loadFile); //$NON-NLS-1$
         this.classHint = classHint;
+    }
+
+    public void setResourceName(String resourceName) {
+        if (loadFile != null)
+            throw new IllegalUsageException("already specified to load from file " + loadFile); //$NON-NLS-1$
+        this.resourceName = resourceName;
+    }
+
+    public void setSrcSide(boolean srcSide) {
+        this.srcSide = srcSide;
     }
 
     public void addConfiguredIncr(TextElement text) {
@@ -59,12 +71,12 @@ public class CountersTask extends Task implements IPureTask {
                 counters = new Counters(loadFile);
             if (classHint != null) {
                 Class<?> clazz = Class.forName(classHint);
-                counters = new Counters(clazz);
+                counters = new Counters(clazz, resourceName, srcSide);
             }
             for (Map.Entry<String, Counter> entry : counters.entrySet()) {
                 String key = entry.getKey();
                 Counter counter = entry.getValue();
-                String property = name == null ? key : name + "." + key;
+                String property = name == null ? key : name + "." + key; //$NON-NLS-1$
                 String value = counter.format();
                 getProject().setProperty(property, value);
             }

@@ -49,7 +49,6 @@
         <copy todir="${basedir}/lib">
             <fileset dir="${JAVA_LIB}">
                 <include name="${lib.asm}" />
-                <include name="${lib.asm_util}" />
                 <include name="${lib.jna}" />
             </fileset>
         </copy>

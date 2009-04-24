@@ -9,7 +9,7 @@ public class TerminalWriter extends Writer {
 
     public TerminalWriter(Terminal terminal) {
         if (terminal == null)
-            throw new NullPointerException("terminal");
+            throw new NullPointerException("terminal"); //$NON-NLS-1$
         this.terminal = terminal;
     }
 

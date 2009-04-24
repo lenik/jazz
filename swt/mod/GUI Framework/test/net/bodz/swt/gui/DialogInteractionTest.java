@@ -53,9 +53,9 @@ public class DialogInteractionTest {
 
     @Test
     public void testAsk() {
-        int answer = ia.ask("Error happens", new ExpectedException(), //
+        int answer = ia.ask("Error happens", new ExpectedException(), // //$NON-NLS-1$
                 Proposals.retry, Proposals.ignore, Proposals.cancel);
-        System.out.println("Answer: " + answer);
+        System.out.println("Answer: " + answer); //$NON-NLS-1$
     }
 
     @Test

@@ -13,7 +13,7 @@ public class StreamTerminal extends _Terminal {
 
     public StreamTerminal(PrintStream stream) {
         if (stream == null)
-            throw new NullPointerException("stream");
+            throw new NullPointerException("stream"); //$NON-NLS-1$
         this.out = stream;
     }
 

@@ -71,7 +71,7 @@ public class Components extends TreeTextMap<Component> {
         for (Component child : children) {
             childIndex++;
             if (child == null)
-                throw new NullPointerException("child[" + childIndex + "]");
+                throw new NullPointerException("child[" + childIndex + "]"); //$NON-NLS-1$ //$NON-NLS-2$
             String id = child.getId();
             if (id == null) {
                 String name = child.getName();
@@ -87,7 +87,7 @@ public class Components extends TreeTextMap<Component> {
                 assert id != null;
                 child.setId(id);
             } else if (map.containsKey(id)) {
-                String mesg = String.format("Dupliated id(%s): old=%s, new=%s", id, map.get(id),
+                String mesg = String.format(PackNLS.getString("Components.duplicatedId_sss"), id, map.get(id), //$NON-NLS-1$
                         child);
                 throw new IllegalStateException(mesg);
             }
@@ -99,7 +99,7 @@ public class Components extends TreeTextMap<Component> {
     static String searchUnusedKey(TextMap<?> map, String s, int startIndex) {
         while (true) {
             if (startIndex >= Integer.MAX_VALUE)
-                throw new RuntimeException("Index used out for: " + s);
+                throw new RuntimeException(PackNLS.getString("Components.indexUsedOut") + s); //$NON-NLS-1$
             String key = s + startIndex;
             if (!map.containsKey(key))
                 return key;

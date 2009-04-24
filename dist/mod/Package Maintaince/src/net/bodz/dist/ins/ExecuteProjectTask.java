@@ -16,6 +16,7 @@ import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.lang.err.UnexpectedException;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.xml.ExceptionBuffer;
+import net.bodz.dist.nls.PackNLS;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
@@ -44,7 +45,7 @@ public abstract class ExecuteProjectTask extends Task {
 
     public void setResFolder(ResFolder resFolder) {
         if (this.resFolder != null)
-            throw new BuildException("ResFolder is already specified: " + resFolder);
+            throw new BuildException(PackNLS.getString("ExecuteProjectTask.resFolderIsSpecified") + resFolder); //$NON-NLS-1$
         this.resFolder = resFolder;
     }
 
@@ -75,9 +76,9 @@ public abstract class ExecuteProjectTask extends Task {
     @Override
     public void execute() throws BuildException {
         if (project == null)
-            throw new BuildException("Project isn't specified");
+            throw new BuildException(PackNLS.getString("ExecuteProjectTask.projectIsntSpecified")); //$NON-NLS-1$
         if (resFolder == null)
-            throw new BuildException("Resource folder isn't specified");
+            throw new BuildException(PackNLS.getString("ExecuteProjectTask.resFolderIsntSpecified")); //$NON-NLS-1$
         TaskLogTerm logger = new TaskLogTerm(this);
         logger.setLevel(logger.getLevel() + logLevel);
         final List<Exception> exceptions = new ArrayList<Exception>();
@@ -102,7 +103,7 @@ public abstract class ExecuteProjectTask extends Task {
         for (Map.Entry<String, Object> e : map.entrySet()) {
             String name = e.getKey();
             if (!vardef.containsKey(name))
-                throw new IllegalArgumentException("Undefined variable: " + name);
+                throw new IllegalArgumentException(PackNLS.getString("ExecuteProjectTask.undefinedVariable") + name); //$NON-NLS-1$
             Object value = e.getValue();
             session.set(name, value);
         }

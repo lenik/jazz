@@ -1,6 +1,7 @@
 package net.bodz.bas.ant;
 
 import net.bodz.bas.lang.err.ParseException;
+import net.bodz.bas.nls.AppNLS;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TreeTextMap;
 import net.bodz.bas.types.TypeParser;
@@ -21,9 +22,9 @@ public class WithNamedParameters {
     public void addConfiguredParameter(NamedParameter parameter) throws ParseException {
         String name = parameter.name;
         if (name == null)
-            throw new IllegalArgumentException("Name of the parameter isn't specified");
+            throw new IllegalArgumentException(AppNLS.getString("WithNamedParameters.noParameterName")); //$NON-NLS-1$
         if (map.containsKey(name))
-            throw new IllegalArgumentException("Parameter " + name + " is already existed");
+            throw new IllegalArgumentException(AppNLS.getString("WithNamedParameters.parameterExisted") + name + " is already existed"); //$NON-NLS-1$ //$NON-NLS-2$
 
         Class<?> type = parameter.type;
         String valueText = parameter.valueText;

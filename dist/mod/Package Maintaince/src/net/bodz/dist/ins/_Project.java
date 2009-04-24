@@ -20,6 +20,7 @@ import net.bodz.dist.ins.Schemes.Maximum;
 import net.bodz.dist.ins.Schemes.Minimum;
 import net.bodz.dist.ins.builtins.RequiredSection;
 import net.bodz.dist.ins.lic.License;
+import net.bodz.dist.nls.PackNLS;
 import net.bodz.swt.util.SWTResources;
 
 import org.eclipse.swt.graphics.ImageData;
@@ -32,7 +33,7 @@ public class _Project extends RequiredSection implements Project {
     private String    company;
 
     public _Project(Class<?> clazz, Component... children) {
-        super("root", "Project Root", children);
+        super("root", PackNLS.getString("_Project.projectRoot"), children); //$NON-NLS-1$ //$NON-NLS-2$
         if (clazz != null)
             loadInfo(clazz);
         this.variables = new TreeTextMap<Variable>();
@@ -112,6 +113,11 @@ public class _Project extends RequiredSection implements Project {
         return variables.get(variableName);
     }
 
+    @Override
+    public BaseDirVariable getBaseDir(String variableName) {
+        return (BaseDirVariable) variables.get(variableName);
+    }
+
     public void define(String name, Variable variable) {
         variables.put(name, variable);
     }
@@ -144,9 +150,9 @@ public class _Project extends RequiredSection implements Project {
     boolean findDependents(Component parent, TreeCallback<Component> callback, int level,
             IdentSet uniq) {
         if (parent == null)
-            throw new NullPointerException("null component in level " + level);
+            throw new NullPointerException("null component in level " + level); //$NON-NLS-1$
         if (uniq.contains(parent))
-            throw new IllegalStateException("Loop detected: " + parent);
+            throw new IllegalStateException(PackNLS.getString("_Project.loopDetected") + parent); //$NON-NLS-1$
         uniq.add(parent);
         Collection<Component> children = parent.getDependancy();
         if (children == null)
@@ -177,9 +183,9 @@ public class _Project extends RequiredSection implements Project {
     boolean findDependentsBy(Component child, TreeCallback<Component> callback, int level,
             IdentSet uniq) {
         if (child == null)
-            throw new NullPointerException("null component in rev-level " + level);
+            throw new NullPointerException("null component in rev-level " + level); //$NON-NLS-1$
         if (uniq.contains(child))
-            throw new IllegalStateException("Loop detected: " + child);
+            throw new IllegalStateException(PackNLS.getString("_Project.loopDetected") + child); //$NON-NLS-1$
         uniq.add(child);
         Set<Component> parents = bydeps.get(child);
         if (parents == null)
@@ -208,7 +214,7 @@ public class _Project extends RequiredSection implements Project {
     boolean analyseDependency(Component child, TreeCallback<Component> missingCallback, int level,
             IdentSet uniq) {
         if (uniq.contains(child))
-            throw new IllegalStateException("Loop detected: " + child);
+            throw new IllegalStateException(PackNLS.getString("_Project.loopDetected") + child); //$NON-NLS-1$
         uniq.add(child);
         Collection<Component> dependancy = child.getDependancy();
         if (dependancy == null)

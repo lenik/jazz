@@ -6,11 +6,13 @@ import net.bodz.bas.ui.UserInterface;
 
 public interface Job extends ExceptionSourceRunnable {
 
-    int STOPPED  = 0;
-    int STOPPING = 1;
-    int RUNNING  = 2;
-    int PAUSING  = 3;
-    int PAUSED   = 4;
+    int NOTSTART   = 0;
+    int RUNNING    = 1;
+    int STOPPING   = 2;
+    int STOPPED    = 3;
+    int PAUSING    = 4;
+    int PAUSED     = 5;
+    int TERMINATED = 6;
 
     @Override
     void run();

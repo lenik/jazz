@@ -1,11 +1,19 @@
 package net.bodz.bas.ant;
 
+/**
+ * Value attribute will overwrite any text.
+ */
 public class TextElement {
 
+    private String       value;
     private StringBuffer buf;
 
     public TextElement() {
         buf = new StringBuffer();
+    }
+
+    public void setValue(String s) {
+        this.value = s;
     }
 
     public void addText(String s) {
@@ -13,6 +21,8 @@ public class TextElement {
     }
 
     public String getText() {
+        if (value != null)
+            return value;
         return buf.toString();
     }
 

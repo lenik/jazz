@@ -12,10 +12,11 @@ public class TestConfig {
     // <property name="packoutjar" value="${env.TMP}/PackagerTaskTest/a.jar" />
 
     public static File tmp        = Files.getTmpDir();
-    public static File outDir     = new File(tmp, "pack.dir");
-    public static File outJar     = new File(tmp, "pack.jar");
+    public static File outDir     = new File(tmp, "pack.dir"); //$NON-NLS-1$
+    public static File outDirZip  = new File(tmp, "pack.dir.zip"); //$NON-NLS-1$
+    public static File outJar     = new File(tmp, "pack.jar"); //$NON-NLS-1$
 
-    public static File targetHome = new File(tmp, "target");
+    public static File targetHome = new File(tmp, "target"); //$NON-NLS-1$
 
     public static void setTestBaseDir(ISession session) {
         Project project = session.getProject();
@@ -26,7 +27,7 @@ public class TestConfig {
             Variable variable = e.getValue();
             if (variable.getType() == Variable.BASE_DIR) {
                 File testbase = new File(TestConfig.targetHome, name);
-                L.finfo("Set test basedir %s => %s\n", name, testbase);
+                L.finfo("Set test basedir %s => %s\n", name, testbase); //$NON-NLS-1$
                 session.set(name, testbase);
             }
         }

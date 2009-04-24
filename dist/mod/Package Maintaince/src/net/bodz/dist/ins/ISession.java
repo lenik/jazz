@@ -45,7 +45,7 @@ public interface ISession {
 
     List<ResFolder> getResFolders();
 
-    void addResFolder(ResFolder resFolder);
+    boolean addResFolder(ResFolder resFolder);
 
     /**
      * @param beforeIndex

@@ -31,8 +31,8 @@ public class DesktopApps {
 
     static String _encode(String s) {
         try {
-            s = URLEncoder.encode(s, "utf-8");
-            return s.replace("+", "%20");
+            s = URLEncoder.encode(s, "utf-8"); //$NON-NLS-1$
+            return s.replace("+", "%20"); //$NON-NLS-1$ //$NON-NLS-2$
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }

@@ -4,6 +4,7 @@ import java.io.File;
 
 import net.bodz.bas.io.CWD;
 import net.bodz.bas.lang.err.ParseException;
+import net.bodz.bas.nls.AppNLS;
 import net.bodz.bas.snm.EclipseProject;
 import net.bodz.bas.snm.SJProject;
 import net.bodz.bas.types.TextMap;
@@ -37,12 +38,12 @@ public class ProjectInfo {
 
     public ProjectInfo(Project antProject, File searchStart) throws ParseException {
         if (antProject == null)
-            throw new NullPointerException("project");
+            throw new NullPointerException("project"); //$NON-NLS-1$
         this.antProject = antProject;
 
         base = SJProject.findProjectBase(searchStart);
         if (base == null)
-            throw new RuntimeException("Can't find the eclipse project, search from " + searchStart);
+            throw new RuntimeException(AppNLS.getString("ProjectInfo.cantFindEclipseProject") + searchStart); //$NON-NLS-1$
 
         parse();
     }

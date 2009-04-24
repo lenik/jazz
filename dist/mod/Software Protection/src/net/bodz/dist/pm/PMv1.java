@@ -51,7 +51,6 @@ public abstract class PMv1 implements ProtectionModel {
 
     @Override
     public byte[] keyAdd(byte[] k1, byte[] k2) {
-
         return null;
     }
 

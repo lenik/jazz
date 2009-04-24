@@ -7,10 +7,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import net.bodz.bas.test.TestDefs;
@@ -144,15 +146,30 @@ public class FilesTest {
     public void testGetFile2() throws IOException {
         Class<?>[] classes = {
         //
-                getClass(),// 
+                getClass(),//
                 String.class, //
         };
         for (Class<?> clazz : classes) {
-            String p = clazz.getName().replace('.', '/') + ".class";
+            String p = clazz.getName().replace('.', '/') + ".class"; //$NON-NLS-1$
             URL url = Files.classData(clazz);
             File file = Files.getFile(url, p);
-            System.out.println(clazz + " -> " + file);
+            System.out.println(clazz + " -> " + file); //$NON-NLS-1$
         }
+    }
+
+    @Test
+    public void testReadByBlock() throws Exception {
+        byte[] src = "0123456789abcdefghijklmnopqrstuvwxyz".getBytes(); //$NON-NLS-1$
+        ByteArrayInputStream in = new ByteArrayInputStream(src);
+        Iterator<byte[]> iter = Files.readByBlock(5, in).iterator();
+        assertEquals("01234", new String(iter.next())); //$NON-NLS-1$
+        assertEquals("56789", new String(iter.next())); //$NON-NLS-1$
+        assertEquals("abcde", new String(iter.next())); //$NON-NLS-1$
+        assertEquals("fghij", new String(iter.next())); //$NON-NLS-1$
+        assertEquals("klmno", new String(iter.next())); //$NON-NLS-1$
+        assertEquals("pqrst", new String(iter.next())); //$NON-NLS-1$
+        assertEquals("uvwxy", new String(iter.next())); //$NON-NLS-1$
+        assertEquals("z", new String(iter.next())); //$NON-NLS-1$
     }
 
 }

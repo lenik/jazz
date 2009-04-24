@@ -15,9 +15,9 @@ public class DefaultTextCodec<T> extends _TextCodec<T> {
 
     public DefaultTextCodec(Class<? extends T> type, TypeParser parser) {
         if (type == null)
-            throw new NullPointerException("type");
+            throw new NullPointerException("type"); //$NON-NLS-1$
         if (parser == null)
-            throw new NullPointerException("parser");
+            throw new NullPointerException("parser"); //$NON-NLS-1$
         this.type = type;
         this.parser = parser;
     }

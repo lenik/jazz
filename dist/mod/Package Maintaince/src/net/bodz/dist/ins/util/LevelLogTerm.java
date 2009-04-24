@@ -12,7 +12,7 @@ public class LevelLogTerm extends ArrayLogTerm {
     class Term extends BufferedTerminal {
 
         private final Terminal target;
-        private String         tab = "    ";
+        private String         tab = "    "; //$NON-NLS-1$
 
         public Term(Terminal target) {
             this.target = target;

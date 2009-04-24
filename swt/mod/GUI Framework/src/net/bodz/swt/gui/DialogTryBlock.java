@@ -50,7 +50,7 @@ public abstract class DialogTryBlock extends _TryBlock {
         case 2:
             return CANCEL;
         case 3:
-            throw new RuntimeException("Debug");
+            throw new RuntimeException("Debug"); //$NON-NLS-1$
         }
         throw new UnexpectedException();
     }

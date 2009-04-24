@@ -177,7 +177,7 @@ public class Strings {
         return lcfirst + s.substring(1);
     }
 
-    static Pattern words = Pattern.compile("\\w+");
+    static Pattern words = Pattern.compile("\\w+"); //$NON-NLS-1$
 
     public static String ucfirstWords(String s) {
         return new PatternProcessor(words) {

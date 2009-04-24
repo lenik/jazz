@@ -48,7 +48,7 @@ public class StrictDeviceResources {
 
     public StrictDeviceResources(Device device, StrictDeviceResources reuse) {
         if (device == null)
-            throw new NullPointerException("device");
+            throw new NullPointerException("device"); //$NON-NLS-1$
         this.device = device;
         if (reuse == null) {
             if (weakCache) {

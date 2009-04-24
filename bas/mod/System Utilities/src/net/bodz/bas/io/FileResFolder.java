@@ -2,6 +2,8 @@ package net.bodz.bas.io;
 
 import java.io.File;
 
+import net.bodz.bas.nls.SysNLS;
+
 public class FileResFolder implements ResFolder {
 
     private final File    dir;
@@ -18,15 +20,19 @@ public class FileResFolder implements ResFolder {
 
     public FileResFolder(File dir, boolean mkdirsWhenAccess, boolean mkdirsWhenWrite) {
         if (dir == null)
-            throw new NullPointerException("dir");
+            throw new NullPointerException("dir"); //$NON-NLS-1$
         if (dir.exists()) {
             if (!dir.isDirectory())
                 throw new IllegalStateException(
-                        "Non-directory with the same path is already existed: " + dir);
+                        SysNLS.getString("FileResFolder.nondirWithSameName") + dir); //$NON-NLS-1$
         }
         this.dir = dir;
         this.mkdirsWhenAccess = mkdirsWhenAccess;
         this.mkdirsWhenWrite = mkdirsWhenWrite;
+    }
+
+    public File getFile() {
+        return dir;
     }
 
     @Override
@@ -66,9 +72,9 @@ public class FileResFolder implements ResFolder {
     public String toString() {
         String s = dir.toString();
         if (mkdirsWhenAccess)
-            s = "* " + s;
+            s = "* " + s; //$NON-NLS-1$
         if (mkdirsWhenWrite)
-            s = "* " + s;
+            s = "* " + s; //$NON-NLS-1$
         return s;
     }
 

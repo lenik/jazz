@@ -262,7 +262,7 @@ public class DialogUI extends _UserInterface {
                     char c = p.getMnemonic();
                     int m = Strings.indexOfIgnoreCase(text, c);
                     if (m != -1)
-                        text = text.substring(0, m) + "&" + text.substring(m);
+                        text = text.substring(0, m) + "&" + text.substring(m); //$NON-NLS-1$
                     Button button = addButton(parent, SWT.NONE, image, text, i, false);
                     String description = p.getDescription();
                     if (description != null)

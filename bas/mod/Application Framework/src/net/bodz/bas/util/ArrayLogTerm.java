@@ -16,7 +16,7 @@ public abstract class ArrayLogTerm extends LogTerm {
 
     public void setArray(Terminal[] array) {
         if (array == null)
-            throw new NullPointerException("array");
+            throw new NullPointerException("array"); //$NON-NLS-1$
         this.array = array;
     }
 

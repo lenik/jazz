@@ -54,8 +54,8 @@ import net.bodz.bas.util.PluginTypeEx;
  * 
  * <pre>
  * ${:import(
- *     net.bodz.bas.a.Doc, 
- *     net.bodz.bas.a.RcsKeywords, 
+ *     net.bodz.bas.a.Doc,
+ *     net.bodz.bas.a.RcsKeywords,
  *     net.bodz.bas.a.Version
  * )}@Doc(&quot;${primary_type_name} ${description}&quot;)
  * &#064;RcsKeywords(id = &quot;$$Id${primary_type_name}.java 0 ${date} ${time} ${user} $$&quot;)
@@ -222,7 +222,7 @@ public class BasicCLI {
             Class<? extends BasicCLI> clazz = getClass();
             ClassInfo info = ClassInfo.get(clazz);
 
-            String name = clazz.getSimpleName();
+            String name = A_bas.getDisplayName(clazz);
             String doc = info.getDoc();
             if (doc == null)
                 doc = clazz.getName();
@@ -344,7 +344,7 @@ public class BasicCLI {
         Terminal dbg = L.debug();
         // dbg.p("parse boot info");
         // bootProc = BootProc.get(getClass());
-        //        
+        //
         // if (bootProc != null) {
         // dbg.p("load-config PRE");
         // try {

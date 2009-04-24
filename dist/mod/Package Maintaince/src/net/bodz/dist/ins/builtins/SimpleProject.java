@@ -2,8 +2,9 @@ package net.bodz.dist.ins.builtins;
 
 import java.io.File;
 
+import net.bodz.bas.io.Files;
 import net.bodz.bas.sys.SystemInfo;
-import net.bodz.dist.ins.BasedirVariable;
+import net.bodz.dist.ins.BaseDirVariable;
 import net.bodz.dist.ins.ConfigPage;
 import net.bodz.dist.ins.ISession;
 import net.bodz.dist.ins.Variable;
@@ -56,7 +57,7 @@ public class SimpleProject extends _Project {
 
     }
 
-    public static final String BASE_PROGRAMS = "BASE_PROGRAMS";
+    public static final String BASE_PROGRAMS = "BASE_PROGRAMS"; //$NON-NLS-1$
 
     public SimpleProject(Class<?> clazz) {
         super(clazz);
@@ -66,23 +67,23 @@ public class SimpleProject extends _Project {
         add(new ChooseScheme());
         add(new CustomConfig());
 
-        Variable var = new BasedirVariable(//
-                "Program Files", //
+        File programsDir = new File(PFILES_ROOT, getName() + "-" + getVersion()); //$NON-NLS-1$
+        Variable programsVar = new BaseDirVariable(//
+                PackNLS.getString("SimpleProject.programFiles"), // //$NON-NLS-1$
                 PackNLS.getString("SimpleProject.doc.programs"), //$NON-NLS-1$
-                findProgramFilesDir());
-        define(BASE_PROGRAMS, var);
+                programsDir);
+        define(BASE_PROGRAMS, programsVar);
     }
 
-    File findProgramFilesDir() {
+    protected static File PFILES_ROOT;
+    static {
         String parent = "/usr/local"; //$NON-NLS-1$
-        String name = getName();
         if (SystemInfo.isWin32()) {
             parent = System.getenv("ProgramFiles"); //$NON-NLS-1$
             if (parent == null)
                 parent = "C:/Program Files"; //$NON-NLS-1$
         }
-        File dir = new File(parent, name);
-        return dir;
+        PFILES_ROOT = Files.canoniOf(parent);
     }
 
 }
