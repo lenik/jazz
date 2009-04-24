@@ -1,6 +1,7 @@
 package net.bodz.bas.ui;
 
 import net.bodz.bas.lang.err.UnexpectedException;
+import net.bodz.bas.nls.AppNLS;
 
 /**
  * @test
@@ -12,7 +13,7 @@ public abstract class _TryBlock extends TryBlock {
     public _TryBlock(UserInterface ui, int maxRetry, boolean tryImmediately) {
         super(maxRetry, false);
         if (ui == null)
-            throw new NullPointerException("interaction");
+            throw new NullPointerException("interaction"); //$NON-NLS-1$
         this.UI = ui;
         if (tryImmediately)
             _run();
@@ -38,7 +39,7 @@ public abstract class _TryBlock extends TryBlock {
         case 2:
             return CANCEL;
         case 3:
-            throw new RuntimeException("Debug");
+            throw new RuntimeException("Debug"); //$NON-NLS-1$
         }
         throw new UnexpectedException();
     }

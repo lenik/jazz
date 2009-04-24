@@ -19,13 +19,13 @@ public abstract class BufferedTerminal extends _Terminal {
         if (!started)
             restart();
         buf.append(s);
-        if (s.endsWith("\n"))
+        if (s.endsWith("\n")) //$NON-NLS-1$
             p();
     }
 
     @Override
     public void p() {
-        String s = started ? buf.toString() : "";
+        String s = started ? buf.toString() : ""; //$NON-NLS-1$
         started = false;
         _p(s);
     }

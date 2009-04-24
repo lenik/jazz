@@ -13,7 +13,7 @@ public class TaskLogTerm extends LogTerm {
 
     public TaskLogTerm(Task task) {
         if (task == null)
-            throw new NullPointerException("project");
+            throw new NullPointerException("project"); //$NON-NLS-1$
         this.task = task;
     }
 

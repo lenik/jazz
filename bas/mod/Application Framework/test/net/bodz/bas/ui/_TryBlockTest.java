@@ -10,23 +10,23 @@ public class _TryBlockTest {
 
             @Override
             protected void body() throws Exception {
-                System.out.println("run");
-                throw new Exception("run exception");
+                System.out.println("run"); //$NON-NLS-1$
+                throw new Exception("run exception"); //$NON-NLS-1$
             }
 
             @Override
             protected void exit(int exitType) {
-                System.out.println("Exit: " + exitType);
+                System.out.println("Exit: " + exitType); //$NON-NLS-1$
             }
 
             @Override
             protected void init() {
-                System.out.println("Init");
+                System.out.println("Init"); //$NON-NLS-1$
             }
 
             @Override
             protected void retry() {
-                System.out.println("Retry");
+                System.out.println("Retry"); //$NON-NLS-1$
             }
 
         };

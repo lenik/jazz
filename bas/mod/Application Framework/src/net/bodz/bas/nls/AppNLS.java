@@ -11,6 +11,10 @@ public class AppNLS extends NLSAccessor {
         bundle = ResourceBundle.getBundle(AppNLS.class.getName());
     }
 
+    public static String format(String key, Object... args) {
+        return format(bundle, key, args);
+    }
+
     public static String getString(String key) {
         return getString(bundle, key);
     }

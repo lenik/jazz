@@ -102,9 +102,9 @@ public interface Factory<T> {
 
         public ByClassName(ClassLoader loader, String name) {
             if (loader == null)
-                throw new NullPointerException("classLoader");
+                throw new NullPointerException("classLoader"); //$NON-NLS-1$
             if (name == null)
-                throw new NullPointerException("className");
+                throw new NullPointerException("className"); //$NON-NLS-1$
             this.loader = loader;
             this.name = name;
         }
@@ -141,7 +141,7 @@ public interface Factory<T> {
 
         public ByXML(String xml, ExceptionListener listener) {
             if (xml == null)
-                throw new NullPointerException("xml");
+                throw new NullPointerException("xml"); //$NON-NLS-1$
             this.xml = xml;
             this.listener = listener;
         }
@@ -173,7 +173,7 @@ public interface Factory<T> {
 
         public ByXMLFile(File xmlFile, ExceptionListener listener) {
             if (xmlFile == null)
-                throw new NullPointerException("xmlFile");
+                throw new NullPointerException("xmlFile"); //$NON-NLS-1$
             this.xmlFile = xmlFile;
             this.listener = listener;
         }

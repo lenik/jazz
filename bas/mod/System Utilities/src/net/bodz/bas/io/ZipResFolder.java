@@ -12,9 +12,13 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
+import net.bodz.bas.nls.SysNLS;
+
 public class ZipResFolder implements ResFolder {
 
-    private final File      file_zip;
+    private final File      file;
+    private final String    jarurl;
+
     private final boolean   autoMkdirs;
 
     private ZipFile         zipFile;
@@ -26,9 +30,14 @@ public class ZipResFolder implements ResFolder {
 
     public ZipResFolder(File zipfile, boolean autoMkdirs) {
         if (zipfile == null)
-            throw new NullPointerException("zipfile");
-        this.file_zip = zipfile;
+            throw new NullPointerException("zipfile"); //$NON-NLS-1$
+        this.file = zipfile;
+        this.jarurl = "jar:" + Files.getURL(file).toExternalForm() + "!/"; //$NON-NLS-1$ //$NON-NLS-2$
         this.autoMkdirs = autoMkdirs;
+    }
+
+    public File getFile() {
+        return file;
     }
 
     public boolean isAutoMkdirs() {
@@ -37,32 +46,40 @@ public class ZipResFolder implements ResFolder {
 
     void autoMkdirs() {
         if (autoMkdirs) {
-            File parentDir = file_zip.getParentFile();
+            File parentDir = file.getParentFile();
             if (parentDir != null)
                 parentDir.mkdirs();
         }
     }
 
     @Override
-    public ZipEntryResLink get(String entryPath) {
-        return new ZipEntryResLink(entryPath);
+    public ResLink get(String entryPath) {
+        // return new ZipEntryResLink(entryPath);
+        String s = jarurl + entryPath;
+        try {
+            URL url = new URL(s);
+            return new URLResLink(url);
+        } catch (MalformedURLException e) {
+            throw new IllegalArgumentException(SysNLS.getString("ZipResFolder.invalidEntryPath") + entryPath, e); //$NON-NLS-1$
+        }
     }
 
     synchronized void openZipForRead() throws IOException {
         if (zipFile != null)
             return;
         if (zipOut != null)
-            throw new IOException("currently opened for writing: " + file_zip);
-        zipFile = new ZipFile(file_zip);
+            throw new IOException(SysNLS.getString("ZipResFolder.currentlyWriting") + file); //$NON-NLS-1$
+        zipFile = new ZipFile(file);
     }
 
-    synchronized void openZipForWrite() throws IOException {
+    synchronized void openZipForWrite(boolean createNew) throws IOException {
         if (zipOut != null)
-            return;
+            if (!createNew)
+                return;
         if (zipFile != null)
-            throw new IOException("currently opened for reading: " + file_zip);
+            throw new IOException(SysNLS.getString("ZipResFolder.currentlyReading") + file); //$NON-NLS-1$
         autoMkdirs();
-        FileOutputStream out = new FileOutputStream(file_zip, true);
+        FileOutputStream out = new FileOutputStream(file, false);
         zipOut = new ZipOutputStream(out);
     }
 
@@ -79,16 +96,24 @@ public class ZipResFolder implements ResFolder {
 
     @Override
     public int hashCode() {
-        return 0x1237767b ^ file_zip.hashCode();
+        return 0x1237767b ^ file.hashCode();
     }
 
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof ZipResFolder) {
             ZipResFolder a = (ZipResFolder) obj;
-            return file_zip.equals(a.file_zip);
+            return file.equals(a.file);
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        String s = file.toString();
+        if (autoMkdirs)
+            s = "* " + s; //$NON-NLS-1$
+        return s;
     }
 
     public class ZipEntryResLink extends _ResLink {
@@ -98,7 +123,7 @@ public class ZipResFolder implements ResFolder {
 
         public ZipEntryResLink(String entry) {
             if (entry == null)
-                throw new NullPointerException("entryName");
+                throw new NullPointerException("entryName"); //$NON-NLS-1$
             this.entryName = entry;
         }
 
@@ -109,7 +134,7 @@ public class ZipResFolder implements ResFolder {
 
         @Override
         public URL getURL() {
-            String s = "jar:" + file_zip.toURI() + "!" + entryName;
+            String s = "jar:" + file.toURI() + "!" + entryName; //$NON-NLS-1$ //$NON-NLS-2$
             URL entryURL;
             try {
                 entryURL = new URL(s);
@@ -143,9 +168,9 @@ public class ZipResFolder implements ResFolder {
 
         @Override
         public OutputStream openOutputStream(boolean append) throws IOException {
-            if (append)
-                throw new UnsupportedOperationException("Can't append to entries in a zip file");
-            openZipForWrite();
+            // XXX - !append doesn't exactly means createNew
+            // in fact, jdk doesn't support append to zip.
+            openZipForWrite(!append);
             assert zipOut != null;
             ZipEntry zipEntry = new ZipEntry(entryName);
             ZipEntryOutputStream entryOut = new ZipEntryOutputStream(zipOut, zipEntry);
@@ -189,7 +214,7 @@ public class ZipResFolder implements ResFolder {
 
         @Override
         public String toString() {
-            return file_zip + "!" + entryName;
+            return file + "!" + entryName; //$NON-NLS-1$
         }
 
     }

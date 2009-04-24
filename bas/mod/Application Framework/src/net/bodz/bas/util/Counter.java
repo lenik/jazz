@@ -6,6 +6,7 @@ import net.bodz.bas.codec.DefaultTextCodec;
 import net.bodz.bas.codec.TextCodec;
 import net.bodz.bas.lang.err.CheckException;
 import net.bodz.bas.lang.err.EncodeException;
+import net.bodz.bas.nls.AppNLS;
 import net.bodz.bas.types.util.IdentSet;
 
 public class Counter {
@@ -138,7 +139,7 @@ public class Counter {
 
     private void _check(IdentSet uniq, Counter c) throws CheckException {
         if (uniq.contains(c))
-            throw new CheckException("Loop detected: " + c);
+            throw new CheckException(AppNLS.getString("Counter.loopDetected") + c); //$NON-NLS-1$
         uniq.add(c);
         Iterable<Counter> parents = getParents();
         if (parents != null)

@@ -12,8 +12,8 @@ public class CountersTest {
     public void test1() throws Exception {
         net.bodz.bas.util.Counters counters = new net.bodz.bas.util.Counters(getClass());
         System.out.println(counters);
-        Counter buildid = counters.get("buildid");
-        Counter packid = counters.get("packid");
+        Counter buildid = counters.get("buildid"); //$NON-NLS-1$
+        Counter packid = counters.get("packid"); //$NON-NLS-1$
 
         packid.init();
         assertEquals(1, packid.getAndIncrease());

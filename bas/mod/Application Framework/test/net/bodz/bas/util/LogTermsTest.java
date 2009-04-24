@@ -14,7 +14,7 @@ public class LogTermsTest {
     public void test1() {
         LogTerm bas = new ConsoleLogTerm();
         LogTerm t1 = new ConsoleLogTerm();
-        LogTerms.set("net.bodz.bas", bas);
+        LogTerms.set("net.bodz.bas", bas); //$NON-NLS-1$
         LogTerms.set(1, t1);
 
         LogTerm byname = LogTerms.get(LogTermsTest.class.getName());

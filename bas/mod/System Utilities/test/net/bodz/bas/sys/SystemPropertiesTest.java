@@ -32,10 +32,10 @@ public class SystemPropertiesTest {
                 value = Strings.escape(value);
 
             // System.getProperty(key)
-            System.out.println("    /** " + key + " = " + value + " */");
-            System.out.println("    public static String get" + Strings.ucfirst(name) + "() {\n" + //
-                    "        return System.getProperty(\"" + key + "\"); \n" + //
-                    "    }\n");
+            System.out.println("    /** " + key + " = " + value + " */"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            System.out.println("    public static String get" + Strings.ucfirst(name) + "() {\n" + // //$NON-NLS-1$ //$NON-NLS-2$
+                    "        return System.getProperty(\"" + key + "\"); \n" + // //$NON-NLS-1$ //$NON-NLS-2$
+                    "    }\n"); //$NON-NLS-1$
         }
     }
 

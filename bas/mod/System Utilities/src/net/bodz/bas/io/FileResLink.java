@@ -10,6 +10,8 @@ import java.net.URL;
 import java.util.jar.JarFile;
 import java.util.zip.ZipFile;
 
+import net.bodz.bas.nls.SysNLS;
+
 public class FileResLink extends _ResLink {
 
     private final File    file;
@@ -21,9 +23,9 @@ public class FileResLink extends _ResLink {
 
     public FileResLink(File file, boolean autoMkdirs) {
         if (file == null)
-            throw new NullPointerException("file");
+            throw new NullPointerException("file"); //$NON-NLS-1$
         if (file.exists() && !file.isFile())
-            throw new IllegalStateException("Non-file with the same path is already existed: "
+            throw new IllegalStateException(SysNLS.getString("FileResLink.nonfileWithSameName") //$NON-NLS-1$
                     + file);
         this.file = file;
         this.autoMkdirs = autoMkdirs;

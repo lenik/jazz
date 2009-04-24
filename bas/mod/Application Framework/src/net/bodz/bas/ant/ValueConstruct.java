@@ -9,6 +9,7 @@ import net.bodz.bas.lang.Caller;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.err.IllegalUsageException;
 import net.bodz.bas.loader.UCL;
+import net.bodz.bas.nls.AppNLS;
 import net.bodz.bas.types.util.Empty;
 import net.bodz.bas.util.Factory;
 
@@ -26,7 +27,7 @@ public class ValueConstruct extends WithParameters {
 
     void setFactory(Factory<Object> factory) {
         if (this.factory != null)
-            throw new IllegalUsageException("Factory is already specified: " + this.factory);
+            throw new IllegalUsageException(AppNLS.getString("ValueConstruct.factoryIsSpecifed") + this.factory); //$NON-NLS-1$
         this.factory = factory;
     }
 
@@ -68,7 +69,7 @@ public class ValueConstruct extends WithParameters {
 
     public Object create(Class<?>[] prependTypes, Object[] prependValues) throws CreateException {
         if (factory == null)
-            throw new IllegalUsageException("Don't know how to get bean instance");
+            throw new IllegalUsageException(AppNLS.getString("ValueConstruct.nowayToGetInstance")); //$NON-NLS-1$
         Class<?>[] types = prependTypes(prependTypes).toArray(Empty.Classes);
         Object[] values = prependValues(prependValues).toArray(Empty.Objects);
         return factory._create(types, values);

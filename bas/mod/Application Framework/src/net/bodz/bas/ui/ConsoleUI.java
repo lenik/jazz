@@ -28,9 +28,9 @@ public class ConsoleUI extends _UserInterface {
 
     public ConsoleUI(InputStream in, PrintStream out) {
         if (in == null)
-            throw new NullPointerException("in");
+            throw new NullPointerException("in"); //$NON-NLS-1$
         if (out == null)
-            throw new NullPointerException("out");
+            throw new NullPointerException("out"); //$NON-NLS-1$
         InputStreamReader isr = new InputStreamReader(System.in);
         lineIn = new LineReader(isr);
         this.out = out;
@@ -93,22 +93,22 @@ public class ConsoleUI extends _UserInterface {
     @Override
     public int ask(String title, Object detail, IProposal... proposals) {
         if (proposals == null)
-            throw new NullPointerException("proposals");
+            throw new NullPointerException("proposals"); //$NON-NLS-1$
         if (proposals.length == 0)
-            throw new IllegalArgumentException("No proposal");
+            throw new IllegalArgumentException(AppNLS.getString("ConsoleUI.noProposal")); //$NON-NLS-1$
         print(title, detail);
         do {
-            out.print("Choose a proposal: ");
+            out.print(AppNLS.getString("ConsoleUI.chooseProposal")); //$NON-NLS-1$
             for (int i = 0; i < proposals.length; i++) {
                 IProposal p = proposals[i];
                 String name = getDisplayName(p);
                 // String desc = p.getDescription();
                 // String s = desc == null ? name : name + ": " + desc;
                 if (i != 0)
-                    out.print(", ");
+                    out.print(", "); //$NON-NLS-1$
                 out.print(name);
             }
-            out.print(": ");
+            out.print(": "); //$NON-NLS-1$
             String line;
             try {
                 line = lineIn.readLine();
@@ -130,7 +130,7 @@ public class ConsoleUI extends _UserInterface {
             }
             if (mostNearly != -1)
                 return mostNearly;
-            System.err.println("Bad selection: " + line);
+            System.err.println(AppNLS.getString("ConsoleUI.badSelection") + line); //$NON-NLS-1$
         } while (true);
     }
 

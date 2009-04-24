@@ -24,6 +24,13 @@ public class NLSAccessor {
     // ResourceBundle utilities.
     static boolean diag = true;
 
+    protected static String format(ResourceBundle bundle, String key, Object... args) {
+        String format = getString(bundle, key);
+        if (format == null)
+            throw new NullPointerException("key isn't existed: " + key); //$NON-NLS-1$
+        return String.format(format, args);
+    }
+
     protected static String getString(ResourceBundle bundle, String key) {
         try {
             return bundle.getString(key);

@@ -28,9 +28,9 @@ public class ConsoleTerminal extends _Terminal {
 
     public ConsoleTerminal(CharOut out, int width) {
         if (out == null)
-            throw new NullPointerException("out");
+            throw new NullPointerException("out"); //$NON-NLS-1$
         if (width < 1)
-            throw new OutOfDomainException("width", width, 1);
+            throw new OutOfDomainException("width", width, 1); //$NON-NLS-1$
         this.out = out;
         this.width = width;
     }
@@ -41,7 +41,7 @@ public class ConsoleTerminal extends _Terminal {
     }
 
     protected String getLead() {
-        return "";
+        return ""; //$NON-NLS-1$
     }
 
     private final boolean isEOL(String s) {
@@ -54,7 +54,7 @@ public class ConsoleTerminal extends _Terminal {
 
     @Override
     public void n(String s) {
-        assert s != null : "null string";
+        assert s != null : "null string"; //$NON-NLS-1$
         switch (state) {
         case START:
             out.print(getLead());
@@ -70,12 +70,12 @@ public class ConsoleTerminal extends _Terminal {
 
     @Override
     public void p() {
-        p("");
+        p(""); //$NON-NLS-1$
     }
 
     @Override
     public void p(String s) {
-        assert s != null : "null string";
+        assert s != null : "null string"; //$NON-NLS-1$
         switch (state) {
         case START:
             out.print(getLead());
@@ -96,7 +96,7 @@ public class ConsoleTerminal extends _Terminal {
 
     @Override
     public void t(String s) {
-        assert s != null : "null string";
+        assert s != null : "null string"; //$NON-NLS-1$
         if (state == DIRTY)
             out.println();
         String t = getLead() + s;

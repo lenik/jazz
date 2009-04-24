@@ -15,14 +15,14 @@ public class LogTerms {
     static TypeHierMap<LogTerm> typeMap;
     static {
         nameMap = new PrefixMap<LogTerm>();
-        nameMap.put("", console);
+        nameMap.put("", console); //$NON-NLS-1$
         typeMap = new TypeHierMap<LogTerm>();
         typeMap.put(Object.class, console);
     }
 
     public static LogTerm get(String name) {
         LogTerm t = nameMap.floor(name);
-        assert t != null : "null by name " + name;
+        assert t != null : "null by name " + name; //$NON-NLS-1$
         return t;
     }
 
@@ -42,13 +42,13 @@ public class LogTerms {
 
     public static LogTerm get(Class<?> type) {
         LogTerm t = typeMap.floor(type);
-        assert t != null : "null by type " + type;
+        assert t != null : "null by type " + type; //$NON-NLS-1$
         return t;
     }
 
     public static void set(Class<?> type, LogTerm logTerm) {
         if (logTerm == null)
-            throw new NullPointerException("logTerm");
+            throw new NullPointerException("logTerm"); //$NON-NLS-1$
         typeMap.put(type, logTerm);
     }
 

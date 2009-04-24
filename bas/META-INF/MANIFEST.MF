@@ -82,7 +82,10 @@ Export-Package: net.bodz.bas.a,
  org.objectweb.asm,
  org.objectweb.asm.commons,
  org.objectweb.asm.signature,
- org.objectweb.asm.util
+ org.objectweb.asm.tree,
+ org.objectweb.asm.tree.analysis,
+ org.objectweb.asm.util,
+ org.objectweb.asm.xml
 Bundle-ClassPath: mod/_MODEL/bin/,
  mod/Application Framework/bin/,
  mod/B-IOS Framework/bin/,

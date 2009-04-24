@@ -13,7 +13,7 @@ public class Proposal implements IProposal {
 
     public Proposal(int priority, char mnemonic, String name, String description) {
         if (name == null)
-            throw new NullPointerException("name");
+            throw new NullPointerException("name"); //$NON-NLS-1$
         this.priority = priority;
         this.mnemonic = mnemonic;
         this.name = name;
@@ -51,7 +51,7 @@ public class Proposal implements IProposal {
         String s = name;
         String description = getDescription();
         if (description != null)
-            s += ": " + description;
+            s += ": " + description; //$NON-NLS-1$
         return s;
     }
 

@@ -11,7 +11,7 @@ public class StatusChangeEvent extends EventObject {
     public StatusChangeEvent(Object source, Object status) {
         super(source);
         if (status == null)
-            throw new NullPointerException("status");
+            throw new NullPointerException("status"); //$NON-NLS-1$
         this.status = status;
     }
 

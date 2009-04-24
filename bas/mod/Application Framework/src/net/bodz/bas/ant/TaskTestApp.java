@@ -8,6 +8,7 @@ import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.Caller;
 import net.bodz.bas.lang.err.IllegalUsageError;
 import net.bodz.bas.lang.err.IllegalUsageException;
+import net.bodz.bas.nls.AppNLS;
 import net.bodz.bas.snm.SJProject;
 
 import org.apache.tools.ant.BuildLogger;
@@ -55,26 +56,34 @@ public class TaskTestApp {
     }
 
     public TaskTestApp(int caller) throws IOException {
+        this(caller, null);
+    }
+
+    public TaskTestApp(int caller, String resourceName) throws IOException {
         this();
         Class<?> callerClass = Caller.getCallerClass(caller);
         URL url = Files.classData(callerClass);
-        if ("jar".equals(url.getProtocol())) {
+        if ("jar".equals(url.getProtocol())) { //$NON-NLS-1$
             // if callerClass is in a jar, the default project helper is failed
             // to setBaseDir.
             File altBaseDir = SJProject.getOutputBase(callerClass);
-            project.log("Using alternated base dir: " + altBaseDir, Project.MSG_WARN);
+            project.log(AppNLS.getString("TaskTestApp.altBaseDir") + altBaseDir, Project.MSG_WARN); //$NON-NLS-1$
             project.setBaseDir(altBaseDir);
         }
 
-        load(caller + 1);
+        load(caller + 1, resourceName);
     }
 
-    public void load(int caller) throws IOException {
+    public void load(int caller, String resourceName) throws IOException {
         Class<?> callerClass = Caller.getCallerClass(caller);
-        URL xmlURL = Files.classData(callerClass, "xml");
+        URL xmlURL;
+        if (resourceName == null)
+            xmlURL = Files.classData(callerClass, "xml"); //$NON-NLS-1$
+        else
+            xmlURL = callerClass.getResource(resourceName);
         File buildFile = Files.getFile(xmlURL);
         if (!buildFile.exists())
-            throw new IllegalUsageException("The build file for test isn't existed: " + buildFile);
+            throw new IllegalUsageException(AppNLS.getString("TaskTestApp.buildFileIsntExisted") + buildFile); //$NON-NLS-1$
         load(buildFile);
     }
 
@@ -85,7 +94,7 @@ public class TaskTestApp {
     public void run() {
         String defaultTarget = project.getDefaultTarget();
         if (defaultTarget == null)
-            throw new IllegalUsageError("No default target in the project " + project);
+            throw new IllegalUsageError(AppNLS.getString("TaskTestApp.noDefaultTarget") + project); //$NON-NLS-1$
         project.executeTarget(defaultTarget);
     }
 

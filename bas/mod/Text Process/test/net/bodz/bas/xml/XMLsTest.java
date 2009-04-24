@@ -45,30 +45,30 @@ public class XMLsTest {
     }
 
     void testXmlCodec(String name, Object val) throws EncodeException, DecodeException {
-        System.out.println("XML encode/decode test of " + name);
+        System.out.println("XML encode/decode test of " + name); //$NON-NLS-1$
         String xml = XMLs.encode(val);
-        System.out.println("  Encoded to" + name + ": \n" + xml);
+        System.out.println("  Encoded to" + name + ": \n" + xml); //$NON-NLS-1$ //$NON-NLS-2$
         Object decoded = XMLs.decode(xml);
-        System.out.println("  Decoded to " + decoded);
+        System.out.println("  Decoded to " + decoded); //$NON-NLS-1$
         System.out.println();
     }
 
     @Test
     public void testEncodeNull() throws IOException {
         String nullXml = XMLs.encode(null);
-        System.out.println("null-xml = " + nullXml);
+        System.out.println("null-xml = " + nullXml); //$NON-NLS-1$
         Object null2 = XMLs.decode(nullXml);
         assertNull(null2);
     }
 
     @Test
     public void testEncodeString() throws IOException {
-        testXmlCodec("string", "Hello, <&world>!\n");
+        testXmlCodec("string", "Hello, <&world>!\n"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     @Test
     public void testEncodeArray() throws IOException {
-        testXmlCodec("array", new Object[] {
+        testXmlCodec("array", new Object[] { //$NON-NLS-1$
         //
                 10, //
                 new Integer[] { 20, 21, 22 }, //

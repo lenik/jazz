@@ -51,7 +51,7 @@ public class TreePosition<N extends TreeNode<? extends N>> implements Iterable<N
 
         @Override
         public String toString() {
-            return node + "[" + index + "]";
+            return node + "[" + index + "]"; //$NON-NLS-1$ //$NON-NLS-2$
         }
 
     }
@@ -70,7 +70,7 @@ public class TreePosition<N extends TreeNode<? extends N>> implements Iterable<N
             list.add(dim);
             List<? extends N> children = parent.getChildren();
             if (children == null)
-                throw new IllegalArgumentException("Null children, can't go deeper");
+                throw new IllegalArgumentException("Null children, can't go deeper"); //$NON-NLS-1$
             parent = children.get(childIndex);
         }
         return list;
@@ -111,7 +111,7 @@ public class TreePosition<N extends TreeNode<? extends N>> implements Iterable<N
 
         public Iter(List<Dim<N>> dims, Pred1<? super N> pred, List<TreePosition<N>> posBuf) {
             if (dims == null)
-                throw new NullPointerException("dims");
+                throw new NullPointerException("dims"); //$NON-NLS-1$
             this.stack = new ArrayStack<Dim<N>>();
             for (Dim<N> dim : dims)
                 stack.push(dim); // top -> dims[last]
@@ -126,7 +126,7 @@ public class TreePosition<N extends TreeNode<? extends N>> implements Iterable<N
                 N topNode = top.node;
                 int topIndex = top.index;
                 List<? extends N> children = topNode.getChildren();
-                assert children != null : "term-node should not be iterated";
+                assert children != null : "term-node should not be iterated"; //$NON-NLS-1$
                 int size = children.size();
                 if (topIndex < size) { // there is current or more siblings
                     N current = children.get(topIndex);

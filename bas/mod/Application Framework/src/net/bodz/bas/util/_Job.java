@@ -7,7 +7,6 @@ import net.bodz.bas.lang.RecoverableExceptionEvent;
 import net.bodz.bas.lang.RecoverableExceptionListener;
 import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.lang.err.OutOfDomainException;
-import net.bodz.bas.sys.SystemProperties;
 import net.bodz.bas.types.TreeNode;
 import net.bodz.bas.types.util.Objects;
 import net.bodz.bas.ui.ConsoleUI;
@@ -15,13 +14,14 @@ import net.bodz.bas.ui.UserInterface;
 
 public abstract class _Job implements Job, TreeNode<_Job> {
 
-    protected UserInterface                    UI = ConsoleUI.stdout;
-    protected LogTerm                          L  = LogTerms.console;
+    protected UserInterface                    UI    = ConsoleUI.stdout;
+    protected LogTerm                          L     = LogTerms.console;
 
-    private int                                state;
+    private int                                state = NOTSTART;
 
     private List<_Job>                         children;
     private List<ChildObserver>                observers;
+    private List<Runnable>                     exitHooks;
 
     private Object                             status;
     private int                                progressIndex;
@@ -38,9 +38,13 @@ public abstract class _Job implements Job, TreeNode<_Job> {
     @Override
     public void run() {
         switch (state) {
+        case NOTSTART:
+            setState(RUNNING);
+            break;
         case RUNNING:
             return;
-        case STOPPED:
+        case TERMINATED: // can restart?
+        case STOPPED: // can error-restart?
             setState(RUNNING);
             break;
         case STOPPING: // synchronized??
@@ -50,7 +54,21 @@ public abstract class _Job implements Job, TreeNode<_Job> {
         case PAUSING:
             throw new NotImplementedException();
         }
-        runTree();
+        try {
+            runTree();
+            if (state == STOPPING)
+                setState(STOPPED);
+            else
+                setState(TERMINATED);
+        } finally {
+            if (exitHooks != null)
+                for (Runnable exitHook : exitHooks)
+                    try {
+                        exitHook.run();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+        }
     }
 
     /**
@@ -70,7 +88,18 @@ public abstract class _Job implements Job, TreeNode<_Job> {
         return state;
     }
 
-    public void setState(int state) {
+    private void setState(int state) {
+        List<? extends Job> children = getChildren();
+        if (children != null)
+            for (Job child : children)
+                switch (state) {
+                case PAUSING:
+                    child.pause();
+                    break;
+                case STOPPING:
+                    child.stop();
+                    break;
+                }
         if (this.state != state) {
             this.state = state;
             fireStateChange();
@@ -86,16 +115,14 @@ public abstract class _Job implements Job, TreeNode<_Job> {
         case STOPPING:
             // setState(STOPPING | PAUSING);
             break;
-        case STOPPED:
-        case PAUSING:
-        case PAUSED:
-            return;
         }
     }
 
     @Override
     public void stop() {
         switch (state) {
+        case NOTSTART:
+        case TERMINATED:
         case STOPPED:
             break;
         case STOPPING:
@@ -106,10 +133,6 @@ public abstract class _Job implements Job, TreeNode<_Job> {
     }
 
     static int slowdown = 0;
-    static {
-        if (SystemProperties.isDevelopMode())
-            slowdown = 100;
-    }
 
     protected final boolean isStopping() {
         if (slowdown != 0)
@@ -126,7 +149,7 @@ public abstract class _Job implements Job, TreeNode<_Job> {
 
     protected void execute(Job child, double progressIncrement) {
         if (progressIncrement < 0)
-            throw new OutOfDomainException("progressIncrement", progressIncrement, 0);
+            throw new OutOfDomainException("progressIncrement", progressIncrement, 0); //$NON-NLS-1$
         ChildObserver childObserver = new ChildObserver(progressIncrement);
         childObserver.bind(child);
         try {
@@ -136,17 +159,23 @@ public abstract class _Job implements Job, TreeNode<_Job> {
         }
     }
 
+    public void addExitHook(Runnable hook) {
+        if (exitHooks == null)
+            exitHooks = new ArrayList<Runnable>();
+        exitHooks.add(hook);
+    }
+
     @Override
     public void setUserInterface(UserInterface userInterface) {
         if (userInterface == null)
-            throw new NullPointerException("interaction");
+            throw new NullPointerException("interaction"); //$NON-NLS-1$
         this.UI = userInterface;
     }
 
     @Override
     public void setLogger(LogTerm logger) {
         if (logger == null)
-            throw new NullPointerException("logger");
+            throw new NullPointerException("logger"); //$NON-NLS-1$
         this.L = logger;
     }
 
@@ -188,7 +217,7 @@ public abstract class _Job implements Job, TreeNode<_Job> {
 
     @Override
     public int getProgressIndex() {
-        return progressIndex;
+        return (int) progressIndex;
     }
 
     protected void setProgressIndex(int progressIndex) {
@@ -205,7 +234,7 @@ public abstract class _Job implements Job, TreeNode<_Job> {
     }
 
     public int getProgressSize() {
-        return progressSize;
+        return (int) progressSize;
     }
 
     protected void setProgressSize(int progressSize) {
@@ -213,6 +242,23 @@ public abstract class _Job implements Job, TreeNode<_Job> {
             this.progressSize = progressSize;
             fireProgressChange();
         }
+    }
+
+    /**
+     * Set progress index, status info, and check if stopping requested.
+     */
+    protected boolean moveOn(double progressIndex, Object status) {
+        setStatus(status);
+        return moveOn(progressIndex);
+    }
+
+    protected boolean moveOn(double progressIndex) {
+        setProgressIndex(progressIndex);
+        if (isStopping()) {
+            setStopped();
+            return false;
+        }
+        return true;
     }
 
     /**

@@ -22,8 +22,7 @@
         <path path="mod/Wrapper Classes/bin" />
     </path>
 
-    <taskdef resource="net/bodz/bas/ant/task.properties"
-             classpathref="classpath" />
+    <taskdef resource="net/bodz/bas/ant/task.properties" classpathref="classpath" />
 
     <target name="default" depends="dist">
     </target>
@@ -94,8 +93,6 @@
         <copy todir="${basedir}/lib">
             <fileset dir="${JAVA_LIB}">
                 <include name="${lib.asm}" />
-                <include name="${lib.asm_commons}" />
-                <include name="${lib.asm_util}" />
             </fileset>
         </copy>
     </target>

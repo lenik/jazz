@@ -18,6 +18,7 @@ import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.ControlBreak;
 import net.bodz.bas.lang.a.OverrideOption;
 import net.bodz.bas.lang.err.NotImplementedException;
+import net.bodz.bas.nls.AppNLS;
 import net.bodz.bas.types.TypeParsers.GetInstanceParser;
 import net.bodz.bas.types.parsers.WildcardsParser;
 
@@ -273,7 +274,7 @@ public class BatchCLI extends BasicCLI {
         try {
             doFile(file);
         } catch (Throwable e) {
-            L.ferror("Failed to process %s: \n", file, e);
+            L.ferror(AppNLS.getString("BatchCLI.failedToProcess_s"), file, e); //$NON-NLS-1$
             if (L.showDetail())
                 e.printStackTrace(L.error().getPrintStream());
             if (!errorContinue)

@@ -9,13 +9,15 @@ import java.net.URL;
 import java.util.jar.JarFile;
 import java.util.zip.ZipFile;
 
+import net.bodz.bas.nls.SysNLS;
+
 public class URLResLink extends _ResLink {
 
     private URL url;
 
     public URLResLink(URL url) {
         if (url == null)
-            throw new NullPointerException("url");
+            throw new NullPointerException("url"); //$NON-NLS-1$
         this.url = url;
     }
 
@@ -35,7 +37,13 @@ public class URLResLink extends _ResLink {
 
     @Override
     public Boolean exists() {
-        return false;
+        try {
+            InputStream in = url.openStream();
+            in.close();
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
     }
 
     @Override
@@ -45,7 +53,7 @@ public class URLResLink extends _ResLink {
 
     @Override
     public OutputStream openOutputStream(boolean append) throws IOException {
-        throw new UnsupportedOperationException("URL resource is read-only");
+        throw new UnsupportedOperationException(SysNLS.getString("URLResLink.readOnly")); //$NON-NLS-1$
     }
 
     /**
