@@ -24,7 +24,6 @@ import net.bodz.bas.io.CharOuts.BCharOut;
 import net.bodz.dist.ins.Attachment;
 import net.bodz.dist.ins.ISession;
 import net.bodz.dist.ins.InstallException;
-import net.bodz.dist.ins.SessionJob;
 import net.bodz.dist.ins._Component;
 import net.bodz.dist.ins.util.Utils;
 import net.bodz.dist.nls.PackNLS;
@@ -33,6 +32,11 @@ import net.bodz.dist.nls.PackNLS;
  * @test FileCopyTest
  */
 public class FileCopy extends _Component {
+
+    static class Data {
+        String[] list;
+        long     size;
+    }
 
     private final String           baseName;
     private final String           basePath;
@@ -129,18 +133,26 @@ public class FileCopy extends _Component {
     }
 
     @Override
-    public SessionJob pack(ISession session) {
-        return new PackJob(session);
+    public long getSize() {
+        Data data = (Data) getRegistryData();
+        if (data == null)
+            return 0;
+        return data.size;
     }
 
     @Override
-    public SessionJob install(ISession session) {
-        return new InstallJob(session);
+    public CJob pack(ISession session) {
+        return new СPack(session);
     }
 
     @Override
-    public SessionJob uninstall(ISession session) {
-        return new UninstallJob(session);
+    public CJob install(ISession session) {
+        return new CInstall(session);
+    }
+
+    @Override
+    public CJob uninstall(ISession session) {
+        return new CUninstall(session);
     }
 
     private static class NoSVN implements PruneFileFilter {
@@ -152,18 +164,23 @@ public class FileCopy extends _Component {
         }
     }
 
-    public static final FileFilter NoSVN = new NoSVN();
+    public static final FileFilter NoSVN       = new NoSVN();
 
-    class PackJob extends SessionJob {
+    // file-system dependent.
+    static final int               dirFileSize = 0;
 
-        public PackJob(ISession session) {
-            super(session, FileCopy.this);
+    class СPack extends CJob {
+
+        public СPack(ISession session) {
+            super(session);
         }
 
         @Override
         protected void _run() {
             int count = files.size();
-            List<String> regList = new ArrayList<String>(count);
+            List<String> list = new ArrayList<String>(count);
+            long sum = 0;
+
             Attachment a = getAttachment(session, true);
             L.finfo(PackNLS.getString("FileCopy.packFiles_ss"), getId(), a); //$NON-NLS-1$
 
@@ -216,38 +233,43 @@ public class FileCopy extends _Component {
                         JarEntry entry = new JarEntry(dest);
                         jout.putNextEntry(entry);
                         jout.closeEntry();
+                        sum += dirFileSize;
                     } else if (f.isFile()) {
                         long fileSize = f.length();
-                        L.detail(PackNLS.getString("FileCopy.putEntry"), dest, PackNLS.getString("FileCopy.size_"), fileSize, ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                        L.fdetail(PackNLS.getString("FileCopy.putEntry_sd"), dest, fileSize);
                         JarEntry entry = new JarEntry(dest);
                         jout.putNextEntry(entry);
                         entry.setSize(fileSize);
                         for (byte[] block : Files.readByBlock(Files.blockSize, f)) {
+                            // progress...?
                             jout.write(block);
                         }
                         jout.closeEntry();
+                        sum += fileSize;
                     } else {
                         L.warn(PackNLS.getString("FileCopy.unknownFileType"), f); //$NON-NLS-1$
                         continue;
                     }
-                    regList.add(dest);
+                    list.add(dest);
                 } catch (IOException e) {
                     if (!recoverException(e))
                         return;
                 }
             } // for file
-            String[] registry = regList.toArray(new String[0]);
-            setRegistryData(registry);
+            Data data = new Data();
+            data.list = list.toArray(new String[0]);
+            data.size = sum;
+            setRegistryData(data);
         }
 
     }
 
     boolean autoMkdirs = true;
 
-    class InstallJob extends SessionJob {
+    class CInstall extends CJob {
 
-        public InstallJob(ISession session) {
-            super(session, FileCopy.this);
+        public CInstall(ISession session) {
+            super(session);
         }
 
         @Override
@@ -257,10 +279,11 @@ public class FileCopy extends _Component {
                 if (basePath != null)
                     baseDir = new File(baseDir, basePath);
             L.finfo(PackNLS.getString("FileCopy.installFiles_ss"), getId(), baseDir); //$NON-NLS-1$
-            String[] regList = (String[]) getRegistryData();
-            if (regList == null)
-                throw new NullPointerException("regList"); //$NON-NLS-1$
-            setProgressSize(regList.length);
+            Data data = (Data) getRegistryData();
+            if (data == null)
+                throw new NullPointerException("data"); //$NON-NLS-1$
+
+            setProgressSize(data.list.length);
 
             Attachment a = getAttachment(session, false);
             ZipFile zipFile;
@@ -272,12 +295,13 @@ public class FileCopy extends _Component {
             }
             int index = 0;
             try {
-                for (String name : regList) {
+                for (String name : data.list) {
                     if (!moveOn(index++))
                         break;
                     ZipEntry entry = zipFile.getEntry(name);
                     if (entry == null) {
-                        InstallException ex = new InstallException(PackNLS.getString("FileCopy.entryIsntExisted") + name); //$NON-NLS-1$
+                        InstallException ex = new InstallException(PackNLS
+                                .getString("FileCopy.entryIsntExisted") + name); //$NON-NLS-1$
                         if (recoverException(ex))
                             continue;
                         break;
@@ -340,10 +364,10 @@ public class FileCopy extends _Component {
         }
     }
 
-    class UninstallJob extends SessionJob {
+    class CUninstall extends CJob {
 
-        public UninstallJob(ISession session) {
-            super(session, FileCopy.this);
+        public CUninstall(ISession session) {
+            super(session);
         }
 
         @Override
@@ -369,7 +393,8 @@ public class FileCopy extends _Component {
                     names.add(entry.getName());
                 zin.close();
             } catch (IOException e) {
-                throwException(new InstallException(PackNLS.getString("FileCopy.failedToListArchive"), e)); //$NON-NLS-1$
+                throwException(new InstallException(PackNLS
+                        .getString("FileCopy.failedToListArchive"), e)); //$NON-NLS-1$
                 return;
             } finally {
                 try {

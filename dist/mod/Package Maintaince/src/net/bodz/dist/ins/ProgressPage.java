@@ -257,7 +257,7 @@ class ProgressPage extends PageComposite {
                     int jobState = rootJob.getState();
                     if (jobState == Job.TERMINATED)
                         state = DONE;
-                } catch (SessionException e) {
+                } catch (Exception e) {
                     _UI.alert(PackNLS.getString("ProgressPage.installError"), e); //$NON-NLS-1$
                 } finally {
                     rootJob = null;

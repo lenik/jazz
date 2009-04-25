@@ -27,8 +27,8 @@ public abstract class _Component implements Component {
     private boolean         visible;
     private boolean         readOnly = false;
     private boolean         selection;
-    private int             size;
-    private int             moreSize;
+    private long            size;
+    private long            moreSize;
 
     private List<Component> children;
     private Set<Component>  dependancy;
@@ -121,19 +121,19 @@ public abstract class _Component implements Component {
         this.selection = selection;
     }
 
-    public int getSize() {
+    public long getSize() {
         return size;
     }
 
-    protected void setSize(int size) {
+    protected void setSize(long size) {
         this.size = size;
     }
 
-    public int getMoreSize() {
+    public long getMoreSize() {
         return moreSize;
     }
 
-    protected void setMoreSize(int moreSize) {
+    protected void setMoreSize(long moreSize) {
         this.moreSize = moreSize;
     }
 
@@ -230,6 +230,10 @@ public abstract class _Component implements Component {
             setProgressIndex(jobCount);
         }
 
+        @Override
+        protected void _run() {
+        }
+
     }
 
     @Override
@@ -298,13 +302,21 @@ public abstract class _Component implements Component {
         return concat;
     }
 
-    protected SessionJob pack(ISession session) {
+    protected abstract class CJob extends SessionJob {
+
+        public CJob(ISession session) {
+            super(session, _Component.this);
+        }
+
+    }
+
+    protected CJob pack(ISession session) {
         return null;
     }
 
-    protected abstract SessionJob install(ISession session);
+    protected abstract CJob install(ISession session);
 
-    protected SessionJob uninstall(ISession session) {
+    protected CJob uninstall(ISession session) {
         return null;
     }
 

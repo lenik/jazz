@@ -35,10 +35,6 @@ public abstract class SessionJob extends _Job {
     }
 
     @Override
-    protected void _run() {
-    }
-
-    @Override
     protected void execute(Job child, double progressIncrement) {
         if (!(child instanceof SessionJob))
             throw new OutOfDomainException("child", child, SessionJob.class); //$NON-NLS-1$

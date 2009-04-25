@@ -39,6 +39,11 @@ public interface ISession {
 
     Object get(String variableName);
 
+    /**
+     * @throws IllegalArgumentException
+     *             if variableName isn't defined.
+     * @return never <code>null</code>
+     */
     File getFile(String variableName);
 
     String expand(String s);

@@ -52,7 +52,7 @@ public class _Project extends RequiredSection implements Project {
         }
         ClassInfo info = ClassInfo.get(clazz);
         setName(clazz.getName());
-        setText(A_bas.getDisplayName(getClass()));
+        setText(A_bas.getDisplayName(clazz));
         setDoc(info.getDoc());
         URL iconURL = info.getIcon();
         if (iconURL != null) {

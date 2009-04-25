@@ -3,11 +3,12 @@ package net.bodz.dist.pm;
 import net.bodz.bas.lang.err.SystemException;
 import net.bodz.dist.seals.IdSeededSequence;
 import net.bodz.dist.seals.Sequence;
+import net.bodz.dist.sysid.ConstId;
 import net.bodz.dist.sysid.MacAddressId;
 import net.bodz.dist.sysid.SysIdProvider;
 import net.bodz.dist.sysid.VolumeId;
 
-public class BasicPM extends PMv1 {
+public class BasicPM extends _ProtectionModel {
 
     SysIdProvider sysIdProvider;
     Sequence      userSeq;
@@ -32,6 +33,12 @@ public class BasicPM extends PMv1 {
                 return sysIdProvider;
             }
         };
+    }
+
+    static final ConstId defaultMasterId;
+    static {
+        byte[] id = { (byte) 0xDE, (byte) 0xAD, (byte) 0xCA, (byte) 0xFE };
+        defaultMasterId = new ConstId(id);
     }
 
     @Override

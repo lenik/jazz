@@ -50,6 +50,7 @@
             <fileset dir="${JAVA_LIB}">
                 <include name="${lib.asm}" />
                 <include name="${lib.jna}" />
+                <include name="${lib.jacob}" />
             </fileset>
         </copy>
     </target>

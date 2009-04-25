@@ -82,14 +82,16 @@ public class InstallComposite extends WizardComposite {
 
     class NextPage {
 
-        TreePosition<Component> start;
+        final Component               startComponent;
+        final TreePosition<Component> startPosition;
 
-        public NextPage(Component root) {
-            this(new TreePosition<Component>(root, 0));
+        public NextPage(Component startComponent) {
+            this(startComponent, new TreePosition<Component>(startComponent, 0));
         }
 
-        public NextPage(TreePosition<Component> start) {
-            this.start = start;
+        public NextPage(Component startComponent, TreePosition<Component> start) {
+            this.startComponent = startComponent;
+            this.startPosition = start;
         }
 
         /**
@@ -99,27 +101,33 @@ public class InstallComposite extends WizardComposite {
         @Override
         public String toString() {
             LinkedStack<TreePosition<Component>> posBuf = new LinkedStack<TreePosition<Component>>();
-            Iterator<Component> iter = start.iterator(hasConfigPred, posBuf);
-            iter.next(); // skip start itself.
-            posBuf.pop(); // skip start address
+            Iterator<Component> iter = startPosition.iterator(hasConfigPred, posBuf);
             if (!iter.hasNext())
                 return "summary"; //$NON-NLS-1$
+            Component nextComponent = iter.next();
+            TreePosition<Component> nextPosition = posBuf.pop();
+            if (nextComponent == startComponent) { // start is a page-node, skip
+                // start.
+                if (!iter.hasNext())
+                    return "summary"; //$NON-NLS-1$
+                nextComponent = iter.next();
+                nextPosition = posBuf.pop();
+            }
 
-            final Component nextComponent = iter.next();
-            final TreePosition<Component> nextPosition = posBuf.pop();
-            String pageId = "Config(" + nextComponent.getId() + ")"; //$NON-NLS-1$ //$NON-NLS-2$
-
-            if (!isPageDefined(pageId))
-                definePage(pageId, new PageFactory() {
+            String nextPageId = "Config(" + nextComponent.getId() + ")"; //$NON-NLS-1$ //$NON-NLS-2$
+            if (!isPageDefined(nextPageId)) {
+                final Component c = nextComponent;
+                definePage(nextPageId, new PageFactory() {
                     @Override
                     public PageComposite create(Composite parent) {
-                        return nextComponent.createConfig(session, parent, SWT.NONE);
+                        return c.createConfig(session, parent, SWT.NONE);
                     }
                 });
+            }
 
             SymlinkPageFlow pageFlow = getPageFlow();
-            pageFlow.putLink(pageId, "next", new NextPage(nextPosition)); //$NON-NLS-1$
-            return pageId;
+            pageFlow.putLink(nextPageId, "next", new NextPage(nextComponent, nextPosition)); //$NON-NLS-1$
+            return nextPageId;
         }
 
     }

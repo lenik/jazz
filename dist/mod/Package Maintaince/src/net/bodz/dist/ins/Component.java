@@ -47,9 +47,9 @@ public interface Component extends TreeNode<Component> {
     /** Instance variable */
     void setSelection(boolean selection);
 
-    int getSize();
+    long getSize();
 
-    int getMoreSize();
+    long getMoreSize();
 
     /**
      * @return <code>null</code> if none.
