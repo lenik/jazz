@@ -1,6 +1,5 @@
 package net.bodz.dist.ins.builtins;
 
-import net.bodz.dist.ins.ComponentTestApp;
 
 import org.junit.Test;
 

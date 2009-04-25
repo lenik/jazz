@@ -1,12 +1,17 @@
 package net.bodz.dist.ins.builtins;
 
+import net.bodz.bas.types.util.Ns;
 import net.bodz.dist.ins.ConfigPage;
-import net.bodz.dist.ins.Project;
 import net.bodz.dist.ins.ISession;
+import net.bodz.dist.ins.Installer;
+import net.bodz.dist.ins.LogoImage;
+import net.bodz.dist.ins.Project;
 import net.bodz.dist.nls.PackNLS;
 import net.bodz.swt.controls.Picture;
+import net.bodz.swt.util.SWTResources;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -21,9 +26,17 @@ public class LogoPage extends ConfigPage {
         setLayout(new GridLayout());
         this.session = session;
 
-        final Picture logoPicture = new Picture(this, SWT.NONE);
-        logoPicture.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, true, true));
-        // logoPicture.setImage(null);
+        final Picture logoPicture = new Picture(this, SWT.NONE, true);
+        logoPicture.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        ImageData logo = session.getProject().getLogo();
+        if (logo == null) {
+            String name = Ns._getValue(Installer.class, LogoImage.class);
+            if (name != null) {
+                Image defaultLogo = SWTResources.getImageRes(Installer.class, name);
+                logoPicture.setImage(defaultLogo);
+            }
+        } else
+            logoPicture.setImage(new Image(getDisplay(), logo));
     }
 
     @Override

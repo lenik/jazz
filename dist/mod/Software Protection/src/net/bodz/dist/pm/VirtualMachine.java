@@ -5,7 +5,7 @@ import java.nio.ByteBuffer;
 /**
  * This type of VM share a common format of instructions.
  */
-public abstract class CiscVM {
+public abstract class VirtualMachine {
 
     static final int END = 0;
 

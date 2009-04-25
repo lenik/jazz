@@ -1,4 +1,4 @@
-package net.bodz.dist.ins.builtins;
+package net.bodz.dist.ins.util;
 
 import java.util.Collection;
 

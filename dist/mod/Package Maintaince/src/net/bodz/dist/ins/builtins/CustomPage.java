@@ -1,8 +1,8 @@
 package net.bodz.dist.ins.builtins;
 
-import static net.bodz.dist.ins.builtins.TreeItems.FULL;
-import static net.bodz.dist.ins.builtins.TreeItems.NONE;
-import static net.bodz.dist.ins.builtins.TreeItems.UNKNOWN;
+import static net.bodz.dist.ins.util.TreeItems.FULL;
+import static net.bodz.dist.ins.util.TreeItems.NONE;
+import static net.bodz.dist.ins.util.TreeItems.UNKNOWN;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -18,6 +18,7 @@ import net.bodz.dist.ins.Project;
 import net.bodz.dist.ins.Scheme;
 import net.bodz.dist.ins.Variable;
 import net.bodz.dist.ins.util.MissingDependancyBuffer;
+import net.bodz.dist.ins.util.TreeItems;
 import net.bodz.dist.ins.util.MissingDependancyBuffer.Entry;
 import net.bodz.dist.nls.PackNLS;
 import net.bodz.swt.controls.WindowComposite;
@@ -89,18 +90,29 @@ public class CustomPage extends ConfigPage {
         tree.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
-                if ((e.detail & SWT.CHECK) == 0)
-                    return;
-                TreeItem item = (TreeItem) e.item;
-                Component c = (Component) item.getData();
-                if (c.isReadOnly()) {
-                    boolean orig = c.getSelection();
-                    item.setChecked(orig);
-                    e.doit = false;
-                    return;
+                boolean checks = (e.detail & SWT.CHECK) != 0;
+                if (checks) {
+                    TreeItem item = (TreeItem) e.item;
+                    Component c = (Component) item.getData();
+                    if (c.isReadOnly()) {
+                        boolean orig = c.getSelection();
+                        item.setChecked(orig);
+                        e.doit = false;
+                        return;
+                    }
+                    boolean checked = item.getChecked();
+                    TreeItems.setState(item, checked ? FULL : NONE, true);
+                } else {
+                    TreeItem[] items = tree.getSelection();
+                    if (items != null && items.length != 0) {
+                        TreeItem item = items[0];
+                        Component c = (Component) item.getData();
+                        String doc = c.getDoc();
+                        if (doc == null)
+                            doc = c.getName();
+                        descriptionLabel.setText(doc);
+                    }
                 }
-                boolean checked = item.getChecked();
-                TreeItems.setState(item, checked ? FULL : NONE, true);
             }
         });
         tree.addTreeListener(new TreeListener() {
@@ -222,16 +234,22 @@ public class CustomPage extends ConfigPage {
         }
     }
 
+    static final int iconSize = 16;
+
     int createTree(TreeItem item, Component component) {
         // cItemMap.put(component, item);
         item.setData(component);
         component.setViewData(item);
 
-        ImageData image = component.getImage();
         String text = component.getText();
-        if (image != null)
-            item.setImage(new Image(getDisplay(), image));
         item.setText(text);
+
+        ImageData image = component.getImage();
+        if (image != null) {
+            if (image.width > iconSize || image.height > iconSize)
+                image = image.scaledTo(iconSize, iconSize);
+            item.setImage(new Image(getDisplay(), image));
+        }
 
         boolean defaultSelection = component.getSelection();
         Scheme scheme = session.getScheme();

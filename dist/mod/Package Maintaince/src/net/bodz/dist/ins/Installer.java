@@ -1,9 +1,9 @@
 package net.bodz.dist.ins;
 
-import net.bodz.bas.a.ClassInfo;
 import net.bodz.bas.a.DisplayName;
 import net.bodz.bas.a.RcsKeywords;
 import net.bodz.bas.a.Version;
+import net.bodz.bas.a.WebSite;
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.lang.err.IllegalUsageError;
 import net.bodz.bas.ui.UIException;
@@ -18,9 +18,11 @@ import org.eclipse.swt.widgets.Composite;
 
 @DisplayName("boDz Product Installer")
 // @Icon("icon.gif")
+@LogoImage("logo2.jpg")
 @PreferredSize(width = 500, height = 400)
 @RcsKeywords(id = "$Id$")
 @Version( { 1, 0 })
+@WebSite("http://www.bodz.net/products/SWT-Installer")
 public class Installer extends BasicGUI {
 
     @Option(alias = "c")
@@ -69,12 +71,6 @@ public class Installer extends BasicGUI {
         String text = project.getText();
         String version = project.getVersion();
         return text + PackNLS.getString("Installer.installer") + version; //$NON-NLS-1$
-    }
-
-    @Override
-    protected String getBannerString() {
-        ClassInfo info = _loadClassInfo();
-        return PackNLS.getString("Installer.copyright") + info.getVersionString(); //$NON-NLS-1$
     }
 
     public ISession getSession() {

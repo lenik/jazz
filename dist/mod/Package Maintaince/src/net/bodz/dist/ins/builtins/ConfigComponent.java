@@ -2,7 +2,6 @@ package net.bodz.dist.ins.builtins;
 
 import net.bodz.dist.ins.ConfigPage;
 import net.bodz.dist.ins.ISession;
-import net.bodz.dist.ins.SessionJob;
 import net.bodz.dist.ins._Component;
 
 import org.eclipse.swt.widgets.Composite;
@@ -27,7 +26,7 @@ public abstract class ConfigComponent extends _Component {
     }
 
     @Override
-    public SessionJob install(ISession session) {
+    public CJob install(ISession session) {
         return null;
     }
 
