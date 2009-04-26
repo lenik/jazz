@@ -47,6 +47,9 @@ public class ConsoleUI extends _UserInterface {
         out.print(title);
         if (detail != null)
             out.print(": \n    " + detail); //$NON-NLS-1$
+        if (detail instanceof Throwable) {
+            ((Throwable) detail).printStackTrace(out);
+        }
         out.println();
     }
 
