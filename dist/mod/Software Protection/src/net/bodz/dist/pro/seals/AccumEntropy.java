@@ -1,5 +1,7 @@
 package net.bodz.dist.pro.seals;
 
+import net.bodz.dist.pro.nls.ProtectNLS;
+
 /**
  * @test AccumEntropyTest
  */
@@ -14,7 +16,7 @@ public class AccumEntropy extends _Entropy {
 
     public AccumEntropy(int poolSize, int multiplier) {
         if (poolSize < 2)
-            throw new IllegalArgumentException("The pool is too small");
+            throw new IllegalArgumentException(ProtectNLS.getString("AccumEntropy.poolTooSmall")); //$NON-NLS-1$
         this.pool = new byte[poolSize];
         this.multiplier = multiplier;
     }

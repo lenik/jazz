@@ -5,9 +5,6 @@ import java.io.IOException;
 import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.io.FileResFolder;
 import net.bodz.bas.util.LogTerm;
-import net.bodz.dist.ins.ConsoleExecutor;
-import net.bodz.dist.ins.Schemes;
-import net.bodz.dist.ins.SessionException;
 
 import org.junit.Test;
 
@@ -21,7 +18,7 @@ public class ConsoleExecutorTest extends ConsoleExecutor {
 
     @Test
     public void testPack() throws SessionException {
-        session.addResFolder(new FileResFolder(TestConfig.outDir, true));
+        session.addResFolder(0, new FileResFolder(TestConfig.outDir, true));
         session.dump(CharOuts.stdout);
         pack();
     }

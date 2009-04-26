@@ -1,5 +1,6 @@
 package net.bodz.dist.pro.util;
 
+import net.bodz.dist.pro.nls.ProtectNLS;
 import net.bodz.swt.gui.pfl.PageComposite;
 
 import org.eclipse.swt.SWT;
@@ -15,12 +16,12 @@ public class CantActivatePage extends PageComposite {
         setLayout(new GridLayout());
 
         final Label thankLabel = new Label(this, SWT.NONE);
-        thankLabel.setText("Activation canceled.");
+        thankLabel.setText(ProtectNLS.getString("CantActivatePage.canceled")); //$NON-NLS-1$
     }
 
     @Override
     protected Object getInitialState() {
-        return "quit";
+        return "quit"; //$NON-NLS-1$
     }
 
     @Override
@@ -30,7 +31,7 @@ public class CantActivatePage extends PageComposite {
 
     @Override
     public String getPageTitle() {
-        return "Can't activate this product";
+        return ProtectNLS.getString("CantActivatePage.title"); //$NON-NLS-1$
     }
 
 }

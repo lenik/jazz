@@ -7,7 +7,7 @@ public class DiskId extends _SysIdProvider {
     private final int diskIndex;
 
     public DiskId(int diskIndex) {
-        super("-");
+        super("-"); //$NON-NLS-1$
         this.diskIndex = diskIndex;
     }
 

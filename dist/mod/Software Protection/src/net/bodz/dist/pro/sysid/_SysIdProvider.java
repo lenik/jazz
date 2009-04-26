@@ -10,7 +10,7 @@ public abstract class _SysIdProvider implements SysIdProvider {
 
     public _SysIdProvider(String separator) {
         if (separator == null)
-            separator = "";
+            separator = ""; //$NON-NLS-1$
         this.separator = separator;
     }
 

@@ -7,7 +7,7 @@ public class CpuId extends _SysIdProvider {
     private final int cpuIndex;
 
     public CpuId(int cpuIndex) {
-        super("-");
+        super("-"); //$NON-NLS-1$
         this.cpuIndex = cpuIndex;
     }
 
