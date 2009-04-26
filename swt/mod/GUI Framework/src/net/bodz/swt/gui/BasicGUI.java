@@ -13,6 +13,7 @@ import java.util.Set;
 import net.bodz.bas.a.BootInfo;
 import net.bodz.bas.a.ClassInfo;
 import net.bodz.bas.a.StartMode;
+import net.bodz.bas.a.WebSite;
 import net.bodz.bas.cli.BasicCLI;
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.lang.err.IllegalUsageError;
@@ -53,6 +54,7 @@ import org.eclipse.swt.widgets.ToolBar;
 
 @BootInfo(userlibs = { "bodz_swt", "bodz_icons" }, configs = SWTConfig.class)
 @StartMode(StartMode.GUI)
+@WebSite("http://www.bodz.net/products/BasicGUI")
 public class BasicGUI extends BasicCLI {
 
     @Option(alias = "Xw")
@@ -283,7 +285,7 @@ public class BasicGUI extends BasicCLI {
         String author = info.getAuthor();
         String webSite = info.getWebSite();
         if (webSite == null)
-            webSite = "http://www.bodz.net/products/net.bodz.swt"; //$NON-NLS-1$
+            webSite = "http://www.bodz.net/"; //$NON-NLS-1$
         String banner = GUINLS.format("BasicGUI.banner", author, webSite, webSite); //$NON-NLS-1$
         return banner;
     }

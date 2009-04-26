@@ -36,6 +36,7 @@ public class SymlinkPageFlow extends PageFlow {
             return null;
         int depth = 0;
         do {
+            // don't expand symlink if the address is already defined.
             if (isPageLoaded(address))
                 return address;
             if (isPageLoadable(address))
