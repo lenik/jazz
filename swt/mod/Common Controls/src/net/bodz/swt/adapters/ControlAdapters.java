@@ -1,7 +1,11 @@
 package net.bodz.swt.adapters;
 
+import java.awt.Desktop;
+import java.net.URI;
+
 import net.bodz.bas.lang.Pred1;
 import net.bodz.swt.controls.ViewportCanvas;
+import net.bodz.swt.gui.DialogUI;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlAdapter;
@@ -12,10 +16,15 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.events.MouseWheelListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Link;
+import org.eclipse.swt.widgets.Shell;
 
 /**
  * @test ControlAdaptersTest
@@ -212,6 +221,27 @@ public class ControlAdapters {
         }
         Panning panning = new Panning();
         view.addMouseWheelListener(panning);
+    }
+
+    static SelectionListener browseLinkWhenSelected;
+    static {
+        browseLinkWhenSelected = new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                try {
+                    String url = e.text;
+                    URI uri = new URI(url);
+                    Desktop.getDesktop().browse(uri);
+                } catch (Exception ex) {
+                    Shell shell = ((Control) e.widget).getShell();
+                    new DialogUI(shell).alert(ex.getMessage(), ex);
+                }
+            }
+        };
+    }
+
+    public static void browseLink(final Link link) {
+        link.addSelectionListener(browseLinkWhenSelected);
     }
 
 }
