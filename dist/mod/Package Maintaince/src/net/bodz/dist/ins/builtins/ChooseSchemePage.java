@@ -4,7 +4,8 @@ import net.bodz.bas.sys.SystemProperties;
 import net.bodz.dist.ins.ConfigPage;
 import net.bodz.dist.ins.ISession;
 import net.bodz.dist.ins.Scheme;
-import net.bodz.dist.nls.PackNLS;
+import net.bodz.dist.ins.builtins.ChooseSchemePageTest;
+import net.bodz.dist.ins.nls.PackNLS;
 import net.bodz.swt.controls.util.Controls;
 import net.bodz.swt.gui.ValidateException;
 

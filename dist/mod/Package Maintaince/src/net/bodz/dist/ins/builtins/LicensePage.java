@@ -3,7 +3,7 @@ package net.bodz.dist.ins.builtins;
 import net.bodz.bas.sys.SystemProperties;
 import net.bodz.dist.ins.ConfigPage;
 import net.bodz.dist.ins.ISession;
-import net.bodz.dist.nls.PackNLS;
+import net.bodz.dist.ins.nls.PackNLS;
 import net.bodz.swt.controls.util.Playback;
 import net.bodz.swt.layouts.BorderLayout;
 

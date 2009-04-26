@@ -9,7 +9,7 @@ import com.jacob.com.Variant;
 
 public class ISWbemProperty extends Dispatch {
 
-    public static final String componentName = "WbemScripting.ISWbemProperty";
+    public static final String componentName = "WbemScripting.ISWbemProperty"; //$NON-NLS-1$
 
     public ISWbemProperty() {
         super(componentName);
@@ -38,7 +38,7 @@ public class ISWbemProperty extends Dispatch {
      * @return the result is of type Variant
      */
     public Variant getValue() {
-        return Dispatch.get(this, "Value");
+        return Dispatch.get(this, "Value"); //$NON-NLS-1$
     }
 
     /**
@@ -48,7 +48,7 @@ public class ISWbemProperty extends Dispatch {
      *            an input-parameter of type Variant
      */
     public void setValue(Variant value) {
-        Dispatch.put(this, "Value", value);
+        Dispatch.put(this, "Value", value); //$NON-NLS-1$
     }
 
     /**
@@ -57,7 +57,7 @@ public class ISWbemProperty extends Dispatch {
      * @return the result is of type String
      */
     public String getName() {
-        return Dispatch.get(this, "Name").toString();
+        return Dispatch.get(this, "Name").toString(); //$NON-NLS-1$
     }
 
     /**
@@ -66,7 +66,7 @@ public class ISWbemProperty extends Dispatch {
      * @return the result is of type boolean
      */
     public boolean getIsLocal() {
-        return Dispatch.get(this, "IsLocal").changeType(Variant.VariantBoolean).getBoolean();
+        return Dispatch.get(this, "IsLocal").changeType(Variant.VariantBoolean).getBoolean(); //$NON-NLS-1$
     }
 
     /**
@@ -75,7 +75,7 @@ public class ISWbemProperty extends Dispatch {
      * @return the result is of type String
      */
     public String getOrigin() {
-        return Dispatch.get(this, "Origin").toString();
+        return Dispatch.get(this, "Origin").toString(); //$NON-NLS-1$
     }
 
     /**
@@ -84,7 +84,7 @@ public class ISWbemProperty extends Dispatch {
      * @return the result is of type int
      */
     public int getCIMType() {
-        return Dispatch.get(this, "CIMType").changeType(Variant.VariantInt).getInt();
+        return Dispatch.get(this, "CIMType").changeType(Variant.VariantInt).getInt(); //$NON-NLS-1$
     }
 
     /**
@@ -93,7 +93,7 @@ public class ISWbemProperty extends Dispatch {
      * @return the result is of type ISWbemQualifierSet
      */
     public ISWbemQualifierSet getQualifiers_() {
-        return new ISWbemQualifierSet(Dispatch.get(this, "Qualifiers_").toDispatch());
+        return new ISWbemQualifierSet(Dispatch.get(this, "Qualifiers_").toDispatch()); //$NON-NLS-1$
     }
 
     /**
@@ -102,7 +102,7 @@ public class ISWbemProperty extends Dispatch {
      * @return the result is of type boolean
      */
     public boolean getIsArray() {
-        return Dispatch.get(this, "IsArray").changeType(Variant.VariantBoolean).getBoolean();
+        return Dispatch.get(this, "IsArray").changeType(Variant.VariantBoolean).getBoolean(); //$NON-NLS-1$
     }
 
 }

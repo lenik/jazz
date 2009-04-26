@@ -9,7 +9,7 @@ import com.jacob.com.Variant;
 
 public class ISWbemObjectPath extends Dispatch {
 
-    public static final String componentName = "WbemScripting.ISWbemObjectPath";
+    public static final String componentName = "WbemScripting.ISWbemObjectPath"; //$NON-NLS-1$
 
     public ISWbemObjectPath() {
         super(componentName);
@@ -38,7 +38,7 @@ public class ISWbemObjectPath extends Dispatch {
      * @return the result is of type String
      */
     public String getPath() {
-        return Dispatch.get(this, "Path").toString();
+        return Dispatch.get(this, "Path").toString(); //$NON-NLS-1$
     }
 
     /**
@@ -48,7 +48,7 @@ public class ISWbemObjectPath extends Dispatch {
      *            an input-parameter of type String
      */
     public void setPath(String path) {
-        Dispatch.put(this, "Path", path);
+        Dispatch.put(this, "Path", path); //$NON-NLS-1$
     }
 
     /**
@@ -57,7 +57,7 @@ public class ISWbemObjectPath extends Dispatch {
      * @return the result is of type String
      */
     public String getRelPath() {
-        return Dispatch.get(this, "RelPath").toString();
+        return Dispatch.get(this, "RelPath").toString(); //$NON-NLS-1$
     }
 
     /**
@@ -67,7 +67,7 @@ public class ISWbemObjectPath extends Dispatch {
      *            an input-parameter of type String
      */
     public void setRelPath(String relPath) {
-        Dispatch.put(this, "RelPath", relPath);
+        Dispatch.put(this, "RelPath", relPath); //$NON-NLS-1$
     }
 
     /**
@@ -76,7 +76,7 @@ public class ISWbemObjectPath extends Dispatch {
      * @return the result is of type String
      */
     public String getServer() {
-        return Dispatch.get(this, "Server").toString();
+        return Dispatch.get(this, "Server").toString(); //$NON-NLS-1$
     }
 
     /**
@@ -86,7 +86,7 @@ public class ISWbemObjectPath extends Dispatch {
      *            an input-parameter of type String
      */
     public void setServer(String server) {
-        Dispatch.put(this, "Server", server);
+        Dispatch.put(this, "Server", server); //$NON-NLS-1$
     }
 
     /**
@@ -95,7 +95,7 @@ public class ISWbemObjectPath extends Dispatch {
      * @return the result is of type String
      */
     public String getNamespace() {
-        return Dispatch.get(this, "Namespace").toString();
+        return Dispatch.get(this, "Namespace").toString(); //$NON-NLS-1$
     }
 
     /**
@@ -105,7 +105,7 @@ public class ISWbemObjectPath extends Dispatch {
      *            an input-parameter of type String
      */
     public void setNamespace(String namespace) {
-        Dispatch.put(this, "Namespace", namespace);
+        Dispatch.put(this, "Namespace", namespace); //$NON-NLS-1$
     }
 
     /**
@@ -114,7 +114,7 @@ public class ISWbemObjectPath extends Dispatch {
      * @return the result is of type String
      */
     public String getParentNamespace() {
-        return Dispatch.get(this, "ParentNamespace").toString();
+        return Dispatch.get(this, "ParentNamespace").toString(); //$NON-NLS-1$
     }
 
     /**
@@ -123,7 +123,7 @@ public class ISWbemObjectPath extends Dispatch {
      * @return the result is of type String
      */
     public String getDisplayName() {
-        return Dispatch.get(this, "DisplayName").toString();
+        return Dispatch.get(this, "DisplayName").toString(); //$NON-NLS-1$
     }
 
     /**
@@ -133,7 +133,7 @@ public class ISWbemObjectPath extends Dispatch {
      *            an input-parameter of type String
      */
     public void setDisplayName(String displayName) {
-        Dispatch.put(this, "DisplayName", displayName);
+        Dispatch.put(this, "DisplayName", displayName); //$NON-NLS-1$
     }
 
     /**
@@ -142,7 +142,7 @@ public class ISWbemObjectPath extends Dispatch {
      * @return the result is of type String
      */
     public String getClass1() {
-        return Dispatch.get(this, "Class").toString();
+        return Dispatch.get(this, "Class").toString(); //$NON-NLS-1$
     }
 
     /**
@@ -151,7 +151,7 @@ public class ISWbemObjectPath extends Dispatch {
      * @param class an input-parameter of type String
      */
     public void setClass(String _class) {
-        Dispatch.put(this, "Class", _class);
+        Dispatch.put(this, "Class", _class); //$NON-NLS-1$
     }
 
     /**
@@ -160,14 +160,14 @@ public class ISWbemObjectPath extends Dispatch {
      * @return the result is of type boolean
      */
     public boolean getIsClass() {
-        return Dispatch.get(this, "IsClass").changeType(Variant.VariantBoolean).getBoolean();
+        return Dispatch.get(this, "IsClass").changeType(Variant.VariantBoolean).getBoolean(); //$NON-NLS-1$
     }
 
     /**
      * Wrapper for calling the ActiveX-Method with input-parameter(s).
      */
     public void setAsClass() {
-        Dispatch.call(this, "SetAsClass");
+        Dispatch.call(this, "SetAsClass"); //$NON-NLS-1$
     }
 
     /**
@@ -176,14 +176,14 @@ public class ISWbemObjectPath extends Dispatch {
      * @return the result is of type boolean
      */
     public boolean getIsSingleton() {
-        return Dispatch.get(this, "IsSingleton").changeType(Variant.VariantBoolean).getBoolean();
+        return Dispatch.get(this, "IsSingleton").changeType(Variant.VariantBoolean).getBoolean(); //$NON-NLS-1$
     }
 
     /**
      * Wrapper for calling the ActiveX-Method with input-parameter(s).
      */
     public void setAsSingleton() {
-        Dispatch.call(this, "SetAsSingleton");
+        Dispatch.call(this, "SetAsSingleton"); //$NON-NLS-1$
     }
 
     /**
@@ -192,7 +192,7 @@ public class ISWbemObjectPath extends Dispatch {
      * @return the result is of type ISWbemNamedValueSet
      */
     public ISWbemNamedValueSet getKeys() {
-        return new ISWbemNamedValueSet(Dispatch.get(this, "Keys").toDispatch());
+        return new ISWbemNamedValueSet(Dispatch.get(this, "Keys").toDispatch()); //$NON-NLS-1$
     }
 
     /**
@@ -201,7 +201,7 @@ public class ISWbemObjectPath extends Dispatch {
      * @return the result is of type ISWbemSecurity
      */
     public ISWbemSecurity getSecurity_() {
-        return new ISWbemSecurity(Dispatch.get(this, "Security_").toDispatch());
+        return new ISWbemSecurity(Dispatch.get(this, "Security_").toDispatch()); //$NON-NLS-1$
     }
 
     /**
@@ -210,7 +210,7 @@ public class ISWbemObjectPath extends Dispatch {
      * @return the result is of type String
      */
     public String getLocale() {
-        return Dispatch.get(this, "Locale").toString();
+        return Dispatch.get(this, "Locale").toString(); //$NON-NLS-1$
     }
 
     /**
@@ -220,7 +220,7 @@ public class ISWbemObjectPath extends Dispatch {
      *            an input-parameter of type String
      */
     public void setLocale(String locale) {
-        Dispatch.put(this, "Locale", locale);
+        Dispatch.put(this, "Locale", locale); //$NON-NLS-1$
     }
 
     /**
@@ -229,7 +229,7 @@ public class ISWbemObjectPath extends Dispatch {
      * @return the result is of type String
      */
     public String getAuthority() {
-        return Dispatch.get(this, "Authority").toString();
+        return Dispatch.get(this, "Authority").toString(); //$NON-NLS-1$
     }
 
     /**
@@ -239,7 +239,7 @@ public class ISWbemObjectPath extends Dispatch {
      *            an input-parameter of type String
      */
     public void setAuthority(String authority) {
-        Dispatch.put(this, "Authority", authority);
+        Dispatch.put(this, "Authority", authority); //$NON-NLS-1$
     }
 
 }

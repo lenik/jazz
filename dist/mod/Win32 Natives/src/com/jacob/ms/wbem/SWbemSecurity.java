@@ -8,7 +8,7 @@ import com.jacob.com.Dispatch;
 
 public class SWbemSecurity extends ISWbemSecurity {
 
-    public static final String componentName = "clsid:{B54D66E9-2287-11D2-8B33-00600806D9B6}";
+    public static final String componentName = "clsid:{B54D66E9-2287-11D2-8B33-00600806D9B6}"; //$NON-NLS-1$
 
     public SWbemSecurity() {
         super(componentName);

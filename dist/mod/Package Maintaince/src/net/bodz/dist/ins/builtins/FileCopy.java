@@ -25,8 +25,8 @@ import net.bodz.dist.ins.Attachment;
 import net.bodz.dist.ins.ISession;
 import net.bodz.dist.ins.InstallException;
 import net.bodz.dist.ins._Component;
+import net.bodz.dist.ins.nls.PackNLS;
 import net.bodz.dist.ins.util.Utils;
-import net.bodz.dist.nls.PackNLS;
 
 /**
  * @test FileCopyTest
@@ -236,7 +236,7 @@ public class FileCopy extends _Component {
                         sum += dirFileSize;
                     } else if (f.isFile()) {
                         long fileSize = f.length();
-                        L.fdetail(PackNLS.getString("FileCopy.putEntry_sd"), dest, fileSize);
+                        L.fdetail(PackNLS.getString("FileCopy.putEntry_sd"), dest, fileSize); //$NON-NLS-1$
                         JarEntry entry = new JarEntry(dest);
                         jout.putNextEntry(entry);
                         entry.setSize(fileSize);
@@ -281,7 +281,8 @@ public class FileCopy extends _Component {
             L.finfo(PackNLS.getString("FileCopy.installFiles_ss"), getId(), baseDir); //$NON-NLS-1$
             Data data = (Data) getRegistryData();
             if (data == null)
-                throw new NullPointerException("data"); //$NON-NLS-1$
+                throw new IllegalStateException(
+                        "Missing registry data, which contains the file list to copy.");
 
             setProgressSize(data.list.length);
 

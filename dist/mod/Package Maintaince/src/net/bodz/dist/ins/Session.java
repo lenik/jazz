@@ -25,8 +25,8 @@ import net.bodz.bas.types.TreeTextMap;
 import net.bodz.bas.ui.UserInterface;
 import net.bodz.bas.util.LogTerm;
 import net.bodz.bas.xml.XMLs;
+import net.bodz.dist.ins.nls.PackNLS;
 import net.bodz.dist.ins.util.Flags;
-import net.bodz.dist.nls.PackNLS;
 
 public class Session implements ISession {
 

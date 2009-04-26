@@ -6,6 +6,7 @@ import net.bodz.bas.io.Files;
 import net.bodz.bas.sys.SystemInfo;
 import net.bodz.dist.ins.ISession;
 import net.bodz.dist.ins._Component;
+import net.bodz.dist.ins.nls.PackNLS;
 
 import com.roxes.win32.LnkFile;
 
@@ -33,9 +34,9 @@ public class Shortcut extends _Component {
             String arguments, String workingDir, String text, String icon, int iconIndex) {
         super(false, true);
         if (srcbase == null)
-            throw new NullPointerException("srcbase");
+            throw new NullPointerException("srcbase"); //$NON-NLS-1$
         if (dstbase == null)
-            throw new NullPointerException("dstbase");
+            throw new NullPointerException("dstbase"); //$NON-NLS-1$
         this.srcbase = srcbase;
         this.srcpath = srcpath;
         this.dstbase = dstbase;
@@ -63,7 +64,7 @@ public class Shortcut extends _Component {
                 parentFile = Files.canoniOf(parentFile);
                 parentFile.mkdirs();
             }
-            L.info("Create shortcut ", dst);
+            L.info(PackNLS.getString("Shortcut.create"), dst); //$NON-NLS-1$
             if (SystemInfo.isWin32()) {
                 File _src = Files.canoniOf(src);
                 LnkFile lnk = new LnkFile(dst.getParent(), dst.getName());
@@ -96,7 +97,7 @@ public class Shortcut extends _Component {
             String lnkFilePath = lnk.getLinkFilePath();
             File file = new File(lnkFilePath);
             if (file.exists()) {
-                L.info("Remove shortcut ", file);
+                L.info(PackNLS.getString("Shortcut.remove"), file); //$NON-NLS-1$
                 file.delete();
             }
         }

@@ -8,7 +8,7 @@ import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.lang.err.IllegalUsageError;
 import net.bodz.bas.ui.UIException;
 import net.bodz.bas.ui.a.PreferredSize;
-import net.bodz.dist.nls.PackNLS;
+import net.bodz.dist.ins.nls.PackNLS;
 import net.bodz.swt.gui.BasicGUI;
 import net.bodz.swt.gui.pfl.WizardExitEvent;
 import net.bodz.swt.gui.pfl.WizardExitListener;

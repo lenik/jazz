@@ -9,7 +9,7 @@ import com.jacob.com.Variant;
 
 public class ISWbemLocator extends Dispatch {
 
-    public static final String componentName = "WbemScripting.ISWbemLocator";
+    public static final String componentName = "WbemScripting.ISWbemLocator"; //$NON-NLS-1$
 
     public ISWbemLocator() {
         super(componentName);
@@ -56,7 +56,7 @@ public class ISWbemLocator extends Dispatch {
     public ISWbemServices connectServer(String strServer, String strNamespace, String strUser,
             String strPassword, String strLocale, String strAuthority, int iSecurityFlags,
             Object objWbemNamedValueSet) {
-        return new ISWbemServices(Dispatch.call(this, "ConnectServer", strServer, strNamespace,
+        return new ISWbemServices(Dispatch.call(this, "ConnectServer", strServer, strNamespace, //$NON-NLS-1$
                 strUser, strPassword, strLocale, strAuthority, new Variant(iSecurityFlags),
                 objWbemNamedValueSet).toDispatch());
     }
@@ -82,7 +82,7 @@ public class ISWbemLocator extends Dispatch {
      */
     public ISWbemServices connectServer(String strServer, String strNamespace, String strUser,
             String strPassword, String strLocale, String strAuthority, int iSecurityFlags) {
-        return new ISWbemServices(Dispatch.call(this, "ConnectServer", strServer, strNamespace,
+        return new ISWbemServices(Dispatch.call(this, "ConnectServer", strServer, strNamespace, //$NON-NLS-1$
                 strUser, strPassword, strLocale, strAuthority, new Variant(iSecurityFlags))
                 .toDispatch());
     }
@@ -106,7 +106,7 @@ public class ISWbemLocator extends Dispatch {
      */
     public ISWbemServices connectServer(String strServer, String strNamespace, String strUser,
             String strPassword, String strLocale, String strAuthority) {
-        return new ISWbemServices(Dispatch.call(this, "ConnectServer", strServer, strNamespace,
+        return new ISWbemServices(Dispatch.call(this, "ConnectServer", strServer, strNamespace, //$NON-NLS-1$
                 strUser, strPassword, strLocale, strAuthority).toDispatch());
     }
 
@@ -127,7 +127,7 @@ public class ISWbemLocator extends Dispatch {
      */
     public ISWbemServices connectServer(String strServer, String strNamespace, String strUser,
             String strPassword, String strLocale) {
-        return new ISWbemServices(Dispatch.call(this, "ConnectServer", strServer, strNamespace,
+        return new ISWbemServices(Dispatch.call(this, "ConnectServer", strServer, strNamespace, //$NON-NLS-1$
                 strUser, strPassword, strLocale).toDispatch());
     }
 
@@ -146,7 +146,7 @@ public class ISWbemLocator extends Dispatch {
      */
     public ISWbemServices connectServer(String strServer, String strNamespace, String strUser,
             String strPassword) {
-        return new ISWbemServices(Dispatch.call(this, "ConnectServer", strServer, strNamespace,
+        return new ISWbemServices(Dispatch.call(this, "ConnectServer", strServer, strNamespace, //$NON-NLS-1$
                 strUser, strPassword).toDispatch());
     }
 
@@ -162,7 +162,7 @@ public class ISWbemLocator extends Dispatch {
      * @return the result is of type ISWbemServices
      */
     public ISWbemServices connectServer(String strServer, String strNamespace, String strUser) {
-        return new ISWbemServices(Dispatch.call(this, "ConnectServer", strServer, strNamespace,
+        return new ISWbemServices(Dispatch.call(this, "ConnectServer", strServer, strNamespace, //$NON-NLS-1$
                 strUser).toDispatch());
     }
 
@@ -176,7 +176,7 @@ public class ISWbemLocator extends Dispatch {
      * @return the result is of type ISWbemServices
      */
     public ISWbemServices connectServer(String strServer, String strNamespace) {
-        return new ISWbemServices(Dispatch.call(this, "ConnectServer", strServer, strNamespace)
+        return new ISWbemServices(Dispatch.call(this, "ConnectServer", strServer, strNamespace) //$NON-NLS-1$
                 .toDispatch());
     }
 
@@ -188,7 +188,7 @@ public class ISWbemLocator extends Dispatch {
      * @return the result is of type ISWbemServices
      */
     public ISWbemServices connectServer(String strServer) {
-        return new ISWbemServices(Dispatch.call(this, "ConnectServer", strServer).toDispatch());
+        return new ISWbemServices(Dispatch.call(this, "ConnectServer", strServer).toDispatch()); //$NON-NLS-1$
     }
 
     /**
@@ -197,7 +197,7 @@ public class ISWbemLocator extends Dispatch {
      * @return the result is of type ISWbemServices
      */
     public ISWbemServices connectServer() {
-        return new ISWbemServices(Dispatch.call(this, "ConnectServer").toDispatch());
+        return new ISWbemServices(Dispatch.call(this, "ConnectServer").toDispatch()); //$NON-NLS-1$
     }
 
     /**
@@ -206,7 +206,7 @@ public class ISWbemLocator extends Dispatch {
      * @return the result is of type ISWbemSecurity
      */
     public ISWbemSecurity getSecurity_() {
-        return new ISWbemSecurity(Dispatch.get(this, "Security_").toDispatch());
+        return new ISWbemSecurity(Dispatch.get(this, "Security_").toDispatch()); //$NON-NLS-1$
     }
 
 }

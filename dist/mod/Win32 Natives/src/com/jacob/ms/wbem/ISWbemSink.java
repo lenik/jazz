@@ -8,7 +8,7 @@ import com.jacob.com.Dispatch;
 
 public class ISWbemSink extends Dispatch {
 
-    public static final String componentName = "WbemScripting.ISWbemSink";
+    public static final String componentName = "WbemScripting.ISWbemSink"; //$NON-NLS-1$
 
     public ISWbemSink() {
         super(componentName);
@@ -35,7 +35,7 @@ public class ISWbemSink extends Dispatch {
      * Wrapper for calling the ActiveX-Method with input-parameter(s).
      */
     public void cancel() {
-        Dispatch.call(this, "Cancel");
+        Dispatch.call(this, "Cancel"); //$NON-NLS-1$
     }
 
 }

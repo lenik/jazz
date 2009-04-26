@@ -8,7 +8,7 @@ import com.jacob.com.Dispatch;
 
 public class SWbemRefreshableItem extends ISWbemRefreshableItem {
 
-    public static final String componentName = "clsid:{8C6854BC-DE4B-11D3-B390-00105A1F473A}";
+    public static final String componentName = "clsid:{8C6854BC-DE4B-11D3-B390-00105A1F473A}"; //$NON-NLS-1$
 
     public SWbemRefreshableItem() {
         super(componentName);

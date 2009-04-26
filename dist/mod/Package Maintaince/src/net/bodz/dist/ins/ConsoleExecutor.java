@@ -8,7 +8,9 @@ import net.bodz.bas.util.LogTerm;
 import net.bodz.bas.util.LogTerms;
 import net.bodz.bas.util.ProgressChangeEvent;
 import net.bodz.bas.util.StatusChangeEvent;
-import net.bodz.dist.nls.PackNLS;
+import net.bodz.dist.ins.ConsoleExecutorTest;
+import net.bodz.dist.ins.PackageTaskTest;
+import net.bodz.dist.ins.nls.PackNLS;
 
 /**
  * @test {@link PackageTaskTest}

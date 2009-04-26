@@ -3,6 +3,11 @@ package net.bodz.dist.ins;
 import net.bodz.bas.io.FileResFolder;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.xml.XMLs;
+import net.bodz.dist.ins.Components;
+import net.bodz.dist.ins.ConsoleExecutor;
+import net.bodz.dist.ins.ISession;
+import net.bodz.dist.ins.Project;
+import net.bodz.dist.ins.ProjectExecutor;
 
 import org.junit.Test;
 

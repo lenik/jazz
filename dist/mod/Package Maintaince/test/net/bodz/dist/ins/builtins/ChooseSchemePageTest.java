@@ -3,8 +3,9 @@ package net.bodz.dist.ins.builtins;
 import net.bodz.bas.ui.ConsoleUI;
 import net.bodz.bas.util.LogTerms;
 import net.bodz.dist.ins.ISession;
-import net.bodz.dist.ins.TestProject;
 import net.bodz.dist.ins.Session;
+import net.bodz.dist.ins.TestProject;
+import net.bodz.dist.ins.builtins.ChooseSchemePage;
 import net.bodz.swt.gui.pfl.PageComposite;
 import net.bodz.swt.gui.pfl.PageTestApp;
 

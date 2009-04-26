@@ -2,6 +2,8 @@ package net.bodz.dist.ins.util;
 
 import static org.junit.Assert.assertEquals;
 
+import net.bodz.dist.ins.util.IntAddressBuffer;
+
 import org.junit.Test;
 
 public class IntAddressBufferTest {

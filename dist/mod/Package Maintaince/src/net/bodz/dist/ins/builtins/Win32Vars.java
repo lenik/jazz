@@ -4,6 +4,7 @@ import java.io.File;
 
 import net.bodz.bas.sys.SystemInfo;
 import net.bodz.dist.ins._Project;
+import net.bodz.dist.ins.builtins.Win32VarsTest;
 
 import com.roxes.win32.Win32;
 
@@ -12,25 +13,25 @@ import com.roxes.win32.Win32;
  */
 public class Win32Vars {
 
-    public static final String WINDIR                  = "WINDIR";
-    public static final String SYSDIR                  = "SYSDIR";
+    public static final String WINDIR                  = "WINDIR"; //$NON-NLS-1$
+    public static final String SYSDIR                  = "SYSDIR"; //$NON-NLS-1$
 
-    public static final String PROGRAM_FILES           = "PROGRAM_FILES";
-    public static final String COMMON_FILES            = "COMMON_FILES";
-    public static final String COMMON_DESKTOP          = "COMMON_DESKTOP";
-    public static final String COMMON_DOCUMENTS        = "COMMON_DOCUMENTS";
-    public static final String COMMON_START_MENU       = "COMMON_START_MENU";
-    public static final String COMMON_PROGRAMS_MENU    = "COMMON_PROGRAMS_MENU";
-    public static final String COMMON_AUTOSTART_MENU   = "COMMON_AUTOSTART_MENU";
-    public static final String COMMON_TEMPLATES        = "COMMON_TEMPLATES";
-    public static final String PERSONAL_DESKTOP        = "PERSONAL_DESKTOP";
-    public static final String PERSONAL_FILES          = "PERSONAL_FILES";
-    public static final String PERSONAL_START_MENU     = "PERSONAL_START_MENU";
-    public static final String PERSONAL_PROGRAMS_MENU  = "PERSONAL_PROGRAMS_MENU";
-    public static final String PERSONAL_AUTOSTART_MENU = "PERSONAL_AUTOSTART_MENU";
-    public static final String PERSONAL_TEMPLATES      = "PERSONAL_TEMPLATES";
-    public static final String PERSONAL_SEND_TO        = "PERSONAL_SEND_TO";
-    public static final String PERSONAL_FAVORITES      = "PERSONAL_FAVORITES";
+    public static final String PROGRAM_FILES           = "PROGRAM_FILES"; //$NON-NLS-1$
+    public static final String COMMON_FILES            = "COMMON_FILES"; //$NON-NLS-1$
+    public static final String COMMON_DESKTOP          = "COMMON_DESKTOP"; //$NON-NLS-1$
+    public static final String COMMON_DOCUMENTS        = "COMMON_DOCUMENTS"; //$NON-NLS-1$
+    public static final String COMMON_START_MENU       = "COMMON_START_MENU"; //$NON-NLS-1$
+    public static final String COMMON_PROGRAMS_MENU    = "COMMON_PROGRAMS_MENU"; //$NON-NLS-1$
+    public static final String COMMON_AUTOSTART_MENU   = "COMMON_AUTOSTART_MENU"; //$NON-NLS-1$
+    public static final String COMMON_TEMPLATES        = "COMMON_TEMPLATES"; //$NON-NLS-1$
+    public static final String PERSONAL_DESKTOP        = "PERSONAL_DESKTOP"; //$NON-NLS-1$
+    public static final String PERSONAL_FILES          = "PERSONAL_FILES"; //$NON-NLS-1$
+    public static final String PERSONAL_START_MENU     = "PERSONAL_START_MENU"; //$NON-NLS-1$
+    public static final String PERSONAL_PROGRAMS_MENU  = "PERSONAL_PROGRAMS_MENU"; //$NON-NLS-1$
+    public static final String PERSONAL_AUTOSTART_MENU = "PERSONAL_AUTOSTART_MENU"; //$NON-NLS-1$
+    public static final String PERSONAL_TEMPLATES      = "PERSONAL_TEMPLATES"; //$NON-NLS-1$
+    public static final String PERSONAL_SEND_TO        = "PERSONAL_SEND_TO"; //$NON-NLS-1$
+    public static final String PERSONAL_FAVORITES      = "PERSONAL_FAVORITES"; //$NON-NLS-1$
 
     public static void setup(_Project project) {
         if (!SystemInfo.isWin32())

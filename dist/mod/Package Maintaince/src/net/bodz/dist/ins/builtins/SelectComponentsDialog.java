@@ -9,9 +9,10 @@ import net.bodz.bas.lang.err.CancelException;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.types.util.Strings;
 import net.bodz.dist.ins.Component;
+import net.bodz.dist.ins.builtins.SelectComponentsDialogTest;
+import net.bodz.dist.ins.nls.PackNLS;
 import net.bodz.dist.ins.util.Indices;
 import net.bodz.dist.ins.util.MissingDependancyBuffer.Entry;
-import net.bodz.dist.nls.PackNLS;
 import net.bodz.swt.dialogs.SimpleDialog;
 
 import org.eclipse.swt.SWT;

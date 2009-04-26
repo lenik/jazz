@@ -5,6 +5,7 @@ import java.util.Collection;
 import net.bodz.dist.ins.Component;
 import net.bodz.dist.ins.Components;
 import net.bodz.dist.ins.TestProject;
+import net.bodz.dist.ins.builtins.SelectComponentsDialog;
 
 import org.eclipse.swt.SWT;
 import org.junit.Test;

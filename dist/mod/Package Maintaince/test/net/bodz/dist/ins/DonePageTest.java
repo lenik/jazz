@@ -4,6 +4,10 @@ import java.io.IOException;
 
 import net.bodz.bas.ui.ConsoleUI;
 import net.bodz.bas.util.LogTerms;
+import net.bodz.dist.ins.DonePage;
+import net.bodz.dist.ins.ISession;
+import net.bodz.dist.ins.Project;
+import net.bodz.dist.ins.Session;
 import net.bodz.swt.gui.pfl.PageComposite;
 import net.bodz.swt.gui.pfl.PageTestApp;
 

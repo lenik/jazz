@@ -9,7 +9,7 @@ import com.jacob.com.Variant;
 
 public class ISWbemObjectSet extends Dispatch {
 
-    public static final String componentName = "WbemScripting.ISWbemObjectSet";
+    public static final String componentName = "WbemScripting.ISWbemObjectSet"; //$NON-NLS-1$
 
     public ISWbemObjectSet() {
         super(componentName);
@@ -38,7 +38,7 @@ public class ISWbemObjectSet extends Dispatch {
      * @return the result is of type Variant
      */
     public Variant get_NewEnum() {
-        return Dispatch.get(this, "_NewEnum");
+        return Dispatch.get(this, "_NewEnum"); //$NON-NLS-1$
     }
 
     /**
@@ -51,7 +51,7 @@ public class ISWbemObjectSet extends Dispatch {
      * @return the result is of type ISWbemObject
      */
     public ISWbemObject item(String strObjectPath, int iFlags) {
-        return new ISWbemObject(Dispatch.call(this, "Item", strObjectPath, new Variant(iFlags))
+        return new ISWbemObject(Dispatch.call(this, "Item", strObjectPath, new Variant(iFlags)) //$NON-NLS-1$
                 .toDispatch());
     }
 
@@ -63,7 +63,7 @@ public class ISWbemObjectSet extends Dispatch {
      * @return the result is of type ISWbemObject
      */
     public ISWbemObject item(String strObjectPath) {
-        return new ISWbemObject(Dispatch.call(this, "Item", strObjectPath).toDispatch());
+        return new ISWbemObject(Dispatch.call(this, "Item", strObjectPath).toDispatch()); //$NON-NLS-1$
     }
 
     /**
@@ -72,7 +72,7 @@ public class ISWbemObjectSet extends Dispatch {
      * @return the result is of type int
      */
     public int getCount() {
-        return Dispatch.get(this, "Count").changeType(Variant.VariantInt).getInt();
+        return Dispatch.get(this, "Count").changeType(Variant.VariantInt).getInt(); //$NON-NLS-1$
     }
 
     /**
@@ -81,7 +81,7 @@ public class ISWbemObjectSet extends Dispatch {
      * @return the result is of type ISWbemSecurity
      */
     public ISWbemSecurity getSecurity_() {
-        return new ISWbemSecurity(Dispatch.get(this, "Security_").toDispatch());
+        return new ISWbemSecurity(Dispatch.get(this, "Security_").toDispatch()); //$NON-NLS-1$
     }
 
 }

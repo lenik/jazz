@@ -6,7 +6,8 @@ import java.util.NoSuchElementException;
 
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TreeTextMap;
-import net.bodz.dist.nls.PackNLS;
+import net.bodz.dist.ins.ComponentsTest;
+import net.bodz.dist.ins.nls.PackNLS;
 
 /**
  * @test {@link ComponentsTest}

@@ -21,7 +21,7 @@ import net.bodz.dist.ins.Schemes.Maximum;
 import net.bodz.dist.ins.Schemes.Minimum;
 import net.bodz.dist.ins.builtins.RequiredSection;
 import net.bodz.dist.ins.lic.License;
-import net.bodz.dist.nls.PackNLS;
+import net.bodz.dist.ins.nls.PackNLS;
 import net.bodz.swt.util.SWTResources;
 
 import org.eclipse.swt.graphics.ImageData;

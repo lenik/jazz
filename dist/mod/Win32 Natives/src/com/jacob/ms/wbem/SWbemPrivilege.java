@@ -8,7 +8,7 @@ import com.jacob.com.Dispatch;
 
 public class SWbemPrivilege extends ISWbemPrivilege {
 
-    public static final String componentName = "clsid:{26EE67BC-5804-11D2-8B4A-00600806D9B6}";
+    public static final String componentName = "clsid:{26EE67BC-5804-11D2-8B4A-00600806D9B6}"; //$NON-NLS-1$
 
     public SWbemPrivilege() {
         super(componentName);

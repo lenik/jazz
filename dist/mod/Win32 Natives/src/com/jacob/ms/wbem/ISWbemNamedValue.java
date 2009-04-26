@@ -9,7 +9,7 @@ import com.jacob.com.Variant;
 
 public class ISWbemNamedValue extends Dispatch {
 
-    public static final String componentName = "WbemScripting.ISWbemNamedValue";
+    public static final String componentName = "WbemScripting.ISWbemNamedValue"; //$NON-NLS-1$
 
     public ISWbemNamedValue() {
         super(componentName);
@@ -38,7 +38,7 @@ public class ISWbemNamedValue extends Dispatch {
      * @return the result is of type Variant
      */
     public Variant getValue() {
-        return Dispatch.get(this, "Value");
+        return Dispatch.get(this, "Value"); //$NON-NLS-1$
     }
 
     /**
@@ -48,7 +48,7 @@ public class ISWbemNamedValue extends Dispatch {
      *            an input-parameter of type Variant
      */
     public void setValue(Variant value) {
-        Dispatch.put(this, "Value", value);
+        Dispatch.put(this, "Value", value); //$NON-NLS-1$
     }
 
     /**
@@ -57,7 +57,7 @@ public class ISWbemNamedValue extends Dispatch {
      * @return the result is of type String
      */
     public String getName() {
-        return Dispatch.get(this, "Name").toString();
+        return Dispatch.get(this, "Name").toString(); //$NON-NLS-1$
     }
 
 }

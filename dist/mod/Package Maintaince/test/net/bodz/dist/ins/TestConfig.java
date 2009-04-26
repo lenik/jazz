@@ -5,6 +5,9 @@ import java.util.Map;
 
 import net.bodz.bas.io.Files;
 import net.bodz.bas.util.LogTerm;
+import net.bodz.dist.ins.ISession;
+import net.bodz.dist.ins.Project;
+import net.bodz.dist.ins.Variable;
 
 public class TestConfig {
 

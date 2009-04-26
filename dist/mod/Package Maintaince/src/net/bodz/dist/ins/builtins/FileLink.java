@@ -8,6 +8,8 @@ import net.bodz.bas.io.Files;
 import net.bodz.bas.sys.SystemInfo;
 import net.bodz.dist.ins.ISession;
 import net.bodz.dist.ins._Component;
+import net.bodz.dist.ins.builtins.FileLinkTest;
+import net.bodz.dist.ins.nls.PackNLS;
 
 import com.roxes.win32.LnkFile;
 
@@ -25,13 +27,13 @@ public class FileLink extends _Component {
     public FileLink(String srcbase, String srcpath, String dstbase, String dstpath, boolean symbolic) {
         super(false, true);
         if (srcbase == null)
-            throw new NullPointerException("srcbase");
+            throw new NullPointerException("srcbase"); //$NON-NLS-1$
         if (srcpath == null)
-            throw new NullPointerException("srcpath");
+            throw new NullPointerException("srcpath"); //$NON-NLS-1$
         if (dstbase == null)
-            throw new NullPointerException("dstbase");
+            throw new NullPointerException("dstbase"); //$NON-NLS-1$
         if (dstpath == null)
-            throw new NullPointerException("dstpath");
+            throw new NullPointerException("dstpath"); //$NON-NLS-1$
         this.srcbase = srcbase;
         this.srcpath = srcpath;
         this.dstbase = dstbase;
@@ -53,9 +55,9 @@ public class FileLink extends _Component {
             Path dstpath = dst.toPath();
             try {
                 if (dst.exists()) {
-                    boolean confirm = UI.confirm("File %s is already existed, overwrite?", dst);
+                    boolean confirm = UI.confirm(PackNLS.getString("FileLink.fileExist_s"), dst); //$NON-NLS-1$
                     if (!confirm) {
-                        L.info("FileLink skipped: ", dst);
+                        L.info(PackNLS.getString("FileLink.skipped"), dst); //$NON-NLS-1$
                         return;
                     }
                 } else {
@@ -65,12 +67,12 @@ public class FileLink extends _Component {
                     parentFile.mkdirs();
                 }
                 if (symbolic) {
-                    L.finfo("Create symlink %s => %s\n", src, dst);
+                    L.finfo(PackNLS.getString("FileLink.createSymlink_ss"), src, dst); //$NON-NLS-1$
                     try {
                         dstpath.createSymbolicLink(srcpath);
                     } catch (UnsupportedOperationException e) {
                         if (SystemInfo.isWin32()) {
-                            L.warn("Symbolic link isn't supported, try to create win32 shortcut.");
+                            L.warn(PackNLS.getString("FileLink.symlinkIsntSupported")); //$NON-NLS-1$
                             File _src = Files.canoniOf(src);
                             LnkFile lnk = new LnkFile(dst.getParent(), dst.getName());
                             lnk.setPath(_src.getPath());
@@ -80,11 +82,11 @@ public class FileLink extends _Component {
                             throw e;
                     }
                 } else {
-                    L.finfo("Create link %s => %s\n", src, dst);
+                    L.finfo(PackNLS.getString("FileLink.createLink_ss"), src, dst); //$NON-NLS-1$
                     try {
                         dstpath.createLink(srcpath);
                     } catch (UnsupportedOperationException e) {
-                        L.warn("Hard link isn't supported, try full copy.");
+                        L.warn(PackNLS.getString("FileLink.hardLinkIsntSupported")); //$NON-NLS-1$
                         try {
                             File parentFile = dst.getParentFile();
                             parentFile = Files.canoniOf(parentFile);
@@ -112,10 +114,10 @@ public class FileLink extends _Component {
             File dst = new File(session.getFile(dstbase), dstpath);
             try {
                 if (dst.exists()) {
-                    L.info("Remove link ", dst);
+                    L.info(PackNLS.getString("FileLink.remove"), dst); //$NON-NLS-1$
                     dst.delete();
-                } else if ((dst = new File(dst.getPath() + ".lnk")).exists()) {
-                    L.info("Remove shortcut file ", dst);
+                } else if ((dst = new File(dst.getPath() + ".lnk")).exists()) { //$NON-NLS-1$
+                    L.info(PackNLS.getString("FileLink.removeShortcut"), dst); //$NON-NLS-1$
                     dst.delete();
                 }
             } catch (Exception e) {

@@ -17,7 +17,7 @@ import java.util.zip.ZipOutputStream;
 
 import net.bodz.bas.io.ResLink;
 import net.bodz.bas.lang.err.NotImplementedException;
-import net.bodz.dist.nls.PackNLS;
+import net.bodz.dist.ins.nls.PackNLS;
 
 public class StatedAttachment implements Attachment {
 

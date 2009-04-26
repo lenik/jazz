@@ -8,7 +8,7 @@ import com.jacob.com.Dispatch;
 
 public class ISWbemMethod extends Dispatch {
 
-    public static final String componentName = "WbemScripting.ISWbemMethod";
+    public static final String componentName = "WbemScripting.ISWbemMethod"; //$NON-NLS-1$
 
     public ISWbemMethod() {
         super(componentName);
@@ -37,7 +37,7 @@ public class ISWbemMethod extends Dispatch {
      * @return the result is of type String
      */
     public String getName() {
-        return Dispatch.get(this, "Name").toString();
+        return Dispatch.get(this, "Name").toString(); //$NON-NLS-1$
     }
 
     /**
@@ -46,7 +46,7 @@ public class ISWbemMethod extends Dispatch {
      * @return the result is of type String
      */
     public String getOrigin() {
-        return Dispatch.get(this, "Origin").toString();
+        return Dispatch.get(this, "Origin").toString(); //$NON-NLS-1$
     }
 
     /**
@@ -55,7 +55,7 @@ public class ISWbemMethod extends Dispatch {
      * @return the result is of type ISWbemObject
      */
     public ISWbemObject getInParameters() {
-        return new ISWbemObject(Dispatch.get(this, "InParameters").toDispatch());
+        return new ISWbemObject(Dispatch.get(this, "InParameters").toDispatch()); //$NON-NLS-1$
     }
 
     /**
@@ -64,7 +64,7 @@ public class ISWbemMethod extends Dispatch {
      * @return the result is of type ISWbemObject
      */
     public ISWbemObject getOutParameters() {
-        return new ISWbemObject(Dispatch.get(this, "OutParameters").toDispatch());
+        return new ISWbemObject(Dispatch.get(this, "OutParameters").toDispatch()); //$NON-NLS-1$
     }
 
     /**
@@ -73,7 +73,7 @@ public class ISWbemMethod extends Dispatch {
      * @return the result is of type ISWbemQualifierSet
      */
     public ISWbemQualifierSet getQualifiers_() {
-        return new ISWbemQualifierSet(Dispatch.get(this, "Qualifiers_").toDispatch());
+        return new ISWbemQualifierSet(Dispatch.get(this, "Qualifiers_").toDispatch()); //$NON-NLS-1$
     }
 
 }
