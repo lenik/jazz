@@ -6,6 +6,7 @@ import net.bodz.bas.lang.Pred1;
 import net.bodz.bas.types.LinkedStack;
 import net.bodz.bas.types.TreePosition;
 import net.bodz.bas.ui.UIException;
+import net.bodz.dist.ins.InstallCompositeTest;
 import net.bodz.swt.gui.pfl.PageComposite;
 import net.bodz.swt.gui.pfl.PageFactory;
 import net.bodz.swt.gui.pfl.SymlinkPageFlow;

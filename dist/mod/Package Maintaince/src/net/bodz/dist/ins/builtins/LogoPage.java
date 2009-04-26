@@ -6,7 +6,7 @@ import net.bodz.dist.ins.ISession;
 import net.bodz.dist.ins.Installer;
 import net.bodz.dist.ins.LogoImage;
 import net.bodz.dist.ins.Project;
-import net.bodz.dist.nls.PackNLS;
+import net.bodz.dist.ins.nls.PackNLS;
 import net.bodz.swt.controls.Picture;
 import net.bodz.swt.util.SWTResources;
 

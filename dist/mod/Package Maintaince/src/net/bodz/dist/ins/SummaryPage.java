@@ -1,7 +1,7 @@
 package net.bodz.dist.ins;
 
 import net.bodz.bas.io.CharOuts.BCharOut;
-import net.bodz.dist.nls.PackNLS;
+import net.bodz.dist.ins.nls.PackNLS;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.ImageData;

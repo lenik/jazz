@@ -1,6 +1,10 @@
 package net.bodz.dist.ins;
 
 import net.bodz.bas.io.FileResFolder;
+import net.bodz.dist.ins.ConsoleExecutor;
+import net.bodz.dist.ins.ISession;
+import net.bodz.dist.ins.InstallComposite;
+import net.bodz.dist.ins.ProjectExecutor;
 import net.bodz.swt.gui.pfl.WizardExitEvent;
 import net.bodz.swt.gui.pfl.WizardExitListener;
 import net.bodz.swt.gui.util.ControlTestApp;

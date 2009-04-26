@@ -1,5 +1,6 @@
 package net.bodz.dist.ins;
 
+
 public interface Scheme {
 
     String getName();

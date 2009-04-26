@@ -9,7 +9,7 @@ import com.jacob.com.Variant;
 
 public class ISWbemPrivilegeSet extends Dispatch {
 
-    public static final String componentName = "WbemScripting.ISWbemPrivilegeSet";
+    public static final String componentName = "WbemScripting.ISWbemPrivilegeSet"; //$NON-NLS-1$
 
     public ISWbemPrivilegeSet() {
         super(componentName);
@@ -38,7 +38,7 @@ public class ISWbemPrivilegeSet extends Dispatch {
      * @return the result is of type Variant
      */
     public Variant get_NewEnum() {
-        return Dispatch.get(this, "_NewEnum");
+        return Dispatch.get(this, "_NewEnum"); //$NON-NLS-1$
     }
 
     /**
@@ -49,7 +49,7 @@ public class ISWbemPrivilegeSet extends Dispatch {
      * @return the result is of type ISWbemPrivilege
      */
     public ISWbemPrivilege item(int iPrivilege) {
-        return new ISWbemPrivilege(Dispatch.call(this, "Item", new Variant(iPrivilege))
+        return new ISWbemPrivilege(Dispatch.call(this, "Item", new Variant(iPrivilege)) //$NON-NLS-1$
                 .toDispatch());
     }
 
@@ -59,7 +59,7 @@ public class ISWbemPrivilegeSet extends Dispatch {
      * @return the result is of type int
      */
     public int getCount() {
-        return Dispatch.get(this, "Count").changeType(Variant.VariantInt).getInt();
+        return Dispatch.get(this, "Count").changeType(Variant.VariantInt).getInt(); //$NON-NLS-1$
     }
 
     /**
@@ -72,7 +72,7 @@ public class ISWbemPrivilegeSet extends Dispatch {
      * @return the result is of type ISWbemPrivilege
      */
     public ISWbemPrivilege add(int iPrivilege, boolean bIsEnabled) {
-        return new ISWbemPrivilege(Dispatch.call(this, "Add", new Variant(iPrivilege),
+        return new ISWbemPrivilege(Dispatch.call(this, "Add", new Variant(iPrivilege), //$NON-NLS-1$
                 new Variant(bIsEnabled)).toDispatch());
     }
 
@@ -84,7 +84,7 @@ public class ISWbemPrivilegeSet extends Dispatch {
      * @return the result is of type ISWbemPrivilege
      */
     public ISWbemPrivilege add(int iPrivilege) {
-        return new ISWbemPrivilege(Dispatch.call(this, "Add", new Variant(iPrivilege)).toDispatch());
+        return new ISWbemPrivilege(Dispatch.call(this, "Add", new Variant(iPrivilege)).toDispatch()); //$NON-NLS-1$
     }
 
     /**
@@ -94,14 +94,14 @@ public class ISWbemPrivilegeSet extends Dispatch {
      *            an input-parameter of type int
      */
     public void remove(int iPrivilege) {
-        Dispatch.call(this, "Remove", new Variant(iPrivilege));
+        Dispatch.call(this, "Remove", new Variant(iPrivilege)); //$NON-NLS-1$
     }
 
     /**
      * Wrapper for calling the ActiveX-Method with input-parameter(s).
      */
     public void deleteAll() {
-        Dispatch.call(this, "DeleteAll");
+        Dispatch.call(this, "DeleteAll"); //$NON-NLS-1$
     }
 
     /**
@@ -114,7 +114,7 @@ public class ISWbemPrivilegeSet extends Dispatch {
      * @return the result is of type ISWbemPrivilege
      */
     public ISWbemPrivilege addAsString(String strPrivilege, boolean bIsEnabled) {
-        return new ISWbemPrivilege(Dispatch.call(this, "AddAsString", strPrivilege,
+        return new ISWbemPrivilege(Dispatch.call(this, "AddAsString", strPrivilege, //$NON-NLS-1$
                 new Variant(bIsEnabled)).toDispatch());
     }
 
@@ -126,7 +126,7 @@ public class ISWbemPrivilegeSet extends Dispatch {
      * @return the result is of type ISWbemPrivilege
      */
     public ISWbemPrivilege addAsString(String strPrivilege) {
-        return new ISWbemPrivilege(Dispatch.call(this, "AddAsString", strPrivilege).toDispatch());
+        return new ISWbemPrivilege(Dispatch.call(this, "AddAsString", strPrivilege).toDispatch()); //$NON-NLS-1$
     }
 
 }

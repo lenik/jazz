@@ -9,7 +9,7 @@ import com.jacob.com.Variant;
 
 public class ISWbemEventSource extends Dispatch {
 
-    public static final String componentName = "WbemScripting.ISWbemEventSource";
+    public static final String componentName = "WbemScripting.ISWbemEventSource"; //$NON-NLS-1$
 
     public ISWbemEventSource() {
         super(componentName);
@@ -40,7 +40,7 @@ public class ISWbemEventSource extends Dispatch {
      * @return the result is of type ISWbemObject
      */
     public ISWbemObject nextEvent(int iTimeoutMs) {
-        return new ISWbemObject(Dispatch.call(this, "NextEvent", new Variant(iTimeoutMs))
+        return new ISWbemObject(Dispatch.call(this, "NextEvent", new Variant(iTimeoutMs)) //$NON-NLS-1$
                 .toDispatch());
     }
 
@@ -50,7 +50,7 @@ public class ISWbemEventSource extends Dispatch {
      * @return the result is of type ISWbemObject
      */
     public ISWbemObject nextEvent() {
-        return new ISWbemObject(Dispatch.call(this, "NextEvent").toDispatch());
+        return new ISWbemObject(Dispatch.call(this, "NextEvent").toDispatch()); //$NON-NLS-1$
     }
 
     /**
@@ -59,7 +59,7 @@ public class ISWbemEventSource extends Dispatch {
      * @return the result is of type ISWbemSecurity
      */
     public ISWbemSecurity getSecurity_() {
-        return new ISWbemSecurity(Dispatch.get(this, "Security_").toDispatch());
+        return new ISWbemSecurity(Dispatch.get(this, "Security_").toDispatch()); //$NON-NLS-1$
     }
 
 }

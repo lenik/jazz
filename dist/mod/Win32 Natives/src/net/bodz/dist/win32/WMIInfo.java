@@ -11,14 +11,14 @@ public class WMIInfo {
         ComThread.InitSTA();
 
         SWbemServicesEx services = new SWbemServicesEx();
-        ISWbemObjectSet win32Processors = services.instancesOf("Win32_Processor");
+        ISWbemObjectSet win32Processors = services.instancesOf("Win32_Processor"); //$NON-NLS-1$
         // ISWbemObjectSet win32Processors = new
         // SWbemServices().instancesOf("Win32_Processor");
         int count = win32Processors.getCount();
-        System.out.println("Count=" + count);
+        System.out.println("Count=" + count); //$NON-NLS-1$
 
         String programId = win32Processors.getProgramId();
-        System.out.println("Program ID=" + programId);
+        System.out.println("Program ID=" + programId); //$NON-NLS-1$
 
         Variant newEnum = win32Processors.get_NewEnum();
         newEnum.getDispatch();

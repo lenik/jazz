@@ -6,6 +6,8 @@ import java.io.IOException;
 import net.bodz.bas.a.DisplayName;
 import net.bodz.bas.io.FileFinder;
 import net.bodz.bas.snm.SJProject;
+import net.bodz.dist.ins.BaseDirVariable;
+import net.bodz.dist.ins.Variable;
 import net.bodz.dist.ins.builtins.CTAProject;
 import net.bodz.dist.ins.builtins.FileCopy;
 import net.bodz.dist.ins.builtins.OptionalSection;

@@ -13,7 +13,7 @@ import net.bodz.bas.util.JobObserver;
 import net.bodz.bas.util.LogTerm;
 import net.bodz.bas.util.ProgressChangeEvent;
 import net.bodz.bas.util.StatusChangeEvent;
-import net.bodz.dist.nls.PackNLS;
+import net.bodz.dist.ins.nls.PackNLS;
 import net.bodz.swt.controls.DetailSwitchEvent;
 import net.bodz.swt.controls.DetailSwitchListener;
 import net.bodz.swt.controls.WindowComposite;

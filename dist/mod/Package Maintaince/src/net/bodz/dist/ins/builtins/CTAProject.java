@@ -13,6 +13,7 @@ import net.bodz.bas.io.Files;
 import net.bodz.bas.snm.SJProject;
 import net.bodz.dist.ins.BaseDirVariable;
 import net.bodz.dist.ins.Component;
+import net.bodz.dist.ins.nls.PackNLS;
 
 @DisplayName("Component Test Application")
 @Doc("A test program for z.dist components")
@@ -41,9 +42,9 @@ public class CTAProject extends SimpleProject {
     private void setup() throws IOException {
         File testHome = Files.getTmpDir();
 
-        define("BASE_A", new BaseDirVariable("Apples", new File(testHome, "apple"))); //$NON-NLS-1$
-        define("BASE_B", new BaseDirVariable("Bees", new File(testHome, "bee"))); //$NON-NLS-1$
-        define("BASE_C", new BaseDirVariable("Cakes", new File(testHome, "cake"))); //$NON-NLS-1$
+        define("BASE_A", new BaseDirVariable(PackNLS.getString("CTAProject.aa"), new File(testHome, PackNLS.getString("CTAProject.a")))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        define("BASE_B", new BaseDirVariable(PackNLS.getString("CTAProject.bb"), new File(testHome, PackNLS.getString("CTAProject.b")))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        define("BASE_C", new BaseDirVariable(PackNLS.getString("CTAProject.cc"), new File(testHome, PackNLS.getString("CTAProject.c")))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
         FileFilter filter = FileCopy.NoSVN;
 

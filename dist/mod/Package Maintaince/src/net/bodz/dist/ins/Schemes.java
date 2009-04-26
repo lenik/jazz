@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.bodz.bas.types.util.Strings;
-import net.bodz.dist.nls.PackNLS;
+import net.bodz.dist.ins.nls.PackNLS;
 
 public class Schemes {
 

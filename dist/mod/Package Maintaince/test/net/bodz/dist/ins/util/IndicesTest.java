@@ -2,6 +2,8 @@ package net.bodz.dist.ins.util;
 
 import static org.junit.Assert.assertArrayEquals;
 
+import net.bodz.dist.ins.util.Indices;
+
 import org.junit.Test;
 
 public class IndicesTest {

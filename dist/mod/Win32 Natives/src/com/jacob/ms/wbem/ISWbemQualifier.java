@@ -9,7 +9,7 @@ import com.jacob.com.Variant;
 
 public class ISWbemQualifier extends Dispatch {
 
-    public static final String componentName = "WbemScripting.ISWbemQualifier";
+    public static final String componentName = "WbemScripting.ISWbemQualifier"; //$NON-NLS-1$
 
     public ISWbemQualifier() {
         super(componentName);
@@ -38,7 +38,7 @@ public class ISWbemQualifier extends Dispatch {
      * @return the result is of type Variant
      */
     public Variant getValue() {
-        return Dispatch.get(this, "Value");
+        return Dispatch.get(this, "Value"); //$NON-NLS-1$
     }
 
     /**
@@ -48,7 +48,7 @@ public class ISWbemQualifier extends Dispatch {
      *            an input-parameter of type Variant
      */
     public void setValue(Variant value) {
-        Dispatch.put(this, "Value", value);
+        Dispatch.put(this, "Value", value); //$NON-NLS-1$
     }
 
     /**
@@ -57,7 +57,7 @@ public class ISWbemQualifier extends Dispatch {
      * @return the result is of type String
      */
     public String getName() {
-        return Dispatch.get(this, "Name").toString();
+        return Dispatch.get(this, "Name").toString(); //$NON-NLS-1$
     }
 
     /**
@@ -66,7 +66,7 @@ public class ISWbemQualifier extends Dispatch {
      * @return the result is of type boolean
      */
     public boolean getIsLocal() {
-        return Dispatch.get(this, "IsLocal").changeType(Variant.VariantBoolean).getBoolean();
+        return Dispatch.get(this, "IsLocal").changeType(Variant.VariantBoolean).getBoolean(); //$NON-NLS-1$
     }
 
     /**
@@ -75,7 +75,7 @@ public class ISWbemQualifier extends Dispatch {
      * @return the result is of type boolean
      */
     public boolean getPropagatesToSubclass() {
-        return Dispatch.get(this, "PropagatesToSubclass").changeType(Variant.VariantBoolean)
+        return Dispatch.get(this, "PropagatesToSubclass").changeType(Variant.VariantBoolean) //$NON-NLS-1$
                 .getBoolean();
     }
 
@@ -86,7 +86,7 @@ public class ISWbemQualifier extends Dispatch {
      *            an input-parameter of type boolean
      */
     public void setPropagatesToSubclass(boolean propagatesToSubclass) {
-        Dispatch.put(this, "PropagatesToSubclass", new Variant(propagatesToSubclass));
+        Dispatch.put(this, "PropagatesToSubclass", new Variant(propagatesToSubclass)); //$NON-NLS-1$
     }
 
     /**
@@ -95,7 +95,7 @@ public class ISWbemQualifier extends Dispatch {
      * @return the result is of type boolean
      */
     public boolean getPropagatesToInstance() {
-        return Dispatch.get(this, "PropagatesToInstance").changeType(Variant.VariantBoolean)
+        return Dispatch.get(this, "PropagatesToInstance").changeType(Variant.VariantBoolean) //$NON-NLS-1$
                 .getBoolean();
     }
 
@@ -106,7 +106,7 @@ public class ISWbemQualifier extends Dispatch {
      *            an input-parameter of type boolean
      */
     public void setPropagatesToInstance(boolean propagatesToInstance) {
-        Dispatch.put(this, "PropagatesToInstance", new Variant(propagatesToInstance));
+        Dispatch.put(this, "PropagatesToInstance", new Variant(propagatesToInstance)); //$NON-NLS-1$
     }
 
     /**
@@ -115,7 +115,7 @@ public class ISWbemQualifier extends Dispatch {
      * @return the result is of type boolean
      */
     public boolean getIsOverridable() {
-        return Dispatch.get(this, "IsOverridable").changeType(Variant.VariantBoolean).getBoolean();
+        return Dispatch.get(this, "IsOverridable").changeType(Variant.VariantBoolean).getBoolean(); //$NON-NLS-1$
     }
 
     /**
@@ -125,7 +125,7 @@ public class ISWbemQualifier extends Dispatch {
      *            an input-parameter of type boolean
      */
     public void setIsOverridable(boolean isOverridable) {
-        Dispatch.put(this, "IsOverridable", new Variant(isOverridable));
+        Dispatch.put(this, "IsOverridable", new Variant(isOverridable)); //$NON-NLS-1$
     }
 
     /**
@@ -134,7 +134,7 @@ public class ISWbemQualifier extends Dispatch {
      * @return the result is of type boolean
      */
     public boolean getIsAmended() {
-        return Dispatch.get(this, "IsAmended").changeType(Variant.VariantBoolean).getBoolean();
+        return Dispatch.get(this, "IsAmended").changeType(Variant.VariantBoolean).getBoolean(); //$NON-NLS-1$
     }
 
 }

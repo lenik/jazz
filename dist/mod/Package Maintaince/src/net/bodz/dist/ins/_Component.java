@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.bodz.bas.a.A_bas;
-import net.bodz.dist.nls.PackNLS;
+import net.bodz.dist.ins.nls.PackNLS;
 
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Composite;

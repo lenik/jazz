@@ -9,7 +9,7 @@ import com.jacob.com.Variant;
 
 public class ISWbemMethodSet extends Dispatch {
 
-    public static final String componentName = "WbemScripting.ISWbemMethodSet";
+    public static final String componentName = "WbemScripting.ISWbemMethodSet"; //$NON-NLS-1$
 
     public ISWbemMethodSet() {
         super(componentName);
@@ -38,7 +38,7 @@ public class ISWbemMethodSet extends Dispatch {
      * @return the result is of type Variant
      */
     public Variant get_NewEnum() {
-        return Dispatch.get(this, "_NewEnum");
+        return Dispatch.get(this, "_NewEnum"); //$NON-NLS-1$
     }
 
     /**
@@ -51,7 +51,7 @@ public class ISWbemMethodSet extends Dispatch {
      * @return the result is of type ISWbemMethod
      */
     public ISWbemMethod item(String strName, int iFlags) {
-        return new ISWbemMethod(Dispatch.call(this, "Item", strName, new Variant(iFlags))
+        return new ISWbemMethod(Dispatch.call(this, "Item", strName, new Variant(iFlags)) //$NON-NLS-1$
                 .toDispatch());
     }
 
@@ -63,7 +63,7 @@ public class ISWbemMethodSet extends Dispatch {
      * @return the result is of type ISWbemMethod
      */
     public ISWbemMethod item(String strName) {
-        return new ISWbemMethod(Dispatch.call(this, "Item", strName).toDispatch());
+        return new ISWbemMethod(Dispatch.call(this, "Item", strName).toDispatch()); //$NON-NLS-1$
     }
 
     /**
@@ -72,7 +72,7 @@ public class ISWbemMethodSet extends Dispatch {
      * @return the result is of type int
      */
     public int getCount() {
-        return Dispatch.get(this, "Count").changeType(Variant.VariantInt).getInt();
+        return Dispatch.get(this, "Count").changeType(Variant.VariantInt).getInt(); //$NON-NLS-1$
     }
 
 }

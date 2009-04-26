@@ -7,6 +7,7 @@ import net.bodz.bas.io.Files;
 import net.bodz.bas.types.util.Strings;
 import net.bodz.dist.ins.ISession;
 import net.bodz.dist.ins._Component;
+import net.bodz.dist.ins.nls.PackNLS;
 
 public class CreateFile extends _Component {
 
@@ -23,11 +24,11 @@ public class CreateFile extends _Component {
     public CreateFile(String base, String path, Object data, Object charset, boolean append) {
         super(false, true);
         if (base == null)
-            throw new NullPointerException("base");
+            throw new NullPointerException("base"); //$NON-NLS-1$
         if (path == null)
-            throw new NullPointerException("path");
+            throw new NullPointerException("path"); //$NON-NLS-1$
         if (data == null)
-            throw new NullPointerException("data");
+            throw new NullPointerException("data"); //$NON-NLS-1$
         this.base = base;
         this.path = path;
         this.append = append;
@@ -48,10 +49,10 @@ public class CreateFile extends _Component {
                 boolean append = CreateFile.this.append && dest.exists();
                 String abbr = Strings.ellipse(String.valueOf(data), 40);
                 if (append) {
-                    L.finfo("Append to %s: %s", dest, abbr);
+                    L.finfo(PackNLS.getString("CreateFile.appendTo_ss"), dest, abbr); //$NON-NLS-1$
                     Files.append(dest, data, charset);
                 } else {
-                    L.finfo("Create file %s: %s", dest, abbr);
+                    L.finfo(PackNLS.getString("CreateFile.createFile_ss"), dest, abbr); //$NON-NLS-1$
                     Files.createFile(dest, data, charset);
                 }
             } catch (IOException e) {
@@ -70,7 +71,7 @@ public class CreateFile extends _Component {
         @Override
         protected void _run() {
             File dest = new File(session.getFile(base), path);
-            L.info("Delete file ", dest);
+            L.info(PackNLS.getString("CreateFile.deleteFile"), dest); //$NON-NLS-1$
             dest.delete();
         }
 

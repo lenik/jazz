@@ -9,7 +9,7 @@ import com.jacob.com.Variant;
 
 public class ISWbemSecurity extends Dispatch {
 
-    public static final String componentName = "WbemScripting.ISWbemSecurity";
+    public static final String componentName = "WbemScripting.ISWbemSecurity"; //$NON-NLS-1$
 
     public ISWbemSecurity() {
         super(componentName);
@@ -38,7 +38,7 @@ public class ISWbemSecurity extends Dispatch {
      * @return the result is of type int
      */
     public int getImpersonationLevel() {
-        return Dispatch.get(this, "ImpersonationLevel").changeType(Variant.VariantInt).getInt();
+        return Dispatch.get(this, "ImpersonationLevel").changeType(Variant.VariantInt).getInt(); //$NON-NLS-1$
     }
 
     /**
@@ -48,7 +48,7 @@ public class ISWbemSecurity extends Dispatch {
      *            an input-parameter of type int
      */
     public void setImpersonationLevel(int impersonationLevel) {
-        Dispatch.put(this, "ImpersonationLevel", new Variant(impersonationLevel));
+        Dispatch.put(this, "ImpersonationLevel", new Variant(impersonationLevel)); //$NON-NLS-1$
     }
 
     /**
@@ -57,7 +57,7 @@ public class ISWbemSecurity extends Dispatch {
      * @return the result is of type int
      */
     public int getAuthenticationLevel() {
-        return Dispatch.get(this, "AuthenticationLevel").changeType(Variant.VariantInt).getInt();
+        return Dispatch.get(this, "AuthenticationLevel").changeType(Variant.VariantInt).getInt(); //$NON-NLS-1$
     }
 
     /**
@@ -67,7 +67,7 @@ public class ISWbemSecurity extends Dispatch {
      *            an input-parameter of type int
      */
     public void setAuthenticationLevel(int authenticationLevel) {
-        Dispatch.put(this, "AuthenticationLevel", new Variant(authenticationLevel));
+        Dispatch.put(this, "AuthenticationLevel", new Variant(authenticationLevel)); //$NON-NLS-1$
     }
 
     /**
@@ -76,7 +76,7 @@ public class ISWbemSecurity extends Dispatch {
      * @return the result is of type ISWbemPrivilegeSet
      */
     public ISWbemPrivilegeSet getPrivileges() {
-        return new ISWbemPrivilegeSet(Dispatch.get(this, "Privileges").toDispatch());
+        return new ISWbemPrivilegeSet(Dispatch.get(this, "Privileges").toDispatch()); //$NON-NLS-1$
     }
 
 }

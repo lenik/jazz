@@ -9,7 +9,7 @@ import com.jacob.com.Variant;
 
 public class ISWbemSinkEvents extends Dispatch {
 
-    public static final String componentName = "WbemScripting.ISWbemSinkEvents";
+    public static final String componentName = "WbemScripting.ISWbemSinkEvents"; //$NON-NLS-1$
 
     public ISWbemSinkEvents() {
         super(componentName);
@@ -41,7 +41,7 @@ public class ISWbemSinkEvents extends Dispatch {
      *            an input-parameter of type ISWbemNamedValueSet
      */
     public void onObjectReady(ISWbemObject objWbemObject, ISWbemNamedValueSet objWbemAsyncContext) {
-        Dispatch.call(this, "OnObjectReady", objWbemObject, objWbemAsyncContext);
+        Dispatch.call(this, "OnObjectReady", objWbemObject, objWbemAsyncContext); //$NON-NLS-1$
     }
 
     /**
@@ -56,7 +56,7 @@ public class ISWbemSinkEvents extends Dispatch {
      */
     public void onCompleted(int iHResult, ISWbemObject objWbemErrorObject,
             ISWbemNamedValueSet objWbemAsyncContext) {
-        Dispatch.call(this, "OnCompleted", new Variant(iHResult), objWbemErrorObject,
+        Dispatch.call(this, "OnCompleted", new Variant(iHResult), objWbemErrorObject, //$NON-NLS-1$
                 objWbemAsyncContext);
     }
 
@@ -74,7 +74,7 @@ public class ISWbemSinkEvents extends Dispatch {
      */
     public void onProgress(int iUpperBound, int iCurrent, String strMessage,
             ISWbemNamedValueSet objWbemAsyncContext) {
-        Dispatch.call(this, "OnProgress", new Variant(iUpperBound), new Variant(iCurrent),
+        Dispatch.call(this, "OnProgress", new Variant(iUpperBound), new Variant(iCurrent), //$NON-NLS-1$
                 strMessage, objWbemAsyncContext);
     }
 
@@ -88,7 +88,7 @@ public class ISWbemSinkEvents extends Dispatch {
      */
     public void onObjectPut(ISWbemObjectPath objWbemObjectPath,
             ISWbemNamedValueSet objWbemAsyncContext) {
-        Dispatch.call(this, "OnObjectPut", objWbemObjectPath, objWbemAsyncContext);
+        Dispatch.call(this, "OnObjectPut", objWbemObjectPath, objWbemAsyncContext); //$NON-NLS-1$
     }
 
 }

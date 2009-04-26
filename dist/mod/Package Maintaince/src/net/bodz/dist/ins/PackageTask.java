@@ -10,7 +10,8 @@ import net.bodz.bas.io.ResFolder;
 import net.bodz.bas.io.ZipResFolder;
 import net.bodz.bas.lang.RecoverableExceptionEvent;
 import net.bodz.bas.xml.ExceptionBuffer;
-import net.bodz.dist.nls.PackNLS;
+import net.bodz.dist.ins.PackageTaskTest;
+import net.bodz.dist.ins.nls.PackNLS;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;

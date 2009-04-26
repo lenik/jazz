@@ -9,7 +9,7 @@ import com.jacob.com.Variant;
 
 public class ISWbemLastError extends Dispatch {
 
-    public static final String componentName = "WbemScripting.ISWbemLastError";
+    public static final String componentName = "WbemScripting.ISWbemLastError"; //$NON-NLS-1$
 
     public ISWbemLastError() {
         super(componentName);
@@ -42,7 +42,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type ISWbemObjectPath
      */
     public ISWbemObjectPath put_(int iFlags, Object objWbemNamedValueSet) {
-        return new ISWbemObjectPath(Dispatch.call(this, "Put_", new Variant(iFlags),
+        return new ISWbemObjectPath(Dispatch.call(this, "Put_", new Variant(iFlags), //$NON-NLS-1$
                 objWbemNamedValueSet).toDispatch());
     }
 
@@ -54,7 +54,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type ISWbemObjectPath
      */
     public ISWbemObjectPath put_(int iFlags) {
-        return new ISWbemObjectPath(Dispatch.call(this, "Put_", new Variant(iFlags)).toDispatch());
+        return new ISWbemObjectPath(Dispatch.call(this, "Put_", new Variant(iFlags)).toDispatch()); //$NON-NLS-1$
     }
 
     /**
@@ -63,7 +63,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type ISWbemObjectPath
      */
     public ISWbemObjectPath put_() {
-        return new ISWbemObjectPath(Dispatch.call(this, "Put_").toDispatch());
+        return new ISWbemObjectPath(Dispatch.call(this, "Put_").toDispatch()); //$NON-NLS-1$
     }
 
     /**
@@ -80,7 +80,7 @@ public class ISWbemLastError extends Dispatch {
      */
     public void putAsync_(Object objWbemSink, int iFlags, Object objWbemNamedValueSet,
             Object objWbemAsyncContext) {
-        Dispatch.call(this, "PutAsync_", objWbemSink, new Variant(iFlags), objWbemNamedValueSet,
+        Dispatch.call(this, "PutAsync_", objWbemSink, new Variant(iFlags), objWbemNamedValueSet, //$NON-NLS-1$
                 objWbemAsyncContext);
     }
 
@@ -95,7 +95,7 @@ public class ISWbemLastError extends Dispatch {
      *            an input-parameter of type Object
      */
     public void putAsync_(Object objWbemSink, int iFlags, Object objWbemNamedValueSet) {
-        Dispatch.call(this, "PutAsync_", objWbemSink, new Variant(iFlags), objWbemNamedValueSet);
+        Dispatch.call(this, "PutAsync_", objWbemSink, new Variant(iFlags), objWbemNamedValueSet); //$NON-NLS-1$
     }
 
     /**
@@ -107,7 +107,7 @@ public class ISWbemLastError extends Dispatch {
      *            an input-parameter of type int
      */
     public void putAsync_(Object objWbemSink, int iFlags) {
-        Dispatch.call(this, "PutAsync_", objWbemSink, new Variant(iFlags));
+        Dispatch.call(this, "PutAsync_", objWbemSink, new Variant(iFlags)); //$NON-NLS-1$
     }
 
     /**
@@ -117,7 +117,7 @@ public class ISWbemLastError extends Dispatch {
      *            an input-parameter of type Object
      */
     public void putAsync_(Object objWbemSink) {
-        Dispatch.call(this, "PutAsync_", objWbemSink);
+        Dispatch.call(this, "PutAsync_", objWbemSink); //$NON-NLS-1$
     }
 
     /**
@@ -129,7 +129,7 @@ public class ISWbemLastError extends Dispatch {
      *            an input-parameter of type Object
      */
     public void delete_(int iFlags, Object objWbemNamedValueSet) {
-        Dispatch.call(this, "Delete_", new Variant(iFlags), objWbemNamedValueSet);
+        Dispatch.call(this, "Delete_", new Variant(iFlags), objWbemNamedValueSet); //$NON-NLS-1$
     }
 
     /**
@@ -139,14 +139,14 @@ public class ISWbemLastError extends Dispatch {
      *            an input-parameter of type int
      */
     public void delete_(int iFlags) {
-        Dispatch.call(this, "Delete_", new Variant(iFlags));
+        Dispatch.call(this, "Delete_", new Variant(iFlags)); //$NON-NLS-1$
     }
 
     /**
      * Wrapper for calling the ActiveX-Method with input-parameter(s).
      */
     public void delete_() {
-        Dispatch.call(this, "Delete_");
+        Dispatch.call(this, "Delete_"); //$NON-NLS-1$
     }
 
     /**
@@ -163,7 +163,7 @@ public class ISWbemLastError extends Dispatch {
      */
     public void deleteAsync_(Object objWbemSink, int iFlags, Object objWbemNamedValueSet,
             Object objWbemAsyncContext) {
-        Dispatch.call(this, "DeleteAsync_", objWbemSink, new Variant(iFlags), objWbemNamedValueSet,
+        Dispatch.call(this, "DeleteAsync_", objWbemSink, new Variant(iFlags), objWbemNamedValueSet, //$NON-NLS-1$
                 objWbemAsyncContext);
     }
 
@@ -178,7 +178,7 @@ public class ISWbemLastError extends Dispatch {
      *            an input-parameter of type Object
      */
     public void deleteAsync_(Object objWbemSink, int iFlags, Object objWbemNamedValueSet) {
-        Dispatch.call(this, "DeleteAsync_", objWbemSink, new Variant(iFlags), objWbemNamedValueSet);
+        Dispatch.call(this, "DeleteAsync_", objWbemSink, new Variant(iFlags), objWbemNamedValueSet); //$NON-NLS-1$
     }
 
     /**
@@ -190,7 +190,7 @@ public class ISWbemLastError extends Dispatch {
      *            an input-parameter of type int
      */
     public void deleteAsync_(Object objWbemSink, int iFlags) {
-        Dispatch.call(this, "DeleteAsync_", objWbemSink, new Variant(iFlags));
+        Dispatch.call(this, "DeleteAsync_", objWbemSink, new Variant(iFlags)); //$NON-NLS-1$
     }
 
     /**
@@ -200,7 +200,7 @@ public class ISWbemLastError extends Dispatch {
      *            an input-parameter of type Object
      */
     public void deleteAsync_(Object objWbemSink) {
-        Dispatch.call(this, "DeleteAsync_", objWbemSink);
+        Dispatch.call(this, "DeleteAsync_", objWbemSink); //$NON-NLS-1$
     }
 
     /**
@@ -213,7 +213,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type ISWbemObjectSet
      */
     public ISWbemObjectSet instances_(int iFlags, Object objWbemNamedValueSet) {
-        return new ISWbemObjectSet(Dispatch.call(this, "Instances_", new Variant(iFlags),
+        return new ISWbemObjectSet(Dispatch.call(this, "Instances_", new Variant(iFlags), //$NON-NLS-1$
                 objWbemNamedValueSet).toDispatch());
     }
 
@@ -225,7 +225,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type ISWbemObjectSet
      */
     public ISWbemObjectSet instances_(int iFlags) {
-        return new ISWbemObjectSet(Dispatch.call(this, "Instances_", new Variant(iFlags))
+        return new ISWbemObjectSet(Dispatch.call(this, "Instances_", new Variant(iFlags)) //$NON-NLS-1$
                 .toDispatch());
     }
 
@@ -235,7 +235,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type ISWbemObjectSet
      */
     public ISWbemObjectSet instances_() {
-        return new ISWbemObjectSet(Dispatch.call(this, "Instances_").toDispatch());
+        return new ISWbemObjectSet(Dispatch.call(this, "Instances_").toDispatch()); //$NON-NLS-1$
     }
 
     /**
@@ -252,7 +252,7 @@ public class ISWbemLastError extends Dispatch {
      */
     public void instancesAsync_(Object objWbemSink, int iFlags, Object objWbemNamedValueSet,
             Object objWbemAsyncContext) {
-        Dispatch.call(this, "InstancesAsync_", objWbemSink, new Variant(iFlags),
+        Dispatch.call(this, "InstancesAsync_", objWbemSink, new Variant(iFlags), //$NON-NLS-1$
                 objWbemNamedValueSet, objWbemAsyncContext);
     }
 
@@ -267,7 +267,7 @@ public class ISWbemLastError extends Dispatch {
      *            an input-parameter of type Object
      */
     public void instancesAsync_(Object objWbemSink, int iFlags, Object objWbemNamedValueSet) {
-        Dispatch.call(this, "InstancesAsync_", objWbemSink, new Variant(iFlags),
+        Dispatch.call(this, "InstancesAsync_", objWbemSink, new Variant(iFlags), //$NON-NLS-1$
                 objWbemNamedValueSet);
     }
 
@@ -280,7 +280,7 @@ public class ISWbemLastError extends Dispatch {
      *            an input-parameter of type int
      */
     public void instancesAsync_(Object objWbemSink, int iFlags) {
-        Dispatch.call(this, "InstancesAsync_", objWbemSink, new Variant(iFlags));
+        Dispatch.call(this, "InstancesAsync_", objWbemSink, new Variant(iFlags)); //$NON-NLS-1$
     }
 
     /**
@@ -290,7 +290,7 @@ public class ISWbemLastError extends Dispatch {
      *            an input-parameter of type Object
      */
     public void instancesAsync_(Object objWbemSink) {
-        Dispatch.call(this, "InstancesAsync_", objWbemSink);
+        Dispatch.call(this, "InstancesAsync_", objWbemSink); //$NON-NLS-1$
     }
 
     /**
@@ -303,7 +303,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type ISWbemObjectSet
      */
     public ISWbemObjectSet subclasses_(int iFlags, Object objWbemNamedValueSet) {
-        return new ISWbemObjectSet(Dispatch.call(this, "Subclasses_", new Variant(iFlags),
+        return new ISWbemObjectSet(Dispatch.call(this, "Subclasses_", new Variant(iFlags), //$NON-NLS-1$
                 objWbemNamedValueSet).toDispatch());
     }
 
@@ -315,7 +315,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type ISWbemObjectSet
      */
     public ISWbemObjectSet subclasses_(int iFlags) {
-        return new ISWbemObjectSet(Dispatch.call(this, "Subclasses_", new Variant(iFlags))
+        return new ISWbemObjectSet(Dispatch.call(this, "Subclasses_", new Variant(iFlags)) //$NON-NLS-1$
                 .toDispatch());
     }
 
@@ -325,7 +325,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type ISWbemObjectSet
      */
     public ISWbemObjectSet subclasses_() {
-        return new ISWbemObjectSet(Dispatch.call(this, "Subclasses_").toDispatch());
+        return new ISWbemObjectSet(Dispatch.call(this, "Subclasses_").toDispatch()); //$NON-NLS-1$
     }
 
     /**
@@ -342,7 +342,7 @@ public class ISWbemLastError extends Dispatch {
      */
     public void subclassesAsync_(Object objWbemSink, int iFlags, Object objWbemNamedValueSet,
             Object objWbemAsyncContext) {
-        Dispatch.call(this, "SubclassesAsync_", objWbemSink, new Variant(iFlags),
+        Dispatch.call(this, "SubclassesAsync_", objWbemSink, new Variant(iFlags), //$NON-NLS-1$
                 objWbemNamedValueSet, objWbemAsyncContext);
     }
 
@@ -357,7 +357,7 @@ public class ISWbemLastError extends Dispatch {
      *            an input-parameter of type Object
      */
     public void subclassesAsync_(Object objWbemSink, int iFlags, Object objWbemNamedValueSet) {
-        Dispatch.call(this, "SubclassesAsync_", objWbemSink, new Variant(iFlags),
+        Dispatch.call(this, "SubclassesAsync_", objWbemSink, new Variant(iFlags), //$NON-NLS-1$
                 objWbemNamedValueSet);
     }
 
@@ -370,7 +370,7 @@ public class ISWbemLastError extends Dispatch {
      *            an input-parameter of type int
      */
     public void subclassesAsync_(Object objWbemSink, int iFlags) {
-        Dispatch.call(this, "SubclassesAsync_", objWbemSink, new Variant(iFlags));
+        Dispatch.call(this, "SubclassesAsync_", objWbemSink, new Variant(iFlags)); //$NON-NLS-1$
     }
 
     /**
@@ -380,7 +380,7 @@ public class ISWbemLastError extends Dispatch {
      *            an input-parameter of type Object
      */
     public void subclassesAsync_(Object objWbemSink) {
-        Dispatch.call(this, "SubclassesAsync_", objWbemSink);
+        Dispatch.call(this, "SubclassesAsync_", objWbemSink); //$NON-NLS-1$
     }
 
     /**
@@ -414,7 +414,7 @@ public class ISWbemLastError extends Dispatch {
             Object objWbemNamedValueSet) {
         return new ISWbemObjectSet(Dispatch.callN(
                 this,
-                "Associators_",
+                "Associators_", //$NON-NLS-1$
                 new Object[] { strAssocClass, strResultClass, strResultRole, strRole,
                         new Variant(bClassesOnly), new Variant(bSchemaOnly),
                         strRequiredAssocQualifier, strRequiredQualifier, new Variant(iFlags),
@@ -449,7 +449,7 @@ public class ISWbemLastError extends Dispatch {
             String strRequiredAssocQualifier, String strRequiredQualifier, int iFlags) {
         return new ISWbemObjectSet(Dispatch.callN(
                 this,
-                "Associators_",
+                "Associators_", //$NON-NLS-1$
                 new Object[] { strAssocClass, strResultClass, strResultRole, strRole,
                         new Variant(bClassesOnly), new Variant(bSchemaOnly),
                         strRequiredAssocQualifier, strRequiredQualifier, new Variant(iFlags) })
@@ -480,7 +480,7 @@ public class ISWbemLastError extends Dispatch {
     public ISWbemObjectSet associators_(String strAssocClass, String strResultClass,
             String strResultRole, String strRole, boolean bClassesOnly, boolean bSchemaOnly,
             String strRequiredAssocQualifier, String strRequiredQualifier) {
-        return new ISWbemObjectSet(Dispatch.call(this, "Associators_", strAssocClass,
+        return new ISWbemObjectSet(Dispatch.call(this, "Associators_", strAssocClass, //$NON-NLS-1$
                 strResultClass, strResultRole, strRole, new Variant(bClassesOnly),
                 new Variant(bSchemaOnly), strRequiredAssocQualifier, strRequiredQualifier)
                 .toDispatch());
@@ -508,7 +508,7 @@ public class ISWbemLastError extends Dispatch {
     public ISWbemObjectSet associators_(String strAssocClass, String strResultClass,
             String strResultRole, String strRole, boolean bClassesOnly, boolean bSchemaOnly,
             String strRequiredAssocQualifier) {
-        return new ISWbemObjectSet(Dispatch.call(this, "Associators_", strAssocClass,
+        return new ISWbemObjectSet(Dispatch.call(this, "Associators_", strAssocClass, //$NON-NLS-1$
                 strResultClass, strResultRole, strRole, new Variant(bClassesOnly),
                 new Variant(bSchemaOnly), strRequiredAssocQualifier).toDispatch());
     }
@@ -532,7 +532,7 @@ public class ISWbemLastError extends Dispatch {
      */
     public ISWbemObjectSet associators_(String strAssocClass, String strResultClass,
             String strResultRole, String strRole, boolean bClassesOnly, boolean bSchemaOnly) {
-        return new ISWbemObjectSet(Dispatch.call(this, "Associators_", strAssocClass,
+        return new ISWbemObjectSet(Dispatch.call(this, "Associators_", strAssocClass, //$NON-NLS-1$
                 strResultClass, strResultRole, strRole, new Variant(bClassesOnly),
                 new Variant(bSchemaOnly)).toDispatch());
     }
@@ -554,7 +554,7 @@ public class ISWbemLastError extends Dispatch {
      */
     public ISWbemObjectSet associators_(String strAssocClass, String strResultClass,
             String strResultRole, String strRole, boolean bClassesOnly) {
-        return new ISWbemObjectSet(Dispatch.call(this, "Associators_", strAssocClass,
+        return new ISWbemObjectSet(Dispatch.call(this, "Associators_", strAssocClass, //$NON-NLS-1$
                 strResultClass, strResultRole, strRole, new Variant(bClassesOnly)).toDispatch());
     }
 
@@ -573,7 +573,7 @@ public class ISWbemLastError extends Dispatch {
      */
     public ISWbemObjectSet associators_(String strAssocClass, String strResultClass,
             String strResultRole, String strRole) {
-        return new ISWbemObjectSet(Dispatch.call(this, "Associators_", strAssocClass,
+        return new ISWbemObjectSet(Dispatch.call(this, "Associators_", strAssocClass, //$NON-NLS-1$
                 strResultClass, strResultRole, strRole).toDispatch());
     }
 
@@ -590,7 +590,7 @@ public class ISWbemLastError extends Dispatch {
      */
     public ISWbemObjectSet associators_(String strAssocClass, String strResultClass,
             String strResultRole) {
-        return new ISWbemObjectSet(Dispatch.call(this, "Associators_", strAssocClass,
+        return new ISWbemObjectSet(Dispatch.call(this, "Associators_", strAssocClass, //$NON-NLS-1$
                 strResultClass, strResultRole).toDispatch());
     }
 
@@ -604,7 +604,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type ISWbemObjectSet
      */
     public ISWbemObjectSet associators_(String strAssocClass, String strResultClass) {
-        return new ISWbemObjectSet(Dispatch.call(this, "Associators_", strAssocClass,
+        return new ISWbemObjectSet(Dispatch.call(this, "Associators_", strAssocClass, //$NON-NLS-1$
                 strResultClass).toDispatch());
     }
 
@@ -616,7 +616,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type ISWbemObjectSet
      */
     public ISWbemObjectSet associators_(String strAssocClass) {
-        return new ISWbemObjectSet(Dispatch.call(this, "Associators_", strAssocClass).toDispatch());
+        return new ISWbemObjectSet(Dispatch.call(this, "Associators_", strAssocClass).toDispatch()); //$NON-NLS-1$
     }
 
     /**
@@ -625,7 +625,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type ISWbemObjectSet
      */
     public ISWbemObjectSet associators_() {
-        return new ISWbemObjectSet(Dispatch.call(this, "Associators_").toDispatch());
+        return new ISWbemObjectSet(Dispatch.call(this, "Associators_").toDispatch()); //$NON-NLS-1$
     }
 
     /**
@@ -660,7 +660,7 @@ public class ISWbemLastError extends Dispatch {
             String strResultRole, String strRole, boolean bClassesOnly, boolean bSchemaOnly,
             String strRequiredAssocQualifier, String strRequiredQualifier, int iFlags,
             Object objWbemNamedValueSet, Object objWbemAsyncContext) {
-        Dispatch.callN(this, "AssociatorsAsync_", new Object[] { objWbemSink, strAssocClass,
+        Dispatch.callN(this, "AssociatorsAsync_", new Object[] { objWbemSink, strAssocClass, //$NON-NLS-1$
                 strResultClass, strResultRole, strRole, new Variant(bClassesOnly),
                 new Variant(bSchemaOnly), strRequiredAssocQualifier, strRequiredQualifier,
                 new Variant(iFlags), objWbemNamedValueSet, objWbemAsyncContext });
@@ -696,7 +696,7 @@ public class ISWbemLastError extends Dispatch {
             String strResultRole, String strRole, boolean bClassesOnly, boolean bSchemaOnly,
             String strRequiredAssocQualifier, String strRequiredQualifier, int iFlags,
             Object objWbemNamedValueSet) {
-        Dispatch.callN(this, "AssociatorsAsync_", new Object[] { objWbemSink, strAssocClass,
+        Dispatch.callN(this, "AssociatorsAsync_", new Object[] { objWbemSink, strAssocClass, //$NON-NLS-1$
                 strResultClass, strResultRole, strRole, new Variant(bClassesOnly),
                 new Variant(bSchemaOnly), strRequiredAssocQualifier, strRequiredQualifier,
                 new Variant(iFlags), objWbemNamedValueSet });
@@ -729,7 +729,7 @@ public class ISWbemLastError extends Dispatch {
     public void associatorsAsync_(Object objWbemSink, String strAssocClass, String strResultClass,
             String strResultRole, String strRole, boolean bClassesOnly, boolean bSchemaOnly,
             String strRequiredAssocQualifier, String strRequiredQualifier, int iFlags) {
-        Dispatch.callN(this, "AssociatorsAsync_", new Object[] { objWbemSink, strAssocClass,
+        Dispatch.callN(this, "AssociatorsAsync_", new Object[] { objWbemSink, strAssocClass, //$NON-NLS-1$
                 strResultClass, strResultRole, strRole, new Variant(bClassesOnly),
                 new Variant(bSchemaOnly), strRequiredAssocQualifier, strRequiredQualifier,
                 new Variant(iFlags) });
@@ -760,7 +760,7 @@ public class ISWbemLastError extends Dispatch {
     public void associatorsAsync_(Object objWbemSink, String strAssocClass, String strResultClass,
             String strResultRole, String strRole, boolean bClassesOnly, boolean bSchemaOnly,
             String strRequiredAssocQualifier, String strRequiredQualifier) {
-        Dispatch.callN(this, "AssociatorsAsync_", new Object[] { objWbemSink, strAssocClass,
+        Dispatch.callN(this, "AssociatorsAsync_", new Object[] { objWbemSink, strAssocClass, //$NON-NLS-1$
                 strResultClass, strResultRole, strRole, new Variant(bClassesOnly),
                 new Variant(bSchemaOnly), strRequiredAssocQualifier, strRequiredQualifier });
     }
@@ -788,7 +788,7 @@ public class ISWbemLastError extends Dispatch {
     public void associatorsAsync_(Object objWbemSink, String strAssocClass, String strResultClass,
             String strResultRole, String strRole, boolean bClassesOnly, boolean bSchemaOnly,
             String strRequiredAssocQualifier) {
-        Dispatch.call(this, "AssociatorsAsync_", objWbemSink, strAssocClass, strResultClass,
+        Dispatch.call(this, "AssociatorsAsync_", objWbemSink, strAssocClass, strResultClass, //$NON-NLS-1$
                 strResultRole, strRole, new Variant(bClassesOnly), new Variant(bSchemaOnly),
                 strRequiredAssocQualifier);
     }
@@ -813,7 +813,7 @@ public class ISWbemLastError extends Dispatch {
      */
     public void associatorsAsync_(Object objWbemSink, String strAssocClass, String strResultClass,
             String strResultRole, String strRole, boolean bClassesOnly, boolean bSchemaOnly) {
-        Dispatch.call(this, "AssociatorsAsync_", objWbemSink, strAssocClass, strResultClass,
+        Dispatch.call(this, "AssociatorsAsync_", objWbemSink, strAssocClass, strResultClass, //$NON-NLS-1$
                 strResultRole, strRole, new Variant(bClassesOnly), new Variant(bSchemaOnly));
     }
 
@@ -835,7 +835,7 @@ public class ISWbemLastError extends Dispatch {
      */
     public void associatorsAsync_(Object objWbemSink, String strAssocClass, String strResultClass,
             String strResultRole, String strRole, boolean bClassesOnly) {
-        Dispatch.call(this, "AssociatorsAsync_", objWbemSink, strAssocClass, strResultClass,
+        Dispatch.call(this, "AssociatorsAsync_", objWbemSink, strAssocClass, strResultClass, //$NON-NLS-1$
                 strResultRole, strRole, new Variant(bClassesOnly));
     }
 
@@ -855,7 +855,7 @@ public class ISWbemLastError extends Dispatch {
      */
     public void associatorsAsync_(Object objWbemSink, String strAssocClass, String strResultClass,
             String strResultRole, String strRole) {
-        Dispatch.call(this, "AssociatorsAsync_", objWbemSink, strAssocClass, strResultClass,
+        Dispatch.call(this, "AssociatorsAsync_", objWbemSink, strAssocClass, strResultClass, //$NON-NLS-1$
                 strResultRole, strRole);
     }
 
@@ -873,7 +873,7 @@ public class ISWbemLastError extends Dispatch {
      */
     public void associatorsAsync_(Object objWbemSink, String strAssocClass, String strResultClass,
             String strResultRole) {
-        Dispatch.call(this, "AssociatorsAsync_", objWbemSink, strAssocClass, strResultClass,
+        Dispatch.call(this, "AssociatorsAsync_", objWbemSink, strAssocClass, strResultClass, //$NON-NLS-1$
                 strResultRole);
     }
 
@@ -888,7 +888,7 @@ public class ISWbemLastError extends Dispatch {
      *            an input-parameter of type String
      */
     public void associatorsAsync_(Object objWbemSink, String strAssocClass, String strResultClass) {
-        Dispatch.call(this, "AssociatorsAsync_", objWbemSink, strAssocClass, strResultClass);
+        Dispatch.call(this, "AssociatorsAsync_", objWbemSink, strAssocClass, strResultClass); //$NON-NLS-1$
     }
 
     /**
@@ -900,7 +900,7 @@ public class ISWbemLastError extends Dispatch {
      *            an input-parameter of type String
      */
     public void associatorsAsync_(Object objWbemSink, String strAssocClass) {
-        Dispatch.call(this, "AssociatorsAsync_", objWbemSink, strAssocClass);
+        Dispatch.call(this, "AssociatorsAsync_", objWbemSink, strAssocClass); //$NON-NLS-1$
     }
 
     /**
@@ -910,7 +910,7 @@ public class ISWbemLastError extends Dispatch {
      *            an input-parameter of type Object
      */
     public void associatorsAsync_(Object objWbemSink) {
-        Dispatch.call(this, "AssociatorsAsync_", objWbemSink);
+        Dispatch.call(this, "AssociatorsAsync_", objWbemSink); //$NON-NLS-1$
     }
 
     /**
@@ -935,7 +935,7 @@ public class ISWbemLastError extends Dispatch {
     public ISWbemObjectSet references_(String strResultClass, String strRole, boolean bClassesOnly,
             boolean bSchemaOnly, String strRequiredQualifier, int iFlags,
             Object objWbemNamedValueSet) {
-        return new ISWbemObjectSet(Dispatch.call(this, "References_", strResultClass, strRole,
+        return new ISWbemObjectSet(Dispatch.call(this, "References_", strResultClass, strRole, //$NON-NLS-1$
                 new Variant(bClassesOnly), new Variant(bSchemaOnly), strRequiredQualifier,
                 new Variant(iFlags), objWbemNamedValueSet).toDispatch());
     }
@@ -959,7 +959,7 @@ public class ISWbemLastError extends Dispatch {
      */
     public ISWbemObjectSet references_(String strResultClass, String strRole, boolean bClassesOnly,
             boolean bSchemaOnly, String strRequiredQualifier, int iFlags) {
-        return new ISWbemObjectSet(Dispatch.call(this, "References_", strResultClass, strRole,
+        return new ISWbemObjectSet(Dispatch.call(this, "References_", strResultClass, strRole, //$NON-NLS-1$
                 new Variant(bClassesOnly), new Variant(bSchemaOnly), strRequiredQualifier,
                 new Variant(iFlags)).toDispatch());
     }
@@ -981,7 +981,7 @@ public class ISWbemLastError extends Dispatch {
      */
     public ISWbemObjectSet references_(String strResultClass, String strRole, boolean bClassesOnly,
             boolean bSchemaOnly, String strRequiredQualifier) {
-        return new ISWbemObjectSet(Dispatch.call(this, "References_", strResultClass, strRole,
+        return new ISWbemObjectSet(Dispatch.call(this, "References_", strResultClass, strRole, //$NON-NLS-1$
                 new Variant(bClassesOnly), new Variant(bSchemaOnly), strRequiredQualifier)
                 .toDispatch());
     }
@@ -1001,7 +1001,7 @@ public class ISWbemLastError extends Dispatch {
      */
     public ISWbemObjectSet references_(String strResultClass, String strRole, boolean bClassesOnly,
             boolean bSchemaOnly) {
-        return new ISWbemObjectSet(Dispatch.call(this, "References_", strResultClass, strRole,
+        return new ISWbemObjectSet(Dispatch.call(this, "References_", strResultClass, strRole, //$NON-NLS-1$
                 new Variant(bClassesOnly), new Variant(bSchemaOnly)).toDispatch());
     }
 
@@ -1017,7 +1017,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type ISWbemObjectSet
      */
     public ISWbemObjectSet references_(String strResultClass, String strRole, boolean bClassesOnly) {
-        return new ISWbemObjectSet(Dispatch.call(this, "References_", strResultClass, strRole,
+        return new ISWbemObjectSet(Dispatch.call(this, "References_", strResultClass, strRole, //$NON-NLS-1$
                 new Variant(bClassesOnly)).toDispatch());
     }
 
@@ -1031,7 +1031,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type ISWbemObjectSet
      */
     public ISWbemObjectSet references_(String strResultClass, String strRole) {
-        return new ISWbemObjectSet(Dispatch.call(this, "References_", strResultClass, strRole)
+        return new ISWbemObjectSet(Dispatch.call(this, "References_", strResultClass, strRole) //$NON-NLS-1$
                 .toDispatch());
     }
 
@@ -1043,7 +1043,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type ISWbemObjectSet
      */
     public ISWbemObjectSet references_(String strResultClass) {
-        return new ISWbemObjectSet(Dispatch.call(this, "References_", strResultClass).toDispatch());
+        return new ISWbemObjectSet(Dispatch.call(this, "References_", strResultClass).toDispatch()); //$NON-NLS-1$
     }
 
     /**
@@ -1052,7 +1052,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type ISWbemObjectSet
      */
     public ISWbemObjectSet references_() {
-        return new ISWbemObjectSet(Dispatch.call(this, "References_").toDispatch());
+        return new ISWbemObjectSet(Dispatch.call(this, "References_").toDispatch()); //$NON-NLS-1$
     }
 
     /**
@@ -1080,7 +1080,7 @@ public class ISWbemLastError extends Dispatch {
     public void referencesAsync_(Object objWbemSink, String strResultClass, String strRole,
             boolean bClassesOnly, boolean bSchemaOnly, String strRequiredQualifier, int iFlags,
             Object objWbemNamedValueSet, Object objWbemAsyncContext) {
-        Dispatch.callN(this, "ReferencesAsync_", new Object[] { objWbemSink, strResultClass,
+        Dispatch.callN(this, "ReferencesAsync_", new Object[] { objWbemSink, strResultClass, //$NON-NLS-1$
                 strRole, new Variant(bClassesOnly), new Variant(bSchemaOnly), strRequiredQualifier,
                 new Variant(iFlags), objWbemNamedValueSet, objWbemAsyncContext });
     }
@@ -1108,7 +1108,7 @@ public class ISWbemLastError extends Dispatch {
     public void referencesAsync_(Object objWbemSink, String strResultClass, String strRole,
             boolean bClassesOnly, boolean bSchemaOnly, String strRequiredQualifier, int iFlags,
             Object objWbemNamedValueSet) {
-        Dispatch.call(this, "ReferencesAsync_", objWbemSink, strResultClass, strRole, new Variant(
+        Dispatch.call(this, "ReferencesAsync_", objWbemSink, strResultClass, strRole, new Variant( //$NON-NLS-1$
                 bClassesOnly), new Variant(bSchemaOnly), strRequiredQualifier, new Variant(iFlags),
                 objWbemNamedValueSet);
     }
@@ -1133,7 +1133,7 @@ public class ISWbemLastError extends Dispatch {
      */
     public void referencesAsync_(Object objWbemSink, String strResultClass, String strRole,
             boolean bClassesOnly, boolean bSchemaOnly, String strRequiredQualifier, int iFlags) {
-        Dispatch.call(this, "ReferencesAsync_", objWbemSink, strResultClass, strRole, new Variant(
+        Dispatch.call(this, "ReferencesAsync_", objWbemSink, strResultClass, strRole, new Variant( //$NON-NLS-1$
                 bClassesOnly), new Variant(bSchemaOnly), strRequiredQualifier, new Variant(iFlags));
     }
 
@@ -1155,7 +1155,7 @@ public class ISWbemLastError extends Dispatch {
      */
     public void referencesAsync_(Object objWbemSink, String strResultClass, String strRole,
             boolean bClassesOnly, boolean bSchemaOnly, String strRequiredQualifier) {
-        Dispatch.call(this, "ReferencesAsync_", objWbemSink, strResultClass, strRole, new Variant(
+        Dispatch.call(this, "ReferencesAsync_", objWbemSink, strResultClass, strRole, new Variant( //$NON-NLS-1$
                 bClassesOnly), new Variant(bSchemaOnly), strRequiredQualifier);
     }
 
@@ -1175,7 +1175,7 @@ public class ISWbemLastError extends Dispatch {
      */
     public void referencesAsync_(Object objWbemSink, String strResultClass, String strRole,
             boolean bClassesOnly, boolean bSchemaOnly) {
-        Dispatch.call(this, "ReferencesAsync_", objWbemSink, strResultClass, strRole, new Variant(
+        Dispatch.call(this, "ReferencesAsync_", objWbemSink, strResultClass, strRole, new Variant( //$NON-NLS-1$
                 bClassesOnly), new Variant(bSchemaOnly));
     }
 
@@ -1193,7 +1193,7 @@ public class ISWbemLastError extends Dispatch {
      */
     public void referencesAsync_(Object objWbemSink, String strResultClass, String strRole,
             boolean bClassesOnly) {
-        Dispatch.call(this, "ReferencesAsync_", objWbemSink, strResultClass, strRole, new Variant(
+        Dispatch.call(this, "ReferencesAsync_", objWbemSink, strResultClass, strRole, new Variant( //$NON-NLS-1$
                 bClassesOnly));
     }
 
@@ -1208,7 +1208,7 @@ public class ISWbemLastError extends Dispatch {
      *            an input-parameter of type String
      */
     public void referencesAsync_(Object objWbemSink, String strResultClass, String strRole) {
-        Dispatch.call(this, "ReferencesAsync_", objWbemSink, strResultClass, strRole);
+        Dispatch.call(this, "ReferencesAsync_", objWbemSink, strResultClass, strRole); //$NON-NLS-1$
     }
 
     /**
@@ -1220,7 +1220,7 @@ public class ISWbemLastError extends Dispatch {
      *            an input-parameter of type String
      */
     public void referencesAsync_(Object objWbemSink, String strResultClass) {
-        Dispatch.call(this, "ReferencesAsync_", objWbemSink, strResultClass);
+        Dispatch.call(this, "ReferencesAsync_", objWbemSink, strResultClass); //$NON-NLS-1$
     }
 
     /**
@@ -1230,7 +1230,7 @@ public class ISWbemLastError extends Dispatch {
      *            an input-parameter of type Object
      */
     public void referencesAsync_(Object objWbemSink) {
-        Dispatch.call(this, "ReferencesAsync_", objWbemSink);
+        Dispatch.call(this, "ReferencesAsync_", objWbemSink); //$NON-NLS-1$
     }
 
     /**
@@ -1248,7 +1248,7 @@ public class ISWbemLastError extends Dispatch {
      */
     public ISWbemObject execMethod_(String strMethodName, Object objWbemInParameters, int iFlags,
             Object objWbemNamedValueSet) {
-        return new ISWbemObject(Dispatch.call(this, "ExecMethod_", strMethodName,
+        return new ISWbemObject(Dispatch.call(this, "ExecMethod_", strMethodName, //$NON-NLS-1$
                 objWbemInParameters, new Variant(iFlags), objWbemNamedValueSet).toDispatch());
     }
 
@@ -1264,7 +1264,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type ISWbemObject
      */
     public ISWbemObject execMethod_(String strMethodName, Object objWbemInParameters, int iFlags) {
-        return new ISWbemObject(Dispatch.call(this, "ExecMethod_", strMethodName,
+        return new ISWbemObject(Dispatch.call(this, "ExecMethod_", strMethodName, //$NON-NLS-1$
                 objWbemInParameters, new Variant(iFlags)).toDispatch());
     }
 
@@ -1278,7 +1278,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type ISWbemObject
      */
     public ISWbemObject execMethod_(String strMethodName, Object objWbemInParameters) {
-        return new ISWbemObject(Dispatch.call(this, "ExecMethod_", strMethodName,
+        return new ISWbemObject(Dispatch.call(this, "ExecMethod_", strMethodName, //$NON-NLS-1$
                 objWbemInParameters).toDispatch());
     }
 
@@ -1290,7 +1290,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type ISWbemObject
      */
     public ISWbemObject execMethod_(String strMethodName) {
-        return new ISWbemObject(Dispatch.call(this, "ExecMethod_", strMethodName).toDispatch());
+        return new ISWbemObject(Dispatch.call(this, "ExecMethod_", strMethodName).toDispatch()); //$NON-NLS-1$
     }
 
     /**
@@ -1312,7 +1312,7 @@ public class ISWbemLastError extends Dispatch {
     public void execMethodAsync_(Object objWbemSink, String strMethodName,
             Object objWbemInParameters, int iFlags, Object objWbemNamedValueSet,
             Object objWbemAsyncContext) {
-        Dispatch.call(this, "ExecMethodAsync_", objWbemSink, strMethodName, objWbemInParameters,
+        Dispatch.call(this, "ExecMethodAsync_", objWbemSink, strMethodName, objWbemInParameters, //$NON-NLS-1$
                 new Variant(iFlags), objWbemNamedValueSet, objWbemAsyncContext);
     }
 
@@ -1332,7 +1332,7 @@ public class ISWbemLastError extends Dispatch {
      */
     public void execMethodAsync_(Object objWbemSink, String strMethodName,
             Object objWbemInParameters, int iFlags, Object objWbemNamedValueSet) {
-        Dispatch.call(this, "ExecMethodAsync_", objWbemSink, strMethodName, objWbemInParameters,
+        Dispatch.call(this, "ExecMethodAsync_", objWbemSink, strMethodName, objWbemInParameters, //$NON-NLS-1$
                 new Variant(iFlags), objWbemNamedValueSet);
     }
 
@@ -1350,7 +1350,7 @@ public class ISWbemLastError extends Dispatch {
      */
     public void execMethodAsync_(Object objWbemSink, String strMethodName,
             Object objWbemInParameters, int iFlags) {
-        Dispatch.call(this, "ExecMethodAsync_", objWbemSink, strMethodName, objWbemInParameters,
+        Dispatch.call(this, "ExecMethodAsync_", objWbemSink, strMethodName, objWbemInParameters, //$NON-NLS-1$
                 new Variant(iFlags));
     }
 
@@ -1366,7 +1366,7 @@ public class ISWbemLastError extends Dispatch {
      */
     public void execMethodAsync_(Object objWbemSink, String strMethodName,
             Object objWbemInParameters) {
-        Dispatch.call(this, "ExecMethodAsync_", objWbemSink, strMethodName, objWbemInParameters);
+        Dispatch.call(this, "ExecMethodAsync_", objWbemSink, strMethodName, objWbemInParameters); //$NON-NLS-1$
     }
 
     /**
@@ -1378,7 +1378,7 @@ public class ISWbemLastError extends Dispatch {
      *            an input-parameter of type String
      */
     public void execMethodAsync_(Object objWbemSink, String strMethodName) {
-        Dispatch.call(this, "ExecMethodAsync_", objWbemSink, strMethodName);
+        Dispatch.call(this, "ExecMethodAsync_", objWbemSink, strMethodName); //$NON-NLS-1$
     }
 
     /**
@@ -1387,7 +1387,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type ISWbemObject
      */
     public ISWbemObject clone_() {
-        return new ISWbemObject(Dispatch.call(this, "Clone_").toDispatch());
+        return new ISWbemObject(Dispatch.call(this, "Clone_").toDispatch()); //$NON-NLS-1$
     }
 
     /**
@@ -1398,7 +1398,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type String
      */
     public String getObjectText_(int iFlags) {
-        return Dispatch.call(this, "GetObjectText_", new Variant(iFlags)).toString();
+        return Dispatch.call(this, "GetObjectText_", new Variant(iFlags)).toString(); //$NON-NLS-1$
     }
 
     /**
@@ -1407,7 +1407,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type String
      */
     public String getObjectText_() {
-        return Dispatch.call(this, "GetObjectText_").toString();
+        return Dispatch.call(this, "GetObjectText_").toString(); //$NON-NLS-1$
     }
 
     /**
@@ -1418,7 +1418,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type ISWbemObject
      */
     public ISWbemObject spawnDerivedClass_(int iFlags) {
-        return new ISWbemObject(Dispatch.call(this, "SpawnDerivedClass_", new Variant(iFlags))
+        return new ISWbemObject(Dispatch.call(this, "SpawnDerivedClass_", new Variant(iFlags)) //$NON-NLS-1$
                 .toDispatch());
     }
 
@@ -1428,7 +1428,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type ISWbemObject
      */
     public ISWbemObject spawnDerivedClass_() {
-        return new ISWbemObject(Dispatch.call(this, "SpawnDerivedClass_").toDispatch());
+        return new ISWbemObject(Dispatch.call(this, "SpawnDerivedClass_").toDispatch()); //$NON-NLS-1$
     }
 
     /**
@@ -1439,7 +1439,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type ISWbemObject
      */
     public ISWbemObject spawnInstance_(int iFlags) {
-        return new ISWbemObject(Dispatch.call(this, "SpawnInstance_", new Variant(iFlags))
+        return new ISWbemObject(Dispatch.call(this, "SpawnInstance_", new Variant(iFlags)) //$NON-NLS-1$
                 .toDispatch());
     }
 
@@ -1449,7 +1449,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type ISWbemObject
      */
     public ISWbemObject spawnInstance_() {
-        return new ISWbemObject(Dispatch.call(this, "SpawnInstance_").toDispatch());
+        return new ISWbemObject(Dispatch.call(this, "SpawnInstance_").toDispatch()); //$NON-NLS-1$
     }
 
     /**
@@ -1462,7 +1462,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type boolean
      */
     public boolean compareTo_(Object objWbemObject, int iFlags) {
-        return Dispatch.call(this, "CompareTo_", objWbemObject, new Variant(iFlags)).changeType(
+        return Dispatch.call(this, "CompareTo_", objWbemObject, new Variant(iFlags)).changeType( //$NON-NLS-1$
                 Variant.VariantBoolean).getBoolean();
     }
 
@@ -1474,7 +1474,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type boolean
      */
     public boolean compareTo_(Object objWbemObject) {
-        return Dispatch.call(this, "CompareTo_", objWbemObject).changeType(Variant.VariantBoolean)
+        return Dispatch.call(this, "CompareTo_", objWbemObject).changeType(Variant.VariantBoolean) //$NON-NLS-1$
                 .getBoolean();
     }
 
@@ -1484,7 +1484,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type ISWbemQualifierSet
      */
     public ISWbemQualifierSet getQualifiers_() {
-        return new ISWbemQualifierSet(Dispatch.get(this, "Qualifiers_").toDispatch());
+        return new ISWbemQualifierSet(Dispatch.get(this, "Qualifiers_").toDispatch()); //$NON-NLS-1$
     }
 
     /**
@@ -1493,7 +1493,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type ISWbemPropertySet
      */
     public ISWbemPropertySet getProperties_() {
-        return new ISWbemPropertySet(Dispatch.get(this, "Properties_").toDispatch());
+        return new ISWbemPropertySet(Dispatch.get(this, "Properties_").toDispatch()); //$NON-NLS-1$
     }
 
     /**
@@ -1502,7 +1502,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type ISWbemMethodSet
      */
     public ISWbemMethodSet getMethods_() {
-        return new ISWbemMethodSet(Dispatch.get(this, "Methods_").toDispatch());
+        return new ISWbemMethodSet(Dispatch.get(this, "Methods_").toDispatch()); //$NON-NLS-1$
     }
 
     /**
@@ -1511,7 +1511,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type Variant
      */
     public Variant getDerivation_() {
-        return Dispatch.get(this, "Derivation_");
+        return Dispatch.get(this, "Derivation_"); //$NON-NLS-1$
     }
 
     /**
@@ -1520,7 +1520,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type ISWbemObjectPath
      */
     public ISWbemObjectPath getPath_() {
-        return new ISWbemObjectPath(Dispatch.get(this, "Path_").toDispatch());
+        return new ISWbemObjectPath(Dispatch.get(this, "Path_").toDispatch()); //$NON-NLS-1$
     }
 
     /**
@@ -1529,7 +1529,7 @@ public class ISWbemLastError extends Dispatch {
      * @return the result is of type ISWbemSecurity
      */
     public ISWbemSecurity getSecurity_() {
-        return new ISWbemSecurity(Dispatch.get(this, "Security_").toDispatch());
+        return new ISWbemSecurity(Dispatch.get(this, "Security_").toDispatch()); //$NON-NLS-1$
     }
 
 }

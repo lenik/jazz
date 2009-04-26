@@ -16,7 +16,7 @@ import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.lang.err.UnexpectedException;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.xml.ExceptionBuffer;
-import net.bodz.dist.nls.PackNLS;
+import net.bodz.dist.ins.nls.PackNLS;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;

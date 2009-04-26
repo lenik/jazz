@@ -8,7 +8,7 @@ import com.jacob.com.Dispatch;
 
 public class SWbemObjectPath extends ISWbemObjectPath {
 
-    public static final String componentName = "clsid:{5791BC26-CE9C-11D1-97BF-0000F81E849C}";
+    public static final String componentName = "clsid:{5791BC26-CE9C-11D1-97BF-0000F81E849C}"; //$NON-NLS-1$
 
     public SWbemObjectPath() {
         super(componentName);

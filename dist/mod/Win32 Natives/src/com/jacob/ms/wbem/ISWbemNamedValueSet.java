@@ -9,7 +9,7 @@ import com.jacob.com.Variant;
 
 public class ISWbemNamedValueSet extends Dispatch {
 
-    public static final String componentName = "WbemScripting.ISWbemNamedValueSet";
+    public static final String componentName = "WbemScripting.ISWbemNamedValueSet"; //$NON-NLS-1$
 
     public ISWbemNamedValueSet() {
         super(componentName);
@@ -38,7 +38,7 @@ public class ISWbemNamedValueSet extends Dispatch {
      * @return the result is of type Variant
      */
     public Variant get_NewEnum() {
-        return Dispatch.get(this, "_NewEnum");
+        return Dispatch.get(this, "_NewEnum"); //$NON-NLS-1$
     }
 
     /**
@@ -51,7 +51,7 @@ public class ISWbemNamedValueSet extends Dispatch {
      * @return the result is of type ISWbemNamedValue
      */
     public ISWbemNamedValue item(String strName, int iFlags) {
-        return new ISWbemNamedValue(Dispatch.call(this, "Item", strName, new Variant(iFlags))
+        return new ISWbemNamedValue(Dispatch.call(this, "Item", strName, new Variant(iFlags)) //$NON-NLS-1$
                 .toDispatch());
     }
 
@@ -63,7 +63,7 @@ public class ISWbemNamedValueSet extends Dispatch {
      * @return the result is of type ISWbemNamedValue
      */
     public ISWbemNamedValue item(String strName) {
-        return new ISWbemNamedValue(Dispatch.call(this, "Item", strName).toDispatch());
+        return new ISWbemNamedValue(Dispatch.call(this, "Item", strName).toDispatch()); //$NON-NLS-1$
     }
 
     /**
@@ -72,7 +72,7 @@ public class ISWbemNamedValueSet extends Dispatch {
      * @return the result is of type int
      */
     public int getCount() {
-        return Dispatch.get(this, "Count").changeType(Variant.VariantInt).getInt();
+        return Dispatch.get(this, "Count").changeType(Variant.VariantInt).getInt(); //$NON-NLS-1$
     }
 
     /**
@@ -87,7 +87,7 @@ public class ISWbemNamedValueSet extends Dispatch {
      * @return the result is of type ISWbemNamedValue
      */
     public ISWbemNamedValue add(String strName, Variant varValue, int iFlags) {
-        return new ISWbemNamedValue(Dispatch.call(this, "Add", strName, varValue,
+        return new ISWbemNamedValue(Dispatch.call(this, "Add", strName, varValue, //$NON-NLS-1$
                 new Variant(iFlags)).toDispatch());
     }
 
@@ -101,7 +101,7 @@ public class ISWbemNamedValueSet extends Dispatch {
      * @return the result is of type ISWbemNamedValue
      */
     public ISWbemNamedValue add(String strName, Variant varValue) {
-        return new ISWbemNamedValue(Dispatch.call(this, "Add", strName, varValue).toDispatch());
+        return new ISWbemNamedValue(Dispatch.call(this, "Add", strName, varValue).toDispatch()); //$NON-NLS-1$
     }
 
     /**
@@ -113,7 +113,7 @@ public class ISWbemNamedValueSet extends Dispatch {
      *            an input-parameter of type int
      */
     public void remove(String strName, int iFlags) {
-        Dispatch.call(this, "Remove", strName, new Variant(iFlags));
+        Dispatch.call(this, "Remove", strName, new Variant(iFlags)); //$NON-NLS-1$
     }
 
     /**
@@ -123,7 +123,7 @@ public class ISWbemNamedValueSet extends Dispatch {
      *            an input-parameter of type String
      */
     public void remove(String strName) {
-        Dispatch.call(this, "Remove", strName);
+        Dispatch.call(this, "Remove", strName); //$NON-NLS-1$
     }
 
     /**
@@ -132,14 +132,14 @@ public class ISWbemNamedValueSet extends Dispatch {
      * @return the result is of type ISWbemNamedValueSet
      */
     public ISWbemNamedValueSet clone1() {
-        return new ISWbemNamedValueSet(Dispatch.call(this, "Clone").toDispatch());
+        return new ISWbemNamedValueSet(Dispatch.call(this, "Clone").toDispatch()); //$NON-NLS-1$
     }
 
     /**
      * Wrapper for calling the ActiveX-Method with input-parameter(s).
      */
     public void deleteAll() {
-        Dispatch.call(this, "DeleteAll");
+        Dispatch.call(this, "DeleteAll"); //$NON-NLS-1$
     }
 
 }

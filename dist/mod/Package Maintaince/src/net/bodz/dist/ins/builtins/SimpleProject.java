@@ -9,7 +9,7 @@ import net.bodz.dist.ins.ConfigPage;
 import net.bodz.dist.ins.ISession;
 import net.bodz.dist.ins.Variable;
 import net.bodz.dist.ins._Project;
-import net.bodz.dist.nls.PackNLS;
+import net.bodz.dist.ins.nls.PackNLS;
 
 import org.eclipse.swt.widgets.Composite;
 

@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import net.bodz.bas.io.Files;
-import net.bodz.dist.nls.PackNLS;
+import net.bodz.dist.ins.nls.PackNLS;
 
 public class License {
 

@@ -1,6 +1,6 @@
 package net.bodz.dist.ins;
 
-import net.bodz.dist.nls.PackNLS;
+import net.bodz.dist.ins.nls.PackNLS;
 import net.bodz.swt.gui.pfl.PageComposite;
 
 import org.eclipse.swt.SWT;
