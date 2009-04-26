@@ -7,6 +7,7 @@ import net.bodz.bas.a.Version;
 import net.bodz.bas.a.WebSite;
 import net.bodz.bas.ui.UIException;
 import net.bodz.bas.ui.a.PreferredSize;
+import net.bodz.dist.pro.nls.ProtectNLS;
 import net.bodz.dist.pro.pm.ProtectException;
 import net.bodz.swt.adapters.TextAdapters;
 import net.bodz.swt.gui.BasicGUI;
@@ -64,10 +65,10 @@ public class ActivateCodeGenerator extends BasicGUI {
 
         final Label hostIdLabel = new Label(composite, SWT.NONE);
         hostIdLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
-        hostIdLabel.setText("Host ID:");
+        hostIdLabel.setText(ProtectNLS.getString("ActivateCodeGenerator.hostId")); //$NON-NLS-1$
 
         hostIdText = new Text(composite, SWT.BORDER);
-        hostIdText.setText("Host ID");
+        hostIdText.setText("Host ID"); //$NON-NLS-1$
         final GridData gd_hostIdText = new GridData(SWT.FILL, SWT.CENTER, true, false);
         hostIdText.setLayoutData(gd_hostIdText);
         hostIdText.addSelectionListener(rg);
@@ -75,10 +76,10 @@ public class ActivateCodeGenerator extends BasicGUI {
 
         final Label targetStringLabel_1 = new Label(composite, SWT.NONE);
         targetStringLabel_1.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
-        targetStringLabel_1.setText("Target String:");
+        targetStringLabel_1.setText(ProtectNLS.getString("ActivateCodeGenerator.targetString")); //$NON-NLS-1$
 
         targetStringText = new Text(composite, SWT.BORDER);
-        targetStringText.setText("Target String");
+        targetStringText.setText("Target String"); //$NON-NLS-1$
         final GridData gd_targetStringText = new GridData(SWT.FILL, SWT.CENTER, true, false);
         targetStringText.setLayoutData(gd_targetStringText);
         targetStringText.addSelectionListener(rg);
@@ -86,10 +87,10 @@ public class ActivateCodeGenerator extends BasicGUI {
 
         final Label activationCodeLabel = new Label(composite, SWT.NONE);
         activationCodeLabel.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false));
-        activationCodeLabel.setText("Activation Code: ");
+        activationCodeLabel.setText(ProtectNLS.getString("ActivateCodeGenerator.activationCode")); //$NON-NLS-1$
 
         codeText = new Text(composite, SWT.BORDER);
-        codeText.setText("Code");
+        codeText.setText("Code"); //$NON-NLS-1$
         final GridData gd_codeText = new GridData(SWT.FILL, SWT.CENTER, true, false);
         codeText.setLayoutData(gd_codeText);
         codeText.addSelectionListener(rg);
@@ -109,11 +110,11 @@ public class ActivateCodeGenerator extends BasicGUI {
         buttons.setLayout(gridLayout_1);
 
         final Button generateButton = new Button(buttons, SWT.NONE);
-        generateButton.setText("&Generate");
+        generateButton.setText(ProtectNLS.getString("ActivateCodeGenerator.generate")); //$NON-NLS-1$
         generateButton.addSelectionListener(rg);
 
         final Button copyButton = new Button(buttons, SWT.NONE);
-        copyButton.setText("&Copy");
+        copyButton.setText(ProtectNLS.getString("ActivateCodeGenerator.copy")); //$NON-NLS-1$
         copyButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {

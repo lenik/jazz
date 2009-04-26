@@ -10,7 +10,7 @@ public class VolumeId extends _SysIdProvider {
     private final String path;
 
     public VolumeId(String path) {
-        super("-");
+        super("-"); //$NON-NLS-1$
         this.path = path;
     }
 

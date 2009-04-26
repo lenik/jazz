@@ -2,6 +2,8 @@ package net.bodz.dist.pro.pm;
 
 import java.util.Arrays;
 
+import net.bodz.dist.pro.nls.ProtectNLS;
+
 public class XorMatrix implements Cloneable {
 
     private final int[] m;
@@ -48,7 +50,7 @@ public class XorMatrix implements Cloneable {
 
     void checkMultiplyWith(XorMatrix m) {
         if (cols != m.rows)
-            throw new IllegalArgumentException("can't multiply with " + m);
+            throw new IllegalArgumentException(ProtectNLS.getString("XorMatrix.cantMultiply") + m); //$NON-NLS-1$
     }
 
     public void add(XorMatrix b) {

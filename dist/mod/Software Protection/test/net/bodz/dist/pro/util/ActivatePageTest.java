@@ -39,8 +39,8 @@ public class ActivatePageTest extends PageTestApp {
     @Test
     public void test1() throws Exception {
         ActivationByTargetString abt = new ActivationByTargetString(getClass(), pm);
-        String code = abt.generateFor("next");
-        System.out.println("Activation Code: " + code);
+        String code = abt.generateFor("next"); //$NON-NLS-1$
+        System.out.println("Activation Code: " + code); //$NON-NLS-1$
         run();
     }
 

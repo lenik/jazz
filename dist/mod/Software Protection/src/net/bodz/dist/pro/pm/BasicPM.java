@@ -5,6 +5,7 @@ import java.security.Key;
 import javax.crypto.SecretKey;
 
 import net.bodz.bas.lang.err.SystemException;
+import net.bodz.dist.pro.nls.ProtectNLS;
 import net.bodz.dist.pro.sysid.DiskId;
 import net.bodz.dist.pro.sysid.MacAddressId;
 import net.bodz.dist.pro.sysid.SysIdProvider;
@@ -28,7 +29,7 @@ public class BasicPM extends _ProtectionModel {
             if (id != null)
                 return sip;
         }
-        throw new SystemException("Can't identify this machine.");
+        throw new SystemException(ProtectNLS.getString("BasicPM.cantIdentify")); //$NON-NLS-1$
     }
 
     @Override

@@ -1,5 +1,6 @@
 package net.bodz.dist.pro.seals;
 
+import net.bodz.dist.pro.nls.ProtectNLS;
 import net.bodz.dist.pro.pm.ProtectionModel;
 import net.bodz.dist.pro.pm.ProtectionModels;
 
@@ -28,24 +29,24 @@ public class Serial {
 
     public Serial(String text) {
         if (text == null)
-            throw new NullPointerException("text");
-        String[] segs = text.split("-");
+            throw new NullPointerException("text"); //$NON-NLS-1$
+        String[] segs = text.split("-"); //$NON-NLS-1$
         if (segs.length < 1)
-            throw new IllegalArgumentException("No header");
+            throw new IllegalArgumentException(ProtectNLS.getString("Serial.noHeader")); //$NON-NLS-1$
         String head = segs[0];
 
         String modelName = ProtectionModels.floor(head);
         if (modelName == null)
-            throw new IllegalArgumentException("bad model: " + head);
+            throw new IllegalArgumentException(ProtectNLS.getString("Serial.badModel") + head); //$NON-NLS-1$
         head = head.substring(modelName.length());
         setModelName(modelName);
 
         if (head.length() == 0)
-            throw new IllegalArgumentException("no product specified");
+            throw new IllegalArgumentException(ProtectNLS.getString("Serial.noProduct")); //$NON-NLS-1$
         int productLen = Integer.parseInt(head.substring(0, 1));
         head = head.substring(1);
         if (head.length() < productLen)
-            throw new IllegalArgumentException("invalid product length");
+            throw new IllegalArgumentException(ProtectNLS.getString("Serial.invalidProductLen")); //$NON-NLS-1$
 
         product = head.substring(0, productLen);
         head = head.substring(productLen);
@@ -61,7 +62,7 @@ public class Serial {
     public void setModelName(String modelName) {
         ProtectionModel model = ProtectionModels.get(modelName);
         if (model == null)
-            throw new IllegalArgumentException("bad model: " + modelName);
+            throw new IllegalArgumentException(ProtectNLS.getString("Serial.badModel") + modelName); //$NON-NLS-1$
         this.modelName = modelName;
         this.model = model;
     }
@@ -96,8 +97,8 @@ public class Serial {
 
     @Override
     public String toString() {
-        String productLen = "" + product.length();
-        String module = "" + this.module;
+        String productLen = "" + product.length(); //$NON-NLS-1$
+        String module = "" + this.module; //$NON-NLS-1$
         String head = modelName + productLen + product + module;
         if (sections == null)
             return head;
@@ -105,7 +106,7 @@ public class Serial {
         buf.append(head);
         for (int i = 0; i < sections.length; i++) {
             if (i != 0)
-                buf.append("-");
+                buf.append("-"); //$NON-NLS-1$
             int sect = sections[i];
             buf.append(sect);
         }

@@ -16,7 +16,7 @@ public class _SysIdProviderTest {
         String s = prov.getIdString();
         if (s != null)
             s = s.toUpperCase();
-        assertEquals("03-04-80-FF", s);
+        assertEquals("03-04-80-FF", s); //$NON-NLS-1$
         byte[] id2 = prov.parseId(s);
         assertArrayEquals(id, id2);
     }

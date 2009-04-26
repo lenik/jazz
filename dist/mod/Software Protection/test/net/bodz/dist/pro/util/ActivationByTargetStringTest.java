@@ -16,17 +16,17 @@ public class ActivationByTargetStringTest {
             BasicPM pm = new BasicPM(seed);
             ActivationByTargetString abt = new ActivationByTargetString(getClass(), pm);
             String hostId = abt.getHostId();
-            System.out.println("Host ID = " + hostId);
+            System.out.println("Host ID = " + hostId); //$NON-NLS-1$
 
             ActivationByTargetString rev = new ActivationByTargetString(hostId);
-            String target = "hello你好";
+            String target = "hello你好"; //$NON-NLS-1$
             String code = rev.generateFor(target);
-            System.out.println("Code for " + target + ": " + code);
+            System.out.println("Code for " + target + ": " + code); //$NON-NLS-1$ //$NON-NLS-2$
 
-            System.out.println("Activated: " + abt.isActivated());
+            System.out.println("Activated: " + abt.isActivated()); //$NON-NLS-1$
             abt.setActivateCode(code);
             String targetLoaded = abt.getTargetString();
-            System.out.println("Target: \"" + targetLoaded + "\"");
+            System.out.println("Target: \"" + targetLoaded + "\""); //$NON-NLS-1$ //$NON-NLS-2$
 
             assertEquals(target, targetLoaded);
         }

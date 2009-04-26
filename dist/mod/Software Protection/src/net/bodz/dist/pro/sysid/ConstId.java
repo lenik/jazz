@@ -7,7 +7,7 @@ public class ConstId extends _SysIdProvider {
     final byte[] id;
 
     public ConstId(byte[] id) {
-        super("-");
+        super("-"); //$NON-NLS-1$
         this.id = id;
     }
 

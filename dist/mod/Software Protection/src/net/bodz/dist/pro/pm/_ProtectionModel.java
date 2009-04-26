@@ -17,6 +17,7 @@ import net.bodz.bas.lang.err.SystemException;
 import net.bodz.bas.text.encodings.Encodings;
 import net.bodz.bas.types.HashTextMap;
 import net.bodz.bas.types.TextMap;
+import net.bodz.dist.pro.nls.ProtectNLS;
 import net.bodz.dist.pro.seals.IdSeededSequence;
 import net.bodz.dist.pro.seals.Sequence;
 import net.bodz.dist.pro.sysid.SysIdProvider;
@@ -30,7 +31,7 @@ public abstract class _ProtectionModel implements ProtectionModel {
 
     public _ProtectionModel(SysIdProvider sysIdProvider, int seed) {
         if (sysIdProvider == null)
-            throw new NullPointerException("sysIdProvider");
+            throw new NullPointerException("sysIdProvider"); //$NON-NLS-1$
         this.sysIdProvider = sysIdProvider;
         this.seed = seed;
         this.machines = new HashTextMap<VirtualMachine>();
@@ -41,7 +42,7 @@ public abstract class _ProtectionModel implements ProtectionModel {
     public VirtualMachine getVM(String type) {
         VirtualMachine vm = machines.get(type);
         if (vm == null)
-            throw new IllegalUsageException("VM for specified type isn't existed: " + type);
+            throw new IllegalUsageException(ProtectNLS.getString("_ProtectionModel.vmIsntExisted") + type); //$NON-NLS-1$
         return vm;
     }
 
@@ -71,13 +72,13 @@ public abstract class _ProtectionModel implements ProtectionModel {
         Section[] sections;
         String[] names = getSectionNames();
         if (names == null)
-            throw new NullPointerException("section-list");
+            throw new NullPointerException("section-list"); //$NON-NLS-1$
         sections = new Section[names.length];
         for (int i = 0; i < names.length; i++) {
             String name = names[i];
             Section section = getSection(name);
             if (section == null)
-                throw new NullPointerException("Section isn't defined: " + name);
+                throw new NullPointerException(ProtectNLS.getString("_ProtectionModel.sectionIsntDefined") + name); //$NON-NLS-1$
             sections[i] = section;
         }
         return sections;
@@ -88,14 +89,14 @@ public abstract class _ProtectionModel implements ProtectionModel {
         return sections.get(name);
     }
 
-    private static final byte[] salt = "*master-model*".getBytes();
+    private static final byte[] salt = "*master-model*".getBytes(); //$NON-NLS-1$
 
     @Override
     public SecretKey keygen(String passphrase) throws ProtectException {
         // Create the key
         KeySpec keySpec = new PBEKeySpec(passphrase.toCharArray(), salt, 3);
         try {
-            SecretKey key = SecretKeyFactory.getInstance("PBEWithMD5AndDES")
+            SecretKey key = SecretKeyFactory.getInstance("PBEWithMD5AndDES") //$NON-NLS-1$
                     .generateSecret(keySpec);
             return key;
         } catch (GeneralSecurityException e) {
@@ -115,8 +116,8 @@ public abstract class _ProtectionModel implements ProtectionModel {
     public KeyPair keygen2() throws ProtectException {
         try {
             if (random == null)
-                random = SecureRandom.getInstance("SHA1PRNG");
-            KeyPairGenerator kpg = KeyPairGenerator.getInstance("DSA");
+                random = SecureRandom.getInstance("SHA1PRNG"); //$NON-NLS-1$
+            KeyPairGenerator kpg = KeyPairGenerator.getInstance("DSA"); //$NON-NLS-1$
         } catch (Exception e) {
             throw new ProtectException(e);
         }
@@ -130,7 +131,7 @@ public abstract class _ProtectionModel implements ProtectionModel {
     public byte[] encrypt(Key key, byte[] text) throws ProtectException {
         try {
             if (ecipher == null) {
-                ecipher = Cipher.getInstance("DES");
+                ecipher = Cipher.getInstance("DES"); //$NON-NLS-1$
                 ecipher.init(Cipher.ENCRYPT_MODE, key);
             }
             byte[] result = ecipher.doFinal(text);
@@ -144,7 +145,7 @@ public abstract class _ProtectionModel implements ProtectionModel {
     public byte[] decrypt(Key KEY, byte[] secret) throws ProtectException {
         try {
             if (dcipher == null) {
-                dcipher = Cipher.getInstance("DES");
+                dcipher = Cipher.getInstance("DES"); //$NON-NLS-1$
                 dcipher.init(Cipher.DECRYPT_MODE, KEY);
             }
             byte[] result = dcipher.doFinal(secret);

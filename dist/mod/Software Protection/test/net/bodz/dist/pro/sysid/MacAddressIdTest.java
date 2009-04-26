@@ -8,7 +8,7 @@ public class MacAddressIdTest {
     public static void main(String[] args) throws SystemException {
         MacAddressId macId = new MacAddressId(0);
         String s = macId.getIdString();
-        System.out.println("Mac: [" + s + "]");
+        System.out.println("Mac: [" + s + "]"); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
 }

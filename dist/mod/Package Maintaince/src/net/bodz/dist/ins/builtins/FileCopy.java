@@ -24,6 +24,7 @@ import net.bodz.bas.io.CharOuts.BCharOut;
 import net.bodz.dist.ins.Attachment;
 import net.bodz.dist.ins.ISession;
 import net.bodz.dist.ins.InstallException;
+import net.bodz.dist.ins.RegistryData;
 import net.bodz.dist.ins._Component;
 import net.bodz.dist.ins.nls.PackNLS;
 import net.bodz.dist.ins.util.Utils;
@@ -33,9 +34,28 @@ import net.bodz.dist.ins.util.Utils;
  */
 public class FileCopy extends _Component {
 
+    @RegistryData
     public static class Data {
-        String[] list;
-        long     size;
+
+        private String[] list;
+        private long     size;
+
+        public String[] getList() {
+            return list;
+        }
+
+        public void setList(String[] list) {
+            this.list = list;
+        }
+
+        public long getSize() {
+            return size;
+        }
+
+        public void setSize(long size) {
+            this.size = size;
+        }
+
     }
 
     private final String           baseName;
@@ -280,9 +300,9 @@ public class FileCopy extends _Component {
                     baseDir = new File(baseDir, basePath);
             L.finfo(PackNLS.getString("FileCopy.installFiles_ss"), getId(), baseDir); //$NON-NLS-1$
             Data data = (Data) getRegistryData();
-            if (data == null)
+            if (data == null || data.list == null)
                 throw new IllegalStateException(
-                        "Missing registry data, which contains the file list to copy.");
+                        PackNLS.getString("FileCopy.missingRegistry")); //$NON-NLS-1$
 
             setProgressSize(data.list.length);
 
@@ -410,6 +430,10 @@ public class FileCopy extends _Component {
                 if (isdir)
                     name = name.substring(0, name.length() - 1);
                 File dest = new File(baseDir, name);
+                if (!dest.exists()) {
+                    L.detail(PackNLS.getString("FileCopy.fileNotExist"), dest); //$NON-NLS-1$
+                    continue;
+                }
                 if (isdir) {
                     L.detail(PackNLS.getString("FileCopy.deleteDir"), dest); //$NON-NLS-1$
                     dest.delete();

@@ -1,6 +1,7 @@
 package net.bodz.dist.pro.util;
 
 import net.bodz.bas.lang.err.ParseException;
+import net.bodz.dist.pro.nls.ProtectNLS;
 import net.bodz.dist.pro.util.ActivatePageTest;
 import net.bodz.swt.adapters.ControlAdapters;
 import net.bodz.swt.gui.pfl.PageComposite;
@@ -29,7 +30,7 @@ public class ActivatePage extends PageComposite {
     public ActivatePage(Composite parent, int style, ActivationByTargetString abt) {
         super(parent, style);
         if (abt == null)
-            throw new NullPointerException("abt");
+            throw new NullPointerException("abt"); //$NON-NLS-1$
         this.abt = abt;
         createContents(parent, style);
     }
@@ -43,12 +44,12 @@ public class ActivatePage extends PageComposite {
         final GridData gd_pleaseEnterRegistrationLabel = new GridData(SWT.LEFT, SWT.CENTER, false,
                 false, 2, 1);
         pleaseEnterRegistrationLabel.setLayoutData(gd_pleaseEnterRegistrationLabel);
-        pleaseEnterRegistrationLabel.setText("Please activate this software: ");
+        pleaseEnterRegistrationLabel.setText(ProtectNLS.getString("ActivatePage.caption")); //$NON-NLS-1$
 
         final Label hostIdLabel = new Label(this, SWT.NONE);
         final GridData gd_hostIdLabel = new GridData(SWT.RIGHT, SWT.CENTER, false, false);
         hostIdLabel.setLayoutData(gd_hostIdLabel);
-        hostIdLabel.setText("Host ID: ");
+        hostIdLabel.setText(ProtectNLS.getString("ActivatePage.hostId")); //$NON-NLS-1$
 
         hostidText = new Text(this, SWT.BORDER | SWT.READ_ONLY);
         final GridData gd_hostidText = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -58,7 +59,7 @@ public class ActivatePage extends PageComposite {
         final Label codeLabel = new Label(this, SWT.NONE);
         final GridData gd_codeLabel = new GridData(SWT.RIGHT, SWT.CENTER, false, false);
         codeLabel.setLayoutData(gd_codeLabel);
-        codeLabel.setText("Activation Code: ");
+        codeLabel.setText(ProtectNLS.getString("ActivatePage.activationCode")); //$NON-NLS-1$
 
         codeText = new Text(this, SWT.BORDER);
         final GridData gd_codeText = new GridData(SWT.FILL, SWT.CENTER, true, false);
@@ -78,19 +79,19 @@ public class ActivatePage extends PageComposite {
 
         final Label label = new Label(this, SWT.HORIZONTAL | SWT.SEPARATOR);
         label.setLayoutData(new GridData(SWT.FILL, SWT.BOTTOM, false, true, 2, 1));
-        label.setText("Label");
+        label.setText("Label"); //$NON-NLS-1$
 
         final Label label1 = new Label(this, SWT.WRAP);
         final GridData gd_label1 = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 2, 1);
         label1.setLayoutData(gd_label1);
-        label1.setText("Have encounter any problem?");
+        label1.setText(ProtectNLS.getString("ActivatePage.hint1")); //$NON-NLS-1$
 
         String website = abt.getWebsite();
         final Link link = new Link(this, SWT.NONE);
         final GridData gd_label2 = new GridData(SWT.RIGHT, SWT.CENTER, false, false, 2, 1);
         link.setLayoutData(gd_label2);
         link.setText(String.format(
-                "Access our <a href=\"%s\">website</a> to get the activation code.", website));
+                ProtectNLS.getString("ActivatePage.accessWebsite_s"), website)); //$NON-NLS-1$
         if (website != null)
             link.setToolTipText(website);
         ControlAdapters.browseLink(link);
@@ -103,12 +104,12 @@ public class ActivatePage extends PageComposite {
 
     @Override
     public String getPageTitle() {
-        return "Product Activation";
+        return ProtectNLS.getString("ActivatePage.title"); //$NON-NLS-1$
     }
 
     @Override
     protected Object getInitialState() {
-        return "cancel";
+        return "cancel"; //$NON-NLS-1$
     }
 
     @Override
@@ -120,7 +121,7 @@ public class ActivatePage extends PageComposite {
             abt.save();
             return s;
         } catch (ParseException ex) {
-            return "cancel";
+            return "cancel"; //$NON-NLS-1$
         }
     }
 

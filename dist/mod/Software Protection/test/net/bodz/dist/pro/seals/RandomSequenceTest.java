@@ -29,7 +29,7 @@ public class RandomSequenceTest {
         if (littleEndian) {
             assertEquals(n, n1);
         } else {
-            throw new NotImplementedException("big-endian");
+            throw new NotImplementedException("big-endian"); //$NON-NLS-1$
         }
     }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="test" default="packAll">
+<project name="test" default="packToDir">
 
     <property environment="env" />
     <property name="JAVA_LIB" value="${env.JAVA_LIB}" />

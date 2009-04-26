@@ -11,6 +11,7 @@ import net.bodz.bas.a.WebSite;
 import net.bodz.bas.lang.err.IllegalUsageError;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.types.util.Ns;
+import net.bodz.dist.pro.nls.ProtectNLS;
 import net.bodz.dist.pro.pm.ProtectException;
 import net.bodz.dist.pro.pm.ProtectionModel;
 import net.bodz.dist.pro.seals.CodeSet;
@@ -22,10 +23,10 @@ import net.bodz.dist.pro.util.ActivationByTargetStringTest;
  */
 public class ActivationByTargetString {
 
-    private static final String  KEY_HOSTID        = "hostId";
-    private static final String  KEY_ACTIVATE_CODE = "activateCode";
+    private static final String  KEY_HOSTID        = "hostId"; //$NON-NLS-1$
+    private static final String  KEY_ACTIVATE_CODE = "activateCode"; //$NON-NLS-1$
 
-    private static final Charset encoding          = Charset.forName("utf-8");
+    private static final Charset encoding          = Charset.forName("utf-8"); //$NON-NLS-1$
 
     private final String         prefix;
     private final byte[]         prefixBytes;
@@ -39,10 +40,10 @@ public class ActivationByTargetString {
 
     ActivationByTargetString(Class<?> clazz) throws ProtectException {
         if (clazz == null)
-            throw new NullPointerException("clazz");
+            throw new NullPointerException("clazz"); //$NON-NLS-1$
         Activation activation = Ns.getN(clazz, Activation.class);
         if (activation == null)
-            throw new IllegalUsageError("No activation info");
+            throw new IllegalUsageError(ProtectNLS.getString("ActivationByTargetString.noActivationInfo")); //$NON-NLS-1$
         this.prefix = activation.prefix();
         this.prefixBytes = prefix.getBytes(encoding);
         this.segments = activation.segments();
@@ -58,7 +59,7 @@ public class ActivationByTargetString {
 
     public ActivationByTargetString(String hostId) throws ProtectException {
         website = null;
-        String[] segs = hostId.split("-");
+        String[] segs = hostId.split("-"); //$NON-NLS-1$
         prefix = segs[0];
         prefixBytes = prefix.getBytes(encoding);
         segments = segs.length - 1;
@@ -76,7 +77,7 @@ public class ActivationByTargetString {
     public ActivationByTargetString(Class<?> clazz, ProtectionModel pm) throws ProtectException {
         this(clazz);
         if (pm == null)
-            throw new NullPointerException("pm");
+            throw new NullPointerException("pm"); //$NON-NLS-1$
 
         hostBytes = new byte[segments * 4];
         ByteBuffer out = ByteBuffer.wrap(hostBytes);
@@ -85,7 +86,7 @@ public class ActivationByTargetString {
         for (int i = 0; i < segments; i++) {
             if (i == 0)
                 buf.append(prefix);
-            buf.append("-");
+            buf.append("-"); //$NON-NLS-1$
             int n = seq.next();
             buf.append(CodeSet.encode(n));
             out.putInt(n);
@@ -115,7 +116,7 @@ public class ActivationByTargetString {
 
     public void save() {
         if (preferences == null)
-            throw new NullPointerException("preferences");
+            throw new NullPointerException("preferences"); //$NON-NLS-1$
         preferences.put(KEY_HOSTID, hostId);
         preferences.put(KEY_ACTIVATE_CODE, activateCode);
     }
@@ -123,7 +124,7 @@ public class ActivationByTargetString {
     static final MessageDigest digest;
     static {
         try {
-            digest = MessageDigest.getInstance("SHA-1");
+            digest = MessageDigest.getInstance("SHA-1"); //$NON-NLS-1$
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
@@ -141,14 +142,14 @@ public class ActivationByTargetString {
         byte[] hostMac = getHostMac();
         int last = activateCode.lastIndexOf('-');
         if (last == -1)
-            throw new ParseException("No checksum");
+            throw new ParseException(ProtectNLS.getString("ActivationByTargetString.noChecksum")); //$NON-NLS-1$
         String code = activateCode.substring(0, last);
 
         String checksum = digest(code);
         if (!checksum.equalsIgnoreCase(activateCode.substring(last + 1)))
-            throw new ParseException("Error Checksum");
+            throw new ParseException(ProtectNLS.getString("ActivationByTargetString.errorChecksum")); //$NON-NLS-1$
 
-        String[] segs = code.split("-");
+        String[] segs = code.split("-"); //$NON-NLS-1$
 
         byte[] segbuf = new byte[4];
         ByteBuffer segbb = ByteBuffer.wrap(segbuf);
@@ -210,17 +211,17 @@ public class ActivationByTargetString {
                         break;
             }
             if (k == Integer.MAX_VALUE)
-                throw new UnsupportedOperationException("Unsupported target string: "
+                throw new UnsupportedOperationException(ProtectNLS.getString("ActivationByTargetString.cantMakeupTarget") //$NON-NLS-1$
                         + targetString);
             String seg = CodeSet.encode(k);
             if (i != 0)
                 codebuf.append('-');
             codebuf.append(seg);
         }
-        System.out.println("Search space: " + count);
-        System.out.printf("Tries per char: %.3f\n", (double) count / chars.length);
+        System.out.println(ProtectNLS.getString("ActivationByTargetString.searchSpace") + count); //$NON-NLS-1$
+        System.out.printf(ProtectNLS.getString("ActivationByTargetString.triesPerChar_f"), (double) count / chars.length); //$NON-NLS-1$
         String code = codebuf.toString();
-        return code + "-" + digest(code);
+        return code + "-" + digest(code); //$NON-NLS-1$
     }
 
 }

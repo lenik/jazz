@@ -12,7 +12,7 @@ public class MacAddressId extends _SysIdProvider {
     private int nicIndex;
 
     public MacAddressId(int nicIndex) {
-        super("-");
+        super("-"); //$NON-NLS-1$
         this.nicIndex = nicIndex;
     }
 
