@@ -1,6 +1,10 @@
 package net.bodz.dist.pm;
 
 import java.security.GeneralSecurityException;
+import java.security.Key;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.SecureRandom;
 import java.security.spec.KeySpec;
 
 import javax.crypto.Cipher;
@@ -9,20 +13,26 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
 import net.bodz.bas.lang.err.IllegalUsageException;
+import net.bodz.bas.lang.err.SystemException;
+import net.bodz.bas.text.encodings.Encodings;
 import net.bodz.bas.types.HashTextMap;
 import net.bodz.bas.types.TextMap;
+import net.bodz.dist.seals.IdSeededSequence;
+import net.bodz.dist.seals.Sequence;
 import net.bodz.dist.sysid.SysIdProvider;
 
 public abstract class _ProtectionModel implements ProtectionModel {
 
     private final SysIdProvider           sysIdProvider;
+    private final int                     seed;
     private final TextMap<VirtualMachine> machines;
     private final TextMap<Section>        sections;
 
-    public _ProtectionModel(SysIdProvider sysIdProvider) {
+    public _ProtectionModel(SysIdProvider sysIdProvider, int seed) {
         if (sysIdProvider == null)
             throw new NullPointerException("sysIdProvider");
         this.sysIdProvider = sysIdProvider;
+        this.seed = seed;
         this.machines = new HashTextMap<VirtualMachine>();
         this.sections = new HashTextMap<Section>();
     }
@@ -38,6 +48,20 @@ public abstract class _ProtectionModel implements ProtectionModel {
     @Override
     public SysIdProvider getSysIdProvider() {
         return sysIdProvider;
+    }
+
+    @Override
+    public Sequence getSequence() throws ProtectException {
+        try {
+            return new IdSeededSequence(seed) {
+                @Override
+                protected SysIdProvider findIdProvider() {
+                    return getSysIdProvider();
+                }
+            };
+        } catch (SystemException e) {
+            throw new ProtectException(e);
+        }
     }
 
     protected abstract String[] getSectionNames();
@@ -64,25 +88,43 @@ public abstract class _ProtectionModel implements ProtectionModel {
         return sections.get(name);
     }
 
-    private Cipher ecipher;
-    private Cipher dcipher;
+    private static final byte[] salt = "*master-model*".getBytes();
 
-    byte[]         salt           = {
-                                  //
-            (byte) 0xA9, (byte) 0x9B, (byte) 0xC8, (byte) 0x32, //
-            (byte) 0x56, (byte) 0x35, (byte) 0xE3, (byte) 0x03, };
-    int            iterationCount = 19;
-
-    SecretKey generateSK(String passPhrase) throws ProtectException {
+    @Override
+    public SecretKey keygen(String passphrase) throws ProtectException {
         // Create the key
-        KeySpec keySpec = new PBEKeySpec(passPhrase.toCharArray(), salt, iterationCount);
+        KeySpec keySpec = new PBEKeySpec(passphrase.toCharArray(), salt, 3);
         try {
             SecretKey key = SecretKeyFactory.getInstance("PBEWithMD5AndDES")
                     .generateSecret(keySpec);
+            return key;
         } catch (GeneralSecurityException e) {
             throw new ProtectException(e);
         }
     }
+
+    @Override
+    public SecretKey keygen(byte[] keybytes) throws ProtectException {
+        String hex = Encodings.HEX.encode(keybytes);
+        return keygen(hex);
+    }
+
+    private static SecureRandom random;
+
+    @Override
+    public KeyPair keygen2() throws ProtectException {
+        try {
+            if (random == null)
+                random = SecureRandom.getInstance("SHA1PRNG");
+            KeyPairGenerator kpg = KeyPairGenerator.getInstance("DSA");
+        } catch (Exception e) {
+            throw new ProtectException(e);
+        }
+        return null;
+    }
+
+    private Cipher ecipher;
+    private Cipher dcipher;
 
     @Override
     public byte[] encrypt(Key key, byte[] text) throws ProtectException {
@@ -103,7 +145,7 @@ public abstract class _ProtectionModel implements ProtectionModel {
         try {
             if (dcipher == null) {
                 dcipher = Cipher.getInstance("DES");
-                dcipher.init(Cipher.DECRYPT_MODE, key);
+                dcipher.init(Cipher.DECRYPT_MODE, KEY);
             }
             byte[] result = dcipher.doFinal(secret);
             return result;

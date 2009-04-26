@@ -1,61 +1,54 @@
 package net.bodz.dist.pm;
 
+import java.security.Key;
+
+import javax.crypto.SecretKey;
+
 import net.bodz.bas.lang.err.SystemException;
-import net.bodz.dist.seals.IdSeededSequence;
-import net.bodz.dist.seals.Sequence;
-import net.bodz.dist.sysid.ConstId;
+import net.bodz.dist.sysid.DiskId;
 import net.bodz.dist.sysid.MacAddressId;
 import net.bodz.dist.sysid.SysIdProvider;
 import net.bodz.dist.sysid.VolumeId;
 
 public class BasicPM extends _ProtectionModel {
 
-    SysIdProvider sysIdProvider;
-    Sequence      userSeq;
+    public BasicPM(int seed) throws SystemException {
+        super(findAvailableSysIdProvider(), seed);
+    }
 
-    public BasicPM() throws SystemException {
+    static SysIdProvider findAvailableSysIdProvider() throws SystemException {
         SysIdProvider[] list = {
         //
+                new DiskId(0), //
                 new MacAddressId(0), //
                 new VolumeId("C:/"), //  //$NON-NLS-1$
         };
         for (SysIdProvider sip : list) {
             byte[] id = sip.getId();
-            if (id == null)
-                continue;
-            sysIdProvider = sip;
+            if (id != null)
+                return sip;
         }
-        if (sysIdProvider == null)
-            throw new SystemException("Can't identify this machine.");
-        userSeq = new IdSeededSequence() {
-            @Override
-            protected SysIdProvider findIdProvider() {
-                return sysIdProvider;
-            }
-        };
-    }
-
-    static final ConstId defaultMasterId;
-    static {
-        byte[] id = { (byte) 0xDE, (byte) 0xAD, (byte) 0xCA, (byte) 0xFE };
-        defaultMasterId = new ConstId(id);
+        throw new SystemException("Can't identify this machine.");
     }
 
     @Override
-    public Sequence getUserSequence() {
-        return userSeq;
+    protected String[] getSectionNames() {
+        return null;
     }
 
     @Override
-    public void precrypt() {
+    public SecretKey keygen(byte[] keybytes) throws ProtectException {
+        return null;
     }
 
-    static {
-        try {
-            ProtectionModels.register("A", new BasicPM());
-        } catch (SystemException e) {
-            throw new RuntimeException(e);
-        }
+    @Override
+    public byte[] protectKey(Key privateKey, Key skey) throws ProtectException {
+        return null;
+    }
+
+    @Override
+    public Key restoreKey(Key publicKey, byte[] skeyEncoded) throws ProtectException {
+        return null;
     }
 
 }

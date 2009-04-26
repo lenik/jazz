@@ -14,12 +14,12 @@ public abstract class IdSeededSequence extends _Sequence {
      * @throws SystemException
      *             if exception happens when finding the seed.
      */
-    public IdSeededSequence() throws SystemException {
+    public IdSeededSequence(int seed) throws SystemException {
         SysIdProvider idProvider = findIdProvider();
         if (idProvider == null)
-            seedById = 0xDEADCAFE;
+            seedById = seed + 0xDEADCAFE;
         else
-            seedById = digest(idProvider.getId());
+            seedById = seed + digest(idProvider.getId());
         randomizer = new RandomSequence(seedById);
     }
 

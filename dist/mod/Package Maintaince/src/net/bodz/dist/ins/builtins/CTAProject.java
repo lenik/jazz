@@ -9,6 +9,7 @@ import net.bodz.bas.a.Doc;
 import net.bodz.bas.a.RcsKeywords;
 import net.bodz.bas.a.Version;
 import net.bodz.bas.io.FileFinder;
+import net.bodz.bas.io.Files;
 import net.bodz.bas.snm.SJProject;
 import net.bodz.dist.ins.BaseDirVariable;
 import net.bodz.dist.ins.Component;
@@ -38,11 +39,11 @@ public class CTAProject extends SimpleProject {
     }
 
     private void setup() throws IOException {
-        File parent = (File) get(BASE_PROGRAMS).getDefaultValue();
+        File testHome = Files.getTmpDir();
 
-        define("BASE_A", new BaseDirVariable("Apples", new File(parent, "apple"))); //$NON-NLS-1$
-        define("BASE_B", new BaseDirVariable("Bees", new File(parent, "bee"))); //$NON-NLS-1$
-        define("BASE_C", new BaseDirVariable("Cakes", new File(parent, "cake"))); //$NON-NLS-1$
+        define("BASE_A", new BaseDirVariable("Apples", new File(testHome, "apple"))); //$NON-NLS-1$
+        define("BASE_B", new BaseDirVariable("Bees", new File(testHome, "bee"))); //$NON-NLS-1$
+        define("BASE_C", new BaseDirVariable("Cakes", new File(testHome, "cake"))); //$NON-NLS-1$
 
         FileFilter filter = FileCopy.NoSVN;
 

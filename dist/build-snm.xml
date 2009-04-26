@@ -26,9 +26,7 @@
 
     <target name=":bin.jar">
         <mkdir dir="lib" />
-        <jar destfile="lib/net.bodz.dist.jar"
-             update="true"
-             manifest="META-INF/MANIFEST.MF">
+        <jar destfile="lib/net.bodz.dist.jar" update="true" manifest="META-INF/MANIFEST.MF">
             <zipfileset prefix="META-INF" dir="META-INF" />
             <fileset dir="mod/Package Maintaince/bin" />
             <fileset dir="mod/Software Protection/bin" />
@@ -51,6 +49,7 @@
                 <include name="${lib.asm}" />
                 <include name="${lib.jna}" />
                 <include name="${lib.jacob}" />
+                <include name="${lib.roxes_win32}" />
             </fileset>
         </copy>
     </target>

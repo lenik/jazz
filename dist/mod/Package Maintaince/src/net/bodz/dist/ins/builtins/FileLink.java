@@ -3,11 +3,13 @@ package net.bodz.dist.ins.builtins;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
+import net.bodz.bas.io.Files;
 import net.bodz.bas.sys.SystemInfo;
 import net.bodz.dist.ins.ISession;
 import net.bodz.dist.ins._Component;
+
+import com.roxes.win32.LnkFile;
 
 /**
  * @test {@link FileLinkTest}
@@ -45,30 +47,58 @@ public class FileLink extends _Component {
 
         @Override
         protected void _run() {
-            String src = new File(session.getFile(srcbase), srcpath).getPath();
-            String dst = new File(session.getFile(dstbase), dstpath).getPath();
-            Path srcpath = Paths.get(src);
-            Path dstpath = Paths.get(dst);
+            File src = new File(session.getFile(srcbase), srcpath);
+            File dst = new File(session.getFile(dstbase), dstpath);
+            Path srcpath = src.toPath();
+            Path dstpath = dst.toPath();
             try {
+                if (dst.exists()) {
+                    boolean confirm = UI.confirm("File %s is already existed, overwrite?", dst);
+                    if (!confirm) {
+                        L.info("FileLink skipped: ", dst);
+                        return;
+                    }
+                } else {
+                    // mkdir -p dst.parent
+                    File parentFile = dst.getParentFile();
+                    parentFile = Files.canoniOf(parentFile);
+                    parentFile.mkdirs();
+                }
                 if (symbolic) {
-                    L.finfo("Create symlink %s => %s", src, dst);
+                    L.finfo("Create symlink %s => %s\n", src, dst);
                     try {
                         dstpath.createSymbolicLink(srcpath);
                     } catch (UnsupportedOperationException e) {
                         if (SystemInfo.isWin32()) {
-                            // using JNA instead...
-//                            Desktop.getDesktop().
-                        }
+                            L.warn("Symbolic link isn't supported, try to create win32 shortcut.");
+                            File _src = Files.canoniOf(src);
+                            LnkFile lnk = new LnkFile(dst.getParent(), dst.getName());
+                            lnk.setPath(_src.getPath());
+                            lnk.setWorkingDirectory(_src.getParent());
+                            lnk.save();
+                        } else
+                            throw e;
                     }
                 } else {
-                    L.finfo("Create link %s => %s", src, dst);
-                    dstpath.createLink(srcpath);
+                    L.finfo("Create link %s => %s\n", src, dst);
+                    try {
+                        dstpath.createLink(srcpath);
+                    } catch (UnsupportedOperationException e) {
+                        L.warn("Hard link isn't supported, try full copy.");
+                        try {
+                            File parentFile = dst.getParentFile();
+                            parentFile = Files.canoniOf(parentFile);
+                            parentFile.mkdirs();
+                            Files.copy(src, dst);
+                        } catch (IOException ex) {
+                            throw ex;
+                        }
+                    }
                 }
             } catch (IOException e) {
                 recoverException(e);
             }
         }
-
     }
 
     class CUninstall extends CJob {
@@ -79,12 +109,16 @@ public class FileLink extends _Component {
 
         @Override
         protected void _run() {
-            String dst = new File(session.getFile(dstbase), dstpath).getPath();
-            Path dstpath = Paths.get(dst);
+            File dst = new File(session.getFile(dstbase), dstpath);
             try {
-                L.finfo("Remove link ", dst);
-                dstpath.delete();
-            } catch (IOException e) {
+                if (dst.exists()) {
+                    L.info("Remove link ", dst);
+                    dst.delete();
+                } else if ((dst = new File(dst.getPath() + ".lnk")).exists()) {
+                    L.info("Remove shortcut file ", dst);
+                    dst.delete();
+                }
+            } catch (Exception e) {
                 recoverException(e);
             }
         }

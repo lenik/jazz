@@ -32,7 +32,7 @@ public class ConsoleExecutor extends ProjectExecutor {
     @Override
     public void recoverException(RecoverableExceptionEvent e) {
         Exception ex = e.getException();
-        int answer = UI.ask(ex.getMessage(), e, Proposals.ignore, Proposals.cancel);
+        int answer = UI.ask(ex.getMessage(), ex, Proposals.ignore, Proposals.cancel);
         if (answer == 0) // ignore
             e.setRecovered(true);
     }

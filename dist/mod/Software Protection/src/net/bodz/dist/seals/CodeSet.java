@@ -55,6 +55,7 @@ public class CodeSet {
     }
 
     public static int decode(String s) {
+        s = s.toUpperCase();
         int len = s.length();
         int n = 0;
         for (int i = 0; i < len; i++) {
@@ -71,6 +72,7 @@ public class CodeSet {
     }
 
     public static long decodeLong(String s) {
+        s = s.toUpperCase();
         int len = s.length();
         long n = 0;
         for (int i = 0; i < len; i++) {

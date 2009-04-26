@@ -11,8 +11,8 @@ public interface Section {
 
     SectionMetaData getMetaData();
 
-    void lock(Key key) throws ProtectException;
+    void lock(KeyBytes key) throws ProtectException;
 
-    void unlock(Key KEY) throws ProtectException;
+    void unlock(KeyBytes KEY) throws ProtectException;
 
 }

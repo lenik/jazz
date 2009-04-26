@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<classpath> 
-  <classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-  <classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-  <classpathentry kind="output" path="mod/bin"/>
-  <classpathentry kind="src" output="mod/Package Maintaince/bin" path="mod/Package Maintaince/src"/>
-  <classpathentry kind="src" output="mod/Package Maintaince/test.bin" path="mod/Package Maintaince/test"/>
-  <classpathentry kind="src" output="mod/Software Protection/bin" path="mod/Software Protection/src"/>
-  <classpathentry kind="src" output="mod/Software Protection/test.bin" path="mod/Software Protection/test"/>
-  <classpathentry kind="src" output="mod/Utilities/bin" path="mod/Utilities/src"/>
-  <classpathentry kind="src" output="mod/Utilities/test.bin" path="mod/Utilities/test"/>
-  <classpathentry kind="src" path="mod/Win32 Natives/src" output="mod/Win32 Natives/bin"/>
-  <classpathentry kind="src" path="mod/Win32 Natives/test" output="mod/Win32 Natives/test.bin"/>
+<classpath>
+	<classpathentry exported="true" kind="lib" path="lib/jacob-1.14.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jna-3.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/roxes-win32forjava-1.1.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" output="mod/Package Maintaince/bin" path="mod/Package Maintaince/src"/>
+	<classpathentry kind="src" output="mod/Package Maintaince/test.bin" path="mod/Package Maintaince/test"/>
+	<classpathentry kind="src" output="mod/Software Protection/bin" path="mod/Software Protection/src"/>
+	<classpathentry kind="src" output="mod/Software Protection/test.bin" path="mod/Software Protection/test"/>
+	<classpathentry kind="src" output="mod/Utilities/bin" path="mod/Utilities/src"/>
+	<classpathentry kind="src" output="mod/Utilities/test.bin" path="mod/Utilities/test"/>
+	<classpathentry kind="src" output="mod/Win32 Natives/bin" path="mod/Win32 Natives/src"/>
+	<classpathentry kind="src" output="mod/Win32 Natives/test.bin" path="mod/Win32 Natives/test"/>
+	<classpathentry kind="output" path="mod/bin"/>
 </classpath>

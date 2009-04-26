@@ -73,6 +73,9 @@ public class SimpleProject extends _Project {
                 PackNLS.getString("SimpleProject.doc.programs"), //$NON-NLS-1$
                 programsDir);
         define(BASE_PROGRAMS, programsVar);
+
+        if (SystemInfo.isWin32())
+            Win32Vars.setup(this);
     }
 
     protected static File PFILES_ROOT;

@@ -1,5 +1,6 @@
 package net.bodz.dist.ins;
 
+import java.io.File;
 import java.net.URL;
 import java.util.Collection;
 import java.util.HashMap;
@@ -120,6 +121,16 @@ public class _Project extends RequiredSection implements Project {
 
     public void define(String name, Variable variable) {
         variables.put(name, variable);
+    }
+
+    public void define(String name, String value) {
+        Variable var = new Variable(null, value);
+        variables.put(name, var);
+    }
+
+    public void define(String name, File value) {
+        Variable var = new Variable(null, value);
+        variables.put(name, var);
     }
 
     @Override
