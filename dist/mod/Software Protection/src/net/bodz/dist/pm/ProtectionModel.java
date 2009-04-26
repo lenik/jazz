@@ -1,5 +1,11 @@
 package net.bodz.dist.pm;
 
+import java.security.Key;
+import java.security.KeyPair;
+
+import javax.crypto.SecretKey;
+
+import net.bodz.dist.seals.Sequence;
 import net.bodz.dist.sysid.SysIdProvider;
 
 public interface ProtectionModel {
@@ -15,15 +21,27 @@ public interface ProtectionModel {
      */
     SysIdProvider getSysIdProvider();
 
+    Sequence getSequence() throws ProtectException;
+
+    SecretKey keygen(String passphrase) throws ProtectException;
+
+    SecretKey keygen(byte[] keybytes) throws ProtectException;
+
+    KeyPair keygen2() throws ProtectException;
+
     /**
      * General purpose encryption method
      */
-    byte[] encrypt(Key key, byte[] text) throws ProtectException;
+    byte[] encrypt(Key skey, byte[] text) throws ProtectException;
 
     /**
      * General purpose decryption method
      */
-    byte[] decrypt(Key KEY, byte[] secret) throws ProtectException;
+    byte[] decrypt(Key skey, byte[] secret) throws ProtectException;
+
+    byte[] protectKey(Key privateKey, Key skey) throws ProtectException;
+
+    Key restoreKey(Key publicKey, byte[] skeyEncoded) throws ProtectException;
 
     /**
      * @return maybe <code>null</code>

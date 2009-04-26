@@ -21,7 +21,7 @@ public class CreateFile extends _Component {
     }
 
     public CreateFile(String base, String path, Object data, Object charset, boolean append) {
-        super(true, false);
+        super(false, true);
         if (base == null)
             throw new NullPointerException("base");
         if (path == null)
@@ -45,12 +45,15 @@ public class CreateFile extends _Component {
         protected void _run() {
             File dest = new File(session.getFile(base), path);
             try {
+                boolean append = CreateFile.this.append && dest.exists();
                 String abbr = Strings.ellipse(String.valueOf(data), 40);
-                if (append)
+                if (append) {
                     L.finfo("Append to %s: %s", dest, abbr);
-                else
-                    L.finfo("Write to %s: %s", dest, abbr);
-                Files.write(dest, data, charset, append);
+                    Files.append(dest, data, charset);
+                } else {
+                    L.finfo("Create file %s: %s", dest, abbr);
+                    Files.createFile(dest, data, charset);
+                }
             } catch (IOException e) {
                 recoverException(e);
             }

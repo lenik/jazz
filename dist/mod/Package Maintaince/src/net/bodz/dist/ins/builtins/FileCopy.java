@@ -33,7 +33,7 @@ import net.bodz.dist.nls.PackNLS;
  */
 public class FileCopy extends _Component {
 
-    static class Data {
+    public static class Data {
         String[] list;
         long     size;
     }
