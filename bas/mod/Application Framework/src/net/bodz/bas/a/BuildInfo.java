@@ -4,7 +4,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Counts {
+public @interface BuildInfo {
 
     /**
      * resource name, which defines proeprties of counters

@@ -33,6 +33,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.jar.Manifest;
 import java.util.regex.Pattern;
 
 import net.bodz.bas.lang.IntMath;
@@ -941,6 +942,31 @@ public class Files {
             outs.close();
     }
 
+    static void _mkdir_p(File file) {
+        if (file == null)
+            throw new NullPointerException("fille");
+        File parentFile = file.getParentFile();
+        parentFile = Files.canoniOf(parentFile);
+        parentFile.mkdirs();
+    }
+
+    public static <T> void createFile(File file, T data, Object charset) throws IOException {
+        _mkdir_p(file);
+        write(file, data, charset);
+    }
+
+    public static <T> void createFile(File file, T data) throws IOException {
+        _mkdir_p(file);
+        write(file, data, Charsets.DEFAULT);
+    }
+
+    public static <T> void createFile(File file, byte[] data, int off, int len) throws IOException {
+        if (file == null)
+            throw new NullPointerException("file");
+        _mkdir_p(file);
+        write(file, data, off, len);
+    }
+
     // _load
 
     /**
@@ -1032,6 +1058,31 @@ public class Files {
     }
 
     // data associated with a class
+
+    /**
+     * @return <code>null</code> if no manifest.
+     */
+    public static Manifest getManifest(Class<?> clazz) {
+        URL url = clazz.getResource("/META-INF/MANIFEST.MF");
+        if (url == null)
+            return null;
+        InputStream in = null;
+        try {
+            in = url.openStream();
+            Manifest manifest = new Manifest(in);
+            in.close();
+            return manifest;
+        } catch (IOException e) {
+            throw new IllegalStateException("Bad manifest for " + clazz, e);
+        } finally {
+            if (in != null)
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+        }
+    }
 
     /**
      * Same as {@link #_classData(Class, String)} with ".class" as
@@ -1259,7 +1310,8 @@ public class Files {
         // s=file:/C:/abc/dir/example.jar!/com/example/Name.class
         String s = url.toExternalForm();
         if (!s.endsWith(removeSubPath)) {
-            throw new IllegalArgumentException(String.format(SysNLS.getString("Files.urlIsntEndWith_ss"), //$NON-NLS-1$
+            throw new IllegalArgumentException(String.format(SysNLS
+                    .getString("Files.urlIsntEndWith_ss"), //$NON-NLS-1$
                     removeSubPath, url));
         }
         int rlen = removeSubPath.length();

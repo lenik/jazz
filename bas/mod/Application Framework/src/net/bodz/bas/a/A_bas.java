@@ -3,7 +3,9 @@ package net.bodz.bas.a;
 import java.io.IOException;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Member;
+import java.net.URL;
 import java.text.ParseException;
+import java.util.Properties;
 
 import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.err.NotImplementedException;
@@ -118,6 +120,18 @@ public class A_bas {
 
     public static VersionInfo parseId(Class<?> clazz) {
         return parseId(clazz.getAnnotation(RcsKeywords.class));
+    }
+
+    /**
+     * @return <code>null</code> if build info is unknown.
+     * @throws IOException
+     */
+    public static Properties getBuildInfo(Class<?> clazz) throws IOException {
+        String resname = Ns._getValue(clazz, BuildInfo.class);
+        if (resname == null)
+            return null;
+        URL url = clazz.getResource(resname);
+        return Files.loadProperties(url);
     }
 
 }
