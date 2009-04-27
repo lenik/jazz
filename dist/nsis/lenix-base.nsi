@@ -61,10 +61,12 @@ Section "Cygwin Runtime (1.7.0)"
         File bin\m4.exe
         File bin\md5sum.exe
         File bin\mount.exe
+        File bin\sed.exe
         File bin\sh.exe
         File bin\sha1sum.exe
         File bin\tac.exe
         File bin\tar.exe
+        File bin\tr.exe
         File bin\umount.exe
         File bin\unzip.exe
         File bin\wget.exe
