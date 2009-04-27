@@ -249,7 +249,7 @@ public class Session implements ISession {
     public void closeAttachments() {
         for (Entry<String, StatedAttachment> entry : apool.entrySet()) {
             StatedAttachment a = entry.getValue();
-            L.debug(PackNLS.getString("Session.closeAttachment"), a); //$NON-NLS-1$
+            L.info(PackNLS.getString("Session.closeAttachment"), a); //$NON-NLS-1$
             try {
                 a.close();
             } catch (IOException e) {

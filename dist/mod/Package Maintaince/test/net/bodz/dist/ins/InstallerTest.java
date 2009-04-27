@@ -5,8 +5,6 @@ import net.bodz.bas.io.ZipResFolder;
 import net.bodz.bas.lang.util.Reflects;
 import net.bodz.bas.util.LogTerm;
 import net.bodz.bas.util._Job;
-import net.bodz.dist.ins.ISession;
-import net.bodz.dist.ins.Installer;
 
 import org.junit.Test;
 
@@ -16,7 +14,7 @@ public class InstallerTest {
         Reflects.setStatic(_Job.class, "slowdown", 10); //$NON-NLS-1$
     }
 
-    // @Test
+    @Test
     public void testFromDir() throws Throwable {
         TestProject project = new TestProject();
         Installer installer = new Installer(project) {
@@ -31,7 +29,7 @@ public class InstallerTest {
         installer.run();
     }
 
-    @Test
+    // @Test
     public void testFromZip() throws Throwable {
         TestProject project = new TestProject();
         Installer installer = new Installer(project) {

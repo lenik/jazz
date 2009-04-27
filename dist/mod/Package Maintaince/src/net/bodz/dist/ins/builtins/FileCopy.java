@@ -2,6 +2,7 @@ package net.bodz.dist.ins.builtins;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,10 +12,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.jar.JarEntry;
-import java.util.jar.JarOutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.FileFinder;
@@ -37,8 +38,8 @@ public class FileCopy extends _Component {
     @RegistryData
     public static class Data {
 
-        private String[] list;
-        private long     size;
+        String[] list;
+        long     size;
 
         public String[] getList() {
             return list;
@@ -48,12 +49,34 @@ public class FileCopy extends _Component {
             this.list = list;
         }
 
-        public long getSize() {
+        public long getSumSize() {
             return size;
         }
 
-        public void setSize(long size) {
+        public void setSumSize(long size) {
             this.size = size;
+        }
+
+        static final boolean verbose = false;
+
+        @Override
+        public String toString() {
+            BCharOut buf = new BCharOut();
+            if (list == null)
+                buf.print("null list");
+            else {
+                buf.printf("%d entries, %d bytes", list.length, size);
+                if (verbose) {
+                    for (int i = 0; i < Math.min(1, list.length); i++) {
+                        if (i != 0)
+                            buf.print(", ");
+                        buf.print(list[i]);
+                    }
+                    if (list.length > 10)
+                        buf.print(", ...");
+                }
+            }
+            return buf.toString();
         }
 
     }
@@ -142,7 +165,7 @@ public class FileCopy extends _Component {
 
     Attachment getAttachment(ISession session, boolean autoCreate) {
         String id = getId();
-        String aname = baseName + "/" + id + ".jar"; //$NON-NLS-1$ //$NON-NLS-2$
+        String aname = baseName + "/" + id + ".zip"; //$NON-NLS-1$ //$NON-NLS-2$
         Attachment a;
         try {
             a = session.getAttachment(aname, autoCreate);
@@ -204,9 +227,9 @@ public class FileCopy extends _Component {
             Attachment a = getAttachment(session, true);
             L.finfo(PackNLS.getString("FileCopy.packFiles_ss"), getId(), a); //$NON-NLS-1$
 
-            JarOutputStream jout;
+            ZipOutputStream zout;
             try {
-                jout = a.getJarOut();
+                zout = a.getZipOut();
             } catch (IOException e) {
                 throwException(e);
                 return;
@@ -251,20 +274,36 @@ public class FileCopy extends _Component {
                         assert dest.endsWith("/"); //$NON-NLS-1$
                         L.detail(PackNLS.getString("FileCopy.putEntry"), dest); //$NON-NLS-1$
                         JarEntry entry = new JarEntry(dest);
-                        jout.putNextEntry(entry);
-                        jout.closeEntry();
+                        zout.putNextEntry(entry);
+                        zout.closeEntry();
                         sum += dirFileSize;
                     } else if (f.isFile()) {
                         long fileSize = f.length();
                         L.fdetail(PackNLS.getString("FileCopy.putEntry_sd"), dest, fileSize); //$NON-NLS-1$
                         JarEntry entry = new JarEntry(dest);
-                        jout.putNextEntry(entry);
-                        entry.setSize(fileSize);
-                        for (byte[] block : Files.readByBlock(Files.blockSize, f)) {
-                            // progress...?
-                            jout.write(block);
+                        // entry.setSize(fileSize);
+                        zout.putNextEntry(entry);
+                        long remaining = fileSize;
+                        int blockSize = Files.blockSize;
+                        byte[] block = new byte[Files.blockSize];
+                        FileInputStream in = new FileInputStream(f);
+                        try {
+                            while (remaining > 0) {
+                                // progress...?
+                                int cb = Math.min(blockSize, (int) remaining);
+                                cb = in.read(block, 0, cb);
+                                if (cb == -1)
+                                    break;
+                                zout.write(block, 0, cb);
+                                remaining -= cb;
+                            }
+                        } finally {
+                            in.close();
+                            zout.closeEntry();
                         }
-                        jout.closeEntry();
+                        if (remaining != 0)
+                            L.fwarn("Incorrect file size %d, %d more bytes doesn't exist\n",
+                                    fileSize, remaining);
                         sum += fileSize;
                     } else {
                         L.warn(PackNLS.getString("FileCopy.unknownFileType"), f); //$NON-NLS-1$
@@ -349,13 +388,13 @@ public class FileCopy extends _Component {
                     L.detail(PackNLS.getString("FileCopy.extract"), destFile); //$NON-NLS-1$
                     FileOutputStream destOut = null;
                     try {
+                        InputStream entryIn = zipFile.getInputStream(entry);
                         destOut = new FileOutputStream(destFile);
                         long remaining = entry.getSize();
                         int blockSize = Files.blockSize;
                         byte[] block = new byte[blockSize];
                         while (remaining > 0) {
-                            int cb = (int) Math.min(blockSize, remaining);
-                            InputStream entryIn = zipFile.getInputStream(entry);
+                            int cb = Math.min(blockSize, (int) remaining);
                             cb = entryIn.read(block, 0, cb);
                             if (cb == -1)
                                 throw new IOException(PackNLS.getString("FileCopy.unexpectedEOF") //$NON-NLS-1$
