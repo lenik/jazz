@@ -1,5 +1,7 @@
 package net.bodz.dist.ins;
 
+import java.util.ArrayList;
+
 import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.io.term.BufferedTerminal;
 import net.bodz.bas.io.term.Terminal;
@@ -43,34 +45,35 @@ import org.eclipse.swt.widgets.ToolItem;
 
 class ProgressPage extends PageComposite {
 
-    private static final int BLOCK        = 0;
-    private static final int DONE         = 1;
-    private static final int CANCELED     = 2;
+    private static final int  BLOCK        = 0;
+    private static final int  DONE         = 1;
+    private static final int  CANCELED     = 2;
 
-    private final ISession   session;
+    private final ISession    session;
 
-    private int              state        = BLOCK;
-    private SessionJob       rootJob;
-    private Thread           jobThread;
+    private int               state        = BLOCK;
+    private SessionJob        rootJob;
+    private Thread            jobThread;
 
-    private Label            imageLabel;
-    private Label            statusLabel;
+    private Label             imageLabel;
+    private Label             statusLabel;
 
-    private int              progressSize = 1000;
-    private ProgressBar      progressBar;
-    private Label            progressText;
+    private int               progressSize = 1000;
+    private ProgressBar       progressBar;
+    private Label             progressText;
 
-    private int              logMax       = 10000;
-    private WindowComposite  logDetail;
-    private ToolItem         pauseItem;
-    private ToolItem         cancelItem;
-    private List             logList;
+    private int               logMax       = 10000;
+    private WindowComposite   logDetail;
+    private ToolItem          pauseItem;
+    private ToolItem          cancelItem;
+    private List              logList;
+    private ArrayList<Object> logListData;
 
-    private Composite        counterbar;
-    private Label            elapsedLabel;
-    private Label            remainingLabel;
+    private Composite         counterbar;
+    private Label             elapsedLabel;
+    private Label             remainingLabel;
 
-    public ProgressPage(ISession session, Composite parent, int style) {
+    public ProgressPage(final ISession session, Composite parent, int style) {
         super(parent, style);
 
         this.session = session;
@@ -102,6 +105,20 @@ class ProgressPage extends PageComposite {
             @Override
             protected void createContents(Composite parent, int style) {
                 logList = new List(parent, SWT.H_SCROLL | SWT.V_SCROLL);
+
+                logList.addSelectionListener(new SelectionAdapter() {
+                    @Override
+                    public void widgetDefaultSelected(SelectionEvent e) {
+                        int index = logList.getSelectionIndex();
+                        if (index != -1) {
+                            Object data = logList.getData(String.valueOf(index));
+                            if (data != null) {
+                                UserInterface UI = session.getUserInterface();
+                                UI.alert("Log Detail: " + data, data);
+                            }
+                        }
+                    }
+                });
 
                 final ToolItem copyItem = addToolItem(SWT.PUSH);
                 copyItem.setImage(SWTResources.getImageRes("/icons/full/etool16/copy_edit.gif")); //$NON-NLS-1$
@@ -358,12 +375,12 @@ class ProgressPage extends PageComposite {
         // layout();
     }
 
-    public void setTextLog(int level, String s) {
+    public void setTextAndLog(int level, String s, Object data) {
         setText(s);
-        log(level, s);
+        log(level, s, data);
     }
 
-    public void log(int level, String s) {
+    public void log(int level, String s, Object data) {
         // enhanced list:
         // Image icon = getLevelIcon(level);
         // logsList.add(icon, s);
@@ -418,7 +435,7 @@ class ProgressPage extends PageComposite {
                 @Override
                 public void run() {
                     setText(s);
-                    log(level, s);
+                    log(level, s, null);
                 }
             });
         }

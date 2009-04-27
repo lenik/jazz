@@ -8,6 +8,7 @@ import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.lang.err.IllegalUsageError;
 import net.bodz.bas.ui.UIException;
 import net.bodz.bas.ui.a.PreferredSize;
+import net.bodz.bas.util.LogTerm;
 import net.bodz.dist.ins.nls.PackNLS;
 import net.bodz.swt.gui.BasicGUI;
 import net.bodz.swt.gui.pfl.WizardExitEvent;
@@ -34,10 +35,12 @@ public class Installer extends BasicGUI {
     // private InstallComposite installComposite;
 
     public Installer() {
+        this(null);
     }
 
     public Installer(Project project) {
         this.project = project;
+        this.L.setLevel(LogTerm.DETAIL);
     }
 
     @Override

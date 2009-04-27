@@ -481,10 +481,13 @@ public class StatedAttachment implements Attachment {
             super(link, "ZipOutputStream"); //$NON-NLS-1$
         }
 
+        /**
+         * JDK doesn't support to append a zip file.
+         */
         @Override
         public ZipOutputStream getZipOut() throws IOException {
             if (zout == null) {
-                OutputStream out = link.openOutputStream(true); // false);
+                OutputStream out = link.openOutputStream(false);
                 zout = new ZipOutputStream(out);
             }
             return zout;
@@ -508,10 +511,13 @@ public class StatedAttachment implements Attachment {
             super(link, "JarOutputStream"); //$NON-NLS-1$
         }
 
+        /**
+         * JDK doesn't support to append a zip file.
+         */
         @Override
         public JarOutputStream getJarOut() throws IOException {
             if (jout == null) {
-                OutputStream out = link.openOutputStream(true); // XXX - false);
+                OutputStream out = link.openOutputStream(true);
                 jout = new JarOutputStream(out);
             }
             return jout;

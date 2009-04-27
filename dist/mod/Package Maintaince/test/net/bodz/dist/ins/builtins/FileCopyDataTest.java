@@ -11,7 +11,7 @@ public class FileCopyDataTest {
     public void testXMLEncode() throws Exception {
         Data data = new Data();
         data.setList(new String[] { "hello", "world" });
-        data.setSize(1234);
+        data.setSumSize(1234);
         String xml = XMLs.encode(data);
         Object rest = XMLs.decode(xml);
         System.out.println(xml);
