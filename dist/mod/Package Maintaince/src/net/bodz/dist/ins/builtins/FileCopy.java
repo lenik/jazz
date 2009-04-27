@@ -301,8 +301,7 @@ public class FileCopy extends _Component {
             L.finfo(PackNLS.getString("FileCopy.installFiles_ss"), getId(), baseDir); //$NON-NLS-1$
             Data data = (Data) getRegistryData();
             if (data == null || data.list == null)
-                throw new IllegalStateException(
-                        PackNLS.getString("FileCopy.missingRegistry")); //$NON-NLS-1$
+                throw new IllegalStateException(PackNLS.getString("FileCopy.missingRegistry")); //$NON-NLS-1$
 
             setProgressSize(data.list.length);
 

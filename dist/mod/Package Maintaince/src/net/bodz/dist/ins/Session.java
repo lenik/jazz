@@ -30,7 +30,7 @@ import net.bodz.dist.ins.util.Flags;
 
 public class Session implements ISession {
 
-    static final String               attachmentsPath = ".attachments"; //$NON-NLS-1$
+    static final String               attachmentsPath = "a/";          //$NON-NLS-1$
     static final String               registryPath    = "registry.xml"; //$NON-NLS-1$
 
     private final Project             project;
@@ -223,7 +223,7 @@ public class Session implements ISession {
     }
 
     protected String getAttachmentPath(String name) {
-        return attachmentsPath + "/" + name; //$NON-NLS-1$
+        return attachmentsPath + name;
     }
 
     @Override
