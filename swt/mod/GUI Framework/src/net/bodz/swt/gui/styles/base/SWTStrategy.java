@@ -72,9 +72,13 @@ public abstract class SWTStrategy extends RenderStrategy {
         if (rc == null)
             throw new NullPointerException("rc"); //$NON-NLS-1$
         SWTRenderer renderer = findRenderer(var);
-        if (renderer == null)
-            throw new RenderException(GUINLS.getString("SWTStrategy.nullRenderer") //$NON-NLS-1$
-                    + var.getMeta().getType());
+        if (renderer == null) {
+            String errmesg = GUINLS.getString("SWTStrategy.nullRenderer") //$NON-NLS-1$
+                    + var.getMeta().getName();
+            var = GUIVars.wrap(errmesg);
+            renderer = findRenderer(var);
+            throw new RenderException(errmesg); // XXX -
+        }
         @SuppressWarnings("unchecked")
         GUIVar<Object> gvar = (GUIVar<Object>) var;
         return renderer.render(rc, gvar, parent, style);

@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import net.bodz.bas.lang.err.CancelException;
-import net.bodz.bas.lang.err.CheckException;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.swt.controls.helper.FixSizeComposite;
 import net.bodz.swt.controls.helper.StackComposite;
@@ -28,7 +26,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 /**
- * @test SaveImageDialogTest
+ * @test {@link SaveImageDialogTest}
  */
 public class SaveImageDialog extends SimpleDialog {
 
@@ -41,8 +39,6 @@ public class SaveImageDialog extends SimpleDialog {
     private ParametersComposite   voidParamsComp;
     private ParametersComposite[] paramsComps;
 
-    private File                  file;
-
     public SaveImageDialog(Shell parent, int style, ImageData image, String title) {
         super(parent, style, title);
         this.imageData = image;
@@ -51,6 +47,40 @@ public class SaveImageDialog extends SimpleDialog {
     public SaveImageDialog(Shell parent, int style, ImageData image) {
         super(parent, style, ControlsNLS.getString("SaveImageDialog.title")); //$NON-NLS-1$
         this.imageData = image;
+    }
+
+    @Override
+    public synchronized File open() {
+        return (File) super.open(false);
+    }
+
+    @Override
+    protected Object evaluate() throws ValidateException, IOException {
+        String path = pathText.getText();
+        File file = new File(path);
+        // if (file.exists()) ;
+
+        int typeIndex = imageTypeCombo.getSelectionIndex();
+        assert typeIndex != -1;
+        ParametersComposite paramsComp = paramsComps[typeIndex];
+        Object params = null;
+        if (paramsComp != null)
+            params = paramsComp.get();
+
+        ImageType type = imageTypes[typeIndex];
+        FileOutputStream out = null;
+        try {
+            out = new FileOutputStream(file);
+            type.save(imageData, out, params);
+            return file;
+        } finally {
+            if (out != null)
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    throw e;
+                }
+        }
     }
 
     @Override
@@ -110,11 +140,11 @@ public class SaveImageDialog extends SimpleDialog {
     static {
         imageTypes = new ImageType[] {
         //
-            new JPEGImageType(), //  
-            new PNGImageType(), //  
-            new GIFImageType(), //  
-            new BMPImageType(), //  
-            new TIFFImageType(), //  
+            new JPEGImageType(), //
+            new PNGImageType(), //
+            new GIFImageType(), //
+            new BMPImageType(), //
+            new TIFFImageType(), //
         };
     }
 
@@ -162,45 +192,6 @@ public class SaveImageDialog extends SimpleDialog {
             paramsStack.bringFront(voidParamsComp);
         }
         getBody().layout();
-    }
-
-    @Override
-    protected void execute() throws CheckException {
-        String path = pathText.getText();
-        file = new File(path);
-        // if (file.exists()) ;
-
-        int typeIndex = imageTypeCombo.getSelectionIndex();
-        assert typeIndex != -1;
-        ParametersComposite paramsComp = paramsComps[typeIndex];
-        Object params = null;
-        if (paramsComp != null)
-            params = paramsComp.get();
-
-        ImageType type = imageTypes[typeIndex];
-        FileOutputStream out = null;
-        try {
-            out = new FileOutputStream(file);
-            type.save(imageData, out, params);
-            set(file);
-        } catch (IOException e) {
-            throw new CheckException(e.getMessage(), e);
-        } finally {
-            if (out != null)
-                try {
-                    out.close();
-                } catch (IOException e) {
-                }
-        }
-    }
-
-    @Override
-    public synchronized File open() {
-        try {
-            return (File) super.open();
-        } catch (CancelException e) {
-            return null;
-        }
     }
 
 }

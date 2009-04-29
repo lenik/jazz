@@ -6,13 +6,11 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 import net.bodz.bas.a.A_bas;
+import net.bodz.bas.lang.Func0;
 import net.bodz.bas.lang.err.CancelException;
-import net.bodz.bas.lang.err.CheckException;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.err.IllegalUsageError;
 import net.bodz.bas.lang.err.ParseException;
-import net.bodz.bas.lang.err.ReadOnlyException;
-import net.bodz.bas.lang.ref.Ref;
 import net.bodz.bas.types.HashTextMap;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TypeParser;
@@ -164,6 +162,10 @@ public class DialogUI extends _UserInterface {
             super(parent, style, title);
         }
 
+        public SWTRenderContext getRenderContext() {
+            return new RC();
+        }
+
         @Override
         protected void createUserButtons(Composite parent) throws CreateException {
             // already created.
@@ -174,10 +176,6 @@ public class DialogUI extends _UserInterface {
             DialogUI.this.addEffects(getShell());
         }
 
-        public SWTRenderContext getRenderContext() {
-            return new RC();
-        }
-
     }
 
     protected void addEffects(Shell shell) {
@@ -185,7 +183,17 @@ public class DialogUI extends _UserInterface {
 
     @Override
     public void alert(String title, final Object detail) {
-        SimpleDialog dialog = new _Dialog(parent, style, title) {
+        class AlertDialog extends _Dialog {
+
+            public AlertDialog(Shell parent, int style, String title) {
+                super(parent, style, title);
+            }
+
+            @Override
+            public Object open() {
+                return super.open(false);
+            }
+
             @Override
             protected void createDetail(Composite parent) throws CreateException {
                 SWTRenderContext rc = getRenderContext();
@@ -200,18 +208,24 @@ public class DialogUI extends _UserInterface {
             protected void createButtons(Composite parent) throws SWTException, CreateException {
                 addOKButton(parent);
             }
-        };
-        try {
-            dialog.open();
-        } catch (CancelException e) {
-            // ignore
         }
+        new AlertDialog(parent, style, title).open();
     }
 
     @Override
     public boolean confirm(String title, final Object detail) {
-        SimpleDialog dialog = new _Dialog(parent, style, title) {
+        class ConfirmDialog extends _Dialog {
+
             SWTRenderContext rc = getRenderContext();
+
+            public ConfirmDialog(Shell parent, int style, String title) {
+                super(parent, style, title);
+            }
+
+            @Override
+            public Boolean open() {
+                return (Boolean) super.open(false);
+            }
 
             @Override
             protected void createDetail(Composite parent) throws CreateException {
@@ -227,19 +241,24 @@ public class DialogUI extends _UserInterface {
                 addYesButton(parent);
                 addNoButton(parent);
             }
-        };
-        try {
-            Object result = dialog.open();
-            return (Boolean) result;
-        } catch (CancelException e) {
-            return false;
         }
+        return new ConfirmDialog(parent, style, title).open();
     }
 
     @Override
     public int ask(String title, final Object detail, final IProposal... proposals) {
-        SimpleDialog dialog = new _Dialog(parent, style, title) {
+        class AskDialog extends _Dialog {
+
             SWTRenderContext rc = getRenderContext();
+
+            public AskDialog(Shell parent, int style, String title) {
+                super(parent, style, title);
+            }
+
+            @Override
+            public Integer open() {
+                return (Integer) super.open(false);
+            }
 
             @Override
             protected void createDetail(Composite parent) throws CreateException {
@@ -263,7 +282,7 @@ public class DialogUI extends _UserInterface {
                     int m = Strings.indexOfIgnoreCase(text, c);
                     if (m != -1)
                         text = text.substring(0, m) + "&" + text.substring(m); //$NON-NLS-1$
-                    Button button = addButton(parent, SWT.NONE, image, text, i, false);
+                    Button button = addButton(parent, SWT.NONE, image, text, i);
                     String description = p.getDescription();
                     if (description != null)
                         button.setToolTipText(description);
@@ -271,13 +290,11 @@ public class DialogUI extends _UserInterface {
                         button.setSelection(true);
                 }
             }
-        };
-        try {
-            Object result = dialog.open();
-            return (Integer) result;
-        } catch (CancelException e) {
-            return -1;
         }
+        Integer index = new AskDialog(parent, style, title).open();
+        if (index == null)
+            return -1;
+        return index.intValue();
     }
 
     @Override
@@ -288,8 +305,25 @@ public class DialogUI extends _UserInterface {
         } catch (ParseException e) {
             throw new IllegalUsageError(GUINLS.getString("SWTInteraction.errparse") + type); //$NON-NLS-1$
         }
-        SimpleDialog dialog = new _Dialog(parent, style, title) {
+        class PromptDialog extends _Dialog {
+
             private Text text;
+
+            public PromptDialog(Shell parent, int style, String title) {
+                super(parent, style, title);
+            }
+
+            @SuppressWarnings("unchecked")
+            @Override
+            public T open() {
+                return (T) super.open(false);
+            }
+
+            @Override
+            protected Object evaluate() throws ParseException {
+                String s = text.getText();
+                return parser.parse(s);
+            }
 
             @Override
             protected void createDetail(Composite parent) throws SWTException, CreateException {
@@ -319,24 +353,8 @@ public class DialogUI extends _UserInterface {
                 text.setFocus();
             }
 
-            @Override
-            protected void execute() {
-                String s = text.getText();
-                try {
-                    Object value = parser.parse(s);
-                    set(value);
-                } catch (ParseException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        };
-        try {
-            @SuppressWarnings("unchecked")
-            T result = (T) dialog.open();
-            return result;
-        } catch (CancelException e) {
-            return null;
         }
+        return new PromptDialog(parent, style, title).open();
     }
 
     private static int FLATMAX = 3;
@@ -383,8 +401,37 @@ public class DialogUI extends _UserInterface {
     @Override
     public <K> K choice(String title, final Object detail, final Map<K, ?> candidates,
             final K initial) {
-        SimpleDialog dialog = new _Dialog(parent, style, title) {
+        class ChoiceDialog extends _Dialog {
+
             SWTRenderContext rc = getRenderContext();
+
+            class SetResultByData extends SelectionAdapter {
+
+                @Override
+                public void widgetSelected(SelectionEvent e) {
+                    Object data = e.widget.getData();
+                    result = data;
+                }
+
+            }
+
+            Object          result;
+            SetResultByData setResultByData = new SetResultByData();
+
+            public ChoiceDialog(Shell parent, int style, String title) {
+                super(parent, style, title);
+            }
+
+            @SuppressWarnings("unchecked")
+            @Override
+            public K open() {
+                return (K) super.open(false);
+            }
+
+            @Override
+            protected Object evaluate() throws Exception {
+                return result;
+            }
 
             @Override
             protected void createDetail(Composite parent) throws CreateException {
@@ -398,36 +445,31 @@ public class DialogUI extends _UserInterface {
             @Override
             protected void createBody(Composite parent) throws CreateException {
                 if (candidates.size() <= FLATMAX)
-                    createRadios(parent, this, candidates, initial);
+                    createRadios(parent, candidates, initial);
                 else
-                    createCombo(parent, this, candidates, initial);
+                    createCombo(parent, candidates, initial);
             }
 
-            void createRadios(Composite parent, final Ref<Object> result, Map<?, ?> candidates,
-                    Object initial) throws CreateException {
+            void createRadios(Composite parent, Map<?, ?> candidates, Object initial)
+                    throws CreateException {
                 parent.setLayout(new GridLayout(2, false));
                 for (Entry<?, ?> entry : candidates.entrySet()) {
                     final Object key = entry.getKey();
                     Object value = entry.getValue();
                     boolean selected = Objects.equals(key, initial);
                     Button radio = new Button(parent, SWT.RADIO);
+                    radio.addSelectionListener(setResultByData);
                     radio.setSelection(selected);
                     try {
                         strategy.render(rc, value, parent, SWT.NONE);
                     } catch (RenderException e) {
                         throw new CreateException(e);
                     }
-                    radio.addSelectionListener(new SelectionAdapter() {
-                        @Override
-                        public void widgetSelected(SelectionEvent e) {
-                            result.set(key);
-                        }
-                    });
                 }
             }
 
-            void createCombo(Composite parent, final Ref<Object> result, Map<?, ?> candidates,
-                    final Object initial) throws CreateException {
+            void createCombo(Composite parent, Map<?, ?> candidates, final Object initial)
+                    throws CreateException {
                 FillLayout fillLayout = new FillLayout();
                 fillLayout.type = SWT.VERTICAL;
                 parent.setLayout(fillLayout);
@@ -455,7 +497,7 @@ public class DialogUI extends _UserInterface {
                     public void widgetSelected(SelectionEvent e) {
                         int index = combo.getSelectionIndex();
                         if (index != -1) {
-                            result.set(keys[index]);
+                            result = keys[index];
                             if (preRenderred != null)
                                 preRenderred.show(index);
                         }
@@ -479,27 +521,36 @@ public class DialogUI extends _UserInterface {
                         combo.select(insertIndex);
                 }
             }
-        };
-        dialog.set(initial);
-        try {
-            @SuppressWarnings("unchecked")
-            K key = (K) dialog.open();
-            return key;
-        } catch (CancelException e) {
-            return null;
         }
+        ;
+        return new ChoiceDialog(parent, style, title).open();
     }
 
     @Override
     public <K> Set<K> choices(String title, final Object detail, final Map<K, ?> candidates,
             K... initial) {
         final Set<K> initials = new HashSet<K>(initial.length);
-
         for (K k : initial)
             initials.add(k);
-        SimpleDialog dialog = new _Dialog(parent, style, title) {
+
+        class ChoicesDialog extends _Dialog {
             SWTRenderContext rc = getRenderContext();
-            Ref<Set<K>>      selection;
+            Func0<Set<K>>    selection;
+
+            public ChoicesDialog(Shell parent, int style, String title) {
+                super(parent, style, title);
+            }
+
+            @SuppressWarnings("unchecked")
+            @Override
+            public Set<K> open() {
+                return (Set<K>) super.open(false);
+            }
+
+            @Override
+            protected Set<K> evaluate() throws Exception {
+                return selection.eval();
+            }
 
             @Override
             protected void createDetail(Composite parent) throws CreateException {
@@ -518,60 +569,48 @@ public class DialogUI extends _UserInterface {
                     selection = createList(parent, candidates, initials);
             }
 
-            @Override
-            protected void execute() throws CheckException {
-                Set<K> set = selection.get();
-                set(set);
-            }
-
-            Ref<Set<K>> createChecks(Composite parent, Map<K, ?> candidates, Set<K> initial)
+            Func0<Set<K>> createChecks(Composite parent, Map<K, ?> candidates, Set<K> initial)
                     throws CreateException {
                 parent.setLayout(new GridLayout(2, false));
 
-                class KB {
+                class KeyButton {
                     K      key;
                     Button button;
 
-                    public KB(K key, Button button) {
-                        super();
+                    public KeyButton(K key, Button button) {
                         this.key = key;
                         this.button = button;
                     }
                 }
                 final int size = candidates.size();
-                final KB[] checks = new KB[size];
+                final KeyButton[] keyButtons = new KeyButton[size];
                 int index = 0;
                 for (Entry<K, ?> entry : candidates.entrySet()) {
                     final K key = entry.getKey();
                     Object value = entry.getValue();
                     boolean selected = initial.contains(value);
-                    final Button check = new Button(parent, SWT.CHECK);
-                    check.setSelection(selected);
-                    checks[index++] = new KB(key, check);
+                    final Button button = new Button(parent, SWT.CHECK);
+                    button.setSelection(selected);
+                    keyButtons[index++] = new KeyButton(key, button);
                     try {
                         strategy.render(rc, value, parent, SWT.NONE);
                     } catch (RenderException e) {
                         throw new CreateException(e);
                     }
                 }
-                return new Ref<Set<K>>() {
+                return new Func0<Set<K>>() {
                     @Override
-                    public Set<K> get() {
+                    public Set<K> eval() {
                         Set<K> set = new HashSet<K>(size);
-                        for (KB kb : checks)
+                        for (KeyButton kb : keyButtons)
                             if (kb.button.getSelection())
                                 set.add(kb.key);
                         return set;
                     }
-
-                    @Override
-                    public void set(Object value) {
-                        throw new ReadOnlyException();
-                    }
                 };
             }
 
-            Ref<Set<K>> createList(Composite parent, Map<K, ?> candidates, Set<K> initial)
+            Func0<Set<K>> createList(Composite parent, Map<K, ?> candidates, Set<K> initial)
                     throws CreateException {
                 FillLayout fillLayout = new FillLayout();
                 fillLayout.type = SWT.VERTICAL;
@@ -635,32 +674,19 @@ public class DialogUI extends _UserInterface {
                     if (selected)
                         listBox.select(insertIndex);
                 }
-
-                return new Ref<Set<K>>() {
+                return new Func0<Set<K>>() {
                     @Override
-                    public Set<K> get() {
+                    public Set<K> eval() {
                         Set<K> set = new HashSet<K>(size);
                         for (int i = 0; i < keys.length; i++)
                             if (listBox.isSelected(i))
                                 set.add(keys[i].key);
                         return set;
                     }
-
-                    @Override
-                    public void set(Object value) {
-                        throw new ReadOnlyException();
-                    }
                 };
             }
-        };
-        try {
-            @SuppressWarnings("unchecked")
-            Set<K> selection = (Set<K>) dialog.open();
-            assert selection != null;
-            return selection;
-        } catch (CancelException e) {
-            return null;
         }
+        return new ChoicesDialog(parent, style, title).open();
     }
 
 }

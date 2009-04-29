@@ -7,17 +7,21 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.prefs.Preferences;
 
 import net.bodz.bas.a.BootInfo;
 import net.bodz.bas.a.ClassInfo;
+import net.bodz.bas.a.Language;
 import net.bodz.bas.a.StartMode;
 import net.bodz.bas.a.WebSite;
 import net.bodz.bas.cli.BasicCLI;
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.lang.err.IllegalUsageError;
 import net.bodz.bas.lang.err.NotImplementedException;
+import net.bodz.bas.text.locale.Locales;
 import net.bodz.bas.types.util.Ns;
 import net.bodz.bas.ui.UIException;
 import net.bodz.bas.ui.UserInterface;
@@ -54,6 +58,7 @@ import org.eclipse.swt.widgets.ToolBar;
 
 @BootInfo(userlibs = { "bodz_swt", "bodz_icons" }, configs = SWTConfig.class)
 @StartMode(StartMode.GUI)
+@Language( { "en", "zh_CN" })
 @WebSite("http://www.bodz.net/products/BasicGUI")
 public class BasicGUI extends BasicCLI {
 
@@ -123,12 +128,29 @@ public class BasicGUI extends BasicCLI {
         }
     }
 
+    private static final String KEY_LANG = "lang";
+
     @Override
     protected void doMain(String[] args) throws Throwable {
         // this.args = args;
         views = new HashMap<Object, Composite>();
 
         final Display display = Display.getDefault();
+
+        Class<?> appClass = getClass();
+        Preferences preferences = Preferences.userNodeForPackage(appClass);
+        String lang = preferences.get(KEY_LANG, null);
+        if (lang == null) {
+            SelectLanguageDialog dialog = new SelectLanguageDialog(null, SWT.NONE, getClass());
+            String userChoice = dialog.open();
+            if (userChoice != null) {
+                lang = userChoice;
+                preferences.put(KEY_LANG, lang);
+            } else
+                lang = Locale.getDefault().getLanguage();
+        }
+        Locale locale = Locales.getLocale(lang);
+        Locale.setDefault(locale);
 
         shell = createShell();// throws GUIExcaption
         UI = new DialogUI(shell);
@@ -166,9 +188,9 @@ public class BasicGUI extends BasicCLI {
         String title = info.getName();
         String doc = info.getDoc();
         if (doc != null)
-            title += ": " + doc; //$NON-NLS-1$
+            title += ": " + doc;
         String version = info.getVersionString();
-        return title + " " + version; //$NON-NLS-1$
+        return title + " " + version;
     }
 
     protected Shell createShell() throws UIException, SWTException {
@@ -231,7 +253,7 @@ public class BasicGUI extends BasicCLI {
 
         final Menu fileMenu = Menus.newSubMenu(menu, GUINLS.getString("BasicGUI.menu.file")); //$NON-NLS-1$
         final MenuItem fileExit = new MenuItem(fileMenu, SWT.NONE);
-        fileExit.setText(GUINLS.getString("BasicGUI.menu.exit")); //$NON-NLS-1$
+        fileExit.setText(GUINLS.getString("BasicGUI.menu.exit"));
 
         return menu;
     }
@@ -260,12 +282,12 @@ public class BasicGUI extends BasicCLI {
                 try {
                     uri = new URI(s);
                 } catch (URISyntaxException ex) {
-                    throw new IllegalUsageError(GUINLS.getString("BasicGUI.badBannerLink") + s, ex); //$NON-NLS-1$
+                    throw new IllegalUsageError(GUINLS.getString("BasicGUI.badBannerLink") + s, ex);
                 }
                 try {
                     Desktop.getDesktop().browse(uri);
                 } catch (IOException ex) {
-                    UI.alert(GUINLS.getString("BasicGUI.cantOpenBrowser"), ex); //$NON-NLS-1$
+                    UI.alert(GUINLS.getString("BasicGUI.cantOpenBrowser"), ex);
                 }
             }
         });
@@ -275,7 +297,7 @@ public class BasicGUI extends BasicCLI {
         updateTime.setAlignment(SWT.RIGHT);
         String dateString = _loadClassInfo().getDateString();
         if (dateString != null) {
-            updateTime.setText(GUINLS.getString("BasicGUI.lastUpdated") + dateString); //$NON-NLS-1$
+            updateTime.setText(GUINLS.getString("BasicGUI.lastUpdated") + dateString);
         }
         return statusBar;
     }
@@ -286,7 +308,7 @@ public class BasicGUI extends BasicCLI {
         String webSite = info.getWebSite();
         if (webSite == null)
             webSite = "http://www.bodz.net/"; //$NON-NLS-1$
-        String banner = GUINLS.format("BasicGUI.banner", author, webSite, webSite); //$NON-NLS-1$
+        String banner = GUINLS.format("BasicGUI.banner", author, webSite, webSite);
         return banner;
     }
 
@@ -301,7 +323,7 @@ public class BasicGUI extends BasicCLI {
     protected void createInitialView(Composite parent) throws UIException, SWTException {
         parent.setLayout(new FillLayout());
         Label welcomeLabel = new Label(parent, SWT.NONE);
-        welcomeLabel.setText(GUINLS.getString("BasicGUI.welcome")); //$NON-NLS-1$
+        welcomeLabel.setText(GUINLS.getString("BasicGUI.welcome"));
     }
 
     protected void createView(Composite parent, Object key) throws SWTException, UIException {
@@ -309,7 +331,7 @@ public class BasicGUI extends BasicCLI {
             createInitialView(parent);
             return;
         }
-        throw new NotImplementedException("key: " + key); //$NON-NLS-1$
+        throw new NotImplementedException("key: " + key);
     }
 
     protected void openView(Composite parent, Object key) throws SWTException, UIException {
