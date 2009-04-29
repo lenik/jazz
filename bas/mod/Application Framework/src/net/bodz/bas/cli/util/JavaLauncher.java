@@ -97,7 +97,7 @@ public abstract class JavaLauncher implements Launcher {
     static boolean LOAD_DUMP = false;
 
     protected void load() throws Exception {
-        ClassLoader initSysLoader = Caller.getCallerClassLoader();
+        ClassLoader initSysLoader = Caller.getCallerClassLoader(0);
         ClassLoader sysLoader = initSysLoader;
 
         BootProc bootProc = BootProc.get(getClass());

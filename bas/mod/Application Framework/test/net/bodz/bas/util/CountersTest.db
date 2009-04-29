@@ -1,8 +1,0 @@
-buildid.format=#,#
-buildid.init=10000
-buildid.incr=10
-
-packid.format=0000
-packid.init=1
-packid.incr=1
-packid.parents=buildid

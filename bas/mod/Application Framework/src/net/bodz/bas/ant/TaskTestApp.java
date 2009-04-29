@@ -56,7 +56,7 @@ public class TaskTestApp {
     }
 
     public TaskTestApp(int caller) throws IOException {
-        this(caller, null);
+        this(caller + 1, null);
     }
 
     public TaskTestApp(int caller, String resourceName) throws IOException {
@@ -83,7 +83,8 @@ public class TaskTestApp {
             xmlURL = callerClass.getResource(resourceName);
         File buildFile = Files.getFile(xmlURL);
         if (!buildFile.exists())
-            throw new IllegalUsageException(AppNLS.getString("TaskTestApp.buildFileIsntExisted") + buildFile); //$NON-NLS-1$
+            throw new IllegalUsageException(
+                    AppNLS.getString("TaskTestApp.buildFileIsntExisted") + buildFile); //$NON-NLS-1$
         load(buildFile);
     }
 

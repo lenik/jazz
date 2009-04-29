@@ -79,4 +79,12 @@ public class FileResLink extends _ResLink {
         return new JarFile(file);
     }
 
+    @Override
+    public String toString() {
+        String s = file.getPath();
+        if (autoMkdirs)
+            s = "*" + s;
+        return s;
+    }
+
 }

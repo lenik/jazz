@@ -816,6 +816,8 @@ public class Files {
 
     public static Properties loadProperties(Object in, Object charset, boolean close)
             throws IOException {
+        if (in == null)
+            throw new NullPointerException("in");
         Reader reader = getReader(in, charset);
         try {
             Properties properties = new Properties();
@@ -944,7 +946,7 @@ public class Files {
 
     static void _mkdir_p(File file) {
         if (file == null)
-            throw new NullPointerException("fille");
+            throw new NullPointerException("fille"); //$NON-NLS-1$
         File parentFile = file.getParentFile();
         parentFile = Files.canoniOf(parentFile);
         parentFile.mkdirs();
@@ -962,7 +964,7 @@ public class Files {
 
     public static <T> void createFile(File file, byte[] data, int off, int len) throws IOException {
         if (file == null)
-            throw new NullPointerException("file");
+            throw new NullPointerException("file"); //$NON-NLS-1$
         _mkdir_p(file);
         write(file, data, off, len);
     }
@@ -1063,7 +1065,7 @@ public class Files {
      * @return <code>null</code> if no manifest.
      */
     public static Manifest getManifest(Class<?> clazz) {
-        URL url = clazz.getResource("/META-INF/MANIFEST.MF");
+        URL url = clazz.getResource("/META-INF/MANIFEST.MF"); //$NON-NLS-1$
         if (url == null)
             return null;
         InputStream in = null;
@@ -1073,7 +1075,7 @@ public class Files {
             in.close();
             return manifest;
         } catch (IOException e) {
-            throw new IllegalStateException("Bad manifest for " + clazz, e);
+            throw new IllegalStateException(SysNLS.getString("Files.badManifest") + clazz, e); //$NON-NLS-1$
         } finally {
             if (in != null)
                 try {

@@ -84,7 +84,7 @@ public class XMLs {
     static Object readObject(XMLDecoder decoder, int caller) {
         Thread thread = Thread.currentThread();
         ClassLoader orig = thread.getContextClassLoader();
-        ClassLoader loader = Caller.getCallerClassLoader(caller + 1);
+        ClassLoader loader = Caller.getCallerClassLoader(caller);
         if (orig == loader)
             return decoder.readObject();
         else

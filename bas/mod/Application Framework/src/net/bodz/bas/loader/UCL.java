@@ -137,11 +137,11 @@ public class UCL {
     }
 
     public static void findURLs(Iter it) {
-        findURLs(Caller.getCallerClassLoader(), it);
+        findURLs(Caller.getCallerClassLoader(0), it);
     }
 
     public static URL[] findURLs() {
-        return findURLs(Caller.getCallerClassLoader());
+        return findURLs(Caller.getCallerClassLoader(0));
     }
 
     public static abstract class Iter {

@@ -17,14 +17,11 @@ public class CallerTest {
 
         assertSame(CallerTest.class, //
                 Caller.getCallerClass(0));
-
-        assertSame(CallerTest.class, //
-                Caller.getCallerClass());
     }
 
     @Test
     public void test2() {
-        StackTraceElement stack = Caller.getCallerStack();
+        StackTraceElement stack = Caller.getStack(0);
         Class<?> clazz = getClass();
         assertEquals(clazz.getName(), stack.getClassName());
         assertEquals("test2", stack.getMethodName()); //$NON-NLS-1$

@@ -218,7 +218,7 @@ public class BootProc {
     }
 
     public ClassLoader configSysLoader() {
-        ClassLoader parent = Caller.getCallerClassLoader();
+        ClassLoader parent = Caller.getCallerClassLoader(0);
         return configSysLoader(parent);
     }
 
