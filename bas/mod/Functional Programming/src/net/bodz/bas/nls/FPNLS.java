@@ -1,21 +1,22 @@
 package net.bodz.bas.nls;
 
-import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-public class FPNLS {
-    private static final String         BUNDLE_NAME     = "net.bodz.bas.FPNLS";                 //$NON-NLS-1$
+import net.bodz.bas.text.locale.NLSAccessor;
 
-    private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
+public class FPNLS extends NLSAccessor {
 
-    private FPNLS() {
+    private static final ResourceBundle bundle;
+    static {
+        bundle = ResourceBundle.getBundle(FPNLS.class.getName());
+    }
+
+    public static String format(String format, Object... args) {
+        return format(bundle, format, args);
     }
 
     public static String getString(String key) {
-        try {
-            return RESOURCE_BUNDLE.getString(key);
-        } catch (MissingResourceException e) {
-            return '!' + key + '!';
-        }
+        return getString(bundle, key);
     }
+
 }

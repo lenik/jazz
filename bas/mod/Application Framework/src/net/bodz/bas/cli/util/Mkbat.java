@@ -87,7 +87,7 @@ public class Mkbat extends BatchEditCLI {
     protected void _boot() throws Throwable {
         force = parameters().isForce();
 
-        ClassLoader initSysLoader = Caller.getCallerClassLoader();
+        ClassLoader initSysLoader = Caller.getCallerClassLoader(0);
         if (_userlibs != null)
             userlibs = _userlibs.toArray(Empty.URLs);
         if (userlibs == null)
@@ -148,7 +148,7 @@ public class Mkbat extends BatchEditCLI {
         BootProc bootProc = BootProc.get(class0);
 
         // prepare realSysLoader
-        ClassLoader realSysLoader = Caller.getCallerClassLoader();
+        ClassLoader realSysLoader = Caller.getCallerClassLoader(0);
         if (bootProc != null)
             realSysLoader = bootProc.configSysLoader(realSysLoader);
 

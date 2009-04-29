@@ -58,7 +58,7 @@ public class DefaultBooter {
     }
 
     public static Class<?> load(String className, URL... userlibs) throws LoadException {
-        ClassLoader sysLoader = Caller.getCallerClassLoader();
+        ClassLoader sysLoader = Caller.getCallerClassLoader(0);
         return load(sysLoader, className, userlibs);
     }
 

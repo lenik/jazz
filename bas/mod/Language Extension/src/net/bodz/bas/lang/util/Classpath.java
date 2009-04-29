@@ -42,12 +42,12 @@ public class Classpath {
     }
 
     public static void dumpURLs(CharOut out) {
-        UCL.dump(Caller.getCallerClassLoader(), out);
+        UCL.dump(Caller.getCallerClassLoader(0), out);
         out.flush();
     }
 
     public static String dumpURLs() {
-        return UCL.dump(Caller.getCallerClassLoader());
+        return UCL.dump(Caller.getCallerClassLoader(0));
     }
 
 }

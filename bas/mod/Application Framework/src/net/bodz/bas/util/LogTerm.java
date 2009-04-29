@@ -1,6 +1,7 @@
 package net.bodz.bas.util;
 
 import net.bodz.bas.io.term.Terminal;
+import net.bodz.bas.io.term.Terminals;
 
 /**
  * @test {@link LogTermTest}
@@ -38,454 +39,409 @@ public abstract class LogTerm {
      */
     static String generator = "class net.bodz.bas.util.LogTermTest"; //$NON-NLS-1$
 
-    public Terminal fatal() {
-        return filter(FATAL);
-    }
-
     public boolean showFatal() {
         return level >= FATAL;
     }
 
+    public Terminal fatal() {
+        if (level >= FATAL)
+            return filter(FATAL);
+        return Terminals.nil;
+    }
+
     public void fatal(Object o) {
-        if (level >= FATAL) {
+        if (level >= FATAL)
             fatal().p(o);
-        }
     }
 
     public void nfatal(Object o) {
-        if (level >= FATAL) {
+        if (level >= FATAL)
             fatal().n(o);
-        }
     }
 
     public void tfatal(Object o) {
-        if (level >= FATAL) {
+        if (level >= FATAL)
             fatal().t(o);
-        }
     }
 
     public void fatal(Object... args) {
-        if (level >= FATAL) {
+        if (level >= FATAL)
             fatal().p(args);
-        }
     }
 
     public void nfatal(Object... args) {
-        if (level >= FATAL) {
+        if (level >= FATAL)
             fatal().n(args);
-        }
     }
 
     public void tfatal(Object... args) {
-        if (level >= FATAL) {
+        if (level >= FATAL)
             fatal().t(args);
-        }
     }
 
     public void ffatal(String format, Object... args) {
-        if (level >= FATAL) {
+        if (level >= FATAL)
             fatal().f(format, args);
-        }
-    }
-
-    public Terminal error() {
-        return filter(ERROR);
     }
 
     public boolean showError() {
         return level >= ERROR;
     }
 
+    public Terminal error() {
+        if (level >= ERROR)
+            return filter(ERROR);
+        return Terminals.nil;
+    }
+
     public void error(Object o) {
-        if (level >= ERROR) {
+        if (level >= ERROR)
             error().p(o);
-        }
     }
 
     public void nerror(Object o) {
-        if (level >= ERROR) {
+        if (level >= ERROR)
             error().n(o);
-        }
     }
 
     public void terror(Object o) {
-        if (level >= ERROR) {
+        if (level >= ERROR)
             error().t(o);
-        }
     }
 
     public void error(Object... args) {
-        if (level >= ERROR) {
+        if (level >= ERROR)
             error().p(args);
-        }
     }
 
     public void nerror(Object... args) {
-        if (level >= ERROR) {
+        if (level >= ERROR)
             error().n(args);
-        }
     }
 
     public void terror(Object... args) {
-        if (level >= ERROR) {
+        if (level >= ERROR)
             error().t(args);
-        }
     }
 
     public void ferror(String format, Object... args) {
-        if (level >= ERROR) {
+        if (level >= ERROR)
             error().f(format, args);
-        }
-    }
-
-    public Terminal user() {
-        return filter(USER);
     }
 
     public boolean showUser() {
         return level >= USER;
     }
 
+    public Terminal user() {
+        if (level >= USER)
+            return filter(USER);
+        return Terminals.nil;
+    }
+
     public void user(Object o) {
-        if (level >= USER) {
+        if (level >= USER)
             user().p(o);
-        }
     }
 
     public void nuser(Object o) {
-        if (level >= USER) {
+        if (level >= USER)
             user().n(o);
-        }
     }
 
     public void tuser(Object o) {
-        if (level >= USER) {
+        if (level >= USER)
             user().t(o);
-        }
     }
 
     public void user(Object... args) {
-        if (level >= USER) {
+        if (level >= USER)
             user().p(args);
-        }
     }
 
     public void nuser(Object... args) {
-        if (level >= USER) {
+        if (level >= USER)
             user().n(args);
-        }
     }
 
     public void tuser(Object... args) {
-        if (level >= USER) {
+        if (level >= USER)
             user().t(args);
-        }
     }
 
     public void fuser(String format, Object... args) {
-        if (level >= USER) {
+        if (level >= USER)
             user().f(format, args);
-        }
-    }
-
-    public Terminal warn() {
-        return filter(WARN);
     }
 
     public boolean showWarn() {
         return level >= WARN;
     }
 
+    public Terminal warn() {
+        if (level >= WARN)
+            return filter(WARN);
+        return Terminals.nil;
+    }
+
     public void warn(Object o) {
-        if (level >= WARN) {
+        if (level >= WARN)
             warn().p(o);
-        }
     }
 
     public void nwarn(Object o) {
-        if (level >= WARN) {
+        if (level >= WARN)
             warn().n(o);
-        }
     }
 
     public void twarn(Object o) {
-        if (level >= WARN) {
+        if (level >= WARN)
             warn().t(o);
-        }
     }
 
     public void warn(Object... args) {
-        if (level >= WARN) {
+        if (level >= WARN)
             warn().p(args);
-        }
     }
 
     public void nwarn(Object... args) {
-        if (level >= WARN) {
+        if (level >= WARN)
             warn().n(args);
-        }
     }
 
     public void twarn(Object... args) {
-        if (level >= WARN) {
+        if (level >= WARN)
             warn().t(args);
-        }
     }
 
     public void fwarn(String format, Object... args) {
-        if (level >= WARN) {
+        if (level >= WARN)
             warn().f(format, args);
-        }
-    }
-
-    public Terminal mesg() {
-        return filter(MESG);
     }
 
     public boolean showMesg() {
         return level >= MESG;
     }
 
+    public Terminal mesg() {
+        if (level >= MESG)
+            return filter(MESG);
+        return Terminals.nil;
+    }
+
     public void mesg(Object o) {
-        if (level >= MESG) {
+        if (level >= MESG)
             mesg().p(o);
-        }
     }
 
     public void nmesg(Object o) {
-        if (level >= MESG) {
+        if (level >= MESG)
             mesg().n(o);
-        }
     }
 
     public void tmesg(Object o) {
-        if (level >= MESG) {
+        if (level >= MESG)
             mesg().t(o);
-        }
     }
 
     public void mesg(Object... args) {
-        if (level >= MESG) {
+        if (level >= MESG)
             mesg().p(args);
-        }
     }
 
     public void nmesg(Object... args) {
-        if (level >= MESG) {
+        if (level >= MESG)
             mesg().n(args);
-        }
     }
 
     public void tmesg(Object... args) {
-        if (level >= MESG) {
+        if (level >= MESG)
             mesg().t(args);
-        }
     }
 
     public void fmesg(String format, Object... args) {
-        if (level >= MESG) {
+        if (level >= MESG)
             mesg().f(format, args);
-        }
-    }
-
-    public Terminal info() {
-        return filter(INFO);
     }
 
     public boolean showInfo() {
         return level >= INFO;
     }
 
+    public Terminal info() {
+        if (level >= INFO)
+            return filter(INFO);
+        return Terminals.nil;
+    }
+
     public void info(Object o) {
-        if (level >= INFO) {
+        if (level >= INFO)
             info().p(o);
-        }
     }
 
     public void ninfo(Object o) {
-        if (level >= INFO) {
+        if (level >= INFO)
             info().n(o);
-        }
     }
 
     public void tinfo(Object o) {
-        if (level >= INFO) {
+        if (level >= INFO)
             info().t(o);
-        }
     }
 
     public void info(Object... args) {
-        if (level >= INFO) {
+        if (level >= INFO)
             info().p(args);
-        }
     }
 
     public void ninfo(Object... args) {
-        if (level >= INFO) {
+        if (level >= INFO)
             info().n(args);
-        }
     }
 
     public void tinfo(Object... args) {
-        if (level >= INFO) {
+        if (level >= INFO)
             info().t(args);
-        }
     }
 
     public void finfo(String format, Object... args) {
-        if (level >= INFO) {
+        if (level >= INFO)
             info().f(format, args);
-        }
-    }
-
-    public Terminal detail() {
-        return filter(DETAIL);
     }
 
     public boolean showDetail() {
         return level >= DETAIL;
     }
 
+    public Terminal detail() {
+        if (level >= DETAIL)
+            return filter(DETAIL);
+        return Terminals.nil;
+    }
+
     public void detail(Object o) {
-        if (level >= DETAIL) {
+        if (level >= DETAIL)
             detail().p(o);
-        }
     }
 
     public void ndetail(Object o) {
-        if (level >= DETAIL) {
+        if (level >= DETAIL)
             detail().n(o);
-        }
     }
 
     public void tdetail(Object o) {
-        if (level >= DETAIL) {
+        if (level >= DETAIL)
             detail().t(o);
-        }
     }
 
     public void detail(Object... args) {
-        if (level >= DETAIL) {
+        if (level >= DETAIL)
             detail().p(args);
-        }
     }
 
     public void ndetail(Object... args) {
-        if (level >= DETAIL) {
+        if (level >= DETAIL)
             detail().n(args);
-        }
     }
 
     public void tdetail(Object... args) {
-        if (level >= DETAIL) {
+        if (level >= DETAIL)
             detail().t(args);
-        }
     }
 
     public void fdetail(String format, Object... args) {
-        if (level >= DETAIL) {
+        if (level >= DETAIL)
             detail().f(format, args);
-        }
-    }
-
-    public Terminal debug() {
-        return filter(DEBUG);
     }
 
     public boolean showDebug() {
         return level >= DEBUG;
     }
 
+    public Terminal debug() {
+        if (level >= DEBUG)
+            return filter(DEBUG);
+        return Terminals.nil;
+    }
+
     public void debug(Object o) {
-        if (level >= DEBUG) {
+        if (level >= DEBUG)
             debug().p(o);
-        }
     }
 
     public void ndebug(Object o) {
-        if (level >= DEBUG) {
+        if (level >= DEBUG)
             debug().n(o);
-        }
     }
 
     public void tdebug(Object o) {
-        if (level >= DEBUG) {
+        if (level >= DEBUG)
             debug().t(o);
-        }
     }
 
     public void debug(Object... args) {
-        if (level >= DEBUG) {
+        if (level >= DEBUG)
             debug().p(args);
-        }
     }
 
     public void ndebug(Object... args) {
-        if (level >= DEBUG) {
+        if (level >= DEBUG)
             debug().n(args);
-        }
     }
 
     public void tdebug(Object... args) {
-        if (level >= DEBUG) {
+        if (level >= DEBUG)
             debug().t(args);
-        }
     }
 
     public void fdebug(String format, Object... args) {
-        if (level >= DEBUG) {
+        if (level >= DEBUG)
             debug().f(format, args);
-        }
-    }
-
-    public Terminal trace() {
-        return filter(TRACE);
     }
 
     public boolean showTrace() {
         return level >= TRACE;
     }
 
+    public Terminal trace() {
+        if (level >= TRACE)
+            return filter(TRACE);
+        return Terminals.nil;
+    }
+
     public void trace(Object o) {
-        if (level >= TRACE) {
+        if (level >= TRACE)
             trace().p(o);
-        }
     }
 
     public void ntrace(Object o) {
-        if (level >= TRACE) {
+        if (level >= TRACE)
             trace().n(o);
-        }
     }
 
     public void ttrace(Object o) {
-        if (level >= TRACE) {
+        if (level >= TRACE)
             trace().t(o);
-        }
     }
 
     public void trace(Object... args) {
-        if (level >= TRACE) {
+        if (level >= TRACE)
             trace().p(args);
-        }
     }
 
     public void ntrace(Object... args) {
-        if (level >= TRACE) {
+        if (level >= TRACE)
             trace().n(args);
-        }
     }
 
     public void ttrace(Object... args) {
-        if (level >= TRACE) {
+        if (level >= TRACE)
             trace().t(args);
-        }
     }
 
     public void ftrace(String format, Object... args) {
-        if (level >= TRACE) {
+        if (level >= TRACE)
             trace().f(format, args);
-        }
     }
 
 }

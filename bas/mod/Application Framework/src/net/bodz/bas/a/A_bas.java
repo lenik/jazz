@@ -131,6 +131,8 @@ public class A_bas {
         if (resname == null)
             return null;
         URL url = clazz.getResource(resname);
+        if (url == null)
+            throw new NullPointerException("BuildInfo resource isn't existed: " + resname);
         return Files.loadProperties(url);
     }
 

@@ -44,6 +44,8 @@ import net.bodz.bas.types.parsers.CharOutParser;
 import net.bodz.bas.types.parsers.LoggerParser;
 import net.bodz.bas.types.util.Empty;
 import net.bodz.bas.types.util.Strings;
+import net.bodz.bas.ui.ConsoleUI;
+import net.bodz.bas.ui.UserInterface;
 import net.bodz.bas.util.LogTerm;
 import net.bodz.bas.util.LogTerms;
 import net.bodz.bas.util.PluginException;
@@ -81,21 +83,23 @@ import net.bodz.bas.util.PluginTypeEx;
 @OptionGroup(value = "standard", rank = -1)
 @RcsKeywords(id = "$Id$")
 @ScriptType(CLIScriptClass.class)
-public class BasicCLI {
+public class BasicCLI implements Runnable {
 
     @Option(hidden = true)
     @ParseBy(CharOutParser.class)
-    protected CharOut _stdout        = CharOuts.stdout;
+    protected CharOut       _stdout        = CharOuts.stdout;
 
     @Option(name = "logger", hidden = true)
     @ParseBy(LoggerParser.class)
-    protected LogTerm L              = LogTerms.get(1);
+    protected LogTerm       L              = LogTerms.get(1);
+
+    protected UserInterface UI             = ConsoleUI.stdout;
 
     @Option(hidden = true)
-    boolean           _logWithPrefix = true;
+    boolean                 _logWithPrefix = true;
 
     @Option(hidden = true)
-    boolean           _logWithDate   = false;
+    boolean                 _logWithDate   = false;
 
     @Option(alias = "v", doc = "repeat to get more info")
     void _verbose() {
@@ -373,6 +377,15 @@ public class BasicCLI {
         if (cmdline != null)
             args = Strings.split(cmdline);
         run(args);
+    }
+
+    @Override
+    public void run() {
+        try {
+            run(Empty.Strings);
+        } catch (Throwable e) {
+            UI.alert(e.getMessage(), e);
+        }
     }
 
     /**

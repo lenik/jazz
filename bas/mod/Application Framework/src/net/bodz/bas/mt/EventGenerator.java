@@ -15,9 +15,9 @@ public abstract class EventGenerator implements Runnable {
 
     public EventGenerator(Executor executor, Iterator<?> eventSource) {
         if (executor == null)
-            throw new NullPointerException("executor");
+            throw new NullPointerException("executor"); //$NON-NLS-1$
         if (eventSource == null)
-            throw new NullPointerException("eventSource");
+            throw new NullPointerException("eventSource"); //$NON-NLS-1$
         this.executor = executor;
         this.eventSource = eventSource;
         this.eventHandlers = new HashMap<Object, List<Runnable>>();
