@@ -43,6 +43,9 @@ public class GUIHint {
     private String          toolItem;
     private String          viewId;
 
+    public GUIHint() {
+    }
+
     public GUIHint(GUIHint copy) {
         if (copy == null)
             return;

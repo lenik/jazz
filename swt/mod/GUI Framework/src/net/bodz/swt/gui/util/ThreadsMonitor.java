@@ -44,6 +44,11 @@ public class ThreadsMonitor extends SimpleDialog {
     }
 
     @Override
+    public Object open() {
+        return open(false);
+    }
+
+    @Override
     protected void createTopBar(Composite parent) {
         new EmptyComposite(parent, SWT.NONE);
     }

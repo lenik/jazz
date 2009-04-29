@@ -135,9 +135,8 @@ public class GUIStructs {
         void add(String name, GUIVarMeta meta) {
             if (map != null) {
                 if (map.containsKey(name))
-                    logger
-                            .warn(
-                                    GUINLS.getString("GUIStructs.nodupItem"), name, GUINLS.getString("GUIStructs.inIsOverwritten"), meta); //$NON-NLS-1$ //$NON-NLS-2$
+                    logger.fwarn(GUINLS.getString("GUIStructs.dupItem_sss"), //
+                            name, this, meta.getName());
                 map.put(name, meta);
             } else
                 list.add(meta);

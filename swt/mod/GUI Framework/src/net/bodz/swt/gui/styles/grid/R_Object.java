@@ -1,15 +1,17 @@
 package net.bodz.swt.gui.styles.grid;
 
 import static net.bodz.swt.gui.util.SWTInject.styleFx;
-import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.ui.RenderException;
+import net.bodz.swt.gui.GUIHint;
 import net.bodz.swt.gui.GUIStruct;
 import net.bodz.swt.gui.GUIVar;
+import net.bodz.swt.gui.GUIVars;
 import net.bodz.swt.gui.SWTRenderContext;
 import net.bodz.swt.gui.GUIStructs.GUIObjectStruct;
 import net.bodz.swt.gui.styles.base._R_Object;
 
 import org.eclipse.swt.SWTException;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Composite;
 
 public class R_Object extends _R_Object {
@@ -25,8 +27,12 @@ public class R_Object extends _R_Object {
             int style) throws RenderException, SWTException {
         assert var != null;
         Object object = var.get();
-        if (object == null)
-            throw new NotImplementedException("null obj: " + var); //$NON-NLS-1$
+        if (object == null) {
+            object = "(null)";
+            GUIHint hint = new GUIHint();
+            hint.color = new RGB(255, 0, 0);
+            var = GUIVars.wrap(object, hint);
+        }
         GUIStruct objStruct = new GUIObjectStruct(object);
         return strategy.renderStruct(rc, objStruct, parent, styleFx(style, var));
     }
