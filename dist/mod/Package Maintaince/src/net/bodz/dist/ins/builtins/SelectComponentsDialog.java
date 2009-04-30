@@ -5,11 +5,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
-import net.bodz.bas.lang.err.CancelException;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.types.util.Strings;
 import net.bodz.dist.ins.Component;
-import net.bodz.dist.ins.builtins.SelectComponentsDialogTest;
 import net.bodz.dist.ins.nls.PackNLS;
 import net.bodz.dist.ins.util.Indices;
 import net.bodz.dist.ins.util.MissingDependancyBuffer.Entry;
@@ -59,25 +57,23 @@ public class SelectComponentsDialog extends SimpleDialog {
         this.components = components;
     }
 
+    /**
+     * @return <code>null</code> if canceled.
+     */
     @SuppressWarnings("unchecked")
     @Override
-    public synchronized Collection<Component> open() throws CancelException {
-        try {
-            Object result = super.open();
-            return (Collection<Component>) result;
-        } catch (CancelException e) {
-            return null;
-        }
+    public synchronized Collection<Component> open() {
+        return (Collection<Component>) super.open(false);
     }
 
     @Override
-    public void execute() {
+    public ArrayList<Component> evaluate() {
         int[] indices = list.getSelectionIndices();
         ArrayList<Component> selected = new ArrayList<Component>(indices.length);
         for (int index : indices) {
             selected.add(components[index]);
         }
-        set(selected);
+        return selected;
     }
 
     @Override
