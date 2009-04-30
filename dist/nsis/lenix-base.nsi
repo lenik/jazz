@@ -5,21 +5,25 @@
 !define __HOME__ ${__DIR__}\..
 
 Name "Lenix Runtime"
-OutFile "${__HOME__}\dist\lenix-base.exe"
+OutFile "$%DIST_HOME%\lenix-base.exe"
 InstallDir ${LENIX}
 
 ; Page custom...
 Page instfiles
 
 Section "-Lenix Core Runtime"
-    ${EnvVarUpdate} $0 "LABJA_ROOT" "A" "HKLM" $INSTDIR
+    !insertmacro EnvSet "LABJA_ROOT"    "$INSTDIR"
+    !insertmacro EnvSet "CYGWIN"        "nodosfilewarning noenvcache title"
+    
+    ${EnvVarUpdate} $0 "PATH"           "A" "HKCU" $INSTDIR\bin
+    
     !insertmacro DirRec $INSTDIR ${LAPIOTA} bin
     !insertmacro DirRec $INSTDIR ${LAPIOTA} lib
     
     !insertmacro DirRec $INSTDIR ${__HOME__} bin
     !insertmacro DirRec $INSTDIR ${__HOME__} etc
     
-    WriteRegStr HKCR .xj "" Lenix.XJ
+    WriteRegStr HKCR .xj  "" Lenix.XJ
     WriteRegStr HKCR .xjw "" Lenix.XJW
     WriteRegExpandStr HKCR Lenix.XJ  "" "Lenix Java Console Application"
     WriteRegExpandStr HKCR Lenix.XJW "" "Lenix Java Application"
@@ -27,12 +31,12 @@ Section "-Lenix Core Runtime"
     WriteRegExpandStr HKCR Lenix.XJW\DefaultIcon "" "%SystemRoot%\System32\shell32.dll,-3"
     ;; WriteRegExpandStr HKCR Lenix.XJW\DefaultIcon "" "%SystemRoot%\System32\shell32.dll,-274"
     
-    ; "...\bash.exe" -c "env LAM_KALA=/ $(cygpath -u '...\xj.sh') $(cygpath -u '%0') %*"
+    ; "...\bash.exe" -c "env LAM_KALA=/ xj.sh $(cygpath -u '%0') %*"
     ; due to the path problem of $LAM_KALA/ => //, so let it be empty string. 
     WriteRegStr HKCR Lenix.XJ\Shell\open\Command "" \
-        "$\"$INSTDIR\bin\bash.exe$\"  -c $\"env LAM_KALA= $$(cygpath -u '$INSTDIR\bin\xj.sh')  $$(cygpath -u '%0') %*$\""
+        "$\"$INSTDIR\bin\bash.exe$\"  -c $\"env LAM_KALA= xj.sh  $$(cygpath -u '%0') %*$\""
     WriteRegStr HKCR Lenix.XJW\Shell\open\Command "" \
-        "$\"$INSTDIR\bin\bashw.exe$\" -c $\"env LAM_KALA= $$(cygpath -u '$INSTDIR\bin\xjw.sh') $$(cygpath -u '%0') %*$\""
+        "$\"$INSTDIR\bin\bashw.exe$\" -c $\"env LAM_KALA= xjw.sh $$(cygpath -u '%0') %*$\""
     System::Call "shell32.dll::SHChangeNotify(i, i, i, i) v (0x08000000, 0, 0, 0)"
 SectionEnd
 
@@ -53,14 +57,19 @@ Section "Cygwin Runtime (1.7.0)"
         File bin\bashw.exe
         File bin\bzip2.exe
         File bin\bunzip2.exe
+        File bin\cygcheck.exe
+        File bin\cygpath.exe
         File bin\diff.exe
         File bin\echo.exe
+        File bin\env.exe
         File bin\grep.exe
         File bin\gunzip
         File bin\gzip.exe
+        File bin\id.exe
         File bin\m4.exe
         File bin\md5sum.exe
         File bin\mount.exe
+        File bin\rm.exe
         File bin\sed.exe
         File bin\sh.exe
         File bin\sha1sum.exe
@@ -70,6 +79,7 @@ Section "Cygwin Runtime (1.7.0)"
         File bin\umount.exe
         File bin\unzip.exe
         File bin\wget.exe
+        File bin\which.exe
         File bin\zip.exe
         File /nonfatal \
             /x brl* \
