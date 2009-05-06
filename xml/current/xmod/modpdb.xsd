@@ -4,15 +4,27 @@
 		<xs:complexType>
 			<xs:complexContent>
 				<xs:extension base="pdb:docobj">
-					<xs:choice minOccurs="0" maxOccurs="unbounded">
-						<xs:element ref="pdb:table"/>
-						<xs:element ref="pdb:view"/>
-						<xs:element name="hr" type="pdb:docobj">
-							<xs:annotation>
-								<xs:documentation>used to generate beautiful documents.</xs:documentation>
-							</xs:annotation>
+					<xs:sequence>
+						<xs:element name="import" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:attribute name="href" type="xs:string" use="required"/>
+								<xs:attribute name="type" type="xs:string">
+									<xs:annotation>
+										<xs:documentation>reserved</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
 						</xs:element>
-					</xs:choice>
+						<xs:choice minOccurs="0" maxOccurs="unbounded">
+							<xs:element ref="pdb:table"/>
+							<xs:element ref="pdb:view"/>
+							<xs:element name="hr" type="pdb:docobj">
+								<xs:annotation>
+									<xs:documentation>used to generate beautiful documents.</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:choice>
+					</xs:sequence>
 				</xs:extension>
 			</xs:complexContent>
 		</xs:complexType>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modpdb xmlns="http://www.bodz.net/xml/current/xmod/modpdb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.bodz.net/xml/current/xmod/modpdb
+C:\.radiko\.miaj\mirror\site\xml\current\xmod\modpdb.xsd" name="MisBase" qname="net.bodz.mis.base" cat="net.bodz.mis" disp="Mis.Base">
+	<!--Base Def-->
+	<table name="_Docobj" opts="c" disp="General Object">
+		<field name="name" disp="Identifier Name" type="C[,30]" opts="U"/>
+		<field name="qname" disp="Qualified Name" type="C[,120]" opts="NU"/>
+		<field name="flags" disp="Flags" type="I32" opts="D(0)" info="Some is taken from [opts]
+(non-indexing)"/>
+		<field name="opts" disp="Options" type="C[,30]" opts="D('')" info="(non-indexing)"/>
+		<field name="scope" disp="Scope for searching" type="I" opts="D(0)" info="Values ::=
+0 = private, system, public
+1 = system, public
+2 = public"/>
+		<field name="cat" disp="Category" type="C[,120]" opts="N"/>
+		<field name="disp" disp="Display Name" type="C[,50]" opts="D('')"/>
+		<field name="info" disp="Information" type="C[,200]" opts="D('')"/>
+	</table>
+</modpdb>

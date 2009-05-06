@@ -1,21 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <modpdb xmlns="http://www.bodz.net/xml/current/xmod/modpdb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.bodz.net/xml/current/xmod/modpdb
 C:\.radiko\.miaj\mirror\site\xml\current\xmod\modpdb.xsd" name="MisCommons" qname="net.bodz.mis.commons" cat="net.bodz.mis" disp="Mis.Commons">
+	<import href="base.pdb.xml"/>
 	<!--User System-->
-	<table name="_Obj" opts="c" disp="General Object">
-		<field name="name" disp="Identifier Name" type="C[,30]" opts="U"/>
-		<field name="qname" disp="Qualified Name" type="C[,120]" opts="NU"/>
-		<field name="flags" disp="Flags" type="I32" opts="D(0)" info="Some is taken from [opts]
-(non-indexing)"/>
-		<field name="opts" disp="Options" type="C[,30]" opts="D('')" info="(non-indexing)"/>
-		<field name="scope" disp="Scope for searching" type="I" opts="D(0)" info="Values ::=
-0 = private, system, public
-1 = system, public
-2 = public"/>
-		<field name="cat" disp="Category" type="C[,120]" opts="N"/>
-		<field name="disp" disp="Display Name" type="C[,50]" opts="D('')"/>
-		<field name="info" disp="Information" type="C[,200]" opts="D('')"/>
-	</table>
 	<table name="_Perm" opts="c" disp="General Permission">
 		<field name="perm" disp="Permission Key" type="I" opts="K"/>
 		<field name="dpl" disp="Declared Privilege Level" type="I" opts="D(0)" info="Values ::=
@@ -32,21 +19,21 @@ C:\.radiko\.miaj\mirror\site\xml\current\xmod\modpdb.xsd" name="MisCommons" qnam
 		<field name="ival" disp="Ext Value / Integer" type="I" opts="D(0)"/>
 		<field name="cval" disp="Ext Value / String" type="C[,120]" opts="D('')"/>
 	</table>
-	<table name="CUser" base="after(_Obj)" disp="Common User">
+	<table name="CUser" base="after(_Docobj)" disp="Common User">
 		<field name="id" disp="id/usr" type="I" opts="KDi"/>
 	</table>
-	<table name="CGroup" base="after(_Obj)" disp="Common Group, also User-Type">
+	<table name="CGroup" base="after(_Docobj)" disp="Common Group, also User-Type">
 		<field name="id" disp="id/grp" type="I" opts="KDi"/>
 		<field name="creator" disp="User created the group" type="NI" opts="KF(n:1 => User.id)"/>
 	</table>
-	<table name="CRole" base="after(_Obj)" disp="Common Role">
+	<table name="CRole" base="after(_Docobj)" disp="Common Role">
 		<field name="id" disp="id/rol" type="I" opts="KDi"/>
 		<field name="creator" disp="User created the role" type="NI" opts="KF(n:1 => User.id)"/>
 		<field name="t" disp="Role Type" type="C" opts="D('G')" info="Values ::=
 'G' = General-Role
 'M' = Member-Role"/>
 	</table>
-	<table name="CPerm" base="after(_Obj)" disp="Common Permission">
+	<table name="CPerm" base="after(_Docobj)" disp="Common Permission">
 		<field name="id" disp="id/perm" type="I" opts="KDi"/>
 		<field name="creator" disp="User created the role" type="NI" opts="KF(n:1 => User.id)"/>
 	</table>
