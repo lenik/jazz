@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 rel. 3 sp1 (http://www.altova.com) by what (ever) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:group name="ui-component">
+		<xs:sequence>
+			<xs:element name="description" minOccurs="0"/>
+			<xs:element name="author" minOccurs="0"/>
+			<xs:element name="icon" minOccurs="0"/>
+			<xs:element name="label" minOccurs="0"/>
+			<xs:element name="tooltip" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:complexType name="artifactType">
+		<xs:sequence>
+			<xs:element name="description"/>
+			<xs:group ref="ui-component"/>
+		</xs:sequence>
+		<xs:attribute name="status"/>
+	</xs:complexType>
+	<xs:element name="rfc">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="artifactType">
+					<xs:sequence>
+						<xs:element name="leader"/>
+						<xs:element name="contacts"/>
+						<xs:element name="describe"/>
+						<xs:element name="target"/>
+						<xs:element name="need"/>
+						<xs:element name="existings"/>
+						<xs:element name="technology">
+							<xs:complexType/>
+						</xs:element>
+						<xs:element name="proposed-name"/>
+						<xs:element name="dependancy"/>
+						<xs:element name="security-issues"/>
+						<xs:element name="i18n-issues"/>
+						<xs:element name="obseletes"/>
+						<xs:element name="schedule"/>
+						<xs:element name="team"/>
+						<xs:element name="ri-tck"/>
+						<xs:element name="license"/>
+						<xs:element name="reference"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="itab">
+		<xs:annotation>
+			<xs:documentation>inline table</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="column" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:group ref="ui-component"/>
+						</xs:sequence>
+						<xs:attribute name="name"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="row" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:any namespace="##local" processContents="lax" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 rel. 3 sp1 (http://www.altova.com) by what (ever) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:group name="ui-component">
+		<xs:sequence>
+			<xs:element name="description" minOccurs="0"/>
+			<xs:element name="author" minOccurs="0"/>
+			<xs:element name="icon" minOccurs="0"/>
+			<xs:element name="label" minOccurs="0"/>
+			<xs:element name="tooltip" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:element name="itab">
+		<xs:annotation>
+			<xs:documentation>inline table</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="column" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:group ref="ui-component"/>
+						</xs:sequence>
+						<xs:attribute name="name"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="row" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:any namespace="##local" processContents="lax" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="dict">
+		<xs:annotation>
+			<xs:documentation>Comment describing your root element</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="icon" minOccurs="0"/>
+				<xs:element name="description" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attribute name="lang" type="xs:language"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="name"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
