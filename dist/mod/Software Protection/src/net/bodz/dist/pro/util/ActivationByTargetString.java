@@ -16,15 +16,14 @@ import net.bodz.dist.pro.pm.ProtectException;
 import net.bodz.dist.pro.pm.ProtectionModel;
 import net.bodz.dist.pro.seals.CodeSet;
 import net.bodz.dist.pro.seals.Sequence;
-import net.bodz.dist.pro.util.ActivationByTargetStringTest;
 
 /**
  * @test {@link ActivationByTargetStringTest}
  */
 public class ActivationByTargetString {
 
-    private static final String  KEY_HOSTID        = "hostId"; //$NON-NLS-1$
-    private static final String  KEY_ACTIVATE_CODE = "activateCode"; //$NON-NLS-1$
+    private static final String  KEY_HOSTID        = "hostId";                //$NON-NLS-1$
+    private static final String  KEY_ACTIVATE_CODE = "activateCode";          //$NON-NLS-1$
 
     private static final Charset encoding          = Charset.forName("utf-8"); //$NON-NLS-1$
 
@@ -43,7 +42,8 @@ public class ActivationByTargetString {
             throw new NullPointerException("clazz"); //$NON-NLS-1$
         Activation activation = Ns.getN(clazz, Activation.class);
         if (activation == null)
-            throw new IllegalUsageError(ProtectNLS.getString("ActivationByTargetString.noActivationInfo")); //$NON-NLS-1$
+            throw new IllegalUsageError(ProtectNLS
+                    .getString("ActivationByTargetString.noActivationInfo")); //$NON-NLS-1$
         this.prefix = activation.prefix();
         this.prefixBytes = prefix.getBytes(encoding);
         this.segments = activation.segments();
@@ -162,6 +162,7 @@ public class ActivationByTargetString {
             digest.reset();
             digest.update(prefixBytes);
             digest.update(hostMac);
+            digest.update((byte) i);
             byte[] v = digest.digest(segbuf);
             // int c = ((v[0] & 0xff) << 8) | v[1];
             int t0 = (v[0] & 0xff);
@@ -203,6 +204,7 @@ public class ActivationByTargetString {
                 digest.reset();
                 digest.update(prefixBytes);
                 digest.update(hostMac);
+                digest.update((byte) i);
                 segbb.clear();
                 segbb.putInt(k);
                 byte[] v = digest.digest(segbuf);
@@ -211,7 +213,8 @@ public class ActivationByTargetString {
                         break;
             }
             if (k == Integer.MAX_VALUE)
-                throw new UnsupportedOperationException(ProtectNLS.getString("ActivationByTargetString.cantMakeupTarget") //$NON-NLS-1$
+                throw new UnsupportedOperationException(ProtectNLS
+                        .getString("ActivationByTargetString.cantMakeupTarget") //$NON-NLS-1$
                         + targetString);
             String seg = CodeSet.encode(k);
             if (i != 0)
@@ -219,7 +222,9 @@ public class ActivationByTargetString {
             codebuf.append(seg);
         }
         System.out.println(ProtectNLS.getString("ActivationByTargetString.searchSpace") + count); //$NON-NLS-1$
-        System.out.printf(ProtectNLS.getString("ActivationByTargetString.triesPerChar_f"), (double) count / chars.length); //$NON-NLS-1$
+        System.out
+                .printf(
+                        ProtectNLS.getString("ActivationByTargetString.triesPerChar_f"), (double) count / chars.length); //$NON-NLS-1$
         String code = codebuf.toString();
         return code + "-" + digest(code); //$NON-NLS-1$
     }
