@@ -14,6 +14,7 @@ Page instfiles
 Section "-Lenix Core Runtime"
     !insertmacro EnvSet "LABJA_ROOT"    "$INSTDIR"
     !insertmacro EnvSet "CYGWIN"        "nodosfilewarning noenvcache title"
+    !insertmacro EnvSet "LANG"          "zh_CN.UTF-8"
     
     ${EnvVarUpdate} $0 "PATH"           "A" "HKCU" $INSTDIR\bin
     
