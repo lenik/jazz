@@ -2,6 +2,23 @@ package net.bodz.bas.lang.err;
 
 import net.bodz.bas.nls.LangNLS;
 
+/**
+ * oode Template:
+ * 
+ * oode:
+ * 
+ * <pre>
+ *  if (${var:localVar} ${cursor}&lt; ${boundary:0})
+ *     throw new OutOfDomainException(&quot;${var}&quot;, ${var}, ${boundary});
+ * </pre>
+ * 
+ * npe:
+ * 
+ * <pre>
+ * if (${var:localVar} == null)
+ *             throw new NullPointerException(&quot;${var}&quot;);
+ *</pre>
+ */
 public class OutOfDomainException extends IllegalArgumentException {
 
     private static final long serialVersionUID = -673378255529233385L;

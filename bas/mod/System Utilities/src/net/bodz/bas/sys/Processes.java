@@ -12,6 +12,9 @@ import net.bodz.bas.nls.SysNLS;
 import net.bodz.bas.types.util.Arrays2;
 import net.bodz.bas.types.util.Strings;
 
+/**
+ * @test {@link ProcessesTest}
+ */
 public class Processes {
 
     private static String[] shvec;
