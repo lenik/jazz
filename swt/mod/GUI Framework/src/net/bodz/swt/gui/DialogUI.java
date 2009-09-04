@@ -45,7 +45,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 /**
- * @test {@link DialogInteractionTest}
+ * @test {@link DialogUITest}
  */
 public class DialogUI extends _UserInterface {
 

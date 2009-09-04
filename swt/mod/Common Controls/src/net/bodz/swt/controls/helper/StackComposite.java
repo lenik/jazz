@@ -15,11 +15,6 @@ public class StackComposite extends Composite {
         setLayout(stackLayout);
     }
 
-    public void bringFront(Control control) {
-        stackLayout.topControl = control;
-        layout();
-    }
-
     @Override
     public Point computeSize(int wHint, int hHint, boolean changed) {
         Point size;
@@ -31,4 +26,31 @@ public class StackComposite extends Composite {
         }
         return size;
     }
+
+    public void bringFront(Control control) {
+        stackLayout.topControl = control;
+        layout();
+    }
+
+    public int size() {
+        return getChildren().length;
+    }
+
+    public boolean remove(Control control) {
+        if (control == null)
+            throw new NullPointerException("control");
+        for (Control c : getChildren()) {
+            if (control.equals(c)) {
+                control.dispose();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void clear() {
+        for (Control c : getChildren())
+            c.dispose();
+    }
+
 }
