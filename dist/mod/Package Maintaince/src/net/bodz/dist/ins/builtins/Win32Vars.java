@@ -4,7 +4,6 @@ import java.io.File;
 
 import net.bodz.bas.sys.SystemInfo;
 import net.bodz.dist.ins._Project;
-import net.bodz.dist.ins.builtins.Win32VarsTest;
 
 import com.roxes.win32.Win32;
 

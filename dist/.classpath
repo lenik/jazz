@@ -14,5 +14,7 @@
 	<classpathentry kind="src" output="mod/Utilities/test.bin" path="mod/Utilities/test"/>
 	<classpathentry kind="src" output="mod/Win32 Natives/bin" path="mod/Win32 Natives/src"/>
 	<classpathentry kind="src" output="mod/Win32 Natives/test.bin" path="mod/Win32 Natives/test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/net.bodz.bas"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/net.bodz.swt"/>
 	<classpathentry kind="output" path="mod/bin"/>
 </classpath>

@@ -5,6 +5,7 @@ import net.bodz.bas.io.ZipResFolder;
 import net.bodz.bas.lang.util.Reflects;
 import net.bodz.bas.util.LogTerm;
 import net.bodz.bas.util._Job;
+import net.bodz.dist.ins.builtins.TestConfig;
 
 import org.junit.Test;
 

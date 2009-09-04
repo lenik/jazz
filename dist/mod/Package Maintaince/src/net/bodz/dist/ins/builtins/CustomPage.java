@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import net.bodz.bas.types.TreePath;
 import net.bodz.bas.ui.UserInterface;
 import net.bodz.dist.ins.Component;
 import net.bodz.dist.ins.ConfigPage;
@@ -22,9 +23,10 @@ import net.bodz.dist.ins.util.MissingDependancyBuffer;
 import net.bodz.dist.ins.util.TreeItems;
 import net.bodz.dist.ins.util.MissingDependancyBuffer.Entry;
 import net.bodz.swt.controls.WindowComposite;
-import net.bodz.swt.gui.SlientValidationException;
+import net.bodz.swt.gui.QuietValidateException;
 import net.bodz.swt.gui.ValidateException;
-import net.bodz.swt.gui.pfl.Location;
+import net.bodz.swt.gui.pfl.PageException;
+import net.bodz.swt.gui.pfl.ServiceContext;
 import net.bodz.swt.util.SWTResources;
 
 import org.eclipse.swt.SWT;
@@ -51,8 +53,6 @@ import org.eclipse.swt.widgets.TreeItem;
  */
 public class CustomPage extends ConfigPage {
 
-    private ISession        session;
-
     boolean                 showRoot = true;
 
     private Label           descriptionLabel;
@@ -62,18 +62,21 @@ public class CustomPage extends ConfigPage {
     private WindowComposite basedirsComp;
     private List<Text>      dirTexts;
 
-    public CustomPage(ISession _session, Composite parent, int style) {
-        super(parent, style);
-        this.session = _session;
+    public CustomPage(Component owner, ISession session) {
+        super(owner, session);
+    }
+
+    @Override
+    protected void createContents(Composite holder) throws PageException {
         final GridLayout gridLayout = new GridLayout();
         gridLayout.marginWidth = 0;
         gridLayout.marginHeight = 0;
         gridLayout.horizontalSpacing = 1;
         gridLayout.verticalSpacing = 0;
         gridLayout.numColumns = 3;
-        setLayout(gridLayout);
+        holder.setLayout(gridLayout);
 
-        final Composite infobar = new Composite(this, SWT.NONE);
+        final Composite infobar = new Composite(holder, SWT.NONE);
         final GridData gd_infobar = new GridData(SWT.LEFT, SWT.FILL, false, true);
         gd_infobar.widthHint = 100;
         infobar.setLayoutData(gd_infobar);
@@ -82,10 +85,10 @@ public class CustomPage extends ConfigPage {
         descriptionLabel = new Label(infobar, SWT.WRAP);
         descriptionLabel.setText("DESCRIPTION"); //$NON-NLS-1$
 
-        Label vt = new Label(this, SWT.SEPARATOR | SWT.VERTICAL);
+        Label vt = new Label(holder, SWT.SEPARATOR | SWT.VERTICAL);
         vt.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
 
-        tree = new Tree(this, SWT.CHECK);
+        tree = new Tree(holder, SWT.CHECK);
         tree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
         tree.addSelectionListener(new SelectionAdapter() {
             @Override
@@ -127,12 +130,12 @@ public class CustomPage extends ConfigPage {
             }
         });
 
-        Label hr = new Label(this, SWT.SEPARATOR | SWT.HORIZONTAL);
+        Label hr = new Label(holder, SWT.SEPARATOR | SWT.HORIZONTAL);
         hr.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 
         final Image dirImage = SWTResources
                 .getImageRes("/com/sun/java/swing/plaf/windows/icons/Directory.gif"); //$NON-NLS-1$
-        basedirsComp = new WindowComposite(this, SWT.NONE, false, this) {
+        basedirsComp = new WindowComposite(holder, SWT.NONE, false, holder) {
             @Override
             protected void createContents(Composite parent, int style) {
                 final GridLayout gridLayout = new GridLayout();
@@ -192,11 +195,11 @@ public class CustomPage extends ConfigPage {
         basedirsComp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
         basedirsComp.setText(PackNLS.getString("CustomPage.installLocations")); //$NON-NLS-1$
 
-        Label hr2 = new Label(this, SWT.SEPARATOR | SWT.HORIZONTAL);
+        Label hr2 = new Label(holder, SWT.SEPARATOR | SWT.HORIZONTAL);
         hr2.setLayoutData(//
                 new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 
-        statusbar = new Composite(this, SWT.NONE);
+        statusbar = new Composite(holder, SWT.NONE);
         statusbar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
         final GridLayout gridLayout_statusbar = new GridLayout();
         gridLayout_statusbar.numColumns = 2;
@@ -211,11 +214,10 @@ public class CustomPage extends ConfigPage {
     }
 
     @Override
-    public void enter(String prev, int reason) {
-        if (reason != Location.FORWARD)
-            return;
+    public TreePath service(ServiceContext context) throws PageException {
         // refreshBaseDirs();
         refreshTree();
+        return null;
     }
 
     void refreshTree() {
@@ -248,7 +250,7 @@ public class CustomPage extends ConfigPage {
         if (image != null) {
             if (image.width > iconSize || image.height > iconSize)
                 image = image.scaledTo(iconSize, iconSize);
-            item.setImage(new Image(getDisplay(), image));
+            item.setImage(new Image(pageContainer.getDisplay(), image));
         }
 
         boolean defaultSelection = component.getSelection();
@@ -268,7 +270,8 @@ public class CustomPage extends ConfigPage {
 
                 TreeItem childItem = new TreeItem(item, SWT.NONE);
                 if (readOnly) {
-                    Color readOnlyColor = getDisplay().getSystemColor(SWT.COLOR_WIDGET_DARK_SHADOW);
+                    Color readOnlyColor = pageContainer.getDisplay().getSystemColor(
+                            SWT.COLOR_WIDGET_DARK_SHADOW);
                     childItem.setForeground(readOnlyColor);
                 }
 
@@ -302,12 +305,12 @@ public class CustomPage extends ConfigPage {
         project.analyseDependency(missingBuffer);
         List<Entry> missingList = missingBuffer.getList();
         if (!missingList.isEmpty()) {
-            SelectComponentsDialog dialog = new SelectComponentsDialog(getShell(), SWT.NONE,
-                    PackNLS.getString("CustomPage.checkMissings"), //$NON-NLS-1$
+            SelectComponentsDialog dialog = new SelectComponentsDialog(pageContainer.getShell(),
+                    SWT.NONE, PackNLS.getString("CustomPage.checkMissings"), //$NON-NLS-1$
                     PackNLS.getString("CustomPage.checkMissings.caption"), missingList); //$NON-NLS-1$
             Collection<Component> add = dialog.open();
             if (add == null)
-                throw new SlientValidationException(tree);
+                throw new QuietValidateException(tree);
             for (Component c : add) {
                 TreeItem item = (TreeItem) c.getViewData();
                 TreeItems.setState(item, FULL);
@@ -326,7 +329,7 @@ public class CustomPage extends ConfigPage {
                 boolean confirmed = UI.confirm(PackNLS.getString("CustomPage.createDirQ"), //$NON-NLS-1$
                         PackNLS.format("CustomPage.confirmMkdir", dirFile));//$NON-NLS-1$
                 if (!confirmed) {
-                    throw new SlientValidationException(dirText);
+                    throw new QuietValidateException(dirText);
                 } else if (!dirFile.mkdirs())
                     throw new ValidateException(dirText, PackNLS.getString("CustomPage.cantMkdir") //$NON-NLS-1$
                             + dirFile);

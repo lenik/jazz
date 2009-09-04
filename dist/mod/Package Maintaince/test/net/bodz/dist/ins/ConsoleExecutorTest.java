@@ -5,6 +5,7 @@ import java.io.IOException;
 import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.io.FileResFolder;
 import net.bodz.bas.util.LogTerm;
+import net.bodz.dist.ins.builtins.TestConfig;
 
 import org.junit.Test;
 

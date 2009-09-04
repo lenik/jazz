@@ -31,7 +31,7 @@ import net.bodz.dist.ins.nls.PackNLS;
 import net.bodz.dist.ins.util.Utils;
 
 /**
- * @test FileCopyTest
+ * @test {@link FileCopyTest}
  */
 public class FileCopy extends _Component {
 
@@ -96,12 +96,10 @@ public class FileCopy extends _Component {
 
     /**
      * @param basePath
-     *            <code>base-variable/sub/path...</code>, must use / as the file
-     *            separator.
+     *            <code>base-variable/sub/path...</code>, must use / as the file separator.
      * @param localBase
-     *            used to construct the subpath of local files, by remove
-     *            localBase from local paths. using <code>null</code> to ignore
-     *            the directory names.
+     *            used to construct the subpath of local files, by remove localBase from local
+     *            paths. using <code>null</code> to ignore the directory names.
      */
     public FileCopy(String baseName, String basePath, File localBase, Collection<File> files) {
         super(false, true);
@@ -126,7 +124,7 @@ public class FileCopy extends _Component {
         this(baseName, basePath, localBase, Arrays.asList(files));
     }
 
-    public FileCopy(String baseName, String basePath, File... files) {
+    public FileCopy(String baseName, String basePath, File[] files) {
         this(baseName, basePath, null, Arrays.asList(files));
     }
 
@@ -144,7 +142,7 @@ public class FileCopy extends _Component {
         this(baseName, ROOT, localBase, files);
     }
 
-    public FileCopy(String baseName, File... files) {
+    public FileCopy(String baseName, File[] files) {
         this(baseName, ROOT, null, files);
     }
 

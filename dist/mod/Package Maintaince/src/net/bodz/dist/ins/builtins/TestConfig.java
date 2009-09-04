@@ -1,4 +1,4 @@
-package net.bodz.dist.ins;
+package net.bodz.dist.ins.builtins;
 
 import java.io.File;
 import java.util.Map;

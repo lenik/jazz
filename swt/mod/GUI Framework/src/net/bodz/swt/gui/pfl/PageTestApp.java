@@ -1,6 +1,7 @@
 package net.bodz.swt.gui.pfl;
 
 import net.bodz.bas.lang.err.IllegalUsageException;
+import net.bodz.bas.types.TreePath;
 import net.bodz.swt.gui.util.ControlTestApp;
 import net.bodz.swt.nls.GUINLS;
 
@@ -11,77 +12,91 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-public abstract class PageTestApp extends ControlTestApp {
+public class PageTestApp extends ControlTestApp {
 
-    WizardComposite wizard;
+    private NavigatorComposite navigator;
+    private SimpleBook         book;
+
+    static final TreePath      START = new TreePath("start");
+    static final TreePath      DEBUG = new TreePath("debug");
 
     public PageTestApp() {
-        wizard = new WizardComposite(parent, SWT.NONE);
-        wizard.definePage("test", new PageFactory() { //$NON-NLS-1$
-                    @Override
-                    public PageComposite create(Composite parent) {
-                        return createPage(parent, SWT.NONE);
-                    }
-                });
-        wizard.definePage("end", new PageFactory() { //$NON-NLS-1$
-                    @Override
-                    public PageComposite create(Composite parent) {
-                        return new PageComposite(parent, SWT.NONE) {
-                            Label prevLabel;
-                            Label infoLabel;
-                            Text  text;
-                            {
-                                setLayout(new GridLayout(1, false));
-                                prevLabel = new Label(this, SWT.NONE);
-                                prevLabel.setText(GUINLS.getString("PageTestApp.youFromQ")); //$NON-NLS-1$
+        book = new SimpleBook();
+        book.setFirst(START);
+        book.add(DEBUG, new DebugPage());
+        book.addMethod(new PageMethod(DEBUG.getPath(), "Debug"));
+    }
 
-                                infoLabel = new Label(this, SWT.NONE);
+    public PageTestApp(Page pageToTest) {
+        this();
+        setTestPage(pageToTest);
+    }
 
-                                text = new Text(this, SWT.BORDER | SWT.MULTI | SWT.READ_ONLY
-                                        | SWT.V_SCROLL);
-                                GridData gridData = new GridData(GridData.FILL, GridData.FILL,
-                                        true, true);
-                                text.setLayoutData(gridData);
-                            }
+    public void setTestPage(Page pageToTest) {
+        book.add(START, pageToTest);
+    }
 
-                            @Override
-                            public void enter(String prev, int reason) {
-                                prevLabel.setText(String.format(GUINLS
-                                        .getString("PageTestApp.youFromA_ss"), prev, reason)); //$NON-NLS-1$ 
-
-                                Page prevPage = wizard.getPageFlow().getPage(prev);
-                                if (prevPage == null)
-                                    throw new IllegalUsageException(GUINLS
-                                            .getString("PageTestApp.badAddress") //$NON-NLS-1$
-                                            + prev);
-                                String type = prevPage.getClass().getName();
-                                int hash = System.identityHashCode(prevPage);
-                                infoLabel
-                                        .setText(GUINLS.getString("PageTestApp.page_") + type + ") @" //$NON-NLS-1$ //$NON-NLS-2$
-                                                + Integer.toHexString(hash) + ": "); //$NON-NLS-1$
-
-                                String s = prevPage.toString();
-                                text.setText(s);
-                            }
-
-                            @Override
-                            protected Object getInitialState() {
-                                return "quit"; //$NON-NLS-1$
-                            }
-                        };
-                    }
-                });
-        wizard.addExitListener(new WizardExitListener() {
+    @Override
+    public void run() {
+        navigator = new NavigatorComposite(book, parent, SWT.NONE);
+        navigator.getPageFlow().addBadPathListener(new BadPathListener() {
             @Override
-            public void wizardExit(WizardExitEvent e) {
+            public void badPath(BadPathEvent e) {
+                System.out.println("Exit from: " + e.path);
                 shell.dispose();
             }
         });
-        SymlinkPageFlow pageFlow = wizard.getPageFlow();
-        pageFlow.putLink("test/next", "end"); //$NON-NLS-1$ //$NON-NLS-2$
-        pageFlow.set("test"); //$NON-NLS-1$
+        super.run();
     }
 
-    protected abstract PageComposite createPage(Composite parent, int style);
+    static class DebugPage extends _Page {
+
+        Label prevLabel;
+        Label infoLabel;
+        Text  text;
+
+        public DebugPage() {
+            addMethod(new PageMethod("quit"));
+        }
+
+        @Override
+        protected void createContents(Composite holder) throws PageException {
+            holder.setLayout(new GridLayout(1, false));
+            prevLabel = new Label(holder, SWT.NONE);
+            prevLabel.setText(GUINLS.getString("PageTestApp.youFromQ")); //$NON-NLS-1$
+
+            infoLabel = new Label(holder, SWT.NONE);
+
+            text = new Text(holder, SWT.BORDER | SWT.MULTI | SWT.READ_ONLY | SWT.V_SCROLL);
+            GridData gridData = new GridData(GridData.FILL, GridData.FILL, true, true);
+            text.setLayoutData(gridData);
+        }
+
+        @Override
+        public TreePath service(ServiceContext context) throws PageException {
+            Book book = context.getPageContext().getBook();
+            TreePath referrer = context.getReferrerPath();
+            prevLabel.setText(GUINLS.format("PageTestApp.youFromA_s", referrer)); //$NON-NLS-1$
+
+            // debug request must come from an existing page.
+            if (referrer == null)
+                throw new NullPointerException("referrer");
+
+            Page referrerPage = book.getPage(referrer);
+            if (referrerPage == null)
+                throw new IllegalUsageException(GUINLS.getString("PageTestApp.badAddress") //$NON-NLS-1$
+                        + referrer);
+
+            String type = referrerPage.getClass().getName();
+            int hash = System.identityHashCode(referrerPage);
+            infoLabel.setText(GUINLS.getString("PageTestApp.page_") + type + ") @" //$NON-NLS-1$ //$NON-NLS-2$
+                    + Integer.toHexString(hash) + ": "); //$NON-NLS-1$
+
+            String s = referrerPage.toString();
+            text.setText(s);
+            return null;
+        }
+
+    }
 
 }

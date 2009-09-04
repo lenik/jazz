@@ -11,15 +11,13 @@ import net.bodz.dist.ins.Variable;
 import net.bodz.dist.ins._Project;
 import net.bodz.dist.ins.nls.PackNLS;
 
-import org.eclipse.swt.widgets.Composite;
-
 public class SimpleProject extends _Project {
 
     static class DisplayLogo extends ConfigComponent {
 
         @Override
-        public ConfigPage createConfig(ISession session, Composite parent, int style) {
-            return new LogoPage(session, parent, style);
+        public ConfigPage createConfig(ISession session) {
+            return new LogoPage(this, session);
         }
 
     }
@@ -27,8 +25,8 @@ public class SimpleProject extends _Project {
     static class LicenseAgreement extends ConfigComponent {
 
         @Override
-        public ConfigPage createConfig(ISession session, Composite parent, int style) {
-            return new LicensePage(session, parent, style);
+        public ConfigPage createConfig(ISession session) {
+            return new LicensePage(this, session);
         }
 
     }
@@ -36,8 +34,8 @@ public class SimpleProject extends _Project {
     static class ChooseScheme extends ConfigComponent {
 
         @Override
-        public ConfigPage createConfig(ISession session, Composite parent, int style) {
-            return new ChooseSchemePage(session, parent, style);
+        public ConfigPage createConfig(ISession session) {
+            return new ChooseSchemePage(this, session);
         }
 
     }
@@ -51,8 +49,8 @@ public class SimpleProject extends _Project {
         }
 
         @Override
-        public ConfigPage createConfig(ISession session, Composite parent, int style) {
-            return new CustomPage(session, parent, style);
+        public ConfigPage createConfig(ISession session) {
+            return new CustomPage(this, session);
         }
 
     }

@@ -6,7 +6,7 @@ import net.bodz.bas.text.locale.NLSAccessor;
 
 public class GUINLS extends NLSAccessor {
 
-    private static final ResourceBundle bundle;
+    public static final ResourceBundle bundle;
     static {
         bundle = ResourceBundle.getBundle(GUINLS.class.getName());
     }

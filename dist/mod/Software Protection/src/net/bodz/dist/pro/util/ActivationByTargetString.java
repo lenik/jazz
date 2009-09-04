@@ -121,6 +121,13 @@ public class ActivationByTargetString {
         preferences.put(KEY_ACTIVATE_CODE, activateCode);
     }
 
+    public void clear() {
+        if (preferences == null)
+            throw new NullPointerException("preferences");
+        preferences.remove(KEY_HOSTID);
+        preferences.remove(KEY_ACTIVATE_CODE);
+    }
+
     static final MessageDigest digest;
     static {
         try {

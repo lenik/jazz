@@ -4,9 +4,9 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+import net.bodz.bas.types.HashTextMap;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TreeTextMap;
-import net.bodz.dist.ins.ComponentsTest;
 import net.bodz.dist.ins.nls.PackNLS;
 
 /**
@@ -16,11 +16,23 @@ public class Components extends TreeTextMap<Component> {
 
     private static final long serialVersionUID = -3086334384020221224L;
 
+    private TextMap<String>   nextMap;
+
+    public Components() {
+        nextMap = new HashTextMap<String>();
+    }
+
+    public Map<String, String> getNextMap() {
+        return nextMap;
+    }
+
     public void importRegistry(Map<String, Object> registry) {
         importRegistry(registry, false);
     }
 
     /**
+     * Import component data from registry map.
+     * 
      * @param strict
      *            error if registry contains any id of non-existing component
      * @throws NoSuchElementException
@@ -39,6 +51,11 @@ public class Components extends TreeTextMap<Component> {
         }
     }
 
+    /**
+     * Export component data to a registry map.
+     * 
+     * @return Registry {@link Map} contains all component data.
+     */
     public TextMap<Object> exportRegistry() {
         TreeTextMap<Object> registry = new TreeTextMap<Object>();
         for (Map.Entry<String, Component> e : entrySet()) {
@@ -51,50 +68,85 @@ public class Components extends TreeTextMap<Component> {
         return registry;
     }
 
+    /**
+     * Preprocess the component tree, fill undertermined values and analyse the necessary
+     * information.
+     * 
+     * @param start
+     *            the root of component tree to start to collect.
+     */
     public static Components collect(Component start) {
         Components components = new Components();
-        collectChildren(components, start);
+        TreePrep treePrep = new TreePrep(components, components.nextMap);
+        treePrep.iterate(start);
         return components;
     }
 
-    static void collectChildren(TextMap<Component> map, Component start) {
-        Collection<? extends Component> children = start.getChildren();
-        if (children == null)
-            return;
-        String startId = start.getId();
-        String prefix;
-        if (startId == null) {
-            prefix = ""; //$NON-NLS-1$
-            start.setId(prefix);
-        } else
-            prefix = startId + "."; //$NON-NLS-1$
-        int childIndex = 0;
-        for (Component child : children) {
-            childIndex++;
-            if (child == null)
-                throw new NullPointerException("child[" + childIndex + "]"); //$NON-NLS-1$ //$NON-NLS-2$
-            String id = child.getId();
-            if (id == null) {
-                String name = child.getName();
-                if (name == null)
-                    // 1, 2, 3, ...
-                    id = searchUnusedKey(map, prefix, 1);
-                else {
-                    id = prefix + name;
-                    if (map.containsKey(id))
-                        // x_1, x_2, ...
-                        id = searchUnusedKey(map, id + "_", 1); //$NON-NLS-1$
-                }
-                assert id != null;
-                child.setId(id);
-            } else if (map.containsKey(id)) {
-                String mesg = String.format(PackNLS.getString("Components.duplicatedId_sss"), id, map.get(id), //$NON-NLS-1$
-                        child);
-                throw new IllegalStateException(mesg);
-            }
-            map.put(id, child);
-            collectChildren(map, child);
+    private static final String DOT = ".";
+
+    static class TreePrep {
+
+        final TextMap<Component> idMap;
+        final TextMap<String>    nextMap;
+
+        public TreePrep(TextMap<Component> idMap, TextMap<String> seqMap) {
+            this.idMap = idMap;
+            this.nextMap = seqMap;
         }
+
+        /**
+         * @return last id.
+         */
+        public String iterate(Component start) {
+            assert start != null;
+            String startId = start.getId();
+            String prefix;
+            if (startId == null) {
+                // this must be root Component.
+                prefix = ""; //$NON-NLS-1$
+                startId = "";
+                start.setId(startId);
+            } else
+                prefix = startId + DOT; //$NON-NLS-1$
+
+            String prevId = startId;
+
+            Collection<? extends Component> children = start.getChildren();
+            if (children != null) {
+                int index = 0;
+                for (Component child : children) {
+                    index++;
+                    if (child == null)
+                        throw new NullPointerException("child[" + index + "]"); //$NON-NLS-1$ //$NON-NLS-2$
+                    String id = child.getId();
+                    if (id == null) {
+                        String name = child.getName();
+                        if (name == null)
+                            // 1, 2, 3, ...
+                            id = searchUnusedKey(idMap, prefix, 1);
+                        else {
+                            id = prefix + name;
+                            if (idMap.containsKey(id))
+                                // x_1, x_2, ...
+                                id = searchUnusedKey(idMap, id + "_", 1); //$NON-NLS-1$
+                        }
+                        assert id != null;
+                        child.setId(id);
+                    } else if (idMap.containsKey(id)) {
+                        String mesg = String.format(PackNLS
+                                .getString("Components.duplicatedId_sss"), id, idMap.get(id), //$NON-NLS-1$
+                                child);
+                        throw new IllegalStateException(mesg);
+                    }
+                    idMap.put(id, child);
+                    nextMap.put(prevId, id);
+                    prevId = iterate(child);
+                }
+            }
+            String lastId = prevId;
+            return lastId;
+        }
+
     }
 
     static String searchUnusedKey(TextMap<?> map, String s, int startIndex) {

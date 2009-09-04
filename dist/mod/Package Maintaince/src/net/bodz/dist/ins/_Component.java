@@ -10,7 +10,6 @@ import net.bodz.bas.a.A_bas;
 import net.bodz.dist.ins.nls.PackNLS;
 
 import org.eclipse.swt.graphics.ImageData;
-import org.eclipse.swt.widgets.Composite;
 
 public abstract class _Component implements Component {
 
@@ -194,7 +193,7 @@ public abstract class _Component implements Component {
     }
 
     @Override
-    public ConfigPage createConfig(ISession session, Composite parent, int style) {
+    public ConfigPage createConfig(ISession session) {
         return null;
     }
 

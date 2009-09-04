@@ -6,14 +6,14 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 
-public class TestPage2 extends PageComposite {
+public class TestPage2 extends _Page {
 
     TestComposite inner;
 
-    public TestPage2(Composite parent, int style) {
-        super(parent, style);
-        setLayout(new FillLayout());
-        inner = new TestComposite(this, SWT.NONE);
+    @Override
+    protected void createContents(Composite holder) {
+        holder.setLayout(new FillLayout());
+        inner = new TestComposite(holder, SWT.NONE);
     }
 
 }

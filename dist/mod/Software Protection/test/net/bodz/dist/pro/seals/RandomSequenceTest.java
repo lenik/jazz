@@ -5,9 +5,6 @@ import static org.junit.Assert.assertEquals;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
-import net.bodz.bas.lang.err.NotImplementedException;
-import net.bodz.dist.pro.seals.RandomSequence;
-
 import org.junit.Test;
 
 public class RandomSequenceTest {
@@ -17,19 +14,28 @@ public class RandomSequenceTest {
     @Test
     public void testGetBytes() {
         RandomSequence seq = new RandomSequence(123);
+
         int n = seq.next();
         System.out.println(n);
         assertEquals(-1188957731, n);
 
         seq.reset();
-        ByteBuffer bb = ByteBuffer.allocate(10);
-        seq.next(bb);
-        IntBuffer ib = bb.asIntBuffer();
-        int n1 = ib.get();
+        ByteBuffer buf = ByteBuffer.allocate(10);
+        seq.next(buf);
+        buf.flip();
+
+        IntBuffer intbuf = buf.asIntBuffer();
+        int n1 = intbuf.get();
         if (littleEndian) {
-            assertEquals(n, n1);
+            int n1rev = 0;
+            for (int i = 0; i < 4; i++) {
+                n1rev <<= 8;
+                n1rev |= n1 & 0xff;
+                n1 >>= 8;
+            }
+            assertEquals(n, n1rev);
         } else {
-            throw new NotImplementedException("big-endian"); //$NON-NLS-1$
+            assertEquals(n, n1);
         }
     }
 

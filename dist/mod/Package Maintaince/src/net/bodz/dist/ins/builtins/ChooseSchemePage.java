@@ -1,10 +1,10 @@
 package net.bodz.dist.ins.builtins;
 
 import net.bodz.bas.sys.SystemProperties;
+import net.bodz.dist.ins.Component;
 import net.bodz.dist.ins.ConfigPage;
 import net.bodz.dist.ins.ISession;
 import net.bodz.dist.ins.Scheme;
-import net.bodz.dist.ins.builtins.ChooseSchemePageTest;
 import net.bodz.dist.ins.nls.PackNLS;
 import net.bodz.swt.controls.util.Controls;
 import net.bodz.swt.gui.ValidateException;
@@ -24,23 +24,37 @@ import org.eclipse.swt.widgets.Label;
  */
 public class ChooseSchemePage extends ConfigPage {
 
-    private ISession session;
     private Scheme[] schemes;
 
     private int      selectedIndex = -1;
 
-    public ChooseSchemePage(ISession session, Composite parent, int style) {
-        super(parent, style);
-        this.session = session;
-
+    public ChooseSchemePage(Component owner, ISession session) {
+        super(owner, session);
+        schemes = session.getProject().getSchemes();
         if (SystemProperties.isDevelopMode())
             selectedIndex = 0;
+    }
 
+    public int getSelectedIndex() {
+        return selectedIndex;
+    }
+
+    @Override
+    public ImageData getPageIcon() {
+        return super.getPageIcon();
+    }
+
+    @Override
+    public String getPageTitle() {
+        return PackNLS.getString("ChooseSchemePage.title"); //$NON-NLS-1$
+    }
+
+    @Override
+    protected void createContents(Composite parent) {
         final GridLayout gridLayout = new GridLayout();
         gridLayout.numColumns = 2;
-        setLayout(gridLayout);
+        parent.setLayout(gridLayout);
 
-        schemes = session.getProject().getSchemes();
         SelectionAdapter selector = new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -55,7 +69,7 @@ public class ChooseSchemePage extends ConfigPage {
             String caption = scheme.getCaption();
             String description = scheme.getDescription();
 
-            final Button schemeButton = new Button(this, SWT.RADIO);
+            final Button schemeButton = new Button(parent, SWT.RADIO);
             schemeButton.setText(caption);
             schemeButton.setData(i);
             schemeButton.addSelectionListener(selector);
@@ -64,22 +78,11 @@ public class ChooseSchemePage extends ConfigPage {
             if (selectedIndex == i)
                 schemeButton.setSelection(true);
 
-            final Label label = new Label(this, SWT.NONE);
+            final Label label = new Label(parent, SWT.NONE);
             label.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, true, true));
             label.setText(description);
             Controls.setFontHeight(label, 12);
         }
-
-    }
-
-    @Override
-    public ImageData getPageIcon() {
-        return super.getPageIcon();
-    }
-
-    @Override
-    public String getPageTitle() {
-        return PackNLS.getString("ChooseSchemePage.title"); //$NON-NLS-1$
     }
 
     @Override
@@ -88,10 +91,6 @@ public class ChooseSchemePage extends ConfigPage {
             throw new ValidateException(PackNLS.getString("ChooseSchemePage.notSelected")); //$NON-NLS-1$
         Scheme scheme = schemes[selectedIndex];
         session.setScheme(scheme);
-    }
-
-    public int getSelectedIndex() {
-        return selectedIndex;
     }
 
     @Override

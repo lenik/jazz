@@ -8,16 +8,21 @@ import org.eclipse.swt.widgets.Label;
 public class PageTestAppTest {
 
     public static void main(String[] args) {
-        PageTestApp app = new PageTestApp() {
+        PageTestApp app = new PageTestApp(new _Page() {
+
             @Override
-            protected PageComposite createPage(Composite parent, int style) {
-                PageComposite page = new PageComposite(parent, style);
-                page.setLayout(new FillLayout());
-                Label label = new Label(page, SWT.NONE);
-                label.setText("Test Page"); //$NON-NLS-1$
-                return page;
+            public String getPageTitle() {
+                return "Test Page Title";
             }
-        };
+
+            @Override
+            protected void createContents(Composite holder) throws PageException {
+                holder.setLayout(new FillLayout());
+                Label label = new Label(holder, SWT.NONE);
+                label.setText("Test Page"); //$NON-NLS-1$
+            }
+
+        });
         app.run();
     }
 
