@@ -15,7 +15,7 @@ import net.bodz.bas.ui.Proposals;
 import org.eclipse.swt.widgets.Shell;
 import org.junit.Test;
 
-public class DialogInteractionTest {
+public class DialogUITest {
 
     DialogUI ia;
     Person   person;
@@ -28,7 +28,7 @@ public class DialogInteractionTest {
     String   lily  = "LiLY"; //$NON-NLS-1$
     Person   lily2 = person;
 
-    public DialogInteractionTest() {
+    public DialogUITest() {
         ia = new DialogUI(new Shell());
     }
 

@@ -128,7 +128,7 @@ public class BasicGUI extends BasicCLI {
         }
     }
 
-    private static final String KEY_LANG = "lang";
+    private static final String KEY_LANG = "net.bodz.bas.preferredLanguage";
 
     @Override
     protected void doMain(String[] args) throws Throwable {

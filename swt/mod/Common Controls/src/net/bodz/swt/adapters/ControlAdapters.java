@@ -10,6 +10,8 @@ import net.bodz.swt.gui.DialogUI;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlAdapter;
 import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.FocusAdapter;
 import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.events.MouseAdapter;
@@ -22,6 +24,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.swt.widgets.Shell;
@@ -242,6 +245,19 @@ public class ControlAdapters {
 
     public static void browseLink(final Link link) {
         link.addSelectionListener(browseLinkWhenSelected);
+    }
+
+    public static void cascadeDispose(final Composite composite) {
+        class CascadeDispose implements DisposeListener {
+            @Override
+            public void widgetDisposed(DisposeEvent e) {
+                Control[] children = composite.getChildren();
+                for (Control c : children)
+                    if (!c.isDisposed())
+                        c.dispose();
+            }
+        }
+        composite.addDisposeListener(new CascadeDispose());
     }
 
 }

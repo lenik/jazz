@@ -16,5 +16,6 @@
 	<classpathentry kind="src" output="mod/Presentation/bin" path="mod/Presentation/src"/>
 	<classpathentry kind="src" output="mod/Presentation/test.bin" path="mod/Presentation/test"/>
 	<classpathentry kind="var" path="JAVA_LIB/net.bodz.icons.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/net.bodz.bas"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

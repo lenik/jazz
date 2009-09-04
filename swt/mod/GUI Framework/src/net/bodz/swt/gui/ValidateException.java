@@ -4,7 +4,7 @@ import net.bodz.bas.lang.err.CheckException;
 
 import org.eclipse.swt.widgets.Control;
 
-public class ValidateException extends CheckException {
+public class ValidateException extends CheckException implements QuietHint {
 
     private static final long serialVersionUID = 4861800631957356772L;
 
@@ -53,7 +53,8 @@ public class ValidateException extends CheckException {
         return control;
     }
 
-    public boolean isSilent() {
+    @Override
+    public boolean isQuiet() {
         return false;
     }
 

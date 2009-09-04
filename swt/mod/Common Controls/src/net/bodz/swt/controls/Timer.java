@@ -2,6 +2,9 @@ package net.bodz.swt.controls;
 
 import org.eclipse.swt.widgets.Display;
 
+/**
+ * @test {@link TimerTest}
+ */
 public abstract class Timer implements Runnable {
 
     class Delayed implements Runnable {

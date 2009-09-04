@@ -33,20 +33,28 @@ public class DynamicControl extends Composite {
     }
 
     /**
-     * @param except
+     * @param keepThis
      *            don't remove this control.
+     * @return number of controls haven't been removed.
      */
-    private int clear(Control except) {
+    private int _clear(Control keepThis) {
         Control[] children = getChildren();
-        int excepts = 0;
+        int ignored = 0;
         for (Control child : children) {
-            if (except != null && child.equals(except)) {
-                excepts++;
+            if (keepThis != null && child.equals(keepThis)) {
+                ignored++;
                 continue;
             }
             child.dispose();
         }
-        return excepts;
+        return ignored;
+    }
+
+    /**
+     * @return <code>true</code> if successful cleared.
+     */
+    private boolean clear(Control keep) {
+        return _clear(keep) == 0;
     }
 
     public void clear() {
@@ -61,7 +69,7 @@ public class DynamicControl extends Composite {
     }
 
     public void setControl(Control control) {
-        if (clear(control) == 0)
+        if (clear(control))
             control.setParent(this);
     }
 
