@@ -11,8 +11,8 @@ import net.bodz.bas.ui.a.PreferredSize;
 import net.bodz.bas.util.LogTerm;
 import net.bodz.dist.ins.nls.PackNLS;
 import net.bodz.swt.gui.BasicGUI;
-import net.bodz.swt.gui.pfl.WizardExitEvent;
-import net.bodz.swt.gui.pfl.WizardExitListener;
+import net.bodz.swt.gui.pfl.BadPathEvent;
+import net.bodz.swt.gui.pfl.BadPathListener;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
@@ -60,11 +60,11 @@ public class Installer extends BasicGUI {
         ISession session = new Session(project, UI, L);
         setSession(session);
         InstallComposite installComposite = new InstallComposite(session, parent, SWT.NONE);
-        installComposite.addExitListener(new WizardExitListener() {
+        installComposite.getPageFlow().addBadPathListener(new BadPathListener() {
             @Override
-            public void wizardExit(WizardExitEvent e) {
+            public void badPath(BadPathEvent e) {
                 shell.dispose();
-                System.out.println("Exit address: " + e.address); //$NON-NLS-1$
+                System.out.println("Exit address: " + e.path); //$NON-NLS-1$
             }
         });
     }

@@ -1,7 +1,12 @@
 package net.bodz.dist.ins;
 
 import net.bodz.bas.io.CharOuts.BCharOut;
+import net.bodz.bas.types.TreePath;
 import net.bodz.dist.ins.nls.PackNLS;
+import net.bodz.swt.gui.pfl.PageException;
+import net.bodz.swt.gui.pfl.PageMethod;
+import net.bodz.swt.gui.pfl.ServiceContext;
+import net.bodz.swt.gui.pfl._Page;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.ImageData;
@@ -11,22 +16,17 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
 
-class SummaryPage extends ConfigPage {
+class SummaryPage extends _Page {
 
     private ISession session;
 
     private Text     text;
 
-    public SummaryPage(ISession session, Composite parent, int style) {
-        super(parent, style);
-        setLayout(new GridLayout());
+    public SummaryPage(ISession session) {
+        if (session == null)
+            throw new NullPointerException("session");
         this.session = session;
-
-        final Label sessionConfigurationLabel = new Label(this, SWT.NONE);
-        sessionConfigurationLabel.setText(PackNLS.getString("SummaryPage.sessionConfig")); //$NON-NLS-1$
-
-        text = new Text(this, SWT.WRAP | SWT.V_SCROLL | SWT.READ_ONLY | SWT.MULTI | SWT.BORDER);
-        text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        addMethod(new PageMethod(ProgressPage.class));
     }
 
     @Override
@@ -40,11 +40,22 @@ class SummaryPage extends ConfigPage {
     }
 
     @Override
-    public void enter(String prev, int reason) {
+    protected void createContents(Composite holder) {
+        holder.setLayout(new GridLayout());
+        final Label sessionConfigurationLabel = new Label(holder, SWT.NONE);
+        sessionConfigurationLabel.setText(PackNLS.getString("SummaryPage.sessionConfig")); //$NON-NLS-1$
+
+        text = new Text(holder, SWT.WRAP | SWT.V_SCROLL | SWT.READ_ONLY | SWT.MULTI | SWT.BORDER);
+        text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+    }
+
+    @Override
+    public TreePath service(ServiceContext context) throws PageException {
         BCharOut buf = new BCharOut();
         session.dump(buf);
         String dump = buf.toString();
         text.setText(dump);
+        return null;
     }
 
 }

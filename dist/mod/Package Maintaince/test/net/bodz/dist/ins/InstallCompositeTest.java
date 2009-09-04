@@ -1,12 +1,9 @@
 package net.bodz.dist.ins;
 
 import net.bodz.bas.io.FileResFolder;
-import net.bodz.dist.ins.ConsoleExecutor;
-import net.bodz.dist.ins.ISession;
-import net.bodz.dist.ins.InstallComposite;
-import net.bodz.dist.ins.ProjectExecutor;
-import net.bodz.swt.gui.pfl.WizardExitEvent;
-import net.bodz.swt.gui.pfl.WizardExitListener;
+import net.bodz.dist.ins.builtins.TestConfig;
+import net.bodz.swt.gui.pfl.BadPathEvent;
+import net.bodz.swt.gui.pfl.BadPathListener;
 import net.bodz.swt.gui.util.ControlTestApp;
 
 import org.eclipse.swt.SWT;
@@ -26,9 +23,9 @@ public class InstallCompositeTest {
         TestConfig.setTestBaseDir(session);
 
         InstallComposite c = new InstallComposite(session, app.parent, SWT.BORDER);
-        c.addExitListener(new WizardExitListener() {
+        c.getPageFlow().addBadPathListener(new BadPathListener() {
             @Override
-            public void wizardExit(WizardExitEvent e) {
+            public void badPath(BadPathEvent e) {
                 app.shell.dispose();
             }
         });

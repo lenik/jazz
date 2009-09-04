@@ -5,11 +5,8 @@ import net.bodz.bas.util.LogTerms;
 import net.bodz.dist.ins.ISession;
 import net.bodz.dist.ins.Session;
 import net.bodz.dist.ins.TestProject;
-import net.bodz.dist.ins.builtins.ChooseSchemePage;
-import net.bodz.swt.gui.pfl.PageComposite;
 import net.bodz.swt.gui.pfl.PageTestApp;
 
-import org.eclipse.swt.widgets.Composite;
 import org.junit.Test;
 
 public class ChooseSchemePageTest {
@@ -18,13 +15,7 @@ public class ChooseSchemePageTest {
     public void test1() throws Exception {
         final TestProject project = new TestProject();
         final ISession session = new Session(project, ConsoleUI.stdout, LogTerms.console);
-        PageTestApp app = new PageTestApp() {
-            @Override
-            protected PageComposite createPage(Composite parent, int style) {
-                ChooseSchemePage csp = new ChooseSchemePage(session, parent, style);
-                return csp;
-            }
-        };
+        PageTestApp app = new PageTestApp(new ChooseSchemePage(project, session));
         app.run();
     }
 

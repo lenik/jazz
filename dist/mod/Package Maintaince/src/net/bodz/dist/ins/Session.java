@@ -98,6 +98,11 @@ public class Session implements ISession {
     }
 
     @Override
+    public Components getComponents() {
+        return components;
+    }
+
+    @Override
     public Component getComponent(String id) {
         return components.get(id);
     }
@@ -339,4 +344,5 @@ public class Session implements ISession {
                 dump(out, child, prefix + "  "); //$NON-NLS-1$
         }
     }
+
 }

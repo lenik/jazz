@@ -1,117 +1,231 @@
 package net.bodz.swt.gui.pfl;
 
-import java.util.Collection;
-import java.util.NoSuchElementException;
+import java.util.ArrayList;
+import java.util.List;
 
-import net.bodz.bas.types.TextMap;
-import net.bodz.bas.types.TreeTextMap;
+import net.bodz.bas.types.SimpleRequest;
+import net.bodz.bas.types.TreePath;
+import net.bodz.bas.types.util.Objects;
+import net.bodz.swt.adapters.ControlAdapters;
+import net.bodz.swt.gui.QuietHint;
 import net.bodz.swt.gui.ValidateException;
-import net.bodz.swt.nls.GUINLS;
 
-public class PageFlow extends Location {
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Text;
 
-    /**
-     * unix-style path -> page object
-     */
-    private TextMap<Page> pages;
+public abstract class PageFlow {
 
-    public PageFlow() {
-        this.pages = new TreeTextMap<Page>();
+    private final PageContext            pageContext;
+    private final Book                   book;
+    private final History                history;
+
+    private List<LocationChangeListener> locationChangeListeners;
+    private List<BadPathListener>        badPathListeners;
+
+    public PageFlow(PageContext pageContext) {
+        if (pageContext == null)
+            throw new NullPointerException("pageContext");
+        this.pageContext = pageContext;
+        this.book = pageContext.getBook();
+        this.history = pageContext.getHistory();
+        if (book == null)
+            throw new NullPointerException("book");
+        if (history == null)
+            throw new NullPointerException("history");
     }
 
-    public Collection<Page> getPages() {
-        return pages.values();
-    }
-
-    @Override
-    public boolean has(String next) {
-        String address = resolv(next);
-        if (pages.containsKey(address))
-            return true;
-        return isPageLoadable(address);
-    }
-
-    protected boolean isPageLoaded(String address) {
-        return pages.containsKey(address);
-    }
-
-    public boolean isPageLoadable(String address) {
-        return false;
+    public TreePath getLocation() {
+        return this.history.get();
     }
 
     /**
-     * Only called if {@link #isPageLoadable(String)} returns <code>true</code>
-     * on the specified address
-     * 
-     * @return <code>null</code> in default implementation.
+     * @throws IllegalStateException
+     *             if current page is sticked
      */
-    protected Page loadPage(String address) {
-        return null;
-    }
-
-    public Page getPage() {
-        String address = get();
-        return getPage(address);
-    }
-
-    public Page getPage(String address) {
-        if (address == null)
-            return null;
-        Page page = pages.get(address);
-        if (page == null && isPageLoadable(address)) {
-            page = loadPage(address);
-            pages.put(address, page);
-        }
-        return page;
-    }
-
-    public boolean canGoBack() {
-        return has(-1);
-    }
-
-    public void goBack() {
-        if (!has(-1))
-            throw new NoSuchElementException(GUINLS.getString("PageFlow.noPrevious")); //$NON-NLS-1$
-        go(-1);
-    }
-
-    protected String getPageNext(Page page) {
-        if (page == null)
-            return null;
-        Object exit = page.exitState();
-        if (exit == null)
-            return null;
-        return String.valueOf(exit);
-    }
-
-    public boolean canGoOn() {
-        Page page = getPage();
-        if (page == null)
+    public boolean jump(int delta) {
+        TreePath prev = history.get();
+        if (!history.jump(delta))
             return false;
-        String next = getPageNext(page);
-        return has(next);
+        try {
+            TreePath next = history.get();
+            if (prev != null)
+                _leave(prev, next);
+            if (next != null)
+                _enter(prev, next);
+            showTurn(prev, next);
+        } catch (PageException e) {
+            handleQException(e);
+            return false;
+        }
+        return true;
     }
 
-    public void goOn() throws ValidateException {
-        Page page = getPage();
-        if (page == null)
-            throw new IllegalStateException(GUINLS.getString("PageFlow.noCurrentPage")); //$NON-NLS-1$
-        page.validate();
-        String next = getPageNext(page);
-        set(next);
+    public boolean go(TreePath next) {
+        // XXX - source?
+        SimpleRequest request = new SimpleRequest(this, next);
+        return submit(request);
     }
 
-    @Override
-    protected void locationChange(String prev, String next, int reason) {
-        Page prevPage = getPage(prev);
-        if (prevPage != null)
-            prevPage.leave(next, reason);
+    public boolean submit(SimpleRequest request) {
+        TreePath prev = history.get();
+        TreePath next = request.getPath();
+        if (next == null)
+            throw new NullPointerException("request.path");
+        try {
+            if (prev != null) {
+                Page page = book.getPage(prev);
+                try {
+                    page.validate();
+                } catch (ValidateException e) {
+                    handleQException(e);
+                    Control control = e.getControl();
+                    if (control != null)
+                        control.setFocus();
+                    return false;
+                }
+                _leave(prev, next);
+            }
 
-        Page nextPage = getPage(next);
-        if (nextPage != null)
-            nextPage.enter(prev, reason);
+            TreePath referrer = prev;
+            while (true) {
+                if (!book.contains(next)) {
+                    fireBadPath(next);
+                    return false;
+                }
+                assert next != null;
+                _enter(prev, next);
+                showTurn(prev, next);
 
-        super.locationChange(prev, next, reason);
+                ServiceContext context = createServiceContext(request, referrer);
+                Page nextPage = book.getPage(next);
+                TreePath redirect = nextPage.service(context);
+                if (redirect == null)
+                    break;
+                referrer = next;
+                next = redirect;
+            }
+
+            history.go(next);
+        } catch (PageException e) {
+            handleQException(e);
+            return false;
+        }
+        return true;
+    }
+
+    protected ServiceContext createServiceContext(final SimpleRequest request,
+            final TreePath referrer) {
+        return new ServiceContext() {
+
+            @Override
+            public PageContext getPageContext() {
+                return pageContext;
+            }
+
+            @Override
+            public SimpleRequest getRequest() {
+                return request;
+            }
+
+            @Override
+            public TreePath getReferrerPath() {
+                return referrer;
+            }
+
+        };
+    }
+
+    private void _leave(TreePath prev, TreePath next) throws PageException {
+        assert prev != null;
+        assert book.contains(prev);
+        Page prevPage = book.getPage(prev);
+        if (prevPage.isSticked())
+            throw new PageException("Page is sticked: " + getPageInfo(prev, prevPage));
+        prevPage.leave(next);
+    }
+
+    private void _enter(TreePath prev, TreePath next) throws PageException {
+        assert next != null;
+        assert book.contains(next);
+        Page nextPage = book.getPage(next);
+        nextPage.enter(prev);
+        if (!Objects.equals(prev, next))
+            fireLocationChange(prev, next);
+    }
+
+    protected abstract void showTurn(TreePath prev, TreePath path) throws PageException;
+
+    protected void handleException(Exception e) {
+        throw new Error(e);
+    }
+
+    protected final <X extends Exception & QuietHint> void handleQException(X e) {
+        if (!e.isQuiet()) {
+            handleException(e);
+        }
+    }
+
+    /**
+     * @see ControlAdapters#commit(Control, net.bodz.swt.adapters.CommitAdapter)
+     */
+    protected void handleValidateException(ValidateException e) {
+        handleQException(e);
+        Control control = e.getControl();
+        if (control != null) {
+            control.setFocus();
+            if (control instanceof Text) {
+                Text text = (Text) control;
+                int len = text.getText().length();
+                text.setSelection(0, len);
+            }
+        }
+    }
+
+    static String getPageInfo(TreePath path, Page page) {
+        String pageTitle = page.getPageTitle();
+        return path + " => " + pageTitle;
+    }
+
+    public void addLocationChangeListener(LocationChangeListener l) {
+        if (locationChangeListeners == null)
+            locationChangeListeners = new ArrayList<LocationChangeListener>(1);
+        locationChangeListeners.add(l);
+    }
+
+    public void removeLocationChangeListener(LocationChangeListener l) {
+        if (locationChangeListeners != null)
+            locationChangeListeners.remove(l);
+    }
+
+    protected void fireLocationChange(TreePath prev, TreePath next) {
+        if (Objects.equals(prev, next))
+            return;
+        if (locationChangeListeners != null) {
+            // source??
+            LocationChangeEvent e = new LocationChangeEvent(this, prev, next);
+            for (LocationChangeListener l : locationChangeListeners)
+                l.locationChange(e);
+        }
+    }
+
+    public void addBadPathListener(BadPathListener l) {
+        if (badPathListeners == null)
+            badPathListeners = new ArrayList<BadPathListener>(1);
+        badPathListeners.add(l);
+    }
+
+    public void removeBadPathListener(BadPathListener l) {
+        if (badPathListeners != null)
+            badPathListeners.remove(l);
+    }
+
+    protected void fireBadPath(TreePath path) {
+        if (badPathListeners != null) {
+            BadPathEvent e = new BadPathEvent(pageContext, path);
+            for (BadPathListener l : badPathListeners) {
+                l.badPath(e);
+            }
+        }
     }
 
 }

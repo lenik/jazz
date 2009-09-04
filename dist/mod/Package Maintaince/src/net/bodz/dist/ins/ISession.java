@@ -16,6 +16,8 @@ public interface ISession {
 
     Project getProject();
 
+    Components getComponents();
+
     Component getComponent(String id);
 
     Scheme getScheme();
@@ -74,10 +76,9 @@ public interface ISession {
      *            name of the attachment to use
      * @param autoCreate
      *            create new attachment resource if not existed
-     * @return {@link Attachment} which can be opened later. After used the
-     *         attachment, it can be left opened for next time use, all unclosed
-     *         attachments are auto closed at the end of the session. The return
-     *         value is never be <code>null</code>.
+     * @return {@link Attachment} which can be opened later. After used the attachment, it can be
+     *         left opened for next time use, all unclosed attachments are auto closed at the end of
+     *         the session. The return value is never be <code>null</code>.
      * @throws IOException
      *             if the name is invalid or failed to get the attachment.
      */

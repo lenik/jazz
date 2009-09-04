@@ -2,13 +2,13 @@ package net.bodz.dist.ins.builtins;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileSystemException;
 import java.nio.file.Path;
 
 import net.bodz.bas.io.Files;
 import net.bodz.bas.sys.SystemInfo;
 import net.bodz.dist.ins.ISession;
 import net.bodz.dist.ins._Component;
-import net.bodz.dist.ins.builtins.FileLinkTest;
 import net.bodz.dist.ins.nls.PackNLS;
 
 import com.roxes.win32.LnkFile;
@@ -55,11 +55,12 @@ public class FileLink extends _Component {
             Path dstpath = dst.toPath();
             try {
                 if (dst.exists()) {
-                    boolean confirm = UI.confirm(PackNLS.getString("FileLink.fileExist_s"), dst); //$NON-NLS-1$
+                    boolean confirm = UI.confirm(PackNLS.format("FileLink.fileExist_s", dst)); //$NON-NLS-1$
                     if (!confirm) {
                         L.info(PackNLS.getString("FileLink.skipped"), dst); //$NON-NLS-1$
                         return;
                     }
+                    dst.delete();
                 } else {
                     // mkdir -p dst.parent
                     File parentFile = dst.getParentFile();
@@ -71,6 +72,7 @@ public class FileLink extends _Component {
                     try {
                         dstpath.createSymbolicLink(srcpath);
                     } catch (UnsupportedOperationException e) {
+                        L.warn(e);
                         if (SystemInfo.isWin32()) {
                             L.warn(PackNLS.getString("FileLink.symlinkIsntSupported")); //$NON-NLS-1$
                             File _src = Files.canoniOf(src);
@@ -83,10 +85,18 @@ public class FileLink extends _Component {
                     }
                 } else {
                     L.finfo(PackNLS.getString("FileLink.createLink_ss"), src, dst); //$NON-NLS-1$
+                    String errmesg = null;
                     try {
                         dstpath.createLink(srcpath);
                     } catch (UnsupportedOperationException e) {
-                        L.warn(PackNLS.getString("FileLink.hardLinkIsntSupported")); //$NON-NLS-1$
+                        L.warn(e);
+                        errmesg = PackNLS.getString("FileLink.hardLinkIsntSupported");
+                    } catch (FileSystemException e) {
+                        L.warn(e);
+                        errmesg = PackNLS.getString("FileLink.hardLinkIsntSupported");
+                    }
+                    if (errmesg != null) {
+                        L.warn(errmesg);
                         try {
                             File parentFile = dst.getParentFile();
                             parentFile = Files.canoniOf(parentFile);

@@ -1,9 +1,13 @@
 package net.bodz.swt.gui.pfl;
 
-import net.bodz.bas.util.StateChangeListener;
+import java.beans.PropertyChangeListener;
+import java.util.Collection;
+
+import net.bodz.bas.types.TreePath;
 import net.bodz.swt.gui.ValidateException;
 
 import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.widgets.Control;
 
 public interface Page {
 
@@ -12,32 +16,52 @@ public interface Page {
     ImageData getPageIcon();
 
     /**
-     * @param prev
-     *            full path of previous page
+     * @return <code>null</code> for non-page, which doesn't make history record. For non-page,
+     *         {@link #service(ServiceContext)} must returns non-<code>null</code> path for
+     *         redirection.
      */
-    void enter(String prev, int reason);
-
-    void leave(String next, int reason);
+    Control createUI(PageContainer pageContainer) throws PageException;
 
     /**
-     * The page is locked and leave is forbidden.
+     * Be called only once for any instance.
+     * 
+     * @return <code>null</code> stay with-in current page, otherwise redirect to the returned path
+     *         if any.
      */
-    boolean isLocked();
+    TreePath service(ServiceContext context) throws PageException;
+
+    void enter(TreePath prev) throws PageException;
+
+    void leave(TreePath next) throws PageException;
+
+    /**
+     * The page is sticked and leave is forbidden.
+     */
+    boolean isSticked();
 
     /**
      * Can't go ahead (or submit) if validation is failed.
      * 
      * @throws ValidateException
      */
-    void validate() throws ValidateException;
+    void validate() throws PageException, ValidateException;
 
     /**
-     * Exit state may be used as a path string to the next page.
+     * @return <code>null</code> to use a default submit method.
      */
-    Object exitState();
+    Collection<PageMethod> getMethods();
 
-    void addStateChangeListener(StateChangeListener listener);
+    String PROP_PAGETITLE = "pageTitle";
+    String PROP_PAGEICON  = "pageIcon";
+    String PROP_METHODS   = "methods";
+    String PROP_STICKED   = "sticked";
 
-    void removeStateChangeListener(StateChangeListener listener);
+    void addPropertyChangeListener(PropertyChangeListener listener);
+
+    void addPropertyChangeListener(String propertyName, PropertyChangeListener listener);
+
+    void removePropertyChangeListener(PropertyChangeListener listener);
+
+    void removePropertyChangeListener(String propertyName, PropertyChangeListener listener);
 
 }

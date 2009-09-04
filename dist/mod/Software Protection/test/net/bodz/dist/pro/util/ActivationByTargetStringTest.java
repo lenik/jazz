@@ -12,7 +12,7 @@ public class ActivationByTargetStringTest {
 
     @Test
     public void test1() throws Exception {
-        for (int seed = 0; seed < 100; seed++) {
+        for (int seed = 0; seed < 5; seed++) {
             BasicPM pm = new BasicPM(seed);
             ActivationByTargetString abt = new ActivationByTargetString(getClass(), pm);
             String hostId = abt.getHostId();

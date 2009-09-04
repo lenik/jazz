@@ -6,6 +6,7 @@ import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.io.term.BufferedTerminal;
 import net.bodz.bas.io.term.Terminal;
 import net.bodz.bas.lang.RecoverableExceptionEvent;
+import net.bodz.bas.types.TreePath;
 import net.bodz.bas.types.util.Strings;
 import net.bodz.bas.ui.Proposals;
 import net.bodz.bas.ui.UserInterface;
@@ -20,8 +21,11 @@ import net.bodz.swt.controls.DetailSwitchEvent;
 import net.bodz.swt.controls.DetailSwitchListener;
 import net.bodz.swt.controls.WindowComposite;
 import net.bodz.swt.gui.DialogUI;
-import net.bodz.swt.gui.pfl.PageComposite;
-import net.bodz.swt.gui.pfl.PageFlow;
+import net.bodz.swt.gui.pfl.Page;
+import net.bodz.swt.gui.pfl.PageException;
+import net.bodz.swt.gui.pfl.PageMethod;
+import net.bodz.swt.gui.pfl.ServiceContext;
+import net.bodz.swt.gui.pfl._Page;
 import net.bodz.swt.util.SWTResources;
 
 import org.eclipse.swt.SWT;
@@ -43,7 +47,7 @@ import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.ToolItem;
 
-class ProgressPage extends PageComposite {
+class ProgressPage extends _Page {
 
     private static final int  BLOCK        = 0;
     private static final int  DONE         = 1;
@@ -73,34 +77,48 @@ class ProgressPage extends PageComposite {
     private Label             elapsedLabel;
     private Label             remainingLabel;
 
-    public ProgressPage(final ISession session, Composite parent, int style) {
-        super(parent, style);
-
+    public ProgressPage(final ISession session) {
         this.session = session;
 
+        addMethod(new PageMethod(DonePage.class));
+        addMethod(new PageMethod(CanceledPage.class));
+    }
+
+    @Override
+    public ImageData getPageIcon() {
+        return super.getPageIcon();
+    }
+
+    @Override
+    public String getPageTitle() {
+        return PackNLS.getString("ProgressPage.installing"); //$NON-NLS-1$
+    }
+
+    @Override
+    protected void createContents(final Composite holder) {
         final GridLayout gridLayout = new GridLayout();
         gridLayout.numColumns = 2;
-        setLayout(gridLayout);
+        holder.setLayout(gridLayout);
 
-        imageLabel = new Label(this, SWT.NONE);
+        imageLabel = new Label(holder, SWT.NONE);
         imageLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
 
-        statusLabel = new Label(this, SWT.NONE); // SWT.WRAP);
+        statusLabel = new Label(holder, SWT.NONE); // SWT.WRAP);
         statusLabel.setText("STATUS"); //$NON-NLS-1$
         GridData statusData = new GridData(SWT.FILL, SWT.CENTER, true, false);
         // statusData.heightHint = 50;
         statusLabel.setLayoutData(statusData);
 
-        progressBar = new ProgressBar(this, SWT.NONE);
+        progressBar = new ProgressBar(holder, SWT.NONE);
         progressBar.setMaximum(progressSize);
         progressBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
-        progressText = new Label(this, SWT.NONE);
+        progressText = new Label(holder, SWT.NONE);
         progressText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
         progressText.setAlignment(SWT.CENTER);
         progressText.setText("0%"); //$NON-NLS-1$
 
-        logDetail = new WindowComposite(this, SWT.NONE, true, this) {
+        logDetail = new WindowComposite(holder, SWT.NONE, true, holder) {
 
             @Override
             protected void createContents(Composite parent, int style) {
@@ -173,11 +191,11 @@ class ProgressPage extends PageComposite {
         logDetail.addDetailSwitchListener(new DetailSwitchListener() {
             @Override
             public void detailSwitch(DetailSwitchEvent e) {
-                layout();
+                holder.layout();
             }
         });
 
-        final Composite statusbar = new Composite(this, SWT.NONE);
+        final Composite statusbar = new Composite(holder, SWT.NONE);
         final GridLayout gridLayout_1 = new GridLayout();
         gridLayout_1.numColumns = 2;
         gridLayout_1.verticalSpacing = 0;
@@ -216,40 +234,32 @@ class ProgressPage extends PageComposite {
     }
 
     @Override
-    public ImageData getPageIcon() {
-        return super.getPageIcon();
-    }
-
-    @Override
-    public String getPageTitle() {
-        return PackNLS.getString("ProgressPage.installing"); //$NON-NLS-1$
-    }
-
-    @Override
-    public boolean isLocked() {
+    public boolean isSticked() {
         return state == BLOCK;
     }
 
     protected void setState(int state) {
+        java.util.List<PageMethod> old = getMethods();
         this.state = state;
         switch (state) {
+        case BLOCK:
+            // reflected by isSticked().
+            break;
         case DONE:
-            setExitState("next"); //$NON-NLS-1$
+            setMethods(new PageMethod(DonePage.class, "quit"));
             break;
         case CANCELED:
-            setExitState("cancel"); //$NON-NLS-1$
+            setMethods(new PageMethod(CanceledPage.class, "canceled"));
             break;
         }
-        firePageStateChange();
+        propertyChangeSupport.firePropertyChange(Page.PROP_METHODS, old, getMethods());
     }
 
     /**
      * Execute the install immediately when entered into this page
      */
     @Override
-    public void enter(String prev, int reason) {
-        if (reason != PageFlow.FORWARD)
-            return;
+    public TreePath service(ServiceContext context) throws PageException {
         logList.removeAll();
         setState(BLOCK);
 
@@ -282,7 +292,7 @@ class ProgressPage extends PageComposite {
                     session.closeAttachments();
                     session.setLogger(logger0);
                     final int newState = state;
-                    getDisplay().asyncExec(new Runnable() {
+                    pageContainer.getDisplay().asyncExec(new Runnable() {
                         @Override
                         public void run() {
                             setState(newState);
@@ -293,6 +303,7 @@ class ProgressPage extends PageComposite {
             }
         };
         jobThread.start();
+        return null;
     }
 
     class Observer extends JobObserver {
@@ -310,7 +321,7 @@ class ProgressPage extends PageComposite {
             final double progress = e.getProgress();
             final Object source = e.getSource();
             System.err.printf("%.3f: %s\n", progress, source); //$NON-NLS-1$
-            getDisplay().asyncExec(new Runnable() {
+            pageContainer.getDisplay().asyncExec(new Runnable() {
                 @Override
                 public void run() {
                     setProgress(progress);
@@ -320,7 +331,7 @@ class ProgressPage extends PageComposite {
 
         @Override
         public void durationChange(DurationChangeEvent e) {
-            getDisplay().asyncExec(new Runnable() {
+            pageContainer.getDisplay().asyncExec(new Runnable() {
                 @Override
                 public void run() {
                     // setDu...
@@ -332,7 +343,7 @@ class ProgressPage extends PageComposite {
         public void statusChange(StatusChangeEvent e) {
             Object status = e.getStatus();
             final String text = String.valueOf(status);
-            getDisplay().asyncExec(new Runnable() {
+            pageContainer.getDisplay().asyncExec(new Runnable() {
                 @Override
                 public void run() {
                     setText(text);
@@ -367,12 +378,12 @@ class ProgressPage extends PageComposite {
 
     public void setImage(Image image) {
         imageLabel.setImage(image);
-        layout();
+        pageHolder.layout();
     }
 
     public void setText(String s) {
         statusLabel.setText(s);
-        // layout();
+        // pageHolder.layout();
     }
 
     public void setTextAndLog(int level, String s, Object data) {
@@ -405,7 +416,7 @@ class ProgressPage extends PageComposite {
     }
 
     private void copyLogs() {
-        Display display = getDisplay();
+        Display display = pageContainer.getDisplay();
         Clipboard clipboard = new Clipboard(display);
 
         String s = null;
@@ -431,7 +442,7 @@ class ProgressPage extends PageComposite {
 
         @Override
         protected void _p(final String s) {
-            getDisplay().asyncExec(new Runnable() {
+            pageContainer.getDisplay().asyncExec(new Runnable() {
                 @Override
                 public void run() {
                     setText(s);
@@ -442,7 +453,7 @@ class ProgressPage extends PageComposite {
 
         @Override
         protected void _t(final String s) {
-            getDisplay().asyncExec(new Runnable() {
+            pageContainer.getDisplay().asyncExec(new Runnable() {
                 @Override
                 public void run() {
                     setText(s);

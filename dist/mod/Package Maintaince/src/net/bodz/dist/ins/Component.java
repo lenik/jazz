@@ -6,13 +6,14 @@ import java.util.Set;
 import net.bodz.bas.types.TreeNode;
 
 import org.eclipse.swt.graphics.ImageData;
-import org.eclipse.swt.widgets.Composite;
 
 public interface Component extends TreeNode<Component> {
 
     /**
-     * <code>null</code> id and duplicated id must be filled with a unique one,
-     * with {@link #setId(String)}.
+     * id must be unique in the component tree.
+     * 
+     * @return <code>null</code> will set (by {@link #setId(String)}) to an auto generated unique
+     *         id.
      */
     String getId();
 
@@ -30,8 +31,7 @@ public interface Component extends TreeNode<Component> {
     String getDoc();
 
     /**
-     * Change the selection state of feature component will cause refresh all
-     * the sibling nodes.
+     * Change the selection state of feature component will cause refresh all the sibling nodes.
      */
     boolean isFeature();
 
@@ -58,8 +58,7 @@ public interface Component extends TreeNode<Component> {
     List<? extends Component> getChildren();
 
     /**
-     * @return component names this component required. <code>null</code> if
-     *         none.
+     * @return component names this component required. <code>null</code> if none.
      */
     Set<Component> getDependancy();
 
@@ -74,8 +73,7 @@ public interface Component extends TreeNode<Component> {
     void setViewData(Object viewData);
 
     /**
-     * called by packager, after {@link #pack(ISession)}, the data is then
-     * persisted.
+     * called by packager, after {@link #pack(ISession)}, the data is then persisted.
      */
     Object getRegistryData();
 
@@ -87,7 +85,7 @@ public interface Component extends TreeNode<Component> {
 
     boolean hasConfig();
 
-    ConfigPage createConfig(ISession session, Composite parent, int style);
+    ConfigPage createConfig(ISession session);
 
     double getProgressScaleToParent();
 

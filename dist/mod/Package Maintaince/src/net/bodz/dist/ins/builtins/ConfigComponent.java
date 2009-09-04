@@ -4,8 +4,6 @@ import net.bodz.dist.ins.ConfigPage;
 import net.bodz.dist.ins.ISession;
 import net.bodz.dist.ins._Component;
 
-import org.eclipse.swt.widgets.Composite;
-
 public abstract class ConfigComponent extends _Component {
 
     public ConfigComponent() {
@@ -18,7 +16,7 @@ public abstract class ConfigComponent extends _Component {
     }
 
     @Override
-    public abstract ConfigPage createConfig(ISession session, Composite parent, int style);
+    public abstract ConfigPage createConfig(ISession session);
 
     @Override
     public double getProgressScaleToParent() {

@@ -14,29 +14,33 @@ import org.eclipse.swt.widgets.Text;
 
 @Doc("Test page 1")
 @Icon("icons/full/obj16/ant.gif")
-public class TestPage1 extends PageComposite {
+public class TestPage1 extends _Page {
 
     private Text ageText;
     private Text nameText;
 
-    public TestPage1(Composite parent, int style) {
-        super(parent, style);
+    public TestPage1() {
+        addMethod(new PageMethod(TestPage2.class));
+    }
+
+    @Override
+    protected void createContents(Composite parent) {
         final GridLayout gridLayout = new GridLayout();
         gridLayout.numColumns = 2;
-        setLayout(gridLayout);
+        parent.setLayout(gridLayout);
 
-        final Label nameLabel = new Label(this, SWT.NONE);
+        final Label nameLabel = new Label(parent, SWT.NONE);
         nameLabel.setText("&Name: "); //$NON-NLS-1$
 
-        nameText = new Text(this, SWT.BORDER);
+        nameText = new Text(parent, SWT.BORDER);
         nameText.setTextLimit(100);
         final GridData gd_nameText = new GridData(SWT.FILL, SWT.CENTER, true, false);
         nameText.setLayoutData(gd_nameText);
 
-        final Label ageLabel = new Label(this, SWT.NONE);
+        final Label ageLabel = new Label(parent, SWT.NONE);
         ageLabel.setText("&Age: "); //$NON-NLS-1$
 
-        ageText = new Text(this, SWT.BORDER);
+        ageText = new Text(parent, SWT.BORDER);
         ageText.setTextLimit(2);
         final GridData gd_ageText = new GridData(SWT.FILL, SWT.CENTER, true, false);
         ageText.setLayoutData(gd_ageText);

@@ -1,136 +1,78 @@
 package net.bodz.dist.ins;
 
-import java.util.Iterator;
-
-import net.bodz.bas.lang.Pred1;
-import net.bodz.bas.types.LinkedStack;
-import net.bodz.bas.types.TreePosition;
+import net.bodz.bas.types.TreePath;
 import net.bodz.bas.ui.UIException;
-import net.bodz.dist.ins.InstallCompositeTest;
-import net.bodz.swt.gui.pfl.PageComposite;
-import net.bodz.swt.gui.pfl.PageFactory;
-import net.bodz.swt.gui.pfl.SymlinkPageFlow;
-import net.bodz.swt.gui.pfl.WizardComposite;
+import net.bodz.swt.gui.pfl.Book;
+import net.bodz.swt.gui.pfl.NavigatorComposite;
+import net.bodz.swt.gui.pfl.Page;
+import net.bodz.swt.gui.pfl.SimpleBook;
 
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 
 /**
  * @test {@link InstallCompositeTest}
  */
-public class InstallComposite extends WizardComposite {
+public class InstallComposite extends NavigatorComposite {
 
     protected final ISession session;
 
     public InstallComposite(ISession session, Composite parent, int style) throws UIException {
-        super(parent, style, false);
+        super(createBook(session), parent, style);
         this.session = session;
-        createPages();
         // Pre-load the progress page.
         // progressPage = (ProgressPage) getPageFlow().getPage("progress");
         // if (progressPage == null)
         // throw new UIException("Failed to load progress page");
     }
 
-    void createPages() throws UIException {
-        definePage("summary", new PageFactory() {//$NON-NLS-1$
-                    @Override
-                    public PageComposite create(Composite parent) {
-                        return new SummaryPage(session, parent, SWT.NONE);
-                    }
-                });
-        definePage("progress", new PageFactory() { //$NON-NLS-1$
-                    @Override
-                    public PageComposite create(Composite parent) {
-                        return new ProgressPage(session, parent, SWT.NONE);
-                    }
-                });
-        definePage("done", new PageFactory() { //$NON-NLS-1$
-                    @Override
-                    public PageComposite create(Composite parent) {
-                        return new DonePage(session, parent, SWT.NONE);
-                    }
-                });
-        definePage("canceled", new PageFactory() { //$NON-NLS-1$
-                    @Override
-                    public PageComposite create(Composite parent) {
-                        return new CanceledPage(session, parent, SWT.NONE);
-                    }
-                });
-        SymlinkPageFlow pageFlow = getPageFlow();
-        pageFlow.putLink("summary/next", "progress"); //$NON-NLS-1$ //$NON-NLS-2$
-        pageFlow.putLink("progress/next", "done"); //$NON-NLS-1$ //$NON-NLS-2$
-        pageFlow.putLink("progress/cancel", "canceled"); //$NON-NLS-1$ //$NON-NLS-2$
+    static Book createBook(final ISession session) throws UIException {
+        SimpleBook book = new SimpleBook();
+        book.add(SummaryPage.class, new SummaryPage(session));
+        book.add(ProgressPage.class, new ProgressPage(session));
+        book.add(DonePage.class, new DonePage(session));
+        book.add(CanceledPage.class, new CanceledPage(session));
 
         Project start = session.getProject();
-        pageFlow.putLink("start", new NextPage(start)); //$NON-NLS-1$
-        pageFlow.set("start"); //$NON-NLS-1$
-    }
+        String startId = ConfigPage.getNextConfigId(session, start.getId());
+        String startPath = ConfigPage.CPrefix + startId;
+        book.setFirst(startPath);
 
-    class HasConfigPred extends Pred1<Component> {
-        @Override
-        public boolean test(Component a) {
-            if (a.hasConfig()) {
-                Scheme scheme = session.getScheme();
-                if (scheme == null || scheme.showConfig(a))
-                    return true;
-            }
-            return false;
-        }
-    }
+        class ConfigBook extends SimpleBook {
 
-    final HasConfigPred hasConfigPred = new HasConfigPred();
-
-    class NextPage {
-
-        final Component               startComponent;
-        final TreePosition<Component> startPosition;
-
-        public NextPage(Component startComponent) {
-            this(startComponent, new TreePosition<Component>(startComponent, 0));
-        }
-
-        public NextPage(Component startComponent, TreePosition<Component> start) {
-            this.startComponent = startComponent;
-            this.startPosition = start;
-        }
-
-        /**
-         * {@link NextPage#toString()} is evaluated when dereference the symlink
-         * to the next page.
-         */
-        @Override
-        public String toString() {
-            LinkedStack<TreePosition<Component>> posBuf = new LinkedStack<TreePosition<Component>>();
-            Iterator<Component> iter = startPosition.iterator(hasConfigPred, posBuf);
-            if (!iter.hasNext())
-                return "summary"; //$NON-NLS-1$
-            Component nextComponent = iter.next();
-            TreePosition<Component> nextPosition = posBuf.pop();
-            if (nextComponent == startComponent) { // start is a page-node, skip
-                // start.
-                if (!iter.hasNext())
-                    return "summary"; //$NON-NLS-1$
-                nextComponent = iter.next();
-                nextPosition = posBuf.pop();
+            public ConfigBook(Book next) {
+                super(next);
             }
 
-            String nextPageId = "Config(" + nextComponent.getId() + ")"; //$NON-NLS-1$ //$NON-NLS-2$
-            if (!isPageDefined(nextPageId)) {
-                final Component c = nextComponent;
-                definePage(nextPageId, new PageFactory() {
-                    @Override
-                    public PageComposite create(Composite parent) {
-                        return c.createConfig(session, parent, SWT.NONE);
+            @Override
+            protected boolean _contains(TreePath path) {
+                return _getPage(path) != null;
+            }
+
+            @Override
+            protected Page _getPage(TreePath path) {
+                Page page = super._getPage(path);
+                if (page == null) {
+                    String s = path.getPath();
+                    if (s.startsWith(ConfigPage.CPrefix)) {
+                        String id = s.substring(ConfigPage.CPrefix.length());
+                        Component c = session.getComponent(id);
+                        if (c == null)
+                            throw new NullPointerException("null component: " + id);
+                        Scheme scheme = session.getScheme();
+                        if (c.hasConfig())
+                            if (scheme == null || scheme.showConfig(c)) {
+                                page = c.createConfig(session);
+                                super.add(path, page);
+                            }
                     }
-                });
+                }
+                return page;
             }
 
-            SymlinkPageFlow pageFlow = getPageFlow();
-            pageFlow.putLink(nextPageId, "next", new NextPage(nextComponent, nextPosition)); //$NON-NLS-1$
-            return nextPageId;
         }
 
+        Book configBook = new ConfigBook(book);
+        return configBook;
     }
 
 }

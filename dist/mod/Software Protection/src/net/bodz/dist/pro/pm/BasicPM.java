@@ -1,15 +1,16 @@
 package net.bodz.dist.pro.pm;
 
 import java.security.Key;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.crypto.SecretKey;
 
 import net.bodz.bas.lang.err.SystemException;
 import net.bodz.dist.pro.nls.ProtectNLS;
-import net.bodz.dist.pro.sysid.DiskId;
+import net.bodz.dist.pro.sysid.CpuId;
 import net.bodz.dist.pro.sysid.MacAddressId;
 import net.bodz.dist.pro.sysid.SysIdProvider;
-import net.bodz.dist.pro.sysid.VolumeId;
 
 public class BasicPM extends _ProtectionModel {
 
@@ -18,13 +19,13 @@ public class BasicPM extends _ProtectionModel {
     }
 
     static SysIdProvider findAvailableSysIdProvider() throws SystemException {
-        SysIdProvider[] list = {
-        //
-                new DiskId(0), //
-                new MacAddressId(0), //
-                new VolumeId("C:/"), //  //$NON-NLS-1$
-        };
-        for (SysIdProvider sip : list) {
+        List<SysIdProvider> probeList = new ArrayList<SysIdProvider>();
+        probeList.add(new CpuId(0));
+        probeList.add(new MacAddressId(0));
+        // list.add(new DiskId(0));
+        // list.add(new VolumeId("C:/"));
+
+        for (SysIdProvider sip : probeList) {
             byte[] id = sip.getId();
             if (id != null)
                 return sip;
