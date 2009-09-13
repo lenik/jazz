@@ -172,7 +172,7 @@ public class PKIDumper {
                     if (store != null) {
                         try {
                             out.println(store.size(), " entries"); //$NON-NLS-1$
-                            for (String alias : Iterates.iterate(store.aliases())) {
+                            for (String alias : Iterates.once(store.aliases())) {
                                 dumpStoreEntry(prefix + "  ", store, alias, //$NON-NLS-1$
                                         null, detail - 1);
                             }
@@ -224,7 +224,7 @@ public class PKIDumper {
     }
 
     public void dumpKeyStore(String prefix, KeyStore keyStore, int detail) throws KeyStoreException {
-        for (String alias : Iterates.iterate(keyStore.aliases()))
+        for (String alias : Iterates.once(keyStore.aliases()))
             dumpStoreEntry(prefix + "  ", keyStore, alias, null, detail); //$NON-NLS-1$
     }
 

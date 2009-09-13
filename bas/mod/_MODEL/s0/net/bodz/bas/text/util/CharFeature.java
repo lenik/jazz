@@ -4,9 +4,10 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.files.MapsFile;
-import net.bodz.bas.files.MapsFile.PartMap;
+import net.bodz.bas.files.PartRecords;
+import net.bodz.bas.files.PartRecords.PartMap;
 import net.bodz.bas.io.Files;
+import net.bodz.bas.io.URLResLink;
 import net.bodz.bas.io.ByteOuts.BByteOut;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.types.Bits;
@@ -21,8 +22,8 @@ public class CharFeature {
         bitf = new HashMap<String, Bits>();
 
         URL part1 = Files.classData(CharFeature.class, "1"); //$NON-NLS-1$
-        MapsFile mf = new MapsFile(part1);
-        for (PartMap map : mf) {
+        PartRecords mf = new PartRecords(new URLResLink(part1));
+        for (PartMap map : mf.iterate()) {
             String name = map.get("name"); //$NON-NLS-1$
             String bitmap = map.getText();
             if (name.startsWith("~")) { //$NON-NLS-1$

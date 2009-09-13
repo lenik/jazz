@@ -76,9 +76,10 @@ public class Processes {
 
             @Override
             public void sendProc(OutputStream out) throws IOException {
-                if (sendSrc == null)
-                    ; // super.sendProc();
-                else
+                if (sendSrc == null) {
+                    out.close();
+                    // super.sendProc(out, sendSrc);
+                } else
                     super.sendProc(out, sendSrc);
             }
 
@@ -154,9 +155,12 @@ public class Processes {
         return buf.toByteArray();
     }
 
-    public static String iocap(Process process, String charsetName) throws InterruptedException {
+    public static String iocap(Process process, String charset) throws InterruptedException {
+        return iocap(process, Charset.forName(charset));
+    }
+
+    public static String iocap(Process process, Charset charset) throws InterruptedException {
         byte[] out = iocap(process);
-        Charset charset = Charset.forName(charsetName);
         return new String(out, charset);
     }
 

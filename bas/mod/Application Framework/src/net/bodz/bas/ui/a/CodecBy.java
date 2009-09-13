@@ -13,6 +13,7 @@ import net.bodz.bas.lang.a.TargetSide;
 @TargetSide(TargetSide.BEAN)
 public @interface CodecBy {
 
+    @SuppressWarnings("unchecked")
     Class<? extends Codec> value() default Codec.class;
 
 }

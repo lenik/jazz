@@ -4,12 +4,18 @@ import net.bodz.bas.a.A_bas;
 
 public abstract class _NLSDict implements NLSDict {
 
-    private final String title;
+    private final String  title;
+    private final NLSDict next;
 
     public _NLSDict(String title) {
+        this(title, null);
+    }
+
+    public _NLSDict(String title, NLSDict next) {
         if (title == null)
             title = A_bas.getDisplayName(getClass());
         this.title = title;
+        this.next = next;
     }
 
     @Override
@@ -18,14 +24,43 @@ public abstract class _NLSDict implements NLSDict {
     }
 
     @Override
-    public boolean contains(String key) {
+    public final boolean contains(String key) {
+        if (_contains(key))
+            return true;
+        if (next != null)
+            return next.contains(key);
+        return false;
+    }
+
+    protected boolean _contains(String key) {
         return get(key) != null;
     }
 
     @Override
-    public Object get(String key) {
-        return get(key, null);
+    public final Object get(String key) {
+        Object value = _get(key);
+        if (value != null || _contains(key))
+            return value;
+        if (next != null)
+            return next.get(key);
+        return null;
     }
+
+    @Override
+    public final Object get(String key, Object def) {
+        Object value = _get(key);
+        if (value != null || _contains(key))
+            return value;
+        if (next != null)
+            return next.get(key, def);
+        return def;
+    }
+
+    protected Object _get(String key) {
+        return _get(key, null);
+    }
+
+    protected abstract Object _get(String key, Object def);
 
     @Override
     public String getString(String key) {
@@ -42,7 +77,7 @@ public abstract class _NLSDict implements NLSDict {
     }
 
     @Override
-    public String format(String key, Object... args) {
+    public final String format(String key, Object... args) {
         String format = getString(key);
         if (format == null)
             throw new NullPointerException("key isn't existed: " + key); //$NON-NLS-1$
@@ -60,7 +95,10 @@ public abstract class _NLSDict implements NLSDict {
 
     @Override
     public String toString() {
-        return "NLSDict: " + getTitle();
+        String s = "NLSDict: " + getTitle();
+        if (next != null)
+            s += "\n" + next;
+        return s;
     }
 
 }

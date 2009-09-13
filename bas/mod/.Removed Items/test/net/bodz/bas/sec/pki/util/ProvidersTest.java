@@ -3,6 +3,7 @@ package net.bodz.bas.sec.pki.util;
 import java.io.File;
 import java.security.KeyStore;
 import java.security.Provider;
+import java.security.ProviderException;
 import java.security.Security;
 
 import junit.framework.TestCase;
@@ -38,6 +39,9 @@ public class ProvidersTest extends TestCase {
         Provider provider;
         try {
             provider = Providers.parse(curl);
+        } catch (ProviderException e) {
+            // no provider, skip
+            return;
         } catch (ParseException e) {
             // maybe no slot available, skip the test.
             return;

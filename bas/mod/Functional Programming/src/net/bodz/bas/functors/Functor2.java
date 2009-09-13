@@ -54,13 +54,13 @@ public abstract class Functor2<T> implements IFunctor<T>, Groupable<T> {
     }
 
     @Override
-    @OverrideOption(chain = ChainUsage.PREFERRED, order = ChainOrder.FDFC)
+    @OverrideOption(chain = ChainUsage.PREFERRED, order = ChainOrder.TAIL)
     public IFunctor<?> reduce() throws FunctorException {
         return this;
     }
 
     @Override
-    @OverrideOption(chain = ChainUsage.PREFERRED, order = ChainOrder.FDLC)
+    @OverrideOption(chain = ChainUsage.PREFERRED, order = ChainOrder.TAIL)
     public void validate() throws ValidationException {
     }
 

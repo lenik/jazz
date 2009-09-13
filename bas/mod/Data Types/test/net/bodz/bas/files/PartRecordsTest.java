@@ -4,20 +4,23 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import net.bodz.bas.files.MapsFile.PartMap;
+import net.bodz.bas.files.PartRecords.PartMap;
 import net.bodz.bas.io.Files;
+import net.bodz.bas.io.ResLink;
+import net.bodz.bas.io.URLResLink;
+import net.bodz.bas.types.util.DirectIterator;
 
 import org.junit.Test;
 
-public class MapsFileTest {
+public class PartRecordsTest {
 
     static String map2str(Map<String, String> map) {
         if (map == null)
@@ -39,32 +42,33 @@ public class MapsFileTest {
     }
 
     @Test
-    public void test1() {
-        URL f = Files.classData(getClass(), "1"); //$NON-NLS-1$
-        MapsFile maps = new MapsFile(f);
-        Iterator<PartMap> it = maps.iterator();
+    public void test1() throws IOException {
+        URL url = Files.classData(getClass(), "1"); //$NON-NLS-1$
+        ResLink resLink = new URLResLink(url);
+        PartRecords maps = new PartRecords(resLink);
+        DirectIterator<PartMap, IOException> it = maps.iterator();
         PartMap part;
 
-        part = it.next();
+        part = it.getNext();
         assertEquals("part A", ".=hello\nworld\n, age=10, name=a", //$NON-NLS-1$ //$NON-NLS-2$
                 map2str(part));
 
-        part = it.next();
+        part = it.getNext();
         assertEquals("part B", ".=BBB\n, age=20, location=home\n, name=b", //$NON-NLS-1$ //$NON-NLS-2$
                 map2str(part));
 
-        part = it.next();
+        part = it.getNext();
         assertEquals("part C", ".=CCC\n", map2str(part)); //$NON-NLS-1$ //$NON-NLS-2$
 
-        part = it.next();
+        part = it.getNext();
         assertEquals("part D", ".=DDD\n, name=d", map2str(part)); //$NON-NLS-1$ //$NON-NLS-2$
 
-        part = it.next();
+        part = it.getNext();
         assertEquals("part E", ".=EEE\nFFF\n", map2str(part)); //$NON-NLS-1$ //$NON-NLS-2$
 
-        assertFalse(it.hasNext());
+        assertFalse(it.next());
         try {
-            part = it.next();
+            part = it.get();
             fail("extra part: " + map2str(part)); //$NON-NLS-1$
         } catch (NoSuchElementException e) {
         }

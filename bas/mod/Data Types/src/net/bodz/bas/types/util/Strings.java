@@ -792,7 +792,7 @@ public class Strings {
     /**
      * Escape literal character in C/Java language.
      */
-    public static String escape(char c) {
+    public static String escape(int c) {
         switch (c) {
         case '\r':
             return "\\r"; //$NON-NLS-1$
@@ -810,7 +810,7 @@ public class Strings {
         case '\'':
             return "\\\'"; //$NON-NLS-1$
         }
-        return String.valueOf(c);
+        return String.valueOf((char) c);
     }
 
     /**

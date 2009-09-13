@@ -5,33 +5,26 @@ public class ThreadDict extends _NLSDict {
     private final ThreadLocal<NLSDict> localDicts;
 
     ThreadDict() {
-        super("Thread Local NLSDict");
+        super("Thread Local NLSDict", SystemDict.getInstance());
         localDicts = new ThreadLocal<NLSDict>();
     }
 
     @Override
-    public boolean contains(String key) {
+    public boolean _contains(String key) {
         NLSDict dict = localDicts.get();
         if (dict != null)
-            if (dict.contains(key))
-                return true;
-        NLSDict systemDict = SystemDict.getInstance();
-        if (systemDict != null)
-            return systemDict.contains(key);
+            return dict.contains(key);
         return false;
     }
 
     @Override
-    public Object get(String key, Object def) {
+    public Object _get(String key, Object def) {
         NLSDict dict = localDicts.get();
         if (dict != null) {
-            Object value = dict.get(key, def);
-            if (value != null)
+            Object value = dict.get(key);
+            if (value != null || dict.contains(key))
                 return value;
         }
-        NLSDict systemDict = SystemDict.getInstance();
-        if (systemDict != null)
-            return systemDict.get(key, def);
         return def;
     }
 

@@ -4,6 +4,9 @@ import java.util.Collection;
 
 import net.bodz.bas.types.TypeHierSet;
 
+/**
+ * Multi-Type Port
+ */
 public class MTPortMeta extends _PortMeta {
 
     private final TypeHierSet baseTypes;

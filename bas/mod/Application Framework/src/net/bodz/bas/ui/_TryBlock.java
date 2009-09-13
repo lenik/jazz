@@ -1,11 +1,7 @@
 package net.bodz.bas.ui;
 
 import net.bodz.bas.lang.err.UnexpectedException;
-import net.bodz.bas.nls.AppNLS;
 
-/**
- * @test
- */
 public abstract class _TryBlock extends TryBlock {
 
     protected final UserInterface UI;

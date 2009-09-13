@@ -22,11 +22,22 @@ public class Iterates {
         };
     }
 
-    static class OneTimeIterable<E> implements Iterable<E> {
+    public static <T, X extends Throwable> Iterable<? extends T> iterate(
+            final DirectIterable<? extends T, X> dit) {
+        return new Iterable<? extends T>() {
+            @Override
+            public Iterator<? extends T> iterator() {
+                DirectIterator<? extends T, X> _dit = dit.iterator(false);
+                return Iterators.iterator(_dit);
+            }
+        };
+    }
+
+    static class OnceIterable<E> implements Iterable<E> {
 
         private Iterator<E> iter;
 
-        public OneTimeIterable(Iterator<E> iter) {
+        public OnceIterable(Iterator<E> iter) {
             assert iter != null;
             this.iter = iter;
         }
@@ -42,19 +53,18 @@ public class Iterates {
 
     }
 
-    public static <E> Iterable<E> iterate(Iterator<E> iter) {
-        return new OneTimeIterable<E>(iter);
+    public static <E> Iterable<E> once(Iterator<E> iter) {
+        return new OnceIterable<E>(iter);
     }
 
-    public static <E> Iterable<E> iterate(Enumeration<E> enumr) {
-        return new OneTimeIterable<E>(Iterators.iterator(enumr));
+    public static <E> Iterable<E> once(Enumeration<E> enumr) {
+        return new OnceIterable<E>(Iterators.iterator(enumr));
     }
 
     public static <E> Iterable<E> iterate(final Class<? extends Iterator<E>> iterType) {
         if (iterType == null)
             throw new NullPointerException("iterType"); //$NON-NLS-1$
         return new Iterable<E>() {
-
             @Override
             public Iterator<E> iterator() {
                 try {
@@ -65,7 +75,6 @@ public class Iterates {
                     throw new RuntimeException(e);
                 }
             }
-
         };
     }
 
