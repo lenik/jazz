@@ -2,9 +2,12 @@ package net.bodz.bas.ant;
 
 import java.io.IOException;
 
+import org.junit.Test;
+
 public class CountersTaskTest {
 
-    public static void main(String[] args) throws IOException {
+    @Test
+    public void test() throws IOException {
         new TaskTestApp(1).run();
     }
 

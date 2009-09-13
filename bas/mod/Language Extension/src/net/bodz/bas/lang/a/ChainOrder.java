@@ -5,10 +5,10 @@ public enum ChainOrder {
     /** No preferred chain order */
     ANY,
 
-    /** First define first call */
-    FDFC,
+    /** Head recursion */
+    HEAD,
 
-    /** First define last call */
-    FDLC,
+    /** Tail recursion */
+    TAIL,
 
 }

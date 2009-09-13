@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.jar.JarFile;
 import java.util.zip.ZipFile;
 
@@ -35,25 +36,28 @@ public interface ResLink {
 
     /**
      * @throws UnsupportedOperationException
-     *             If target resource can't be opened as {@link OutputStream},
-     *             or if target resource doesn't support append mode.
+     *             If target resource can't be opened as {@link OutputStream}, or if target resource
+     *             doesn't support append mode.
      */
     OutputStream openOutputStream(boolean append) throws IOException;
 
     /**
      * @param encoding
-     *            may be <code>null</code> if target resource has a default
-     *            encoding.
+     *            may be <code>null</code> if target resource has a default encoding.
      * @throws UnsupportedOperationException
      *             If target resource can't be opened as {@link Reader},
      */
     Reader openReader(String encoding) throws IOException;
+
+    Reader openReader(Charset charset) throws IOException;
 
     /**
      * @throws UnsupportedOperationException
      *             If target resource can't be opened as {@link Writer},
      */
     Writer openWriter(boolean append, String encoding) throws IOException;
+
+    Writer openWriter(boolean append, Charset charset) throws IOException;
 
     ZipFile openZipFile() throws IOException;
 

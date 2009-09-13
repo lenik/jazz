@@ -17,7 +17,7 @@ public class P11Test {
         }
         KeyStore ks = KeyStore.getInstance("PKCS11", p11); //$NON-NLS-1$
         ks.aliases();
-        for (String alias : Iterates.iterate(ks.aliases()))
+        for (String alias : Iterates.once(ks.aliases()))
             System.out.println(alias);
     }
 

@@ -10,7 +10,7 @@ public abstract class _Factory<T> implements Factory<T> {
 
     @Override
     public T create(Object... args) throws CreateException {
-        return create(null, args);
+        return _create(null, args);
     }
 
     @Override

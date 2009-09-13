@@ -6,6 +6,10 @@ public class ParseException extends Exception {
 
     private static final long serialVersionUID = 7260313523533602858L;
 
+    public String             source;
+    public int                line;
+    public int                column;
+
     public ParseException() {
         super();
     }
@@ -25,6 +29,76 @@ public class ParseException extends Exception {
     public ParseException(Class<?> unparsableType, String unparsableText) {
         this(LangNLS.getString("ParseException.unknownParse") + unparsableType + ": " //$NON-NLS-1$ //$NON-NLS-2$
                 + unparsableText);
+    }
+
+    public void setLocation(String source) {
+        setLocation(source, 0, 0);
+    }
+
+    public void setLocation(String source, int line) {
+        setLocation(source, line, 0);
+    }
+
+    public void setLocation(String source, int line, int column) {
+        this.source = source;
+        this.line = line;
+        this.column = column;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public int getLine() {
+        return line;
+    }
+
+    public void setLine(int line) {
+        this.line = line;
+    }
+
+    public int getColumn() {
+        return column;
+    }
+
+    public void setColumn(int column) {
+        this.column = column;
+    }
+
+    /**
+     * "Line 23: at column 45, error message"
+     */
+    @Override
+    public String getMessage() {
+        String message = super.getMessage();
+        if (source == null && line == 0 && column == 0)
+            return message;
+        StringBuffer buf = new StringBuffer(message.length());
+        boolean prefixed = false;
+        if (source != null) {
+            buf.append(source);
+            buf.append(":");
+            prefixed = true;
+        }
+        if (line != 0) {
+            if (source == null)
+                buf.append("Line ");
+            buf.append(line);
+            buf.append(':');
+            if (column != 0) {
+                buf.append(" at column ");
+                buf.append(column);
+                buf.append(',');
+            }
+            prefixed = true;
+        }
+        if (prefixed)
+            buf.append(' ');
+        return buf.toString();
     }
 
 }

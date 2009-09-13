@@ -7,37 +7,37 @@ import net.bodz.bas.lang.err.UnexpectedException;
 
 public class ResourceBundleDict extends _NLSDict {
 
-    private NLSDict              parent;
     private final ResourceBundle bundle;
 
     public ResourceBundleDict(String title) {
-        super(title);
-        parent = ThreadDict.getInstance();
+        super(title, ThreadDict.getInstance());
         bundle = ResourceBundle.getBundle(getClass().getName());
     }
 
     public ResourceBundleDict(String title, ResourceBundle resourceBundle) {
-        this(ThreadDict.getInstance(), title, resourceBundle);
+        this(title, resourceBundle, ThreadDict.getInstance());
     }
 
-    public ResourceBundleDict(NLSDict parent, String title, ResourceBundle resourceBundle) {
-        super(title);
+    public ResourceBundleDict(String title, ResourceBundle resourceBundle, NLSDict next) {
+        super(title, next);
         if (resourceBundle == null)
             throw new NullPointerException("resourceBundle");
-        this.parent = parent;
         this.bundle = resourceBundle;
     }
 
     @Override
-    public Object get(String key, Object def) {
+    protected boolean _contains(String key) {
+        return bundle.containsKey(key);
+    }
+
+    @Override
+    protected Object _get(String key, Object def) {
         if (!bundle.containsKey(key))
-            if (parent != null)
-                return parent.get(key, def);
-            else
-                return def;
+            return def;
         try {
             return bundle.getString(key);
         } catch (MissingResourceException e) {
+            assert bundle.containsKey(key);
             throw new UnexpectedException(e);
         }
     }

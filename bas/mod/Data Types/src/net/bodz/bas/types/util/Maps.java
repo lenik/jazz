@@ -1,12 +1,17 @@
 package net.bodz.bas.types.util;
 
 import java.util.AbstractSet;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 
+import net.bodz.bas.io.CharOuts.BCharOut;
 import net.bodz.bas.types.IntRange;
 
 public class Maps {
@@ -143,6 +148,41 @@ public class Maps {
         }
 
         return new ListMap();
+    }
+
+    public static <K, V> String dump(Map<K, V> map) {
+        return dump(map, null);
+    }
+
+    public static <K, V> String dump(Map<K, V> map, Comparator<? super K> keyf) {
+        return dump("%s=%s\n", map, keyf);
+    }
+
+    public static <K, V> String dump(String format, Map<K, V> map) {
+        return dump(format, map, null);
+    }
+
+    public static <K, V> String dump(String format, Map<K, V> map, Comparator<? super K> keyf) {
+        if (format == null)
+            throw new NullPointerException("format");
+        if (map == null)
+            throw new NullPointerException("map");
+        BCharOut out = new BCharOut(map.size() * 100);
+        if (keyf == null) {
+            for (Entry<K, V> e : map.entrySet()) {
+                K key = e.getKey();
+                V value = e.getValue();
+                out.printf(format, key, value);
+            }
+        } else {
+            List<K> keys = new ArrayList<K>(map.keySet());
+            Collections.sort(keys, keyf);
+            for (K key : keys) {
+                V value = map.get(key);
+                out.printf(format, key, value);
+            }
+        }
+        return out.toString();
     }
 
 }

@@ -35,7 +35,7 @@ public class Iterators {
         return (Iterator<T>) EMPTY;
     }
 
-    public static <T> Iterator<T> iterator(final T simple) {
+    public static <T> Iterator<T> scalarIterator(final T simple) {
         return new Iterator<T>() {
 
             boolean ended;
@@ -112,9 +112,71 @@ public class Iterators {
         return new ArrayIterator();
     }
 
+    public static <T> Iterator<T> iterator(final DirectIterator<T, ? extends Throwable> dit) {
+        class Dit2It implements Iterator<T> {
+
+            static final int NOVAL = 0;
+            static final int HAVE  = 1;
+            static final int END   = 2;
+
+            private int      state = NOVAL;
+
+            @Override
+            public boolean hasNext() {
+                try {
+                    switch (state) {
+                    case NOVAL:
+                        if (dit.next())
+                            state = HAVE;
+                        else {
+                            state = END;
+                            return false;
+                        }
+                    case HAVE:
+                        return true;
+                    case END:
+                    }
+                    return false;
+                } catch (RuntimeException e) {
+                    throw e;
+                } catch (Throwable e) {
+                    throw new RuntimeException(e.getMessage(), e);
+                }
+            }
+
+            @Override
+            public T next() {
+                switch (state) {
+                case HAVE:
+                    state = NOVAL;
+                    return dit.get();
+                case NOVAL:
+                    try {
+                        if (dit.next())
+                            return dit.get();
+                    } catch (RuntimeException e) {
+                        throw e;
+                    } catch (Throwable e) {
+                        throw new RuntimeException(e.getMessage(), e);
+                    }
+                case END:
+                default:
+                    throw new NoSuchElementException();
+                }
+            }
+
+            @Override
+            public void remove() {
+                throw new UnsupportedOperationException();
+            }
+
+        }
+        return new Dit2It();
+    }
+
     /**
-     * Warning removal: <i> Type safety : A generic array of Iterator<El> is
-     * created for a varargs </i>
+     * Warning removal: <i> Type safety : A generic array of Iterator<El> is created for a varargs
+     * </i>
      */
     @SuppressWarnings("unchecked")
     public static <T> Iterator<T> concat(Iterator<T> it1, Iterator<T> it2) {
@@ -228,8 +290,7 @@ public class Iterators {
 
     /**
      * @throws NullPointerException
-     *             if <code>cmp</code> or any of <code>itrs</code> is
-     *             <code>null</code>.
+     *             if <code>cmp</code> or any of <code>itrs</code> is <code>null</code>.
      */
     public static <T> Iterator<T> weave(final Comparator<? super T> cmp, final Iterator<T>... itrs) {
         if (cmp == null)

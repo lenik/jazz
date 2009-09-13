@@ -166,9 +166,8 @@ public class Files {
 
     /**
      * @param in
-     *            type of one of following types, or any of
-     *            {@link #getInputStream(Object, Object)} thru
-     *            {@link InputStreamReader}.
+     *            type of one of following types, or any of {@link #getInputStream(Object, Object)}
+     *            thru {@link InputStreamReader}.
      *            <ul>
      *            <li><code>Reader</code>
      *            <li><code>String</code> -> {@link StringReader}
@@ -221,9 +220,8 @@ public class Files {
 
     /**
      * @param out
-     *            type of one of following types, or any of
-     *            {@link #getOutputStream(Object, Object)} thru
-     *            {@link OutputStreamWriter}.
+     *            type of one of following types, or any of {@link #getOutputStream(Object, Object)}
+     *            thru {@link OutputStreamWriter}.
      *            <ul>
      *            <li><code>Writer</code>
      *            </ul>
@@ -972,8 +970,8 @@ public class Files {
     // _load
 
     /**
-     * @return {@link Iterable} whose {@link Iterator#next()} throws
-     *         {@link WrappedException} of {@link IOException}
+     * @return {@link Iterable} whose {@link Iterator#next()} throws {@link WrappedException} of
+     *         {@link IOException}
      */
     public static Iterable<Object> _load(final Object in) {
 
@@ -1087,8 +1085,7 @@ public class Files {
     }
 
     /**
-     * Same as {@link #_classData(Class, String)} with ".class" as
-     * <code>extension</code>.
+     * Same as {@link #_classData(Class, String)} with ".class" as <code>extension</code>.
      */
     public static URL classData(Class<?> clazz) {
         String thisName = clazz.getSimpleName();
@@ -1693,8 +1690,8 @@ public class Files {
     }
 
     /**
-     * if difference info is available, then return the first difference.
-     * otherwise return <code>false</code> if any different exists.
+     * if difference info is available, then return the first difference. otherwise return
+     * <code>false</code> if any different exists.
      * 
      * @return <code>null</code> if the same
      */
@@ -1814,6 +1811,63 @@ public class Files {
                 }
             }
         }
+    }
+
+    static File[]   sysPaths;
+    static String[] sysExts;
+    static {
+        String ps = System.getProperty("path.separator");
+        if (ps == null)
+            ps = ":";
+        String pathenv = System.getenv("PATH");
+        if (pathenv == null)
+            sysPaths = new File[0];
+        else {
+            String[] v = pathenv.split(ps);
+            sysPaths = new File[v.length];
+            for (int i = 0; i < v.length; i++)
+                sysPaths[i] = new File(v[i]);
+        }
+
+        String pathextenv = System.getenv("PATHEXT");
+        if (pathextenv == null)
+            sysExts = new String[0];
+        else {
+            String[] v = pathextenv.split(ps);
+            // sysExts = new String[v.length];
+            // for (int i = 0; i < v.length; i++)
+            // sysExts[i] = "." + v[i];
+            sysExts = v;
+        }
+    }
+
+    /**
+     * Find program using system default PATHEXT (win32 only).
+     * 
+     * @return <code>null</code> if couldn't find name.
+     */
+    public static File which(String name, File... paths) {
+        return which(name, sysExts, paths);
+    }
+
+    /**
+     * @return <code>null</code> if couldn't find name.
+     */
+    public static File which(String name, String[] pathExts, File... paths) {
+        if (paths == null || paths.length == 0)
+            paths = sysPaths;
+        for (File path : paths) {
+            File f = new File(path, name);
+            if (f.isFile())
+                return f;
+            if (pathExts != null)
+                for (String ext : pathExts) {
+                    f = new File(path, name + ext);
+                    if (f.isFile())
+                        return f;
+                }
+        }
+        return null;
     }
 
 }

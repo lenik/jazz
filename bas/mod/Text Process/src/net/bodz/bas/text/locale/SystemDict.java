@@ -5,7 +5,7 @@ import net.bodz.bas.nls.GeneralNLS;
 public class SystemDict extends ResourceBundleDict {
 
     SystemDict() {
-        super(null, "System Dict", GeneralNLS.bundle);
+        super("System Dict", GeneralNLS.bundle, null);
     }
 
     private static NLSDict instance = new SystemDict();

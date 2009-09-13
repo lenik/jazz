@@ -18,18 +18,10 @@ import net.bodz.bas.nls.AppNLS;
 public class Relations {
 
     public static void _fail(String comment, Object expected, Object actual) {
-        StringBuffer buffer = new StringBuffer();
-        if (comment != null) {
-            buffer.append(comment);
-            if (comment.length() > 0)
-                buffer.append(' ');
-        }
-        buffer.append(AppNLS.getString("Relations.expected")); //$NON-NLS-1$
-        buffer.append(expected);
-        buffer.append(AppNLS.getString("Relations.actual")); //$NON-NLS-1$
-        buffer.append(actual);
-        buffer.append(")"); //$NON-NLS-1$
-        fail(buffer.toString());
+        if (comment != null)
+            assertEquals(comment, expected, actual);
+        else
+            assertEquals(expected, actual);
     }
 
     public static class OK implements Relation {
