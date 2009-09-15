@@ -28,7 +28,7 @@ import net.bodz.bas.text.encodings.Charsets;
 @BootInfo(syslibs = "bodz_bas")
 public abstract class JavaLauncher implements Launcher {
 
-    private Method                mainf;
+    private Class<?>              mainClass;
 
     private InputStream           redirectIn;
     private PrintStream           redirectOut;
@@ -40,14 +40,43 @@ public abstract class JavaLauncher implements Launcher {
     // private static LogOut out = LogOuts.debug;
 
     public JavaLauncher() {
+        ClassLoader initSysLoader = Caller.getCallerClassLoader(0);
+        ClassLoader sysLoader = initSysLoader;
+
+        try {
+            BootProc bootProc = BootProc.get(getClass());
+            if (bootProc != null) {
+                // sysLoader = bootProc.configSysLoader();
+                // sysLoader = bootProc.configLoader(sysLoader);
+                URL[] urls = LoadUtil.find(bootProc.getSysLibs());
+                Classpath.addURL(urls);
+            }
+            if (LOAD_DUMP)
+                UCL.dump(sysLoader, CharOuts.stderr);
+
+            String mainClassName = getMainClassName();
+            mainClass = DefaultBooter.loadFix(sysLoader, mainClassName);
+        } catch (Exception e) {
+            throw new Error(e.getMessage(), e);
+        }
     }
 
     protected abstract String getMainClassName();
 
+    protected Class<?> getMainClass() {
+        return mainClass;
+    }
+
+    protected Method getMainMethod() throws SecurityException, NoSuchMethodException {
+        Class<?> clazz = getMainClass();
+        Method main = clazz.getMethod("main", String[].class); //$NON-NLS-1$
+        return main;
+    }
+
     @Override
     public void launch(final String[] args) throws Exception {
-        if (mainf == null)
-            load();
+        final Method main = getMainMethod();
+
         InputStream origIn = null;
         PrintStream origOut = null;
         PrintStream origErr = null;
@@ -69,7 +98,7 @@ public abstract class JavaLauncher implements Launcher {
                 public void run() throws Exception {
                     try {
                         // (SecurityControl isnot-a Control)
-                        Control.invoke(mainf, null, (Object) args);
+                        Control.invoke(main, null, (Object) args);
                     } catch (Exception e) {
                         throw e;
                     }
@@ -95,25 +124,6 @@ public abstract class JavaLauncher implements Launcher {
     }
 
     static boolean LOAD_DUMP = false;
-
-    protected void load() throws Exception {
-        ClassLoader initSysLoader = Caller.getCallerClassLoader(0);
-        ClassLoader sysLoader = initSysLoader;
-
-        BootProc bootProc = BootProc.get(getClass());
-        if (bootProc != null) {
-            // sysLoader = bootProc.configSysLoader();
-            // sysLoader = bootProc.configLoader(sysLoader);
-            URL[] urls = LoadUtil.find(bootProc.getSysLibs());
-            Classpath.addURL(urls);
-        }
-        if (LOAD_DUMP)
-            UCL.dump(sysLoader, CharOuts.stderr);
-
-        String targetName = getMainClassName();
-        Class<?> targetClass = DefaultBooter.loadFix(sysLoader, targetName);
-        mainf = targetClass.getMethod("main", String[].class); //$NON-NLS-1$
-    }
 
     public void setRedirectIn(InputStream redirectIn) {
         this.redirectIn = redirectIn;

@@ -4,7 +4,7 @@ import java.nio.CharBuffer;
 import java.util.regex.Pattern;
 
 import net.bodz.bas.lang.err.NotImplementedException;
-import net.bodz.bas.text.interp.Unescape;
+import net.bodz.bas.text.util.Unescape;
 
 public class RegexProcessor extends Unescape {
 

@@ -26,8 +26,8 @@ import net.bodz.bas.text.diff.DiffComparators;
 import net.bodz.bas.text.diff.DiffFormat;
 import net.bodz.bas.text.diff.DiffFormats;
 import net.bodz.bas.text.diff.DiffInfo;
-import net.bodz.bas.text.interp.Interps;
-import net.bodz.bas.text.interp.PatternProcessor;
+import net.bodz.bas.text.util.Interps;
+import net.bodz.bas.text.util.PatternProcessor;
 import net.bodz.bas.types.Pair;
 
 /**

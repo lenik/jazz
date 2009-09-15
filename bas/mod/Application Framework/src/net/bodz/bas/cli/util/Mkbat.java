@@ -34,7 +34,7 @@ import net.bodz.bas.loader.LoadUtil;
 import net.bodz.bas.loader.TempClassLoader;
 import net.bodz.bas.loader.UCL;
 import net.bodz.bas.snm.SJLibLoader;
-import net.bodz.bas.text.interp.Interps;
+import net.bodz.bas.text.util.Interps;
 import net.bodz.bas.types.HashTextMap;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.util.Arrays2;
