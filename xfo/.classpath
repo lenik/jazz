@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" output="mod/Core FS/bin" path="mod/Core FS/src"/>
+	<classpathentry kind="src" output="mod/Core FS/test.bin" path="mod/Core FS/test"/>
+	<classpathentry kind="src" output="mod/User Tools/bin" path="mod/User Tools/src"/>
+	<classpathentry kind="src" output="mod/User Tools/test.bin" path="mod/User Tools/test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/net.bodz.bas"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/net.bodz.xml"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
