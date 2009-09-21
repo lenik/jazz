@@ -37,7 +37,7 @@ public class XYInputStream extends FilterInputStream implements XYTellable {
     }
 
     @Override
-    public long tell() throws IOException {
+    public long tell() {
         return offset;
     }
 

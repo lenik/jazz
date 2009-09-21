@@ -1,7 +1,5 @@
 package net.bodz.bas.lop;
 
-import java.io.IOException;
-
 import net.bodz.bas.io.CharOuts.BCharOut;
 import net.bodz.bas.lop.util.XYPosition;
 import net.bodz.bas.lop.util.XYTellable;
@@ -13,16 +11,38 @@ public abstract class _Token implements Token {
     private final int    id;
     private final Object value;
 
-    public _Token(Lexer lexer, int id) {
-        this(lexer, id, null);
+    private long         offset;
+    private int          y;
+    private int          x;
+
+    public _Token(Lexer lexer, int id, XYTellable start) {
+        this(lexer, id, null, start);
     }
 
-    public _Token(Lexer lexer, int id, Object value) {
+    public _Token(Lexer lexer, int id, Object value, XYTellable start) {
         if (lexer == null)
             throw new NullPointerException("lexer");
         this.lexer = lexer;
         this.id = id;
         this.value = value;
+        this.offset = start.tell();
+        this.y = start.tellY();
+        this.x = start.tellX();
+    }
+
+    public _Token(Lexer lexer, int id, long offset, int y, int x) {
+        this(lexer, id, null, offset, y, x);
+    }
+
+    public _Token(Lexer lexer, int id, Object value, long offset, int y, int x) {
+        if (lexer == null)
+            throw new NullPointerException("lexer");
+        this.lexer = lexer;
+        this.id = id;
+        this.value = value;
+        this.offset = offset;
+        this.y = y;
+        this.x = x;
     }
 
     @Override
@@ -53,31 +73,25 @@ public abstract class _Token implements Token {
     }
 
     @Override
-    public long tell() throws IOException {
-        return lexer.tell();
+    public long tell() {
+        return offset;
     }
 
     @Override
     public int tellX() {
-        return lexer.tellX();
+        return x;
     }
 
     @Override
     public int tellY() {
-        return lexer.tellY();
+        return y;
     }
 
     @Override
-    public XYTellable getBoundary() {
-        long offset = -1;
-        try {
-            offset = lexer.tell();
-        } catch (IOException e) {
-        }
-        int x = lexer.tellX();
-        int y = lexer.tellY();
-        XYPosition boundary = new XYPosition(offset, y, x);
-        return boundary;
+    public XYTellable end() {
+        String text = getText();
+        XYPosition end = new XYPosition(this).add(text);
+        return end;
     }
 
     /**
@@ -87,25 +101,12 @@ public abstract class _Token implements Token {
     public String toString() {
         int id = getId();
         String name = getName();
-        long start = -1;
-        try {
-            start = tell();
-        } catch (IOException e) {
-        }
-        int line = tellY() + 1;
-        int column = tellX() + 1;
         Object value = getValue();
         String text = getText();
 
         BCharOut out = new BCharOut();
 
-        out.print(line);
-        out.print(":");
-        out.print(column);
-        if (start != -1) {
-            out.print("+");
-            out.print(start);
-        }
+        out.print(XYPosition.format(this));
         out.print(": ");
 
         if (name != null)

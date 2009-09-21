@@ -391,7 +391,7 @@ public class BasicCLI implements Runnable {
     /**
      * public access: so derivations don't have to declare static main()s.
      */
-    public synchronized void run(String... args) throws Throwable {
+    public synchronized void run(String... args) throws Exception {
         Terminal dbg = L.debug();
         dbg.p("cli prepare"); //$NON-NLS-1$
         _prepare();
@@ -446,23 +446,22 @@ public class BasicCLI implements Runnable {
 
     /** Do nothing, to be overrided. */
     @OverrideOption(chain = ChainUsage.PREFERRED)
-    void _postInit() throws Throwable {
+    void _postInit() throws Exception {
     }
 
     /** Do nothing, to be overrided. */
-    protected void _boot() throws Throwable {
+    protected void _boot() throws Exception {
     }
 
     /**
      * @throws ControlBreak
      */
-    protected void _exit() throws Throwable {
+    protected void _exit() throws Exception {
         throw new ControlBreak("exit"); //$NON-NLS-1$
     }
 
     /**
-     * return non-null value to enable the `<i>default file is read from
-     * stdin</i>' mode.
+     * return non-null value to enable the `<i>default file is read from stdin</i>' mode.
      * 
      * @return <code>null</code>
      */
@@ -476,7 +475,7 @@ public class BasicCLI implements Runnable {
      * User main method.
      */
     @OverrideOption(group = "basicMain")
-    protected void doMain(String[] args) throws Throwable {
+    protected void doMain(String[] args) throws Exception {
         if (args.length == 0) {
             InputStream in = _getDefaultIn();
             if (in != null)
@@ -494,7 +493,7 @@ public class BasicCLI implements Runnable {
      * <i> stdin is never used. </i>
      */
     @OverrideOption(group = "basicMain")
-    protected void doMainManaged(String[] args) throws Throwable {
+    protected void doMainManaged(String[] args) throws Exception {
         for (String arg : args)
             doFileArgument(CWD.get(arg));
     }
@@ -504,7 +503,7 @@ public class BasicCLI implements Runnable {
      *            canonical file
      */
     @OverrideOption(group = "basicMain")
-    protected void doFileArgument(File file) throws Throwable {
+    protected void doFileArgument(File file) throws Exception {
         assert file != null;
         FileInputStream in = new FileInputStream(file);
         try {
@@ -521,7 +520,7 @@ public class BasicCLI implements Runnable {
      *            canonical file or null
      */
     @OverrideOption(group = "basicMain")
-    protected void doFileArgument(File file, InputStream in) throws Throwable {
+    protected void doFileArgument(File file, InputStream in) throws Exception {
         throw new NotImplementedException();
     }
 

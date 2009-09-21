@@ -130,7 +130,7 @@ public class INIRecords extends MapResRecords<String, String> {
     }
 
     @Override
-    public DirectIterator<? extends TextMap<String>, IOException> iterator() {
+    public DirectIterator<TextMap<String>, IOException> iterator() {
         return new Iter();
     }
 

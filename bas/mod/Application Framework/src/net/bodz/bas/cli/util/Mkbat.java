@@ -84,7 +84,7 @@ public class Mkbat extends BatchEditCLI {
     static boolean BOOT_DUMP = false;
 
     @Override
-    protected void _boot() throws Throwable {
+    protected void _boot() throws Exception {
         force = parameters().isForce();
 
         ClassLoader initSysLoader = Caller.getCallerClassLoader(0);

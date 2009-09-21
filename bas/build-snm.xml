@@ -53,6 +53,8 @@
             <fileset dir="mod/Text Process/bin" />
             <fileset dir="mod/Wrapper Classes/bin" />
         </jar>
+        <length property="size.bin" file="lib/net.bodz.bas.jar" />
+        <echo>Size: ${size.bin}</echo>
     </target>
 
     <target name=":src.jar">
@@ -70,6 +72,8 @@
             <fileset dir="mod/Text Process/src" />
             <fileset dir="mod/Wrapper Classes/src" />
         </jar>
+        <length property="size.src" file="lib/net.bodz.bas-src.jar" />
+        <echo>Size: ${size.src}</echo>
     </target>
 
     <target name="loadertest.jar">

@@ -8,7 +8,7 @@ import java.nio.CharBuffer;
 
 import net.bodz.bas.lang.err.OutOfDomainException;
 
-public class LAReader extends FilterReader {
+public class LAReader extends FilterReader implements Lookable {
 
     // LA(cap)
     protected final int cap;
@@ -142,6 +142,21 @@ public class LAReader extends FilterReader {
         throw new IOException("Mark isn't supported"); //$NON-NLS-1$
     }
 
+    @Override
+    public int getLookMax() {
+        return lab.length;
+    }
+
+    @Override
+    public int getLookedLength() {
+        if (begin < current)
+            return current - begin;
+        if (begin == current && !full)
+            return 0; //$NON-NLS-1$
+        return cap - begin + current;
+    }
+
+    @Override
     public int look() throws IOException {
         if (isLabFilled()) {
             return lab[current];
@@ -159,6 +174,7 @@ public class LAReader extends FilterReader {
         return c;
     }
 
+    @Override
     public int look(char[] cbuf, int off, int len) throws IOException {
         if (len > cap)
             throw new OutOfDomainException("look-len", len, cap); //$NON-NLS-1$
@@ -193,10 +209,12 @@ public class LAReader extends FilterReader {
         return cc;
     }
 
+    @Override
     public int look(char[] cbuf) throws IOException {
         return look(cbuf, 0, cbuf.length);
     }
 
+    @Override
     public String look(int length) throws IOException {
         char[] cbuf = new char[length];
         int cc = look(cbuf, 0, length);

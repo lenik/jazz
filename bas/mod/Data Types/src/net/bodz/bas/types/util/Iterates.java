@@ -22,13 +22,16 @@ public class Iterates {
         };
     }
 
-    public static <T, X extends Throwable> Iterable<? extends T> iterate(
+    public static <T, X extends Throwable> Iterable<T> iterate(
             final DirectIterable<? extends T, X> dit) {
-        return new Iterable<? extends T>() {
+        return new Iterable<T>() {
             @Override
-            public Iterator<? extends T> iterator() {
+            public Iterator<T> iterator() {
                 DirectIterator<? extends T, X> _dit = dit.iterator(false);
-                return Iterators.iterator(_dit);
+                // This down-cast is safe because we won't modify any data thru Iterator.
+                @SuppressWarnings("unchecked")
+                Iterator<T> iterator = (Iterator<T>) Iterators.iterator(_dit);
+                return iterator;
             }
         };
     }

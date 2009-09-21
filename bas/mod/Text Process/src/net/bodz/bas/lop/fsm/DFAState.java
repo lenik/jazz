@@ -10,6 +10,8 @@ import net.bodz.bas.lang.err.NotImplementedException;
 
 /**
  * DFA State: For any two of transitions in a DFA State, their CharSet are not intersected.
+ * 
+ * @test 
  */
 public class DFAState implements Comparable<DFAState> {
 

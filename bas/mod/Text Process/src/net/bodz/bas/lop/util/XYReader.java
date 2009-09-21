@@ -23,7 +23,7 @@ public class XYReader extends FilterReader implements XYTellable {
     }
 
     @Override
-    public long tell() throws IOException {
+    public long tell() {
         return offset;
     }
 
