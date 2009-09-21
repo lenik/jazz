@@ -5,37 +5,77 @@ import java.util.Stack;
 
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.CharOuts.BCharOut;
+import net.bodz.bas.lop.util.XYPosition;
+import net.bodz.bas.lop.util.XYTellable;
 import net.bodz.bas.types.IndexMap;
 import net.bodz.bas.types.util.Strings;
 
 public abstract class _Lexer implements Lexer {
 
+    protected class Token extends _Token {
+
+        private final String text = _Lexer.this.getText();
+
+        public Token(int id) {
+            this(id, null);
+        }
+
+        public Token(int id, Object value) {
+            super(_Lexer.this, id, value, getTokenStart());
+        }
+
+        @Override
+        public String getText() {
+            return text;
+        }
+
+    }
+
+    /**
+     * @see #_read()
+     */
+    public static final int EOF = -1;
+
     private Object          value;
 
     private Stack<Integer>  stateStack;
-
-    @SuppressWarnings("unused")
-    private DocumentSize    last;
-    private DocumentSize    end;
-
     private Stack<BCharOut> recordStack;
     private BCharOut        currentRecord;
+
+    private long            prevOffset;
+    private int             prevY;
+    private int             prevX;
 
     public _Lexer() {
     }
 
-    protected abstract int getInitialState();
+    protected abstract int _read();
 
-    // DocumentPosition
-
-    @Override
-    public abstract long tell();
+    protected abstract XYTellable getTokenStart();
 
     @Override
-    public abstract int tellY();
+    public Token read() {
+        XYTellable prev = getTokenStart();
+        prevOffset = prev.tell();
+        prevY = prev.tellY();
+        prevX = prev.tellX();
+        int tokenId = _read();
+        if (tokenId == EOF)
+            return null;
+        Object value = getValue();
+        setValue(null);
+        return new Token(tokenId, value);
+    }
 
-    @Override
-    public abstract int tellX();
+    public XYTellable getTokenStart(int history) {
+        switch (history) {
+        case 0:
+            return getTokenStart();
+        case 1:
+            return new XYPosition(prevOffset, prevY, prevX);
+        }
+        return null;
+    }
 
     protected abstract String getText();
 
@@ -158,71 +198,6 @@ public abstract class _Lexer implements Lexer {
             buffer.append(getStateName(state));
         }
         return buffer.toString();
-    }
-
-    /**
-     * Enable using of:
-     * <ul>
-     * <li>{@link net.bodz.bas.lop.Token#getPreStart()}
-     * <li>
-     * {@link net.bodz.bas.lop.Token#getPreStartLine()}
-     * <li>
-     * {@link net.bodz.bas.lop.Token#getPreStartCOlumn()}
-     * <li>
-     * {@link net.bodz.bas.lop.Token#getEnd()}
-     * <li>
-     * {@link net.bodz.bas.lop.Token#getEndLine()}
-     * <li>
-     * {@link net.bodz.bas.lop.Token#getEndColumn()}
-     * </ul>
-     */
-    protected boolean lookAheadEndOfMatch() {
-        return true;
-    }
-
-    public class Token extends _Token {
-
-        private final String text;
-
-        public Token(int id) {
-            this(id, null);
-        }
-
-        public Token(int id, Object value) {
-            super(_Lexer.this, id, value);
-            this.text = _Lexer.this.getText();
-        }
-
-        @Override
-        public String getText() {
-            return text;
-        }
-
-    }
-
-    private DocumentSize end() {
-        DocumentSize start = new DocumentSize((int) tell(), tellY(), tellX());
-        DocumentSize end = start.add(getText());
-        return end;
-    }
-
-    public static final int EOF = -1;
-
-    protected abstract int _read();
-
-    @Override
-    public Token read() {
-        boolean look = lookAheadEndOfMatch();
-        if (look) {
-            last = end;
-            end = end();
-        }
-        int tokenId = _read();
-        if (tokenId == EOF)
-            return null;
-        Object value = getValue();
-        setValue(null);
-        return new Token(tokenId, value);
     }
 
     protected void startRecord() {

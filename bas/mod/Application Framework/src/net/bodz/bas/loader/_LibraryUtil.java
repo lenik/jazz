@@ -30,7 +30,8 @@ public class _LibraryUtil {
             File tmpFile = null;
             try {
                 InputStream in = url.openStream();
-                tmpFile = File.createTempFile(filename, null, true);
+                tmpFile = File.createTempFile(filename, null);
+                tmpFile.deleteOnExit();
                 FileOutputStream out = new FileOutputStream(tmpFile);
                 byte[] block = new byte[4096];
                 int n;
@@ -39,7 +40,8 @@ public class _LibraryUtil {
                 out.close();
                 in.close();
             } catch (IOException ex) {
-                throw new RuntimeException(AppNLS.getString("_LibraryUtil.cantCopyLibrary") + tmpFile, ex); //$NON-NLS-1$
+                throw new RuntimeException(
+                        AppNLS.getString("_LibraryUtil.cantCopyLibrary") + tmpFile, ex); //$NON-NLS-1$
             }
             System.load(tmpFile.getPath());
             loaded.add(filename);

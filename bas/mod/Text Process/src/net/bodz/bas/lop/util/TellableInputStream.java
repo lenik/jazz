@@ -29,7 +29,7 @@ public class TellableInputStream extends FilterInputStream implements Tellable {
     }
 
     @Override
-    public long tell() throws IOException {
+    public long tell() {
         return pos;
     }
 

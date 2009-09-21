@@ -8,11 +8,11 @@ import net.bodz.bas.lang.a.ReflectField;
 import net.bodz.bas.lang.a.ReflectMethod;
 import net.bodz.bas.lang.util.Reflects;
 import net.bodz.bas.lop._Lexer;
+import net.bodz.bas.lop.util.XYTellable;
 
 /**
  * Subclass must implement following members: <code>
  * <ul>
- * <li>int YYINITIAL;
  * <li>int yyline;
  * <li>int yycolumn;
  * <li>Reader zzReader;
@@ -31,10 +31,7 @@ import net.bodz.bas.lop._Lexer;
  * 
  * @since JFlex 1.4.1
  */
-public abstract class JFlexLexer extends _Lexer {
-
-    @ReflectField("YYINITIAL")
-    private Field  YYINITIAL;   // public int
+public abstract class JFlexLexer extends _Lexer implements XYTellable {
 
     @ReflectMethod("yylex")
     private Method yylex;       // public int()
@@ -135,11 +132,6 @@ public abstract class JFlexLexer extends _Lexer {
     }
 
     @Override
-    protected int getInitialState() {
-        return (Integer) Reflects.get(null, YYINITIAL);
-    }
-
-    @Override
     protected void setState(int state) {
         Reflects.invoke(this, yybegin, state);
     }
@@ -162,6 +154,11 @@ public abstract class JFlexLexer extends _Lexer {
                 return -1;
         }
         return c;
+    }
+
+    @Override
+    protected XYTellable getTokenStart() {
+        return this;
     }
 
 }

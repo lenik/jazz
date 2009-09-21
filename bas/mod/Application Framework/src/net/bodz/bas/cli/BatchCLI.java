@@ -238,7 +238,7 @@ public class BatchCLI extends BasicCLI {
      */
     @Override
     @OverrideOption(group = "batch")
-    protected void doFileArgument(final File file) throws Throwable {
+    protected void doFileArgument(final File file) throws Exception {
         currentStartFile = file;
         FileFinder finder = new FileFinder(fileFilter, prune, recursive, file);
         if (rootLast)
@@ -258,7 +258,7 @@ public class BatchCLI extends BasicCLI {
      */
     @Override
     @Deprecated
-    protected void doFileArgument(File file, InputStream in) throws Throwable {
+    protected void doFileArgument(File file, InputStream in) throws Exception {
         doFile(file, in);
     }
 
@@ -283,7 +283,7 @@ public class BatchCLI extends BasicCLI {
         }
     }
 
-    protected void doFile(File file) throws Throwable {
+    protected void doFile(File file) throws Exception {
         FileInputStream in = new FileInputStream(file);
         try {
             doFile(file, in);
@@ -296,21 +296,21 @@ public class BatchCLI extends BasicCLI {
      * if no argument and {@link #_getDefaultIn()} returns a non-null value, a
      * null-file and the default-in will be passed in.
      */
-    protected void doFile(File file, InputStream in) throws Throwable {
+    protected void doFile(File file, InputStream in) throws Exception {
         throw new NotImplementedException();
     }
 
     public class Methods {
 
-        public void doFileArgument(File file) throws Throwable {
+        public void doFileArgument(File file) throws Exception {
             BatchCLI.this.doFileArgument(file);
         }
 
-        public void doFile(File file) throws Throwable {
+        public void doFile(File file) throws Exception {
             BatchCLI.this.doFile(file);
         }
 
-        public void doFile(File file, InputStream in) throws Throwable {
+        public void doFile(File file, InputStream in) throws Exception {
             BatchCLI.this.doFile(file, in);
         }
 

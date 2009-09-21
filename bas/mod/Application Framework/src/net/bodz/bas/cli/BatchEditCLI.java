@@ -271,7 +271,7 @@ public class BatchEditCLI extends BatchCLI {
      *            canonical file
      */
     @OverrideOption(group = "batchEdit")
-    protected EditResult doEdit(File file) throws Throwable {
+    protected EditResult doEdit(File file) throws Exception {
         File editTmp = _getEditTmp(file);
         try {
             EditResult result = doEditWithTemp(file, editTmp);
@@ -288,7 +288,7 @@ public class BatchEditCLI extends BatchCLI {
      */
     @Override
     @Deprecated
-    protected void doFile(File file, InputStream in) throws Throwable {
+    protected void doFile(File file, InputStream in) throws Exception {
         throw new NotImplementedException();
     }
 
@@ -299,7 +299,7 @@ public class BatchEditCLI extends BatchCLI {
      *            canonical file
      */
     @OverrideOption(group = "batchEdit")
-    protected EditResult doEditWithTemp(File file, File editTmp) throws Throwable {
+    protected EditResult doEditWithTemp(File file, File editTmp) throws Exception {
         EditResult result = doEdit(file, editTmp);
         if (result == null) // ignored
             return null;
@@ -322,7 +322,7 @@ public class BatchEditCLI extends BatchCLI {
      *         PROCESS_EDIT: have the result written to the out file
      */
     @OverrideOption(group = "batchEdit")
-    protected EditResult doEdit(File in, File out) throws Throwable {
+    protected EditResult doEdit(File in, File out) throws Exception {
         InputStream ins = null;
         OutputStream outs = null;
         try {
@@ -341,14 +341,13 @@ public class BatchEditCLI extends BatchCLI {
     }
 
     /**
-     * Implemented as: read lines and pass to
-     * {@link #doEditByLine(Iterable, CharOut)}.
+     * Implemented as: read lines and pass to {@link #doEditByLine(Iterable, CharOut)}.
      * 
      * @return PROCESS_IGNORE: file skipped <br>
      *         PROCESS_EDIT: have the result written to the output
      */
     @OverrideOption(group = "batchEdit")
-    protected EditResult doEditByIO(InputStream in, OutputStream out) throws Throwable {
+    protected EditResult doEditByIO(InputStream in, OutputStream out) throws Exception {
         Iterable<String> lines = Files.readByLine2(inputEncoding.name(), in);
         CharOut cout = CharOuts.stdout;
         if (out != null)
@@ -363,7 +362,7 @@ public class BatchEditCLI extends BatchCLI {
      *         PROCESS_EDIT: have the result written to the output
      */
     @OverrideOption(group = "batchEdit")
-    protected EditResult doEditByLine(Iterable<String> lines, CharOut out) throws Throwable {
+    protected EditResult doEditByLine(Iterable<String> lines, CharOut out) throws Exception {
         throw new NotImplementedException();
     }
 
@@ -495,7 +494,7 @@ public class BatchEditCLI extends BatchCLI {
     }
 
     @Override
-    protected void doMain(String[] args) throws Throwable {
+    protected void doMain(String[] args) throws Exception {
         super.doMain(args);
         if (L.showDetail())
             stat.dumpDetail(L.detail().getCharOut());
@@ -506,18 +505,18 @@ public class BatchEditCLI extends BatchCLI {
 
     @Override
     @OverrideOption(group = "batchEdit")
-    protected void doFileArgument(final File file) throws Throwable {
+    protected void doFileArgument(final File file) throws Exception {
         L.tinfo(AppNLS.getString("BatchEditCLI.s.start"), file); //$NON-NLS-1$
         super.doFileArgument(file);
     }
 
     public class Methods extends net.bodz.bas.cli.BatchCLI.Methods {
 
-        public EditResult doEdit(File file) throws Throwable {
+        public EditResult doEdit(File file) throws Exception {
             return BatchEditCLI.this.doEdit(file);
         }
 
-        public EditResult doEdit(File in, File out) throws Throwable {
+        public EditResult doEdit(File in, File out) throws Exception {
             return BatchEditCLI.this.doEdit(in, out);
         }
 
