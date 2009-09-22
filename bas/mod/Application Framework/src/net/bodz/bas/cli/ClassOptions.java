@@ -240,14 +240,20 @@ public class ClassOptions<CT> {
                     String chr = optnam.substring(1, 2);
                     opt = findOption(chr);
                     if (opt.getParameterCount() == 0 || !opt.o.optional().isEmpty()) {
+                        // boolean option, or option has a default value,
                         if (optnam.length() > 2)
+                            // remove the shortopt from --abcdefg => -bcdefg
                             args.set(i, "-" + optnam.substring(2)); //$NON-NLS-1$
                         else
+                            // remove the shortopt entirely
                             args.remove(i);
                     } else {
+                        // option expects a value
                         if (optnam.length() > 2)
+                            // -aVALUE => VALUE
                             args.set(i, optnam.substring(2));
                         else
+                            // {-a, VALUE} => {VALUE}
                             args.remove(i);
                     }
                     optnam = chr;
@@ -338,8 +344,11 @@ public class ClassOptions<CT> {
         Class<?> valtype = opt.getType();
         Object optval = null;
 
-        if (optarg == null)
+        if (optarg == null) {
             optarg = opt.o.optional();
+            if (optarg.isEmpty())
+                throw new ParseException("Option value expected: " + opt.getCLIName());
+        }
 
         String key = null;
         if (opt.isMap()) {

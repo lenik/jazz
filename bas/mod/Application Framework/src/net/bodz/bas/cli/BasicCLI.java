@@ -6,6 +6,9 @@ import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.net.URL;
+import java.nio.file.FileSystem;
+import java.nio.file.FileSystems;
+import java.nio.file.PathMatcher;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -495,7 +498,24 @@ public class BasicCLI implements Runnable {
     @OverrideOption(group = "basicMain")
     protected void doMainManaged(String[] args) throws Exception {
         for (String arg : args)
-            doFileArgument(CWD.get(arg));
+            expandFileArgument(CWD.get(arg));
+    }
+
+    boolean enableWildcards = false;
+
+    void expandFileArgument(File wildcards) throws Exception {
+        String name = wildcards.getName();
+        if (enableWildcards && (name.contains("*") || name.contains("?"))) {
+            FileSystem fs = FileSystems.getDefault();
+            PathMatcher pathMatcher = fs.getPathMatcher("glob:name");
+            for (File sibling : wildcards.getParentFile().listFiles())
+                if (pathMatcher.matches(sibling.toPath())) {
+                    L.debug("Wildcard expansion: ", wildcards, " -> ", sibling);
+                    doFileArgument(sibling);
+                }
+            return;
+        }
+        doFileArgument(wildcards);
     }
 
     /**
