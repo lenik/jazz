@@ -5,9 +5,7 @@
     <taskdef resource="net/bodz/bas/ant/task.properties"
              classpath="${env.JAVA_LIB}/net.bodz.bas.jar" />
 
-    <propertybean name="project"
-                  classname="net.bodz.bas.ant.ProjectInfo"
-                  expandproperties="true" />
+    <propertybean name="project" classname="net.bodz.bas.ant.ProjectInfo" expandproperties="true" />
 
     <property name="distdir" value="${env.JAVA_LIB}" />
     <property name="distsrc" value="${env.JAVA_SRC}" />
@@ -38,6 +36,8 @@
             <fileset dir="mod/Geom Shapes/bin" />
             <fileset dir="mod/Presentation/bin" />
         </jar>
+        <length property="size.bin" file="lib/net.bodz.swt.jar" />
+        <echo>Size: ${size.bin}</echo>
     </target>
 
     <target name=":src.jar">
@@ -50,6 +50,8 @@
             <fileset dir="mod/Geom Shapes/src" />
             <fileset dir="mod/Presentation/src" />
         </jar>
+        <length property="size.src" file="lib/net.bodz.swt-src.jar" />
+        <echo>Size: ${size.src}</echo>
     </target>
 
     <target name="clean">

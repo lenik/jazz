@@ -1,18 +1,20 @@
 package net.bodz.swt.gui.pfl;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.ImageData;
 
-public class PageMethod {
+public class PageMethod extends SelectionAdapter {
 
-    private String    action;
-    private ImageData image;
-    private String    label;
-    private String    toolTip;
+    public static final int ABSOLUTE = 0;
+    public static final int SIBLING  = 1;
+    public static final int CHILD    = 2;
+
+    private String          action;
+
+    private ImageData       image;
+    private String          label;
+    private String          toolTip;
 
     public PageMethod(String action) {
         this(action, null);
@@ -20,6 +22,10 @@ public class PageMethod {
 
     public PageMethod(Class<?> clazz) {
         this(clazz.getName(), null);
+    }
+
+    public PageMethod(Class<?> clazz, String label) {
+        this(clazz.getName(), label);
     }
 
     public PageMethod(String action, String label) {
@@ -66,23 +72,8 @@ public class PageMethod {
         this.toolTip = toolTip;
     }
 
-    private List<SelectionListener> selectionListeners;
-
-    public void addSelectionListener(SelectionListener listener) {
-        if (selectionListeners == null)
-            selectionListeners = new ArrayList<SelectionListener>(1);
-        selectionListeners.add(listener);
-    }
-
-    public void removeSelectionListener(SelectionListener listener) {
-        if (selectionListeners != null)
-            selectionListeners.remove(listener);
-    }
-
-    final void fireSelection(SelectionEvent event) {
-        if (selectionListeners != null)
-            for (SelectionListener listener : selectionListeners)
-                listener.widgetSelected(event);
+    @Override
+    public void widgetSelected(SelectionEvent e) {
     }
 
     @Override

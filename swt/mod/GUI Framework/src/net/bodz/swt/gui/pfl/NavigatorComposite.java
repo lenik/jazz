@@ -357,8 +357,13 @@ public class NavigatorComposite extends Composite implements PageContext {
 
     void createMethodButtons(Composite bar, TreePath contextPath, Collection<PageMethod> methods,
             boolean disabled) {
-        if (methods != null)
-            for (PageMethod method : methods) {
+        if (methods != null) {
+            int index = 0;
+            for (final PageMethod method : methods) {
+                if (method == null)
+                    throw new NullPointerException("method[" + index + "]");
+                index++;
+
                 ImageData image = method.getImage();
                 String label = method.getLabel();
 
@@ -375,10 +380,13 @@ public class NavigatorComposite extends Composite implements PageContext {
                 button.addSelectionListener(new SelectionAdapter() {
                     @Override
                     public void widgetSelected(SelectionEvent e) {
-                        pageFlow.submit(request);
+                        method.widgetSelected(e);
+                        if (e.doit)
+                            pageFlow.submit(request);
                     }
                 });
             }
+        }
     }
 
     String formatLabel(String label) {

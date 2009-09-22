@@ -1,6 +1,7 @@
 package net.bodz.swt.gui.styles.base;
 
 import java.io.File;
+import java.util.Date;
 
 import net.bodz.bas.lang.a.ChainUsage;
 import net.bodz.bas.lang.a.OverrideOption;
@@ -40,20 +41,22 @@ public abstract class SWTStrategy extends RenderStrategy {
 
     @OverrideOption(chain = ChainUsage.MUST)
     protected void setup() {
-        put(String.class, new R_Text());
-        put(Number.class, new R_Number());
+        put(byte[].class, new R_binary());
         put(boolean.class, new R_Boolean());
         put(Boolean.class, new R_Boolean());
+        put(Number.class, new R_Number());
+        put(String.class, new R_Text());
         put(Throwable.class, new R_Throwable());
+
+        put(Date.class, new R_Date());
         put(File.class, new R_File());
-        put(byte[].class, new R_binary());
     }
 
     @Override
     public SWTRenderer put(Class<?> key, Renderer value) {
         if (!(value instanceof SWTRenderer))
-            throw new IllegalArgumentException(
-                    GUINLS.getString("SWTStrategy.notSWTRenderer") + value); //$NON-NLS-1$
+            throw new IllegalArgumentException(GUINLS
+                    .getString("SWTStrategy.notSWTRenderer") + value); //$NON-NLS-1$
         return (SWTRenderer) super.put(key, value);
     }
 
@@ -67,8 +70,8 @@ public abstract class SWTStrategy extends RenderStrategy {
         }
     }
 
-    public Control render(SWTRenderContext rc, GUIVar<?> var, Composite parent, int style)
-            throws RenderException, SWTException {
+    public Control render(SWTRenderContext rc, GUIVar<?> var, Composite parent,
+            int style) throws RenderException, SWTException {
         if (rc == null)
             throw new NullPointerException("rc"); //$NON-NLS-1$
         SWTRenderer renderer = findRenderer(var);
@@ -84,8 +87,8 @@ public abstract class SWTStrategy extends RenderStrategy {
         return renderer.render(rc, gvar, parent, style);
     }
 
-    public Control render(SWTRenderContext rc, Object constantValue, Composite parent, int style)
-            throws RenderException, SWTException {
+    public Control render(SWTRenderContext rc, Object constantValue,
+            Composite parent, int style) throws RenderException, SWTException {
         if (rc == null)
             throw new NullPointerException("rc"); //$NON-NLS-1$
         GUIVar<Object> var = GUIVars.wrap(constantValue);

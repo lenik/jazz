@@ -14,8 +14,6 @@ import net.bodz.swt.gui.ValidateException;
 import net.bodz.swt.gui.a.A_gui;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -159,21 +157,6 @@ public abstract class _Page implements Page {
     @Override
     public String toString() {
         return getClass().getName() + ": " + getPageTitle();
-    }
-
-    protected class ChangeMethodsAdapter extends SelectionAdapter {
-
-        private final Collection<PageMethod> methods;
-
-        public ChangeMethodsAdapter(PageMethod... methods) {
-            this.methods = Arrays.asList(methods);
-        }
-
-        @Override
-        public void widgetSelected(SelectionEvent e) {
-            setMethods(methods);
-        }
-
     }
 
 }

@@ -5,9 +5,9 @@ import java.lang.reflect.Constructor;
 import net.bodz.bas.lang.Proc1;
 import net.bodz.bas.lang.err.ReflectException;
 import net.bodz.bas.lang.util.Reflects;
-import net.bodz.swt.controls.util.Controls;
 import net.bodz.swt.layouts.BorderLayout;
 import net.bodz.swt.nls.GUINLS;
+import net.bodz.swt.widgets.util.Controls;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -21,22 +21,17 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
 /**
- * @test ControlTestAppTest
+ * @test {@link ControlTestAppTest}
  */
 public class ControlTestApp {
 
-    public Display    display = Display.getDefault();
-    public String     title   = GUINLS.getString("ControlTestApp.title"); //$NON-NLS-1$
-    public Shell      shell;
-    public Composite  parent;
-    private Composite tools;
+    public final Display   display = Display.getDefault();
+    public final String    title   = GUINLS.getString("ControlTestApp.title"); //$NON-NLS-1$
+    public final Shell     shell;
+    public final Composite holder;
+    private Composite      tools;
 
     public ControlTestApp() {
-        createContents();
-    }
-
-    void createContents() {
-        display = Display.getDefault();
         shell = new Shell();
         shell.setSize(320, 240);
         shell.setText(title);
@@ -44,12 +39,12 @@ public class ControlTestApp {
         BorderLayout layout = new BorderLayout();
         shell.setLayout(layout);
 
-        parent = new Composite(shell, SWT.NONE);
-        FillLayout parentLayout = new FillLayout();
-        parentLayout.marginWidth = 5;
-        parentLayout.marginHeight = 5;
-        parent.setLayout(parentLayout);
-        parent.setLayoutData(BorderLayout.CENTER);
+        holder = new Composite(shell, SWT.NONE);
+        FillLayout fillLayout = new FillLayout();
+        fillLayout.marginWidth = 5;
+        fillLayout.marginHeight = 5;
+        holder.setLayout(fillLayout);
+        holder.setLayoutData(BorderLayout.CENTER);
 
         tools = new Composite(shell, SWT.NONE);
         FillLayout toolsLayout = new FillLayout();
@@ -83,12 +78,12 @@ public class ControlTestApp {
         try {
             ctor = Reflects.getDeclaredConstructor(controlType, //
                     Composite.class, int.class);
-            control = Reflects.newInstance(ctor, parent, SWT.BORDER);
+            control = Reflects.newInstance(ctor, holder, SWT.BORDER);
         } catch (ReflectException e) {
             try {
                 ctor = Reflects.getDeclaredConstructor(controlType, //
                         Composite.class);
-                control = Reflects.newInstance(ctor, parent);
+                control = Reflects.newInstance(ctor, holder);
             } catch (ReflectException e2) {
                 throw new RuntimeException(e);
             }

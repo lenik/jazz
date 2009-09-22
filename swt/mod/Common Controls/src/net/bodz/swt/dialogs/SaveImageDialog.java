@@ -5,10 +5,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import net.bodz.bas.lang.err.CreateException;
-import net.bodz.swt.controls.helper.FixSizeComposite;
-import net.bodz.swt.controls.helper.StackComposite;
 import net.bodz.swt.gui.ValidateException;
 import net.bodz.swt.nls.ControlsNLS;
+import net.bodz.swt.widgets.StackComposite;
+import net.bodz.swt.widgets.util.FixSizeComposite;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;

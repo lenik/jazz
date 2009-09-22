@@ -6,11 +6,11 @@ import java.util.Map;
 import net.bodz.bas.lang.err.CreateException;
 import net.bodz.bas.lang.err.UnexpectedException;
 import net.bodz.bas.ui.UserInterface;
-import net.bodz.swt.controls.helper.EmptyComposite;
 import net.bodz.swt.dialogs.SimpleDialog;
 import net.bodz.swt.gui.DialogUI;
 import net.bodz.swt.nls.GUINLS;
 import net.bodz.swt.util.SWTResources;
+import net.bodz.swt.widgets.util.EmptyComposite;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;

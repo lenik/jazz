@@ -4,14 +4,16 @@ import net.bodz.swt.gui.util.ControlTestApp;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
+import org.junit.Test;
 
 public class ControlAdaptersTest {
 
+    @Test
     public void testMoving() {
         ControlTestApp test = new ControlTestApp();
-        test.parent.setLayout(null);
+        test.holder.setLayout(null);
 
-        Button button = new Button(test.parent, SWT.NONE);
+        Button button = new Button(test.holder, SWT.NONE);
         button.setBounds(10, 10, 50, 20);
 
         ControlAdapters.makeMoveable(button, SWT.ALT);
@@ -19,17 +21,22 @@ public class ControlAdaptersTest {
         test.run();
     }
 
+    @Test
     public void testPanning() {
+        ControlTestApp test = new ControlTestApp();
+        test.holder.setLayout(null);
+
+        Button button = new Button(test.holder, SWT.NONE);
+        button.setBounds(10, 10, 50, 20);
+
+        // ...
+        test.run();
 
     }
 
+    @Test
     public void testWheelPanning() {
 
-    }
-
-    public static void main(String[] args) {
-        ControlAdaptersTest test = new ControlAdaptersTest();
-        test.testMoving();
     }
 
 }

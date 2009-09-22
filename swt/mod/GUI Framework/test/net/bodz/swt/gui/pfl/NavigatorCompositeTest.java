@@ -15,7 +15,7 @@ public class NavigatorCompositeTest {
         book.setFirst(TestPage1.class);
 
         final ControlTestApp test = new ControlTestApp();
-        final NavigatorComposite navigator = new NavigatorComposite(book, test.parent, SWT.BORDER);
+        final NavigatorComposite navigator = new NavigatorComposite(book, test.holder, SWT.BORDER);
 
         navigator.getPageFlow().addBadPathListener(new BadPathListener() {
             @Override

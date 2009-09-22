@@ -1,12 +1,12 @@
 package net.bodz.swt.gui.styles.base;
 
 import net.bodz.bas.ui.RenderException;
-import net.bodz.swt.controls.helper.DynamicControl;
 import net.bodz.swt.gui.GUIVar;
 import net.bodz.swt.gui.GUIVarMeta;
 import net.bodz.swt.gui.SWTRenderContext;
 import net.bodz.swt.gui.SWTRenderer;
 import net.bodz.swt.nls.GUINLS;
+import net.bodz.swt.widgets.DynamicControl;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;

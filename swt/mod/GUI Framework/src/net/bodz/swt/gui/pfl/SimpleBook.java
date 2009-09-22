@@ -22,12 +22,26 @@ public class SimpleBook extends _Book {
     private NLSDict             dict;
 
     public SimpleBook() {
+        this(null, null);
+    }
+
+    public SimpleBook(String title) {
+        this(title, null);
+    }
+
+    public SimpleBook(Book next) {
+        this(null, next);
+    }
+
+    public SimpleBook(String title, Book next) {
+        super(title, next);
         map = new HashMap<TreePath, Page>();
         methods = new ArrayList<PageMethod>(4);
         dict = new ResourceBundleDict("GUI Dict", GUINLS.bundle);
     }
 
-    public TreePath getFirst() {
+    @Override
+    protected TreePath _getFirst() {
         return first;
     }
 
@@ -44,12 +58,12 @@ public class SimpleBook extends _Book {
     }
 
     @Override
-    public boolean contains(TreePath path) {
+    protected boolean _contains(TreePath path) {
         return map.containsKey(path);
     }
 
     @Override
-    public Page getPage(TreePath path) {
+    protected Page _getPage(TreePath path) {
         return map.get(path);
     }
 
@@ -78,7 +92,7 @@ public class SimpleBook extends _Book {
     }
 
     @Override
-    public List<PageMethod> getMethods() {
+    protected List<PageMethod> _getMethods() {
         return Collections.unmodifiableList(methods);
     }
 
@@ -95,7 +109,7 @@ public class SimpleBook extends _Book {
     }
 
     @Override
-    public NLSDict getDict() {
+    protected NLSDict _getDict() {
         return dict;
     }
 
@@ -106,17 +120,22 @@ public class SimpleBook extends _Book {
     @Override
     public String toString() {
         BCharOut out = new BCharOut(map.size() * 30);
-        out.println("Pages: ");
+        out.println(getTitle() + ": ");
+        out.println("    Pages: ");
         for (Entry<TreePath, Page> e : map.entrySet()) {
             TreePath path = e.getKey();
-            out.println("    " + path + " -> " + e.getValue());
+            out.println("        " + path + " -> " + e.getValue());
         }
         if (methods != null && !methods.isEmpty())
-            out.println("Methods: ");
+            out.println("    Methods: ");
         for (PageMethod method : methods)
-            out.println("    " + method);
+            out.println("        " + method);
         if (dict != null)
-            out.println("Dict: " + dict.getTitle());
+            out.println("    Dict: " + dict.getTitle());
+        if (next != null) {
+            out.println();
+            out.println(next);
+        }
         return out.toString();
     }
 

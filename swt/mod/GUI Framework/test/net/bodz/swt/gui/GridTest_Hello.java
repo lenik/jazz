@@ -19,7 +19,7 @@ public class GridTest_Hello extends BasicGUI {
     private Text text;
 
     @Override
-    protected void createInitialView(Composite comp) throws UIException, SWTException {
+    protected void createInitialView(Composite comp) throws UIException {
         final GridLayout gridLayout = new GridLayout();
         gridLayout.numColumns = 3;
         comp.setLayout(gridLayout);
