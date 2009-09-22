@@ -18,7 +18,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class EclipseProject {
 
-    private File base;
+    private final File base;
 
     public EclipseProject(File base) {
         assert base != null : "null base"; //$NON-NLS-1$
@@ -36,16 +36,11 @@ public class EclipseProject {
         return base;
     }
 
-    public void setBase(File base) {
-        this.base = base;
-    }
-
-    public File[] getFileClasspath() throws ParseException {
-        File cpFile = new File(base, ".classpath"); //$NON-NLS-1$
-        final String[] _output = new String[1];
-        final List<String> outputs = new ArrayList<String>();
+    public List<File> getFileClasspath() throws ParseException {
+        File classpathFile = new File(base, ".classpath"); //$NON-NLS-1$
+        final List<File> classpaths = new ArrayList<File>();
         try {
-            XMLs.parse(cpFile, new DefaultHandler() {
+            XMLs.parse(classpathFile, new DefaultHandler() {
                 @Override
                 public void startElement(String uri, String localName, String name,
                         Attributes attributes) throws SAXException {
@@ -53,14 +48,13 @@ public class EclipseProject {
                         return;
                     String kind = attributes.getValue("kind"); //$NON-NLS-1$
                     String path = attributes.getValue("path"); //$NON-NLS-1$
-                    if ("output".equals(kind)) { // default //$NON-NLS-1$
-                        _output[0] = path;
+                    if ("output".equals(kind)) // default //$NON-NLS-1$
+                        classpaths.add(new File(base, path));
+                    if ("src".equals(kind)) {//$NON-NLS-1$
+                        String output = attributes.getValue("output"); //$NON-NLS-1$
+                        if (output != null)
+                            classpaths.add(new File(base, output));
                     }
-                    if (!"src".equals(kind)) //$NON-NLS-1$
-                        return;
-                    String output = attributes.getValue("output"); //$NON-NLS-1$
-                    if (output != null)
-                        outputs.add(output);
                 }
             });
         } catch (IOException e) {
@@ -68,26 +62,19 @@ public class EclipseProject {
         } catch (SAXException e) {
             throw new ParseException(e);
         }
-        String output = _output[0];
-        int n = outputs.size();
-        if (output != null)
-            n++;
-        File[] files = new File[n];
-        int i = 0;
-        for (String s : outputs) {
-            files[i++] = new File(base, s);
-        }
-        if (output != null)
-            files[i] = new File(base, output);
-        return files;
+        return classpaths;
     }
 
+    /**
+     * Convert classpaths to URL[].
+     */
     public URL[] getClasspaths() throws ParseException {
-        File[] files = getFileClasspath();
-        URL[] urls = new URL[files.length];
-        for (int i = 0; i < files.length; i++) {
-            URL url = Files.getURL(files[i]);
-            urls[i] = url;
+        List<File> classpaths = getFileClasspath();
+        URL[] urls = new URL[classpaths.size()];
+        int i = 0;
+        for (File classpath : classpaths) {
+            URL url = Files.getURL(classpath);
+            urls[i++] = url;
         }
         return urls;
     }

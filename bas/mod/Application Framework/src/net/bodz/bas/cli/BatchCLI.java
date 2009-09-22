@@ -274,8 +274,8 @@ public class BatchCLI extends BasicCLI {
         try {
             doFile(file);
         } catch (Throwable e) {
-            L.ferror(AppNLS.getString("BatchCLI.failedToProcess_s"), file, e); //$NON-NLS-1$
-            if (L.showDetail())
+            L.ferror(AppNLS.getString("BatchCLI.failedToProcess_ss"), file, e); //$NON-NLS-1$
+            if (L.showDetail() || !errorContinue)
                 e.printStackTrace(L.error().getPrintStream());
             if (!errorContinue)
                 throw new ControlBreak();
@@ -293,8 +293,8 @@ public class BatchCLI extends BasicCLI {
     }
 
     /**
-     * if no argument and {@link #_getDefaultIn()} returns a non-null value, a
-     * null-file and the default-in will be passed in.
+     * if no argument and {@link #_getDefaultIn()} returns a non-null value, a null-file and the
+     * default-in will be passed in.
      */
     protected void doFile(File file, InputStream in) throws Exception {
         throw new NotImplementedException();

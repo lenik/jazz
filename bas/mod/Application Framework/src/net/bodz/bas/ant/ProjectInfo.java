@@ -43,16 +43,19 @@ public class ProjectInfo {
 
         base = SJProject.findProjectBase(searchStart);
         if (base == null)
-            throw new RuntimeException(AppNLS.getString("ProjectInfo.cantFindEclipseProject") + searchStart); //$NON-NLS-1$
+            throw new RuntimeException(
+                    AppNLS.getString("ProjectInfo.cantFindEclipseProject") + searchStart); //$NON-NLS-1$
 
         parse();
     }
 
+    /**
+     * Convert classpath to ant.Path objects.
+     */
     void parse() throws ParseException {
         EclipseProject eproj = new EclipseProject(base);
-        File[] files = eproj.getFileClasspath();
         classpath = new Path(antProject);
-        for (File f : files) {
+        for (File f : eproj.getFileClasspath()) {
             Path path = new Path(antProject, f.getPath());
             classpath.add(path);
         }

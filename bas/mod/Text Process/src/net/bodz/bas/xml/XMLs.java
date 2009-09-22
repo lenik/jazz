@@ -1,6 +1,9 @@
 package net.bodz.bas.xml;
 
+import java.beans.Encoder;
 import java.beans.ExceptionListener;
+import java.beans.Expression;
+import java.beans.PersistenceDelegate;
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
 import java.io.ByteArrayInputStream;
@@ -113,10 +116,21 @@ public class XMLs {
 
     public static void encode(int caller, Object obj, OutputStream out, String encoding,
             ExceptionListener exceptionListener) {
-        XMLEncoder enc = new XMLEncoder(out, encoding, true, 0);
-        enc.setExceptionListener(exceptionListener);
-        writeObject(enc, obj, caller + 1);
-        enc.close();
+        XMLEncoder encoder = new XMLEncoder(out, encoding, true, 0);
+        encoder.setPersistenceDelegate(URL.class, //
+                new PersistenceDelegate() {
+                    @Override
+                    protected Expression instantiate(Object oldInstance, Encoder out) {
+                        return new Expression(//
+                                oldInstance, //
+                                oldInstance.getClass(), //
+                                "new", //
+                                new Object[] { oldInstance.toString() });
+                    }
+                });
+        encoder.setExceptionListener(exceptionListener);
+        writeObject(encoder, obj, caller + 1);
+        encoder.close();
     }
 
     public static void encode(int caller, Object obj, OutputStream out,
@@ -155,6 +169,7 @@ public class XMLs {
 
     public static Object decode(int caller, InputStream in, ExceptionListener exceptionListener) {
         XMLDecoder decoder = new XMLDecoder(in, exceptionListener);
+
         Object obj = readObject(decoder, caller + 1);
         decoder.close();
         return obj;

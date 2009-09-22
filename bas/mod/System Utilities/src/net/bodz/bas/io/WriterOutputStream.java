@@ -11,6 +11,9 @@ import java.nio.charset.CoderResult;
 
 import net.bodz.bas.lang.err.UnexpectedException;
 
+/**
+ * @test {@link WriterOutputStreamTest}
+ */
 public class WriterOutputStream extends OutputStream {
 
     protected final Writer writer;
@@ -34,33 +37,39 @@ public class WriterOutputStream extends OutputStream {
     }
 
     @Override
+    public void flush() throws IOException {
+        decode(true);
+        writer.flush();
+    }
+
+    @Override
     public void write(int b) throws IOException {
         bytebuf.put((byte) b);
         decode(false);
     }
 
     @Override
-    public void write(byte[] b, int off, int len) throws IOException {
-        bytebuf.put(b, off, len);
-        decode(false);
-    }
-
-    @Override
     public void write(byte[] b) throws IOException {
-        bytebuf.put(b);
-        decode(false);
+        write(b, 0, b.length);
     }
 
     @Override
-    public void flush() throws IOException {
-        decode(true);
-        writer.flush();
+    public void write(byte[] b, int off, int len) throws IOException {
+        while (len > 0) {
+            int blockSize = Math.min(bytebuf.remaining(), len);
+            bytebuf.put(b, off, blockSize);
+            off += blockSize;
+            len -= blockSize;
+            decode(len == 0);
+        }
     }
 
     protected void decode(boolean end) throws IOException {
         bytebuf.flip();
         {
             CoderResult result = decoder.decode(bytebuf, charbuf, end);
+            if (end)
+                decoder.reset();
             if (result.isOverflow())
                 throw new UnexpectedException("charbuf overflow"); //$NON-NLS-1$
             if (result.isError()) {
