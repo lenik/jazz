@@ -8,16 +8,29 @@ import net.bodz.bas.io.CharOuts.BCharOut;
 import net.bodz.bas.text.locale.NLSDict;
 import net.bodz.bas.types.TreePath;
 
-public class BookRewrite extends _Book {
+public class BookRewrite implements Book {
 
-    private List<RewriteRule> rules;
-    private Book              next;
+    private final String            title;
+    private final List<RewriteRule> rules;
+    private final Book              next;
 
     public BookRewrite(Book next) {
+        this(null, next);
+    }
+
+    public BookRewrite(String title, Book next) {
+        if (title == null)
+            title = getClass().getName();
+        this.title = title;
         if (next == null)
             throw new NullPointerException("next");
         this.rules = new ArrayList<RewriteRule>();
         this.next = next;
+    }
+
+    @Override
+    public String getTitle() {
+        return title;
     }
 
     @Override
@@ -94,9 +107,10 @@ public class BookRewrite extends _Book {
     @Override
     public String toString() {
         BCharOut out = new BCharOut(rules.size() * 30);
-        out.println("Rewrite Rules:");
+        out.println(getTitle() + ": ");
+        out.println("    Rewrite Rules:");
         for (RewriteRule rule : rules) {
-            out.println("    " + rule);
+            out.println("        " + rule);
         }
         out.println();
         out.print(next);

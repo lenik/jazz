@@ -1,16 +1,15 @@
 package net.bodz.swt.gui.pfl;
 
-
 public class TextRewrite extends RewriteRule {
 
     private final String pattern;
-    private final String replacement;
+    private final Object replacement;
 
-    public TextRewrite(String pattern, String replacement) {
+    public TextRewrite(String pattern, Object replacement) {
         this(0, pattern, replacement);
     }
 
-    public TextRewrite(int flags, String pattern, String replacement) {
+    public TextRewrite(int flags, String pattern, Object replacement) {
         super(flags);
         if (pattern == null)
             throw new NullPointerException("pattern");
@@ -47,13 +46,15 @@ public class TextRewrite extends RewriteRule {
         if (isIgnoreCase())
             _text = text.toLowerCase();
 
+        String repl = replacement.toString();
+
         if (isWhole())
-            return _text.equals(pattern) ? replacement : text;
+            return _text.equals(pattern) ? repl : text;
 
         int q = 1;
         if (isReplaceAll()) {
             if (!isIgnoreCase())
-                return text.replace(pattern, replacement);
+                return text.replace(pattern, repl);
             q = Integer.MAX_VALUE;
         }
 
@@ -62,9 +63,8 @@ public class TextRewrite extends RewriteRule {
             start = _text.indexOf(pattern, start);
             if (start == -1)
                 break;
-            text = text.substring(0, start) + replacement
-                    + text.substring(start + pattern.length());
-            start += replacement.length();
+            text = text.substring(0, start) + repl + text.substring(start + pattern.length());
+            start += repl.length();
         }
         return text;
     }

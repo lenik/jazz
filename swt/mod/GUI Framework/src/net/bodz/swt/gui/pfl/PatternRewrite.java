@@ -6,9 +6,9 @@ import java.util.regex.Pattern;
 public class PatternRewrite extends RewriteRule {
 
     private final Pattern pattern;
-    private final String  replacement;
+    private final Object  replacement;
 
-    public PatternRewrite(int flags, Pattern pattern, String replacement) {
+    public PatternRewrite(int flags, Pattern pattern, Object replacement) {
         super(flags);
         if (pattern == null)
             throw new NullPointerException("pattern");
@@ -36,7 +36,8 @@ public class PatternRewrite extends RewriteRule {
     @Override
     public String rewrite(String text) {
         Matcher m = pattern.matcher(text);
-        String dst = isReplaceAll() ? m.replaceAll(replacement) : m.replaceFirst(replacement);
+        String repl = replacement.toString();
+        String dst = isReplaceAll() ? m.replaceAll(repl) : m.replaceFirst(repl);
         return dst;
     }
 

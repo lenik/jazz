@@ -20,12 +20,12 @@ import net.bodz.bas.types.util.Strings;
 import net.bodz.bas.ui.IProposal;
 import net.bodz.bas.ui.RenderException;
 import net.bodz.bas.ui._UserInterface;
-import net.bodz.swt.controls.helper.StackComposite;
 import net.bodz.swt.dialogs.SimpleDialog;
 import net.bodz.swt.gui.styles.base.SWTStrategy;
 import net.bodz.swt.gui.styles.grid.SWTGridStrategy;
 import net.bodz.swt.nls.GUINLS;
 import net.bodz.swt.util.SWTResources;
+import net.bodz.swt.widgets.StackComposite;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;

@@ -5,7 +5,6 @@ import net.bodz.swt.layouts.BorderLayout;
 import net.bodz.swt.layouts.LineLayout;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.SWTException;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -15,14 +14,14 @@ import org.junit.Test;
 public class SWTControls extends BasicGUI {
 
     @Override
-    protected void createInitialView(Composite comp) throws UIException, SWTException {
-        comp.setLayout(new BorderLayout(0, 0));
+    protected void createInitialView(Composite holder) throws UIException {
+        holder.setLayout(new BorderLayout(0, 0));
 
-        final Button button = new Button(comp, SWT.NONE);
+        final Button button = new Button(holder, SWT.NONE);
         button.setLayoutData(BorderLayout.NORTH);
         button.setText("button"); //$NON-NLS-1$
 
-        final Composite south = new Composite(comp, SWT.NONE);
+        final Composite south = new Composite(holder, SWT.NONE);
         south.setLayout(new LineLayout());
         south.setLayoutData(BorderLayout.SOUTH);
 
@@ -38,7 +37,7 @@ public class SWTControls extends BasicGUI {
         final Button buttonC = new Button(south, SWT.NONE);
         buttonC.setText("test"); //$NON-NLS-1$
 
-        final Composite east = new Composite(comp, SWT.BORDER);
+        final Composite east = new Composite(holder, SWT.BORDER);
         east.setLayout(new LineLayout());
         east.setLayoutData(BorderLayout.EAST);
 

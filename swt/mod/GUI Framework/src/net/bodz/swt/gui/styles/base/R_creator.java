@@ -10,7 +10,6 @@ import net.bodz.bas.types.TypeParser;
 import net.bodz.bas.types.TypeParsers;
 import net.bodz.bas.types.util.Types;
 import net.bodz.bas.ui.RenderException;
-import net.bodz.swt.controls.helper.DynamicControl;
 import net.bodz.swt.gui.GUIHint;
 import net.bodz.swt.gui.GUIVar;
 import net.bodz.swt.gui.SWTRenderContext;
@@ -18,6 +17,7 @@ import net.bodz.swt.gui.SWTRenderer;
 import net.bodz.swt.layouts.LineLayout;
 import net.bodz.swt.nls.GUINLS;
 import net.bodz.swt.util.SWTResources;
+import net.bodz.swt.widgets.DynamicControl;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;

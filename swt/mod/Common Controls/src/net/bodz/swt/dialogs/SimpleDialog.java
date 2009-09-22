@@ -5,15 +5,15 @@ import java.util.List;
 
 import net.bodz.bas.lang.err.CancelException;
 import net.bodz.bas.lang.err.CreateException;
-import net.bodz.swt.controls.helper.EmptyComposite;
-import net.bodz.swt.controls.helper.Switcher;
-import net.bodz.swt.controls.util.Controls;
 import net.bodz.swt.gui.DialogUI;
 import net.bodz.swt.gui.ValidateEvent;
 import net.bodz.swt.gui.ValidateException;
 import net.bodz.swt.gui.ValidateListener;
 import net.bodz.swt.nls.ControlsNLS;
 import net.bodz.swt.util.SWTResources;
+import net.bodz.swt.widgets.Switcher;
+import net.bodz.swt.widgets.util.Controls;
+import net.bodz.swt.widgets.util.EmptyComposite;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -256,10 +256,10 @@ public abstract class SimpleDialog extends Dialog {
         body.setLayout(new FillLayout());
 
         errorBar = new Switcher(shell, _diagstyle);
-        Composite errorComp = errorBar.getVisibleComposite();
+        Composite errorComp = errorBar.get(true);
         errorComp.setLayout(new FillLayout());
         errorLabel = new Label(errorComp, _diagstyle);
-        errorBar.switchTo(false);
+        errorBar.set(false);
 
         final Composite bottomBar = new Composite(shell, _diagstyle);
         bottomBar.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -319,7 +319,7 @@ public abstract class SimpleDialog extends Dialog {
 
     void createException(Composite parent, Exception e) {
         errorLabel.setText(ControlsNLS.getString("SimpleDialog.createError") + e.toString()); //$NON-NLS-1$
-        errorBar.switchTo(true);
+        errorBar.set(true);
     }
 
     protected void createTopBar(Composite parent) {
@@ -363,8 +363,7 @@ public abstract class SimpleDialog extends Dialog {
 
     /**
      * @param value
-     *            {@value #NO_CHANGE} if the button won't change the current
-     *            value.
+     *            {@value #NO_CHANGE} if the button won't change the current value.
      */
     protected Button addButton(Composite parent, int style, Image image, String text,
             final Object value) {

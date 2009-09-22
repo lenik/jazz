@@ -38,7 +38,7 @@ public class PageTestApp extends ControlTestApp {
 
     @Override
     public void run() {
-        navigator = new NavigatorComposite(book, parent, SWT.NONE);
+        navigator = new NavigatorComposite(book, holder, SWT.NONE);
         navigator.getPageFlow().addBadPathListener(new BadPathListener() {
             @Override
             public void badPath(BadPathEvent e) {

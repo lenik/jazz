@@ -1,7 +1,7 @@
 package net.bodz.swt.gui.util;
 
 import net.bodz.bas.lang.Proc1;
-import net.bodz.swt.controls.helper.TestComposite;
+import net.bodz.swt.widgets.util.TestComposite;
 
 import org.eclipse.swt.widgets.Button;
 

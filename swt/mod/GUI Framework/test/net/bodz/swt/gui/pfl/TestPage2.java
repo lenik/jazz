@@ -1,6 +1,6 @@
 package net.bodz.swt.gui.pfl;
 
-import net.bodz.swt.controls.helper.TestComposite;
+import net.bodz.swt.widgets.util.TestComposite;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;

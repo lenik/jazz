@@ -26,18 +26,20 @@ import net.bodz.bas.types.util.Ns;
 import net.bodz.bas.ui.UIException;
 import net.bodz.bas.ui.UserInterface;
 import net.bodz.bas.ui.a.PreferredSize;
-import net.bodz.swt.controls.helper.DynamicControl;
-import net.bodz.swt.controls.util.Controls;
-import net.bodz.swt.controls.util.Menus;
+import net.bodz.swt.adapters.ControlAdapters;
 import net.bodz.swt.gui.util.ThreadsMonitor;
 import net.bodz.swt.layouts.BorderLayout;
 import net.bodz.swt.nls.GUINLS;
 import net.bodz.swt.util.SWTResources;
+import net.bodz.swt.widgets.DynamicControl;
+import net.bodz.swt.widgets.util.Controls;
+import net.bodz.swt.widgets.util.Menus;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.SWTException;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
@@ -56,6 +58,9 @@ import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.ToolBar;
 
+/**
+ * @test {@link BasicGUITest}
+ */
 @BootInfo(userlibs = { "bodz_swt", "bodz_icons" }, configs = SWTConfig.class)
 @StartMode(StartMode.GUI)
 @Language( { "en", "zh_CN" })
@@ -83,20 +88,22 @@ public class BasicGUI extends BasicCLI {
     protected UserInterface        UI          = new DialogUI();
 
     @Override
-    public synchronized void run(String... args) throws Throwable {
+    public synchronized void run(String... args) throws Exception {
         try {
             super.run(args);
         } catch (net.bodz.bas.lang.Control c) {
             throw c;
-        } catch (Throwable t) {
-            DialogUI iact = new DialogUI(shell);
-            iact.alert(t.getMessage(), t);
-            throw t;
+        } catch (Exception e) {
+            if (!shell.isDisposed()) {
+                DialogUI iact = new DialogUI(shell);
+                iact.alert(e.getMessage(), e);
+            }
+            throw e;
         }
     }
 
     @Override
-    protected void _exit() throws Throwable {
+    protected void _exit() throws Exception {
         checkHangOns();
         super._exit();
     }
@@ -131,7 +138,7 @@ public class BasicGUI extends BasicCLI {
     private static final String KEY_LANG = "net.bodz.bas.preferredLanguage";
 
     @Override
-    protected void doMain(String[] args) throws Throwable {
+    protected void doMain(String[] args) throws Exception {
         // this.args = args;
         views = new HashMap<Object, Composite>();
 
@@ -193,7 +200,7 @@ public class BasicGUI extends BasicCLI {
         return title + " " + version;
     }
 
-    protected Shell createShell() throws UIException, SWTException {
+    protected Shell createShell() throws UIException {
         Shell shell = new Shell();
         shell.setText(getTitle());
         ClassInfo info = _loadClassInfo();
@@ -245,11 +252,11 @@ public class BasicGUI extends BasicCLI {
         return shell;
     }
 
-    protected Menu createMenu(Shell parent) throws SWTException, UIException {
+    protected Menu createMenu(Shell shell) throws UIException {
         boolean TODO = true;
         if (TODO)
             return null;
-        final Menu menu = new Menu(parent, SWT.BAR);
+        final Menu menu = new Menu(shell, SWT.BAR);
 
         final Menu fileMenu = Menus.newSubMenu(menu, GUINLS.getString("BasicGUI.menu.file")); //$NON-NLS-1$
         final MenuItem fileExit = new MenuItem(fileMenu, SWT.NONE);
@@ -258,7 +265,65 @@ public class BasicGUI extends BasicCLI {
         return menu;
     }
 
-    protected Control createToolBar(Composite parent) throws SWTException, UIException {
+    protected Menu createStartMenu(Shell shell) throws UIException {
+        Menu menu = new Menu(shell, SWT.POP_UP);
+
+        MenuItem about = new MenuItem(menu, SWT.PUSH);
+        about.setText("About");
+        about.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                AboutDialog aboutDialog = new AboutDialog(getClass());
+                aboutDialog.open();
+            }
+        });
+
+        new MenuItem(menu, SWT.SEPARATOR);
+
+        MenuItem pref = new MenuItem(menu, SWT.PUSH);
+        pref.setText("Preferences...");
+
+        MenuItem monitor = new MenuItem(menu, SWT.PUSH);
+        monitor.setText("Threads Monitor...");
+        monitor.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                ThreadsMonitor monitor = new ThreadsMonitor(null, SWT.NONE);
+                // monitor.setText("There stills running threads");
+                monitor.open();
+            }
+        });
+
+        new MenuItem(menu, SWT.SEPARATOR);
+
+        MenuItem feature = new MenuItem(menu, SWT.PUSH);
+        feature.setText("Feature Request...");
+        ControlAdapters.openBrowser(feature, "http://track.bodz.net/request?product=?");
+
+        MenuItem bug = new MenuItem(menu, SWT.PUSH);
+        bug.setText("Bug Report...");
+        ControlAdapters.openBrowser(bug, "http://track.bodz.net/bugs?product=?");
+
+        MenuItem forum = new MenuItem(menu, SWT.PUSH);
+        forum.setText("Forum");
+        ControlAdapters.openBrowser(forum, "http://track.bodz.net/forum?product=?");
+
+        new MenuItem(menu, SWT.SEPARATOR);
+
+        MenuItem credits = new MenuItem(menu, SWT.PUSH);
+        credits.setText("Credits...");
+        credits.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                CreditDialog creditDialog = new CreditDialog();
+                creditDialog.open();
+            }
+        });
+
+        return menu;
+    }
+
+    protected Control createToolBar(Composite parent) throws UIException {
         boolean TODO = true;
         if (TODO)
             return null;
@@ -266,12 +331,28 @@ public class BasicGUI extends BasicCLI {
         return toolBar;
     }
 
-    protected Control createStatusBar(Composite parent) throws SWTException, UIException {
-        Composite statusBar = new Composite(parent, SWT.BORDER); // SWT.BORDER
-        statusBar.setLayout(new GridLayout(2, false));
+    protected Control createStatusBar(Composite parent) throws UIException {
+        Composite bottomBar = new Composite(parent, SWT.BORDER); // SWT.BORDER
+        GridLayout bottomGrid = new GridLayout(3, false);
+        bottomGrid.marginWidth = 0;
+        bottomGrid.marginHeight = 0;
+        bottomBar.setLayout(bottomGrid);
+
+        final Menu startMenu = createStartMenu(parent.getShell());
+
+        Image basLogo = SWTResources.getImageRes("/icons/bodz/bas_w.gif");
+        Label startButton = new Label(bottomBar, SWT.NONE);
+        startButton.setImage(basLogo);
+        startButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseDown(MouseEvent e) {
+                // startMenu.setLocation(e.x, e.y);
+                startMenu.setVisible(true);
+            }
+        });
 
         String banner = getBannerString();
-        Link link = new Link(statusBar, SWT.NONE);
+        Link link = new Link(bottomBar, SWT.NONE);
         link.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
         link.setText(banner);
         link.addSelectionListener(new SelectionAdapter() {
@@ -292,14 +373,14 @@ public class BasicGUI extends BasicCLI {
             }
         });
 
-        Label updateTime = new Label(statusBar, SWT.NONE);
+        Label updateTime = new Label(bottomBar, SWT.NONE);
         updateTime.setLayoutData(new GridData(SWT.END, SWT.CENTER, true, false));
         updateTime.setAlignment(SWT.RIGHT);
         String dateString = _loadClassInfo().getDateString();
         if (dateString != null) {
             updateTime.setText(GUINLS.getString("BasicGUI.lastUpdated") + dateString);
         }
-        return statusBar;
+        return bottomBar;
     }
 
     protected String getBannerString() {
@@ -312,7 +393,7 @@ public class BasicGUI extends BasicCLI {
         return banner;
     }
 
-    protected Control createExpandBar(Composite parent) throws SWTException, UIException {
+    protected Control createExpandBar(Composite parent) throws UIException {
         boolean TODO = true;
         if (TODO)
             return null;
@@ -320,24 +401,24 @@ public class BasicGUI extends BasicCLI {
         return expandBar;
     }
 
-    protected void createInitialView(Composite parent) throws UIException, SWTException {
-        parent.setLayout(new FillLayout());
-        Label welcomeLabel = new Label(parent, SWT.NONE);
+    protected void createInitialView(Composite holder) throws UIException {
+        holder.setLayout(new FillLayout());
+        Label welcomeLabel = new Label(holder, SWT.NONE);
         welcomeLabel.setText(GUINLS.getString("BasicGUI.welcome"));
     }
 
-    protected void createView(Composite parent, Object key) throws SWTException, UIException {
+    protected void createView(Composite holder, Object key) throws UIException {
         if (key == null) {
-            createInitialView(parent);
+            createInitialView(holder);
             return;
         }
         throw new NotImplementedException("key: " + key);
     }
 
-    protected void openView(Composite parent, Object key) throws SWTException, UIException {
+    protected void openView(Composite holder, Object key) throws UIException {
         Composite view = views.get(key);
         if (view == null) {
-            view = new Composite(parent, SWT.NONE);
+            view = new Composite(holder, SWT.NONE);
             createView(view, key);
             views.put(key, view);
         }

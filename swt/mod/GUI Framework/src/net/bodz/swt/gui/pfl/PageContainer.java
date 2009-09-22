@@ -6,8 +6,8 @@ import java.util.NoSuchElementException;
 
 import net.bodz.bas.types.TreePath;
 import net.bodz.bas.types.util.Objects;
-import net.bodz.swt.controls.helper.EmptyComposite;
-import net.bodz.swt.controls.helper.StackComposite;
+import net.bodz.swt.widgets.StackComposite;
+import net.bodz.swt.widgets.util.EmptyComposite;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
