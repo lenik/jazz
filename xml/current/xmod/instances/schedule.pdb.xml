@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<modpdb xmlns="http://www.bodz.net/xml/current/xmod/modpdb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.bodz.net/xml/current/xmod/modpdb
-C:\.radiko\.miaj\mirror\site\xml\current\xmod\modpdb.xsd" name="task-base" disp="Task Model">
-	<table name="Task" base="_Docobj" disp="任务" info="可执行任务">
-		<field name="state"/>
-		<field/>
-	</table>
-</modpdb>

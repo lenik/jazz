@@ -9,9 +9,6 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Vector;
 
 import org.jibx.runtime.BindingDirectory;
 import org.jibx.runtime.IBindingFactory;
@@ -19,6 +16,9 @@ import org.jibx.runtime.IMarshallingContext;
 import org.jibx.runtime.IUnmarshallingContext;
 import org.jibx.runtime.JiBXException;
 
+/**
+ * @test {@link JiBXTest}
+ */
 public class JiBX {
 
     public static Object parse(Class<?> clazz, Reader xmlin) throws JiBXException {
@@ -40,8 +40,7 @@ public class JiBX {
         return obj;
     }
 
-    public static Object parse(Class<?> clazz, InputStream xmlin)
-            throws JiBXException {
+    public static Object parse(Class<?> clazz, InputStream xmlin) throws JiBXException {
         return parse(clazz, xmlin, null);
     }
 
@@ -49,20 +48,18 @@ public class JiBX {
             throws JiBXException, FileNotFoundException {
         IBindingFactory bfact = BindingDirectory.getFactory(clazz);
         IUnmarshallingContext uctx = bfact.createUnmarshallingContext();
-        Object obj = uctx.unmarshalDocument(new FileInputStream(xmlpath),
-                encoding);
+        Object obj = uctx.unmarshalDocument(new FileInputStream(xmlpath), encoding);
         if (obj instanceof InputSourceTrace)
             ((InputSourceTrace) obj).setInputSource(xmlpath);
         return obj;
     }
 
-    public static Object parse(Class<?> clazz, String xmlpath)
-            throws JiBXException, FileNotFoundException {
+    public static Object parse(Class<?> clazz, String xmlpath) throws JiBXException,
+            FileNotFoundException {
         return parse(clazz, xmlpath, null);
     }
 
-    public static void rewrite(Object obj, Writer xmlout, String encoding)
-            throws JiBXException {
+    public static void rewrite(Object obj, Writer xmlout, String encoding) throws JiBXException {
         assert obj != null;
         IBindingFactory bfact = BindingDirectory.getFactory(obj.getClass());
         IMarshallingContext mctx = bfact.createMarshallingContext();
@@ -77,8 +74,7 @@ public class JiBX {
         mctx.marshalDocument(obj, encoding, null, xmlout);
     }
 
-    public static String rewrite(Object obj, String encoding)
-            throws JiBXException {
+    public static String rewrite(Object obj, String encoding) throws JiBXException {
         Writer buf = new StringWriter();
         rewrite(obj, buf, encoding);
         return buf.toString();
@@ -86,18 +82,6 @@ public class JiBX {
 
     public static String rewrite(Object obj) throws JiBXException {
         return rewrite(obj, "utf-8");
-    }
-
-    public static ArrayList arrayList() throws JiBXException {
-        return new ArrayList();
-    }
-
-    public static LinkedList linkedList() throws JiBXException {
-        return new LinkedList();
-    }
-
-    public static Vector vector() throws JiBXException {
-        return new Vector();
     }
 
     public static String dirname(Object inputSource) {
@@ -120,5 +104,5 @@ public class JiBX {
         throw new UnsupportedOperationException("Can't fetch dirname of class "
                 + inputSource.getClass());
     }
-    
+
 }

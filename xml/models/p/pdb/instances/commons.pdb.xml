@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pdb name="MisCommons" qname="net.bodz.mis.commons" cat="net.bodz.mis" label="Mis.Commons" xmlns="http://xml.bodz.net/p/pdb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xml.bodz.net/p/pdb
+..\pdb.xsd">
+	<import href="base.pdb.xml"/>
+	<!--User System-->
+	<table name="_Perm" opts="c" label="General Permission">
+		<field name="perm" label="Permission Key" type="I" opts="K"/>
+		<field name="dpl" label="Declared Privilege Level" type="I" opts="D(0)" doc="Values ::=
+-1 = Forbidden
+0  = Inherit
+1+ = Level"/>
+		<field name="cpl" label="Current Privilege Level" type="I" opts="N" doc="Values ::=
+0- = Forbidden
+1+ = Level"/>
+		<field name="cxt" label="CPL Expiration Time" type="Ts" opts="NI" doc="set cpl to null after timeout"/>
+	</table>
+	<table name="_Ext" opts="c" label="Customizable Extension">
+		<field name="key" label="Ext Key" type="C[,30]" opts="K"/>
+		<field name="ival" label="Ext Value / Integer" type="I" opts="D(0)"/>
+		<field name="cval" label="Ext Value / String" type="C[,120]" opts="D('')"/>
+	</table>
+	<table name="CUser" base="after(_Docobj)" label="Common User">
+		<field name="id" label="id/usr" type="I" opts="KDi"/>
+	</table>
+	<table name="CGroup" base="after(_Docobj)" label="Common Group, also User-Type">
+		<field name="id" label="id/grp" type="I" opts="KDi"/>
+		<field name="creator" label="User created the group" type="NI" opts="KF(n:1 => User.id)"/>
+	</table>
+	<table name="CRole" base="after(_Docobj)" label="Common Role">
+		<field name="id" label="id/rol" type="I" opts="KDi"/>
+		<field name="creator" label="User created the role" type="NI" opts="KF(n:1 => User.id)"/>
+		<field name="t" label="Role Type" type="C" opts="D('G')" doc="Values ::=
+'G' = General-Role
+'M' = Member-Role"/>
+	</table>
+	<table name="CPerm" base="after(_Docobj)" label="Common Permission">
+		<field name="id" label="id/perm" type="I" opts="KDi"/>
+		<field name="creator" label="User created the role" type="NI" opts="KF(n:1 => User.id)"/>
+	</table>
+	<table name="CUserPerm" opts="S" base="after(_Perm)" label="Common User Permission">
+		<field name="usr" label="Owner User" type="I" opts="KF(n:1 => User.id)"/>
+	</table>
+	<table name="CGroupPerm" opts="S" base="after(_Perm)" label="Common Group Customizable Extension">
+		<field name="grp" label="Owner Group" type="I" opts="KF(n:1 => Group.id)"/>
+	</table>
+	<table name="CRolePerm" opts="S" base="after(_Perm)" label="Common Role Customizable Extension">
+		<field name="rol" label="Owner Role" type="I" opts="KF(n:1 => Role.id)"/>
+	</table>
+	<table name="CUserExt" opts="Sx" base="after(_Ext)" label="Common User Customizable Extension">
+		<field name="usr" label="Owner User" type="I" opts="KF(n:1 => User.id)"/>
+	</table>
+	<table name="CGroupExt" opts="Sx" base="after(_Ext)" label="Common Group Customizable Extension">
+		<field name="grp" label="Owner Group" type="I" opts="KF(n:1 => Group.id)"/>
+	</table>
+	<table name="CRoleExt" opts="Sx" base="after(_Ext)" label="Common Role Customizable Extension">
+		<field name="rol" label="Owner Role" type="I" opts="KF(n:1 => Role.id)"/>
+	</table>
+	<table name="CUserRole" opts="Sr" label="Allocate roles to user">
+		<field name="usr" label="Owner User" type="I" opts="KF(n:1 => User.id)"/>
+		<field name="rol" label="Allocated Rolw" type="I" opts="KF(n:1 => Role.id)"/>
+	</table>
+	<table name="CGroupRole" opts="Sr" label="Allocate roles to group">
+		<field name="grp" label="Owner Group" type="I" opts="KF(n:1 => Group.id)"/>
+		<field name="rol" label="Allocated Rolw" type="I" opts="KF(n:1 => Role.id)"/>
+	</table>
+	<table name="CUserGroup" opts="Sr" label="Allocate groups to user">
+		<field name="usr" label="Owner User" type="I" opts="KF(n:1 => User.id)"/>
+		<field name="grp" label="Allocated Group" type="I" opts="KF(n:1 => Group.id)"/>
+		<field name="memrol" label="Member Role" type="I" opts="F(n:1 => Role.id)" doc="Role.t == 'M'"/>
+	</table>
+	<table name="CUserS1" opts="Sc" label="User Security Info (Level 1)">
+		<field name="usr" label="Owner User" type="I" opts="KF(1:1 => User.id)"/>
+		<field name="pwd1" label="Master Password" type="C[40]" doc="Control-Purpose"/>
+		<field name="pwd2" label="Secondary Password" type="C[40]" doc="Transaction-Purpose, default set to pwd1.
+do reset pwd2 by enter pwd1"/>
+		<field name="pwd" label="General Password" type="C[40]" doc="General-Purpose, default set to pwd2.
+do reset pwd by enter pwd2/pwd1"/>
+		<field name="pp1" label="Plain text of pwd1" type="C[,30]" opts="N"/>
+		<field name="pp2" label="Plain text of pwd2" type="C[,30]" opts="N"/>
+		<field name="pp" label="Plain text of pwd" type="C[,30]" opts="N"/>
+		<field name="mail1" label="Master E-mail" type="C[,80]" doc="Control-Purpose
+Receive resetted pwd1, pwd2, pwd"/>
+		<field name="mail2" label="Secondary E-mail" type="C[,80]" doc="Transaction-Purpose, default set to mail1
+Receive resetted pwd2, pwd"/>
+		<field name="mail" label="General E-mail" type="C[,80]" doc="General-Purpose, default set to mail2
+Receive resetted pwd"/>
+		<field name="act1" label="mail1 is activated" type="I" opts="D(0)"/>
+		<field name="act2" label="mail2 is activated" type="I" opts="D(0)"/>
+		<field name="act" label="mail is activated" type="I" opts="D(0)"/>
+		<field name="axt1" label="mail1 Activation Expiration Time" type="Ts" opts="N" doc="set act1 to 0 after axt1 timeout"/>
+		<field name="axt2" label="mail2 Activation Expiration Time" type="Ts" opts="N" doc="set act2 to 0 after axt2 timeout"/>
+		<field name="axt" label="mail Activation Expiration Time" type="Ts" opts="N" doc="set act to 0 after axt timeout"/>
+		<field name="prot_q" label="Protect Question" type="C[,100]" opts="N"/>
+		<field name="prot_a" label="Protect Answer" type="C[,30]" opts="N"/>
+		<field name="keyt" label="Key Type" type="C[,10]" opts="N" doc="SSH, SSH2, X.509, etc."/>
+		<field name="prvk" label="Private Key" type="C[]" opts="N" doc="Not used, yet."/>
+		<field name="pubk" label="Public Key" type="C[]" opts="N" doc="Not used, yet."/>
+	</table>
+	<!--User Commons-->
+	<table name="CContact" label="Contact Info">
+		<field name="id" label="id/ctt" type="I" opts="KDi"/>
+		<field name="addr" label="Address" type="C[,200]" opts="N"/>
+		<field name="phone" label="Phone Number" type="C[,30]" opts="N"/>
+	</table>
+	<table name="CUserContact" opts="Sr" label="Allocate contacts to user">
+		<field name="usr" label="Owner User" type="I" opts="KF(n:1 => User.id)"/>
+		<field name="ctt" label="Contact" type="I" opts="KF(1:1 => Contact.id)"/>
+		<field name="pref" label="Preference" type="I" opts="D(100)"/>
+		<field name="usage" label="Usage Info" type="C[,30]" opts="N"/>
+	</table>
+</pdb>

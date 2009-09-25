@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pdb name="MisCalendar" qname="net.bodz.mis.calendar" cat="net.bodz.mis" label="Mis.Calendar" xmlns="http://xml.bodz.net/p/pdb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xml.bodz.net/p/pdb
+..\pdb.xsd">
+	<import href="commons.pdb.xml"/>
+	<table name="Task" opts="-" label="-">
+		<field name="id" label="id/" type="I" opts="KDi"/>
+	</table>
+	<table name="Next">
+		<field/>
+	</table>
+</pdb>

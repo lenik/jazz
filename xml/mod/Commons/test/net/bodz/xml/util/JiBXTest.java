@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.net.URL;
 
 import net.bodz.bas.types.Pair;
-import net.bodz.xml.xmod.modcfg.Modcfg;
-import net.bodz.xml.xmod.modpdb.Modpdb;
+import net.bodz.xml.models.cfg.Modcfg;
+import net.bodz.xml.models.pdb.Modpdb;
 
 import org.junit.Test;
 

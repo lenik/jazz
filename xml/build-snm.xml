@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<project name="net.bodz.xml" default="default">
+	<target name="default" depends="makeBinJar, makeSrcJar, distlib">
+	</target>
+
+	<target name="makeBinJar">
+		<jar destfile="build/net.bodz.xml.jar">
+			<fileset dir="bin">
+			</fileset>
+		</jar>
+	</target>
+	
+	<target name="makeSrcJar">
+		<jar destfile="build/net.bodz.xml-src.jar">
+			<fileset dir="src">
+			</fileset>
+		</jar>
+	</target>
+
+	<property environment="env"/>
+	<property name="distdir" value="${env.JAVA_LIB}"/>
+	
+    <target name="distlib">
+    	<copy todir="${distdir}">
+    		<fileset dir="${basedir}/build">
+    			<exclude name="*-src.jar"/>
+			</fileset>
+    	</copy>        
+    	<copy todir="${distdir}/src">
+    		<fileset dir="${basedir}/build">
+				<include name="*-src.jar"/>
+			</fileset>
+    	</copy>        
+    </target>
+
+</project>

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by Snima Denik (Bytes of Danci.Z) -->
+<xs:schema xmlns:xsf="http://www.bodz.net/xml/current/xsf" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.bodz.net/xml/current/xsf" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<!--========== BASE ==========-->
+	<xs:group name="base-group">
+		<xs:choice>
+			<xs:element name="base-structure" type="xsf:base-structure"/>
+			<xs:element name="base-content" type="xsf:base-content"/>
+			<xs:element name="base-media" type="xsf:base-media"/>
+			<xs:element name="base-declarator" type="xsf:base-declarator"/>
+			<xs:element name="base-executable" type="xsf:base-executable"/>
+			<xs:element name="base-pragma" type="xsf:base-pragma"/>
+		</xs:choice>
+	</xs:group>
+	<xs:complexType name="base-structure">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:any namespace="##other" processContents="lax"/>
+			<xs:element ref="xsf:group"/>
+		</xs:choice>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="base-content">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:any namespace="##other" processContents="lax"/>
+		</xs:choice>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="base-media">
+		<xs:complexContent>
+			<xs:extension base="xsf:base-content"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="base-declarator"/>
+	<xs:complexType name="base-executable">
+		<xs:complexContent>
+			<xs:extension base="xsf:base-structure">
+				<xs:choice minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="facet">
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="xsf:base-executable"/>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:choice>
+				<xs:attribute name="version" type="xs:string"/>
+				<xs:attribute name="language" type="xs:string"/>
+				<xs:attribute name="dialect" type="xs:string"/>
+				<xs:attribute name="facet" type="xs:string"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="base-pragma"/>
+	<xs:element name="group" type="xsf:base-structure">
+		<xs:annotation>
+			<xs:documentation>A group can be reduced by moving self::all() to parent::, while keep the semantics unchanged. </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<!--========== STRUCTURE ==========-->
+	<xs:group name="structure-group">
+		<xs:choice>
+			<xs:element name="structure-composition" type="xsf:structure-composition"/>
+			<xs:element name="structure-tree" type="xsf:structure-tree"/>
+		</xs:choice>
+	</xs:group>
+	<xs:complexType name="structure-composition">
+		<xs:complexContent>
+			<xs:extension base="xsf:base-structure">
+				<xs:choice minOccurs="0" maxOccurs="unbounded">
+					<xs:element ref="xsf:embed"/>
+					<xs:element ref="xsf:include"/>
+					<xs:element ref="xsf:import"/>
+					<!--
+                    Cuz base-structure is anyType, so let properties go. 
+                    <xs:element name="property">
+                        <xs:annotation>
+                            <xs:documentation>Properties of this section, for example, gdml - a parser generater define use property for: 
+
+- programming language of the implementation
+
+- the algorithm used
+
+etc. </xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                    <xs:attribute name="name" type="xs:string" use="required"/>
+                                    <xs:attribute name="select" type="xs:string" use="optional"/>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                    -->
+				</xs:choice>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="structure-tree">
+		<xs:complexContent>
+			<xs:extension base="xsf:base-structure">
+				<xs:choice minOccurs="0" maxOccurs="unbounded">
+					<xs:element name="node">
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:extension base="xsf:structure-tree">
+									<xs:choice minOccurs="0" maxOccurs="unbounded">
+										<xs:element name="attribute">
+											<xs:complexType mixed="true">
+												<xs:attribute name="name" type="xs:string" use="required"/>
+												<xs:attribute name="value" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:choice>
+									<xs:attributeGroup ref="xsf:structure-node-attrs"/>
+								</xs:extension>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+				</xs:choice>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:attributeGroup name="structure-node-attrs">
+		<xs:attribute name="name" type="xs:string" use="required"/>
+		<xs:attribute name="value" type="xs:string" use="optional"/>
+		<xs:attribute name="facet" type="xs:string" use="optional"/>
+		<xs:attribute name="type" type="xs:string" use="optional"/>
+	</xs:attributeGroup>
+	<xs:element name="embed">
+		<xs:annotation>
+			<xs:documentation>Fragments appended to this document. predefined fragment as follows: head, tail, declare, define, custom. </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="xsf:base-structure">
+					<xs:attribute name="position" type="xs:string" use="optional"/>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="include">
+		<xs:annotation>
+			<xs:documentation>Different type(type-uri) of include may be processed differently. 
+e.g. xml will be included with version-header stripped. </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:attribute name="href" type="xs:string" use="required"/>
+			<xs:attribute name="type" type="xs:string" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="import">
+		<xs:annotation>
+			<xs:documentation>Import is more run-time </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="parameter">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attribute name="name" type="xs:string" use="required"/>
+								<xs:attribute name="value" type="xs:string" use="optional"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+			<xs:attribute name="href" type="xs:string" use="required"/>
+			<xs:attribute name="type" type="xs:string" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<!--========== CONTENT ==========-->
+	<xs:group name="content-group">
+		<xs:choice>
+			<xs:element name="content-text"/>
+			<xs:element name="content-string"/>
+			<xs:element name="content-number"/>
+			<xs:element name="content-date"/>
+		</xs:choice>
+	</xs:group>
+	<!--========== CONTENT.DATA ==========-->
+	<xs:group name="data-group">
+		<xs:choice>
+			<xs:element name="file"/>
+			<xs:element name="query"/>
+			<xs:element name="execute"/>
+		</xs:choice>
+	</xs:group>
+	<!--========== MEDIA ==========-->
+	<xs:group name="media-group">
+		<xs:annotation>
+			<xs:documentation>Media terminals</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:choice>
+				<xs:annotation>
+					<xs:documentation>Static components</xs:documentation>
+				</xs:annotation>
+				<xs:element name="media-image" type="xsf:base-media"/>
+				<xs:element name="media-audio" type="xsf:base-media"/>
+				<xs:element name="media-movie" type="xsf:base-media"/>
+			</xs:choice>
+			<xs:choice>
+				<xs:annotation>
+					<xs:documentation>Interactive components</xs:documentation>
+				</xs:annotation>
+				<xs:element name="media-control" type="xsf:base-media"/>
+				<xs:element name="media-flash" type="xsf:base-media"/>
+				<xs:element name="media-activex" type="xsf:base-media"/>
+				<xs:element name="media-applet" type="xsf:base-media"/>
+			</xs:choice>
+		</xs:choice>
+	</xs:group>
+	<!--========== DECLARATOR ==========-->
+	<!--========== EXECUTABLE ==========-->
+	<!--========== EXECUTABLE.SCRIPT ==========-->
+	<xs:group name="script-group">
+		<xs:choice>
+			<xs:element name="vbscript" type="xsf:base-executable"/>
+			<xs:element name="javascript" type="xsf:base-executable"/>
+			<xs:element name="latiscript" type="xsf:base-executable"/>
+			<xs:element name="xsfscript" type="xsf:base-executable"/>
+		</xs:choice>
+	</xs:group>
+	<!--========== PRAGMA ==========-->
+</xs:schema>

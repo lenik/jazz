@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 rel. 3 sp1 (http://www.altova.com) by what (ever) -->
+<xjl xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xml.bodz.net/xjl xjl.xsd" xmlns="http://xml.bodz.net/xjl">
+	<package name="xjl.test"/>
+	<import name="java.io.File"/>
+	<import name="java.net.URL"/>
+	<import name="java.util.Map"/>
+	<classdef vis="public" name="HelloXJL">
+		<def static="true" name="main" throws="Exception">
+			<doc>This is the main method.</doc>
+			<invoke inst="System.out" name="println">
+				<string>Hello, World</string>
+			</invoke>
+		</def>
+	</classdef>
+</xjl>

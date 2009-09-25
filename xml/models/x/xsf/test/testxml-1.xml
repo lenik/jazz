@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by Snima Denik (Bytes of Danci.Z) -->
+<?xml-stylesheet type="text/xsl" href="testxsl-1.xslt"?>
+<xsf:group xmlns:xsf="http://www.bodz.net/xml/current/xsf" xmlns:my="test://xsf/t-group-1">
+	<ROOT ROOT-NAME="The Root Attribute">
+		<BOOK-A>
+			<SECTION-1/>
+		</BOOK-A>
+		<xsf:group ROOT-AGE="18">
+			<BOOK-B TITLE="亚瑟王的传说">..传说的内容..<SECTION-2/>
+			</BOOK-B>
+		</xsf:group>
+		<xsf:include href="bookC.xml"/>
+	</ROOT>
+</xsf:group>
