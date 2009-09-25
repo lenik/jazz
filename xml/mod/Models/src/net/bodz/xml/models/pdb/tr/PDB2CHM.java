@@ -1,11 +1,11 @@
-package net.bodz.xml.models.cfg;
+package net.bodz.xml.models.pdb.tr;
 
 import net.bodz.xml.util.Translet;
 
-public class CFG2PRP extends Translet {
+public class PDB2CHM extends Translet {
 
     public static void main(String[] args) throws Throwable {
-        new CFG2PRP().run(args);
+        new PDB2CHM().run(args);
     }
 
 }

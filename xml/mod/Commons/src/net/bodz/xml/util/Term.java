@@ -4,100 +4,115 @@ import java.io.Serializable;
 
 import net.bodz.bas.types.util.Strings;
 
-/** Term(param)[dims] */
+/** Term(params)[bounds] */
 public class Term implements Serializable {
 
     private static final long serialVersionUID = -1846722082543087995L;
 
-    protected String          name;
-    protected String[]        params;
-    protected Integer[]       dims;
+    private final int         id;
+    private final String      name;
+    private final String[]    parameters;
+    private final Integer[]   bounds;
+
+    public Term(String name, String... params) {
+        this(0, name, params);
+    }
+
+    public Term(int id, String name, String... params) {
+        this.id = id;
+        this.name = name;
+        this.parameters = params;
+        this.bounds = null;
+    }
+
+    public Term(int id, String name, String[] params, Integer[] bounds) {
+        this.id = id;
+        this.name = name;
+        this.parameters = params;
+        this.bounds = bounds;
+    }
+
+    public Term(int id, String name, String[] params, String[] _bounds) {
+        this.id = id;
+        this.name = name;
+        this.parameters = params;
+        if (_bounds == null)
+            this.bounds = null;
+        else {
+            this.bounds = new Integer[_bounds.length];
+            for (int i = 0; i < _bounds.length; i++) {
+                String s = _bounds[i];
+                if (s == null)
+                    throw new NullPointerException("bound[" + i + "]");
+                s = s.trim();
+                if (s.isEmpty())
+                    this.bounds[i] = null;
+                else
+                    this.bounds[i] = Integer.valueOf(s);
+            }
+        }
+    }
+
+    public int getId() {
+        return id;
+    }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String[] getParameters() {
+        return parameters;
     }
 
-    public String[] getParams() {
-        return params;
+    public int getParameterCount() {
+        if (parameters == null)
+            return 0;
+        return parameters.length;
     }
 
-    public void setParams(String[] strings) {
-        if (strings == null || strings.length == 0)
-            params = null;
+    public String getRawParameter() {
+        return Strings.join(" ", parameters);
+    }
+
+    public String getParameter(int index) {
+        return parameters[index];
+    }
+
+    public Integer[] getBounds() {
+        return bounds;
+    }
+
+    public int getDimension() {
+        if (bounds == null)
+            return 0;
         else
-            params = strings;
+            return bounds.length;
     }
 
-    public int getParamCount() {
-        if (params == null)
-            return 0;
-        return params.length;
-    }
-
-    public String getParam(int index) {
-        return params[index];
-    }
-
-    public void setParam(int index, String param) {
-        params[index] = param;
-    }
-
-    public Integer[] getDims() {
-        return dims;
-    }
-
-    public void setDims(Integer[] dims) {
-        this.dims = dims;
-    }
-
-    public void setDims(String[] strings) {
-        if (strings == null || strings.length == 0)
-            dims = null;
-        else {
-            dims = new Integer[strings.length];
-            for (int i = 0; i < strings.length; i++) {
-                String s = strings[i];
-                if (s != null && s.trim().length() > 0)
-                    dims[i] = Integer.valueOf(s);
-            }
-        }
-    }
-
-    public int getDimCount() {
-        if (dims == null)
-            return 0;
-        return dims.length;
-    }
-
-    public Integer getDim(int index) {
-        return dims[index];
-    }
-
-    public void setDim(int index, Integer dim) {
-        dims[index] = dim;
+    public int getBound(int dimIndex) {
+        if (bounds == null || dimIndex < 0 || dimIndex >= bounds.length)
+            throw new IllegalArgumentException("Bad index: " + dimIndex);
+        return bounds[dimIndex];
     }
 
     @Override
     public String toString() {
-        if (params == null && dims == null)
+        if (parameters == null && bounds == null)
             return name;
         StringBuffer buffer = new StringBuffer(name);
-        if (params != null) {
+        if (parameters != null) {
             buffer.append('(');
-            buffer.append(Strings.join(",", params));
+            buffer.append(Strings.join(",", parameters));
             buffer.append(')');
         }
-        if (dims != null) {
+        if (bounds != null) {
             buffer.append('[');
-            for (int i = 0; i < dims.length; i++) {
+            for (int i = 0; i < bounds.length; i++) {
                 if (i > 0)
                     buffer.append(',');
-                if (dims[i] != null)
-                    buffer.append(dims[i]);
+                if (bounds[i] != null)
+                    buffer.append(bounds[i]);
             }
             buffer.append(']');
         }

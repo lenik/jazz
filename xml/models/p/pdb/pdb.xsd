@@ -5,7 +5,11 @@
 			<xs:sequence>
 				<xs:element name="import" minOccurs="0" maxOccurs="unbounded">
 					<xs:complexType>
-						<xs:attribute name="href" type="xs:string" use="required"/>
+						<xs:attribute name="href" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation>href to parent pdb.xml</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
 						<xs:attribute name="type" type="xs:string">
 							<xs:annotation>
 								<xs:documentation>reserved</xs:documentation>
@@ -44,11 +48,10 @@ opts:
     D=cache/dict
     Dr=redundant (info-dict)
     Ro=read-only table
-    S=sub-table
-        Sc=Columns-Continue (1:1)
-        S, Ss=Sub-Table (1:n)
-        Sr=Relationships (n:m)
-        Sx=eXtensible-Fields (1:n:n)
+    S=subtable-deriviation
+        Sm=more fields (1:1)
+        Sp=properties (1:n:n)
+        Sd=details (1:n)
     T=transient table
 </xs:documentation>
 		</xs:annotation>
@@ -82,7 +85,7 @@ opts:
 						<xs:attributeGroup ref="pdb:objectAttributes"/>
 						<xs:attribute name="type" type="xs:string">
 							<xs:annotation>
-								<xs:documentation>sql type (YaSQL)
+								<xs:documentation>data type
 default C[,32]
 
 B[min,max] = binary
@@ -291,7 +294,7 @@ multiple filters are AND-ed. </xs:documentation>
 		</xs:attribute>
 	</xs:complexType>
 	<xs:attributeGroup name="objectAttributes">
-		<xs:attribute name="name" type="xs:string">
+		<xs:attribute name="name" type="xs:string" use="required">
 			<xs:annotation>
 				<xs:documentation>object name</xs:documentation>
 			</xs:annotation>
@@ -310,7 +313,7 @@ Common Options:
     </xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
-		<xs:attribute name="tags" type="xs:string">
+		<xs:attribute name="tags" type="xs:string" use="optional">
 			<xs:annotation>
 				<xs:documentation>category for organization purpose.</xs:documentation>
 			</xs:annotation>

@@ -1,220 +1,254 @@
 package net.bodz.xml.models.pdb;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
 
-import net.bodz.bas.lang.err.ParseException;
-import net.bodz.xml.a.XMLDump;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
+
 import net.bodz.xml.util.Term;
-import net.bodz.xml.xmod.util.Docobj;
+import net.bodz.xml.util.TermBuilder;
+import net.bodz.xml.util.TermDict;
+import net.bodz.xml.util.TermParser;
 
-class Column extends ArrayList<Object> {
+/**
+ * @test {@link TableTest}
+ */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "", propOrder = { "field", "index", "check", "trigger", "instance" })
+@XmlRootElement(name = "table")
+public class Table {
 
-    private static final long serialVersionUID = -8024718839909013511L;
+    @XmlAttribute
+    protected String         base;
+    @XmlAttribute(required = true)
+    protected String         name;
+    @XmlAttribute
+    protected String         label;
+    @XmlAttribute
+    protected String         tags;
+    @XmlAttribute
+    protected String         doc;
 
-    public Column() {
-        super();
+    @XmlElement(required = true)
+    protected List<Field>    field;
+    protected List<Index>    index;
+    protected List<Check>    check;
+    protected List<Trigger>  trigger;
+    protected List<Instance> instance;
+
+    public String getBase() {
+        return base;
     }
 
-    public Column(int initialCapacity) {
-        super(initialCapacity);
+    public void setBase(String base) {
+        this.base = base;
     }
 
-}
-
-public class Table extends Docobj {
-
-    /** D, Dr (Forbid: T) */
-    public static final int            CACHED         = 1;
-
-    /** Dr */
-    public static final int            NOT_REFERENCED = 2;
-
-    /** T (Forbid: D, Dr) */
-    public static final int            TRANSIENT      = 4;
-
-    /** Ro */
-    public static final int            READ_ONLY      = 8;
-
-    protected Modpdb                   db;
-
-    @XMLDump
-    protected final List<Field>        fields;
-
-    // @XMLDump
-    // protected final List<TableIndex> indexes;
-
-    @XMLDump
-    protected final List<TableCheck>   checks;
-
-    @XMLDump
-    protected final List<TableTrigger> triggers;
-
-    @XMLDump
-    protected final List<Row>          rows;
-
-    private Map<String, Integer>       nameIndexes;
-
-    protected PrimaryKey               pkey;
-    protected Map<String, ForeignKey>  fkeys;
-    protected Map<String, Index>       idxes;
-    protected Field                    f_TimeStamp;
-    protected Field                    f_Version;
-
-    public Table() {
-        fields = new ArrayList<Field>();
-        // indexes = new ArrayList<TableIndex>();
-        checks = new ArrayList<TableCheck>();
-        triggers = new ArrayList<TableTrigger>();
-        rows = new ArrayList<Row>();
-
-        fkeys = new HashMap<String, ForeignKey>();
-        idxes = new HashMap<String, Index>();
+    public String getName() {
+        return name;
     }
 
-    protected void pre_set(Object outer) {
-        assert outer instanceof Modpdb;
-        db = (Modpdb) outer;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    protected int getFieldIndex(String name) {
-        if (nameIndexes == null) {
-            nameIndexes = new HashMap<String, Integer>();
-            for (int index = 0; index < fields.size(); index++)
-                nameIndexes.put(fields.get(index).getName(), index);
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    public String getDoc() {
+        return doc;
+    }
+
+    public void setDoc(String doc) {
+        this.doc = doc;
+    }
+
+    public List<Field> getFields() {
+        if (field == null) {
+            field = new ArrayList<Field>();
         }
-        Integer index = nameIndexes.get(name);
-        if (index == null)
-            throw new NoSuchElementException(name + " (table " + name + ")");
-        return index;
+        return this.field;
     }
 
-    public Row getRow(int index) {
-        return rows.get(index);
-    }
-
-    public void setRow(int index, Row row) {
-        rows.set(index, row);
-    }
-
-    public void addRow(Row row) {
-        rows.add(row);
-    }
-
-    public Field getField(int index) {
-        return fields.get(index);
-    }
-
-    public Index getIndex(String name) {
-        return idxes.get(name);
-    }
-
-    public TableCheck getCheck(int index) {
-        return checks.get(index);
-    }
-
-    public TableTrigger getTrigger(int index) {
-        return triggers.get(index);
-    }
-
-    public int sizeFields() {
-        return fields.size();
-    }
-
-    public Iterator<Row> iteratorRows() {
-        return rows.iterator();
-    }
-
-    public int sizeRows() {
-        return rows.size();
-    }
-
-    public Column getColumn(int fieldIndex) {
-        if (rows == null)
-            return null;
-        Column column = new Column(rows.size());
-        for (Row row : rows) {
-            column.add(row.get(fieldIndex));
+    public List<Index> getIndexes() {
+        if (index == null) {
+            index = new ArrayList<Index>();
         }
-        return column;
+        return this.index;
     }
 
-    public Column getColumn(String fieldName) {
-        int index = getFieldIndex(fieldName);
-        return getColumn(index);
-    }
-
-    /** (default) */
-    public static final int MAIN_TABLE     = 0;
-    /** S, Ss */
-    public static final int SUB_TABLE      = 1;
-    /** Sc */
-    public static final int SUB_TABLE_CONT = 2;
-    /** Sx */
-    public static final int SUB_TABLE_EXT  = 3;
-
-    protected int           subs           = MAIN_TABLE;
-
-    /**
-     * <pre>
-     *  D=cache/dict
-     *  Dr=redundant (info-dict)
-     *  Ro=read-only table
-     *  S, Ss, Sc, Sx=sub-table
-     *  T=transient table
-     * </pre>
-     */
-    @Override
-    protected boolean parseOpts(Term opt) throws ParseException {
-        String abb = opt.getName();
-        int len = abb.length();
-        switch (abb.charAt(0)) {
-        case 'D':
-            if (len == 1)
-                flags |= CACHED;
-            else if ("Dr".equals(abb))
-                flags |= CACHED | NOT_REFERENCED;
-            else
-                break;
-            return true;
-        case 'R':
-            if ("Ro".equals(abb))
-                flags |= READ_ONLY;
-            else
-                break;
-            return true;
-        case 'S':
-            if (len == 1)
-                subs = SUB_TABLE;
-            else if ("Ss".equals(abb))
-                subs = SUB_TABLE;
-            else if ("Sc".equals(abb))
-                subs = SUB_TABLE_CONT;
-            else if ("Sx".equals(abb))
-                subs = SUB_TABLE_EXT;
-            else
-                break;
-            return true;
-        case 'T':
-            if (len == 1)
-                flags |= TRANSIENT;
-            else
-                break;
-            return true;
+    public List<Check> getChecks() {
+        if (check == null) {
+            check = new ArrayList<Check>();
         }
-        return super.parseOpts(opt);
+        return this.check;
+    }
+
+    public List<Trigger> getTriggers() {
+        if (trigger == null) {
+            trigger = new ArrayList<Trigger>();
+        }
+        return this.trigger;
+    }
+
+    public List<Instance> getInstances() {
+        if (instance == null) {
+            instance = new ArrayList<Instance>();
+        }
+        return this.instance;
+    }
+
+    @XmlTransient
+    private boolean         _abstract;
+    public static final int CACHE_DICT          = 1;
+    public static final int CACHE_REDUNDANT     = 2;
+    public static final int CACHE_TRANSIENT     = 3;
+
+    @XmlTransient
+    private int             cacheStrategy;
+
+    public static final int MAINTABLE           = 0;
+    public static final int SUBTABLE_GENERAL    = 1;
+    public static final int SUBTABLE_MOREFIELDS = 2;
+    public static final int SUBTABLE_PROPERTIES = 3;
+    public static final int SUBTABLE_DETAILS    = 4;
+
+    @XmlTransient
+    private int             tableRole;
+
+    @XmlAttribute
+    public String getOpts() {
+        TermBuilder b = new TermBuilder();
+        if (_abstract)
+            b.put(OPT_ABSTRACT);
+        switch (cacheStrategy) {
+        case CACHE_DICT:
+            b.put(OPT_CACHE_DICT);
+            break;
+        case CACHE_REDUNDANT:
+            b.put(OPT_CACHE_REDUNDANT);
+            break;
+        case CACHE_TRANSIENT:
+            b.put(OPT_CACHE_TRANSIENT);
+            break;
+        }
+        switch (tableRole) {
+        case MAINTABLE:
+            break;
+        case SUBTABLE_GENERAL:
+            b.put(OPT_SUB_GENERAL);
+            break;
+        case SUBTABLE_MOREFIELDS:
+            b.put(OPT_SUB_MOREFIELDS);
+            break;
+        case SUBTABLE_PROPERTIES:
+            b.put(OPT_SUB_PROPERTIES);
+            break;
+        case SUBTABLE_DETAILS:
+            b.put(OPT_SUB_DETAILS);
+            break;
+        }
+        return b.toString();
+    }
+
+    public void setOpts(String opts) {
+        _abstract = false;
+        tableRole = MAINTABLE;
+        cacheStrategy = 0;
+        for (Term t : TermParser.parse(__dict__, opts))
+            switch (t.getId()) {
+            case OPT_ABSTRACT:
+                _abstract = true;
+                break;
+            case OPT_CACHE_DICT:
+                cacheStrategy = CACHE_DICT;
+                break;
+            case OPT_CACHE_REDUNDANT:
+                cacheStrategy = CACHE_REDUNDANT;
+                break;
+            case OPT_CACHE_TRANSIENT:
+                cacheStrategy = CACHE_TRANSIENT;
+                break;
+            case OPT_SUB_GENERAL:
+                tableRole = SUBTABLE_GENERAL;
+                break;
+            case OPT_SUB_MOREFIELDS:
+                tableRole = SUBTABLE_MOREFIELDS;
+                break;
+            case OPT_SUB_PROPERTIES:
+                tableRole = SUBTABLE_PROPERTIES;
+                break;
+            case OPT_SUB_DETAILS:
+                tableRole = SUBTABLE_DETAILS;
+                break;
+            default:
+                throw new IllegalArgumentException("Bad opt: " + t.getName());
+            }
     }
 
     public boolean isAbstract() {
-        return isCommentOut();
+        return _abstract;
     }
 
-    public int getSubmode() {
-        return subs;
+    public void setAbstract(boolean _abstract) {
+        this._abstract = _abstract;
     }
-    
+
+    public int getCacheStrategy() {
+        return cacheStrategy;
+    }
+
+    public void setCacheStrategy(int cacheStrategy) {
+        this.cacheStrategy = cacheStrategy;
+    }
+
+    public int getTableRole() {
+        return tableRole;
+    }
+
+    public void setTableRole(int tableRole) {
+        this.tableRole = tableRole;
+    }
+
+    static final int      OPT_ABSTRACT        = 1;
+    static final int      OPT_CACHE_DICT      = 2;
+    static final int      OPT_CACHE_REDUNDANT = 3;
+    static final int      OPT_CACHE_TRANSIENT = 4;
+    static final int      OPT_READ_ONLY       = 5;
+    static final int      OPT_SUB_GENERAL     = 6;
+    static final int      OPT_SUB_MOREFIELDS  = 7;
+    static final int      OPT_SUB_PROPERTIES  = 8;
+    static final int      OPT_SUB_DETAILS     = 9;
+    static final TermDict __dict__            = new TermDict();
+    static {
+        __dict__.define(OPT_ABSTRACT, "c");
+        __dict__.define(OPT_CACHE_DICT, "D");
+        __dict__.define(OPT_CACHE_REDUNDANT, "Dr");
+        __dict__.define(OPT_CACHE_TRANSIENT, "T");
+        __dict__.define(OPT_READ_ONLY, "Ro");
+        __dict__.define(OPT_SUB_GENERAL, "S");
+        __dict__.define(OPT_SUB_MOREFIELDS, "Sm");
+        __dict__.define(OPT_SUB_PROPERTIES, "Sp");
+        __dict__.define(OPT_SUB_DETAILS, "Sd");
+    }
+
 }

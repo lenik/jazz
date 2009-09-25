@@ -5,8 +5,9 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 import net.bodz.xml.util.Term;
@@ -14,10 +15,9 @@ import net.bodz.xml.util.TermBuilder;
 import net.bodz.xml.util.TermDict;
 import net.bodz.xml.util.TermParser;
 
-@Deprecated
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = { "field" })
-public class Index {
+@XmlType(name = "", propOrder = { "any" })
+public class Instance {
 
     @XmlAttribute
     protected String       name;
@@ -28,8 +28,8 @@ public class Index {
     @XmlAttribute
     protected String       doc;
 
-    @XmlElement(required = true)
-    protected List<String> field;
+    @XmlAnyElement(lax = true)
+    protected List<Object> any;
 
     public String getName() {
         return name;
@@ -63,37 +63,31 @@ public class Index {
         this.doc = doc;
     }
 
-    public void setField(List<String> field) {
-        this.field = field;
-    }
-
-    public List<String> getField() {
-        if (field == null) {
-            field = new ArrayList<String>();
+    public List<Object> getAny() {
+        if (any == null) {
+            any = new ArrayList<Object>();
         }
-        return this.field;
+        return this.any;
     }
 
-    public static final int DICT_CACHED = 1;
-    private int             dictMode;
+    public static final int RESERVED = 1;
+    @XmlTransient
+    private boolean         reserved;
 
     @XmlAttribute
     public String getOpts() {
         TermBuilder b = new TermBuilder(__dict__);
-        switch (dictMode) {
-        case DICT_CACHED:
-            b.put(OPT_DICT_CACHED);
-            break;
-        }
+        if (reserved)
+            b.put(OPT_RESERVED);
         return b.toString();
     }
 
     public void setOpts(String value) {
-        dictMode = 0;
+        reserved = false;
         for (Term t : TermParser.parse(__dict__, value)) {
             switch (t.getId()) {
-            case OPT_DICT_CACHED:
-                dictMode = DICT_CACHED;
+            case OPT_RESERVED:
+                reserved = true;
                 break;
             default:
                 throw new IllegalArgumentException("Bad opt: " + t.getName());
@@ -101,10 +95,10 @@ public class Index {
         }
     }
 
-    static final int      OPT_DICT_CACHED = 1;
-    static final TermDict __dict__        = new TermDict();
+    static final int      OPT_RESERVED = 1;
+    static final TermDict __dict__     = new TermDict();
     static {
-        __dict__.define(OPT_DICT_CACHED, "D");
+        __dict__.define(OPT_RESERVED, "R");
     }
 
 }

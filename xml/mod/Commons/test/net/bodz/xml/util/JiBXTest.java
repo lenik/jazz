@@ -6,7 +6,7 @@ import java.net.URL;
 
 import net.bodz.bas.types.Pair;
 import net.bodz.xml.models.cfg.Modcfg;
-import net.bodz.xml.models.pdb.Modpdb;
+import net.bodz.xml.models.pdb.PDB;
 
 import org.junit.Test;
 
@@ -44,8 +44,8 @@ public class JiBXTest {
                 // entry(OK, new TPair(Modpdb.class, "/xmod/test/pdb_1.xml"),
                 // Modpdb.class, "xsd unique check: object name"),
 
-                entry(OK, new TPair(Modpdb.class, "/xmod/test/pdb_2.xml"),
-                        Modpdb.class, "pdb: victalk"),
+                entry(OK, new TPair(PDB.class, "/xmod/test/pdb_2.xml"),
+                        PDB.class, "pdb: victalk"),
 
                 entry(OK, new TPair(Modcfg.class, "/xmod/test/cfg_1.xml"),
                         Modcfg.class, "cfg: test1"),
