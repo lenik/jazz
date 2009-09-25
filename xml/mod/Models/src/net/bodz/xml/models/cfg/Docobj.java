@@ -2,7 +2,7 @@ package net.bodz.xml.models.cfg;
 
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.xml.util.Term;
-import net.bodz.xml.util.TermsParser;
+import net.bodz.xml.util.TermParser;
 
 public class Docobj {
 
@@ -43,8 +43,7 @@ public class Docobj {
     public final void setOpts(String opts) throws ParseException {
         this.opts = opts;
         if (opts != null) {
-            Term[] terms = TermsParser.parse(opts);
-            for (Term term : terms) {
+            for (Term term : TermParser.parse(null, opts)) {
                 if (!parseOpts(term))
                     throw new IllegalArgumentException("Unknown option: " + term);
             }
