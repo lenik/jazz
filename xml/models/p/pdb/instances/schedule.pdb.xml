@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pdb name="task-base" label="Task Model" xmlns="http://xml.bodz.net/p/pdb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xml.bodz.net/p/pdb
+..\pdb.xsd">
+	<table name="Task" base="_Docobj" label="任务" doc="可执行任务">
+		<field name="state"/>
+	</table>
+</pdb>

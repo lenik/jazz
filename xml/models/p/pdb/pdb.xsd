@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:pdb="http://xml.bodz.net/p/pdb" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://xml.bodz.net/p/pdb" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="pdb">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="import" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:attribute name="href" type="xs:string" use="required"/>
+						<xs:attribute name="type" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>reserved</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:choice minOccurs="0" maxOccurs="unbounded">
+					<xs:element ref="pdb:table"/>
+					<xs:element ref="pdb:view"/>
+				</xs:choice>
+			</xs:sequence>
+			<xs:attributeGroup ref="pdb:objectAttributes"/>
+			<xs:attribute name="qname" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>qualified package name </xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="cat" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>category</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+		<xs:unique name="u_table_view">
+			<xs:selector xpath="pdb:table | pdb:view"/>
+			<xs:field xpath="@name"/>
+		</xs:unique>
+	</xs:element>
+	<xs:element name="table">
+		<xs:annotation>
+			<xs:documentation>REQ: @name
+
+opts: 
+    c=abstract
+    D=cache/dict
+    Dr=redundant (info-dict)
+    Ro=read-only table
+    S=sub-table
+        Sc=Columns-Continue (1:1)
+        S, Ss=Sub-Table (1:n)
+        Sr=Relationships (n:m)
+        Sx=eXtensible-Fields (1:n:n)
+    T=transient table
+</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="field" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>REQ: @name
+
+opts: 
+    N=nullable
+    K=primary key (group)
+    F([nam,] n:m ? table.field[, disp-sql]) = foreign key
+        F-> normal ref-integrity
+        F--> no ref-integrity
+        F=> cascade-update
+        F>> cascade-delete
+    I(nam)=index (group)
+    Ic(nam)=clustered index
+    U(nam)=unique (group)
+    T(field, ?)=timestamp
+    V(field, ?)=version
+    S?=special mode
+        Sd=cache/display-name
+    D(value)=default value
+    Dx(sql-exp)=default exp
+    Di(gen-method) = identity
+</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:attributeGroup ref="pdb:objectAttributes"/>
+						<xs:attribute name="type" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>sql type (YaSQL)
+default C[,32]
+
+B[min,max] = binary
+Bt = bit/boolean
+C[min,max] = 
+    char/varchar/text
+Cn[min,max] = 
+    nchar/nvarchar/ntext
+T? = datetime
+    Td=date
+    Tt=time
+    Ts=timestamp
+F?=float (default sys/float)
+I?=integer (default sys/int)
+    I8, I16, I32, I64, etc.
+M[totlen,declen] = money
+N[totlen,declen] = number</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="index" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>(deprecated)</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="field" type="xs:string" maxOccurs="unbounded"/>
+						</xs:sequence>
+						<xs:attributeGroup ref="pdb:objectAttributes"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="check" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="sql" type="xs:string"/>
+						</xs:sequence>
+						<xs:attributeGroup ref="pdb:objectAttributes"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="trigger" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="sql" type="xs:string"/>
+						</xs:sequence>
+						<xs:attributeGroup ref="pdb:objectAttributes"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="instance" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>data row</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:any namespace="##local" processContents="lax" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>field data</xs:documentation>
+								</xs:annotation>
+							</xs:any>
+						</xs:sequence>
+						<xs:attributeGroup ref="pdb:objectAttributes"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="pdb:objectAttributes"/>
+			<xs:attribute name="base" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>extends the specified table, 
+
+no duplicated fields is allowed.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+		<xs:unique name="u_field">
+			<xs:selector xpath="field"/>
+			<xs:field xpath="@name"/>
+		</xs:unique>
+		<xs:unique name="u_index">
+			<xs:selector xpath="index"/>
+			<xs:field xpath="@name"/>
+		</xs:unique>
+		<xs:unique name="u_check">
+			<xs:selector xpath="check"/>
+			<xs:field xpath="@name"/>
+		</xs:unique>
+		<xs:unique name="u_trigger">
+			<xs:selector xpath="trigger"/>
+			<xs:field xpath="@name"/>
+		</xs:unique>
+	</xs:element>
+	<xs:element name="view">
+		<xs:annotation>
+			<xs:documentation>REQ: @name
+
+opts: 
+    D=cache/dict</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="from" type="pdb:fromType" maxOccurs="unbounded"/>
+				<xs:element name="field" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>sql expr returns the field value, or (alias.)* to select all fields. </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attribute name="label" type="xs:string">
+									<xs:annotation>
+										<xs:documentation>default inferred from expr</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="filter" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>sql expr used to filter. 
+multiple filters are AND-ed. </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="groupBy">
+					<xs:complexType>
+						<xs:attribute name="fields" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation>comma-separated field exprs</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="having" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>sql expr to filter the group</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="sort">
+					<xs:annotation>
+						<xs:documentation>sql expr used to sort</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attribute name="order">
+									<xs:annotation>
+										<xs:documentation>default ascending</xs:documentation>
+									</xs:annotation>
+									<xs:simpleType>
+										<xs:restriction base="xs:string">
+											<xs:enumeration value="ascending"/>
+											<xs:enumeration value="descending"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:attribute>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attributeGroup ref="pdb:objectAttributes"/>
+			<xs:attribute name="distinct" type="xs:boolean">
+				<xs:annotation>
+					<xs:documentation>remove duplicated rows</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="fromType">
+		<xs:choice>
+			<xs:element name="ref">
+				<xs:complexType>
+					<xs:attribute name="name" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>referenced table/view name</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="pdb:view"/>
+			<xs:element name="join">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="left" type="pdb:fromType"/>
+						<xs:element name="right" type="pdb:fromType"/>
+					</xs:sequence>
+					<xs:attribute name="mode">
+						<xs:annotation>
+							<xs:documentation>default is left-join</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="left"/>
+								<xs:enumeration value="right"/>
+								<xs:enumeration value="natural"/>
+								<xs:enumeration value="full"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:choice>
+		<xs:attribute name="alias" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>alias used in following expr</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:attributeGroup name="objectAttributes">
+		<xs:attribute name="name" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>object name</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="label" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>display string</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="opts" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>options, in components' local-syntax
+
+Common Options: 
+    c=comment-out
+    </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="tags" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>category for organization purpose.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="doc" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>short help-info</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:attributeGroup>
+</xs:schema>

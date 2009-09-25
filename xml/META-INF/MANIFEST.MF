@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: XML Framework
+Bundle-SymbolicName: net.bodz.xml;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Vendor: Lenik
+Require-Bundle: net.bodz.bas;bundle-version="1.0.0"
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: mod/Commons/bin/,
+ mod/XML Modules/bin/
+Export-Package: net.bodz.xml.models.cfg,
+ net.bodz.xml.models.pdb,
+ net.bodz.xml.util,
+ net.bodz.xml.xmod.util

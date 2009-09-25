@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 rel. 3 sp1 (http://www.altova.com) by what (ever) -->
+<itab xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xml.bodz.net/b/bastypes/1 ..\bastypes.xsd" xmlns="http://xml.bodz.net/b/bastypes/1" name="Table 1">
+	<column type="string" name="abc">
+		<text>def</text>
+	</column>
+</itab>

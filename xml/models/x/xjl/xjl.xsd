@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 rel. 3 sp1 (http://www.altova.com) by what (ever) -->
+<xs:schema xmlns:xjl="http://xml.bodz.net/xjl" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://xml.bodz.net/xjl" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="xjl">
+		<xs:annotation>
+			<xs:documentation>XML Java Language</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="package" minOccurs="0">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="xjl:annotatableType">
+								<xs:attribute name="name" type="xs:string" use="required"/>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="import" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:attribute name="static" type="xs:boolean"/>
+						<xs:attribute name="name" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>Full qualified name</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="rename" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>RESERVED.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:group ref="xjl:typedef" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="annotatableType">
+		<xs:sequence>
+			<xs:element name="doc" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>exactly the same as javadoc</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ann" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>annotations</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="param" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:attribute name="name" type="xs:string" use="required"/>
+								<xs:attribute name="value" type="xs:string"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="type" type="xs:string" use="required"/>
+					<xs:attribute name="value" type="xs:string"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:group name="typedef">
+		<xs:choice>
+			<xs:element name="classdef">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="xjl:annotatableType">
+							<xs:choice minOccurs="0" maxOccurs="unbounded">
+								<xs:element name="var" type="xjl:varType"/>
+								<xs:element name="def">
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="xjl:sigdefType">
+												<xs:group ref="xjl:statement"/>
+												<xs:attribute name="name" type="xs:string" use="required">
+													<xs:annotation>
+														<xs:documentation>method name</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:extension>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="ctor">
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="xjl:sigdefType">
+												<xs:group ref="xjl:statement"/>
+											</xs:extension>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="init">
+									<xs:complexType>
+										<xs:group ref="xjl:statement"/>
+										<xs:attribute name="static" type="xs:boolean"/>
+									</xs:complexType>
+								</xs:element>
+								<xs:group ref="xjl:typedef">
+									<xs:annotation>
+										<xs:documentation>inner type</xs:documentation>
+									</xs:annotation>
+								</xs:group>
+							</xs:choice>
+							<xs:attributeGroup ref="xjl:typeAttributes"/>
+							<xs:attribute name="name" type="xs:string" use="required"/>
+							<xs:attribute name="extends" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>Superclass to extends</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="impl" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>Comma separated interface list.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="ifacedef">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="xjl:annotatableType">
+							<xs:choice minOccurs="0" maxOccurs="unbounded">
+								<xs:element name="const" type="xjl:varType"/>
+								<xs:element name="sigdef">
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="xjl:sigdefType">
+												<xs:attribute name="name" type="xs:string" use="required">
+													<xs:annotation>
+														<xs:documentation>method name</xs:documentation>
+													</xs:annotation>
+												</xs:attribute>
+											</xs:extension>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+								<xs:group ref="xjl:typedef">
+									<xs:annotation>
+										<xs:documentation>inner type</xs:documentation>
+									</xs:annotation>
+								</xs:group>
+							</xs:choice>
+							<xs:attribute name="name" use="required"/>
+							<xs:attribute name="extends" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>comma separated iface list</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="enumdef">
+				<xs:annotation>
+					<xs:documentation>NOT IMPLEMENT</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="xjl:annotatableType">
+							<xs:choice minOccurs="0" maxOccurs="unbounded">
+								<xs:group ref="xjl:typedef">
+									<xs:annotation>
+										<xs:documentation>inner type</xs:documentation>
+									</xs:annotation>
+								</xs:group>
+							</xs:choice>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="anndef">
+				<xs:annotation>
+					<xs:documentation>NOT IMPLEMENT</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="xjl:annotatableType">
+							<xs:choice minOccurs="0" maxOccurs="unbounded">
+								<xs:group ref="xjl:typedef">
+									<xs:annotation>
+										<xs:documentation>inner type</xs:documentation>
+									</xs:annotation>
+								</xs:group>
+							</xs:choice>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:choice>
+	</xs:group>
+	<xs:attributeGroup name="typeAttributes">
+		<xs:attribute name="vis" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Visibility</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="final" type="xs:boolean" use="optional" default="false"/>
+		<xs:attribute name="static" type="xs:boolean" use="optional" default="false"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="funAttributes">
+		<xs:attribute name="vis" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>visibility, default package-public</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="final" type="xs:boolean" use="optional" default="false"/>
+		<xs:attribute name="static" type="xs:boolean" use="optional" default="false"/>
+	</xs:attributeGroup>
+	<xs:attributeGroup name="varAttributes">
+		<xs:attribute name="vis" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Visibility</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="static" type="xs:boolean" use="optional" default="false"/>
+		<xs:attribute name="final" type="xs:boolean" use="optional" default="false"/>
+		<xs:attribute name="const" type="xs:boolean" use="optional" default="false"/>
+		<xs:attribute name="transient" type="xs:boolean" use="optional" default="false"/>
+		<xs:attribute name="volatile" type="xs:boolean" use="optional" default="false"/>
+	</xs:attributeGroup>
+	<xs:complexType name="varType">
+		<xs:complexContent>
+			<xs:extension base="xjl:annotatableType">
+				<xs:group ref="xjl:expression" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>init value</xs:documentation>
+					</xs:annotation>
+				</xs:group>
+				<xs:attributeGroup ref="xjl:varAttributes"/>
+				<xs:attribute name="type" type="xs:string" use="required"/>
+				<xs:attribute name="name" type="xs:string" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="sigdefType">
+		<xs:complexContent>
+			<xs:extension base="xjl:annotatableType">
+				<xs:sequence>
+					<xs:element name="param" minOccurs="0" maxOccurs="unbounded">
+						<xs:complexType>
+							<xs:attribute name="type" type="xs:string" use="required"/>
+							<xs:attribute name="final" type="xs:boolean"/>
+							<xs:attribute name="name" type="xs:string" use="required"/>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:attributeGroup ref="xjl:funAttributes"/>
+				<xs:attribute name="rettype" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>default void. </xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+				<xs:attribute name="throws" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>comma separated exception type list</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:group name="expression">
+		<xs:choice>
+			<xs:element name="expr" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>java expression</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="eval" type="xjl:invokeType"/>
+			<xs:element name="array">
+				<xs:complexType>
+					<xs:group ref="xjl:expression">
+						<xs:annotation>
+							<xs:documentation>init values</xs:documentation>
+						</xs:annotation>
+					</xs:group>
+					<xs:attribute name="type" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>Object by default.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="len" type="xs:integer">
+						<xs:annotation>
+							<xs:documentation>count(*) by default</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="string"/>
+			<xs:element name="new">
+				<xs:complexType>
+					<xs:group ref="xjl:expression" minOccurs="0" maxOccurs="unbounded">
+						<xs:annotation>
+							<xs:documentation>ctor parameters</xs:documentation>
+						</xs:annotation>
+					</xs:group>
+					<xs:attribute name="type" type="xs:string">
+						<xs:annotation>
+							<xs:documentation>generic type parameters are ok. </xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+		</xs:choice>
+	</xs:group>
+	<xs:group name="statement">
+		<xs:choice>
+			<xs:group ref="xjl:typedef">
+				<xs:annotation>
+					<xs:documentation>local type</xs:documentation>
+				</xs:annotation>
+			</xs:group>
+			<xs:element name="var" type="xjl:varType">
+				<xs:annotation>
+					<xs:documentation>local var</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="set">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="xjl:withValue">
+							<xs:attribute name="var" type="xs:string" use="required">
+								<xs:annotation>
+									<xs:documentation>set to which var, must be left-value</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="invoke" type="xjl:invokeType"/>
+			<xs:element name="do">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:group ref="xjl:statement" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:element name="else-exit" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>exit the do-scope, but by neither break/continue. </xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:group ref="xjl:statement"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="label" type="xs:string"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:group ref="xjl:doControl"/>
+			<xs:element name="for">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="init">
+							<xs:complexType>
+								<xs:group ref="xjl:statement"/>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="cond" type="xjl:withTest"/>
+						<xs:element name="incr">
+							<xs:complexType>
+								<xs:group ref="xjl:statement"/>
+							</xs:complexType>
+						</xs:element>
+						<xs:group ref="xjl:statement"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="foreach">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="xjl:withValue">
+							<xs:group ref="xjl:statement"/>
+							<xs:attribute name="type" type="xs:string" use="required">
+								<xs:annotation>
+									<xs:documentation>iterator variable type</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="name" type="xs:string" use="required">
+								<xs:annotation>
+									<xs:documentation>iterator variable name</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="if" type="xjl:ifType"/>
+			<xs:element name="ifelse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="if" type="xjl:ifType" maxOccurs="unbounded"/>
+						<xs:element name="else" minOccurs="0">
+							<xs:complexType>
+								<xs:group ref="xjl:statement"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="switch">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="xjl:withValue">
+							<xs:choice maxOccurs="unbounded">
+								<xs:element name="case">
+									<xs:complexType>
+										<xs:complexContent>
+											<xs:extension base="xjl:withValue">
+												<xs:group ref="xjl:statement"/>
+											</xs:extension>
+										</xs:complexContent>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="other">
+									<xs:complexType>
+										<xs:group ref="xjl:statement"/>
+									</xs:complexType>
+								</xs:element>
+							</xs:choice>
+							<xs:attribute name="break" type="xs:boolean" default="false">
+								<xs:annotation>
+									<xs:documentation>true: break after the first case/default label matched. 
+false: continue to next case/default, until break. </xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="try">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:group ref="xjl:statement"/>
+						<xs:element name="catch" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:group ref="xjl:statement"/>
+								<xs:attribute name="type" type="xs:string" use="required">
+									<xs:annotation>
+										<xs:documentation>Exception type to catch</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="name" use="required">
+									<xs:annotation>
+										<xs:documentation>Naming the exception instance. </xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="finally" minOccurs="0">
+							<xs:complexType>
+								<xs:group ref="xjl:statement"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="return" type="xjl:withValue"/>
+			<xs:element name="throw" type="xjl:withValue"/>
+			<xs:any namespace="##local">
+				<xs:annotation>
+					<xs:documentation>replace invoke/@name with this tag name.</xs:documentation>
+				</xs:annotation>
+			</xs:any>
+		</xs:choice>
+	</xs:group>
+	<xs:complexType name="withValue">
+		<xs:group ref="xjl:expression" minOccurs="0"/>
+		<xs:attribute name="value" type="xs:string"/>
+	</xs:complexType>
+	<xs:complexType name="withTest">
+		<xs:sequence minOccurs="0">
+			<xs:element name="test">
+				<xs:complexType>
+					<xs:group ref="xjl:expression"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute name="test" type="xs:string"/>
+	</xs:complexType>
+	<xs:group name="doControl">
+		<xs:annotation>
+			<xs:documentation>must be with-in a do/ element</xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="break">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="xjl:withTest">
+							<xs:attribute name="label" type="xs:string"/>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="continue">
+				<xs:annotation>
+					<xs:documentation>if value or the value is true</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="xjl:withTest">
+							<xs:attribute name="label" type="xs:string"/>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="while" type="xjl:withTest">
+				<xs:annotation>
+					<xs:documentation>break when the test is false.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:group>
+	<xs:complexType name="ifType">
+		<xs:complexContent>
+			<xs:extension base="xjl:withTest">
+				<xs:group ref="xjl:statement"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="invokeType">
+		<xs:sequence>
+			<xs:element name="inst" minOccurs="0">
+				<xs:complexType>
+					<xs:group ref="xjl:expression"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:group ref="xjl:expression" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Ordinal Parameters</xs:documentation>
+				</xs:annotation>
+			</xs:group>
+		</xs:sequence>
+		<xs:attribute name="inst" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>the object instance to invoke on. 
+default is `this'</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="name" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>method name</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+</xs:schema>

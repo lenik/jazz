@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 rel. 3 sp1 (http://www.altova.com) by what (ever) -->
+<xs:schema xmlns:b="http://xml.bodz.net/b/bastypes/1" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://xml.bodz.net/b/bastypes/1" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<!--Common Groups-->
+	<xs:group name="_commons">
+		<xs:sequence>
+			<xs:group ref="b:_appearance"/>
+			<xs:group ref="b:_contacts"/>
+			<xs:group ref="b:_credits"/>
+			<xs:group ref="b:_version"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="_credits">
+		<xs:sequence>
+			<xs:element name="credit" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="type">
+								<xs:simpleType>
+									<xs:restriction base="xs:string">
+										<xs:enumeration value="initiator"/>
+										<xs:enumeration value="contributor"/>
+										<xs:enumeration value="organization"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:attribute>
+							<xs:attribute name="alias" type="xs:string"/>
+							<xs:attribute name="email" type="xs:string"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="_appearance">
+		<xs:sequence>
+			<xs:element name="icon" minOccurs="0"/>
+			<xs:element name="text" minOccurs="0"/>
+			<xs:element name="description" minOccurs="0"/>
+			<xs:element name="doc" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="_version">
+		<xs:sequence>
+			<xs:element name="version" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Version number</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="rcsdata" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>RCS substitute variables</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:attribute name="keyword" use="required">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="id"/>
+								<xs:enumeration value="revision"/>
+								<xs:enumeration value="date"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="changelog" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Description about the changement.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:simpleContent>
+									<xs:extension base="xs:string">
+										<xs:attribute name="committer" type="xs:string">
+											<xs:annotation>
+												<xs:documentation>Commit by whom</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="date" type="xs:date">
+											<xs:annotation>
+												<xs:documentation>Commit date</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+									</xs:extension>
+								</xs:simpleContent>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="_contacts">
+		<xs:sequence>
+			<xs:choice minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="url">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attribute name="subject" type="xs:string"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="phone">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attribute name="usage" type="xs:string"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="address">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:string">
+								<xs:attribute name="usage" type="xs:string"/>
+							</xs:extension>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+		</xs:sequence>
+	</xs:group>
+	<!--Common Groups-->
+	<xs:element name="itab">
+		<xs:annotation>
+			<xs:documentation>inline table</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:group ref="b:_appearance"/>
+				<xs:element name="column" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:group ref="b:_appearance"/>
+						</xs:sequence>
+						<xs:attribute name="name" type="xs:string" use="required"/>
+						<xs:attribute name="type" use="required">
+							<xs:simpleType>
+								<xs:union memberTypes="xs:string">
+									<xs:simpleType>
+										<xs:restriction base="xs:string">
+											<xs:enumeration value="string"/>
+											<xs:enumeration value="integer"/>
+											<xs:enumeration value="decimal"/>
+											<xs:enumeration value="boolean"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:union>
+							</xs:simpleType>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="row" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:any namespace="##local" processContents="lax" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="dict">
+		<xs:annotation>
+			<xs:documentation>Comment describing your root element</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:group ref="b:_appearance"/>
+				<xs:element name="entry" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:group ref="b:_appearance"/>
+						</xs:sequence>
+						<xs:attribute name="key" type="xs:string"/>
+						<xs:attribute name="value" type="xs:string"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

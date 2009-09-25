@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 rel. 3 sp1 (http://www.altova.com) by what (ever) -->
+<xjl:xjl xmlns:xjl="http://xml.bodz.net/xjl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xml.bodz.net/xjl K:\workspace\net.bodz\net.bodz.xml\xjl.xsd">
+	<xjl:package name="xjl.demo"/>
+	<xjl:import name="java.util.Map"/>
+	<xjl:classdef name="Collects">
+		<xjl:var vis="private" type="Map&lt;Integer, String>" name="numbers"/>
+		<xjl:ctor vis="public">
+			<xjl:param type="int" name="n"/>
+			<xjl:do>
+				<xjl:var type="int" name="i"/>
+				<xjl:for>
+					<xjl:init>
+						<xjl:set var="i" value="0"/>
+					</xjl:init>
+					<xjl:cond test="i &lt; 100"/>
+					<xjl:incr>
+						<xjl:set var="i" value="i+1"/>
+					</xjl:incr>
+					<xjl:invoke inst="numbers" name="put">
+						<xjl:expr>i</xjl:expr>
+						<xjl:expr>"Num" + i</xjl:expr>
+					</xjl:invoke>
+				</xjl:for>
+			</xjl:do>
+		</xjl:ctor>
+		<xjl:def vis="public" name="toString">
+			<xjl:ann type="Override"/>
+			<xjl:do>
+				<xjl:var type="StringBuffer" name="buf"/>
+				<xjl:foreach type="Map.Entry&lt;Integer, String>" name="e" value="numbers">
+					<xjl:do>
+						<xjl:var type="int" name="num">
+							<xjl:eval inst="numbers" name="get">
+								<xjl:expr>e.getKey()</xjl:expr>
+							</xjl:eval>
+						</xjl:var>
+					</xjl:do>
+				</xjl:foreach>
+			</xjl:do>
+		</xjl:def>
+	</xjl:classdef>
+</xjl:xjl>

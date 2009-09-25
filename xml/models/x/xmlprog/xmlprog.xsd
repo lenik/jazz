@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 rel. 3 sp1 (http://www.altova.com) by what (ever) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="seq">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="nodeType">
+					<xs:choice minOccurs="0" maxOccurs="unbounded">
+						<xs:group ref="nodeGroup"/>
+					</xs:choice>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="nodeType">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:any namespace="##other" processContents="lax"/>
+		</xs:choice>
+		<xs:attribute name="tag" type="xs:string"/>
+	</xs:complexType>
+	<xs:group name="nodeGroup">
+		<xs:choice>
+			<xs:element name="expr" type="nodeType"/>
+			<xs:element name="def" type="nodeType"/>
+			<xs:element name="quote" type="nodeType"/>
+			<xs:element name="dequote" type="nodeType"/>
+			<xs:element name="let" type="nodeType"/>
+			<xs:element name="letrec" type="nodeType"/>
+			<xs:element ref="seq"/>
+			<xs:element name="list" type="nodeType"/>
+			<xs:element name="car" type="nodeType"/>
+			<xs:element name="cdr" type="nodeType"/>
+			<xs:element name="list-get" type="nodeType"/>
+			<xs:element name="list-set" type="nodeType"/>
+			<xs:element name="eval" type="nodeType"/>
+			<xs:any namespace="##other">
+				<xs:annotation>
+					<xs:documentation>eval</xs:documentation>
+				</xs:annotation>
+			</xs:any>
+		</xs:choice>
+	</xs:group>
+</xs:schema>

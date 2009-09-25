@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2005 U (http://www.xmlspy.com) by Snima Denik (Bytes of Danci.Z) -->
+<BOOK-C xmlns:xsf="http://www.bodz.net/xml/current/xsf" title="南北战争">
+	<SECTION-3/>南北战争发生在美国。<SECTION-4 comments="Some comments">More text. </SECTION-4>
+	<xsf:include href="section5.xml"/>结束语。</BOOK-C>
