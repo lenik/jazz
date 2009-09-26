@@ -14,7 +14,7 @@ handlers:
 
 - url: /([a-z]/.*)
   static_files: models/\1
-  upload: models/
+  upload: models/.*\.xsd
 
 - url: /.*
   script: not_found.py
