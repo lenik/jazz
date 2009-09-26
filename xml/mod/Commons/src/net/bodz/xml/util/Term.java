@@ -4,53 +4,41 @@ import java.io.Serializable;
 
 import net.bodz.bas.types.util.Strings;
 
-/** Term(params)[bounds] */
+/**
+ * <pre>
+ * TermINDEX &lt; type &gt; (params)[bounds]
+ * </pre>
+ */
 public class Term implements Serializable {
 
     private static final long serialVersionUID = -1846722082543087995L;
 
     private final int         id;
     private final String      name;
-    private final String[]    parameters;
-    private final Integer[]   bounds;
+    private Integer           index;
+    private String            typeParameter;
+    private String            rawParameter;
+    private String[]          parameters;
+    private Integer[]         bounds;
 
-    public Term(String name, String... params) {
-        this(0, name, params);
-    }
-
-    public Term(int id, String name, String... params) {
+    public Term(int id, String name) {
         this.id = id;
         this.name = name;
-        this.parameters = params;
-        this.bounds = null;
     }
 
-    public Term(int id, String name, String[] params, Integer[] bounds) {
-        this.id = id;
-        this.name = name;
-        this.parameters = params;
-        this.bounds = bounds;
+    public Term(int id, String name, String... parameters) {
+        this(id, name);
+        this.parameters = parameters;
     }
 
-    public Term(int id, String name, String[] params, String[] _bounds) {
-        this.id = id;
-        this.name = name;
-        this.parameters = params;
-        if (_bounds == null)
-            this.bounds = null;
-        else {
-            this.bounds = new Integer[_bounds.length];
-            for (int i = 0; i < _bounds.length; i++) {
-                String s = _bounds[i];
-                if (s == null)
-                    throw new NullPointerException("bound[" + i + "]");
-                s = s.trim();
-                if (s.isEmpty())
-                    this.bounds[i] = null;
-                else
-                    this.bounds[i] = Integer.valueOf(s);
-            }
-        }
+    public Term(int id, String name, String[] parameters, Integer[] bounds) {
+        this(id, name, parameters);
+        setBounds(bounds);
+    }
+
+    public Term(int id, String name, String[] parameters, String[] bounds) {
+        this(id, name, parameters);
+        setBounds(bounds);
     }
 
     public int getId() {
@@ -61,8 +49,42 @@ public class Term implements Serializable {
         return name;
     }
 
-    public String[] getParameters() {
-        return parameters;
+    public boolean hasIndex() {
+        return index != null;
+    }
+
+    public int getIndex() {
+        return getIndex(0);
+    }
+
+    public int getIndex(int defaultValue) {
+        if (index == null)
+            return defaultValue;
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
+    }
+
+    public String getTypeParameter() {
+        return typeParameter;
+    }
+
+    public void setTypeParameter(String typeParameter) {
+        this.typeParameter = typeParameter;
+    }
+
+    public String getRawParameter() {
+        if (rawParameter != null)
+            return rawParameter;
+        if (parameters == null)
+            return null;
+        return Strings.join(", ", parameters);
+    }
+
+    public void setRawParameter(String rawParameter) {
+        this.rawParameter = rawParameter;
     }
 
     public int getParameterCount() {
@@ -71,16 +93,66 @@ public class Term implements Serializable {
         return parameters.length;
     }
 
-    public String getRawParameter() {
-        return Strings.join(" ", parameters);
+    public String[] getParameters() {
+        return parameters;
     }
 
-    public String getParameter(int index) {
-        return parameters[index];
+    public void setParameters(String[] parameters) {
+        this.parameters = parameters;
+    }
+
+    public String get(int parameterIndex) {
+        return parameters[parameterIndex];
+    }
+
+    public int getInt(int parameterIndex) {
+        String s = parameters[parameterIndex];
+        return Integer.parseInt(s);
+    }
+
+    public int getInt(int parameterIndex, int defaultValue) {
+        try {
+            return getInt(parameterIndex);
+        } catch (NumberFormatException e) {
+            return defaultValue;
+        }
+    }
+
+    public boolean getBoolean(int parameterIndex) {
+        String s = parameters[parameterIndex];
+        if ("1".equals(s))
+            return true;
+        return Boolean.parseBoolean(s);
+    }
+
+    public void set(int parameterIndex, Object parameter) {
+        parameters[parameterIndex] = String.valueOf(parameter);
     }
 
     public Integer[] getBounds() {
         return bounds;
+    }
+
+    public void setBounds(Integer[] bounds) {
+        if (bounds == null)
+            throw new NullPointerException("bounds");
+        this.bounds = bounds;
+    }
+
+    public void setBounds(String[] bounds) {
+        if (bounds == null)
+            throw new NullPointerException("bounds");
+        this.bounds = new Integer[bounds.length];
+        for (int i = 0; i < bounds.length; i++) {
+            String s = bounds[i];
+            if (s == null)
+                throw new NullPointerException("bound[" + i + "]");
+            s = s.trim();
+            if (s.isEmpty())
+                this.bounds[i] = null;
+            else
+                this.bounds[i] = Integer.valueOf(s);
+        }
     }
 
     public int getDimension() {
@@ -90,20 +162,33 @@ public class Term implements Serializable {
             return bounds.length;
     }
 
-    public int getBound(int dimIndex) {
-        if (bounds == null || dimIndex < 0 || dimIndex >= bounds.length)
-            throw new IllegalArgumentException("Bad index: " + dimIndex);
-        return bounds[dimIndex];
+    public int getBound(int dim) {
+        return getBound(dim, 0);
+    }
+
+    public int getBound(int dim, int defaultValue) {
+        if (bounds == null || dim < 0 || dim >= bounds.length)
+            throw new IllegalArgumentException("Bad index: " + dim);
+        Integer bound = bounds[dim];
+        if (bound == null)
+            return defaultValue;
+        return bound;
     }
 
     @Override
     public String toString() {
-        if (parameters == null && bounds == null)
-            return name;
         StringBuffer buffer = new StringBuffer(name);
-        if (parameters != null) {
+        if (index != null)
+            buffer.append(index);
+        if (typeParameter != null) {
+            buffer.append('<');
+            buffer.append(typeParameter);
+            buffer.append('>');
+        }
+        String rp = getRawParameter();
+        if (rp != null) {
             buffer.append('(');
-            buffer.append(Strings.join(",", parameters));
+            buffer.append(rp);
             buffer.append(')');
         }
         if (bounds != null) {

@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
@@ -20,7 +21,7 @@ import net.bodz.xml.util.TermParser;
  * @test {@link PDBTest}
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(propOrder = { "imports", "tables", "views" })
+@XmlType(propOrder = { "imports", "tableOrViews" })
 @XmlRootElement(name = "pdb")
 public class PDB {
 
@@ -53,11 +54,11 @@ public class PDB {
     @XmlElement(name = "import")
     protected List<PDB.Import> imports;
 
-    @XmlElement(name = "table", type = Table.class)
-    protected List<Table>      tables;
-
-    @XmlElement(name = "view", type = View.class)
-    protected List<View>       views;
+    @XmlElements( {
+    //
+            @XmlElement(name = "table", type = Table.class), //
+            @XmlElement(name = "view", type = View.class) })
+    protected List<Object>     tableOrViews;
 
     public String getQname() {
         return qname;
@@ -122,16 +123,18 @@ public class PDB {
         imports.add(_import);
     }
 
-    public List<Table> getTables() {
-        if (tables == null)
-            tables = new ArrayList<Table>();
-        return tables;
+    public List<Object> getTableOrViews() {
+        if (tableOrViews == null)
+            tableOrViews = new ArrayList<Object>();
+        return tableOrViews;
     }
 
-    public List<View> getViews() {
-        if (views == null)
-            views = new ArrayList<View>();
-        return views;
+    public void addTable(Table table) {
+        getTableOrViews().add(table);
+    }
+
+    public void addView(View view) {
+        getTableOrViews().add(view);
     }
 
     @XmlAttribute

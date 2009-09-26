@@ -8,7 +8,11 @@ Require-Bundle: net.bodz.bas;bundle-version="1.0.0"
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: mod/Commons/bin/,
  mod/XML Modules/bin/
-Export-Package: net.bodz.xml.models.cfg,
+Export-Package: net.bodz.xml.a,
+ net.bodz.xml.extb,
+ net.bodz.xml.extb.impl,
+ net.bodz.xml.models,
+ net.bodz.xml.models.cfg,
  net.bodz.xml.models.pdb,
- net.bodz.xml.util,
- net.bodz.xml.xmod.util
+ net.bodz.xml.models.pdb.tr,
+ net.bodz.xml.util

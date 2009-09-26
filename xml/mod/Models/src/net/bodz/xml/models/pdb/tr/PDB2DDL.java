@@ -12,7 +12,7 @@ import net.bodz.xml.util.Translet;
  */
 public class PDB2DDL extends Translet {
 
-    public static void main(String[] args) throws Throwable {
+    public static void main(String[] args) throws Exception {
         new PDB2DDL().run(args);
     }
 

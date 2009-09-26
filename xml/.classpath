@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<classpath> 
-  <classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-  <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-  <classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-  <classpathentry kind="output" path="bin"/>
-  <classpathentry kind="src" output="mod/Commons/bin" path="mod/Commons/src"/>
-  <classpathentry kind="src" output="mod/Commons/test.bin" path="mod/Commons/test"/>
-  <classpathentry kind="src" output="mod/Models/bin" path="mod/Models/src"/>
-  <classpathentry kind="src" output="mod/Models/test.bin" path="mod/Models/test"/>
-  <classpathentry kind="src" path="mod/jaxb/src" output="mod/jaxb/bin"/>
-  <classpathentry kind="src" path="mod/jaxb/test" output="mod/jaxb/test.bin"/>
-  <classpathentry kind="var" path="JAVA_LIB/dom4j-1.6.1.jar" sourcepath="/JAVA_SRC/dom4j-1.6.1-src.zip"/>
-  <classpathentry kind="var" path="JAVA_LIB/jibx-run.jar" sourcepath="/JAVA_SRC/jibx-src.zip"/>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" output="mod/Commons/bin" path="mod/Commons/src"/>
+	<classpathentry kind="src" output="mod/Commons/test.bin" path="mod/Commons/test"/>
+	<classpathentry kind="src" output="mod/Models/bin" path="mod/Models/src"/>
+	<classpathentry kind="src" output="mod/Models/test.bin" path="mod/Models/test"/>
+	<classpathentry kind="src" output="mod/jaxb/bin" path="mod/jaxb/src"/>
+	<classpathentry kind="src" output="mod/jaxb/test.bin" path="mod/jaxb/test"/>
+	<classpathentry kind="var" path="JAVA_LIB/dom4j-1.6.1.jar" sourcepath="/JAVA_SRC/dom4j-1.6.1-src.zip"/>
+	<classpathentry kind="var" path="JAVA_LIB/jibx-run.jar" sourcepath="/JAVA_SRC/jibx-src.zip"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/net.bodz.bas"/>
+	<classpathentry kind="output" path="bin"/>
 </classpath>

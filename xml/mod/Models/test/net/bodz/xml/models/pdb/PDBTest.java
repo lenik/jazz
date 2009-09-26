@@ -19,6 +19,13 @@ public class PDBTest {
         bookdb.addImport("info", "libraries-info.xml");
 
         bookdb.setExtern(true);
+
+        bookdb.addTable(TableTest.categoryTable);
+        bookdb.addTable(TableTest.categoryTable);
+        bookdb.addView(ViewTest.productSumView);
+        bookdb.addTable(TableTest.categoryTable);
+        bookdb.addTable(TableTest.categoryTable);
+        bookdb.addView(ViewTest.productSumView);
     }
 
     @Test
