@@ -293,10 +293,28 @@ public class Index implements PDBElement {
     static final Pattern containsRelationGraphPattern;
     static {
         containsRelationGraphPattern = Pattern
-                .compile("^\\s*(\\w:\\w)\\s*(-->|->|=>|>>|[⇒↗→»])\\s*(.*?)\\s*$");
+                .compile("^\\s*(\\w:\\w)?\\s*(-->|->|=>|>>|[⇒↗→»])\\s*(.*?)\\s*$");
     }
 
     void parseRef(String quant, String graph, String remote, String orig) throws ParseException {
+        quantifier = MANY_TO_ONE;
+        if (quant != null && !quant.isEmpty()) {
+            int colon = quant.indexOf(':');
+            if (colon == -1 || colon == 0 || colon == quant.length() - 1)
+                throw new ParseException("quantifier should be in format \"x:y\": " + quant);
+            boolean local1 = "1".equals(quant.substring(0, colon));
+            boolean remote1 = "1".equals(quant.substring(colon + 1));
+            if (local1)
+                if (remote1)
+                    quantifier = ONE_TO_ONE;
+                else
+                    quantifier = ONE_TO_MANY;
+            else if (remote1)
+                quantifier = MANY_TO_ONE;
+            else
+                quantifier = MANY_TO_MANY;
+        }
+
         if ("=>".equals(graph) || "⇒".equals(graph)) {
             refIntegrity = STRICT;
             deleteStrategy = updateStrategy = FORBID;
@@ -312,24 +330,6 @@ public class Index implements PDBElement {
             refIntegrity = STRICT;
             deleteStrategy = CASCADE;
             updateStrategy = CASCADE;
-        }
-
-        quantifier = MANY_TO_ONE;
-        if (!quant.isEmpty()) {
-            int colon = quant.indexOf(':');
-            if (colon == -1 || colon == 0 || colon == quant.length() - 1)
-                throw new ParseException("quantifier should be in format \"x:y\": " + quant);
-            boolean local1 = "1".equals(quant.substring(0, colon));
-            boolean remote1 = "1".equals(quant.substring(colon + 1));
-            if (local1)
-                if (remote1)
-                    quantifier = ONE_TO_ONE;
-                else
-                    quantifier = ONE_TO_MANY;
-            else if (remote1)
-                quantifier = MANY_TO_ONE;
-            else
-                quantifier = MANY_TO_MANY;
         }
 
         if (remote.isEmpty())

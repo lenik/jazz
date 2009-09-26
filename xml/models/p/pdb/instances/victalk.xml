@@ -2,7 +2,7 @@
 <pdb cat="biz/support/spy" name="VicTalk" qname="com.ebja.victalk" label="Successful Negotiation Support" doc="成功谈判支持" xmlns="http://xml.bodz.net/p/pdb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xml.bodz.net/p/pdb
 ..\pdb.xsd">
 	<table name="Prp" opts="D" label="属性" doc="量化属性类别。">
-		<field name="id" label="id/prp" type="I" opts="KDi"/>
+		<field name="id" label="id/prp" type="Id" opts="KDi"/>
 		<field name="cat" label="属性分类" type="C" opts="I" doc="'*'=通用
 'S'=语句适用
 'T'=目标适用"/>
@@ -39,7 +39,7 @@
 	</table>
 	<table name="Ctx" label="上下文" doc="谈判情景。
 默认情景(0)表示未识别的情景。">
-		<field name="id" label="id/ctx" type="I" opts="KDi"/>
+		<field name="id" label="id/ctx" type="Id" opts="KDi"/>
 		<field name="desc" label="简要描述" type="C[,100]" opts="I"/>
 		<field name="detail" label="详细描述" type="C[]"/>
 		<field name="gparent" label="一般父上下文" type="I" opts="F(n:1 ↗ Ctx.id)
@@ -52,14 +52,14 @@ D(0)"/>
 		</instance>
 	</table>
 	<table name="CtxR" label="上下文关系" doc="从某一情景至另一情景的时序统计关系。">
-		<field name="id" label="id" type="I" opts="KDi"/>
+		<field name="id" label="id" type="Id" opts="KDi"/>
 		<field name="a" label="情景一" type="I" opts="F(n:1 » Ctx.id)"/>
 		<field name="b" label="情景二" type="I" opts="F(n:1 » Ctx.id)"/>
 		<field name="count" label="实证计数器" type="I" opts="D(0)" doc="某当实际对话中从情景一转移至情景二发生时，即加1。"/>
 	</table>
 	<table name="Tgt" label="目标" doc="谈判的目标。
 默认目标(0)表示未识别的目标，用于速记候选语句。">
-		<field name="id" label="id/tgt" type="I" opts="KDi"/>
+		<field name="id" label="id/tgt" type="Id" opts="KDi"/>
 		<field name="desc" label="简要描述" type="C[,100]" opts="I"/>
 		<field name="detail" label="详细描述" type="C[]"/>
 		<instance>
@@ -70,33 +70,33 @@ D(0)"/>
 	</table>
 	<table name="TP" label="目标属性" doc="目标关注的属性。
 谈判">
-		<field name="id" label="id" type="I" opts="KDi"/>
+		<field name="id" label="id" type="Id" opts="KDi"/>
 		<field name="prp" label="属性类型" type="I" opts="F(n:1 ⇒ Prp.id)"/>
 		<field name="val" label="属性值" type="F"/>
 	</table>
 	<table name="Stm" label="语句" doc="语句内容。">
-		<field name="id" label="id/stm" type="I" opts="KDi"/>
+		<field name="id" label="id/stm" type="Id" opts="KDi"/>
 		<field name="txt" label="语句文本" type="C[,200]" opts="I"/>
 		<field name="full" label="完整的语句文本" type="C[]"/>
 	</table>
 	<table name="StmR" label="语句关系" doc="从某一语句接续至另一语句的时序统计关系。">
-		<field name="id" label="id" type="I" opts="KDi"/>
+		<field name="id" label="id" type="Id" opts="KDi"/>
 		<field name="a" label="语句一" type="I" opts="F(n:1 » Stm.id)"/>
 		<field name="b" label="语句二" type="I" opts="F(n:1 » Stm.id)"/>
 		<field name="count" label="实证计数器" type="I" opts="D(0)" doc="某当实际对话中从语句一接续至语句二发生时，即加1。"/>
 	</table>
 	<table name="SP" label="语句属性" doc="语句的量化属性。">
-		<field name="id" label="id" type="I" opts="KDi"/>
+		<field name="id" label="id" type="Id" opts="KDi"/>
 		<field name="prp" label="属性类型" type="I" opts="F(n:1 ⇒ Prp.id)"/>
 		<field name="val" label="属性值" type="F"/>
 	</table>
 	<table name="Ch" label="角色类型" doc="通用角色类型。">
-		<field name="id" label="id/ch" type="I" opts="KDi"/>
+		<field name="id" label="id/ch" type="Id" opts="KDi"/>
 		<field name="name" label="名称" type="C[,30]" opts="I"/>
 		<field name="desc" label="描述信息" type="C[,200]"/>
 	</table>
 	<table name="Dlg" label="对话实例" doc="实时录制的对话实例。">
-		<field name="id" label="id/dlg" type="I" opts="KDi"/>
+		<field name="id" label="id/dlg" type="Id" opts="KDi"/>
 		<field name="t0" label="对话起始时间" type="T" opts="I"/>
 		<field name="dur" label="对话持续时间(秒)" type="F" opts="D(0)"/>
 		<field name="cat" label="分类" type="C[,50]" opts="D('')"/>
@@ -104,27 +104,27 @@ D(0)"/>
 		<field name="memo" label="备忘录" type="C[]"/>
 	</table>
 	<table name="DlgCh" label="对话角色" doc="参与对话实例的角色实例。">
-		<field name="id" label="id/dch" type="I" opts="KDi"/>
+		<field name="id" label="id/dch" type="Id" opts="KDi"/>
 		<field name="dlg" label="对话实例" type="I" opts="F(n:1 » Dlg.id)"/>
 		<field name="ch" label="角色类型" type="I" opts="F(n:1 ⇒ Ch.id)"/>
 		<field name="name" label="实例名称" type="C[,30]" opts="D('?')" doc="扮演角色者的真实姓名。"/>
 		<field name="act" label="是否主动" type="b" opts="D(0)" doc="是否为主动方（Nevic系统可控）。"/>
 	</table>
 	<table name="DlgRes" label="对话资源" doc="实时录制的对话资源。">
-		<field name="id" label="id" type="I" opts="KDi"/>
+		<field name="id" label="id" type="Id" opts="KDi"/>
 		<field name="dlg" label="对话实例" type="I" opts="F(n:1 » Dlg.id)"/>
 		<field name="off" label="时间偏移(秒)" type="F" opts="D(0)"/>
 		<field name="href" label="资源链接" type="C[,200]"/>
 	</table>
 	<table name="DlgCtx" label="对话上下文" doc="对话实例的上下文转移序列。">
-		<field name="id" label="id" type="I" opts="KDi"/>
+		<field name="id" label="id" type="Id" opts="KDi"/>
 		<field name="dlg" label="对话实例" type="I" opts="F(n:1 » Dlg.id)"/>
 		<field name="off" label="时间偏移(秒)" type="F" opts="D(0)"/>
 		<field name="ctx" label="已定义上下文" type="I" opts="F(n:1 ⇒ Ctx.id)"/>
 		<field name="memo" label="备注" type="C[]"/>
 	</table>
 	<table name="DlgStm" label="对话语句" doc="对话实例的语句实例序列。">
-		<field name="id" label="id/dstm" type="I" opts="KDi"/>
+		<field name="id" label="id/dstm" type="Id" opts="KDi"/>
 		<field name="dlg" label="对话实例" type="I" opts="F(n:1 » Dlg.id)"/>
 		<field name="off" label="时间偏移(秒)" type="F" opts="D(0)"/>
 		<field name="dch" label="扮演者" type="I" opts="F(n:1 ⇒ DlgCh.id)"/>
@@ -133,13 +133,13 @@ D(0)"/>
 	</table>
 	<table name="DlgSP" label="对话属性评定" doc="针对某一实例对话的属性评定。
 评定结果作为语句属性的量化依据。">
-		<field name="id" label="id" type="I" opts="KDi"/>
+		<field name="id" label="id" type="Id" opts="KDi"/>
 		<field name="dstm" label="语句实例" type="I" opts="F(n:1 » DlgStm.id)"/>
 		<field name="prp" label="属性类型" type="I" opts="F(n:1 ⇒ Prp.id)"/>
 		<field name="val" label="属性值" type="F"/>
 	</table>
 	<table name="RefT" opts="DRo" label="参考源类型" doc="对参考信息数据源的分类。">
-		<field name="id" label="id" type="I" opts="KDi"/>
+		<field name="id" label="id" type="Id" opts="KDi"/>
 		<field name="name" label="名称" type="C[,30]" opts="I"/>
 		<field name="is_href" label="是否链接" type="b"/>
 		<instance>
@@ -161,7 +161,7 @@ D(0)"/>
 	</table>
 	<table name="Ref" label="参考源" doc="参考信息的数据源。
 可能是内含的数据或外部数据的链接。">
-		<field name="id" label="id" type="I" opts="KDi"/>
+		<field name="id" label="id" type="Id" opts="KDi"/>
 		<field name="t" label="类型" type="I" opts="F(n:1 ⇒ RefT.id)"/>
 		<field name="href" label="链接" type="C[,200]" opts="N"/>
 		<field name="dat" label="内含数据" type="C[]" opts="N"/>
