@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
@@ -16,12 +17,15 @@ import net.bodz.xml.util.TermBuilder;
 import net.bodz.xml.util.TermDict;
 import net.bodz.xml.util.TermParser;
 
+/**
+ * @test {@link ViewTest}
+ */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = { "from", "field", "filter", "groupBy", "sort" })
 @XmlRootElement(name = "view")
 public class View {
 
-    @XmlAttribute
+    @XmlAttribute(required = true)
     protected String           name;
     @XmlAttribute
     protected String           label;
@@ -123,17 +127,21 @@ public class View {
     @XmlType(name = "", propOrder = { "value" })
     public static class Field {
 
-        @XmlValue
-        protected String value;
+        @XmlAttribute
+        protected String name;
+
         @XmlAttribute
         protected String label;
 
-        public String getValue() {
-            return value;
+        @XmlValue
+        protected String value;
+
+        public String getName() {
+            return name;
         }
 
-        public void setValue(String value) {
-            this.value = value;
+        public void setName(String name) {
+            this.name = name;
         }
 
         public String getLabel() {
@@ -142,6 +150,14 @@ public class View {
 
         public void setLabel(String label) {
             this.label = label;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
         }
 
     }
@@ -204,8 +220,11 @@ public class View {
     public static final int DICT_CACHED = 1;
     public static final int DICT_INFO   = 2;
 
+    @XmlTransient
     private int             dictMode;
+    @XmlTransient
     private boolean         readOnly;
+    @XmlTransient
     private boolean         _transient;
 
     public int getDictMode() {

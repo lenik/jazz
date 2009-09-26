@@ -7,9 +7,8 @@
 'S'=语句适用
 'T'=目标适用"/>
 		<field name="name" label="名称" type="C[,30]" opts="I"/>
-		<field name="type" label="数据类型" type="C" doc="'I'=integer
-'F'=float
-'D'=decibel"/>
+		<field name="type" label="数据类型" type="C" doc="'Z'=integer
+'R'=real/decimal"/>
 		<field name="min" label="最小值" type="F" doc="取值范围"/>
 		<field name="max" label="最大值" type="F" doc="取值范围"/>
 		<field name="info" label="帮助信息" type="C[]"/>

@@ -63,15 +63,6 @@ opts:
 
 opts: 
     N=nullable
-    K=primary key (group)
-    F([nam,] n:m ? table.field[, disp-sql]) = foreign key
-        F-> normal ref-integrity
-        F--> no ref-integrity
-        F=> cascade-update
-        F>> cascade-delete
-    I(nam)=index (group)
-    Ic(nam)=clustered index
-    U(nam)=unique (group)
     T(field, ?)=timestamp
     V(field, ?)=version
     S?=special mode
@@ -79,7 +70,9 @@ opts:
     D(value)=default value
     Dx(sql-exp)=default exp
     Di(gen-method) = identity
-</xs:documentation>
+
+
+and also index opts. </xs:documentation>
 					</xs:annotation>
 					<xs:complexType>
 						<xs:attributeGroup ref="pdb:objectAttributes"/>
@@ -88,34 +81,61 @@ opts:
 								<xs:documentation>data type
 default C[,32]
 
-B[min,max] = binary
-Bt = bit/boolean
+b = boolean
+B = bit
 C[min,max] = 
     char/varchar/text
-Cn[min,max] = 
+U[min,max] = 
     nchar/nvarchar/ntext
+Y[min,max] = binary
 T? = datetime
     Td=date
     Tt=time
     Ts=timestamp
-F?=float (default sys/float)
-I?=integer (default sys/int)
-    I8, I16, I32, I64, etc.
-M[totlen,declen] = money
-N[totlen,declen] = number</xs:documentation>
+I?=system int
+    I1, I2, I4, I8
+F?=system float
+    F4, F8
+N[prec,scale] = numeric/decimal
+Z? = N[?,0]
+X=XML
+O=object</xs:documentation>
 							</xs:annotation>
 						</xs:attribute>
 					</xs:complexType>
 				</xs:element>
 				<xs:element name="index" minOccurs="0" maxOccurs="unbounded">
 					<xs:annotation>
-						<xs:documentation>(deprecated)</xs:documentation>
+						<xs:documentation>opts: 
+    [KFIU]〈id〉(params,  n:m X remote)
+    K=primary key
+    F=foreign key
+    I=index
+    U=unique
+    
+    X: -> normal ref-integrity
+        --> no ref-integrity
+        => set-null
+        >> cascade</xs:documentation>
 					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="field" type="xs:string" maxOccurs="unbounded"/>
+							<xs:element name="field" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>when index-field is specified both in @opts and this elements, the result is unknown. </xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="local" type="xs:string" use="required"/>
+									<xs:attribute name="remote" type="xs:string"/>
+								</xs:complexType>
+							</xs:element>
 						</xs:sequence>
 						<xs:attributeGroup ref="pdb:objectAttributes"/>
+						<xs:attribute name="ref" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>referenced table (remote table) </xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
 					</xs:complexType>
 				</xs:element>
 				<xs:element name="check" minOccurs="0" maxOccurs="unbounded">
@@ -140,13 +160,29 @@ N[totlen,declen] = number</xs:documentation>
 					</xs:annotation>
 					<xs:complexType>
 						<xs:sequence>
-							<xs:any namespace="##local" processContents="lax" minOccurs="0" maxOccurs="unbounded">
+							<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded">
 								<xs:annotation>
 									<xs:documentation>field data</xs:documentation>
 								</xs:annotation>
 							</xs:any>
 						</xs:sequence>
-						<xs:attributeGroup ref="pdb:objectAttributes"/>
+						<xs:attribute name="name" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>instance variable name</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="label" type="xs:string" use="optional"/>
+						<xs:attribute name="opts" type="xs:string" use="optional"/>
+						<xs:attribute name="tags" type="xs:string" use="optional">
+							<xs:annotation>
+								<xs:documentation>category for organization purpose.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="doc" type="xs:string" use="optional">
+							<xs:annotation>
+								<xs:documentation>short help-info</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
 					</xs:complexType>
 				</xs:element>
 			</xs:sequence>
@@ -193,11 +229,12 @@ opts:
 					<xs:complexType>
 						<xs:simpleContent>
 							<xs:extension base="xs:string">
-								<xs:attribute name="label" type="xs:string">
+								<xs:attribute name="name" type="xs:string">
 									<xs:annotation>
 										<xs:documentation>default inferred from expr</xs:documentation>
 									</xs:annotation>
 								</xs:attribute>
+								<xs:attribute name="label" type="xs:string"/>
 							</xs:extension>
 						</xs:simpleContent>
 					</xs:complexType>

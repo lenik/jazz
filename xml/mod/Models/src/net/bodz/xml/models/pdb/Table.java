@@ -24,7 +24,7 @@ import net.bodz.xml.util.TermParser;
 @XmlRootElement(name = "table")
 public class Table {
 
-    @XmlAttribute
+    @XmlAttribute(required = true)
     protected String         base;
     @XmlAttribute(required = true)
     protected String         name;
@@ -137,7 +137,7 @@ public class Table {
 
     @XmlAttribute
     public String getOpts() {
-        TermBuilder b = new TermBuilder();
+        TermBuilder b = new TermBuilder(__dict__);
         if (_abstract)
             b.put(OPT_ABSTRACT);
         switch (cacheStrategy) {
