@@ -2,6 +2,8 @@ package net.bodz.xml.models.pdb;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -173,9 +175,9 @@ public class Index implements PDBElement {
      *     I=index
      *     U=unique
      *     
-     *     X: -> normal ref-integrity
+     *     X: => normal ref-integrity
      *         --> no ref-integrity
-     *         => set-null
+     *         -> set-null
      *         >> cascade
      * </pre>
      */
@@ -249,11 +251,15 @@ public class Index implements PDBElement {
             String[] parameters = t.getParameters();
             if (parameters != null)
                 for (String param : parameters) {
-                    if (param.contains(">")) {
+                    Matcher m = containsRelationGraphPattern.matcher(param);
+                    if (m.find()) {
                         // if (t.getId() != OPT_FKEY)
                         // throw new IllegalArgumentException("not foreign reference: " + t);
                         try {
-                            parseRef(param);
+                            String quant = m.group(1);
+                            String graph = m.group(2);
+                            String remote = m.group(3);
+                            parseRef(quant, graph, remote, param);
                         } catch (ParseException e) {
                             throw new IllegalArgumentException(e.getMessage(), e);
                         }
@@ -284,38 +290,25 @@ public class Index implements PDBElement {
         }
     }
 
-    void parseRef(String s) throws ParseException {
-        int gt = s.indexOf('>');
-        int opBegin = gt;
-        int opEnd = gt + 1; // exclusive
-        while (opBegin >= 1) {
-            char behind = s.charAt(opBegin - 1);
-            if ("-=>".indexOf(behind) == -1)
-                break;
-            opBegin--;
-        }
-        while (opEnd <= s.length() - 1) {
-            char ahead = s.charAt(opEnd);
-            if ("-=>".indexOf(ahead) == -1)
-                break;
-            opEnd++;
-        }
-        String op = s.substring(opBegin, opEnd);
-        String quant = s.substring(0, opBegin).trim();
-        String remote = s.substring(opEnd);
+    static final Pattern containsRelationGraphPattern;
+    static {
+        containsRelationGraphPattern = Pattern
+                .compile("^\\s*(\\w:\\w)\\s*(-->|->|=>|>>|[⇒↗→»])\\s*(.*?)\\s*$");
+    }
 
-        if ("->".equals(op)) {
+    void parseRef(String quant, String graph, String remote, String orig) throws ParseException {
+        if ("=>".equals(graph) || "⇒".equals(graph)) {
             refIntegrity = STRICT;
             deleteStrategy = updateStrategy = FORBID;
-        } else if ("-->".equals(op)) {
+        } else if ("-->".equals(graph) || "↗".equals(graph)) {
             refIntegrity = LAX;
             deleteStrategy = updateStrategy = NONE;
-        } else if ("=>".equals(op)) {
+        } else if ("->".equals(graph) || "→".equals(graph)) {
             boolean nullable = false; // owningTable.isNullable();
             refIntegrity = nullable ? STRICT : LAX; // generally is LAX.
             deleteStrategy = SET_NULL;
             updateStrategy = CASCADE;
-        } else if (">>".equals(op)) {
+        } else if (">>".equals(graph) || "»".equals(graph)) {
             refIntegrity = STRICT;
             deleteStrategy = CASCADE;
             updateStrategy = CASCADE;
@@ -340,7 +333,7 @@ public class Index implements PDBElement {
         }
 
         if (remote.isEmpty())
-            throw new ParseException("referenced table(fields) isn't specified: " + s);
+            throw new ParseException("referenced table(fields) isn't specified: " + orig);
         int dot = remote.indexOf('.');
         String remoteField = null;
         if (dot != -1) {
@@ -377,22 +370,22 @@ public class Index implements PDBElement {
         String op = null;
         if (refIntegrity == STRICT) {
             if (deleteStrategy == FORBID && updateStrategy == FORBID)
-                op = "->";
+                op = "⇒";
             else if (deleteStrategy == CASCADE && updateStrategy == CASCADE)
-                op = ">>";
+                op = "»";
             else if (deleteStrategy == SET_NULL && updateStrategy == CASCADE)
-                op = "=>";
+                op = "→";
         } else if (refIntegrity == LAX) {
             if (deleteStrategy == NONE && updateStrategy == NONE)
-                op = "-->";
+                op = "↗";
             else if (deleteStrategy == SET_NULL && updateStrategy == CASCADE)
-                op = "=>";
+                op = "→";
         }
         if (op == null) {
             if (refIntegrity == STRICT)
-                op = "->";
+                op = "⇒";
             else
-                op = "-->";
+                op = "↗";
             switch (deleteStrategy) {
             case NONE:
                 throw new UnexpectedException("strict ref but ignore delete");

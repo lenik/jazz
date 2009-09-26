@@ -11,7 +11,7 @@ public class FieldTest {
         addressField.setName("address");
         addressField.setLabel("地址信息");
         addressField.setDoc("地址是一个空间上的方位");
-        addressField.setOpts("NDiF(n:1 -> globe.location)");
+        addressField.setOpts("NDiF(n:1 => globe.location)");
     }
 
     @Test

@@ -113,9 +113,9 @@ O=object</xs:documentation>
     I=index
     U=unique
     
-    X: -> normal ref-integrity
+    X: => normal ref-integrity
         --> no ref-integrity
-        => set-null
+        -> set-null
         >> cascade</xs:documentation>
 					</xs:annotation>
 					<xs:complexType>
