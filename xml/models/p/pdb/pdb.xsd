@@ -53,7 +53,10 @@ opts:
         Sp=properties (1:n:n)
         Sd=details (1:n)
     T=transient table
-</xs:documentation>
+
+    R#=rated table
+        R0=discardable
+        R9=very important</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
 			<xs:sequence>

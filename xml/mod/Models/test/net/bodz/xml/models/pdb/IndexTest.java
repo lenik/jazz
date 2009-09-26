@@ -15,7 +15,7 @@ public class IndexTest {
     @Test
     public void test1() throws Exception {
         test("F(n:1 -> remote.field)");
-        test("U(n:1 -> remote.field)");
+        test("U(⇒ remote.field)");
     }
 
 }
