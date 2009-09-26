@@ -4,7 +4,7 @@
 	<table name="tab1">
 		<field name="a" type="C"/>
 		<field name="b" type="N"/>
-		<field name="c" type="D"/>
+		<field name="c" type="Z4"/>
 	</table>
 	<table name="tab2">
 		<field name="m"/>

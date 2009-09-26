@@ -11,6 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
+import net.bodz.bas.types.TextMap;
 import net.bodz.xml.util.Term;
 import net.bodz.xml.util.TermBuilder;
 import net.bodz.xml.util.TermDict;
@@ -20,9 +21,9 @@ import net.bodz.xml.util.TermParser;
  * @test {@link TableTest}
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = { "field", "index", "check", "trigger", "instance" })
+@XmlType(name = "", propOrder = { "fields", "indexes", "checks", "triggers", "instances" })
 @XmlRootElement(name = "table")
-public class Table {
+public class Table implements PDBElement {
 
     @XmlAttribute(required = true)
     protected String         base;
@@ -35,12 +36,16 @@ public class Table {
     @XmlAttribute
     protected String         doc;
 
-    @XmlElement(required = true)
-    protected List<Field>    field;
-    protected List<Index>    index;
-    protected List<Check>    check;
-    protected List<Trigger>  trigger;
-    protected List<Instance> instance;
+    @XmlElement(name = "field", required = true)
+    protected List<Field>    fields;
+    @XmlElement(name = "index")
+    protected List<Index>    indexes;
+    @XmlElement(name = "check")
+    protected List<Check>    checks;
+    @XmlElement(name = "trigger")
+    protected List<Trigger>  triggers;
+    @XmlElement(name = "instance", namespace = Instance.NS)
+    protected List<Instance> instances;
 
     public String getBase() {
         return base;
@@ -83,38 +88,38 @@ public class Table {
     }
 
     public List<Field> getFields() {
-        if (field == null) {
-            field = new ArrayList<Field>();
+        if (fields == null) {
+            fields = new ArrayList<Field>();
         }
-        return this.field;
+        return this.fields;
     }
 
     public List<Index> getIndexes() {
-        if (index == null) {
-            index = new ArrayList<Index>();
+        if (indexes == null) {
+            indexes = new ArrayList<Index>();
         }
-        return this.index;
+        return this.indexes;
     }
 
     public List<Check> getChecks() {
-        if (check == null) {
-            check = new ArrayList<Check>();
+        if (checks == null) {
+            checks = new ArrayList<Check>();
         }
-        return this.check;
+        return this.checks;
     }
 
     public List<Trigger> getTriggers() {
-        if (trigger == null) {
-            trigger = new ArrayList<Trigger>();
+        if (triggers == null) {
+            triggers = new ArrayList<Trigger>();
         }
-        return this.trigger;
+        return this.triggers;
     }
 
     public List<Instance> getInstances() {
-        if (instance == null) {
-            instance = new ArrayList<Instance>();
+        if (instances == null) {
+            instances = new ArrayList<Instance>();
         }
-        return this.instance;
+        return this.instances;
     }
 
     @XmlTransient
@@ -125,6 +130,9 @@ public class Table {
 
     @XmlTransient
     private int             cacheStrategy;
+
+    @XmlTransient
+    private boolean         readOnly;
 
     public static final int MAINTABLE           = 0;
     public static final int SUBTABLE_GENERAL    = 1;
@@ -151,6 +159,8 @@ public class Table {
             b.put(OPT_CACHE_TRANSIENT);
             break;
         }
+        if (readOnly)
+            b.put(OPT_READ_ONLY);
         switch (tableRole) {
         case MAINTABLE:
             break;
@@ -187,6 +197,9 @@ public class Table {
                 break;
             case OPT_CACHE_TRANSIENT:
                 cacheStrategy = CACHE_TRANSIENT;
+                break;
+            case OPT_READ_ONLY:
+                readOnly = true;
                 break;
             case OPT_SUB_GENERAL:
                 tableRole = SUBTABLE_GENERAL;
@@ -249,6 +262,33 @@ public class Table {
         __dict__.define(OPT_SUB_MOREFIELDS, "Sm");
         __dict__.define(OPT_SUB_PROPERTIES, "Sp");
         __dict__.define(OPT_SUB_DETAILS, "Sd");
+    }
+
+    @Override
+    public void accept(PDBVisitor visitor) {
+        visitor.visit(this);
+        assert fields != null;
+        for (Field field : this.fields)
+            field.accept(visitor);
+        if (indexes != null)
+            for (Index index : this.indexes)
+                index.accept(visitor);
+        if (instances != null)
+            for (Instance instance : this.instances)
+                instance.accept(visitor);
+    }
+
+    @XmlTransient
+    TextMap<Field> fieldMap;
+    @XmlTransient
+    TextMap<Index> indexMap;
+
+    public Field getField(String name) {
+        return fieldMap.get(name);
+    }
+
+    public Index getIndex(String name) {
+        return indexMap.get(name);
     }
 
 }

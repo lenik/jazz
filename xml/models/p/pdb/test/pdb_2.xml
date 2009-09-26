@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pdb xmlns="http://xml.bodz.net/p/pdb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xml.bodz.net/p/pdb
+<pdb xmlns="http://xml.bodz.net/p/pdb" xmlns:u="http://xml.bodz.net/p/pdb/user" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xml.bodz.net/p/pdb
 ..\pdb.xsd" cat="biz/support/spy" name="VicTalk" qname="com.ebja.victalk" label="Successful Negotiation Support" doc="成功谈判支持">
 	<table name="Prp" opts="D" label="属性" doc="量化属性类别。">
 		<field name="id" label="id/prp" type="I" opts="KDi"/>
@@ -13,30 +13,30 @@
 		<field name="min" label="最小值" type="F" doc="取值范围"/>
 		<field name="max" label="最大值" type="F" doc="取值范围"/>
 		<field name="info" label="帮助信息" type="C[]"/>
-		<instance >
+		<u:instance>
 			<cat>*</cat>
 			<name>说服</name>
 			<type>R</type>
 			<min>-10</min>
 			<max>10</max>
 			<info>沦陷 -> 说服</info>
-		</instance>
-		<instance>
+		</u:instance>
+		<u:instance>
 			<cat>*</cat>
 			<name>转移注意力</name>
 			<type>R</type>
 			<min>-10</min>
 			<max>10</max>
-		</instance>
-		<instance>
+		</u:instance>
+		<u:instance>
 			<cat>*</cat>
 			<name>跟进</name>
 			<type>R</type>
-		</instance>
-		<instance>
+		</u:instance>
+		<u:instance>
 			<cat>*</cat>
 			<type>R</type>
-		</instance>
+		</u:instance>
 	</table>
 	<table name="Ctx" label="上下文" doc="谈判情景。
 默认情景(0)表示未识别的情景。">
@@ -45,12 +45,12 @@
 		<field name="detail" label="详细描述" type="C[]"/>
 		<field name="gparent" label="一般父上下文" type="I" opts="F(n:1-->Ctx.id)
 D(0)"/>
-		<instance>
+		<u:instance>
 			<id>0</id>
 			<desc>未识别</desc>
 			<detail>未识别的上下文</detail>
 			<gparent>0</gparent>
-		</instance>
+		</u:instance>
 	</table>
 	<table name="CtxR" label="上下文关系" doc="从某一情景至另一情景的时序统计关系。">
 		<field name="id" label="id" type="I" opts="KDi"/>
@@ -63,11 +63,11 @@ D(0)"/>
 		<field name="id" label="id/tgt" type="I" opts="KDi"/>
 		<field name="desc" label="简要描述" type="C[,100]" opts="I"/>
 		<field name="detail" label="详细描述" type="C[]"/>
-		<instance>
+		<u:instance>
 			<id>0</id>
 			<desc>未识别</desc>
 			<detail>未识别的目标</detail>
-		</instance>
+		</u:instance>
 	</table>
 	<table name="TP" label="目标属性" doc="目标关注的属性。
 谈判">
@@ -143,22 +143,22 @@ D(0)"/>
 		<field name="id" label="id" type="I" opts="KDi"/>
 		<field name="name" label="名称" type="C[,30]" opts="I"/>
 		<field name="is_href" label="是否链接" type="b"/>
-		<instance>
+		<u:instance>
 			<name>文档</name>
 			<is_href>1</is_href>
-		</instance>
-		<instance>
+		</u:instance>
+		<u:instance>
 			<name>图像</name>
 			<is_href>1</is_href>
-		</instance>
-		<instance>
+		</u:instance>
+		<u:instance>
 			<name>声音</name>
 			<is_href>1</is_href>
-		</instance>
-		<instance>
+		</u:instance>
+		<u:instance>
 			<name>剪辑</name>
 			<is_href>1</is_href>
-		</instance>
+		</u:instance>
 	</table>
 	<table name="Ref" label="参考源" doc="参考信息的数据源。
 可能是内含的数据或外部数据的链接。">

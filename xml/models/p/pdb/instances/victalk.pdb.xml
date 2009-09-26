@@ -108,7 +108,7 @@ D(0)"/>
 		<field name="dlg" label="对话实例" type="I" opts="F(n:1>>Dlg.id)"/>
 		<field name="ch" label="角色类型" type="I" opts="F(n:1->Ch.id)"/>
 		<field name="name" label="实例名称" type="C[,30]" opts="D('?')" doc="扮演角色者的真实姓名。"/>
-		<field name="act" label="是否主动" type="Bt" opts="D(0)" doc="是否为主动方（Nevic系统可控）。"/>
+		<field name="act" label="是否主动" type="b" opts="D(0)" doc="是否为主动方（Nevic系统可控）。"/>
 	</table>
 	<table name="DlgRes" label="对话资源" doc="实时录制的对话资源。">
 		<field name="id" label="id" type="I" opts="KDi"/>
@@ -141,7 +141,7 @@ D(0)"/>
 	<table name="RefT" opts="DRo" label="参考源类型" doc="对参考信息数据源的分类。">
 		<field name="id" label="id" type="I" opts="KDi"/>
 		<field name="name" label="名称" type="C[,30]" opts="I"/>
-		<field name="is_href" label="是否链接" type="Bt"/>
+		<field name="is_href" label="是否链接" type="b"/>
 		<instance>
 			<name>文档</name>
 			<is_href>1</is_href>

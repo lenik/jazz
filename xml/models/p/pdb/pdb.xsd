@@ -154,37 +154,7 @@ O=object</xs:documentation>
 						<xs:attributeGroup ref="pdb:objectAttributes"/>
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="instance" minOccurs="0" maxOccurs="unbounded">
-					<xs:annotation>
-						<xs:documentation>data row</xs:documentation>
-					</xs:annotation>
-					<xs:complexType>
-						<xs:sequence>
-							<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded">
-								<xs:annotation>
-									<xs:documentation>field data</xs:documentation>
-								</xs:annotation>
-							</xs:any>
-						</xs:sequence>
-						<xs:attribute name="name" type="xs:string">
-							<xs:annotation>
-								<xs:documentation>instance variable name</xs:documentation>
-							</xs:annotation>
-						</xs:attribute>
-						<xs:attribute name="label" type="xs:string" use="optional"/>
-						<xs:attribute name="opts" type="xs:string" use="optional"/>
-						<xs:attribute name="tags" type="xs:string" use="optional">
-							<xs:annotation>
-								<xs:documentation>category for organization purpose.</xs:documentation>
-							</xs:annotation>
-						</xs:attribute>
-						<xs:attribute name="doc" type="xs:string" use="optional">
-							<xs:annotation>
-								<xs:documentation>short help-info</xs:documentation>
-							</xs:annotation>
-						</xs:attribute>
-					</xs:complexType>
-				</xs:element>
+				<xs:element ref="pdb:instance" minOccurs="0" maxOccurs="unbounded"/>
 			</xs:sequence>
 			<xs:attributeGroup ref="pdb:objectAttributes"/>
 			<xs:attribute name="base" type="xs:string">
@@ -330,6 +300,34 @@ multiple filters are AND-ed. </xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
 	</xs:complexType>
+	<xs:element name="instance">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>field data</xs:documentation>
+					</xs:annotation>
+				</xs:any>
+			</xs:sequence>
+			<xs:attribute name="name" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>instance variable name</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="label" type="xs:string" use="optional"/>
+			<xs:attribute name="opts" type="xs:string" use="optional"/>
+			<xs:attribute name="tags" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>category for organization purpose.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="doc" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>short help-info</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
 	<xs:attributeGroup name="objectAttributes">
 		<xs:attribute name="name" type="xs:string" use="required">
 			<xs:annotation>

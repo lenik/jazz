@@ -5,7 +5,4 @@
 	<table name="Task" opts="-" label="-">
 		<field name="id" label="id/" type="I" opts="KDi"/>
 	</table>
-	<table name="Next">
-		<field/>
-	</table>
 </pdb>

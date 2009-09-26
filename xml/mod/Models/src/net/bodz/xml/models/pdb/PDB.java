@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
+import net.bodz.bas.types.TextMap;
 import net.bodz.xml.util.Term;
 import net.bodz.xml.util.TermBuilder;
 import net.bodz.xml.util.TermDict;
@@ -23,7 +24,7 @@ import net.bodz.xml.util.TermParser;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(propOrder = { "imports", "tableOrViews" })
 @XmlRootElement(name = "pdb")
-public class PDB {
+public class PDB implements PDBElement {
 
     @XmlAttribute(required = true)
     protected String name;
@@ -44,11 +45,18 @@ public class PDB {
     // TODO: name=import
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType
-    public static class Import {
+    public static class Import implements PDBElement {
+
         @XmlAttribute(required = true)
         public String href;
         @XmlAttribute
         public String type;
+
+        @Override
+        public void accept(PDBVisitor visitor) {
+            visitor.visit(this);
+        }
+
     }
 
     @XmlElement(name = "import")
@@ -169,6 +177,36 @@ public class PDB {
     static final TermDict __dict__   = new TermDict();
     static {
         __dict__.define(OPT_EXTERN, "E");
+    }
+
+    @Override
+    public void accept(PDBVisitor visitor) {
+        visitor.visit(this);
+        if (imports != null)
+            for (Import _import : imports)
+                _import.accept(visitor);
+        if (tableOrViews != null)
+            for (Object o : tableOrViews)
+                ((PDBElement) o).accept(visitor);
+    }
+
+    @XmlTransient
+    TextMap<Object> tableOrViewMap;
+    @XmlTransient
+    TextMap<Table>  tableMap;
+    @XmlTransient
+    TextMap<View>   viewMap;
+
+    public Object getTableOrView(String name) {
+        return tableOrViewMap.get(name);
+    }
+
+    public Table getTable(String name) {
+        return tableMap.get(name);
+    }
+
+    public View getView(String name) {
+        return viewMap.get(name);
     }
 
 }

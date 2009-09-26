@@ -17,7 +17,7 @@ import net.bodz.xml.util.TermParser;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
-public class Field {
+public class Field implements PDBElement {
 
     @XmlAttribute(required = true)
     protected String name;
@@ -109,11 +109,13 @@ public class Field {
             b.putParameters(versionForFields);
         }
         switch (defaultStrategy) {
-        case DEFAULT_EXPR:
+        case 0:
+            break;
+        case DEFAULT_VALUE:
             b.put(OPT_DEFAULT_VALUE);
             b.putParameters(_default);
             break;
-        case DEFAULT_VALUE:
+        case DEFAULT_EXPR:
             b.put(OPT_DEFAULT_EXPR);
             b.putParameters(_default);
             break;
@@ -241,6 +243,18 @@ public class Field {
         __dict__.define(OPT_DEFAULT_VALUE, "D");
         __dict__.define(OPT_DEFAULT_EXPR, "Dx");
         __dict__.define(OPT_IDENTITY, "Di");
+    }
+
+    @Override
+    public void accept(PDBVisitor visitor) {
+        visitor.visit(this);
+    }
+
+    @XmlTransient
+    Table table;
+
+    public Table getTable() {
+        return table;
     }
 
 }
