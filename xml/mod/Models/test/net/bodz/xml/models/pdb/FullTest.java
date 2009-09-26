@@ -2,11 +2,11 @@ package net.bodz.xml.models.pdb;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.io.StringWriter;
 
 import javax.xml.bind.JAXB;
 
 import net.bodz.xml.models.Models;
+import net.bodz.xml.util.XMLTest;
 
 import org.junit.Test;
 
@@ -22,12 +22,14 @@ public class FullTest {
             }
         });
         for (File testxml : testxmls) {
-            // new ObjectFactory().
+            System.out.println("Constructed from xml-file: " + testxml);
             PDB pdb = JAXB.unmarshal(testxml, PDB.class);
-            System.out.println(pdb);
-            StringWriter buf = new StringWriter();
-            JAXB.marshal(pdb, buf);
-            System.out.println(buf);
+            System.out.println("  PDB: " + pdb);
+
+            CollectVisitor visitor = new CollectVisitor();
+            pdb.accept(visitor);
+
+            XMLTest.testMarshal(pdb);
         }
     }
 

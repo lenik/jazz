@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
+import net.bodz.bas.types.TextMap;
 import net.bodz.xml.util.Term;
 import net.bodz.xml.util.TermBuilder;
 import net.bodz.xml.util.TermDict;
@@ -23,7 +24,7 @@ import net.bodz.xml.util.TermParser;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = { "from", "field", "filter", "groupBy", "sort" })
 @XmlRootElement(name = "view")
-public class View {
+public class View implements PDBElement {
 
     @XmlAttribute(required = true)
     protected String           name;
@@ -125,7 +126,7 @@ public class View {
 
     @XmlAccessorType(XmlAccessType.FIELD)
     @XmlType(name = "", propOrder = { "value" })
-    public static class Field {
+    public static class Field implements PDBElement {
 
         @XmlAttribute
         protected String name;
@@ -158,6 +159,11 @@ public class View {
 
         public void setValue(String value) {
             this.value = value;
+        }
+
+        @Override
+        public void accept(PDBVisitor visitor) {
+            visitor.visit(this);
         }
 
     }
@@ -303,6 +309,18 @@ public class View {
         __dict__.define(OPT_DICT_INFO, "Dr");
         __dict__.define(OPT_READ_ONLY, "Ro");
         __dict__.define(OPT_TRANSIENT, "T");
+    }
+
+    @Override
+    public void accept(PDBVisitor visitor) {
+        visitor.visit(this);
+    }
+
+    @XmlTransient
+    TextMap<View.Field> fieldMap;
+
+    public View.Field getField(String name) {
+        return fieldMap.get(name);
     }
 
 }

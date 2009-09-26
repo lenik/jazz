@@ -22,7 +22,7 @@ import net.bodz.xml.util.TermParser;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = { "fields" })
-public class Index {
+public class Index implements PDBElement {
 
     @XmlAttribute
     protected String name;
@@ -246,38 +246,39 @@ public class Index {
                 // so won't clear the index/@name attribute.
                 this.name = indexName;
             }
-
-            for (String param : t.getParameters()) {
-                if (param.contains(">")) {
-                    // if (t.getId() != OPT_FKEY)
-                    // throw new IllegalArgumentException("not foreign reference: " + t);
-                    try {
-                        parseRef(param);
-                    } catch (ParseException e) {
-                        throw new IllegalArgumentException(e.getMessage(), e);
+            String[] parameters = t.getParameters();
+            if (parameters != null)
+                for (String param : parameters) {
+                    if (param.contains(">")) {
+                        // if (t.getId() != OPT_FKEY)
+                        // throw new IllegalArgumentException("not foreign reference: " + t);
+                        try {
+                            parseRef(param);
+                        } catch (ParseException e) {
+                            throw new IllegalArgumentException(e.getMessage(), e);
+                        }
+                        refError = false;
+                    } else if ("clustered".equals(param))
+                        clustered = true;
+                    else if ("unique".equals(param))
+                        unique = true;
+                    else if (param.startsWith("delete-")) {
+                        param = param.substring(7);
+                        if ("cascade".equals(param))
+                            deleteStrategy = CASCADE;
+                        else if ("set-null".equals(param))
+                            deleteStrategy = SET_NULL;
+                        else
+                            throw new IllegalArgumentException("bad delete strategy: " + param);
+                    } else if (param.startsWith("update-")) {
+                        if ("cascade".equals(param))
+                            updateStrategy = CASCADE;
+                        else if ("set-null".equals(param))
+                            updateStrategy = SET_NULL;
+                        else
+                            throw new IllegalArgumentException("bad update strategy: " + param);
                     }
-                    refError = false;
-                } else if ("clustered".equals(param))
-                    clustered = true;
-                else if ("unique".equals(param))
-                    unique = true;
-                else if (param.startsWith("delete-")) {
-                    param = param.substring(7);
-                    if ("cascade".equals(param))
-                        deleteStrategy = CASCADE;
-                    else if ("set-null".equals(param))
-                        deleteStrategy = SET_NULL;
-                    else
-                        throw new IllegalArgumentException("bad delete strategy: " + param);
-                } else if (param.startsWith("update-")) {
-                    if ("cascade".equals(param))
-                        updateStrategy = CASCADE;
-                    else if ("set-null".equals(param))
-                        updateStrategy = SET_NULL;
-                    else
-                        throw new IllegalArgumentException("bad update strategy: " + param);
                 }
-            }
             if (refError)
                 throw new IllegalArgumentException("reference isn't defined: " + t);
         }
@@ -443,6 +444,18 @@ public class Index {
         __dict__.define(OPT_FKEY, "F");
         __dict__.define(OPT_INDEX, "I");
         __dict__.define(OPT_UNIQUE, "U");
+    }
+
+    @Override
+    public void accept(PDBVisitor visitor) {
+        visitor.visit(this);
+    }
+
+    @XmlTransient
+    Table table;
+
+    public Table getTable() {
+        return table;
     }
 
 }

@@ -14,7 +14,7 @@ import net.bodz.xml.util.TermParser;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "")
-public class Check {
+public class Check implements PDBElement {
 
     @XmlAttribute
     protected String name;
@@ -97,6 +97,11 @@ public class Check {
     static final TermDict __dict__     = new TermDict();
     static {
         __dict__.define(OPT_RESERVED, "R");
+    }
+
+    @Override
+    public void accept(PDBVisitor visitor) {
+        visitor.visit(this);
     }
 
 }

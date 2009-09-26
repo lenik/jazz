@@ -181,9 +181,12 @@ public class FieldType {
         case OPT_NUMERIC:
             sqlType = DECIMAL;
             if (t.getDimension() == 0 || t.getBound(0) == 0)
-                throw new IllegalArgumentException("precision isn't specified: " + t);
-            precision = t.getBound(0);
-            scale = t.getBound(1, 0);
+                precision = PREC_REAL;
+            else {
+                precision = t.getBound(0);
+                if (t.getDimension() > 1)
+                    scale = t.getBound(1, 0);
+            }
             if (scale > precision)
                 throw new IllegalArgumentException("scale>precision: " + t);
             break;
@@ -233,9 +236,12 @@ public class FieldType {
                     throw new IllegalArgumentException("Bad bounds: " + t);
                 varLength = min != max;
                 precision = max;
-            } else {
+            } else if (t.getDimension() == 1) {
                 varLength = false;
                 precision = t.getBound(0, PREC_STRING);
+            } else if (t.getDimension() == 0) {
+                varLength = false;
+                precision = PREC_STRING;
             }
         }
     }
