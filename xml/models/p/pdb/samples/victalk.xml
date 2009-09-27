@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pdb cat="biz/support/spy" name="VicTalk" qname="com.ebja.victalk" label="Successful Negotiation Support" doc="成功谈判支持" xmlns="http://xml.bodz.net/p/pdb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xml.bodz.net/p/pdb
 ..\pdb.xsd">
+	<import href="usr.xml"/>
 	<table name="Prp" opts="D" label="属性" doc="量化属性类别。">
 		<field name="id" label="id/prp" type="Id" opts="KDi"/>
 		<field name="cat" label="属性分类" type="C" opts="I" doc="'*'=通用

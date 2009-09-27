@@ -52,8 +52,8 @@ public class PDBTest {
 
     @Test
     public void testCollect() throws Exception {
-        File dir = new File(Models.findModelHome("pdb"), "instances");
-        File victalkXml = new File(dir, "victalk.pdb.xml");
+        File dir = new File(Models.findModelHome("pdb"), "samples");
+        File victalkXml = new File(dir, "victalk.xml");
         PDB victalk = JAXB.unmarshal(victalkXml, PDB.class);
         System.out.println("Victalk loaded: " + victalk);
 

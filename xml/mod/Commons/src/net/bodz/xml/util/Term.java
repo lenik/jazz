@@ -181,9 +181,9 @@ public class Term implements Serializable {
         if (index != null)
             buffer.append(index);
         if (typeParameter != null) {
-            buffer.append('<');
+            buffer.append('\u00AB'); // // «
             buffer.append(typeParameter);
-            buffer.append('>');
+            buffer.append('\u00BB'); // »
         }
         String rp = getRawParameter();
         if (rp != null) {

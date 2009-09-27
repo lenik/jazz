@@ -1,6 +1,7 @@
 package net.bodz.xml.models.pdb;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -283,12 +284,51 @@ public class Table implements PDBElement {
     @XmlTransient
     TextMap<Index> indexMap;
 
+    @XmlTransient
+    Index          primaryKey;
+    @XmlTransient
+    List<Index>    references;
+
     public Field getField(String name) {
         return fieldMap.get(name);
     }
 
+    /**
+     * May different from the original XML representation, because indexes with same name could be
+     * reconstructed to a single one.
+     */
     public Index getIndex(String name) {
         return indexMap.get(name);
+    }
+
+    /**
+     * @return <code>null</code> if table doesn't have a primary key.
+     */
+    public Index getPrimaryKey() {
+        return primaryKey;
+    }
+
+    /**
+     * @return non-<code>null</code> unmodifiable list.
+     */
+    public List<Index> getReferences() {
+        List<Index> list = references;
+        if (list == null)
+            list = new ArrayList<Index>(0);
+        return Collections.unmodifiableList(list);
+    }
+
+    @XmlTransient
+    List<Index> reverseReferences;
+
+    /**
+     * @return non-<code>null</code> unmodifiable list.
+     */
+    public List<Index> getReversedReferences() {
+        List<Index> list = reverseReferences;
+        if (list == null)
+            list = new ArrayList<Index>();
+        return Collections.unmodifiableList(list);
     }
 
 }

@@ -67,7 +67,7 @@ public class Field implements PDBElement {
     public String getType() {
         if (type == null)
             type = new FieldType();
-        return type.getOpts();
+        return type.get();
     }
 
     public void setType(String type) {

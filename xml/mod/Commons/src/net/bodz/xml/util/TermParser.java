@@ -177,9 +177,9 @@ public class TermParser {
                 }
                 term.setIndex(n);
             }
-            if (look == '<') {
+            if (look == '<' || look == '\u00AB') { // «
                 reader.read();
-                String typeParameter = readArg(">");
+                String typeParameter = readArg(look == '<' ? ">" : "\u00BB"); // »
                 term.setTypeParameter(typeParameter);
                 reader.read();
                 look = skip();
@@ -191,7 +191,7 @@ public class TermParser {
                 reader.read();
                 look = skip();
             }
-            if (reader.look() == '[') {
+            if (look == '[') {
                 reader.read();
                 String[] bounds = readArgs(',', "]");
                 term.setBounds(bounds);

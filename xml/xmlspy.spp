@@ -6,5 +6,7 @@
 	<Folder FolderName="HTML Files" ExtStr="html;htm;xhtml;asp"/>
 	<Folder FolderName="DTD/Schemas" ExtStr="dtd;dcd;xdr;biz;xsd"/>
 	<Folder FolderName="Entities" ExtStr="ent"/>
-	<ExtMountFolder FolderName="K:\workspace\net.bodz\net.bodz.xml"/>
+	<ExtMountFolder FolderName="K:\net.bodz\net.bodz.xml"/>
+	<ExtMountFolder FolderName="K:\com.seccaproject\com.seccaproject.public\models"/>
+	<ExtMountFolder FolderName="K:\com.labja\com.labja.public\models"/>
 </Project>
