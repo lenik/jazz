@@ -141,7 +141,7 @@ public class Index implements PDBElement {
     private int             quantifier;
 
     /** free reference, for describing purpose */
-    public static final int LAX          = 0;
+    public static final int LOOSE        = 0;
 
     /** force keeping integrity, forbidden referent's delete/update */
     public static final int STRICT       = 1;
@@ -196,7 +196,7 @@ public class Index implements PDBElement {
         b.put(token);
         if (name != null) {
             String tp = name;
-            if (label != null)
+            if (label != null) // I« index=label »
                 tp += "=" + label;
             b.putTypeParameter(tp);
         }
@@ -240,7 +240,7 @@ public class Index implements PDBElement {
             String indexName = t.getTypeParameter();
             if (indexName != null) {
                 int eq = indexName.indexOf('=');
-                if (eq != -1) {
+                if (eq != -1) { // I« index=label »
                     label = indexName.substring(eq + 1);
                     indexName = indexName.substring(0, eq);
                 }
@@ -290,10 +290,26 @@ public class Index implements PDBElement {
         }
     }
 
+    static final String  A_STRICT  = "=>";                     // lock
+    static final String  A_CASCADE = ">>";                     // transfer
+    static final String  A_BREAK   = "->";                     // set-null
+    static final String  A_LOOSE   = "-->";                    // skip
+
+    static final char    C_STRICT  = '\u21D2';                 // ⇒
+    static final char    C_CASCADE = '\u00BB';                 // »
+    static final char    C_BREAK   = '\u2192';                 // →
+    static final char    C_LOOSE   = '\u2197';                 // ↗
+
+    static final String  U_STRICT  = String.valueOf(C_STRICT);
+    static final String  U_CASCADE = String.valueOf(C_CASCADE);
+    static final String  U_BREAK   = String.valueOf(C_BREAK);
+    static final String  U_LOOSE   = String.valueOf(C_LOOSE);
+
     static final Pattern containsRelationGraphPattern;
     static {
-        containsRelationGraphPattern = Pattern
-                .compile("^\\s*(\\w:\\w)?\\s*(-->|->|=>|>>|[⇒↗→»])\\s*(.*?)\\s*$");
+        containsRelationGraphPattern = Pattern.compile(//
+                "^\\s*(\\w:\\w)?\\s*(-->|->|=>|>>|[" + U_STRICT + U_CASCADE + U_BREAK + U_LOOSE
+                        + "])\\s*(.*?)\\s*$");
     }
 
     void parseRef(String quant, String graph, String remote, String orig) throws ParseException {
@@ -315,21 +331,21 @@ public class Index implements PDBElement {
                 quantifier = MANY_TO_MANY;
         }
 
-        if ("=>".equals(graph) || "⇒".equals(graph)) {
+        if (A_STRICT.equals(graph) || ("" + U_STRICT).equals(graph)) {
             refIntegrity = STRICT;
             deleteStrategy = updateStrategy = FORBID;
-        } else if ("-->".equals(graph) || "↗".equals(graph)) {
-            refIntegrity = LAX;
-            deleteStrategy = updateStrategy = NONE;
-        } else if ("->".equals(graph) || "→".equals(graph)) {
-            boolean nullable = false; // owningTable.isNullable();
-            refIntegrity = nullable ? STRICT : LAX; // generally is LAX.
-            deleteStrategy = SET_NULL;
-            updateStrategy = CASCADE;
-        } else if (">>".equals(graph) || "»".equals(graph)) {
+        } else if (A_CASCADE.equals(graph) || ("" + U_CASCADE).equals(graph)) {
             refIntegrity = STRICT;
             deleteStrategy = CASCADE;
             updateStrategy = CASCADE;
+        } else if (A_BREAK.equals(graph) || ("" + U_BREAK).equals(graph)) {
+            boolean nullable = false; // owningTable.isNullable();
+            refIntegrity = nullable ? STRICT : LOOSE; // generally is loose.
+            deleteStrategy = SET_NULL;
+            updateStrategy = CASCADE;
+        } else if (A_LOOSE.equals(graph) || ("" + U_LOOSE).equals(graph)) {
+            refIntegrity = LOOSE;
+            deleteStrategy = updateStrategy = NONE;
         }
 
         if (remote.isEmpty())
@@ -367,25 +383,25 @@ public class Index implements PDBElement {
             buf.append("n:m");
             break;
         }
-        String op = null;
+        String graph = null;
         if (refIntegrity == STRICT) {
             if (deleteStrategy == FORBID && updateStrategy == FORBID)
-                op = "⇒";
+                graph = U_STRICT;
             else if (deleteStrategy == CASCADE && updateStrategy == CASCADE)
-                op = "»";
+                graph = U_CASCADE;
             else if (deleteStrategy == SET_NULL && updateStrategy == CASCADE)
-                op = "→";
-        } else if (refIntegrity == LAX) {
+                graph = U_BREAK;
+        } else if (refIntegrity == LOOSE) {
             if (deleteStrategy == NONE && updateStrategy == NONE)
-                op = "↗";
+                graph = U_LOOSE;
             else if (deleteStrategy == SET_NULL && updateStrategy == CASCADE)
-                op = "→";
+                graph = U_BREAK;
         }
-        if (op == null) {
+        if (graph == null) {
             if (refIntegrity == STRICT)
-                op = "⇒";
+                graph = U_STRICT;
             else
-                op = "↗";
+                graph = U_LOOSE;
             switch (deleteStrategy) {
             case NONE:
                 throw new UnexpectedException("strict ref but ignore delete");
@@ -413,7 +429,7 @@ public class Index implements PDBElement {
         }
 
         buf.append(' ');
-        buf.append(op);
+        buf.append(graph);
         buf.append(' ');
 
         assert ref != null;
@@ -446,9 +462,15 @@ public class Index implements PDBElement {
 
     @XmlTransient
     Table table;
+    @XmlTransient
+    Table refTable;
 
     public Table getTable() {
         return table;
+    }
+
+    public Table getRefTable() {
+        return refTable;
     }
 
 }

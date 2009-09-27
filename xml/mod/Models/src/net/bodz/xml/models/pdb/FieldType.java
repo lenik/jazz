@@ -15,40 +15,49 @@ import net.bodz.xml.util.TermParser;
  */
 public class FieldType {
 
-    public static final int BOOLEAN = 1;
-    public static final int BIT     = 2;
-    public static final int INTEGER = 3;  // precision: number of bytes
-    public static final int FLOAT   = 4;  // precision: number of bytes
-    public static final int DECIMAL = 5;
-    public static final int REAL    = 6;
-    public static final int TIME    = 7;  // precision: 0-timestamp, 1-time, 2-date, 3-datetime
-    public static final int STRING  = 10;
-    public static final int UNICODE = 12;
-    public static final int BINARY  = 14;
-    public static final int XML     = 16;
-    public static final int OBJECT  = 100;
+    public static final int BOOLEAN        = 1;
+    public static final int BIT            = 2;
+    public static final int INTEGER        = 3;   // precision: number of bytes
+    public static final int FLOAT          = 4;   // precision: number of bytes
+    public static final int DECIMAL        = 5;
+    public static final int REAL           = 6;
+    // precision: 0-timestamp, 1-time, 2-date, 3-datetime
+    public static final int TIME           = 7;
+    public static final int STRING         = 10;
+    public static final int UNICODE        = 12;
+    public static final int BINARY         = 14;
+    public static final int XML            = 16;
+    public static final int IDENTITY       = 17;
+    public static final int OBJECT         = 100;
 
-    private int             sqlType;
+    static final int        SIZE_INT       = 4;
+    static final int        SIZE_FLOAT     = 4;
+    static final int        PREC_INTEGER   = 9;
+    static final int        PREC_REAL      = 12;
+    static final int        PREC_STRING    = 32;
+    static final int        PREC_UNLIMITED = 1000;
+
+    private int             adt;
     private int             precision;
     private int             scale;
     private boolean         varLength;
 
     public FieldType() {
-        sqlType = UNICODE;
+        adt = UNICODE;
         varLength = true;
-        precision = 32;
+        precision = PREC_UNLIMITED;
         scale = 0;
     }
 
-    public FieldType(String opts) {
-        setOpts(opts);
+    public FieldType(String typeString) {
+        set(typeString);
     }
 
     @XmlAttribute
-    public String getOpts() {
+    public String get() {
         TermBuilder b = new TermBuilder(__dict__);
         boolean putLength = false;
-        switch (sqlType) {
+        switch (adt) {
         case BOOLEAN:
             b.put(OPT_BOOLEAN);
             if (precision != 1)
@@ -120,6 +129,9 @@ public class FieldType {
         case XML:
             b.put(OPT_XML);
             break;
+        case IDENTITY:
+            b.put(OPT_IDENTITY);
+            break;
         case OBJECT:
             b.put(OPT_OBJECT);
             break;
@@ -136,24 +148,24 @@ public class FieldType {
         return b.toString();
     }
 
-    public void setOpts(String value) {
+    public void set(String typeString) {
         precision = 0;
         scale = 0;
-        Iterator<Term> terms = TermParser.parse(__dict__, value).iterator();
+        Iterator<Term> terms = TermParser.parse(__dict__, typeString).iterator();
         Term t = terms.next();
         int size;
         boolean checkLen = false;
         switch (t.getId()) {
         case OPT_BOOLEAN:
-            sqlType = BOOLEAN;
+            adt = BOOLEAN;
             precision = t.getIndex(1);
             break;
         case OPT_BIT:
-            sqlType = BIT;
+            adt = BIT;
             precision = t.getIndex(1);
             break;
         case OPT_INT:
-            sqlType = INTEGER;
+            adt = INTEGER;
             size = t.getIndex(SIZE_INT);
             switch (size) {
             case 1:
@@ -167,7 +179,7 @@ public class FieldType {
             }
             break;
         case OPT_FLOAT:
-            sqlType = FLOAT;
+            adt = FLOAT;
             size = t.getIndex(SIZE_FLOAT);
             switch (size) {
             case 4: // float
@@ -179,7 +191,7 @@ public class FieldType {
             }
             break;
         case OPT_NUMERIC:
-            sqlType = DECIMAL;
+            adt = DECIMAL;
             if (t.getDimension() == 0 || t.getBound(0) == 0)
                 precision = PREC_REAL;
             else {
@@ -191,11 +203,11 @@ public class FieldType {
                 throw new IllegalArgumentException("scale>precision: " + t);
             break;
         case OPT_INTEGER:
-            sqlType = DECIMAL;
+            adt = DECIMAL;
             precision = t.getIndex(PREC_INTEGER);
             break;
         case OPT_REAL:
-            sqlType = REAL;
+            adt = REAL;
             precision = t.getIndex(PREC_REAL);
             break;
         case OPT_DATETIME:
@@ -205,28 +217,31 @@ public class FieldType {
         case OPT_TIME:
             precision++;
         case OPT_TIMESTAMP:
-            sqlType = TIME;
+            adt = TIME;
             break;
         case OPT_STRING:
-            sqlType = STRING;
+            adt = STRING;
             checkLen = true;
             break;
         case OPT_UNICODE:
-            sqlType = UNICODE;
+            adt = UNICODE;
             checkLen = true;
             break;
         case OPT_BINARY:
-            sqlType = BINARY;
+            adt = BINARY;
             checkLen = true;
             break;
         case OPT_XML:
-            sqlType = XML;
+            adt = XML;
+            break;
+        case OPT_IDENTITY:
+            adt = IDENTITY;
             break;
         case OPT_OBJECT:
-            sqlType = OBJECT;
+            adt = OBJECT;
             break;
         default:
-            throw new IllegalArgumentException("Bad opt: " + t);
+            throw new IllegalArgumentException("Illegal type string: " + t);
         }
         if (checkLen) {
             if (t.getDimension() >= 2) {
@@ -246,12 +261,15 @@ public class FieldType {
         }
     }
 
-    public int getSqlType() {
-        return sqlType;
+    /**
+     * The Abstract Data Type used in pdb architecture.
+     */
+    public int getAdt() {
+        return adt;
     }
 
-    public void setSqlType(int sqlType) {
-        this.sqlType = sqlType;
+    public void setAdt(int adt) {
+        this.adt = adt;
     }
 
     public int getPrecision() {
@@ -286,12 +304,7 @@ public class FieldType {
     static final int      OPT_BINARY    = 14;
     static final int      OPT_XML       = 15;
     static final int      OPT_OBJECT    = 16;
-
-    static final int      SIZE_INT      = 4;
-    static final int      SIZE_FLOAT    = 4;
-    static final int      PREC_INTEGER  = 9;
-    static final int      PREC_REAL     = 12;
-    static final int      PREC_STRING   = 32;
+    static final int      OPT_IDENTITY  = 17;
 
     static final TermDict __dict__      = new TermDict();
     static {
@@ -311,11 +324,12 @@ public class FieldType {
         __dict__.define(OPT_BINARY, "Y");
         __dict__.define(OPT_XML, "X");
         __dict__.define(OPT_OBJECT, "O");
+        __dict__.define(OPT_IDENTITY, "Id");
     }
 
     @Override
     public String toString() {
-        return getOpts();
+        return get();
     }
 
 }

@@ -32,9 +32,9 @@ public class TermBuilder {
     }
 
     public void putTypeParameter(String typeParameter) {
-        buf.append('<');
+        buf.append('\u00AB'); // «
         buf.append(typeParameter);
-        buf.append('>');
+        buf.append('\u00BB'); // »
     }
 
     public void putParameters(String rawParameters) {

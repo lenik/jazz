@@ -14,8 +14,8 @@ public class IndexTest {
 
     @Test
     public void test1() throws Exception {
-        test("F(n:1 -> remote.field)");
-        test("U(⇒ remote.field)");
+        test("F<fk1>(n:1 -> remote.field)");
+        test("U« uk2 »(⇒ remote.field)");
     }
 
 }

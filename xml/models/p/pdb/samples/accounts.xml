@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pdb xmlns="http://xml.bodz.net/p/pdb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xml.bodz.net/p/pdb
+http://xml.bodz.net/p/pdb/pdb.xsd" name="AppNameAccounts" qname="com.AppName.accounts" label="应用数据库">
+	<table name="Group" label="用户组" opts="D" doc="组是指可共享资源的用户的集合。">
+		<field name="id" type="Id" opts="KDi"/>
+		<field name="name" label="组名称" type="C[]" doc="显示的组名称。"/>
+		<field name="doc" label="组描述" type="C[, 100]" doc="描述该用户组的用途。"/>
+		<instance name="G_ADMIN">
+			<name>admin</name>
+			<displayName>系统管理员组</displayName>
+			<doc>管理、维护系统的用户组。</doc>
+		</instance>
+		<instance name="G_MANAGER">
+			<name>manager</name>
+			<displayName>管理员组</displayName>
+			<doc>管理行政、决策事务的用户组。</doc>
+		</instance>
+		<instance name="G_USER">
+			<name>user</name>
+			<displayName>用户组</displayName>
+			<doc>使用系统为其服务的用户组。</doc>
+		</instance>
+		<instance name="G_GUEST">
+			<name>guest</name>
+			<displayName>来宾用户组</displayName>
+			<doc>来宾用户组。</doc>
+		</instance>
+	</table>
+	<table name="User" label="用户" doc="注册的用户。">
+		<field name="id" type="Id" opts="KDi"/>
+		<field name="name" label="登录名称" type="C[]" opts="U" doc="用于登录的名称。"/>
+		<field name="nickname" label="昵称" type="C[]" doc="用于显示的昵称。"/>
+		<field name="opts" label="选项" type="C[]" opts="N" doc="可扩展选项。"/>
+		<field name="passwd" label="登录密码" type="C[, 20]" opts="NDr" doc="登录密码明文。如果密码已经转为哈
+希，则明文可以丢弃。如果两项均存
+在，则可以使用任一项来验证。
+当两项均不存在时，该用户选择不使
+用密码。"/>
+		<field name="passwdHash" label="登录密码哈希" type="C[, 32]" opts="N" doc="登录密码的哈希值。"/>
+		<field name="email" label="电子邮件" type="C[]" opts="N" doc="联系用的电子邮件。"/>
+		<field name="emailVeriCode" type="C[, 30]" opts="N" doc="验证电子邮件地址时临时存放的验证
+字符串。"/>
+		<field name="emailVerified" label="邮件地址验证" type="b" doc="标记邮件地址是否已验证，当邮件地
+址更换时需要重新验证。"/>
+		<field name="passwdQ" label="密码保护问题" type="C[, 100]" opts="N" doc="允许不设置密码保护。"/>
+		<field name="passwdA" label="密码保护答案" type="C[, 30]" opts="N" doc="用于找回密码的密码保护答案。"/>
+		<instance name="U_ADMIN">
+			<name>admin</name>
+			<nickname>系统管理员</nickname>
+			<passwd>admin</passwd>
+			<email>admin@AppName.com</email>
+		</instance>
+		<instance name="U_GUEST">
+			<name>guest</name>
+			<nickname>来宾</nickname>
+		</instance>
+	</table>
+	<table name="UserGroup" label="用户组分配" doc="设定用户所属的组。">
+		<field name="id" type="Id" opts="KDi"/>
+		<field name="group" label="用户组" type="Id" opts="F(⇒ Group) "/>
+		<field name="user" label="分配用户" type="Id" opts="F(⇒ User)" doc="指定用户从属于本组。"/>
+		<instance expr="true">
+			<group>{ $G_ADMIN.id }</group>
+			<user>{ $U_ADMIN.id }</user>
+		</instance>
+		<instance expr="true">
+			<group>{ $G_GUEST.id }</group>
+			<user>{ $U_GUEST.id }</user>
+		</instance>
+	</table>
+	<table name="Role" label="角色" opts="D" doc="为简化权限管理而设的分类。">
+		<field name="id" type="Id" opts="KDi"/>
+		<field name="name" label="角色名称" type="C[]" doc="角色的显示名称。"/>
+		<field name="doc" label="描述" type="C[, 200]"/>
+	</table>
+	<table name="GroupRole" label="组角色分配" doc="设定组拥有的角色。">
+		<field name="id" type="Id" opts="KDi"/>
+		<field name="role" label="角色" type="Id" opts="F(» Role)"/>
+		<field name="group" label="分配组" type="Id" opts="F(» Group)" doc="设定该组具有本角色。"/>
+	</table>
+	<table name="UserRole" label="用户角色分配" doc="设定用户拥有的角色。">
+		<field name="id" type="Id" opts="KDi"/>
+		<field name="role" label="角色" type="Id" opts="F(» Role)"/>
+		<field name="user" label="分配用户" type="Id" opts="F(» User)" doc="设定该用户具有本角色。"/>
+	</table>
+	<table name="Domain" label="访问域" opts="D" doc="权限管理中，需要控制访问权限的对
+象范畴可能是实体对象（如文件、目
+录）、过程（如打印、关机）等。对
+不同类型的范畴有不同的对象集合的
+描述、界定方式。通过将对象划分为
+访问域，并且使用不同的访问路径来
+选择域中的对象。">
+		<field name="id" type="Id" opts="KDi"/>
+		<field name="name" label="域名称" type="C[]" doc="该名称可能被用于编程脚本中。"/>
+		<field name="label" label="标签" type="C[]" doc="显示在域旁边的标签文字。"/>
+		<field name="opts" label="选项" type="C[]" opts="N" doc="可扩展选项。"/>
+		<field name="pathFormat" label="路径格式" type="C[, 100]"/>
+		<field name="doc" label="描述"/>
+		<instance>
+			<name>file</name>
+			<label>文件</label>
+			<pathFormat>path</pathFormat>
+			<doc>本地文件，用绝对或路径表示。</doc>
+		</instance>
+		<instance>
+			<name>data</name>
+			<label>数据</label>
+			<pathFormat>db.table</pathFormat>
+			<doc>数据对象，用“数据库.表”表示。</doc>
+		</instance>
+		<instance>
+			<name>page</name>
+			<label>页面</label>
+			<pathFormat>url</pathFormat>
+			<doc>页面地址，用于指定网站内的页面，使用相对路径表示。</doc>
+		</instance>
+	</table>
+	<table name="_Permission" label="权限分配" opts="A" doc="分配权限给角色、用户组、用户等行
+为对象。">
+		<field name="id" type="Id" opts="KDi"/>
+		<field name="domain" label="访问域" type="Id" opts="F(» Domain)" doc="路径所属的访问域。"/>
+		<field name="path" label="主路径" type="C[, 200]" opts="NI" doc="访问路径字符串，按前缀树的方式组
+织。"/>
+		<field name="allow" label="允许集" type="C[, 200]" opts="N" doc="允许路径内的指定后缀集。"/>
+		<field name="deny" label="拒绝集" doc="拒绝路径内的指定后缀集。"/>
+	</table>
+	<table name="RolePermission
+(Permission)" label="角色权限分配" doc="分配权限给角色。">
+		<field name="role" label="分配角色" type="Id" opts="F(» Role)" doc="将该集合作用于指定角色。"/>
+	</table>
+	<table name="GroupPermission
+(Permission)" label="组权限分配" doc="分配权限给用户组。">
+		<field name="group" label="分配组" type="Id" opts="F(» Role)" doc="将该集合作用于指定用户组。"/>
+	</table>
+	<table name="UserPermission
+(Permission)" label="用户权限分配" doc="分配权限给用户。">
+		<field name="user" label="分配用户" type="Id" opts="F(» Role)" doc="将该集合作用于指定用户。"/>
+	</table>
+</pdb>

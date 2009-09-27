@@ -18,6 +18,8 @@ import net.bodz.xml.util.TermBuilder;
 import net.bodz.xml.util.TermDict;
 import net.bodz.xml.util.TermParser;
 
+import com.sun.xml.internal.bind.annotation.XmlLocation;
+
 /**
  * @test {@link PDBTest}
  */
@@ -25,6 +27,10 @@ import net.bodz.xml.util.TermParser;
 @XmlType(propOrder = { "imports", "tableOrViews" })
 @XmlRootElement(name = "pdb")
 public class PDB implements PDBElement {
+
+    @XmlLocation
+    @XmlTransient
+    protected Object location;
 
     @XmlAttribute(required = true)
     protected String name;
@@ -67,6 +73,10 @@ public class PDB implements PDBElement {
             @XmlElement(name = "table", type = Table.class), //
             @XmlElement(name = "view", type = View.class) })
     protected List<Object>     tableOrViews;
+
+    public Object getLocation() {
+        return location;
+    }
 
     public String getQname() {
         return qname;

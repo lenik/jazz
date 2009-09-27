@@ -329,6 +329,11 @@ multiple filters are AND-ed. </xs:documentation>
 					<xs:documentation>short help-info</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
+			<xs:attribute name="expr" type="xs:boolean" use="optional">
+				<xs:annotation>
+					<xs:documentation>using expr in the field text, which should be evaluated when processing. </xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
 		</xs:complexType>
 	</xs:element>
 	<xs:attributeGroup name="objectAttributes">
