@@ -27,7 +27,7 @@ public class AutoCompileLoaderTest {
         dir = new File(Files.getTmpDir(), "acl");
         compiler = new JavaCompiler(dir);
 
-        loader0 = Caller.getCallerClassLoader();
+        loader0 = Caller.getCallerClassLoader(0);
         loader = new AutoCompileLoader(compiler, loader0);
 
         Files.deleteTree(dir);

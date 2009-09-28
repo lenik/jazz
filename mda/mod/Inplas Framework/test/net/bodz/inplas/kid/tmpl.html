@@ -1,0 +1,142 @@
+<%! page @import='kid.jsp' %>
+<%
+// Local Declarations
+int    _view   = V_INDEX; 
+String _title  = "标题";
+String _action ; 
+
+String 
+
+try {
+	try {
+		// pre- operations
+	} catch (Throwable _t) {
+		view = ERROR; 
+	}
+%>
+<%
+	switch (_view) {
+		case V_INDEX: 
+			break; 
+		case V_VIEW: 
+			break; 
+		case V_EDIT: 
+			break; 
+		case V_PROCESS: 
+			break; 
+		case V_ERROR:
+			break; 
+		default: 
+	}
+%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title><%=_title%>
+<%
+	switch (_view) {
+		case V_INDEX: %>
+列表
+<%
+			break; 
+		case V_VIEW: %>
+查看
+<%
+			break; 
+		case V_EDIT: %>
+编辑
+<%
+			break; 
+		case V_PROCESS: %>
+过程
+<%
+			break; 
+		case V_ERROR: %>
+错误
+<%
+			break; 
+		default: %>
+-
+<%
+	}
+%>
+</title>
+<%
+	switch (_view) {
+		case V_INDEX: %>
+<!-- INDEX HEAD -->
+<%
+			break; 
+		case V_VIEW: %>
+<!-- VIEW HEAD -->
+<%
+			break; 
+		case V_EDIT: %>
+<!-- EDIT HEAD -->
+<%
+			break; 
+		case V_PROCESS: %>
+<!-- PROCESS HEAD -->
+<%
+			break; 
+		case V_ERROR: %>
+<!-- ERROR HEAD -->
+<%
+			break; 
+		default: %>
+<!-- default HEAD -->
+<%
+	}
+%>
+</head>
+<body>
+<%
+	switch (_view) {
+		case V_INDEX: %>
+<h1> Index </h1>
+<%
+			break; 
+		case V_VIEW: %>
+<h1> View </h1>
+<%
+			break; 
+		case V_EDIT: %>
+<h1> Edit </h1>
+<%
+			break; 
+		case V_PROCESS: %>
+<h1> Process </h1>
+<%
+			break; 
+		case V_ERROR: %>
+<h1> Error </h1>
+<%
+			break; 
+		default: %>
+<h1> Default ? </h1>
+<%
+	}
+%>
+</body>
+</html>
+<%
+	switch (_view) {
+		case V_INDEX: 
+			break; 
+		case V_VIEW: 
+			break; 
+		case V_EDIT: 
+			break; 
+		case V_PROCESS:
+			break; 
+		case V_ERROR:
+			break; 
+		default: 
+	}
+} catch (Throwable _t) {
+	// embedded error-box, absolute positioning. 
+} finally {
+	// clean up
+}
+%>

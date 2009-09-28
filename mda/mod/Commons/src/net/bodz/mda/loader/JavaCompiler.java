@@ -9,17 +9,17 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.bodz.bas.cli.a.RunInfo;
+import net.bodz.bas.a.BootInfo;
 import net.bodz.bas.cli.util.JavaLauncher;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.err.NotImplementedException;
-import net.bodz.bas.lang.util.Classpath;
+import net.bodz.bas.loader.UCL;
 import net.bodz.bas.sys.SystemInfo;
 import net.bodz.bas.types.util.Empty;
 import net.bodz.bas.types.util.RegexProcessor;
 import net.bodz.bas.types.util.Strings;
 
-@RunInfo(load = "findcp $JAVA_HOME/lib/tools.jar")
+@BootInfo(syslibs = "tools.jar")
 public class JavaCompiler extends JavaLauncher {
 
     /** -source */
@@ -86,7 +86,7 @@ public class JavaCompiler extends JavaLauncher {
     }
 
     public void inheritsClasspath() {
-        URL[] urls = Classpath.findURLs();
+        URL[] urls = UCL.findURLs();
         for (URL url : urls) {
             try {
                 File file = new File(url.toURI());

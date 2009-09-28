@@ -1,0 +1,29 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: boDz Model Driven Architect
+Bundle-SymbolicName: net.bodz.mda
+Bundle-Version: 1.0.0
+Bundle-Vendor: Lenik
+Require-Bundle: net.bodz.bas;bundle-version="1.0.0",
+ net.bodz.xml;bundle-version="1.0.0",
+ net.bodz.swt;bundle-version="1.0.0"
+Export-Package: net.bodz.bas.text.ast,
+ net.bodz.bas.text.rewrite,
+ net.bodz.mda.dbm.biz,
+ net.bodz.mda.dbm.ent,
+ net.bodz.mda.java.codesnippets,
+ net.bodz.mda.java.dom,
+ net.bodz.mda.java.initial.util,
+ net.bodz.mda.javalava,
+ net.bodz.mda.javalava.dom,
+ net.bodz.mda.javalava.initial,
+ net.bodz.mda.loader,
+ net.bodz.mda.rtl,
+ net.bodz.mda.xmm,
+ net.bodz.mda.xmm.initial
+Bundle-ClassPath: mod/Commons/bin/,
+ mod/DB Model/bin/,
+ mod/Inplas Framework/bin/,
+ mod/Javalava Parser/bin/,
+ mod/Text Parser/bin/,
+ mod/XML Models/bin/
