@@ -4,8 +4,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.bodz.bas.lang.Filter;
-import net.bodz.bas.text.interp.PatternProcessor;
+import net.bodz.bas.lang.Filt1;
+import net.bodz.bas.text.util.PatternProcessor;
 
 public class EnclosedTags extends PatternProcessor {
 
@@ -53,14 +53,14 @@ public class EnclosedTags extends PatternProcessor {
         first = false;
     }
 
-    @SuppressWarnings("unchecked")
     protected void processTag(String tag, String text) {
         if (tagMap != null) {
             Object obj = tagMap.get(tag);
             while (obj != null) {
                 String repl;
-                if (obj instanceof Filter) {
-                    Filter<?, String> filter = (Filter<?, String>) obj;
+                if (obj instanceof Filt1) {
+                    @SuppressWarnings("unchecked")
+                    Filt1<?, String> filter = (Filt1<?, String>) obj;
                     obj = filter.filter(text);
                     continue;
                 } else

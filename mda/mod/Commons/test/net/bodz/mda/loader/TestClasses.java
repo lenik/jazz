@@ -2,32 +2,32 @@ package net.bodz.mda.loader;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Iterator;
 
-import net.bodz.bas.files.MapsFile;
-import net.bodz.bas.files.MapsFile.PartMap;
+import net.bodz.bas.files.PartRecords;
+import net.bodz.bas.files.PartRecords.PartMap;
 import net.bodz.bas.io.Files;
+import net.bodz.bas.types.util.DirectIterator;
 
 public class TestClasses {
 
-    private MapsFile          parts;
-    private Iterator<PartMap> iterator;
+    private PartRecords                          parts;
+    private DirectIterator<PartMap, IOException> dit;
 
     public TestClasses(ClassLoader loader, String part) throws IOException {
         this.loader = loader;
         URL testClasses = Files.classData(TestClasses.class, part);
-        parts = new MapsFile(testClasses, "utf-8");
-        iterator = parts.iterator();
+        parts = new PartRecords(testClasses, "utf-8");
+        dit = parts.iterator();
     }
 
     private String java;
     private String name;
     private String expected;
 
-    public boolean next() {
-        if (!iterator.hasNext())
+    public boolean next() throws IOException {
+        if (!dit.next())
             return false;
-        PartMap map = iterator.next();
+        PartMap map = dit.get();
         name = map.get("name");
         expected = map.get("expected");
         java = map.getText();

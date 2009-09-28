@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<binding package="net.bodz.inplas.kid">
+	<mapping name="Section" class="Project">
+		<collection field="tables" add-method="addTable">
+			<structure name="Table" type="Table">
+				<value name="Name" field="name_X"/>
+				<value name="Comment" field="comment_X"/>
+				<collection field="fields" add-method="addField">
+					<structure name="Field" type="Field">
+						<value name="Name" field="name_X"/>
+						<value name="Tip" field="display_X"/>
+						<value name="Type" field="type_X"/>
+						<value name="Props" field="props_X"/>
+						<value name="Description" field="comment_X"/>
+					</structure>
+				</collection>
+			</structure>
+		</collection>
+	</mapping>
+</binding>
