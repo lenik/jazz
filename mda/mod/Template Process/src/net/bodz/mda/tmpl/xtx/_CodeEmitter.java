@@ -8,9 +8,9 @@ import net.bodz.bas.types.util.Strings;
 
 public abstract class _CodeEmitter implements CodeEmitter {
 
-    private boolean         header         = true;
-    private boolean         multiline;
-    private int             heredocMinSize = 100;
+    protected boolean       header         = true;
+    protected boolean       multiline;
+    protected int           heredocMinSize = 100;
 
     private String          source         = "* unknown *";
     private int             line;
@@ -48,7 +48,7 @@ public abstract class _CodeEmitter implements CodeEmitter {
     }
 
     @Override
-    public void start() {
+    public void start() throws IOException {
         if (header) {
             emitCommentLine("");
             emitCommentLine("Emitted by: " + getClass().getName());
@@ -58,7 +58,7 @@ public abstract class _CodeEmitter implements CodeEmitter {
     }
 
     @Override
-    public void end() {
+    public void end() throws IOException {
         if (header) {
             emitCommentLine("");
             emitCommentLine("Emit date: " + new Date());
@@ -66,7 +66,7 @@ public abstract class _CodeEmitter implements CodeEmitter {
         }
     }
 
-    protected abstract String emitCommentLine(String s);
+    protected abstract String emitCommentLine(String s) throws IOException;
 
     @Override
     public void emitCode(String code) throws IOException {

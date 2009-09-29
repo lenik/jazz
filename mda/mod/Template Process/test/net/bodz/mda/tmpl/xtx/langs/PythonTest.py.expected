@@ -1,0 +1,8 @@
+from sys import stdout
+if 1: 
+    pass
+stdout.write("1ok.\n".__str__())
+if 2: 
+   pass
+       
+stdout.write("2ok.\n".__str__())

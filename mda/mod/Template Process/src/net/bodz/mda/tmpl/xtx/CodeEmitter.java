@@ -8,7 +8,7 @@ public interface CodeEmitter {
 
     void setSourcePosition(int line, int column);
 
-    void start();
+    void start() throws IOException;
 
     void emitCode(String code) throws IOException;
 
@@ -16,6 +16,6 @@ public interface CodeEmitter {
 
     void emitText(String text) throws IOException;
 
-    void end();
+    void end() throws IOException;
 
 }
