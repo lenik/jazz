@@ -8,6 +8,7 @@ import net.bodz.bas.types.util.Strings;
 
 public abstract class _CodeEmitter implements CodeEmitter {
 
+    private boolean         header         = true;
     private boolean         multiline;
     private int             heredocMinSize = 100;
 
@@ -48,17 +49,21 @@ public abstract class _CodeEmitter implements CodeEmitter {
 
     @Override
     public void start() {
-        emitCommentLine("");
-        emitCommentLine("Emitted by: " + getClass().getName());
-        emitCommentLine("Source: " + getSource());
-        emitCommentLine("");
+        if (header) {
+            emitCommentLine("");
+            emitCommentLine("Emitted by: " + getClass().getName());
+            emitCommentLine("Source: " + getSource());
+            emitCommentLine("");
+        }
     }
 
     @Override
     public void end() {
-        emitCommentLine("");
-        emitCommentLine("Emit date: " + new Date());
-        emitCommentLine("");
+        if (header) {
+            emitCommentLine("");
+            emitCommentLine("Emit date: " + new Date());
+            emitCommentLine("");
+        }
     }
 
     protected abstract String emitCommentLine(String s);
@@ -89,7 +94,7 @@ public abstract class _CodeEmitter implements CodeEmitter {
                 return;
             }
         }
-        emitPrintExpr(text, false);
+        emitPrintExpr(quote(text), false);
     }
 
     public void emitHereDoc(String doc) throws IOException {

@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.io.CharOut;
-import net.bodz.bas.lang.TRunnable;
 import net.bodz.mda.tmpl.xtx.CodeEmitter;
 import net.bodz.mda.tmpl.xtx.Helper;
+import net.bodz.mda.tmpl.xtx.TemplateScript;
 import net.bodz.mda.tmpl.xtx.XtxLang;
 import net.bodz.mda.tmpl.xtx._CodeEmitter;
 
@@ -33,13 +33,13 @@ public class Python implements XtxLang {
     }
 
     @Override
-    public TRunnable<String[], Exception> compile(String path) {
+    public TemplateScript compile(String path) {
         if (path == null)
             throw new NullPointerException("path");
         List<String> cmd = new ArrayList<String>();
         cmd.add(program);
         cmd.add(path);
-        return Helper.interpretedCompiler(true, cmd.toArray(new String[0]));
+        return Helper.interpretedCompiler(this, cmd.toArray(new String[0]));
     }
 
     class Emitter extends _CodeEmitter {

@@ -1,7 +1,10 @@
 package net.bodz.mda.tmpl.xtx;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.Charset;
@@ -14,15 +17,16 @@ import net.bodz.bas.a.RcsKeywords;
 import net.bodz.bas.a.Version;
 import net.bodz.bas.cli.BasicCLI;
 import net.bodz.bas.cli.a.Option;
+import net.bodz.bas.io.CharOut;
+import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.io.CharOuts.BCharOut;
 import net.bodz.bas.io.CharOuts.WriterCharOut;
-import net.bodz.bas.lang.ControlExit;
-import net.bodz.bas.lang.TRunnable;
 import net.bodz.bas.lang.err.IllegalUsageError;
 import net.bodz.bas.lang.err.IllegalUsageException;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.types.sg.InvalidStateException;
+import net.bodz.bas.types.util.Strings;
 import net.bodz.mda.tmpl.xtx.langs.Perl;
 import net.bodz.mda.tmpl.xtx.langs.Python;
 
@@ -30,25 +34,34 @@ import net.bodz.mda.tmpl.xtx.langs.Python;
 @ProgramName("xtx")
 @RcsKeywords(id = "$Id$")
 @Version( { 0, 1 })
-public class Main extends BasicCLI {
+public class XtxMain extends BasicCLI {
 
     public static final int CODE_GATE = '\u00AC';                // ¬
     public static final int ESCAPE    = '\\';
 
     @Option(alias = "e", vnam = "CHARSET", doc = "encoding of template file")
-    Charset                 encoding  = Charset.defaultCharset();
+    Charset                 encoding  = Charset.forName("utf-8");
 
     @Option(alias = "c", vnam = "DIR", doc = "where to put compiled templates")
     File                    compileDirectory;
 
-    @Option(alias = "d", vnam = "DIR", doc = "where to put result files, or directory")
+    @Option(alias = "t", doc = "only compile the template")
+    boolean                 compileOnly;
+
+    @Option(alias = "o", vnam = "DIR", doc = "where to put result files, or directory")
     File                    output;
+
+    @Option(alias = "B", doc = "don't compare with last modified time")
+    boolean                 alwaysMake;
+
+    @Option(alias = "s", doc = "send output to stdout")
+    boolean                 stdout;
 
     @Option(vnam = "FILE", fileIndex = 0, required = true)
     File                    template;
 
     String                  templateNameWithoutXtx;
-    File                    compiledFile;
+    File                    scriptFile;
     File                    resultFile;
 
     @Override
@@ -65,8 +78,12 @@ public class Main extends BasicCLI {
             throw new IllegalUsageError("illegal xtx-template extension");
 
         if (compileDirectory == null)
-            compileDirectory = template.getParentFile();
-        compiledFile = new File(compileDirectory, templateNameWithoutXtx);
+            if (output != null && output.isDirectory())
+                compileDirectory = output;
+            else
+                compileDirectory = template.getParentFile();
+        scriptFile = new File(compileDirectory, templateNameWithoutXtx);
+        L.debug("compile-directory: ", compileDirectory);
 
         if (output == null)
             output = compileDirectory;
@@ -74,48 +91,78 @@ public class Main extends BasicCLI {
             String resultName = Files.getName(templateNameWithoutXtx);
             output = new File(output, resultName);
         }
+        L.debug("result-output: ", output);
     }
 
     @Override
-    protected void doMainManaged(String[] args) throws Exception {
-        String name = template.getName();
+    protected void doMain(String[] args) throws Exception {
+        L.detail("search matching xtx-language for ", templateNameWithoutXtx);
         XtxLang matchingLang = null;
         for (XtxLang lang : languages) {
-            if (lang.matches(name)) {
+            if (lang.matches(templateNameWithoutXtx)) {
+                L.detail("found matching xtx-language: ", lang);
                 matchingLang = lang;
                 break;
             }
         }
         if (matchingLang == null)
-            throw new UnsupportedOperationException("No matching host lang for name: " + name);
+            throw new UnsupportedOperationException("No matching host lang for name: "
+                    + templateNameWithoutXtx);
 
-        if (!compiledFile.exists() || //
-                template.lastModified() > compiledFile.lastModified()) {
+        if (alwaysMake || !scriptFile.exists() || //
+                template.lastModified() > scriptFile.lastModified()) {
+            L.detail("preprocess ", template, " -> ", scriptFile);
             Reader templateReader = Files.getReader(template, encoding);
-            Writer compiledWriter = Files.getWriter(compiledFile, encoding);
-            WriterCharOut cout = new WriterCharOut(compiledWriter);
+            CharOut scriptOut;
+            if (stdout && compileOnly)
+                scriptOut = CharOuts.stdout;
+            else {
+                Writer scriptWriter = Files.getWriter(scriptFile, encoding);
+                scriptOut = new WriterCharOut(scriptWriter);
+            }
             try {
-                CodeEmitter emitter = matchingLang.newEmitter(cout); // options...
+                CodeEmitter emitter = matchingLang.newEmitter(scriptOut); // options...
                 parse(templateReader, emitter);
             } finally {
                 templateReader.close();
-                cout.close();
+                if (scriptOut != CharOuts.stdout)
+                    scriptOut.close();
             }
         }
+        L.detail("preprocess finished. ");
+        if (compileOnly)
+            return;
 
-        TRunnable<String[], Exception> runnable = matchingLang.compile(compiledFile.getPath());
-        if (runnable != null)
-            try {
-                runnable.run(args);
-            } catch (ControlExit exit) {
-                int status = exit.getStatus();
-                System.exit(status);
+        L.detail("compile using local language ", matchingLang.getName());
+        TemplateScript script = matchingLang.compile(scriptFile.getPath());
+
+        L.detail("execute the compiled template");
+        if (L.showDebug()) {
+            L.debug("    with arguments: ");
+            for (int i = 0; i < args.length; i++)
+                L.debug("    ", i, ". \"", Strings.escape(args[i]), "\"");
+        }
+        InputStream resultStream = script.execute(args);
+        OutputStream out = null;
+        try {
+            out = stdout ? System.out : new FileOutputStream(output);
+            byte[] block = new byte[4096];
+            int cb;
+            while ((cb = resultStream.read(block)) != -1) {
+                out.write(block, 0, cb);
             }
+        } finally {
+            resultStream.close();
+            if (out != null && out != System.out)
+                out.close();
+        }
+        L.detail("done");
     }
 
-    static final int S_TEXT = 0;
-    static final int S_CODE = 1;
-    static final int S_EXPR = 2;
+    static final int S_LEAD_TEXT = 0;
+    static final int S_TEXT      = 1;
+    static final int S_CODE      = 3;
+    static final int S_EXPR      = 5;
 
     public static void parse(Reader reader, CodeEmitter emitter) throws IOException, ParseException {
         if (reader == null)
@@ -123,8 +170,17 @@ public class Main extends BasicCLI {
         int state = S_TEXT;
         int braceLevel = 0;
         BCharOut buffer = new BCharOut();
+        BCharOut leadingBuffer = new BCharOut();
+        int y = 0;
+        int x = 0;
+        boolean atLeading = true;
         int c;
         while ((c = reader.read()) != -1) {
+            if (c == '\n') {
+                y++;
+                x = 0;
+            } else
+                x++;
             if (c == ESCAPE) {
                 c = reader.read();
                 switch (c) {
@@ -137,10 +193,20 @@ public class Main extends BasicCLI {
                 buffer._write(ESCAPE);
             }
             switch (state) {
+            case S_LEAD_TEXT:
+                atLeading = x == 0;
+                state = S_TEXT;
             case S_TEXT:
+                if (atLeading)
+                    if (Character.isSpaceChar(c)) {
+                        leadingBuffer._write(c);
+                        continue;
+                    }
+                atLeading = false;
                 switch (c) {
                 case CODE_GATE:
                     state = S_CODE;
+                    leadingBuffer.flip(); // skip leading space to the gate.
                     break;
                 case '{':
                     state = S_EXPR;
@@ -151,21 +217,23 @@ public class Main extends BasicCLI {
                     continue;
                 }
                 String text = buffer.flip();
-                emitter.emitText(text);
+                if (!text.isEmpty())
+                    emitter.emitText(text);
                 break;
             case S_CODE:
                 switch (c) {
                 case '\n':
                     buffer._write('\n');
                 case CODE_GATE:
-                    state = S_TEXT;
+                    state = S_LEAD_TEXT;
                     break;
                 default:
                     buffer._write(c);
                     continue;
                 }
                 String code = buffer.flip();
-                emitter.emitCode(code);
+                if (!code.isEmpty())
+                    emitter.emitCode(code);
                 break;
             case S_EXPR:
                 switch (c) {
@@ -176,34 +244,37 @@ public class Main extends BasicCLI {
                     braceLevel--;
                     break;
                 }
-                buffer._write(c);
                 if (braceLevel == 0) {
                     String exprCode = buffer.flip();
-                    emitter.emitExpr(exprCode);
+                    if (!exprCode.isEmpty())
+                        emitter.emitExpr(exprCode);
                     state = S_TEXT;
-                }
+                } else
+                    buffer._write(c);
                 break;
             default:
                 throw new InvalidStateException();
             }
         }
         switch (state) {
+        case S_LEAD_TEXT:
         case S_TEXT:
             String text = buffer.flip();
-            emitter.emitText(text);
+            if (!text.isEmpty())
+                emitter.emitText(text);
             break;
         case S_CODE:
             String code = buffer.flip();
-            emitter.emitCode(code);
+            if (!code.isEmpty())
+                emitter.emitCode(code);
             break;
         case S_EXPR:
             throw new ParseException("expect '}': " + buffer);
         }
-
     }
 
     public static void main(String[] args) throws Exception {
-        new Main().run(args);
+        new XtxMain().run(args);
     }
 
     static final List<XtxLang> languages;
