@@ -1,7 +1,6 @@
 package net.bodz.mda.tmpl.xtx;
 
 import net.bodz.bas.io.CharOut;
-import net.bodz.bas.lang.TRunnable;
 
 /**
  * XTX Templating
@@ -55,6 +54,6 @@ public interface XtxLang {
     /**
      * @return <code>null</code> if result script isn't runnable.
      */
-    TRunnable<String[], Exception> compile(String path);
+    TemplateScript compile(String path);
 
 }

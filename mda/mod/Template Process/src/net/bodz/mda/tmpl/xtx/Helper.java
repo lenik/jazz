@@ -1,47 +1,50 @@
 package net.bodz.mda.tmpl.xtx;
 
-import net.bodz.bas.lang.ControlExit;
-import net.bodz.bas.lang.TRunnable;
+import java.io.IOException;
+import java.io.InputStream;
+
+import net.bodz.bas.lang.err.CompileException;
 import net.bodz.bas.sys.Processes;
 import net.bodz.bas.types.util.Arrays2;
 
 public class Helper {
 
-    static class InterpretedCompiler implements TRunnable<String[], Exception> {
+    static class InterpretedCompiler implements TemplateScript {
 
-        private boolean  waitFor;
+        private XtxLang  lang;
         private String[] shellCommand;
 
-        public InterpretedCompiler(boolean waitFor, String[] shellCommand) {
+        public InterpretedCompiler(XtxLang lang, String[] shellCommand) {
+            if (lang == null)
+                throw new NullPointerException("lang");
             if (shellCommand == null)
                 throw new NullPointerException("shellCommand");
-            this.waitFor = waitFor;
+            this.lang = lang;
             this.shellCommand = shellCommand;
         }
 
+        public XtxLang getLanguage() {
+            return lang;
+        }
+
         @Override
-        public void run(String[] parameters) throws Exception, ControlExit {
-            if (parameters == null)
-                parameters = new String[0];
+        public InputStream execute(String... args) throws CompileException, TemplateException,
+                IOException {
+            if (args == null)
+                args = new String[0];
             String[] cmdarray;
-            if (parameters == null)
-                cmdarray = parameters;
+            if (args == null)
+                cmdarray = args;
             else
-                cmdarray = Arrays2.concat(shellCommand, parameters);
+                cmdarray = Arrays2.concat(shellCommand, args);
             Process process = Processes.shellExec(cmdarray);
-            if (waitFor) {
-                int exitValue = process.waitFor();
-                throw new ControlExit(exitValue);
-            }
+            InputStream in = process.getInputStream();
+            return in;
         }
     }
 
-    /**
-     * @return the returned TRunnable will throw {@link ControlExit} with-in its
-     *         {@link #run(String[])} method.
-     */
-    public static InterpretedCompiler interpretedCompiler(boolean waitFor, String... shellCommand) {
-        return new InterpretedCompiler(waitFor, shellCommand);
+    public static InterpretedCompiler interpretedCompiler(XtxLang lang, String... shellCommand) {
+        return new InterpretedCompiler(lang, shellCommand);
     }
 
 }
