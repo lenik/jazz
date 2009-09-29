@@ -28,14 +28,14 @@ import net.bodz.bas.types.util.Types;
 
 public class ClassOptions<CT> {
 
-    private PrefixMap<_Option<?>>       options;
-    private Set<String>                 weakAliases;
+    private PrefixMap<_Option<?>>       all;
+    private Set<String>                 weaks;
     public TreeMap<Integer, _Option<?>> specfiles;
     private HashSet<_Option<?>>         required;
 
     public ClassOptions(Class<CT> clazz) {
-        options = new PrefixMap<_Option<?>>();
-        weakAliases = new HashSet<String>();
+        all = new PrefixMap<_Option<?>>();
+        weaks = new HashSet<String>();
 
         BeanInfo beanInfo;
         try {
@@ -103,49 +103,45 @@ public class ClassOptions<CT> {
             importMethod(optgrp, _method.getMethod());
     }
 
-    protected void addOption(_Option<?> copt) {
-        String optnam = copt.getCLIName();
-        _Option<?> prev = options.get(optnam);
-        if (prev != null)
+    protected void addOption(_Option<?> newopt) {
+        String optnam = newopt.getCLIName();
+        _Option<?> existing = all.get(optnam);
+        if (existing != null && !existing.isWeak())
             throw new IllegalArgumentException(AppNLS.getString("ClassOptions.optionName") + optnam //$NON-NLS-1$
                     + AppNLS.getString("ClassOptions.isAlreadyExisted")); //$NON-NLS-1$
-        options.put(optnam, copt);
-        for (String alias : copt.o.alias()) {
-            boolean weak = alias.startsWith("."); //$NON-NLS-1$
-            if (weak)
-                alias = alias.substring(1);
-            prev = options.get(alias);
-            if (prev != null && !weak)
+        all.put(optnam, newopt);
+        for (String newalias : newopt.o.alias()) {
+            boolean newweak = newalias.startsWith("."); //$NON-NLS-1$
+            if (newweak)
+                newalias = newalias.substring(1);
+            newweak |= newopt.isWeak();
+
+            boolean aliasExisted = all.containsKey(newalias) && !weaks.contains(newalias);
+            if (aliasExisted)
                 throw new IllegalArgumentException(
-                        AppNLS.getString("ClassOptions.optionAlias") + alias //$NON-NLS-1$
+                        AppNLS.getString("ClassOptions.optionAlias") + newalias //$NON-NLS-1$
                                 + AppNLS.getString("ClassOptions.isAlreadyExisted")); //$NON-NLS-1$
-            if (weak)
-                if (prev == null)
-                    weakAliases.add(alias);
-                else
-                    assert weakAliases.contains(alias);
-            if (!weak)
-                if (prev != null)
-                    weakAliases.remove(alias);
-                else
-                    assert !weakAliases.contains(alias);
-            options.put(alias, copt);
+            all.put(newalias, newopt);
+            if (newweak)
+                weaks.add(newalias);
+            else
+                weaks.remove(newalias);
         }
-        if (copt.o.required()) {
+        if (newopt.o.required()) {
             if (required == null)
                 required = new HashSet<_Option<?>>();
-            required.add(copt);
+            required.add(newopt);
         }
-        int index = copt.o.fileIndex();
+        int index = newopt.o.fileIndex();
         if (index != -1) {
             if (specfiles == null)
                 specfiles = new TreeMap<Integer, _Option<?>>();
-            specfiles.put(index, copt);
+            specfiles.put(index, newopt);
         }
     }
 
     public TreeMap<String, _Option<?>> getOptions() {
-        return options;
+        return all;
     }
 
     /**
@@ -154,7 +150,7 @@ public class ClassOptions<CT> {
      * @return null if option does not exist
      */
     public _Option<?> getOption(String name) {
-        return options.get(name);
+        return all.get(name);
     }
 
     /**
@@ -169,9 +165,9 @@ public class ClassOptions<CT> {
             throw new CLIException(AppNLS.getString("ClassOptions.emptyName")); //$NON-NLS-1$
         if (name.startsWith("no-")) //$NON-NLS-1$
             name = name.substring(3);
-        if (options.containsKey(name))
-            return (_Option<Object>) options.get(name);
-        List<String> fullnames = Collections2.toList(options.ceilingKeys(name));
+        if (all.containsKey(name))
+            return (_Option<Object>) all.get(name);
+        List<String> fullnames = Collections2.toList(all.ceilingKeys(name));
         if (fullnames.isEmpty())
             throw new CLIException(AppNLS.getString("ClassOptions.noOption") + name); //$NON-NLS-1$
         if (fullnames.size() > 1) {
@@ -179,7 +175,7 @@ public class ClassOptions<CT> {
             for (String nam : fullnames) {
                 cands.append(nam);
                 cands.append('\n');
-                nam = options.higherKey(nam);
+                nam = all.higherKey(nam);
                 if (nam == null || !nam.startsWith(name))
                     break;
             }
@@ -187,20 +183,35 @@ public class ClassOptions<CT> {
                     + cands.toString());
         }
         String fullname = fullnames.get(0);
-        return (_Option<Object>) options.get(fullname);
+        return (_Option<Object>) all.get(fullname);
     }
 
     private static final String[] String_0 = {};
 
     public String[] getAliases(_Option<?> opt) {
         List<String> aliases = new ArrayList<String>();
-        for (Entry<String, _Option<?>> e : options.entrySet()) {
+        for (Entry<String, _Option<?>> e : all.entrySet()) {
             if (e.getValue() != opt)
                 continue;
             String alias = e.getKey();
             aliases.add(alias);
         }
         return aliases.toArray(String_0);
+    }
+
+    /**
+     * @param name
+     *            (H-)name or alias.
+     * @return <code>true</code> if specified name or alias hasn't been used, or it's a weak name.
+     * @see Option#name()
+     * @see Option#alias()
+     */
+    public boolean isReusable(String name) {
+        if (!all.containsKey(name))
+            return true;
+        if (weaks.contains(name))
+            return true;
+        return false;
     }
 
     public String[] load(CT classobj, String... args) throws CLIException, ParseException {

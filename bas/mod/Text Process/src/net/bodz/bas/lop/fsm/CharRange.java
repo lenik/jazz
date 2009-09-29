@@ -3,7 +3,6 @@ package net.bodz.bas.lop.fsm;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.lop.fsm.CharRangeTest;
 import net.bodz.bas.types.util.Strings;
 
 /**
@@ -84,7 +83,10 @@ public class CharRange extends _CharSet {
                     return EQUALS;
                 else
                     return ALL_THIS;
-            return ALL_THAT;
+            else if (allThat)
+                return ALL_THAT;
+            else
+                return PARTIAL;
         }
         int n = 0;
         for (int ch = begin; ch < end; ch++)

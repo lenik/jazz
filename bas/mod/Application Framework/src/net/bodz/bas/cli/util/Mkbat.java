@@ -35,17 +35,17 @@ import net.bodz.bas.loader.TempClassLoader;
 import net.bodz.bas.loader.UCL;
 import net.bodz.bas.snm.SJLibLoader;
 import net.bodz.bas.text.util.Interps;
+import net.bodz.bas.types.ArraySet;
 import net.bodz.bas.types.HashTextMap;
 import net.bodz.bas.types.TextMap;
-import net.bodz.bas.types.util.Arrays2;
 import net.bodz.bas.types.util.Empty;
 import net.bodz.bas.types.util.Ns;
 import net.bodz.bas.types.util.Strings;
 
 @Doc("Generate program launcher for java applications")
-@Version( { 0, 3 })
-@RcsKeywords(id = "$Id$")
 @ProgramName("mkbat")
+@RcsKeywords(id = "$Id$")
+@Version( { 0, 3 })
 public class Mkbat extends BatchEditCLI {
 
     boolean                 force;
@@ -54,9 +54,11 @@ public class Mkbat extends BatchEditCLI {
     private TextMap<String> varmap;
     private Set<String>     generated;
 
-    private List<URL>       _userlibs;
-    private URL[]           userlibs = {};
+    private List<URL>       classpathList;
+    private URL[]           classpath = {};
     private ClassLoader     bootSysLoader;
+
+    private List<String>    runtimeLibs;
 
     public Mkbat() {
         generated = new HashSet<String>();
@@ -69,16 +71,22 @@ public class Mkbat extends BatchEditCLI {
         varmap.put("GENERATOR", generator); //$NON-NLS-1$
     }
 
-    @Option(alias = "l", vnam = "LIBSPEC", doc = "add user lib for locating the class")
-    public void addUserLib(String libspec) {
-        for (URL url : LoadUtil.find(libspec, true))
-            addUserLib(url);
+    @Option(alias = "cp", vnam = "LIBSPEC", doc = "add user lib for locating the class")
+    public void addClasspath(String entry) {
+        for (URL url : LoadUtil.find(entry, true))
+            addClasspath(url);
     }
 
-    public void addUserLib(URL url) {
-        if (_userlibs == null)
-            _userlibs = new ArrayList<URL>();
-        _userlibs.add(url);
+    public void addClasspath(URL url) {
+        if (classpathList == null)
+            classpathList = new ArrayList<URL>();
+        classpathList.add(url);
+    }
+
+    public void addRuntimeLib(String libname) {
+        if (runtimeLibs == null)
+            runtimeLibs = new ArrayList<String>();
+        runtimeLibs.add(libname);
     }
 
     static boolean BOOT_DUMP = false;
@@ -88,12 +96,12 @@ public class Mkbat extends BatchEditCLI {
         force = parameters().isForce();
 
         ClassLoader initSysLoader = Caller.getCallerClassLoader(0);
-        if (_userlibs != null)
-            userlibs = _userlibs.toArray(Empty.URLs);
-        if (userlibs == null)
+        if (classpathList != null)
+            classpath = classpathList.toArray(Empty.URLs);
+        if (classpath == null)
             bootSysLoader = initSysLoader;
         else
-            bootSysLoader = TempClassLoader.get(userlibs, initSysLoader);
+            bootSysLoader = TempClassLoader.get(classpath, initSysLoader);
         if (BOOT_DUMP)
             UCL.dump(bootSysLoader, CharOuts.stderr);
     }
@@ -153,7 +161,7 @@ public class Mkbat extends BatchEditCLI {
             realSysLoader = bootProc.configSysLoader(realSysLoader);
 
         // realSysLoader -> configLoader
-        Class<?> class1 = DefaultBooter.load(realSysLoader, className, userlibs);
+        Class<?> class1 = DefaultBooter.load(realSysLoader, className, classpath);
 
         // has main()? [2, configLoader]
         try {
@@ -200,30 +208,35 @@ public class Mkbat extends BatchEditCLI {
         BootProc bootProc = BootProc.get(clazz);
         String booter = null;
         String[] bootArgs = {};
-        String[] cplibs = {};
+        Set<String> allRuntimeLibs = new ArraySet<String>();
         if (bootProc != null) {
             booter = bootProc.getBooterClassName();
-            cplibs = bootProc.getSysLibs();
+            for (String sysLib : bootProc.getSysLibs())
+                allRuntimeLibs.add(sysLib);
             if (!bootProc.hasConfig()) {
                 // merge syslibs & userlibs if no config.
-                String[] userlibs = bootProc.getUserLibs();
-                cplibs = Arrays2.concat(cplibs, userlibs);
+                for (String userlib : bootProc.getUserLibs())
+                    allRuntimeLibs.add(userlib);
             } else
                 // XXX: anything other then userlib in boot args?
                 bootArgs = bootProc.getBootArgs();
         }
+        if (runtimeLibs != null)
+            for (String runtimeLib : runtimeLibs)
+                allRuntimeLibs.add(runtimeLib);
 
         String launch = ""; //$NON-NLS-1$
         if (bootArgs.length != 0) {
+            // booter==null?
             launch = booter + " " + Strings.join(" ", bootArgs) + " --"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         } else if (booter != null) {
             launch = booter + " --"; //$NON-NLS-1$
         }
         varmap.put("LAUNCH", batEscape(launch)); //$NON-NLS-1$
 
-        BCharOut loadlibs = new BCharOut();
+        BCharOut loadSection = new BCharOut();
         SJLibLoader libloader = SJLibLoader.DEFAULT;
-        for (String lib : cplibs) {
+        for (String lib : allRuntimeLibs) {
             File f = libloader.findLibraryFile(lib);
             String fname;
             if (f == null) {
@@ -235,10 +248,10 @@ public class Mkbat extends BatchEditCLI {
             } else
                 fname = f.getName();
             String loadlib = "call :load " + qq(lib) + " " + qq(fname); //$NON-NLS-1$ //$NON-NLS-2$
-            loadlibs.println("    " + loadlib); //$NON-NLS-1$
+            loadSection.println("    " + loadlib); //$NON-NLS-1$
         }
         // varmap.put("LOADLIBS_0", "");
-        varmap.put("LOADLIBS", batEscape(loadlibs.toString())); //$NON-NLS-1$
+        varmap.put("LOADLIBS", batEscape(loadSection.toString())); //$NON-NLS-1$
 
         String inst = Interps.dereference(batTemplBody, varmap);
         byte[] batData = inst.getBytes();
@@ -272,7 +285,7 @@ public class Mkbat extends BatchEditCLI {
         return s;
     }
 
-    public static void main(String[] args) throws Throwable {
+    public static void main(String[] args) throws Exception {
         new Mkbat().run(args);
     }
 

@@ -14,20 +14,29 @@ import org.apache.tools.ant.types.Path;
 
 public class MkbatTask extends CLITask {
 
-    private final Mkbat mkbat;
+    private final Mkbat  mkbat;
 
     // private File srcdir;
-    private List<Path>  srcdirList   = new ArrayList<Path>();
-    private List<Path>  userlibsList = new ArrayList<Path>();
+    private List<Path>   classpathList;
+    private List<Path>   findmainList;
+    private List<String> runtimeLibs;
 
     public MkbatTask() {
         super(new Mkbat());
         mkbat = (Mkbat) super.app;
         addArguments("-rq", "--"); //$NON-NLS-1$ //$NON-NLS-2$
+        classpathList = new ArrayList<Path>();
+        findmainList = new ArrayList<Path>();
+        runtimeLibs = new ArrayList<String>();
     }
 
-    public void addSrcdir(Path srcdir) {
-        srcdirList.add(srcdir);
+    public void addFindMain(Path classpath) {
+        findmainList.add(classpath);
+    }
+
+    public void addConfiguredLibrary(Parameter parameter) {
+        String library = parameter.getText().trim();
+        runtimeLibs.add(library);
     }
 
     public File getOutdir() {
@@ -43,21 +52,25 @@ public class MkbatTask extends CLITask {
         pathSeparator = ";"; //$NON-NLS-1$
     }
 
-    public void addUserlibs(Path userlibs) {
-        userlibsList.add(userlibs);
+    public void addClasspath(Path path) {
+        classpathList.add(path);
     }
 
     @Override
     public void execute() throws BuildException {
-        for (Path userlibs : userlibsList) {
-            String[] paths = userlibs.list();
+        for (Path classpath : classpathList) {
+            String[] paths = classpath.list();
             for (int i = 0; i < paths.length; i++) {
                 File file = new File(paths[i]);
                 URL url = Files.getURL(file);
-                mkbat.addUserLib(url);
+                mkbat.addClasspath(url);
             }
         }
-        for (Path srcdir : srcdirList) {
+
+        for (String runtimeLib : runtimeLibs)
+            mkbat.addRuntimeLib(runtimeLib);
+
+        for (Path srcdir : findmainList) {
             for (String path : srcdir.list()) {
                 // log("-> " + path);
                 addArguments(path);

@@ -5,6 +5,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import net.bodz.bas.cli.ClassOptions;
+import net.bodz.bas.cli._Option;
+
 /**
  * [OPTION] [--] FILES
  * <p>
@@ -15,10 +18,10 @@ import java.lang.annotation.Target;
  * <li>using shortest non-ambiguous option names.
  * <li>for boolean types, --no-NAME is auto defined and no PARAM
  * <li>for collection/array types, multiple options are allowed
- * <li>for map types, PARAM has form of --NAME=KEY=VAL, where valparser and
- * valcheck are applied on VAL.
- * <li>for method/callback types, the number of PARAM is determined by the
- * arguments of that method, and the wanted types applied on each argument.
+ * <li>for map types, PARAM has form of --NAME=KEY=VAL, where valparser and valcheck are applied on
+ * VAL.
+ * <li>for method/callback types, the number of PARAM is determined by the arguments of that method,
+ * and the wanted types applied on each argument.
  * </ul>
  * 
  * Recommend eclipse template `opt':
@@ -34,8 +37,16 @@ import java.lang.annotation.Target;
 @Target( { ElementType.TYPE, ElementType.FIELD, ElementType.METHOD })
 public @interface Option {
 
+    /**
+     * {@link _Option#isWeak() weak-option} is option with name prefixed by '.', such option can be
+     * overrided by options with the same name declared in derived classes.
+     */
     String name() default "";
 
+    /**
+     * {@link ClassOptions#isReusable(String) weak-alias} is aliases prefixed by '.', such alias can
+     * be reused by options declared in derived classes.
+     */
     String[] alias() default {};
 
     String vnam() default "";
@@ -63,14 +74,13 @@ public @interface Option {
     String optional() default "";
 
     /**
-     * when valtype is specified, the value must be collection type and the
-     * parser and check are applied for each item in the collection.
+     * when valtype is specified, the value must be collection type and the parser and check are
+     * applied for each item in the collection.
      */
     Class<?> valtype() default void.class;
 
     /**
-     * Get option also from FILES by index. for collection/map types, this is
-     * the starting index.
+     * Get option also from FILES by index. for collection/map types, this is the starting index.
      */
     int fileIndex() default -1;
 

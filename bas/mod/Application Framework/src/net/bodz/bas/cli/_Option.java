@@ -20,10 +20,11 @@ import net.bodz.bas.types.util.Types;
 
 public abstract class _Option<T> implements ScriptField<T> {
 
-    protected String               name;
-    protected final String         hname;
+    protected String               name;     // listDetai l
+    protected final String         hname;    // list-detail
     public final Option            o;
 
+    protected final boolean        weak;
     protected final Class<?>       type;
     protected final boolean        multi;
     protected Class<T>             valtype;
@@ -35,14 +36,19 @@ public abstract class _Option<T> implements ScriptField<T> {
     protected final String         optgrp;
 
     @SuppressWarnings("unchecked")
-    public _Option(String name, AnnotatedElement elm, Class<?> type, OptionGroup optgrp) {
+    public _Option(String reflectName, AnnotatedElement elm, Class<?> type, OptionGroup optgrp) {
         Option option = elm.getAnnotation(Option.class);
-        if (!option.name().isEmpty()) {
+        String optionName = option.name();
+        if (!optionName.isEmpty()) {
+            this.weak = optionName.startsWith(".");
+            if (weak)
+                optionName = optionName.substring(1);
             this.hname = option.name();
             this.name = Strings.dehyphenatize(hname);
         } else {
-            this.name = name;
-            this.hname = Strings.hyphenatize(name);
+            this.name = reflectName;
+            this.hname = Strings.hyphenatize(reflectName);
+            this.weak = false; // default strict.
         }
         this.o = option;
         this.type = type;
@@ -105,11 +111,11 @@ public abstract class _Option<T> implements ScriptField<T> {
                 } else
                     check = null;
             } catch (CreateException e) {
-                throw new CLIError(AppNLS.getString("_Option.cantInitOption") + name, e); //$NON-NLS-1$
+                throw new CLIError(AppNLS.getString("_Option.cantInitOption") + reflectName, e); //$NON-NLS-1$
             } catch (CLIError e) {
-                throw new CLIError(AppNLS.getString("_Option.cantInitOption") + name, e); //$NON-NLS-1$
+                throw new CLIError(AppNLS.getString("_Option.cantInitOption") + reflectName, e); //$NON-NLS-1$
             } catch (ParseException e) {
-                throw new CLIError(AppNLS.getString("_Option.cantInitOption") + name, e); //$NON-NLS-1$
+                throw new CLIError(AppNLS.getString("_Option.cantInitOption") + reflectName, e); //$NON-NLS-1$
             }
         }
     }
@@ -117,6 +123,10 @@ public abstract class _Option<T> implements ScriptField<T> {
     @Override
     public String getName() {
         return name;
+    }
+
+    public boolean isWeak() {
+        return weak;
     }
 
     @Override

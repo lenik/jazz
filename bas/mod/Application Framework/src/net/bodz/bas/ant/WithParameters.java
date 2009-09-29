@@ -17,12 +17,9 @@ public class WithParameters {
         this.values = new ArrayList<Object>();
     }
 
-    public void addConfiguredParameter(Parameter param) throws ParseException {
-        Class<?> type = param.type;
-        String valueText = param.valueText;
-        TypeParser typeParser = TypeParsers.get(type);
-        Object value = valueText == null ? null : typeParser.parse(valueText);
-
+    public void addConfiguredParameter(Parameter parameter) throws ParseException {
+        Class<?> type = parameter.getType();
+        Object value = parameter.parseValue();
         types.add(type);
         values.add(value);
     }

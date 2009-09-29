@@ -116,6 +116,13 @@ public class ByteOuts {
             return getBuffer().toByteArray();
         }
 
+        public byte[] flip() {
+            ByteArrayOutputStream buf = getBuffer();
+            byte[] bytes = buf.toByteArray();
+            buf.reset();
+            return bytes;
+        }
+
         @Override
         public String toString() {
             return getBuffer().toString();

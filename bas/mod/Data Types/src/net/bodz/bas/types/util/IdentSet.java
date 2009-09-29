@@ -6,6 +6,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Compare two objects by == operator, rather than using {@link Object#equals(Object)}.
+ */
 public class IdentSet extends AbstractSet<Object> implements Set<Object> {
 
     private static final long                     serialVersionUID = -6499268314160028115L;
