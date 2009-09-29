@@ -3,8 +3,6 @@ package net.bodz.bas.types.util;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import net.bodz.bas.lang.ControlBreak;
-
 /**
  * Usage:
  * 
@@ -40,6 +38,10 @@ public interface DirectIterator<T, X extends Throwable> {
      */
     T get();
 
-    T getNext() throws X, ControlBreak;
+    /**
+     * @throws NoSuchElementException
+     *             if no more element.
+     */
+    T getNext() throws X, NoSuchElementException;
 
 }

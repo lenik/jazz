@@ -22,6 +22,7 @@ public class ProjectInfo {
 
     private File            base;
     private Path            classpath;
+    private Path            classpathWithTest;
 
     private TextMap<Module> modules;
 
@@ -55,9 +56,13 @@ public class ProjectInfo {
     void parse() throws ParseException {
         EclipseProject eproj = new EclipseProject(base);
         classpath = new Path(antProject);
+        classpathWithTest = new Path(antProject);
         for (File f : eproj.getFileClasspath()) {
+            boolean nonTest = !f.getName().contains("test"); // test.bin
             Path path = new Path(antProject, f.getPath());
-            classpath.add(path);
+            if (nonTest)
+                classpath.add(path);
+            classpathWithTest.add(path);
         }
     }
 
@@ -67,6 +72,10 @@ public class ProjectInfo {
 
     public Path getClasspath() {
         return classpath;
+    }
+
+    public Path getClasspathWithTest() {
+        return classpathWithTest;
     }
 
     public TextMap<Module> getModules() {

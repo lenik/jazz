@@ -13,8 +13,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
+
+import javax.xml.bind.DataBindingException;
+import javax.xml.bind.JAXB;
 
 import net.bodz.bas.io.Files;
 import net.bodz.bas.lang.Caller;
@@ -241,6 +246,32 @@ public class XMLs {
 
     public static String encode(Object obj) throws EncodeException {
         return encode(1, obj);
+    }
+
+    // JAXB shortcuts
+
+    public static String marshal(Object jaxbObject) throws DataBindingException {
+        return marshal(jaxbObject, 1024);
+    }
+
+    public static String marshal(Object jaxbObject, int appxSize) throws DataBindingException {
+        StringWriter buf = new StringWriter(appxSize);
+        JAXB.marshal(jaxbObject, buf);
+        return buf.toString();
+    }
+
+    public static <T> T unmarshal(String xml, Class<T> type) {
+        if (xml == null)
+            throw new NullPointerException("xml");
+        StringReader reader = new StringReader(xml);
+        return JAXB.unmarshal(reader, type);
+    }
+
+    public static <T> T unmarshal(byte[] xml, Class<T> type) {
+        if (xml == null)
+            throw new NullPointerException("xml");
+        ByteArrayInputStream in = new ByteArrayInputStream(xml);
+        return JAXB.unmarshal(in, type);
     }
 
 }

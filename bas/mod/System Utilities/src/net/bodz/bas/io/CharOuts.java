@@ -182,9 +182,14 @@ public class CharOuts {
 
     public static class BCharOut extends CharOut {
 
-        private StringBuffer buffer;
+        /**
+         * @TODO set final in futuer.
+         */
+        protected StringBuffer buffer;
 
         public BCharOut(StringBuffer buffer) {
+            if (buffer == null)
+                throw new NullPointerException("buffer");
             this.buffer = buffer;
         }
 
@@ -200,8 +205,8 @@ public class CharOuts {
             return buffer;
         }
 
+        @Deprecated
         public void setBuffer(StringBuffer buffer) {
-            assert buffer != null;
             this.buffer = buffer;
         }
 
@@ -231,6 +236,12 @@ public class CharOuts {
         @Override
         public String toString() {
             return buffer.toString();
+        }
+
+        public String flip() {
+            String s = buffer.toString();
+            buffer.setLength(0);
+            return s;
         }
 
     }

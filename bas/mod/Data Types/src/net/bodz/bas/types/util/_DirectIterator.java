@@ -1,6 +1,6 @@
 package net.bodz.bas.types.util;
 
-import net.bodz.bas.lang.ControlBreak;
+import java.util.NoSuchElementException;
 
 public abstract class _DirectIterator<T, X extends Throwable> implements DirectIterator<T, X> {
 
@@ -10,11 +10,11 @@ public abstract class _DirectIterator<T, X extends Throwable> implements DirectI
     }
 
     @Override
-    public T getNext() throws X, ControlBreak {
+    public T getNext() throws X, NoSuchElementException {
         if (next())
             return get();
         else
-            throw new ControlBreak();
+            throw new NoSuchElementException();
     }
 
 }

@@ -222,12 +222,15 @@ public class Arrays2 {
         return list.toArray(dest);
     }
 
-    @SuppressWarnings("unchecked")
-    public static <T> T[] convert(Iterator<T> iterator) {
+    public static <T> T[] convert(Iterable<T> iterable, T[] a) {
+        return convert(iterable.iterator(), a);
+    }
+
+    public static <T> T[] convert(Iterator<T> iterator, T[] a) {
         List<T> list = new ArrayList<T>();
         while (iterator.hasNext())
             list.add(iterator.next());
-        return (T[]) list.toArray();
+        return list.toArray(a);
     }
 
     public static int[] convert(IntIterator iterator, int appxSize) {

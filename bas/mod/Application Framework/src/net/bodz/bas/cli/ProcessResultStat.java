@@ -91,8 +91,8 @@ public class ProcessResultStat {
         String ignores = ""; //$NON-NLS-1$
         if (ignored > 0)
             ignores = "(" + ignored + AppNLS.getString("ProcessResultStat.ignored_"); //$NON-NLS-1$ //$NON-NLS-2$
-        out.printf(AppNLS.getString("ProcessResultStat.stat_ddsdd"), //$NON-NLS-1$
-                changed, total, ignores, saved, errorred);
+        out.println(AppNLS.format("ProcessResultStat.stat_ddsdd", //
+                changed, total, ignores, saved, errorred));
     }
 
     static final int nameWidth = 40;

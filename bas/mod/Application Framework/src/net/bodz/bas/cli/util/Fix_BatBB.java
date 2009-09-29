@@ -92,7 +92,7 @@ public class Fix_BatBB extends BatchEditCLI {
         return filled;
     }
 
-    public static void main(String[] args) throws Throwable {
+    public static void main(String[] args) throws Exception {
         new Fix_BatBB().run(args);
     }
 

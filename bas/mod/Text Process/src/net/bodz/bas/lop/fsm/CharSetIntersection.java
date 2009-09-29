@@ -3,7 +3,10 @@ package net.bodz.bas.lop.fsm;
 import net.bodz.bas.lang.err.IllegalUsageException;
 import net.bodz.bas.lang.err.UnexpectedException;
 
-public class CharSetIntersection extends _CharSet {
+/**
+ * @test {@link CharSetIntersectionTest}
+ */
+public final class CharSetIntersection extends _CharSet {
 
     private final CharSet a;
     private final CharSet b;
@@ -67,7 +70,10 @@ public class CharSetIntersection extends _CharSet {
         case EQUALS:
             return _a;
         }
-        return new CharSetIntersection(_a, _b)._reduce();
+        CharSet x = new CharSetIntersection(_a, _b)._reduce();
+        if (x != null && x.equals(this))
+            return this;
+        return x;
     }
 
     private CharSet _reduce() {

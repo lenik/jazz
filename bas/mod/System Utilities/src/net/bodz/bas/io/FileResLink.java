@@ -17,6 +17,10 @@ public class FileResLink extends _ResLink {
     private final File    file;
     private final boolean autoMkdirs;
 
+    public FileResLink(String path) {
+        this(new File(path));
+    }
+
     public FileResLink(File file) {
         this(file, false);
     }

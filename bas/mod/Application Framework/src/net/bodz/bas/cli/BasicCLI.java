@@ -30,6 +30,7 @@ import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.io.term.Terminal;
 import net.bodz.bas.lang.ControlBreak;
+import net.bodz.bas.lang.VRunnable;
 import net.bodz.bas.lang.a.ChainUsage;
 import net.bodz.bas.lang.a.OverrideOption;
 import net.bodz.bas.lang.err.CreateException;
@@ -86,9 +87,9 @@ import net.bodz.bas.util.PluginTypeEx;
 @OptionGroup(value = "standard", rank = -1)
 @RcsKeywords(id = "$Id$")
 @ScriptType(CLIScriptClass.class)
-public class BasicCLI implements Runnable {
+public class BasicCLI implements Runnable, VRunnable<String, Exception> {
 
-    @Option(hidden = true)
+    @Option(name = ".stdout", hidden = true)
     @ParseBy(CharOutParser.class)
     protected CharOut       _stdout        = CharOuts.stdout;
 
@@ -386,7 +387,7 @@ public class BasicCLI implements Runnable {
     public void run() {
         try {
             run(Empty.Strings);
-        } catch (Throwable e) {
+        } catch (Exception e) {
             UI.alert(e.getMessage(), e);
         }
     }
@@ -394,6 +395,7 @@ public class BasicCLI implements Runnable {
     /**
      * public access: so derivations don't have to declare static main()s.
      */
+    @Override
     public synchronized void run(String... args) throws Exception {
         Terminal dbg = L.debug();
         dbg.p("cli prepare"); //$NON-NLS-1$
@@ -473,9 +475,11 @@ public class BasicCLI implements Runnable {
     }
 
     /**
-     * Start point after all options are parsed.
+     * User main method: the start point after all options are parsed.
      * <p>
-     * User main method.
+     * <b>Default Implementation:</b> Get default input (usually the stdin) if no file is specified,
+     * or show the help page if default input is disabled. Next step:
+     * {@link #doMainManaged(String[])}
      */
     @OverrideOption(group = "basicMain")
     protected void doMain(String[] args) throws Exception {
@@ -491,9 +495,11 @@ public class BasicCLI implements Runnable {
     }
 
     /**
-     * User repeatable-main method.
+     * 
+     * User repeatable-main method. <i>({@link #_getDefaultIn()} is never used)</i>
      * <p>
-     * <i> stdin is never used. </i>
+     * <b>Default Implementation:</b> Expand each wild-card argument when necessary. Next step:
+     * {@link #doFileArgument(File)}
      */
     @OverrideOption(group = "basicMain")
     protected void doMainManaged(String[] args) throws Exception {
@@ -519,6 +525,9 @@ public class BasicCLI implements Runnable {
     }
 
     /**
+     * <b>Default Implementation:</b> Open the file and continue to
+     * {@link #doFileArgument(File, InputStream)}
+     * 
      * @param file
      *            canonical file
      */
@@ -534,7 +543,9 @@ public class BasicCLI implements Runnable {
     }
 
     /**
-     * if no argument specified, _main(null, stdin) is called.
+     * If no argument specified, _main(null, stdin) is called.
+     * <p>
+     * <b>Default Implementation:</b> not implemented.
      * 
      * @param file
      *            canonical file or null

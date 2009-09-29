@@ -2,7 +2,10 @@ package net.bodz.bas.lop.fsm;
 
 import net.bodz.bas.lang.err.UnexpectedException;
 
-public class CharSetSubtraction extends _CharSet {
+/**
+ * @test {@link CharSetSubtractionTest}
+ */
+public final class CharSetSubtraction extends _CharSet {
 
     private final CharSet a;
     private final CharSet b;
@@ -75,7 +78,10 @@ public class CharSetSubtraction extends _CharSet {
         case EQUALS:
             return null;
         }
-        return new CharSetSubtraction(_a, _b)._reduce();
+        CharSet x = new CharSetSubtraction(_a, _b)._reduce();
+        if (x != null && x.equals(this))
+            return this;
+        return x;
     }
 
     private CharSet _reduce() {
