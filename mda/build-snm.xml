@@ -21,7 +21,7 @@
 
     <target name="10src.jar">
         <mkdir dir="build" />
-        <jar destfile="build/net.bodz.mda-10src.jar" update="true">
+        <jar destfile="build/net.bodz.mda-src.jar" update="true">
             <fileset dir="mod/Commons/src" />
             <fileset dir="mod/DB Model/src" />
             <fileset dir="mod/Javalava Parser/src" />

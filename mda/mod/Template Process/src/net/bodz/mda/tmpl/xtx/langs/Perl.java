@@ -60,6 +60,8 @@ public class Perl implements XtxLang {
         public void emitPrintExpr(String exprCode, boolean newLine) throws IOException {
             String code = "print " + exprCode + ";\n";
             emitCode(code);
+            if (newLine)
+                emitCode("print \"\n\"; \n");
         }
 
         @Override

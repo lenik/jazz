@@ -44,8 +44,18 @@ public class Python implements XtxLang {
 
     class Emitter extends _CodeEmitter {
 
+        private String indent = "";
+
         public Emitter(CharOut out) {
             super(out);
+            // not supported, currently.
+            this.multiline = true;
+        }
+
+        @Override
+        public void start() throws IOException {
+            super.start();
+            emitCode("from sys import stdout\n");
         }
 
         @Override
@@ -54,8 +64,49 @@ public class Python implements XtxLang {
         }
 
         @Override
+        public void emitCode(String code) throws IOException {
+            int nl = code.lastIndexOf('\n');
+            int end = code.length();
+            // only matching lines with \n-lookback.
+            // pattern: (\n.*?)$
+            while (nl != -1) {
+                String x = getIndent(code, nl + 1, end);
+                if (x != null) {
+                    indent = x;
+                    break;
+                }
+                end = nl;
+                nl = code.lastIndexOf('\n', nl - 1);
+            }
+            // for current python-xtx, because all statements must be on separate line,
+            // so check also when no \n-lookback found.
+            String x = getIndent(code, 0, end);
+            if (x != null)
+                indent = x;
+            super.emitCode(code);
+        }
+
+        StringBuffer buf = new StringBuffer();
+
+        public String getIndent(String s, int start, int end) {
+            buf.setLength(0);
+            for (int i = start; i < end; i++) {
+                char c = s.charAt(i);
+                if (Character.isWhitespace(c))
+                    buf.append(c);
+                else
+                    return buf.toString();
+            }
+            return null;
+        }
+
+        @Override
         public void emitPrintExpr(String exprCode, boolean newLine) throws IOException {
-            String code = "print " + exprCode;
+            String code;
+            if (newLine)
+                code = indent + "print " + exprCode + "\n";
+            else
+                code = indent + "stdout.write(" + exprCode + ".__str__())\n";
             emitCode(code);
         }
 

@@ -36,33 +36,39 @@ import net.bodz.mda.tmpl.xtx.langs.Python;
 @Version( { 0, 1 })
 public class XtxMain extends BasicCLI {
 
-    public static final int CODE_GATE = '\u00AC';                // ¬
-    public static final int ESCAPE    = '\\';
+    public static final char CODE_GATE  = '\u00AC';                // ¬
+    public static final char ESCAPE     = '\\';
+
+    @Option(alias = "E", vnam = "CHAR", doc = "escape char, default \\")
+    char                     escapeChar = ESCAPE;
+
+    @Option(alias = "G", vnam = "CHAR", doc = "code gate char, default \u00AC")
+    char                     gateChar   = CODE_GATE;
 
     @Option(alias = "e", vnam = "CHARSET", doc = "encoding of template file")
-    Charset                 encoding  = Charset.forName("utf-8");
+    Charset                  encoding   = Charset.forName("utf-8");
 
     @Option(alias = "c", vnam = "DIR", doc = "where to put compiled templates")
-    File                    compileDirectory;
+    File                     compileDirectory;
 
     @Option(alias = "t", doc = "only compile the template")
-    boolean                 compileOnly;
+    boolean                  compileOnly;
 
     @Option(alias = "o", vnam = "DIR", doc = "where to put result files, or directory")
-    File                    output;
+    File                     output;
 
     @Option(alias = "B", doc = "don't compare with last modified time")
-    boolean                 alwaysMake;
+    boolean                  alwaysMake;
 
     @Option(alias = "s", doc = "send output to stdout")
-    boolean                 stdout;
+    boolean                  stdout;
 
     @Option(vnam = "FILE", fileIndex = 0, required = true)
-    File                    template;
+    File                     template;
 
-    String                  templateNameWithoutXtx;
-    File                    scriptFile;
-    File                    resultFile;
+    String                   templateNameWithoutXtx;
+    File                     scriptFile;
+    File                     resultFile;
 
     @Override
     protected void _boot() throws Exception {
@@ -164,9 +170,10 @@ public class XtxMain extends BasicCLI {
     static final int S_CODE      = 3;
     static final int S_EXPR      = 5;
 
-    public static void parse(Reader reader, CodeEmitter emitter) throws IOException, ParseException {
+    public void parse(Reader reader, CodeEmitter emitter) throws IOException, ParseException {
         if (reader == null)
             throw new NullPointerException("reader");
+        emitter.start();
         int state = S_TEXT;
         int braceLevel = 0;
         BCharOut buffer = new BCharOut();
@@ -181,16 +188,19 @@ public class XtxMain extends BasicCLI {
                 x = 0;
             } else
                 x++;
-            if (c == ESCAPE) {
+            if (c == escapeChar) {
                 c = reader.read();
+                if (c == gateChar) {
+                    buffer._write(c);
+                    continue;
+                }
                 switch (c) {
-                case CODE_GATE:
                 case '{':
                 case '}':
                     buffer._write(c);
                     continue;
                 }
-                buffer._write(ESCAPE);
+                buffer._write(escapeChar);
             }
             switch (state) {
             case S_LEAD_TEXT:
@@ -203,31 +213,30 @@ public class XtxMain extends BasicCLI {
                         continue;
                     }
                 atLeading = false;
-                switch (c) {
-                case CODE_GATE:
+                if (c == gateChar) {
                     state = S_CODE;
                     leadingBuffer.flip(); // skip leading space to the gate.
-                    break;
-                case '{':
-                    state = S_EXPR;
-                    braceLevel++;
-                    break;
-                default:
-                    buffer._write(c);
-                    continue;
-                }
+                } else
+                    switch (c) {
+                    case '{':
+                        state = S_EXPR;
+                        braceLevel++;
+                        break;
+                    default:
+                        buffer._write(c);
+                        continue;
+                    }
                 String text = buffer.flip();
                 if (!text.isEmpty())
                     emitter.emitText(text);
                 break;
             case S_CODE:
-                switch (c) {
-                case '\n':
-                    buffer._write('\n');
-                case CODE_GATE:
+                if (c == gateChar)
                     state = S_LEAD_TEXT;
-                    break;
-                default:
+                else if (c == '\n') {
+                    buffer._write('\n');
+                    state = S_LEAD_TEXT;
+                } else {
                     buffer._write(c);
                     continue;
                 }
@@ -271,6 +280,7 @@ public class XtxMain extends BasicCLI {
         case S_EXPR:
             throw new ParseException("expect '}': " + buffer);
         }
+        emitter.end();
     }
 
     public static void main(String[] args) throws Exception {
