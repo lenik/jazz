@@ -1,7 +1,5 @@
 package net.bodz.swt.widgets;
 
-import net.bodz.swt.widgets.TimerTest;
-
 import org.eclipse.swt.widgets.Display;
 
 /**
