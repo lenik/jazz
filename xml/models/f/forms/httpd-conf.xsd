@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="httpd-conf">
+		<xs:annotation>
+			<xs:documentation>Comment describing your root element</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:group name="module-core">
+		<xs:choice>
+			<xs:element name="a"/>
+		</xs:choice>
+	</xs:group>
+	<xs:group name="module-mpm-common"/>
+	<xs:group name="module-beos"/>
+	<xs:group name="module-event"/>
+	<xs:group name="module-mpm-netware"/>
+	<xs:group name="module-mpm-os2"/>
+	<xs:group name="module-prefork"/>
+	<xs:group name="module-mpm-winnt"/>
+	<xs:group name="module-worker"/>
+	<xs:group name="mod-actions"/>
+	<xs:group name="mod-alias"/>
+	<xs:group name="mod-asis"/>
+	<xs:group name="mod-auth-basic"/>
+	<xs:group name="mod-auth-digest"/>
+	<xs:group name="mod-authn-alias"/>
+	<xs:group name="mod-authn-anon"/>
+	<xs:group name="module-core">
+		<xs:choice>
+			<xs:element name="a"/>
+		</xs:choice>
+	</xs:group>
+	<xs:group name="module-core">
+		<xs:choice>
+			<xs:element name="a"/>
+		</xs:choice>
+	</xs:group>
+	<xs:group name="module-core">
+		<xs:choice>
+			<xs:element name="a"/>
+		</xs:choice>
+	</xs:group>
+	<xs:group name="module-core">
+		<xs:choice>
+			<xs:element name="a"/>
+		</xs:choice>
+	</xs:group>
+	<xs:group name="module-core">
+		<xs:choice>
+			<xs:element name="a"/>
+		</xs:choice>
+	</xs:group>
+	<xs:group name="module-core">
+		<xs:choice>
+			<xs:element name="a"/>
+		</xs:choice>
+	</xs:group>
+	<xs:group name="module-core">
+		<xs:choice>
+			<xs:element name="a"/>
+		</xs:choice>
+	</xs:group>
+	<xs:group name="module-core">
+		<xs:choice>
+			<xs:element name="a"/>
+		</xs:choice>
+	</xs:group>
+	<xs:group name="module-core">
+		<xs:choice>
+			<xs:element name="a"/>
+		</xs:choice>
+	</xs:group>
+	<xs:group name="module-core">
+		<xs:choice>
+			<xs:element name="a"/>
+		</xs:choice>
+	</xs:group>
+	<xs:group name="module-core">
+		<xs:choice>
+			<xs:element name="a"/>
+		</xs:choice>
+	</xs:group>
+	<xs:group name="module-core">
+		<xs:choice>
+			<xs:element name="a"/>
+		</xs:choice>
+	</xs:group>
+	<xs:group name="module-core">
+		<xs:choice>
+			<xs:element name="a"/>
+		</xs:choice>
+	</xs:group>
+	<xs:group name="module-core">
+		<xs:choice>
+			<xs:element name="a"/>
+		</xs:choice>
+	</xs:group>
+	<xs:group name="module-core">
+		<xs:choice>
+			<xs:element name="a"/>
+		</xs:choice>
+	</xs:group>
+	<xs:group name="module-core">
+		<xs:choice>
+			<xs:element name="a"/>
+		</xs:choice>
+	</xs:group>
+	<xs:group name="module-core">
+		<xs:choice>
+			<xs:element name="a"/>
+		</xs:choice>
+	</xs:group>
+</xs:schema>

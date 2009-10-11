@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pdb xmlns="http://xml.bodz.net/p/pdb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xml.bodz.net/p/pdb
+http://xml.bodz.net/p/pdb/pdb.xsd" package="com.AppName.appdb" name="AppNameForum" label="应用论坛数据库" prefix="Forum">
+	<import href="http://xml.bodz.net/p/pdb/samples/accounts.xml"/>
+	<table name="Zone" label="论区" ts="both" opts="" doc="讨论区是相关讨论主题的逻辑划分。">
+		<field name="id" type="Id" opts="KDi"/>
+		<field name="name" label="名称" type="C[, 30]" doc="用于外部引用的名称"/>
+		<field name="label" label="标签" type="C[, 30]" doc="显示在讨论区旁边的简短名称。"/>
+		<field name="doc" label="描述" type="C[, 200]"/>
+		<field name="readOnly" label="只读" type="b" opts="D(0)" doc="不允许回复。"/>
+		<field name="audit" label="审核" type="B(THREAD, POST)" doc="需要对发起话题（THREAD）或回复
+（POST）进行审核。"/>
+	</table>
+	<table name="Thread" label="线索" ts="both" opts="Sd(Zone)" doc="讨论主题。">
+		<field name="id" type="Id" opts="KDi"/>
+		<field name="views" label="阅读数" type="I4" opts="D(0)"/>
+		<field name="posts" label="回帖数" type="I4" opts="D(0)"/>
+		<field name="iconText" label="文字图标" type="C[, 10]" opts="N" doc="（冗余）"/>
+		<field name="subject" label="标题" type="C[, 120]" opts="N" doc="（冗余）"/>
+		<field name="lastPostBy" label="最后回复人" type="C[, 10]" opts="N" doc="（冗余）"/>
+	</table>
+	<table name="Post" label="帖子" ts="both" opts="Sd(Thread)" doc="对某个话题的具体发起或回复的内容
+。">
+		<field name="id" type="Id" opts="KDi"/>
+		<field name="thread" label="所属线索" type="Id" opts="NF(→ Thread)" doc="所属的主题线索。"/>
+		<field name="reply" label="回复帖子" type="-" opts="NF(→ Post)" doc="回复的原帖，若为NULL则是发起贴。"/>
+		<field name="from" label="发帖者" type="Id" opts="NF(→ User)" doc="帖子的发起人。"/>
+		<field name="opts" label="选项" type="C[, 30]" opts="N"/>
+		<field name="iconText" label="文字图标" type="C[, 10]" opts="N" doc="文字图标，可能通过字典映射成图形
+图标。"/>
+		<field name="subject" label="标题" type="C[, 120]" opts="N" doc="帖子的标题，如果是NULL，则和线索
+的标题相同。"/>
+		<field name="body" label="内容" type="C[,]" doc="帖子的内容。"/>
+	</table>
+	<table name="ThreadRef" label="线索引用" ts="both" opts="Sd(Thread)" doc="线索的外部引用记录。">
+		<field name="system" label="引用系统" type="C[, 30]" opts="U«referer»" doc="被引用的系统指称。"/>
+		<field name="sid" label="按索引" type="Id" opts="U«referer»N" doc="系统内的索引。"/>
+		<field name="path" label="按地址" type="C[, 200]" opts="N" doc="系统内的路径。"/>
+	</table>
+	<table name="Attachment" label="附件" ts="both" doc="媒体文件或程序数据。">
+		<field name="id" type="Id" opts="KDi"/>
+		<field name="name" label="文件名" type="C[, 100]" doc="下载的可更改文件名。"/>
+		<field name="_name" label="原始名称" type="C[, 100]" doc="上传时的原文件名。"/>
+		<field name="location" label="存储位置" type="C[, 200]" opts="I" doc="一般是服务器所在磁盘路径，也可能
+是URL。"/>
+		<field name="sha1" label="散列" type="Y20" opts="NI" doc="文件的SHA-1散列值。如果为空则不
+作检验。"/>
+		<field name="doc" label="描述" type="C[, 200]"/>
+		<field name="mimeType" label="媒体类型" type="C[, 40]" opts="I"/>
+		<field name="tags" label="标签" type="C[, 100]" opts="I" doc="空格分隔的分类名。"/>
+		<field name="credit" label="点数" type="I4" opts="D(0)" doc="可能需要消耗的点数。"/>
+		<field name="downloads" label="下载次数" type="I4" opts="I"/>
+	</table>
+	<table name="PostAttachment" label="帖子附件" opts="Sd(Post)" doc="帖子相关的附件。">
+		<field name="id" type="Id" opts="KDi"/>
+		<field name="post" label="帖子" type="Id" opts="F(» Post)"/>
+		<field name="attachment" label="附件" type="Id" opts="F(» Attachment)"/>
+	</table>
+	<table name="ZoneListener" label="论区订阅" ts="both" opts="Sd(Zone)" doc="论区更新时需要通知的订阅者。">
+		<field name="id" type="Id" opts="KDi"/>
+		<field name="zone" label="论区" type="Id" opts="F(» Zone)"/>
+		<field name="group" label="订阅用户组" type="Id" opts="NF(» Group)"/>
+		<field name="user" label="订阅用户" type="Id" opts="NF(» User)"/>
+	</table>
+	<table name="ThreadListener" label="线索订阅" ts="both" opts="Sd(Thread)" doc="线索更新时需要通知的订阅者。">
+		<field name="id" type="Id" opts="KDi"/>
+		<field name="thread" label="线索" type="Id" opts="F(» Thread)"/>
+		<field name="group" label="订阅用户组" type="Id" opts="NF(» Group)"/>
+		<field name="user" label="订阅用户" type="Id" opts="NF(» User)"/>
+	</table>
+</pdb>

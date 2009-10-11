@@ -37,13 +37,14 @@ public class FieldType {
     static final int        PREC_STRING    = 32;
     static final int        PREC_UNLIMITED = 1000;
 
-    private int             adt;
+    private int             dataType;
+    private String          concreteType;
     private int             precision;
     private int             scale;
     private boolean         varLength;
 
     public FieldType() {
-        adt = UNICODE;
+        dataType = UNICODE;
         varLength = true;
         precision = PREC_UNLIMITED;
         scale = 0;
@@ -57,7 +58,7 @@ public class FieldType {
     public String get() {
         TermBuilder b = new TermBuilder(__dict__);
         boolean putLength = false;
-        switch (adt) {
+        switch (dataType) {
         case BOOLEAN:
             b.put(OPT_BOOLEAN);
             if (precision != 1)
@@ -145,6 +146,8 @@ public class FieldType {
             else if (precision != PREC_STRING)
                 b.putBounds(precision);
         }
+        if (concreteType != null)
+            b.putTypeParameter(concreteType);
         return b.toString();
     }
 
@@ -157,15 +160,15 @@ public class FieldType {
         boolean checkLen = false;
         switch (t.getId()) {
         case OPT_BOOLEAN:
-            adt = BOOLEAN;
+            dataType = BOOLEAN;
             precision = t.getIndex(1);
             break;
         case OPT_BIT:
-            adt = BIT;
+            dataType = BIT;
             precision = t.getIndex(1);
             break;
         case OPT_INT:
-            adt = INTEGER;
+            dataType = INTEGER;
             size = t.getIndex(SIZE_INT);
             switch (size) {
             case 1:
@@ -179,7 +182,7 @@ public class FieldType {
             }
             break;
         case OPT_FLOAT:
-            adt = FLOAT;
+            dataType = FLOAT;
             size = t.getIndex(SIZE_FLOAT);
             switch (size) {
             case 4: // float
@@ -191,7 +194,7 @@ public class FieldType {
             }
             break;
         case OPT_NUMERIC:
-            adt = DECIMAL;
+            dataType = DECIMAL;
             if (t.getDimension() == 0 || t.getBound(0) == 0)
                 precision = PREC_REAL;
             else {
@@ -203,11 +206,11 @@ public class FieldType {
                 throw new IllegalArgumentException("scale>precision: " + t);
             break;
         case OPT_INTEGER:
-            adt = DECIMAL;
+            dataType = DECIMAL;
             precision = t.getIndex(PREC_INTEGER);
             break;
         case OPT_REAL:
-            adt = REAL;
+            dataType = REAL;
             precision = t.getIndex(PREC_REAL);
             break;
         case OPT_DATETIME:
@@ -217,28 +220,28 @@ public class FieldType {
         case OPT_TIME:
             precision++;
         case OPT_TIMESTAMP:
-            adt = TIME;
+            dataType = TIME;
             break;
         case OPT_STRING:
-            adt = STRING;
+            dataType = STRING;
             checkLen = true;
             break;
         case OPT_UNICODE:
-            adt = UNICODE;
+            dataType = UNICODE;
             checkLen = true;
             break;
         case OPT_BINARY:
-            adt = BINARY;
+            dataType = BINARY;
             checkLen = true;
             break;
         case OPT_XML:
-            adt = XML;
+            dataType = XML;
             break;
         case OPT_IDENTITY:
-            adt = IDENTITY;
+            dataType = IDENTITY;
             break;
         case OPT_OBJECT:
-            adt = OBJECT;
+            dataType = OBJECT;
             break;
         default:
             throw new IllegalArgumentException("Illegal type string: " + t);
@@ -259,17 +262,23 @@ public class FieldType {
                 precision = PREC_STRING;
             }
         }
+        concreteType = t.getTypeParameter();
     }
 
-    /**
-     * The Abstract Data Type used in pdb architecture.
-     */
-    public int getAdt() {
-        return adt;
+    public int getDataType() {
+        return dataType;
     }
 
-    public void setAdt(int adt) {
-        this.adt = adt;
+    public void setDataType(int dataType) {
+        this.dataType = dataType;
+    }
+
+    public String getConcreteType() {
+        return concreteType;
+    }
+
+    public void setConcreteType(String concreteType) {
+        this.concreteType = concreteType;
     }
 
     public int getPrecision() {

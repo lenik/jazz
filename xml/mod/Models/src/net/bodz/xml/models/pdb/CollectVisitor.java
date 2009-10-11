@@ -16,15 +16,15 @@ import org.xml.sax.Locator;
 
 public class CollectVisitor extends _PDBVisitor {
 
-    protected PDB   pdb;
-    protected Table table;
-    protected Field field;
-    protected Index index;
-    protected View  view;
+    protected PDB   context;
+    protected Table contextTable;
+    protected Field contextField;
+    protected Index contextIndex;
+    protected View  contextView;
 
     @Override
     public boolean visit(PDB pdb) {
-        this.pdb = pdb;
+        this.context = pdb;
         pdb.tableOrViewMap = new TreeTextMap<Object>();
         pdb.tableMap = new HashTextMap<Table>();
         pdb.viewMap = new TreeTextMap<View>();
@@ -33,7 +33,7 @@ public class CollectVisitor extends _PDBVisitor {
 
     @Override
     public boolean visit(Import _import) {
-        Object location = pdb.getLocation();
+        Object location = context.getLocation();
         String systemId;
         if (location instanceof Location)
             systemId = ((Location) location).getSystemId();
@@ -50,20 +50,20 @@ public class CollectVisitor extends _PDBVisitor {
         }
         PDB pdb = JAXB.unmarshal(importUrl, PDB.class);
         // ignore the pdb database properties.
-        List<Object> tableOrViews = this.pdb.getTableOrViews();
+        List<Object> tableOrViews = this.context.getTableOrViews();
         tableOrViews.addAll(pdb.getTableOrViews());
         return true;
     }
 
     @Override
     public boolean visit(Table table) {
-        this.table = table;
+        this.contextTable = table;
+        table.pdb = context;
         String name = table.getName();
         if (name == null)
             throw new NullPointerException("table name");
-        pdb.tableOrViewMap.put(name, table);
-        pdb.tableMap.put(name, table);
-
+        context.tableOrViewMap.put(name, table);
+        context.tableMap.put(name, table);
         table.fieldMap = new TreeTextMap<Field>();
         table.indexMap = new TreeTextMap<Index>();
         return true;
@@ -71,30 +71,30 @@ public class CollectVisitor extends _PDBVisitor {
 
     @Override
     public boolean visit(Field field) {
-        this.field = field;
+        this.contextField = field;
+        field.table = contextTable;
         String name = field.getName();
         if (name == null)
             throw new NullPointerException("field name");
-        table.fieldMap.put(name, field);
-        field.table = table;
+        contextTable.fieldMap.put(name, field);
         return true;
     }
 
     @Override
     public boolean visit(Index index) {
-        this.index = index;
+        this.contextIndex = index;
+        index.table = contextTable;
         String name = index.getName();
         if (name != null)
-            table.indexMap.put(name, index);
-        index.table = table;
+            contextTable.indexMap.put(name, index);
         return true;
     }
 
     @Override
     public boolean visit(Instance instance) {
-        instance.table = table;
+        instance.table = contextTable;
         List<Object> any = instance.getAny();
-        RowData data = new RowData(table);
+        RowData data = new RowData(contextTable);
         for (Object _cell : any) {
             Element cellElement = (Element) _cell;
             String fieldName = cellElement.getLocalName();
@@ -107,13 +107,13 @@ public class CollectVisitor extends _PDBVisitor {
 
     @Override
     public boolean visit(View view) {
-        this.view = view;
+        this.contextView = view;
+        view.pdb = context;
         String name = view.getName();
         if (name == null)
             throw new NullPointerException("view name");
-        pdb.tableOrViewMap.put(name, view);
-        pdb.viewMap.put(name, view);
-
+        context.tableOrViewMap.put(name, view);
+        context.viewMap.put(name, view);
         view.fieldMap = new TreeTextMap<View.Field>();
         return true;
     }
@@ -122,7 +122,7 @@ public class CollectVisitor extends _PDBVisitor {
     public boolean visit(View.Field field) {
         String name = field.getName();
         if (name != null)
-            view.fieldMap.put(name, field);
+            contextView.fieldMap.put(name, field);
         return true;
     }
 

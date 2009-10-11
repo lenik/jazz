@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:pi="http://xml.bodz.net/p/project-info" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.w3.org/1999/xhtml" targetNamespace="http://xml.bodz.net/p/project-info" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://www.w3.org/1999/xhtml" schemaLocation="http://www.w3.org/2002/08/xhtml/xhtml1-strict.xsd"/>
+	<xs:element name="project-info">
+		<xs:annotation>
+			<xs:documentation>Comment describing your root element</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="project" type="pi:projectType" maxOccurs="unbounded">
+					<xs:keyref name="member-ref" refer="pi:member-key">
+						<xs:selector xpath=".//member"/>
+						<xs:field xpath="@id"/>
+					</xs:keyref>
+				</xs:element>
+				<xs:element name="member-info" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="Block">
+								<xs:attribute name="id" type="xs:ID" use="required"/>
+								<xs:attribute name="name" type="xs:string" use="required"/>
+								<xs:attribute name="email" type="xs:string"/>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+		<xs:key name="member-key">
+			<xs:selector xpath="member-info"/>
+			<xs:field xpath="@id"/>
+		</xs:key>
+	</xs:element>
+	<xs:complexType name="projectType">
+		<xs:sequence>
+			<xs:element name="summary" minOccurs="0">
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="Block"/>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="section" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>document sections</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="Block">
+							<xs:attribute name="class" type="xs:string">
+								<xs:annotation>
+									<xs:documentation>category class</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="title" type="xs:string" use="required"/>
+						</xs:extension>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="resources" minOccurs="0">
+				<xs:complexType>
+					<xs:choice minOccurs="0" maxOccurs="unbounded">
+						<xs:element name="svn-repo">
+							<xs:complexType>
+								<xs:attribute name="location" type="xs:string" use="required"/>
+								<xs:attribute name="username" type="xs:string">
+									<xs:annotation>
+										<xs:documentation>Username for read access</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="password" type="xs:string">
+									<xs:annotation>
+										<xs:documentation>Password for read access</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="member" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="id" type="xs:IDREF" use="required"/>
+					<xs:attribute name="role" type="xs:string"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="sub-project" type="pi:projectType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="package" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>qualified package, 
+also the preferred namespace in implementation. </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="name" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>unique name</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="label" type="xs:string"/>
+		<xs:attribute name="title" type="xs:string"/>
+		<xs:attribute name="version" type="xs:string"/>
+	</xs:complexType>
+</xs:schema>

@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 import net.bodz.bas.types.TextMap;
+import net.bodz.bas.types.util.Strings;
 import net.bodz.xml.util.Term;
 import net.bodz.xml.util.TermBuilder;
 import net.bodz.xml.util.TermDict;
@@ -26,10 +27,11 @@ import net.bodz.xml.util.TermParser;
 @XmlRootElement(name = "table")
 public class Table implements PDBElement {
 
-    @XmlAttribute(required = true)
-    protected String         base;
-    @XmlAttribute(required = true)
+    @XmlTransient
     protected String         name;
+    @XmlTransient
+    protected List<String>   baseList;
+
     @XmlAttribute
     protected String         label;
     @XmlAttribute
@@ -48,19 +50,45 @@ public class Table implements PDBElement {
     @XmlElement(name = "instance", namespace = Instance.NS)
     protected List<Instance> instances;
 
+    @XmlAttribute
     public String getBase() {
-        return base;
+        if (baseList == null || baseList.isEmpty())
+            return null;
+        return Strings.join(", ", baseList);
     }
 
-    public void setBase(String base) {
-        this.base = base;
+    public void setBase(String bases) {
+        if (bases == null)
+            baseList = null;
+        else {
+            baseList = new ArrayList<String>();
+            int comma;
+            while ((comma = bases.indexOf(',')) != -1) {
+                String base = bases.substring(0, comma).trim();
+                bases = bases.substring(comma + 1);
+                baseList.add(base);
+            }
+            baseList.add(bases.trim());
+        }
     }
 
+    @XmlAttribute(required = true)
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
+        if (name != null) {
+            int p = name.indexOf('(');
+            if (p != -1) {
+                int q = name.lastIndexOf(')');
+                if (q == -1)
+                    throw new IllegalArgumentException("expected ')': " + name);
+                String bases = name.substring(p + 1, q);
+                name = name.substring(0, p).trim();
+                setBase(bases);
+            }
+        }
         this.name = name;
     }
 
@@ -120,6 +148,8 @@ public class Table implements PDBElement {
         if (instances == null) {
             instances = new ArrayList<Instance>();
         }
+        // TODO ...
+        // Collections.unmodifiableList()
         return this.instances;
     }
 
@@ -254,7 +284,7 @@ public class Table implements PDBElement {
     static final int      OPT_SUB_DETAILS     = 9;
     static final TermDict __dict__            = new TermDict();
     static {
-        __dict__.define(OPT_ABSTRACT, "c");
+        __dict__.define(OPT_ABSTRACT, "A");
         __dict__.define(OPT_CACHE_DICT, "D");
         __dict__.define(OPT_CACHE_REDUNDANT, "Dr");
         __dict__.define(OPT_CACHE_TRANSIENT, "T");
@@ -280,6 +310,9 @@ public class Table implements PDBElement {
     }
 
     @XmlTransient
+    PDB            pdb;
+
+    @XmlTransient
     TextMap<Field> fieldMap;
     @XmlTransient
     TextMap<Index> indexMap;
@@ -288,6 +321,10 @@ public class Table implements PDBElement {
     Index          primaryKey;
     @XmlTransient
     List<Index>    references;
+
+    public PDB getPDB() {
+        return pdb;
+    }
 
     public Field getField(String name) {
         return fieldMap.get(name);

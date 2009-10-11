@@ -81,9 +81,9 @@ public class Field implements PDBElement {
     private Index           index;
 
     @XmlTransient
-    private String          timestampForFields;
+    private String[]        timestampForFields;
     @XmlTransient
-    private String          versionForFields;
+    private String[]        versionForFields;
 
     public static final int DEFAULT_VALUE = 1;
     public static final int DEFAULT_EXPR  = 2;
@@ -150,10 +150,10 @@ public class Field implements PDBElement {
                 index.setOpts(t.toString());
                 break;
             case OPT_TIMESTAMP:
-                timestampForFields = t.getRawParameter();
+                timestampForFields = t.getParameters();
                 break;
             case OPT_VERSION:
-                versionForFields = t.getRawParameter();
+                versionForFields = t.getParameters();
                 break;
             case OPT_DEFAULT_VALUE:
                 defaultStrategy = DEFAULT_VALUE;
@@ -189,19 +189,19 @@ public class Field implements PDBElement {
         this.index = index;
     }
 
-    public String getTimestampForFields() {
+    public String[] getTimestampForFields() {
         return timestampForFields;
     }
 
-    public void setTimestampForFields(String timestampForFields) {
+    public void setTimestampForFields(String[] timestampForFields) {
         this.timestampForFields = timestampForFields;
     }
 
-    public String getVersionForFields() {
+    public String[] getVersionForFields() {
         return versionForFields;
     }
 
-    public void setVersionForFields(String versionForFields) {
+    public void setVersionForFields(String[] versionForFields) {
         this.versionForFields = versionForFields;
     }
 

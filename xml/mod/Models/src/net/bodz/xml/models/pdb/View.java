@@ -317,6 +317,13 @@ public class View implements PDBElement {
     }
 
     @XmlTransient
+    PDB pdb;
+
+    public PDB getPDB() {
+        return pdb;
+    }
+
+    @XmlTransient
     TextMap<View.Field> fieldMap;
 
     public View.Field getField(String name) {

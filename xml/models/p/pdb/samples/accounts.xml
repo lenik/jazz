@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pdb xmlns="http://xml.bodz.net/p/pdb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xml.bodz.net/p/pdb
-http://xml.bodz.net/p/pdb/pdb.xsd" name="AppNameAccounts" qname="com.AppName.accounts" label="应用数据库">
-	<table name="Group" label="用户组" opts="D" doc="组是指可共享资源的用户的集合。">
+http://xml.bodz.net/p/pdb/pdb.xsd" package="com.AppName.accounts" name="AppNameAccounts" label="应用数据库">
+	<table name="Group" label="用户组" opts="D" ts="both" doc="组是指可共享资源的用户的集合。">
 		<field name="id" type="Id" opts="KDi"/>
 		<field name="name" label="组名称" type="C[]" doc="显示的组名称。"/>
 		<field name="doc" label="组描述" type="C[, 100]" doc="描述该用户组的用途。"/>
@@ -26,7 +26,7 @@ http://xml.bodz.net/p/pdb/pdb.xsd" name="AppNameAccounts" qname="com.AppName.acc
 			<doc>来宾用户组。</doc>
 		</instance>
 	</table>
-	<table name="User" label="用户" doc="注册的用户。">
+	<table name="User" label="用户" ts="both" doc="注册的用户。">
 		<field name="id" type="Id" opts="KDi"/>
 		<field name="name" label="登录名称" type="C[]" opts="U" doc="用于登录的名称。"/>
 		<field name="nickname" label="昵称" type="C[]" doc="用于显示的昵称。"/>
@@ -68,7 +68,7 @@ http://xml.bodz.net/p/pdb/pdb.xsd" name="AppNameAccounts" qname="com.AppName.acc
 			<user>{ $U_GUEST.id }</user>
 		</instance>
 	</table>
-	<table name="Role" label="角色" opts="D" doc="为简化权限管理而设的分类。">
+	<table name="Role" label="角色" opts="D" ts="both" doc="为简化权限管理而设的分类。">
 		<field name="id" type="Id" opts="KDi"/>
 		<field name="name" label="角色名称" type="C[]" doc="角色的显示名称。"/>
 		<field name="doc" label="描述" type="C[, 200]"/>
@@ -83,7 +83,7 @@ http://xml.bodz.net/p/pdb/pdb.xsd" name="AppNameAccounts" qname="com.AppName.acc
 		<field name="role" label="角色" type="Id" opts="F(» Role)"/>
 		<field name="user" label="分配用户" type="Id" opts="F(» User)" doc="设定该用户具有本角色。"/>
 	</table>
-	<table name="Domain" label="访问域" opts="D" doc="权限管理中，需要控制访问权限的对
+	<table name="Domain" label="访问域" opts="D" ts="both" doc="权限管理中，需要控制访问权限的对
 象范畴可能是实体对象（如文件、目
 录）、过程（如打印、关机）等。对
 不同类型的范畴有不同的对象集合的
