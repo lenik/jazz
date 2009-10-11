@@ -5,6 +5,17 @@
 			<xs:sequence>
 				<xs:element name="import" minOccurs="0" maxOccurs="unbounded">
 					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="rename" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>rename table or view</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="from" type="xs:string"/>
+									<xs:attribute name="to" type="xs:string"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
 						<xs:attribute name="href" type="xs:string" use="required">
 							<xs:annotation>
 								<xs:documentation>href to parent pdb.xml</xs:documentation>
@@ -15,6 +26,11 @@
 								<xs:documentation>reserved</xs:documentation>
 							</xs:annotation>
 						</xs:attribute>
+						<xs:attribute name="prefix" type="xs:string">
+							<xs:annotation>
+								<xs:documentation>add or rename the table prefix.</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
 					</xs:complexType>
 				</xs:element>
 				<xs:choice minOccurs="0" maxOccurs="unbounded">
@@ -23,16 +39,9 @@
 				</xs:choice>
 			</xs:sequence>
 			<xs:attributeGroup ref="pdb:objectAttributes"/>
-			<xs:attribute name="qname" type="xs:string">
-				<xs:annotation>
-					<xs:documentation>qualified package name </xs:documentation>
-				</xs:annotation>
-			</xs:attribute>
-			<xs:attribute name="cat" type="xs:string">
-				<xs:annotation>
-					<xs:documentation>category</xs:documentation>
-				</xs:annotation>
-			</xs:attribute>
+			<xs:attribute name="package" type="xs:string"/>
+			<xs:attribute name="category" type="xs:string"/>
+			<xs:attribute name="prefix" type="xs:string"/>
 		</xs:complexType>
 		<xs:unique name="u_table_view">
 			<xs:selector xpath="pdb:table | pdb:view"/>
@@ -44,7 +53,7 @@
 			<xs:documentation>REQ: @name
 
 opts: 
-    c=abstract
+    A=abstract
     D=cache/dict
     Dr=redundant (info-dict)
     Ro=read-only table
@@ -163,8 +172,25 @@ O=object</xs:documentation>
 			<xs:attribute name="base" type="xs:string">
 				<xs:annotation>
 					<xs:documentation>extends the specified table, 
-
 no duplicated fields is allowed.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="ts">
+				<xs:annotation>
+					<xs:documentation>auto managed timestamp</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="none"/>
+						<xs:enumeration value="create"/>
+						<xs:enumeration value="modify"/>
+						<xs:enumeration value="both"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="override" type="xs:boolean" default="false">
+				<xs:annotation>
+					<xs:documentation>For imported tables, you can replace/add more fields/instances to the existings, with the same table name while override=true. </xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
 		</xs:complexType>

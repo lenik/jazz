@@ -11,64 +11,45 @@
 				<xs:element name="allocate">
 					<xs:complexType>
 						<xs:sequence>
-							<xs:element name="use-case-set">
-								<xs:complexType>
-									<xs:sequence>
-										<xs:element name="use-case" type="usecaseType" maxOccurs="unbounded">
-											<xs:annotation>
-												<xs:documentation>The greater the rank if, the more important the use-case is. </xs:documentation>
-											</xs:annotation>
-										</xs:element>
-									</xs:sequence>
-								</xs:complexType>
+							<xs:element name="use-case" type="usecaseType" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>The greater the rank if, the more important the use-case is. </xs:documentation>
+								</xs:annotation>
 							</xs:element>
-							<xs:element name="technology-set">
+							<xs:element name="technology" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>The greater the risk is, the more difficult in the implementation. </xs:documentation>
+								</xs:annotation>
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="technology" maxOccurs="unbounded">
-											<xs:annotation>
-												<xs:documentation>The greater the risk is, the more difficult in the implementation. </xs:documentation>
-											</xs:annotation>
-											<xs:complexType>
-												<xs:sequence>
-													<xs:element name="detail" type="xs:string" minOccurs="0"/>
-													<xs:element name="skill-requirement" minOccurs="0" maxOccurs="unbounded">
-														<xs:complexType>
-															<xs:simpleContent>
-																<xs:extension base="xs:string">
-																	<xs:attribute name="name" type="xs:string" use="required"/>
-																	<xs:attribute name="minlevel" type="xs:string" use="optional"/>
-																</xs:extension>
-															</xs:simpleContent>
-														</xs:complexType>
-													</xs:element>
-												</xs:sequence>
-												<xs:attribute name="name" type="xs:string" use="required"/>
-												<xs:attribute name="rank" type="xs:integer" use="optional" default="0"/>
-												<xs:attribute name="risk" type="xs:integer" use="optional" default="0"/>
-											</xs:complexType>
-										</xs:element>
-									</xs:sequence>
-								</xs:complexType>
-							</xs:element>
-							<xs:element name="resource-set" maxOccurs="unbounded">
-								<xs:complexType>
-									<xs:sequence>
-										<xs:element name="resource" maxOccurs="unbounded">
+										<xs:element name="detail" type="xs:string" minOccurs="0"/>
+										<xs:element name="skill-requirement" minOccurs="0" maxOccurs="unbounded">
 											<xs:complexType>
 												<xs:simpleContent>
 													<xs:extension base="xs:string">
-														<xs:attribute name="type" type="xs:string" use="optional"/>
-														<xs:attribute name="stocks" type="xs:double" use="optional"/>
+														<xs:attribute name="name" type="xs:string" use="required"/>
+														<xs:attribute name="minlevel" type="xs:string" use="optional"/>
 													</xs:extension>
 												</xs:simpleContent>
 											</xs:complexType>
 										</xs:element>
 									</xs:sequence>
 									<xs:attribute name="name" type="xs:string" use="required"/>
+									<xs:attribute name="rank" type="xs:integer" use="optional" default="0"/>
+									<xs:attribute name="risk" type="xs:integer" use="optional" default="0"/>
 								</xs:complexType>
 							</xs:element>
-							<xs:element name="team" type="teamType" maxOccurs="unbounded"/>
+							<xs:element name="resource" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="xs:string">
+											<xs:attribute name="type" type="xs:string" use="optional"/>
+											<xs:attribute name="stocks" type="xs:double" use="optional"/>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="member" type="memberType" maxOccurs="unbounded"/>
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
@@ -245,9 +226,7 @@
 		<xs:attribute name="role" type="xs:string" use="required"/>
 	</xs:complexType>
 	<xs:complexType name="teamType">
-		<xs:sequence>
-			<xs:element name="member" type="memberType" maxOccurs="unbounded"/>
-		</xs:sequence>
+		<xs:sequence/>
 		<xs:attribute name="name" type="xs:string" use="required"/>
 	</xs:complexType>
 	<xs:complexType name="requisitionType">

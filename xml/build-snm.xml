@@ -2,54 +2,38 @@
 <project name="net.bodz.xml" default="default">
 
     <property environment="env" />
-    <taskdef resource="net/bodz/bas/ant/task.properties"
-             classpath="${env.JAVA_LIB}/net.bodz.bas.jar" />
+    <import file="${env.LAPIOTA}/lib/ant/basic.xml" />
 
-    <propertybean name="project" classname="net.bodz.bas.ant.ProjectInfo" expandproperties="true" />
+    <target name="default" depends="10bin.jar, 10src.jar, 20mkbat, .kala.dist" />
 
-    <property name="distdir" value="${env.JAVA_LIB}" />
-    <property name="distsrc" value="${env.JAVA_SRC}" />
-
-    <target name="default" depends="dist">
-    </target>
-
-    <target name="dist" depends=":bin.jar, :src.jar">
-        <copy todir="${distdir}">
-            <fileset dir="${basedir}/lib">
-                <exclude name="*-src.jar" />
-            </fileset>
-        </copy>
-        <copy todir="${distsrc}">
-            <fileset dir="${basedir}/lib">
-                <include name="*-src.jar" />
-            </fileset>
-        </copy>
-    </target>
-
-    <target name=":bin.jar">
-        <mkdir dir="lib" />
-        <jar destfile="lib/net.bodz.xml.jar" update="true">
+    <target name="10bin.jar">
+        <mkdir dir="build" />
+        <jar destfile="build/net.bodz.xml.jar" update="true">
             <fileset dir="mod/Commons/bin" />
             <fileset dir="mod/Models/bin" />
         </jar>
-        <length property="size.bin" file="lib/net.bodz.xml.jar" />
+        <length property="size.bin" file="build/net.bodz.xml.jar" />
         <echo>Size: ${size.bin}</echo>
     </target>
 
-    <target name=":src.jar">
-        <mkdir dir="lib" />
-        <jar destfile="lib/net.bodz.xml-src.jar" update="true">
+    <target name="10src.jar">
+        <mkdir dir="build" />
+        <jar destfile="build/net.bodz.xml-src.jar" update="true">
             <fileset dir="mod/Commons/src" />
             <fileset dir="mod/Models/src" />
         </jar>
-        <length property="size.src" file="lib/net.bodz.xml-src.jar" />
+        <length property="size.src" file="build/net.bodz.xml-src.jar" />
         <echo>Size: ${size.src}</echo>
     </target>
 
-    <target name="clean">
-        <delete verbose="true">
-            <fileset dir="${basedir}/lib" includes="*.jar" />
-        </delete>
+    <target name="20mkbat" depends="10bin.jar">
+        <mkbat outdir="${basedir}/bin">
+            <library>bodz_mda</library>
+            <classpath refid="project.classpath" />
+            <findmain path="mod/Model In Marks/bin" />
+            <findmain path="mod/Template Process/bin" />
+            <findmain path="mod/XML Models/bin" />
+        </mkbat>
     </target>
 
 </project>

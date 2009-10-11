@@ -2,28 +2,11 @@
 <pdb xmlns="http://xml.bodz.net/p/pdb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xml.bodz.net/p/pdb
 http://xml.bodz.net/p/pdb/pdb.xsd" package="com.AppName.appdb" name="AppNameDB" label="应用数据库">
 	<import href="http://xml.bodz.net/p/pdb/samples/accounts.xml"/>
-	<table name="-" label="-" opts="-" ts="both" doc="-">
+	<table name="-" label="-" opts="-" doc="-">
 		<field name="id" type="Id" opts="KDi"/>
 		<field name="-" label="-" type="-" opts="-" doc="-"/>
 		<instance>
-			<field1/>
-			<field2/>
-		</instance>
-		<instance>
-			<field1/>
-			<field2/>
-		</instance>
-	</table>
-	<table name="-" label="-" opts="-" ts="both" doc="-">
-		<field name="id" type="Id" opts="KDi"/>
-		<field name="-" label="-" type="-" opts="-" doc="-"/>
-		<instance>
-			<field1/>
-			<field2/>
-		</instance>
-		<instance>
-			<field1/>
-			<field2/>
+			<x/>
 		</instance>
 	</table>
 </pdb>

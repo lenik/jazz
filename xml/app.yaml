@@ -12,9 +12,10 @@ handlers:
 - url: /(.*\.py)
   script: \1
 
-- url: /([a-z]/.*)
+- url: /([a-z]/.*(\.xml|xsl|xslt|dtd|xsd))
   static_files: models/\1
-  upload: models/.*\.xsd
+  mime_type: text/xml
+  upload: models/.*(\.xml|xsl|xslt|dtd|xsd)
 
 - url: /.*
   script: not_found.py

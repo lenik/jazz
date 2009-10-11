@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pdb xmlns="http://xml.bodz.net/p/pdb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xml.bodz.net/p/pdb
+http://xml.bodz.net/p/pdb/pdb.xsd" package="com.AppName.appdb" name="AppNameTrack" label="应用数据库">
+	<import href="http://xml.bodz.net/p/pdb/samples/accounts.xml"/>
+	<import href="http://xml.bodz.net/p/pdb/samples/forum.xml"/>
+	<table name="Arch" label="机器架构列表">
+		<field name="id" type="Id" opts="KDi"/>
+		<field name="name" label="名称" type="C[, 50]" doc="机器架构的名称。"/>
+		<instance>
+			<name>i386</name>
+		</instance>
+		<instance>
+			<name>i386 (64-bit)</name>
+		</instance>
+		<instance>
+			<name>PowerPC</name>
+		</instance>
+		<instance>
+			<name>Sun Sparc</name>
+		</instance>
+		<instance>
+			<name>JVM</name>
+		</instance>
+	</table>
+	<table name="OS" label="操作系统列表" opts="-">
+		<field name="id" type="Id" opts="KDi"/>
+		<field name="name" label="名称" type="C[, 50]" doc="操作系统的名称。"/>
+		<instance>
+			<name>Windows 98</name>
+		</instance>
+		<instance>
+			<name>Windows 2000</name>
+		</instance>
+		<instance>
+			<name>Windows 2003</name>
+		</instance>
+		<instance>
+			<name>Windows XP</name>
+		</instance>
+		<instance>
+			<name>Vista</name>
+		</instance>
+		<instance>
+			<name>Windows 7</name>
+		</instance>
+	</table>
+	<table name="ProductGroup" label="产品组" ts="both" doc="定义产品的分组。">
+		<field name="id" type="Id" opts="KDi"/>
+		<field name="name" label="名称" type="C[, 50]" doc="产品分组的名称。"/>
+	</table>
+	<table name="Product" label="产品" opts="Sd(ProductGroup)" ts="both">
+		<field name="id" type="Id" opts="KDi"/>
+		<field name="name" label="名称" type="C[, 50]" doc="产品的正规名称。"/>
+		<field name="label" label="标签" type="C[, 50]" doc="显示在产品旁边的标签文字。"/>
+	</table>
+	<table name="Component" label="组件" ts="both" doc="独立组件定义。">
+		<field name="id" type="Id" opts="KDi"/>
+		<field name="name" label="名称" type="C[, 50]" doc="组件的正规名称。"/>
+		<field name="label" label="标签" type="C[, 50]" doc="显示在组件旁边的标签文字。"/>
+	</table>
+	<table name="ProductComponent" label="产品组件构成" opts="Sd(Product)" doc="产品由哪些组件构成。">
+		<field name="id" type="Id" opts="KDi"/>
+		<field name="product" label="产品" type="Id" opts="F(» Product)"/>
+		<field name="component" label="组件" type="Id" opts="F(» Component)"/>
+	</table>
+	<table name="ProductVersion" label="产品版本" opts="Sd(Product)" ts="both" doc="产品的版本集。">
+		<field name="id" type="Id" opts="KDi"/>
+		<field name="product" label="产品" type="Id" opts="F(» Product)"/>
+		<field name="version" label="版本名称" type="C[, 30]"/>
+	</table>
+	<table name="ComponentVersion" label="组件版本" opts="Sd(Component)" ts="both" doc="组件的版本集。">
+		<field name="id" type="Id" opts="KDi"/>
+		<field name="component" label="组件" type="Id" opts="F(» Component)"/>
+		<field name="version" label="版本名称" type="C[, 30]"/>
+	</table>
+	<table name="TaskState" label="任务状态" opts="D">
+		<field name="id" type="Id" opts="KDi"/>
+		<field name="name" label="名称" type="C[, 30]"/>
+		<instance>
+			<name>open</name>
+		</instance>
+		<instance>
+			<name>resolved</name>
+		</instance>
+		<instance>
+			<name>closed</name>
+		</instance>
+		<instance>
+			<name>re-open</name>
+		</instance>
+	</table>
+	<table name="ReqyestType" label="请求类型" opts="D">
+		<field name="id" type="Id" opts="KDi"/>
+		<field name="name" label="名称" type="C[, 30]"/>
+		<instance>
+			<name>fatal</name>
+		</instance>
+		<instance>
+			<name>major</name>
+		</instance>
+		<instance>
+			<name>minor</name>
+		</instance>
+		<instance>
+			<name>enhancement</name>
+		</instance>
+		<instance>
+			<name>feature</name>
+		</instance>
+	</table>
+	<table name="RequestTask" label="请求任务" ts="both">
+		<field name="id" type="Id" opts="KDi"/>
+		<field name="arch" label="机器架构" type="Id" opts="NF(→ Arch)"/>
+		<field name="os" label="操作系统" type="Id" opts="NF(→ OS)"/>
+		<field name="product" label="产品" type="Id" opts="NF(→ Product)" doc="引起问题的原因产品"/>
+		<field name="productVersion" label="产品版本" type="C[, 30]" opts="N" doc="引起问题的原因产品版本"/>
+		<field name="component" label="组件" type="Id" opts="NF(→ Component)" doc="引起问题的原因组件"/>
+		<field name="componentVersion" label="组件版本" type="C[, 30]" opts="N" doc="引起问题的原因组件版本。"/>
+		<field name="type" label="请求类型" type="Id" opts="F(⇒ RequestType)"/>
+		<field name="state" label="状态" type="Id" opts="F(⇒ TaskState)"/>
+		<field name="user" label="请求人" type="Id" opts="F(⇒ User)"/>
+		<field name="subject" label="主题" type="C[, 200]"/>
+		<field name="reproduce" label="重复动作" type="C[, 500]" doc="说明如何重复产生本问题。"/>
+		<field name="thread" label="讨论线索" type="Id" opts="NF(→ ForumThread)" doc="发起讨论的主题线索。"/>
+	</table>
+	<table name="Assignment" ts="both">
+		<field name="id" type="Id" opts="KDi"/>
+		<field name="name" label="名称" type="C[, 30]"/>
+	</table>
+</pdb>
