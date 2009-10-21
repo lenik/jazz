@@ -2,9 +2,9 @@ package net.bodz.bas.types.parsers;
 
 import java.util.regex.Pattern;
 
-public class WildcardsIParser extends WildcardsParser {
+public class GlobiParser extends GlobParser {
 
-    public WildcardsIParser() {
+    public GlobiParser() {
         super(Pattern.CASE_INSENSITIVE);
     }
 

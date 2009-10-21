@@ -6,6 +6,9 @@ import net.bodz.bas.lang.ControlExit;
 import net.bodz.bas.lang.RunnableThrows;
 import net.bodz.bas.lang.Runnables;
 
+/**
+ * @test {@link CatchExitTest}
+ */
 public class CatchExit extends _SecurityManager {
 
     public CatchExit(SecurityManager proxy) {
