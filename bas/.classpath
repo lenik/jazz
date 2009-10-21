@@ -1,35 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry exported="true" kind="lib" path="lib/asm-3.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/asm-commons-3.1.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/asm-util-3.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-	<classpathentry kind="src" output="mod/.Removed Items/bin" path="mod/.Removed Items/src"/>
-	<classpathentry kind="src" output="mod/.Removed Items/test.bin" path="mod/.Removed Items/test"/>
-	<classpathentry kind="src" output="mod/Application Framework/bin" path="mod/Application Framework/src"/>
-	<classpathentry kind="src" output="mod/Application Framework/test.bin" path="mod/Application Framework/test"/>
-	<classpathentry kind="src" output="mod/B-IOS Framework/bin" path="mod/B-IOS Framework/src"/>
-	<classpathentry kind="src" output="mod/B-IOS Framework/test.bin" path="mod/B-IOS Framework/test"/>
-	<classpathentry kind="src" output="mod/Bundled Modules/bin" path="mod/Bundled Modules/src"/>
-	<classpathentry kind="src" output="mod/Bundled Modules/test.bin" path="mod/Bundled Modules/test"/>
-	<classpathentry kind="src" output="mod/Data Types/bin" path="mod/Data Types/src"/>
-	<classpathentry kind="src" output="mod/Data Types/test.bin" path="mod/Data Types/test"/>
-	<classpathentry kind="src" output="mod/Database Abstraction/bin" path="mod/Database Abstraction/src"/>
-	<classpathentry kind="src" output="mod/Database Abstraction/test.bin" path="mod/Database Abstraction/test"/>
-	<classpathentry kind="src" output="mod/Functional Programming/bin" path="mod/Functional Programming/src"/>
-	<classpathentry kind="src" output="mod/Functional Programming/test.bin" path="mod/Functional Programming/test"/>
-	<classpathentry kind="src" output="mod/Language Extension/bin" path="mod/Language Extension/src"/>
-	<classpathentry kind="src" output="mod/Language Extension/test.bin" path="mod/Language Extension/test"/>
-	<classpathentry kind="src" output="mod/System Utilities/bin" path="mod/System Utilities/src"/>
-	<classpathentry kind="src" output="mod/System Utilities/test.bin" path="mod/System Utilities/test"/>
-	<classpathentry kind="src" output="mod/Text Process/bin" path="mod/Text Process/src"/>
-	<classpathentry kind="src" output="mod/Text Process/test.bin" path="mod/Text Process/test"/>
-	<classpathentry kind="src" output="mod/Wrapper Classes/bin" path="mod/Wrapper Classes/src"/>
-	<classpathentry kind="src" output="mod/Wrapper Classes/test.bin" path="mod/Wrapper Classes/test"/>
-	<classpathentry kind="src" output="mod/_MODEL/s0.bin" path="mod/_MODEL/s0"/>
-	<classpathentry kind="src" output="mod/_MODEL/bin" path="mod/_MODEL/src"/>
-	<classpathentry kind="src" output="mod/_MODEL/test.bin" path="mod/_MODEL/test"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="src" output="baswrap/target/classes" path="baswrap/src/main/java"/>
+	<classpathentry kind="src" output="baswrap/target/test-classes" path="baswrap/src/test/java"/>
+	<classpathentry kind="src" output="bastypes/target/classes" path="bastypes/src/main/java"/>
+	<classpathentry kind="src" output="bastypes/target/test-classes" path="bastypes/src/test/java"/>
+	<classpathentry kind="src" output="bastext/target/classes" path="bastext/src/main/java"/>
+	<classpathentry kind="src" output="bastext/target/test-classes" path="bastext/src/test/java"/>
+	<classpathentry kind="src" output="basutils/target/classes" path="basutils/src/main/java"/>
+	<classpathentry kind="src" output="basutils/target/test-classes" path="basutils/src/test/java"/>
+	<classpathentry kind="src" output="basicfx/target/classes" path="basicfx/src/main/java"/>
+	<classpathentry kind="src" output="basicfx/target/test-classes" path="basicfx/src/test/java"/>
+	<classpathentry kind="src" output="basicdb/target/classes" path="basicdb/src/main/java"/>
+	<classpathentry kind="src" output="basicdb/target/test-classes" path="basicdb/src/test/java"/>
+	<classpathentry kind="src" output="bios/target/classes" path="bios/src/main/java"/>
+	<classpathentry kind="src" output="bios/target/test-classes" path="bios/src/test/java"/>
+	<classpathentry kind="src" output="_MODEL/target/s0-classes" path="_MODEL/src/s0/java"/>
+	<classpathentry kind="src" output="_MODEL/target/classes" path="_MODEL/src/main/java"/>
+	<classpathentry kind="src" output="_MODEL/target/test-classes" path="_MODEL/src/test/java"/>
+	<classpathentry kind="var" path="JAVA_LIB/asm-3.1.jar"/>
+	<classpathentry kind="var" path="JAVA_LIB/asm-commons-3.1.jar"/>
+	<classpathentry kind="var" path="JAVA_LIB/asm-util-3.1.jar"/>
+	<classpathentry kind="output" path="target/classes"/>
 </classpath>

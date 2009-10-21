@@ -2,7 +2,7 @@
 <project name="net.bodz.bas" default="default">
 
     <property environment="env" />
-    <import file="${env.LAPIOTA}/lib/ant/basic.xml" />
+    <import file="${env.LAPIOTA}/lib/ant/_base.xml" />
 
     <target name="default" depends="10bin.jar, 10src.jar, 20mkbat, .kala.dist" />
 
@@ -17,17 +17,17 @@
     <target name="10bin.jar">
         <mkdir dir="build" />
         <jar destfile="build/net.bodz.bas.jar" update="true">
-            <fileset dir="mod/_MODEL/bin" />
-            <fileset dir="mod/Application Framework/bin" />
-            <fileset dir="mod/B-IOS Framework/bin" />
-            <fileset dir="mod/Bundled Modules/bin" />
-            <fileset dir="mod/Data Types/bin" />
-            <fileset dir="mod/Database Abstraction/bin" />
-            <fileset dir="mod/Functional Programming/bin" />
-            <fileset dir="mod/Language Extension/bin" />
-            <fileset dir="mod/System Utilities/bin" />
-            <fileset dir="mod/Text Process/bin" />
-            <fileset dir="mod/Wrapper Classes/bin" />
+            <fileset dir="target/mod/_MODEL/main-classes" />
+            <fileset dir="target/mod/Application Framework/main-classes" />
+            <fileset dir="target/mod/B-IOS Framework/main-classes" />
+            <fileset dir="target/mod/Bundled Modules/main-classes" />
+            <fileset dir="target/mod/Data Types/main-classes" />
+            <fileset dir="target/mod/Database Abstraction/main-classes" />
+            <fileset dir="target/mod/Functional Programming/main-classes" />
+            <fileset dir="target/mod/Language Extension/main-classes" />
+            <fileset dir="target/mod/System Utilities/main-classes" />
+            <fileset dir="target/mod/Text Process/main-classes" />
+            <fileset dir="target/mod/Wrapper Classes/main-classes" />
         </jar>
         <length property="size.bin" file="lib/net.bodz.bas.jar" />
         <echo>Size: ${size.bin}</echo>
@@ -36,17 +36,17 @@
     <target name="10src.jar">
         <mkdir dir="build" />
         <jar destfile="build/net.bodz.bas-src.jar" update="true">
-            <fileset dir="mod/_MODEL/src" />
-            <fileset dir="mod/Application Framework/src" />
-            <fileset dir="mod/B-IOS Framework/src" />
-            <fileset dir="mod/Bundled Modules/src" />
-            <fileset dir="mod/Data Types/src" />
-            <fileset dir="mod/Database Abstraction/src" />
-            <fileset dir="mod/Functional Programming/src" />
-            <fileset dir="mod/Language Extension/src" />
-            <fileset dir="mod/System Utilities/src" />
-            <fileset dir="mod/Text Process/src" />
-            <fileset dir="mod/Wrapper Classes/src" />
+            <fileset dir="mod/_MODEL/main" />
+            <fileset dir="mod/Application Framework/main" />
+            <fileset dir="mod/B-IOS Framework/main" />
+            <fileset dir="mod/Bundled Modules/main" />
+            <fileset dir="mod/Data Types/main" />
+            <fileset dir="mod/Database Abstraction/main" />
+            <fileset dir="mod/Functional Programming/main" />
+            <fileset dir="mod/Language Extension/main" />
+            <fileset dir="mod/System Utilities/main" />
+            <fileset dir="mod/Text Process/main" />
+            <fileset dir="mod/Wrapper Classes/main" />
         </jar>
         <length property="size.src" file="lib/net.bodz.bas-src.jar" />
         <echo>Size: ${size.src}</echo>
@@ -55,7 +55,7 @@
     <target name="10loadertest.jar">
         <mkdir dir="build" />
         <jar destfile="build/10loadertest.jar">
-            <fileset dir="mod/Application Framework/bin">
+            <fileset dir="target/mod/Application Framework/main-classes">
                 <include name="net/bodz/bas/a/LoadBy.class" />
                 <include name="net/bodz/bas/loader/BundledLoader.class" />
                 <include name="net/bodz/bas/loader/LoaderTest.class" />
@@ -63,11 +63,31 @@
         </jar>
     </target>
 
-    <target name="20mkbat" depends="10bin.jar">
+    <target name="20mkbat" depends="10bin.jar, .kala.dist">
+        <taskdef resource="net/bodz/bas/ant/task.properties">
+            <classpath>
+                <fileset dir="${JAVA_LIB}">
+                    <include name="${lib.bodz_bas}" />
+                    <include name="${lib.bodz_dist}" />
+                    <include name="${lib.bodz_jna}" />
+                    <include name="${lib.dom4j}" />
+                    <include name="${lib.groovy}" />
+                    <include name="${lib.jna}" />
+                </fileset>
+                <fileset dir="${ant.home}/..">
+                    <include name="org.eclipse.swt.win32.win32.x86_*.jar" />
+                </fileset>
+            </classpath>
+        </taskdef>
+
+        <propertybean name="project"
+                      classname="net.bodz.bas.ant.ProjectInfo"
+                      expandproperties="true" />
+
         <mkbat outdir="${basedir}/bin">
             <library>bodz_bas</library>
             <classpath refid="project.classpath" />
-            <findmain path="mod/Application Framework/bin" />
+            <findmain path="target/mod/Application Framework/main-classes" />
         </mkbat>
     </target>
 
