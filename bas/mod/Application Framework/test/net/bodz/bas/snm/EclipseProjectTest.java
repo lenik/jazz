@@ -9,9 +9,9 @@ import org.junit.Test;
 public class EclipseProjectTest {
 
     @Test
-    public void testGetClasspaths() throws Exception {
+    public void testGetURLClasspath() throws Exception {
         EclipseProject ep = EclipseProject.findFromCWD();
-        URL[] cp = ep.getClasspaths();
+        URL[] cp = ep.getURLClasspath();
         // 2*(app, bios, bundled, dtypes, fp, lang, sys, text, wrap)
         assertTrue(cp.length > 10);
         for (URL url : cp)

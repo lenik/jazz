@@ -85,7 +85,7 @@ public class LoadUtil {
                 throw new IllegalArgumentException(AppNLS.getString("LoadUtil.cantFindProjectBase") //$NON-NLS-1$
                         + start);
             try {
-                return new EclipseProject(base).getClasspaths();
+                return new EclipseProject(base).getURLClasspath();
             } catch (ParseException e) {
                 throw new RuntimeException(e);
             }

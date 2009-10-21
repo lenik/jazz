@@ -20,7 +20,7 @@ import net.bodz.bas.lang.a.OverrideOption;
 import net.bodz.bas.lang.err.NotImplementedException;
 import net.bodz.bas.nls.AppNLS;
 import net.bodz.bas.types.TypeParsers.GetInstanceParser;
-import net.bodz.bas.types.parsers.WildcardsParser;
+import net.bodz.bas.types.parsers.GlobParser;
 
 @OptionGroup(value = "batch", rank = -2)
 public class BatchCLI extends BasicCLI {
@@ -45,10 +45,10 @@ public class BatchCLI extends BasicCLI {
     FileMask         exclusiveMask;
 
     @Option(alias = "If", vnam = "WILDCARDS", doc = "include these filenames")
-    @ParseBy(WildcardsParser.class)
+    @ParseBy(GlobParser.class)
     Pattern          fileInclusivePattern;
     @Option(alias = "IF", vnam = "WILDCARDS", doc = "exclude these filenames")
-    @ParseBy(WildcardsParser.class)
+    @ParseBy(GlobParser.class)
     Pattern          fileExclusivePattern;
 
     @Option(alias = "Ip", vnam = "REGEXP", doc = "include these pathnames")
