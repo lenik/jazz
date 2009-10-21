@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<project name="testdef">
+
+    <property name="project.base" location="../../../../../../.." />
+
+    <path id="classpath">
+        <path path="${project.base}/basicfx/target/classes" />
+        <path path="${project.base}/basicfx/target/test-classes" />
+        <path path="${project.base}/bastypes/target/classes" />
+        <path path="${project.base}/basutils/target/classes" />
+        <path path="${project.base}/bastext/target/classes" />
+        <path path="${project.base}/baswrap/target/classes" />
+    </path>
+
+    <taskdef resource="net/bodz/bas/ant/task.properties" classpathref="classpath" />
+
+</project>
