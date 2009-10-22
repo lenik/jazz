@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Forms
+Bundle-SymbolicName: net.bodz.xml.forms
+Bundle-Version: 1.0.0.qualifier
+Require-Bundle: net.bodz.bas;bundle-version="1.0.0",
+ net.bodz.xml;bundle-version="1.0.0"

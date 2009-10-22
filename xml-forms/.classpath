@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" output="target/mod/Commons/main" path="mod/Commons/main"/>
+	<classpathentry kind="src" output="target/mod/Commons/test" path="mod/Commons/test"/>
+	<classpathentry kind="src" output="target/mod/XML Forms/main" path="mod/XML Forms/main"/>
+	<classpathentry kind="src" output="target/mod/XML Forms/test" path="mod/XML Forms/test"/>
+	<classpathentry kind="src" output="target/mod/jaxb/main" path="mod/jaxb/main"/>
+	<classpathentry kind="src" output="target/mod/jaxb/test" path="mod/jaxb/test"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/net.bodz.bas"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/net.bodz.xml"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>
