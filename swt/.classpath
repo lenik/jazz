@@ -3,19 +3,19 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-	<classpathentry kind="src" output="mod/Bundled Modules/bin" path="mod/Bundled Modules/src"/>
-	<classpathentry kind="src" output="mod/Bundled Modules/test.bin" path="mod/Bundled Modules/test"/>
-	<classpathentry kind="src" output="mod/Common Controls/bin" path="mod/Common Controls/src"/>
-	<classpathentry kind="src" output="mod/Common Controls/test.bin" path="mod/Common Controls/test"/>
-	<classpathentry kind="src" output="mod/Commons/bin" path="mod/Commons/src"/>
-	<classpathentry kind="src" output="mod/Commons/test.bin" path="mod/Commons/test"/>
-	<classpathentry kind="src" output="mod/GUI Framework/bin" path="mod/GUI Framework/src"/>
-	<classpathentry kind="src" output="mod/GUI Framework/test.bin" path="mod/GUI Framework/test"/>
-	<classpathentry kind="src" output="mod/Geom Shapes/bin" path="mod/Geom Shapes/src"/>
-	<classpathentry kind="src" output="mod/Geom Shapes/test.bin" path="mod/Geom Shapes/test"/>
-	<classpathentry kind="src" output="mod/Presentation/bin" path="mod/Presentation/src"/>
-	<classpathentry kind="src" output="mod/Presentation/test.bin" path="mod/Presentation/test"/>
+	<classpathentry kind="src" output="target/mod/Bundled Modules/main-classes" path="mod/Bundled Modules/main/java"/>
+	<classpathentry kind="src" output="target/mod/Bundled Modules/test-classes" path="mod/Bundled Modules/test/java"/>
+	<classpathentry kind="src" output="target/mod/Common Controls/main-classes" path="mod/Common Controls/main/java"/>
+	<classpathentry kind="src" output="target/mod/Common Controls/test-classes" path="mod/Common Controls/test/java"/>
+	<classpathentry kind="src" output="target/mod/Commons/main-classes" path="mod/Commons/main/java"/>
+	<classpathentry kind="src" output="target/mod/Commons/test-classes" path="mod/Commons/test/java"/>
+	<classpathentry kind="src" output="target/mod/GUI Framework/main-classes" path="mod/GUI Framework/main/java"/>
+	<classpathentry kind="src" output="target/mod/GUI Framework/test-classes" path="mod/GUI Framework/test/java"/>
+	<classpathentry kind="src" output="target/mod/Geom Shapes/main-classes" path="mod/Geom Shapes/main/java"/>
+	<classpathentry kind="src" output="target/mod/Geom Shapes/test-classes" path="mod/Geom Shapes/test/java"/>
+	<classpathentry kind="src" output="target/mod/Presentation/main-classes" path="mod/Presentation/main/java"/>
+	<classpathentry kind="src" output="target/mod/Presentation/test-classes" path="mod/Presentation/test/java"/>
 	<classpathentry kind="var" path="JAVA_LIB/net.bodz.icons.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/net.bodz.bas"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="output" path="target/classes"/>
 </classpath>

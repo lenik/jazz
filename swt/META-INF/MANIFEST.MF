@@ -45,8 +45,7 @@ Export-Package: net.bodz.geom.attributes,
  net.bodz.swt.util,
  net.bodz.swt.widgets,
  net.bodz.swt.widgets.gs,
- net.bodz.swt.widgets.util,
- test
+ net.bodz.swt.widgets.util
 Bundle-ClassPath: mod/Bundled Modules/bin/,
  mod/Common Controls/bin/,
  mod/Commons/bin/,

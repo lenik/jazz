@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<project name="net.bodz.game" default="default">
+
+	<property environment="env" />
+	<property name="distdir" value="${env.JAVA_LIB}" />
+	<property name="distsrc" value="${env.JAVA_SRC}" />
+
+	<target name="default" depends="dist">
+	</target>
+
+	<target name="dist" depends=":bin.jar, :src.jar">
+		<copy todir="${distdir}">
+			<fileset dir="${basedir}/build">
+				<exclude name="*-src.jar" />
+			</fileset>
+		</copy>
+		<copy todir="${distsrc}">
+			<fileset dir="${basedir}/build">
+				<include name="*-src.jar" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name=":bin.jar">
+		<mkdir dir="build" />
+		<jar destfile="build/net.bodz.game.jar" update="true">
+			<fileset dir="mod/Commons/bin" />
+		</jar>
+	</target>
+
+	<target name=":src.jar">
+		<mkdir dir="build" />
+		<jar destfile="build/net.bodz.game-src.jar" update="true">
+			<fileset dir="mod/Commons/src" />
+		</jar>
+	</target>
+
+	<target name="clean">
+		<delete verbose="true">
+			<fileset dir="${basedir}/build" includes="*.jar" />
+		</delete>
+	</target>
+
+</project>

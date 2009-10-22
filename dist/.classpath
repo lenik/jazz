@@ -6,15 +6,15 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-	<classpathentry kind="src" output="mod/Package Maintaince/bin" path="mod/Package Maintaince/src"/>
-	<classpathentry kind="src" output="mod/Package Maintaince/test.bin" path="mod/Package Maintaince/test"/>
-	<classpathentry kind="src" output="mod/Software Protection/bin" path="mod/Software Protection/src"/>
-	<classpathentry kind="src" output="mod/Software Protection/test.bin" path="mod/Software Protection/test"/>
-	<classpathentry kind="src" output="mod/Utilities/bin" path="mod/Utilities/src"/>
-	<classpathentry kind="src" output="mod/Utilities/test.bin" path="mod/Utilities/test"/>
-	<classpathentry kind="src" output="mod/Win32 Natives/bin" path="mod/Win32 Natives/src"/>
-	<classpathentry kind="src" output="mod/Win32 Natives/test.bin" path="mod/Win32 Natives/test"/>
+	<classpathentry kind="src" output="target/mod/Package Maintaince/main-classes" path="mod/Package Maintaince/main/java"/>
+	<classpathentry kind="src" output="target/mod/Package Maintaince/test-classes" path="mod/Package Maintaince/test/java"/>
+	<classpathentry kind="src" output="target/mod/Software Protection/main-classes" path="mod/Software Protection/main/java"/>
+	<classpathentry kind="src" output="target/mod/Software Protection/test-classes" path="mod/Software Protection/test/java"/>
+	<classpathentry kind="src" output="target/mod/Utilities/main-classes" path="mod/Utilities/main/java"/>
+	<classpathentry kind="src" output="target/mod/Utilities/test-classes" path="mod/Utilities/test/java"/>
+	<classpathentry kind="src" output="target/mod/Win32 Natives/main-classes" path="mod/Win32 Natives/main/java"/>
+	<classpathentry kind="src" output="target/mod/Win32 Natives/test-classes" path="mod/Win32 Natives/test/java"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/net.bodz.bas"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/net.bodz.swt"/>
-	<classpathentry kind="output" path="mod/bin"/>
+	<classpathentry kind="output" path="target/classes"/>
 </classpath>

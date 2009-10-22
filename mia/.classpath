@@ -2,13 +2,12 @@
 
 <classpath> 
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-  <classpathentry kind="output" path="bin"/>
+  <classpathentry kind="output" path="target/classes"/>
   <classpathentry combineaccessrules="false" kind="src" path="/net.bodz.bas"/>
-  <classpathentry kind="src" path="mod/Math/src" output="mod/Math/bin"/>
-  <classpathentry kind="src" path="mod/Math/test" output="mod/Math/test.bin"/>
-  <classpathentry kind="src" path="mod/Node Graph/src" output="mod/Node Graph/bin"/>
-  <classpathentry kind="src" path="mod/Node Graph/test" output="mod/Node Graph/test.bin"/>
-  <classpathentry kind="src" path="mod/Shape Drawings/src" output="mod/Shape Drawings/bin"/>
-  <classpathentry kind="src" path="mod/Shape Drawings/test" output="mod/Shape Drawings/test.bin"/>
-  <classpathentry kind="src" path="src"/>
+  <classpathentry kind="src" path="mod/Geom Comput/main" output="target/mod/Geom Comput/main/>
+  <classpathentry kind="src" path="mod/Geom Comput/test" output="target/mod/Geom Comput/test/java"/>
+  <classpathentry kind="src" output="target/mod/Math/main-classes" path="mod/Math/main/java"/>
+  <classpathentry kind="src" output="target/mod/Math/test-classes" path="mod/Math/test/java"/>
+  <classpathentry kind="src" output="target/mod/Node Graph/main-classes" path="mod/Node Graph/main/java"/>
+  <classpathentry kind="src" output="target/mod/Node Graph/test-classes" path="mod/Node Graph/test/java"/>
 </classpath>

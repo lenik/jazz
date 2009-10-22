@@ -9,12 +9,12 @@
     <target name="10bin.jar">
         <mkdir dir="build" />
         <jar destfile="build/net.bodz.swt.jar" update="true">
-            <fileset dir="mod/Bundled Modules/bin" />
-            <fileset dir="mod/Common Controls/bin" />
-            <fileset dir="mod/Commons/bin" />
-            <fileset dir="mod/GUI Framework/bin" />
-            <fileset dir="mod/Geom Shapes/bin" />
-            <fileset dir="mod/Presentation/bin" />
+            <fileset dir="target/mod/Bundled Modules/main-classes" />
+            <fileset dir="target/mod/Common Controls/main-classes" />
+            <fileset dir="target/mod/Commons/main-classes" />
+            <fileset dir="target/mod/GUI Framework/main-classes" />
+            <fileset dir="target/mod/Geom Shapes/main-classes" />
+            <fileset dir="target/mod/Presentation/main-classes" />
         </jar>
         <length property="size.bin" file="build/net.bodz.swt.jar" />
         <echo>Size: ${size.bin}</echo>
@@ -23,12 +23,12 @@
     <target name="10src.jar">
         <mkdir dir="build" />
         <jar destfile="build/net.bodz.swt-src.jar" update="true">
-            <fileset dir="mod/Bundled Modules/src" />
-            <fileset dir="mod/Common Controls/src" />
-            <fileset dir="mod/Commons/src" />
-            <fileset dir="mod/GUI Framework/src" />
-            <fileset dir="mod/Geom Shapes/src" />
-            <fileset dir="mod/Presentation/src" />
+            <fileset dir="mod/Bundled Modules/main" />
+            <fileset dir="mod/Common Controls/main" />
+            <fileset dir="mod/Commons/main" />
+            <fileset dir="mod/GUI Framework/main" />
+            <fileset dir="mod/Geom Shapes/main" />
+            <fileset dir="mod/Presentation/main" />
         </jar>
         <length property="size.src" file="build/net.bodz.swt-src.jar" />
         <echo>Size: ${size.src}</echo>
@@ -38,17 +38,17 @@
         <mkbat outdir="${basedir}/bin">
             <library>bodz_swt</library>
             <classpath refid="project.classpath" />
-            <findmain path="mod/GUI Framework/bin" />
-            <findmain path="mod/Presentation/bin" />
+            <findmain path="target/mod/GUI Framework/main-classes" />
+            <findmain path="target/mod/Presentation/main-classes" />
         </mkbat>
         <!--
         <mkbat outdir="${basedir}/test.bin">
             <library>bodz_swt</library>
             <library value="${basedir}" />
             <classpath refid="project.classpathWithTest" />
-            <findmain path="mod/Commons/test.bin" />
-            <findmain path="mod/GUI Framework/test.bin" />
-            <findmain path="mod/Presentation/test.bin" />
+            <findmain path="target/mod/Commons/test-classes" />
+            <findmain path="target/mod/GUI Framework/test-classes" />
+            <findmain path="target/mod/Presentation/test-classes" />
         </mkbat>
         -->
     </target>
