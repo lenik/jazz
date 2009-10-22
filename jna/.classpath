@@ -2,9 +2,7 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-	<classpathentry kind="src" output="mod/Win32 Commons/bin" path="mod/Win32 Commons/src"/>
-	<classpathentry kind="src" output="mod/Win32 Commons/test.bin" path="mod/Win32 Commons/test"/>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="lib/jna-3.0.jar" sourcepath="lib/jna-3.0-src.zip"/>
-	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="src" output="target/classes" path="src/main/java"/>
+	<classpathentry kind="src" output="target/test-classes" path="src/test/java"/>
+	<classpathentry kind="output" path="target/classes"/>
 </classpath>

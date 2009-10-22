@@ -10,4 +10,5 @@
 	<ExtMountFolder FolderName="K:\com.seccaproject\com.seccaproject.public\models"/>
 	<ExtMountFolder FolderName="K:\com.labja\com.labja.public\models"/>
 	<ExtMountFolder FolderName="K:\net.bodz\net.bodz.xml\models\p\pdb"/>
+	<ExtMountFolder FolderName="K:\com.seccaproject\com.seccaproject.public"/>
 </Project>

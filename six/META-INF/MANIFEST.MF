@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: SiX Parser Engine
+Bundle-SymbolicName: net.bodz.six;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Vendor: Lenik
+Require-Bundle: net.bodz.bas;bundle-version="1.0.0"
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: mod/Parser Model/bin/
+Export-Package: net.bodz.sandbox,
+ net.bodz.sandbox.graph,
+ net.bodz.six.core,
+ net.bodz.six.misc,
+ net.bodz.six.parser

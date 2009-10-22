@@ -1,0 +1,77 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.bodz</groupId>
+	<artifactId>jna</artifactId>
+	<packaging>jar</packaging>
+	<version>0.1-SNAPSHOT</version>
+	<name>bas</name>
+	<url>http://jna.bodz.net/</url>
+	<properties>
+		<distrib-local>C:\lam\repo.distrib</distrib-local>
+	</properties>
+	<organization>
+		<name>boDz Software</name>
+		<url>http://www.bodz.net</url>
+	</organization>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jna</groupId>
+			<artifactId>jna</artifactId>
+			<version>3.0.9</version>
+		</dependency>
+	</dependencies>
+	<scm>
+		<connection>scm:svn:svn://svn.bodz.net/n/net.bodz.jna/trunk</connection>
+		<developerConnection>scm:svn:svn://auto:auto@svn.bodz.net/n/net.bodz.jna/trunk</developerConnection>
+	</scm>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<encoding>utf-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<configuration>
+					<tagBase>svn://svn.bodz.net/n/net.bodz.jna/tags</tagBase>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	<distributionManagement>
+		<repository>
+			<id>distrib-release</id>
+			<name>Release Distribution Repository</name>
+			<url>file://${distrib-local}/release</url>
+		</repository>
+		<snapshotRepository>
+			<id>distrib-snapshot</id>
+			<name>Snapshot Distribution Repository</name>
+			<url>file://${distrib-local}/snapshot</url>
+		</snapshotRepository>
+		<site>
+			<id>distrib-site</id>
+			<name>Distribution Site Location</name>
+			<url>file://${distrib-local}/site</url>
+		</site>
+		<downloadUrl>http://download.bodz.net</downloadUrl>
+	</distributionManagement>
+</project>

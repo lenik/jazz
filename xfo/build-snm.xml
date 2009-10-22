@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<project name="net.bodz.xfo" default="default">
+
+    <property environment="env" />
+    <import file="${env.LAPIOTA}/lib/ant/basic.xml" />
+
+    <target name="default" depends="10bin.jar, 10src.jar, 20mkbat, .kala.dist" />
+
+    <target name="10bin.jar">
+        <mkdir dir="build" />
+        <jar destfile="build/net.bodz.xfo.jar" update="true">
+            <fileset dir="mod/Core FS/bin" />
+            <fileset dir="mod/User Tools/bin" />
+        </jar>
+        <length property="size.bin" file="build/net.bodz.xfo.jar" />
+        <echo>Size: ${size.bin}</echo>
+    </target>
+
+    <target name="10src.jar">
+        <mkdir dir="build" />
+        <jar destfile="build/net.bodz.xfo-src.jar" update="true">
+            <fileset dir="mod/Core FS/src" />
+            <fileset dir="mod/User Tools/src" />
+        </jar>
+        <length property="size.src" file="build/net.bodz.xfo-src.jar" />
+        <echo>Size: ${size.src}</echo>
+    </target>
+
+    <target name="20mkbat" depends="10bin.jar">
+        <mkbat outdir="${basedir}/bin">
+            <library>bodz_mda</library>
+            <classpath refid="project.classpath" />
+            <findmain path="mod/Core FS/bin" />
+            <findmain path="mod/User Tools/bin" />
+        </mkbat>
+    </target>
+
+</project>

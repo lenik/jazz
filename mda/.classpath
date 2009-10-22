@@ -4,22 +4,22 @@
   <classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
   <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
   <classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-  <classpathentry kind="output" path="mod/bin"/>
+  <classpathentry kind="output" path="target/classes"/>
   <classpathentry combineaccessrules="false" kind="src" path="/net.bodz.bas"/>
-  <classpathentry kind="src" output="mod/Commons/bin" path="mod/Commons/src"/>
-  <classpathentry kind="src" output="mod/Commons/test.bin" path="mod/Commons/test"/>
-  <classpathentry kind="src" output="mod/DB Model/bin" path="mod/DB Model/src"/>
-  <classpathentry kind="src" output="mod/DB Model/test.bin" path="mod/DB Model/test"/>
-  <classpathentry kind="src" output="mod/Javalava Parser/bin" path="mod/Javalava Parser/src"/>
-  <classpathentry kind="src" output="mod/Javalava Parser/test.bin" path="mod/Javalava Parser/test"/>
-  <classpathentry kind="src" output="mod/Model In Marks/bin" path="mod/Model In Marks/src"/>
-  <classpathentry kind="src" output="mod/Model In Marks/test.bin" path="mod/Model In Marks/test"/>
-  <classpathentry kind="src" path="mod/Template Process/src" output="mod/Template Process/bin"/>
-  <classpathentry kind="src" path="mod/Template Process/test" output="mod/Template Process/test.bin"/>
-  <classpathentry kind="src" output="mod/Text Parser/bin" path="mod/Text Parser/src"/>
-  <classpathentry kind="src" output="mod/Text Parser/test.bin" path="mod/Text Parser/test"/>
-  <classpathentry kind="src" output="mod/XML Models/bin" path="mod/XML Models/src"/>
-  <classpathentry kind="src" output="mod/XML Models/test.bin" path="mod/XML Models/test"/>
+  <classpathentry kind="src" output="target/mod/Commons/main-classes" path="mod/Commons/main/java"/>
+  <classpathentry kind="src" output="target/mod/Commons/test-classes" path="mod/Commons/test/java"/>
+  <classpathentry kind="src" output="target/mod/DB Model/main-classes" path="mod/DB Model/main/java"/>
+  <classpathentry kind="src" output="target/mod/DB Model/test-classes" path="mod/DB Model/test/java"/>
+  <classpathentry kind="src" output="target/mod/Javalava Parser/main-classes" path="mod/Javalava Parser/main/java"/>
+  <classpathentry kind="src" output="target/mod/Javalava Parser/test-classes" path="mod/Javalava Parser/test/java"/>
+  <classpathentry kind="src" output="target/mod/Model In Marks/main-classes" path="mod/Model In Marks/main/java"/>
+  <classpathentry kind="src" output="target/mod/Model In Marks/test-classes" path="mod/Model In Marks/test/java"/>
+  <classpathentry kind="src" path="mod/Template Process/src" output="target/mod/Template Process/bin"/>
+  <classpathentry kind="src" path="mod/Template Process/test" output="target/mod/Template Process/test/java"/>
+  <classpathentry kind="src" output="target/mod/Text Parser/main-classes" path="mod/Text Parser/main/java"/>
+  <classpathentry kind="src" output="target/mod/Text Parser/test-classes" path="mod/Text Parser/test/java"/>
+  <classpathentry kind="src" output="target/mod/XML Models/main-classes" path="mod/XML Models/main/java"/>
+  <classpathentry kind="src" output="target/mod/XML Models/test-classes" path="mod/XML Models/test/java"/>
   <classpathentry kind="var" path="JAVA_HOME/lib/tools.jar" sourcepath="/JAVA_SRC/src-jdk-1.6.0_03.zip"/>
   <classpathentry kind="var" path="JAVA_LIB/dom4j-1.6.1.jar" sourcepath="/JAVA_SRC/src-dom4j-1.6.1.zip"/>
   <classpathentry kind="var" path="JAVA_LIB/groovy-all-1.5.6.jar" sourcepath="/JAVA_SRC/groovy-src-1.5.6.zip"/>

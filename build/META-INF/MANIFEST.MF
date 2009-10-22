@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Build System Helpers
+Bundle-SymbolicName: net.bodz.build
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: boDz Software
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.apache.ant;bundle-version="1.7.1"
