@@ -1,0 +1,120 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.bodz.bas</groupId>
+	<artifactId>bas-parent</artifactId>
+	<version>1</version>
+	<packaging>pom</packaging>
+	<name>BAS Parent</name>
+	<url>http://bas.bodz.net/</url>
+	<properties>
+		<!--set dist.url to file://C:/lam/sw.java/lib/m2 in user/settings.xml. -->
+		<bas.dist.url>http://repo.bodz.net:11082/archiva/repository</bas.dist.url>
+		<bas.dist.release>${bas.dist.url}/releases</bas.dist.release>
+		<bas.dist.snapshot>${bas.dist.url}/snapshots</bas.dist.snapshot>
+		<!--site repository shall using scp protocol.-->
+		<bas.dist.site>file://${basedir}/../site</bas.dist.site>
+	</properties>
+	<organization>
+		<name>boDz Software Foundation</name>
+		<url>http://www.bodz.net</url>
+	</organization>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.4</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<source>1.6</source>
+						<target>1.6</target>
+						<encoding>utf-8</encoding>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<configuration>
+						<encoding>utf-8</encoding>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+	<repositories>
+		<repository>
+			<id>bodz.release-repository</id>
+			<name>BAS Release Repository</name>
+			<url>http://repo.bodz.bas/archiva/repository/releases</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>bodz.snapshot-repository</id>
+			<name>BAS Snapshot Repository</name>
+			<url>http://repo.bodz.bas/archiva/repository/snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+	<distributionManagement>
+		<repository>
+			<id>distrib-release</id>
+			<name>Release Distribution Repository</name>
+			<url>${bas.dist.release}</url>
+		</repository>
+		<snapshotRepository>
+			<id>distrib-snapshot</id>
+			<name>Snapshot Distribution Repository</name>
+			<url>${bas.dist.snapshot}</url>
+		</snapshotRepository>
+		<site>
+			<id>distrib-site</id>
+			<name>Distribution Site Location</name>
+			<url>${bas.dist.site}</url>
+		</site>
+		<downloadUrl>http://www.bodz.net/downloads</downloadUrl>
+	</distributionManagement>
+	<profiles>
+		<profile>
+			<id>maven-optimization</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<build>
+				<pluginManagement>
+					<plugins>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-release-plugin</artifactId>
+							<version>2.0-beta-9</version>
+						</plugin>
+						<plugin>
+							<groupId>org.apache.maven.plugins</groupId>
+							<artifactId>maven-scm-plugin</artifactId>
+							<!--Can't use 1.3-SNAPSHOT for release-plugin. -->
+							<version>1.2</version>
+						</plugin>
+					</plugins>
+				</pluginManagement>
+			</build>
+		</profile>
+	</profiles>
+</project>
