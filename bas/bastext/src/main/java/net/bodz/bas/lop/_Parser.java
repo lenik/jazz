@@ -1,6 +1,5 @@
 package net.bodz.bas.lop;
 
-
 public abstract class _Parser implements Parser {
 
     protected Lexer lexer;

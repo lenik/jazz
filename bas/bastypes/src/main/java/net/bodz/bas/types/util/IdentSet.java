@@ -11,7 +11,7 @@ import java.util.Set;
  */
 public class IdentSet extends AbstractSet<Object> implements Set<Object> {
 
-    private static final long                     serialVersionUID = -6499268314160028115L;
+    private static final long serialVersionUID = -6499268314160028115L;
 
     private final IdentityHashMap<Object, Object> ihm;
 

@@ -15,7 +15,7 @@ import net.bodz.bas.nls.FPNLS;
 
 public class Sequence<T> extends _Functor<T> implements Groupable<T>, List<IFunctor<T>> {
 
-    private List<IFunctor<T>>    list;
+    private List<IFunctor<T>> list;
     private Map<Object, Integer> labels;
 
     public Sequence() {

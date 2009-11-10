@@ -17,14 +17,14 @@ import net.bodz.bas.lang.err.OutOfDomainException;
  */
 public class TreePath implements Comparable<TreePath>, Serializable {
 
-    private static final long  serialVersionUID = -7257088263065852283L;
+    private static final long serialVersionUID = -7257088263065852283L;
 
-    public static final String FS               = "/";
+    public static final String FS = "/";
 
-    public static final int    ABSOLUTE         = -1;
-    private final int          uplevel;
+    public static final int ABSOLUTE = -1;
+    private final int uplevel;
 
-    private final String[]     segments;
+    private final String[] segments;
 
     /**
      * @param path
@@ -66,8 +66,7 @@ public class TreePath implements Comparable<TreePath>, Serializable {
             else
                 uplevel = parent.uplevel + child.uplevel - reduce;
             System.arraycopy(parent.segments, 0, segments, 0, pn);
-            System.arraycopy(child.segments, 0, segments, pn,
-                    child.segments.length);
+            System.arraycopy(child.segments, 0, segments, pn, child.segments.length);
         }
     }
 
@@ -120,8 +119,7 @@ public class TreePath implements Comparable<TreePath>, Serializable {
 
     public TreePath getParent() {
         if (segments.length > 0)
-            return new TreePath(uplevel, Arrays.copyOf(segments,
-                    segments.length - 1), false);
+            return new TreePath(uplevel, Arrays.copyOf(segments, segments.length - 1), false);
         else if (isAbsolute())
             // return this; // root/.. = root
             return null; // root/.. = null

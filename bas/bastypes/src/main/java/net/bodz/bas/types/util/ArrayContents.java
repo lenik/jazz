@@ -8,9 +8,9 @@ import net.bodz.bas.nls.TypesNLS;
 
 public class ArrayContents<A, E> extends AbstractList<E> {
 
-    private final A          array;
+    private final A array;
     private final ArrayOp<A> op;
-    private final boolean    deep;
+    private final boolean deep;
 
     public ArrayContents(A array) {
         this(array, false, null);
@@ -20,8 +20,7 @@ public class ArrayContents<A, E> extends AbstractList<E> {
     public ArrayContents(A array, boolean deep, ArrayOp<A> op) {
         if (deep) {
             if (array == null || array.getClass().getComponentType().isPrimitive()) {
-                throw new IllegalArgumentException(TypesNLS
-                        .getString("ArrayContents.deepModeOnPrimv")); //$NON-NLS-1$
+                throw new IllegalArgumentException(TypesNLS.getString("ArrayContents.deepModeOnPrimv")); //$NON-NLS-1$
             }
         }
         this.array = array;

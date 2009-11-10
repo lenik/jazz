@@ -9,11 +9,11 @@ public abstract class PrefetchedIterator<T> implements Iterator<T> {
 
     private static final int UNKNOWN = 0;
     private static final int HASNEXT = 1;
-    private static final int CACHED  = 2;
-    private static final int END     = -1;
-    private int              _state  = UNKNOWN;
+    private static final int CACHED = 2;
+    private static final int END = -1;
+    private int _state = UNKNOWN;
 
-    private T                cache;
+    private T cache;
 
     @Override
     public final boolean hasNext() {

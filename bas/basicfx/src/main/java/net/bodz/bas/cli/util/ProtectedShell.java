@@ -11,7 +11,7 @@ import net.bodz.bas.nls.AppNLS;
 
 public class ProtectedShell {
 
-    private boolean  enabled;
+    private boolean enabled;
     private Terminal out;
 
     public ProtectedShell(boolean enabled, Terminal out) {

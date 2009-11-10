@@ -9,8 +9,8 @@ import java.util.concurrent.Executor;
 
 public abstract class MultiEventGenerator implements Runnable {
 
-    private final Executor              executor;
-    private final Iterator<?>           eventSource;
+    private final Executor executor;
+    private final Iterator<?> eventSource;
     private Map<Object, List<Runnable>> eventHandlers;
 
     public MultiEventGenerator(Executor executor, Iterator<?> eventSource) {

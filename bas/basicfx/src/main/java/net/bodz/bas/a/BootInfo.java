@@ -20,19 +20,19 @@ public @interface BootInfo {
     String[] syslibs() default {};
 
     /**
-     * after fully booted, the user libs are added to the last class loader
-     * returned by {@link LoadConfig#getLoader(ClassLoader)}.
+     * after fully booted, the user libs are added to the last class loader returned by
+     * {@link LoadConfig#getLoader(ClassLoader)}.
      */
     String[] userlibs() default {};
 
     /**
-     * syslibs are visible to the booter class, and the booter class itself must
-     * be with-in the syslibs.
+     * syslibs are visible to the booter class, and the booter class itself must be with-in the
+     * syslibs.
      * 
      * userlibs are passed to the booter's main() method.
      * <p>
-     * The booter shall create a temporary class loader to get more boot info
-     * and load configs, and drop the temporary loader after fully booted.
+     * The booter shall create a temporary class loader to get more boot info and load configs, and
+     * drop the temporary loader after fully booted.
      * <p>
      * <code>
      * booter-main("-l", USERLIB, ..., "--", MAINCLASS, ARGS)

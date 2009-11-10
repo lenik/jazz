@@ -5,8 +5,8 @@ import net.bodz.bas.lang.err.IllegalUsageError;
 public interface LasUnit {
 
     /**
-     * @return <code>false</code> to skip the block to be entered, and the
-     *         correspoing <code>leave</code> is unnecessary.
+     * @return <code>false</code> to skip the block to be entered, and the correspoing
+     *         <code>leave</code> is unnecessary.
      */
     boolean enter(Object... args);
 

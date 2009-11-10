@@ -11,9 +11,9 @@ public class MemoryOutputStream extends OutputStream {
     private final Memory memory;
 
     /** addr_t */
-    private int          start;
+    private int start;
 
-    private int          size;
+    private int size;
 
     public MemoryOutputStream(Memory memory, int start, int size) {
         this.memory = memory;

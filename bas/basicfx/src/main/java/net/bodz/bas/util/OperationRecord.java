@@ -13,8 +13,7 @@ public interface OperationRecord {
     void execute() throws OperationException;
 
     /**
-     * The history manager guarantees rollback only once for each recorded
-     * operation.
+     * The history manager guarantees rollback only once for each recorded operation.
      */
     void rollback() throws OperationException;
 

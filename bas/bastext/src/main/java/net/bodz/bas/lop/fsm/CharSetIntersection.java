@@ -11,8 +11,8 @@ public final class CharSetIntersection extends _CharSet {
     private final CharSet a;
     private final CharSet b;
     private final boolean _abstract;
-    private final int     begin;
-    private final int     end;
+    private final int begin;
+    private final int end;
 
     public CharSetIntersection(CharSet a, CharSet b) {
         if (a == null)
@@ -20,8 +20,7 @@ public final class CharSetIntersection extends _CharSet {
         if (b == null)
             throw new NullPointerException("b");
         if (a.intersects(b) == NONE)
-            throw new IllegalUsageException(String.format("CharSets are not intersected: %s ^ %s",
-                    a, b));
+            throw new IllegalUsageException(String.format("CharSets are not intersected: %s ^ %s", a, b));
         this._abstract = a.isAbstract() || b.isAbstract();
         this.a = a;
         this.b = b;

@@ -29,8 +29,8 @@ public class XMLsTest {
 
         XMLs.parse(new StringReader(xml), new DefaultHandler() {
             @Override
-            public void startElement(String uri, String localName, String name,
-                    Attributes attributes) throws SAXException {
+            public void startElement(String uri, String localName, String name, Attributes attributes)
+                    throws SAXException {
                 Integer stat = tagstat.get(name);
                 if (stat == null)
                     stat = 1;
@@ -69,10 +69,10 @@ public class XMLsTest {
     @Test
     public void testEncodeArray() throws IOException {
         testXmlCodec("array", new Object[] { //$NON-NLS-1$
-        //
-                10, //
-                new Integer[] { 20, 21, 22 }, //
-                30 });
+                //
+                        10, //
+                        new Integer[] { 20, 21, 22 }, //
+                        30 });
     }
 
 }

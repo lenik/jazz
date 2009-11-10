@@ -10,7 +10,7 @@ import net.bodz.bas.types.TextMap;
 
 public class EclipseWorkspace {
 
-    private File            base;
+    private File base;
     private TextMap<String> cpVars;
 
     public EclipseWorkspace(File base) throws IOException {
@@ -27,7 +27,7 @@ public class EclipseWorkspace {
     }
 
     static String PREFS = "org.eclipse.core.runtime/.settings/org.eclipse.jdt.core.prefs"; //$NON-NLS-1$
-    static String CPVAR = "org.eclipse.jdt.core.classpathVariable.";                      //$NON-NLS-1$
+    static String CPVAR = "org.eclipse.jdt.core.classpathVariable."; //$NON-NLS-1$
 
     public void reload() throws IOException {
         Properties prefs = Files.loadProperties(new File(base, PREFS));

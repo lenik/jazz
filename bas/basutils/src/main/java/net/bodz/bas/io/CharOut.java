@@ -30,7 +30,7 @@ public abstract class CharOut implements ICharOut {
     }
 
     private final static char[] NULL = "(null)".toCharArray(); //$NON-NLS-1$
-    private final static char   NL   = '\n';
+    private final static char NL = '\n';
 
     public void print(String s) {
         try {

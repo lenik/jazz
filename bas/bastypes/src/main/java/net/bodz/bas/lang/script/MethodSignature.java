@@ -16,7 +16,7 @@ import net.bodz.bas.types.util.Types;
 
 public class MethodSignature {
 
-    private final String     name;
+    private final String name;
     private final Class<?>[] types;
 
     public MethodSignature(String name, Class<?>... types) {

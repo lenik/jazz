@@ -11,7 +11,7 @@ public class LogTerms {
         console = new ConsoleLogTerm();
     }
 
-    static PrefixMap<LogTerm>   nameMap;
+    static PrefixMap<LogTerm> nameMap;
     static TypeHierMap<LogTerm> typeMap;
     static {
         nameMap = new PrefixMap<LogTerm>();

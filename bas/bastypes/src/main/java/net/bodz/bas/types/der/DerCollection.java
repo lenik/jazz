@@ -11,18 +11,16 @@ public class DerCollection<E> extends AbstractCollection<E> implements Derivatio
     private final Collection<E> orig;
 
     /**
-     * when modification(change, remove) is made on <code>orig</code>, then the
-     * content of <code>orig</code> is copied (just references, not clone), and
-     * the <code>edit</code> contains both modified <code>orig</code> and newly
-     * added entries.
+     * when modification(change, remove) is made on <code>orig</code>, then the content of
+     * <code>orig</code> is copied (just references, not clone), and the <code>edit</code> contains
+     * both modified <code>orig</code> and newly added entries.
      */
-    private boolean             copy;
+    private boolean copy;
 
     /**
-     * if <code>copy</code> is <code>true</code>, <code>edit</code> must be
-     * non-null.
+     * if <code>copy</code> is <code>true</code>, <code>edit</code> must be non-null.
      */
-    private Collection<E>       edit;
+    private Collection<E> edit;
 
     /**
      * @throws NullPointerException

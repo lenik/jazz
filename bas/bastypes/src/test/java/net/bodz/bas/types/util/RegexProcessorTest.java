@@ -12,7 +12,7 @@ public class RegexProcessorTest {
 
     static class TestFindAll {
         final Pattern pattern;
-        final int     group;
+        final int group;
 
         public TestFindAll(Pattern pattern, int group) {
             this.pattern = pattern;

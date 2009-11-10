@@ -47,8 +47,7 @@ public class Reflects {
         bind(declareClass, defineClass, defineObject);
     }
 
-    public static void bind(Class<?> declareClass, Class<?> defineClass, Object defineObject)
-            throws ReflectException {
+    public static void bind(Class<?> declareClass, Class<?> defineClass, Object defineObject) throws ReflectException {
         TextMap<PropertyDescriptor> properties = null;
 
         for (Field declareField : declareClass.getDeclaredFields()) {
@@ -181,8 +180,8 @@ public class Reflects {
         }
     }
 
-    public static Method getDeclaredMethod(Class<?> clazz, String methodName,
-            Class<?>... parameterTypes) throws ReflectException {
+    public static Method getDeclaredMethod(Class<?> clazz, String methodName, Class<?>... parameterTypes)
+            throws ReflectException {
         try {
             return clazz.getDeclaredMethod(methodName, parameterTypes);
         } catch (Exception e) {
@@ -209,18 +208,16 @@ public class Reflects {
     public static Object get(Object obj, PropertyDescriptor property) throws ReflectException {
         Method read = property.getReadMethod();
         if (read == null)
-            throw new IllegalArgumentException(
-                    LangNLS.getString("Reflects.property") + property.getName() //$NON-NLS-1$
-                            + LangNLS.getString("Reflects.noread")); //$NON-NLS-1$
+            throw new IllegalArgumentException(LangNLS.getString("Reflects.property") + property.getName() //$NON-NLS-1$
+                    + LangNLS.getString("Reflects.noread")); //$NON-NLS-1$
         return invoke(obj, read);
     }
 
     public static void set(Object obj, PropertyDescriptor property, Object value) {
         Method write = property.getWriteMethod();
         if (write == null)
-            throw new IllegalArgumentException(
-                    LangNLS.getString("Reflects.property") + property.getName() //$NON-NLS-1$
-                            + LangNLS.getString("Reflects.nowrite")); //$NON-NLS-1$
+            throw new IllegalArgumentException(LangNLS.getString("Reflects.property") + property.getName() //$NON-NLS-1$
+                    + LangNLS.getString("Reflects.nowrite")); //$NON-NLS-1$
         invoke(obj, write, value);
     }
 
@@ -232,8 +229,7 @@ public class Reflects {
         set(obj, field, value);
     }
 
-    public static void setStatic(Class<?> clazz, String fieldName, Object value)
-            throws ReflectException {
+    public static void setStatic(Class<?> clazz, String fieldName, Object value) throws ReflectException {
         Field field = getDeclaredField(clazz, fieldName);
         field.setAccessible(true);
         set(null, field, value);
@@ -247,8 +243,7 @@ public class Reflects {
         }
     }
 
-    public static <T> Constructor<T> getDeclaredConstructor(Class<T> clazz,
-            Class<?>... parameterTypes) {
+    public static <T> Constructor<T> getDeclaredConstructor(Class<T> clazz, Class<?>... parameterTypes) {
         try {
             return clazz.getDeclaredConstructor(parameterTypes);
         } catch (Exception e) {
@@ -264,8 +259,7 @@ public class Reflects {
         }
     }
 
-    public static <T> T newInstance(Constructor<T> ctor, Object... initargs)
-            throws ReflectException {
+    public static <T> T newInstance(Constructor<T> ctor, Object... initargs) throws ReflectException {
         try {
             return Control.newInstance(ctor, initargs);
         } catch (Exception e) {

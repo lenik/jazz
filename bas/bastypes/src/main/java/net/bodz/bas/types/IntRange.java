@@ -22,7 +22,7 @@ public class IntRange extends AbstractSet<Integer> implements NavigableSet<Integ
 
     class Iter implements Iterator<Integer> {
 
-        private int i    = start;
+        private int i = start;
         private int last = start - 1;
 
         @Override
@@ -42,8 +42,7 @@ public class IntRange extends AbstractSet<Integer> implements NavigableSet<Integ
             if (last == start)
                 start++; // now last<start.
             else
-                throw new UnsupportedOperationException(TypesNLS
-                        .getString("IntRange.holeAfterRemove")); //$NON-NLS-1$
+                throw new UnsupportedOperationException(TypesNLS.getString("IntRange.holeAfterRemove")); //$NON-NLS-1$
         }
 
     }
@@ -126,7 +125,7 @@ public class IntRange extends AbstractSet<Integer> implements NavigableSet<Integ
 
     class DIter implements Iterator<Integer> {
 
-        private int i    = end;
+        private int i = end;
         private int last = end;
 
         @Override
@@ -146,8 +145,7 @@ public class IntRange extends AbstractSet<Integer> implements NavigableSet<Integ
             if (last == end - 1)
                 end--; // now last>=end.
             else
-                throw new UnsupportedOperationException(TypesNLS
-                        .getString("IntRange.holeAfterRemove")); //$NON-NLS-1$
+                throw new UnsupportedOperationException(TypesNLS.getString("IntRange.holeAfterRemove")); //$NON-NLS-1$
         }
     }
 
@@ -243,8 +241,8 @@ public class IntRange extends AbstractSet<Integer> implements NavigableSet<Integ
     }
 
     @Override
-    public NavigableSet<Integer> subSet(Integer fromElement, boolean fromInclusive,
-            Integer toElement, boolean toInclusive) {
+    public NavigableSet<Integer> subSet(Integer fromElement, boolean fromInclusive, Integer toElement,
+            boolean toInclusive) {
         if (!fromInclusive)
             fromElement++;
         if (toInclusive)

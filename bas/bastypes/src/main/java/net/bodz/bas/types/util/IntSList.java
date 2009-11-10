@@ -2,9 +2,9 @@ package net.bodz.bas.types.util;
 
 public class IntSList {
 
-    private int   start;
+    private int start;
     private int[] next;
-    private int   size;
+    private int size;
 
     public IntSList(int size) {
         next = new int[size];

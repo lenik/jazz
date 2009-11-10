@@ -19,8 +19,8 @@ import net.bodz.bas.types.util.Types;
 
 public class MethodOption extends _Option<CallInfo> implements ScriptMethod<Object> {
 
-    private final Method       method;
-    private final int          argc;
+    private final Method method;
+    private final int argc;
     private final TypeParser[] parsers;
 
     public MethodOption(String name, Method method, OptionGroup optgrp) {

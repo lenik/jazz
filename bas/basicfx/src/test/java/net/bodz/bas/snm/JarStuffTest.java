@@ -18,7 +18,7 @@ public class JarStuffTest {
 
     private String magic = "MaGiC-GoOd.."; //$NON-NLS-1$
 
-    File           projectBase;
+    File projectBase;
 
     public JarStuffTest() {
         projectBase = EclipseProject.findProjectBase(JarStuffTest.class);

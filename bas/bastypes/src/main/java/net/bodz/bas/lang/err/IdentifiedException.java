@@ -13,35 +13,34 @@ package net.bodz.bas.lang.err;
  * 已识别的异常是指在不转换异常的前提下，将异常标记为已识别。已识别的异常通常不再被捕获，而直接使程序终止。例如：
  * 
  * <pre>
- *    int divide(String a, String b) {
- *        assert a != null &amp;&amp; b != null; 
- *        try {
- *            int i = Integer.parseInt(a); 
- *            int j = Integer.parseInt(b); 
- *            return i / j; 
- *        } catch (ParseException e) {
- *            throw new IdentifiedException(e.getMessage(), e); 
- *        }
- *    }
+ * int divide(String a, String b) {
+ *     assert a != null &amp;&amp; b != null;
+ *     try {
+ *         int i = Integer.parseInt(a);
+ *         int j = Integer.parseInt(b);
+ *         return i / j;
+ *     } catch (ParseException e) {
+ *         throw new IdentifiedException(e.getMessage(), e);
+ *     }
+ * }
  * </pre>
  * 
- * 通过标注 ParseException 为已识别异常，编译器将不再要求 divide 抛出 ParseException。而 divide
- * 调用者也无法捕捉到该异常，但 ArithmeticException (除数为0) 并未被识别，因此 divide 调用者可以捕获该异常。
+ * 通过标注 ParseException 为已识别异常，编译器将不再要求 divide 抛出 ParseException。而 divide 调用者也无法捕捉到该异常，但
+ * ArithmeticException (除数为0) 并未被识别，因此 divide 调用者可以捕获该异常。
  * 
  * <hr>
- * This exception is used to separate identified exceptions from others, and
- * bypass the exception checking of compiling.
+ * This exception is used to separate identified exceptions from others, and bypass the exception
+ * checking of compiling.
  * <p>
  * Generally, there are several ways to process exceptions:
  * <ol>
  * <li>By add throws statements, the exceptions are passed out to caller.
- * <li>Handle the exceptions, e.g. try to access a different file when a file
- * couldn't be accessed.
+ * <li>Handle the exceptions, e.g. try to access a different file when a file couldn't be accessed.
  * <li>Convert the exceptions to a unified exception.
  * </ol>
- * IdentifiedException is to mark exceptions as been identified, so they won't
- * be catched any more, they would cancel the execution of program, and the
- * compiler also not check throws statements against them.
+ * IdentifiedException is to mark exceptions as been identified, so they won't be catched any more,
+ * they would cancel the execution of program, and the compiler also not check throws statements
+ * against them.
  */
 public class IdentifiedException extends RuntimeException {
 

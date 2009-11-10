@@ -34,43 +34,43 @@ import net.bodz.bas.lop.util.XYTellable;
 public abstract class JFlexLexer extends _Lexer implements XYTellable {
 
     @ReflectMethod("yylex")
-    private Method yylex;       // public int()
+    private Method yylex; // public int()
 
     @ReflectMethod(value = "yyreset", parameters = Reader.class)
-    private Method yyreset;     // public void(Reader)
+    private Method yyreset; // public void(Reader)
 
     @ReflectMethod("yyclose")
-    private Method yyclose;     // public void()
+    private Method yyclose; // public void()
 
     @ReflectMethod("yystate")
-    private Method yystate;     // public int()
+    private Method yystate; // public int()
 
     @ReflectMethod(value = "yybegin", parameters = int.class)
-    private Method yybegin;     // public void(int)
+    private Method yybegin; // public void(int)
 
     @ReflectMethod("yytext")
-    private Method yytext;      // public String()
+    private Method yytext; // public String()
 
     @ReflectMethod(value = "yycharat", parameters = int.class)
-    private Method yycharat;    // public char(int)
+    private Method yycharat; // public char(int)
 
     @ReflectMethod("yylength")
-    private Method yylength;    // public int()
+    private Method yylength; // public int()
 
     @ReflectField("yyline")
-    private Field  yyline;      // private int
+    private Field yyline; // private int
 
     @ReflectField("yycolumn")
-    private Field  yycolumn;    // private int
+    private Field yycolumn; // private int
 
     @ReflectField("zzReader")
-    private Field  zzReader;    // private Reader
+    private Field zzReader; // private Reader
 
     @ReflectField("zzCurrentPos")
-    private Field  zzCurrentPos; // private int
+    private Field zzCurrentPos; // private int
 
     @ReflectField("zzAtEOF")
-    private Field  zzAtEOF;     // private boolean, see also zzEOFDone
+    private Field zzAtEOF; // private boolean, see also zzEOFDone
 
     /**
      * JFlex constructors: <code><ul>  

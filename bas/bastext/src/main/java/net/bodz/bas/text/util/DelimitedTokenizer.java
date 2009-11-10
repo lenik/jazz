@@ -13,8 +13,8 @@ public class DelimitedTokenizer implements DirectIterable<String, IOException> {
 
     private List<Delimiter> delimiters;
 
-    private int                  state;
-    private Reader               in;
+    private int state;
+    private Reader in;
 
     public DelimitedTokenizer(Reader in, Delimiter... delimiters) {
         this(in, Arrays.asList(delimiters));
@@ -29,7 +29,7 @@ public class DelimitedTokenizer implements DirectIterable<String, IOException> {
     }
 
     private static final int TD_OFFSET = 100;
-    private static final int TD_SPAN   = 100;
+    private static final int TD_SPAN = 100;
     private static final int TD_ESC_OFFSET;
     private static final int TD_MAXLEN;
     static {
@@ -42,7 +42,7 @@ public class DelimitedTokenizer implements DirectIterable<String, IOException> {
     void next() throws IOException {
         int c;
         while ((c = in.read()) != -1) {
-            
+
         }
     }
 

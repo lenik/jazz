@@ -4,8 +4,7 @@ package net.bodz.bas.lang;
  * Used for:
  * <ul>
  * <li>null.class
- * <li>class literals in fields of an annotation class can't be
- * <code>null</code>, for example:
+ * <li>class literals in fields of an annotation class can't be <code>null</code>, for example:
  * 
  * <pre>
  * class Serializable_null implements Serializable, null_class {

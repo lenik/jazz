@@ -14,8 +14,7 @@ public @interface Icon {
     String[] value() default {};
 
     /**
-     * create(usage) -> resource-path or ImageData, where usage is `big',
-     * `small', etc.
+     * create(usage) -> resource-path or ImageData, where usage is `big', `small', etc.
      */
     Class<? extends Factory<?>> factory() default Factory_Object_null.class;
 

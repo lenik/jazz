@@ -6,7 +6,7 @@ public abstract class PrefetchedIntIterator implements IntIterator {
 
     protected final int END;
 
-    private int         prefetched;
+    private int prefetched;
 
     public PrefetchedIntIterator(int endValue) {
         this.END = endValue;

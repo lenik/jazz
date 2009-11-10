@@ -14,9 +14,9 @@ import net.bodz.bas.types.util.Types;
 
 public class VarArgcMethod extends _VMethod {
 
-    private final String     name;
+    private final String name;
     private IndexMap<Method> argcMap;
-    private boolean          autotype = true;
+    private boolean autotype = true;
 
     public VarArgcMethod(String name) {
         this.name = name;
@@ -53,8 +53,8 @@ public class VarArgcMethod extends _VMethod {
      * if parameter type incompat, TypeParser on the toString value is used.
      */
     @Override
-    public Object invoke(Object obj, Object... params) throws NoSuchMethodException,
-            IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+    public Object invoke(Object obj, Object... params) throws NoSuchMethodException, IllegalArgumentException,
+            IllegalAccessException, InvocationTargetException {
         int argc = params.length;
         Method method = get(argc);
         if (method == null)
@@ -88,16 +88,14 @@ public class VarArgcMethod extends _VMethod {
     }
 
     /**
-     * safe-type invoke, the corresponding argc method must have compat
-     * signature.
+     * safe-type invoke, the corresponding argc method must have compat signature.
      * 
      * @throws NoSuchMethodException
      *             if non-exist argc or the method signature incompat.
      */
     @Override
-    public Object invokel(Object obj, Class<?>[] paramTypes, Object... params)
-            throws NoSuchMethodException, IllegalArgumentException, IllegalAccessException,
-            InvocationTargetException {
+    public Object invokel(Object obj, Class<?>[] paramTypes, Object... params) throws NoSuchMethodException,
+            IllegalArgumentException, IllegalAccessException, InvocationTargetException {
         if (paramTypes != null)
             if (paramTypes.length != params.length)
                 throw new IllegalArgumentException(LangNLS.getString("VarArgcMethod.diffParamTV")); //$NON-NLS-1$

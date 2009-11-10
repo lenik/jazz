@@ -11,21 +11,21 @@ import net.bodz.bas.lang.err.NotImplementedException;
 /**
  * DFA State: For any two of transitions in a DFA State, their CharSet are not intersected.
  * 
- * @test 
+ * @test
  */
 public class DFAState implements Comparable<DFAState> {
 
-    private final DFA                  dfa;
-    private final int                  id;
-    private final String               name;
-    private final int                  flags;
+    private final DFA dfa;
+    private final int id;
+    private final String name;
+    private final int flags;
 
     /**
      * TODO: 为了改善访问性能，避免new Char(ch)的额外开销，应该使用一种新型的双列TreeMap.
      */
     private TreeMap<CharSet, DFAState> transitionMap;
 
-    private DFAState                   defaultTransition;
+    private DFAState defaultTransition;
 
     DFAState(DFA dfa, int id, String name) {
         this(dfa, id, name, 0);

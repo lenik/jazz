@@ -13,8 +13,8 @@ import net.bodz.bios.nls.BIOSNLS;
 public class EncodeUnit extends TextProcessUnit {
 
     private CharsetEncoder encoder;
-    private CharBuffer     unconv;
-    private ByteBuffer     convBuf;
+    private CharBuffer unconv;
+    private ByteBuffer convBuf;
 
     public EncodeUnit(String charsetName) {
         this(Charset.forName(charsetName));

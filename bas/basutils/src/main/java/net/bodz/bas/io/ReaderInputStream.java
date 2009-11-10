@@ -16,8 +16,8 @@ public class ReaderInputStream extends InputStream {
 
     protected final Reader reader;
     private CharsetEncoder encoder;
-    private CharBuffer     charbuf;
-    private ByteBuffer     bytebuf;
+    private CharBuffer charbuf;
+    private ByteBuffer bytebuf;
 
     public ReaderInputStream(Reader reader, Charset charset) {
         this.reader = reader;

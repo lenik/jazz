@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 public class BitSetIntSet extends _IntSet {
 
     private final BitSet bits;
-    private int          cardinality;
+    private int cardinality;
 
     public BitSetIntSet() {
         this.bits = new BitSet();
@@ -73,7 +73,7 @@ public class BitSetIntSet extends _IntSet {
 
     class Iter implements IntIterator {
 
-        int i       = bits.nextSetBit(0);
+        int i = bits.nextSetBit(0);
         int current = -1;
 
         @Override

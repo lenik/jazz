@@ -9,7 +9,7 @@ public class ArrayAccessList<T> extends AbstractList<T> {
 
     private final T[] array;
     private final int off;
-    private int       len;
+    private int len;
 
     public ArrayAccessList(T[] array, int off, int len) {
         assert array != null;

@@ -40,8 +40,7 @@ public class _LibraryUtil {
                 out.close();
                 in.close();
             } catch (IOException ex) {
-                throw new RuntimeException(
-                        AppNLS.getString("_LibraryUtil.cantCopyLibrary") + tmpFile, ex); //$NON-NLS-1$
+                throw new RuntimeException(AppNLS.getString("_LibraryUtil.cantCopyLibrary") + tmpFile, ex); //$NON-NLS-1$
             }
             System.load(tmpFile.getPath());
             loaded.add(filename);

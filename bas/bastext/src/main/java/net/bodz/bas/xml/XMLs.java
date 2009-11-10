@@ -60,8 +60,7 @@ public class XMLs {
         parse(new InputSource(in), handlers);
     }
 
-    public static void parse(InputSource source, Object... handlers) throws SAXException,
-            IOException {
+    public static void parse(InputSource source, Object... handlers) throws SAXException, IOException {
         assert source != null : "null source"; //$NON-NLS-1$
         XMLReader xmlReader = XMLReaderFactory.createXMLReader();
         for (Object handler : handlers) {
@@ -138,8 +137,7 @@ public class XMLs {
         encoder.close();
     }
 
-    public static void encode(int caller, Object obj, OutputStream out,
-            ExceptionListener exceptionListener) {
+    public static void encode(int caller, Object obj, OutputStream out, ExceptionListener exceptionListener) {
         encode(caller + 1, obj, out, "utf-8", exceptionListener); //$NON-NLS-1$
     }
 
@@ -235,8 +233,7 @@ public class XMLs {
         encode(1, obj, out, exceptionListener);
     }
 
-    public static void encode(Object obj, OutputStream out, String encoding,
-            ExceptionListener exceptionListener) {
+    public static void encode(Object obj, OutputStream out, String encoding, ExceptionListener exceptionListener) {
         encode(1, obj, out, encoding, exceptionListener);
     }
 

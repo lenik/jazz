@@ -6,8 +6,8 @@ import net.bodz.bas.types.util.Objects;
 
 public class Person {
 
-    private String  name;
-    private int     age;
+    private String name;
+    private int age;
     private boolean sex;
     private Address location;
 
@@ -90,10 +90,8 @@ public class Person {
 
     @Override
     public String toString() {
-        return String.format(
-                AppNLS.getString("Person.xml_sdss"), // //$NON-NLS-1$
-                name, age,
-                sex ? AppNLS.getString("Person.girl") : AppNLS.getString("Person.boy"), location); //$NON-NLS-1$ //$NON-NLS-2$
+        return String.format(AppNLS.getString("Person.xml_sdss"), // //$NON-NLS-1$
+                name, age, sex ? AppNLS.getString("Person.girl") : AppNLS.getString("Person.boy"), location); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     public static final Person Tom;

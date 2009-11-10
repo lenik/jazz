@@ -10,7 +10,7 @@ import net.bodz.bas.types.HashTextMap;
 
 public class ModulesRoot {
 
-    private File              root;
+    private File root;
     private Map<String, File> modules;
 
     public ModulesRoot(File root, Map<String, File> modules) {
@@ -31,7 +31,7 @@ public class ModulesRoot {
      * Max-matched prefixes & suffixes.
      */
     private static class MaxFixes implements FilenameFilter {
-        final String  pattern;
+        final String pattern;
         public String maxPrefix;
         public String maxSuffix;
 

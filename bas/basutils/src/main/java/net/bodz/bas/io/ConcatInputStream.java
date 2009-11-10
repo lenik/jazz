@@ -10,7 +10,7 @@ import net.bodz.bas.lang.a.Derived;
 public class ConcatInputStream extends InputStream {
 
     protected final Queue<InputStream> q;
-    private boolean                    fast = true;
+    private boolean fast = true;
 
     public ConcatInputStream(Queue<InputStream> queue) {
         if (queue == null)

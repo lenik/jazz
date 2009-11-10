@@ -12,7 +12,7 @@ import org.junit.Test;
 
 public class BreakLinesUnitTest {
 
-    BreakLinesUnit chop   = new BreakLinesUnit();
+    BreakLinesUnit chop = new BreakLinesUnit();
     BreakLinesUnit nochop = new BreakLinesUnit();
 
     public BreakLinesUnitTest() {

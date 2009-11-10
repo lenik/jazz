@@ -23,22 +23,22 @@ import net.bodz.bas.lop._Parser;
 public abstract class ByaccjParser extends _Parser {
 
     @ReflectField("yystate")
-    private Field  yystate;
+    private Field yystate;
 
     @ReflectMethod(value = "state_peek", parameters = int.class)
     private Method state_peek;
 
     @ReflectField("yylval")
-    private Field  yylval;
+    private Field yylval;
 
     @ReflectMethod(value = "val_peek", parameters = int.class)
     private Method val_peek;
 
     @ReflectField(value = "yyname", type = String[].class)
-    private Field  tokenNames;
+    private Field tokenNames;
 
     @ReflectField(value = "yyrule", type = String[].class)
-    private Field  ruleNames;
+    private Field ruleNames;
 
     @Override
     public int state(int stackRelative) {

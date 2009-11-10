@@ -8,11 +8,11 @@ import net.bodz.bas.types.util.DirectIterator;
 public class UnionSet<T> extends _Set<T> {
 
     private final Set<T>[] sets;
-    private final boolean  isFinal;
-    private final boolean  isFinite;
+    private final boolean isFinal;
+    private final boolean isFinite;
 
-    private T              first;
-    private T              last;
+    private T first;
+    private T last;
 
     @SuppressWarnings("unchecked")
     public UnionSet(Set<T> a, Set<T> b) {

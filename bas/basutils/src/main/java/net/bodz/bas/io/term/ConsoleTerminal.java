@@ -8,23 +8,23 @@ import net.bodz.bas.types.util.Strings;
 
 public class ConsoleTerminal extends _Terminal {
 
-    private CharOut  out;
-    private int      width;
+    private CharOut out;
+    private int width;
 
     /** just commited */
     static final int START = 0;
 
     /** begin of line */
-    static final int BOL   = 1;
+    static final int BOL = 1;
 
     /** middle of line */
     static final int DIRTY = 2;
 
     /** line contains test/preview buffer, see {@link #blen}. */
-    static final int TBUF  = 3;
+    static final int TBUF = 3;
 
-    private int      state = START;
-    private int      blen;
+    private int state = START;
+    private int blen;
 
     public ConsoleTerminal(CharOut out, int width) {
         if (out == null)

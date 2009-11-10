@@ -2,13 +2,13 @@ package net.bodz.bas.ui;
 
 public abstract class TryBlock implements Runnable {
 
-    public static final int    INFINITE = -1;
+    public static final int INFINITE = -1;
 
-    protected static final int RETRY    = 0;
-    protected static final int IGNORE   = 1;
-    protected static final int CANCEL   = 2;
+    protected static final int RETRY = 0;
+    protected static final int IGNORE = 1;
+    protected static final int CANCEL = 2;
 
-    private final int          maxRetry;
+    private final int maxRetry;
 
     public TryBlock() {
         this(INFINITE, true);
@@ -75,10 +75,10 @@ public abstract class TryBlock implements Runnable {
     protected void retry() {
     }
 
-    public static final int DONE       = 0;
-    public static final int IGNORED    = 1;
+    public static final int DONE = 0;
+    public static final int IGNORED = 1;
     public static final int MAXRETRIED = 2;
-    public static final int CANCELED   = 3;
+    public static final int CANCELED = 3;
 
     int _exit(int exitType) {
         exit(exitType);

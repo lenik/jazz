@@ -6,9 +6,9 @@ import java.lang.reflect.Method;
 
 public class MethodParameter extends AccessibleObject {
 
-    private final int          index;
-    private final Class<?>     type;
-    private final String       name;
+    private final int index;
+    private final Class<?> type;
+    private final String name;
     // private Method declaringMethod;
     private final Annotation[] annotations;
 

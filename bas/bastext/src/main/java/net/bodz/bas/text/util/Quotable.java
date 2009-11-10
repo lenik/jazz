@@ -8,7 +8,7 @@ import net.bodz.bas.types.util.Strings;
 
 public class Quotable extends PatternProcessor {
 
-    int leftTrim  = 0;
+    int leftTrim = 0;
     int rightTrim = 0;
 
     public Quotable(Quotable o) {

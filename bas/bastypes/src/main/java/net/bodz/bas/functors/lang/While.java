@@ -11,9 +11,9 @@ import net.bodz.bas.lang2.FunctorException;
 public class While<T> extends _Functor<T> {
 
     protected _Functor<Boolean> predicate;
-    protected _Functor<T>       body;
+    protected _Functor<T> body;
 
-    protected T                 evaluated;
+    protected T evaluated;
 
     public While() {
     }

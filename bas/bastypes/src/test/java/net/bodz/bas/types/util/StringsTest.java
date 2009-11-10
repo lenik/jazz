@@ -126,8 +126,7 @@ public class StringsTest {
                 char[] delim = args[0].toCharArray();
                 int limit = Integer.parseInt(args[1]);
                 input = args[2];
-                String[] result = Strings.split((Object) input, delim, limit, Strings.TRIM
-                        | Strings.QUOTE);
+                String[] result = Strings.split((Object) input, delim, limit, Strings.TRIM | Strings.QUOTE);
                 String actual = Strings.join("|", result); //$NON-NLS-1$
                 assertEquals(expected, actual);
             }

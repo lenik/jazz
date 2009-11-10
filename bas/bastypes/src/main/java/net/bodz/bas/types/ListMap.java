@@ -15,8 +15,7 @@ public class ListMap<K, V> implements Map<K, V> {
 
     /**
      * @throws NullPointerException
-     *             if either <code>keys</code> or <code>values</code> is
-     *             <code>null</code>.
+     *             if either <code>keys</code> or <code>values</code> is <code>null</code>.
      */
     public ListMap(List<K> keys, List<V> values) {
         if (keys == null)

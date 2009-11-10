@@ -10,8 +10,8 @@ import net.bodz.bas.nls.AppNLS;
 public class PluginTypeEx {
 
     private final Class<? extends Plugin> clazz;
-    private final Factory<Plugin>         factory;
-    private final ClassInfo               info;
+    private final Factory<Plugin> factory;
+    private final ClassInfo info;
 
     @SuppressWarnings("unchecked")
     public PluginTypeEx(Factory<Plugin> factory) {
@@ -19,8 +19,7 @@ public class PluginTypeEx {
         this.factory = factory;
         Class<?> type = factory.getType();
         if (!Plugin.class.isAssignableFrom(type))
-            throw new IllegalArgumentException(AppNLS
-                    .getString("PluginTypeEx.wrongFactoryWhichCreate") //$NON-NLS-1$
+            throw new IllegalArgumentException(AppNLS.getString("PluginTypeEx.wrongFactoryWhichCreate") //$NON-NLS-1$
                     + type);
         this.clazz = (Class<? extends Plugin>) type;
         this.info = ClassInfo.get(clazz);

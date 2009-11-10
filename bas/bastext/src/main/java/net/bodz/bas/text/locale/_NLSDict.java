@@ -4,7 +4,7 @@ import net.bodz.bas.a.A_bas;
 
 public abstract class _NLSDict implements NLSDict {
 
-    private final String  title;
+    private final String title;
     private final NLSDict next;
 
     public _NLSDict(String title) {

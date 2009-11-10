@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class List1s<E> extends AbstractList<E> {
 
-    private E       first;
+    private E first;
     private List<E> more;
 
     protected List<E> createMoreList() {

@@ -9,10 +9,10 @@ import net.bodz.bas.nls.LangNLS;
 
 public abstract class _ScriptClass<T> implements ScriptClass<T> {
 
-    protected final Class<?>             origClass;
-    private final ScriptClass<?>         superScriptClass;
+    protected final Class<?> origClass;
+    private final ScriptClass<?> superScriptClass;
 
-    private Map<String, ScriptField<?>>  fields;
+    private Map<String, ScriptField<?>> fields;
     private Map<String, ScriptMethod<?>> methods;
 
     public _ScriptClass(Class<?> origClass, ScriptClass<?> superScriptClass) {
@@ -39,7 +39,7 @@ public abstract class _ScriptClass<T> implements ScriptClass<T> {
         throw new NotImplementedException();
     }
 
-    private static final ScriptField<?>[]  ScriptField_0;
+    private static final ScriptField<?>[] ScriptField_0;
     private static final ScriptMethod<?>[] ScriptMethod_0;
     static {
         ScriptField_0 = new ScriptField<?>[0];
@@ -133,8 +133,7 @@ public abstract class _ScriptClass<T> implements ScriptClass<T> {
     }
 
     @Override
-    public Object invoke(Object object, String methodName, Object... parameters)
-            throws ScriptException {
+    public Object invoke(Object object, String methodName, Object... parameters) throws ScriptException {
         ScriptMethod<Object> method = getMethod(methodName);
         if (method == null)
             throw new ScriptException(LangNLS.getString("_ScriptClass.nomethod") + methodName); //$NON-NLS-1$

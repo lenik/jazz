@@ -41,7 +41,7 @@ public class SJLibLoader {
         private static final long serialVersionUID = 388938369034212989L;
     }
 
-    private List<String>      findPaths;
+    private List<String> findPaths;
     private Map<File, LibDir> libDirs;
 
     public SJLibLoader() {
@@ -115,8 +115,7 @@ public class SJLibLoader {
             try {
                 libraries = Files.loadProperties(ini);
             } catch (IOException e) {
-                throw new Error(
-                        AppNLS.getString("SJLibLoader.failedToLoad") + ini + ": " + e.getMessage(), e); //$NON-NLS-1$ //$NON-NLS-2$
+                throw new Error(AppNLS.getString("SJLibLoader.failedToLoad") + ini + ": " + e.getMessage(), e); //$NON-NLS-1$ //$NON-NLS-2$
             }
             for (Entry<Object, Object> e : libraries.entrySet()) {
                 String name = (String) e.getKey();

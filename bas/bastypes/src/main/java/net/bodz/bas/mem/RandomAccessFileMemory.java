@@ -12,9 +12,9 @@ import net.bodz.bas.nls.TypesNLS;
 public class RandomAccessFileMemory extends _Memory {
 
     private RandomAccessFile file;
-    private long             offset;
+    private long offset;
 
-    private static boolean   precheck = false;
+    private static boolean precheck = false;
 
     public RandomAccessFileMemory(File file, long offset) throws FileNotFoundException {
         this(new RandomAccessFile(file, "rw"), offset); //$NON-NLS-1$

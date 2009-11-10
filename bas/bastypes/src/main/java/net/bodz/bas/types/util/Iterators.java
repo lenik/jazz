@@ -116,10 +116,10 @@ public class Iterators {
         class Dit2It implements Iterator<T> {
 
             static final int NOVAL = 0;
-            static final int HAVE  = 1;
-            static final int END   = 2;
+            static final int HAVE = 1;
+            static final int END = 2;
 
-            private int      state = NOVAL;
+            private int state = NOVAL;
 
             @Override
             public boolean hasNext() {
@@ -187,7 +187,7 @@ public class Iterators {
     public static <T> Iterator<T> concat(final Iterator<T>... iterators) {
         class ConcatIterator extends PrefetchedIterator<T> {
 
-            private int         index;
+            private int index;
             private Iterator<T> current;
 
             @Override
@@ -240,7 +240,7 @@ public class Iterators {
     private static class ItrNxt<T> {
 
         Iterator<T> itr;
-        T           nxt;
+        T nxt;
 
         public ItrNxt(Iterator<T> itr, T first) {
             assert itr != null : "null itr"; //$NON-NLS-1$
@@ -282,8 +282,7 @@ public class Iterators {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> Iterator<T> weave(Comparator<? super T> cmp, Iterator<T> itr1,
-            Iterator<T> itr2) {
+    public static <T> Iterator<T> weave(Comparator<? super T> cmp, Iterator<T> itr1, Iterator<T> itr2) {
         Iterator<?> gv[] = { itr1, itr2 };
         return weave(cmp, (Iterator<T>[]) gv);
     }
@@ -296,8 +295,7 @@ public class Iterators {
         if (cmp == null)
             throw new NullPointerException("cmp"); //$NON-NLS-1$
         ItrNxtCmp<T> inxtcmp = new ItrNxtCmp<T>(cmp);
-        final SortedList<ItrNxt<T>> alive = new SortedList<ItrNxt<T>>(new DyingList<ItrNxt<T>>(
-                itrs.length), inxtcmp);
+        final SortedList<ItrNxt<T>> alive = new SortedList<ItrNxt<T>>(new DyingList<ItrNxt<T>>(itrs.length), inxtcmp);
         for (int i = 0; i < itrs.length; i++) {
             Iterator<T> itr = itrs[i];
             if (itr == null)

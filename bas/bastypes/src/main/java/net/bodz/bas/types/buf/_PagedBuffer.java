@@ -80,7 +80,7 @@ public abstract class _PagedBuffer implements IPagedBuffer {
             // <page, NEWPAGE(rest-buf), page.next>
             // insertAfter = page
         } else if (pos.offset == 0) {
-//            insertBefore = pos.page.getPrev();
+            // insertBefore = pos.page.getPrev();
         } else {
             // split page to 2 parts: <page.1, NEWPAGE(buf), page.2, page.next>
             ByteBuffer pageBuffer = page.buffer;
@@ -99,7 +99,7 @@ public abstract class _PagedBuffer implements IPagedBuffer {
             prev.setNext(p1);
             p1.setNext(p2);
             p2.setNext(next);
-//            insertAfter = p1;
+            // insertAfter = p1;
         }
         ByteBuffer bb = ByteBuffer.wrap(buf, off, len).slice();
         return insert(pos, bb);
@@ -165,8 +165,7 @@ public abstract class _PagedBuffer implements IPagedBuffer {
             else
                 limit = p.buffer.limit();
             if (woff + limit > wsize)
-                throw new RuntimeException(
-                        "pre-calculated size is invalid, maybe concurrently changed?");
+                throw new RuntimeException("pre-calculated size is invalid, maybe concurrently changed?");
             System.arraycopy(array, offset, wbuf, woff, limit);
             woff += limit;
         }

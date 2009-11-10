@@ -26,16 +26,16 @@ public class PrettyLogger extends _LasUnit {
 
     }
 
-    public static final ToString toString    = new ToString();
+    public static final ToString toString = new ToString();
 
-    public DateFormat            dateFormat  = Dates.dateTimeFormat;
-    public String                prefix;
-    public String                tabChar     = "\t";                //$NON-NLS-1$
+    public DateFormat dateFormat = Dates.dateTimeFormat;
+    public String prefix;
+    public String tabChar = "\t"; //$NON-NLS-1$
     public Filt1<String, Object> valueFormat = toString;
-    public boolean               printClassName;
-    public boolean               dumpFullStack;
+    public boolean printClassName;
+    public boolean dumpFullStack;
 
-    private int                  level;
+    private int level;
 
     public PrettyLogger(LasUnit prev, CharOut out) {
         super(prev);

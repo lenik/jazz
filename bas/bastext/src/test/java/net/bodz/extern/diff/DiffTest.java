@@ -31,12 +31,11 @@ import org.junit.Test;
 /**
  * Test Diff behavior.
  * 
- * @author Stuart D. Gathman Copyright (C) 2002 Business Management Systems,
- *         Inc.
+ * @author Stuart D. Gathman Copyright (C) 2002 Business Management Systems, Inc.
  */
 public class DiffTest {
 
-    private static String[] f1 = { "hello" };       //$NON-NLS-1$
+    private static String[] f1 = { "hello" }; //$NON-NLS-1$
     private static String[] f2 = { "hello", "bye" }; //$NON-NLS-1$ //$NON-NLS-2$
 
     @Test
@@ -55,8 +54,7 @@ public class DiffTest {
     }
 
     /**
-     * This was causing an array out of bounds exception. Submitted by Markus
-     * Oellinger.
+     * This was causing an array out of bounds exception. Submitted by Markus Oellinger.
      */
     public void testSwap() {
         final Integer[] l1 = loadArray(new int[] { 1, 2, 4, 7, 9, 35, 56, 58, 76 });
@@ -80,28 +78,25 @@ public class DiffTest {
     }
 
     private static String[] test1 = { "aaa", "bbb", "ccc", "ddd", "eee", "fff", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
-            "ggg", "hhh", "iii"  };            //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            "ggg", "hhh", "iii" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     private static String[] test2 = { "aaa", "jjj", "kkk", "lll", "bbb", "ccc", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$
             "hhh", "iii", "mmm", "nnn", "ppp" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$
 
     /**
-     * Test context based output. Changes past the end of old file were causing
-     * an array out of bounds exception. Submitted by Cristian-Augustin Saita
-     * and Adam Rabung.
+     * Test context based output. Changes past the end of old file were causing an array out of
+     * bounds exception. Submitted by Cristian-Augustin Saita and Adam Rabung.
      */
     // @Test
     public void testContext() {
         _GNUDiff diff = new _GNUDiff(Arrays.asList(test1), Arrays.asList(test2));
         List<DiffInfo> script = diff.diff_2(false);
         StringWriter wtr = new StringWriter();
-        DiffPrint.Base p = new DiffPrint.UnifiedPrint(Arrays.asList(test1), Arrays.asList(test2),
-                CharOuts.get(wtr));
+        DiffPrint.Base p = new DiffPrint.UnifiedPrint(Arrays.asList(test1), Arrays.asList(test2), CharOuts.get(wtr));
         // p.print_header("test1","test2");
         p.print_script(script);
         /*
-         * FIXME: when DiffPrint is updated to diff-2.7, testfor expected output
-         * in wtr.toString(). diff-1.15 does not combine adjacent changes when
-         * they are close together.
+         * FIXME: when DiffPrint is updated to diff-2.7, testfor expected output in wtr.toString().
+         * diff-1.15 does not combine adjacent changes when they are close together.
          */
     }
 

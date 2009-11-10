@@ -5,7 +5,7 @@ package net.bodz.bas.ant;
  */
 public class TextElement {
 
-    private String       value;
+    private String value;
     private StringBuffer buf;
 
     public TextElement() {

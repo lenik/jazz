@@ -11,12 +11,12 @@ import java.nio.CharBuffer;
 public class XYReader extends FilterReader implements XYTellable {
 
     private long offset;
-    private int  y;
-    private int  x;
+    private int y;
+    private int x;
 
     private long markOffset;
-    private int  markY;
-    private int  markX;
+    private int markY;
+    private int markX;
 
     public XYReader(Reader proxy) {
         super(proxy);

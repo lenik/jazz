@@ -43,8 +43,7 @@ public abstract class _Ptr32 extends _RefType {
      *            absolute address
      */
     @Override
-    protected void putRemote(Memory memory, int offset, Memory targetMemory, int targetOffset)
-            throws AccessException {
+    protected void putRemote(Memory memory, int offset, Memory targetMemory, int targetOffset) throws AccessException {
         throw new UnsupportedOperationException();
     }
 

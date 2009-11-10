@@ -9,15 +9,15 @@ import net.bodz.bas.lang.a.OverrideOption;
 public class PatternProcessor extends BCharOut {
 
     protected Pattern pattern;
-    protected String  source;
+    protected String source;
 
     protected Matcher matcher;
-    protected int     matchIndex;
+    protected int matchIndex;
 
     /** end() position of last match */
-    protected int     matchBegin;
+    protected int matchBegin;
 
-    protected int     count;
+    protected int count;
 
     public PatternProcessor(Pattern pattern) {
         this.pattern = pattern;

@@ -6,8 +6,8 @@ public class Delimiter implements Serializable {
 
     private static final long serialVersionUID = 1766948183124423805L;
 
-    private final String      start;
-    private final String      end;
+    private final String start;
+    private final String end;
 
     public Delimiter(String delimiter) {
         if (delimiter == null)

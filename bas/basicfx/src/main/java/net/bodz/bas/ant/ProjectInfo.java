@@ -17,11 +17,11 @@ import org.apache.tools.ant.types.Path;
  */
 public class ProjectInfo {
 
-    private Project         antProject;
+    private Project antProject;
 
-    private File            projectBase;
-    private Path            classpath;
-    private Path            classpathWithTest;
+    private File projectBase;
+    private Path classpath;
+    private Path classpathWithTest;
 
     private TextMap<Module> modules;
 
@@ -43,8 +43,7 @@ public class ProjectInfo {
 
         projectBase = EclipseProject.findProjectBase(searchStart);
         if (projectBase == null)
-            throw new RuntimeException(
-                    AppNLS.getString("ProjectInfo.cantFindEclipseProject") + searchStart); //$NON-NLS-1$
+            throw new RuntimeException(AppNLS.getString("ProjectInfo.cantFindEclipseProject") + searchStart); //$NON-NLS-1$
 
         parse();
     }

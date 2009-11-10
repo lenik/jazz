@@ -7,7 +7,7 @@ import net.bodz.bas.io.CharOut;
 
 public class CharOutSink extends TextProcessSink {
 
-    private CharOut   out;
+    private CharOut out;
     private Flushable flushable;
 
     public CharOutSink(CharOut out, boolean autoFlush) throws IOException {

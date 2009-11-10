@@ -14,18 +14,18 @@ import net.bodz.bas.ui.a.Icon;
 
 public class ClassInfo {
 
-    private final Class<?>    clazz;
+    private final Class<?> clazz;
     private final ClassLoader loader;
-    private boolean           loaded;
+    private boolean loaded;
 
-    private String            name;
-    private String            doc;
-    private URL               icon;
-    private Map<String, URL>  iconMap;
-    private String            author;
-    private String            webSite;
-    private int[]             version;
-    private String            dateString;
+    private String name;
+    private String doc;
+    private URL icon;
+    private Map<String, URL> iconMap;
+    private String author;
+    private String webSite;
+    private int[] version;
+    private String dateString;
 
     public ClassInfo(Class<?> clazz) {
         assert clazz != null;

@@ -13,8 +13,8 @@ public abstract class MapResRecords<K, V> extends _ResRecords<Map<K, V>> {
 
     protected Class<? extends K> keyClass;
     protected Class<? extends V> valueClass;
-    protected TypeParser         keyParser;
-    protected TypeParser         valueParser;
+    protected TypeParser keyParser;
+    protected TypeParser valueParser;
 
     public MapResRecords(ResLink resLink) {
         this(resLink, null);

@@ -8,20 +8,20 @@ import net.bodz.bas.nls.SysNLS;
 
 public class ManagedProcess {
 
-    private final String   name;
+    private final String name;
 
     // private final Process process;
-    protected OutputStream out;       // captured stdin of target process
-    protected InputStream  in;        // captured stdout of target process
-    protected InputStream  err;       // captured stderr of target process
+    protected OutputStream out; // captured stdin of target process
+    protected InputStream in; // captured stdout of target process
+    protected InputStream err; // captured stderr of target process
 
-    private Thread         sender;
-    private Thread         inGrabber;
-    private Thread         errGrabber;
+    private Thread sender;
+    private Thread inGrabber;
+    private Thread errGrabber;
 
-    private IOCallback     callback;
+    private IOCallback callback;
 
-    private static int     _id = 0;
+    private static int _id = 0;
 
     static String getNextId() {
         return "MP_" + (++_id); //$NON-NLS-1$

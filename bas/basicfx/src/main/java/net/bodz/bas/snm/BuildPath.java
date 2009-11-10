@@ -28,11 +28,11 @@ import org.xml.sax.helpers.DefaultHandler;
 public class BuildPath {
 
     public static class SourceFolder {
-        public File     path;
-        public File     output;
+        public File path;
+        public File output;
         public String[] includes;
         public String[] excludes;
-        public File     nativeLibraryLocation;
+        public File nativeLibraryLocation;
 
         @Override
         public String toString() {
@@ -40,8 +40,8 @@ public class BuildPath {
         }
     }
 
-    List<SourceFolder>   sourceFolders;
-    File                 defaultOutput;
+    List<SourceFolder> sourceFolders;
+    File defaultOutput;
 
     List<EclipseProject> requiredProjects;
 
@@ -54,7 +54,7 @@ public class BuildPath {
 
     List<Library> libraries;
 
-    String[]      trySrcSuffixes;
+    String[] trySrcSuffixes;
 
     public BuildPath() {
         this.sourceFolders = new ArrayList<SourceFolder>();
@@ -64,12 +64,10 @@ public class BuildPath {
 
     public BuildPath(Class<?> virtualProjectForClass) {
         this();
-        String selfResourceName = "/" + virtualProjectForClass.getName().replace('.', '/')
-                + ".class";
+        String selfResourceName = "/" + virtualProjectForClass.getName().replace('.', '/') + ".class";
         URL selfRes = virtualProjectForClass.getResource(selfResourceName);
         if (selfRes == null)
-            throw new UnexpectedException(
-                    "Self resource error, maybe class extension isn't '.class'? ");
+            throw new UnexpectedException("Self resource error, maybe class extension isn't '.class'? ");
         File defaultClasspath;
         try {
             defaultClasspath = Files.getFile(selfRes, selfResourceName);
@@ -81,15 +79,14 @@ public class BuildPath {
         }
     }
 
-    public BuildPath(final File baseDir, File classpathFile, File manifestFile)
-            throws ParseException {
+    public BuildPath(final File baseDir, File classpathFile, File manifestFile) throws ParseException {
         this();
         if (classpathFile != null && classpathFile.exists()) {
             try {
                 XMLs.parse(classpathFile, new DefaultHandler() {
                     @Override
-                    public void startElement(String uri, String localName, String name,
-                            Attributes attributes) throws SAXException {
+                    public void startElement(String uri, String localName, String name, Attributes attributes)
+                            throws SAXException {
                         if (!"classpathentry".equals(name)) //$NON-NLS-1$
                             return;
                         String kind = attributes.getValue("kind"); //$NON-NLS-1$
@@ -275,8 +272,8 @@ public class BuildPath {
     public class ClassContainer {
         File sourcePath;
         File classPath;
-        URL  sourceURL;
-        URL  classURL;
+        URL sourceURL;
+        URL classURL;
 
         public ClassContainer(SourceFolder sourceFolder) {
             this.sourcePath = sourceFolder.path;
@@ -381,8 +378,8 @@ public class BuildPath {
 
     public static class SourceResource {
         ClassContainer container;
-        File           file;
-        URL            url;
+        File file;
+        URL url;
 
         public SourceResource(ClassContainer container, File file) {
             this.container = container;

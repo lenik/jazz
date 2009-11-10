@@ -36,15 +36,15 @@ public abstract class _Lexer implements Lexer {
      */
     public static final int EOF = -1;
 
-    private Object          value;
+    private Object value;
 
-    private Stack<Integer>  stateStack;
+    private Stack<Integer> stateStack;
     private Stack<BCharOut> recordStack;
-    private BCharOut        currentRecord;
+    private BCharOut currentRecord;
 
-    private long            prevOffset;
-    private int             prevY;
-    private int             prevX;
+    private long prevOffset;
+    private int prevY;
+    private int prevX;
 
     public _Lexer() {
     }

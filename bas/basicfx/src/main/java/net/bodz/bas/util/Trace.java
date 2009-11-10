@@ -24,8 +24,8 @@ import net.bodz.bas.types.util.Strings;
  */
 public class Trace {
 
-    public static boolean enabled   = SystemProperties.isDevelopMode();
-    public static Object  logPrefix = ""; //$NON-NLS-1$
+    public static boolean enabled = SystemProperties.isDevelopMode();
+    public static Object logPrefix = ""; //$NON-NLS-1$
 
     public static void setLogDate(boolean enabled) {
         if (enabled)
@@ -51,7 +51,7 @@ public class Trace {
 
     }
 
-    static final TypeMap<Integer>                 typeNextId;
+    static final TypeMap<Integer> typeNextId;
     static final IdentityHashMap<Object, Integer> allId;
 
     static {
@@ -104,7 +104,7 @@ public class Trace {
     }
 
     static final IdentityHashMap<Object, List<String>> allLogs;
-    static final IdentityHashMap<Object, RelationMap>  allRelations;
+    static final IdentityHashMap<Object, RelationMap> allRelations;
 
     static {
         allLogs = new IdentityHashMap<Object, List<String>>();

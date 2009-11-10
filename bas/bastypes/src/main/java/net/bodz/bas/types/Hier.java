@@ -13,8 +13,7 @@ public interface Hier<E> {
 
     /**
      * @param e
-     *            value to be shrinked (ceiling-ward), never be
-     *            <code>null</code>
+     *            value to be shrinked (ceiling-ward), never be <code>null</code>
      * @return shrinked value (floor-ward), <code>null</code> if no more shrink
      */
     E shrink(E e);

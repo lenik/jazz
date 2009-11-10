@@ -75,8 +75,7 @@ public class SimpleJavaCall {
     }
 
     @Deprecated
-    public static Object call(Object object, String methodName, Object[] arguments,
-            Object defaultValue) {
+    public static Object call(Object object, String methodName, Object[] arguments, Object defaultValue) {
         try {
             return call(object, methodName, arguments);
         } catch (Exception e) {
@@ -85,8 +84,7 @@ public class SimpleJavaCall {
     }
 
     @Deprecated
-    public static Object call(Class<?> cls, String methodName, Object[] arguments,
-            Object defaultValue) {
+    public static Object call(Class<?> cls, String methodName, Object[] arguments, Object defaultValue) {
         try {
             return call(cls, methodName, arguments);
         } catch (Exception e) {
@@ -109,8 +107,7 @@ public class SimpleJavaCall {
     }
 
     @Deprecated
-    public static Object call(String className, String methodName, Object[] arguments,
-            Object defaultValue) {
+    public static Object call(String className, String methodName, Object[] arguments, Object defaultValue) {
         try {
             return call(className, methodName, arguments);
         } catch (Exception e) {

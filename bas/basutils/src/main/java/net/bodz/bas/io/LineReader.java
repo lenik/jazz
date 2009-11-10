@@ -10,7 +10,7 @@ public class LineReader extends Reader {
 
     private final Reader reader;
     private StringBuffer buf;
-    private String       markedBuf;
+    private String markedBuf;
 
     public LineReader(Reader reader) {
         assert reader != null;

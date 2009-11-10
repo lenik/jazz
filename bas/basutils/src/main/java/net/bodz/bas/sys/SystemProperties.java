@@ -66,16 +66,14 @@ public class SystemProperties {
     }
 
     /**
-     * java.endorsed.dirs =
-     * C:\\lam\\kala\\abc.d\\j\\jdk-1.7.0\\jre\\lib\\endorsed
+     * java.endorsed.dirs = C:\\lam\\kala\\abc.d\\j\\jdk-1.7.0\\jre\\lib\\endorsed
      */
     public static String getJavaEndorsedDirs() {
         return System.getProperty("java.endorsed.dirs"); //$NON-NLS-1$
     }
 
     /**
-     * java.ext.dirs =
-     * C:\\lam\\kala\\abc.d\\j\\jdk-1.7.0\\jre\\lib\\ext;C:\\WINDOWS
+     * java.ext.dirs = C:\\lam\\kala\\abc.d\\j\\jdk-1.7.0\\jre\\lib\\ext;C:\\WINDOWS
      * \\Sun\\Java\\lib\\ext
      */
     public static String getJavaExtDirs() {
@@ -210,16 +208,11 @@ public class SystemProperties {
     }
 
     /**
-     * sun.boot.class.path =
-     * C:\\lam\\kala\\abc.d\\j\\jdk-1.7.0\\jre\\lib\\resources
-     * .jar;C:\\lam\\kala\
-     * \abc.d\\j\\jdk-1.7.0\\jre\\lib\\rt.jar;C:\\lam\\kala\\abc
-     * .d\\j\\jdk-1.7.0\\
-     * jre\\lib\\sunrsasign.jar;C:\\lam\\kala\\abc.d\\j\\jdk-1.7
-     * .0\\jre\\lib\\jsse
-     * .jar;C:\\lam\\kala\\abc.d\\j\\jdk-1.7.0\\jre\\lib\\jce.jar
-     * ;C:\\lam\\kala\\abc
-     * .d\\j\\jdk-1.7.0\\jre\\lib\\charsets.jar;C:\\lam\\kala\\
+     * sun.boot.class.path = C:\\lam\\kala\\abc.d\\j\\jdk-1.7.0\\jre\\lib\\resources
+     * .jar;C:\\lam\\kala\ \abc.d\\j\\jdk-1.7.0\\jre\\lib\\rt.jar;C:\\lam\\kala\\abc
+     * .d\\j\\jdk-1.7.0\\ jre\\lib\\sunrsasign.jar;C:\\lam\\kala\\abc.d\\j\\jdk-1.7
+     * .0\\jre\\lib\\jsse .jar;C:\\lam\\kala\\abc.d\\j\\jdk-1.7.0\\jre\\lib\\jce.jar
+     * ;C:\\lam\\kala\\abc .d\\j\\jdk-1.7.0\\jre\\lib\\charsets.jar;C:\\lam\\kala\\
      * abc.d\\j\\jdk-1.7.0\\jre\\classes
      */
     public static String getSunBootClassPath() {

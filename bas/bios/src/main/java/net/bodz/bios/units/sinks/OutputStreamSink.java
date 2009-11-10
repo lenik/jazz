@@ -6,7 +6,7 @@ import java.io.OutputStream;
 public class OutputStreamSink extends ByteProcessSink {
 
     private OutputStream out;
-    private boolean      autoFlush;
+    private boolean autoFlush;
 
     public OutputStreamSink(OutputStream out, boolean autoFlush) throws IOException {
         this.out = out;

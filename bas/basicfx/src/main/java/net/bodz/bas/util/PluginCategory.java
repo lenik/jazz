@@ -12,11 +12,11 @@ import net.bodz.bas.nls.AppNLS;
  */
 public class PluginCategory {
 
-    private final String                  categoryName;
+    private final String categoryName;
     private final Class<? extends Plugin> categoryBaseType;
-    private final ClassInfo               categoryTypeInfo;
+    private final ClassInfo categoryTypeInfo;
 
-    protected Map<String, PluginTypeEx>   registry;
+    protected Map<String, PluginTypeEx> registry;
 
     public PluginCategory(String name, Class<? extends Plugin> baseType) {
         assert baseType != null;

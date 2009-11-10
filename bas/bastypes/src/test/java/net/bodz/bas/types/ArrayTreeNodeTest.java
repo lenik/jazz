@@ -10,11 +10,10 @@ public class ArrayTreeNodeTest {
         return args;
     }
 
-    public static final Object[]      helloVar;
+    public static final Object[] helloVar;
     public static final ArrayTreeNode helloTree;
     static {
-        helloVar = array(
-        //
+        helloVar = array(//
                 "Hello", // //$NON-NLS-1$
                 array(10, 20, 30), // 
                 array(40, array(41, 42)), //

@@ -22,8 +22,7 @@ public class JarLocations {
             File base = Files.getFile(url, p);
             return base;
         } catch (Exception e) {
-            throw new IllegalArgumentException(
-                    AppNLS.getString("SJProject.strangeClassURL") + url, e); //$NON-NLS-1$
+            throw new IllegalArgumentException(AppNLS.getString("SJProject.strangeClassURL") + url, e); //$NON-NLS-1$
         }
     }
 
@@ -37,8 +36,7 @@ public class JarLocations {
             ResFolder base = Files.getResFolder(url, classFileName);
             return base;
         } catch (Exception e) {
-            throw new IllegalArgumentException(
-                    AppNLS.getString("SJProject.strangeClassURL") + url, e); //$NON-NLS-1$
+            throw new IllegalArgumentException(AppNLS.getString("SJProject.strangeClassURL") + url, e); //$NON-NLS-1$
         }
     }
 

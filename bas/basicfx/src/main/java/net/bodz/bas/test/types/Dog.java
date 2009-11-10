@@ -6,7 +6,7 @@ import net.bodz.bas.types.util.Objects;
 
 public class Dog {
 
-    private String  name;
+    private String name;
     private boolean drunk;
 
     public Dog() {

@@ -16,7 +16,7 @@ public class Vars {
 
     public static class FieldMeta implements VarMeta {
 
-        protected final Field   field;
+        protected final Field field;
         protected final boolean readOnly;
         protected final boolean hasPropertyChangeSupport;
 
@@ -24,8 +24,7 @@ public class Vars {
             assert field != null;
             this.field = field;
             this.readOnly = readOnly || Modifier.isFinal(field.getModifiers());
-            hasPropertyChangeSupport = IPropertyChangeSupport.class.isAssignableFrom(field
-                    .getDeclaringClass());
+            hasPropertyChangeSupport = IPropertyChangeSupport.class.isAssignableFrom(field.getDeclaringClass());
         }
 
         public FieldMeta(Field field) {
@@ -93,7 +92,7 @@ public class Vars {
     public static class FieldVar<T> extends _Var<T> {
 
         protected FieldMeta meta;
-        protected Object    ctx;
+        protected Object ctx;
 
         public FieldVar(FieldMeta meta, Object object) {
             this.meta = meta;
@@ -147,9 +146,9 @@ public class Vars {
     public static class PropertyMeta implements VarMeta {
 
         protected final PropertyDescriptor property;
-        protected final Method             readf;
-        protected final Method             writef;
-        protected final boolean            hasPropertyChangeSupport;
+        protected final Method readf;
+        protected final Method writef;
+        protected final boolean hasPropertyChangeSupport;
 
         public PropertyMeta(PropertyDescriptor property) {
             this.property = property;
@@ -158,8 +157,7 @@ public class Vars {
             if (readf == null)
                 throw new UnsupportedOperationException(LangNLS.getString("Vars.noread") //$NON-NLS-1$
                         + property.getName());
-            hasPropertyChangeSupport = IPropertyChangeSupport.class.isAssignableFrom(readf
-                    .getDeclaringClass());
+            hasPropertyChangeSupport = IPropertyChangeSupport.class.isAssignableFrom(readf.getDeclaringClass());
         }
 
         public PropertyDescriptor getProperty() {
@@ -222,7 +220,7 @@ public class Vars {
     public static class PropertyVar<T> extends _Var<T> {
 
         protected final PropertyMeta meta;
-        protected Object             ctx;
+        protected Object ctx;
 
         public PropertyVar(PropertyMeta meta, Object object) {
             assert meta != null;
@@ -276,10 +274,10 @@ public class Vars {
 
     public static class ConstantMeta implements VarMeta {
 
-        private final String       name;
-        private final Class<?>     type;
+        private final String name;
+        private final Class<?> type;
         private final Annotation[] annotations;
-        static final Annotation[]  Annotation_0 = {};
+        static final Annotation[] Annotation_0 = {};
 
         public ConstantMeta(String name, Class<?> type) {
             this.name = name;
@@ -356,7 +354,7 @@ public class Vars {
     public static class ConstantVar<T> implements Var<T> {
 
         protected final ConstantMeta meta;
-        protected final T            value;
+        protected final T value;
 
         public ConstantVar(ConstantMeta meta, T value) {
             this.meta = meta;

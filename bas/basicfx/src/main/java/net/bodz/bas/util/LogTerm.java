@@ -8,18 +8,18 @@ import net.bodz.bas.io.term.Terminals;
  */
 public abstract class LogTerm {
 
-    public static final int USER   = -4;
-    public static final int FATAL  = -3;
-    public static final int ERROR  = -2;
-    public static final int WARN   = -1;
-    public static final int MESG   = 0;
-    public static final int INFO   = 1;
+    public static final int USER = -4;
+    public static final int FATAL = -3;
+    public static final int ERROR = -2;
+    public static final int WARN = -1;
+    public static final int MESG = 0;
+    public static final int INFO = 1;
     public static final int DETAIL = 2;
-    public static final int DEBUG  = 3;
-    public static final int TRACE  = 4;
+    public static final int DEBUG = 3;
+    public static final int TRACE = 4;
 
     /** max level logged */
-    private int             level  = INFO;
+    private int level = INFO;
 
     public int getLevel() {
         return level;

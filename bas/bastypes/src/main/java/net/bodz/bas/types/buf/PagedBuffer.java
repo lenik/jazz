@@ -4,7 +4,7 @@ import java.nio.ByteBuffer;
 
 public class PagedBuffer extends _PagedBuffer {
 
-    int     preferredPageSize;
+    int preferredPageSize;
     MemPage head;
     MemPage end;
 

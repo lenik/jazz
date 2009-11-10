@@ -10,7 +10,7 @@ import net.bodz.bios.units.SOSource;
 public class ChannelSource extends SOSource {
 
     private ReadableByteChannel channel;
-    private ByteBuffer          buffer;
+    private ByteBuffer buffer;
 
     public ChannelSource() {
         this(Files.blockSize);

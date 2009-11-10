@@ -12,8 +12,7 @@ public class CLIScriptClass<T extends BasicCLI> extends _ScriptClass<T> {
     private final T dynamicImpl;
 
     @SuppressWarnings("unchecked")
-    public CLIScriptClass(Class<T> origClass, Object dynamicImpl, boolean inheritsConvert)
-            throws ScriptException {
+    public CLIScriptClass(Class<T> origClass, Object dynamicImpl, boolean inheritsConvert) throws ScriptException {
         super(origClass, inheritsConvert ? Scripts.convertClass(origClass) : null);
         this.dynamicImpl = (T) dynamicImpl;
         try {

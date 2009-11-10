@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class TempOutputStream extends FilterOutputStream {
 
-    private File    file;
+    private File file;
     private boolean cleaned;
 
     public TempOutputStream(String fileName) throws IOException {

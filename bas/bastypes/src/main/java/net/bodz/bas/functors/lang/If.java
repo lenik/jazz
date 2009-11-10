@@ -10,10 +10,10 @@ import net.bodz.bas.nls.FPNLS;
 public class If<T> extends _Functor<T> {
 
     protected _Functor<Boolean> predicate;
-    protected _Functor<T>       truePart;
-    protected _Functor<T>       falsePart;
+    protected _Functor<T> truePart;
+    protected _Functor<T> falsePart;
 
-    protected T                 evaluated;
+    protected T evaluated;
 
     public If(_Functor<Boolean> predicate, _Functor<T> truePart, _Functor<T> falsePart) {
         this.predicate = predicate;

@@ -16,12 +16,12 @@ import net.bodz.bas.nls.SysNLS;
 
 public class ZipResFolder implements ResFolder {
 
-    private final File      file;
-    private final String    jarurl;
+    private final File file;
+    private final String jarurl;
 
-    private final boolean   autoMkdirs;
+    private final boolean autoMkdirs;
 
-    private ZipFile         zipFile;
+    private ZipFile zipFile;
     private ZipOutputStream zipOut;
 
     public ZipResFolder(File zipfile) {
@@ -118,7 +118,7 @@ public class ZipResFolder implements ResFolder {
 
     public class ZipEntryResLink extends _ResLink {
 
-        private String  entryName;
+        private String entryName;
         private boolean entryCreated;
 
         public ZipEntryResLink(String entry) {

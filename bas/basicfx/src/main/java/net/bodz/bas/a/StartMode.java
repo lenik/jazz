@@ -9,8 +9,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface StartMode {
 
-    int CLI    = 0;
-    int GUI    = 1;
+    int CLI = 0;
+    int GUI = 1;
     int DAEMON = 2;
 
     int value();

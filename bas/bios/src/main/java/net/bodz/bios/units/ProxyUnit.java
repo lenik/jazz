@@ -8,8 +8,8 @@ import net.bodz.bios.UnitMeta;
 public abstract class ProxyUnit implements Unit {
 
     protected final Unit proxy;
-    private InPort[]     inPorts;
-    private OutPort[]    outPorts;
+    private InPort[] inPorts;
+    private OutPort[] outPorts;
 
     public ProxyUnit(Unit proxy) {
         this.proxy = proxy;

@@ -18,8 +18,8 @@ public class WriterOutputStream extends OutputStream {
 
     protected final Writer writer;
     private CharsetDecoder decoder;
-    private ByteBuffer     bytebuf;
-    private CharBuffer     charbuf;
+    private ByteBuffer bytebuf;
+    private CharBuffer charbuf;
 
     public WriterOutputStream(Writer writer, Charset charset) {
         this.writer = writer;

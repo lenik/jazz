@@ -13,10 +13,10 @@ public class ForRange<T> extends _Functor<T> {
 
     _Functor<Number> from;
     _Functor<Number> to;
-    Number           step;
-    _Functor<?>      body;
+    Number step;
+    _Functor<?> body;
 
-    Object           index;
+    Object index;
 
     public class Index extends TransientConstant<Object> {
         @Override

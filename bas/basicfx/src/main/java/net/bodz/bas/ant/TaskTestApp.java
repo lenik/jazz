@@ -41,7 +41,7 @@ import org.apache.tools.ant.Task;
 public class TaskTestApp {
 
     public final Project project;
-    public BuildLogger   logger;
+    public BuildLogger logger;
 
     public TaskTestApp() {
         project = new Project();
@@ -83,8 +83,7 @@ public class TaskTestApp {
             xmlURL = callerClass.getResource(resourceName);
         File buildFile = Files.getFile(xmlURL);
         if (!buildFile.exists())
-            throw new IllegalUsageException(
-                    AppNLS.getString("TaskTestApp.buildFileIsntExisted") + buildFile); //$NON-NLS-1$
+            throw new IllegalUsageException(AppNLS.getString("TaskTestApp.buildFileIsntExisted") + buildFile); //$NON-NLS-1$
         load(buildFile);
     }
 

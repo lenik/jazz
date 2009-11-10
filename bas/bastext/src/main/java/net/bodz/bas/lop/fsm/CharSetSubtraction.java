@@ -9,10 +9,10 @@ public final class CharSetSubtraction extends _CharSet {
 
     private final CharSet a;
     private final CharSet b;
-    private final int     ab;
+    private final int ab;
     private final boolean _abstract;
-    private final int     begin;
-    private final int     end;
+    private final int begin;
+    private final int end;
 
     public CharSetSubtraction(CharSet a, CharSet b) {
         if (a == null)

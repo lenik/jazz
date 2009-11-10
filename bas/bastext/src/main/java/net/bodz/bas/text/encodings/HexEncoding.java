@@ -12,11 +12,11 @@ import net.bodz.bas.text.util.Lookups;
 public class HexEncoding extends _Encoding {
 
     private final String IFS;
-    private final char   simpleIFS;
+    private final char simpleIFS;
     private final char[] enctbl = Lookups.n2cl;
     private final byte[] dectbl = Lookups.c2n;
 
-    private final int    width;
+    private final int width;
     private final String NL;
 
     public HexEncoding() {

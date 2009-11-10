@@ -29,7 +29,7 @@ import net.bodz.bas.types.TypeParsers;
 public class Parameter {
 
     private Class<?> type = String.class;
-    private String   text;
+    private String text;
 
     public void setType(Class<?> type) {
         if (type == null)

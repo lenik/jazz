@@ -9,7 +9,7 @@ import net.bodz.bas.io.Files;
 public class ChannelSink extends ByteProcessSink {
 
     private WritableByteChannel channel;
-    private ByteBuffer          buffer;
+    private ByteBuffer buffer;
 
     public ChannelSink() {
         this(Files.blockSize);

@@ -21,7 +21,7 @@ public interface State extends Serializable {
     /**
      * Error state
      */
-    int ERROR  = 2;
+    int ERROR = 2;
 
     /**
      * Get the state name.
@@ -84,8 +84,8 @@ public interface State extends Serializable {
     /**
      * Static message/target state transition map.
      * 
-     * This is the static part of the transition map, defined for help purpose,
-     * such as visualization, etc.
+     * This is the static part of the transition map, defined for help purpose, such as
+     * visualization, etc.
      * 
      * @return the map
      */

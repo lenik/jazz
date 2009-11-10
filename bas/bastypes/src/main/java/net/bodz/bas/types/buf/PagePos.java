@@ -3,7 +3,7 @@ package net.bodz.bas.types.buf;
 public class PagePos {
 
     public MemPage page;
-    public int     offset;
+    public int offset;
 
     public PagePos(MemPage page, int offset) {
         if (page == null)

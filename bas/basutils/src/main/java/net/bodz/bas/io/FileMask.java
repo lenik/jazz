@@ -6,35 +6,35 @@ import net.bodz.bas.nls.SysNLS;
 
 public class FileMask {
 
-    public static final int READ      = 0x00000001;
-    public static final int WRITE     = 0x00000002;
-    public static final int EXECUTE   = 0x00000004;
-    public static final int ACCESS    = READ | WRITE | EXECUTE;
+    public static final int READ = 0x00000001;
+    public static final int WRITE = 0x00000002;
+    public static final int EXECUTE = 0x00000004;
+    public static final int ACCESS = READ | WRITE | EXECUTE;
 
-    public static final int HIDDEN    = 0x00000010;
-    public static final int ARCHIVE   = 0x00000020;
-    public static final int SYSTEM    = 0x00000040;
-    public static final int ATTRIB    = ARCHIVE | HIDDEN | SYSTEM;
+    public static final int HIDDEN = 0x00000010;
+    public static final int ARCHIVE = 0x00000020;
+    public static final int SYSTEM = 0x00000040;
+    public static final int ATTRIB = ARCHIVE | HIDDEN | SYSTEM;
 
-    public static final int ZERO      = 0x00000100;
-    public static final int NZERO     = 0x00000200;
-    public static final int EXIST     = 0x00000400;
-    public static final int NEXIST    = 0x00000800;
-    public static final int FILEINFO  = ZERO | NZERO | EXIST | NEXIST;
+    public static final int ZERO = 0x00000100;
+    public static final int NZERO = 0x00000200;
+    public static final int EXIST = 0x00000400;
+    public static final int NEXIST = 0x00000800;
+    public static final int FILEINFO = ZERO | NZERO | EXIST | NEXIST;
 
-    public static final int FILE      = 0x00001000;
+    public static final int FILE = 0x00001000;
     public static final int DIRECTORY = 0x00002000;
-    public static final int OBJTYPE   = FILE | DIRECTORY;
+    public static final int OBJTYPE = FILE | DIRECTORY;
 
-    public static final int TEXT      = 0x00010000;
-    public static final int BINARY    = 0x00020000;
-    public static final int CNTTYPE   = TEXT | BINARY;
+    public static final int TEXT = 0x00010000;
+    public static final int BINARY = 0x00020000;
+    public static final int CNTTYPE = TEXT | BINARY;
 
-    private static char[]   bitchars  = "rwx-HAS-zseEfd--TB--------------" //$NON-NLS-1$
-                                      .toCharArray();
+    private static char[] bitchars = "rwx-HAS-zseEfd--TB--------------" //$NON-NLS-1$
+    .toCharArray();
 
-    private final int       mask;
-    private final int       bits;
+    private final int mask;
+    private final int bits;
 
     public FileMask(int bits, int mask) {
         if ((bits & CNTTYPE) != 0) {
@@ -193,8 +193,7 @@ public class FileMask {
                 bits |= BINARY;
                 break;
             default:
-                throw new IllegalArgumentException(String.format(SysNLS
-                        .getString("FileMask.errMask_cd"), c, c)); //$NON-NLS-1$
+                throw new IllegalArgumentException(String.format(SysNLS.getString("FileMask.errMask_cd"), c, c)); //$NON-NLS-1$
             }
         }
         return bits;
@@ -215,7 +214,7 @@ public class FileMask {
         return format(parse(str));
     }
 
-    public static final FileMask ALL   = new FileMask(-1);
+    public static final FileMask ALL = new FileMask(-1);
     public static final FileMask BASIC = new FileMask(ACCESS | FILEINFO | OBJTYPE);
 
     public static int getFileBits(File file) {

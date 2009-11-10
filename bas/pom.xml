@@ -1,56 +1,34 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>net.bodz</groupId>
+	<groupId>net.bodz.bas</groupId>
 	<artifactId>bas</artifactId>
+	<version>0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<version>0.1</version>
-	<name>bas</name>
+	<name>BAS Framework</name>
 	<url>http://bas.bodz.net/</url>
-	<properties>
-		<distrib-local>C:\lam\repo.distrib</distrib-local>
-	</properties>
+	<inceptionYear>2004</inceptionYear>
 	<organization>
 		<name>boDz Software</name>
 		<url>http://www.bodz.net</url>
 	</organization>
+	<developers>
+		<developer>
+			<name>Lenik</name>
+			<email>lenik@bodz.net</email>
+		</developer>
+	</developers>
 	<modules>
 		<module>baswrap</module>
 		<module>bastypes</module>
-		<module>basutil</module>
+		<module>basutils</module>
 		<module>basicdb</module>
 		<module>bios</module>
 		<module>basicfx</module>
 	</modules>
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.0</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
 	<scm>
-		<connection>scm:svn:svn://svn.bodz.net/n/net.bodz.bas/tags/bas-0.1</connection>
-		<developerConnection>scm:svn:svn://auto:auto@svn.bodz.net/n/net.bodz.bas/tags/bas-0.1</developerConnection>
+		<connection>scm:svn:svn://svn.bodz.net/n/net.bodz.bas/trunk</connection>
+		<developerConnection>scm:svn:svn://auto:auto@svn.bodz.net/n/net.bodz.bas/trunk</developerConnection>
 	</scm>
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<configuration>
-					<encoding>utf-8</encoding>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
-				<configuration>
-					<tagBase>svn://auto:auto@svn.bodz.net/n/net.bodz.bas/tags</tagBase>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 	<distributionManagement>
 		<repository>
 			<id>distrib-release</id>
@@ -69,4 +47,33 @@
 		</site>
 		<downloadUrl>http://download.bodz.net</downloadUrl>
 	</distributionManagement>
+	<properties>
+		<distrib-local>C:\lam\repo.distrib</distrib-local>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.0</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<encoding>utf-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<configuration>
+					<tagBase>svn://svn.bodz.net/n/net.bodz.bas/tags</tagBase>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>

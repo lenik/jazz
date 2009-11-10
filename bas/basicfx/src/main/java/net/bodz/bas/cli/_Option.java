@@ -20,20 +20,20 @@ import net.bodz.bas.types.util.Types;
 
 public abstract class _Option<T> implements ScriptField<T> {
 
-    protected String               name;     // listDetai l
-    protected final String         hname;    // list-detail
-    public final Option            o;
+    protected String name; // listDetai l
+    protected final String hname; // list-detail
+    public final Option o;
 
-    protected final boolean        weak;
-    protected final Class<?>       type;
-    protected final boolean        multi;
-    protected Class<T>             valtype;
+    protected final boolean weak;
+    protected final Class<?> type;
+    protected final boolean multi;
+    protected Class<T> valtype;
 
-    protected final TypeParser     parser;
+    protected final TypeParser parser;
     protected final ItemTypeParser valparser;
-    protected final Checker        check;
+    protected final Checker check;
 
-    protected final String         optgrp;
+    protected final String optgrp;
 
     @SuppressWarnings("unchecked")
     public _Option(String reflectName, AnnotatedElement elm, Class<?> type, OptionGroup optgrp) {

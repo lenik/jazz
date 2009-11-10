@@ -19,8 +19,7 @@ public class For<T> extends _Functor<T> {
     public For() {
     }
 
-    public For(_Functor<?> initor, _Functor<Boolean> predicate, _Functor<?> incrementor,
-            _Functor<T> body) {
+    public For(_Functor<?> initor, _Functor<Boolean> predicate, _Functor<?> incrementor, _Functor<T> body) {
         setInitor(initor);
         setPredicate(predicate);
         setIncrementor(incrementor);

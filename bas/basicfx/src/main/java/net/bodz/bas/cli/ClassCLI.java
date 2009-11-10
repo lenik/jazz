@@ -25,7 +25,7 @@ import net.bodz.bas.types.util.Strings;
 
 public class ClassCLI {
 
-    private static boolean                     cache = false;
+    private static boolean cache = false;
     private static ClassLocal<ClassOptions<?>> clOptions;
     static {
         clOptions = new ClassLocal<ClassOptions<?>>();
@@ -70,8 +70,8 @@ public class ClassCLI {
     }
 
     @SuppressWarnings("unchecked")
-    public static String helpOptions(Class<?> clazz, String restSyntax, final int tabsize,
-            final int docColumn) throws CLIException {
+    public static String helpOptions(Class<?> clazz, String restSyntax, final int tabsize, final int docColumn)
+            throws CLIException {
         final ClassOptions<Object> copt = (ClassOptions<Object>) getClassOptions(clazz);
         TreeMap<String, _Option<?>> options = copt.getOptions();
         StringBuffer buffer = new StringBuffer(options.size() * 80);

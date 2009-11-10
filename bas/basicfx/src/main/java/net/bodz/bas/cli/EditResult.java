@@ -4,28 +4,28 @@ import net.bodz.bas.nls.AppNLS;
 
 public class EditResult {
 
-    public static final int NONE      = 0;
-    public static final int SAVE      = 10;
+    public static final int NONE = 0;
+    public static final int SAVE = 10;
     public static final int SAVE_SAME = 11;
     public static final int SAVE_DIFF = 12;
-    public static final int DELETE    = 20;
-    public static final int RENAME    = 30;
-    public static final int MOVE      = 40;
-    public static final int COPY      = 50;
+    public static final int DELETE = 20;
+    public static final int RENAME = 30;
+    public static final int MOVE = 40;
+    public static final int COPY = 50;
 
-    protected String[]      tags;
+    protected String[] tags;
 
-    public Boolean          changed;
+    public Boolean changed;
 
-    public int              operation;
+    public int operation;
 
     /** dest pathname for RENAME, MOVE, COPY */
-    public Object           dest;
+    public Object dest;
 
     /** saved, deleted, renamed, moved, copied */
-    public boolean          done;
-    public boolean          error;
-    public Throwable        cause;
+    public boolean done;
+    public boolean error;
+    public Throwable cause;
 
     public EditResult(String... tags) {
         this.tags = tags;

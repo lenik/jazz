@@ -18,13 +18,13 @@ import net.bodz.bas.types.Key;
 
 public class Switch<T> extends _Functor<T> {
 
-    protected _Functor<Object>     key;
-    protected List<_Functor<T>>    caseList = new ArrayList<_Functor<T>>();
-    protected Map<Object, Integer> caseMap  = new HashMap<Object, Integer>();
+    protected _Functor<Object> key;
+    protected List<_Functor<T>> caseList = new ArrayList<_Functor<T>>();
+    protected Map<Object, Integer> caseMap = new HashMap<Object, Integer>();
 
-    protected T                    evaluated;
+    protected T evaluated;
 
-    public static final Key        DEFAULT  = new Key("default");            //$NON-NLS-1$
+    public static final Key DEFAULT = new Key("default"); //$NON-NLS-1$
 
     public Switch() {
     }

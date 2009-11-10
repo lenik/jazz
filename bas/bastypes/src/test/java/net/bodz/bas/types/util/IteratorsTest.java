@@ -10,19 +10,19 @@ import org.junit.Test;
 
 public class IteratorsTest {
 
-    Number       a[] = { 10, 20, 30, 40, 50 };
-    Number       b[] = { 22, 23, 24, 25 };
-    Number       c[] = { 5, 15, 25, 26, 28, 45, 55 };
-    Number       d[] = { 60 };
-    Number       e[] = {};
-    Number       f[] = { 31, 53, 22, 15, 5 };
+    Number a[] = { 10, 20, 30, 40, 50 };
+    Number b[] = { 22, 23, 24, 25 };
+    Number c[] = { 5, 15, 25, 26, 28, 45, 55 };
+    Number d[] = { 60 };
+    Number e[] = {};
+    Number f[] = { 31, 53, 22, 15, 5 };
 
-    List<Number> al  = Arrays.asList(a);
-    List<Number> bl  = Arrays.asList(b);
-    List<Number> cl  = Arrays.asList(c);
-    List<Number> dl  = Arrays.asList(d);
-    List<Number> el  = Arrays.asList(e);
-    List<Number> fl  = Arrays.asList(f);
+    List<Number> al = Arrays.asList(a);
+    List<Number> bl = Arrays.asList(b);
+    List<Number> cl = Arrays.asList(c);
+    List<Number> dl = Arrays.asList(d);
+    List<Number> el = Arrays.asList(e);
+    List<Number> fl = Arrays.asList(f);
 
     @Test
     public void iterWraps() throws Exception {

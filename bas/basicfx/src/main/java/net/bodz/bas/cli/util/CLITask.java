@@ -16,7 +16,7 @@ import org.apache.tools.ant.Task;
 
 public class CLITask extends Task {
 
-    protected final BasicCLI       app;
+    protected final BasicCLI app;
     protected final ScriptClass<?> sclass;
 
     public CLITask(BasicCLI cliApp) {
@@ -29,8 +29,8 @@ public class CLITask extends Task {
     }
 
     private List<String> moreargs;
-    private String       tailargs;
-    private int          logLevel = 0;
+    private String tailargs;
+    private int logLevel = 0;
 
     protected void addArguments(String... args) {
         if (moreargs == null)

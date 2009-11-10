@@ -20,12 +20,12 @@ import net.bodz.bas.types.util.Strings;
 
 public class BootProc {
 
-    private final String   description;
+    private final String description;
 
     private final BootProc prev;
 
-    private String[]       syslibs;
-    private String[]       userlibs;
+    private String[] syslibs;
+    private String[] userlibs;
 
     /**
      * <pre>
@@ -36,9 +36,9 @@ public class BootProc {
      *             +-- @BootInfo.booter : scl
      * </pre>
      */
-    private String         booterClassName;
+    private String booterClassName;
 
-    private ConfigParam[]  configs;
+    private ConfigParam[] configs;
 
     public BootProc(String description, BootProc prev, BootInfo info) {
         this.description = description;
@@ -131,8 +131,8 @@ public class BootProc {
 
     static class ConfigParam {
         Class<? extends LoadConfig> clazz;
-        String[]                    args;
-        LoadConfig                  instance;
+        String[] args;
+        LoadConfig instance;
 
         public ConfigParam(Class<? extends LoadConfig> clazz, String[] args) {
             this.clazz = clazz;

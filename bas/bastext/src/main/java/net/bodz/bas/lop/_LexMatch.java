@@ -1,12 +1,11 @@
 package net.bodz.bas.lop;
 
-
 public class _LexMatch implements Comparable<_LexMatch> {
 
-    private int     order;
-    private int     declOrder;
-    private String  state;
-    private String  value;
+    private int order;
+    private int declOrder;
+    private String state;
+    private String value;
     private boolean mayReturn;
 
     public _LexMatch(LexMatch a, int declOrder) {

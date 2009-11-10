@@ -31,34 +31,34 @@ import net.bodz.bas.types.util.Strings;
 public class BatchEditCLI extends BatchCLI {
 
     @Option(alias = ".E", vnam = "ENCODING", doc = "default encoding of output files")
-    Charset        outputEncoding = Charset.defaultCharset();
+    Charset outputEncoding = Charset.defaultCharset();
 
     @Option(alias = "O", vnam = "DIR", doc = "put output files under this directory")
-    File           outputDirectory;
+    File outputDirectory;
 
     @Option(vnam = ".EXT", optional = ".bak", doc = "backup modified files with given extension")
-    String         backupExtension;
+    String backupExtension;
 
     @Option(alias = "P", doc = "protected mode, don't modify any files")
-    boolean        dryRun;
+    boolean dryRun;
 
     @Option(alias = "f", doc = "force overwrite existing files, this includes --error-continue")
-    boolean        force;
+    boolean force;
 
     @Option(alias = ".X", vnam = "DIFF-ALG", optional = "gnudiff", doc = "show diff between original and modified files, default using gnudiff")
     DiffComparator diffAlgorithm;
 
     @Option(alias = "Xf", vnam = "FORMAT", doc = "Simdiff, ED, Context, Unified, Normal")
-    DiffFormat     diffFormat     = DiffFormats.Simdiff;
+    DiffFormat diffFormat = DiffFormats.Simdiff;
 
     @Option(alias = "Xo", vnam = "FILE", doc = "write diff output to specified file")
-    CharOut        diffOutput     = CharOuts.stdout;
+    CharOut diffOutput = CharOuts.stdout;
 
     @Option(alias = "X3", doc = "diff between src/dst/out, when output to different file")
-    boolean        diff3          = false;
+    boolean diff3 = false;
 
     @Option(alias = "X2", doc = "diff between src/out rather then src/dst, only used when output directory is different")
-    boolean        diffWithDest   = false;
+    boolean diffWithDest = false;
 
     public class Parameters extends BatchCLI.Parameters {
 
@@ -202,7 +202,7 @@ public class BatchEditCLI extends BatchCLI {
         return true;
     }
 
-    private File   tmpDir    = Files.getTmpDir();
+    private File tmpDir = Files.getTmpDir();
     private String tmpPrefix = getClass().getSimpleName();
 
     private File _getOutputFile(String relative, File in) {
@@ -405,9 +405,7 @@ public class BatchEditCLI extends BatchCLI {
                 else
                     tags = "|" + Strings.join("|", result.tags); //$NON-NLS-1$ //$NON-NLS-2$
                 if (result.cause != null)
-                    L
-                            .error(
-                                    AppNLS.getString("BatchEditCLI.s.fail_"), tags, "] ", src, ": ", result.cause); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                    L.error(AppNLS.getString("BatchEditCLI.s.fail_"), tags, "] ", src, ": ", result.cause); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 else
                     L.error(AppNLS.getString("BatchEditCLI.s.fail_"), tags, "] ", src); //$NON-NLS-1$ //$NON-NLS-2$
             }
@@ -421,8 +419,7 @@ public class BatchEditCLI extends BatchCLI {
         if (result.operation == EditResult.SAVE) {
             assert result.changed == null;
             if (edit == null)
-                throw new IllegalUsageError(AppNLS
-                        .getString("BatchEditCLI.cantSave.notBatchEditor")); //$NON-NLS-1$
+                throw new IllegalUsageError(AppNLS.getString("BatchEditCLI.cantSave.notBatchEditor")); //$NON-NLS-1$
             if (!diff3 && !diffWithDest) {
                 result.changed = diff(src, edit);
                 diffPrinted = true;
@@ -467,8 +464,7 @@ public class BatchEditCLI extends BatchCLI {
             boolean canOverwrite = saveLocal || force;
             if (dst.exists() && !canOverwrite)
                 // user interaction...
-                throw new IllegalStateException(String.format(AppNLS
-                        .getString("BatchEditCLI.fileExisted_s"), dst)); //$NON-NLS-1$
+                throw new IllegalStateException(String.format(AppNLS.getString("BatchEditCLI.fileExisted_s"), dst)); //$NON-NLS-1$
 
             File dstdir = dst.getParentFile();
             if (dstdir != null)

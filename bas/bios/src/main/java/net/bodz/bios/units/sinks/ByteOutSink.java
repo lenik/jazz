@@ -7,7 +7,7 @@ import net.bodz.bas.io.ByteOut;
 
 public class ByteOutSink extends ByteProcessSink {
 
-    private ByteOut   out;
+    private ByteOut out;
     private Flushable flushable;
 
     public ByteOutSink(ByteOut out, boolean autoFlush) throws IOException {

@@ -5,10 +5,10 @@ import java.util.Stack;
 
 public abstract class LexMatchAcceptor {
 
-    protected static final int VOID   = 0;
+    protected static final int VOID = 0;
     protected static final int YYTEXT = 1;
 
-    private Stack<String>      stack;
+    private Stack<String> stack;
 
     protected void enter(String state) {
         if (stack == null)

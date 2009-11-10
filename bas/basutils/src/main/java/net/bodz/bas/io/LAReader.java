@@ -14,11 +14,11 @@ public class LAReader extends FilterReader implements Lookable {
     protected final int cap;
 
     /** Look-Ahead Buffer */
-    protected char[]    lab;
+    protected char[] lab;
 
-    protected int       begin;
-    protected int       current;
-    protected boolean   full;
+    protected int begin;
+    protected int current;
+    protected boolean full;
 
     public LAReader(Reader reader, int cap) {
         super(reader);

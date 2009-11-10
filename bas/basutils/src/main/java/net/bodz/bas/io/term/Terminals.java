@@ -4,7 +4,7 @@ import net.bodz.bas.io.CharOuts;
 
 public class Terminals {
 
-    public static final Terminal        nil = new NullTerminal();
+    public static final Terminal nil = new NullTerminal();
 
     public static final ConsoleTerminal stdout;
     public static final ConsoleTerminal stderr;

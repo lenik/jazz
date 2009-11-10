@@ -6,7 +6,7 @@ public class StatusChangeEvent extends EventObject {
 
     private static final long serialVersionUID = -4086144384777447184L;
 
-    private Object            status;
+    private Object status;
 
     public StatusChangeEvent(Object source, Object status) {
         super(source);

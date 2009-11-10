@@ -19,11 +19,10 @@ public interface Factory<T> {
 
     /**
      * @param argTypes
-     *            may be <code>null</code> if not applicable. if argTypes isn't
-     *            null, its length must be equals to the number of args.
+     *            may be <code>null</code> if not applicable. if argTypes isn't null, its length
+     *            must be equals to the number of args.
      * @param args
-     *            each argument must be instance of corresponding argType, or
-     *            <code>null</code>.
+     *            each argument must be instance of corresponding argType, or <code>null</code>.
      */
     T _create(Class<?>[] argTypes, Object... args) throws CreateException;
 
@@ -56,14 +55,13 @@ public interface Factory<T> {
     class Ctor<T> extends _Factory<T> {
 
         private Class<? extends T> clazz;
-        private Object             outer;
+        private Object outer;
 
         public Ctor(Class<? extends T> clazz, Object outer) {
             assert clazz != null;
             if (clazz.isMemberClass()) {
                 if (outer == null)
-                    throw new NullPointerException(
-                            AppNLS.getString("Factory.needEnclosing") + clazz); //$NON-NLS-1$
+                    throw new NullPointerException(AppNLS.getString("Factory.needEnclosing") + clazz); //$NON-NLS-1$
             }
             this.clazz = clazz;
             this.outer = outer;
@@ -94,7 +92,7 @@ public interface Factory<T> {
     class ByClassName extends _Factory<Object> {
 
         private final ClassLoader loader;
-        private final String      name;
+        private final String name;
 
         public ByClassName(int caller, String name) {
             this(Caller.getCallerClassLoader(caller + 0), name);
@@ -136,7 +134,7 @@ public interface Factory<T> {
     class ByXML extends _Factory<Object> {
 
         // private ClassLoader loader;
-        String            xml;
+        String xml;
         ExceptionListener listener;
 
         public ByXML(String xml, ExceptionListener listener) {
@@ -168,7 +166,7 @@ public interface Factory<T> {
     class ByXMLFile extends _Factory<Object> {
 
         // private ClassLoader loader;
-        File              xmlFile;
+        File xmlFile;
         ExceptionListener listener;
 
         public ByXMLFile(File xmlFile, ExceptionListener listener) {

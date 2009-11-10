@@ -7,8 +7,8 @@ import java.io.IOException;
  */
 public class WireInPort extends _InPort {
 
-    private String     name;
-    private PortMeta   meta;
+    private String name;
+    private PortMeta meta;
     protected Receiver dst;
 
     public WireInPort(String name, Unit unit, int index, Receiver dst) {

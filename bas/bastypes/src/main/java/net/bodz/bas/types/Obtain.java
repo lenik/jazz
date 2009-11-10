@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 public @interface Obtain {
 
     /**
-     * Can obtain by parsing a string. 
+     * Can obtain by parsing a string.
      */
     Class<? extends TypeParser> parser() default TypeParser.class;
 

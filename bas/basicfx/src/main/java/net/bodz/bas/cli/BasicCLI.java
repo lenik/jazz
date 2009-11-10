@@ -91,19 +91,19 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
 
     @Option(name = ".stdout", hidden = true)
     @ParseBy(CharOutParser.class)
-    protected CharOut       _stdout        = CharOuts.stdout;
+    protected CharOut _stdout = CharOuts.stdout;
 
     @Option(name = "logger", hidden = true)
     @ParseBy(LoggerParser.class)
-    protected LogTerm       L              = LogTerms.get(1);
+    protected LogTerm L = LogTerms.get(1);
 
-    protected UserInterface UI             = ConsoleUI.stdout;
-
-    @Option(hidden = true)
-    boolean                 _logWithPrefix = true;
+    protected UserInterface UI = ConsoleUI.stdout;
 
     @Option(hidden = true)
-    boolean                 _logWithDate   = false;
+    boolean _logWithPrefix = true;
+
+    @Option(hidden = true)
+    boolean _logWithDate = false;
 
     @Option(alias = "v", doc = "repeat to get more info")
     void _verbose() {
@@ -165,8 +165,8 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
             }
         }
 
-        private CLIPlugin create(String pluginId, String ctorArg) throws CreateException,
-                PluginException, ParseException {
+        private CLIPlugin create(String pluginId, String ctorArg) throws CreateException, PluginException,
+                ParseException {
             PluginTypeEx typeEx = plugins.getTypeEx(CLIPlugin.class, pluginId);
             if (typeEx == null)
                 throw new PluginException(AppNLS.getString("BasicCLI.noPlugin") + pluginId); //$NON-NLS-1$
@@ -260,9 +260,7 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
 
             int[] verjoin = new int[majorver.length + verinfo.revision.length];
             System.arraycopy(majorver, 0, verjoin, 0, majorver.length);
-            System
-                    .arraycopy(verinfo.revision, 0, verjoin, majorver.length,
-                            verinfo.revision.length);
+            System.arraycopy(verinfo.revision, 0, verjoin, majorver.length, verinfo.revision.length);
 
             String author = info.getAuthor();
             if (author != null)
@@ -323,10 +321,10 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
         return AppNLS.getString("BasicCLI.help.FILES"); //$NON-NLS-1$
     }
 
-    private boolean                prepared;
+    private boolean prepared;
     // private BootProc bootProc;
     private ClassOptions<BasicCLI> opts;
-    private List<String>           restArgs;
+    private List<String> restArgs;
 
     public BasicCLI() {
         TypeParsers.register(CLIPlugin.class, new PluginParser());

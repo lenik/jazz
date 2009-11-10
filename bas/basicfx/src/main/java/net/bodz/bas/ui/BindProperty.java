@@ -19,7 +19,7 @@ public @interface BindProperty {
      */
     String value();
 
-    int UPDATE  = 1;
+    int UPDATE = 1;
     int REFRESH = 2;
 
     int mode() default UPDATE;

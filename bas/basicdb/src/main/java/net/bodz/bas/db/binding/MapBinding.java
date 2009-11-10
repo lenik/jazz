@@ -11,7 +11,7 @@ import net.bodz.bas.lang.script.Scripts;
 public class MapBinding {
 
     private final ScriptClass<?> sclass;
-    private final Object         instance;
+    private final Object instance;
 
     public MapBinding(Class<?> clazz, Object instance, boolean forceAccess) throws ScriptException {
         assert clazz != null;

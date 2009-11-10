@@ -23,7 +23,7 @@ import net.bodz.bas.types.util.Strings;
  */
 public class ConsoleUI extends _UserInterface {
 
-    private LineReader  lineIn;
+    private LineReader lineIn;
     private PrintStream out;
 
     public ConsoleUI(InputStream in, PrintStream out) {
@@ -87,8 +87,7 @@ public class ConsoleUI extends _UserInterface {
         String s = Strings.ucfirstWords(name);
         int occur = Strings.indexOfIgnoreCase(s, c);
         if (occur != -1) {
-            s = s.substring(0, occur) + '(' + s.substring(occur, occur + 1) + ')'
-                    + s.substring(occur + 1);
+            s = s.substring(0, occur) + '(' + s.substring(occur, occur + 1) + ')' + s.substring(occur + 1);
         }
         return s;
     }
@@ -182,8 +181,7 @@ public class ConsoleUI extends _UserInterface {
                 Object value = candidates.get(key);
                 out.println("  " + i + ". " + keyname + " => " + value); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             }
-            out.println(String.format(
-                    AppNLS.getString("CLIInteraction.enterYourChoice_d"), keys.length)); //$NON-NLS-1$
+            out.println(String.format(AppNLS.getString("CLIInteraction.enterYourChoice_d"), keys.length)); //$NON-NLS-1$
             try {
                 String line = lineIn.readLine();
                 if (line == null)

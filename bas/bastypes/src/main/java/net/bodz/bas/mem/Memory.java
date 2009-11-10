@@ -20,7 +20,7 @@ public interface Memory {
     Memory offset(long off);
 
     int LITTLE_ENDIAN = 0;
-    int BIG_ENDIAN    = 1;
+    int BIG_ENDIAN = 1;
 
     int getByteOrder();
 

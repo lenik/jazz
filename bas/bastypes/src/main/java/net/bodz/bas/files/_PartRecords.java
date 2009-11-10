@@ -23,10 +23,10 @@ import net.bodz.bas.types.util._DirectIterator;
 public abstract class _PartRecords<K, V> extends MapResRecords<K, V> {
 
     public static final int TEXT_AFTER_HEADER = 0;
-    public static final int FREE_FORM         = 1;
+    public static final int FREE_FORM = 1;
 
-    private int             flags;
-    private K               textKey;
+    private int flags;
+    private K textKey;
 
     public _PartRecords(ResLink resLink) {
         this(resLink, null, 0);
@@ -129,15 +129,15 @@ public abstract class _PartRecords<K, V> extends MapResRecords<K, V> {
 
     class Iter extends _DirectIterator<Map<K, V>, IOException> {
 
-        private static final int PREHEADER   = 0;
-        private static final int HEADER      = 1;
+        private static final int PREHEADER = 0;
+        private static final int HEADER = 1;
         private static final int HEADER_TEXT = 2;
-        private static final int TEXT        = 3;
+        private static final int TEXT = 3;
 
-        private LineReader       lineReader;
-        private boolean          end;
-        private Map<K, V>        map;
-        private Map<K, V>        nextMap;
+        private LineReader lineReader;
+        private boolean end;
+        private Map<K, V> map;
+        private Map<K, V> nextMap;
 
         @Override
         public boolean next() throws IOException {

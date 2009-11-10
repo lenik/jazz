@@ -14,11 +14,11 @@ import org.apache.tools.ant.types.Path;
 
 public class MkbatTask extends CLITask {
 
-    private final Mkbat  mkbat;
+    private final Mkbat mkbat;
 
     // private File srcdir;
-    private List<Path>   classpathList;
-    private List<Path>   findmainList;
+    private List<Path> classpathList;
+    private List<Path> findmainList;
     private List<String> runtimeLibs;
 
     public MkbatTask() {

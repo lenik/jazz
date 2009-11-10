@@ -7,7 +7,7 @@ import net.bodz.bas.types.util.Strings;
 
 public class CollectionTerminal extends BufferedTerminal {
 
-    private final Object             prefix;
+    private final Object prefix;
     private final Collection<String> collection;
 
     public CollectionTerminal(Object prefix, Collection<String> collection) {

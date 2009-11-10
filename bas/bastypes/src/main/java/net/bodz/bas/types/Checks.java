@@ -68,14 +68,14 @@ public class Checks {
 
     public static class FileAccess implements Checker {
 
-        public static final int READ      = 1;
-        public static final int WRITE     = 2;
-        public static final int EXECUTE   = 4;
+        public static final int READ = 1;
+        public static final int WRITE = 2;
+        public static final int EXECUTE = 4;
         public static final int DIRECTORY = 8;
-        public static final int FILE      = 16;
-        public static final int TEXT      = 32;
+        public static final int FILE = 16;
+        public static final int TEXT = 32;
 
-        private int             mode;
+        private int mode;
 
         public FileAccess(int mode) {
             this.mode = mode;

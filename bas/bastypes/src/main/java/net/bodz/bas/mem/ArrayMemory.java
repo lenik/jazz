@@ -6,8 +6,8 @@ import net.bodz.bas.lang.err.OutOfDomainException;
 public class ArrayMemory extends _Memory {
 
     private final byte[] array;
-    private final int    start;
-    private final int    end;
+    private final int start;
+    private final int end;
 
     public ArrayMemory(int capacity) {
         this(new byte[capacity]);

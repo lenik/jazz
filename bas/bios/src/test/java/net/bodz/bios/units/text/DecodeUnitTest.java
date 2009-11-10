@@ -17,7 +17,7 @@ import org.junit.Test;
 public class DecodeUnitTest {
 
     DecodeUnit decode;
-    SISOUnit   tostr;
+    SISOUnit tostr;
 
     public DecodeUnitTest() throws IOException {
         Charset utf8 = Charset.forName("utf-8"); //$NON-NLS-1$

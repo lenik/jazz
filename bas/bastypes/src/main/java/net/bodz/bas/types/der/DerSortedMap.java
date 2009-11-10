@@ -12,8 +12,8 @@ public abstract class DerSortedMap<K, V> extends DerMap<K, V> implements SortedM
 
     private static final long serialVersionUID = -4142737182766452892L;
 
-    private SortedMap<K, V>   psm;
-    private SortedMap<K, V>   qsm;
+    private SortedMap<K, V> psm;
+    private SortedMap<K, V> qsm;
 
     public DerSortedMap(SortedMap<K, V> pMap) {
         super(pMap);

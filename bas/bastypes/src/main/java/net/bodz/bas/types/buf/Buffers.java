@@ -26,8 +26,7 @@ public class Buffers {
                 buffer.arrayOffset() + buffer.position(), buffer.remaining(), charset);
     }
 
-    public static String getString(ByteBuffer buffer, String charset)
-            throws UnsupportedEncodingException {
+    public static String getString(ByteBuffer buffer, String charset) throws UnsupportedEncodingException {
         return new String(buffer.array(), //
                 buffer.arrayOffset() + buffer.position(), buffer.remaining(), charset);
     }
@@ -50,8 +49,7 @@ public class Buffers {
      *             if dest or src is <code>null</code>.
      * @throws UnsupportedOperationException
      */
-    public static ByteBuffer _insert(ByteBuffer dest, int destOff, byte[] src, int off, int len,
-            boolean beforeCursor) {
+    public static ByteBuffer _insert(ByteBuffer dest, int destOff, byte[] src, int off, int len, boolean beforeCursor) {
         if (len == 0)
             return dest;
         byte[] _dest = dest.array();

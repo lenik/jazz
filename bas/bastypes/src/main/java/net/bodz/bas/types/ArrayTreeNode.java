@@ -9,9 +9,9 @@ import java.util.List;
  */
 public class ArrayTreeNode implements TreeNode<ArrayTreeNode> {
 
-    private Object              var;
+    private Object var;
 
-    private Object[]            array;
+    private Object[] array;
     private List<ArrayTreeNode> children;
 
     public ArrayTreeNode(Object var) {

@@ -89,9 +89,9 @@ public class TypeParsers {
 
     public static class ArrayParser implements TypeParser {
 
-        private Class<?>   valtype;
+        private Class<?> valtype;
         private TypeParser valparser;
-        private Pattern    separator;
+        private Pattern separator;
 
         public ArrayParser(Class<?> valtype, TypeParser valparser, Pattern separator) {
             if (valparser == null)
@@ -125,8 +125,7 @@ public class TypeParsers {
     }
 
     /**
-     * @return <code>null</code> if no explicitly (or implicitly derived) type
-     *         registered.
+     * @return <code>null</code> if no explicitly (or implicitly derived) type registered.
      */
     public static TypeParser get(Class<?> clazz) {
         return registry.floor(clazz);

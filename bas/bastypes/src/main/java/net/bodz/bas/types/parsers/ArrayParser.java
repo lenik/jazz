@@ -10,9 +10,9 @@ import net.bodz.bas.types.TypeParsers;
 
 public class ArrayParser implements TypeParser {
 
-    private Class<?>   valtype;
+    private Class<?> valtype;
     private TypeParser valparser;
-    private Pattern    separator;
+    private Pattern separator;
 
     public ArrayParser(Class<?> valtype, TypeParser valparser, Pattern separator) {
         if (valparser == null)

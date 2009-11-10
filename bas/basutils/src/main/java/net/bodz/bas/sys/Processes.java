@@ -18,7 +18,7 @@ import net.bodz.bas.types.util.Strings;
 public class Processes {
 
     private static String[] shvec;
-    private static String   shprefix;
+    private static String shprefix;
     static {
         String os = System.getProperty("os.name"); //$NON-NLS-1$
         if (os.startsWith("Windows")) { //$NON-NLS-1$
@@ -124,8 +124,7 @@ public class Processes {
         }
     }
 
-    public static int iocap(Process process, Object outerrSink) throws InterruptedException,
-            IOException {
+    public static int iocap(Process process, Object outerrSink) throws InterruptedException, IOException {
         OutputStream outerr = Files.getOutputStream(outerrSink);
         boolean outerrc = Files.shouldClose(outerrSink);
         try {

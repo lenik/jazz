@@ -7,7 +7,7 @@ import java.io.IOException;
 
 public class TempWriter extends FilterWriter {
 
-    private File    file;
+    private File file;
     private boolean cleaned;
 
     public TempWriter(String fileName) throws IOException {

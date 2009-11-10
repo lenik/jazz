@@ -16,10 +16,9 @@ import net.bodz.bas.types.util._DirectIterator;
 public class CSVRecords extends _ResRecords<String[]> {
 
     private String delim;
-    private int    limit;
+    private int limit;
 
-    public CSVRecords(ResLink resLink, Charset charset, String delim, int maxColumns)
-            throws IOException {
+    public CSVRecords(ResLink resLink, Charset charset, String delim, int maxColumns) throws IOException {
         super(resLink, charset);
         this.delim = delim;
         this.limit = maxColumns;
@@ -44,8 +43,8 @@ public class CSVRecords extends _ResRecords<String[]> {
     class Iter extends _DirectIterator<String[], IOException> {
 
         private LineReader lineReader;
-        private boolean    end;
-        private String[]   row;
+        private boolean end;
+        private String[] row;
 
         @Override
         public boolean next() throws IOException {

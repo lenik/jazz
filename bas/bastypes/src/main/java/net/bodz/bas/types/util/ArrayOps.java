@@ -1271,16 +1271,16 @@ public class ArrayOps {
 
     private static final Map<Class<?>, ArrayOp<?>> ops;
 
-    public static final Bytes                      Bytes;
-    public static final Shorts                     Shorts;
-    public static final Ints                       Ints;
-    public static final Longs                      Longs;
-    public static final Floats                     Floats;
-    public static final Doubles                    Doubles;
-    public static final Booleans                   Booleans;
-    public static final Chars                      Chars;
-    public static final Objects<Object>            Objects;
-    public static final Objects<String>            Strings;
+    public static final Bytes Bytes;
+    public static final Shorts Shorts;
+    public static final Ints Ints;
+    public static final Longs Longs;
+    public static final Floats Floats;
+    public static final Doubles Doubles;
+    public static final Booleans Booleans;
+    public static final Chars Chars;
+    public static final Objects<Object> Objects;
+    public static final Objects<String> Strings;
 
     static {
         ops = new HashMap<Class<?>, ArrayOp<?>>();

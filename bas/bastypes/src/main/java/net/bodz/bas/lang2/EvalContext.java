@@ -5,10 +5,10 @@ import java.util.List;
 
 public class EvalContext {
 
-    private List<Object>  stack;
-    private int           end;
+    private List<Object> stack;
+    private int end;
     private List<Integer> frames;
-    private int           frameend;
+    private int frameend;
 
     public EvalContext() {
         stack = new ArrayList<Object>();
