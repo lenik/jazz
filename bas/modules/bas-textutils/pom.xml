@@ -1,29 +1,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>basicdb</artifactId>
-	<name>basicdb</name>
-	<version>0.1-SNAPSHOT</version>
 	<parent>
-		<groupId>net.bodz</groupId>
-		<artifactId>bas</artifactId>
-		<version>0.1-SNAPSHOT</version>
+		<groupId>net.bodz.bas</groupId>
+		<artifactId>bas-modules</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
 	</parent>
+	<artifactId>bas-textutils</artifactId>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.0</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>net.bodz</groupId>
-			<artifactId>basutils</artifactId>
-			<version>0</version>
-		</dependency>
-		<dependency>
-			<groupId>net.bodz</groupId>
-			<artifactId>bastext</artifactId>
-			<version>0</version>
+			<groupId>net.bodz.bas</groupId>
+			<artifactId>bas-datatypes</artifactId>
 		</dependency>
 	</dependencies>
+	<name>BAS Module :: Text Utils</name>
 </project>

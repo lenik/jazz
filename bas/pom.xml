@@ -1,79 +1,93 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>net.bodz.bas</groupId>
+	<parent>
+		<groupId>net.bodz.bas</groupId>
+		<artifactId>bas-parent</artifactId>
+		<version>1</version>
+	</parent>
 	<artifactId>bas</artifactId>
-	<version>0.1-SNAPSHOT</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-proxy</artifactId>
+				<type>pom</type>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-proxy-java-util</artifactId>
+				<type>jar</type>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-datatypes</artifactId>
+				<type>jar</type>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-utils</artifactId>
+				<type>jar</type>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-textutils</artifactId>
+				<type>jar</type>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-iofilter</artifactId>
+				<type>jar</type>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-database</artifactId>
+				<type>jar</type>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-quickstart</artifactId>
+				<type>jar</type>
+				<version>${project.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	<modules>
+		<module>bas-proxy</module>
+		<module>modules</module>
+	</modules>
 	<name>BAS Framework</name>
 	<url>http://bas.bodz.net/</url>
 	<inceptionYear>2004</inceptionYear>
-	<organization>
-		<name>boDz Software</name>
-		<url>http://www.bodz.net</url>
-	</organization>
 	<developers>
 		<developer>
-			<name>Lenik</name>
+			<id>lenik</id>
+			<name>Lenik (谢继雷)</name>
 			<email>lenik@bodz.net</email>
+			<roles>
+				<role>Project Leader</role>
+			</roles>
+			<timezone>GMT+8</timezone>
 		</developer>
 	</developers>
-	<modules>
-		<module>baswrap</module>
-		<module>bastypes</module>
-		<module>basutils</module>
-		<module>basicdb</module>
-		<module>bios</module>
-		<module>basicfx</module>
-	</modules>
+	<mailingLists>
+		<mailingList>
+			<name>boDz Software Foundation</name>
+			<archive>http://list.bodz.net/bsf/archive</archive>
+			<post>post@bsf.list.bodz.net</post>
+			<subscribe>subscribe@bsf.list.bodz.net</subscribe>
+			<unsubscribe>unsubscribe@bsf.list.bodz.net</unsubscribe>
+		</mailingList>
+	</mailingLists>
 	<scm>
 		<connection>scm:svn:svn://svn.bodz.net/n/net.bodz.bas/trunk</connection>
-		<developerConnection>scm:svn:svn://auto:auto@svn.bodz.net/n/net.bodz.bas/trunk</developerConnection>
 	</scm>
-	<distributionManagement>
-		<repository>
-			<id>distrib-release</id>
-			<name>Release Distribution Repository</name>
-			<url>file://${distrib-local}/release</url>
-		</repository>
-		<snapshotRepository>
-			<id>distrib-snapshot</id>
-			<name>Snapshot Distribution Repository</name>
-			<url>file://${distrib-local}/snapshot</url>
-		</snapshotRepository>
-		<site>
-			<id>distrib-site</id>
-			<name>Distribution Site Location</name>
-			<url>file://${distrib-local}/site</url>
-		</site>
-		<downloadUrl>http://download.bodz.net</downloadUrl>
-	</distributionManagement>
-	<properties>
-		<distrib-local>C:\lam\repo.distrib</distrib-local>
-	</properties>
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.0</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<configuration>
-					<encoding>utf-8</encoding>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-release-plugin</artifactId>
-				<configuration>
-					<tagBase>svn://svn.bodz.net/n/net.bodz.bas/tags</tagBase>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 </project>
