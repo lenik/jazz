@@ -11,8 +11,8 @@ import java.util.NoSuchElementException;
 public class NestedIterator<T> implements Iterator<T> {
 
     private Iterator<Iterator<T>> iterators;
-    private Iterator<T>           currentIterator;
-    private Iterator<T>           lastIterator;
+    private Iterator<T> currentIterator;
+    private Iterator<T> lastIterator;
 
     public NestedIterator(Iterator<T>... iterators) {
         this(Arrays.asList((Iterator<T>[]) iterators));

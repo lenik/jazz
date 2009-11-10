@@ -6,7 +6,7 @@ import net.bodz.bas.mem._Type;
 
 public class Bool32 extends _Type {
 
-    public static final byte[] TRUE  = { 0, 0, 0, 1 };
+    public static final byte[] TRUE = { 0, 0, 0, 1 };
     public static final byte[] FALSE = { 0, 0, 0, 0 };
 
     @Override

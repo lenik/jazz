@@ -8,7 +8,7 @@ import net.bodz.bas.lang.err.ParseException;
 public class WithParameters {
 
     private final List<Class<?>> types;
-    private final List<Object>   values;
+    private final List<Object> values;
 
     public WithParameters() {
         this.types = new ArrayList<Class<?>>();

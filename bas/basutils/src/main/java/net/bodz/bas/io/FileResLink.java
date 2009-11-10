@@ -14,7 +14,7 @@ import net.bodz.bas.nls.SysNLS;
 
 public class FileResLink extends _ResLink {
 
-    private final File    file;
+    private final File file;
     private final boolean autoMkdirs;
 
     public FileResLink(String path) {

@@ -9,7 +9,7 @@ import java.util.Queue;
 public class ConcatReader extends Reader {
 
     protected final Queue<Reader> q;
-    private boolean               fast = true;
+    private boolean fast = true;
 
     public ConcatReader(Queue<Reader> queue) {
         if (queue == null)

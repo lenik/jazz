@@ -31,7 +31,7 @@ public class LasUnits {
 
     public static final LasUnit nil = new Nil();
 
-    static DirMap<LasUnit>      registry;
+    static DirMap<LasUnit> registry;
     static {
         registry = new DirMap<LasUnit>();
     }

@@ -48,17 +48,17 @@ import net.bodz.bas.types.util.Strings;
 @Version( { 0, 3 })
 public class Mkbat extends BatchEditCLI {
 
-    boolean                 force;
+    boolean force;
 
     // private String prefix = "";
     private TextMap<String> varmap;
-    private Set<String>     generated;
+    private Set<String> generated;
 
-    private List<URL>       classpathList;
-    private URL[]           classpath = {};
-    private ClassLoader     bootSysLoader;
+    private List<URL> classpathList;
+    private URL[] classpath = {};
+    private ClassLoader bootSysLoader;
 
-    private List<String>    runtimeLibs;
+    private List<String> runtimeLibs;
 
     public Mkbat() {
         generated = new HashSet<String>();
@@ -265,8 +265,8 @@ public class Mkbat extends BatchEditCLI {
             L.info("save ", batf); //$NON-NLS-1$
     }
 
-    static URL       batTempl;
-    static String    batTemplBody;
+    static URL batTempl;
+    static String batTemplBody;
     static Fix_BatBB fix_BatBB;
 
     static {

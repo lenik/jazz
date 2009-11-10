@@ -13,8 +13,8 @@ public enum SetRelation {
     ;
 
     static final int BIT_SHARE = 1;
-    static final int BIT_MORE  = 2;
-    static final int BIT_LESS  = 4;
+    static final int BIT_MORE = 2;
+    static final int BIT_LESS = 4;
 
     public boolean isSuperset() {
         switch (this) {

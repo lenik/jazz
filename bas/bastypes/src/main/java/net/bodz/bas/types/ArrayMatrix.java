@@ -7,9 +7,9 @@ import net.bodz.bas.lang.err.ReadOnlyException;
 
 public class ArrayMatrix<T> implements Matrix<T> {
 
-    private T[][]        array;
-    private int          rows;
-    private int          columns;
+    private T[][] array;
+    private int rows;
+    private int columns;
     private List<String> rowNames;
     private List<String> columnNames;
 

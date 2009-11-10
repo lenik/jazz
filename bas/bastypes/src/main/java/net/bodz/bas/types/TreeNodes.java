@@ -8,13 +8,11 @@ import java.util.List;
 
 public class TreeNodes {
 
-    public static <N extends TreeNode<? extends N>> void traverse(N start,
-            TreeCallback<? super N> callback) {
+    public static <N extends TreeNode<? extends N>> void traverse(N start, TreeCallback<? super N> callback) {
         _traverse(start, callback, 0);
     }
 
-    static <N extends TreeNode<? extends N>> int _traverse(N start,
-            TreeCallback<? super N> callback, int level) {
+    static <N extends TreeNode<? extends N>> int _traverse(N start, TreeCallback<? super N> callback, int level) {
         int status = callback.each(start, level);
         if (status != OK)
             return status;

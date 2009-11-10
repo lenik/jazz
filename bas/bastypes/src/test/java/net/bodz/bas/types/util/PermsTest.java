@@ -21,7 +21,7 @@ import org.junit.Test;
 public class PermsTest {
 
     static LogTerm logger = LogTerms.get(1);
-    int            count  = 0;
+    int count = 0;
 
     public PermsTest() {
         logger.setLevel(LogTerm.INFO);
@@ -232,8 +232,7 @@ public class PermsTest {
                 ords.add(ord);
             }
         });
-        int[] expecteds = { 0, 1, 3, 2, 4, 5, 9, 8, 10, 11, 6, 7, 16, 17, 12, 13, 15, 14, 18, 19,
-                21, 20, 22, 23, };
+        int[] expecteds = { 0, 1, 3, 2, 4, 5, 9, 8, 10, 11, 6, 7, 16, 17, 12, 13, 15, 14, 18, 19, 21, 20, 22, 23, };
         int[] actuals = Ints.toArray(ords);
         assertArrayEquals(expecteds, actuals);
     }

@@ -6,8 +6,8 @@ import java.io.IOException;
 
 public class BreakLinesUnit extends TextProcessUnit {
 
-    private char         eolChar;
-    private boolean      chop;
+    private char eolChar;
+    private boolean chop;
 
     private StringBuffer lineBuf;
 

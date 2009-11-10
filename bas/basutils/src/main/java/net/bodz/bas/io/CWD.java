@@ -8,7 +8,7 @@ public class CWD {
 
     private static final long serialVersionUID = 6765421613751651110L;
 
-    private static File       cwd;
+    private static File cwd;
     static {
         String userDir = System.getProperty("user.dir"); //$NON-NLS-1$
         if (userDir == null)

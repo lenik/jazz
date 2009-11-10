@@ -58,7 +58,7 @@ import net.bodz.bas.types.util.PrefetchedIterator;
  */
 public class Files {
 
-    public static int     blockSize = 4096;
+    public static int blockSize = 4096;
     private static String slash;
     static {
         slash = System.getProperty("file.separator"); //$NON-NLS-1$
@@ -120,8 +120,7 @@ public class Files {
      *            <li><code>URL</code> -> {@link File#File(URI)}
      *            </ul>
      */
-    public static OutputStream getOutputStream(Object out, Object charset, boolean append)
-            throws IOException {
+    public static OutputStream getOutputStream(Object out, Object charset, boolean append) throws IOException {
         if (out == null)
             return null;
         if (out instanceof OutputStream)
@@ -255,8 +254,7 @@ public class Files {
         return false;
     }
 
-    public static byte[] readBytes(Object in, long size, Object charset, boolean close)
-            throws IOException {
+    public static byte[] readBytes(Object in, long size, Object charset, boolean close) throws IOException {
         InputStream ins = getInputStream(in, charset);
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         byte block[] = new byte[blockSize];
@@ -345,8 +343,7 @@ public class Files {
      * 
      * @see LineReader#readLine()
      */
-    public static List<String> readLines(Object in, Object charset, boolean close)
-            throws IOException {
+    public static List<String> readLines(Object in, Object charset, boolean close) throws IOException {
         LineReader reader = getLineReader(in, charset);
         List<String> lines = new ArrayList<String>();
         String line;
@@ -393,8 +390,8 @@ public class Files {
      * 
      * @see LineReader#readLine()
      */
-    public static String readLine(Object in, Object charset, boolean close, int index,
-            Pattern pattern) throws IOException {
+    public static String readLine(Object in, Object charset, boolean close, int index, Pattern pattern)
+            throws IOException {
         assert index > 0;
         LineReader reader = getLineReader(in, charset);
         String line = null;
@@ -450,8 +447,7 @@ public class Files {
         return readLine(in, Charsets.DEFAULT);
     }
 
-    public static String readTill(Object in, char term, Charset charset, boolean close)
-            throws IOException {
+    public static String readTill(Object in, char term, Charset charset, boolean close) throws IOException {
         Reader reader = getReader(in, charset);
         StringBuffer buffer = new StringBuffer();
         int c;
@@ -481,8 +477,7 @@ public class Files {
         return readTill(in, term, Charsets.DEFAULT);
     }
 
-    public static String readLen(Object in, int length, Charset charset, boolean close)
-            throws IOException {
+    public static String readLen(Object in, int length, Charset charset, boolean close) throws IOException {
         Reader reader = getReader(in, charset);
         try {
             char[] buf = new char[length];
@@ -516,9 +511,9 @@ public class Files {
 
         return new PrefetchedIterator<Integer>() {
 
-            private int         index = -1;
+            private int index = -1;
             private InputStream input = null;
-            private boolean     close;
+            private boolean close;
 
             @_throws(IOException.class)
             @Override
@@ -624,8 +619,8 @@ public class Files {
 
         return new PrefetchedIterator<Integer>() {
 
-            private int     index = -1;
-            private Reader  input = null;
+            private int index = -1;
+            private Reader input = null;
             private boolean close;
 
             @_throws(IOException.class)
@@ -736,8 +731,8 @@ public class Files {
     protected static Iterator<String> _readByLine(final Object[] files, final Charset charset) {
         return new PrefetchedIterator<String>() {
 
-            private int        fileIndex = 0;
-            private LineReader reader    = null;
+            private int fileIndex = 0;
+            private LineReader reader = null;
 
             @_throws(IOException.class)
             @Override
@@ -812,8 +807,7 @@ public class Files {
 
     // loadProperties
 
-    public static Properties loadProperties(Object in, Object charset, boolean close)
-            throws IOException {
+    public static Properties loadProperties(Object in, Object charset, boolean close) throws IOException {
         if (in == null)
             throw new NullPointerException("in");
         Reader reader = getReader(in, charset);
@@ -876,8 +870,7 @@ public class Files {
 
     // write
 
-    public static <T> void write(Object out, T data, Object charset, boolean append)
-            throws IOException {
+    public static <T> void write(Object out, T data, Object charset, boolean append) throws IOException {
         boolean close = shouldClose(out);
         if (data instanceof byte[]) {
             OutputStream outs = getOutputStream(out, charset, append);
@@ -977,7 +970,7 @@ public class Files {
 
         class ObjIter extends PrefetchedIterator<Object> {
             final ObjectInput objin;
-            boolean           shouldClose;
+            boolean shouldClose;
 
             public ObjIter() throws IOException {
                 if (in instanceof ObjectInput)
@@ -1149,8 +1142,8 @@ public class Files {
 
     public static void dump(Object out, Object... objs) throws IOException {
         assert out != null;
-        ObjectOutput objout = (out instanceof ObjectOutput) ? (ObjectOutput) out
-                : new ObjectOutputStream(getOutputStream(out));
+        ObjectOutput objout = (out instanceof ObjectOutput) ? (ObjectOutput) out : new ObjectOutputStream(
+                getOutputStream(out));
         boolean close = shouldClose(out);
         for (Object o : objs)
             objout.writeObject(o);
@@ -1299,8 +1292,7 @@ public class Files {
         throw new UnsupportedOperationException("Can't get file from ResFolder " + resFolder); //$NON-NLS-1$
     }
 
-    public static ResFolder getResFolder(URL url, String removeSubPath)
-            throws MalformedURLException {
+    public static ResFolder getResFolder(URL url, String removeSubPath) throws MalformedURLException {
         if (removeSubPath == null || removeSubPath.isEmpty())
             return new URLResFolder(url);
         // jar:file:/C:/abc/dir/example.jar!/com/example/Name.class
@@ -1309,8 +1301,7 @@ public class Files {
         // s=file:/C:/abc/dir/example.jar!/com/example/Name.class
         String s = url.toExternalForm();
         if (!s.endsWith(removeSubPath)) {
-            throw new IllegalArgumentException(String.format(SysNLS
-                    .getString("Files.urlIsntEndWith_ss"), //$NON-NLS-1$
+            throw new IllegalArgumentException(String.format(SysNLS.getString("Files.urlIsntEndWith_ss"), //$NON-NLS-1$
                     removeSubPath, url));
         }
         int rlen = removeSubPath.length();
@@ -1356,7 +1347,7 @@ public class Files {
     }
 
     static Map<Object, File> temps;
-    static Pattern           invalidFilenameChars;
+    static Pattern invalidFilenameChars;
     static {
         invalidFilenameChars = Pattern.compile("[^a-zA-Z0-9-_]"); //$NON-NLS-1$
     }
@@ -1367,8 +1358,8 @@ public class Files {
         return convertToFile(key, in, "CTF-" + name, ".tmp", TMPDIR); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    public static File convertToFile(Object key, Object in, String prefix, String suffix,
-            File tmpdir) throws IOException {
+    public static File convertToFile(Object key, Object in, String prefix, String suffix, File tmpdir)
+            throws IOException {
         if (temps == null)
             temps = new HashMap<Object, File>();
         if (key != null) {
@@ -1401,8 +1392,7 @@ public class Files {
         List<String> tails = new ArrayList<String>();
         for (File look = file;; look = look.getParentFile()) {
             if (look == null)
-                throw new UnexpectedException(String.format(SysNLS
-                        .getString("Files.fileNotInStart_ss"), file, start)); //$NON-NLS-1$
+                throw new UnexpectedException(String.format(SysNLS.getString("Files.fileNotInStart_ss"), file, start)); //$NON-NLS-1$
             if (look.equals(start))
                 break;
             tails.add(look.getName());
@@ -1479,8 +1469,8 @@ public class Files {
                 134231808, -1, -1, -1, -1, -1, -1, -1);
     }
 
-    static int  textLookSize = blockSize;
-    static int  textFailSize = (int) 0.90f * textLookSize;
+    static int textLookSize = blockSize;
+    static int textFailSize = (int) 0.90f * textLookSize;
 
     public static boolean isText(byte[] bytes) {
         int lookSize = Math.min(textLookSize, bytes.length);
@@ -1813,7 +1803,7 @@ public class Files {
         }
     }
 
-    static File[]   sysPaths;
+    static File[] sysPaths;
     static String[] sysExts;
     static {
         String ps = System.getProperty("path.separator");

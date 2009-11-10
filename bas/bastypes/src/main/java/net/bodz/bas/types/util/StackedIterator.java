@@ -14,8 +14,8 @@ import net.bodz.bas.types.Stack;
 public class StackedIterator<T> implements Iterator<T> {
 
     private Stack<Iterator<T>> stack;
-    private Iterator<T>        currentIterator;
-    private Iterator<T>        lastIterator;
+    private Iterator<T> currentIterator;
+    private Iterator<T> lastIterator;
 
     public StackedIterator() {
         stack = new LinkedStack<Iterator<T>>();

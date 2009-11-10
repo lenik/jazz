@@ -12,10 +12,10 @@ import org.junit.Test;
 public class CLIScriptClassTest extends BasicCLI {
 
     @Option
-    private String    myName  = "Lucy"; //$NON-NLS-1$
+    private String myName = "Lucy"; //$NON-NLS-1$
 
     @Option(hidden = true)
-    private int       yourAge = 13;
+    private int yourAge = 13;
 
     @Option
     private boolean[] serial;

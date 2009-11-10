@@ -15,7 +15,7 @@ import net.bodz.bas.types.Bits;
 public class CharFeature {
 
     public static final Map<String, byte[]> octf;
-    public static final Map<String, Bits>   bitf;
+    public static final Map<String, Bits> bitf;
 
     static {
         octf = new HashMap<String, byte[]>();

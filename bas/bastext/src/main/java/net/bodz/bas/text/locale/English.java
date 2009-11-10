@@ -34,11 +34,11 @@ public class English {
     }
 
     // private static final Pattern P_Ve;
-    private static final Pattern       P_Ce;
-    private static final Pattern       P_VVC;
-    private static final Pattern       P_CVC;
-    private static final Pattern       P_Cy;
-    private static final Pattern       P_aiouxs;
+    private static final Pattern P_Ce;
+    private static final Pattern P_VVC;
+    private static final Pattern P_CVC;
+    private static final Pattern P_Cy;
+    private static final Pattern P_aiouxs;
     static {
         // P_Ve = Pattern.compile("[aeiou]e$", Pattern.CASE_INSENSITIVE);
         P_Ce = Pattern.compile("[^aeiou]e$", Pattern.CASE_INSENSITIVE); //$NON-NLS-1$

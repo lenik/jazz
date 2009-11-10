@@ -33,8 +33,8 @@ public class UCL {
     }
 
     /**
-     * @return {@link URLClassLoader} which contains the specified url, or
-     *         <code>null</code> if not found.
+     * @return {@link URLClassLoader} which contains the specified url, or <code>null</code> if not
+     *         found.
      */
     public static URLClassLoader exists(ClassLoader cl, URL url, boolean findParents) {
         if (url == null)
@@ -57,8 +57,7 @@ public class UCL {
     /**
      * try to not add duplicated urls.
      * 
-     * @return <code>false</code> if specified url is already existed in ucl or
-     *         its parents.
+     * @return <code>false</code> if specified url is already existed in ucl or its parents.
      */
     public static int addURL(URLClassLoader ucl, URL... urls) {
         if (URLClassLoader_addURL == null)
@@ -165,7 +164,7 @@ public class UCL {
     private static class Dumper extends Iter {
 
         private final CharOut out;
-        private boolean       cont;
+        private boolean cont;
 
         public Dumper(CharOut out) {
             this.out = out;

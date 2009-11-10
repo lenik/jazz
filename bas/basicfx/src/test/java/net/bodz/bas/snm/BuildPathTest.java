@@ -25,8 +25,7 @@ public class BuildPathTest {
         // buildPath.addLibrary(rt);
     }
 
-    public void testType(BuildPath buildPath, Class<?> type, String classPath, String sourcePath)
-            throws Exception {
+    public void testType(BuildPath buildPath, Class<?> type, String classPath, String sourcePath) throws Exception {
         if (buildPath == null)
             buildPath = new BuildPath(type);
         System.out.println("Class: " + type);

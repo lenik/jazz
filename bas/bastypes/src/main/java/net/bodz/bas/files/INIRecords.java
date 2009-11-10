@@ -22,8 +22,8 @@ import net.bodz.bas.types.util._DirectIterator;
 public class INIRecords extends MapResRecords<String, String> {
 
     private boolean flatten;
-    private String  delim    = ".";    //$NON-NLS-1$
-    private String  existKey = "exist"; //$NON-NLS-1$
+    private String delim = "."; //$NON-NLS-1$
+    private String existKey = "exist"; //$NON-NLS-1$
 
     public INIRecords(ResLink resLink, Charset charset, boolean flatten) {
         super(resLink, charset);
@@ -69,9 +69,9 @@ public class INIRecords extends MapResRecords<String, String> {
 
     class Iter extends _DirectIterator<TextMap<String>, IOException> {
 
-        private LineReader      lineReader;
-        private boolean         end;
-        private String          sectionName = null;
+        private LineReader lineReader;
+        private boolean end;
+        private String sectionName = null;
         private TextMap<String> map;
 
         @Override

@@ -14,7 +14,7 @@ import net.bodz.bios.units.SISOUnit;
  */
 public class GrabberUnit extends SISOUnit {
 
-    private OutPort            srcPort;
+    private OutPort srcPort;
     private Collection<Object> buffer;
 
     GrabberUnit(OutPort outPort, Collection<Object> collection) throws IOException {

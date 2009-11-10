@@ -2,8 +2,8 @@ package net.bodz.bas.ui;
 
 public class Proposal implements IProposal {
 
-    private final int    priority;
-    private final char   mnemonic;
+    private final int priority;
+    private final char mnemonic;
     private final String name;
     private final String description;
 

@@ -12,9 +12,9 @@ import net.bodz.bas.text.util.Lookups;
 
 public class HexCharsetDecoder extends CharsetDecoder {
 
-    private byte[]  transtbl  = Lookups.c2n;
-    private byte    delimiter = 0x20;
-    private int     ch;
+    private byte[] transtbl = Lookups.c2n;
+    private byte delimiter = 0x20;
+    private int ch;
     private boolean chFill;
 
     /**

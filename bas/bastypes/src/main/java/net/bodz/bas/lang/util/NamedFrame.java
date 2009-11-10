@@ -24,8 +24,7 @@ public class NamedFrame {
     /**
      * @see _FrameTemplate
      */
-    public static Runnable wrap(Runnable runnable, String className, String methodName,
-            String description) {
+    public static Runnable wrap(Runnable runnable, String className, String methodName, String description) {
         className = toSafeName(className);
         methodName = toSafeName(methodName);
         byte[] bytes = Dump.dump(className, methodName, description);

@@ -10,9 +10,9 @@ public class MemoryInputStream extends InputStream {
     private final Memory memory;
 
     /** addr_t */
-    private int          start;
+    private int start;
 
-    private int          size;
+    private int size;
 
     public MemoryInputStream(Memory memory, int start, int size) {
         this.memory = memory;

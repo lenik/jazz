@@ -4,7 +4,7 @@ public class DontKnowException extends RuntimeException {
 
     private static final long serialVersionUID = 3241400062992357227L;
 
-    private Object            guessValue;
+    private Object guessValue;
 
     public DontKnowException() {
         super();

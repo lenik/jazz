@@ -17,8 +17,8 @@ import net.bodz.bas.lang.err.ParseException;
 public abstract class _Encoding implements Encoding {
 
     protected final String charset;
-    private final float    bpc;
-    private final boolean  streamOnly;
+    private final float bpc;
+    private final boolean streamOnly;
 
     public _Encoding(int blockBytes, int blockChars) {
         this.charset = preferredStringCharset();

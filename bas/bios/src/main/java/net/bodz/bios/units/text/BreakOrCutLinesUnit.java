@@ -7,8 +7,8 @@ import java.nio.CharBuffer;
 
 public class BreakOrCutLinesUnit extends TextProcessUnit {
 
-    private char       eolChar;
-    private boolean    chop;
+    private char eolChar;
+    private boolean chop;
 
     private CharBuffer lineBuf;
 

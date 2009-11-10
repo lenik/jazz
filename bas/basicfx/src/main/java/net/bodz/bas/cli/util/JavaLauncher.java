@@ -28,11 +28,11 @@ import net.bodz.bas.text.encodings.Charsets;
 @BootInfo(syslibs = "bodz_bas")
 public abstract class JavaLauncher implements Launcher {
 
-    private Class<?>              mainClass;
+    private Class<?> mainClass;
 
-    private InputStream           redirectIn;
-    private PrintStream           redirectOut;
-    private PrintStream           redirectErr;
+    private InputStream redirectIn;
+    private PrintStream redirectOut;
+    private PrintStream redirectErr;
 
     private ByteArrayOutputStream outbuf;
     private ByteArrayOutputStream errbuf;
@@ -141,10 +141,10 @@ public abstract class JavaLauncher implements Launcher {
         this.redirectErr = (PrintStream) redirectErr;
     }
 
-    public static final int NONE       = 0;
-    public static final int OUT_ONLY   = 1;
-    public static final int ERR_ONLY   = 2;
-    public static final int BOTH       = 3;
+    public static final int NONE = 0;
+    public static final int OUT_ONLY = 1;
+    public static final int ERR_ONLY = 2;
+    public static final int BOTH = 3;
     public static final int BOTH_MIXED = 4;
 
     public void capture(int mode) {

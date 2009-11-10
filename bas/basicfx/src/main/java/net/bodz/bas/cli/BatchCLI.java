@@ -26,42 +26,42 @@ import net.bodz.bas.types.parsers.GlobParser;
 public class BatchCLI extends BasicCLI {
 
     @Option(alias = ".e", vnam = "ENCODING", doc = "default encoding of input files")
-    Charset          inputEncoding = Charset.defaultCharset();
+    Charset inputEncoding = Charset.defaultCharset();
 
     @Option(alias = "i", doc = "prefer to do case-insensitive comparation")
-    boolean          ignoreCase;
+    boolean ignoreCase;
 
     @Option(doc = "always continue when error occurred")
-    boolean          errorContinue;
+    boolean errorContinue;
 
     @Option(alias = "r", vnam = "[DEPTH]", optional = "65536", doc = "max depth of directories recurse into")
-    int              recursive;
+    int recursive;
     @Option(alias = "rl", doc = "process children files before the parent directory")
-    boolean          rootLast;
+    boolean rootLast;
 
     @Option(alias = "Im", vnam = "FILEMASK", doc = "include specified type of files, default non-hidden files")
-    FileMask         inclusiveMask = new FileMask("f/fH");    //$NON-NLS-1$
+    FileMask inclusiveMask = new FileMask("f/fH"); //$NON-NLS-1$
     @Option(alias = "IM", vnam = "FILEMASK", doc = "exclude specified type of files")
-    FileMask         exclusiveMask;
+    FileMask exclusiveMask;
 
     @Option(alias = "If", vnam = "WILDCARDS", doc = "include these filenames")
     @ParseBy(GlobParser.class)
-    Pattern          fileInclusivePattern;
+    Pattern fileInclusivePattern;
     @Option(alias = "IF", vnam = "WILDCARDS", doc = "exclude these filenames")
     @ParseBy(GlobParser.class)
-    Pattern          fileExclusivePattern;
+    Pattern fileExclusivePattern;
 
     @Option(alias = "Ip", vnam = "REGEXP", doc = "include these pathnames")
-    Pattern          pathInclusivePattern;
+    Pattern pathInclusivePattern;
     @Option(alias = "IP", vnam = "REGEXP", doc = "exclude these pathnames")
-    Pattern          pathExclusivePattern;
+    Pattern pathExclusivePattern;
 
     @Option(alias = "rp", doc = "don't recurse into excluded directories")
-    boolean          prune;
+    boolean prune;
 
     @Option(alias = "Ic", vnam = "CLASS(FileFilter)", doc = "using custom file filter, this will override other --I* options")
     @ParseBy(GetInstanceParser.class)
-    FileFilter       fileFilter;
+    FileFilter fileFilter;
 
     @Option(vnam = "CLASS(Comparator)", doc = "sort files in each directory")
     @ParseBy(GetInstanceParser.class)

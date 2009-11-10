@@ -15,16 +15,16 @@ import org.junit.Test;
 
 public class _UnitTest {
 
-    InputStreamSource   src;
-    DecodeUnit          decoder;
-    TeeUnit             tee;
-    BreakLinesUnit      breakLines;
+    InputStreamSource src;
+    DecodeUnit decoder;
+    TeeUnit tee;
+    BreakLinesUnit breakLines;
     BreakOrCutLinesUnit breakOrCut;
-    DumperSink          dumper;
-    GrabberUnit         lineGrabber;
+    DumperSink dumper;
+    GrabberUnit lineGrabber;
 
-    static final int    BLOCKSIZE = 8;
-    static final int    CUTSIZE   = 10;
+    static final int BLOCKSIZE = 8;
+    static final int CUTSIZE = 10;
 
     void init(byte[] bin) throws IOException {
         ByteArrayInputStream in = new ByteArrayInputStream(bin);

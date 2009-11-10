@@ -18,7 +18,7 @@ import net.bodz.bas.snm.BuildPath.SourceFolder;
  */
 public class EclipseProject {
 
-    File      baseDir;
+    File baseDir;
     BuildPath buildPath;
 
     public EclipseProject(File baseDir) throws ParseException {

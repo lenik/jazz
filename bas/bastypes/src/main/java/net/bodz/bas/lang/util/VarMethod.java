@@ -14,7 +14,7 @@ import net.bodz.bas.types.util.Types;
 
 public class VarMethod extends _VMethod {
 
-    private final String         name;
+    private final String name;
 
     /**
      * Parameter Types Map
@@ -54,9 +54,8 @@ public class VarMethod extends _VMethod {
     }
 
     @Override
-    public Object invokel(Object obj, Class<?>[] paramTypes, Object... params)
-            throws NoSuchMethodException, IllegalArgumentException, IllegalAccessException,
-            InvocationTargetException {
+    public Object invokel(Object obj, Class<?>[] paramTypes, Object... params) throws NoSuchMethodException,
+            IllegalArgumentException, IllegalAccessException, InvocationTargetException {
         Method method = findMethod(paramTypes);
         if (method == null)
             throw new NoSuchMethodException(name + "(" //$NON-NLS-1$

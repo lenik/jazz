@@ -18,7 +18,7 @@ import org.apache.tools.ant.types.Path;
 public class ValueConstruct extends WithParameters {
 
     private Factory<Object> factory;
-    private URLClassLoader  loader;
+    private URLClassLoader loader;
 
     public ValueConstruct() {
         ClassLoader parent = Caller.getCallerClassLoader(0);
@@ -37,8 +37,8 @@ public class ValueConstruct extends WithParameters {
 
     /**
      * @param className
-     *            Must be visible to the classloader of this task class. That
-     *            means, bodz_bas should not in the bootstrap classpath,
+     *            Must be visible to the classloader of this task class. That means, bodz_bas should
+     *            not in the bootstrap classpath,
      */
     public void setClassName(int caller, String className) {
         setFactory(new Factory.ByClassName(loader, className));

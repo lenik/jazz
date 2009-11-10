@@ -24,8 +24,11 @@ public class EchoReferencesTask extends Task {
 
         for (Object key : keys) {
             Object value = references.get(key);
-            String s = String.format(AppNLS.getString("EchoReferencesTask.entry"), // //$NON-NLS-1$
-                    key, value == null ? AppNLS.getString("EchoReferencesTask.nullEntryValue") : value.getClass().getName(), value); //$NON-NLS-1$
+            String s = String
+                    .format(
+                            AppNLS.getString("EchoReferencesTask.entry"), // //$NON-NLS-1$
+                            key,
+                            value == null ? AppNLS.getString("EchoReferencesTask.nullEntryValue") : value.getClass().getName(), value); //$NON-NLS-1$
             log(s, Project.MSG_INFO);
         }
     }

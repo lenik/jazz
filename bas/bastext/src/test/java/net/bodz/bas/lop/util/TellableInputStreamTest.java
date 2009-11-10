@@ -13,8 +13,7 @@ public class TellableInputStreamTest {
 
     @Test
     public void test1() throws IOException {
-        TellableInputStream r = new TellableInputStream(
-                new ByteArrayInputStream(hello));
+        TellableInputStream r = new TellableInputStream(new ByteArrayInputStream(hello));
 
         assertEquals(0, r.tell());
         r.read();

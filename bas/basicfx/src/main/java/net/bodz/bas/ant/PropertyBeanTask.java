@@ -33,20 +33,20 @@ import org.apache.tools.ant.types.Path;
 
 public class PropertyBeanTask extends Task implements IPureTask {
 
-    private String         baseName;
+    private String baseName;
     private ValueConstruct vCtor;
 
-    private boolean        smartExpand      = false;
+    private boolean smartExpand = false;
 
-    private boolean        expandArray      = true;
-    private boolean        expandList       = true;
-    private boolean        expandMap        = true;
+    private boolean expandArray = true;
+    private boolean expandList = true;
+    private boolean expandMap = true;
 
-    private boolean        expandProperties = false;
-    private boolean        expandFields     = false;
+    private boolean expandProperties = false;
+    private boolean expandFields = false;
 
-    private PrefixSet      stopTypePrefixes;
-    static PrefixSet       defaultStopTypePrefixes;
+    private PrefixSet stopTypePrefixes;
+    static PrefixSet defaultStopTypePrefixes;
     static {
         defaultStopTypePrefixes = new PrefixSet();
         defaultStopTypePrefixes.add("java."); //$NON-NLS-1$
@@ -54,13 +54,13 @@ public class PropertyBeanTask extends Task implements IPureTask {
         defaultStopTypePrefixes.add("org.apache.tools.ant."); //$NON-NLS-1$
     }
 
-    private PrefixSet      hiddenPrefixes;
-    private int            maxDepth         = 16;
-    private boolean        unique           = true;
-    private String         duplicatedMessage;
+    private PrefixSet hiddenPrefixes;
+    private int maxDepth = 16;
+    private boolean unique = true;
+    private String duplicatedMessage;
 
-    private TypeHierSet    refTypes;
-    static TypeHierSet     defaultRefTypes;
+    private TypeHierSet refTypes;
+    static TypeHierSet defaultRefTypes;
     static {
         defaultRefTypes = new TypeHierSet();
         // defaultRefTypes.add(ResourceCollection.class); // interface
@@ -69,10 +69,10 @@ public class PropertyBeanTask extends Task implements IPureTask {
             defaultRefTypes.add(type);
     }
 
-    private boolean        userProperties;
+    private boolean userProperties;
 
-    private boolean        verbose;
-    private LogTerm        logger           = new TaskLogTerm(this);
+    private boolean verbose;
+    private LogTerm logger = new TaskLogTerm(this);
 
     public PropertyBeanTask() {
         this.vCtor = new ValueConstruct();
@@ -222,8 +222,8 @@ public class PropertyBeanTask extends Task implements IPureTask {
 
     class Traverser {
 
-        Project   project;
-        IdentSet  uniqSet;
+        Project project;
+        IdentSet uniqSet;
         PrefixSet stp;
 
         public Traverser(Project project) {

@@ -15,15 +15,15 @@ import net.bodz.bas.types.util.Strings;
 
 public class ProcessResultStat {
 
-    private int              ignored;
-    private int              total;
-    private int              changed;
-    private int              saved;
-    private int              deleted;
-    private int              renamed;
-    private int              moved;
-    private int              copied;
-    private int              errorred;
+    private int ignored;
+    private int total;
+    private int changed;
+    private int saved;
+    private int deleted;
+    private int renamed;
+    private int moved;
+    private int copied;
+    private int errorred;
 
     private TextMap<Integer> tagStat;
     private TypeMap<Integer> errStat;
@@ -63,8 +63,7 @@ public class ProcessResultStat {
                 copied++;
                 break;
             default:
-                throw new IllegalArgumentException(AppNLS
-                        .getString("ProcessResultStat.unknownOperation") //$NON-NLS-1$
+                throw new IllegalArgumentException(AppNLS.getString("ProcessResultStat.unknownOperation") //$NON-NLS-1$
                         + result.operation);
             }
 
@@ -126,23 +125,19 @@ public class ProcessResultStat {
         }
 
         if (changed > 0)
-            dumpField(out, 4,
-                    AppNLS.getString("ProcessResultStat.changed"), changed, total - changed); //$NON-NLS-1$
+            dumpField(out, 4, AppNLS.getString("ProcessResultStat.changed"), changed, total - changed); //$NON-NLS-1$
         if (saved > 0)
             dumpField(out, 4, AppNLS.getString("ProcessResultStat.saved"), saved, total - saved); //$NON-NLS-1$
         if (deleted > 0)
-            dumpField(out, 4,
-                    AppNLS.getString("ProcessResultStat.deleted"), deleted, total - deleted); //$NON-NLS-1$
+            dumpField(out, 4, AppNLS.getString("ProcessResultStat.deleted"), deleted, total - deleted); //$NON-NLS-1$
         if (renamed > 0)
-            dumpField(out, 4,
-                    AppNLS.getString("ProcessResultStat.renamed"), renamed, total - renamed); //$NON-NLS-1$
+            dumpField(out, 4, AppNLS.getString("ProcessResultStat.renamed"), renamed, total - renamed); //$NON-NLS-1$
         if (moved > 0)
             dumpField(out, 4, AppNLS.getString("ProcessResultStat.moved"), moved, total - moved); //$NON-NLS-1$
         if (copied > 0)
             dumpField(out, 4, AppNLS.getString("ProcessResultStat.copied"), copied, total - copied); //$NON-NLS-1$
         if (errorred > 0)
-            dumpField(out, 4,
-                    AppNLS.getString("ProcessResultStat.errors"), errorred, total - errorred); //$NON-NLS-1$
+            dumpField(out, 4, AppNLS.getString("ProcessResultStat.errors"), errorred, total - errorred); //$NON-NLS-1$
 
         List<Class<?>> errTypes = new ArrayList<Class<?>>(errStat.keySet());
         Collections.sort(errTypes, Comparators.TYPE);

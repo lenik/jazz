@@ -10,9 +10,9 @@ import net.bodz.bas.lang.err.OutOfDomainException;
 public abstract class _Ring<A, T> implements Ring<A, T> {
 
     protected final A array;
-    protected int     capacity;
-    protected int     begin;
-    protected int     end;
+    protected int capacity;
+    protected int begin;
+    protected int end;
     protected boolean full;
 
     public _Ring(int capacity) {

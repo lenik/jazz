@@ -7,7 +7,7 @@ import net.bodz.bas.types.TypeParsers;
 public class DefaultTextCodec<T> extends _TextCodec<T> {
 
     private final Class<? extends T> type;
-    private final TypeParser         parser;
+    private final TypeParser parser;
 
     public DefaultTextCodec(Class<? extends T> type) {
         this(type, TypeParsers.get(type));

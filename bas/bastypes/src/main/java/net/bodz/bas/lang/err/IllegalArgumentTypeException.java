@@ -43,8 +43,7 @@ public class IllegalArgumentTypeException extends IllegalArgumentException {
         if (expected == null)
             return String.valueOf(argType);
         else
-            return String.valueOf(argType)
-                    + LangNLS.getString("IllegalArgumentTypeException.expect") + expected; //$NON-NLS-1$
+            return String.valueOf(argType) + LangNLS.getString("IllegalArgumentTypeException.expect") + expected; //$NON-NLS-1$
     }
 
 }

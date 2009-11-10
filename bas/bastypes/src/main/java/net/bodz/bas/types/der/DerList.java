@@ -12,8 +12,8 @@ public abstract class DerList<E> extends AbstractList<E> implements Derivation<L
 
     private final List<E> pList;
     private final List<E> qList;
-    private DerListDelta  delta;
-    private int           dels;
+    private DerListDelta delta;
+    private int dels;
 
     /**
      * @throws NullPointerException

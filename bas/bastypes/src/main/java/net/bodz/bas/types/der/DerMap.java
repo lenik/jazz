@@ -14,8 +14,7 @@ import net.bodz.bas.types.util.PrefetchedIterator;
 /**
  * @test DerMapTest
  */
-public abstract class DerMap<K, V> extends AbstractMap<K, V> implements Derivation<Map<K, V>>,
-        Serializable {
+public abstract class DerMap<K, V> extends AbstractMap<K, V> implements Derivation<Map<K, V>>, Serializable {
 
     private static final long serialVersionUID = -4599316213416843857L;
 
@@ -28,7 +27,7 @@ public abstract class DerMap<K, V> extends AbstractMap<K, V> implements Derivati
     /**
      * if pDels.contains(x) and qMap.contains(x), x is exist in qMap.
      */
-    protected Set<Object>     pDels;
+    protected Set<Object> pDels;
 
     public DerMap(Map<K, V> pMap) {
         this.pMap = pMap;

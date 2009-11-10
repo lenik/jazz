@@ -6,13 +6,13 @@ import net.bodz.bas.lang.err.OutOfDomainException;
 
 public class MemPage {
 
-    public static final int MANAGED  = 1;
+    public static final int MANAGED = 1;
     public static final int READONLY = 2;
 
-    public ByteBuffer       buffer;
-    private MemPage         prev;
-    private MemPage         next;
-    private int             flags;
+    public ByteBuffer buffer;
+    private MemPage prev;
+    private MemPage next;
+    private int flags;
 
     public MemPage(ByteBuffer buffer) {
         this(buffer, 0);

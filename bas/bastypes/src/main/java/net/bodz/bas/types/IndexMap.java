@@ -6,8 +6,8 @@ public class IndexMap<V> extends TreeMap<Integer, V> {
 
     private static final long serialVersionUID = -3711088749059166963L;
 
-    private int               size;
-    private int               nextFree;
+    private int size;
+    private int nextFree;
 
     // List
 

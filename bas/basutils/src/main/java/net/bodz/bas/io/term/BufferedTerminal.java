@@ -2,7 +2,7 @@ package net.bodz.bas.io.term;
 
 public abstract class BufferedTerminal extends _Terminal {
 
-    boolean      started = false;
+    boolean started = false;
     StringBuffer buf;
 
     public BufferedTerminal() {

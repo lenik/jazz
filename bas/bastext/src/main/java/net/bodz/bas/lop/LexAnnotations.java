@@ -10,7 +10,7 @@ import java.util.Map.Entry;
 
 public class LexAnnotations {
 
-    private TreeMap<_LexMatch, Field>  syms;
+    private TreeMap<_LexMatch, Field> syms;
     private TreeMap<_LexMatch, Method> rules;
 
     public LexAnnotations(Class<?> clazz, boolean inherits) {
@@ -97,10 +97,10 @@ public class LexAnnotations {
 
     public static class Alignment extends LexMatchAcceptor {
 
-        private int                  symSize;
+        private int symSize;
         private Map<String, Integer> ruleSizeInState;
-        private int                  ruleSizeInDefaultState;
-        private int                  ruleSize;
+        private int ruleSizeInDefaultState;
+        private int ruleSize;
 
         @Override
         protected void symbol(String name, String value) {

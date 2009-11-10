@@ -12,7 +12,7 @@ public class Members {
     public static class PublicMethods extends PrefetchedIterator<Method> {
 
         private final Method[] methods;
-        private int            index;
+        private int index;
 
         public PublicMethods(Class<?> clazz) {
             this.methods = clazz.getMethods();
@@ -80,7 +80,7 @@ public class Members {
     public static class AllMethods extends PrefetchedIterator<Method> {
         private Class<?> clazz;
         private Method[] methods;
-        private int      index;
+        private int index;
 
         public AllMethods(Class<?> clazz) {
             this.clazz = clazz;
@@ -130,8 +130,7 @@ public class Members {
         return allMethods(clazz, false);
     }
 
-    public static Iterable<Method> allMethods(final Class<?> clazz, final String methodName,
-            final boolean allTree) {
+    public static Iterable<Method> allMethods(final Class<?> clazz, final String methodName, final boolean allTree) {
         assert methodName != null;
         return new Iterable<Method>() {
             @Override
@@ -159,15 +158,14 @@ public class Members {
         return all ? allMethods(clazz) : publicMethods(clazz);
     }
 
-    public static Iterable<Method> methods(final Class<?> clazz, final String methodName,
-            boolean all) {
+    public static Iterable<Method> methods(final Class<?> clazz, final String methodName, boolean all) {
         return all ? allMethods(clazz, methodName) : publicMethods(clazz, methodName);
     }
 
     public static class PublicConstructors extends PrefetchedIterator<Constructor<?>> {
 
         private final Constructor<?>[] ctors;
-        private int                    index;
+        private int index;
 
         public PublicConstructors(Class<?> clazz) {
             this.ctors = clazz.getConstructors();
@@ -200,7 +198,7 @@ public class Members {
 
     public static class AllConstructors extends PrefetchedIterator<Constructor<?>> {
         private Constructor<?>[] ctors;
-        private int              index;
+        private int index;
 
         public AllConstructors(Class<?> clazz) {
             ctors = clazz.getDeclaredConstructors();
@@ -238,7 +236,7 @@ public class Members {
     public static class PublicFields extends PrefetchedIterator<Field> {
 
         private final Field[] fields;
-        private int           index;
+        private int index;
 
         public PublicFields(Class<?> clazz) {
             this.fields = clazz.getFields();
@@ -286,8 +284,8 @@ public class Members {
 
     public static class AllFields extends PrefetchedIterator<Field> {
         private Class<?> clazz;
-        private Field[]  fields;
-        private int      index;
+        private Field[] fields;
+        private int index;
 
         public AllFields(Class<?> clazz) {
             this.clazz = clazz;
@@ -337,8 +335,7 @@ public class Members {
         return allFields(clazz, false);
     }
 
-    public static Iterable<Field> allFields(final Class<?> clazz, final String fieldName,
-            final boolean allTree) {
+    public static Iterable<Field> allFields(final Class<?> clazz, final String fieldName, final boolean allTree) {
         assert fieldName != null;
         return new Iterable<Field>() {
             @Override

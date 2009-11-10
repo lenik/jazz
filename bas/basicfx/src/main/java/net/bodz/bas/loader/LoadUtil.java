@@ -20,12 +20,11 @@ public class LoadUtil {
     private static SJLibLoader sjlibs = SJLibLoader.DEFAULT;
 
     /**
-     * <code>jarname.jar</code> (with extension) is searched and loaded using
-     * {@link SJLibLoader}.
+     * <code>jarname.jar</code> (with extension) is searched and loaded using {@link SJLibLoader}.
      * <p>
-     * <code>libname</code> (without extension) are resolved using
-     * <code>libraries.ini</code> file, if <code>libname</code> isn't defined in
-     * <code>libraries.ini</code> , then <code>libname.jar</code> is used.
+     * <code>libname</code> (without extension) are resolved using <code>libraries.ini</code> file,
+     * if <code>libname</code> isn't defined in <code>libraries.ini</code> , then
+     * <code>libname.jar</code> is used.
      * 
      * @return <code>null</code> if can't resolve the libspec
      */
@@ -69,8 +68,8 @@ public class LoadUtil {
     }
 
     /**
-     * @return URL array with each component set to <code>null</code> if
-     *         corresponding jar isn't exists, or libspec isn't defined.
+     * @return URL array with each component set to <code>null</code> if corresponding jar isn't
+     *         exists, or libspec isn't defined.
      */
     public static URL[] find(String[] libspecs) {
         return find(libspecs, false);
@@ -89,8 +88,7 @@ public class LoadUtil {
                 throw new RuntimeException(e);
             }
         } else
-            throw new IllegalArgumentException(
-                    AppNLS.getString("LoadUtil.unsupportedPackName") + name); //$NON-NLS-1$
+            throw new IllegalArgumentException(AppNLS.getString("LoadUtil.unsupportedPackName") + name); //$NON-NLS-1$
     }
 
     static File _findLib(String name) {
@@ -101,8 +99,7 @@ public class LoadUtil {
         return sjlibs.findFile(jar);
     }
 
-    public static void execMain(ClassLoader realLoader, String className, String... args)
-            throws Throwable {
+    public static void execMain(ClassLoader realLoader, String className, String... args) throws Throwable {
         Class<?> clazz = Class.forName(className, true, realLoader);
         execMain(clazz, args);
     }

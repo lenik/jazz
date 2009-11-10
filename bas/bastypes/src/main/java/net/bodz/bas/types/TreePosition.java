@@ -15,7 +15,7 @@ public class TreePosition<N extends TreeNode<? extends N>> implements Iterable<N
 
     static class Dim<N extends TreeNode<? extends N>> implements Cloneable {
 
-        public final N   node;
+        public final N node;
         public final int index;
 
         public Dim(N node, int index) {
@@ -105,8 +105,8 @@ public class TreePosition<N extends TreeNode<? extends N>> implements Iterable<N
 
     static class Iter<N extends TreeNode<? extends N>> extends PrefetchedIterator<N> {
 
-        private final ArrayStack<Dim<N>>    stack;
-        private final Pred1<? super N>      pred;
+        private final ArrayStack<Dim<N>> stack;
+        private final Pred1<? super N> pred;
         private final List<TreePosition<N>> posBuf;
 
         public Iter(List<Dim<N>> dims, Pred1<? super N> pred, List<TreePosition<N>> posBuf) {
@@ -173,12 +173,10 @@ public class TreePosition<N extends TreeNode<? extends N>> implements Iterable<N
     }
 
     /**
-     * Iterate all nodes filtered by pred, include or after the node at this
-     * position.
+     * Iterate all nodes filtered by pred, include or after the node at this position.
      * 
      * @param posRef
-     *            save a copy of position of previous node just returned by
-     *            {@link Iterator#next()}.
+     *            save a copy of position of previous node just returned by {@link Iterator#next()}.
      */
     public Iterator<N> iterator(Pred1<? super N> pred, List<TreePosition<N>> posBuf) {
         return new Iter<N>(list, pred, posBuf);

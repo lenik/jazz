@@ -16,8 +16,7 @@ public class Funcs {
         };
     }
 
-    public static <T> Func0<T> getFunc0(Class<?> clazz, String methodName)
-            throws NoSuchMethodException {
+    public static <T> Func0<T> getFunc0(Class<?> clazz, String methodName) throws NoSuchMethodException {
         assert clazz != null;
         Method method = clazz.getMethod(methodName);
         return getFunc0(method, (Object) null);

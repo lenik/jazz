@@ -13,8 +13,8 @@ import net.bodz.bios.nls.BIOSNLS;
 public class DecodeUnit extends BinaryProcessUnit {
 
     private CharsetDecoder decoder;
-    private ByteBuffer     unconv;
-    private CharBuffer     convBuf;
+    private ByteBuffer unconv;
+    private CharBuffer convBuf;
 
     public DecodeUnit(String charsetName) {
         this(Charset.forName(charsetName));

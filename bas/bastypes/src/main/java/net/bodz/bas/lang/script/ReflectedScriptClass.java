@@ -188,8 +188,8 @@ class ReflectedScriptClass<T> extends _ScriptClass<T> {
                 }
 
                 @Override
-                public Object invoke(Object object, Object... parameters)
-                        throws IllegalArgumentException, ScriptException {
+                public Object invoke(Object object, Object... parameters) throws IllegalArgumentException,
+                        ScriptException {
                     Class<?>[] ptypes = Types.getTypes(parameters);
                     MethodSignature sig = new MethodSignature(name, ptypes);
                     Method m = (Method) sorted.floor(sig);
@@ -228,8 +228,7 @@ class ReflectedScriptClass<T> extends _ScriptClass<T> {
     }
 
     @SuppressWarnings("unchecked")
-    private static <R> ReflectedScriptClass<R> _get(Class<R> clazz, boolean forceAccess)
-            throws ScriptException {
+    private static <R> ReflectedScriptClass<R> _get(Class<R> clazz, boolean forceAccess) throws ScriptException {
         if (clazz == null)
             return null;
         return (ReflectedScriptClass<R>) Scripts.convertClass(clazz, forceAccess);

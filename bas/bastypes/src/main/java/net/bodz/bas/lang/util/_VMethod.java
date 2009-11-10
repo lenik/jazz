@@ -7,8 +7,8 @@ import net.bodz.bas.types.util.Types;
 
 public abstract class _VMethod implements VMethod {
 
-    public Object invoke(Object obj, Object... params) throws IllegalArgumentException,
-            NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+    public Object invoke(Object obj, Object... params) throws IllegalArgumentException, NoSuchMethodException,
+            IllegalAccessException, InvocationTargetException {
         Class<?>[] paramTypes = Types.getTypes(params);
         return invokel(obj, paramTypes, params);
     }

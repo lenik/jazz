@@ -6,7 +6,7 @@ public class StateChangeEvent extends EventObject {
 
     private static final long serialVersionUID = 3764143297831749161L;
 
-    private int               type;
+    private int type;
 
     public StateChangeEvent(Object source) {
         super(source);

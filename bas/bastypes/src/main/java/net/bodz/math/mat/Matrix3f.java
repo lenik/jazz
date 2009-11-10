@@ -11,8 +11,7 @@ public class Matrix3f extends javax.vecmath.Matrix3f {
         super();
     }
 
-    public Matrix3f(float m00, float m01, float m02, float m10, float m11, float m12, float m20,
-            float m21, float m22) {
+    public Matrix3f(float m00, float m01, float m02, float m10, float m11, float m12, float m20, float m21, float m22) {
         super(m00, m01, m02, m10, m11, m12, m20, m21, m22);
     }
 
@@ -53,9 +52,8 @@ public class Matrix3f extends javax.vecmath.Matrix3f {
     }
 
     /*
-     * public void transform(Point2f point2f) { Tuple3f t = new
-     * Vector3f(point2f); super.transform(t); point2f.x(t.x / t.z);
-     * point2f.y(t.y / t.z); }
+     * public void transform(Point2f point2f) { Tuple3f t = new Vector3f(point2f);
+     * super.transform(t); point2f.x(t.x / t.z); point2f.y(t.y / t.z); }
      */
 
     @Override

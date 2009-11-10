@@ -11,9 +11,9 @@ import net.bodz.bas.types.util.Objects;
 public class SimpleRequest extends VarMap<String, Object> {
 
     private final Object source;
-    private String       protocol;
-    private TreePath     path;
-    private String       anchor;
+    private String protocol;
+    private TreePath path;
+    private String anchor;
 
     public SimpleRequest(Object source, TreePath path) {
         this(source, path, null);
@@ -35,11 +35,9 @@ public class SimpleRequest extends VarMap<String, Object> {
      * @param path
      * @param anchor
      * @param parameters
-     *            referenced parameters map, <code>null</code> to construct a
-     *            new one.
+     *            referenced parameters map, <code>null</code> to construct a new one.
      */
-    public SimpleRequest(Object source, String protocol, TreePath path,
-            String anchor, Map<String, Object> parameters) {
+    public SimpleRequest(Object source, String protocol, TreePath path, String anchor, Map<String, Object> parameters) {
         super(parameters);
         this.source = source;
         this.protocol = protocol;

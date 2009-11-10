@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 public @interface TargetSide {
 
     int BEAN = 0;
-    int GUI  = 1;
+    int GUI = 1;
 
     int value();
 

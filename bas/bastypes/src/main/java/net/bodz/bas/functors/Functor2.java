@@ -77,7 +77,7 @@ public abstract class Functor2<T> implements IFunctor<T>, Groupable<T> {
     /**
      * Structure reduced
      */
-    protected static final int REDUCED   = 0x00000001;
+    protected static final int REDUCED = 0x00000001;
 
     /**
      * Validated
@@ -96,14 +96,14 @@ public abstract class Functor2<T> implements IFunctor<T>, Groupable<T> {
      */
     protected static final int TRANSIENT = 0x00001000;
 
-    protected static final int OUTGO     = 0x00002000;
+    protected static final int OUTGO = 0x00002000;
 
     /**
      * Closed functors don't affect the environment, context, etc. <br>
      * so they are not "dirty", and can be safely removed. <br>
      * This is useful in functor-reduce archetecture.
      */
-    protected static final int CLOSED    = 0x00010000;
+    protected static final int CLOSED = 0x00010000;
 
     protected abstract int getFlags();
 

@@ -11,12 +11,12 @@ import net.bodz.bas.lang.err.NotImplementedException;
  */
 public abstract class StateImpl implements State {
 
-    private static final long               serialVersionUID = -5084131581390074137L;
+    private static final long serialVersionUID = -5084131581390074137L;
 
-    private static final Map<Object, State> DummyMap         = new HashMap<Object, State>();
+    private static final Map<Object, State> DummyMap = new HashMap<Object, State>();
 
-    protected StateGraph                    graph;
-    protected Map<Object, State>            staticMap        = DummyMap;
+    protected StateGraph graph;
+    protected Map<Object, State> staticMap = DummyMap;
 
     public StateImpl(StateGraph graph) {
         this.graph = graph;

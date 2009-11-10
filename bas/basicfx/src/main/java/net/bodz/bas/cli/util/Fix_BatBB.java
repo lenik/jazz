@@ -19,10 +19,10 @@ import net.bodz.bas.io.Files;
 public class Fix_BatBB extends BatchEditCLI {
 
     @Option(alias = "b", vnam = "SIZE", doc = "block size, default 1024")
-    int  blockSize = 1024;
+    int blockSize = 1024;
 
     @Option
-    char fillChar  = ':';
+    char fillChar = ':';
 
     @Override
     protected EditResult doEditByIO(InputStream in, OutputStream out) throws Exception {

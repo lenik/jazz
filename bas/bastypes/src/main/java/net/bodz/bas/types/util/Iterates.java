@@ -22,8 +22,7 @@ public class Iterates {
         };
     }
 
-    public static <T, X extends Throwable> Iterable<T> iterate(
-            final DirectIterable<? extends T, X> dit) {
+    public static <T, X extends Throwable> Iterable<T> iterate(final DirectIterable<? extends T, X> dit) {
         return new Iterable<T>() {
             @Override
             public Iterator<T> iterator() {
@@ -81,8 +80,7 @@ public class Iterates {
         };
     }
 
-    public static <E> Iterable<E> iterate(final Class<? extends Iterator<E>> iterType,
-            final Object enclosing) {
+    public static <E> Iterable<E> iterate(final Class<? extends Iterator<E>> iterType, final Object enclosing) {
         if (enclosing == null)
             throw new NullPointerException("enclosing"); //$NON-NLS-1$
         final Constructor<? extends Iterator<E>> ctor;

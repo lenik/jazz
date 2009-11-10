@@ -8,8 +8,8 @@ import java.lang.annotation.Target;
 import net.bodz.bas.lang.ControlReturn;
 
 /**
- * The {@link Class#getDeclaredFields()} and {@link Class#getDeclaredMethods()}
- * must return the members in the order same as their declaration.
+ * The {@link Class#getDeclaredFields()} and {@link Class#getDeclaredMethods()} must return the
+ * members in the order same as their declaration.
  * 
  * For static fields, this annotation defines a const regexp.
  * 

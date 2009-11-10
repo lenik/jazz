@@ -13,7 +13,7 @@ import net.bodz.bas.types.TextMap;
 public class LibInstaller {
 
     static boolean ignoreCase;
-    static String  libSuffix;
+    static String libSuffix;
     static {
         String osName = System.getProperty("os.name"); //$NON-NLS-1$
         if (osName != null) {
@@ -25,7 +25,7 @@ public class LibInstaller {
             libSuffix = libSuffix.toLowerCase();
     }
 
-    private File   installDir;
+    private File installDir;
 
     public LibInstaller(File installDir) {
         this.installDir = installDir;

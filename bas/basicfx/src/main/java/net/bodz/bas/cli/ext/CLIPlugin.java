@@ -8,8 +8,8 @@ import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.util.Plugin;
 
 /**
- * Implementations must have at least a default constructor, while more
- * constructors may be useful to receive cli-arguments.
+ * Implementations must have at least a default constructor, while more constructors may be useful
+ * to receive cli-arguments.
  */
 public interface CLIPlugin extends Plugin {
 

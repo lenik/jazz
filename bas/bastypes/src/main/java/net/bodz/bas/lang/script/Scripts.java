@@ -11,7 +11,7 @@ import net.bodz.bas.types.util.Ns;
 
 public class Scripts {
 
-    private static TypeMap<ScriptClass<?>>          explicitScriptClasses;
+    private static TypeMap<ScriptClass<?>> explicitScriptClasses;
     private static TypeMap<ReflectedScriptClass<?>> forceConverted;
     private static TypeMap<ReflectedScriptClass<?>> noforceConverted;
     static {
@@ -24,8 +24,7 @@ public class Scripts {
      * @param dynamicImpl
      */
     @SuppressWarnings("unchecked")
-    public static <T> ScriptClass<T> getScriptClass(Class<?> origClass, Object dynamicImpl)
-            throws ScriptException {
+    public static <T> ScriptClass<T> getScriptClass(Class<?> origClass, Object dynamicImpl) throws ScriptException {
         assert origClass != null;
         ScriptClass<?> sclass = explicitScriptClasses.get(origClass);
         if (sclass == null) {
@@ -49,12 +48,11 @@ public class Scripts {
         return getScriptClass(dynamicImpl.getClass(), dynamicImpl);
     }
 
-    private static final Class<?>[] STATIC_CTOR  = { Class.class };
+    private static final Class<?>[] STATIC_CTOR = { Class.class };
     private static final Class<?>[] DYNAMIC_CTOR = { Class.class, Object.class };
 
     @SuppressWarnings("unchecked")
-    static ScriptClass<?> newScriptClass(Class<? extends ScriptClass<?>> scType,
-            Class<?> origClass, Object dynamicImpl) {
+    static ScriptClass<?> newScriptClass(Class<? extends ScriptClass<?>> scType, Class<?> origClass, Object dynamicImpl) {
         ScriptClass<?> sclass;
         try {
             if (dynamicImpl == null) {
@@ -85,8 +83,7 @@ public class Scripts {
      *             if <code>clazz</code> is null
      */
     @SuppressWarnings("unchecked")
-    public static <T> ScriptClass<T> convertClass(Class<?> clazz, boolean forceAccess)
-            throws ScriptException {
+    public static <T> ScriptClass<T> convertClass(Class<?> clazz, boolean forceAccess) throws ScriptException {
         assert clazz != null;
         ReflectedScriptClass<?> sclass;
         if (forceAccess) {
@@ -106,8 +103,7 @@ public class Scripts {
     }
 
     /**
-     * (Singleton) Convert specified java class to script class, only public
-     * members are converted.
+     * (Singleton) Convert specified java class to script class, only public members are converted.
      * 
      * @throws NullPointerException
      *             if <code>clazz</code> is null
@@ -118,19 +114,17 @@ public class Scripts {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> ScriptField<T> convertField(Class<?> clazz, final String memberName,
-            boolean forceAccess) throws ScriptException {
+    public static <T> ScriptField<T> convertField(Class<?> clazz, final String memberName, boolean forceAccess)
+            throws ScriptException {
         ScriptClass<?> sclass = convertClass(clazz, forceAccess);
         return (ScriptField<T>) sclass.getField(memberName);
     }
 
-    public static <T> ScriptField<T> convertField(Class<?> clazz, final String memberName)
-            throws ScriptException {
+    public static <T> ScriptField<T> convertField(Class<?> clazz, final String memberName) throws ScriptException {
         return convertField(clazz, memberName, false);
     }
 
-    public static <T> ScriptField<T> convertField(Field field, boolean forceAccess)
-            throws ScriptException {
+    public static <T> ScriptField<T> convertField(Field field, boolean forceAccess) throws ScriptException {
         Class<?> clazz = field.getDeclaringClass();
         return convertField(clazz, field.getName(), forceAccess);
     }
@@ -140,19 +134,17 @@ public class Scripts {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> ScriptMethod<T> convertMethod(Class<?> clazz, String memberName,
-            boolean forceAccess) throws ScriptException {
+    public static <T> ScriptMethod<T> convertMethod(Class<?> clazz, String memberName, boolean forceAccess)
+            throws ScriptException {
         ScriptClass<?> sclass = convertClass(clazz, forceAccess);
         return (ScriptMethod<T>) sclass.getMethod(memberName);
     }
 
-    public static <T> ScriptMethod<T> convertMethod(Class<?> clazz, final String memberName)
-            throws ScriptException {
+    public static <T> ScriptMethod<T> convertMethod(Class<?> clazz, final String memberName) throws ScriptException {
         return convertMethod(clazz, memberName, false);
     }
 
-    public static <T> ScriptMethod<T> convertMethod(Method method, boolean forceAccess)
-            throws ScriptException {
+    public static <T> ScriptMethod<T> convertMethod(Method method, boolean forceAccess) throws ScriptException {
         Class<?> clazz = method.getDeclaringClass();
         return convertMethod(clazz, method.getName(), forceAccess);
     }

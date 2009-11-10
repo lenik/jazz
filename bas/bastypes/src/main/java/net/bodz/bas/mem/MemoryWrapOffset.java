@@ -5,7 +5,7 @@ public class MemoryWrapOffset extends _Memory {
     private final Memory orig;
 
     /** addr_t */
-    private final int    offset;
+    private final int offset;
 
     public MemoryWrapOffset(Memory orig, int offset) {
         assert orig != null;

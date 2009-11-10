@@ -5,7 +5,7 @@ import java.io.Writer;
 
 public class WriterSink extends TextProcessSink {
 
-    private Writer  out;
+    private Writer out;
     private boolean autoFlush;
 
     public WriterSink(Writer out, boolean autoFlush) throws IOException {

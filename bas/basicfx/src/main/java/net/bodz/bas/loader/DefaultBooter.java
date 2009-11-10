@@ -24,12 +24,11 @@ import net.bodz.bas.types.util.Empty;
  */
 public class DefaultBooter {
 
-    private static CharOut out          = CharOuts.stderr;
+    private static CharOut out = CharOuts.stderr;
 
-    static boolean         LOADFIX_DUMP = false;
+    static boolean LOADFIX_DUMP = false;
 
-    public static Class<?> loadFix(ClassLoader initSysLoader, String className, URL... userlibs)
-            throws LoadException {
+    public static Class<?> loadFix(ClassLoader initSysLoader, String className, URL... userlibs) throws LoadException {
         ClassLoader bootSysLoader;
         if (userlibs == null)
             bootSysLoader = initSysLoader;
@@ -68,8 +67,7 @@ public class DefaultBooter {
      * @param userlibs
      *            use {@link BootInfo#userlibs()}
      */
-    public static Class<?> load(ClassLoader sysLoader, String className, URL... userlibs)
-            throws LoadException {
+    public static Class<?> load(ClassLoader sysLoader, String className, URL... userlibs) throws LoadException {
         // get class0
         // WORKAROUND: let the boot bit more smooth.
         ClassLoader bootLoader = TempClassLoader.get(userlibs, sysLoader);
@@ -137,7 +135,7 @@ public class DefaultBooter {
     }
 
     static class Count extends Pred1<Throwable> {
-        int     count;
+        int count;
         boolean errorContinue;
 
         public Count(int count, boolean errorContinue) {

@@ -29,8 +29,8 @@ public abstract class _RefType extends _Type implements RefType {
         putRemote(memory, offset, memory, targetOffset);
     }
 
-    protected abstract void putRemote(Memory memory, int offset, Memory targetMemory,
-            int targetOffset) throws AccessException;
+    protected abstract void putRemote(Memory memory, int offset, Memory targetMemory, int targetOffset)
+            throws AccessException;
 
     @Override
     public Object getTarget(Memory memory, int offset) throws AccessException {

@@ -109,8 +109,7 @@ public class Plugins {
         return find(type, pluginId);
     }
 
-    public Plugin load(Class<? extends Plugin> type, String pluginId, Object... args)
-            throws PluginException {
+    public Plugin load(Class<? extends Plugin> type, String pluginId, Object... args) throws PluginException {
         PluginTypeEx typeEx = find(type, pluginId);
         if (typeEx == null)
             return null;

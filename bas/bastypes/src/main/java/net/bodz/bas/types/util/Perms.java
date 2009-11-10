@@ -39,8 +39,7 @@ public class Perms {
         iterateInPlace(array, 0, Array.getLength(array), closure);
     }
 
-    public static <A> void perm(int ord, A src, int srcoff, int srclen, A dst, int dstoff,
-            int dstlen) {
+    public static <A> void perm(int ord, A src, int srcoff, int srclen, A dst, int dstoff, int dstlen) {
         ArrayOp<A> op = ArrayOps.get(src);
 
         int[] ordv = new int[dstlen];

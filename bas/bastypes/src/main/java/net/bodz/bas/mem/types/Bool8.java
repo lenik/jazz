@@ -6,7 +6,7 @@ import net.bodz.bas.mem._Type;
 
 public class Bool8 extends _Type {
 
-    public static final byte TRUE  = 1;
+    public static final byte TRUE = 1;
     public static final byte FALSE = 0;
 
     @Override

@@ -6,8 +6,7 @@ import net.bodz.bas.lang2.Pred1;
 
 public class ReflectUtil {
 
-    public static void findField(Class<?> clazz, Object object,
-            Object fieldValue, Pred1<Field> pred) {
+    public static void findField(Class<?> clazz, Object object, Object fieldValue, Pred1<Field> pred) {
         for (Field field : clazz.getFields()) {
             try {
                 Object value = field.get(object);
@@ -24,13 +23,11 @@ public class ReflectUtil {
         }
     }
 
-    public static void findField(Object object, Object fieldValue,
-            Pred1<Field> pred) {
+    public static void findField(Object object, Object fieldValue, Pred1<Field> pred) {
         findField(object.getClass(), object, fieldValue, pred);
     }
 
-    public static Field getFirstField(Class<?> clazz, Object object,
-            Object fieldValue) {
+    public static Field getFirstField(Class<?> clazz, Object object, Object fieldValue) {
         final Field[] first = new Field[1];
         findField(clazz, object, fieldValue, new Pred1<Field>() {
             @Override
@@ -46,8 +43,7 @@ public class ReflectUtil {
         return getFirstField(object.getClass(), object, fieldValue);
     }
 
-    public static String getFirstFieldName(Class<?> clazz, Object object,
-            Object fieldValue) {
+    public static String getFirstFieldName(Class<?> clazz, Object object, Object fieldValue) {
         Field field = getFirstField(clazz, object, fieldValue);
         if (field == null)
             return null;

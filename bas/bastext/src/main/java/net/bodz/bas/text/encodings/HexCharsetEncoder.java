@@ -9,14 +9,14 @@ import java.nio.charset.CoderResult;
 import net.bodz.bas.text.util.Lookups;
 
 /**
- * Encodes each character(maybe latin-1, utf-8, ucs-4, etc..) into hex string;
- * space(0x20) is used for seperate each character, internally.
+ * Encodes each character(maybe latin-1, utf-8, ucs-4, etc..) into hex string; space(0x20) is used
+ * for seperate each character, internally.
  */
 public class HexCharsetEncoder extends CharsetEncoder {
 
-    private byte[]  transtbl;
-    private byte[]  delimiter = { 0x20 };
-    private boolean leads     = false;
+    private byte[] transtbl;
+    private byte[] delimiter = { 0x20 };
+    private boolean leads = false;
 
     public HexCharsetEncoder(Charset charset) {
         this(charset, Lookups.n2cl);
@@ -40,8 +40,7 @@ public class HexCharsetEncoder extends CharsetEncoder {
             this.transtbl[i] = (byte) transtbl[i];
     }
 
-    public HexCharsetEncoder(Charset cs, float averageBytesPerChar, float maxBytesPerChar,
-            byte[] replacement) {
+    public HexCharsetEncoder(Charset cs, float averageBytesPerChar, float maxBytesPerChar, byte[] replacement) {
         super(cs, averageBytesPerChar, maxBytesPerChar, replacement);
     }
 

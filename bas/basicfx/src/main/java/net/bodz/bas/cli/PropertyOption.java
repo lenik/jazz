@@ -10,8 +10,8 @@ import net.bodz.bas.lang.script.ScriptException;
 public class PropertyOption<T> extends _Option<T> {
 
     private final PropertyDescriptor property;
-    private final Method             readf;
-    private final Method             writef;
+    private final Method readf;
+    private final Method writef;
 
     @SuppressWarnings("unchecked")
     public PropertyOption(String name, PropertyDescriptor property, OptionGroup optgrp) {

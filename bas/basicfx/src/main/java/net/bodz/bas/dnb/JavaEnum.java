@@ -9,7 +9,7 @@ import net.bodz.bas.lang.ClassLocal;
 public abstract class JavaEnum implements Comparable<JavaEnum> {
 
     private final String name;
-    private final int    ordinal;
+    private final int ordinal;
 
     public JavaEnum(String name, int ordinal) {
         this.name = name;
@@ -19,7 +19,7 @@ public abstract class JavaEnum implements Comparable<JavaEnum> {
 
     // List<JavaEnum> or JavaEnum[]
     private static ClassLocal<Map<String, JavaEnum>> clNameMap;
-    private static ClassLocal<Object>                clValues;
+    private static ClassLocal<Object> clValues;
 
     protected void register(JavaEnum constDecl) {
         Class<?> type = getClass();

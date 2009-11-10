@@ -1,6 +1,5 @@
 package net.bodz.bas.lop;
 
-
 public class DocumentSize {
 
     public final int length;

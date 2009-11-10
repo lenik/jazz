@@ -30,8 +30,8 @@ import net.bodz.bas.types.util.Strings;
  */
 public class CURL {
 
-    private String          type;
-    private Alpha[]         alphas;
+    private String type;
+    private Alpha[] alphas;
     private TextMap<String> parameters;
 
     public CURL(String type, Alpha... alphas) {

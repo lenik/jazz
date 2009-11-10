@@ -11,9 +11,9 @@ import java.util.List;
  */
 public class SortedList<E> extends AbstractList<E> implements Serializable {
 
-    private static final long           serialVersionUID = -4774959095993441826L;
+    private static final long serialVersionUID = -4774959095993441826L;
 
-    private final List<E>               list;
+    private final List<E> list;
     private final Comparator<? super E> comparator;
 
     public SortedList(List<E> sortedList, Comparator<? super E> comparator) {

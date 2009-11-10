@@ -28,10 +28,10 @@ import net.bodz.bas.types.util.Types;
 
 public class ClassOptions<CT> {
 
-    private PrefixMap<_Option<?>>       all;
-    private Set<String>                 weaks;
+    private PrefixMap<_Option<?>> all;
+    private Set<String> weaks;
     public TreeMap<Integer, _Option<?>> specfiles;
-    private HashSet<_Option<?>>         required;
+    private HashSet<_Option<?>> required;
 
     public ClassOptions(Class<CT> clazz) {
         all = new PrefixMap<_Option<?>>();
@@ -118,9 +118,8 @@ public class ClassOptions<CT> {
 
             boolean aliasExisted = all.containsKey(newalias) && !weaks.contains(newalias);
             if (aliasExisted)
-                throw new IllegalArgumentException(
-                        AppNLS.getString("ClassOptions.optionAlias") + newalias //$NON-NLS-1$
-                                + AppNLS.getString("ClassOptions.isAlreadyExisted")); //$NON-NLS-1$
+                throw new IllegalArgumentException(AppNLS.getString("ClassOptions.optionAlias") + newalias //$NON-NLS-1$
+                        + AppNLS.getString("ClassOptions.isAlreadyExisted")); //$NON-NLS-1$
             all.put(newalias, newopt);
             if (newweak)
                 weaks.add(newalias);
@@ -379,8 +378,7 @@ public class ClassOptions<CT> {
             try {
                 optval = opt.parse(optarg, key);
             } catch (ParseException e) {
-                throw new ParseException(String.format(AppNLS
-                        .getString("ClassOptions.cantPartOption_sss"), opt //$NON-NLS-1$
+                throw new ParseException(String.format(AppNLS.getString("ClassOptions.cantPartOption_sss"), opt //$NON-NLS-1$
                         .getCLIName(), valtype, optarg), e);
             }
         if (key != null)
@@ -399,8 +397,8 @@ public class ClassOptions<CT> {
         }
     }
 
-    private int loadCall(CT object, MethodOption optcall, List<String> args, int off)
-            throws CLIException, ParseException {
+    private int loadCall(CT object, MethodOption optcall, List<String> args, int off) throws CLIException,
+            ParseException {
         int argc = optcall.getParameterCount();
         int rest = args.size() - off;
         if (argc > rest)

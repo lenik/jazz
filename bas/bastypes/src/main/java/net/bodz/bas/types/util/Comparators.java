@@ -14,7 +14,7 @@ import net.bodz.bas.types.Pair;
 public class Comparators {
 
     /** compare Comparables */
-    public static final STD     STD     = new STD();
+    public static final STD STD = new STD();
 
     /** if not Comparable, then compare by toString() */
     public static final NATURAL NATURAL = new NATURAL();
@@ -52,9 +52,9 @@ public class Comparators {
         }
     }
 
-    public static final INT    INT    = new INT();
-    public static final LONG   LONG   = new LONG();
-    public static final FLOAT  FLOAT  = new FLOAT();
+    public static final INT INT = new INT();
+    public static final LONG LONG = new LONG();
+    public static final FLOAT FLOAT = new FLOAT();
     public static final DOUBLE DOUBLE = new DOUBLE();
 
     static class INT implements Comparator<Integer> {
@@ -104,7 +104,7 @@ public class Comparators {
     }
 
     /** compare by type hierarchically */
-    public static final TYPE_HIER  TYPE_HIER  = new TYPE_HIER();
+    public static final TYPE_HIER TYPE_HIER = new TYPE_HIER();
 
     /** compare by type-list hierarchically */
     public static final TYPES_HIER TYPES_HIER = new TYPES_HIER();
@@ -186,8 +186,7 @@ public class Comparators {
     }
 
     /**
-     * compare by method name, then parameters count, then each parameter's
-     * typename
+     * compare by method name, then parameters count, then each parameter's typename
      */
     public static final METHOD METHOD = new METHOD();
 
@@ -209,10 +208,8 @@ public class Comparators {
             if (cmp != 0)
                 return cmp;
 
-            Class<?>[] lt = lsig ? ((MethodSignature) l).getParameterTypes() : ((Method) l)
-                    .getParameterTypes();
-            Class<?>[] rt = rsig ? ((MethodSignature) r).getParameterTypes() : ((Method) r)
-                    .getParameterTypes();
+            Class<?>[] lt = lsig ? ((MethodSignature) l).getParameterTypes() : ((Method) l).getParameterTypes();
+            Class<?>[] rt = rsig ? ((MethodSignature) r).getParameterTypes() : ((Method) r).getParameterTypes();
             cmp = lt.length - rt.length;
             if (cmp != 0)
                 return cmp;
@@ -319,7 +316,7 @@ public class Comparators {
     public static class MemberFieldComparator implements Comparator<Object> {
 
         private final Comparator<Object> comparator;
-        protected final Field            memberField;
+        protected final Field memberField;
 
         public MemberFieldComparator(Comparator<Object> comparator, Field memberField) {
             assert memberField != null;
@@ -345,12 +342,11 @@ public class Comparators {
 
     public static class MemberMethodComparator implements Comparator<Object> {
 
-        protected final Method           memberMethod;
-        protected final Object[]         args;
+        protected final Method memberMethod;
+        protected final Object[] args;
         private final Comparator<Object> comparator;
 
-        public MemberMethodComparator(Comparator<Object> comparator, Method memberMethod,
-                Object... args) {
+        public MemberMethodComparator(Comparator<Object> comparator, Method memberMethod, Object... args) {
             assert comparator != null;
             assert memberMethod != null;
             this.comparator = comparator;
@@ -375,8 +371,7 @@ public class Comparators {
 
     public static class MemberPropertyComparator extends MemberMethodComparator {
 
-        public MemberPropertyComparator(Comparator<Object> comparator,
-                PropertyDescriptor memberProperty) {
+        public MemberPropertyComparator(Comparator<Object> comparator, PropertyDescriptor memberProperty) {
             super(comparator, memberProperty.getReadMethod());
             if (memberMethod == null)
                 throw new IllegalArgumentException(TypesNLS.getString("Comparators.2") //$NON-NLS-1$
@@ -389,13 +384,11 @@ public class Comparators {
         return new MemberFieldComparator(comparator, memberField);
     }
 
-    public static Comparator<Object> member(Comparator<Object> comparator, Method memberMethod,
-            Object... args) {
+    public static Comparator<Object> member(Comparator<Object> comparator, Method memberMethod, Object... args) {
         return new MemberMethodComparator(comparator, memberMethod, args);
     }
 
-    public static Comparator<Object> member(Comparator<Object> comparator,
-            PropertyDescriptor memberProperty) {
+    public static Comparator<Object> member(Comparator<Object> comparator, PropertyDescriptor memberProperty) {
         return new MemberPropertyComparator(comparator, memberProperty);
     }
 

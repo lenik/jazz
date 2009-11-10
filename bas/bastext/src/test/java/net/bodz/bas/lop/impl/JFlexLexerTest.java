@@ -14,7 +14,7 @@ public class JFlexLexerTest {
 
     static class TD {
 
-        int    id;
+        int id;
         String text;
         Object value;
 

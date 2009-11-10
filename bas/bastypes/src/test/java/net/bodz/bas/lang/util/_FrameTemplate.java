@@ -5,7 +5,7 @@ package net.bodz.bas.lang.util;
  */
 public class _FrameTemplate implements Runnable {
 
-    private final String   description;
+    private final String description;
     private final Runnable target;
 
     public _FrameTemplate(String description, Runnable target) {

@@ -10,11 +10,11 @@ import java.io.InputStream;
 public class XYInputStream extends FilterInputStream implements XYTellable {
 
     private long offset;
-    private int  y;
-    private int  x;
+    private int y;
+    private int x;
     private long markOffset;
-    private int  markY;
-    private int  markX;
+    private int markY;
+    private int markX;
 
     public XYInputStream(InputStream proxy) {
         super(proxy);

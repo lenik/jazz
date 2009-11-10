@@ -53,7 +53,7 @@ public class SJEclipse {
 
     }
 
-    static ModulesRoot       abcd;
+    static ModulesRoot abcd;
     static List<ModulesRoot> searches;
     static {
         searches = new ArrayList<ModulesRoot>();

@@ -7,7 +7,7 @@ import net.bodz.bas.io.CharOuts.BCharOut;
 
 public class DFA {
 
-    private final String   name;
+    private final String name;
     private List<DFAState> states;
 
     public DFA(String name) {

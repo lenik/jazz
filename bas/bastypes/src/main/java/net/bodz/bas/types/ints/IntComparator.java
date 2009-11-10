@@ -9,7 +9,7 @@ public interface IntComparator {
 
     int compare(int a, int b);
 
-    IntComparator ASCEND  = new AscendIntComp();
+    IntComparator ASCEND = new AscendIntComp();
     IntComparator DESCEND = new DescendIntComp();
 
 }

@@ -19,8 +19,8 @@ public interface Unit extends Flushable {
     OutPort getOutPort(int index);
 
     /**
-     * reset should not be propagated, since {@link Unit} don't know which units
-     * it connects, but only ports.
+     * reset should not be propagated, since {@link Unit} don't know which units it connects, but
+     * only ports.
      */
     void reset() throws IOException;
 

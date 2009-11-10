@@ -5,11 +5,11 @@ import net.bodz.bas.types.util.Strings;
 
 public class VersionInfo implements Comparable<VersionInfo> {
 
-    public String  name;
-    public long    time;
-    public int     revision[];
-    public String  author;
-    public String  state;
+    public String name;
+    public long time;
+    public int revision[];
+    public String author;
+    public String state;
 
     private String revString;
 

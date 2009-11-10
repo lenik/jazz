@@ -14,24 +14,24 @@ import net.bodz.bas.ui.UserInterface;
 
 public abstract class _Job implements Job, TreeNode<_Job> {
 
-    protected UserInterface                    UI    = ConsoleUI.stdout;
-    protected LogTerm                          L     = LogTerms.console;
+    protected UserInterface UI = ConsoleUI.stdout;
+    protected LogTerm L = LogTerms.console;
 
-    private int                                state = NOTSTART;
+    private int state = NOTSTART;
 
-    private List<_Job>                         children;
-    private List<ChildObserver>                observers;
-    private List<Runnable>                     exitHooks;
+    private List<_Job> children;
+    private List<ChildObserver> observers;
+    private List<Runnable> exitHooks;
 
-    private Object                             status;
-    private int                                progressIndex;
-    private int                                progressSize;
-    private Long                               durationSum;
+    private Object status;
+    private int progressIndex;
+    private int progressSize;
+    private Long durationSum;
 
     private List<RecoverableExceptionListener> exceptionListeners;
-    private List<StatusChangeListener>         statusChangeListeners;
-    private List<ProgressChangeListener>       progressChangeListeners;
-    private List<DurationChangeListener>       durationChangeListeners;
+    private List<StatusChangeListener> statusChangeListeners;
+    private List<ProgressChangeListener> progressChangeListeners;
+    private List<DurationChangeListener> durationChangeListeners;
 
     protected abstract void _run();
 
@@ -72,8 +72,7 @@ public abstract class _Job implements Job, TreeNode<_Job> {
     }
 
     /**
-     * Override this method to specify your own run order, and set progress
-     * indexes for child jobs.
+     * Override this method to specify your own run order, and set progress indexes for child jobs.
      */
     protected void runTree() {
         _run();
@@ -262,8 +261,7 @@ public abstract class _Job implements Job, TreeNode<_Job> {
     }
 
     /**
-     * Override this method to get a better estimated duration this job will
-     * take to complete.
+     * Override this method to get a better estimated duration this job will take to complete.
      * 
      * @return 0 in default implementation.
      */
@@ -360,8 +358,7 @@ public abstract class _Job implements Job, TreeNode<_Job> {
         }
 
         /**
-         * Default implementation won't change the actual progress of parent
-         * job.
+         * Default implementation won't change the actual progress of parent job.
          */
         @Override
         public void progressChange(ProgressChangeEvent e) {
@@ -425,8 +422,7 @@ public abstract class _Job implements Job, TreeNode<_Job> {
      * 
      * @return <code>true</code> if the exception is recovered.
      */
-    protected boolean defaultExceptionHandler(Exception exception, boolean recoverable,
-            boolean discarded) {
+    protected boolean defaultExceptionHandler(Exception exception, boolean recoverable, boolean discarded) {
         exception.printStackTrace();
         return discarded;
     }

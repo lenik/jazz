@@ -40,9 +40,9 @@ public class Dates {
         HHMMSS = getFormat("hhmmss"); //$NON-NLS-1$
     }
 
-    public static DateFormat       dateFormat;
-    public static DateFormat       timeFormat;
-    public static DateFormat       dateTimeFormat;
+    public static DateFormat dateFormat;
+    public static DateFormat timeFormat;
+    public static DateFormat dateTimeFormat;
     static {
         dateFormat = YYYY_MM_DD;
         timeFormat = HH_MM_SS;

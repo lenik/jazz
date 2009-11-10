@@ -12,8 +12,8 @@ public @interface Font {
 
     int height() default 0;
 
-    int PLAIN  = java.awt.Font.PLAIN;
-    int BOLD   = java.awt.Font.BOLD;
+    int PLAIN = java.awt.Font.PLAIN;
+    int BOLD = java.awt.Font.BOLD;
     int ITALIC = java.awt.Font.ITALIC;
 
     int style() default PLAIN;

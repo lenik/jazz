@@ -8,7 +8,7 @@ import net.bodz.bios.Unit;
 public abstract class MISOUnit extends SOUnit implements Unit, Sender {
 
     private InPort[] inPorts;
-    private OutPort  outPort;
+    private OutPort outPort;
 
     @Override
     public int getInPorts() {

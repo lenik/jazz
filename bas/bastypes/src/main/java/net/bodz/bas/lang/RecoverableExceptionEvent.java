@@ -6,8 +6,8 @@ public class RecoverableExceptionEvent extends EventObject {
 
     private static final long serialVersionUID = 6558508128150210701L;
 
-    private boolean           recovered;
-    private Exception         exception;
+    private boolean recovered;
+    private Exception exception;
 
     public RecoverableExceptionEvent(Object source, Exception exception) {
         super(source);

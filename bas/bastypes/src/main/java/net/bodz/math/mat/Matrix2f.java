@@ -6,10 +6,10 @@ public class Matrix2f implements Serializable {
 
     static final long serialVersionUID = 948093791490130460L;
 
-    public float      x00;
-    public float      x01;
-    public float      x10;
-    public float      x11;
+    public float x00;
+    public float x01;
+    public float x10;
+    public float x11;
 
     public Matrix2f() {
         x00 = 1.0f;
@@ -126,10 +126,9 @@ public class Matrix2f implements Serializable {
     /**
      * this / m
      * 
-     * [-m01 n10 + m00 n11 m00 n01 - n00 m01 ] [------------------ -
-     * ----------------- ] [n00 n11 - n01 n10 n00 n11 - n01 n10 ] [ ] [-m11 n10
-     * + m10 n11 -n00 m11 + m10 n01] [------------------ - ------------------]
-     * [n00 n11 - n01 n10 n00 n11 - n01 n10 ]
+     * [-m01 n10 + m00 n11 m00 n01 - n00 m01 ] [------------------ - ----------------- ] [n00 n11 -
+     * n01 n10 n00 n11 - n01 n10 ] [ ] [-m11 n10 + m10 n11 -n00 m11 + m10 n01] [------------------ -
+     * ------------------] [n00 n11 - n01 n10 n00 n11 - n01 n10 ]
      */
     public final void div(Matrix2f m) {
         float D = m.x00 * m.x11 - m.x01 * m.x10;

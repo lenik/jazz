@@ -25,8 +25,7 @@ public class CLIPlugins extends Plugins {
         if (!CLIPlugin.class.isAssignableFrom(baseType))
             throw new OutOfDomainException("baseType", baseType, //$NON-NLS-1$
                     CLIPlugin.class);
-        CLIPluginCategory category = new CLIPluginCategory(name,
-                (Class<? extends CLIPlugin>) baseType);
+        CLIPluginCategory category = new CLIPluginCategory(name, (Class<? extends CLIPlugin>) baseType);
         return registerCategory(category);
     }
 

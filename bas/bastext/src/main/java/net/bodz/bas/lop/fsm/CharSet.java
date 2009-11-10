@@ -23,12 +23,12 @@ public interface CharSet extends Comparable<CharSet> {
     @OverrideOption(chain = ChainUsage.PREFERRED, order = ChainOrder.TAIL)
     CharSet reduce();
 
-    int UNKNOWN  = -1;
-    int NONE     = 0;
-    int PARTIAL  = 1;
+    int UNKNOWN = -1;
+    int NONE = 0;
+    int PARTIAL = 1;
     int ALL_THIS = 2;
     int ALL_THAT = 3;
-    int EQUALS   = 4;
+    int EQUALS = 4;
 
     /**
      * Only called if this {@link CharSet} isn't abstract.

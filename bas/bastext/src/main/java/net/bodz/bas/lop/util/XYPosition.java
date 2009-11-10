@@ -1,14 +1,13 @@
 package net.bodz.bas.lop.util;
 
-
 /**
  * @test
  */
 public class XYPosition implements XYTellable {
 
     private final long offset;
-    private final int  y;
-    private final int  x;
+    private final int y;
+    private final int x;
 
     public XYPosition(XYTellable xyt) {
         if (xyt == null)

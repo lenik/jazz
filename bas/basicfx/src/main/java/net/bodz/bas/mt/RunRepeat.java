@@ -3,9 +3,9 @@ package net.bodz.bas.mt;
 public class RunRepeat implements Runnable {
 
     private final Runnable target;
-    private final int      delay;
-    private final int      repeatCount;
-    private int            count;
+    private final int delay;
+    private final int repeatCount;
+    private int count;
 
     public RunRepeat(Runnable target, int delay, int repeatCount) {
         if (target == null)

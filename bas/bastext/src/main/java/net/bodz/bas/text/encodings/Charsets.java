@@ -12,8 +12,7 @@ import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TreeTextMap;
 
 /**
- * Literal Charset Provider Literal charset is designed for debug or special
- * purpose.
+ * Literal Charset Provider Literal charset is designed for debug or special purpose.
  */
 public class Charsets extends CharsetProvider {
 
@@ -47,7 +46,7 @@ public class Charsets extends CharsetProvider {
     // utilities
 
     public static Charset DEFAULT = Charset.defaultCharset();
-    public static Charset ASCII   = Charset.forName("ascii"); //$NON-NLS-1$
+    public static Charset ASCII = Charset.forName("ascii"); //$NON-NLS-1$
 
     public static Charset get(Object charset) {
         if (charset == null)
@@ -56,8 +55,7 @@ public class Charsets extends CharsetProvider {
             return (Charset) charset;
         if (charset instanceof String)
             return Charset.forName((String) charset);
-        throw new IllegalArgumentTypeException(charset, TextNLS
-                .getString("Charsets.stringOrCharset")); //$NON-NLS-1$
+        throw new IllegalArgumentTypeException(charset, TextNLS.getString("Charsets.stringOrCharset")); //$NON-NLS-1$
     }
 
     public static CharsetEncoder getEncoder(Object charset) {

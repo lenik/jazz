@@ -24,8 +24,7 @@ public class Objects {
     }
 
     /**
-     * @see net.bodz.bas.types.util.ArrayOps.Bytes#equalsWithWrap(byte[],
-     *      byte[])
+     * @see net.bodz.bas.types.util.ArrayOps.Bytes#equalsWithWrap(byte[], byte[])
      */
     @Deprecated
     public static boolean equalsWithWrap(byte[] pattern, byte[] bytes, int off) {
@@ -40,8 +39,7 @@ public class Objects {
     }
 
     /**
-     * @return <code>true</code> if both a and b are <code>null</code>, or
-     *         <code>a.equals(b)</code>
+     * @return <code>true</code> if both a and b are <code>null</code>, or <code>a.equals(b)</code>
      */
     public static final boolean equals(Object a, Object b) {
         if (a == null || b == null)
@@ -73,8 +71,7 @@ public class Objects {
         return true;
     }
 
-    public static Object cloneByConstructor(Object object, Class<?> copyClass)
-            throws CloneNotSupportedException {
+    public static Object cloneByConstructor(Object object, Class<?> copyClass) throws CloneNotSupportedException {
         if (object == null)
             return null;
         Class<?> cls = object.getClass();
@@ -85,17 +82,14 @@ public class Objects {
             cloned = cstr.newInstance(object);
             return cloned;
         } catch (NoSuchMethodException e) {
-            throw new CloneNotSupportedException(
-                    TypesNLS.getString("Objects.noCopyCtor") + cls.getName()); //$NON-NLS-1$
+            throw new CloneNotSupportedException(TypesNLS.getString("Objects.noCopyCtor") + cls.getName()); //$NON-NLS-1$
         } catch (IllegalAccessException e) {
-            throw new CloneNotSupportedException(
-                    TypesNLS.getString("Objects.cantAccessCopyCtor") + cls.getName()); //$NON-NLS-1$
+            throw new CloneNotSupportedException(TypesNLS.getString("Objects.cantAccessCopyCtor") + cls.getName()); //$NON-NLS-1$
         } catch (InvocationTargetException e) {
             throw new CloneNotSupportedException(TypesNLS.getString("Objects.errClone") //$NON-NLS-1$
                     + e.getMessage());
         } catch (InstantiationException e) {
-            throw new CloneNotSupportedException(
-                    TypesNLS.getString("Objects.errNewInst") + e.getMessage()); //$NON-NLS-1$
+            throw new CloneNotSupportedException(TypesNLS.getString("Objects.errNewInst") + e.getMessage()); //$NON-NLS-1$
         }
     }
 

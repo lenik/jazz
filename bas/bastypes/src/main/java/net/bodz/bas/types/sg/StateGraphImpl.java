@@ -9,12 +9,12 @@ import net.bodz.bas.types.Stack;
 
 public class StateGraphImpl implements StateGraph {
 
-    private static final long  serialVersionUID = 3618890808666598908L;
+    private static final long serialVersionUID = 3618890808666598908L;
 
-    protected Object           context;
-    protected State            current;
+    protected Object context;
+    protected State current;
 
-    private Stack<State>       stack;
+    private Stack<State> stack;
 
     // <name, state>
     private Map<Object, State> registry;

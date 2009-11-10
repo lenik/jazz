@@ -6,7 +6,7 @@ import net.bodz.bas.nls.SysNLS;
 
 public class FileResFolder implements ResFolder {
 
-    private final File    dir;
+    private final File dir;
     private final boolean mkdirsWhenAccess;
     private final boolean mkdirsWhenWrite;
 
@@ -23,8 +23,7 @@ public class FileResFolder implements ResFolder {
             throw new NullPointerException("dir"); //$NON-NLS-1$
         if (dir.exists()) {
             if (!dir.isDirectory())
-                throw new IllegalStateException(
-                        SysNLS.getString("FileResFolder.nondirWithSameName") + dir); //$NON-NLS-1$
+                throw new IllegalStateException(SysNLS.getString("FileResFolder.nondirWithSameName") + dir); //$NON-NLS-1$
         }
         this.dir = dir;
         this.mkdirsWhenAccess = mkdirsWhenAccess;
@@ -62,8 +61,7 @@ public class FileResFolder implements ResFolder {
         if (obj instanceof FileResFolder) {
             FileResFolder a = (FileResFolder) obj;
             if (dir.equals(a.dir))
-                return mkdirsWhenAccess == a.mkdirsWhenAccess
-                        && mkdirsWhenWrite == a.mkdirsWhenWrite;
+                return mkdirsWhenAccess == a.mkdirsWhenAccess && mkdirsWhenWrite == a.mkdirsWhenWrite;
         }
         return false;
     }

@@ -28,9 +28,9 @@ public class DerListDelta {
     static class Add implements IMap {
 
         private final IMap prev;
-        private final int  vBefore;
-        private final int  n;
-        private final int  qNext;
+        private final int vBefore;
+        private final int n;
+        private final int qNext;
 
         public Add(IMap prev, int qNext, int vBefore, int n) {
             this.prev = prev;
@@ -63,8 +63,8 @@ public class DerListDelta {
     static class Remove implements IMap {
 
         private final IMap prev;
-        private final int  vStart;
-        private final int  n;
+        private final int vStart;
+        private final int n;
 
         public Remove(IMap prev, int v, int n) {
             this.prev = prev;
@@ -95,8 +95,7 @@ public class DerListDelta {
     // private
 
     /**
-     * TODO: new FlattenMap implements IMap and convert add/dels to a single
-     * flatten map.
+     * TODO: new FlattenMap implements IMap and convert add/dels to a single flatten map.
      */
     public void optimizeIndexMap() {
         // throw new NotImplementedException();

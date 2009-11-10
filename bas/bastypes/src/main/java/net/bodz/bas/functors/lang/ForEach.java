@@ -20,9 +20,9 @@ public class ForEach<T> extends _Functor<T> {
     }
 
     protected _Functor<Collection<?>> coll;
-    protected _Functor<T>             body;
+    protected _Functor<T> body;
 
-    protected Object                  index;
+    protected Object index;
 
     public ForEach() {
     }

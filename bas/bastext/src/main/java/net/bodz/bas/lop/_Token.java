@@ -7,13 +7,13 @@ import net.bodz.bas.types.util.Strings;
 
 public abstract class _Token implements Token {
 
-    private final Lexer  lexer;
-    private final int    id;
+    private final Lexer lexer;
+    private final int id;
     private final Object value;
 
-    private long         offset;
-    private int          y;
-    private int          x;
+    private long offset;
+    private int y;
+    private int x;
 
     public _Token(Lexer lexer, int id, XYTellable start) {
         this(lexer, id, null, start);

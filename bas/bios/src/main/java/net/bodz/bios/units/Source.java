@@ -19,12 +19,11 @@ public interface Source extends Unit {
     /**
      * pump immediately.
      * 
-     * may implemented as {@link #pump(int)} with timeout=0. but this isn't
-     * necessary, {@link #pump()} may wait for any timeout. (but it should be
-     * too long)
+     * may implemented as {@link #pump(int)} with timeout=0. but this isn't necessary,
+     * {@link #pump()} may wait for any timeout. (but it should be too long)
      * 
-     * @return <code>false</code> if no immediately available data. this is
-     *         different with {@link #pump(int)}.
+     * @return <code>false</code> if no immediately available data. this is different with
+     *         {@link #pump(int)}.
      */
     boolean pump() throws IOException;
 

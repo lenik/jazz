@@ -271,8 +271,7 @@ public class Strings {
         return join(separator, Iterators.iterator(enumr));
     }
 
-    public static Pair<String, String> join(String separatorKey, String separatorValue,
-            Map<?, ?> map) {
+    public static Pair<String, String> join(String separatorKey, String separatorValue, Map<?, ?> map) {
         StringBuffer bufferKey = null;
         StringBuffer bufferValue = null;
         for (Object o : map.entrySet()) {
@@ -314,26 +313,25 @@ public class Strings {
     }
 
     /** trim each token */
-    public static final int TRIM       = 1;
+    public static final int TRIM = 1;
 
     /** EOL also used to delimit tokens */
     public static final int MULTILINES = 2;
 
     /** string quoted by " or ' are treated as single token */
-    public static final int QUOTE      = 4;
+    public static final int QUOTE = 4;
 
     /** remove quote chars, only affects with {@link #QUOTE} */
-    public static final int DEQUOTE    = 8;
+    public static final int DEQUOTE = 8;
 
     /** line comment (//) and block comment are removed */
-    public static final int COMMENT    = 16;
+    public static final int COMMENT = 16;
 
     /**
      * @param delims
      *            whitespace if <code>null</code>
      */
-    public static String[] split(Object src, char[] delims, int limit, int flags)
-            throws IOException {
+    public static String[] split(Object src, char[] delims, int limit, int flags) throws IOException {
         boolean trimList = limit == 0;
         boolean trim = test(flags & TRIM);
         if (limit <= 0)

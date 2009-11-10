@@ -21,17 +21,17 @@ public class FileFinder implements Iterable<File> {
 
     private static final int defaultMaxDepth = 256;
 
-    public static final int  FILE            = 1;
-    public static final int  DIR             = 2;
-    public static final int  DIR_POST        = 4;
+    public static final int FILE = 1;
+    public static final int DIR = 2;
+    public static final int DIR_POST = 4;
 
-    private File[]           start;
-    private FileFilter       userFilter;
-    private boolean          prune;
-    private FileFilter       filter;
+    private File[] start;
+    private FileFilter userFilter;
+    private boolean prune;
+    private FileFilter filter;
 
-    private int              maxDepth;
-    private int              order           = FILE | DIR;
+    private int maxDepth;
+    private int order = FILE | DIR;
     private Comparator<File> comparator;
 
     class Filter implements FileFilter {

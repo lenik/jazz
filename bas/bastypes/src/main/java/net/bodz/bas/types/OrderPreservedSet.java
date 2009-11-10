@@ -10,7 +10,7 @@ public abstract class OrderPreservedSet<E> implements Set<E>, Serializable {
 
     private static final long serialVersionUID = 111818316100018739L;
 
-    private List<E>           list;
+    private List<E> list;
 
     protected OrderPreservedSet(List<E> list) {
         if (list == null)

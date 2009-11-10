@@ -6,8 +6,8 @@ import java.lang.annotation.RetentionPolicy;
 /**
  * Style variation hint.
  * 
- * For example, a string may be in "label" or "edit" style, and a method may be
- * in "button" or "link" style.
+ * For example, a string may be in "label" or "edit" style, and a method may be in "button" or
+ * "link" style.
  */
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Style {

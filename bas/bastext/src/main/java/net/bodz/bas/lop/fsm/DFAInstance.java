@@ -4,7 +4,7 @@ public class DFAInstance {
 
     private final DFA dfa;
 
-    private DFAState  state;
+    private DFAState state;
 
     public DFAInstance(DFA dfa, int startStateId) {
         if (dfa == null)

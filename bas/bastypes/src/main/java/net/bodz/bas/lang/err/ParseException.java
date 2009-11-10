@@ -6,9 +6,9 @@ public class ParseException extends Exception {
 
     private static final long serialVersionUID = 7260313523533602858L;
 
-    public String             source;
-    public int                line;
-    public int                column;
+    public String source;
+    public int line;
+    public int column;
 
     public ParseException() {
         super();

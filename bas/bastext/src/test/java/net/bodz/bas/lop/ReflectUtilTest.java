@@ -14,14 +14,14 @@ import org.junit.Test;
 
 public class ReflectUtilTest {
 
-    public static final String X       = "X";
-    public static final String XX      = "X";
-    public static final String Y       = "Y";
-    public static final String Z       = "Z";
+    public static final String X = "X";
+    public static final String XX = "X";
+    public static final String Y = "Y";
+    public static final String Z = "Z";
 
-    public static int          HUNDRED = 100;
-    public static int          HYAKU   = 100;
-    public static int          FIVE    = 5;
+    public static int HUNDRED = 100;
+    public static int HYAKU = 100;
+    public static int FIVE = 5;
 
     static class CatNames extends Pred1<Field> {
         List<String> list = new ArrayList<String>();

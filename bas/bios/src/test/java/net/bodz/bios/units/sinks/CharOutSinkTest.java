@@ -7,7 +7,7 @@ import net.bodz.bas.io.CharOuts;
 
 public class CharOutSinkTest {
 
-    CharOut     charOut;
+    CharOut charOut;
     CharOutSink charOutSink;
 
     public CharOutSinkTest() throws IOException {

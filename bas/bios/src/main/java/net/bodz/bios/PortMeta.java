@@ -21,8 +21,8 @@ public interface PortMeta extends Meta {
     /**
      * Type with low order value is preferred.
      * 
-     * no value defined for unsupported types, if a type is unsupported, you may
-     * want to return {@link Integer#MAX_VALUE}.
+     * no value defined for unsupported types, if a type is unsupported, you may want to return
+     * {@link Integer#MAX_VALUE}.
      * 
      * @return a rank value indicating the preference of a given type.
      */

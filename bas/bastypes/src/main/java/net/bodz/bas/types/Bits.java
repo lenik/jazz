@@ -66,7 +66,7 @@ public interface Bits extends IBits {
     public static class BytevLE extends _Bits {
 
         private byte[] bytes;
-        private int    bits;
+        private int bits;
 
         public BytevLE(int bits) {
             this(new byte[units(bits, Byte.SIZE)], bits);
@@ -132,7 +132,7 @@ public interface Bits extends IBits {
     public static class BytevBE extends _Bits {
 
         private byte[] bytes;
-        private int    bits;
+        private int bits;
 
         public BytevBE(int bits) {
             this(new byte[units(bits, Byte.SIZE)], bits);
@@ -198,7 +198,7 @@ public interface Bits extends IBits {
     public static class IntvLE extends _Bits {
 
         private int[] ints;
-        private int   bits;
+        private int bits;
 
         public IntvLE(int bits) {
             this(new int[units(bits, Integer.SIZE)], bits);
@@ -278,7 +278,7 @@ public interface Bits extends IBits {
     public static class IntvBE extends _Bits {
 
         private int[] ints;
-        private int   bits;
+        private int bits;
 
         public IntvBE(int bits) {
             this(new int[units(bits, Integer.SIZE)], bits);

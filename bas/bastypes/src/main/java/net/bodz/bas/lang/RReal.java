@@ -6,8 +6,8 @@ public class RReal extends Number {
 
     private static final long serialVersionUID = -8213113619672707641L;
 
-    private final double      min;
-    private final double      max;
+    private final double min;
+    private final double max;
 
     public RReal(double min, double max) {
         assert min <= max : "min<=max"; //$NON-NLS-1$
@@ -87,9 +87,9 @@ public class RReal extends Number {
         return CC(m, x);
     }
 
-    static final int PP    = 0;
-    static final int NP    = 2;
-    static final int NN    = 3;
+    static final int PP = 0;
+    static final int NP = 2;
+    static final int NN = 3;
 
     static final int PP_PP = 0;
     static final int PP_NP = 2;
