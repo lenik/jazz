@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>net.bodz.bas</groupId>
+		<artifactId>bas</artifactId>
+		<version>0.0.2-SNAPSHOT</version>
+	</parent>
+	<artifactId>layer-3</artifactId>
+	<packaging>pom</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<modules>
+		<module>bas-ant</module>
+		<module>bas-quickstart</module>
+		<module>bas-snmjava</module>
+		<module>bas-sysutil</module>
+		<module>bas-unitperf</module>
+	</modules>
+	<name>BAS :: Layer 3</name>
+</project>
