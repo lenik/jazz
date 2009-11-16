@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>net.bodz.bas</groupId>
+		<artifactId>bas</artifactId>
+		<version>0.0.2-SNAPSHOT</version>
+	</parent>
+	<artifactId>bas-incubator</artifactId>
+	<packaging>pom</packaging>
+	<version>0.0.2-SNAPSHOT</version>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-incubator-posutil</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	<modules>
+		<module>bas-incubator-posutil</module>
+	</modules>
+	<name>BAS :: Incubator</name>
+</project>
