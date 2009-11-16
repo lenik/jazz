@@ -14,8 +14,8 @@
 		</dependency>
 		<dependency>
 			<groupId>net.bodz.bas</groupId>
-			<artifactId>bas-datatypes</artifactId>
+			<artifactId>bas-commons</artifactId>
 		</dependency>
 	</dependencies>
-	<name>BAS Module :: Common Utils</name>
+	<name>BAS :: Common Utilities</name>
 </project>

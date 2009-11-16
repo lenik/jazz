@@ -14,7 +14,7 @@
 		</dependency>
 		<dependency>
 			<groupId>net.bodz.bas</groupId>
-			<artifactId>bas-datatypes</artifactId>
+			<artifactId>bas-commons</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>net.bodz.bas</groupId>
@@ -25,5 +25,5 @@
 			<artifactId>bas-textutils</artifactId>
 		</dependency>
 	</dependencies>
-	<name>BAS Module :: IO Filter (B-ios)</name>
+	<name>BAS :: IO Filter (B-ios)</name>
 </project>

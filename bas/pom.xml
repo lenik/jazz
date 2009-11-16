@@ -24,7 +24,7 @@
 			</dependency>
 			<dependency>
 				<groupId>net.bodz.bas</groupId>
-				<artifactId>bas-datatypes</artifactId>
+				<artifactId>bas-commons</artifactId>
 				<type>jar</type>
 				<version>${project.version}</version>
 			</dependency>
@@ -55,6 +55,12 @@
 			<dependency>
 				<groupId>net.bodz.bas</groupId>
 				<artifactId>bas-quickstart</artifactId>
+				<type>jar</type>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-router</artifactId>
 				<type>jar</type>
 				<version>${project.version}</version>
 			</dependency>
