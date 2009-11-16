@@ -5,7 +5,7 @@
 		<artifactId>bas-modules</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>bas-datatypes</artifactId>
+	<artifactId>bas-commons</artifactId>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -17,5 +17,5 @@
 			<artifactId>bas-proxy-java-util</artifactId>
 		</dependency>
 	</dependencies>
-	<name>BAS Module :: Data Types</name>
+	<name>BAS :: Commons</name>
 </project>

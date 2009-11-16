@@ -14,7 +14,7 @@
 		</dependency>
 		<dependency>
 			<groupId>net.bodz.bas</groupId>
-			<artifactId>bas-datatypes</artifactId>
+			<artifactId>bas-commons</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>net.bodz.bas</groupId>
@@ -33,5 +33,5 @@
 			<artifactId>bas-iofilter</artifactId>
 		</dependency>
 	</dependencies>
-	<name>BAS Module :: Quickstart Application Framework</name>
+	<name>BAS :: Quickstart Application Framework</name>
 </project>
