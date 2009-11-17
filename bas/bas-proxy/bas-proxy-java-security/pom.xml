@@ -2,16 +2,10 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
+		<artifactId>bas-proxy</artifactId>
 		<groupId>net.bodz.bas</groupId>
-		<artifactId>bas-incubator</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>bas-incubator-posutil</artifactId>
-	<dependencies>
-		<dependency>
-			<groupId>net.bodz.bas</groupId>
-			<artifactId>bas-api</artifactId>
-		</dependency>
-	</dependencies>
-	<name>BAS :: Incubator :: POS Utilities (Fragments of pre-java-implementation)</name>
+	<artifactId>bas-proxy-java-security</artifactId>
+	<name>BAS :: Proxy :: java.security</name>
 </project>

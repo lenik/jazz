@@ -13,5 +13,5 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	<name>BAS Proxy Wrapper :: java.util</name>
+	<name>BAS :: Proxy :: java.util</name>
 </project>
