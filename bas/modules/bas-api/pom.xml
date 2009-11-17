@@ -7,5 +7,11 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>bas-api</artifactId>
+	<dependencies>
+		<dependency>
+			<groupId>net.bodz.bas</groupId>
+			<artifactId>bas-i18n</artifactId>
+		</dependency>
+	</dependencies>
 	<name>BAS :: Tags &amp; Annotations For API</name>
 </project>
