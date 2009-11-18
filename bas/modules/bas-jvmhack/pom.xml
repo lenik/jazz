@@ -9,9 +9,20 @@
 	<artifactId>bas-jvmhack</artifactId>
 	<dependencies>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
+			<groupId>net.bodz.bas</groupId>
+			<artifactId>bas-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.bodz.bas</groupId>
+			<artifactId>bas-loader</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.bodz.bas</groupId>
+			<artifactId>bas-proxy-java-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>asm</groupId>
+			<artifactId>asm</artifactId>
 		</dependency>
 	</dependencies>
 	<name>BAS :: JVM Hacks</name>
