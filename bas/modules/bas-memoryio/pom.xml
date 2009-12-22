@@ -4,8 +4,20 @@
 	<parent>
 		<artifactId>bas-modules</artifactId>
 		<groupId>net.bodz.bas</groupId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.1</version>
 	</parent>
 	<artifactId>bas-memoryio</artifactId>
+	<version>0.0.1</version>
+	<dependencies>
+		<dependency>
+			<groupId>net.bodz.bas</groupId>
+			<artifactId>bas-commons</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 	<name>BAS :: Memory I/O Abstraction</name>
 </project>

@@ -4,10 +4,11 @@
 	<parent>
 		<groupId>net.bodz.bas</groupId>
 		<artifactId>bas</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.1</version>
 	</parent>
 	<artifactId>bas-proxy</artifactId>
 	<packaging>pom</packaging>
+	<version>0.0.1</version>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -30,9 +31,15 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+	<dependencies>
+		<dependency>
+			<groupId>net.bodz.bas</groupId>
+			<artifactId>bas-api</artifactId>
+		</dependency>
+	</dependencies>
 	<modules>
 		<module>bas-proxy-java-util</module>
 		<module>bas-proxy-java-security</module>
 	</modules>
-	<name>BAS Proxy Wrappers</name>
+	<name>BAS :: Proxy Wrappers</name>
 </project>

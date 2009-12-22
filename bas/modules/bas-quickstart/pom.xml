@@ -3,9 +3,10 @@
 	<parent>
 		<groupId>net.bodz.bas</groupId>
 		<artifactId>bas-modules</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.1</version>
 	</parent>
 	<artifactId>bas-quickstart</artifactId>
+	<version>0.0.1</version>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>

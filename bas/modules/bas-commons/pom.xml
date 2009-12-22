@@ -3,18 +3,31 @@
 	<parent>
 		<groupId>net.bodz.bas</groupId>
 		<artifactId>bas-modules</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.1</version>
 	</parent>
 	<artifactId>bas-commons</artifactId>
+	<version>0.0.1</version>
 	<dependencies>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
+			<groupId>net.bodz.bas</groupId>
+			<artifactId>bas-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.bodz.bas</groupId>
+			<artifactId>bas-aspect</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.bodz.bas</groupId>
+			<artifactId>bas-collection</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>net.bodz.bas</groupId>
 			<artifactId>bas-proxy-java-util</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 	<name>BAS :: Commons</name>

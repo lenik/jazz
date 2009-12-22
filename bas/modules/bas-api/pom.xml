@@ -4,14 +4,10 @@
 	<parent>
 		<artifactId>bas-modules</artifactId>
 		<groupId>net.bodz.bas</groupId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.1</version>
 	</parent>
 	<artifactId>bas-api</artifactId>
-	<dependencies>
-		<dependency>
-			<groupId>net.bodz.bas</groupId>
-			<artifactId>bas-i18n</artifactId>
-		</dependency>
-	</dependencies>
+	<version>0.0.1</version>
+	<dependencies/>
 	<name>BAS :: Tags &amp; Annotations For API</name>
 </project>
