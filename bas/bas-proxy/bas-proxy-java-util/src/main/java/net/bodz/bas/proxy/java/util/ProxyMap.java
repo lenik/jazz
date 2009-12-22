@@ -4,10 +4,10 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import net.bodz.bas.proxy.Proxy;
+import net.bodz.bas.api.hint.AbstractProxy;
 
-public class ProxyMap<K, V> // 
-        extends Proxy<Map<K, V>> //
+public class ProxyMap<K, V>
+        extends AbstractProxy<Map<K, V>>
         implements Map<K, V> {
 
     public ProxyMap(Map<K, V> proxy) {
