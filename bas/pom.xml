@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
@@ -6,7 +7,7 @@
 		<version>1</version>
 	</parent>
 	<artifactId>bas</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<packaging>pom</packaging>
 	<dependencyManagement>
 		<dependencies>
@@ -14,61 +15,129 @@
 				<groupId>net.bodz.bas</groupId>
 				<artifactId>bas-proxy</artifactId>
 				<type>pom</type>
-				<version>${project.version}</version>
+				<version>0.0.1</version>
 			</dependency>
 			<dependency>
 				<groupId>net.bodz.bas</groupId>
 				<artifactId>bas-proxy-java-util</artifactId>
 				<type>jar</type>
-				<version>${project.version}</version>
+				<version>0.0.1</version>
+			</dependency>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-proxy-java-security</artifactId>
+				<type>jar</type>
+				<version>0.0.1</version>
+			</dependency>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-i18n</artifactId>
+				<type>jar</type>
+				<version>0.0.1</version>
+			</dependency>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-api</artifactId>
+				<type>jar</type>
+				<version>0.0.1</version>
 			</dependency>
 			<dependency>
 				<groupId>net.bodz.bas</groupId>
 				<artifactId>bas-commons</artifactId>
 				<type>jar</type>
-				<version>${project.version}</version>
+				<version>0.0.1</version>
 			</dependency>
 			<dependency>
 				<groupId>net.bodz.bas</groupId>
 				<artifactId>bas-utils</artifactId>
 				<type>jar</type>
-				<version>${project.version}</version>
+				<version>0.0.1</version>
 			</dependency>
 			<dependency>
 				<groupId>net.bodz.bas</groupId>
 				<artifactId>bas-textutils</artifactId>
 				<type>jar</type>
-				<version>${project.version}</version>
+				<version>0.0.1</version>
 			</dependency>
 			<dependency>
 				<groupId>net.bodz.bas</groupId>
 				<artifactId>bas-iofilter</artifactId>
 				<type>jar</type>
-				<version>${project.version}</version>
+				<version>0.0.1</version>
 			</dependency>
 			<dependency>
 				<groupId>net.bodz.bas</groupId>
 				<artifactId>bas-database</artifactId>
 				<type>jar</type>
-				<version>${project.version}</version>
+				<version>0.0.1</version>
 			</dependency>
 			<dependency>
 				<groupId>net.bodz.bas</groupId>
 				<artifactId>bas-quickstart</artifactId>
 				<type>jar</type>
-				<version>${project.version}</version>
+				<version>0.0.1</version>
 			</dependency>
 			<dependency>
 				<groupId>net.bodz.bas</groupId>
 				<artifactId>bas-router</artifactId>
 				<type>jar</type>
-				<version>${project.version}</version>
+				<version>0.0.1</version>
+			</dependency>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-jvmhack</artifactId>
+				<type>jar</type>
+				<version>0.0.1</version>
+			</dependency>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-loader</artifactId>
+				<type>jar</type>
+				<version>0.0.1</version>
+			</dependency>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-natives</artifactId>
+				<type>pom</type>
+				<version>0.0.1</version>
+			</dependency>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-natives-win32</artifactId>
+				<type>jar</type>
+				<version>0.0.1</version>
+			</dependency>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-unitperf</artifactId>
+				<type>jar</type>
+				<version>0.0.1</version>
+			</dependency>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-typeinfo</artifactId>
+				<type>jar</type>
+				<version>0.0.1</version>
+			</dependency>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-collection</artifactId>
+				<type>jar</type>
+				<version>0.0.1</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 	<modules>
 		<module>bas-proxy</module>
 		<module>modules</module>
+		<module>bas-incubator</module>
 	</modules>
 	<name>BAS Framework</name>
 	<url>http://bas.bodz.net/</url>
@@ -76,7 +145,7 @@
 	<developers>
 		<developer>
 			<id>lenik</id>
-			<name>Lenik (谢继雷)</name>
+			<name>Lenik (谢继陿</name>
 			<email>lenik@bodz.net</email>
 			<roles>
 				<role>Project Leader</role>

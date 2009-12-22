@@ -4,14 +4,15 @@
 	<parent>
 		<groupId>net.bodz.bas</groupId>
 		<artifactId>bas-modules</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.1</version>
 	</parent>
-	<artifactId>bas-aspect</artifactId>
+	<artifactId>bas-typeinfo</artifactId>
+	<version>0.0.1</version>
 	<dependencies>
 		<dependency>
 			<groupId>net.bodz.bas</groupId>
 			<artifactId>bas-api</artifactId>
 		</dependency>
 	</dependencies>
-	<name>BAS :: Type Aspects</name>
+	<name>BAS :: Type Informaton / Aspects</name>
 </project>
