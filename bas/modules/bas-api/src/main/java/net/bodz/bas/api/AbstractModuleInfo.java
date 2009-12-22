@@ -4,16 +4,20 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import net.bodz.bas.i18n.NLS;
+import net.bodz.bas.api.types.NLS;
+import net.bodz.bas.api.types.ResourceBundleNLS;
 
+/**
+ * To make the default {@link #getPackageName()} and all the related methods work, your direct
+ * derivation of this abstract class should be declared as <code>final</code>.
+ */
 public abstract class AbstractModuleInfo
         implements IModuleInfo {
 
-    NLS defaultNLS;
-    Map<Locale, NLS> localeNLS;
+    private NLS defaultNLS;
+    private Map<Locale, NLS> localeNLS;
 
     public AbstractModuleInfo() {
-        localeNLS = new HashMap<Locale, NLS>();
     }
 
     public String getPackageName() {
@@ -22,27 +26,30 @@ public abstract class AbstractModuleInfo
 
     public NLS getNLS() {
         if (defaultNLS == null)
-            defaultNLS = createNLS( Locale.getDefault() );
+            defaultNLS = createNLS(Locale.getDefault());
         return defaultNLS;
     }
 
-    public NLS getNLS( Locale locale ) {
+    public NLS getNLS(Locale locale) {
         if (locale == null)
-            throw new NullPointerException( "locale" );
-        if (locale.equals( Locale.getDefault() ))
+            throw new NullPointerException("locale");
+        if (locale.equals(Locale.getDefault()))
             return getNLS();
 
-        NLS nls = localeNLS.get( locale );
+        if (localeNLS == null)
+            localeNLS = new HashMap<Locale, NLS>();
+
+        NLS nls = localeNLS.get(locale);
         if (nls == null) {
-            nls = createNLS( locale );
-            localeNLS.put( locale, nls );
+            nls = createNLS(locale);
+            localeNLS.put(locale, nls);
         }
         return nls;
     }
 
-    protected NLS createNLS( Locale locale ) {
+    protected NLS createNLS(Locale locale) {
         String defaultBaseName = getPackageName() + ".NLS";
-        NLS nls = new NLS( defaultBaseName, locale );
+        NLS nls = new ResourceBundleNLS(defaultBaseName, locale);
         return nls;
     }
 

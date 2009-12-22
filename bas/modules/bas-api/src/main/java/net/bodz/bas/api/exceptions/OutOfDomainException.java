@@ -1,7 +1,7 @@
 package net.bodz.bas.api.exceptions;
 
 import net.bodz.bas.api.ModuleInfo;
-import net.bodz.bas.i18n.NLS;
+import net.bodz.bas.api.types.NLS;
 
 /**
  * oode Template:
@@ -29,31 +29,31 @@ public class OutOfDomainException
         super();
     }
 
-    public OutOfDomainException( String s ) {
-        super( s );
+    public OutOfDomainException(String s) {
+        super(s);
     }
 
     // 3 (boundary n< at 0)
-    public OutOfDomainException( String arg, Object actualval, Object boundval ) {
-        super( getMesg( arg, actualval, boundval ) );
+    public OutOfDomainException(String arg, Object actualValue, Object boundaryValue) {
+        super(format(arg, actualValue, boundaryValue));
     }
 
-    // 3 (x)
-    public OutOfDomainException( String arg, Object actualval ) {
-        super( getMesg( arg, actualval ) );
+    // 3 (n<)
+    public OutOfDomainException(String arg, Object actualValue) {
+        super(format(arg, actualValue));
     }
 
-    public static String getMesg( String arg, Object actualval, Object boundval ) {
-        return String.valueOf( actualval )
-                + //
-                nls.getString( "OutOfDomainException.boundary" ) + arg + nls.getString( "OutOfDomainException.at" ) + boundval + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+    // 3 (boundary n< at 0)
+    public static String format(String arg, Object actualValue, Object boundaryValue) {
+        return NLS.format("_s_boundar", actualValue, arg, boundaryValue);
     }
 
-    public static String getMesg( String arg, Object actualval ) {
-        return String.valueOf( actualval ) + //
+    // 3 (n<)
+    public static String format(String arg, Object actualValue) {
+        return String.valueOf(actualValue) + //
                 " (" + arg + ")"; //$NON-NLS-1$ //$NON-NLS-2$
     }
 
-    private static NLS nls = ModuleInfo.getInstance().getNLS();
+    private static NLS NLS = ModuleInfo.getInstance().getNLS();
 
 }
