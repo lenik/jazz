@@ -2,7 +2,7 @@ package net.bodz.bas.api;
 
 import java.util.Locale;
 
-import net.bodz.bas.i18n.NLS;
+import net.bodz.bas.api.types.NLS;
 
 public interface IModuleInfo {
 
@@ -10,6 +10,6 @@ public interface IModuleInfo {
 
     NLS getNLS();
 
-    NLS getNLS( Locale locale );
+    NLS getNLS(Locale locale);
 
 }

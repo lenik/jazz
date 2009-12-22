@@ -1,7 +1,7 @@
 package net.bodz.bas.api.exceptions;
 
 import net.bodz.bas.api.ModuleInfo;
-import net.bodz.bas.i18n.NLS;
+import net.bodz.bas.api.types.NLS;
 
 public class ParseException
         extends Exception {
@@ -16,32 +16,31 @@ public class ParseException
         super();
     }
 
-    public ParseException( String message, Throwable cause ) {
-        super( message, cause );
+    public ParseException(String message, Throwable cause) {
+        super(message, cause);
     }
 
-    public ParseException( String message ) {
-        super( message );
+    public ParseException(String message) {
+        super(message);
     }
 
-    public ParseException( Throwable cause ) {
-        super( cause );
+    public ParseException(Throwable cause) {
+        super(cause);
     }
 
-    public ParseException( Class<?> unparsableType, String unparsableText ) {
-        this( nls.getString( "ParseException.unknownParse" ) + unparsableType + ": " //$NON-NLS-1$ //$NON-NLS-2$
-                + unparsableText );
+    public ParseException(Class<?> unparsableType, String unparsableText) {
+        this(NLS.format("unknownParse: %s", unparsableType));
     }
 
-    public void setLocation( String source ) {
-        setLocation( source, 0, 0 );
+    public void setLocation(String source) {
+        setLocation(source, 0, 0);
     }
 
-    public void setLocation( String source, int line ) {
-        setLocation( source, line, 0 );
+    public void setLocation(String source, int line) {
+        setLocation(source, line, 0);
     }
 
-    public void setLocation( String source, int line, int column ) {
+    public void setLocation(String source, int line, int column) {
         this.source = source;
         this.line = line;
         this.column = column;
@@ -51,7 +50,7 @@ public class ParseException
         return source;
     }
 
-    public void setSource( String source ) {
+    public void setSource(String source) {
         this.source = source;
     }
 
@@ -59,7 +58,7 @@ public class ParseException
         return line;
     }
 
-    public void setLine( int line ) {
+    public void setLine(int line) {
         this.line = line;
     }
 
@@ -67,7 +66,7 @@ public class ParseException
         return column;
     }
 
-    public void setColumn( int column ) {
+    public void setColumn(int column) {
         this.column = column;
     }
 
@@ -79,30 +78,30 @@ public class ParseException
         String message = super.getMessage();
         if (source == null && line == 0 && column == 0)
             return message;
-        StringBuffer buf = new StringBuffer( message.length() );
+        StringBuffer buf = new StringBuffer(message.length());
         boolean prefixed = false;
         if (source != null) {
-            buf.append( source );
-            buf.append( ":" );
+            buf.append(source);
+            buf.append(":");
             prefixed = true;
         }
         if (line != 0) {
             if (source == null)
-                buf.append( "Line " );
-            buf.append( line );
-            buf.append( ':' );
+                buf.append("Line ");
+            buf.append(line);
+            buf.append(':');
             if (column != 0) {
-                buf.append( " at column " );
-                buf.append( column );
-                buf.append( ',' );
+                buf.append(" at column ");
+                buf.append(column);
+                buf.append(',');
             }
             prefixed = true;
         }
         if (prefixed)
-            buf.append( ' ' );
+            buf.append(' ');
         return buf.toString();
     }
 
-    private static NLS nls = ModuleInfo.getInstance().getNLS();
+    private static NLS NLS = ModuleInfo.getInstance().getNLS();
 
 }
