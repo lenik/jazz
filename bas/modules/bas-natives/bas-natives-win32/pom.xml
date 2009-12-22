@@ -7,6 +7,6 @@
 	</parent>
 	<artifactId>bas-natives-win32</artifactId>
 	<packaging>jar</packaging>
-	<version>0.0.1</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<name>BAS :: Natives :: Win32</name>
 </project>
