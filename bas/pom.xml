@@ -15,115 +15,121 @@
 				<groupId>net.bodz.bas</groupId>
 				<artifactId>bas-proxy</artifactId>
 				<type>pom</type>
-				<version>0.0.1</version>
+				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>net.bodz.bas</groupId>
 				<artifactId>bas-proxy-java-util</artifactId>
 				<type>jar</type>
-				<version>0.0.1</version>
+				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>net.bodz.bas</groupId>
 				<artifactId>bas-proxy-java-security</artifactId>
 				<type>jar</type>
-				<version>0.0.1</version>
-			</dependency>
-			<dependency>
-				<groupId>net.bodz.bas</groupId>
-				<artifactId>bas-i18n</artifactId>
-				<type>jar</type>
-				<version>0.0.1</version>
-			</dependency>
-			<dependency>
-				<groupId>net.bodz.bas</groupId>
-				<artifactId>bas-api</artifactId>
-				<type>jar</type>
-				<version>0.0.1</version>
-			</dependency>
-			<dependency>
-				<groupId>net.bodz.bas</groupId>
-				<artifactId>bas-commons</artifactId>
-				<type>jar</type>
-				<version>0.0.1</version>
-			</dependency>
-			<dependency>
-				<groupId>net.bodz.bas</groupId>
-				<artifactId>bas-utils</artifactId>
-				<type>jar</type>
-				<version>0.0.1</version>
-			</dependency>
-			<dependency>
-				<groupId>net.bodz.bas</groupId>
-				<artifactId>bas-textutils</artifactId>
-				<type>jar</type>
-				<version>0.0.1</version>
-			</dependency>
-			<dependency>
-				<groupId>net.bodz.bas</groupId>
-				<artifactId>bas-iofilter</artifactId>
-				<type>jar</type>
-				<version>0.0.1</version>
-			</dependency>
-			<dependency>
-				<groupId>net.bodz.bas</groupId>
-				<artifactId>bas-database</artifactId>
-				<type>jar</type>
-				<version>0.0.1</version>
-			</dependency>
-			<dependency>
-				<groupId>net.bodz.bas</groupId>
-				<artifactId>bas-quickstart</artifactId>
-				<type>jar</type>
-				<version>0.0.1</version>
-			</dependency>
-			<dependency>
-				<groupId>net.bodz.bas</groupId>
-				<artifactId>bas-router</artifactId>
-				<type>jar</type>
-				<version>0.0.1</version>
-			</dependency>
-			<dependency>
-				<groupId>net.bodz.bas</groupId>
-				<artifactId>bas-jvmhack</artifactId>
-				<type>jar</type>
-				<version>0.0.1</version>
-			</dependency>
-			<dependency>
-				<groupId>net.bodz.bas</groupId>
-				<artifactId>bas-loader</artifactId>
-				<type>jar</type>
-				<version>0.0.1</version>
+				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>net.bodz.bas</groupId>
 				<artifactId>bas-natives</artifactId>
 				<type>pom</type>
-				<version>0.0.1</version>
+				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>net.bodz.bas</groupId>
-				<artifactId>bas-natives-win32</artifactId>
+				<artifactId>bas-api</artifactId>
 				<type>jar</type>
-				<version>0.0.1</version>
-			</dependency>
-			<dependency>
-				<groupId>net.bodz.bas</groupId>
-				<artifactId>bas-unitperf</artifactId>
-				<type>jar</type>
-				<version>0.0.1</version>
-			</dependency>
-			<dependency>
-				<groupId>net.bodz.bas</groupId>
-				<artifactId>bas-typeinfo</artifactId>
-				<type>jar</type>
-				<version>0.0.1</version>
+				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 			<dependency>
 				<groupId>net.bodz.bas</groupId>
 				<artifactId>bas-collection</artifactId>
 				<type>jar</type>
-				<version>0.0.1</version>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-commons</artifactId>
+				<type>jar</type>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-database</artifactId>
+				<type>jar</type>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-fsm</artifactId>
+				<type>jar</type>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-i18n</artifactId>
+				<type>jar</type>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-iofilter</artifactId>
+				<type>jar</type>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-jvmhack</artifactId>
+				<type>jar</type>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-loader</artifactId>
+				<type>jar</type>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-memoryio</artifactId>
+				<type>jar</type>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-quickstart</artifactId>
+				<type>jar</type>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-router</artifactId>
+				<type>jar</type>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-textutils</artifactId>
+				<type>jar</type>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-typeinfo</artifactId>
+				<type>jar</type>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-unitperf</artifactId>
+				<type>jar</type>
+				<version>0.0.1-SNAPSHOT</version>
+			</dependency>
+			<dependency>
+				<groupId>net.bodz.bas</groupId>
+				<artifactId>bas-utils</artifactId>
+				<type>jar</type>
+				<version>0.0.1-SNAPSHOT</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
@@ -135,9 +141,9 @@
 		</dependency>
 	</dependencies>
 	<modules>
+		<module>bas-incubator</module>
 		<module>bas-proxy</module>
 		<module>modules</module>
-		<module>bas-incubator</module>
 	</modules>
 	<name>BAS Framework</name>
 	<url>http://bas.bodz.net/</url>
