@@ -8,8 +8,7 @@ public interface TypeInfo
     @Override
     Object query(String infoId);
 
-//    @Override
-//    <T> T query(Class<T> infoClass);
-
+    @Override
+    <T> T query(Class<T> infoClass);
 
 }

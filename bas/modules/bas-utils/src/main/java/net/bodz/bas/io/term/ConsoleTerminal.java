@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.lang.err.OutOfDomainException;
-import net.bodz.bas.types.util.Strings;
+import net.bodz.bas.text.util.Strings;
 
 public class ConsoleTerminal extends _Terminal {
 

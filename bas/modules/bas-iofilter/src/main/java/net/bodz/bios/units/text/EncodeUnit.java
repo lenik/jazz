@@ -7,7 +7,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 import java.nio.charset.CoderResult;
 
-import net.bodz.bas.lang.err.IllegalUsageError;
+import net.bodz.bas.commons.exceptions.IllegalUsageError;
 import net.bodz.bios.nls.BIOSNLS;
 
 public class EncodeUnit extends TextProcessUnit {

@@ -7,10 +7,10 @@ import java.net.URL;
 import java.text.ParseException;
 import java.util.Properties;
 
+import net.bodz.bas.commons.exceptions.NotImplementedException;
+import net.bodz.bas.commons.util.Dates;
+import net.bodz.bas.commons.util.Ns;
 import net.bodz.bas.io.Files;
-import net.bodz.bas.lang.err.NotImplementedException;
-import net.bodz.bas.types.util.Dates;
-import net.bodz.bas.types.util.Ns;
 
 @RcsKeywords(id = "$Id$")
 public class A_bas {

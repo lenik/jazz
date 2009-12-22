@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.a.ClassInfo;
-import net.bodz.bas.lang.err.OutOfDomainException;
+import net.bodz.bas.commons.exceptions.OutOfDomainException;
 import net.bodz.bas.nls.AppNLS;
 
 /**

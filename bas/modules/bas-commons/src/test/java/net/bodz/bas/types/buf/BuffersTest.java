@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import java.nio.ByteBuffer;
 
+import net.bodz.bas.commons.buffer.Buffers;
+
 import org.junit.Test;
 
 public class BuffersTest {

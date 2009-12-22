@@ -1,6 +1,6 @@
 package net.bodz.bas.jvm.exit;
 
-import net.bodz.bas.api.callback.Executable;
+import net.bodz.bas.api.types.Executable;
 import net.bodz.bas.commons.controlflow.ControlExit;
 import net.bodz.bas.proxy.java.security.ProxySecurityManager;
 

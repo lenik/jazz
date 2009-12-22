@@ -1,15 +1,15 @@
 package net.bodz.bas.a;
 
-import static net.bodz.bas.types.util.ArrayOps.Ints;
+import static net.bodz.bas.commons.collection.util.ArrayOps.Ints;
 
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.lang.ClassLocal;
-import net.bodz.bas.types.util.Annotations;
-import net.bodz.bas.types.util.Ns;
-import net.bodz.bas.types.util.Strings;
+import net.bodz.bas.commons.typealiases.ClassLocal;
+import net.bodz.bas.commons.util.Annotations;
+import net.bodz.bas.commons.util.Ns;
+import net.bodz.bas.text.util.Strings;
 import net.bodz.bas.ui.a.Icon;
 
 public class ClassInfo {

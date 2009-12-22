@@ -7,10 +7,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 
+import net.bodz.bas.commons.collection.util.Arrays2;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.nls.SysNLS;
-import net.bodz.bas.types.util.Arrays2;
-import net.bodz.bas.types.util.Strings;
+import net.bodz.bas.text.util.Strings;
 
 /**
  * @test {@link ProcessesTest}

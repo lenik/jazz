@@ -1,9 +1,9 @@
 package net.bodz.bas.ui;
 
-import net.bodz.bas.lang.ref.Var;
+import net.bodz.bas.commons.collection.hierarchical.TypeHierMap;
+import net.bodz.bas.commons.ref.Var;
+import net.bodz.bas.commons.util.Types;
 import net.bodz.bas.nls.AppNLS;
-import net.bodz.bas.types.TypeHierMap;
-import net.bodz.bas.types.util.Types;
 
 public abstract class RenderStrategy extends TypeHierMap<Renderer> {
 

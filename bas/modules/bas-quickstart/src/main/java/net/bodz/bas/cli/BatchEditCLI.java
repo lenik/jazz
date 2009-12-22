@@ -13,19 +13,19 @@ import java.util.List;
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.cli.a.OptionGroup;
 import net.bodz.bas.cli.util.ProtectedShell;
+import net.bodz.bas.commons.annotations.OverrideOption;
+import net.bodz.bas.commons.exceptions.IllegalUsageError;
+import net.bodz.bas.commons.exceptions.NotImplementedException;
+import net.bodz.bas.commons.exceptions.UnexpectedException;
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.io.Files;
-import net.bodz.bas.lang.a.OverrideOption;
-import net.bodz.bas.lang.err.IllegalUsageError;
-import net.bodz.bas.lang.err.NotImplementedException;
-import net.bodz.bas.lang.err.UnexpectedException;
 import net.bodz.bas.nls.AppNLS;
 import net.bodz.bas.text.diff.DiffComparator;
 import net.bodz.bas.text.diff.DiffFormat;
 import net.bodz.bas.text.diff.DiffFormats;
 import net.bodz.bas.text.diff.DiffInfo;
-import net.bodz.bas.types.util.Strings;
+import net.bodz.bas.text.util.Strings;
 
 @OptionGroup(value = "batch process", rank = -3)
 public class BatchEditCLI extends BatchCLI {

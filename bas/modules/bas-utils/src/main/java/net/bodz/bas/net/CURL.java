@@ -8,13 +8,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map.Entry;
 
+import net.bodz.bas.commons.collection.util.Arrays2;
+import net.bodz.bas.commons.util.Objects;
 import net.bodz.bas.lang.err.UnexpectedException;
 import net.bodz.bas.lang2.Filt1;
+import net.bodz.bas.text.util.Strings;
 import net.bodz.bas.types.TextMap;
 import net.bodz.bas.types.TreeTextMap;
-import net.bodz.bas.types.util.Arrays2;
-import net.bodz.bas.types.util.Objects;
-import net.bodz.bas.types.util.Strings;
 
 /**
  * <pre>

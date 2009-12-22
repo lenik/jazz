@@ -3,6 +3,8 @@ package net.bodz.bas.types.buf;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import net.bodz.bas.commons.buffer.ByteRing;
+
 import org.junit.Test;
 
 public class ByteRingTest {

@@ -1,6 +1,8 @@
 package net.bodz.bas.lang.util;
 
 import static org.junit.Assert.assertEquals;
+import net.bodz.bas.commons.scripting.util.Members;
+import net.bodz.bas.commons.scripting.util.VarMethod;
 import net.bodz.bas.types.testtypes.C;
 import net.bodz.bas.types.testtypes.CI;
 import net.bodz.bas.types.testtypes.CJz;

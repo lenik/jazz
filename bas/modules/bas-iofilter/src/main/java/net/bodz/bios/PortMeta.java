@@ -2,7 +2,7 @@ package net.bodz.bios;
 
 import java.util.Collection;
 
-import net.bodz.bas.lang.Meta;
+import net.bodz.bas.commons.tags.Meta;
 
 public interface PortMeta extends Meta {
 

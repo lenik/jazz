@@ -3,7 +3,7 @@ package net.bodz.bas.lop.fsm;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.types.util.Strings;
+import net.bodz.bas.text.util.Strings;
 
 /**
  * @test {@link CharRangeTest}

@@ -4,17 +4,19 @@ import java.util.Locale;
 
 import junit.framework.TestCase;
 
+import net.bodz.bas.api.types.ResourceBundleNLS;
+
 import org.junit.Test;
 
 public class NLSTest
         extends TestCase {
 
-    NLS NLS_zh_CN_var;
+    ResourceBundleNLS NLS_zh_CN_var;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        NLS_zh_CN_var = new NLS( NLSTest.class, new Locale( "zh", "CN", "var" ) );
+        NLS_zh_CN_var = new ResourceBundleNLS( NLSTest.class, new Locale( "zh", "CN", "var" ) );
     }
 
     @Test

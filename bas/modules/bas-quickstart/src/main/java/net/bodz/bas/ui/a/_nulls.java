@@ -1,6 +1,6 @@
 package net.bodz.bas.ui.a;
 
-import net.bodz.bas.lang.null_class;
+import net.bodz.bas.commons.annotation.null_class;
 import net.bodz.bas.util.Factory;
 
 class Factory_Object_null extends Factory.Static<Object> implements null_class {

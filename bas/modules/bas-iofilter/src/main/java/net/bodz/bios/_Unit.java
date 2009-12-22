@@ -4,13 +4,13 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.bodz.bas.commons.annotations.MetaClass;
+import net.bodz.bas.commons.typealiases.ClassLocal;
+import net.bodz.bas.commons.util.Annotations;
+import net.bodz.bas.commons.util.Types;
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.CharOuts.BCharOut;
-import net.bodz.bas.lang.ClassLocal;
-import net.bodz.bas.mda.a.MetaClass;
-import net.bodz.bas.types.util.Annotations;
-import net.bodz.bas.types.util.Strings;
-import net.bodz.bas.types.util.Types;
+import net.bodz.bas.text.util.Strings;
 import net.bodz.bios.util.Naming;
 
 public abstract class _Unit implements Unit {

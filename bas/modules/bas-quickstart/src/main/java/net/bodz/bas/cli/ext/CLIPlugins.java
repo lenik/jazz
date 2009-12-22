@@ -1,10 +1,10 @@
 package net.bodz.bas.cli.ext;
 
 import net.bodz.bas.cli.CLIException;
+import net.bodz.bas.commons.exceptions.OutOfDomainException;
 import net.bodz.bas.io.CharOut;
-import net.bodz.bas.lang.err.OutOfDomainException;
 import net.bodz.bas.text.locale.English;
-import net.bodz.bas.types.util.Strings;
+import net.bodz.bas.text.util.Strings;
 import net.bodz.bas.util.Plugin;
 import net.bodz.bas.util.PluginCategory;
 import net.bodz.bas.util.Plugins;

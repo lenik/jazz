@@ -1,6 +1,6 @@
 package net.bodz.bas.io;
 
-import static net.bodz.bas.types.util.Arrays2._;
+import static net.bodz.bas.commons.collection.util.Arrays2._;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.bodz.bas.types.util.Strings;
+import net.bodz.bas.text.util.Strings;
 
 import org.junit.Test;
 

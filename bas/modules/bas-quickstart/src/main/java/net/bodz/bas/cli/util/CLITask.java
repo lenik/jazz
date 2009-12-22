@@ -5,9 +5,9 @@ import java.util.List;
 
 import net.bodz.bas.cli.BasicCLI;
 import net.bodz.bas.cli.CLIException;
-import net.bodz.bas.lang.err.ParseException;
-import net.bodz.bas.lang.script.ScriptClass;
-import net.bodz.bas.lang.script.ScriptException;
+import net.bodz.bas.commons.exceptions.ParseException;
+import net.bodz.bas.commons.scripting.ScriptClass;
+import net.bodz.bas.commons.scripting.ScriptException;
 import net.bodz.bas.types.util.Empty;
 import net.bodz.bas.util.LogTerm;
 

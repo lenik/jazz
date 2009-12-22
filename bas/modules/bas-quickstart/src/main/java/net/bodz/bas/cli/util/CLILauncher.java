@@ -1,8 +1,8 @@
 package net.bodz.bas.cli.util;
 
 import net.bodz.bas.cli.BasicCLI;
-import net.bodz.bas.lang.util.Reflects;
-import net.bodz.bas.types.util.ArrayOps;
+import net.bodz.bas.commons.collection.util.ArrayOps;
+import net.bodz.bas.commons.scripting.Reflects;
 
 public class CLILauncher {
 

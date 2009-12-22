@@ -1,6 +1,6 @@
 package net.bodz.bios.units.text;
 
-import static net.bodz.bas.types.util.ArrayOps.Chars;
+import static net.bodz.bas.commons.collection.util.ArrayOps.Chars;
 
 import java.io.IOException;
 import java.nio.CharBuffer;

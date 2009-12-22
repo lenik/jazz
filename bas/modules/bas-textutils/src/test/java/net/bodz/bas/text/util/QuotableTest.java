@@ -1,6 +1,6 @@
 package net.bodz.bas.text.util;
 
-import static net.bodz.bas.types.util.Arrays2._;
+import static net.bodz.bas.commons.collection.util.Arrays2._;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 

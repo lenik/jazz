@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import net.bodz.bas.cli.a.Option;
-import net.bodz.bas.lang.script.ScriptClass;
-import net.bodz.bas.lang.script.Scripts;
+import net.bodz.bas.commons.scripting.ScriptClass;
+import net.bodz.bas.commons.scripting.Scripts;
 
 import org.junit.Test;
 

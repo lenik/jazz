@@ -10,7 +10,7 @@ import java.net.URL;
 import net.bodz.bas.io.FileResFolder;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.io.ResFolder;
-import net.bodz.bas.types.util.Strings;
+import net.bodz.bas.text.util.Strings;
 
 import org.junit.Test;
 

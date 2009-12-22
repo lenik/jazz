@@ -15,11 +15,11 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Map.Entry;
 
-import net.bodz.bas.lang.err.ParseException;
-import net.bodz.bas.lang.script.ScriptException;
+import net.bodz.bas.api.types.TypeParser;
+import net.bodz.bas.commons.exceptions.ParseException;
+import net.bodz.bas.commons.scripting.ScriptException;
+import net.bodz.bas.commons.typeparser.TypeParsers;
 import net.bodz.bas.nls.AppNLS;
-import net.bodz.bas.types.TypeParser;
-import net.bodz.bas.types.TypeParsers;
 
 class Util {
 

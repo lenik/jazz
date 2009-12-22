@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.bodz.bas.collection.comparators.Comparators;
+import net.bodz.bas.commons.collection.TextMap;
+import net.bodz.bas.commons.typealiases.TreeTextMap;
+import net.bodz.bas.commons.typealiases.TypeMap;
+import net.bodz.bas.commons.typealiases.TypeMap.HashTypeMap;
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.nls.AppNLS;
-import net.bodz.bas.types.TextMap;
-import net.bodz.bas.types.TreeTextMap;
-import net.bodz.bas.types.TypeMap;
-import net.bodz.bas.types.TypeMap.HashTypeMap;
-import net.bodz.bas.types.util.Comparators;
-import net.bodz.bas.types.util.Strings;
+import net.bodz.bas.text.util.Strings;
 
 public class ProcessResultStat {
 

@@ -2,11 +2,11 @@ package net.bodz.bas.ant;
 
 import java.io.File;
 
+import net.bodz.bas.commons.collection.TextMap;
+import net.bodz.bas.commons.exceptions.ParseException;
 import net.bodz.bas.io.CWD;
-import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.nls.AppNLS;
 import net.bodz.bas.snm.EclipseProject;
-import net.bodz.bas.types.TextMap;
 
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.FileSet;

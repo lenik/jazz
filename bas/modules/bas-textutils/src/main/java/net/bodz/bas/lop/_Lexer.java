@@ -7,8 +7,8 @@ import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.CharOuts.BCharOut;
 import net.bodz.bas.lop.util.XYPosition;
 import net.bodz.bas.lop.util.XYTellable;
+import net.bodz.bas.text.util.Strings;
 import net.bodz.bas.types.IndexMap;
-import net.bodz.bas.types.util.Strings;
 
 public abstract class _Lexer implements Lexer {
 

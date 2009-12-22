@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.bodz.bas.lang.RunnableThrows;
+import net.bodz.bas.commons.callback.Executable;
 
 /**
  * may throw exceptions in future:
@@ -119,7 +119,7 @@ public interface UserInterface {
      */
     int[] choices(String title, Object detail, List<?> candidates, int... initial);
 
-    int tryBlock(RunnableThrows<? extends Exception> runnable);
+    int tryBlock(Executable<? extends Exception> runnable);
 
     /**
      * @param maxRetry
@@ -130,7 +130,7 @@ public interface UserInterface {
      * @see TryBlock#IGNORED
      * @see TryBlock#CANCELED
      */
-    int tryBlock(RunnableThrows<? extends Exception> runnable, int maxRetry);
+    int tryBlock(Executable<? extends Exception> runnable, int maxRetry);
 
     // void showProgress(Runnable runnable);
 

@@ -1,8 +1,8 @@
 package net.bodz.bas.util;
 
-import net.bodz.bas.lang.Caller;
-import net.bodz.bas.types.PrefixMap;
-import net.bodz.bas.types.TypeHierMap;
+import net.bodz.bas.commons.caller.Caller;
+import net.bodz.bas.commons.collection.hierarchical.PrefixMap;
+import net.bodz.bas.commons.collection.hierarchical.TypeHierMap;
 
 public class LogTerms {
 

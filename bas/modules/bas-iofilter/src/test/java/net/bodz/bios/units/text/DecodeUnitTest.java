@@ -7,8 +7,8 @@ import java.nio.charset.Charset;
 import java.util.Collection;
 
 import net.bodz.bas.text.encodings.Encodings;
+import net.bodz.bas.text.util.Strings;
 import net.bodz.bas.types.util.Empty;
-import net.bodz.bas.types.util.Strings;
 import net.bodz.bios.units.SISOUnit;
 import net.bodz.bios.util.WhatIf;
 

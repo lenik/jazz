@@ -2,8 +2,8 @@ package net.bodz.bios.units;
 
 import java.io.IOException;
 
-import net.bodz.bas.lang.a.TypeNote;
-import net.bodz.bas.lang.err.OutOfDomainException;
+import net.bodz.bas.commons.annotations.TypeNote;
+import net.bodz.bas.commons.exceptions.OutOfDomainException;
 import net.bodz.bios.InPort;
 import net.bodz.bios.OutPort;
 import net.bodz.bios.Port;

@@ -4,19 +4,19 @@ import java.lang.reflect.AnnotatedElement;
 import java.util.Collection;
 import java.util.Map;
 
-import net.bodz.bas.cli.a.CheckBy;
+import net.bodz.bas.api.types.Checker;
+import net.bodz.bas.api.types.TypeParser;
+import net.bodz.bas.aspect.annotation.ParseBy;
+import net.bodz.bas.aspect.annotation.ValidateBy;
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.cli.a.OptionGroup;
-import net.bodz.bas.cli.a.ParseBy;
-import net.bodz.bas.lang.err.CheckException;
-import net.bodz.bas.lang.err.CreateException;
-import net.bodz.bas.lang.err.ParseException;
-import net.bodz.bas.lang.script.ScriptField;
+import net.bodz.bas.commons.exceptions.CheckException;
+import net.bodz.bas.commons.exceptions.CreateException;
+import net.bodz.bas.commons.exceptions.ParseException;
+import net.bodz.bas.commons.scripting.ScriptField;
+import net.bodz.bas.commons.util.Types;
 import net.bodz.bas.nls.AppNLS;
-import net.bodz.bas.types.Checker;
-import net.bodz.bas.types.TypeParser;
-import net.bodz.bas.types.util.Strings;
-import net.bodz.bas.types.util.Types;
+import net.bodz.bas.text.util.Strings;
 
 public abstract class _Option<T> implements ScriptField<T> {
 
@@ -95,7 +95,7 @@ public abstract class _Option<T> implements ScriptField<T> {
                 else
                     valparser = null;
 
-                CheckBy checkBy = elm.getAnnotation(CheckBy.class);
+                ValidateBy checkBy = elm.getAnnotation(ValidateBy.class);
                 Class<? extends Checker> check0 = null;
                 if (checkBy != null) {
                     check0 = checkBy.value();

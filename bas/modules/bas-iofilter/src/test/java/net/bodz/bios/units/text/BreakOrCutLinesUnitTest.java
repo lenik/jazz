@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.IOException;
 import java.util.Collection;
 
-import net.bodz.bas.types.util.Strings;
+import net.bodz.bas.text.util.Strings;
 import net.bodz.bios.util.WhatIf;
 
 import org.junit.Test;

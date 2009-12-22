@@ -4,9 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
 
+import net.bodz.bas.commons.collection.TextMap;
+import net.bodz.bas.commons.typealiases.HashTextMap;
 import net.bodz.bas.io.Files;
-import net.bodz.bas.types.HashTextMap;
-import net.bodz.bas.types.TextMap;
 
 public class EclipseWorkspace {
 

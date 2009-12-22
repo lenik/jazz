@@ -4,7 +4,7 @@ import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.lang.ClassLocal;
+import net.bodz.bas.commons.typealiases.ClassLocal;
 
 public abstract class JavaEnum implements Comparable<JavaEnum> {
 

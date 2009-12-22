@@ -3,8 +3,8 @@ package net.bodz.bas.cli.ext;
 import java.util.Map;
 
 import net.bodz.bas.cli.CLIException;
+import net.bodz.bas.commons.exceptions.ParseException;
 import net.bodz.bas.io.CharOut;
-import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.util.Plugin;
 
 /**

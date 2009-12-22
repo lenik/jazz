@@ -1,6 +1,6 @@
 package net.bodz.bas.ui;
 
-import net.bodz.bas.lang.ref.Var;
+import net.bodz.bas.commons.ref.Var;
 
 public interface Renderer {
 

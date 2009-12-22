@@ -1,7 +1,7 @@
 package net.bodz.bas.cli.util;
 
-import static net.bodz.bas.types.util.ArrayOps.Bytes;
-import static net.bodz.bas.types.util.Strings.qq;
+import static net.bodz.bas.commons.collection.util.ArrayOps.Bytes;
+import static net.bodz.bas.text.util.Strings.qq;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,11 +23,15 @@ import net.bodz.bas.a.Version;
 import net.bodz.bas.cli.BatchEditCLI;
 import net.bodz.bas.cli.EditResult;
 import net.bodz.bas.cli.a.Option;
+import net.bodz.bas.commons.caller.Caller;
+import net.bodz.bas.commons.collection.ArraySet;
+import net.bodz.bas.commons.collection.TextMap;
+import net.bodz.bas.commons.exceptions.IdentifiedException;
+import net.bodz.bas.commons.typealiases.HashTextMap;
+import net.bodz.bas.commons.util.Ns;
 import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.io.CharOuts.BCharOut;
-import net.bodz.bas.lang.Caller;
-import net.bodz.bas.lang.err.IdentifiedException;
 import net.bodz.bas.loader.DefaultBooter;
 import net.bodz.bas.loader.LoadException;
 import net.bodz.bas.loader.LoadUtil;
@@ -35,12 +39,8 @@ import net.bodz.bas.loader.TempClassLoader;
 import net.bodz.bas.loader.UCL;
 import net.bodz.bas.snm.SJLibLoader;
 import net.bodz.bas.text.util.Interps;
-import net.bodz.bas.types.ArraySet;
-import net.bodz.bas.types.HashTextMap;
-import net.bodz.bas.types.TextMap;
+import net.bodz.bas.text.util.Strings;
 import net.bodz.bas.types.util.Empty;
-import net.bodz.bas.types.util.Ns;
-import net.bodz.bas.types.util.Strings;
 
 @Doc("Generate program launcher for java applications")
 @ProgramName("mkbat")

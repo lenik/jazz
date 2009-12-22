@@ -1,7 +1,7 @@
 package net.bodz.bas.a;
 
-import net.bodz.bas.types.util.Dates;
-import net.bodz.bas.types.util.Strings;
+import net.bodz.bas.commons.util.Dates;
+import net.bodz.bas.text.util.Strings;
 
 public class VersionInfo implements Comparable<VersionInfo> {
 

@@ -6,10 +6,10 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bodz.bas.commons.exceptions.NotImplementedException;
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.term.Terminal;
 import net.bodz.bas.io.term._Terminal;
-import net.bodz.bas.lang.err.NotImplementedException;
 
 public class MultiplexedTerminal extends _Terminal {
 

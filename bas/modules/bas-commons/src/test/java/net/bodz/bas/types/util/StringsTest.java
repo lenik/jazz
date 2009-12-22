@@ -5,6 +5,8 @@ import static org.junit.Assert.assertEquals;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
+import net.bodz.bas.text.util.Strings;
+
 import org.junit.Test;
 
 public class StringsTest {

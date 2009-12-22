@@ -3,10 +3,10 @@ package net.bodz.bas.db.binding;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.bodz.bas.lang.script.ScriptClass;
-import net.bodz.bas.lang.script.ScriptException;
-import net.bodz.bas.lang.script.ScriptField;
-import net.bodz.bas.lang.script.Scripts;
+import net.bodz.bas.commons.scripting.ScriptClass;
+import net.bodz.bas.commons.scripting.ScriptException;
+import net.bodz.bas.commons.scripting.ScriptField;
+import net.bodz.bas.commons.scripting.Scripts;
 
 public class MapBinding {
 

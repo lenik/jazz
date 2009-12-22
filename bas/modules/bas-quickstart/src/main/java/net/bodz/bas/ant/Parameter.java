@@ -1,9 +1,9 @@
 package net.bodz.bas.ant;
 
-import net.bodz.bas.lang.err.CreateException;
-import net.bodz.bas.lang.err.ParseException;
-import net.bodz.bas.types.TypeParser;
-import net.bodz.bas.types.TypeParsers;
+import net.bodz.bas.api.types.TypeParser;
+import net.bodz.bas.commons.exceptions.CreateException;
+import net.bodz.bas.commons.exceptions.ParseException;
+import net.bodz.bas.commons.typeparser.TypeParsers;
 
 /**
  * Utility class to help implement a custom tag in ant-xml.

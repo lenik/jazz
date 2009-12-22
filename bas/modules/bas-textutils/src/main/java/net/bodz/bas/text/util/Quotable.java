@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import net.bodz.bas.types.util.Strings;
 
 public class Quotable extends PatternProcessor {
 

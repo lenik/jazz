@@ -1,6 +1,6 @@
 package net.bodz.bios.units.text;
 
-import static net.bodz.bas.types.util.ArrayOps.Bytes;
+import static net.bodz.bas.commons.collection.util.ArrayOps.Bytes;
 
 import java.io.IOException;
 

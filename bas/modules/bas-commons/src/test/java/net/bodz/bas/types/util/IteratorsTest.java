@@ -6,6 +6,10 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import net.bodz.bas.commons.iterators.Iterates;
+import net.bodz.bas.commons.iterators.Iterators;
+import net.bodz.bas.commons.iterators.PrefetchedIterator;
+
 import org.junit.Test;
 
 public class IteratorsTest {

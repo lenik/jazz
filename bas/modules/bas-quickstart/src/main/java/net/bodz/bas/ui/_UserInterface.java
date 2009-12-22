@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.bodz.bas.lang.RunnableThrows;
-import net.bodz.bas.types.IndexMap;
+import net.bodz.bas.commons.callback.Executable;
+import net.bodz.bas.commons.collection.fast.IndexMap;
 
 public abstract class _UserInterface implements UserInterface {
 
@@ -103,16 +103,16 @@ public abstract class _UserInterface implements UserInterface {
         return unbox(choices);
     }
 
-    public int tryBlock(final RunnableThrows<? extends Exception> runnable) {
+    public int tryBlock(final Executable<? extends Exception> runnable) {
         return tryBlock(runnable, TryBlock.INFINITE);
     }
 
     @Override
-    public int tryBlock(final RunnableThrows<? extends Exception> runnable, int maxRetry) {
+    public int tryBlock(final Executable<? extends Exception> runnable, int maxRetry) {
         return new _TryBlock(this, maxRetry, false) {
             @Override
             protected void body() throws Exception {
-                runnable.run();
+                runnable.execute();
             }
         }._run();
     }

@@ -13,9 +13,9 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
+import net.bodz.bas.commons.exceptions.ParseException;
+import net.bodz.bas.commons.exceptions.UnexpectedException;
 import net.bodz.bas.io.Files;
-import net.bodz.bas.lang.err.ParseException;
-import net.bodz.bas.lang.err.UnexpectedException;
 import net.bodz.bas.xml.XMLs;
 
 import org.xml.sax.Attributes;

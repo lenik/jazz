@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import net.bodz.bas.cli.a.OptionGroup;
-import net.bodz.bas.lang.script.ScriptException;
+import net.bodz.bas.commons.scripting.ScriptException;
 
 public class PropertyOption<T> extends _Option<T> {
 

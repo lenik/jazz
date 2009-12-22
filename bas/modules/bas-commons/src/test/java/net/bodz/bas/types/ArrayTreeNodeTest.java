@@ -1,6 +1,9 @@
 package net.bodz.bas.types;
 
-import net.bodz.bas.types.util.Strings;
+import net.bodz.bas.commons.tree.ArrayTreeNode;
+import net.bodz.bas.commons.tree.TreeCallback;
+import net.bodz.bas.commons.tree.TreeNodes;
+import net.bodz.bas.text.util.Strings;
 
 import org.junit.Test;
 

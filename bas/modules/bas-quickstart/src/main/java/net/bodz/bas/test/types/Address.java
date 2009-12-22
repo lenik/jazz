@@ -1,7 +1,7 @@
 package net.bodz.bas.test.types;
 
+import net.bodz.bas.commons.util.Objects;
 import net.bodz.bas.nls.AppNLS;
-import net.bodz.bas.types.util.Objects;
 
 public class Address {
 

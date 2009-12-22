@@ -1,6 +1,7 @@
 package net.bodz.bas.lang.util;
 
 import net.bodz.bas.io.CharOuts;
+import net.bodz.bas.loader.Classpath;
 
 import org.junit.Test;
 

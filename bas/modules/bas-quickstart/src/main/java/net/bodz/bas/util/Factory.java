@@ -6,11 +6,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 
-import net.bodz.bas.lang.Caller;
-import net.bodz.bas.lang.err.CreateException;
-import net.bodz.bas.lang.err.DecodeException;
+import net.bodz.bas.commons.caller.Caller;
+import net.bodz.bas.commons.exceptions.CreateException;
+import net.bodz.bas.commons.exceptions.DecodeException;
+import net.bodz.bas.commons.math.CompatMethods;
 import net.bodz.bas.nls.AppNLS;
-import net.bodz.bas.types.util.CompatMethods;
 import net.bodz.bas.xml.XMLs;
 
 public interface Factory<T> {

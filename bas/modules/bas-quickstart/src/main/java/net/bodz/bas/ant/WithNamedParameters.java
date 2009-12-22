@@ -1,9 +1,9 @@
 package net.bodz.bas.ant;
 
-import net.bodz.bas.lang.err.ParseException;
+import net.bodz.bas.commons.collection.TextMap;
+import net.bodz.bas.commons.exceptions.ParseException;
+import net.bodz.bas.commons.typealiases.TreeTextMap;
 import net.bodz.bas.nls.AppNLS;
-import net.bodz.bas.types.TextMap;
-import net.bodz.bas.types.TreeTextMap;
 
 public class WithNamedParameters {
 

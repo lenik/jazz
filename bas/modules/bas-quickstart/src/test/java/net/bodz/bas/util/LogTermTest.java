@@ -3,11 +3,11 @@ package net.bodz.bas.util;
 import java.io.IOException;
 import java.net.URL;
 
+import net.bodz.bas.commons.collection.TextMap;
+import net.bodz.bas.commons.typealiases.HashTextMap;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.text.util.Interps;
-import net.bodz.bas.types.HashTextMap;
-import net.bodz.bas.types.TextMap;
-import net.bodz.bas.types.util.Strings;
+import net.bodz.bas.text.util.Strings;
 
 public class LogTermTest {
 

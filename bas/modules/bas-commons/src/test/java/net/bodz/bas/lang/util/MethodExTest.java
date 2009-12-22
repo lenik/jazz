@@ -1,8 +1,9 @@
 package net.bodz.bas.lang.util;
 
-import static net.bodz.bas.lang.util.Members.publicMethods;
+import static net.bodz.bas.commons.scripting.util.Members.publicMethods;
 import static org.junit.Assert.assertEquals;
-import net.bodz.bas.lang.err.OutOfDomainException;
+import net.bodz.bas.commons.exceptions.OutOfDomainException;
+import net.bodz.bas.commons.scripting.util.MethodEx;
 
 import org.junit.Test;
 
