@@ -9,7 +9,7 @@ import java.nio.charset.Charset;
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.WriterOutputStream;
 import net.bodz.bas.lang.err.UnexpectedException;
-import net.bodz.bas.types.util.Strings;
+import net.bodz.bas.text.util.Strings;
 
 public abstract class _Terminal implements Terminal {
 

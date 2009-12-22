@@ -1,7 +1,9 @@
 package net.bodz.bas.lang.util;
 
 import static org.junit.Assert.assertEquals;
-import net.bodz.bas.lang.err.IllegalUsageError;
+import net.bodz.bas.commons.exceptions.IllegalUsageError;
+import net.bodz.bas.commons.scripting.util.Members;
+import net.bodz.bas.commons.scripting.util.VarArgcMethod;
 
 import org.junit.Test;
 

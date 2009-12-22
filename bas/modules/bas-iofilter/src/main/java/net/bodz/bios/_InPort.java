@@ -2,11 +2,11 @@ package net.bodz.bios;
 
 import java.io.IOException;
 
-import net.bodz.bas.lang.ClassLocal;
-import net.bodz.bas.lang.err.OutOfDomainException;
-import net.bodz.bas.mda.a.MetaClass;
-import net.bodz.bas.types.util.Annotations;
-import net.bodz.bas.types.util.Types;
+import net.bodz.bas.commons.annotations.MetaClass;
+import net.bodz.bas.commons.exceptions.OutOfDomainException;
+import net.bodz.bas.commons.typealiases.ClassLocal;
+import net.bodz.bas.commons.util.Annotations;
+import net.bodz.bas.commons.util.Types;
 
 public abstract class _InPort extends _Port implements InPort, ReceiverEx {
 

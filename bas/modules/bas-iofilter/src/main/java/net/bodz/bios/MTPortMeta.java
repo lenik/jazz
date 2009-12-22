@@ -2,7 +2,7 @@ package net.bodz.bios;
 
 import java.util.Collection;
 
-import net.bodz.bas.types.TypeHierSet;
+import net.bodz.bas.commons.collection.hierarchical.TypeHierSet;
 
 /**
  * Multi-Type Port

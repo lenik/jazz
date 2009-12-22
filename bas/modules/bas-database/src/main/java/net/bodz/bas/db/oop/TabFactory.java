@@ -1,6 +1,6 @@
 package net.bodz.bas.db.oop;
 
-import net.bodz.bas.types.util.XIterator;
+import net.bodz.bas.commons.iterators.XIterator;
 
 public interface TabFactory<T> {
 

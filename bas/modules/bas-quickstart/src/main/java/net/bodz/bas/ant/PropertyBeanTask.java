@@ -13,16 +13,16 @@ import java.util.Enumeration;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.bodz.bas.collection.IdentSet;
+import net.bodz.bas.commons.collection.hierarchical.PrefixSet;
+import net.bodz.bas.commons.collection.hierarchical.TypeHierSet;
+import net.bodz.bas.commons.exceptions.CreateException;
+import net.bodz.bas.commons.exceptions.IllegalUsageException;
+import net.bodz.bas.commons.exceptions.NotImplementedException;
+import net.bodz.bas.commons.exceptions.ParseException;
 import net.bodz.bas.io.CWD;
-import net.bodz.bas.lang.err.CreateException;
-import net.bodz.bas.lang.err.IllegalUsageException;
-import net.bodz.bas.lang.err.NotImplementedException;
-import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.nls.AppNLS;
-import net.bodz.bas.types.PrefixSet;
-import net.bodz.bas.types.TypeHierSet;
-import net.bodz.bas.types.util.IdentSet;
-import net.bodz.bas.types.util.Strings;
+import net.bodz.bas.text.util.Strings;
 import net.bodz.bas.util.LogTerm;
 
 import org.apache.tools.ant.BuildException;

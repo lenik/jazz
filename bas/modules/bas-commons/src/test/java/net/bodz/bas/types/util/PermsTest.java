@@ -1,6 +1,6 @@
 package net.bodz.bas.types.util;
 
-import static net.bodz.bas.types.util.ArrayOps.Ints;
+import static net.bodz.bas.commons.collection.util.ArrayOps.Ints;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -10,11 +10,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.bodz.bas.api.functor.Proc1;
+import net.bodz.bas.commons.math.IntMath;
 import net.bodz.bas.io.term.Terminal;
-import net.bodz.bas.lang.IntMath;
-import net.bodz.bas.lang2.Proc1;
 import net.bodz.bas.util.LogTerm;
 import net.bodz.bas.util.LogTerms;
+import net.bodz.mia.perms.Perms;
 
 import org.junit.Test;
 

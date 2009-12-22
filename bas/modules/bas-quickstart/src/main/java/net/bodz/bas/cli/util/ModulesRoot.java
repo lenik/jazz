@@ -4,9 +4,9 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.Map;
 
+import net.bodz.bas.commons.typealiases.HashTextMap;
 import net.bodz.bas.io.Files;
 import net.bodz.bas.sys.SystemInfo;
-import net.bodz.bas.types.HashTextMap;
 
 public class ModulesRoot {
 

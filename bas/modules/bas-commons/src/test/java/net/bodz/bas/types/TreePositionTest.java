@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.bodz.bas.commons.collection.LinkedStack;
+import net.bodz.bas.commons.tree.ArrayTreeNode;
+import net.bodz.bas.commons.tree.TreePosition;
+
 import org.junit.Test;
 
 /**

@@ -3,7 +3,7 @@ package net.bodz.bas.types;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.types.util.Objects;
+import net.bodz.bas.commons.util.Objects;
 
 /**
  * @test {@link SimpleRequestTest}

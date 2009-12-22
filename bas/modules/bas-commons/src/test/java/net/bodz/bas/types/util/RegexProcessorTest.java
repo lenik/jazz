@@ -4,7 +4,9 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.regex.Pattern;
 
-import net.bodz.bas.types.util.RegexProcessor.SpaceOverride;
+import net.bodz.bas.text.util.RegexProcessor;
+import net.bodz.bas.text.util.Strings;
+import net.bodz.bas.text.util.RegexProcessor.SpaceOverride;
 
 import org.junit.Test;
 

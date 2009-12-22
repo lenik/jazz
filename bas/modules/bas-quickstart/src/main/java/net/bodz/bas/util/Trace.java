@@ -11,13 +11,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import net.bodz.bas.collection.IdentSet;
+import net.bodz.bas.commons.typealiases.TreeTextMap;
+import net.bodz.bas.commons.typealiases.TypeMap;
+import net.bodz.bas.commons.typealiases.TypeMap.HashTypeMap;
 import net.bodz.bas.nls.AppNLS;
 import net.bodz.bas.sys.SystemProperties;
-import net.bodz.bas.types.TreeTextMap;
-import net.bodz.bas.types.TypeMap;
-import net.bodz.bas.types.TypeMap.HashTypeMap;
-import net.bodz.bas.types.util.IdentSet;
-import net.bodz.bas.types.util.Strings;
+import net.bodz.bas.text.util.Strings;
 
 /**
  * @test {@link TraceTest}

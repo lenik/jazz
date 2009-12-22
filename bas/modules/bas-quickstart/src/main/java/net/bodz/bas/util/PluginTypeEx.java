@@ -1,7 +1,7 @@
 package net.bodz.bas.util;
 
 import net.bodz.bas.a.ClassInfo;
-import net.bodz.bas.lang.err.CreateException;
+import net.bodz.bas.commons.exceptions.CreateException;
 import net.bodz.bas.nls.AppNLS;
 
 /**

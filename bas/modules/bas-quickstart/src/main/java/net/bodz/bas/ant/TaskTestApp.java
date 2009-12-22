@@ -4,10 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
+import net.bodz.bas.commons.caller.Caller;
+import net.bodz.bas.commons.exceptions.IllegalUsageError;
+import net.bodz.bas.commons.exceptions.IllegalUsageException;
 import net.bodz.bas.io.Files;
-import net.bodz.bas.lang.Caller;
-import net.bodz.bas.lang.err.IllegalUsageError;
-import net.bodz.bas.lang.err.IllegalUsageException;
 import net.bodz.bas.nls.AppNLS;
 import net.bodz.bas.snm.JarLocations;
 

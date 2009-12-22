@@ -3,7 +3,7 @@ package net.bodz.bas.lop;
 import net.bodz.bas.io.CharOuts.BCharOut;
 import net.bodz.bas.lop.util.XYPosition;
 import net.bodz.bas.lop.util.XYTellable;
-import net.bodz.bas.types.util.Strings;
+import net.bodz.bas.text.util.Strings;
 
 public abstract class _Token implements Token {
 

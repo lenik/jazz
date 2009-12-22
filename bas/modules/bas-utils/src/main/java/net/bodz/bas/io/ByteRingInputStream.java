@@ -3,7 +3,7 @@ package net.bodz.bas.io;
 import java.io.IOException;
 import java.io.InputStream;
 
-import net.bodz.bas.types.buf.ByteRing;
+import net.bodz.bas.commons.buffer.ByteRing;
 
 public class ByteRingInputStream extends InputStream {
 

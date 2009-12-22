@@ -4,6 +4,9 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.Iterator;
 
+import net.bodz.bas.commons.collection.SortedArrayList;
+import net.bodz.bas.commons.collection.SortedList;
+
 import org.junit.Test;
 
 public class SortedListTest {

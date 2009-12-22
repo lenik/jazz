@@ -4,7 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
-import net.bodz.bas.types.util.Strings;
+import net.bodz.bas.commons.collection.hierarchical.TypeHierSet;
+import net.bodz.bas.text.util.Strings;
 
 import org.junit.Test;
 

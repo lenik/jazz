@@ -10,6 +10,7 @@ import net.bodz.bas.api.exceptions.CreateException;
 import net.bodz.bas.api.exceptions.NegotiationException;
 import net.bodz.bas.api.exceptions.ParseException;
 import net.bodz.bas.api.types.Negotiation;
+import net.bodz.bas.typeinfo.util.SelfDescribedTypeInfo;
 
 @ThreadUnsafe
 public abstract class CommonTypeInfo<T>

@@ -2,6 +2,8 @@ package net.bodz.bas.lang.err;
 
 import static org.junit.Assert.assertEquals;
 
+import net.bodz.bas.commons.exception.Err;
+
 import org.junit.Test;
 
 public class ErrTest {

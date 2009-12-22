@@ -8,15 +8,15 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import net.bodz.bas.commons.collection.TextMap;
+import net.bodz.bas.commons.exceptions.IllegalUsageException;
+import net.bodz.bas.commons.exceptions.NotImplementedException;
+import net.bodz.bas.commons.exceptions.ParseException;
+import net.bodz.bas.commons.typealiases.HashTextMap;
+import net.bodz.bas.commons.typeparser.TypeParsers;
 import net.bodz.bas.io.LineReader;
-import net.bodz.bas.lang.err.IllegalUsageException;
-import net.bodz.bas.lang.err.NotImplementedException;
-import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.nls.AppNLS;
-import net.bodz.bas.types.HashTextMap;
-import net.bodz.bas.types.TextMap;
-import net.bodz.bas.types.TypeParsers;
-import net.bodz.bas.types.util.Strings;
+import net.bodz.bas.text.util.Strings;
 
 /**
  * @test {@link ConsoleInteractionTest}

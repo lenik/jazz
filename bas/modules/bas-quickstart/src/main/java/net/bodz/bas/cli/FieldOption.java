@@ -3,7 +3,7 @@ package net.bodz.bas.cli;
 import java.lang.reflect.Field;
 
 import net.bodz.bas.cli.a.OptionGroup;
-import net.bodz.bas.lang.script.ScriptException;
+import net.bodz.bas.commons.scripting.ScriptException;
 
 public class FieldOption<T> extends _Option<T> {
 

@@ -2,7 +2,7 @@ package net.bodz.bas.nls;
 
 import java.util.ResourceBundle;
 
-import net.bodz.bas.text.locale.NLSAccessor;
+import net.bodz.bas.collection.NLSAccessor;
 
 public class FPNLS extends NLSAccessor {
 

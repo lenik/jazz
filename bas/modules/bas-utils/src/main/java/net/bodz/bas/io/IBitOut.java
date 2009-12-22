@@ -2,7 +2,7 @@ package net.bodz.bas.io;
 
 import java.io.IOException;
 
-import net.bodz.bas.types.IBits;
+import net.bodz.bas.commons.math.IBits;
 
 public interface IBitOut {
 

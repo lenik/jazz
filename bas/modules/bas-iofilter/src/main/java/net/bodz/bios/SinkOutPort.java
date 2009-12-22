@@ -2,7 +2,7 @@ package net.bodz.bios;
 
 import java.io.IOException;
 
-import net.bodz.bas.lang.err.IllegalUsageError;
+import net.bodz.bas.commons.exceptions.IllegalUsageError;
 
 public class SinkOutPort extends _OutPort {
 

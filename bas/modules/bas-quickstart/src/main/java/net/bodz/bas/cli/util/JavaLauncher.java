@@ -1,6 +1,6 @@
 package net.bodz.bas.cli.util;
 
-import static net.bodz.bas.types.util.ArrayOps.Strings;
+import static net.bodz.bas.commons.collection.util.ArrayOps.Strings;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
@@ -12,13 +12,13 @@ import java.nio.charset.Charset;
 
 import net.bodz.bas.a.BootInfo;
 import net.bodz.bas.a.BootProc;
+import net.bodz.bas.commons.callback.Executable;
+import net.bodz.bas.commons.caller.Caller;
+import net.bodz.bas.commons.controlflow.Control;
+import net.bodz.bas.commons.controlflow.ControlExit;
+import net.bodz.bas.commons.exceptions.OutOfDomainException;
 import net.bodz.bas.io.CharOuts;
-import net.bodz.bas.lang.Caller;
-import net.bodz.bas.lang.Control;
-import net.bodz.bas.lang.ControlExit;
-import net.bodz.bas.lang.RunnableThrows;
-import net.bodz.bas.lang.err.OutOfDomainException;
-import net.bodz.bas.lang.util.Classpath;
+import net.bodz.bas.loader.Classpath;
 import net.bodz.bas.loader.DefaultBooter;
 import net.bodz.bas.loader.LoadUtil;
 import net.bodz.bas.loader.UCL;
@@ -93,9 +93,9 @@ public abstract class JavaLauncher implements Launcher {
                 origErr = System.err;
                 System.setErr(redirectErr);
             }
-            RunnableThrows<Exception> doMain = new RunnableThrows<Exception>() {
+            Executable<Exception> doMain = new Executable<Exception>() {
                 @Override
-                public void run() throws Exception {
+                public void execute() throws Exception {
                     try {
                         // (SecurityControl isnot-a Control)
                         Control.invoke(main, null, (Object) args);

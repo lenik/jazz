@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
-import net.bodz.bas.types.util.Comparators;
-import net.bodz.bas.types.util.Strings;
+import net.bodz.bas.collection.comparators.Comparators;
+import net.bodz.bas.text.util.Strings;
 
 import org.junit.Test;
 

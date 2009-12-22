@@ -2,28 +2,27 @@ package net.bodz.bas.types;
 
 import java.io.File;
 import java.lang.reflect.AnnotatedElement;
+import java.nio.file.Files;
 import java.util.regex.Pattern;
 
-import net.bodz.bas.cli.a.CheckBy;
-import net.bodz.bas.io.Files;
-import net.bodz.bas.lang.err.CheckException;
-import net.bodz.bas.lang.err.CheckFailure;
-import net.bodz.bas.lang.err.CreateException;
+import net.bodz.bas.api.exceptions.CheckFailure;
+import net.bodz.bas.api.exceptions.CreateException;
+import net.bodz.bas.commons.util.Types;
 import net.bodz.bas.nls.TypesNLS;
-import net.bodz.bas.types.util.Types;
+import net.bodz.bas.typeinfo.ValidateException;
 
 public class Checks {
 
-    public static Checker getChecker(AnnotatedElement elm) throws CreateException {
+    public static IValidator getChecker(AnnotatedElement elm) throws CreateException {
         CheckBy checkBy = elm.getAnnotation(CheckBy.class);
         return getChecker(checkBy);
     }
 
-    public static Checker getChecker(CheckBy checkBy) throws CreateException {
+    public static IValidator getChecker(CheckBy checkBy) throws CreateException {
         if (checkBy == null)
             return null;
-        Class<? extends Checker> checkerClass = checkBy.value();
-        if (checkerClass == Checker.class)
+        Class<? extends IValidator> checkerClass = checkBy.value();
+        if (checkerClass == IValidator.class)
             return null;
         String param = checkBy.param();
         if (param.isEmpty())
@@ -34,21 +33,21 @@ public class Checks {
             return Types.getClassInstance(checkerClass, param);
     }
 
-    public static void setOnlyOne(Object... args) throws CheckException {
+    public static void setOnlyOne(Object... args) throws ValidateException {
         int last = -1;
         for (int i = 0; i < args.length; i++) {
             if (args[i] != null) {
                 if (last != -1)
-                    throw new CheckException(TypesNLS.getString("Checks.0") + last //$NON-NLS-1$
+                    throw new ValidateException(TypesNLS.getString("Checks.0") + last //$NON-NLS-1$
                             + TypesNLS.getString("Checks.1") + i); //$NON-NLS-1$
                 last = i;
             }
         }
         if (last == -1)
-            throw new CheckException(TypesNLS.getString("Checks.2")); //$NON-NLS-1$
+            throw new ValidateException(TypesNLS.getString("Checks.2")); //$NON-NLS-1$
     }
 
-    public static class Regex implements Checker {
+    public static class Regex implements IValidator {
 
         private final Pattern pattern;
 
@@ -66,7 +65,7 @@ public class Checks {
 
     }
 
-    public static class FileAccess implements Checker {
+    public static class FileAccess implements IValidator {
 
         public static final int READ = 1;
         public static final int WRITE = 2;

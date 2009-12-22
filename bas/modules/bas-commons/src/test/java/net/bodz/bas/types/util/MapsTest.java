@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.bodz.bas.commons.collection.util.Maps;
+
 import org.junit.Test;
 
 public class MapsTest {

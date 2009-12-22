@@ -1,7 +1,6 @@
 package net.bodz.bas.text.util;
 
 import static org.junit.Assert.assertEquals;
-import net.bodz.bas.types.util.Strings;
 
 import org.junit.Test;
 

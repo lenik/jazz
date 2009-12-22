@@ -1,11 +1,11 @@
 package net.bodz.bios.util;
 
-import static net.bodz.bas.lang.util.Members.publicMethods;
+import static net.bodz.bas.commons.scripting.util.Members.publicMethods;
 
 import java.io.IOException;
 
-import net.bodz.bas.lang.ClassLocal;
-import net.bodz.bas.lang.util.MethodEx;
+import net.bodz.bas.commons.scripting.util.MethodEx;
+import net.bodz.bas.commons.typealiases.ClassLocal;
 import net.bodz.bios.ReceiverEx;
 
 @SuppressWarnings("deprecation")

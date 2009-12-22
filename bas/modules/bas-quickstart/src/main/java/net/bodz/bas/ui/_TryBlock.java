@@ -1,6 +1,6 @@
 package net.bodz.bas.ui;
 
-import net.bodz.bas.lang.err.UnexpectedException;
+import net.bodz.bas.commons.exceptions.UnexpectedException;
 
 public abstract class _TryBlock extends TryBlock {
 

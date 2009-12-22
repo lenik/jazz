@@ -4,7 +4,9 @@ import static org.junit.Assert.assertArrayEquals;
 
 import java.util.Arrays;
 
-import net.bodz.bas.lang2.Proc1;
+import net.bodz.bas.api.functor.Proc1;
+import net.bodz.bas.collection.comparators.Comparators;
+import net.bodz.mia.perms.Perms;
 
 import org.junit.Test;
 

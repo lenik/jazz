@@ -10,6 +10,8 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import net.bodz.bas.commons.util.Types;
+
 import org.junit.Test;
 
 public class TypesTest {

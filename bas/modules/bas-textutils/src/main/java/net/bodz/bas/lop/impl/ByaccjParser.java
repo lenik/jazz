@@ -3,9 +3,9 @@ package net.bodz.bas.lop.impl;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import net.bodz.bas.commons.scripting.Reflects;
 import net.bodz.bas.lang.a.ReflectField;
 import net.bodz.bas.lang.a.ReflectMethod;
-import net.bodz.bas.lang.util.Reflects;
 import net.bodz.bas.lop._Parser;
 
 /**

@@ -1,6 +1,6 @@
 package net.bodz.bas.types.util;
 
-import static net.bodz.bas.types.util.ArrayOps.Ints;
+import static net.bodz.bas.commons.collection.util.ArrayOps.Ints;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 

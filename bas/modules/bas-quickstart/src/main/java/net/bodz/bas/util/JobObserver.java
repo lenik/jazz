@@ -1,6 +1,6 @@
 package net.bodz.bas.util;
 
-import net.bodz.bas.lang.RecoverableExceptionListener;
+import net.bodz.bas.commons.exception.RecoverableExceptionListener;
 
 public abstract class JobObserver implements RecoverableExceptionListener, StatusChangeListener,
         ProgressChangeListener, DurationChangeListener {

@@ -7,10 +7,8 @@ import net.bodz.bas.api.exceptions.UnsupportedNegotiationException;
 import net.bodz.bas.api.types.FinalNegotiation;
 import net.bodz.bas.api.types.Negotiation;
 import net.bodz.bas.api.types.NegotiationParameter;
-import net.bodz.bas.typeinfo.Parser;
-import net.bodz.bas.typeinfo.SelfDescribedTypeInfo;
-import net.bodz.bas.typeinfo.TypeInfo;
-import net.bodz.bas.typeinfo.TypeInfoUtil;
+import net.bodz.bas.typeinfo.util.SelfDescribedTypeInfo;
+import net.bodz.bas.typeinfo.util.TypeInfoUtil;
 
 import org.junit.Test;
 
@@ -103,7 +101,7 @@ public class TypeInfoDemoTest {
         }
     }
 
-    static TypeInfo postAddressType = (AddressTypeInfo) TypeInfoUtil.getTypeInfo(Address.class);
+    static TypeInfo postAddressType = (AddressTypeInfo) TypeInfoUtil.findTypeInfo(Address.class);
     static TypeInfo nonpostAddressType = new AddressTypeInfo(false);
 
     @Test
@@ -141,4 +139,5 @@ public class TypeInfoDemoTest {
         Address address = (Address) nonpostAddressType.query(Parser.class).parse("cn:310000:somewhere", negotiation);
         assertEquals("China:3100:somewhere", address.toString());
     }
+
 }

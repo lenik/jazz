@@ -5,6 +5,8 @@ import static org.junit.Assert.assertEquals;
 import java.text.ParseException;
 import java.util.Date;
 
+import net.bodz.bas.commons.util.Dates;
+
 import org.junit.Test;
 
 public class DatesTest {

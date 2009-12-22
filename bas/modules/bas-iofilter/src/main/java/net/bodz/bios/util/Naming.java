@@ -1,6 +1,6 @@
 package net.bodz.bios.util;
 
-import net.bodz.bas.types.util.Strings;
+import net.bodz.bas.text.util.Strings;
 import net.bodz.bios.Port;
 import net.bodz.bios.Unit;
 

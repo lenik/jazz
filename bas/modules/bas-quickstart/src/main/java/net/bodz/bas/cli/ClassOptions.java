@@ -18,13 +18,13 @@ import java.util.Map.Entry;
 
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.cli.a.OptionGroup;
-import net.bodz.bas.lang.err.ParseException;
-import net.bodz.bas.lang.script.ScriptException;
+import net.bodz.bas.commons.collection.hierarchical.PrefixMap;
+import net.bodz.bas.commons.collection.util.Collections2;
+import net.bodz.bas.commons.exceptions.ParseException;
+import net.bodz.bas.commons.pojos.Pair;
+import net.bodz.bas.commons.scripting.ScriptException;
+import net.bodz.bas.commons.util.Types;
 import net.bodz.bas.nls.AppNLS;
-import net.bodz.bas.types.Pair;
-import net.bodz.bas.types.PrefixMap;
-import net.bodz.bas.types.util.Collections2;
-import net.bodz.bas.types.util.Types;
 
 public class ClassOptions<CT> {
 
