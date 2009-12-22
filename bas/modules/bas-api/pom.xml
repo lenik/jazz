@@ -4,7 +4,7 @@
 	<parent>
 		<artifactId>bas-modules</artifactId>
 		<groupId>net.bodz.bas</groupId>
-		<version>0.0.2-SNAPSHOT</version>
+		<version>0.0.1</version>
 	</parent>
 	<artifactId>bas-api</artifactId>
 	<version>0.0.2-SNAPSHOT</version>

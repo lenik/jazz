@@ -3,7 +3,7 @@
 	<parent>
 		<groupId>net.bodz.bas</groupId>
 		<artifactId>bas-natives</artifactId>
-		<version>0.0.2-SNAPSHOT</version>
+		<version>0.0.1</version>
 	</parent>
 	<artifactId>bas-natives-win32</artifactId>
 	<packaging>jar</packaging>

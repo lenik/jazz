@@ -15,31 +15,31 @@
 				<groupId>net.bodz.bas</groupId>
 				<artifactId>bas-proxy</artifactId>
 				<type>pom</type>
-				<version>0.0.2-SNAPSHOT</version>
+				<version>0.0.1</version>
 			</dependency>
 			<dependency>
 				<groupId>net.bodz.bas</groupId>
 				<artifactId>bas-proxy-java-util</artifactId>
 				<type>jar</type>
-				<version>0.0.2-SNAPSHOT</version>
+				<version>0.0.1</version>
 			</dependency>
 			<dependency>
 				<groupId>net.bodz.bas</groupId>
 				<artifactId>bas-proxy-java-security</artifactId>
 				<type>jar</type>
-				<version>0.0.2-SNAPSHOT</version>
+				<version>0.0.1</version>
 			</dependency>
 			<dependency>
 				<groupId>net.bodz.bas</groupId>
 				<artifactId>bas-natives</artifactId>
 				<type>pom</type>
-				<version>0.0.2-SNAPSHOT</version>
+				<version>0.0.1</version>
 			</dependency>
 			<dependency>
 				<groupId>net.bodz.bas</groupId>
 				<artifactId>bas-api</artifactId>
 				<type>jar</type>
-				<version>0.0.2-SNAPSHOT</version>
+				<version>0.0.1</version>
 			</dependency>
 			<dependency>
 				<groupId>net.bodz.bas</groupId>
