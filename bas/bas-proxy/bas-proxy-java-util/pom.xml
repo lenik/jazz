@@ -4,9 +4,9 @@
 	<parent>
 		<groupId>net.bodz.bas</groupId>
 		<artifactId>bas-proxy</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>0.0.1</version>
 	</parent>
 	<artifactId>bas-proxy-java-util</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>BAS :: Proxy :: java.util</name>
 </project>
