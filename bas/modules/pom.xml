@@ -8,26 +8,25 @@
 	</parent>
 	<artifactId>bas-modules</artifactId>
 	<packaging>pom</packaging>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<modules>
-		<module>bas-c1</module>
-		<module>bas-c2</module>
-		<module>bas-collection</module>
-		<module>bas-database</module>
-		<module>bas-fsm</module>
-		<module>bas-i18n</module>
+		<module>bas-commons</module>
+		<module>bas-utils</module>
+		<module>bas-textutils</module>
 		<module>bas-iofilter</module>
-		<module>bas-jvmhack</module>
-		<module>bas-l10n</module>
-		<module>bas-loader</module>
-		<module>bas-memoryio</module>
-		<module>bas-natives</module>
+		<module>bas-database</module>
 		<module>bas-quickstart</module>
 		<module>bas-router</module>
-		<module>bas-textutils</module>
+		<module>bas-memoryio</module>
+		<module>bas-jvmhack</module>
+		<module>bas-api</module>
+		<module>bas-i18n</module>
+		<module>bas-loader</module>
+		<module>bas-natives</module>
+		<module>bas-fsm</module>
+		<module>bas-collection</module>
 		<module>bas-typeinfo</module>
 		<module>bas-unitperf</module>
-		<module>bas-utils</module>
 	</modules>
 	<name>BAS Modules</name>
 </project>

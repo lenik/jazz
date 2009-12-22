@@ -7,7 +7,7 @@
 		<version>0.0.1</version>
 	</parent>
 	<artifactId>bas-api</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.1-SNAPSHOT</version>
 	<dependencies/>
 	<name>BAS :: Tags &amp; Annotations For API</name>
 </project>
