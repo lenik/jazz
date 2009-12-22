@@ -41,37 +41,39 @@ public class Kernel32Test {
         IntByReference pSerial = new IntByReference();
         IntByReference pMaxLen = new IntByReference();
         IntByReference pFlags = new IntByReference();
-        kernel32.GetVolumeInformationA("C:/", buf, buf.capacity(), pSerial,
-                pMaxLen, pFlags, fsbuf, fsbuf.capacity());
+        kernel32.GetVolumeInformationA("C:/", buf, buf.capacity(), pSerial, pMaxLen, pFlags, fsbuf, fsbuf.capacity());
         String volName = getAsciz(buf);
         String fsName = getAsciz(fsbuf);
-        System.out.println("Vol Name = " + volName);
-        System.out.println("FS Name = " + fsName);
+        output("Vol Name = " + volName);
+        output("FS Name = " + fsName);
         System.out.printf("Serial = %x\n", pSerial.getValue());
         // C80A-170D => c80a170d
-        System.out.println("Max complen = " + pMaxLen.getValue());
-        System.out.println("Flags = "
-                + Integer.toBinaryString(pFlags.getValue()));
-
+        output("Max complen = " + pMaxLen.getValue());
+        output("Flags = " + Integer.toBinaryString(pFlags.getValue()));
     }
 
     @Test
-    public void testPerformanceVars() throws InterruptedException {
+    public void testPerformanceVars()
+            throws InterruptedException {
         LongByReference pFrequence = new LongByReference();
         LongByReference pCount = new LongByReference();
         kernel32.QueryPerformanceFrequency(pFrequence);
         kernel32.QueryPerformanceCounter(pCount);
         long freq = pFrequence.getValue();
         long count = pCount.getValue();
-        System.out.println("Frequence: " + freq);
-        System.out.println("Counter: " + count);
+        output("Frequence: " + freq);
+        output("Counter: " + count);
         for (int i = 0; i < 10; i++) {
             kernel32.QueryPerformanceCounter(pCount);
             count = pCount.getValue();
             double systime = (double) count / freq;
-            System.out.println("System up time: " + systime);
-            Thread.sleep(100);
+            output("System up time: " + systime);
+            Thread.sleep(1);
         }
+    }
+
+    void output(String s) {
+        // System.out.println(s);
     }
 
 }
