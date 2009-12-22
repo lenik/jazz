@@ -11,27 +11,30 @@ import org.junit.Test;
 
 import com.sun.jna.Pointer;
 
-public class User32Test extends TestCase {
+public class User32Test
+        extends TestCase {
 
     @Test
-    public void testGetCursorPos() throws Exception {
+    public void testGetCursorPos()
+            throws Exception {
         POINT cursor = new POINT();
         for (int i = 0; i < 10; i++) {
             if (user32.GetCursorPos(cursor))
-                System.out.println("Got cursor position: " + cursor);
+                output("Got cursor position: " + cursor);
             else
-                System.out.println("Can't get cursor position.");
+                output("Can't get cursor position.");
             Thread.sleep(100);
         }
     }
 
     @Test
-    public void testGetWindow() throws Exception {
+    public void testGetWindow()
+            throws Exception {
         HWND active = user32.GetActiveWindow();
         HWND fg = user32.GetForegroundWindow();
 
-        System.out.println("Active window: " + active);
-        System.out.println("Foreground window: " + fg);
+        output("Active window: " + active);
+        output("Foreground window: " + fg);
     }
 
     @Test
@@ -41,19 +44,19 @@ public class User32Test extends TestCase {
             @Override
             public boolean callback(HWND hWnd, Pointer data) {
                 if (hWnd == null)
-                    System.out.println("null hwnd.");
+                    output("null hwnd.");
                 else {
-                    System.out.printf("window: %s\n", hWnd);
+                    output("window: %s" + hWnd);
                     user32.EnumChildWindows(hWnd, new WNDENUMPROC() {
 
                         @Override
                         public boolean callback(HWND hWnd, Pointer data) {
                             if (hWnd == null)
-                                System.out.println("    null child");
+                                output("    null child");
                             else {
                                 RECT rect = new RECT();
                                 user32.GetWindowRect(hWnd, rect);
-                                System.out.printf("    child: %s, rect=%s\n", hWnd, rect);
+                                output("    child: " + hWnd + " rect=" + rect);
                             }
                             return true;
                         }
@@ -64,6 +67,10 @@ public class User32Test extends TestCase {
             }
 
         }, null);
+    }
+
+    void output(String s) {
+        // System.out.println(s);
     }
 
 }
