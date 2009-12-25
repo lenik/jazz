@@ -12,7 +12,8 @@ import net.bodz.bas.typeinfo.TypeInfo;
  * implement {@link TypeInfo} singletons.
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.TYPE, ElementType.TYPE_PARAMETER, ElementType.FIELD, ElementType.PARAMETER })
+@Target( { ElementType.TYPE, ElementType.FIELD, ElementType.PARAMETER })
+// , ElementType.TYPE_PARAMETER for Java-7
 public @interface TypeInfoClass {
 
     Class<? extends TypeInfo> value();

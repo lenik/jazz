@@ -2,7 +2,10 @@ package net.bodz.bas.unitperf.matrix.mod32;
 
 import net.bodz.bas.unitperf.matrix.ArrayMatrix;
 
-public class ModMatrix
+/**
+ * TODO
+ */
+public abstract class ModMatrix
         extends ArrayMatrix {
 
     private static final long serialVersionUID = 1L;

@@ -34,7 +34,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>net.bodz.bas</groupId>
-			<artifactId>bas-api</artifactId>
+			<artifactId>bas-c1</artifactId>
 		</dependency>
 	</dependencies>
 	<modules>

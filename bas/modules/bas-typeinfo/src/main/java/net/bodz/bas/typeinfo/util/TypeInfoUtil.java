@@ -2,6 +2,7 @@ package net.bodz.bas.typeinfo.util;
 
 import java.lang.reflect.Method;
 
+import net.bodz.bas.api.exceptions.IllegalUsageException;
 import net.bodz.bas.typeinfo.InstanceStore;
 import net.bodz.bas.typeinfo.TypeInfo;
 
@@ -24,8 +25,8 @@ public class TypeInfoUtil {
             method.setAccessible(true);
             TypeInfo typeInfo = (TypeInfo) method.invoke(null);
             return typeInfo;
-        } catch (ReflectiveOperationException e) {
-            throw new RuntimeException(e.getMessage(), e);
+        } catch (Exception e) { // ReflectiveOperationException e) {
+            throw new IllegalUsageException("Can't access method getTypeInfo()", e);
         }
     }
 
@@ -35,8 +36,8 @@ public class TypeInfoUtil {
             try {
                 InstanceStore<?> instanceStore = storeClass.newInstance();
                 return instanceStore;
-            } catch (ReflectiveOperationException e) {
-                throw new RuntimeException(e.getMessage(), e);
+            } catch (Exception e) {
+                throw new IllegalUsageException("Can't create store instance of: " + storeClass, e);
             }
         } else {
             TypeInfo typeInfo = TypeInfoUtil.findTypeInfo(type);
