@@ -9,15 +9,6 @@
 	<artifactId>bas-incubator</artifactId>
 	<packaging>pom</packaging>
 	<version>0.0.2-SNAPSHOT</version>
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>net.bodz.bas</groupId>
-				<artifactId>bas-incubator-posutil</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 	<modules>
 		<module>bas-incubator-posutil</module>
 	</modules>

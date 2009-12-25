@@ -12,7 +12,8 @@
 		<dependency>
 			<groupId>net.bodz.bas</groupId>
 			<artifactId>bas-c1</artifactId>
+			<version>0.0.2-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
-	<name>BAS :: Incubator :: POS Utilities (Fragments of pre-java-implementation)</name>
+	<name>BAS :: Incubator :: POS Utilities (Pre-Impl)</name>
 </project>
