@@ -1,7 +1,7 @@
 package net.bodz.bas.exceptions;
 
-import net.bodz.bas.module.ModuleInfo;
-import net.bodz.bas.nls_2.NLS;
+import net.bodz.bas.i18n.nls_2.NLS;
+import net.bodz.bas.lang.ModuleInfo;
 
 public class IllegalArgumentTypeException
         extends IllegalArgumentException {

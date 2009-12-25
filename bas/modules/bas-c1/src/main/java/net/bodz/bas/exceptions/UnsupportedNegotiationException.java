@@ -1,6 +1,7 @@
 package net.bodz.bas.exceptions;
 
-import net.bodz.bas.oo.NegotiationParameter;
+import net.bodz.bas.lang.NegotiationException;
+import net.bodz.bas.lang.NegotiationParameter;
 
 public class UnsupportedNegotiationException
         extends NegotiationException {
