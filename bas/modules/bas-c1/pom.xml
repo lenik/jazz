@@ -11,8 +11,8 @@
 	<dependencies>
 		<dependency>
 			<groupId>net.bodz.bas</groupId>
-			<artifactId>bas-i18n</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<artifactId>bas-proxy-java-util</artifactId>
+			<version>0.0.2-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 	<name>BAS :: Commons Layer 1</name>
