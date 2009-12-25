@@ -13,6 +13,7 @@
 		<dependency>
 			<groupId>net.bodz.bas</groupId>
 			<artifactId>bas-i18n</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 	<modules>
