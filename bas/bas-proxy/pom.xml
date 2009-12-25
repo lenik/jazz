@@ -4,42 +4,21 @@
 	<parent>
 		<groupId>net.bodz.bas</groupId>
 		<artifactId>bas</artifactId>
-		<version>0.0.1</version>
+		<version>0.0.2-SNAPSHOT</version>
 	</parent>
 	<artifactId>bas-proxy</artifactId>
 	<packaging>pom</packaging>
 	<version>0.0.2-SNAPSHOT</version>
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>net.bodz.bas</groupId>
-				<artifactId>bas-proxy</artifactId>
-				<type>pom</type>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>net.bodz.bas</groupId>
-				<artifactId>bas-proxy-java-util</artifactId>
-				<type>jar</type>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>net.bodz.bas</groupId>
-				<artifactId>bas-proxy-java-security</artifactId>
-				<type>jar</type>
-				<version>${project.version}</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 	<dependencies>
 		<dependency>
 			<groupId>net.bodz.bas</groupId>
 			<artifactId>bas-c1</artifactId>
+			<version>0.0.2-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 	<modules>
-		<module>bas-proxy-java-util</module>
 		<module>bas-proxy-java-security</module>
+		<module>bas-proxy-java-util</module>
 	</modules>
 	<name>BAS :: Proxy Wrappers</name>
 </project>
