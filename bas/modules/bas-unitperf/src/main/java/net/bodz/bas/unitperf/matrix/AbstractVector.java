@@ -1,5 +1,8 @@
 package net.bodz.bas.unitperf.matrix;
 
+/**
+ * TODO
+ */
 public abstract class AbstractVector
         implements Vector {
 
@@ -30,6 +33,51 @@ public abstract class AbstractVector
 
     @Override
     public Vector diff() {
+        return null;
+    }
+
+    @Override
+    public Vector add(Vector vector) {
+        return null;
+    }
+
+    @Override
+    public int average() {
+        return 0;
+    }
+
+    @Override
+    public int dotProduct(Vector vector) {
+        return 0;
+    }
+
+    @Override
+    public ArrayMatrix multiply(ArrayMatrix matrix) {
+        return null;
+    }
+
+    @Override
+    public Vector multiply(Vector vector) {
+        return null;
+    }
+
+    @Override
+    public Vector negative() {
+        return null;
+    }
+
+    @Override
+    public Vector subtract(Vector vector) {
+        return null;
+    }
+
+    @Override
+    public int sum() {
+        return 0;
+    }
+
+    @Override
+    public Vector transpose() {
         return null;
     }
 

@@ -2,6 +2,9 @@ package net.bodz.bas.unitperf.matrix;
 
 import java.util.Arrays;
 
+/**
+ * TODO
+ */
 public class ColumnVector
         extends AbstractVector {
 

@@ -10,9 +10,9 @@
 	<packaging>pom</packaging>
 	<version>0.0.2-SNAPSHOT</version>
 	<modules>
-		<module>bas-api</module>
+		<module>bas-c1</module>
+		<module>bas-c2</module>
 		<module>bas-collection</module>
-		<module>bas-commons</module>
 		<module>bas-database</module>
 		<module>bas-fsm</module>
 		<module>bas-i18n</module>

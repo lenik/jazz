@@ -3,6 +3,9 @@ package net.bodz.bas.unitperf.matrix;
 import java.io.Serializable;
 import java.util.Arrays;
 
+/**
+ * TODO
+ */
 public class RowVector
         extends AbstractVector
         implements Serializable {

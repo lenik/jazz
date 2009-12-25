@@ -2,7 +2,10 @@ package net.bodz.bas.unitperf.matrix;
 
 import java.io.Serializable;
 
-public class ArrayMatrix
+/**
+ * TODO
+ */
+public abstract class ArrayMatrix
         implements Matrix, Serializable {
 
     private static final long serialVersionUID = 1L;

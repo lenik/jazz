@@ -2,17 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
+		<artifactId>bas-modules</artifactId>
 		<groupId>net.bodz.bas</groupId>
-		<artifactId>bas-incubator</artifactId>
 		<version>0.0.1</version>
 	</parent>
-	<artifactId>bas-incubator-posutil</artifactId>
+	<artifactId>bas-c1</artifactId>
 	<version>0.0.2-SNAPSHOT</version>
-	<dependencies>
-		<dependency>
-			<groupId>net.bodz.bas</groupId>
-			<artifactId>bas-c1</artifactId>
-		</dependency>
-	</dependencies>
-	<name>BAS :: Incubator :: POS Utilities (Fragments of pre-java-implementation)</name>
+	<dependencies />
+	<name>BAS :: Commons Layer 1</name>
+    <description>BAS-Lang Types &amp; Annotations</description>
 </project>

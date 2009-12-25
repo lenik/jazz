@@ -1,6 +1,6 @@
 package net.bodz.bas.i18n.dict;
 
-import net.bodz.bas.nls.GeneralNLS;
+import net.bodz.bas.i18n.nls.GeneralNLS;
 
 public class SystemDict extends ResourceBundleDict {
 
