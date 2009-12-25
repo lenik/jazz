@@ -7,7 +7,7 @@
 		<version>1</version>
 	</parent>
 	<artifactId>bas</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.2</version>
 	<packaging>pom</packaging>
 	<dependencyManagement>
 		<dependencies>
@@ -169,6 +169,6 @@
 		</mailingList>
 	</mailingLists>
 	<scm>
-		<connection>scm:svn:svn://svn.bodz.net/n/net.bodz.bas/trunk</connection>
+		<connection>scm:svn:svn://svn.bodz.net/n/net.bodz.bas/tags/bas-0.0.2</connection>
 	</scm>
 </project>
