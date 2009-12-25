@@ -7,7 +7,7 @@
 		<version>1</version>
 	</parent>
 	<artifactId>bas</artifactId>
-	<version>0.0.3-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<dependencyManagement>
 		<dependencies>
