@@ -1,6 +1,6 @@
 package net.bodz.bas.jvm.stack;
 
-import net.bodz.bas.api.exceptions.UnexpectedException;
+import net.bodz.bas.exceptions.UnexpectedException;
 
 public class FrameConstructException
         extends UnexpectedException {
