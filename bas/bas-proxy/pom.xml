@@ -9,14 +9,8 @@
 	<artifactId>bas-proxy</artifactId>
 	<packaging>pom</packaging>
 	<version>0.0.2-SNAPSHOT</version>
-	<dependencies>
-		<dependency>
-			<groupId>net.bodz.bas</groupId>
-			<artifactId>bas-c1</artifactId>
-			<version>0.0.2-SNAPSHOT</version>
-		</dependency>
-	</dependencies>
 	<modules>
+		<module>bas-proxy-api</module>
 		<module>bas-proxy-java-security</module>
 		<module>bas-proxy-java-util</module>
 	</modules>
