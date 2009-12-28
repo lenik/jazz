@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import net.bodz.bas.api.hint.AbstractProxy;
+import net.bodz.bas.proxy.AbstractProxy;
 
 public class ProxyMap<K, V>
         extends AbstractProxy<Map<K, V>>

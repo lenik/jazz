@@ -4,7 +4,7 @@ import java.io.FileDescriptor;
 import java.net.InetAddress;
 import java.security.Permission;
 
-import net.bodz.bas.api.hint.Proxy;
+import net.bodz.bas.proxy.Proxy;
 
 public class ProxySecurityManager
         extends SecurityManager
@@ -12,9 +12,11 @@ public class ProxySecurityManager
 
     protected final SecurityManager proxy;
 
+    /**
+     * @param proxy
+     *            <code>null</code> if no check at all.
+     */
     public ProxySecurityManager(SecurityManager proxy) {
-        if (proxy == null)
-            throw new NullPointerException("proxy");
         this.proxy = proxy;
     }
 
