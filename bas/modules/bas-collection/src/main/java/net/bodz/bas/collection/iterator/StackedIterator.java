@@ -3,9 +3,9 @@ package net.bodz.bas.collection.iterator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import net.bodz.bas.collection.LinkedStack;
-import net.bodz.bas.collection.Stack;
 import net.bodz.bas.collection.TypesNLS;
+import net.bodz.bas.collection.list.LinkedStack;
+import net.bodz.bas.collection.list.Stack;
 
 /**
  * @see NestedIterator

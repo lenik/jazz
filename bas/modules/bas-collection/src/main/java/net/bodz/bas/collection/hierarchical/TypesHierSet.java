@@ -1,30 +1,11 @@
 package net.bodz.bas.collection.hierarchical;
 
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.SortedSet;
-
-import net.bodz.bas.collection.comparators.TypeVectorComparator;
+import net.bodz.bas.collection.comparator.TypeVectorComparator;
 
 public class TypesHierSet
         extends HierSet<Class<?>[]> {
 
     private static final long serialVersionUID = 1L;
-
-    @Deprecated
-    public TypesHierSet(Collection<? extends Class<?>[]> c) {
-        super(c);
-    }
-
-    @Deprecated
-    public TypesHierSet(Comparator<? super Class<?>[]> comparator) {
-        super(comparator);
-    }
-
-    @Deprecated
-    public TypesHierSet(SortedSet<Class<?>[]> s) {
-        super(s);
-    }
 
     public TypesHierSet() {
         super(TypeVectorComparator.getInstance());

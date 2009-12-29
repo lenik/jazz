@@ -2,7 +2,7 @@ package net.bodz.bas.collection;
 
 import java.util.ResourceBundle;
 
-import net.bodz.bas.i18n.nls.NLSAccessor;
+import net.bodz.bas.lang.i18n.nls.NLSAccessor;
 
 public class TypesNLS extends NLSAccessor {
 

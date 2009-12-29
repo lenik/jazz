@@ -10,8 +10,13 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<dependencies>
 		<dependency>
+           <groupId>net.sourceforge.collections</groupId>
+           <artifactId>collections-generic</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>net.bodz.bas</groupId>
 			<artifactId>bas-c1</artifactId>
+			<version>0.0.2-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 	<name>BAS :: Collection Types</name>

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import net.bodz.bas.api.exceptions.OutOfDomainException;
+import net.bodz.bas.exceptions.OutOfDomainException;
 
 /**
  * Segment is always trimmed, and can't be:

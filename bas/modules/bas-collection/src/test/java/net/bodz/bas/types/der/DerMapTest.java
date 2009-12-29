@@ -11,9 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.bodz.bas.commons.collection.override.DerHashMap;
-import net.bodz.bas.commons.collection.override.DerMap;
-import net.bodz.bas.commons.util.Comparators;
+import net.bodz.bas.lang.modules.collection.override.DerHashMap;
+import net.bodz.bas.lang.modules.collection.override.DerMap;
+import net.bodz.bas.lang.modules.util.Comparators;
 
 import org.junit.Test;
 

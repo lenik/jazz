@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.Map;
 import java.util.SortedMap;
 
-import net.bodz.bas.collection.comparators.TypeComparator;
+import net.bodz.bas.collection.comparator.TypeComparator;
 
 public class TypeHierMap<V>
         extends HierMap<Class<?>, V> {

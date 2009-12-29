@@ -2,7 +2,7 @@ package net.bodz.bas.types.chained;
 
 import java.util.Map;
 
-import net.bodz.bas.commons.collection.chained.CMap;
+import net.bodz.bas.lang.modules.collection.chained.CMap;
 
 import org.junit.Test;
 

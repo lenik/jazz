@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.bodz.bas.collection.ArrayStack;
 import net.bodz.bas.collection.iterator.PrefetchedIterator;
+import net.bodz.bas.collection.list.ArrayStack;
+import net.bodz.bas.lang.Nullables;
 
 /**
  * @test {@link TreePositionTest}
@@ -45,7 +46,7 @@ public class TreePosition<N extends TreeNode<? extends N>>
             Dim<?> a = (Dim<?>) obj;
             if (index != a.index)
                 return false;
-            if (!Objects.equals(node, a.node))
+            if (!Nullables.equals(node, a.node))
                 return false;
             return true;
         }
