@@ -4,9 +4,9 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import net.bodz.bas.collection.DyingList;
-import net.bodz.bas.collection.SortedList;
-import net.bodz.bas.collection.comparators.NaturalComparator;
+import net.bodz.bas.collection.comparator.NaturalComparator;
+import net.bodz.bas.collection.list.DyingList;
+import net.bodz.bas.collection.list.SortedList;
 
 public class WeaveIterator<T extends Comparable<T>>
         implements Iterator<T> {

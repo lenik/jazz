@@ -2,7 +2,7 @@ package net.bodz.bas.collection.iterator;
 
 import java.util.Iterator;
 
-import net.bodz.bas.api.types.Transformer;
+import net.bodz.bas.closures.Transformer;
 
 public class TransformedIterator<T>
         implements Iterator<T> {

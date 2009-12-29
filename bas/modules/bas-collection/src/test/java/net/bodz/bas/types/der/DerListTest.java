@@ -6,8 +6,8 @@ import static org.junit.Assert.assertNull;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.commons.collection.override.DerArrayList;
-import net.bodz.bas.commons.collection.override.DerList;
+import net.bodz.bas.lang.modules.collection.override.DerArrayList;
+import net.bodz.bas.lang.modules.collection.override.DerList;
 
 import org.junit.Test;
 

@@ -2,7 +2,7 @@ package net.bodz.bas.collection.hierarchical;
 
 import java.util.Collection;
 
-import net.bodz.bas.collection.comparators.TypeComparator;
+import net.bodz.bas.collection.comparator.TypeComparator;
 
 public class TypeHierSet
         extends HierSet<Class<?>> {

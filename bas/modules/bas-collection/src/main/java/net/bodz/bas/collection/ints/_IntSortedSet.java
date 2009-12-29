@@ -1,6 +1,6 @@
 package net.bodz.bas.collection.ints;
 
-import net.bodz.bas.api.exceptions.NotImplementedException;
+import net.bodz.bas.exceptions.NotImplementedException;
 
 
 public abstract class _IntSortedSet extends _IntSet implements IntSortedSet {
