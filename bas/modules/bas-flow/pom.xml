@@ -5,7 +5,7 @@
 		<artifactId>bas-modules</artifactId>
 		<version>0.0.2-SNAPSHOT</version>
 	</parent>
-	<artifactId>bas-iofilter</artifactId>
+	<artifactId>bas-flow</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<dependencies>
 		<dependency>
@@ -15,16 +15,19 @@
 		</dependency>
 		<dependency>
 			<groupId>net.bodz.bas</groupId>
-			<artifactId>bas-commons</artifactId>
+			<artifactId>bas-c2</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>net.bodz.bas</groupId>
 			<artifactId>bas-utils</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>net.bodz.bas</groupId>
 			<artifactId>bas-textutils</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
-	<name>BAS :: IO Filter (B-ios)</name>
+	<name>BAS :: Flow Driven Architecture</name>
 </project>
