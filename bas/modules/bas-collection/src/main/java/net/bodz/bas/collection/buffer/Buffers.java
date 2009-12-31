@@ -6,7 +6,7 @@ import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 
-import net.bodz.bas.types.buf.BuffersTest;
+import net.bodz.bas.collection.buffer.BuffersTest;
 
 /**
  * @test {@link BuffersTest}
@@ -18,7 +18,8 @@ public class Buffers {
                 buffer.arrayOffset() + buffer.position(), buffer.remaining());
     }
 
-    public static String getString(ByteBuffer buffer) throws UnsupportedEncodingException {
+    public static String getString(ByteBuffer buffer)
+            throws UnsupportedEncodingException {
         return new String(buffer.array(), //
                 buffer.arrayOffset() + buffer.position(), buffer.remaining());
     }
@@ -28,7 +29,8 @@ public class Buffers {
                 buffer.arrayOffset() + buffer.position(), buffer.remaining(), charset);
     }
 
-    public static String getString(ByteBuffer buffer, String charset) throws UnsupportedEncodingException {
+    public static String getString(ByteBuffer buffer, String charset)
+            throws UnsupportedEncodingException {
         return new String(buffer.array(), //
                 buffer.arrayOffset() + buffer.position(), buffer.remaining(), charset);
     }

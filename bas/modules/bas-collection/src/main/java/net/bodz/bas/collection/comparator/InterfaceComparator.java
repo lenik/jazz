@@ -2,6 +2,9 @@ package net.bodz.bas.collection.comparator;
 
 import java.util.Arrays;
 
+/**
+ * @test {@link InterfaceComparatorTest}
+ */
 public class InterfaceComparator
         implements NonNullComparator<Class<?>> {
 
