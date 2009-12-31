@@ -11,8 +11,10 @@ public class ClassComparator
 
     @Override
     public int compare(Class<?> c1, Class<?> c2) {
-        assert c1.isInterface() : "not-class: " + c1;
-        assert !c2.isInterface() : "not-class: " + c2;
+        if (c1.isInterface())
+            throw new IllegalArgumentException("Can't compare instance: " + c1);
+        if (c2.isInterface())
+            throw new IllegalArgumentException("Can't compare instance: " + c2);
 
         if (c1.isPrimitive())
             if (c2.isPrimitive())
