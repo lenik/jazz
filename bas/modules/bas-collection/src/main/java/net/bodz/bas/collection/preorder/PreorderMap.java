@@ -1,87 +1,56 @@
-package net.bodz.bas.collection.hierarchical;
+package net.bodz.bas.collection.preorder;
 
-import java.util.Comparator;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 
 import net.bodz.bas.collection.iterator.PrefetchedIterator;
 
-public abstract class HierMap<K, V> extends TreeMap<K, V> implements Hier<K> {
+public abstract class PreorderMap<K, V>
+        extends TreeMap<K, V> {
 
-    private static final long serialVersionUID = 5702402360129338243L;
+    private static final long serialVersionUID = 1L;
 
-    public HierMap() {
-        super();
-    }
+    private final IPreorder<K> preorder;
 
-    public HierMap(Comparator<? super K> comparator) {
-        super(comparator);
-    }
-
-    public HierMap(Map<? extends K, ? extends V> m) {
-        super(m);
-    }
-
-    public HierMap(SortedMap<K, ? extends V> m) {
-        super(m);
-    }
-
-    /**
-     * @throws <code>null</code> by default
-     */
-    protected K nonexistKey() {
-        return null;
-    }
-
-    /**
-     * @return <code>null</code> by default
-     */
-    protected V nonexistValue() {
-        return null;
-    }
-
-    /**
-     * @return <code>null</code> by default
-     */
-    protected Entry<K, V> nonexistEntry() {
-        return null;
+    public PreorderMap(IPreorder<K> preorder) {
+        if (preorder == null)
+            throw new NullPointerException("preorder");
+        this.preorder = preorder;
     }
 
     @Override
     public K floorKey(K key) {
-        K floo = super.floorKey(key);
-        while (floo != null) {
-            if (derives(floo, key))
-                return floo;
-            key = shrink(key);
+        K floor = super.floorKey(key);
+        while (floor != null) {
+            if (preorder.isLessOrEquals(floor, key))
+                return floor;
+            key = preorder.getPreceding(key);
             if (key == null)
                 break;
-            floo = super.floorKey(key);
+            floor = super.floorKey(key);
         }
-        return nonexistKey();
+        return null;
     }
 
     @Override
     public Entry<K, V> floorEntry(K key) {
         Entry<K, V> floo = super.floorEntry(key);
         while (floo != null) {
-            if (derives(floo.getKey(), key))
+            if (preorder.isLessOrEquals(floo.getKey(), key))
                 return floo;
-            key = shrink(key);
+            key = preorder.getPreceding(key);
             if (key == null)
                 break;
             floo = super.floorEntry(key);
         }
-        return nonexistEntry();
+        return null;
     }
 
     public V floor(K key) {
         Entry<K, V> floo = floorEntry(key);
         if (floo == null)
-            return nonexistValue();
+            return null;
         return floo.getValue();
     }
 
@@ -89,35 +58,36 @@ public abstract class HierMap<K, V> extends TreeMap<K, V> implements Hier<K> {
     public K ceilingKey(K key) {
         K ceil = super.ceilingKey(key);
         if (ceil == null)
-            return nonexistKey();
-        if (derives(key, ceil))
+            return null;
+        if (preorder.isGreaterOrEquals(ceil, key))
             return ceil;
-        return nonexistKey();
+        return null;
     }
 
     @Override
     public Entry<K, V> ceilingEntry(K key) {
         Entry<K, V> ceil = super.ceilingEntry(key);
         if (ceil == null)
-            return nonexistEntry();
-        if (derives(key, ceil.getKey()))
+            return null;
+        if (preorder.isGreaterOrEquals(ceil.getKey(), key))
             return ceil;
-        return nonexistEntry();
+        return null;
     }
 
     public V ceiling(K key) {
         Entry<K, V> ceil = ceilingEntry(key);
         if (ceil == null)
-            return nonexistValue();
-        if (derives(key, ceil.getKey()))
+            return null;
+        if (preorder.isGreaterOrEquals(ceil.getKey(), key))
             return ceil.getValue();
-        return nonexistValue();
+        return null;
     }
 
     public Iterable<K> ceilingKeys(final K key) {
         final K start = ceilingKey(key);
 
-        class Iter extends PrefetchedIterator<K> {
+        class Iter
+                extends PrefetchedIterator<K> {
             private K next;
 
             public Iter(K next) {
@@ -130,7 +100,7 @@ public abstract class HierMap<K, V> extends TreeMap<K, V> implements Hier<K> {
                     return end();
                 K ret = next;
                 next = higherKey(next);
-                if (next != null && !derives(key, next))
+                if (next != null && !preorder.isLessOrEquals(key, next))
                     next = null;
                 return ret;
             }
@@ -147,7 +117,8 @@ public abstract class HierMap<K, V> extends TreeMap<K, V> implements Hier<K> {
     public Iterable<Entry<K, V>> ceilingEntries(final K key) {
         final Entry<K, V> start = ceilingEntry(key);
 
-        class Iter extends PrefetchedIterator<Entry<K, V>> {
+        class Iter
+                extends PrefetchedIterator<Entry<K, V>> {
             private Entry<K, V> next;
 
             public Iter(Entry<K, V> next) {
@@ -160,7 +131,7 @@ public abstract class HierMap<K, V> extends TreeMap<K, V> implements Hier<K> {
                     return end();
                 Entry<K, V> ret = next;
                 next = higherEntry(next.getKey());
-                if (next != null && !derives(key, next.getKey()))
+                if (next != null && !preorder.isLessOrEquals(key, next.getKey()))
                     next = null;
                 return ret;
             }
@@ -177,7 +148,8 @@ public abstract class HierMap<K, V> extends TreeMap<K, V> implements Hier<K> {
     public Iterable<V> ceilings(final K key) {
         final Entry<K, V> start = ceilingEntry(key);
 
-        class Iter extends PrefetchedIterator<V> {
+        class Iter
+                extends PrefetchedIterator<V> {
             private Entry<K, V> next;
 
             public Iter(Entry<K, V> next) {
@@ -190,7 +162,7 @@ public abstract class HierMap<K, V> extends TreeMap<K, V> implements Hier<K> {
                     return end();
                 V ret = next.getValue();
                 next = higherEntry(next.getKey());
-                if (next != null && !derives(key, next.getKey()))
+                if (next != null && !preorder.isLessOrEquals(key, next.getKey()))
                     next = null;
                 return ret;
             }
@@ -203,4 +175,5 @@ public abstract class HierMap<K, V> extends TreeMap<K, V> implements Hier<K> {
             }
         };
     }
+
 }
