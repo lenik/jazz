@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>net.bodz.bas</groupId>
-		<artifactId>bas-layer1</artifactId>
+		<artifactId>layer-1</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>bas-loader</artifactId>

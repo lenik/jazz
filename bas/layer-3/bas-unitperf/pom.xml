@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>net.bodz.bas</groupId>
-		<artifactId>bas-layer3</artifactId>
+		<artifactId>layer-3</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>bas-unitperf</artifactId>
@@ -42,5 +42,5 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
-	<name>BAS :: Unit Performance Test</name>
+	<name>BAS :: Layer 3 :: Unit Performance Test</name>
 </project>

@@ -20,5 +20,5 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
-	<name>BAS :: Type System :: Implementation</name>
+	<name>BAS :: Layer 1 :: Type System :: Implementation</name>
 </project>

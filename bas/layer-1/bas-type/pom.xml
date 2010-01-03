@@ -3,8 +3,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>net.bodz.bas</groupId>
-		<artifactId>bas-modules</artifactId>
-		<version>0.0.2-SNAPSHOT</version>
+		<artifactId>layer-1</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>bas-type</artifactId>
 	<packaging>pom</packaging>
@@ -14,5 +14,5 @@
 		<module>bas-type-impl</module>
 		<module>bas-type-srt</module>
 	</modules>
-	<name>BAS :: Type System</name>
+	<name>BAS :: Layer 1 :: Type System</name>
 </project>

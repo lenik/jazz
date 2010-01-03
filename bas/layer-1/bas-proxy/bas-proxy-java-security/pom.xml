@@ -15,5 +15,5 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
-	<name>BAS :: Proxy :: java.security</name>
+	<name>BAS :: Layer 1 :: Proxy :: java.security</name>
 </project>

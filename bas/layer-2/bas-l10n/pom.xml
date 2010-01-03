@@ -3,8 +3,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>net.bodz.bas</groupId>
-		<artifactId>bas-modules</artifactId>
-		<version>0.0.2-SNAPSHOT</version>
+		<artifactId>layer-2</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>bas-l10n</artifactId>
 	<packaging>pom</packaging>
@@ -20,5 +20,5 @@
 		<module>bas-l10n-en</module>
 		<module>bas-l10n-zh</module>
 	</modules>
-	<name>BAS :: Localization</name>
+	<name>BAS :: Layer 2 :: Localization</name>
 </project>

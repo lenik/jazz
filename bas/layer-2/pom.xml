@@ -6,9 +6,20 @@
 		<artifactId>bas</artifactId>
 		<version>0.0.2-SNAPSHOT</version>
 	</parent>
-	<artifactId>bas-layer2</artifactId>
+	<artifactId>layer-2</artifactId>
 	<packaging>pom</packaging>
 	<version>0.0.1-SNAPSHOT</version>
-	<modules/>
+	<modules>
+		<module>bas-arch</module>
+		<module>bas-c2</module>
+		<module>bas-collection</module>
+		<module>bas-database</module>
+		<module>bas-flow</module>
+		<module>bas-fsm</module>
+		<module>bas-i18n</module>
+		<module>bas-l10n</module>
+		<module>bas-textutils</module>
+		<module>bas-utils</module>
+	</modules>
 	<name>BAS :: Layer 2</name>
 </project>

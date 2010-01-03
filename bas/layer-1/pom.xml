@@ -7,31 +7,18 @@
 		<version>0.0.2-SNAPSHOT</version>
 	</parent>
 	<artifactId>layer-1</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
+	<version>0.0.1-SNAPSHOT</version>
 	<modules>
-		<module>bas-annotation</module>
-		<module>bas-bean</module>
-		<module>bas-bits</module>
 		<module>bas-c1</module>
-		<module>bas-compat</module>
 		<module>bas-closure</module>
-		<module>bas-collection</module>
-		<module>bas-hint</module>
 		<module>bas-io</module>
 		<module>bas-jvmhack</module>
-		<module>bas-lang</module>
 		<module>bas-loader</module>
-		<module>bas-log</module>
 		<module>bas-memoryio</module>
 		<module>bas-natives</module>
 		<module>bas-network</module>
-		<module>bas-nio</module>
-		<module>bas-primitive</module>
 		<module>bas-proxy</module>
-		<module>bas-reflect</module>
-		<module>bas-sio</module>
-		<module>bas-sysinfo</module>
 		<module>bas-type</module>
 	</modules>
 	<name>BAS :: Layer 1</name>

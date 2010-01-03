@@ -2,8 +2,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>net.bodz.bas</groupId>
-		<artifactId>bas-modules</artifactId>
-		<version>0.0.2-SNAPSHOT</version>
+		<artifactId>layer-2</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>bas-c2</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -29,5 +29,5 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	<name>BAS :: Commons Layer 2</name>
+	<name>BAS :: Layer 2 :: Commons</name>
 </project>
