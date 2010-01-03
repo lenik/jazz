@@ -1,7 +1,5 @@
 package net.bodz.bas.lang;
 
-import net.bodz.bas.exceptions.UnsupportedNegotiationException;
-
 public interface INegotiation
         extends Iterable<NegotiationParameter> {
 

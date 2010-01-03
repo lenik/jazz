@@ -28,7 +28,7 @@
 		</dependency>
 		<dependency>
 			<groupId>net.bodz.bas</groupId>
-			<artifactId>bas-c1</artifactId>
+			<artifactId>bas-hint</artifactId>
 			<version>0.0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
