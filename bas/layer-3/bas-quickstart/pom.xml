@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>net.bodz.bas</groupId>
-		<artifactId>bas-layer3</artifactId>
+		<artifactId>layer-3</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>bas-quickstart</artifactId>
@@ -39,5 +39,5 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
-	<name>BAS :: Quickstart Application Framework</name>
+	<name>BAS :: Layer 3 :: Quickstart Application Framework</name>
 </project>

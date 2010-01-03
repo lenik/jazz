@@ -10,11 +10,7 @@
 	<packaging>pom</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<modules>
-		<module>bas-ant</module>
-		<module>bas-cli</module>
-		<module>bas-dotnet-synthetics</module>
-		<module>bas-snmjava</module>
-		<module>bas-sysutil</module>
+		<module>bas-quickstart</module>
 		<module>bas-unitperf</module>
 	</modules>
 	<name>BAS :: Layer 3</name>

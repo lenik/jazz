@@ -2,16 +2,16 @@
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<artifactId>bas-modules</artifactId>
 		<groupId>net.bodz.bas</groupId>
-		<version>0.0.2-SNAPSHOT</version>
+		<artifactId>layer-2</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>bas-collection</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<dependencies>
 		<dependency>
-           <groupId>net.sourceforge.collections</groupId>
-           <artifactId>collections-generic</artifactId>
+			<groupId>net.sourceforge.collections</groupId>
+			<artifactId>collections-generic</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>net.bodz.bas</groupId>
@@ -19,5 +19,5 @@
 			<version>0.0.2-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
-	<name>BAS :: Collection Types</name>
+	<name>BAS :: Layer 2 :: Collection Types</name>
 </project>

@@ -15,5 +15,5 @@
 			<version>0.0.2-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
-	<name>BAS :: Type System :: API</name>
+	<name>BAS :: Layer 1 :: Type System :: API</name>
 </project>
