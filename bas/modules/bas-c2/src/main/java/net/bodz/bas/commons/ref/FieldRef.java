@@ -3,6 +3,7 @@ package net.bodz.bas.commons.ref;
 import java.lang.reflect.Field;
 
 import net.bodz.bas.commons.helpinfo.ObjectInfo;
+import net.bodz.bas.lang.Ref;
 
 public class FieldRef<T>
         implements Ref<T> {

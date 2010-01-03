@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.math.BigInteger;
 
-import net.bodz.bas.commons.math.IntMath;
+import net.bodz.bas.math.IntMath;
 
 import org.junit.Test;
 

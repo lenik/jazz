@@ -3,9 +3,9 @@ package net.bodz.bas.fsm.base;
 import java.util.EmptyStackException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 
-import net.bodz.bas.commons.collection.Stack;
-import net.bodz.bas.nls.TypesNLS;
+import net.bodz.bas.collection.TypesNLS;
 
 public class StateGraphImpl implements StateGraph {
 

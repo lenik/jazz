@@ -15,7 +15,8 @@
 		</dependency>
 		<dependency>
 			<groupId>net.bodz.bas</groupId>
-			<artifactId>bas-commons</artifactId>
+			<artifactId>bas-c2</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 	<name>BAS :: Text Utilities</name>

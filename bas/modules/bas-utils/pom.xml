@@ -9,13 +9,19 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<dependencies>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
+			<groupId>net.bodz.bas</groupId>
+			<artifactId>bas-c1</artifactId>
+			<version>0.0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>net.bodz.bas</groupId>
-			<artifactId>bas-commons</artifactId>
+			<artifactId>bas-c2</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 	<name>BAS :: Common Utilities</name>

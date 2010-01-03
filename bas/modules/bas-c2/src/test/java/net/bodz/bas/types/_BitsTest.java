@@ -1,9 +1,9 @@
 package net.bodz.bas.types;
 
-import static net.bodz.bas.commons.collection.util.ArrayOps.Booleans;
+import static net.bodz.bas.lang.modules.collection.util.ArrayOps.Booleans;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertTrue;
-import net.bodz.bas.commons.math.Bits.IntvBE;
+import net.bodz.bas.math.Bits.IntvBE;
 
 import org.junit.Test;
 

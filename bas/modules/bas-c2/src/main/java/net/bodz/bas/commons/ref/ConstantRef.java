@@ -1,7 +1,8 @@
 package net.bodz.bas.commons.ref;
 
-import net.bodz.bas.api.exceptions.ReadOnlyException;
 import net.bodz.bas.commons.util.Objects;
+import net.bodz.bas.exceptions.ReadOnlyException;
+import net.bodz.bas.lang.Ref;
 
 public class ConstantRef<T>
         implements Ref<T> {

@@ -13,11 +13,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-import net.bodz.bas.api.exceptions.CreateException;
-import net.bodz.bas.api.exceptions.OutOfDomainException;
-import net.bodz.bas.api.exceptions.UnexpectedException;
-import net.bodz.bas.commons.annotation.null_class;
+import net.bodz.bas.annotations.null_class;
 import net.bodz.bas.commons.controlflow.Control;
+import net.bodz.bas.exceptions.CreateException;
+import net.bodz.bas.exceptions.OutOfDomainException;
+import net.bodz.bas.exceptions.UnexpectedException;
 
 public class Types {
 

@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.bodz.bas.commons.collection.LinkedStack;
-import net.bodz.bas.commons.tree.ArrayTreeNode;
-import net.bodz.bas.commons.tree.TreePosition;
+import net.bodz.bas.lang.modules.collection.LinkedStack;
+import net.bodz.bas.lang.modules.tree.ArrayTreeNode;
+import net.bodz.bas.lang.modules.tree.TreePosition;
 
 import org.junit.Test;
 

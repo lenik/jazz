@@ -1,5 +1,7 @@
 package net.bodz.bas.commons.ref;
 
+import net.bodz.bas.lang.Ref;
+
 public class SimpleRef<T> implements Ref<T> {
 
     private T o;

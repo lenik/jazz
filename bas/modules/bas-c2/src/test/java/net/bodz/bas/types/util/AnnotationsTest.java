@@ -4,9 +4,9 @@ import static org.junit.Assert.assertEquals;
 
 import java.lang.annotation.Annotation;
 
-import net.bodz.bas.a.Author;
 import net.bodz.bas.commons.util.Annotations;
-import net.bodz.bas.io.CharOuts.BCharOut;
+import net.bodz.bas.lang.a.Author;
+import net.bodz.bas.lang.io.CharOuts.BCharOut;
 
 import org.junit.Test;
 

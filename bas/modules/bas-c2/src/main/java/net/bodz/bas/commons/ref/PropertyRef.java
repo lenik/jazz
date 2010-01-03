@@ -6,8 +6,9 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 
-import net.bodz.bas.api.exceptions.NoSuchKeyException;
 import net.bodz.bas.commons.helpinfo.ObjectInfo;
+import net.bodz.bas.exceptions.NoSuchKeyException;
+import net.bodz.bas.lang.Ref;
 
 public class PropertyRef<PropertyType>
         implements Ref<PropertyType> {

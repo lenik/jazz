@@ -1,7 +1,7 @@
 package net.bodz.bas.commons.callbacks;
 
-import net.bodz.bas.api.exceptions.RuntimizedException;
 import net.bodz.bas.commons.exception.ExceptionCauses;
+import net.bodz.bas.exceptions.RuntimizedException;
 
 import org.junit.Test;
 

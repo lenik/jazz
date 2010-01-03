@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 
+import net.bodz.bas.sysctx.CWD;
+
 import org.junit.Test;
 
 public class CWDTest {

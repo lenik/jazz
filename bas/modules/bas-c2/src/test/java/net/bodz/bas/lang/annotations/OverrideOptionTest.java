@@ -1,9 +1,9 @@
 package net.bodz.bas.lang.annotations;
 
-import net.bodz.bas.commons.annotations.OverrideOption;
 import net.bodz.bas.commons.scripting.MethodSignature;
 import net.bodz.bas.commons.util.Annotations;
-import net.bodz.bas.functors._Functor;
+import net.bodz.bas.hint.OverrideOption;
+import net.bodz.bas.lang.functors._Functor;
 
 import org.junit.Test;
 

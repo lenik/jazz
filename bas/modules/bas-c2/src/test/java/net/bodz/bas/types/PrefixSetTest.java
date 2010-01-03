@@ -3,8 +3,8 @@ package net.bodz.bas.types;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import net.bodz.bas.commons.collection.hierarchical.PrefixSet;
-import net.bodz.bas.text.util.Strings;
+import net.bodz.bas.lang.modules.collection.hierarchical.PrefixSet;
+import net.bodz.bas.lang.text.util.Strings;
 
 import org.junit.Test;
 

@@ -1,8 +1,5 @@
 package net.bodz.bas.exceptions;
 
-import net.bodz.bas.i18n.nls_2.NLS;
-import net.bodz.bas.lang.ModuleInfo;
-
 /**
  * oode Template:
  * 
@@ -45,7 +42,7 @@ public class OutOfDomainException
 
     // 3 (boundary n< at 0)
     public static String format(String arg, Object actualValue, Object boundaryValue) {
-        return NLS.format("_s_boundar", actualValue, arg, boundaryValue);
+        return String.format("%s (boundary %s at %s)", actualValue, arg, boundaryValue);
     }
 
     // 3 (n<)
@@ -53,7 +50,5 @@ public class OutOfDomainException
         return String.valueOf(actualValue) + //
                 " (" + arg + ")"; //$NON-NLS-1$ //$NON-NLS-2$
     }
-
-    private static NLS NLS = ModuleInfo.getInstance().getNLS();
 
 }

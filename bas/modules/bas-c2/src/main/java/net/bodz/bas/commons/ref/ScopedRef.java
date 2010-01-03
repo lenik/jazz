@@ -2,6 +2,7 @@ package net.bodz.bas.commons.ref;
 
 import java.util.LinkedList;
 
+import net.bodz.bas.lang.Ref;
 import net.bodz.bas.nls.LangNLS;
 
 /**

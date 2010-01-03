@@ -5,11 +5,11 @@ import java.lang.reflect.AnnotatedElement;
 import java.nio.file.Files;
 import java.util.regex.Pattern;
 
-import net.bodz.bas.api.exceptions.CheckFailure;
-import net.bodz.bas.api.exceptions.CreateException;
 import net.bodz.bas.commons.util.Types;
+import net.bodz.bas.exceptions.CheckFailure;
+import net.bodz.bas.exceptions.CreateException;
+import net.bodz.bas.lang.typeinfo.ValidateException;
 import net.bodz.bas.nls.TypesNLS;
-import net.bodz.bas.typeinfo.ValidateException;
 
 public class Checks {
 

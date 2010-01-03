@@ -1,6 +1,6 @@
 package net.bodz.bas.types.util;
 
-import static net.bodz.bas.commons.collection.util.ArrayOps.Bytes;
+import static net.bodz.bas.lang.modules.collection.util.ArrayOps.Bytes;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;

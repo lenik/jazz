@@ -6,9 +6,9 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import net.bodz.bas.commons.iterators.Iterates;
-import net.bodz.bas.commons.iterators.Iterators;
-import net.bodz.bas.commons.iterators.PrefetchedIterator;
+import net.bodz.bas.lang.modules.iterators.Iterates;
+import net.bodz.bas.lang.modules.iterators.Iterators;
+import net.bodz.bas.lang.modules.iterators.PrefetchedIterator;
 
 import org.junit.Test;
 
