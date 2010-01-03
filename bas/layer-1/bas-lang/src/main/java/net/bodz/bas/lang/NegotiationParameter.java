@@ -2,8 +2,6 @@ package net.bodz.bas.lang;
 
 import java.io.Serializable;
 
-import net.bodz.bas.exceptions.UnsupportedNegotiationException;
-
 public final class NegotiationParameter
         implements Serializable {
 

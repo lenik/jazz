@@ -2,15 +2,15 @@ package net.bodz.bas.collection.iterator;
 
 import java.util.Iterator;
 
-import net.bodz.bas.closures.Transformer;
+import net.bodz.bas.closures.ITransformer;
 
 public class TransformedIterator<T>
         implements Iterator<T> {
 
     private final Iterator<T> iterator;
-    private final Transformer<T> transformer;
+    private final ITransformer<T> transformer;
 
-    public TransformedIterator(Iterator<T> iterator, Transformer<T> transformer) {
+    public TransformedIterator(Iterator<T> iterator, ITransformer<T> transformer) {
         if (iterator == null)
             throw new NullPointerException("iterator");
         if (transformer == null)

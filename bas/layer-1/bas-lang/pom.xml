@@ -6,8 +6,14 @@
 		<artifactId>layer-1</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>bas-c1</artifactId>
+	<artifactId>bas-lang</artifactId>
 	<version>0.0.2-SNAPSHOT</version>
-	<name>BAS :: Layer 1 :: Commons</name>
-	<description>BAS-Lang Types &amp; Annotations</description>
+	<dependencies>
+		<dependency>
+			<groupId>net.bodz.bas</groupId>
+			<artifactId>bas-hint</artifactId>
+			<version>0.0.2-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
+	<name>BAS :: Layer 1 :: Core Language Enhancement</name>
 </project>

@@ -10,9 +10,10 @@
 	<packaging>pom</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<modules>
-		<module>bas-c1</module>
 		<module>bas-closure</module>
+		<module>bas-hint</module>
 		<module>bas-io</module>
+		<module>bas-lang</module>
 		<module>bas-jvmhack</module>
 		<module>bas-loader</module>
 		<module>bas-memoryio</module>
