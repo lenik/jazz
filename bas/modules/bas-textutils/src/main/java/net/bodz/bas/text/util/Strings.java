@@ -1,14 +1,12 @@
 package net.bodz.bas.text.util;
 
-import static net.bodz.bas.commons.collection.util.ArrayOps.Chars;
-import static net.bodz.bas.commons.math.BoolMath.test;
+import static net.bodz.bas.math.BoolMath.test;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StreamTokenizer;
 import java.io.StringReader;
 import java.lang.reflect.Array;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
@@ -18,32 +16,19 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.bodz.bas.commons.iterators.Iterators;
 import net.bodz.bas.commons.pojos.Pair;
-import net.bodz.bas.commons.util.Objects;
+import net.bodz.bas.text.diff.DiffComparator;
+import net.bodz.bas.text.diff.DiffComparators;
+import net.bodz.bas.text.diff.DiffFormat;
+import net.bodz.bas.text.diff.DiffFormats;
+import net.bodz.bas.text.diff.DiffInfo;
 import net.bodz.bas.types.util.StringsTest;
-import sun.dyn.empty.Empty;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * @test {@link StringsTest}
  */
 public class Strings {
-
-    /**
-     * @see Objects#equals(Object, Object)
-     */
-    @Deprecated
-    public static boolean equals(String a, String b) {
-        if (a == null || b == null)
-            return a == b;
-        return a.equals(b);
-    }
-
-    public static boolean equalsIgnoreCase(String a, String b) {
-        if (a == null || b == null)
-            return a == b;
-        return a.equalsIgnoreCase(b);
-    }
 
     public static int indexOfIgnoreCase(String s, String needle, Locale locale) {
         return s.toLowerCase(locale).indexOf(needle.toLowerCase(locale));

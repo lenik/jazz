@@ -6,7 +6,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 
-import net.bodz.bas.api.exceptions.IllegalUsageError;
+import net.bodz.bas.exceptions.IllegalUsageError;
 
 /**
  * Inherited Annotations

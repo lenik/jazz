@@ -9,11 +9,6 @@
 	<artifactId>bas-c1</artifactId>
 	<version>0.0.2-SNAPSHOT</version>
 	<dependencies>
-		<dependency>
-			<groupId>net.bodz.bas</groupId>
-			<artifactId>bas-proxy-java-util</artifactId>
-			<version>0.0.2-SNAPSHOT</version>
-		</dependency>
 	</dependencies>
 	<name>BAS :: Commons Layer 1</name>
 	<description>BAS-Lang Types &amp; Annotations</description>

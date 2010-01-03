@@ -2,7 +2,7 @@ package net.bodz.bas.commons.exception;
 
 import java.lang.reflect.Field;
 
-import net.bodz.bas.api.exceptions.RuntimizedException;
+import net.bodz.bas.exceptions.RuntimizedException;
 import net.bodz.bas.lang.err.ErrTest;
 
 /**

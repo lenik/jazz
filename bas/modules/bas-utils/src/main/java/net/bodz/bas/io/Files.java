@@ -36,22 +36,16 @@ import java.util.Properties;
 import java.util.jar.Manifest;
 import java.util.regex.Pattern;
 
-import net.bodz.bas.lang.IntMath;
-import net.bodz.bas.lang.err.IdentifiedException;
-import net.bodz.bas.lang.err.IllegalArgumentTypeException;
-import net.bodz.bas.lang.err.RuntimizedException;
-import net.bodz.bas.lang.err.UnexpectedException;
-import net.bodz.bas.lang.err.WrappedException;
-import net.bodz.bas.lang.err._throws;
-import net.bodz.bas.lang2.Pred2;
+import net.bodz.bas.closures.alt.Pred2;
+import net.bodz.bas.exceptions.IdentifiedException;
+import net.bodz.bas.exceptions.IllegalArgumentTypeException;
+import net.bodz.bas.exceptions.RuntimizedException;
+import net.bodz.bas.exceptions.UnexpectedException;
+import net.bodz.bas.exceptions.WrappedException;
+import net.bodz.bas.math.Bits;
+import net.bodz.bas.math.IntMath;
 import net.bodz.bas.nls.SysNLS;
-import net.bodz.bas.text.diff.DiffComparator;
-import net.bodz.bas.text.diff.DiffInfo;
-import net.bodz.bas.text.encodings.Charsets;
-import net.bodz.bas.text.util.CharFeature;
-import net.bodz.bas.types.Bits;
-import net.bodz.bas.types.util.Empty;
-import net.bodz.bas.types.util.PrefetchedIterator;
+import sun.dyn.empty.Empty;
 
 /**
  * @test {@link FilesTest}

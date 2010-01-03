@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import net.bodz.bas.commons.collection.IntSList;
+import net.bodz.bas.lang.modules.collection.IntSList;
 
 import org.junit.Test;
 

@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.commons.collection.hierarchical.TypeHierMap;
+import net.bodz.bas.lang.modules.collection.hierarchical.TypeHierMap;
 
 import org.junit.Test;
 

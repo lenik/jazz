@@ -6,15 +6,12 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.Map.Entry;
 
-import net.bodz.bas.commons.collection.util.Arrays2;
+import net.bodz.bas.closures.alt.Filt1;
 import net.bodz.bas.commons.util.Objects;
-import net.bodz.bas.lang.err.UnexpectedException;
-import net.bodz.bas.lang2.Filt1;
-import net.bodz.bas.text.util.Strings;
-import net.bodz.bas.types.TextMap;
-import net.bodz.bas.types.TreeTextMap;
 
 /**
  * <pre>
@@ -32,13 +29,13 @@ public class CURL {
 
     private String type;
     private Alpha[] alphas;
-    private TextMap<String> parameters;
+    private Map<String, String> parameters;
 
     public CURL(String type, Alpha... alphas) {
         this(type, alphas, null);
     }
 
-    public CURL(String type, Alpha[] alphas, TextMap<String> parameters) {
+    public CURL(String type, Alpha[] alphas, Map<String, String> parameters) {
         if (alphas == null)
             throw new NullPointerException("alphas"); //$NON-NLS-1$
         if (alphas.length == 0)
@@ -120,11 +117,11 @@ public class CURL {
         return alphas.toArray(new Alpha[0]);
     }
 
-    public TextMap<String> getParameters() {
+    public Map<String, String> getParameters() {
         return parameters;
     }
 
-    public void setParameters(TextMap<String> parameters) {
+    public void setParameters(Map<String, String> parameters) {
         this.parameters = parameters;
     }
 
@@ -136,7 +133,7 @@ public class CURL {
 
     public void setParameter(String name, String value) {
         if (parameters == null)
-            parameters = new TreeTextMap<String>();
+            parameters = new TreeMap<String, String>();
         parameters.put(name, value);
     }
 
@@ -160,10 +157,10 @@ public class CURL {
         return buf.toString();
     }
 
-    public static TextMap<String> parseParameters(String s) {
+    public static Map<String, String> parseParameters(String s) {
         if (s == null)
             throw new NullPointerException("s"); //$NON-NLS-1$
-        TextMap<String> parameters = new TreeTextMap<String>();
+        Map<String, String> parameters = new TreeMap<String, String>();
         int p;
         while (true) {
             p = s.indexOf('&');

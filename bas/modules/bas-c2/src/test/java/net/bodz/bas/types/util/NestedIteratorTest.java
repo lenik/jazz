@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.Arrays;
 import java.util.Iterator;
 
-import net.bodz.bas.commons.iterators.NestedIterator;
+import net.bodz.bas.lang.modules.iterators.NestedIterator;
 
 import org.junit.Test;
 

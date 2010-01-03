@@ -1,8 +1,5 @@
 package net.bodz.bas.exceptions;
 
-import net.bodz.bas.i18n.nls_2.NLS;
-import net.bodz.bas.lang.ModuleInfo;
-
 public class IllegalArgumentTypeException
         extends IllegalArgumentException {
 
@@ -45,9 +42,8 @@ public class IllegalArgumentTypeException
         if (expected == null)
             return String.valueOf(argType);
         else
-            return String.valueOf(argType) + NLS.getString("_expect") + expected; //$NON-NLS-1$
-    }
+            return String.format("%s: expect %s", argType, expected);
 
-    private static NLS NLS = ModuleInfo.getInstance().getNLS();
+    }
 
 }

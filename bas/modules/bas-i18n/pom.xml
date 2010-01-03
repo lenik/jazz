@@ -8,11 +8,6 @@
 	</parent>
 	<artifactId>bas-i18n</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<dependencies>
-		<dependency>
-			<groupId>net.bodz.bas</groupId>
-			<artifactId>bas-c1</artifactId>
-		</dependency>
-	</dependencies>
+	<dependencies/>
 	<name>BAS :: Internationalization</name>
 </project>

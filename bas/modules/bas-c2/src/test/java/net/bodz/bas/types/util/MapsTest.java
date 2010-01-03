@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.bodz.bas.commons.collection.util.Maps;
+import net.bodz.bas.lang.modules.collection.util.Maps;
 
 import org.junit.Test;
 
@@ -20,7 +20,7 @@ public class MapsTest {
         list.add("a"); //$NON-NLS-1$
         list.add("b"); //$NON-NLS-1$
         list.add("c"); //$NON-NLS-1$
-        Map<Integer, String> map = Maps.toMap(list);
+        Map<Integer, String> map = DumpMap.toMap(list);
         assertEquals("a", map.get(0)); //$NON-NLS-1$
         assertEquals("b", map.get(1)); //$NON-NLS-1$
         assertEquals("c", map.get(2)); //$NON-NLS-1$

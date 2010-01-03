@@ -1,7 +1,5 @@
 package net.bodz.bas.exceptions;
 
-import net.bodz.bas.i18n.nls_2.NLS;
-import net.bodz.bas.lang.ModuleInfo;
 
 public class ParseException
         extends Exception {
@@ -29,7 +27,7 @@ public class ParseException
     }
 
     public ParseException(Class<?> unparsableType, String unparsableText) {
-        this(NLS.format("unknownParse: %s", unparsableType));
+        this(String.format("Don't know how to parse %s", unparsableType));
     }
 
     public void setLocation(String source) {
@@ -101,7 +99,5 @@ public class ParseException
             buf.append(' ');
         return buf.toString();
     }
-
-    private static NLS NLS = ModuleInfo.getInstance().getNLS();
 
 }

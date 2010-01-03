@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-import net.bodz.bas.collection.util.ArrayOps;
+import net.bodz.bas.collection.array.ArrayOps;
+import net.bodz.bas.lang.Nullables;
 import net.bodz.bas.nls.TypesNLS;
 
 public class Objects {
@@ -25,7 +26,7 @@ public class Objects {
     }
 
     /**
-     * @see net.bodz.bas.commons.collection.util.ArrayOps.Bytes#equalsWithWrap(byte[], byte[])
+     * @see net.bodz.bas.c1.collection.util.ArrayOps.Bytes#equalsWithWrap(byte[], byte[])
      */
     @Deprecated
     public static boolean equalsWithWrap(byte[] pattern, byte[] bytes, int off) {
@@ -39,22 +40,13 @@ public class Objects {
         return true;
     }
 
-    /**
-     * @return <code>true</code> if both a and b are <code>null</code>, or <code>a.equals(b)</code>
-     */
-    public static final boolean equals(Object a, Object b) {
-        if (a == null || b == null)
-            return a == b;
-        return a.equals(b);
-    }
-
     @Deprecated
     public static boolean equals(Object[] pattern, Object[] objs, int off) {
         assert pattern != null;
         assert objs != null;
         assert off >= 0 && objs.length >= pattern.length + off;
         for (int i = 0; i < pattern.length; i++) {
-            if (!equals(objs[off + i], pattern[i]))
+            if (!Nullables.equals(objs[off + i], pattern[i]))
                 return false;
         }
         return true;
@@ -65,14 +57,15 @@ public class Objects {
         for (int i = 0; i < pattern.length; i++) {
             if (off >= objs.length)
                 off = 0;
-            if (!equals(pattern[i], objs[off]))
+            if (!Nullables.equals(pattern[i], objs[off]))
                 return false;
             off++;
         }
         return true;
     }
 
-    public static Object cloneByConstructor(Object object, Class<?> copyClass) throws CloneNotSupportedException {
+    public static Object cloneByConstructor(Object object, Class<?> copyClass)
+            throws CloneNotSupportedException {
         if (object == null)
             return null;
         Class<?> cls = object.getClass();
@@ -94,7 +87,8 @@ public class Objects {
         }
     }
 
-    public static Object cloneByPersistency(Serializable object) throws CloneNotSupportedException {
+    public static Object cloneByPersistency(Serializable object)
+            throws CloneNotSupportedException {
         return null;
     }
 

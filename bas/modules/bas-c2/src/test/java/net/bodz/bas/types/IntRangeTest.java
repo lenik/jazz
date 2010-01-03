@@ -2,7 +2,7 @@ package net.bodz.bas.types;
 
 import static org.junit.Assert.assertEquals;
 
-import net.bodz.bas.commons.collection.fast.IntRange;
+import net.bodz.bas.lang.modules.collection.fast.IntRange;
 
 import org.junit.Test;
 

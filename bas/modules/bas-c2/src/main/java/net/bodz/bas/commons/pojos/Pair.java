@@ -10,7 +10,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
-public class Pair<K, V> implements Map<K, V>, Entry<K, V>, Serializable {
+public class Pair<K, V>
+        implements Entry<K, V>, Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     public K first;
     public V second;
@@ -177,7 +180,5 @@ public class Pair<K, V> implements Map<K, V>, Entry<K, V>, Serializable {
         second = value;
         return old;
     }
-
-    private static final long serialVersionUID = -7265744237177039061L;
 
 }

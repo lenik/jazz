@@ -5,12 +5,11 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.nio.charset.Charset;
+import java.rmi.UnexpectedException;
 
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.WriterOutputStream;
-import net.bodz.bas.lang.err.UnexpectedException;
-import net.bodz.bas.text.util.Strings;
-
+s
 public abstract class _Terminal implements Terminal {
 
     @Override

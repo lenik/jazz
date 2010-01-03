@@ -3,7 +3,7 @@ package net.bodz.bas.types.util;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import net.bodz.bas.commons.collection.fast.List1s;
+import net.bodz.bas.lang.modules.collection.fast.List1s;
 
 import org.junit.Test;
 

@@ -1,5 +1,7 @@
 package net.bodz.bas.commons.ref;
 
+import net.bodz.bas.lang.Ref;
+
 public class ThreadLocalRef<T> implements Ref<T> {
 
     private ThreadLocal<T> local = new ThreadLocal<T>();
