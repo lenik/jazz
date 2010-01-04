@@ -21,7 +21,6 @@
 		</dependency>
 	</dependencies>
 	<modules>
-		<module>extern</module>
 		<module>layer-1</module>
 		<module>layer-2</module>
 		<module>layer-3</module>

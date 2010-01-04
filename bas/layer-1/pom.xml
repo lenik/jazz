@@ -13,13 +13,15 @@
 		<module>bas-closure</module>
 		<module>bas-hint</module>
 		<module>bas-io</module>
-		<module>bas-lang</module>
 		<module>bas-jvmhack</module>
+		<module>bas-lang</module>
 		<module>bas-loader</module>
 		<module>bas-memoryio</module>
 		<module>bas-natives</module>
 		<module>bas-network</module>
+		<module>bas-primitive</module>
 		<module>bas-proxy</module>
+		<module>bas-sysinfo</module>
 		<module>bas-type</module>
 	</modules>
 	<name>BAS :: Layer 1</name>
