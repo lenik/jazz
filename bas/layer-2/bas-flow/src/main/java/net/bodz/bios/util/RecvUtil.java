@@ -4,8 +4,8 @@ import static net.bodz.bas.commons.scripting.util.Members.publicMethods;
 
 import java.io.IOException;
 
+import net.bodz.bas.arch.ClassLocal;
 import net.bodz.bas.commons.scripting.util.MethodEx;
-import net.bodz.bas.commons.typealiases.ClassLocal;
 import net.bodz.bios.ReceiverEx;
 
 @SuppressWarnings("deprecation")

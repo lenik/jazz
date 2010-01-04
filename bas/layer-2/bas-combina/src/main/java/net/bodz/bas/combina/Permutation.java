@@ -1,65 +1,62 @@
-package net.bodz.bas.math;
+package net.bodz.bas.combina;
 
 import java.lang.reflect.Array;
 
-import net.bodz.bas.closures.alt.Proc1;
-import net.bodz.bas.collection.array.ArrayOp;
-import net.bodz.bas.collection.array.ArrayOps;
-import net.bodz.bas.collection.array.Arrays2;
+import net.bodz.bas.closure.alt.Proc1;
+import net.bodz.bas.collection.array.IArrayWrapper;
 import net.bodz.bas.collection.list.IntSList;
-import net.bodz.bas.exceptions.OutOfDomainException;
 
-public class Perms {
+/**
+ * @test {@link PermutationTest}
+ */
+public class Permutation {
 
-    private static <A> void _iterate(A array, int off, int len, Proc1<A> visitor) {
+    private static <A, E> void _iterate(IArrayWrapper<A, E> array, int off, int len, Proc1<A> visitor) {
         if (len == 1) {
-            visitor.exec(array);
+            visitor.exec(array.getArray());
             return;
         }
-        ArrayOp<A> op = ArrayOps.get(array);
         int count = len;
         while (count-- > 0) {
             _iterate(array, off + 1, len - 1, visitor);
             if (count != 0)
-                op.reverse(array, off, off + len);
+                array.reverse(off, off + len);
         }
     }
 
-    public static <A> void iterate(A array, int off, int len, Proc1<A> closure) {
-        A copy = Arrays2.copyOf(array, off, len);
-        _iterate(copy, off, len, closure);
+    public static <A, E> void iterate(IArrayWrapper<A, E> array, Proc1<A> closure) {
+        _iterate(array.copy(), 0, array.length(), closure);
     }
 
-    public static <A> void iterateInPlace(A array, int off, int len, Proc1<A> closure) {
-        _iterate(array, off, len, closure);
-        Arrays2.reverse(array, off, len);
+    public static <A, E> void iterateInPlace(IArrayWrapper<A, E> array, int off, int len, Proc1<A> closure) {
+        _iterate(array, 0, array.length(), closure);
+        array.reverse();
     }
 
-    public static <A> void iterate(A array, Proc1<A> closure) {
+    public static <A, E> void iterate(IArrayWrapper<A, E> array, Proc1<A> closure) {
         iterate(array, 0, Array.getLength(array), closure);
     }
 
-    public static <A> void iterateInPlace(A array, Proc1<A> closure) {
+    public static <A, E> void iterateInPlace(IArrayWrapper<A, E> array, Proc1<A> closure) {
         iterateInPlace(array, 0, Array.getLength(array), closure);
     }
 
-    public static <A> void perm(int ord, A src, int srcoff, int srclen, A dst, int dstoff, int dstlen) {
-        ArrayOp<A> op = ArrayOps.get(src);
-
-        int[] ordv = new int[dstlen];
-        for (int n = 2; n <= dstlen; n++) { // i = 1..len-1
+    public static <A, E> void perm(int ord, IArrayWrapper<A, E> array, A output, int outputOffset) {
+        int length = array.length();
+        int[] ordv = new int[length];
+        for (int n = 2; n <= length; n++) { // i = 1..len-1
             int mod = ord % n; // mod = ord % (i + 1)
             ord /= n;
-            ordv[dstlen - n] = mod; // ordv[len - 1 - i] = mod
+            ordv[length - n] = mod; // ordv[len - 1 - i] = mod
         }
-        assert ordv[dstlen - 1] == 0;
+        assert ordv[length - 1] == 0;
 
         IntSList candidates = new IntSList(srclen);
-        for (int i = 0; i < dstlen; i++) {
+        for (int i = 0; i < length; i++) {
             int mod = ordv[i];
             int srcindex = candidates.remove(mod);
-            Object val = op.get(src, srcoff + srcindex);
-            op.set(dst, dstoff + i, val);
+            Object val = op.get(array, srcoff + srcindex);
+            op.set(output, outputOffset + i, val);
         }
     }
 

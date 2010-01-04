@@ -1,11 +1,11 @@
-package net.bodz.bas.math;
+package net.bodz.bas.primitive;
 
 import net.bodz.bas.hint.GeneratedCode;
 
 public class ErrorToleranceDouble
         extends Number {
 
-    private static final long serialVersionUID = -8213113619672707641L;
+    private static final long serialVersionUID = 1L;
 
     private final double min;
     private final double max;

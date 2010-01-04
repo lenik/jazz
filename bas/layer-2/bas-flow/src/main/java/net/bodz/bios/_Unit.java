@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.bodz.bas.arch.ClassLocal;
 import net.bodz.bas.commons.annotations.MetaClass;
-import net.bodz.bas.commons.typealiases.ClassLocal;
 import net.bodz.bas.commons.util.Annotations;
 import net.bodz.bas.commons.util.Types;
 import net.bodz.bas.io.CharOut;

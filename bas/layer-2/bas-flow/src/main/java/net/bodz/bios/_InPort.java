@@ -2,9 +2,9 @@ package net.bodz.bios;
 
 import java.io.IOException;
 
+import net.bodz.bas.arch.ClassLocal;
 import net.bodz.bas.commons.annotations.MetaClass;
 import net.bodz.bas.commons.exceptions.OutOfDomainException;
-import net.bodz.bas.commons.typealiases.ClassLocal;
 import net.bodz.bas.commons.util.Annotations;
 import net.bodz.bas.commons.util.Types;
 
