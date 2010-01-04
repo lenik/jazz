@@ -11,8 +11,8 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<modules>
 		<module>bas-text-api</module>
-		<module>bas-text-lop</module>
-		<module>bas-text-encoding</module>
+		<module>bas-lop</module>
+		<module>bas-encodings</module>
 		<module>bas-text-prep</module>
 		<module>bas-text-diff</module>
 	</modules>
