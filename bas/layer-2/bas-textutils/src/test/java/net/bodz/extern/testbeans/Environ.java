@@ -2,7 +2,8 @@ package net.bodz.extern.testbeans;
 
 import java.util.HashMap;
 
-public class Environ extends HashMap<String, String> {
+public class Environ
+        extends HashMap<String, String> {
 
     private static final long serialVersionUID = 976559069439914042L;
 

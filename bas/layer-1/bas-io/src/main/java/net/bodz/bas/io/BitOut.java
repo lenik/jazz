@@ -2,9 +2,9 @@ package net.bodz.bas.io;
 
 import java.io.IOException;
 
-import net.bodz.bas.math.IBits;
-import net.bodz.bas.types.Bits.BytevLE;
-import net.bodz.bas.types.Bits.IntvLE;
+import net.bodz.bas.primitive.IBits;
+import net.bodz.bas.primitive.Bits.BytevLE;
+import net.bodz.bas.primitive.Bits.IntvLE;
 
 public abstract class BitOut implements IBitOut {
 

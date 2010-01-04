@@ -3,8 +3,6 @@ package net.bodz.bas.io.term;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import net.bodz.bas.text.util.Strings;
-
 public class CollectionTerminal extends BufferedTerminal {
 
     private final Object prefix;

@@ -2,8 +2,6 @@ package net.bodz.bas.io;
 
 import java.io.File;
 
-import net.bodz.bas.nls.SysNLS;
-
 public class FileResFolder implements ResFolder {
 
     private final File dir;

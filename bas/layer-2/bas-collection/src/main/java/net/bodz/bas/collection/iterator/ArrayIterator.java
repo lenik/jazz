@@ -7,13 +7,17 @@ public class ArrayIterator<T>
         implements Iterator<T> {
 
     private T[] array;
-    private int next = 0;
+    private int next;
 
-    public ArrayIterator(T[] array, int next) {
+    public ArrayIterator(T[] array) {
+        this(array, 0);
+    }
+
+    public ArrayIterator(T[] array, int start) {
         if (array == null)
             throw new NullPointerException("array");
         this.array = array;
-        this.next = next;
+        this.next = start;
     }
 
     @Override
@@ -34,6 +38,10 @@ public class ArrayIterator<T>
     @Override
     public void remove() {
         throw new UnsupportedOperationException();
+    }
+
+    public static <T> ArrayIterator<T> getInstance(T[] array) {
+        return new ArrayIterator<T>(array);
     }
 
 }

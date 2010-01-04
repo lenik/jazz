@@ -9,8 +9,6 @@ import java.net.URL;
 import java.util.jar.JarFile;
 import java.util.zip.ZipFile;
 
-import net.bodz.bas.nls.SysNLS;
-
 public class URLResLink extends _ResLink {
 
     private URL url;

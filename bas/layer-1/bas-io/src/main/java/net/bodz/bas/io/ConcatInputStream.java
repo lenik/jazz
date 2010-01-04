@@ -5,9 +5,10 @@ import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import net.bodz.bas.lang.a.Derived;
+import net.bodz.bas.hint.GeneratedCode;
 
-public class ConcatInputStream extends InputStream {
+public class ConcatInputStream
+        extends InputStream {
 
     protected final Queue<InputStream> q;
     private boolean fast = true;
@@ -22,7 +23,7 @@ public class ConcatInputStream extends InputStream {
         this(defaultQueue(ins));
     }
 
-    @Derived(ConcatReader.class)
+    @GeneratedCode(ConcatReader.class)
     static Queue<InputStream> defaultQueue(InputStream... ins) {
         LinkedList<InputStream> queue = new LinkedList<InputStream>();
         for (InputStream in : ins)
@@ -31,7 +32,8 @@ public class ConcatInputStream extends InputStream {
     }
 
     @Override
-    public int available() throws IOException {
+    public int available()
+            throws IOException {
         if (q.isEmpty())
             return 0;
         InputStream head = q.peek();
@@ -43,18 +45,20 @@ public class ConcatInputStream extends InputStream {
         return avail;
     }
 
-    @Derived(ConcatReader.class)
+    @GeneratedCode(ConcatReader.class)
     @Override
-    public void close() throws IOException {
+    public void close()
+            throws IOException {
         while (!q.isEmpty()) {
             InputStream in = q.remove();
             in.close();
         }
     }
 
-    @Derived(ConcatReader.class)
+    @GeneratedCode(ConcatReader.class)
     @Override
-    public int read() throws IOException {
+    public int read()
+            throws IOException {
         if (q.isEmpty())
             return -1;
         InputStream head = q.peek();
@@ -66,9 +70,10 @@ public class ConcatInputStream extends InputStream {
         return c;
     }
 
-    @Derived(ConcatReader.class)
+    @GeneratedCode(ConcatReader.class)
     @Override
-    public int read(byte[] b, int off, int len) throws IOException {
+    public int read(byte[] b, int off, int len)
+            throws IOException {
         if (q.isEmpty())
             return -1;
         int sum = 0;
@@ -95,9 +100,10 @@ public class ConcatInputStream extends InputStream {
         return sum;
     }
 
-    @Derived(ConcatReader.class)
+    @GeneratedCode(ConcatReader.class)
     @Override
-    public long skip(long n) throws IOException {
+    public long skip(long n)
+            throws IOException {
         if (q.isEmpty())
             return 0;
         long sum = 0;

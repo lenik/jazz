@@ -10,8 +10,6 @@ import java.net.URL;
 import java.util.jar.JarFile;
 import java.util.zip.ZipFile;
 
-import net.bodz.bas.nls.SysNLS;
-
 public class FileResLink extends _ResLink {
 
     private final File file;

@@ -8,6 +8,20 @@
     </parent>
     <artifactId>bas-security</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <dependencies />
+    <dependencies >
+    	<dependency>
+    		<groupId>net.bodz.bas</groupId>
+    		<artifactId>bas-io</artifactId>
+    		<version>0.0.1-SNAPSHOT</version>
+    		<type>jar</type>
+    		<scope>compile</scope>
+    	</dependency>
+    	<dependency>
+    		<groupId>net.bodz.bas</groupId>
+    		<artifactId>bas-hint</artifactId>
+    		<version>0.0.2-SNAPSHOT</version>
+    		<scope>compile</scope>
+    	</dependency>
+    </dependencies>
     <name>BAS :: Layer 2 :: Security Utilities</name>
 </project>
