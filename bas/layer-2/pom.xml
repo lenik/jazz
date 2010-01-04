@@ -13,13 +13,15 @@
 		<module>bas-arch</module>
 		<module>bas-c2</module>
 		<module>bas-collection</module>
+		<module>bas-combina</module>
 		<module>bas-database</module>
 		<module>bas-flow</module>
 		<module>bas-fsm</module>
 		<module>bas-i18n</module>
 		<module>bas-l10n</module>
-		<module>bas-textutils</module>
-		<module>bas-utils</module>
+		<module>bas-security</module>
+		<module>bas-text</module>
+		<module>bas-xml</module>
 	</modules>
 	<name>BAS :: Layer 2</name>
 </project>
