@@ -18,6 +18,11 @@
 			<artifactId>bas-hint</artifactId>
 			<version>0.0.2-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>net.bodz.bas</groupId>
+			<artifactId>bas-lang</artifactId>
+			<version>0.0.2-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 	<name>BAS :: Layer 2 :: Collection Types</name>
 </project>
