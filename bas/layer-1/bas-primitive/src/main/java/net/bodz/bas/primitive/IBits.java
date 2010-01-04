@@ -1,4 +1,4 @@
-package net.bodz.bas.math;
+package net.bodz.bas.primitive;
 
 public interface IBits {
 

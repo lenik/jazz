@@ -1,4 +1,4 @@
-package net.bodz.bas.math;
+package net.bodz.bas.commons.scripting.util;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;

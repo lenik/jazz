@@ -6,7 +6,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.commons.typealiases.ClassLocal;
+import net.bodz.bas.arch.ClassLocal;
 import net.bodz.bas.commons.util.Annotations;
 import net.bodz.bas.commons.util.Ns;
 import net.bodz.bas.text.util.Strings;

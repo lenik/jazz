@@ -12,13 +12,13 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import net.bodz.bas.a.A_bas;
+import net.bodz.bas.arch.ClassLocal;
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.collection.comparators.Comparators;
 import net.bodz.bas.commons.exceptions.ParseException;
 import net.bodz.bas.commons.functor.Filt1;
 import net.bodz.bas.commons.scripting.Reflects;
 import net.bodz.bas.commons.scripting.util.Members;
-import net.bodz.bas.commons.typealiases.ClassLocal;
 import net.bodz.bas.commons.util.Ns;
 import net.bodz.bas.nls.AppNLS;
 import net.bodz.bas.text.util.Strings;

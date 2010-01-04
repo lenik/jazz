@@ -1,6 +1,5 @@
-package net.bodz.bas.types.util;
+package net.bodz.bas.combina;
 
-import static net.bodz.bas.lang.modules.collection.util.ArrayOps.Ints;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -10,21 +9,18 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.bodz.bas.closures.alt.Proc1;
-import net.bodz.bas.lang.io.term.Terminal;
-import net.bodz.bas.lang.util.LogTerm;
-import net.bodz.bas.lang.util.LogTerms;
-import net.bodz.bas.math.IntMath;
-import net.bodz.mia.perms.Perms;
+import net.bodz.bas.closure.alt.Proc1;
+import net.bodz.bas.collection.primitive.IntegerCollection;
+import net.bodz.bas.primitive.IntMath;
 
 import org.junit.Test;
 
-public class PermsTest {
+public class PermutationTest {
 
     static LogTerm logger = LogTerms.get(1);
     int count = 0;
 
-    public PermsTest() {
+    public PermutationTest() {
         logger.setLevel(LogTerm.INFO);
     }
 
@@ -34,7 +30,7 @@ public class PermsTest {
         final char[] array = orig.toCharArray();
         final Set<String> instances = new HashSet<String>();
 
-        Perms.iterate(array, new Proc1<char[]>() {
+        Permutation.iterate(array, new Proc1<char[]>() {
             @Override
             public void exec(char[] inst) {
                 count++;
@@ -66,12 +62,12 @@ public class PermsTest {
         }
 
         String eval(Integer ord) {
-            Perms.perm(ord, src, dst);
+            Permutation.perm(ord, src, dst);
             return new String(dst);
         }
 
         void o(Integer ord, String expected) {
-            Perms.perm(ord, src, dst);
+            Permutation.perm(ord, src, dst);
             String actual = new String(dst);
             assertEquals(expected, actual);
         }
@@ -161,7 +157,7 @@ public class PermsTest {
 
         public void o(String input, int expected) {
             char[] dst = input.toCharArray();
-            int actual = Perms.ord(src, dst);
+            int actual = Permutation.ord(src, dst);
             assertEquals(expected, actual);
         }
     }
@@ -226,15 +222,15 @@ public class PermsTest {
     public void testIterOrd() {
         final char[] src = "1234".toCharArray(); //$NON-NLS-1$
         final List<Integer> ords = new ArrayList<Integer>();
-        Perms.iterate(src, new Proc1<char[]>() {
+        Permutation.iterate(src, new Proc1<char[]>() {
             @Override
             public void exec(char[] inst) {
-                int ord = Perms.ord(src, inst);
+                int ord = Permutation.ord(src, inst);
                 ords.add(ord);
             }
         });
         int[] expecteds = { 0, 1, 3, 2, 4, 5, 9, 8, 10, 11, 6, 7, 16, 17, 12, 13, 15, 14, 18, 19, 21, 20, 22, 23, };
-        int[] actuals = Ints.toArray(ords);
+        int[] actuals = IntegerCollection.toArray(ords);
         assertArrayEquals(expecteds, actuals);
     }
 
