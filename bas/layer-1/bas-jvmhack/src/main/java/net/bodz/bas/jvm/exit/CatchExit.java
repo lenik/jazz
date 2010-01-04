@@ -1,6 +1,6 @@
 package net.bodz.bas.jvm.exit;
 
-import net.bodz.bas.closures.IExecutable;
+import net.bodz.bas.closure.IExecutable;
 import net.bodz.bas.proxy.java.security.ProxySecurityManager;
 
 /**

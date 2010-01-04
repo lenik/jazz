@@ -16,7 +16,7 @@ import net.bodz.bas.commons.typealiases.TreeTextMap;
 import net.bodz.bas.commons.typealiases.TypeMap;
 import net.bodz.bas.commons.typealiases.TypeMap.HashTypeMap;
 import net.bodz.bas.nls.AppNLS;
-import net.bodz.bas.sys.SystemProperties;
+import net.bodz.bas.sysinfo.SystemProperties;
 import net.bodz.bas.text.util.Strings;
 
 /**

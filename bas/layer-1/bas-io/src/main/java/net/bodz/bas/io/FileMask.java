@@ -2,8 +2,6 @@ package net.bodz.bas.io;
 
 import java.io.File;
 
-import net.bodz.bas.nls.SysNLS;
-
 public class FileMask {
 
     public static final int READ = 0x00000001;

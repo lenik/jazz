@@ -12,8 +12,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
-import net.bodz.bas.nls.SysNLS;
-
 public class ZipResFolder implements ResFolder {
 
     private final File file;

@@ -36,15 +36,14 @@ import java.util.Properties;
 import java.util.jar.Manifest;
 import java.util.regex.Pattern;
 
-import net.bodz.bas.closures.alt.Pred2;
+import net.bodz.bas.collection.iterator.PrefetchedIterator;
 import net.bodz.bas.exceptions.IdentifiedException;
 import net.bodz.bas.exceptions.IllegalArgumentTypeException;
 import net.bodz.bas.exceptions.RuntimizedException;
 import net.bodz.bas.exceptions.UnexpectedException;
 import net.bodz.bas.exceptions.WrappedException;
-import net.bodz.bas.math.Bits;
-import net.bodz.bas.math.IntMath;
-import net.bodz.bas.nls.SysNLS;
+import net.bodz.bas.primitive.Bits;
+import net.bodz.bas.primitive.IntMath;
 import sun.dyn.empty.Empty;
 
 /**

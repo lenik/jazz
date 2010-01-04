@@ -1,7 +1,7 @@
 package net.bodz.bas.jvm.exit;
 
 import static org.junit.Assert.assertEquals;
-import net.bodz.bas.closures.IExecutable;
+import net.bodz.bas.closure.IExecutable;
 
 import org.junit.Test;
 

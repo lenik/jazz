@@ -5,8 +5,8 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.nio.charset.Charset;
-import java.rmi.UnexpectedException;
 
+import net.bodz.bas.exceptions.UnexpectedException;
 import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.WriterOutputStream;
 s

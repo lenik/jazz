@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.BufferOverflowException;
 
-import net.bodz.bas.commons.buffer.ByteRing;
+import net.bodz.bas.collection.buffer.ByteRing;
 
 public class ByteRingOutputStream extends OutputStream {
 

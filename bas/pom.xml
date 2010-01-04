@@ -21,10 +21,11 @@
 		</dependency>
 	</dependencies>
 	<modules>
-		<module>bas-incubator</module>
+		<module>extern</module>
 		<module>layer-1</module>
 		<module>layer-2</module>
 		<module>layer-3</module>
+		<module>bas-incubator</module>
 	</modules>
 	<name>BAS Framework</name>
 	<url>http://bas.bodz.net/</url>

@@ -28,6 +28,12 @@
 			<artifactId>bas-loader</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>net.bodz.bas</groupId>
+			<artifactId>bas-closure</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 	<name>BAS :: Layer 1 :: JVM Hacks</name>
 </project>

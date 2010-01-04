@@ -10,14 +10,15 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import net.bodz.bas.types.util.Iterators;
-import net.bodz.bas.types.util.PrefetchedIterator;
-import net.bodz.bas.types.util.StackedIterator;
+import net.bodz.bas.collection.iterator.ArrayIterator;
+import net.bodz.bas.collection.iterator.PrefetchedIterator;
+import net.bodz.bas.collection.iterator.StackedIterator;
 
 /**
  * @test FileFinderTest
  */
-public class FileFinder implements Iterable<File> {
+public class FileFinder
+        implements Iterable<File> {
 
     private static final int defaultMaxDepth = 256;
 
@@ -25,7 +26,7 @@ public class FileFinder implements Iterable<File> {
     public static final int DIR = 2;
     public static final int DIR_POST = 4;
 
-    private File[] start;
+    private File[] startFiles;
     private FileFilter userFilter;
     private boolean prune;
     private FileFilter filter;
@@ -34,7 +35,8 @@ public class FileFinder implements Iterable<File> {
     private int order = FILE | DIR;
     private Comparator<File> comparator;
 
-    class Filter implements FileFilter {
+    class Filter
+            implements FileFilter {
 
         @Override
         public boolean accept(File file) {
@@ -49,7 +51,7 @@ public class FileFinder implements Iterable<File> {
     }
 
     public FileFinder(FileFilter filter, boolean prune, int maxDepth, File... start) {
-        this.start = start;
+        this.startFiles = start;
         this.userFilter = filter;
         this.prune = prune;
         this.maxDepth = maxDepth;
@@ -77,11 +79,11 @@ public class FileFinder implements Iterable<File> {
     }
 
     public File[] getStart() {
-        return start;
+        return startFiles;
     }
 
     public void setStart(File... start) {
-        this.start = start;
+        this.startFiles = start;
     }
 
     public FileFilter getFilter() {
@@ -126,12 +128,13 @@ public class FileFinder implements Iterable<File> {
         this.comparator = comparator;
     }
 
-    class RecIter extends PrefetchedIterator<File> {
+    class RecIter
+            extends PrefetchedIterator<File> {
 
         StackedIterator<File> stack;
 
         public RecIter() {
-            Iterator<File> startIter = Iterators.iterator(start);
+            Iterator<File> startIter = ArrayIterator.getInstance(startFiles);
             stack = new StackedIterator<File>(startIter);
         }
 
@@ -149,7 +152,7 @@ public class FileFinder implements Iterable<File> {
                 if (children.length > 0) {
                     if (comparator != null)
                         Arrays.sort(children, comparator);
-                    Iterator<File> citer = Iterators.iterator(children);
+                    Iterator<File> citer = ArrayIterator.getInstance(children);
                     stack.push(citer);
                 }
             }
@@ -160,7 +163,8 @@ public class FileFinder implements Iterable<File> {
 
     } // RecIter
 
-    public Collection<String> list() throws IOException {
+    public Collection<String> list()
+            throws IOException {
         List<String> list = new ArrayList<String>();
         RecIter iter = new RecIter();
         while (iter.hasNext()) {
@@ -170,7 +174,8 @@ public class FileFinder implements Iterable<File> {
         return list;
     }
 
-    public Collection<File> listFiles() throws IOException {
+    public Collection<File> listFiles()
+            throws IOException {
         List<File> list = new ArrayList<File>();
         RecIter iter = new RecIter();
         while (iter.hasNext()) {

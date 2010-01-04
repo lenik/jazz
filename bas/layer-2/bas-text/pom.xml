@@ -10,11 +10,11 @@
 	<packaging>pom</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<modules>
-		<module>bas-text-api</module>
-		<module>bas-lop</module>
 		<module>bas-encodings</module>
-		<module>bas-text-prep</module>
+		<module>bas-lop</module>
 		<module>bas-text-diff</module>
+		<module>bas-text-prep</module>
+		<module>bas-text-util</module>
 	</modules>
 	<name>BAS :: Layer 2 :: Text</name>
 </project>
