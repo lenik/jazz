@@ -3,9 +3,6 @@ package net.bodz.bas.text.util;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.bodz.bas.io.CharOuts.BCharOut;
-import net.bodz.bas.lang.a.OverrideOption;
-
 public class PatternProcessor extends BCharOut {
 
     protected Pattern pattern;
@@ -87,7 +84,7 @@ public class PatternProcessor extends BCharOut {
 
     @Override
     public String toString() {
-        return getClass() + "-" + System.identityHashCode(this); //$NON-NLS-1$
+        return getClass() + "-" + System.identityHashCode(this); 
     }
 
 }

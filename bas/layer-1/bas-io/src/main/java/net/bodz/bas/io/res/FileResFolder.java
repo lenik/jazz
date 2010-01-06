@@ -19,10 +19,10 @@ public class FileResFolder implements ResFolder {
 
     public FileResFolder(File dir, boolean mkdirsWhenAccess, boolean mkdirsWhenWrite) {
         if (dir == null)
-            throw new NullPointerException("dir"); //$NON-NLS-1$
+            throw new NullPointerException("dir"); 
         if (dir.exists()) {
             if (!dir.isDirectory())
-                throw new IllegalStateException(SysNLS.getString("FileResFolder.nondirWithSameName") + dir); //$NON-NLS-1$
+                throw new IllegalStateException("Non-directory with the same path is already existed: " + dir); 
         }
         this.dir = dir;
         this.mkdirsWhenAccess = mkdirsWhenAccess;
@@ -69,9 +69,9 @@ public class FileResFolder implements ResFolder {
     public String toString() {
         String s = dir.toString();
         if (mkdirsWhenAccess)
-            s = "* " + s; //$NON-NLS-1$
+            s = "* " + s; 
         if (mkdirsWhenWrite)
-            s = "* " + s; //$NON-NLS-1$
+            s = "* " + s; 
         return s;
     }
 

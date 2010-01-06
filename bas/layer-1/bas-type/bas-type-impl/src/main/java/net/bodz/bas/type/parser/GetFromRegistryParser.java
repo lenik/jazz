@@ -21,11 +21,11 @@ public class GetFromRegistryParser
             Field field = registryClass.getField(entry);
             return field.get(null);
         } catch (NoSuchFieldException e) {
-            throw new ParseException(TypesNLS.getString("GetFromRegistryParser.0") + entry //$NON-NLS-1$
-                    + TypesNLS.getString("GetFromRegistryParser.1") + registryClass, e); //$NON-NLS-1$
+            throw new ParseException("Entry " + entry 
+                    + " isn\'t defined in registry " + registryClass, e); 
         } catch (Exception e) {
-            throw new ParseException(TypesNLS.getString("GetFromRegistryParser.2") + entry //$NON-NLS-1$
-                    + TypesNLS.getString("GetFromRegistryParser.3") + registryClass); //$NON-NLS-1$
+            throw new ParseException("Failed to load entry " + entry 
+                    + " in registry " + registryClass); 
         }
     }
 

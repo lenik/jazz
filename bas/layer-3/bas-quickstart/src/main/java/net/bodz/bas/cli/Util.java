@@ -15,11 +15,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.Map.Entry;
 
-import net.bodz.bas.api.types.TypeParser;
-import net.bodz.bas.commons.exceptions.ParseException;
-import net.bodz.bas.commons.scripting.ScriptException;
-import net.bodz.bas.nls.AppNLS;
-import net.bodz.bas.type.feature.impl.TypeParsers;
+import javax.script.ScriptException;
 
 class Util {
 
@@ -61,7 +57,7 @@ class Util {
                     else if (Map.class.isAssignableFrom(type))
                         type = HashMap.class;
                     else
-                        throw new ScriptException(AppNLS.getString("Util.cantNewInst") //$NON-NLS-1$
+                        throw new ScriptException("don\'t know how to create new instance of abstract class/interface " 
                                 + type);
                 }
                 fieldobj = (T) type.newInstance();
@@ -88,55 +84,55 @@ class Util {
 
     public static String dispval(Object o) {
         if (o == null)
-            return AppNLS.getString("Util.null"); //$NON-NLS-1$
+            return "null"; 
         Class<?> type = o.getClass();
         StringBuffer buf = null;
         if (type.isArray()) {
             int l = Array.getLength(o);
             buf = new StringBuffer(l * 20);
-            buf.append("{"); //$NON-NLS-1$
+            buf.append("{"); 
             for (int i = 0; i < l; i++) {
                 if (i > 0)
-                    buf.append(", "); //$NON-NLS-1$
+                    buf.append(", "); 
                 buf.append(dispval(Array.get(o, i)));
             }
-            buf.append("}"); //$NON-NLS-1$
+            buf.append("}"); 
         } else if (o instanceof Collection<?>) {
             Collection<?> col = (Collection<?>) o;
             buf = new StringBuffer(col.size() * 20);
-            buf.append(type.getSimpleName() + " {"); //$NON-NLS-1$
+            buf.append(type.getSimpleName() + " {"); 
             boolean first = true;
             for (Object c : col) {
                 if (first)
                     first = false;
                 else
-                    buf.append(", "); //$NON-NLS-1$
+                    buf.append(", "); 
                 buf.append(dispval(c));
             }
             buf.append('}');
         } else if (o instanceof Map<?, ?>) {
             Map<?, ?> map = (Map<?, ?>) o;
             buf = new StringBuffer(map.size() * 20);
-            buf.append(type.getSimpleName() + " {"); //$NON-NLS-1$
+            buf.append(type.getSimpleName() + " {"); 
             boolean first = true;
             for (Map.Entry<?, ?> e : map.entrySet()) {
                 if (first)
                     first = false;
                 else
-                    buf.append(", "); //$NON-NLS-1$
-                buf.append(e.getKey() + "=" + dispval(e.getValue())); //$NON-NLS-1$
+                    buf.append(", "); 
+                buf.append(e.getKey() + "=" + dispval(e.getValue())); 
             }
             buf.append('}');
         } else if (o instanceof String) {
-            return "\"" + o + "\""; //$NON-NLS-1$ //$NON-NLS-2$
+            return "\"" + o + "\"";  
         } else {
             String typeName = o.getClass().getName();
             int dot = typeName.lastIndexOf('.');
             if (dot != -1)
                 typeName = typeName.substring(dot + 1);
-            return typeName + "(" + String.valueOf(o) + ")"; //$NON-NLS-1$ //$NON-NLS-2$
+            return typeName + "(" + String.valueOf(o) + ")";  
         }
-        return buf == null ? "" : buf.toString(); //$NON-NLS-1$
+        return buf == null ? "" : buf.toString(); 
     }
 
     private static Map<Class<?>, Object> trueValues;
@@ -158,7 +154,7 @@ class Util {
         trueValues.put(Boolean.class, true);
         trueValues.put(char.class, '1');
         trueValues.put(Character.class, '1');
-        trueValues.put(String.class, ""); //$NON-NLS-1$
+        trueValues.put(String.class, ""); 
     }
 
     public static Object getTrueValue(Class<?> type) {

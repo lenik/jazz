@@ -5,8 +5,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import net.bodz.bas.lang.typeinfo.Parser;
-
 /**
  * Annotaton of How to obtain an instance of specified type.
  */

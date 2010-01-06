@@ -11,9 +11,6 @@ import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.lang.util.ReflectsTest;
-import net.bodz.bas.nls.LangNLS;
-
 /**
  * @test {@link ReflectsTest}
  */
@@ -51,7 +48,7 @@ public class Reflects {
             ReflectField f = declareField.getAnnotation(ReflectField.class);
             if (f != null) {
                 if (!Field.class.isAssignableFrom(declareField.getType()))
-                    throw new Error(ReflectField.class + LangNLS.getString("Reflects.notField")); //$NON-NLS-1$
+                    throw new Error(ReflectField.class + " must be declared on Field field"); 
                 Class<?> _class = ifvoid(f._class(), defineClass);
                 String name = f.value();
                 if (name.isEmpty())
@@ -155,8 +152,8 @@ public class Reflects {
             throws IllegalAccessException, InvocationTargetException {
         Method read = property.getReadMethod();
         if (read == null)
-            throw new IllegalArgumentException(LangNLS.getString("Reflects.property") + property.getName() //$NON-NLS-1$
-                    + LangNLS.getString("Reflects.noread")); //$NON-NLS-1$
+            throw new IllegalArgumentException("property " + property.getName() 
+                    + " isn\'t readable"); 
         return read.invoke(obj);
     }
 
@@ -164,8 +161,8 @@ public class Reflects {
             throws IllegalAccessException, InvocationTargetException {
         Method write = property.getWriteMethod();
         if (write == null)
-            throw new IllegalArgumentException(LangNLS.getString("Reflects.property") + property.getName() //$NON-NLS-1$
-                    + LangNLS.getString("Reflects.nowrite")); //$NON-NLS-1$
+            throw new IllegalArgumentException("property " + property.getName() 
+                    + " isn\'t writable"); 
         write.invoke(obj, value);
     }
 
@@ -187,7 +184,7 @@ public class Reflects {
         int i = 0;
         while (true) {
             try {
-                Field outerField = innerClass.getDeclaredField("this$" + i); //$NON-NLS-1$
+                Field outerField = innerClass.getDeclaredField("this$" + i); 
                 outerField.setAccessible(true);
                 return outerField.get(innerInstance);
             } catch (NoSuchFieldException e) {

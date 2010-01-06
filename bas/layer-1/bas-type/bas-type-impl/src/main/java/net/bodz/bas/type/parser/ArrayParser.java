@@ -7,6 +7,7 @@ import net.bodz.bas.exceptions.CreateException;
 import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.type.traits.IParser;
 import net.bodz.bas.type.traits.impl.AbstractParser;
+import net.bodz.bas.type.traits.impl.ParserResolve;
 
 public class ArrayParser
         extends AbstractParser<Object> {
@@ -17,7 +18,7 @@ public class ArrayParser
 
     public ArrayParser(Class<?> valtype, IParser<?> valparser, Pattern separator) {
         if (valparser == null)
-            throw new NullPointerException("null valparser"); //$NON-NLS-1$
+            throw new NullPointerException("null valparser"); 
         this.valtype = valtype;
         this.valparser = valparser;
         this.separator = separator;

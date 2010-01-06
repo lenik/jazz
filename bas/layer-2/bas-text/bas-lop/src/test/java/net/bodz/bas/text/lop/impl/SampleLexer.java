@@ -2,8 +2,6 @@
 
 package net.bodz.bas.text.lop.impl;  
 
-import net.bodz.bas.lang.err.ParseException;
-import net.bodz.bas.text.lop.impl.JFlexLexer;
 
 @SuppressWarnings("unused")
 

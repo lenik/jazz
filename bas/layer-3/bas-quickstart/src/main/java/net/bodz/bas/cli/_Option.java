@@ -4,19 +4,10 @@ import java.lang.reflect.AnnotatedElement;
 import java.util.Collection;
 import java.util.Map;
 
-import net.bodz.bas.api.types.Checker;
-import net.bodz.bas.api.types.TypeParser;
-import net.bodz.bas.aspect.annotation.ParseBy;
-import net.bodz.bas.aspect.annotation.ValidateBy;
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.cli.a.OptionGroup;
-import net.bodz.bas.commons.exceptions.CheckException;
-import net.bodz.bas.commons.exceptions.CreateException;
-import net.bodz.bas.commons.exceptions.ParseException;
-import net.bodz.bas.commons.scripting.ScriptField;
 import net.bodz.bas.commons.util.Types;
-import net.bodz.bas.nls.AppNLS;
-import net.bodz.bas.text.util.Strings;
+import net.bodz.bas.exceptions.CreateException;
 
 public abstract class _Option<T> implements ScriptField<T> {
 
@@ -73,7 +64,7 @@ public abstract class _Option<T> implements ScriptField<T> {
         multi = valtype != null;
         if (multi) {
             if (!(isArray() || isCollection() || isMap()))
-                throw new CLIError(AppNLS.getString("_Option.errValTtype") //$NON-NLS-1$
+                throw new CLIError("valtype can only be specified on Array/Collection/Map types: " 
                         + type);
         } else
             valtype = (Class<T>) type;
@@ -111,11 +102,11 @@ public abstract class _Option<T> implements ScriptField<T> {
                 } else
                     check = null;
             } catch (CreateException e) {
-                throw new CLIError(AppNLS.getString("_Option.cantInitOption") + reflectName, e); //$NON-NLS-1$
+                throw new CLIError("can\'t init option " + reflectName, e); 
             } catch (CLIError e) {
-                throw new CLIError(AppNLS.getString("_Option.cantInitOption") + reflectName, e); //$NON-NLS-1$
+                throw new CLIError("can\'t init option " + reflectName, e); 
             } catch (ParseException e) {
-                throw new CLIError(AppNLS.getString("_Option.cantInitOption") + reflectName, e); //$NON-NLS-1$
+                throw new CLIError("can\'t init option " + reflectName, e); 
             }
         }
     }

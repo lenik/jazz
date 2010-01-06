@@ -31,9 +31,9 @@ public class ZipResFolder implements ResFolder {
 
     public ZipResFolder(File zipfile, boolean autoMkdirs) {
         if (zipfile == null)
-            throw new NullPointerException("zipfile"); //$NON-NLS-1$
+            throw new NullPointerException("zipfile"); 
         this.file = zipfile;
-        this.jarurl = "jar:" + Files.getURL(file).toExternalForm() + "!/"; //$NON-NLS-1$ //$NON-NLS-2$
+        this.jarurl = "jar:" + Files.getURL(file).toExternalForm() + "!/";  
         this.autoMkdirs = autoMkdirs;
     }
 
@@ -61,7 +61,7 @@ public class ZipResFolder implements ResFolder {
             URL url = new URL(s);
             return new URLResLink(url);
         } catch (MalformedURLException e) {
-            throw new IllegalArgumentException(SysNLS.getString("ZipResFolder.invalidEntryPath") + entryPath, e); //$NON-NLS-1$
+            throw new IllegalArgumentException("Invalid entry path: " + entryPath, e); 
         }
     }
 
@@ -69,7 +69,7 @@ public class ZipResFolder implements ResFolder {
         if (zipFile != null)
             return;
         if (zipOut != null)
-            throw new IOException(SysNLS.getString("ZipResFolder.currentlyWriting") + file); //$NON-NLS-1$
+            throw new IOException("currently opened for writing: " + file); 
         zipFile = new ZipFile(file);
     }
 
@@ -78,7 +78,7 @@ public class ZipResFolder implements ResFolder {
             if (!createNew)
                 return;
         if (zipFile != null)
-            throw new IOException(SysNLS.getString("ZipResFolder.currentlyReading") + file); //$NON-NLS-1$
+            throw new IOException("currently opened for reading: " + file); 
         autoMkdirs();
         FileOutputStream out = new FileOutputStream(file, false);
         zipOut = new ZipOutputStream(out);
@@ -113,7 +113,7 @@ public class ZipResFolder implements ResFolder {
     public String toString() {
         String s = file.toString();
         if (autoMkdirs)
-            s = "* " + s; //$NON-NLS-1$
+            s = "* " + s; 
         return s;
     }
 
@@ -124,7 +124,7 @@ public class ZipResFolder implements ResFolder {
 
         public ZipEntryResLink(String entry) {
             if (entry == null)
-                throw new NullPointerException("entryName"); //$NON-NLS-1$
+                throw new NullPointerException("entryName"); 
             this.entryName = entry;
         }
 
@@ -135,7 +135,7 @@ public class ZipResFolder implements ResFolder {
 
         @Override
         public URL getURL() {
-            String s = "jar:" + file.toURI() + "!" + entryName; //$NON-NLS-1$ //$NON-NLS-2$
+            String s = "jar:" + file.toURI() + "!" + entryName;  
             URL entryURL;
             try {
                 entryURL = new URL(s);
@@ -215,7 +215,7 @@ public class ZipResFolder implements ResFolder {
 
         @Override
         public String toString() {
-            return file + "!" + entryName; //$NON-NLS-1$
+            return file + "!" + entryName; 
         }
 
     }

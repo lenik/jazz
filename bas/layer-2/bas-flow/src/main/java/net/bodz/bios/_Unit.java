@@ -17,7 +17,7 @@ public abstract class _Unit implements Unit {
 
     public void send(int portIndex, Object data) throws IOException {
         if (portIndex < 0 || portIndex >= getOutPorts())
-            throw new IndexOutOfBoundsException("out " + portIndex); //$NON-NLS-1$
+            throw new IndexOutOfBoundsException("out " + portIndex); 
         OutPort outPort = getOutPort(portIndex);
         outPort.send(data);
     }
@@ -46,7 +46,7 @@ public abstract class _Unit implements Unit {
      * default name is class name with identity hash.
      */
     protected String getName() {
-        return Naming.getDefaultName(this) + "@" //$NON-NLS-1$
+        return Naming.getDefaultName(this) + "@" 
                 + System.identityHashCode(this);
     }
 
@@ -61,11 +61,11 @@ public abstract class _Unit implements Unit {
         int outPorts = getOutPorts();
         for (int i = 0; i < outPorts; i++) {
             OutPort outPort = getOutPort(i);
-            out.print(prefix + "  " + outPort.getOutPortMeta().getName() //   //$NON-NLS-1$
-                    + "[" + i + "]"); //$NON-NLS-1$ //$NON-NLS-2$
+            out.print(prefix + "  " + outPort.getOutPortMeta().getName() //   
+                    + "[" + i + "]");  
             Receiver dst = outPort.getDst();
             if (dst != null)
-                out.print(" -> "); //$NON-NLS-1$
+                out.print(" -> "); 
             out.println();
 
             if (dst instanceof InPort) {
@@ -76,17 +76,17 @@ public abstract class _Unit implements Unit {
                     if (loops == null)
                         loops = new HashSet<Unit>();
                     else if (loops.contains(_dstUnit)) {
-                        out.print(prefix + "    (ref) "); //$NON-NLS-1$
+                        out.print(prefix + "    (ref) "); 
                         out.println(_dstUnit.getName());
                         return;
                     }
                     loops.add(this);
                     _dstUnit.dumpGraph(out, indent + 1, loops);
                 } else {
-                    out.print(prefix + "    "); //$NON-NLS-1$
+                    out.print(prefix + "    "); 
                     String dstType = dstUnit.getClass().getName();
                     String dstName = dstUnit.getUnitMeta().getName();
-                    out.println(dstName + " (" + dstType + ")"); //$NON-NLS-1$ //$NON-NLS-2$
+                    out.println(dstName + " (" + dstType + ")");  
                 }
             }
         }

@@ -5,8 +5,7 @@ import java.util.List;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 
-import net.bodz.bas.io.CharOut;
-import net.bodz.bas.lang.err.NotImplementedException;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * DFA State: For any two of transitions in a DFA State, their CharSet are not intersected.

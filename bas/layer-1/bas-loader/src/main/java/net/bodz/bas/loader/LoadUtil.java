@@ -4,16 +4,11 @@ import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.commons.controlflow.Control;
-import net.bodz.bas.commons.exceptions.ParseException;
-import net.bodz.bas.io.Files;
-import net.bodz.bas.nls.AppNLS;
-import net.bodz.bas.snm.EclipseProject;
-import net.bodz.bas.snm.SJLibLoader;
-import net.bodz.bas.types.util.Empty;
+import sun.dyn.empty.Empty;
 
 public class LoadUtil {
 
@@ -29,16 +24,16 @@ public class LoadUtil {
      * @return <code>null</code> if can't resolve the libspec
      */
     public static URL[] find(String libspec, boolean errorFail) {
-        if (libspec.startsWith("%")) //$NON-NLS-1$
+        if (libspec.startsWith("%")) 
             return findPack(libspec.substring(1));
         File libfile;
-        if (libspec.contains(".")) //$NON-NLS-1$
+        if (libspec.contains(".")) 
             libfile = _findJar(libspec);
         else
             libfile = _findLib(libspec);
         if (libfile == null)
             if (errorFail)
-                throw new Error(AppNLS.getString("LoadUtil.cantResolveLib") + libspec); //$NON-NLS-1$
+                throw new Error("can\'t resolve lib " + libspec); 
             else
                 return null;
         return new URL[] { Files.getURL(libfile) };
@@ -52,12 +47,12 @@ public class LoadUtil {
     }
 
     public static URL[] find(String[] libspecs, boolean errorFail) {
-        assert libspecs != null : "null libspecs"; //$NON-NLS-1$
+        assert libspecs != null : "null libspecs"; 
         List<URL> urls = new ArrayList<URL>(libspecs.length);
         for (int i = 0; i < libspecs.length; i++) {
             String libspec = libspecs[i];
             if (libspec == null)
-                throw new NullPointerException("libspecs[" + i + "]"); //$NON-NLS-1$ //$NON-NLS-2$
+                throw new NullPointerException("libspecs[" + i + "]");  
             URL[] specUrls = find(libspec, errorFail);
             if (specUrls == null) // according to errorFail.
                 continue;
@@ -76,11 +71,11 @@ public class LoadUtil {
     }
 
     static URL[] findPack(String name) {
-        if ("project".equals(name)) { //$NON-NLS-1$
-            File start = Files.canoniOf("."); //$NON-NLS-1$
+        if ("project".equals(name)) { 
+            File start = Files.canoniOf("."); 
             File base = EclipseProject.findProjectBase(start);
             if (base == null)
-                throw new IllegalArgumentException(AppNLS.getString("LoadUtil.cantFindProjectBase") //$NON-NLS-1$
+                throw new IllegalArgumentException("can\'t find project base: " 
                         + start);
             try {
                 return new EclipseProject(base).getURLClasspath();
@@ -88,7 +83,7 @@ public class LoadUtil {
                 throw new RuntimeException(e);
             }
         } else
-            throw new IllegalArgumentException(AppNLS.getString("LoadUtil.unsupportedPackName") + name); //$NON-NLS-1$
+            throw new IllegalArgumentException("unsupported pack name: " + name); 
     }
 
     static File _findLib(String name) {
@@ -105,7 +100,7 @@ public class LoadUtil {
     }
 
     public static void execMain(Class<?> clazz, String... args) throws Throwable {
-        Method mainf = clazz.getMethod("main", String[].class); //$NON-NLS-1$
+        Method mainf = clazz.getMethod("main", String[].class); 
         try {
             Control.invoke(mainf, null, (Object) args);
         } catch (InvocationTargetException e) {

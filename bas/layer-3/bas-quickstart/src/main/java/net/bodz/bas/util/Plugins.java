@@ -2,9 +2,8 @@ package net.bodz.bas.util;
 
 import java.util.Map.Entry;
 
-import net.bodz.bas.commons.collection.hierarchical.TypeHierMap;
-import net.bodz.bas.commons.exceptions.CreateException;
-import net.bodz.bas.nls.AppNLS;
+import net.bodz.bas.collection.preorder.TypeHierMap;
+import net.bodz.bas.exceptions.CreateException;
 
 public class Plugins {
 
@@ -90,8 +89,8 @@ public class Plugins {
                 } else {
                     if (errmsg == null) {
                         errmsg = new StringBuffer();
-                        errmsg.append(AppNLS.getString("Plugins.ambigPluginId") + pluginId); //$NON-NLS-1$
-                        errmsg.append(AppNLS.getString("Plugins._candidates")); //$NON-NLS-1$
+                        errmsg.append("ambiguous plugin id: " + pluginId); 
+                        errmsg.append(", candidates: \n"); 
                         errmsg.append(found);
                     }
                     errmsg.append('\n');

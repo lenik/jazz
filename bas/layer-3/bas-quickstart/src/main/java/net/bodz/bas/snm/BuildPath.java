@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,11 +13,6 @@ import java.util.jar.Manifest;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
-
-import net.bodz.bas.commons.exceptions.ParseException;
-import net.bodz.bas.commons.exceptions.UnexpectedException;
-import net.bodz.bas.io.Files;
-import net.bodz.bas.xml.XMLs;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -87,14 +83,14 @@ public class BuildPath {
                     @Override
                     public void startElement(String uri, String localName, String name, Attributes attributes)
                             throws SAXException {
-                        if (!"classpathentry".equals(name)) //$NON-NLS-1$
+                        if (!"classpathentry".equals(name)) 
                             return;
-                        String kind = attributes.getValue("kind"); //$NON-NLS-1$
-                        String path = attributes.getValue("path"); //$NON-NLS-1$
-                        if ("output".equals(kind)) // default //$NON-NLS-1$
+                        String kind = attributes.getValue("kind"); 
+                        String path = attributes.getValue("path"); 
+                        if ("output".equals(kind)) // default 
                             defaultOutput = Files.canoniOf(baseDir, path);
-                        if ("src".equals(kind)) {//$NON-NLS-1$
-                            String output = attributes.getValue("output"); //$NON-NLS-1$
+                        if ("src".equals(kind)) {
+                            String output = attributes.getValue("output"); 
                             String nativelib = attributes.getValue("nativelib");
                             SourceFolder source = new SourceFolder();
                             source.path = Files.canoniOf(baseDir, path);

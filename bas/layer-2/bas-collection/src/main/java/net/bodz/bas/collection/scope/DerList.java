@@ -21,7 +21,7 @@ public abstract class DerList<E> extends AbstractList<E> implements Derivation<L
      */
     public DerList(List<E> orig) {
         if (orig == null)
-            throw new NullPointerException("orig"); //$NON-NLS-1$
+            throw new NullPointerException("orig"); 
         this.pList = orig;
         this.delta = new DerListDelta();
         this.qList = createAllocList();
@@ -54,7 +54,7 @@ public abstract class DerList<E> extends AbstractList<E> implements Derivation<L
         delta.add(qNext, index);
         int pq = delta.map(index);
         int q = pq - pList.size();
-        assert q >= 0 : "should added to a new allocated unit"; //$NON-NLS-1$
+        assert q >= 0 : "should added to a new allocated unit"; 
         qList.add(q, e);
     }
 

@@ -11,27 +11,19 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import net.bodz.bas.collection.IdentSet;
-import net.bodz.bas.commons.typealiases.TreeTextMap;
-import net.bodz.bas.commons.typealiases.TypeMap;
-import net.bodz.bas.commons.typealiases.TypeMap.HashTypeMap;
-import net.bodz.bas.nls.AppNLS;
-import net.bodz.bas.sysinfo.SystemProperties;
-import net.bodz.bas.text.util.Strings;
-
 /**
  * @test {@link TraceTest}
  */
 public class Trace {
 
     public static boolean enabled = SystemProperties.isDevelopMode();
-    public static Object logPrefix = ""; //$NON-NLS-1$
+    public static Object logPrefix = ""; 
 
     public static void setLogDate(boolean enabled) {
         if (enabled)
-            setLogDate("yy/MM/dd HH:mm:ss.SSS"); //$NON-NLS-1$
+            setLogDate("yy/MM/dd HH:mm:ss.SSS"); 
         else
-            logPrefix = ""; //$NON-NLS-1$
+            logPrefix = ""; 
     }
 
     public static void setLogDate(String datePattern) {
@@ -40,7 +32,7 @@ public class Trace {
             @Override
             public String toString() {
                 String s = format.format(new Date());
-                return "[" + s + "] "; //$NON-NLS-1$ //$NON-NLS-2$
+                return "[" + s + "] ";  
             }
         };
     }
@@ -80,9 +72,9 @@ public class Trace {
 
     public static String getName(Object object) {
         if (object == null)
-            return AppNLS.getString("Trace.null"); //$NON-NLS-1$
+            return "null"; 
         int id = getId(object);
-        String name = object.getClass().getName() + "#" + id; //$NON-NLS-1$
+        String name = object.getClass().getName() + "#" + id; 
         return name;
     }
 
@@ -91,7 +83,7 @@ public class Trace {
         if (object == null)
             return s;
         String name = getName(object);
-        return name + ": " + object; //$NON-NLS-1$
+        return name + ": " + object; 
     }
 
     static boolean showString = true;
@@ -115,7 +107,7 @@ public class Trace {
 
     static List<String> getList(Object object) {
         if (object == null)
-            throw new NullPointerException("object"); //$NON-NLS-1$
+            throw new NullPointerException("object"); 
         List<String> list = allLogs.get(object);
         if (list == null) {
             list = new ArrayList<String>();
@@ -132,7 +124,7 @@ public class Trace {
             if (object == null)
                 return;
             List<String> list = getList(object);
-            String s = Strings.join("", mesg); //$NON-NLS-1$
+            String s = Strings.join("", mesg); 
             list.add(logPrefix + s);
         }
     }
@@ -145,7 +137,7 @@ public class Trace {
             if (object == null)
                 return;
             List<String> list = getList(object);
-            String s = Strings.join("", mesg); //$NON-NLS-1$
+            String s = Strings.join("", mesg); 
             if (list.isEmpty()) {
                 list.add(logPrefix + s);
             } else {
@@ -170,7 +162,7 @@ public class Trace {
 
     static RelationMap getRelationMap(Object object) {
         if (object == null)
-            throw new NullPointerException("object"); //$NON-NLS-1$
+            throw new NullPointerException("object"); 
         RelationMap relationMap = allRelations.get(object);
         if (relationMap == null) {
             relationMap = new RelationMap();
@@ -238,42 +230,42 @@ public class Trace {
 
         @Override
         public void run() {
-            out.println(AppNLS.getString("Trace.logs")); //$NON-NLS-1$
+            out.println("Logs: "); 
             for (Map.Entry<Object, List<String>> entry : allLogs.entrySet()) {
                 final Object object = entry.getKey();
                 final List<String> logs = entry.getValue();
                 String name = Trace.getNameOrString(object);
-                out.println(AppNLS.getString("Trace.__object") + name); //$NON-NLS-1$
+                out.println("  Object: " + name); 
                 for (String log : logs)
-                    out.println("    " + log); //$NON-NLS-1$
+                    out.println("    " + log); 
             }
             out.println();
 
-            out.println(AppNLS.getString("Trace.relations")); //$NON-NLS-1$
+            out.println("Relations: "); 
             for (Map.Entry<Object, RelationMap> entry : allRelations.entrySet()) {
                 final Object object = entry.getKey();
                 final RelationMap relationMap = entry.getValue();
                 String name = Trace.getNameOrString(object);
-                out.println(AppNLS.getString("Trace.__object") + name); //$NON-NLS-1$
+                out.println("  Object: " + name); 
                 for (Map.Entry<String, Collection<Object>> relationEntry : relationMap.entrySet()) {
                     final String relation = relationEntry.getKey();
                     final Collection<Object> collection = relationEntry.getValue();
-                    out.print("      "); //$NON-NLS-1$
+                    out.print("      "); 
                     out.print(relation);
                     int n = collection.size();
                     Iterator<Object> iter = collection.iterator();
                     if (n == 0)
-                        out.println(AppNLS.getString("Trace.none")); //$NON-NLS-1$
+                        out.println(" -> (none)"); 
                     else if (n == 1) {
                         Object dest0 = iter.next();
-                        out.print(" -> "); //$NON-NLS-1$
+                        out.print(" -> "); 
                         out.println(Trace.getNameOrString(dest0));
                     } else {
-                        out.println(" -> "); //$NON-NLS-1$
+                        out.println(" -> "); 
                         while (iter.hasNext()) {
                             Object dest = iter.next();
                             // out.print("     -> ");
-                            out.print("          "); //$NON-NLS-1$
+                            out.print("          "); 
                             out.println(Trace.getNameOrString(dest));
                         }
                     }

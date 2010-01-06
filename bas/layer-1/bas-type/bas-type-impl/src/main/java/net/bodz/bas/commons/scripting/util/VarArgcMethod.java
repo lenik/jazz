@@ -4,13 +4,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-import net.bodz.bas.collection.map.IndexMap;
-import net.bodz.bas.commons.controlflow.Control;
-import net.bodz.bas.commons.util.Types;
 import net.bodz.bas.exceptions.IllegalUsageError;
 import net.bodz.bas.exceptions.ParseException;
-import net.bodz.bas.nls.LangNLS;
-import net.bodz.bas.type.traits.impl.TypeParsers;
 
 public class VarArgcMethod
         extends _VMethod {
@@ -44,8 +39,8 @@ public class VarArgcMethod
         int index = paramTypes.length;
         if (argcMap.contains(index)) {
             Method m1 = argcMap.get(index);
-            throw new IllegalUsageError(LangNLS.getString("VarArgcMethod.methodsWithSameArgc") // //$NON-NLS-1$
-                    + m1 + "\n" + method); //$NON-NLS-1$
+            throw new IllegalUsageError("methods with same argc: \n" // 
+                    + m1 + "\n" + method); 
         }
         argcMap.set(index, method);
     }
@@ -59,7 +54,7 @@ public class VarArgcMethod
         int argc = params.length;
         Method method = get(argc);
         if (method == null)
-            throw new NoSuchMethodException(name + "([" + argc + "])"); //$NON-NLS-1$ //$NON-NLS-2$
+            throw new NoSuchMethodException(name + "([" + argc + "])");  
         if (autotype) {
             Class<?>[] declTypes = method.getParameterTypes();
             Class<?>[] actuTypes = Types.getTypes(params);
@@ -78,8 +73,8 @@ public class VarArgcMethod
                     } else
                         // OR: <dt>parse(at.toString())
                         throw new IllegalArgumentException(
-                                LangNLS.getString("VarArgcMethod.0") + at + LangNLS.getString("VarArgcMethod.1") //$NON-NLS-1$ //$NON-NLS-2$
-                                        + dt + LangNLS.getString("VarArgcMethod.2")); //$NON-NLS-1$
+                                "invalid argument type: " + at + ", while "  
+                                        + dt + " is expected. "); 
                 else
                     argv[i] = params[i];
             }
@@ -99,19 +94,19 @@ public class VarArgcMethod
             throws NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
         if (paramTypes != null)
             if (paramTypes.length != params.length)
-                throw new IllegalArgumentException(LangNLS.getString("VarArgcMethod.diffParamTV")); //$NON-NLS-1$
+                throw new IllegalArgumentException("number of param types differ to param vals"); 
         int argc = params.length;
         Method method = get(argc);
         if (method == null)
-            throw new NoSuchMethodException("argc=" + argc); //$NON-NLS-1$
+            throw new NoSuchMethodException("argc=" + argc); 
         if (paramTypes != null) {
             Class<?>[] declTypes = method.getParameterTypes();
             for (int i = 0; i < declTypes.length; i++) {
                 Class<?> decl = declTypes[i];
                 Class<?> actu = paramTypes[i];
                 if (!decl.isAssignableFrom(actu))
-                    throw new NoSuchMethodException("argc=" + paramTypes.length //$NON-NLS-1$
-                            + " [" + i + "]: decl=" + decl + ", actu=" + actu); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                    throw new NoSuchMethodException("argc=" + paramTypes.length 
+                            + " [" + i + "]: decl=" + decl + ", actu=" + actu);   
             }
         }
         return invoke(obj, params);

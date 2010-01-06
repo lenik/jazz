@@ -6,9 +6,6 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.commons.util.Ns;
-import net.bodz.bas.nls.LangNLS;
-
 public class Scripts {
 
     private static Map<Class<?>, ScriptClass<?>> explicitScriptClasses;
@@ -32,7 +29,7 @@ public class Scripts {
             Class<? extends ScriptClass<?>> scType;
             scType = Ns._getValue(origClass, ScriptType.class);
             if (scType == null)
-                throw new ScriptException(LangNLS.getString("Scripts.nosclassFor") //$NON-NLS-1$
+                throw new ScriptException("no script class defined for " 
                         + origClass);
             sclass = newScriptClass(scType, origClass, dynamicImpl);
             explicitScriptClasses.put(origClass, sclass);
@@ -68,9 +65,9 @@ public class Scripts {
                 sclass = dynamicCtor.newInstance(origClass, dynamicImpl);
             }
         } catch (NoSuchMethodException e) {
-            throw new RuntimeException(LangNLS.getString("Scripts.noctor"), e); //$NON-NLS-1$
+            throw new RuntimeException("no suitable constructor", e); 
         } catch (Exception e) {
-            throw new RuntimeException(LangNLS.getString("Scripts.errNewInst"), e); //$NON-NLS-1$
+            throw new RuntimeException("can\'t instantiate script class", e); 
         }
         return sclass;
     }

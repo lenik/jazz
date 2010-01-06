@@ -4,19 +4,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 
-import net.bodz.bas.exceptions.TypeConvertException;
-import net.bodz.bas.type.TypeMatrix_BigDecimal;
-import net.bodz.bas.type.TypeMatrix_BigInteger;
-import net.bodz.bas.type.TypeMatrix_Date;
-import net.bodz.bas.type.TypeMatrix_boolean;
-import net.bodz.bas.type.TypeMatrix_byte;
-import net.bodz.bas.type.TypeMatrix_char;
-import net.bodz.bas.type.TypeMatrix_double;
-import net.bodz.bas.type.TypeMatrix_float;
-import net.bodz.bas.type.TypeMatrix_int;
-import net.bodz.bas.type.TypeMatrix_long;
-import net.bodz.bas.type.TypeMatrix_short;
-
 public abstract class VariantLookupMap<K>
         implements ILookupMap<K, Object> {
 

@@ -19,8 +19,8 @@ public class DefaultBooterTest {
 
     @Test
     public void testArgs() throws LoadException, Throwable {
-        String[] args = { "-l", "bodz_icons", "--",// //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                TestArgs.class.getName(), "1", "2", }; //$NON-NLS-1$ //$NON-NLS-2$
+        String[] args = { "-l", "bodz_icons", "--",//   
+                TestArgs.class.getName(), "1", "2", };  
         sum = 0;
         DefaultBooter.main(args);
         assertEquals(3, sum);

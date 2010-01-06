@@ -14,7 +14,7 @@ public class MessageDigestParser
     public MessageDigest parse(String name)
             throws ParseException {
         String provider = null;
-        int d = name.indexOf("::"); //$NON-NLS-1$
+        int d = name.indexOf("::"); 
         if (d != -1) {
             provider = name.substring(0, d);
             name = name.substring(d + 2);

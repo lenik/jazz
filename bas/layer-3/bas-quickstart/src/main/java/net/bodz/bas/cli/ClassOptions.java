@@ -16,15 +16,13 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 
+import javax.script.ScriptException;
+
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.cli.a.OptionGroup;
-import net.bodz.bas.commons.collection.hierarchical.PrefixMap;
-import net.bodz.bas.commons.collection.util.Collections2;
-import net.bodz.bas.commons.exceptions.ParseException;
+import net.bodz.bas.collection.preorder.PrefixMap;
 import net.bodz.bas.commons.pojos.Pair;
-import net.bodz.bas.commons.scripting.ScriptException;
 import net.bodz.bas.commons.util.Types;
-import net.bodz.bas.nls.AppNLS;
 
 public class ClassOptions<CT> {
 
@@ -107,19 +105,19 @@ public class ClassOptions<CT> {
         String optnam = newopt.getCLIName();
         _Option<?> existing = all.get(optnam);
         if (existing != null && !existing.isWeak())
-            throw new IllegalArgumentException(AppNLS.getString("ClassOptions.optionName") + optnam //$NON-NLS-1$
-                    + AppNLS.getString("ClassOptions.isAlreadyExisted")); //$NON-NLS-1$
+            throw new IllegalArgumentException("option name " + optnam 
+                    + " is already existed"); 
         all.put(optnam, newopt);
         for (String newalias : newopt.o.alias()) {
-            boolean newweak = newalias.startsWith("."); //$NON-NLS-1$
+            boolean newweak = newalias.startsWith("."); 
             if (newweak)
                 newalias = newalias.substring(1);
             newweak |= newopt.isWeak();
 
             boolean aliasExisted = all.containsKey(newalias) && !weaks.contains(newalias);
             if (aliasExisted)
-                throw new IllegalArgumentException(AppNLS.getString("ClassOptions.optionAlias") + newalias //$NON-NLS-1$
-                        + AppNLS.getString("ClassOptions.isAlreadyExisted")); //$NON-NLS-1$
+                throw new IllegalArgumentException("option alias " + newalias 
+                        + " is already existed"); 
             all.put(newalias, newopt);
             if (newweak)
                 weaks.add(newalias);
@@ -161,14 +159,14 @@ public class ClassOptions<CT> {
     @SuppressWarnings("unchecked")
     public _Option<Object> findOption(String name) throws CLIException {
         if (name.isEmpty())
-            throw new CLIException(AppNLS.getString("ClassOptions.emptyName")); //$NON-NLS-1$
-        if (name.startsWith("no-")) //$NON-NLS-1$
+            throw new CLIException("option name is empty"); 
+        if (name.startsWith("no-")) 
             name = name.substring(3);
         if (all.containsKey(name))
             return (_Option<Object>) all.get(name);
         List<String> fullnames = Collections2.toList(all.ceilingKeys(name));
         if (fullnames.isEmpty())
-            throw new CLIException(AppNLS.getString("ClassOptions.noOption") + name); //$NON-NLS-1$
+            throw new CLIException("no such option: " + name); 
         if (fullnames.size() > 1) {
             StringBuffer cands = new StringBuffer();
             for (String nam : fullnames) {
@@ -178,7 +176,7 @@ public class ClassOptions<CT> {
                 if (nam == null || !nam.startsWith(name))
                     break;
             }
-            throw new CLIException(AppNLS.getString("ClassOptions.ambigOption") + name + ": \n" //$NON-NLS-1$ //$NON-NLS-2$
+            throw new CLIException("ambiguous option " + name + ": \n"  
                     + cands.toString());
         }
         String fullname = fullnames.get(0);
@@ -231,12 +229,12 @@ public class ClassOptions<CT> {
             String optnam = args.get(i);
             _Option<?> opt = null;
             if (!optionsEnd) {
-                if ("--".equals(optnam)) { //$NON-NLS-1$
+                if ("--".equals(optnam)) { 
                     optionsEnd = true;
                     args.remove(i);
                     continue;
                 }
-                if (optnam.startsWith("--")) { //$NON-NLS-1$
+                if (optnam.startsWith("--")) { 
                     optnam = optnam.substring(2);
                     int eq = optnam.indexOf('=');
                     if (eq != -1) {
@@ -246,14 +244,14 @@ public class ClassOptions<CT> {
                         args.remove(i);
                     }
                     opt = findOption(optnam);
-                } else if (optnam.startsWith("-")) { //$NON-NLS-1$
+                } else if (optnam.startsWith("-")) { 
                     String chr = optnam.substring(1, 2);
                     opt = findOption(chr);
                     if (opt.getParameterCount() == 0 || !opt.o.optional().isEmpty()) {
                         // boolean option, or option has a default value,
                         if (optnam.length() > 2)
                             // remove the shortopt from --abcdefg => -bcdefg
-                            args.set(i, "-" + optnam.substring(2)); //$NON-NLS-1$
+                            args.set(i, "-" + optnam.substring(2)); 
                         else
                             // remove the shortopt entirely
                             args.remove(i);
@@ -288,12 +286,12 @@ public class ClassOptions<CT> {
             if (opt instanceof MethodOption) {
                 usedArgs = loadCall(classobj, (MethodOption) opt, args, i);
             } else if (opt.isBoolean()) {
-                optval = !optnam.startsWith("no-"); //$NON-NLS-1$
+                optval = !optnam.startsWith("no-"); 
             } else if (opt.getParameterCount() > 0) {
                 // assert opt.getParameterCount() == 1;
                 String optarg = null;
                 if (optarg == null && i < args.size())
-                    if (optionsEnd || !args.get(i).startsWith("-")) { //$NON-NLS-1$
+                    if (optionsEnd || !args.get(i).startsWith("-")) { 
                         usedArgs++;
                         optarg = args.get(i);
                     }
@@ -331,7 +329,7 @@ public class ClassOptions<CT> {
             Object optval = entry.getValue();
             if (opt instanceof MethodOption) {
                 String arg = String.valueOf(optval);
-                String[] cargs = arg.split(","); //$NON-NLS-1$
+                String[] cargs = arg.split(","); 
                 loadCall(classobj, (MethodOption) opt, Arrays.asList(cargs), 0);
             } else if (opt.getParameterCount() > 0) {
                 // assert opt.getParameterCount() == 1;
@@ -378,7 +376,7 @@ public class ClassOptions<CT> {
             try {
                 optval = opt.parse(optarg, key);
             } catch (ParseException e) {
-                throw new ParseException(String.format(AppNLS.getString("ClassOptions.cantPartOption_sss"), opt //$NON-NLS-1$
+                throw new ParseException(String.format("Can\'t parse option %s of %s with argument %s", opt 
                         .getCLIName(), valtype, optarg), e);
             }
         if (key != null)
@@ -391,9 +389,9 @@ public class ClassOptions<CT> {
             StringBuffer buf = new StringBuffer(missing.size() * 20);
             for (Object m : missing) {
                 _Option<?> mopt = (_Option<?>) m;
-                buf.append("    " + mopt.getCLIName() + "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+                buf.append("    " + mopt.getCLIName() + "\n");  
             }
-            throw new CLIException(AppNLS.getString("ClassOptions.missRequired") + buf); //$NON-NLS-1$
+            throw new CLIException("missing required option(s): \n" + buf); 
         }
     }
 
@@ -402,7 +400,7 @@ public class ClassOptions<CT> {
         int argc = optcall.getParameterCount();
         int rest = args.size() - off;
         if (argc > rest)
-            throw new CLIException(AppNLS.getString("ClassOptions.notEnough") //$NON-NLS-1$
+            throw new CLIException("not enough parameters for function-option " 
                     + optcall.getCLIName());
         String[] argv = args.subList(off, off + argc).toArray(new String[0]);
         try {

@@ -1,6 +1,5 @@
 package net.bodz.bas.loader;
 
-import net.bodz.bas.a.BootInfo;
 
 @BootInfo(configs = LoaderTest.Config1.class)
 public class LoaderTest {
@@ -9,7 +8,7 @@ public class LoaderTest {
     }
 
     static {
-        System.out.println("! loaded " + LoaderTest.class); //$NON-NLS-1$
+        System.out.println("! loaded " + LoaderTest.class); 
     }
 
     public static Class<?> findClass(String className) throws ClassNotFoundException {

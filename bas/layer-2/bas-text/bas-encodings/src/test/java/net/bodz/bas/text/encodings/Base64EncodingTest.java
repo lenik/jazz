@@ -11,14 +11,14 @@ public class Base64EncodingTest {
     public void testEncode() throws Exception {
         class D {
             void o(String input, String expected) throws Exception {
-                String actual = BASE64.encode(input.getBytes("ascii")); //$NON-NLS-1$
+                String actual = BASE64.encode(input.getBytes("ascii")); 
                 assertEquals(expected, actual);
             }
         }
         D d = new D(); //
-        d.o("", ""); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("hello", "aGVsbG8="); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("[\0\n\r\t]", "WwAKDQld"); //$NON-NLS-1$ //$NON-NLS-2$
+        d.o("", "");  
+        d.o("hello", "aGVsbG8=");  
+        d.o("[\0\n\r\t]", "WwAKDQld");  
     }
 
     @Test
@@ -26,14 +26,14 @@ public class Base64EncodingTest {
         class D {
             void o(String input, String expected) throws Exception {
                 byte[] decode = BASE64.decode(input);
-                String actual = new String(decode, "ascii"); //$NON-NLS-1$
+                String actual = new String(decode, "ascii"); 
                 assertEquals(expected, actual);
             }
         }
         D d = new D(); //
-        d.o("", ""); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("aGVsbG8=", "hello"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("WwAKDQld", "[\0\n\r\t]"); //$NON-NLS-1$ //$NON-NLS-2$
+        d.o("", "");  
+        d.o("aGVsbG8=", "hello");  
+        d.o("WwAKDQld", "[\0\n\r\t]");  
     }
 
 }

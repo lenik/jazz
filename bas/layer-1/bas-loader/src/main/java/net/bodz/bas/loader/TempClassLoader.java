@@ -4,8 +4,6 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.net.URLStreamHandlerFactory;
 
-import net.bodz.bas.commons.collection.util.Arrays2;
-
 public class TempClassLoader extends URLClassLoader {
 
     private TempClassLoader(URL[] urls, ClassLoader parent, URLStreamHandlerFactory factory) {
@@ -55,7 +53,7 @@ public class TempClassLoader extends URLClassLoader {
 
     @Override
     protected synchronized Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
-        assert name != null : "null name"; //$NON-NLS-1$
+        assert name != null : "null name"; 
         Class<?> c = findLoadedClass(name);
         if (c == null) {
             try {

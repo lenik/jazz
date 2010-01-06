@@ -6,11 +6,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.Map;
 
-import net.bodz.bas.commons.exceptions.ParseException;
-import net.bodz.bas.commons.iterators.DirectIterator;
-import net.bodz.bas.commons.typealiases.TreeTextMap;
 import net.bodz.bas.files.PartRecordsTest;
-import net.bodz.bas.io.ResLink;
 
 /**
  * Preferred file name: *.maps

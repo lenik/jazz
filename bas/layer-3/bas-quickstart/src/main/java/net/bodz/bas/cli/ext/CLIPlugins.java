@@ -1,10 +1,7 @@
 package net.bodz.bas.cli.ext;
 
 import net.bodz.bas.cli.CLIException;
-import net.bodz.bas.commons.exceptions.OutOfDomainException;
-import net.bodz.bas.io.CharOut;
-import net.bodz.bas.text.locale.English;
-import net.bodz.bas.text.util.Strings;
+import net.bodz.bas.exceptions.OutOfDomainException;
 import net.bodz.bas.util.Plugin;
 import net.bodz.bas.util.PluginCategory;
 import net.bodz.bas.util.Plugins;
@@ -14,7 +11,7 @@ public class CLIPlugins extends Plugins {
     @Override
     public boolean registerCategory(PluginCategory category) {
         if (!(category instanceof CLIPluginCategory))
-            throw new OutOfDomainException("category class", category //$NON-NLS-1$
+            throw new OutOfDomainException("category class", category 
                     .getClass(), CLIPluginCategory.class);
         return super.registerCategory(category);
     }
@@ -23,7 +20,7 @@ public class CLIPlugins extends Plugins {
     @Override
     public boolean registerCategory(String name, Class<? extends Plugin> baseType) {
         if (!CLIPlugin.class.isAssignableFrom(baseType))
-            throw new OutOfDomainException("baseType", baseType, //$NON-NLS-1$
+            throw new OutOfDomainException("baseType", baseType, 
                     CLIPlugin.class);
         CLIPluginCategory category = new CLIPluginCategory(name, (Class<? extends CLIPlugin>) baseType);
         return registerCategory(category);
@@ -50,13 +47,13 @@ public class CLIPlugins extends Plugins {
             out.println();
             out.print(prefix);
             out.print(name);
-            out.print(": "); //$NON-NLS-1$
+            out.print(": "); 
             if (desc != null)
                 out.print(desc);
             out.println();
 
             CLIPluginCategory cliCategory = (CLIPluginCategory) category;
-            cliCategory.help(out, prefix + "    "); //$NON-NLS-1$
+            cliCategory.help(out, prefix + "    "); 
         }
     }
 

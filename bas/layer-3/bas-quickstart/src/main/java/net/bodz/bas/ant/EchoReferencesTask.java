@@ -5,13 +5,6 @@ import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 
-import net.bodz.bas.collection.comparators.Comparators;
-import net.bodz.bas.nls.AppNLS;
-
-import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.Project;
-import org.apache.tools.ant.Task;
-
 public class EchoReferencesTask extends Task {
 
     @Override
@@ -26,9 +19,9 @@ public class EchoReferencesTask extends Task {
             Object value = references.get(key);
             String s = String
                     .format(
-                            AppNLS.getString("EchoReferencesTask.entry"), // //$NON-NLS-1$
+                            "%s = (Class %s)\n    %s", // 
                             key,
-                            value == null ? AppNLS.getString("EchoReferencesTask.nullEntryValue") : value.getClass().getName(), value); //$NON-NLS-1$
+                            value == null ? "(n/a)" : value.getClass().getName(), value); 
             log(s, Project.MSG_INFO);
         }
     }

@@ -58,9 +58,9 @@ public class Files {
     public static int blockSize = 4096;
     private static String slash;
     static {
-        slash = System.getProperty("file.separator"); //$NON-NLS-1$
+        slash = System.getProperty("file.separator"); 
         if (slash == null)
-            slash = "/"; //$NON-NLS-1$
+            slash = "/"; 
     }
 
     // adapters
@@ -503,8 +503,8 @@ public class Files {
      * {@link Iterator#next()} throws {@link RuntimizedException}.
      */
     protected static Iterator<Integer> _readByBlock(final Object[] files, final byte[] buffer) {
-        assert files != null : "null files[]"; //$NON-NLS-1$
-        assert buffer != null : "null buffer"; //$NON-NLS-1$
+        assert files != null : "null files[]"; 
+        assert buffer != null : "null buffer"; 
 
         return new PrefetchedIterator<Integer>() {
 
@@ -611,8 +611,8 @@ public class Files {
      * {@link Iterator#next()} throws {@link RuntimizedException}.
      */
     protected static Iterator<Integer> _readByLen(final Object[] files, final char[] buffer) {
-        assert files != null : "null files[]"; //$NON-NLS-1$
-        assert buffer != null : "null buffer"; //$NON-NLS-1$
+        assert files != null : "null files[]"; 
+        assert buffer != null : "null buffer"; 
 
         return new PrefetchedIterator<Integer>() {
 
@@ -739,7 +739,7 @@ public class Files {
                 try {
                     if (reader == null) {
                         Object in = files[fileIndex];
-                        assert in != null : "null file"; //$NON-NLS-1$
+                        assert in != null : "null file"; 
                         in = getLineReader(in, charset);
                         reader = (LineReader) in;
                     }
@@ -934,7 +934,7 @@ public class Files {
 
     static void _mkdir_p(File file) {
         if (file == null)
-            throw new NullPointerException("fille"); //$NON-NLS-1$
+            throw new NullPointerException("fille"); 
         File parentFile = file.getParentFile();
         parentFile = Files.canoniOf(parentFile);
         parentFile.mkdirs();
@@ -952,7 +952,7 @@ public class Files {
 
     public static <T> void createFile(File file, byte[] data, int off, int len) throws IOException {
         if (file == null)
-            throw new NullPointerException("file"); //$NON-NLS-1$
+            throw new NullPointerException("file"); 
         _mkdir_p(file);
         write(file, data, off, len);
     }
@@ -1031,7 +1031,7 @@ public class Files {
     }
 
     public static Object load(Object in, int index) throws IOException {
-        assert index >= 0 : "Invalid index " + index; //$NON-NLS-1$
+        assert index >= 0 : "Invalid index " + index; 
         try {
             for (Object o : _load(in)) {
                 if (index-- == 0)
@@ -1040,7 +1040,7 @@ public class Files {
         } catch (WrappedException e) {
             e.rethrow(IOException.class);
         }
-        throw new IndexOutOfBoundsException(SysNLS.getString("Files.scanOverEnd") + index); //$NON-NLS-1$
+        throw new IndexOutOfBoundsException("scan over the end of in: " + index); 
     }
 
     public static Object load(Object in) throws IOException {
@@ -1053,7 +1053,7 @@ public class Files {
      * @return <code>null</code> if no manifest.
      */
     public static Manifest getManifest(Class<?> clazz) {
-        URL url = clazz.getResource("/META-INF/MANIFEST.MF"); //$NON-NLS-1$
+        URL url = clazz.getResource("/META-INF/MANIFEST.MF"); 
         if (url == null)
             return null;
         InputStream in = null;
@@ -1063,7 +1063,7 @@ public class Files {
             in.close();
             return manifest;
         } catch (IOException e) {
-            throw new IllegalStateException(SysNLS.getString("Files.badManifest") + clazz, e); //$NON-NLS-1$
+            throw new IllegalStateException("Bad manifest for " + clazz, e); 
         } finally {
             if (in != null)
                 try {
@@ -1079,7 +1079,7 @@ public class Files {
      */
     public static URL classData(Class<?> clazz) {
         String thisName = clazz.getSimpleName();
-        return clazz.getResource(thisName + ".class"); //$NON-NLS-1$
+        return clazz.getResource(thisName + ".class"); 
     }
 
     /**
@@ -1087,7 +1087,7 @@ public class Files {
      *            don't include the dot(.)
      */
     public static URL classData(Class<?> clazz, String extension) {
-        return _classData(clazz, "." + extension); //$NON-NLS-1$
+        return _classData(clazz, "." + extension); 
     }
 
     /**
@@ -1111,9 +1111,9 @@ public class Files {
     public static URL getRootResource(Class<?> clazz) {
         ClassLoader classLoader = clazz.getClassLoader();
         if (classLoader == null)
-            throw new NullPointerException("can't getClassLoader"); //$NON-NLS-1$
+            throw new NullPointerException("can't getClassLoader"); 
         String pkg = clazz.getPackage().getName();
-        String base = clazz.getSimpleName() + ".class"; //$NON-NLS-1$
+        String base = clazz.getSimpleName() + ".class"; 
         String name = pkg.replace('.', '/') + '/' + base;
         return getRootResource(classLoader, name);
     }
@@ -1123,7 +1123,7 @@ public class Files {
         URL url = classLoader.getResource(hintPath);
         String s = url.toString();
         if (!s.endsWith(hintPath))
-            throw new UnexpectedException(SysNLS.getString("Files.gotBadResURL")); //$NON-NLS-1$
+            throw new UnexpectedException("getResource returned an unknown URL format"); 
         s = s.substring(0, s.length() - hintPath.length());
         try {
             url = new URL(s);
@@ -1131,7 +1131,7 @@ public class Files {
             throw new IdentifiedException(e.getMessage(), e);
         }
         if (url == null)
-            throw new Error(SysNLS.getString("Files.cantGetRootRes")); //$NON-NLS-1$
+            throw new Error("failed to get root resource"); 
         return url;
     }
 
@@ -1248,9 +1248,9 @@ public class Files {
     }
 
     static File getJarFile(URL jarURL) {
-        assert "jar".equals(jarURL.getProtocol()); //$NON-NLS-1$
+        assert "jar".equals(jarURL.getProtocol()); 
         String s = jarURL.getPath(); // path = file:/...!...
-        assert s.startsWith("file:"); //$NON-NLS-1$
+        assert s.startsWith("file:"); 
         int excl = s.lastIndexOf('!');
         if (excl != -1) // assert
             s = s.substring(0, excl); // path = file:/...
@@ -1271,7 +1271,7 @@ public class Files {
         if (url == null)
             return null;
         String protocol = url.getProtocol();
-        if ("jar".equals(protocol)) //$NON-NLS-1$
+        if ("jar".equals(protocol)) 
             return getJarFile(url);
         return canoniOf(url);
     }
@@ -1286,7 +1286,7 @@ public class Files {
             URL context = ((URLResFolder) resFolder).getContext();
             return Files.getFile(context);
         }
-        throw new UnsupportedOperationException("Can't get file from ResFolder " + resFolder); //$NON-NLS-1$
+        throw new UnsupportedOperationException("Can't get file from ResFolder " + resFolder); 
     }
 
     public static ResFolder getResFolder(URL url, String removeSubPath) throws MalformedURLException {
@@ -1298,7 +1298,7 @@ public class Files {
         // s=file:/C:/abc/dir/example.jar!/com/example/Name.class
         String s = url.toExternalForm();
         if (!s.endsWith(removeSubPath)) {
-            throw new IllegalArgumentException(String.format(SysNLS.getString("Files.urlIsntEndWith_ss"), //$NON-NLS-1$
+            throw new IllegalArgumentException(String.format("URL isn\'t end with %s: %s", 
                     removeSubPath, url));
         }
         int rlen = removeSubPath.length();
@@ -1306,7 +1306,7 @@ public class Files {
         s = s.substring(0, s.length() - rlen);
 
         String protocol = url.getProtocol();
-        if ("jar".equals(protocol)) { //$NON-NLS-1$
+        if ("jar".equals(protocol)) { 
             // the jar URL is verified by above. so now can safely return.
             File jarFile = getJarFile(url);
             return new ZipResFolder(jarFile);
@@ -1321,15 +1321,15 @@ public class Files {
     static {
         File t;
         String TEMP;
-        if ((TEMP = System.getenv("TEMP")) != null) //$NON-NLS-1$
+        if ((TEMP = System.getenv("TEMP")) != null) 
             t = Files.canoniOf(TEMP);
-        else if ((TEMP = System.getenv("TMP")) != null) //$NON-NLS-1$
+        else if ((TEMP = System.getenv("TMP")) != null) 
             t = Files.canoniOf(TEMP);
         else
-            t = Files.canoniOf("/tmp"); //$NON-NLS-1$
+            t = Files.canoniOf("/tmp"); 
         if (t.exists()) {
             if (!t.isDirectory())
-                throw new RuntimeException(SysNLS.getString("Files.notDir") + t); //$NON-NLS-1$
+                throw new RuntimeException("not a directory: " + t); 
         } else
             t.mkdirs();
         TMPDIR = t;
@@ -1346,13 +1346,13 @@ public class Files {
     static Map<Object, File> temps;
     static Pattern invalidFilenameChars;
     static {
-        invalidFilenameChars = Pattern.compile("[^a-zA-Z0-9-_]"); //$NON-NLS-1$
+        invalidFilenameChars = Pattern.compile("[^a-zA-Z0-9-_]"); 
     }
 
     public static File convertToFile(Object key, Object in) throws IOException {
         String name = String.valueOf(key);
-        name = invalidFilenameChars.matcher(name).replaceAll("_"); //$NON-NLS-1$
-        return convertToFile(key, in, "CTF-" + name, ".tmp", TMPDIR); //$NON-NLS-1$ //$NON-NLS-2$
+        name = invalidFilenameChars.matcher(name).replaceAll("_"); 
+        return convertToFile(key, in, "CTF-" + name, ".tmp", TMPDIR);  
     }
 
     public static File convertToFile(Object key, Object in, String prefix, String suffix, File tmpdir)
@@ -1383,13 +1383,13 @@ public class Files {
 
     public static String getRelativeName(File file, File start) {
         if (start == null)
-            throw new NullPointerException("start"); //$NON-NLS-1$
+            throw new NullPointerException("start"); 
         file = Files.canoniOf(file);
         start = Files.canoniOf(start);
         List<String> tails = new ArrayList<String>();
         for (File look = file;; look = look.getParentFile()) {
             if (look == null)
-                throw new UnexpectedException(String.format(SysNLS.getString("Files.fileNotInStart_ss"), file, start)); //$NON-NLS-1$
+                throw new UnexpectedException(String.format("File %s isn\'t in the start dir %s", file, start)); 
             if (look.equals(start))
                 break;
             tails.add(look.getName());
@@ -1403,7 +1403,7 @@ public class Files {
             buffer.append(tails.get(i));
         }
         if (buffer == null)
-            return ""; //$NON-NLS-1$
+            return ""; 
         return buffer.toString();
     }
 
@@ -1433,7 +1433,7 @@ public class Files {
         int dot = file.lastIndexOf('.');
         if (dot != -1)
             return file.substring(includeDot ? dot : dot + 1);
-        return ""; //$NON-NLS-1$
+        return ""; 
     }
 
     /**
@@ -1567,14 +1567,14 @@ public class Files {
             if (force) {
                 if (dst.delete())
                     return move(src, dst, false);
-                throw new IOException(SysNLS.getString("Files.cantDelete") + dst); //$NON-NLS-1$
+                throw new IOException("Can\'t delete the existed file " + dst); 
             } else
-                throw new IOException(String.format(SysNLS.getString("Files.destExisted_s"), dst)); //$NON-NLS-1$
+                throw new IOException(String.format("Destination %s is already existed", dst)); 
         if (src.renameTo(dst))
             return true;
         if (copy(src, dst))
             return src.delete();
-        throw new IOException(String.format(SysNLS.getString("Files.cantCopy_ss"), src, dst)); //$NON-NLS-1$
+        throw new IOException(String.format("Failed to copy %s to %s", src, dst)); 
     }
 
     public static boolean move(File src, File dst) throws IOException {
@@ -1582,8 +1582,8 @@ public class Files {
     }
 
     public static boolean copy(Object src, Object dst, boolean append) throws IOException {
-        assert src != null : "null src"; //$NON-NLS-1$
-        assert dst != null : "null dst"; //$NON-NLS-1$
+        assert src != null : "null src"; 
+        assert dst != null : "null dst"; 
         boolean closeIn = shouldClose(src);
         boolean closeOut = shouldClose(dst);
         InputStream in = getInputStream(src);
@@ -1744,7 +1744,7 @@ public class Files {
             } else
                 throw new IllegalArgumentTypeException(input);
             if (!inputf.exists())
-                throw new IllegalArgumentException(SysNLS.getString("Files.inputNotExist") //$NON-NLS-1$
+                throw new IllegalArgumentException("input file isn\'t existed: " 
                         + inputf);
             files.add(inputf);
             if (inputf.lastModified() > mostRecent)
@@ -1773,7 +1773,7 @@ public class Files {
         } else {
             int estart = wildPath.lastIndexOf('/', ast);
             if (estart == -1)
-                throw new IllegalArgumentException(SysNLS.getString("Files.invalidWildExp") //$NON-NLS-1$
+                throw new IllegalArgumentException("invalid wild exp: " 
                         + wildPath);
             estart++;
             int eend = wildPath.indexOf('/', ast);
@@ -1781,9 +1781,9 @@ public class Files {
                 eend = wildPath.length();
             String elm = wildPath.substring(estart, eend);
             String regex = elm;
-            regex = regex.replace(".", "\\."); //$NON-NLS-1$ //$NON-NLS-2$
-            regex = regex.replace("*", ".*"); //$NON-NLS-1$ //$NON-NLS-2$
-            Pattern p = Pattern.compile("^" + regex + "$"); //$NON-NLS-1$ //$NON-NLS-2$
+            regex = regex.replace(".", "\\.");  
+            regex = regex.replace("*", ".*");  
+            Pattern p = Pattern.compile("^" + regex + "$");  
             File parent = new File(wildPath.substring(0, estart));
             if (!parent.isDirectory()) {
                 // maybe file or non-exist.

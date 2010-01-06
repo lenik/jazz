@@ -21,7 +21,7 @@ public class NamedFrameTest {
                 assertEquals("MyFrame", namedFrame.getClassName());
                 assertEquals("我的方法123", namedFrame.getMethodName());
             }
-        }, "My Frame", "我的 方法 123", "This is a named frame"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        }, "My Frame", "我的 方法 123", "This is a named frame");   
         entry.run();
     }
 

@@ -3,7 +3,6 @@ package net.bodz.bas.collection.iterator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import net.bodz.bas.collection.TypesNLS;
 import net.bodz.bas.collection.list.LinkedStack;
 import net.bodz.bas.collection.list.Stack;
 
@@ -97,15 +96,15 @@ public class StackedIterator<T> implements Iterator<T> {
     @Override
     public String toString() {
         if (currentIterator == null)
-            return TypesNLS.getString("StackedIterator.emptyStack"); //$NON-NLS-1$
+            return "empty stack"; 
         StringBuffer buf = new StringBuffer((1 + stack.size()) * 100);
-        buf.append(TypesNLS.getString("StackedIterator.iterators")); //$NON-NLS-1$
-        buf.append("  * " + currentIterator.getClass().getSimpleName() + ": " //$NON-NLS-1$ //$NON-NLS-2$
-                + currentIterator + "\n"); //$NON-NLS-1$
+        buf.append("Iterators in stack: \n"); 
+        buf.append("  * " + currentIterator.getClass().getSimpleName() + ": "  
+                + currentIterator + "\n"); 
         for (Iterator<T> iter : stack) {
-            buf.append("    "); //$NON-NLS-1$
+            buf.append("    "); 
             buf.append(iter.getClass().getSimpleName());
-            buf.append(": "); //$NON-NLS-1$
+            buf.append(": "); 
             buf.append(iter);
             buf.append('\n');
         }

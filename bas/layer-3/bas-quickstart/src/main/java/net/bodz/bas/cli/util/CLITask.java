@@ -3,16 +3,12 @@ package net.bodz.bas.cli.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.script.ScriptException;
+
 import net.bodz.bas.cli.BasicCLI;
 import net.bodz.bas.cli.CLIException;
-import net.bodz.bas.commons.exceptions.ParseException;
-import net.bodz.bas.commons.scripting.ScriptClass;
-import net.bodz.bas.commons.scripting.ScriptException;
-import net.bodz.bas.types.util.Empty;
 import net.bodz.bas.util.LogTerm;
-
-import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.Task;
+import sun.dyn.empty.Empty;
 
 public class CLITask extends Task {
 
@@ -141,7 +137,7 @@ public class CLITask extends Task {
             }
             // adapting attributes
             if (logLevel != 0) {
-                LogTerm L = (LogTerm) sclass.get(app, "logger"); //$NON-NLS-1$
+                LogTerm L = (LogTerm) sclass.get(app, "logger"); 
                 L.setLevel(L.getLevel() + logLevel);
             }
         } catch (CLIException e) {
@@ -163,7 +159,7 @@ public class CLITask extends Task {
     @Override
     protected void handleErrorOutput(String output) {
         errbuf.append(output);
-        if (output.endsWith("\n")) { //$NON-NLS-1$
+        if (output.endsWith("\n")) { 
             super.handleErrorOutput(errbuf.toString());
             errbuf.setLength(0);
         }

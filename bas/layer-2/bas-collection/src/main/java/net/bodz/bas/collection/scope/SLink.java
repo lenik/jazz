@@ -23,7 +23,7 @@ public class SLink<T> {
         if (next == null)
             return _this.toString();
         else
-            return _this.toString() + " -> " + next.toString(); //$NON-NLS-1$
+            return _this.toString() + " -> " + next.toString(); 
     }
 
 }

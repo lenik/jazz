@@ -1,8 +1,5 @@
 package net.bodz.bas.text.lop.fsm;
 
-import net.bodz.bas.text.lop.fsm.CharSet;
-import net.bodz.bas.text.lop.fsm.CharSetSubtraction;
-
 import org.junit.Test;
 
 public class CharSetSubtractionTest extends TestData {

@@ -3,8 +3,8 @@ package net.bodz.bas.text.lop.impl;
 import static org.junit.Assert.assertEquals;
 
 import java.io.StringReader;
+import java.nio.file.Files;
 
-import net.bodz.bas.io.Files;
 import net.bodz.bas.text.lop.Token;
 import net.bodz.bas.text.lop.util.XYTellable;
 

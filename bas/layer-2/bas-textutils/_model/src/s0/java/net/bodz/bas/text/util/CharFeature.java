@@ -21,12 +21,12 @@ public class CharFeature {
         octf = new HashMap<String, byte[]>();
         bitf = new HashMap<String, Bits>();
 
-        URL part1 = Files.classData(CharFeature.class, "1"); //$NON-NLS-1$
+        URL part1 = Files.classData(CharFeature.class, "1"); 
         PartRecords mf = new PartRecords(new URLResLink(part1));
         for (PartMap map : mf.iterate()) {
-            String name = map.get("name"); //$NON-NLS-1$
+            String name = map.get("name"); 
             String bitmap = map.getText();
-            if (name.startsWith("~")) { //$NON-NLS-1$
+            if (name.startsWith("~")) { 
                 name = name.substring(1);
                 byte[] octs = parseOcts(bitmap);
                 octf.put(name, octs);
@@ -43,9 +43,9 @@ public class CharFeature {
     }
 
     public static Bits parseBits(String s) throws ParseException {
-        byte[] bitmap = octf.get("bitmap"); //$NON-NLS-1$
+        byte[] bitmap = octf.get("bitmap"); 
         if (bitmap == null)
-            throw new IllegalStateException("bitmap isn't prepared"); //$NON-NLS-1$
+            throw new IllegalStateException("bitmap isn't prepared"); 
         byte def = bitmap[bitmap.length - 1];
         char[] cv = s.toCharArray();
         Bits bits = new Bits.IntvLE(256);
@@ -72,7 +72,7 @@ public class CharFeature {
                     bits.set(bitIndex++, lastBit);
                 return bits;
             default:
-                throw new ParseException("invalid bitmap char: '" + c + "'"); //$NON-NLS-1$ //$NON-NLS-2$
+                throw new ParseException("invalid bitmap char: '" + c + "'");  
             }
         }
         return bits;

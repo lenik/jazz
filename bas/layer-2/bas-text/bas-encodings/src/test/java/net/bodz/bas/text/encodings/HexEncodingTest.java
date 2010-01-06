@@ -11,14 +11,14 @@ public class HexEncodingTest {
     public void testEncode() throws Exception {
         class D {
             void o(String input, String expected) throws Exception {
-                String actual = HEX.encode(input.getBytes("ascii")); //$NON-NLS-1$
+                String actual = HEX.encode(input.getBytes("ascii")); 
                 assertEquals(expected, actual);
             }
         }
         D d = new D(); //
-        d.o("", ""); // //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("hello", "68 65 6c 6c 6f"); // //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("[\0\n\r\t]", "5b 00 0a 0d 09 5d"); // //$NON-NLS-1$ //$NON-NLS-2$
+        d.o("", ""); //  
+        d.o("hello", "68 65 6c 6c 6f"); //  
+        d.o("[\0\n\r\t]", "5b 00 0a 0d 09 5d"); //  
     }
 
     @Test
@@ -26,14 +26,14 @@ public class HexEncodingTest {
         class D {
             void o(String input, String expected) throws Exception {
                 byte[] decode = HEX.decode(input);
-                String actual = new String(decode, "ascii"); //$NON-NLS-1$
+                String actual = new String(decode, "ascii"); 
                 assertEquals(expected, actual);
             }
         }
         D d = new D(); //
-        d.o("", ""); // //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("68 65 6c 6c 6f", "hello"); // //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("5b 00 0a 0d 09 5d", "[\0\n\r\t]"); // //$NON-NLS-1$ //$NON-NLS-2$
+        d.o("", ""); //  
+        d.o("68 65 6c 6c 6f", "hello"); //  
+        d.o("5b 00 0a 0d 09 5d", "[\0\n\r\t]"); //  
     }
 
 }

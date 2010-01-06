@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
+import java.nio.file.Files;
 
 import net.bodz.bas.a.Doc;
 import net.bodz.bas.a.RcsKeywords;
@@ -11,7 +12,6 @@ import net.bodz.bas.a.Version;
 import net.bodz.bas.cli.BatchEditCLI;
 import net.bodz.bas.cli.EditResult;
 import net.bodz.bas.cli.a.Option;
-import net.bodz.bas.io.Files;
 
 @Doc("Fix: .bat goto labels must not cross 1k block boundary.")
 @Version( { 0, 0 })
@@ -71,7 +71,7 @@ public class Fix_BatBB extends BatchEditCLI {
         return startBlock != endBlock;
     }
 
-    static byte[] remPrefix = ":: Fix_BatBB ::".getBytes(); //$NON-NLS-1$
+    static byte[] remPrefix = ":: Fix_BatBB ::".getBytes(); 
 
     int fillUps(OutputStream out, int start) throws IOException {
         int fill = blockSize - start % blockSize;

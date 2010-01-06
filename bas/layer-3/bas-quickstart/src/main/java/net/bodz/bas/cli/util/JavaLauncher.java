@@ -1,7 +1,5 @@
 package net.bodz.bas.cli.util;
 
-import static net.bodz.bas.commons.collection.util.ArrayOps.Strings;
-
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -12,18 +10,7 @@ import java.nio.charset.Charset;
 
 import net.bodz.bas.a.BootInfo;
 import net.bodz.bas.a.BootProc;
-import net.bodz.bas.commons.callback.Executable;
-import net.bodz.bas.commons.caller.Caller;
-import net.bodz.bas.commons.controlflow.Control;
-import net.bodz.bas.commons.controlflow.ControlExit;
-import net.bodz.bas.commons.exceptions.OutOfDomainException;
-import net.bodz.bas.io.CharOuts;
-import net.bodz.bas.loader.Classpath;
-import net.bodz.bas.loader.DefaultBooter;
-import net.bodz.bas.loader.LoadUtil;
-import net.bodz.bas.loader.UCL;
-import net.bodz.bas.sec.CatchExit;
-import net.bodz.bas.text.encodings.Charsets;
+import net.bodz.bas.exceptions.OutOfDomainException;
 
 @BootInfo(syslibs = "bodz_bas")
 public abstract class JavaLauncher implements Launcher {
@@ -69,7 +56,7 @@ public abstract class JavaLauncher implements Launcher {
 
     protected Method getMainMethod() throws SecurityException, NoSuchMethodException {
         Class<?> clazz = getMainClass();
-        Method main = clazz.getMethod("main", String[].class); //$NON-NLS-1$
+        Method main = clazz.getMethod("main", String[].class); 
         return main;
     }
 
@@ -167,7 +154,7 @@ public abstract class JavaLauncher implements Launcher {
             outbuf = errbuf = new ByteArrayOutputStream();
             break;
         default:
-            throw new OutOfDomainException("mode", mode); //$NON-NLS-1$
+            throw new OutOfDomainException("mode", mode); 
         }
         if (outbuf != null)
             setRedirectOut(outbuf);
@@ -195,7 +182,7 @@ public abstract class JavaLauncher implements Launcher {
 
     public static void main(String[] args) throws Exception {
         if (args.length < 1)
-            throw new IllegalArgumentException("classname expected"); //$NON-NLS-1$
+            throw new IllegalArgumentException("classname expected"); 
         final String className = args[0];
         final String[] _args = Strings.shift(args);
         new JavaLauncher() {

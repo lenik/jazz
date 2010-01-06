@@ -1,8 +1,8 @@
 package net.bodz.bas.type.traits.impl;
 
 import net.bodz.bas.exceptions.ParseException;
-import net.bodz.bas.exceptions.UnsupportedNegotiationException;
 import net.bodz.bas.lang.INegotiation;
+import net.bodz.bas.lang.UnsupportedNegotiationException;
 import net.bodz.bas.type.traits.IParser;
 
 public abstract class AbstractParser<T>

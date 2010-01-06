@@ -1,8 +1,7 @@
 package net.bodz.bas.util;
 
 import net.bodz.bas.a.ClassInfo;
-import net.bodz.bas.commons.exceptions.CreateException;
-import net.bodz.bas.nls.AppNLS;
+import net.bodz.bas.exceptions.CreateException;
 
 /**
  * Plugin Implementation
@@ -19,7 +18,7 @@ public class PluginTypeEx {
         this.factory = factory;
         Class<?> type = factory.getType();
         if (!Plugin.class.isAssignableFrom(type))
-            throw new IllegalArgumentException(AppNLS.getString("PluginTypeEx.wrongFactoryWhichCreate") //$NON-NLS-1$
+            throw new IllegalArgumentException("wrong factory which create " 
                     + type);
         this.clazz = (Class<? extends Plugin>) type;
         this.info = ClassInfo.get(clazz);
@@ -55,7 +54,7 @@ public class PluginTypeEx {
 
     @Override
     public String toString() {
-        return String.format(AppNLS.getString("PluginTypeEx.plugin_s"), clazz.getName()); //$NON-NLS-1$
+        return String.format("Plugin(%s)", clazz.getName()); 
     }
 
 }

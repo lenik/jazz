@@ -1,8 +1,6 @@
 package net.bodz.bas.test.types;
 
 import net.bodz.bas.commons.util.Objects;
-import net.bodz.bas.nls.AppNLS;
-import net.bodz.bas.text.util.Quotable;
 
 public class Dog {
 
@@ -10,7 +8,7 @@ public class Dog {
     private boolean drunk;
 
     public Dog() {
-        this.name = AppNLS.getString("Dog.dogName"); //$NON-NLS-1$
+        this.name = "Little White"; 
     }
 
     public Dog(String name) {
@@ -27,32 +25,32 @@ public class Dog {
     }
 
     public String bark() {
-        return out(AppNLS.getString("Dog.barkSound")); //$NON-NLS-1$
+        return out("Wang wang!!"); 
     }
 
     public String bark(String target) {
-        out(AppNLS.getString("Dog.hi") + target + "!"); //$NON-NLS-1$ //$NON-NLS-2$
+        out("Hi, " + target + "!");  
         return target;
     }
 
     static final Quotable spliter;
     static {
-        spliter = new Quotable("'".toCharArray()); //$NON-NLS-1$
+        spliter = new Quotable("'".toCharArray()); 
     }
 
     public String bark(String target, boolean lazy) {
         if (!lazy)
             return bark(target);
-        String[] words = spliter.splitDequote("\\s+", target); //$NON-NLS-1$
-        String abbr = ""; //$NON-NLS-1$
+        String[] words = spliter.splitDequote("\\s+", target); 
+        String abbr = ""; 
         for (String w : words)
             abbr += w.charAt(0);
-        out(AppNLS.getString("Dog.hiAbbr") + abbr + "!"); //$NON-NLS-1$ //$NON-NLS-2$
+        out("H, " + abbr + "!");  
         return abbr;
     }
 
     public String intro() {
-        return out(AppNLS.getString("Dog.myNameIs") + name + "!"); //$NON-NLS-1$ //$NON-NLS-2$
+        return out("My name is " + name + "!");  
     }
 
     public void drink() {
@@ -94,7 +92,7 @@ public class Dog {
 
     @Override
     public String toString() {
-        return AppNLS.getString("Dog.xDogName") + name + AppNLS.getString("Dog.xDrunkAttr") + drunk + ">"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        return "<Dog name=" + name + " drunk=" + drunk + ">";   
     }
 
 }

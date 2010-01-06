@@ -2,10 +2,6 @@ package net.bodz.bas.text.lop.fsm;
 
 import static org.junit.Assert.assertEquals;
 
-import net.bodz.bas.text.lop.fsm.CharRange;
-import net.bodz.bas.text.lop.fsm.CharSet;
-import net.bodz.bas.text.lop.fsm.SplitResult;
-
 import org.junit.Test;
 
 public class CharRangeTest {

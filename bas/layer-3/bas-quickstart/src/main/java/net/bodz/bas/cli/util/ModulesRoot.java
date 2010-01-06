@@ -2,11 +2,8 @@ package net.bodz.bas.cli.util;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.nio.file.Files;
 import java.util.Map;
-
-import net.bodz.bas.commons.typealiases.HashTextMap;
-import net.bodz.bas.io.Files;
-import net.bodz.bas.sysctx.SystemInfo;
 
 public class ModulesRoot {
 
@@ -24,7 +21,7 @@ public class ModulesRoot {
 
     @Override
     public String toString() {
-        return "ModulesRoot: " + root; //$NON-NLS-1$
+        return "ModulesRoot: " + root; 
     }
 
     /**
@@ -97,8 +94,8 @@ public class ModulesRoot {
         boolean first = parent == null;
         if (parent == null) {
             // absolute path?
-            if (exp.startsWith("/")) //$NON-NLS-1$
-                return findexp(exp.substring(1), Files.canoniOf("/")); //$NON-NLS-1$
+            if (exp.startsWith("/")) 
+                return findexp(exp.substring(1), Files.canoniOf("/")); 
             if (SystemInfo.isWin32() && exp.length() > 2 && exp.charAt(1) == ':') {
                 File driveRoot = Files.canoniOf(exp.substring(0, 2));
                 return findexp(exp.substring(2), driveRoot);
@@ -118,12 +115,12 @@ public class ModulesRoot {
         // @named-root
         if (first) {
             File newParent = null;
-            if (component.startsWith("@")) { //$NON-NLS-1$
+            if (component.startsWith("@")) { 
                 String mod = component.substring(1);
                 newParent = modules.get(mod);
                 if (newParent == null)
                     return null;
-            } else if (component.startsWith("$")) { //$NON-NLS-1$
+            } else if (component.startsWith("$")) { 
                 String env = System.getenv(component.substring(1));
                 if (env == null)
                     return null;
@@ -136,7 +133,7 @@ public class ModulesRoot {
             }
         }
         // fuzzy*
-        if (component.endsWith("*")) { //$NON-NLS-1$
+        if (component.endsWith("*")) { 
             String prefix = component.substring(0, component.length() - 1);
             File expanded = findabc(prefix, parent);
             if (expanded == null || !expanded.exists())
@@ -153,11 +150,11 @@ public class ModulesRoot {
     public static ModulesRoot DEFAULT;
 
     static {
-        File root = new File("/"); //$NON-NLS-1$
+        File root = new File("/"); 
         if (SystemInfo.isWin32()) {
-            String programFiles = System.getenv("ProgramFiles"); //$NON-NLS-1$
+            String programFiles = System.getenv("ProgramFiles"); 
             if (programFiles == null)
-                programFiles = "C:/Program Files"; //$NON-NLS-1$
+                programFiles = "C:/Program Files"; 
             root = Files.canoniOf(programFiles);
         }
         DEFAULT = new ModulesRoot(root);

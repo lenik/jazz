@@ -1,8 +1,6 @@
 package net.bodz.bas.cli.util;
 
 import net.bodz.bas.cli.BasicCLI;
-import net.bodz.bas.commons.collection.util.ArrayOps;
-import net.bodz.bas.commons.scripting.Reflects;
 
 public class CLILauncher {
 
@@ -10,7 +8,7 @@ public class CLILauncher {
         String cliClassName = args[0];
         Class<?> cliClass = Class.forName(cliClassName);
         if (!BasicCLI.class.isAssignableFrom(cliClass))
-            throw new IllegalArgumentException("Not a CLI class: " + cliClass); //$NON-NLS-1$
+            throw new IllegalArgumentException("Not a CLI class: " + cliClass); 
         BasicCLI cli = (BasicCLI) Reflects.newInstance(cliClass);
 
         args = ArrayOps.Strings.shift(args);

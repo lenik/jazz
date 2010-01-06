@@ -10,8 +10,8 @@ public class CharOutsTest {
     @Test
     public void testStdout() throws Exception {
         CharOut out = CharOuts.stdout;
-        out.println("line1"); //$NON-NLS-1$
-        out.println("line2"); //$NON-NLS-1$
+        out.println("line1"); 
+        out.println("line2"); 
     }
 
 }

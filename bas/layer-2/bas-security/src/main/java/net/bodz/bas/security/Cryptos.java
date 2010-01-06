@@ -15,16 +15,16 @@ public class Cryptos {
             MessageDigest digest = MessageDigest.getInstance(alg);
             return digest;
         } catch (NoSuchAlgorithmException e) {
-            throw new UnexpectedException(String.format(SysNLS.getString("Cryptos.0"), alg)); //$NON-NLS-1$
+            throw new UnexpectedException(String.format("Message digest %s isn\'t installed", alg)); 
         }
     }
 
     public static MessageDigest getMD5() {
-        return newDigest("MD5"); //$NON-NLS-1$
+        return newDigest("MD5"); 
     }
 
     public static MessageDigest getSHA1() {
-        return newDigest("SHA1"); //$NON-NLS-1$
+        return newDigest("SHA1"); 
     }
 
     static byte[] calc(Object in, MessageDigest digest) throws IOException {

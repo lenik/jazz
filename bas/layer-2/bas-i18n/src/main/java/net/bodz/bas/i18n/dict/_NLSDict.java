@@ -1,6 +1,5 @@
 package net.bodz.bas.i18n.dict;
 
-import net.bodz.bas.a.A_bas;
 
 public abstract class _NLSDict implements NLSDict {
 
@@ -80,7 +79,7 @@ public abstract class _NLSDict implements NLSDict {
     public final String format(String key, Object... args) {
         String format = getString(key);
         if (format == null)
-            throw new NullPointerException("key isn't existed: " + key); //$NON-NLS-1$
+            throw new NullPointerException("key isn't existed: " + key); 
         String s = String.format(format, args);
         return s;
     }

@@ -1,6 +1,5 @@
 package net.bodz.bas.util;
 
-import net.bodz.bas.commons.exception.ExceptionSourceRunnable;
 import net.bodz.bas.commons.exception.RecoverableExceptionListener;
 import net.bodz.bas.ui.UserInterface;
 

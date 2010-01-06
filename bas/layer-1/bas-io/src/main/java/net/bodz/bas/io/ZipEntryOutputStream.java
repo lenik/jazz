@@ -11,7 +11,7 @@ public class ZipEntryOutputStream extends OutputStream {
 
     public ZipEntryOutputStream(ZipOutputStream out) {
         if (out == null)
-            throw new NullPointerException("out"); //$NON-NLS-1$
+            throw new NullPointerException("out"); 
         this.out = out;
     }
 

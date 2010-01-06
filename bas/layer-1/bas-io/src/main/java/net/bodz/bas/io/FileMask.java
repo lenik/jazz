@@ -28,7 +28,7 @@ public class FileMask {
     public static final int BINARY = 0x00020000;
     public static final int CNTTYPE = TEXT | BINARY;
 
-    private static char[] bitchars = "rwx-HAS-zseEfd--TB--------------" //$NON-NLS-1$
+    private static char[] bitchars = "rwx-HAS-zseEfd--TB--------------" 
     .toCharArray();
 
     private final int mask;
@@ -96,7 +96,7 @@ public class FileMask {
                 if (file.isHidden())
                     bits |= HIDDEN;
                 else {
-                    if (file.getName().startsWith(".")) //$NON-NLS-1$
+                    if (file.getName().startsWith(".")) 
                         bits |= HIDDEN;
                 }
             // if (check(ARCHIVE | SYSTEM)) ; // not supported
@@ -139,7 +139,7 @@ public class FileMask {
 
     @Override
     public String toString() {
-        return format(bits) + "/" + format(mask); //$NON-NLS-1$
+        return format(bits) + "/" + format(mask); 
     }
 
     public static int parse(String str) {
@@ -191,7 +191,7 @@ public class FileMask {
                 bits |= BINARY;
                 break;
             default:
-                throw new IllegalArgumentException(String.format(SysNLS.getString("FileMask.errMask_cd"), c, c)); //$NON-NLS-1$
+                throw new IllegalArgumentException(String.format("illegal mask char: \'%c\' (%d)", c, c)); 
             }
         }
         return bits;

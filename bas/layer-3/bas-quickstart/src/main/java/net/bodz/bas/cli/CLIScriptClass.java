@@ -3,9 +3,7 @@ package net.bodz.bas.cli;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 
-import net.bodz.bas.commons.scripting.ScriptException;
-import net.bodz.bas.commons.scripting.Scripts;
-import net.bodz.bas.commons.scripting._ScriptClass;
+import javax.script.ScriptException;
 
 public class CLIScriptClass<T extends BasicCLI> extends _ScriptClass<T> {
 

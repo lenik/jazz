@@ -14,7 +14,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.bodz.bas.annotations.null_class;
-import net.bodz.bas.commons.controlflow.Control;
 import net.bodz.bas.exceptions.CreateException;
 import net.bodz.bas.exceptions.OutOfDomainException;
 import net.bodz.bas.exceptions.UnexpectedException;
@@ -109,7 +108,7 @@ public class Types {
                 n = t.getName();
             b.append(n);
         }
-        return b == null ? "" : b.toString(); //$NON-NLS-1$
+        return b == null ? "" : b.toString(); 
     }
 
     public static String joinNames(String delim, Class<?>... types) {
@@ -117,7 +116,7 @@ public class Types {
     }
 
     public static String joinNames(Class<?>... types) {
-        return joinNames(", ", types); //$NON-NLS-1$
+        return joinNames(", ", types); 
     }
 
     public static Class<?> gcd(Class<?> a, Class<?> b) {
@@ -151,7 +150,7 @@ public class Types {
         }
 
         public void _solve(Class<?> a, Class<?> b) {
-            assert !a.isAssignableFrom(b) : "illegal usage"; //$NON-NLS-1$
+            assert !a.isAssignableFrom(b) : "illegal usage"; 
             for (Class<?> iface : a.getInterfaces()) {
                 if (iface.isAssignableFrom(b))
                     trueSet.add(iface);
@@ -227,12 +226,12 @@ public class Types {
         if (clazz == null)
             return null;
         if (clazz.isInterface())
-            throw new OutOfDomainException("clazz", clazz, "interface"); //$NON-NLS-1$ //$NON-NLS-2$
+            throw new OutOfDomainException("clazz", clazz, "interface");  
         if (null_class.class.isAssignableFrom(clazz))
             return null;
         Class<?>[] argTypes = Types.getTypes(args);
         try {
-            Method method = clazz.getMethod("getInstance", argTypes); //$NON-NLS-1$
+            Method method = clazz.getMethod("getInstance", argTypes); 
             return (T) Control.invoke(method, null, args);
         } catch (NoSuchMethodException e) {
             return newInstance(clazz, argTypes, args);

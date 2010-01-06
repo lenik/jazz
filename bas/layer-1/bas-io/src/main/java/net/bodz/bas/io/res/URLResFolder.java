@@ -10,7 +10,7 @@ public class URLResFolder implements ResFolder {
 
     public URLResFolder(URL context) {
         if (context == null)
-            throw new NullPointerException("context-url"); //$NON-NLS-1$
+            throw new NullPointerException("context-url"); 
         this.context = context;
     }
 

@@ -3,8 +3,6 @@ package net.bodz.bios.units.sinks;
 import java.io.Flushable;
 import java.io.IOException;
 
-import net.bodz.bas.io.ByteOut;
-
 public class ByteOutSink extends ByteProcessSink {
 
     private ByteOut out;

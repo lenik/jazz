@@ -45,27 +45,27 @@ public class XMLs {
     // SAX Parsers
 
     public static void parse(File file, Object... handlers) throws SAXException, IOException {
-        assert file != null : "null file"; //$NON-NLS-1$
+        assert file != null : "null file"; 
         URL url = Files.getURL(file);
         parse(new InputSource(url.toString()), handlers);
     }
 
     public static void parse(Reader reader, Object... handlers) throws SAXException, IOException {
-        assert reader != null : "null reader"; //$NON-NLS-1$
+        assert reader != null : "null reader"; 
         parse(new InputSource(reader), handlers);
     }
 
     public static void parse(InputStream in, Object... handlers) throws SAXException, IOException {
-        assert in != null : "null in"; //$NON-NLS-1$
+        assert in != null : "null in"; 
         parse(new InputSource(in), handlers);
     }
 
     public static void parse(InputSource source, Object... handlers) throws SAXException, IOException {
-        assert source != null : "null source"; //$NON-NLS-1$
+        assert source != null : "null source"; 
         XMLReader xmlReader = XMLReaderFactory.createXMLReader();
         for (Object handler : handlers) {
             if (handler == null)
-                throw new NullPointerException("null handler"); //$NON-NLS-1$
+                throw new NullPointerException("null handler"); 
             if (handler instanceof DefaultHandler) {
                 DefaultHandler dh = (DefaultHandler) handler;
                 xmlReader.setContentHandler(dh);
@@ -138,15 +138,15 @@ public class XMLs {
     }
 
     public static void encode(int caller, Object obj, OutputStream out, ExceptionListener exceptionListener) {
-        encode(caller + 1, obj, out, "utf-8", exceptionListener); //$NON-NLS-1$
+        encode(caller + 1, obj, out, "utf-8", exceptionListener); 
     }
 
     public static String encode(int caller, Object obj, ExceptionListener exceptionListener) {
         ByteArrayOutputStream buf = new ByteArrayOutputStream();
-        encode(caller + 1, obj, buf, "utf-8", exceptionListener); //$NON-NLS-1$
+        encode(caller + 1, obj, buf, "utf-8", exceptionListener); 
         String xml;
         try {
-            xml = buf.toString("utf-8"); //$NON-NLS-1$
+            xml = buf.toString("utf-8"); 
         } catch (UnsupportedEncodingException e) {
             throw new UnexpectedException(e);
         }
@@ -190,7 +190,7 @@ public class XMLs {
     public static Object decode(int caller, String xml, ExceptionListener exceptionListener) {
         byte[] bytes;
         try {
-            bytes = xml.getBytes("utf-8"); //$NON-NLS-1$
+            bytes = xml.getBytes("utf-8"); 
         } catch (UnsupportedEncodingException e) {
             throw new UnexpectedException(e);
         }

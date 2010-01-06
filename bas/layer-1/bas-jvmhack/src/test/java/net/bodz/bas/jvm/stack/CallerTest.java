@@ -35,7 +35,7 @@ public class CallerTest
         StackTraceElement stack = Caller.stackTrace(0);
         Class<?> clazz = getClass();
         assertEquals(clazz.getName(), stack.getClassName());
-        assertEquals("testStackTrace", stack.getMethodName()); //$NON-NLS-1$
+        assertEquals("testStackTrace", stack.getMethodName()); 
     }
 
     static class NestRunnable

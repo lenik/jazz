@@ -1,21 +1,14 @@
 package net.bodz.bas.cli;
 
-import static net.bodz.bas.commons.collection.util.ArrayOps.Objects;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import net.bodz.bas.api.types.TypeParser;
+import javax.script.ScriptException;
+
 import net.bodz.bas.cli.a.ArgsParseBy;
 import net.bodz.bas.cli.a.OptionGroup;
-import net.bodz.bas.commons.controlflow.Control;
-import net.bodz.bas.commons.exceptions.CreateException;
-import net.bodz.bas.commons.exceptions.ParseException;
-import net.bodz.bas.commons.scripting.ScriptException;
-import net.bodz.bas.commons.scripting.ScriptMethod;
 import net.bodz.bas.commons.util.Types;
-import net.bodz.bas.nls.AppNLS;
-import net.bodz.bas.type.feature.impl.TypeParsers;
+import net.bodz.bas.exceptions.CreateException;
 
 public class MethodOption extends _Option<CallInfo> implements ScriptMethod<Object> {
 
@@ -77,7 +70,7 @@ public class MethodOption extends _Option<CallInfo> implements ScriptMethod<Obje
 
     public Object parseParameter(String param, int paramIndex) throws ParseException {
         if (parsers == null || paramIndex < 0 || paramIndex >= argc)
-            throw new CLIError(AppNLS.getString("MethodOption.paramIdxOut")); //$NON-NLS-1$
+            throw new CLIError("param index out of bounds"); 
         Object val = parsers[paramIndex].parse(param);
         return val;
     }

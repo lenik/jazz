@@ -10,7 +10,7 @@ public class CollectionTerminal extends BufferedTerminal {
 
     public CollectionTerminal(Object prefix, Collection<String> collection) {
         if (collection == null)
-            throw new NullPointerException("list"); //$NON-NLS-1$
+            throw new NullPointerException("list"); 
         this.prefix = prefix;
         this.collection = collection;
     }
@@ -33,7 +33,7 @@ public class CollectionTerminal extends BufferedTerminal {
 
     @Override
     public String toString() {
-        return Strings.join("\n", collection); //$NON-NLS-1$
+        return Strings.join("\n", collection); 
     }
 
 }

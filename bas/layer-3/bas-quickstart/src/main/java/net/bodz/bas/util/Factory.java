@@ -6,12 +6,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 
-import net.bodz.bas.commons.caller.Caller;
-import net.bodz.bas.commons.exceptions.CreateException;
-import net.bodz.bas.commons.exceptions.DecodeException;
-import net.bodz.bas.commons.scripting.util.CompatMethods;
-import net.bodz.bas.nls.AppNLS;
-import net.bodz.bas.xml.XMLs;
+import net.bodz.bas.exceptions.CreateException;
+import net.bodz.bas.exceptions.DecodeException;
 
 public interface Factory<T> {
 
@@ -61,7 +57,7 @@ public interface Factory<T> {
             assert clazz != null;
             if (clazz.isMemberClass()) {
                 if (outer == null)
-                    throw new NullPointerException(AppNLS.getString("Factory.needEnclosing") + clazz); //$NON-NLS-1$
+                    throw new NullPointerException("no outer specified for member " + clazz); 
             }
             this.clazz = clazz;
             this.outer = outer;
@@ -100,9 +96,9 @@ public interface Factory<T> {
 
         public ByClassName(ClassLoader loader, String name) {
             if (loader == null)
-                throw new NullPointerException("classLoader"); //$NON-NLS-1$
+                throw new NullPointerException("classLoader"); 
             if (name == null)
-                throw new NullPointerException("className"); //$NON-NLS-1$
+                throw new NullPointerException("className"); 
             this.loader = loader;
             this.name = name;
         }
@@ -139,7 +135,7 @@ public interface Factory<T> {
 
         public ByXML(String xml, ExceptionListener listener) {
             if (xml == null)
-                throw new NullPointerException("xml"); //$NON-NLS-1$
+                throw new NullPointerException("xml"); 
             this.xml = xml;
             this.listener = listener;
         }
@@ -171,7 +167,7 @@ public interface Factory<T> {
 
         public ByXMLFile(File xmlFile, ExceptionListener listener) {
             if (xmlFile == null)
-                throw new NullPointerException("xmlFile"); //$NON-NLS-1$
+                throw new NullPointerException("xmlFile"); 
             this.xmlFile = xmlFile;
             this.listener = listener;
         }

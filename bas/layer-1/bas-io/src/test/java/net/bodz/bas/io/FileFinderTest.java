@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.FileFilter;
 
 import net.bodz.bas.io.fs.traverse.FileFinder;
-import net.bodz.bas.snm.EclipseProject;
 
 import org.junit.Test;
 
@@ -22,7 +21,7 @@ public class FileFinderTest {
         System.out.println(title);
         for (File f : files) {
             count++;
-            System.out.println("  " + count + ". " + f); //$NON-NLS-1$ //$NON-NLS-2$
+            System.out.println("  " + count + ". " + f);  
         }
         return count;
     }
@@ -32,9 +31,9 @@ public class FileFinderTest {
         if (srcDir == null) // ignored.
             return;
 
-        int n = dump("normal", new FileFinder(srcDir)); //$NON-NLS-1$
+        int n = dump("normal", new FileFinder(srcDir)); 
 
-        int n0 = dump("depth=0", new FileFinder(0, srcDir)); //$NON-NLS-1$
+        int n0 = dump("depth=0", new FileFinder(0, srcDir)); 
         assertEquals(1, n0);
 
         FileFilter fileOnly = new FileFilter() {
@@ -51,8 +50,8 @@ public class FileFinderTest {
             }
         };
 
-        int nFiles = dump("fileOnly", new FileFinder(fileOnly, false, srcDir)); //$NON-NLS-1$
-        int nDirs = dump("dirOnly", new FileFinder(dirOnly, false, srcDir)); //$NON-NLS-1$
+        int nFiles = dump("fileOnly", new FileFinder(fileOnly, false, srcDir)); 
+        int nDirs = dump("dirOnly", new FileFinder(dirOnly, false, srcDir)); 
         assertEquals(n, nFiles + nDirs);
     }
 

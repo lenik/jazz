@@ -21,11 +21,11 @@ public class XMLsTest {
     @Test
     public void testParse1()
             throws Exception {
-        String xml = "<root>" + // //$NON-NLS-1$
-                "<a>A</a>" + // //$NON-NLS-1$
-                "<b>BB</b>" + // //$NON-NLS-1$
-                "<a>AA</a>" + // //$NON-NLS-1$
-                "</root>"; //$NON-NLS-1$
+        String xml = "<root>" + // 
+                "<a>A</a>" + // 
+                "<b>BB</b>" + // 
+                "<a>AA</a>" + // 
+                "</root>"; 
         final Map<String, Integer> tagstat = new TreeMap<String, Integer>();
 
         XMLs.parse(new StringReader(xml), new DefaultHandler() {
@@ -41,17 +41,17 @@ public class XMLsTest {
             }
         });
 
-        assertEquals((Integer) 2, tagstat.get("a")); //$NON-NLS-1$
-        assertEquals((Integer) 1, tagstat.get("b")); //$NON-NLS-1$
+        assertEquals((Integer) 2, tagstat.get("a")); 
+        assertEquals((Integer) 1, tagstat.get("b")); 
     }
 
     void testXmlCodec(String name, Object val)
             throws EncodeException, DecodeException {
-        System.out.println("XML encode/decode test of " + name); //$NON-NLS-1$
+        System.out.println("XML encode/decode test of " + name); 
         String xml = XMLs.encode(val);
-        System.out.println("  Encoded to" + name + ": \n" + xml); //$NON-NLS-1$ //$NON-NLS-2$
+        System.out.println("  Encoded to" + name + ": \n" + xml);  
         Object decoded = XMLs.decode(xml);
-        System.out.println("  Decoded to " + decoded); //$NON-NLS-1$
+        System.out.println("  Decoded to " + decoded); 
         System.out.println();
     }
 
@@ -59,7 +59,7 @@ public class XMLsTest {
     public void testEncodeNull()
             throws IOException {
         String nullXml = XMLs.encode(null);
-        System.out.println("null-xml = " + nullXml); //$NON-NLS-1$
+        System.out.println("null-xml = " + nullXml); 
         Object null2 = XMLs.decode(nullXml);
         assertNull(null2);
     }
@@ -67,13 +67,13 @@ public class XMLsTest {
     @Test
     public void testEncodeString()
             throws IOException {
-        testXmlCodec("string", "Hello, <&world>!\n"); //$NON-NLS-1$ //$NON-NLS-2$
+        testXmlCodec("string", "Hello, <&world>!\n");  
     }
 
     @Test
     public void testEncodeArray()
             throws IOException {
-        testXmlCodec("array", new Object[] { //$NON-NLS-1$
+        testXmlCodec("array", new Object[] { 
                 //
                         10, //
                         new Integer[] { 20, 21, 22 }, //

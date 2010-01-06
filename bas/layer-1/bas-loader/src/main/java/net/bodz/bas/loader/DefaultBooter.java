@@ -5,18 +5,7 @@ import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.a.BootInfo;
-import net.bodz.bas.a.BootProc;
-import net.bodz.bas.api.functor.Pred1;
-import net.bodz.bas.commons.caller.Caller;
-import net.bodz.bas.commons.collection.util.Arrays2;
-import net.bodz.bas.commons.controlflow.ControlBreak;
-import net.bodz.bas.commons.controlflow.ControlContinue;
-import net.bodz.bas.commons.controlflow.ControlExit;
-import net.bodz.bas.io.CharOut;
-import net.bodz.bas.io.CharOuts;
-import net.bodz.bas.nls.AppNLS;
-import net.bodz.bas.types.util.Empty;
+import sun.dyn.empty.Empty;
 
 /**
  * The default booter for {@link BootInfo}.
@@ -98,14 +87,14 @@ public class DefaultBooter {
         }
         ClassLoader userLoader = class1.getClassLoader();
         if (userLoader != realLoader) {
-            out.println(AppNLS.getString("DefaultBooter.warnLoaderCut")); //$NON-NLS-1$
+            out.println("Warning: class loader cut: "); 
             ClassLoader l = realLoader;
             while (l != null && l != userLoader) {
-                out.println(AppNLS.getString("DefaultBooter.mayLose") + l); //$NON-NLS-1$
+                out.println("  may lose: " + l); 
                 if (l instanceof URLClassLoader) {
                     URLClassLoader ucl = (URLClassLoader) l;
                     for (URL url : ucl.getURLs())
-                        out.println("    " + url); //$NON-NLS-1$
+                        out.println("    " + url); 
                 }
                 l = l.getParent();
             }
@@ -161,10 +150,10 @@ public class DefaultBooter {
         Pred1<Throwable> loopPred = new Once();
         A: for (; index < args.length; index++) {
             String arg = args[index];
-            if (arg.startsWith("-")) { //$NON-NLS-1$
+            if (arg.startsWith("-")) { 
                 if (arg.length() != 2)
                     break;
-                if ("--".equals(arg)) { //$NON-NLS-1$
+                if ("--".equals(arg)) { 
                     index++;
                     break;
                 }
@@ -190,7 +179,7 @@ public class DefaultBooter {
                             @Override
                             public boolean test(Throwable o) {
                                 String val = System.getProperty(predProp);
-                                return "1".equals(val); //$NON-NLS-1$
+                                return "1".equals(val); 
                             }
                         };
                     }
@@ -201,7 +190,7 @@ public class DefaultBooter {
             }
         }
         if (index == args.length)
-            throw new IllegalArgumentException(AppNLS.getString("DefaultBooter.noMainClass")); //$NON-NLS-1$
+            throw new IllegalArgumentException("Main class name isn\'t specified."); 
         String className = args[index++];
         args = Arrays2.copyOf(args, index, args.length - index);
 

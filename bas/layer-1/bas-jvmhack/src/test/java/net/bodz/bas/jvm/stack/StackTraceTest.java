@@ -1,7 +1,5 @@
 package net.bodz.bas.jvm.stack;
 
-import net.bodz.bas.jvm.stack.StackTrace;
-
 import org.junit.Test;
 
 public class StackTraceTest {

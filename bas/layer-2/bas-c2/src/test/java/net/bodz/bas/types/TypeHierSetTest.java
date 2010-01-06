@@ -4,8 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.List;
 
-import net.bodz.bas.lang.modules.collection.hierarchical.TypeHierSet;
-import net.bodz.bas.lang.text.util.Strings;
+import net.bodz.bas.collection.preorder.TypeHierSet;
 
 import org.junit.Test;
 
@@ -17,13 +16,13 @@ public class TypeHierSetTest {
         set.add(Number.class);
         set.add(Object.class);
         set.add(String.class);
-        System.out.println(Strings.join(", ", set)); //$NON-NLS-1$
+        System.out.println(Strings.join(", ", set)); 
         assertEquals(Number.class, set.floor(Float.class));
         assertEquals(Object.class, set.floor(List.class));
 
         set.add(Double.class);
         set.add(Integer.class);
-        System.out.println(Strings.join(", ", set)); //$NON-NLS-1$
+        System.out.println(Strings.join(", ", set)); 
         assertEquals(Number.class, set.floor(Float.class));
         assertEquals(Object.class, set.floor(List.class));
     }

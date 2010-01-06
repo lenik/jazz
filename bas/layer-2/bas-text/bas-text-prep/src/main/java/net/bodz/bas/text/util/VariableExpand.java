@@ -8,7 +8,7 @@ public class VariableExpand extends PatternProcessor {
     private static Pattern variableRefPattern;
     static {
         variableRefPattern = Pattern.compile( //
-                "\\$(?:(\\w+)|\\{((?:\\\\.|.)*?)\\})"); //$NON-NLS-1$
+                "\\$(?:(\\w+)|\\{((?:\\\\.|.)*?)\\})"); 
     }
 
     private Map<String, ?> map;

@@ -5,8 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-import net.bodz.bas.text.lop.util.TellableRandomAccessFileTest;
-
 /**
  * @test {@link TellableRandomAccessFileTest}
  */

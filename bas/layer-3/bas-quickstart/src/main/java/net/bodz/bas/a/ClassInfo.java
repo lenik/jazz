@@ -1,15 +1,12 @@
 package net.bodz.bas.a;
 
-import static net.bodz.bas.commons.collection.util.ArrayOps.Ints;
-
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.arch.ClassLocal;
+import net.bodz.bas.collection.util.ClassLocal;
 import net.bodz.bas.commons.util.Annotations;
 import net.bodz.bas.commons.util.Ns;
-import net.bodz.bas.text.util.Strings;
 import net.bodz.bas.ui.a.Icon;
 
 public class ClassInfo {
@@ -37,7 +34,7 @@ public class ClassInfo {
     protected String join(String[] components) {
         if (components == null || components.length == 0)
             return null;
-        return Strings.join(", ", components); //$NON-NLS-1$
+        return Strings.join(", ", components); 
     }
 
     protected void load() {
@@ -51,7 +48,7 @@ public class ClassInfo {
             for (String iconDef : iconDefs) {
                 int sep = iconDef.indexOf('|');
                 if (sep == -1) {
-                    assert this.icon == null : "default icon duplicate"; //$NON-NLS-1$
+                    assert this.icon == null : "default icon duplicate"; 
                     this.icon = loadIcon(iconDef);
                 } else {
                     String usage = iconDef.substring(0, sep);
@@ -59,7 +56,7 @@ public class ClassInfo {
                     if (iconMap == null)
                         iconMap = new HashMap<String, URL>();
                     else
-                        assert !iconMap.containsKey(usage) : "duplicate icon usage: " //$NON-NLS-1$
+                        assert !iconMap.containsKey(usage) : "duplicate icon usage: " 
                                 + usage;
                     iconMap.put(usage, loadIcon(iconDef));
                 }
@@ -81,7 +78,7 @@ public class ClassInfo {
     protected URL loadIcon(String name) {
         URL url = loader.getResource(name);
         if (url == null)
-            throw new IllegalArgumentException("res isn't existed: " + name); //$NON-NLS-1$
+            throw new IllegalArgumentException("res isn't existed: " + name); 
         return url;
     }
 
@@ -162,7 +159,7 @@ public class ClassInfo {
     }
 
     public void setVersionString(String version) {
-        String[] parts = version.split("\\."); //$NON-NLS-1$
+        String[] parts = version.split("\\."); 
         this.version = new int[parts.length];
         for (int i = 0; i < parts.length; i++)
             this.version[i] = Integer.parseInt(parts[i]);

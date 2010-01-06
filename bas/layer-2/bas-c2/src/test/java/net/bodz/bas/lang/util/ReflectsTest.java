@@ -3,8 +3,6 @@ package net.bodz.bas.lang.util;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 
-import net.bodz.bas.commons.scripting.Reflects;
-
 import org.junit.Test;
 
 public class ReflectsTest {

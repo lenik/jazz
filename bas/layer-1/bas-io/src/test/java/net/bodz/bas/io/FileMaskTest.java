@@ -21,14 +21,14 @@ public class FileMaskTest {
         D d = new D(); //
 
         File tmpDir = Files.getTmpDir();
-        File tmpf = File.createTempFile("filemasktest", "tmp"); //$NON-NLS-1$ //$NON-NLS-2$
+        File tmpf = File.createTempFile("filemasktest", "tmp");  
         try {
-            Files.write(tmpf, "hello"); //$NON-NLS-1$
+            Files.write(tmpf, "hello"); 
 
-            d.o(tmpDir, "drwxez"); //$NON-NLS-1$
-            d.o(new File(tmpDir, "nonexist"), "fE"); //$NON-NLS-1$ //$NON-NLS-2$
-            d.o(new File(tmpDir, "?nonexist"), "fE"); //$NON-NLS-1$ //$NON-NLS-2$
-            d.o(tmpf, "frwxes"); //$NON-NLS-1$
+            d.o(tmpDir, "drwxez"); 
+            d.o(new File(tmpDir, "nonexist"), "fE");  
+            d.o(new File(tmpDir, "?nonexist"), "fE");  
+            d.o(tmpf, "frwxes"); 
         } finally {
             tmpf.delete();
         }

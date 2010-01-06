@@ -1,12 +1,11 @@
 package net.bodz.bas.text.util;
 
-import static net.bodz.bas.math.BoolMath.test;
-
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StreamTokenizer;
 import java.io.StringReader;
 import java.lang.reflect.Array;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Enumeration;
@@ -16,13 +15,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.bodz.bas.commons.pojos.Pair;
-import net.bodz.bas.text.diff.DiffComparator;
-import net.bodz.bas.text.diff.DiffComparators;
-import net.bodz.bas.text.diff.DiffFormat;
-import net.bodz.bas.text.diff.DiffFormats;
-import net.bodz.bas.text.diff.DiffInfo;
-import net.bodz.bas.types.util.StringsTest;
+import sun.dyn.empty.Empty;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
@@ -49,7 +42,7 @@ public class Strings {
     public static String chop(String s, int chopLen) {
         assert s != null;
         if (s.length() < chopLen)
-            return ""; //$NON-NLS-1$
+            return ""; 
         return s.substring(0, s.length() - chopLen);
     }
 
@@ -70,7 +63,7 @@ public class Strings {
     }
 
     public static String chomp(String s) {
-        return chomp(s, "\n"); //$NON-NLS-1$
+        return chomp(s, "\n"); 
     }
 
     public static String trimLeft(String s, int end) {
@@ -156,7 +149,7 @@ public class Strings {
         return lcfirst + s.substring(1);
     }
 
-    static Pattern words = Pattern.compile("\\w+"); //$NON-NLS-1$
+    static Pattern words = Pattern.compile("\\w+"); 
 
     public static String ucfirstWords(String s) {
         return new PatternProcessor(words) {
@@ -171,7 +164,7 @@ public class Strings {
      * helloWorld => hello-world
      */
     public static String hyphenatize(String words) {
-        while (words.startsWith("_")) //$NON-NLS-1$
+        while (words.startsWith("_")) 
             words = words.substring(1);
         BCharOut buf = new BCharOut(words.length() * 3 / 2);
         boolean breakNext = false;
@@ -188,7 +181,7 @@ public class Strings {
             wordStart = wordEnd;
         }
         String s = buf.toString();
-        if (s.startsWith("-")) //$NON-NLS-1$
+        if (s.startsWith("-")) 
             s = s.substring(1);
         return s.toLowerCase();
     }
@@ -197,7 +190,7 @@ public class Strings {
      * hello-world => helloWorld
      */
     public static String dehyphenatize(String hstr) {
-        String[] parts = hstr.split("-"); //$NON-NLS-1$
+        String[] parts = hstr.split("-"); 
         StringBuffer buf = new StringBuffer();
         for (int i = 0; i < parts.length; i++) {
             String part = parts[i];
@@ -213,7 +206,7 @@ public class Strings {
     }
 
     public static String q(String s) {
-        return "'" + s + "'"; //$NON-NLS-1$ //$NON-NLS-2$
+        return "'" + s + "'";  
     }
 
     public static String qq(String s) {
@@ -231,7 +224,7 @@ public class Strings {
             Object e = Array.get(array, i);
             buffer.append(e);
         }
-        return buffer == null ? "" : buffer.toString(); //$NON-NLS-1$
+        return buffer == null ? "" : buffer.toString(); 
     }
 
     public static String join(String separator, Iterable<?> iterable) {
@@ -243,7 +236,7 @@ public class Strings {
                 buffer.append(separator);
             buffer.append(String.valueOf(o));
         }
-        return buffer == null ? "" : buffer.toString(); //$NON-NLS-1$
+        return buffer == null ? "" : buffer.toString(); 
     }
 
     public static String join(String separator, Enumeration<?> enumr) {
@@ -266,7 +259,7 @@ public class Strings {
             bufferValue.append(String.valueOf(entry.getValue()));
         }
         if (bufferKey == null)
-            return new Pair<String, String>("", ""); //$NON-NLS-1$ //$NON-NLS-2$
+            return new Pair<String, String>("", "");  
         else
             return new Pair<String, String>(bufferKey.toString(), bufferValue.toString());
     }
@@ -287,7 +280,7 @@ public class Strings {
             buf.append(rev);
         }
         if (buf == null)
-            return ""; //$NON-NLS-1$
+            return ""; 
         return buf.toString();
     }
 
@@ -322,7 +315,7 @@ public class Strings {
         tokenizer.resetSyntax();
         tokenizer.wordChars(Character.MIN_CODE_POINT, Character.MAX_CODE_POINT);
         if (delims == null)
-            for (char sp : " \t\n\r".toCharArray()) //$NON-NLS-1$
+            for (char sp : " \t\n\r".toCharArray()) 
                 tokenizer.whitespaceChars(sp, sp);
         else
             for (char d : delims)
@@ -334,7 +327,7 @@ public class Strings {
         if (test(flags & QUOTE)) {
             // TODO - DEQUOTE or not.
             if (!test(flags & DEQUOTE))
-                throw new NotImplementedException("raw quote isn't impl."); //$NON-NLS-1$
+                throw new NotImplementedException("raw quote isn't impl."); 
             tokenizer.quoteChar('"');
             tokenizer.quoteChar('\'');
         }
@@ -456,13 +449,13 @@ public class Strings {
         if (limit == 0)
             limit = Integer.MAX_VALUE;
         if (sizes.length < 1)
-            throw new IllegalArgumentException("empty sizes"); //$NON-NLS-1$
+            throw new IllegalArgumentException("empty sizes"); 
         int len = s.length();
         int _sizesum = 0;
         for (int i = 0; i < sizes.length; i++) {
             int size = sizes[i];
             if (size <= 0)
-                throw new IllegalArgumentException("illegal size [" + i + "]"); //$NON-NLS-1$ //$NON-NLS-2$
+                throw new IllegalArgumentException("illegal size [" + i + "]");  
             _sizesum += size;
         }
         List<String> list = new ArrayList<String>(len / _sizesum * sizes.length + 1);
@@ -731,7 +724,7 @@ public class Strings {
     }
 
     public static String ellipse(String s, int len) {
-        return ellipse(s, len, "..."); //$NON-NLS-1$
+        return ellipse(s, len, "..."); 
     }
 
     public static String ellipse(String s, int len, String ellipse, String epstart, String epend) {
@@ -756,7 +749,7 @@ public class Strings {
 
     private static PatternProcessor escapeProcessor;
     static {
-        escapeProcessor = new PatternProcessor("[\\\\\"\'\r\n]") { //$NON-NLS-1$
+        escapeProcessor = new PatternProcessor("[\\\\\"\'\r\n]") { 
             @Override
             protected void matched(String part) {
                 assert part.length() == 1;
@@ -772,20 +765,20 @@ public class Strings {
     public static String escape(int c) {
         switch (c) {
         case '\r':
-            return "\\r"; //$NON-NLS-1$
+            return "\\r"; 
         case '\n':
-            return "\\n"; //$NON-NLS-1$
+            return "\\n"; 
         case '\t':
-            return "\\t"; //$NON-NLS-1$
+            return "\\t"; 
         case '\0':
-            return "\\0"; //$NON-NLS-1$
+            return "\\0"; 
 
         case '\\': // followings: "\\"+c:
-            return "\\\\"; //$NON-NLS-1$
+            return "\\\\"; 
         case '\"':
-            return "\\\""; //$NON-NLS-1$
+            return "\\\""; 
         case '\'':
-            return "\\\'"; //$NON-NLS-1$
+            return "\\\'"; 
         }
         return String.valueOf((char) c);
     }
@@ -839,8 +832,8 @@ public class Strings {
     }
 
     public static void diff(String a, String b, CharOut out) {
-        String[] av = a.split("\n"); //$NON-NLS-1$
-        String[] bv = b.split("\n"); //$NON-NLS-1$
+        String[] av = a.split("\n"); 
+        String[] bv = b.split("\n"); 
         diff(Arrays.asList(av), Arrays.asList(bv), out);
     }
 

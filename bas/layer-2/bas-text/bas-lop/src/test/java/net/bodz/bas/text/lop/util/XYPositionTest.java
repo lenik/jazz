@@ -2,8 +2,6 @@ package net.bodz.bas.text.lop.util;
 
 import static org.junit.Assert.assertEquals;
 
-import net.bodz.bas.text.lop.util.XYPosition;
-
 import org.junit.Test;
 
 public class XYPositionTest {

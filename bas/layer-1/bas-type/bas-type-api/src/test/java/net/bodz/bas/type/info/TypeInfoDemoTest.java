@@ -2,13 +2,13 @@ package net.bodz.bas.type.info;
 
 import static org.junit.Assert.assertEquals;
 import net.bodz.bas.exceptions.ParseException;
-import net.bodz.bas.exceptions.UnsupportedNegotiationException;
 import net.bodz.bas.lang.FinalNegotiation;
 import net.bodz.bas.lang.INegotiation;
 import net.bodz.bas.lang.NegotiationException;
 import net.bodz.bas.lang.NegotiationParameter;
-import net.bodz.bas.type.traits.ITypeInfo;
+import net.bodz.bas.lang.UnsupportedNegotiationException;
 import net.bodz.bas.type.traits.IParser;
+import net.bodz.bas.type.traits.ITypeInfo;
 import net.bodz.bas.type.traits.impl.SelfDescribedTypeInfo;
 import net.bodz.bas.type.traits.impl.TypeInfoResolve;
 

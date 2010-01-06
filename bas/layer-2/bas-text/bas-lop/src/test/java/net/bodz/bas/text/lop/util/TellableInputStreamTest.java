@@ -5,8 +5,6 @@ import static org.junit.Assert.assertEquals;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-import net.bodz.bas.text.lop.util.TellableInputStream;
-
 import org.junit.Test;
 
 public class TellableInputStreamTest {

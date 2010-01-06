@@ -1,6 +1,6 @@
 package net.bodz.bas.text.diff;
 
-import net.bodz.extern.diff.GNUDiff;
+import net.bodz.bas.text.diff.gnudiff.GNUDiff;
 
 public class DiffComparators {
 

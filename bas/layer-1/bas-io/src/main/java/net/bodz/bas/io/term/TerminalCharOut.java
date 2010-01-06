@@ -10,7 +10,7 @@ public class TerminalCharOut extends CharOut {
 
     public TerminalCharOut(Terminal terminal) {
         if (terminal == null)
-            throw new NullPointerException("terminal"); //$NON-NLS-1$
+            throw new NullPointerException("terminal"); 
         this.terminal = terminal;
     }
 

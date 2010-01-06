@@ -4,11 +4,6 @@ import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.api.types.TypeParser;
-import net.bodz.bas.commons.exceptions.ParseException;
-import net.bodz.bas.commons.typeparser.TypeParsers;
-import net.bodz.bas.io.ResLink;
-
 public abstract class MapResRecords<K, V> extends _ResRecords<Map<K, V>> {
 
     protected Class<? extends K> keyClass;
@@ -32,14 +27,14 @@ public abstract class MapResRecords<K, V> extends _ResRecords<Map<K, V>> {
 
     protected K parseKey(String key) throws ParseException {
         if (keyParser == null)
-            keyParser = TypeParsers.guess(getKeyClass(), "KeyClass"); //$NON-NLS-1$
+            keyParser = TypeParsers.guess(getKeyClass(), "KeyClass"); 
         Object k = keyParser.parse(key);
         return keyClass.cast(k);
     }
 
     protected V parseValue(String value) throws ParseException {
         if (valueParser == null)
-            valueParser = TypeParsers.guess(getValueClass(), "ValueClass"); //$NON-NLS-1$
+            valueParser = TypeParsers.guess(getValueClass(), "ValueClass"); 
         Object v = valueParser.parse(value);
         return valueClass.cast(v);
     }

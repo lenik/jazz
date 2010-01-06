@@ -4,8 +4,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.net.URLStreamHandlerFactory;
 
-import net.bodz.bas.nls.AppNLS;
-import net.bodz.bas.types.util.Empty;
+import sun.dyn.empty.Empty;
 
 public class BundledLoader extends URLClassLoader {
 
@@ -44,7 +43,7 @@ public class BundledLoader extends URLClassLoader {
             return new BundledLoader(urls, parent);
         }
         throw new UnsupportedOperationException(String.format(
-                AppNLS.getString("BundledLoader.cantReplaceLoader_s"), loader)); //$NON-NLS-1$
+                "Can\'t replace the given loader %s to BundledLoader", loader)); 
     }
 
 }

@@ -9,7 +9,7 @@ public class RunRepeat implements Runnable {
 
     public RunRepeat(Runnable target, int delay, int repeatCount) {
         if (target == null)
-            throw new NullPointerException("target"); //$NON-NLS-1$
+            throw new NullPointerException("target"); 
         this.target = target;
         this.delay = delay;
         this.repeatCount = repeatCount;

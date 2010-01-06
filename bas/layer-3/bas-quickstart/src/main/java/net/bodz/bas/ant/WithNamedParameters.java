@@ -1,9 +1,5 @@
 package net.bodz.bas.ant;
 
-import net.bodz.bas.commons.collection.TextMap;
-import net.bodz.bas.commons.exceptions.ParseException;
-import net.bodz.bas.commons.typealiases.TreeTextMap;
-import net.bodz.bas.nls.AppNLS;
 
 public class WithNamedParameters {
 
@@ -20,10 +16,10 @@ public class WithNamedParameters {
     public void addConfiguredParameter(NamedParameter parameter) throws ParseException {
         String name = parameter.name;
         if (name == null)
-            throw new IllegalArgumentException(AppNLS.getString("WithNamedParameters.noParameterName")); //$NON-NLS-1$
+            throw new IllegalArgumentException("Name of the parameter isn\'t specified"); 
         if (map.containsKey(name))
             throw new IllegalArgumentException(
-                    AppNLS.getString("WithNamedParameters.parameterExisted") + name + " is already existed"); //$NON-NLS-1$ //$NON-NLS-2$
+                    "Parameter %s is already existed" + name + " is already existed");  
         Object value = parameter.parseValue();
         map.put(parameter.name, value);
     }

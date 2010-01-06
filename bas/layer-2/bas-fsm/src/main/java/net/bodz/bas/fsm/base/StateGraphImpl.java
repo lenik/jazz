@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
-import net.bodz.bas.collection.TypesNLS;
-
 public class StateGraphImpl implements StateGraph {
 
     private static final long serialVersionUID = 3618890808666598908L;
@@ -145,8 +143,8 @@ public class StateGraphImpl implements StateGraph {
         assert key != null;
         assert state != null;
         if (registry.containsKey(key))
-            throw new IllegalArgumentException(TypesNLS.getString("StateGraphImpl.0") + key //$NON-NLS-1$
-                    + TypesNLS.getString("StateGraphImpl.1")); //$NON-NLS-1$
+            throw new IllegalArgumentException("Key " + key 
+                    + " is already existed."); 
         registry.put(key, state);
     }
 
@@ -154,7 +152,7 @@ public class StateGraphImpl implements StateGraph {
         assert key != null;
         if (!registry.containsKey(key))
             throw new IllegalArgumentException(
-                    TypesNLS.getString("StateGraphImpl.2") + key + TypesNLS.getString("StateGraphImpl.3")); //$NON-NLS-1$ //$NON-NLS-2$
+                    "Key " + key + " isn\'t existed.");  
         registry.remove(key);
     }
 

@@ -1,9 +1,7 @@
 package net.bodz.bas.ui;
 
-import net.bodz.bas.commons.collection.hierarchical.TypeHierMap;
-import net.bodz.bas.commons.ref.Var;
+import net.bodz.bas.collection.preorder.TypeHierMap;
 import net.bodz.bas.commons.util.Types;
-import net.bodz.bas.nls.AppNLS;
 
 public abstract class RenderStrategy extends TypeHierMap<Renderer> {
 
@@ -19,7 +17,7 @@ public abstract class RenderStrategy extends TypeHierMap<Renderer> {
     public Object render(Object context, Var<?> var) throws RenderException {
         Renderer renderer = findRenderer(var);
         if (renderer == null)
-            throw new RenderException(AppNLS.getString("RenderStrategy.unkRender") //$NON-NLS-1$
+            throw new RenderException("Don\'t know how to render " 
                     + var.getMeta().getType());
         return renderer.render(context, var);
     }

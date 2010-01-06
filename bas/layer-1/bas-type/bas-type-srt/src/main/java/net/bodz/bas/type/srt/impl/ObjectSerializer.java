@@ -22,7 +22,7 @@ public class ObjectSerializer
         oos.writeObject(o);
         oos.flush();
         byte[] bytes = buf.toByteArray();
-        String cdata = new String(bytes, "iso-8859-1"); //$NON-NLS-1$
+        String cdata = new String(bytes, "iso-8859-1"); 
         super.serialize(s, cdata);
     }
 
@@ -30,7 +30,7 @@ public class ObjectSerializer
     public Object unserialize(Reader s)
             throws IOException, SerializeException {
         String cdata = (String) super.unserialize(s);
-        byte[] bytes = cdata.getBytes("iso-8859-1"); //$NON-NLS-1$
+        byte[] bytes = cdata.getBytes("iso-8859-1"); 
         ByteArrayInputStream buf = new ByteArrayInputStream(bytes);
         ObjectInputStream ois = new ObjectInputStream(buf);
         try {

@@ -41,7 +41,7 @@ public class Quotable extends PatternProcessor {
     private static Pattern compile(char open, char close) {
         String _open = Pattern.quote(String.valueOf(open));
         String _close = Pattern.quote(String.valueOf(close));
-        String regex = _open + "((?:\\\\.|.)*?)" + _close; //$NON-NLS-1$
+        String regex = _open + "((?:\\\\.|.)*?)" + _close; 
         return Pattern.compile(regex);
     }
 
@@ -51,10 +51,10 @@ public class Quotable extends PatternProcessor {
             if (regexBuf == null)
                 regexBuf = new StringBuffer(chars.length * 10);
             else
-                regexBuf.append("|"); //$NON-NLS-1$
+                regexBuf.append("|"); 
             char c = chars[i];
             String qc = Pattern.quote(String.valueOf(c));
-            regexBuf.append(qc + "((?:\\\\.|.)*?)" + qc); //$NON-NLS-1$
+            regexBuf.append(qc + "((?:\\\\.|.)*?)" + qc); 
         }
         String regex = regexBuf.toString();
         return Pattern.compile(regex);
@@ -149,7 +149,7 @@ public class Quotable extends PatternProcessor {
             }
         }
         if (parts.isEmpty())
-            return new String[] { "" }; //$NON-NLS-1$
+            return new String[] { "" }; 
         return parts.toArray(new String[0]);
     }
 

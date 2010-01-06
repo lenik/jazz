@@ -2,8 +2,6 @@ package net.bodz.bas.text.lop;
 
 import java.lang.reflect.Field;
 
-import net.bodz.bas.lang2.Pred1;
-
 public class ReflectUtil {
 
     public static void findField(Class<?> clazz, Object object, Object fieldValue, Pred1<Field> pred) {

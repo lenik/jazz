@@ -7,7 +7,7 @@ import java.nio.charset.CharsetEncoder;
 public class HexCharset extends Charset {
 
     public HexCharset() {
-        super("hex", new String[] { "hex", }); //$NON-NLS-1$ //$NON-NLS-2$
+        super("hex", new String[] { "hex", });  
     }
 
     /**

@@ -1,9 +1,8 @@
 package net.bodz.bas.i18n.dict;
 
+import java.rmi.UnexpectedException;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
-
-import net.bodz.bas.api.exceptions.UnexpectedException;
 
 public class ResourceBundleDict
         extends _NLSDict {

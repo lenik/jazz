@@ -3,8 +3,6 @@ package net.bodz.bas.text.lop.fsm;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.text.util.Strings;
-
 public class Char extends _CharSet {
 
     private final int ch;

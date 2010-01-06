@@ -52,7 +52,7 @@ public class ParserResolve {
             return parser;
 
         if (type.isArray())
-            return new ArrayParser(type.getComponentType(), ","); //$NON-NLS-1$
+            return new ArrayParser(type.getComponentType(), ","); 
 
         Obtain obtain = type.getAnnotation(Obtain.class);
         if (obtain != null) {
@@ -83,15 +83,15 @@ public class ParserResolve {
             throw new ParseException(e);
         }
         if (parser == null && errname != null) {
-            throw new ParseException(TypesNLS.getString("TypeParsers.6") + errname //$NON-NLS-1$
-                    + TypesNLS.getString("TypeParsers.7") + type); //$NON-NLS-1$
+            throw new ParseException("can\'t parse " + errname 
+                    + ": no suitable parser for " + type); 
         }
         return parser;
     }
 
     public static IParser<?> guess(Class<?> type, boolean fail)
             throws ParseException {
-        return guess(type, fail ? "" : null); //$NON-NLS-1$
+        return guess(type, fail ? "" : null); 
     }
 
     @SuppressWarnings("unchecked")

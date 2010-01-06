@@ -2,14 +2,10 @@ package net.bodz.bas.snm;
 
 import java.io.File;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.List;
 
-import net.bodz.bas.commons.exceptions.IllegalUsageException;
-import net.bodz.bas.commons.exceptions.NotImplementedException;
-import net.bodz.bas.commons.exceptions.ParseException;
-import net.bodz.bas.commons.exceptions.UnexpectedException;
-import net.bodz.bas.io.Files;
-import net.bodz.bas.nls.AppNLS;
+import net.bodz.bas.exceptions.IllegalUsageException;
 import net.bodz.bas.snm.BuildPath.ClassContainer;
 import net.bodz.bas.snm.BuildPath.SourceFolder;
 
@@ -22,17 +18,17 @@ public class EclipseProject {
     BuildPath buildPath;
 
     public EclipseProject(File baseDir) throws ParseException {
-        assert baseDir != null : "null base"; //$NON-NLS-1$
+        assert baseDir != null : "null base"; 
         this.baseDir = baseDir;
-        File classpathFile = new File(baseDir, ".classpath"); //$NON-NLS-1$
+        File classpathFile = new File(baseDir, ".classpath"); 
         File manifestFile = new File(baseDir, "META-INF/MANIFEST.MF");
         buildPath = new BuildPath(baseDir, classpathFile, manifestFile);
     }
 
     public static EclipseProject findFromCWD() throws ParseException {
-        File base = findProjectBase(new File(".")); //$NON-NLS-1$
+        File base = findProjectBase(new File(".")); 
         if (base == null)
-            throw new RuntimeException(AppNLS.getString("EclipseProject.cantFindProject")); //$NON-NLS-1$
+            throw new RuntimeException("can\'t find the project"); 
         return new EclipseProject(base);
     }
 
@@ -40,7 +36,7 @@ public class EclipseProject {
         if (dir != null && !dir.isDirectory())
             return null;
         while (dir != null) {
-            if (new File(dir, ".project").exists()) //$NON-NLS-1$
+            if (new File(dir, ".project").exists()) 
                 return dir;
             dir = dir.getParentFile();
         }

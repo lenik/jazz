@@ -1,8 +1,6 @@
 package net.bodz.bas.lang.util;
 
-import static net.bodz.bas.commons.scripting.util.Members.publicMethods;
 import static org.junit.Assert.assertEquals;
-import net.bodz.bas.commons.scripting.util.MethodEx;
 import net.bodz.bas.exceptions.OutOfDomainException;
 
 import org.junit.Test;
@@ -12,7 +10,7 @@ public class MethodExTest {
 
     static final MethodEx _process;
     static {
-        _process = new MethodEx(publicMethods(MethodExTest.class, "process"), //$NON-NLS-1$
+        _process = new MethodEx(publicMethods(MethodExTest.class, "process"), 
                 Object.class);
     }
 
@@ -35,18 +33,18 @@ public class MethodExTest {
     @Test
     public void testTypes() {
         Object forInt = process((Object) 44);
-        assertEquals("forInt", 88, forInt); //$NON-NLS-1$
+        assertEquals("forInt", 88, forInt); 
 
         Object forDouble = process((Object) 100.0);
-        assertEquals("forDouble", 10.0, forDouble); //$NON-NLS-1$
+        assertEquals("forDouble", 10.0, forDouble); 
 
         Object forNumber = process((Object) (byte) 10);
-        assertEquals("forNumber", 110, forNumber); //$NON-NLS-1$
+        assertEquals("forNumber", 110, forNumber); 
     }
 
     @Test(expected = OutOfDomainException.class)
     public void testInvalidType() {
-        process((Object) "string"); //$NON-NLS-1$
+        process((Object) "string"); 
     }
 
 }

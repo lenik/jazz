@@ -31,13 +31,13 @@ public class Dates {
         sysTimeFormat = DateFormat.getTimeInstance();
         sysDateTimeFormat = DateFormat.getDateTimeInstance();
 
-        YYYY_MM_DD = getFormat("yyyy-MM-dd"); //$NON-NLS-1$
-        MM_DD_YYYY = getFormat("MM/dd/yyyy"); //$NON-NLS-1$
-        YYYYMMDD = getFormat("yyyyMMdd"); //$NON-NLS-1$
-        YYMMDD = getFormat("yyMMdd"); //$NON-NLS-1$
+        YYYY_MM_DD = getFormat("yyyy-MM-dd"); 
+        MM_DD_YYYY = getFormat("MM/dd/yyyy"); 
+        YYYYMMDD = getFormat("yyyyMMdd"); 
+        YYMMDD = getFormat("yyMMdd"); 
 
-        HH_MM_SS = getFormat("hh:mm:ss"); //$NON-NLS-1$
-        HHMMSS = getFormat("hhmmss"); //$NON-NLS-1$
+        HH_MM_SS = getFormat("hh:mm:ss"); 
+        HHMMSS = getFormat("hhmmss"); 
     }
 
     public static DateFormat dateFormat;
@@ -46,7 +46,7 @@ public class Dates {
     static {
         dateFormat = YYYY_MM_DD;
         timeFormat = HH_MM_SS;
-        dateTimeFormat = getFormat("yyyy-MM-dd hh:mm:ss"); //$NON-NLS-1$
+        dateTimeFormat = getFormat("yyyy-MM-dd hh:mm:ss"); 
     }
 
     public static DateFormat getFormat(String dateFormatString) {

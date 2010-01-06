@@ -61,59 +61,59 @@ public class NamedFrame {
     }
 
     static String toSafeName(String s) {
-        s = s.replaceAll("\\s", ""); //$NON-NLS-1$ //$NON-NLS-2$
+        s = s.replaceAll("\\s", "");  
         return s;
     }
 
     static class Dump implements Opcodes {
 
         public static byte[] dump(String className, String methodName, String description) {
-            boolean isRunnable = "run".equals(methodName); //$NON-NLS-1$
+            boolean isRunnable = "run".equals(methodName); 
             String internalClassName = className.replace('.', '/');
 
             ClassWriter cw = new ClassWriter(0);
             FieldVisitor fv;
             MethodVisitor mv;
 
-            cw.visit(V1_3, ACC_PUBLIC + ACC_SUPER, internalClassName, null, "java/lang/Object", //$NON-NLS-1$
-                    isRunnable ? new String[] { "java/lang/Runnable" } : null); //$NON-NLS-1$
+            cw.visit(V1_3, ACC_PUBLIC + ACC_SUPER, internalClassName, null, "java/lang/Object", 
+                    isRunnable ? new String[] { "java/lang/Runnable" } : null); 
 
-            fv = cw.visitField(ACC_PRIVATE + ACC_FINAL, "description", "Ljava/lang/String;", null, //$NON-NLS-1$ //$NON-NLS-2$
+            fv = cw.visitField(ACC_PRIVATE + ACC_FINAL, "description", "Ljava/lang/String;", null,  
                     null);
             fv.visitEnd();
 
-            fv = cw.visitField(ACC_PRIVATE + ACC_FINAL, "target", "Ljava/lang/Runnable;", null, //$NON-NLS-1$ //$NON-NLS-2$
+            fv = cw.visitField(ACC_PRIVATE + ACC_FINAL, "target", "Ljava/lang/Runnable;", null,  
                     null);
             fv.visitEnd();
 
-            mv = cw.visitMethod(ACC_PUBLIC, "<init>", "(Ljava/lang/String;Ljava/lang/Runnable;)V", //$NON-NLS-1$ //$NON-NLS-2$
+            mv = cw.visitMethod(ACC_PUBLIC, "<init>", "(Ljava/lang/String;Ljava/lang/Runnable;)V",  
                     null, null);
             mv.visitCode();
             mv.visitVarInsn(ALOAD, 0);
-            mv.visitMethodInsn(INVOKESPECIAL, "java/lang/Object", "<init>", "()V"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            mv.visitMethodInsn(INVOKESPECIAL, "java/lang/Object", "<init>", "()V");   
             mv.visitVarInsn(ALOAD, 0);
             mv.visitVarInsn(ALOAD, 1);
-            mv.visitFieldInsn(PUTFIELD, internalClassName, "description", "Ljava/lang/String;"); //$NON-NLS-1$ //$NON-NLS-2$
+            mv.visitFieldInsn(PUTFIELD, internalClassName, "description", "Ljava/lang/String;");  
             mv.visitVarInsn(ALOAD, 0);
             mv.visitVarInsn(ALOAD, 2);
-            mv.visitFieldInsn(PUTFIELD, internalClassName, "target", "Ljava/lang/Runnable;"); //$NON-NLS-1$ //$NON-NLS-2$
+            mv.visitFieldInsn(PUTFIELD, internalClassName, "target", "Ljava/lang/Runnable;");  
             mv.visitInsn(RETURN);
             mv.visitMaxs(2, 3);
             mv.visitEnd();
 
-            mv = cw.visitMethod(ACC_PUBLIC, methodName, "()V", null, null); //$NON-NLS-1$
+            mv = cw.visitMethod(ACC_PUBLIC, methodName, "()V", null, null); 
             mv.visitCode();
             mv.visitVarInsn(ALOAD, 0);
-            mv.visitFieldInsn(GETFIELD, internalClassName, "target", "Ljava/lang/Runnable;"); //$NON-NLS-1$ //$NON-NLS-2$
-            mv.visitMethodInsn(INVOKEINTERFACE, "java/lang/Runnable", "run", "()V"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            mv.visitFieldInsn(GETFIELD, internalClassName, "target", "Ljava/lang/Runnable;");  
+            mv.visitMethodInsn(INVOKEINTERFACE, "java/lang/Runnable", "run", "()V");   
             mv.visitInsn(RETURN);
             mv.visitMaxs(1, 1);
             mv.visitEnd();
 
-            mv = cw.visitMethod(ACC_PUBLIC, "toString", "()Ljava/lang/String;", null, null); //$NON-NLS-1$ //$NON-NLS-2$
+            mv = cw.visitMethod(ACC_PUBLIC, "toString", "()Ljava/lang/String;", null, null);  
             mv.visitCode();
             mv.visitVarInsn(ALOAD, 0);
-            mv.visitFieldInsn(GETFIELD, internalClassName, "description", "Ljava/lang/String;"); //$NON-NLS-1$ //$NON-NLS-2$
+            mv.visitFieldInsn(GETFIELD, internalClassName, "description", "Ljava/lang/String;");  
             mv.visitInsn(ARETURN);
             mv.visitMaxs(1, 1);
             mv.visitEnd();

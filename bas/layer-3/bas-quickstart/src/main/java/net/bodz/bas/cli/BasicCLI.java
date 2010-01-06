@@ -8,52 +8,34 @@ import java.lang.reflect.Constructor;
 import java.net.URL;
 import java.nio.file.FileSystem;
 import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.nio.file.PathMatcher;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import javax.script.ScriptException;
+
 import net.bodz.bas.a.A_bas;
 import net.bodz.bas.a.BootInfo;
 import net.bodz.bas.a.ClassInfo;
 import net.bodz.bas.a.RcsKeywords;
 import net.bodz.bas.a.VersionInfo;
-import net.bodz.bas.api.types.TypeParser;
-import net.bodz.bas.aspect.annotation.ParseBy;
+import net.bodz.bas.annotations.ChainUsage;
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.cli.a.OptionGroup;
 import net.bodz.bas.cli.ext.CLIPlugin;
 import net.bodz.bas.cli.ext.CLIPlugins;
-import net.bodz.bas.collection.VarMap;
-import net.bodz.bas.commons.annotations.ChainUsage;
-import net.bodz.bas.commons.annotations.OverrideOption;
-import net.bodz.bas.commons.callback.VRunnable;
-import net.bodz.bas.commons.controlflow.ControlBreak;
-import net.bodz.bas.commons.exceptions.CreateException;
-import net.bodz.bas.commons.exceptions.NotImplementedException;
-import net.bodz.bas.commons.exceptions.ParseException;
-import net.bodz.bas.commons.scripting.ScriptClass;
-import net.bodz.bas.commons.scripting.ScriptException;
-import net.bodz.bas.commons.scripting.ScriptType;
-import net.bodz.bas.commons.scripting.Scripts;
-import net.bodz.bas.io.CharOut;
-import net.bodz.bas.io.CharOuts;
-import net.bodz.bas.io.Files;
-import net.bodz.bas.io.term.Terminal;
-import net.bodz.bas.io.typeparsers.CharOutParser;
-import net.bodz.bas.io.typeparsers.LoggerParser;
-import net.bodz.bas.nls.AppNLS;
-import net.bodz.bas.sysctx.CWD;
-import net.bodz.bas.text.util.Strings;
-import net.bodz.bas.type.feature.impl.TypeParsers;
-import net.bodz.bas.types.util.Empty;
+import net.bodz.bas.exceptions.CreateException;
+import net.bodz.bas.hint.OverrideOption;
 import net.bodz.bas.ui.ConsoleUI;
 import net.bodz.bas.ui.UserInterface;
 import net.bodz.bas.util.LogTerm;
 import net.bodz.bas.util.LogTerms;
 import net.bodz.bas.util.PluginException;
 import net.bodz.bas.util.PluginTypeEx;
+import sun.dyn.empty.Empty;
 
 /**
  * Recommend eclipse template `cli':
@@ -169,7 +151,7 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
                 ParseException {
             PluginTypeEx typeEx = plugins.getTypeEx(CLIPlugin.class, pluginId);
             if (typeEx == null)
-                throw new PluginException(AppNLS.getString("BasicCLI.noPlugin") + pluginId); //$NON-NLS-1$
+                throw new PluginException("no plugin of " + pluginId); 
             Class<?> clazz = typeEx.getType();
             Constructor<?>[] ctors = clazz.getConstructors(); // only get public
             Constructor<?> ctor = null;
@@ -182,7 +164,7 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
                 }
             }
             if (ctor == null)
-                throw new PluginException(AppNLS.getString("BasicCLI.noCtor") + clazz); //$NON-NLS-1$
+                throw new PluginException("no constructor in " + clazz); 
             int len = sigMaxLen.length;
             int off = 0;
             if (clazz.isMemberClass()) {
@@ -194,7 +176,7 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
                 return (CLIPlugin) typeEx.newInstance();
             }
             if (len != 1)
-                throw new PluginException(AppNLS.getString("BasicCLI.noSuitableCtor") //$NON-NLS-1$
+                throw new PluginException("no suitable constructor to use: " 
                         + typeEx);
 
             Class<?> sig0 = sigMaxLen[off];
@@ -208,7 +190,7 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
             // ctor(E[] array)
             String[] args = {};
             if (ctorArg != null)
-                args = ctorArg.split(","); //$NON-NLS-1$
+                args = ctorArg.split(","); 
             Class<?> valtype = sig0.getComponentType();
             if (valtype == String.class)
                 return (CLIPlugin) typeEx.newInstance((Object) args);
@@ -268,9 +250,9 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
             else
                 author = verinfo.author;
             if (author == null)
-                author = AppNLS.getString("BasicCLI.def.author"); //$NON-NLS-1$
+                author = "Lenik"; 
             if (verinfo.state == null)
-                verinfo.state = AppNLS.getString("BasicCLI.def.state"); //$NON-NLS-1$
+                verinfo.state = "UNKNOWN"; 
 
             info.setName(name);
             info.setDoc(doc);
@@ -291,8 +273,8 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
 
     protected void _version(CharOut out) {
         ClassInfo info = _loadClassInfo();
-        out.printf("[%s] %s\n", info.getName(), info.getDoc()); //$NON-NLS-1$
-        out.printf(AppNLS.getString("BasicCLI.fmt.ver_sss"), // //$NON-NLS-1$
+        out.printf("[%s] %s\n", info.getName(), info.getDoc()); 
+        out.printf("Written by %s,  Version %s,  Last updated at %s\n", // 
                 info.getAuthor(), //
                 Strings.joinDot(info.getVersion()), //
                 info.getDateString());
@@ -312,13 +294,13 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
         out.print(hlp_opts);
 
         if (plugins != null)
-            plugins.help(out, ""); //$NON-NLS-1$
+            plugins.help(out, ""); 
 
         out.flush();
     }
 
     protected String _helpRestSyntax() {
-        return AppNLS.getString("BasicCLI.help.FILES"); //$NON-NLS-1$
+        return "FILES"; 
     }
 
     private boolean prepared;
@@ -360,7 +342,7 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
         // }
         // }
 
-        dbg.p("cli get options"); //$NON-NLS-1$
+        dbg.p("cli get options"); 
         opts = getOptions();
 
         restArgs = new ArrayList<String>();
@@ -396,14 +378,14 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
     @Override
     public synchronized void run(String... args) throws Exception {
         Terminal dbg = L.debug();
-        dbg.p("cli prepare"); //$NON-NLS-1$
+        dbg.p("cli prepare"); 
         _prepare();
         int preRestSize = restArgs.size(); // make climain() reentrant.
 
         try {
             addArguments(args);
 
-            dbg.p("cli boot"); //$NON-NLS-1$
+            dbg.p("cli boot"); 
             _postInit();
             _boot();
 
@@ -425,20 +407,20 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
                     Object optval = opt.get(this);
                     if (optval instanceof CallInfo)
                         continue;
-                    dbg.p(optnam, " = ", Util.dispval(optval)); //$NON-NLS-1$
+                    dbg.p(optnam, " = ", Util.dispval(optval)); 
                 }
                 for (Entry<String, Object> entry : _vars.entrySet()) {
                     String name = entry.getKey();
                     Object value = entry.getValue();
-                    dbg.p("var ", name, " = ", value); //$NON-NLS-1$ //$NON-NLS-2$
+                    dbg.p("var ", name, " = ", value);  
                 }
             }
             String[] rest = restArgs.toArray(Empty.Strings);
 
-            dbg.p("cli main"); //$NON-NLS-1$
+            dbg.p("cli main"); 
             doMain(rest);
 
-            dbg.p("cli exit"); //$NON-NLS-1$
+            dbg.p("cli exit"); 
         } catch (ControlBreak b) {
             return;
         } finally {
@@ -460,7 +442,7 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
      * @throws ControlBreak
      */
     protected void _exit() throws Exception {
-        throw new ControlBreak("exit"); //$NON-NLS-1$
+        throw new ControlBreak("exit"); 
     }
 
     /**

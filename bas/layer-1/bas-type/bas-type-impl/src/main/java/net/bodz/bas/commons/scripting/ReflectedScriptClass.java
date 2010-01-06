@@ -10,7 +10,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.TreeSet;
 
-import net.bodz.bas.commons.util.Types;
 import net.bodz.bas.exceptions.ReadOnlyException;
 
 class ReflectedScriptClass<T> extends _ScriptClass<T> {

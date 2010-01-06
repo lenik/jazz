@@ -4,12 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
 
-import net.bodz.bas.commons.caller.Caller;
-import net.bodz.bas.io.CharOut;
-import net.bodz.bas.io.term.Terminal;
-import net.bodz.bas.io.term.Terminals;
-import net.bodz.bas.nls.LangNLS;
-
 public class Classpath {
 
     static Terminal out = Terminals.nil;
@@ -19,7 +13,7 @@ public class Classpath {
      */
     public static int addURL(ClassLoader loader, URL... urls) {
         if (!(loader instanceof URLClassLoader))
-            throw new UnsupportedOperationException(LangNLS.getString("Classpath.cantAddURL") //$NON-NLS-1$
+            throw new UnsupportedOperationException("can\'t addURL to " 
                     + loader.getClass());
         URLClassLoader ucl = (URLClassLoader) loader;
         int count = 0;
@@ -27,7 +21,7 @@ public class Classpath {
             int added = UCL.addURL(ucl, url);
             if (added != 0) {
                 count += added;
-                out.p("addURL ", url, " -> ", ucl); //$NON-NLS-1$ //$NON-NLS-2$
+                out.p("addURL ", url, " -> ", ucl);  
             }
         }
         return count;

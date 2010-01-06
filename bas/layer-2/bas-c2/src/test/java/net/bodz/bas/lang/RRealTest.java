@@ -1,7 +1,5 @@
 package net.bodz.bas.lang;
 
-import net.bodz.bas.math.ErrorToleranceDouble;
-
 import org.junit.Test;
 
 public class RRealTest {

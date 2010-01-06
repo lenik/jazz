@@ -7,8 +7,8 @@ public abstract class JobObserver implements RecoverableExceptionListener, Statu
 
     public void bind(Job job) {
         if (job == null)
-            throw new NullPointerException("job"); //$NON-NLS-1$
-        Trace.link(this, "observer", job); //$NON-NLS-1$
+            throw new NullPointerException("job"); 
+        Trace.link(this, "observer", job); 
         job.addExceptionListener(this);
         job.addStatusChangeListener(this);
         job.addProgressChangeListener(this);
@@ -17,8 +17,8 @@ public abstract class JobObserver implements RecoverableExceptionListener, Statu
 
     public void unbind(Job job) {
         if (job == null)
-            throw new NullPointerException("job"); //$NON-NLS-1$
-        Trace.unlink(this, "observer", job); //$NON-NLS-1$
+            throw new NullPointerException("job"); 
+        Trace.unlink(this, "observer", job); 
         job.removeExceptionListener(this);
         job.removeStatusChangeListener(this);
         job.removeProgressChangeListener(this);

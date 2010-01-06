@@ -1,12 +1,15 @@
 package net.bodz.bas.text.typeparsers;
 
-import net.bodz.bas.api.exceptions.ParseException;
-import net.bodz.bas.api.types.TypeParser;
+import net.bodz.bas.exceptions.ParseException;
+import net.bodz.bas.text.encodings.Encodings;
+import net.bodz.bas.type.traits.impl.AbstractParser;
 
-public class HexParser extends TypeParser {
+public class HexParser
+        extends AbstractParser<byte[]> {
 
     @Override
-    public byte[] parse(String hex) throws ParseException {
+    public byte[] parse(String hex)
+            throws ParseException {
         return Encodings.HEX.decode(hex);
     }
 

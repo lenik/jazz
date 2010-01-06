@@ -1,9 +1,8 @@
 package net.bodz.bas.types;
 
-import net.bodz.bas.lang.modules.tree.ArrayTreeNode;
-import net.bodz.bas.lang.modules.tree.TreeCallback;
-import net.bodz.bas.lang.modules.tree.TreeNodes;
-import net.bodz.bas.lang.text.util.Strings;
+import net.bodz.bas.collection.tree.ArrayTreeNode;
+import net.bodz.bas.collection.tree.TreeCallback;
+import net.bodz.bas.collection.tree.TreeNodes;
 
 import org.junit.Test;
 
@@ -17,7 +16,7 @@ public class ArrayTreeNodeTest {
     public static final ArrayTreeNode helloTree;
     static {
         helloVar = array(//
-                "Hello", // //$NON-NLS-1$
+                "Hello", // 
                 array(10, 20, 30), // 
                 array(40, array(41, 42)), //
                 50);
@@ -29,7 +28,7 @@ public class ArrayTreeNodeTest {
         TreeNodes.traverse(helloTree, new TreeCallback<ArrayTreeNode>() {
             @Override
             public int each(ArrayTreeNode node, int level) {
-                String indent = Strings.repeat(level, "    "); //$NON-NLS-1$
+                String indent = Strings.repeat(level, "    "); 
                 System.out.println(indent + node);
                 return OK;
             }

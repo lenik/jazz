@@ -4,10 +4,6 @@ import static org.junit.Assert.assertArrayEquals;
 
 import java.util.Arrays;
 
-import net.bodz.bas.closures.alt.Proc1;
-import net.bodz.bas.lang.collection.comparators.Comparators;
-import net.bodz.mia.perms.Perms;
-
 import org.junit.Test;
 
 public class ComparatorsTest {
@@ -48,7 +44,7 @@ public class ComparatorsTest {
             if (buf == null)
                 buf = new StringBuffer();
             else
-                buf.append(", "); //$NON-NLS-1$
+                buf.append(", "); 
             buf.append(c.getSimpleName());
         }
         return buf.toString();
@@ -61,7 +57,7 @@ public class ComparatorsTest {
                 Class<?>[] typeHierOrder = Arrays.copyOf(input, input.length);
                 Arrays.sort(typeHierOrder, Comparators.TYPE_HIER);
                 System.out.print(vstr(input));
-                System.out.print(" => "); //$NON-NLS-1$
+                System.out.print(" => "); 
                 System.out.println(vstr(typeHierOrder));
                 Class<?>[] actual = typeHierOrder;
                 assertArrayEquals(expected, actual);

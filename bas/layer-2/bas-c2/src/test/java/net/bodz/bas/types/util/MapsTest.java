@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.bodz.bas.lang.modules.collection.util.Maps;
+import net.bodz.bas.collection.map.DumpMap;
 
 import org.junit.Test;
 
@@ -17,25 +17,25 @@ public class MapsTest {
     @Test
     public void test1() {
         List<String> list = new ArrayList<String>();
-        list.add("a"); //$NON-NLS-1$
-        list.add("b"); //$NON-NLS-1$
-        list.add("c"); //$NON-NLS-1$
+        list.add("a"); 
+        list.add("b"); 
+        list.add("c"); 
         Map<Integer, String> map = DumpMap.toMap(list);
-        assertEquals("a", map.get(0)); //$NON-NLS-1$
-        assertEquals("b", map.get(1)); //$NON-NLS-1$
-        assertEquals("c", map.get(2)); //$NON-NLS-1$
+        assertEquals("a", map.get(0)); 
+        assertEquals("b", map.get(1)); 
+        assertEquals("c", map.get(2)); 
 
         Iterator<Entry<Integer, String>> it = map.entrySet().iterator();
-        assertEquals("a", it.next().getValue()); //$NON-NLS-1$
-        assertEquals("b", it.next().getValue()); //$NON-NLS-1$
+        assertEquals("a", it.next().getValue()); 
+        assertEquals("b", it.next().getValue()); 
         Entry<Integer, String> cEntry = it.next();
-        cEntry.setValue("x"); //$NON-NLS-1$
-        assertEquals("x", list.get(2)); //$NON-NLS-1$
+        cEntry.setValue("x"); 
+        assertEquals("x", list.get(2)); 
 
         map.clear();
         assertEquals(0, list.size());
 
-        list.add("hello"); //$NON-NLS-1$
+        list.add("hello"); 
         assertEquals(1, map.size());
     }
 

@@ -1,8 +1,7 @@
 package net.bodz.bas.util;
 
-import net.bodz.bas.commons.caller.Caller;
-import net.bodz.bas.commons.collection.hierarchical.PrefixMap;
-import net.bodz.bas.commons.collection.hierarchical.TypeHierMap;
+import net.bodz.bas.collection.preorder.PrefixMap;
+import net.bodz.bas.collection.preorder.TypeHierMap;
 
 public class LogTerms {
 
@@ -15,14 +14,14 @@ public class LogTerms {
     static TypeHierMap<LogTerm> typeMap;
     static {
         nameMap = new PrefixMap<LogTerm>();
-        nameMap.put("", console); //$NON-NLS-1$
+        nameMap.put("", console); 
         typeMap = new TypeHierMap<LogTerm>();
         typeMap.put(Object.class, console);
     }
 
     public static LogTerm get(String name) {
         LogTerm t = nameMap.floor(name);
-        assert t != null : "null by name " + name; //$NON-NLS-1$
+        assert t != null : "null by name " + name; 
         return t;
     }
 
@@ -42,13 +41,13 @@ public class LogTerms {
 
     public static LogTerm get(Class<?> type) {
         LogTerm t = typeMap.floor(type);
-        assert t != null : "null by type " + type; //$NON-NLS-1$
+        assert t != null : "null by type " + type; 
         return t;
     }
 
     public static void set(Class<?> type, LogTerm logTerm) {
         if (logTerm == null)
-            throw new NullPointerException("logTerm"); //$NON-NLS-1$
+            throw new NullPointerException("logTerm"); 
         typeMap.put(type, logTerm);
     }
 

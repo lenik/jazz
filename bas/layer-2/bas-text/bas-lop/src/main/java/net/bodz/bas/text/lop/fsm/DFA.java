@@ -3,8 +3,6 @@ package net.bodz.bas.text.lop.fsm;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.io.CharOuts.BCharOut;
-
 public class DFA {
 
     private final String name;

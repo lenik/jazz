@@ -13,10 +13,10 @@ public class DesktopApps {
 
     public static void openMailer(String recipient, String subject, String body) throws IOException {
         StringBuffer buf = new StringBuffer();
-        buf.append("mailto:"); //$NON-NLS-1$
+        buf.append("mailto:"); 
         buf.append(recipient);
-        buf.append("?subject=" + _encode(subject)); //$NON-NLS-1$
-        buf.append("&body=" + _encode(body)); //$NON-NLS-1$
+        buf.append("?subject=" + _encode(subject)); 
+        buf.append("&body=" + _encode(body)); 
         String s = buf.toString();
         URI mailURI;
         try {
@@ -31,8 +31,8 @@ public class DesktopApps {
 
     static String _encode(String s) {
         try {
-            s = URLEncoder.encode(s, "utf-8"); //$NON-NLS-1$
-            return s.replace("+", "%20"); //$NON-NLS-1$ //$NON-NLS-2$
+            s = URLEncoder.encode(s, "utf-8"); 
+            return s.replace("+", "%20");  
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }

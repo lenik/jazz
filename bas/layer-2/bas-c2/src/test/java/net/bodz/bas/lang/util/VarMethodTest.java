@@ -1,8 +1,6 @@
 package net.bodz.bas.lang.util;
 
 import static org.junit.Assert.assertEquals;
-import net.bodz.bas.commons.scripting.util.Members;
-import net.bodz.bas.commons.scripting.util.VarMethod;
 import net.bodz.bas.types.testtypes.C;
 import net.bodz.bas.types.testtypes.CI;
 import net.bodz.bas.types.testtypes.CJz;
@@ -21,51 +19,51 @@ import org.junit.Test;
 public class VarMethodTest {
 
     public String play(Cat a, Dog b) {
-        return "Cat, Dog"; //$NON-NLS-1$
+        return "Cat, Dog"; 
     }
 
     public String play(C a, Dog b) {
-        return "C, Dog"; //$NON-NLS-1$
+        return "C, Dog"; 
     }
 
     public String play(Cat a, D b) {
-        return "Cat, D"; //$NON-NLS-1$
+        return "Cat, D"; 
     }
 
     public String play(C a, D b) {
-        return "C, D"; //$NON-NLS-1$
+        return "C, D"; 
     }
 
     public String play(CI a, Dx b) {
-        return "CI, Dx"; //$NON-NLS-1$
+        return "CI, Dx"; 
     }
 
     public String play(CI a, DxKI b) {
-        return "CI, DxKI"; //$NON-NLS-1$
+        return "CI, DxKI"; 
     }
 
     public String play(CJz a, DxKI b) {
-        return "CJz, DxKI"; //$NON-NLS-1$
+        return "CJz, DxKI"; 
     }
 
     public String play(CJz a, DIJy b) {
-        return "CJz, DIJy"; //$NON-NLS-1$
+        return "CJz, DIJy"; 
     }
 
     public String play(CJzKI a, DIJ b) {
-        return "CJzKI, DIJ"; //$NON-NLS-1$
+        return "CJzKI, DIJ"; 
     }
 
     VarMethod playf;
     {
-        playf = new VarMethod("play", Members.publicMethods( //$NON-NLS-1$
-                VarMethodTest.class, "play")); //$NON-NLS-1$
+        playf = new VarMethod("play", Members.publicMethods( 
+                VarMethodTest.class, "play")); 
     }
 
     @Test
     public void test1() throws Exception {
         Object ret = playf.invoke(this, new CI(), new DxKIx());
-        assertEquals("CI, DxKI", ret); //$NON-NLS-1$
+        assertEquals("CI, DxKI", ret); 
     }
 
     @Test(expected = NoSuchMethodException.class)

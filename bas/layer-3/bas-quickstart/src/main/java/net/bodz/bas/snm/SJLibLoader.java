@@ -2,16 +2,13 @@ package net.bodz.bas.snm;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Map.Entry;
-
-import net.bodz.bas.io.Files;
-import net.bodz.bas.nls.AppNLS;
-import net.bodz.bas.sysctx.SystemInfo;
 
 public class SJLibLoader {
 
@@ -104,7 +101,7 @@ public class SJLibLoader {
         return lib.getTarget();
     }
 
-    public static String librariesIni = "libraries.ini"; //$NON-NLS-1$
+    public static String librariesIni = "libraries.ini"; 
 
     protected LibDir loadLibDir(File dir) {
         assert dir.isDirectory();
@@ -115,18 +112,18 @@ public class SJLibLoader {
             try {
                 libraries = Files.loadProperties(ini);
             } catch (IOException e) {
-                throw new Error(AppNLS.getString("SJLibLoader.failedToLoad") + ini + ": " + e.getMessage(), e); //$NON-NLS-1$ //$NON-NLS-2$
+                throw new Error("failed to load " + ini + ": " + e.getMessage(), e);  
             }
             for (Entry<Object, Object> e : libraries.entrySet()) {
                 String name = (String) e.getKey();
                 if (libDir.containsKey(name))
-                    throw new IllegalArgumentException(AppNLS.getString("SJLibLoader.dupName") //$NON-NLS-1$
-                            + name + AppNLS.getString("SJLibLoader.definedIn") + ini); //$NON-NLS-1$
+                    throw new IllegalArgumentException("duplicated name: " 
+                            + name + " defined in " + ini); 
 
                 String value = (String) e.getValue();
 
                 File target = Files.canoniOf(dir, value);
-                assert target.isFile() : AppNLS.getString("SJLibLoader.invalidTarget") + target; //$NON-NLS-1$
+                assert target.isFile() : "invalid target " + target; 
                 if (!target.isFile())
                     continue;
 
@@ -140,10 +137,10 @@ public class SJLibLoader {
     public static final SJLibLoader DEFAULT;
     static {
         DEFAULT = new SJLibLoader();
-        DEFAULT.addPath("."); //$NON-NLS-1$
-        DEFAULT.addPath(".."); //$NON-NLS-1$
-        DEFAULT.addPath("../lib"); //$NON-NLS-1$
-        String JAVA_LIB = System.getenv("JAVA_LIB"); //$NON-NLS-1$
+        DEFAULT.addPath("."); 
+        DEFAULT.addPath(".."); 
+        DEFAULT.addPath("../lib"); 
+        String JAVA_LIB = System.getenv("JAVA_LIB"); 
         if (JAVA_LIB != null)
             DEFAULT.addPaths(JAVA_LIB);
     }
