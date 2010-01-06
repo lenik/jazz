@@ -6,9 +6,6 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
 
-import net.bodz.bas.lang.err.ParseException;
-import net.bodz.bas.text.util.Lookups;
-
 public class HexEncoding extends _Encoding {
 
     private final String IFS;

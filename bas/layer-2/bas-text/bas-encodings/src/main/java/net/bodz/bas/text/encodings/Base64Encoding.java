@@ -5,8 +5,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
+import java.nio.file.Files;
 
-import net.bodz.bas.io.Files;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 

@@ -6,10 +6,7 @@ import java.nio.charset.CharsetEncoder;
 import java.nio.charset.spi.CharsetProvider;
 import java.util.Iterator;
 
-import net.bodz.bas.lang.err.IllegalArgumentTypeException;
-import net.bodz.bas.nls.TextNLS;
-import net.bodz.bas.types.TextMap;
-import net.bodz.bas.types.TreeTextMap;
+import net.bodz.bas.exceptions.IllegalArgumentTypeException;
 
 /**
  * Literal Charset Provider Literal charset is designed for debug or special purpose.

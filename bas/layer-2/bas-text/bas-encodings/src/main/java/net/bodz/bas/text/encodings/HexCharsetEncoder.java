@@ -6,8 +6,6 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 import java.nio.charset.CoderResult;
 
-import net.bodz.bas.text.util.Lookups;
-
 /**
  * Encodes each character(maybe latin-1, utf-8, ucs-4, etc..) into hex string; space(0x20) is used
  * for seperate each character, internally.

@@ -6,8 +6,6 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
 
-import net.bodz.bas.lang.err.ParseException;
-
 public interface Encoding {
 
     String preferredStringCharset();
