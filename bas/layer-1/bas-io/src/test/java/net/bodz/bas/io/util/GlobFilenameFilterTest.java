@@ -2,6 +2,8 @@ package net.bodz.bas.io.util;
 
 import java.util.regex.Pattern;
 
+import net.bodz.bas.io.fs.traverse.GlobFilenameFilter;
+
 import org.junit.Assert;
 import org.junit.Test;
 

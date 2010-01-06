@@ -1,4 +1,4 @@
-package net.bodz.bas.io;
+package net.bodz.bas.io.res;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -11,6 +11,9 @@ import java.util.jar.JarFile;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
+
+import net.bodz.bas.io.Files;
+import net.bodz.bas.io.ZipEntryOutputStream;
 
 public class ZipResFolder implements ResFolder {
 

@@ -1,4 +1,4 @@
-package net.bodz.bas.io;
+package net.bodz.bas.io.res;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,6 +8,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.jar.JarFile;
 import java.util.zip.ZipFile;
+
+import net.bodz.bas.io.Files;
 
 public class URLResLink extends _ResLink {
 

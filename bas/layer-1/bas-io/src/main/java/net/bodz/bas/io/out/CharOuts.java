@@ -1,4 +1,4 @@
-package net.bodz.bas.io;
+package net.bodz.bas.io.out;
 
 import java.io.File;
 import java.io.IOException;
@@ -8,6 +8,8 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.nio.CharBuffer;
+
+import net.bodz.bas.io.TempWriter;
 
 public class CharOuts {
 

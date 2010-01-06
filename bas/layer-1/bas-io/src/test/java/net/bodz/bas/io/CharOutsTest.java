@@ -1,5 +1,8 @@
 package net.bodz.bas.io;
 
+import net.bodz.bas.io.out.CharOut;
+import net.bodz.bas.io.out.CharOuts;
+
 import org.junit.Test;
 
 public class CharOutsTest {

@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.Writer;
 
-import net.bodz.bas.io.CharOut;
+import net.bodz.bas.io.out.CharOut;
 
 public interface Terminal {
 

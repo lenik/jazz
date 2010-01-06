@@ -1,6 +1,7 @@
-package net.bodz.bas.io;
+package net.bodz.bas.io.res;
 
 import java.io.File;
+
 
 public class FileResFolder implements ResFolder {
 

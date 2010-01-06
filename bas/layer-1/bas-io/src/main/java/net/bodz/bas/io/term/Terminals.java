@@ -1,6 +1,6 @@
 package net.bodz.bas.io.term;
 
-import net.bodz.bas.io.CharOuts;
+import net.bodz.bas.io.out.CharOuts;
 
 public class Terminals {
 

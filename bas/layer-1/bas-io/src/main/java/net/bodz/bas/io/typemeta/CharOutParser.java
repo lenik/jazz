@@ -4,8 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 import net.bodz.bas.exceptions.ParseException;
-import net.bodz.bas.io.CharOut;
-import net.bodz.bas.io.CharOuts;
+import net.bodz.bas.io.out.CharOut;
+import net.bodz.bas.io.out.CharOuts;
 import net.bodz.bas.type.traits.impl.AbstractParser;
 
 public class CharOutParser

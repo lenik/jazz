@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.File;
 import java.io.FileFilter;
 
+import net.bodz.bas.io.fs.traverse.FileFinder;
 import net.bodz.bas.snm.EclipseProject;
 
 import org.junit.Test;

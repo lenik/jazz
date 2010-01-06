@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.Writer;
 
-import net.bodz.bas.io.CharOut;
-import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.io.NullPrintStream;
 import net.bodz.bas.io.NullWriter;
+import net.bodz.bas.io.out.CharOut;
+import net.bodz.bas.io.out.CharOuts;
 
 public class NullTerminal implements Terminal {
 

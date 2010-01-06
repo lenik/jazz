@@ -1,4 +1,4 @@
-package net.bodz.bas.io;
+package net.bodz.bas.io.out;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
+
+import net.bodz.bas.io.TempOutputStream;
 
 public class ByteOuts {
 
