@@ -48,7 +48,7 @@ public class OutOfDomainException
     // 3 (n<)
     public static String format(String arg, Object actualValue) {
         return String.valueOf(actualValue) + //
-                " (" + arg + ")"; //$NON-NLS-1$ //$NON-NLS-2$
+                " (" + arg + ")";  
     }
 
 }

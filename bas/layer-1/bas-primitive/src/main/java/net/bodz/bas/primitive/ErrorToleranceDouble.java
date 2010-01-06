@@ -11,7 +11,7 @@ public class ErrorToleranceDouble
     private final double max;
 
     public ErrorToleranceDouble(double min, double max) {
-        assert min <= max : "min<=max"; //$NON-NLS-1$
+        assert min <= max : "min<=max"; 
         this.min = min;
         this.max = max;
     }
@@ -56,7 +56,7 @@ public class ErrorToleranceDouble
 
     @Override
     public String toString() {
-        return "[" + min + "," + max + "]"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        return "[" + min + "," + max + "]";   
     }
 
     public double dia() {

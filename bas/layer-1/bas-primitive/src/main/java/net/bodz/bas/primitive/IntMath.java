@@ -28,7 +28,7 @@ public class IntMath {
 
     private static final BigInteger _2e64;
     static {
-        _2e64 = new BigInteger("10000000000000000", 16); //$NON-NLS-1$
+        _2e64 = new BigInteger("10000000000000000", 16); 
     }
 
     public static BigInteger unsign(long l) {
@@ -95,7 +95,7 @@ public class IntMath {
                 6402373705728000L, // 18
                 121645100408832000L, // 19
                 2432902008176640000L, // 20
-                new BigInteger("51090942171709440000"), // 21 //$NON-NLS-1$
+                new BigInteger("51090942171709440000"), // 21 
         /**
          * <pre>
          * new BigInteger(&quot;1124000727777607680000&quot;), // 22
@@ -126,7 +126,7 @@ public class IntMath {
      */
     public static Number fac(int n) {
         if (n < 0)
-            throw new OutOfDomainException("n<", n, 0); //$NON-NLS-1$
+            throw new OutOfDomainException("n<", n, 0); 
         if (n < facConsts.length)
             return facConsts[n];
         int i = facConsts.length; // 41

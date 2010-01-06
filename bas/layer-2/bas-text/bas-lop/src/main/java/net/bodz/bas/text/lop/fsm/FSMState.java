@@ -2,8 +2,6 @@ package net.bodz.bas.text.lop.fsm;
 
 import java.util.Map;
 
-import net.bodz.bas.io.Lookable;
-
 public interface FSMState {
 
     int getId();

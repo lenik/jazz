@@ -7,7 +7,7 @@ public abstract class AbstractProxy<T>
     public final T proxy;
 
     public AbstractProxy(T proxy) {
-        assert proxy != null : "null proxy"; //$NON-NLS-1$
+        assert proxy != null : "null proxy"; 
         this.proxy = proxy;
     }
 

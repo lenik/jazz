@@ -7,7 +7,6 @@ import java.util.NavigableSet;
 import java.util.NoSuchElementException;
 import java.util.SortedSet;
 
-import net.bodz.bas.collection.TypesNLS;
 import net.bodz.bas.collection.comparator.IntegerComparator;
 
 public class IntRange
@@ -45,7 +44,7 @@ public class IntRange
             if (last == start)
                 start++; // now last<start.
             else
-                throw new UnsupportedOperationException(TypesNLS.getString("IntRange.holeAfterRemove")); //$NON-NLS-1$
+                throw new UnsupportedOperationException("hole after remove"); 
         }
 
     }
@@ -75,7 +74,7 @@ public class IntRange
         else if (e == end)
             end++;
         else
-            throw new UnsupportedOperationException(TypesNLS.getString("IntRange.holeAfterAdd")); //$NON-NLS-1$
+            throw new UnsupportedOperationException("hole after add"); 
         return true;
     }
 
@@ -89,7 +88,7 @@ public class IntRange
         else if (i == start)
             start++;
         else
-            throw new UnsupportedOperationException(TypesNLS.getString("IntRange.holeAfterRemove")); //$NON-NLS-1$
+            throw new UnsupportedOperationException("hole after remove"); 
         return true;
     }
 
@@ -100,7 +99,7 @@ public class IntRange
 
     @Override
     public String toString() {
-        return "IntRange[" + start + "," + end + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        return "IntRange[" + start + "," + end + ")";   
     }
 
     // SortedSet
@@ -149,7 +148,7 @@ public class IntRange
             if (last == end - 1)
                 end--; // now last>=end.
             else
-                throw new UnsupportedOperationException(TypesNLS.getString("IntRange.holeAfterRemove")); //$NON-NLS-1$
+                throw new UnsupportedOperationException("hole after remove"); 
         }
     }
 

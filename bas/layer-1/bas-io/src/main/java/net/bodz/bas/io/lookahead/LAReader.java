@@ -134,12 +134,12 @@ public class LAReader extends FilterReader implements Lookable {
 
     @Override
     public void mark(int readAheadLimit) throws IOException {
-        throw new IOException("Mark isn't supported"); //$NON-NLS-1$
+        throw new IOException("Mark isn't supported"); 
     }
 
     @Override
     public void reset() throws IOException {
-        throw new IOException("Mark isn't supported"); //$NON-NLS-1$
+        throw new IOException("Mark isn't supported"); 
     }
 
     @Override
@@ -152,7 +152,7 @@ public class LAReader extends FilterReader implements Lookable {
         if (begin < current)
             return current - begin;
         if (begin == current && !full)
-            return 0; //$NON-NLS-1$
+            return 0; 
         return cap - begin + current;
     }
 
@@ -177,7 +177,7 @@ public class LAReader extends FilterReader implements Lookable {
     @Override
     public int look(char[] cbuf, int off, int len) throws IOException {
         if (len > cap)
-            throw new OutOfDomainException("look-len", len, cap); //$NON-NLS-1$
+            throw new OutOfDomainException("look-len", len, cap); 
         // len = Math.min(cap, len);
         int las = las();
         if (las < len && !isLabFull()) {
@@ -230,14 +230,14 @@ public class LAReader extends FilterReader implements Lookable {
         if (begin < current)
             return new String(lab, begin, current - begin);
         if (begin == current && !full)
-            return ""; //$NON-NLS-1$
+            return ""; 
         return new String(lab, begin, cap - begin) + new String(lab, 0, current);
     }
 
     @Override
     public String toString() {
-        return "look-ahead(" + las() + "/" + cap + "): \"" + lookFilled() //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                + "\""; //$NON-NLS-1$
+        return "look-ahead(" + las() + "/" + cap + "): \"" + lookFilled()   
+                + "\""; 
     }
 
 }

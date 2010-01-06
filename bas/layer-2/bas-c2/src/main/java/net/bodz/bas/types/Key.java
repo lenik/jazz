@@ -16,7 +16,7 @@ public class Key {
 
     @Override
     public String toString() {
-        return "#" + name; //$NON-NLS-1$
+        return "#" + name; 
     }
 
 }

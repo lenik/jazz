@@ -13,9 +13,9 @@ public class ReaderInputStreamTest {
     @Test
     public void testRead() throws IOException {
         // E4 BD A0 E5 A5 BD
-        String s = "abc你好"; //$NON-NLS-1$
+        String s = "abc你好"; 
         Reader reader = new StringReader(s);
-        ReaderInputStream in = new ReaderInputStream(reader, "utf-8"); //$NON-NLS-1$
+        ReaderInputStream in = new ReaderInputStream(reader, "utf-8"); 
 
         assertEquals((int) 'a', in.read());
         assertEquals((int) 'b', in.read());

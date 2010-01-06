@@ -3,12 +3,8 @@ package net.bodz.bas.text.lop;
 import java.io.Reader;
 import java.util.Stack;
 
-import net.bodz.bas.io.CharOut;
-import net.bodz.bas.io.CharOuts.BCharOut;
 import net.bodz.bas.text.lop.util.XYPosition;
 import net.bodz.bas.text.lop.util.XYTellable;
-import net.bodz.bas.text.util.Strings;
-import net.bodz.bas.types.IndexMap;
 
 public abstract class _Lexer implements Lexer {
 

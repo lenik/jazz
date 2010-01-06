@@ -46,7 +46,7 @@ public class ArrayTreeNode implements TreeNode<ArrayTreeNode> {
     @Override
     public String toString() {
         if (array != null) {
-            return "array(" + array.length + ")"; //$NON-NLS-1$ //$NON-NLS-2$
+            return "array(" + array.length + ")";  
         }
         return String.valueOf(var);
     }

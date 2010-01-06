@@ -1,9 +1,6 @@
 package net.bodz.bas.ant;
 
-import net.bodz.bas.api.types.TypeParser;
-import net.bodz.bas.commons.exceptions.CreateException;
-import net.bodz.bas.commons.exceptions.ParseException;
-import net.bodz.bas.type.feature.impl.TypeParsers;
+import net.bodz.bas.exceptions.CreateException;
 
 /**
  * Utility class to help implement a custom tag in ant-xml.
@@ -33,13 +30,13 @@ public class Parameter {
 
     public void setType(Class<?> type) {
         if (type == null)
-            throw new NullPointerException("type"); //$NON-NLS-1$
+            throw new NullPointerException("type"); 
         this.type = type;
     }
 
     public void setTypeName(String typeName) throws ClassNotFoundException {
         if (typeName == null)
-            throw new NullPointerException("typeName"); //$NON-NLS-1$
+            throw new NullPointerException("typeName"); 
         this.type = Class.forName(typeName);
     }
 

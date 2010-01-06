@@ -31,7 +31,7 @@ public abstract class CharOut implements ICharOut {
         write(cv, 0, 1);
     }
 
-    private final static char[] NULL = "(null)".toCharArray(); //$NON-NLS-1$
+    private final static char[] NULL = "(null)".toCharArray(); 
     private final static char NL = '\n';
 
     public void print(String s) {
@@ -109,7 +109,7 @@ public abstract class CharOut implements ICharOut {
 
     public void println(char[] x) {
         print(x);
-        print("\n"); //$NON-NLS-1$
+        print("\n"); 
     }
 
     public void println(double x) {

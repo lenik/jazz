@@ -1,8 +1,7 @@
 package net.bodz.bas.types.util;
 
 import static org.junit.Assert.assertArrayEquals;
-import net.bodz.bas.lang.modules.collection.ints.IntIterator;
-import net.bodz.bas.lang.modules.collection.util.Arrays2;
+import net.bodz.bas.collection.ints.IntIterator;
 
 import org.junit.Test;
 

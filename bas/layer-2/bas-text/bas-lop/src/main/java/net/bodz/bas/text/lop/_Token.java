@@ -1,9 +1,7 @@
 package net.bodz.bas.text.lop;
 
-import net.bodz.bas.io.CharOuts.BCharOut;
 import net.bodz.bas.text.lop.util.XYPosition;
 import net.bodz.bas.text.lop.util.XYTellable;
-import net.bodz.bas.text.util.Strings;
 
 public abstract class _Token implements Token {
 

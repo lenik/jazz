@@ -17,7 +17,7 @@ public class URLResLink extends _ResLink {
 
     public URLResLink(URL url) {
         if (url == null)
-            throw new NullPointerException("url"); //$NON-NLS-1$
+            throw new NullPointerException("url"); 
         this.url = url;
     }
 
@@ -53,7 +53,7 @@ public class URLResLink extends _ResLink {
 
     @Override
     public OutputStream openOutputStream(boolean append) throws IOException {
-        throw new UnsupportedOperationException(SysNLS.getString("URLResLink.readOnly")); //$NON-NLS-1$
+        throw new UnsupportedOperationException("URL resource is read-only"); 
     }
 
     /**

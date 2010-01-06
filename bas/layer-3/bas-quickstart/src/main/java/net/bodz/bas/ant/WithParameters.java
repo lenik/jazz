@@ -3,8 +3,6 @@ package net.bodz.bas.ant;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.commons.exceptions.ParseException;
-
 public class WithParameters {
 
     private final List<Class<?>> types;

@@ -1,6 +1,5 @@
 package net.bodz.bas.cli;
 
-import net.bodz.bas.nls.AppNLS;
 
 public class EditResult {
 
@@ -35,21 +34,21 @@ public class EditResult {
     public String getOperationName() {
         switch (operation) {
         case NONE:
-            return AppNLS.getString("EditResult.none"); //$NON-NLS-1$
+            return "none"; 
         case SAVE:
         case SAVE_DIFF:
         case SAVE_SAME:
-            return AppNLS.getString("EditResult.save"); //$NON-NLS-1$
+            return "save"; 
         case DELETE:
-            return AppNLS.getString("EditResult.none"); //$NON-NLS-1$
+            return "none"; 
         case RENAME:
-            return AppNLS.getString("EditResult.rename"); //$NON-NLS-1$
+            return "renm"; 
         case MOVE:
-            return AppNLS.getString("EditResult.move"); //$NON-NLS-1$
+            return "move"; 
         case COPY:
-            return AppNLS.getString("EditResult.copy"); //$NON-NLS-1$
+            return "copy"; 
         }
-        return "????"; //$NON-NLS-1$
+        return "????"; 
     }
 
     public void save(Boolean changed) {

@@ -4,15 +4,13 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.Objects;
 
-import net.bodz.bas.commons.math.CompatMethods;
+import net.bodz.bas.commons.scripting.util.CompatMethods;
 import net.bodz.bas.commons.scripting.util.Members.AllConstructors;
 import net.bodz.bas.commons.scripting.util.Members.AllMethods;
 import net.bodz.bas.commons.scripting.util.Members.PublicConstructors;
 import net.bodz.bas.commons.scripting.util.Members.PublicMethods;
-import net.bodz.bas.commons.util.Objects;
-import net.bodz.bas.commons.util.Types;
-import net.bodz.bas.nls.LangNLS;
 
 public class MethodSignature {
 
@@ -47,7 +45,7 @@ public class MethodSignature {
 
     @Override
     public String toString() {
-        return LangNLS.getString("MethodSignature.sig") + name + "(" + Types.joinNames(types) + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        return "signature " + name + "(" + Types.joinNames(types) + ")";   
     }
 
     private transient Integer hash;

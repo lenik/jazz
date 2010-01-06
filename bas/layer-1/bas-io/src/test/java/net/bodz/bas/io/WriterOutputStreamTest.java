@@ -13,19 +13,19 @@ public class WriterOutputStreamTest {
     @Test
     public void testWrite() throws IOException {
         StringWriter sw = new StringWriter();
-        WriterOutputStream out = new WriterOutputStream(sw, "utf-8"); //$NON-NLS-1$
+        WriterOutputStream out = new WriterOutputStream(sw, "utf-8"); 
         out.write('a');
-        assertEquals("a", sw.toString()); //$NON-NLS-1$
-        out.write("bc".getBytes("ascii")); //$NON-NLS-1$ //$NON-NLS-2$
-        assertEquals("abc", sw.toString()); //$NON-NLS-1$
+        assertEquals("a", sw.toString()); 
+        out.write("bc".getBytes("ascii"));  
+        assertEquals("abc", sw.toString()); 
 
-        byte[] hello = "你好".getBytes("utf-8"); //$NON-NLS-1$ //$NON-NLS-2$
+        byte[] hello = "你好".getBytes("utf-8");  
         for (int i = 0; i < hello.length; i++)
             out.write(hello[i]);
-        assertEquals("abc你好", sw.toString()); //$NON-NLS-1$
+        assertEquals("abc你好", sw.toString()); 
 
         sw = new StringWriter();
-        out = new WriterOutputStream(sw, "ascii") { //$NON-NLS-1$
+        out = new WriterOutputStream(sw, "ascii") { 
             @Override
             protected void handleMalformed(ByteBuffer buffer) throws IOException {
                 writer.write('M');
@@ -37,10 +37,10 @@ public class WriterOutputStreamTest {
             }
         };
         out.write('s');
-        assertEquals("s", sw.toString()); //$NON-NLS-1$
+        assertEquals("s", sw.toString()); 
         for (int i = 0; i < 3; i++)
             out.write(hello[i]);
-        assertEquals("sMMM", sw.toString()); //$NON-NLS-1$
+        assertEquals("sMMM", sw.toString()); 
     }
 
 }

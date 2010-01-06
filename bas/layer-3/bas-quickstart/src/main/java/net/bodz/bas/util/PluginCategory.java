@@ -4,8 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.a.ClassInfo;
-import net.bodz.bas.commons.exceptions.OutOfDomainException;
-import net.bodz.bas.nls.AppNLS;
+import net.bodz.bas.exceptions.OutOfDomainException;
 
 /**
  * Plugin Category
@@ -58,9 +57,9 @@ public class PluginCategory {
         assert typeEx != null;
         if (registry.containsKey(pluginId))
             throw new IllegalArgumentException(String.format(AppNLS
-                    .getString("PluginCategory.pluginAlreadyRegistered_s"), pluginId)); //$NON-NLS-1$
+                    .getString("PluginCategory.pluginAlreadyRegistered_s"), pluginId)); 
         if (!categoryBaseType.isAssignableFrom(typeEx.getType()))
-            throw new OutOfDomainException(AppNLS.getString("PluginCategory.wrongCategory")); //$NON-NLS-1$
+            throw new OutOfDomainException("wrong category"); 
         registry.put(pluginId, typeEx);
     }
 

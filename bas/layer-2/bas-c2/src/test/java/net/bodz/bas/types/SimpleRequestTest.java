@@ -2,8 +2,6 @@ package net.bodz.bas.types;
 
 import static org.junit.Assert.assertEquals;
 
-import net.bodz.bas.lang.modules.tree.TreePath;
-
 import org.junit.Test;
 
 public class SimpleRequestTest {

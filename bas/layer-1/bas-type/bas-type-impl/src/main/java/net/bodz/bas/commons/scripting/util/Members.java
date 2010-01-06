@@ -5,8 +5,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Iterator;
 
-import net.bodz.bas.collection.iterator.PrefetchedIterator;
-
 public class Members {
 
     public static class PublicMethods extends PrefetchedIterator<Method> {

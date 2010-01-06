@@ -1,7 +1,6 @@
 package net.bodz.bas.a;
 
 import net.bodz.bas.commons.util.Dates;
-import net.bodz.bas.text.util.Strings;
 
 public class VersionInfo implements Comparable<VersionInfo> {
 
@@ -29,7 +28,7 @@ public class VersionInfo implements Comparable<VersionInfo> {
 
     @Override
     public String toString() {
-        return name + "-" + getVersion(); //$NON-NLS-1$
+        return name + "-" + getVersion(); 
     }
 
     @Override

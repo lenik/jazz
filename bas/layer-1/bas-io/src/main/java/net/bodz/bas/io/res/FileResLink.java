@@ -27,9 +27,9 @@ public class FileResLink extends _ResLink {
 
     public FileResLink(File file, boolean autoMkdirs) {
         if (file == null)
-            throw new NullPointerException("file"); //$NON-NLS-1$
+            throw new NullPointerException("file"); 
         if (file.exists() && !file.isFile())
-            throw new IllegalStateException(SysNLS.getString("FileResLink.nonfileWithSameName") //$NON-NLS-1$
+            throw new IllegalStateException("Non-file with the same path is already existed: " 
                     + file);
         this.file = file;
         this.autoMkdirs = autoMkdirs;

@@ -1,6 +1,5 @@
 package net.bodz.bas.text.lop.fsm;
 
-import net.bodz.bas.text.lop.fsm.CharRange;
 
 public class TestData {
 

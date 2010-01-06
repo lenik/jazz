@@ -26,7 +26,7 @@ public abstract class _Encoding implements Encoding {
 
     @Override
     public String preferredStringCharset() {
-        return "ascii"; //$NON-NLS-1$
+        return "ascii"; 
     }
 
     protected boolean streamOnlyImplementation() {

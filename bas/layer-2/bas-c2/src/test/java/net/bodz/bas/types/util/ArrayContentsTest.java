@@ -1,6 +1,5 @@
 package net.bodz.bas.types.util;
 
-import static net.bodz.bas.lang.modules.collection.util.ArrayOps.Ints;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
@@ -21,13 +20,13 @@ public class ArrayContentsTest {
         Object B = Ints.contents(b);
         Object C = Ints.contents(c);
 
-        map.put(a, "a"); //$NON-NLS-1$
-        map.put(b, "b"); //$NON-NLS-1$
+        map.put(a, "a"); 
+        map.put(b, "b"); 
 
-        map.put(A, "A"); //$NON-NLS-1$
-        map.put(B, "B"); //$NON-NLS-1$
+        map.put(A, "A"); 
+        map.put(B, "B"); 
 
-        assertEquals("a", map.get(a)); // //$NON-NLS-1$
+        assertEquals("a", map.get(a)); // 
         assertNull(map.get(c));
         assertEquals("A", map.get(A));
         assertEquals("A", map.get(C));

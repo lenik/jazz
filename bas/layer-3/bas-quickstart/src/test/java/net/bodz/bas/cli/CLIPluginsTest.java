@@ -24,15 +24,15 @@ public class CLIPluginsTest {
     @Test
     public void testRegister() throws Throwable {
         CLIPlugins plugins = new CLIPlugins();
-        Ext a = new Ext("ext-A"); //$NON-NLS-1$
-        Ext b = new Ext("ext-B"); //$NON-NLS-1$
-        plugins.register("a", a); //$NON-NLS-1$
-        plugins.register("ab", a); //$NON-NLS-1$
-        plugins.register("b", b); //$NON-NLS-1$
+        Ext a = new Ext("ext-A"); 
+        Ext b = new Ext("ext-B"); 
+        plugins.register("a", a); 
+        plugins.register("ab", a); 
+        plugins.register("b", b); 
 
-        assertEquals(a, plugins.load(Ext.class, "a")); //$NON-NLS-1$
-        assertEquals(a, plugins.load(Ext.class, "ab")); //$NON-NLS-1$
-        assertEquals(b, plugins.load(Ext.class, "b")); //$NON-NLS-1$
+        assertEquals(a, plugins.load(Ext.class, "a")); 
+        assertEquals(a, plugins.load(Ext.class, "ab")); 
+        assertEquals(b, plugins.load(Ext.class, "b")); 
     }
 
 }

@@ -4,8 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.bodz.bas.commons.callback.Executable;
-import net.bodz.bas.commons.collection.fast.IndexMap;
+import net.bodz.bas.collection.map.IndexMap;
 
 public abstract class _UserInterface implements UserInterface {
 
@@ -26,7 +25,7 @@ public abstract class _UserInterface implements UserInterface {
 
     @Override
     public String prompt(String title) {
-        return prompt(title, title, ""); //$NON-NLS-1$
+        return prompt(title, title, ""); 
     }
 
     @Override
@@ -36,7 +35,7 @@ public abstract class _UserInterface implements UserInterface {
 
     @Override
     public String prompt(String title, Object detail) {
-        return prompt(title, detail, ""); //$NON-NLS-1$
+        return prompt(title, detail, ""); 
     }
 
     @Override

@@ -42,8 +42,8 @@ public class ReaderInputStream extends InputStream {
             {
                 CoderResult result = encoder.encode(charbuf, bytebuf, end);
                 if (result.isOverflow())
-                    throw new UnexpectedException("bytebuf overflow"); //$NON-NLS-1$
-                assert !result.isError() : "encode error"; //$NON-NLS-1$
+                    throw new UnexpectedException("bytebuf overflow"); 
+                assert !result.isError() : "encode error"; 
             }
             bytebuf.flip();
         }

@@ -8,15 +8,6 @@ import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import net.bodz.bas.commons.exceptions.ParseException;
-import net.bodz.bas.commons.iterators.DirectIterator;
-import net.bodz.bas.commons.iterators._DirectIterator;
-import net.bodz.bas.io.FileResLink;
-import net.bodz.bas.io.LineReader;
-import net.bodz.bas.io.ResLink;
-import net.bodz.bas.io.URLResLink;
-import net.bodz.bas.nls.TypesNLS;
-
 /**
  * @see PartRecords
  */
@@ -68,9 +59,9 @@ public abstract class _PartRecords<K, V> extends MapResRecords<K, V> {
     public K getTextKey() {
         if (textKey == null)
             try {
-                textKey = parseKey("."); //$NON-NLS-1$
+                textKey = parseKey("."); 
             } catch (ParseException e) {
-                throw new Error(TypesNLS.getString("MultipartsFile.errorBodyKey"), e); //$NON-NLS-1$
+                throw new Error("error body key", e); 
             }
         return textKey;
     }
@@ -88,7 +79,7 @@ public abstract class _PartRecords<K, V> extends MapResRecords<K, V> {
      * Overrides {@link #isStartOfPart(String)}
      */
     protected boolean isPreHeaderComment(String line) {
-        return line.startsWith("#"); //$NON-NLS-1$
+        return line.startsWith("#"); 
     }
 
     /**
@@ -99,11 +90,11 @@ public abstract class _PartRecords<K, V> extends MapResRecords<K, V> {
      * </ul>
      */
     protected boolean isHeaderComment(String line) {
-        return line.startsWith("--"); //$NON-NLS-1$
+        return line.startsWith("--"); 
     }
 
     protected boolean isTextValue(String value) {
-        return "<<<".equals(value); //$NON-NLS-1$
+        return "<<<".equals(value); 
     }
 
     protected boolean isIndentChar(char c) {

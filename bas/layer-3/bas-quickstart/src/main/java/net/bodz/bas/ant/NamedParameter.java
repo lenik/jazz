@@ -6,7 +6,7 @@ public class NamedParameter extends Parameter {
 
     public void setName(String name) {
         if (name == null)
-            throw new NullPointerException("name"); //$NON-NLS-1$
+            throw new NullPointerException("name"); 
         this.name = name;
     }
 

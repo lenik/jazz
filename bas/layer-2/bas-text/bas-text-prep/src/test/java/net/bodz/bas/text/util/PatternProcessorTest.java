@@ -7,7 +7,7 @@ public class PatternProcessorTest {
     @Test
     public void testAdd() {
 
-        PatternProcessor pp = new PatternProcessor("\\d+") { //$NON-NLS-1$
+        PatternProcessor pp = new PatternProcessor("\\d+") { 
 
             @Override
             protected void matched(String part) {
@@ -22,8 +22,8 @@ public class PatternProcessorTest {
 
         };
 
-        String[] lines = new String[] { "hello 123, 456 world!", //$NON-NLS-1$
-                "22-12, and oh 666", "nothing!", }; //$NON-NLS-1$ //$NON-NLS-2$
+        String[] lines = new String[] { "hello 123, 456 world!", 
+                "22-12, and oh 666", "nothing!", };  
 
         for (String line : lines) {
             String out = pp.process(line);

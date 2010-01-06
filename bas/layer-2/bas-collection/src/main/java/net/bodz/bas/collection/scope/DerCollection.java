@@ -29,7 +29,7 @@ public class CompositeCollection<E>
      */
     public CompositeCollection(Collection<E> parent) {
         if (parent == null)
-            throw new NullPointerException("parent"); //$NON-NLS-1$
+            throw new NullPointerException("parent"); 
         this.parent = parent;
     }
 

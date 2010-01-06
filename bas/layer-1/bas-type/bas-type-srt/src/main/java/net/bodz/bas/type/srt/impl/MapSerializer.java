@@ -18,7 +18,7 @@ public class MapSerializer
             throws IOException, SerializeException {
         Map<?, ?> map = (Map<?, ?>) o;
         Class<?> type = map.getClass();
-        s.write(type.getName() + ":" + map.size() + ":{"); //$NON-NLS-1$ //$NON-NLS-2$
+        s.write(type.getName() + ":" + map.size() + ":{");  
         for (Entry<?, ?> entry : map.entrySet()) {
             Object key = entry.getKey();
             Object value = entry.getValue();

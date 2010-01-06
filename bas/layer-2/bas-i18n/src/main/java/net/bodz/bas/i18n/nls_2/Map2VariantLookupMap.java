@@ -4,8 +4,6 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import net.bodz.bas.hint.Proxy;
-
 public class Map2VariantLookupMap<K, V>
         extends VariantLookupMap<K>
         implements Map<K, V>, Proxy<Map<K, V>> {

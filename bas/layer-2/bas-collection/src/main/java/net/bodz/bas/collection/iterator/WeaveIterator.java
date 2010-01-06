@@ -70,7 +70,7 @@ public class WeaveIterator<T extends Comparable<T>>
 
     public WeaveIterator(Comparator<? super T> cmp, Iterator<T>... iterators) {
         if (cmp == null)
-            throw new NullPointerException("cmp"); //$NON-NLS-1$
+            throw new NullPointerException("cmp"); 
         if (iterators == null)
             throw new NullPointerException("iterators");
         this.cmp = cmp;
@@ -81,7 +81,7 @@ public class WeaveIterator<T extends Comparable<T>>
         for (int i = 0; i < iterators.length; i++) {
             Iterator<T> itr = iterators[i];
             if (itr == null)
-                throw new NullPointerException("itr[" + i + "]"); //$NON-NLS-1$ //$NON-NLS-2$
+                throw new NullPointerException("itr[" + i + "]");  
             if (!itr.hasNext()) // skips when preload.
                 continue;
             T first = itr.next();

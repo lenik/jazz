@@ -3,19 +3,13 @@ package net.bodz.bas.ant;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 
-import net.bodz.bas.commons.caller.Caller;
-import net.bodz.bas.commons.exceptions.IllegalUsageError;
-import net.bodz.bas.commons.exceptions.IllegalUsageException;
-import net.bodz.bas.io.Files;
-import net.bodz.bas.nls.AppNLS;
+import net.bodz.bas.exceptions.IllegalUsageError;
+import net.bodz.bas.exceptions.IllegalUsageException;
 import net.bodz.bas.snm.JarLocations;
 
-import org.apache.tools.ant.BuildLogger;
-import org.apache.tools.ant.DefaultLogger;
-import org.apache.tools.ant.Project;
-import org.apache.tools.ant.ProjectHelper;
-import org.apache.tools.ant.Task;
+import com.sun.jmx.snmp.tasks.Task;
 
 /**
  * Example unit test for ant task:
@@ -63,11 +57,11 @@ public class TaskTestApp {
         this();
         Class<?> callerClass = Caller.getCallerClass(caller);
         URL url = Files.classData(callerClass);
-        if ("jar".equals(url.getProtocol())) { //$NON-NLS-1$
+        if ("jar".equals(url.getProtocol())) { 
             // if callerClass is in a jar, the default project helper is failed
             // to setBaseDir.
             File altBaseDir = JarLocations.getBaseClasspath(callerClass);
-            project.log(AppNLS.getString("TaskTestApp.altBaseDir") + altBaseDir, Project.MSG_WARN); //$NON-NLS-1$
+            project.log("Using alternated base dir: " + altBaseDir, Project.MSG_WARN); 
             project.setBaseDir(altBaseDir);
         }
 
@@ -78,12 +72,12 @@ public class TaskTestApp {
         Class<?> callerClass = Caller.getCallerClass(caller);
         URL xmlURL;
         if (resourceName == null)
-            xmlURL = Files.classData(callerClass, "xml"); //$NON-NLS-1$
+            xmlURL = Files.classData(callerClass, "xml"); 
         else
             xmlURL = callerClass.getResource(resourceName);
         File buildFile = Files.getFile(xmlURL);
         if (!buildFile.exists())
-            throw new IllegalUsageException(AppNLS.getString("TaskTestApp.buildFileIsntExisted") + buildFile); //$NON-NLS-1$
+            throw new IllegalUsageException("The build file for test isn\'t existed: " + buildFile); 
         load(buildFile);
     }
 
@@ -94,7 +88,7 @@ public class TaskTestApp {
     public void run() {
         String defaultTarget = project.getDefaultTarget();
         if (defaultTarget == null)
-            throw new IllegalUsageError(AppNLS.getString("TaskTestApp.noDefaultTarget") + project); //$NON-NLS-1$
+            throw new IllegalUsageError("No default target in the project " + project); 
         project.executeTarget(defaultTarget);
     }
 

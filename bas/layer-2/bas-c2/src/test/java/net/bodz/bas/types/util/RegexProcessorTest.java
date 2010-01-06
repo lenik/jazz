@@ -4,10 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.regex.Pattern;
 
-import net.bodz.bas.lang.text.util.RegexProcessor;
-import net.bodz.bas.lang.text.util.Strings;
-import net.bodz.bas.lang.text.util.RegexProcessor.SpaceOverride;
-
 import org.junit.Test;
 
 public class RegexProcessorTest {
@@ -23,7 +19,7 @@ public class RegexProcessorTest {
 
         public void o(String input, String expected) {
             String[] words = Strings.findAll(input, pattern, group);
-            String actual = Strings.join("|", words); //$NON-NLS-1$
+            String actual = Strings.join("|", words); 
             assertEquals(expected, actual);
         }
     }
@@ -33,27 +29,27 @@ public class RegexProcessorTest {
         // new SpaceOverride("\\s|//.*?\n");
         final SpaceOverride regexProc = RegexProcessor.javaComments;
         final Pattern pwords = regexProc.compile(//
-                "(\\w+)(\\s*)", Pattern.DOTALL); //$NON-NLS-1$
-        System.out.println("pwords=" + pwords); //$NON-NLS-1$
+                "(\\w+)(\\s*)", Pattern.DOTALL); 
+        System.out.println("pwords=" + pwords); 
         TestFindAll d = new TestFindAll(pwords, 1); //
-        d.o("hello", "hello"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("hello world", "hello|world"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("   a, b: @$* c   ", "a|b|c"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("a // IGNORED // \n b", "a|b"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("i/* lenik */ am 13/* 0-based*/year //-old! \nha ha!", //$NON-NLS-1$
-                "i|am|13|year|ha|ha"); //$NON-NLS-1$
+        d.o("hello", "hello");  
+        d.o("hello world", "hello|world");  
+        d.o("   a, b: @$* c   ", "a|b|c");  
+        d.o("a // IGNORED // \n b", "a|b");  
+        d.o("i/* lenik */ am 13/* 0-based*/year //-old! \nha ha!", 
+                "i|am|13|year|ha|ha"); 
     }
 
     @Test
     public void testSpaceOverride2() {
         final SpaceOverride regexProc = RegexProcessor.javaComments;
-        final Pattern square = regexProc.compile(".*?\\[(.*?)\\]", //$NON-NLS-1$
+        final Pattern square = regexProc.compile(".*?\\[(.*?)\\]", 
                 Pattern.DOTALL);
-        System.out.println("square=" + square); //$NON-NLS-1$
+        System.out.println("square=" + square); 
         TestFindAll d = new TestFindAll(square, 1); //
-        d.o("[hello]", "hello"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("[a]/* [b]*/ [c]", "a|c"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("none", ""); //$NON-NLS-1$ //$NON-NLS-2$
+        d.o("[hello]", "hello");  
+        d.o("[a]/* [b]*/ [c]", "a|c");  
+        d.o("none", "");  
         // There's problem of last-match.
         // d.o("[a /*]]]*/] [[[d] //[[e] f]]", "a /*]]]*/|[[d"); //
         // d.o("[][/**/][//]", "|/**/"); //

@@ -3,10 +3,12 @@ package net.bodz.bas.text.util;
 import java.nio.CharBuffer;
 import java.util.regex.Pattern;
 
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 public class RegexProcessor extends Unescape {
 
     public RegexProcessor() {
-        super("\\"); //$NON-NLS-1$
+        super("\\"); 
     }
 
     @Override
@@ -24,23 +26,23 @@ public class RegexProcessor extends Unescape {
         }
         // in.position(in.position() - 1);
         // return super.decode(in);
-        return "\\" + String.valueOf(c); //$NON-NLS-1$
+        return "\\" + String.valueOf(c); 
     }
 
     protected String matchSpace() {
-        return "\\s"; //$NON-NLS-1$
+        return "\\s"; 
     }
 
     protected String matchNonspace() {
-        return "\\S"; //$NON-NLS-1$
+        return "\\S"; 
     }
 
     protected String matchWord() {
-        return "\\w"; //$NON-NLS-1$
+        return "\\w"; 
     }
 
     protected String matchNonword() {
-        return "\\W"; //$NON-NLS-1$
+        return "\\W"; 
     }
 
     @Override
@@ -67,15 +69,15 @@ public class RegexProcessor extends Unescape {
     }
 
     protected String matchDot() {
-        return "."; //$NON-NLS-1$
+        return "."; 
     }
 
     protected String matchCaret() {
-        return "^"; //$NON-NLS-1$
+        return "^"; 
     }
 
     protected String matchDollar() {
-        return "$"; //$NON-NLS-1$
+        return "$"; 
     }
 
     public Pattern compile(String regex, int flags) {
@@ -92,9 +94,9 @@ public class RegexProcessor extends Unescape {
         private String dotRegex;
 
         public SpaceOverride(String spaceRegex) {
-            this.spaceRegex = "(?:" + spaceRegex + ")"; //$NON-NLS-1$ //$NON-NLS-2$
+            this.spaceRegex = "(?:" + spaceRegex + ")";  
             // this.dotRegex = "(?:(?!" + spaceRegex + ").)";
-            this.dotRegex = "(?:" + spaceRegex + "|.)"; //$NON-NLS-1$ //$NON-NLS-2$
+            this.dotRegex = "(?:" + spaceRegex + "|.)";  
         }
 
         @Override
@@ -116,8 +118,8 @@ public class RegexProcessor extends Unescape {
     public static final SpaceOverride javaComments;
     public static final SpaceOverride unixComments;
     static {
-        javaComments = new SpaceOverride("\\s|//.*?\n|/\\*.*?\\*/"); //$NON-NLS-1$
-        unixComments = new SpaceOverride("\\s|#.*?\n"); //$NON-NLS-1$
+        javaComments = new SpaceOverride("\\s|//.*?\n|/\\*.*?\\*/"); 
+        unixComments = new SpaceOverride("\\s|#.*?\n"); 
     }
 
 }

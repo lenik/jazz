@@ -26,24 +26,24 @@ public class TypesTest {
 
     @Test
     public void testLoad() {
-        assertEquals("seq before load", 0, seq); //$NON-NLS-1$
+        assertEquals("seq before load", 0, seq); 
         Types.load(A.class);
-        assertEquals("seq after load", 1, seq); //$NON-NLS-1$
+        assertEquals("seq after load", 1, seq); 
         Types.load(A.class);
-        assertEquals("only load once", 1, seq); //$NON-NLS-1$
+        assertEquals("only load once", 1, seq); 
     }
 
     @Test
     public void testJoinNamesClassOfQArray() {
         class D {
             void o(Class<?>[] input, String expected) {
-                String actual = Types.joinNames(", ", true, input); //$NON-NLS-1$
+                String actual = Types.joinNames(", ", true, input); 
                 assertEquals(expected, actual);
             }
         }
         D d = new D(); //
         d.o(new Class<?>[] { java.util.List.class, java.lang.String.class }, //
-                "List, String"); //$NON-NLS-1$
+                "List, String"); 
     }
 
     @Test

@@ -4,8 +4,6 @@ import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import net.bodz.bas.text.lop.util.TellableInputStreamTest;
-
 /**
  * @test {@link TellableInputStreamTest}
  */

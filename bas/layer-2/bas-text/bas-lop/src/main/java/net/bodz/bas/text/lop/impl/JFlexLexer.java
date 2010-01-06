@@ -4,9 +4,6 @@ import java.io.Reader;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import net.bodz.bas.commons.scripting.Reflects;
-import net.bodz.bas.lang.a.ReflectField;
-import net.bodz.bas.lang.a.ReflectMethod;
 import net.bodz.bas.text.lop._Lexer;
 import net.bodz.bas.text.lop.util.XYTellable;
 

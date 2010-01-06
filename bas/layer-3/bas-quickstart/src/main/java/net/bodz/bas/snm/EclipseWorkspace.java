@@ -2,11 +2,8 @@ package net.bodz.bas.snm;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Properties;
-
-import net.bodz.bas.commons.collection.TextMap;
-import net.bodz.bas.commons.typealiases.HashTextMap;
-import net.bodz.bas.io.Files;
 
 public class EclipseWorkspace {
 
@@ -26,8 +23,8 @@ public class EclipseWorkspace {
         this.base = base;
     }
 
-    static String PREFS = "org.eclipse.core.runtime/.settings/org.eclipse.jdt.core.prefs"; //$NON-NLS-1$
-    static String CPVAR = "org.eclipse.jdt.core.classpathVariable."; //$NON-NLS-1$
+    static String PREFS = "org.eclipse.core.runtime/.settings/org.eclipse.jdt.core.prefs"; 
+    static String CPVAR = "org.eclipse.jdt.core.classpathVariable."; 
 
     public void reload() throws IOException {
         Properties prefs = Files.loadProperties(new File(base, PREFS));
@@ -45,7 +42,7 @@ public class EclipseWorkspace {
     public String expandVar(String varName) {
         String value = cpVars.get(varName);
         if (value == null)
-            value = ""; //$NON-NLS-1$
+            value = ""; 
         return value;
     }
 

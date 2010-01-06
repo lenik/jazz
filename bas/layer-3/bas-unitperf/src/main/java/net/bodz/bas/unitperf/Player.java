@@ -3,10 +3,6 @@ package net.bodz.bas.unitperf;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
-import net.bodz.bas.typeinfo.IInstanceStore;
-import net.bodz.bas.typeinfo.impl.StoreClass;
-import net.bodz.bas.typeinfo.impl.TypeInfoUtil;
-
 public class Player {
 
     private static <A extends Annotation> A findAnnotation(Annotation[] annotations, Class<A> annotatypeType) {

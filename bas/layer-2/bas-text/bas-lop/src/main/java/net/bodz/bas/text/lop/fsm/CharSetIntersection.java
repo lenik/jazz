@@ -1,8 +1,6 @@
 package net.bodz.bas.text.lop.fsm;
 
-import net.bodz.bas.lang.err.IllegalUsageException;
-import net.bodz.bas.lang.err.UnexpectedException;
-import net.bodz.bas.text.lop.fsm.CharSetIntersectionTest;
+import java.rmi.UnexpectedException;
 
 /**
  * @test {@link CharSetIntersectionTest}

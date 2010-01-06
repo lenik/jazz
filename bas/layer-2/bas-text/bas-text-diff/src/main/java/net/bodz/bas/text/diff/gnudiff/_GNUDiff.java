@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import net.bodz.bas.text.diff.DiffInfo;
-import net.bodz.extern.nls.BundledNLS;
 
 /**
  * A class to compare vectors of objects. The result of comparison is a list of <code>change</code>
@@ -313,7 +312,7 @@ public class _GNUDiff {
                  * empty, and that case was handled above without calling `diag'. Let's verify that
                  * this is true.
                  */
-                throw new IllegalArgumentException(BundledNLS.getString("_GNUDiff.emptySubseq")); //$NON-NLS-1$
+                throw new IllegalArgumentException("Empty subsequence"); 
             } else {
                 /* Use that point to split this problem into two subproblems. */
                 compareseq(xoff, b, yoff, b - d);

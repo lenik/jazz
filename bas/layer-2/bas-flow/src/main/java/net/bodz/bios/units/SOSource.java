@@ -2,9 +2,7 @@ package net.bodz.bios.units;
 
 import java.io.IOException;
 
-import net.bodz.bas.commons.annotations.TypeNote;
-import net.bodz.bas.commons.exceptions.IllegalUsageError;
-import net.bodz.bas.commons.exceptions.UnexpectedException;
+import net.bodz.bas.exceptions.IllegalUsageError;
 import net.bodz.bios.InPort;
 import net.bodz.bios.Unit;
 

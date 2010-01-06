@@ -1,8 +1,7 @@
 package net.bodz.bas.util;
 
-import net.bodz.bas.commons.exceptions.IllegalUsageException;
-import net.bodz.bas.commons.exceptions.OutOfDomainException;
-import net.bodz.bas.nls.AppNLS;
+import net.bodz.bas.exceptions.IllegalUsageException;
+import net.bodz.bas.exceptions.OutOfDomainException;
 
 public abstract class _History implements History {
 
@@ -12,9 +11,9 @@ public abstract class _History implements History {
     public void moveTo(int p) {
         int size = size();
         if (p < 0)
-            throw new OutOfDomainException("position", p, 0); //$NON-NLS-1$
+            throw new OutOfDomainException("position", p, 0); 
         if (p >= size)
-            throw new OutOfDomainException("position", p, size); //$NON-NLS-1$
+            throw new OutOfDomainException("position", p, size); 
 
         int current = getPosition();
         if (current == p)
@@ -41,7 +40,7 @@ public abstract class _History implements History {
     public void undo() throws OperationException {
         int p = getPosition();
         if (p <= 0)
-            throw new IllegalUsageException(AppNLS.getString("_History.cantUndoMore")); //$NON-NLS-1$
+            throw new IllegalUsageException("Can\'t undo more"); 
         moveTo(p - 1);
     }
 
@@ -49,7 +48,7 @@ public abstract class _History implements History {
     public void redo() throws OperationException {
         int p = getPosition();
         if (p >= size())
-            throw new IllegalUsageException(AppNLS.getString("_History.cantRedoMore")); //$NON-NLS-1$
+            throw new IllegalUsageException("Can\'t redo more"); 
         moveTo(p + 1);
     }
 

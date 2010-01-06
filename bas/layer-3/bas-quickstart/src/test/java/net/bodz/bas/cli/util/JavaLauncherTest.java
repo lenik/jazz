@@ -26,7 +26,7 @@ public class JavaLauncherTest {
                 Cat.class.getName() });
         assertEquals(100, state);
         JavaLauncher.main(new String[] { //
-                Cat.class.getName(), "200" }); //$NON-NLS-1$
+                Cat.class.getName(), "200" }); 
         assertEquals(200, state);
     }
 

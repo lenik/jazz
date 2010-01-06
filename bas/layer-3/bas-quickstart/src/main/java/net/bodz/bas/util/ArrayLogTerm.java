@@ -1,6 +1,5 @@
 package net.bodz.bas.util;
 
-import net.bodz.bas.io.term.Terminal;
 
 public abstract class ArrayLogTerm extends LogTerm {
 
@@ -16,7 +15,7 @@ public abstract class ArrayLogTerm extends LogTerm {
 
     public void setArray(Terminal[] array) {
         if (array == null)
-            throw new NullPointerException("array"); //$NON-NLS-1$
+            throw new NullPointerException("array"); 
         this.array = array;
     }
 

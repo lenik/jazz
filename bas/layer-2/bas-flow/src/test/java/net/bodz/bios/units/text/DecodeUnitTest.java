@@ -20,7 +20,7 @@ public class DecodeUnitTest {
     SISOUnit tostr;
 
     public DecodeUnitTest() throws IOException {
-        Charset utf8 = Charset.forName("utf-8"); //$NON-NLS-1$
+        Charset utf8 = Charset.forName("utf-8"); 
         // charbuf = [3]
         decode = new DecodeUnit(utf8.newDecoder(), 3);
         decode.setDst(tostr = new Text_String());
@@ -37,16 +37,16 @@ public class DecodeUnitTest {
                     byte[] in = Encodings.HEX.decode(inHex);
                     out = WhatIf.send(decode, tostr, in);
                 }
-                String actual = Strings.join("|", out); //$NON-NLS-1$
+                String actual = Strings.join("|", out); 
                 assertEquals(expected, actual);
             }
         }
         D d = new D(); //
-        d.o("68 65 6c 6c 6f", "hel|lo"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("e4bda0 e5a5bd", "你|好"); //$NON-NLS-1$ //$NON-NLS-2$
+        d.o("68 65 6c 6c 6f", "hel|lo");  
+        d.o("e4bda0 e5a5bd", "你|好");  
         // x <overflow> 你 <underflow> 好 <underflow>
-        d.o("78 e4bda0 e5a5bd", "x|你|好"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("ceb1 ceb2 ceb3 ceba ceba ceba", "α|β|γ|κ|κ|κ"); //$NON-NLS-1$ //$NON-NLS-2$
+        d.o("78 e4bda0 e5a5bd", "x|你|好");  
+        d.o("ceb1 ceb2 ceb3 ceba ceba ceba", "α|β|γ|κ|κ|κ");  
     }
 
 }

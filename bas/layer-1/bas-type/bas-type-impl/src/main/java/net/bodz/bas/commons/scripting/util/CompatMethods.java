@@ -3,9 +3,6 @@ package net.bodz.bas.commons.scripting.util;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 
-import net.bodz.bas.collection.array.Arrays2;
-import net.bodz.bas.commons.util.Types;
-
 public class CompatMethods {
 
     public static int dist(Class<?> root, Class<?> leaf) {
@@ -81,8 +78,8 @@ public class CompatMethods {
         Class<?>[] types = Types.getTypes(args);
         Constructor<?> ctor = getConstructor(clazz, types, true);
         if (ctor == null)
-            throw new NoSuchMethodException(clazz.getName() + "(" //$NON-NLS-1$
-                    + Types.joinNames(types) + ")"); //$NON-NLS-1$
+            throw new NoSuchMethodException(clazz.getName() + "(" 
+                    + Types.joinNames(types) + ")"); 
         boolean prevState = ctor.isAccessible();
         if (!prevState)
             ctor.setAccessible(true);
@@ -113,8 +110,8 @@ public class CompatMethods {
         Class<?>[] types = Types.getTypes(args);
         Method method = getMethod(clazz, methodName, types);
         if (method == null)
-            throw new NoSuchMethodException(clazz.getName() + "." + methodName //$NON-NLS-1$
-                    + "(" + Types.joinNames(types) + ")"); //$NON-NLS-1$ //$NON-NLS-2$
+            throw new NoSuchMethodException(clazz.getName() + "." + methodName 
+                    + "(" + Types.joinNames(types) + ")");  
         return (T) Control.invoke(method, obj, args);
     }
 

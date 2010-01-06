@@ -6,16 +6,7 @@ import java.io.Reader;
 import java.nio.charset.Charset;
 import java.util.NoSuchElementException;
 
-import net.bodz.bas.commons.collection.TextMap;
-import net.bodz.bas.commons.exceptions.ParseException;
-import net.bodz.bas.commons.iterators.DirectIterator;
-import net.bodz.bas.commons.iterators._DirectIterator;
-import net.bodz.bas.commons.typealiases.TreeTextMap;
 import net.bodz.bas.files.INIRecordsTest;
-import net.bodz.bas.io.FileResLink;
-import net.bodz.bas.io.LineReader;
-import net.bodz.bas.io.ResLink;
-import net.bodz.bas.nls.TypesNLS;
 
 /**
  * @test {@link INIRecordsTest}
@@ -23,8 +14,8 @@ import net.bodz.bas.nls.TypesNLS;
 public class INIRecords extends MapResRecords<String, String> {
 
     private boolean flatten;
-    private String delim = "."; //$NON-NLS-1$
-    private String existKey = "exist"; //$NON-NLS-1$
+    private String delim = "."; 
+    private String existKey = "exist"; 
 
     public INIRecords(ResLink resLink, Charset charset, boolean flatten) {
         super(resLink, charset);
@@ -87,10 +78,10 @@ public class INIRecords extends MapResRecords<String, String> {
             String line;
             while ((line = lineReader.readLine()) != null) {
                 line = line.trim();
-                if (line.isEmpty() || line.startsWith("#")) //$NON-NLS-1$
+                if (line.isEmpty() || line.startsWith("#")) 
                     continue;
-                if (line.startsWith("[")) { //$NON-NLS-1$
-                    assert line.endsWith("]"); //$NON-NLS-1$
+                if (line.startsWith("[")) { 
+                    assert line.endsWith("]"); 
                     String futureSection = line.substring(1, line.length() - 1).trim();
                     if (flatten) {
                         map.put(futureSection + delim + existKey, "true");
@@ -98,7 +89,7 @@ public class INIRecords extends MapResRecords<String, String> {
                         continue;
                     } else {
                         if (sectionName != null)
-                            map.put("_section", sectionName); //$NON-NLS-1$
+                            map.put("_section", sectionName); 
                         sectionName = futureSection;
                         return true;
                     }
@@ -106,7 +97,7 @@ public class INIRecords extends MapResRecords<String, String> {
                 int eq = line.indexOf('=');
                 if (eq == -1) {
                     // BOM test.
-                    String mesg = TypesNLS.getString("INIFile.invalidEntry") + line; //$NON-NLS-1$
+                    String mesg = "invalid entry: " + line; 
                     System.err.println(mesg);
                     // throw new ParseException(mesg);
                     continue;
@@ -118,7 +109,7 @@ public class INIRecords extends MapResRecords<String, String> {
                 map.put(key, value);
             } // lines
             if (!flatten && sectionName != null)
-                map.put("_section", sectionName); //$NON-NLS-1$
+                map.put("_section", sectionName); 
             end = true;
             return true;
         }

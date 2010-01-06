@@ -5,11 +5,7 @@ import java.io.Reader;
 import java.nio.charset.Charset;
 import java.util.NoSuchElementException;
 
-import net.bodz.bas.commons.iterators.DirectIterator;
-import net.bodz.bas.commons.iterators._DirectIterator;
 import net.bodz.bas.files.CSVRecordsTest;
-import net.bodz.bas.io.LineReader;
-import net.bodz.bas.io.ResLink;
 
 /**
  * @test {@link CSVRecordsTest}
@@ -34,11 +30,11 @@ public class CSVRecords extends _ResRecords<String[]> {
     }
 
     public CSVRecords(ResLink resLink, Charset charset) throws IOException {
-        this(resLink, charset, ":"); //$NON-NLS-1$
+        this(resLink, charset, ":"); 
     }
 
     public CSVRecords(ResLink resLink) throws IOException {
-        this(resLink, ":"); //$NON-NLS-1$
+        this(resLink, ":"); 
     }
 
     class Iter extends _DirectIterator<String[], IOException> {

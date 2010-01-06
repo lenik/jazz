@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.bodz.bas.lang.modules.collection.LinkedStack;
-import net.bodz.bas.lang.modules.tree.ArrayTreeNode;
-import net.bodz.bas.lang.modules.tree.TreePosition;
+import net.bodz.bas.collection.list.LinkedStack;
+import net.bodz.bas.collection.tree.ArrayTreeNode;
+import net.bodz.bas.collection.tree.TreePosition;
 
 import org.junit.Test;
 
@@ -27,7 +27,7 @@ public class TreePositionTest {
         while (iter.hasNext()) {
             ArrayTreeNode succ = iter.next();
             TreePosition<ArrayTreeNode> succPos = posBuf.pop();
-            System.out.println(succPos + " => " + succ); //$NON-NLS-1$
+            System.out.println(succPos + " => " + succ); 
             buf.add(succ.get());
         }
         Object[] expected = { 30, 40, 41, 42, 50 };

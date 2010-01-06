@@ -39,7 +39,7 @@ public class ExceptionBuffer implements ExceptionListener {
             return null;
         StringBuffer buf = new StringBuffer(exceptions.size() * 30);
         for (Exception e : exceptions) {
-            String line = e.getClass().getName() + ": " + e.getMessage(); //$NON-NLS-1$
+            String line = e.getClass().getName() + ": " + e.getMessage(); 
             buf.append(line);
             buf.append('\n');
         }

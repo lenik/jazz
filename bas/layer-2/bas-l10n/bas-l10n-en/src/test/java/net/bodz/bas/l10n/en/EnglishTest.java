@@ -17,10 +17,10 @@ public class EnglishTest {
             }
         }
         D d = new D(); //
-        d.o("cat", "cats"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("foot", "foots"); // TODO - irregular plural //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("baby", "babies"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("homo", "homoes"); //$NON-NLS-1$ //$NON-NLS-2$
+        d.o("cat", "cats");  
+        d.o("foot", "foots"); // TODO - irregular plural  
+        d.o("baby", "babies");  
+        d.o("homo", "homoes");  
     }
 
     @Test
@@ -32,12 +32,12 @@ public class EnglishTest {
             }
         }
         D d = new D(); //
-        d.o("cry", "crying"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("eat", "eating"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("hob", "hobbing"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("go", "going"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("die", "dying"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("live", "living"); //$NON-NLS-1$ //$NON-NLS-2$
+        d.o("cry", "crying");  
+        d.o("eat", "eating");  
+        d.o("hob", "hobbing");  
+        d.o("go", "going");  
+        d.o("die", "dying");  
+        d.o("live", "living");  
     }
 
     @Test
@@ -49,10 +49,10 @@ public class EnglishTest {
             }
         }
         D d = new D(); //
-        d.o("eat", "ate"); //$NON-NLS-1$ //$NON-NLS-2$
+        d.o("eat", "ate");  
         // d.o("play", "played"); //
-        d.o("late", "lated"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("hob", "hobbed"); //$NON-NLS-1$ //$NON-NLS-2$
+        d.o("late", "lated");  
+        d.o("hob", "hobbed");  
         // d.o("answer", "answered"); //
     }
 
@@ -65,10 +65,10 @@ public class EnglishTest {
             }
         }
         D d = new D(); //
-        d.o("eat", "eaten"); //$NON-NLS-1$ //$NON-NLS-2$
+        d.o("eat", "eaten");  
         // d.o("play", "played"); //
-        d.o("late", "lated"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("hob", "hobbed"); //$NON-NLS-1$ //$NON-NLS-2$
+        d.o("late", "lated");  
+        d.o("hob", "hobbed");  
         // d.o("answer", "answered"); //
     }
 

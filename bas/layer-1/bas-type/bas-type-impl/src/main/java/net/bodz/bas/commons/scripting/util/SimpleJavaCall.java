@@ -49,7 +49,7 @@ public class SimpleJavaCall {
         try {
             Object ret;
             Class<?>[] protos = getClasses(arguments);
-            if (methodName.equals("<cinit>")) { //$NON-NLS-1$
+            if (methodName.equals("<cinit>")) { 
                 Constructor<?> cstr = clazz.getConstructor(protos);
                 ret = cstr.newInstance(arguments);
             } else {

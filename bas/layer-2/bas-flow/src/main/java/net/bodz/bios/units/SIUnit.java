@@ -27,7 +27,7 @@ public abstract class SIUnit extends _Unit implements InPort, ReceiverEx {
     @TypeNote(Unit.class)
     public InPort getInPort(int portIndex) {
         if (portIndex != 0)
-            throw new IndexOutOfBoundsException("in " + portIndex); //$NON-NLS-1$
+            throw new IndexOutOfBoundsException("in " + portIndex); 
         return this;
     }
 
@@ -40,7 +40,7 @@ public abstract class SIUnit extends _Unit implements InPort, ReceiverEx {
     @Override
     @TypeNote(InPort.class)
     public PortMeta getInPortMeta() {
-        return new STPortMeta("in", Object.class); //$NON-NLS-1$
+        return new STPortMeta("in", Object.class); 
     }
 
     @Override
@@ -68,13 +68,13 @@ public abstract class SIUnit extends _Unit implements InPort, ReceiverEx {
     @Override
     @TypeNote(ReceiverEx.class)
     public void recvNull() throws IOException {
-        throw new NullPointerException("recvNull"); //$NON-NLS-1$
+        throw new NullPointerException("recvNull"); 
     }
 
     @Override
     @TypeNote(ReceiverEx.class)
     public void recvUnknown(Object data) throws IOException {
-        throw new OutOfDomainException("type", data.getClass()); //$NON-NLS-1$
+        throw new OutOfDomainException("type", data.getClass()); 
     }
 
 }

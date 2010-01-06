@@ -19,9 +19,9 @@ public class ListMap<K, V> implements Map<K, V> {
      */
     public ListMap(List<K> keys, List<V> values) {
         if (keys == null)
-            throw new NullPointerException("keys"); //$NON-NLS-1$
+            throw new NullPointerException("keys"); 
         if (values == null)
-            throw new NullPointerException("keys"); //$NON-NLS-1$
+            throw new NullPointerException("keys"); 
         this.keys = keys;
         this.values = values;
     }

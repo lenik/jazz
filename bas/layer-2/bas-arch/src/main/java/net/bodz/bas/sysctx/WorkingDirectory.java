@@ -3,23 +3,21 @@ package net.bodz.bas.sysctx;
 import java.io.File;
 import java.nio.file.Files;
 
-import net.bodz.bas.sysinfo.SystemInfo;
-
 public class WorkingDirectory {
 
     private static File cwd;
 
     public static boolean isAbsolutePath(String path) {
         if (path == null)
-            throw new NullPointerException("path"); //$NON-NLS-1$
+            throw new NullPointerException("path"); 
         if (SystemInfo.isWin32())
             path = path.replace('\\', '/');
-        if (path.startsWith("/")) //$NON-NLS-1$
+        if (path.startsWith("/")) 
             return true;
         if (SystemInfo.isWin32()) {
             if (path.length() >= 2 && path.charAt(1) == ':') {
                 String diskpath = path.substring(2);
-                if (diskpath.startsWith("/")) //$NON-NLS-1$
+                if (diskpath.startsWith("/")) 
                     return true;
             }
         }

@@ -3,8 +3,7 @@ package net.bodz.bas.i18n;
 import java.util.Locale;
 
 import junit.framework.TestCase;
-
-import net.bodz.bas.api.types.ResourceBundleNLS;
+import net.bodz.bas.i18n.nls_2.ResourceBundleNLS;
 
 import org.junit.Test;
 

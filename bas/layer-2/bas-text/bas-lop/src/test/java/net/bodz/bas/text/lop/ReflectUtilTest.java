@@ -7,10 +7,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.bodz.bas.lang2.Pred1;
-import net.bodz.bas.text.lop.ReflectUtil;
-import net.bodz.bas.text.util.Strings;
-
 import org.junit.Test;
 
 public class ReflectUtilTest {

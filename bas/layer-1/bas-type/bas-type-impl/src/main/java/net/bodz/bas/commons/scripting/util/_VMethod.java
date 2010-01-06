@@ -2,8 +2,6 @@ package net.bodz.bas.commons.scripting.util;
 
 import java.lang.reflect.InvocationTargetException;
 
-import net.bodz.bas.commons.util.Types;
-
 public abstract class _VMethod implements VMethod {
 
     public Object invoke(Object obj, Object... params) throws IllegalArgumentException, NoSuchMethodException,

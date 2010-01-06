@@ -1,20 +1,22 @@
 package net.bodz.bas.closure.eval;
 
-
 public class Evaluables {
 
     @SuppressWarnings("unchecked")
-    public static <T> T eval(Object o) throws EvalException {
+    public static <T> T eval(Object o)
+            throws EvalException {
         if (o instanceof IEvaluable)
             return eval((IEvaluable<T>) o);
         return (T) o;
     }
 
-    public static <T> T eval(IEvaluable<T> f) throws EvalException {
+    public static <T> T eval(IEvaluable<T> f)
+            throws EvalException {
         return f.eval();
     }
 
-    public static <T> T eval(IEvaluable<T> f, Object... args) throws EvalException {
+    public static <T> T eval(IEvaluable<T> f, Object... args)
+            throws EvalException {
         EvalContext context = EvalContext.getInstance();
         context.enter(args);
         T val = f.eval();

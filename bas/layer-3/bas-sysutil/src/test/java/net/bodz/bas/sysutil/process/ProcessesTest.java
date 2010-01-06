@@ -5,18 +5,17 @@ import static org.junit.Assert.assertEquals;
 import java.io.File;
 
 import net.bodz.bas.io.Files;
-import net.bodz.bas.sysutil.process.Processes;
 
 import org.junit.Test;
 
 public class ProcessesTest {
 
-    String charset = "utf-8"; //$NON-NLS-1$
+    String charset = "utf-8"; 
 
     String iocap(String cmdline) throws Exception {
         Process process = Processes.shellExec(cmdline);
         String out = Processes.iocap(process, charset);
-        out = out.replaceAll("\r\n", "\n"); //$NON-NLS-1$ //$NON-NLS-2$
+        out = out.replaceAll("\r\n", "\n");  
         return out;
     }
 

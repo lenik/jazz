@@ -1,6 +1,6 @@
 package net.bodz.bas.text.lop.fsm;
 
-import net.bodz.bas.lang.err.UnexpectedException;
+import java.rmi.UnexpectedException;
 
 public abstract class _CharSet implements CharSet {
 

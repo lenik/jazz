@@ -72,7 +72,7 @@ public class DecodeUnit extends BinaryProcessUnit {
             }
             // avoid empty-loop.
             else if (result.isOverflow())
-                throw new IllegalUsageError(BIOSNLS.getString("DecodeUnit.capacityTooSmall")); //$NON-NLS-1$
+                throw new IllegalUsageError("capacity too small"); 
             if (result.isError()) {
                 // remove the error byte
                 byte errByte = unconv.get();

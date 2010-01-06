@@ -4,7 +4,7 @@ import java.lang.reflect.Array;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.arch.ClassLocal;
+import net.bodz.bas.collection.util.ClassLocal;
 
 public abstract class JavaEnum implements Comparable<JavaEnum> {
 
@@ -28,7 +28,7 @@ public abstract class JavaEnum implements Comparable<JavaEnum> {
             nameMap = new HashMap<String, JavaEnum>();
             clNameMap.put(type, nameMap);
         } else {
-            assert !nameMap.containsKey(constDecl.name) : "name exists"; //$NON-NLS-1$
+            assert !nameMap.containsKey(constDecl.name) : "name exists"; 
             clValues.remove(type);
         }
         nameMap.put(constDecl.name, constDecl);
@@ -69,7 +69,7 @@ public abstract class JavaEnum implements Comparable<JavaEnum> {
             // }
         }
         // throw exception?
-        throw new NoSuchConstException(type + "." + name); //$NON-NLS-1$
+        throw new NoSuchConstException(type + "." + name); 
     }
 
     @SuppressWarnings("unchecked")

@@ -39,7 +39,7 @@ public class LineReader extends Reader {
      */
     public synchronized String readLine(int maxLineLength) throws IOException {
         if (maxLineLength < 1)
-            throw new IllegalArgumentException("maxLineLength=" + maxLineLength); //$NON-NLS-1$
+            throw new IllegalArgumentException("maxLineLength=" + maxLineLength); 
         int len = buf.length();
         int reject = 0;
         while (len < maxLineLength) {

@@ -1,7 +1,6 @@
 package net.bodz.bas.collection.scope;
 
 import net.bodz.bas.annotations.ChainUsage;
-import net.bodz.bas.collection.TypesNLS;
 import net.bodz.bas.hint.OverrideOption;
 
 public abstract class _ChainedScope<T> implements ChainedScope<T> {
@@ -39,7 +38,7 @@ public abstract class _ChainedScope<T> implements ChainedScope<T> {
     @Override
     public void leave() {
         if (!(head instanceof SLink<?>))
-            throw new IllegalStateException(TypesNLS.getString("_ChainedScope.endOfLink")); //$NON-NLS-1$
+            throw new IllegalStateException("end of link"); 
         @SuppressWarnings("unchecked")
         SLink<T> link = (SLink<T>) head;
         head = link.getNext();

@@ -5,9 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
-import net.bodz.bas.collection.comparators.Comparators;
-import net.bodz.bas.text.util.Strings;
-
 import org.junit.Test;
 
 public class SystemPropertiesTest {
@@ -32,10 +29,10 @@ public class SystemPropertiesTest {
                 value = Strings.escape(value);
 
             // System.getProperty(key)
-            System.out.println("    /** " + key + " = " + value + " */"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            System.out.println("    public static String get" + Strings.ucfirst(name) + "() {\n" + // //$NON-NLS-1$ //$NON-NLS-2$
-                    "        return System.getProperty(\"" + key + "\"); \n" + // //$NON-NLS-1$ //$NON-NLS-2$
-                    "    }\n"); //$NON-NLS-1$
+            System.out.println("    /** " + key + " = " + value + " */");   
+            System.out.println("    public static String get" + Strings.ucfirst(name) + "() {\n" + //  
+                    "        return System.getProperty(\"" + key + "\"); \n" + //  
+                    "    }\n"); 
         }
     }
 

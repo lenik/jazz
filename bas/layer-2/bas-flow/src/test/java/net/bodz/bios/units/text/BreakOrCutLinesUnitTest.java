@@ -24,20 +24,20 @@ public class BreakOrCutLinesUnitTest {
             void o(String in, String expected) throws IOException {
                 Collection<Object> out;
                 if (in == null)
-                    out = WhatIf.send(nochop, "", true); //$NON-NLS-1$
+                    out = WhatIf.send(nochop, "", true); 
                 else
                     out = WhatIf.send(nochop, in);
-                String actual = Strings.join("|", out); //$NON-NLS-1$
+                String actual = Strings.join("|", out); 
                 assertEquals(expected, actual);
             }
         }
         D d = new D(); //
-        d.o("12345", "123"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("67890", "456|789"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("x\n1\n12\n123\n", "0x\n|1\n|12\n|123|\n"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("abcdef", "abc|def"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("ghij", "ghi"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o(null, "j"); //$NON-NLS-1$
+        d.o("12345", "123");  
+        d.o("67890", "456|789");  
+        d.o("x\n1\n12\n123\n", "0x\n|1\n|12\n|123|\n");  
+        d.o("abcdef", "abc|def");  
+        d.o("ghij", "ghi");  
+        d.o(null, "j"); 
     }
 
 }

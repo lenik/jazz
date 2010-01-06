@@ -7,8 +7,6 @@ import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.bodz.bas.commons.scripting.MethodSignature;
-
 public class Annotations {
 
     /**
@@ -25,7 +23,7 @@ public class Annotations {
         if (annotation == null)
             return null;
         try {
-            Method valuef = annotationClass.getMethod("value"); //$NON-NLS-1$
+            Method valuef = annotationClass.getMethod("value"); 
             return valuef.invoke(annotation);
         } catch (NoSuchMethodException e) {
             return null;
@@ -125,9 +123,9 @@ public class Annotations {
             return;
         try {
             Class_annotations = Class.class.getDeclaredField(//
-                    "annotations"); //$NON-NLS-1$
+                    "annotations"); 
             Class_declaredAnnotations = Class.class.getDeclaredField(//
-                    "declaredAnnotations"); //$NON-NLS-1$
+                    "declaredAnnotations"); 
             Class_annotations.setAccessible(true);
             Class_declaredAnnotations.setAccessible(true);
         } catch (NoSuchFieldException e) {
@@ -142,14 +140,14 @@ public class Annotations {
         try {
             Map<Class<?>, Annotation> annotations = (Map<Class<?>, Annotation>) Class_annotations.get(clazz);
             for (Entry<Class<?>, Annotation> ent : annotations.entrySet())
-                out.println(indent + ent.getKey() + " " + ent.getValue()); //$NON-NLS-1$
+                out.println(indent + ent.getKey() + " " + ent.getValue()); 
         } catch (IllegalAccessException e) {
             throw new Error(e.getMessage(), e);
         }
     }
 
     public static void dumpAnnotationMap(Class<?> clazz, CharOut out) {
-        dumpAnnotationMap(clazz, out, ""); //$NON-NLS-1$
+        dumpAnnotationMap(clazz, out, ""); 
     }
 
 }

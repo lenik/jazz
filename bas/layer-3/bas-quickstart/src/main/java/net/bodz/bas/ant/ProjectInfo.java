@@ -1,16 +1,9 @@
 package net.bodz.bas.ant;
 
 import java.io.File;
+import java.nio.file.Path;
 
-import net.bodz.bas.commons.collection.TextMap;
-import net.bodz.bas.commons.exceptions.ParseException;
-import net.bodz.bas.nls.AppNLS;
 import net.bodz.bas.snm.EclipseProject;
-import net.bodz.bas.sysctx.CWD;
-
-import org.apache.tools.ant.Project;
-import org.apache.tools.ant.types.FileSet;
-import org.apache.tools.ant.types.Path;
 
 /**
  * @test {@link ProjectInfoTest}
@@ -38,12 +31,12 @@ public class ProjectInfo {
 
     public ProjectInfo(Project antProject, File searchStart) throws ParseException {
         if (antProject == null)
-            throw new NullPointerException("project"); //$NON-NLS-1$
+            throw new NullPointerException("project"); 
         this.antProject = antProject;
 
         projectBase = EclipseProject.findProjectBase(searchStart);
         if (projectBase == null)
-            throw new RuntimeException(AppNLS.getString("ProjectInfo.cantFindEclipseProject") + searchStart); //$NON-NLS-1$
+            throw new RuntimeException("Can\'t find the eclipse project, search from " + searchStart); 
 
         parse();
     }

@@ -72,7 +72,7 @@ public class EncodeUnit extends TextProcessUnit {
             }
             // avoid empty-loop.
             else if (result.isOverflow())
-                throw new IllegalUsageError(BIOSNLS.getString("EncodeUnit.capacityTooSmall")); //$NON-NLS-1$
+                throw new IllegalUsageError("capacity too small"); 
             if (result.isError()) {
                 // remove the error char
                 char errChar = unconv.get();

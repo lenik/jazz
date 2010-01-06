@@ -48,7 +48,7 @@ public class IndexMap<V> extends TreeMap<Integer, V> {
     }
 
     public boolean add(V e) {
-        throw new UnsupportedOperationException("see addFree"); //$NON-NLS-1$
+        throw new UnsupportedOperationException("see addFree"); 
     }
 
     public int addFree(V e) {

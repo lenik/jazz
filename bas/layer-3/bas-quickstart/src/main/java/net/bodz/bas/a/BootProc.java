@@ -7,16 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import net.bodz.bas.commons.caller.Caller;
-import net.bodz.bas.commons.exceptions.CreateException;
-import net.bodz.bas.io.CharOut;
-import net.bodz.bas.io.CharOuts.BCharOut;
-import net.bodz.bas.loader.DefaultBooter;
-import net.bodz.bas.loader.LoadConfig;
-import net.bodz.bas.loader.LoadException;
-import net.bodz.bas.loader.LoadUtil;
-import net.bodz.bas.text.util.Strings;
-import net.bodz.bas.types.util.Empty;
+import net.bodz.bas.exceptions.CreateException;
+import sun.dyn.empty.Empty;
 
 public class BootProc {
 
@@ -72,7 +64,7 @@ public class BootProc {
         }
         if (info == null)
             return prev;
-        String desc = clazz.getName() + "@" + System.identityHashCode(clazz); //$NON-NLS-1$
+        String desc = clazz.getName() + "@" + System.identityHashCode(clazz); 
         return new BootProc(desc, prev, info);
     }
 
@@ -212,7 +204,7 @@ public class BootProc {
         if (prev != null)
             prev.dumpBootArgs(args);
         for (String libspec : userlibs) {
-            args.add("-l"); //$NON-NLS-1$
+            args.add("-l"); 
             args.add(libspec);
         }
     }
@@ -234,22 +226,22 @@ public class BootProc {
     }
 
     void dump(CharOut out) {
-        out.println("BootProc: " + description); //$NON-NLS-1$
+        out.println("BootProc: " + description); 
         if (syslibs.length != 0)
-            out.println("    syslibs=" + Strings.join(", ", syslibs)); //$NON-NLS-1$ //$NON-NLS-2$
+            out.println("    syslibs=" + Strings.join(", ", syslibs));  
         if (userlibs.length != 0)
-            out.println("    userlibs=" + Strings.join(", ", userlibs)); //$NON-NLS-1$ //$NON-NLS-2$
+            out.println("    userlibs=" + Strings.join(", ", userlibs));  
         if (booterClassName != null)
-            out.println("    booter=" + booterClassName); //$NON-NLS-1$
+            out.println("    booter=" + booterClassName); 
         if (configs != null && configs.length != 0) {
-            out.println("    Configs: "); //$NON-NLS-1$
+            out.println("    Configs: "); 
             for (ConfigParam config : configs) {
-                out.print("        " + config.clazz); //$NON-NLS-1$
-                out.println("(" + Strings.join(", ", config.args) + ")"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                out.print("        " + config.clazz); 
+                out.println("(" + Strings.join(", ", config.args) + ")");   
             }
         }
         if (prev != null) {
-            out.print("prev "); //$NON-NLS-1$
+            out.print("prev "); 
             prev.dump(out);
         }
     }

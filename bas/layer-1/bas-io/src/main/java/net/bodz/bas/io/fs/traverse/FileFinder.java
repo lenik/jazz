@@ -116,7 +116,7 @@ public class FileFinder
 
     public void setOrder(int order) {
         if (0 != (order & DIR_POST))
-            throw new UnsupportedOperationException("DIR_POST"); //$NON-NLS-1$
+            throw new UnsupportedOperationException("DIR_POST"); 
         this.order = order;
     }
 

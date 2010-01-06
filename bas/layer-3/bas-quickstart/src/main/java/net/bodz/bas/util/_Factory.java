@@ -1,7 +1,7 @@
 package net.bodz.bas.util;
 
-import net.bodz.bas.commons.exceptions.CreateException;
-import net.bodz.bas.types.util.Empty;
+import net.bodz.bas.exceptions.CreateException;
+import sun.dyn.empty.Empty;
 
 public abstract class _Factory<T> implements Factory<T> {
 

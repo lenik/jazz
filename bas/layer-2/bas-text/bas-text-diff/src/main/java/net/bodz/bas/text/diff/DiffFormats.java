@@ -3,7 +3,7 @@ package net.bodz.bas.text.diff;
 import java.util.List;
 
 import net.bodz.bas.io.out.CharOut;
-import net.bodz.extern.diff.DiffPrint;
+import net.bodz.bas.text.diff.gnudiff.DiffPrint;
 
 public class DiffFormats {
 
@@ -28,12 +28,12 @@ public class DiffFormats {
 
             @Override
             protected void edit0(char op, int index) {
-                out.printf(" %6d%c%s\n", index, op, al.get(index)); //$NON-NLS-1$
+                out.printf(" %6d%c%s\n", index, op, al.get(index)); 
             }
 
             @Override
             protected void edit1(char op, int index) {
-                out.printf("*%6d%c%s\n", index, op, bl.get(index)); //$NON-NLS-1$
+                out.printf("*%6d%c%s\n", index, op, bl.get(index)); 
             }
         };
 

@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.CharBuffer;
 
-import net.bodz.bas.text.lop.util.TellableReaderTest;
-
 /**
  * @test {@link TellableReaderTest}
  */

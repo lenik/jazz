@@ -3,8 +3,6 @@ package net.bodz.bas.text.lop;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 
-import net.bodz.bas.lang.err.ParseException;
-
 public class NullParser extends _Parser {
 
     private Object value;

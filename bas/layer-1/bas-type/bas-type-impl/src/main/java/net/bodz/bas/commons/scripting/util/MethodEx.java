@@ -2,9 +2,7 @@ package net.bodz.bas.commons.scripting.util;
 
 import java.lang.reflect.Method;
 
-import net.bodz.bas.collection.hierarchical.TypeHierMap;
 import net.bodz.bas.commons.scripting.Reflects;
-import net.bodz.bas.commons.util.Types;
 import net.bodz.bas.exceptions.OutOfDomainException;
 
 /**
@@ -55,7 +53,7 @@ public class MethodEx {
     }
 
     protected Object invokeOnUnknownType(Object obj, Class<?> argType, Object arg) {
-        throw new OutOfDomainException("argType", argType); //$NON-NLS-1$
+        throw new OutOfDomainException("argType", argType); 
     }
 
     public boolean isEmpty() {

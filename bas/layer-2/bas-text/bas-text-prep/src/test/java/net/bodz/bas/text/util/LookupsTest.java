@@ -8,7 +8,7 @@ public class LookupsTest {
 
     @Test
     public void testC2N() {
-        String s = "abcdefghijklmnopqrstuvwxyz"; //$NON-NLS-1$
+        String s = "abcdefghijklmnopqrstuvwxyz"; 
         for (int t = 0; t < 2; t++) {
             for (int i = 0; i < s.length(); i++) {
                 char c = s.charAt(i);
@@ -38,9 +38,9 @@ public class LookupsTest {
             longv[i] = longs;
         }
         System.out.println(//
-                "intDigits = { " + Strings.join(", ", intv) + " }; "); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                "intDigits = { " + Strings.join(", ", intv) + " }; ");   
         System.out.println(//
-                "longDigits = { " + Strings.join(", ", longv) + " }; "); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                "longDigits = { " + Strings.join(", ", longv) + " }; ");   
     }
 
     @Test

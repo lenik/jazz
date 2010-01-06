@@ -32,7 +32,7 @@ public class HexCharsetEncoder extends CharsetEncoder {
      */
     public HexCharsetEncoder(Charset charset, char[] transtbl) {
         super(charset, 3.0f + transtbl.length, 8.0f + transtbl.length, //
-                " ? ".getBytes(Charsets.ASCII)); //$NON-NLS-1$
+                " ? ".getBytes(Charsets.ASCII)); 
         this.transtbl = new byte[transtbl.length];
         for (int i = 0; i < transtbl.length; i++)
             this.transtbl[i] = (byte) transtbl[i];

@@ -12,16 +12,9 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import net.bodz.bas.a.A_bas;
-import net.bodz.bas.arch.ClassLocal;
 import net.bodz.bas.cli.a.Option;
-import net.bodz.bas.collection.comparators.Comparators;
-import net.bodz.bas.commons.exceptions.ParseException;
-import net.bodz.bas.commons.functor.Filt1;
-import net.bodz.bas.commons.scripting.Reflects;
-import net.bodz.bas.commons.scripting.util.Members;
+import net.bodz.bas.collection.util.ClassLocal;
 import net.bodz.bas.commons.util.Ns;
-import net.bodz.bas.nls.AppNLS;
-import net.bodz.bas.text.util.Strings;
 
 public class ClassCLI {
 
@@ -79,9 +72,9 @@ public class ClassCLI {
         Arrays.fill(tab, ' ');
 
         String program = A_bas.getProgramName(clazz);
-        buffer.append(AppNLS.getString("ClassCLI.help.syntax")); //$NON-NLS-1$
+        buffer.append("Syntax: \n"); 
         buffer.append(tab);
-        buffer.append(program + AppNLS.getString("ClassCLI.help.option_")); //$NON-NLS-1$
+        buffer.append(program + " [OPTION] [--]"); 
         if (copt.specfiles != null) {
             int ifile = 0;
             while (true) {
@@ -94,14 +87,14 @@ public class ClassCLI {
             }
         }
 
-        buffer.append(" "); //$NON-NLS-1$
+        buffer.append(" "); 
         if (restSyntax == null) {
             boolean usingRestSyntax = false;
             if (usingRestSyntax) {
                 // getRestSyntax();
-                Method restf = Members.findDeclaredMethod(clazz, "getRestSyntax"); //$NON-NLS-1$
+                Method restf = Members.findDeclaredMethod(clazz, "getRestSyntax"); 
                 if (restf == null)
-                    buffer.append("..."); //$NON-NLS-1$
+                    buffer.append("..."); 
                 else {
                     restSyntax = (String) Reflects.invoke(null, restf);
                     buffer.append(restSyntax);
@@ -113,9 +106,9 @@ public class ClassCLI {
             }
         }
         buffer.append(restSyntax);
-        buffer.append("\n"); //$NON-NLS-1$
+        buffer.append("\n"); 
 
-        buffer.append("\n"); //$NON-NLS-1$
+        buffer.append("\n"); 
 
         Map<String, Set<_Option<?>>> groups = new HashMap<String, Set<_Option<?>>>();
         Comparator<_Option<?>> optnamsort = new Comparator<_Option<?>>() {
@@ -166,7 +159,7 @@ public class ClassCLI {
                             hasshort = true;
                             col += 2;
                         } else {
-                            line.append("--" + nam); //$NON-NLS-1$
+                            line.append("--" + nam); 
                             col += 3 + nam.length();
                         }
                     }
@@ -205,10 +198,10 @@ public class ClassCLI {
             if (first)
                 first = false;
             else
-                buffer.append("\n"); //$NON-NLS-1$
+                buffer.append("\n"); 
             String name = group.getKey();
             Set<_Option<?>> grpopts = group.getValue();
-            buffer.append(Strings.ucfirst(name) + AppNLS.getString("ClassCLI.help.options")); //$NON-NLS-1$
+            buffer.append(Strings.ucfirst(name) + " options: \n"); 
             buffer.append(groupfmt.filter(grpopts));
         }
         return buffer.toString();

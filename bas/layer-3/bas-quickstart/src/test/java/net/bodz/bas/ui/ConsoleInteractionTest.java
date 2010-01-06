@@ -1,8 +1,5 @@
 package net.bodz.bas.ui;
 
-import net.bodz.bas.commons.callback.Executable;
-import net.bodz.bas.commons.exceptions.ExpectedException;
-
 import org.junit.Test;
 
 public class ConsoleInteractionTest {

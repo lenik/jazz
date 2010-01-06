@@ -4,9 +4,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import net.bodz.bas.i18n.nls_2.NLS;
-import net.bodz.bas.i18n.nls_2.ResourceBundleNLS;
-
 /**
  * To make the default {@link #getPackageName()} and all the related methods work, your direct
  * derivation of this abstract class should be declared as <code>final</code>.

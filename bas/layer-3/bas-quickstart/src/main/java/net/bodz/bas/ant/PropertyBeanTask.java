@@ -7,29 +7,18 @@ import java.io.File;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Dictionary;
 import java.util.Enumeration;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.bodz.bas.collection.IdentSet;
-import net.bodz.bas.commons.collection.hierarchical.PrefixSet;
-import net.bodz.bas.commons.collection.hierarchical.TypeHierSet;
-import net.bodz.bas.commons.exceptions.CreateException;
-import net.bodz.bas.commons.exceptions.IllegalUsageException;
-import net.bodz.bas.commons.exceptions.NotImplementedException;
-import net.bodz.bas.commons.exceptions.ParseException;
-import net.bodz.bas.nls.AppNLS;
-import net.bodz.bas.sysctx.CWD;
-import net.bodz.bas.text.util.Strings;
+import net.bodz.bas.collection.preorder.PrefixSet;
+import net.bodz.bas.collection.preorder.TypeHierSet;
+import net.bodz.bas.exceptions.CreateException;
+import net.bodz.bas.exceptions.IllegalUsageException;
 import net.bodz.bas.util.LogTerm;
-
-import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.Project;
-import org.apache.tools.ant.Task;
-import org.apache.tools.ant.types.DataType;
-import org.apache.tools.ant.types.Path;
 
 public class PropertyBeanTask extends Task implements IPureTask {
 
@@ -49,9 +38,9 @@ public class PropertyBeanTask extends Task implements IPureTask {
     static PrefixSet defaultStopTypePrefixes;
     static {
         defaultStopTypePrefixes = new PrefixSet();
-        defaultStopTypePrefixes.add("java."); //$NON-NLS-1$
-        defaultStopTypePrefixes.add("javax."); //$NON-NLS-1$
-        defaultStopTypePrefixes.add("org.apache.tools.ant."); //$NON-NLS-1$
+        defaultStopTypePrefixes.add("java."); 
+        defaultStopTypePrefixes.add("javax."); 
+        defaultStopTypePrefixes.add("org.apache.tools.ant."); 
     }
 
     private PrefixSet hiddenPrefixes;
@@ -77,7 +66,7 @@ public class PropertyBeanTask extends Task implements IPureTask {
     public PropertyBeanTask() {
         this.vCtor = new ValueConstruct();
         this.refTypes = new TypeHierSet(defaultRefTypes);
-        duplicatedMessage = AppNLS.getString("PropertyBeanTask.duplicatedNode"); //$NON-NLS-1$
+        duplicatedMessage = "(duplicated node, terminated)"; 
     }
 
     public String getName() {
@@ -86,7 +75,7 @@ public class PropertyBeanTask extends Task implements IPureTask {
 
     public void setName(String name) {
         if (name == null)
-            throw new NullPointerException("propertyName"); //$NON-NLS-1$
+            throw new NullPointerException("propertyName"); 
         this.baseName = name;
     }
 
@@ -102,9 +91,9 @@ public class PropertyBeanTask extends Task implements IPureTask {
 
     public void hidePrefix(String prefix) {
         if (prefix == null)
-            throw new NullPointerException("prefix"); //$NON-NLS-1$
+            throw new NullPointerException("prefix"); 
         if (prefix.isEmpty())
-            throw new IllegalArgumentException(AppNLS.getString("PropertyBeanTask.emptyPrefix")); //$NON-NLS-1$
+            throw new IllegalArgumentException("empty prefix isn\'t allowed"); 
         if (hiddenPrefixes == null)
             hiddenPrefixes = new PrefixSet();
         hiddenPrefixes.add(prefix);
@@ -175,10 +164,10 @@ public class PropertyBeanTask extends Task implements IPureTask {
         if (hide)
             return parent;
         else
-            return parent + "." + child; //$NON-NLS-1$
+            return parent + "." + child; 
     }
 
-    String nullText = AppNLS.getString("PropertyBeanTask.null"); //$NON-NLS-1$
+    String nullText = "null"; 
 
     void setProperty(String name, String value) {
         Project project = getProject();
@@ -193,7 +182,7 @@ public class PropertyBeanTask extends Task implements IPureTask {
     @Override
     public void execute() throws BuildException {
         if (baseName == null)
-            throw new IllegalUsageException(AppNLS.getString("PropertyBeanTask.noPropertyName")); //$NON-NLS-1$
+            throw new IllegalUsageException("Property name isn\'t specified"); 
 
         final Project project = getProject();
         File baseDir = project.getBaseDir();
@@ -216,7 +205,7 @@ public class PropertyBeanTask extends Task implements IPureTask {
             throw new BuildException(e);
         } catch (Exception e) {
             logger.error(e);
-            throw new BuildException(AppNLS.getString("PropertyBeanTask.traverseError"), e); //$NON-NLS-1$
+            throw new BuildException("Traverse Error", e); 
         }
     }
 
@@ -237,7 +226,7 @@ public class PropertyBeanTask extends Task implements IPureTask {
         public void traverse(String _name, Object node, int level) throws Exception {
             if (verbose) {
                 String abbr = Strings.ellipse(String.valueOf(node), 30);
-                logger.detail(Strings.repeat(level, ' '), _name, " = " + abbr); //$NON-NLS-1$
+                logger.detail(Strings.repeat(level, ' '), _name, " = " + abbr); 
             }
 
             if (node == null) {
@@ -338,7 +327,7 @@ public class PropertyBeanTask extends Task implements IPureTask {
                         try {
                             value = readf.invoke(node);
                         } catch (Exception e) {
-                            value = AppNLS.getString("PropertyBeanTask.cantReadProperty") + name + ": " + e; //$NON-NLS-1$ //$NON-NLS-2$
+                            value = "Can\'t read bean property " + name + ": " + e;  
                         }
                         traverse(join(_name, name), value, level + 1);
                     }

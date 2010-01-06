@@ -18,7 +18,7 @@ public class NLSAccessor {
     protected static String format(ResourceBundle bundle, String key, Object... args) {
         String format = getString(bundle, key);
         if (format == null)
-            throw new NullPointerException("key isn't existed: " + key); //$NON-NLS-1$
+            throw new NullPointerException("key isn't existed: " + key); 
         return String.format(format, args);
     }
 

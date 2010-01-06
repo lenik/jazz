@@ -2,15 +2,13 @@ package net.bodz.bas.ant;
 
 import java.io.File;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.cli.util.CLITask;
 import net.bodz.bas.cli.util.Mkbat;
-import net.bodz.bas.io.Files;
-
-import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.types.Path;
 
 public class MkbatTask extends CLITask {
 
@@ -24,7 +22,7 @@ public class MkbatTask extends CLITask {
     public MkbatTask() {
         super(new Mkbat());
         mkbat = (Mkbat) super.app;
-        addArguments("-rq", "--"); //$NON-NLS-1$ //$NON-NLS-2$
+        addArguments("-rq", "--");  
         classpathList = new ArrayList<Path>();
         findmainList = new ArrayList<Path>();
         runtimeLibs = new ArrayList<String>();
@@ -40,16 +38,16 @@ public class MkbatTask extends CLITask {
     }
 
     public File getOutdir() {
-        return (File) get("outputDirectory"); //$NON-NLS-1$
+        return (File) get("outputDirectory"); 
     }
 
     public void setOutdir(File outdir) {
-        set("outputDirectory", outdir); //$NON-NLS-1$
+        set("outputDirectory", outdir); 
     }
 
     static String pathSeparator;
     static {
-        pathSeparator = ";"; //$NON-NLS-1$
+        pathSeparator = ";"; 
     }
 
     public void addClasspath(Path path) {

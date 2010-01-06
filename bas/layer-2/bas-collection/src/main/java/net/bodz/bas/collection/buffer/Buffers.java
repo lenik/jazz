@@ -6,8 +6,6 @@ import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 
-import net.bodz.bas.collection.buffer.BuffersTest;
-
 /**
  * @test {@link BuffersTest}
  */

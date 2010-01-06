@@ -6,21 +6,13 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.util.Comparator;
 import java.util.regex.Pattern;
 
-import net.bodz.bas.aspect.annotation.ParseBy;
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.cli.a.OptionGroup;
-import net.bodz.bas.commons.annotations.OverrideOption;
-import net.bodz.bas.commons.controlflow.ControlBreak;
-import net.bodz.bas.commons.exceptions.NotImplementedException;
-import net.bodz.bas.io.FileFinder;
-import net.bodz.bas.io.FileMask;
-import net.bodz.bas.io.Files;
-import net.bodz.bas.io.typeparsers.GlobParser;
-import net.bodz.bas.nls.AppNLS;
-import net.bodz.bas.type.feature.impl.TypeParsers.GetInstanceParser;
+import net.bodz.bas.hint.OverrideOption;
 
 @OptionGroup(value = "batch", rank = -2)
 public class BatchCLI extends BasicCLI {
@@ -40,7 +32,7 @@ public class BatchCLI extends BasicCLI {
     boolean rootLast;
 
     @Option(alias = "Im", vnam = "FILEMASK", doc = "include specified type of files, default non-hidden files")
-    FileMask inclusiveMask = new FileMask("f/fH"); //$NON-NLS-1$
+    FileMask inclusiveMask = new FileMask("f/fH"); 
     @Option(alias = "IM", vnam = "FILEMASK", doc = "exclude specified type of files")
     FileMask exclusiveMask;
 
@@ -274,7 +266,7 @@ public class BatchCLI extends BasicCLI {
         try {
             doFile(file);
         } catch (Throwable e) {
-            L.ferror(AppNLS.getString("BatchCLI.failedToProcess_ss"), file, e); //$NON-NLS-1$
+            L.ferror("Failed to process %s: %s", file, e); 
             if (L.showDetail() || !errorContinue)
                 e.printStackTrace(L.error().getPrintStream());
             if (!errorContinue)

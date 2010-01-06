@@ -5,10 +5,6 @@ import java.io.Reader;
 import java.util.Arrays;
 import java.util.List;
 
-import net.bodz.bas.types.util.DirectIterable;
-import net.bodz.bas.types.util.DirectIterator;
-import net.bodz.bas.types.util._DirectIterator;
-
 public class DelimitedTokenizer implements DirectIterable<String, IOException> {
 
     private List<Delimiter> delimiters;

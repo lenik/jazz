@@ -12,16 +12,16 @@ public class BooleanSerializer
     public void serialize(Writer w, Object o)
             throws IOException {
         if (Boolean.TRUE.equals(o))
-            w.write("1"); //$NON-NLS-1$
+            w.write("1"); 
         else
-            w.write("0"); //$NON-NLS-1$
+            w.write("0"); 
     }
 
     @Override
     public Boolean unserialize(Reader s)
             throws IOException {
         String text = readTill(s, ';');
-        return "1".equals(text); //$NON-NLS-1$
+        return "1".equals(text); 
     }
 
 }

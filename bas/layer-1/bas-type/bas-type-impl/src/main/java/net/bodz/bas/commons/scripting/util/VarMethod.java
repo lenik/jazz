@@ -4,11 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-import net.bodz.bas.collection.hierarchical.TypesHierMap;
-import net.bodz.bas.commons.controlflow.Control;
-import net.bodz.bas.commons.util.Types;
 import net.bodz.bas.exceptions.IllegalUsageError;
-import net.bodz.bas.nls.LangNLS;
 
 public class VarMethod extends _VMethod {
 
@@ -56,14 +52,14 @@ public class VarMethod extends _VMethod {
             IllegalArgumentException, IllegalAccessException, InvocationTargetException {
         Method method = findMethod(paramTypes);
         if (method == null)
-            throw new NoSuchMethodException(name + "(" //$NON-NLS-1$
-                    + Types.joinNames(paramTypes) + ")"); //$NON-NLS-1$
+            throw new NoSuchMethodException(name + "(" 
+                    + Types.joinNames(paramTypes) + ")"); 
         if (obj != null) {
             Class<?> objClass = obj.getClass();
             Class<?> declClass = method.getDeclaringClass();
             if (!declClass.isAssignableFrom(objClass))
-                throw new IllegalUsageError(LangNLS.getString("VarMethod.incompatType") + objClass //$NON-NLS-1$
-                        + LangNLS.getString("VarMethod.decl") + declClass); //$NON-NLS-1$
+                throw new IllegalUsageError("invoke method of different type, obj=" + objClass 
+                        + ", decl=" + declClass); 
         }
         return Control.invoke(method, obj, params);
     }

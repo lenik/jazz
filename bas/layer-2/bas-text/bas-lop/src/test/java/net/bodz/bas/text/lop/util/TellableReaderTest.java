@@ -5,8 +5,6 @@ import static org.junit.Assert.assertEquals;
 import java.io.IOException;
 import java.io.StringReader;
 
-import net.bodz.bas.text.lop.util.TellableReader;
-
 import org.junit.Test;
 
 public class TellableReaderTest {

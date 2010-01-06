@@ -2,9 +2,6 @@ package net.bodz.bas.text.util;
 
 import java.nio.CharBuffer;
 
-import net.bodz.bas.io.CharOut;
-import net.bodz.bas.io.CharOuts.BCharOut;
-
 public class Unescape {
 
     private final char[] ESC;
@@ -117,7 +114,7 @@ public class Unescape {
 
     private static final Unescape cUnescape;
     static {
-        cUnescape = new Unescape("\\"); //$NON-NLS-1$
+        cUnescape = new Unescape("\\"); 
     }
 
     public static String unescape(String s) {

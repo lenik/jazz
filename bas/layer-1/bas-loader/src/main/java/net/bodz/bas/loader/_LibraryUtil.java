@@ -8,8 +8,6 @@ import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.bodz.bas.nls.AppNLS;
-
 public class _LibraryUtil {
 
     static Set<String> loaded;
@@ -22,7 +20,7 @@ public class _LibraryUtil {
             System.loadLibrary(libname);
         } catch (UnsatisfiedLinkError e) {
             String filename = System.mapLibraryName(libname);
-            URL url = _LibraryUtil.class.getResource("/" + filename); //$NON-NLS-1$
+            URL url = _LibraryUtil.class.getResource("/" + filename); 
             if (url == null)
                 throw e;
             if (loaded.contains(filename))
@@ -40,7 +38,7 @@ public class _LibraryUtil {
                 out.close();
                 in.close();
             } catch (IOException ex) {
-                throw new RuntimeException(AppNLS.getString("_LibraryUtil.cantCopyLibrary") + tmpFile, ex); //$NON-NLS-1$
+                throw new RuntimeException("Can\'t copy library to " + tmpFile, ex); 
             }
             System.load(tmpFile.getPath());
             loaded.add(filename);

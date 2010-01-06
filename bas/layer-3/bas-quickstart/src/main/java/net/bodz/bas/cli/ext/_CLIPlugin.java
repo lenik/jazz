@@ -7,9 +7,6 @@ import net.bodz.bas.cli.CLIException;
 import net.bodz.bas.cli.ClassCLI;
 import net.bodz.bas.cli.ClassOptions;
 import net.bodz.bas.cli._Option;
-import net.bodz.bas.commons.exceptions.ParseException;
-import net.bodz.bas.io.CharOut;
-import net.bodz.bas.text.util.Strings;
 import net.bodz.bas.util._Plugin;
 
 public class _CLIPlugin extends _Plugin implements CLIPlugin {
@@ -60,7 +57,7 @@ public class _CLIPlugin extends _Plugin implements CLIPlugin {
             out.print(prefix);
             out.print(name);
             if (!doc.isEmpty()) {
-                out.print(": "); //$NON-NLS-1$
+                out.print(": "); 
                 if (name.length() < maxlen)
                     out.print(Strings.repeat(maxlen - name.length(), ' '));
                 out.print(doc);

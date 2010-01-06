@@ -24,7 +24,7 @@ public abstract class _Terminal implements Terminal {
 
     @Override
     public PrintStream getPrintStream() {
-        Charset charset = Charset.forName("utf-8"); //$NON-NLS-1$
+        Charset charset = Charset.forName("utf-8"); 
         WriterOutputStream out = new WriterOutputStream(getWriter(), charset);
         try {
             PrintStream printStream = new PrintStream(out, true, charset.name());
@@ -57,19 +57,19 @@ public abstract class _Terminal implements Terminal {
 
     @Override
     public void n(Object... args) {
-        String s = Strings.join("", args); //$NON-NLS-1$
+        String s = Strings.join("", args); 
         n(s);
     }
 
     @Override
     public void p(Object... args) {
-        String s = Strings.join("", args); //$NON-NLS-1$
+        String s = Strings.join("", args); 
         p(s);
     }
 
     @Override
     public void t(Object... args) {
-        String s = Strings.join("", args); //$NON-NLS-1$
+        String s = Strings.join("", args); 
         t(s);
     }
 

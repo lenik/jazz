@@ -11,27 +11,27 @@ public class TraceTest {
     @Test
     public void test1() throws Exception {
         Trace.enabled = true;
-        Trace.setLogDate("yy/MM/dd HH:mm:ss.SSS"); //$NON-NLS-1$
+        Trace.setLogDate("yy/MM/dd HH:mm:ss.SSS"); 
 
-        String tom = "tom"; //$NON-NLS-1$
-        String tom2 = "to"; //$NON-NLS-1$
+        String tom = "tom"; 
+        String tom2 = "to"; 
         if (_deopt)
-            tom2 += "m"; // to avoid optimization. //$NON-NLS-1$
-        assertNotSame("Should not be optimized by compiler. ", tom, tom2); //$NON-NLS-1$
-        String lucy = "lucy"; //$NON-NLS-1$
+            tom2 += "m"; // to avoid optimization. 
+        assertNotSame("Should not be optimized by compiler. ", tom, tom2); 
+        String lucy = "lucy"; 
 
-        Trace.p(tom, "love lucy"); //$NON-NLS-1$
-        Trace.p(tom2, "hate lucy"); //$NON-NLS-1$
+        Trace.p(tom, "love lucy"); 
+        Trace.p(tom2, "hate lucy"); 
 
-        Trace.p(lucy, "is"); //$NON-NLS-1$
-        Trace.c(lucy, " confused"); //$NON-NLS-1$
+        Trace.p(lucy, "is"); 
+        Trace.c(lucy, " confused"); 
 
-        Trace.link(tom, "love", lucy); //$NON-NLS-1$
-        Trace.link(tom2, "hate", lucy); //$NON-NLS-1$
-        Trace.link(tom, "friend", tom2, lucy); //$NON-NLS-1$
+        Trace.link(tom, "love", lucy); 
+        Trace.link(tom2, "hate", lucy); 
+        Trace.link(tom, "friend", tom2, lucy); 
 
-        Trace.link(lucy, "hate", tom); //$NON-NLS-1$
-        Trace.unlink(lucy, "hate", tom); // empty set //$NON-NLS-1$
+        Trace.link(lucy, "hate", tom); 
+        Trace.unlink(lucy, "hate", tom); // empty set 
     }
 
 }

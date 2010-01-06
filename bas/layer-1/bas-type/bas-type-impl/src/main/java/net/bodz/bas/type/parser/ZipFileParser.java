@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.zip.ZipFile;
 
 import net.bodz.bas.exceptions.ParseException;
-import net.bodz.bas.sysctx.SystemContextFactory;
 import net.bodz.bas.type.traits.impl.AbstractParser;
 
 public class ZipFileParser

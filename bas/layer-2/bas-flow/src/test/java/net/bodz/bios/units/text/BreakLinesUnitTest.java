@@ -25,17 +25,17 @@ public class BreakLinesUnitTest {
         class D {
             void o(String in, String expected) throws IOException {
                 Collection<Object> out = WhatIf.clearSend(chop, in, true);
-                String actual = Strings.join("|", out); //$NON-NLS-1$
+                String actual = Strings.join("|", out); 
                 assertEquals(expected, actual);
             }
         }
         D d = new D(); //
-        d.o("a", "a"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("a\n", "a"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("a\nb", "a|b"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("a\r\nb", "a|b"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("a\n\nb\n\rc", "a||b|\rc"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("a\n\n\n", "a||"); //$NON-NLS-1$ //$NON-NLS-2$
+        d.o("a", "a");  
+        d.o("a\n", "a");  
+        d.o("a\nb", "a|b");  
+        d.o("a\r\nb", "a|b");  
+        d.o("a\n\nb\n\rc", "a||b|\rc");  
+        d.o("a\n\n\n", "a||");  
     }
 
     @Test
@@ -43,17 +43,17 @@ public class BreakLinesUnitTest {
         class D {
             void o(String in, String expected) throws IOException {
                 Collection<Object> out = WhatIf.clearSend(nochop, in, true);
-                String actual = Strings.join("|", out); //$NON-NLS-1$
+                String actual = Strings.join("|", out); 
                 assertEquals(expected, actual);
             }
         }
         D d = new D(); //
-        d.o("a", "a"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("a\n", "a\n"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("a\nb", "a\n|b"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("a\r\nb", "a\r\n|b"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("a\n\nb\n\rc", "a\n|\n|b\n|\rc"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("a\n\n\n", "a\n|\n|\n"); //$NON-NLS-1$ //$NON-NLS-2$
+        d.o("a", "a");  
+        d.o("a\n", "a\n");  
+        d.o("a\nb", "a\n|b");  
+        d.o("a\r\nb", "a\r\n|b");  
+        d.o("a\n\nb\n\rc", "a\n|\n|b\n|\rc");  
+        d.o("a\n\n\n", "a\n|\n|\n");  
     }
 
     @Test
@@ -61,17 +61,17 @@ public class BreakLinesUnitTest {
         class D {
             void o(String in, String expected) throws IOException {
                 Collection<Object> out = WhatIf.send(chop, in);
-                String actual = Strings.join("|", out); //$NON-NLS-1$
+                String actual = Strings.join("|", out); 
                 assertEquals(expected, actual);
             }
         }
         D d = new D(); //
-        d.o("a", ""); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("a\n", "aa"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("a\nb", "a"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("a\r\nb", "ba"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("a\n\nb\n\rc", "ba||b"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("a\n\n\n", "\rca||"); //$NON-NLS-1$ //$NON-NLS-2$
+        d.o("a", "");  
+        d.o("a\n", "aa");  
+        d.o("a\nb", "a");  
+        d.o("a\r\nb", "ba");  
+        d.o("a\n\nb\n\rc", "ba||b");  
+        d.o("a\n\n\n", "\rca||");  
     }
 
     @Test
@@ -79,17 +79,17 @@ public class BreakLinesUnitTest {
         class D {
             void o(String in, String expected) throws IOException {
                 Collection<Object> out = WhatIf.send(nochop, in);
-                String actual = Strings.join("|", out); //$NON-NLS-1$
+                String actual = Strings.join("|", out); 
                 assertEquals(expected, actual);
             }
         }
         D d = new D(); //
-        d.o("a", ""); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("a\n", "aa\n"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("a\nb", "a\n"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("a\r\nb", "ba\r\n"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("a\n\nb\n\rc", "ba\n|\n|b\n"); //$NON-NLS-1$ //$NON-NLS-2$
-        d.o("a\n\n\n", "\rca\n|\n|\n"); //$NON-NLS-1$ //$NON-NLS-2$
+        d.o("a", "");  
+        d.o("a\n", "aa\n");  
+        d.o("a\nb", "a\n");  
+        d.o("a\r\nb", "ba\r\n");  
+        d.o("a\n\nb\n\rc", "ba\n|\n|b\n");  
+        d.o("a\n\n\n", "\rca\n|\n|\n");  
     }
 
 }

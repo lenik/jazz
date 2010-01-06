@@ -60,7 +60,7 @@ public class BoolMath {
             return true;
         try {
             // ?? can find test(Number) by test(Integer)?
-            Method testf = IntMath.class.getMethod("test", type); //$NON-NLS-1$
+            Method testf = IntMath.class.getMethod("test", type); 
             return (Boolean) testf.invoke(null, exp);
         } catch (NoSuchMethodException e) {
             return true;

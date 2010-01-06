@@ -5,10 +5,8 @@ import java.util.List;
 
 import net.bodz.bas.commons.exception.RecoverableExceptionEvent;
 import net.bodz.bas.commons.exception.RecoverableExceptionListener;
-import net.bodz.bas.commons.exceptions.NotImplementedException;
-import net.bodz.bas.commons.exceptions.OutOfDomainException;
-import net.bodz.bas.commons.tree.TreeNode;
 import net.bodz.bas.commons.util.Objects;
+import net.bodz.bas.exceptions.OutOfDomainException;
 import net.bodz.bas.ui.ConsoleUI;
 import net.bodz.bas.ui.UserInterface;
 
@@ -148,7 +146,7 @@ public abstract class _Job implements Job, TreeNode<_Job> {
 
     protected void execute(Job child, double progressIncrement) {
         if (progressIncrement < 0)
-            throw new OutOfDomainException("progressIncrement", progressIncrement, 0); //$NON-NLS-1$
+            throw new OutOfDomainException("progressIncrement", progressIncrement, 0); 
         ChildObserver childObserver = new ChildObserver(progressIncrement);
         childObserver.bind(child);
         try {
@@ -167,14 +165,14 @@ public abstract class _Job implements Job, TreeNode<_Job> {
     @Override
     public void setUserInterface(UserInterface userInterface) {
         if (userInterface == null)
-            throw new NullPointerException("interaction"); //$NON-NLS-1$
+            throw new NullPointerException("interaction"); 
         this.UI = userInterface;
     }
 
     @Override
     public void setLogger(LogTerm logger) {
         if (logger == null)
-            throw new NullPointerException("logger"); //$NON-NLS-1$
+            throw new NullPointerException("logger"); 
         this.L = logger;
     }
 

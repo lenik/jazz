@@ -87,7 +87,7 @@ public class Pair<K, V>
 
     public boolean containsKey(Object key) {
         if (key == null)
-            throw new NullPointerException("null key"); //$NON-NLS-1$
+            throw new NullPointerException("null key"); 
         return key.equals(first);
     }
 
@@ -108,7 +108,7 @@ public class Pair<K, V>
 
     public V get(Object key) {
         if (key == null)
-            throw new NullPointerException("null key"); //$NON-NLS-1$
+            throw new NullPointerException("null key"); 
         if (key.equals(first))
             return second;
         return null;
@@ -127,7 +127,7 @@ public class Pair<K, V>
 
     public V put(K key, V value) {
         if (key == null)
-            throw new NullPointerException("null key"); //$NON-NLS-1$
+            throw new NullPointerException("null key"); 
         first = key;
         second = value;
         return null;
@@ -144,7 +144,7 @@ public class Pair<K, V>
 
     public V remove(Object key) {
         if (key == null)
-            throw new NullPointerException("Null key"); //$NON-NLS-1$
+            throw new NullPointerException("Null key"); 
         if (key.equals(first)) {
             first = null;
             return second;

@@ -14,8 +14,8 @@ public class StringSerializer
     public void serialize(Writer s, Object o)
             throws IOException, SerializeException {
         String str = String.valueOf(o);
-        s.write(str.length() + ":"); //$NON-NLS-1$
-        s.write("\"" + str + "\";"); //$NON-NLS-1$ //$NON-NLS-2$
+        s.write(str.length() + ":"); 
+        s.write("\"" + str + "\";");  
     }
 
     static String repeat(String pat, int count) {
@@ -35,7 +35,7 @@ public class StringSerializer
         // assert text.charAt(text.length() - 1) == '\"';
         text = text.substring(1, text.length() - 1);
         if (text.length() < len)
-            return s + repeat(" ", len - text.length()); //$NON-NLS-1$
+            return s + repeat(" ", len - text.length()); 
         return text.substring(0, len);
     }
 
