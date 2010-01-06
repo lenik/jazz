@@ -1,4 +1,4 @@
-package net.bodz.bas.io;
+package net.bodz.bas.io.res;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,6 +8,7 @@ import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.Writer;
 import java.nio.charset.Charset;
+
 
 public abstract class _ResLink implements ResLink {
 

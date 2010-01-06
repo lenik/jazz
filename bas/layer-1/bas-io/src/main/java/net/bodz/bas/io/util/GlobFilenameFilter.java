@@ -1,5 +1,8 @@
 package net.bodz.bas.io.util;
 
+import net.bodz.bas.io.util.GlobFilenameFilterTest;
+import net.bodz.bas.type.parser.GlobPatternParser;
+
 /**
  * @test {@link GlobFilenameFilterTest}
  */
@@ -11,7 +14,7 @@ public class GlobFilenameFilter
     }
 
     public GlobFilenameFilter(String pattern, boolean whole, boolean fullpath) {
-        super(compileGlob(pattern, 0), whole, fullpath);
+        super(GlobPatternParser._parse(pattern, 0), whole, fullpath);
     }
 
 }

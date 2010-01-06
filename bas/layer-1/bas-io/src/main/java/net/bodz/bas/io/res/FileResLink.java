@@ -1,4 +1,4 @@
-package net.bodz.bas.io;
+package net.bodz.bas.io.res;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -9,6 +9,8 @@ import java.io.OutputStream;
 import java.net.URL;
 import java.util.jar.JarFile;
 import java.util.zip.ZipFile;
+
+import net.bodz.bas.io.Files;
 
 public class FileResLink extends _ResLink {
 

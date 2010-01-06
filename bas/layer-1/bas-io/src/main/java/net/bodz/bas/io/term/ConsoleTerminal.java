@@ -3,7 +3,7 @@ package net.bodz.bas.io.term;
 import java.io.IOException;
 
 import net.bodz.bas.exceptions.OutOfDomainException;
-import net.bodz.bas.io.CharOut;
+import net.bodz.bas.io.out.CharOut;
 
 public class ConsoleTerminal extends _Terminal {
 

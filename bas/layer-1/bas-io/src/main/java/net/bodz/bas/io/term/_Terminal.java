@@ -7,9 +7,9 @@ import java.io.Writer;
 import java.nio.charset.Charset;
 
 import net.bodz.bas.exceptions.UnexpectedException;
-import net.bodz.bas.io.CharOut;
 import net.bodz.bas.io.WriterOutputStream;
-s
+import net.bodz.bas.io.out.CharOut;
+
 public abstract class _Terminal implements Terminal {
 
     @Override

@@ -3,8 +3,8 @@ package net.bodz.bas.io.term;
 import java.io.IOException;
 import java.io.PrintStream;
 
-import net.bodz.bas.io.CharOut;
-import net.bodz.bas.io.CharOuts;
+import net.bodz.bas.io.out.CharOut;
+import net.bodz.bas.io.out.CharOuts;
 
 public class StreamTerminal extends _Terminal {
 

@@ -1,7 +1,8 @@
-package net.bodz.bas.io;
+package net.bodz.bas.io.res;
 
 import java.io.IOException;
 import java.net.URL;
+
 
 public class URLResFolder implements ResFolder {
 

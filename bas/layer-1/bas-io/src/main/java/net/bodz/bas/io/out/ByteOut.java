@@ -1,9 +1,11 @@
-package net.bodz.bas.io;
+package net.bodz.bas.io.out;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+
+import net.bodz.bas.io.PrintException;
 
 public abstract class ByteOut implements IByteOut {
 

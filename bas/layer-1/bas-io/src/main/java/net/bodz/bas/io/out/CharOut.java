@@ -1,8 +1,10 @@
-package net.bodz.bas.io;
+package net.bodz.bas.io.out;
 
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Locale;
+
+import net.bodz.bas.io.PrintException;
 
 public abstract class CharOut implements ICharOut {
 

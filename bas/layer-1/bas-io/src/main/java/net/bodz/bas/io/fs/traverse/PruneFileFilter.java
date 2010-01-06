@@ -1,4 +1,4 @@
-package net.bodz.bas.io;
+package net.bodz.bas.io.fs.traverse;
 
 import java.io.FileFilter;
 

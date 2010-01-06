@@ -1,4 +1,4 @@
-package net.bodz.bas.io;
+package net.bodz.bas.io.lookahead;
 
 import java.io.FilterReader;
 import java.io.IOException;
