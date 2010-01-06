@@ -4,6 +4,8 @@ import java.io.File;
 import java.net.URL;
 import java.nio.file.Files;
 
+import net.bodz.bas.io.res.ResFolder;
+
 /**
  * Here "Jar" may be referred to a jar file or classes directory.
  */

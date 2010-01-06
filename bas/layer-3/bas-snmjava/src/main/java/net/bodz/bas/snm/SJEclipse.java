@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import net.bodz.bas.cli.util.ModulesRoot;
-
 public class SJEclipse {
 
     static PatternFilter linkFilter = new PatternFilter("*.link", true); 

@@ -8,6 +8,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 
+import net.bodz.bas.io.res.FileResFolder;
+import net.bodz.bas.io.res.ResFolder;
+
 import org.junit.Test;
 
 public class JarStuffTest {
