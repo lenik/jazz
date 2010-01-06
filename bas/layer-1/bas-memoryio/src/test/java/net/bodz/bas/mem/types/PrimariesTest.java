@@ -1,7 +1,5 @@
 package net.bodz.bas.mem.types;
 
-import static net.bodz.bas.commons.collection.util.ArrayOps.Bytes;
-import static net.bodz.bas.text.encodings.Encodings.HEX;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 

@@ -23,7 +23,7 @@ import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.List;
 
-import net.bodz.bas.io.CharOuts;
+import net.bodz.bas.io.out.CharOuts;
 import net.bodz.bas.text.diff.DiffInfo;
 
 import org.junit.Test;

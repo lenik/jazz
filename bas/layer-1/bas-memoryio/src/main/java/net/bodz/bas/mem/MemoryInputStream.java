@@ -3,7 +3,7 @@ package net.bodz.bas.mem;
 import java.io.IOException;
 import java.io.InputStream;
 
-import net.bodz.bas.commons.annotations.ThreadUnsafe;
+import net.bodz.bas.hint.ThreadUnsafe;
 
 public class MemoryInputStream extends InputStream {
 

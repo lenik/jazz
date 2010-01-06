@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.util.List;
 
 import net.bodz.bas.commons.util.Dates;
-import net.bodz.bas.io.CharOut;
-import net.bodz.bas.io.CharOuts;
 import net.bodz.bas.io.Files;
+import net.bodz.bas.io.out.CharOut;
+import net.bodz.bas.io.out.CharOuts;
 import net.bodz.bas.lang2.Pred1;
 import net.bodz.bas.text.diff.DiffInfo;
 import net.bodz.extern.nls.BundledNLS;

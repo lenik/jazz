@@ -1,4 +1,4 @@
-package net.bodz.bas.io.util;
+package net.bodz.bas.io.fs.traverse;
 
 import net.bodz.bas.io.util.GlobFilenameFilterTest;
 import net.bodz.bas.type.parser.GlobPatternParser;

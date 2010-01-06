@@ -1,9 +1,9 @@
 package net.bodz.bas.mem;
 
-import static net.bodz.bas.commons.collection.util.ArrayOps.Bytes;
-import net.bodz.bas.commons.exceptions.OutOfDomainException;
+import net.bodz.bas.exceptions.OutOfDomainException;
 
-public class ArrayMemory extends _Memory {
+public class ArrayMemory
+        extends _Memory {
 
     private final byte[] array;
     private final int start;
@@ -24,33 +24,37 @@ public class ArrayMemory extends _Memory {
     }
 
     @Override
-    public byte read(int addr) throws AccessException {
+    public byte read(int addr)
+            throws AccessException {
         if (addr >= end - start)
             throw new BadAddressException(addr, end - start);
         return array[start + addr];
     }
 
     @Override
-    public void write(int addr, byte value) throws AccessException {
+    public void write(int addr, byte value)
+            throws AccessException {
         if (addr >= end - start)
             throw new BadAddressException(addr, end - start);
         array[start + addr] = value;
     }
 
     @Override
-    public void read(int addr, byte[] buf, int off, int len) throws AccessException {
+    public void read(int addr, byte[] buf, int off, int len)
+            throws AccessException {
         int actualEnd = start + addr + len;
         if (actualEnd > end)
             throw new BadAddressException(actualEnd, end);
-        Bytes.copy(array, start + addr, buf, off, len);
+        System.arraycopy(array, start + addr, buf, off, len);
     }
 
     @Override
-    public void write(int addr, byte[] buf, int off, int len) throws BadAddressException {
+    public void write(int addr, byte[] buf, int off, int len)
+            throws BadAddressException {
         int actualEnd = start + addr + len;
         if (actualEnd > end)
             throw new BadAddressException(actualEnd, end);
-        Bytes.copy(buf, off, array, start + addr, len);
+        System.arraycopy(buf, off, array, start + addr, len);
     }
 
     /**
