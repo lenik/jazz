@@ -10,6 +10,7 @@
 	<packaging>pom</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<modules>
+		<module>bas-ant</module>
 		<module>bas-quickstart</module>
 		<module>bas-sysutil</module>
 		<module>bas-unitperf</module>

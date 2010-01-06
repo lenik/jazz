@@ -6,7 +6,7 @@
         <artifactId>layer-3</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>bas-task</artifactId>
+    <artifactId>bas-ant</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <dependencies >
     	<dependency>
