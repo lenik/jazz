@@ -8,6 +8,25 @@
     </parent>
     <artifactId>bas-fs</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <dependencies />
+    <dependencies >
+    	<dependency>
+    		<groupId>net.bodz.bas</groupId>
+    		<artifactId>bas-hint</artifactId>
+    		<version>0.0.2-SNAPSHOT</version>
+    		<type>jar</type>
+    		<scope>compile</scope>
+    	</dependency>
+    	<dependency>
+    		<groupId>net.bodz.bas</groupId>
+    		<artifactId>bas-io</artifactId>
+    		<version>0.0.1-SNAPSHOT</version>
+    		<type>jar</type>
+    		<scope>compile</scope>
+    	</dependency><dependency>
+  <groupId>org.eclipse.core</groupId>
+  <artifactId>resources</artifactId>
+  <version>[3.3.0,3.4.0)</version>
+</dependency>
+    </dependencies>
     <name>BAS :: Layer 2 :: File System</name>
 </project>
