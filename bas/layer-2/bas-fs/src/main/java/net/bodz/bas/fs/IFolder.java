@@ -1,22 +1,23 @@
 package net.bodz.bas.fs;
 
 import java.io.IOException;
+import java.util.List;
 
-import net.bodz.bas.collection.iterator.ImmediateIterator;
+import net.bodz.bas.closure.IFilter;
+import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 
 public interface IFolder
         extends IEntry, Cloneable {
 
-    IFile getFileEntry(String entryName)
+    IEntry getEntry(String entryName)
             throws IOException;
 
-    IFolder getFolderEntry(String entryName)
+    ImmediateIteratorX<? extends IEntry, IOException> entryIterator(IFilter<String> entryNameFilter);
+
+    List<? extends IEntry> listEntries()
             throws IOException;
 
-    ImmediateIterator<IEntry, IOException> entryIterator(IEntryFilter filter);
-
-    ImmediateIterator<IEntry, IOException> entryIterator(IEntryNameFilter filter);
-
-    ImmediateIterator<String, IOException> entryNameIterator(IEntryNameFilter filter);
+    List<? extends IEntry> listEntries(IFilter<String> entryNameFilter)
+            throws IOException;
 
 }

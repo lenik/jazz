@@ -1,21 +1,27 @@
 package net.bodz.bas.fs;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.file.Path;
+import java.util.List;
 
+import net.bodz.bas.closure.IFilter;
+import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
+import net.bodz.bas.collection.iterator.ImmediateIteratorX;
+import net.bodz.bas.collection.util.IteratorToList;
 import net.bodz.bas.exceptions.ReadOnlyException;
 
 public class URLFile
-        extends AbstractFile {
+        extends AbstractFile
+        implements IFolder {
 
     private final URL url;
 
@@ -146,21 +152,107 @@ public class URLFile
         }
     }
 
-    @Override
-    public InputStream newInputStream()
-            throws IOException {
-        return url.openStream();
+    class LoadToolkit
+            extends AbstractLoadToolkit {
+
+        public LoadToolkit() {
+            super(URLFile.this);
+        }
+
+        @Override
+        public InputStream newInputStream()
+                throws IOException {
+            return url.openStream();
+        }
+
+    }
+
+    class DumpToolkit
+            extends AbstractDumpToolkit {
+
+        public DumpToolkit() {
+            super(URLFile.this);
+        }
+
+        @Override
+        public OutputStream newOutputStream()
+                throws IOException {
+            return url.openConnection().getOutputStream();
+        }
+
     }
 
     @Override
-    public OutputStream newOutputStream()
-            throws IOException {
-        return url.openConnection().getOutputStream();
+    public AbstractReadToolkit forRead() {
+        return new LoadToolkit();
     }
 
     @Override
-    public RandomAccessFile newRandomAccessFile(String mode)
+    public AbstractWriteToolkit forWrite() {
+        return new DumpToolkit();
+    }
+
+    @Override
+    public AbstractLoadToolkit forLoad() {
+        return new LoadToolkit();
+    }
+
+    @Override
+    public AbstractDumpToolkit forDump() {
+        return new DumpToolkit();
+    }
+
+    @Override
+    public URLFile getEntry(String entryName)
             throws IOException {
+        URL url = new URL(this.url, entryName);
+        return new URLFile(this, url);
+    }
+
+    @Override
+    public List<? extends URLFile> listEntries()
+            throws IOException {
+        return IteratorToList.toList(entryIterator(null));
+    }
+
+    @Override
+    public List<? extends URLFile> listEntries(IFilter<String> entryNameFilter)
+            throws IOException {
+        return IteratorToList.toList(entryIterator(entryNameFilter));
+    }
+
+    @Override
+    public ImmediateIteratorX<? extends URLFile, IOException> entryIterator(final IFilter<String> entryNameFilter) {
+        File file = getFile();
+        if (file.isDirectory()) {
+            final String[] list;
+            if (entryNameFilter == null)
+                list = file.list();
+            else
+                list = file.list(new FilenameFilter() {
+                    @Override
+                    public boolean accept(File dir, String name) {
+                        return entryNameFilter.accept(name);
+                    }
+                });
+
+            return new AbstractImmediateIteratorX<URLFile, IOException>() {
+
+                int index = 0;
+
+                @Override
+                public URLFile next()
+                        throws IOException {
+                    if (index >= list.length)
+                        return end();
+                    String childName = list[index++];
+                    File childFile = new File(getFile(), childName);
+                    URL childURL = childFile.toURI().toURL();
+                    return new URLFile(URLFile.this, childURL);
+                }
+
+            };
+        }
         throw new UnsupportedOperationException();
     }
 
