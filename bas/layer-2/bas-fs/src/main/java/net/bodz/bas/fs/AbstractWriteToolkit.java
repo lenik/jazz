@@ -6,8 +6,10 @@ import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.io.Writer;
 import java.nio.charset.Charset;
+import java.util.zip.ZipOutputStream;
 
-public abstract class AbstractWriteToolkit {
+public abstract class AbstractWriteToolkit
+        implements IWriteToolkit {
 
     private final IFile file;
 
@@ -47,6 +49,13 @@ public abstract class AbstractWriteToolkit {
             throws IOException {
         OutputStream out = newOutputStream();
         return new PrintStream(out, autoFlush, getCharset().name());
+    }
+
+    @Override
+    public ZipOutputStream newZipOutputStream()
+            throws IOException {
+        OutputStream out = newOutputStream();
+        return new ZipOutputStream(out, getCharset());
     }
 
     public Writer newWriter()

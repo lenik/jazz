@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 public interface IFile
-        extends IEntry, Cloneable {
+        extends IFsEntry, Cloneable {
 
     /**
      * @return <code>null</code> if {@link Charset} is unknown.
@@ -20,20 +20,11 @@ public interface IFile
     void setCharset(Charset charset);
 
     /**
-     * @return <code>null</code> if MIME-Type is unknown.
-     */
-    String getMIMEType();
-
-    /**
      * @return <code>null</code> is length is unknown.
      */
     Long getLength();
 
-    boolean isText()
-            throws IOException;
-
-    boolean isBinary()
-            throws IOException;
+    boolean isExecutable();
 
     boolean isDeleteOnExit();
 
@@ -47,12 +38,30 @@ public interface IFile
     boolean delete()
             throws IOException;
 
-    AbstractReadToolkit forRead();
+    /**
+     * @throw {@link UnsupportedOperationException} If read functionality isn't supported.
+     * 
+     */
+    IReadToolkit forRead();
 
-    AbstractWriteToolkit forWrite();
+    /**
+     * @throw {@link UnsupportedOperationException} If write functionality isn't supported.
+     */
+    IWriteToolkit forWrite();
 
-    AbstractLoadToolkit forLoad();
+    /**
+     * @throw {@link UnsupportedOperationException} If load functionality isn't supported.
+     */
+    ILoadToolkit forLoad();
 
-    AbstractDumpToolkit forDump();
+    /**
+     * @throw {@link UnsupportedOperationException} If dump functionality isn't supported.
+     */
+    IDumpToolkit forDump();
+
+    /**
+     * @throw {@link UnsupportedOperationException} If probe functionality isn't supported.
+     */
+    IProbeToolkit forProbe(boolean heuristic);
 
 }

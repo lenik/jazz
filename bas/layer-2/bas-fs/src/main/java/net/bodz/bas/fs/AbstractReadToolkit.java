@@ -19,7 +19,8 @@ import net.bodz.bas.collection.iterator.OverlappedImmediateIteratorX;
 import net.bodz.bas.collection.util.IteratorToList;
 import net.bodz.bas.io.LineReader;
 
-public abstract class AbstractReadToolkit {
+public abstract class AbstractReadToolkit
+        implements IReadToolkit {
 
     private final IFile file;
     private int blockSize = 4096;

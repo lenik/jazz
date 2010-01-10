@@ -1,27 +1,22 @@
 package net.bodz.bas.fs;
 
-import java.io.IOException;
 import java.nio.charset.Charset;
 
 public abstract class AbstractFile
-        extends AbstractEntry
+        extends AbstractFsEntry
         implements IFile {
 
-    private boolean deleteOnExit;
     private Charset charset = Charset.defaultCharset();
+    private boolean deleteOnExit;
 
-    public AbstractFile(IFolder parentFolder, String name) {
-        super(parentFolder, name);
+    public AbstractFile(String name) {
+        super(name);
     }
 
-    @Override
-    public boolean isDeleteOnExit() {
-        return deleteOnExit;
-    }
-
-    @Override
-    public void setDeleteOnExit(boolean deleteOnExit) {
-        this.deleteOnExit = deleteOnExit;
+    protected <T extends AbstractFile> T clone(T o) {
+        o.charset = charset;
+        o.deleteOnExit = deleteOnExit;
+        return super.clone(o);
     }
 
     @Override
@@ -37,34 +32,58 @@ public abstract class AbstractFile
     }
 
     @Override
-    public String getMIMEType() {
-        String extension = getExtension(false, 1);
-        return MIMETypes.guessByExtension(extension);
-    }
-
-    /**
-     * Treat inaccessible file as binary treat inaccessible file as binary
-     * 
-     * @return <code>true</code> if file is text like.
-     */
-    @Override
-    public boolean isText()
-            throws IOException {
-        byte[] block;
-        block = forRead().readBytes(TextOrBinary.textLookSize);
-        return TextOrBinary.isText(block);
+    public boolean isHidden() {
+        return false;
     }
 
     @Override
-    public boolean isBinary()
-            throws IOException {
-        return !isText();
+    public boolean isDeleteOnExit() {
+        return deleteOnExit;
     }
 
-    protected <T extends AbstractFile> T clone(T o) {
-        o.charset = charset;
-        o.deleteOnExit = deleteOnExit;
-        return super.clone(o);
+    @Override
+    public void setDeleteOnExit(boolean deleteOnExit) {
+        this.deleteOnExit = deleteOnExit;
+    }
+
+    @Override
+    public DefaultLoadToolkit forLoad() {
+        return new DefaultLoadToolkit(forRead());
+    }
+
+    @Override
+    public DefaultDumpToolkit forDump() {
+        return new DefaultDumpToolkit(forWrite());
+    }
+
+    @Override
+    public IProbeToolkit forProbe(boolean heuristic) {
+        if (heuristic)
+            return new HeuristicProbeToolkit(this);
+        else
+            return new LazyProbeToolkit(this);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = super.hashCode();
+        assert charset != null;
+        hash += charset.hashCode();
+        if (deleteOnExit)
+            hash += 0x8876588d;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof AbstractFile))
+            return false;
+        AbstractFile o = (AbstractFile) obj;
+        if (deleteOnExit != o.deleteOnExit)
+            return false;
+        if (!charset.equals(o.charset))
+            return false;
+        return super.equals(o);
     }
 
 }

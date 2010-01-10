@@ -7,17 +7,39 @@ import net.bodz.bas.closure.IFilter;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 
 public interface IFolder
-        extends IEntry, Cloneable {
+        extends IFsEntry, Cloneable {
 
-    IEntry getEntry(String entryName)
+    boolean isIterable();
+
+    /**
+     * @return <code>null</code> If <code>entryName</code> isn't existed, or the folder isn't
+     *         accessible.
+     */
+    IFsEntry getEntry(String entryName)
             throws IOException;
 
-    ImmediateIteratorX<? extends IEntry, IOException> entryIterator(IFilter<String> entryNameFilter);
-
-    List<? extends IEntry> listEntries()
+    /**
+     * @throws UnsupportedOperationException
+     *             If not iterable.
+     * @see #isIterable()
+     */
+    ImmediateIteratorX<? extends IFsEntry, IOException> entryIterator(IFilter<String> entryNameFilter)
             throws IOException;
 
-    List<? extends IEntry> listEntries(IFilter<String> entryNameFilter)
+    /**
+     * @throws UnsupportedOperationException
+     *             If not iterable.
+     * @see #isIterable()
+     */
+    List<? extends IFsEntry> listEntries()
+            throws IOException;
+
+    /**
+     * @throws UnsupportedOperationException
+     *             If not iterable.
+     * @see #isIterable()
+     */
+    List<? extends IFsEntry> listEntries(IFilter<String> entryNameFilter)
             throws IOException;
 
 }
