@@ -12,16 +12,20 @@ import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.collection.util.IteratorToList;
 
-public abstract class AbstractLoadToolkit
-        extends AbstractReadToolkit {
+public class DefaultLoadToolkit
+        implements ILoadToolkit {
 
-    public AbstractLoadToolkit(IFile file) {
-        super(file);
+    private final IReadToolkit rt;
+
+    public DefaultLoadToolkit(IReadToolkit rt) {
+        if (rt == null)
+            throw new NullPointerException("rt");
+        this.rt = rt;
     }
 
     public Properties loadProperties()
             throws IOException {
-        Reader reader = newReader();
+        Reader reader = rt.newReader();
         try {
             Properties properties = new Properties();
             properties.load(reader);
@@ -41,7 +45,7 @@ public abstract class AbstractLoadToolkit
 
         return new AbstractImmediateIteratorX<Object, IOException>() {
 
-            InputStream in = newInputStream();
+            InputStream in = rt.newInputStream();
             ObjectInputStream objIn = new ObjectInputStream(in);
 
             @Override

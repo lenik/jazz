@@ -8,7 +8,7 @@ import java.nio.file.Path;
 
 import net.bodz.bas.type.traits.IAttributes;
 
-public interface IEntry
+public interface IFsEntry
         extends IAttributes {
 
     /**
@@ -67,6 +67,14 @@ public interface IEntry
     boolean isFile();
 
     boolean isFolder();
+
+    boolean isReadable();
+
+    boolean isWritable();
+
+    boolean isHidden();
+
+    boolean isDeletable();
 
     IFolder getParentFolder();
 

@@ -29,16 +29,22 @@ public class URLFile
      * @throws NullPointerException
      *             if <code>url</code> is <code>null</code>
      */
-    public URLFile(IFolder parentFolder, URL url) {
-        super(parentFolder, _getName(url));
+    public URLFile(URL url) {
+        super(_getName(url));
         this.url = url;
     }
 
     @Override
     protected URLFile clone()
             throws CloneNotSupportedException {
-        URLFile o = new URLFile(getParentFolder(), url);
+        URLFile o = new URLFile(url);
         return super.clone(o);
+    }
+
+    @Override
+    public IFolder getParentFolder() {
+        
+        return null;
     }
 
     @Override
@@ -110,6 +116,31 @@ public class URLFile
         return true;
     }
 
+    @Override
+    public boolean isReadable() {
+        return true;
+    }
+
+    @Override
+    public boolean isWritable() {
+        return true;
+    }
+
+    @Override
+    public boolean isIterable() {
+        return true;
+    }
+
+    @Override
+    public boolean isDeletable() {
+        return true;
+    }
+
+    @Override
+    public boolean isExecutable() {
+        return true;
+    }
+
     static String _getName(URL url) {
         String name = url.getFile();
         int slash = name.lastIndexOf('/');
@@ -152,10 +183,10 @@ public class URLFile
         }
     }
 
-    class LoadToolkit
-            extends AbstractLoadToolkit {
+    class ReadToolkit
+            extends AbstractReadToolkit {
 
-        public LoadToolkit() {
+        public ReadToolkit() {
             super(URLFile.this);
         }
 
@@ -167,10 +198,10 @@ public class URLFile
 
     }
 
-    class DumpToolkit
-            extends AbstractDumpToolkit {
+    class WriteToolkit
+            extends AbstractWriteToolkit {
 
-        public DumpToolkit() {
+        public WriteToolkit() {
             super(URLFile.this);
         }
 
@@ -183,30 +214,20 @@ public class URLFile
     }
 
     @Override
-    public AbstractReadToolkit forRead() {
-        return new LoadToolkit();
+    public IReadToolkit forRead() {
+        return new ReadToolkit();
     }
 
     @Override
-    public AbstractWriteToolkit forWrite() {
-        return new DumpToolkit();
-    }
-
-    @Override
-    public AbstractLoadToolkit forLoad() {
-        return new LoadToolkit();
-    }
-
-    @Override
-    public AbstractDumpToolkit forDump() {
-        return new DumpToolkit();
+    public IWriteToolkit forWrite() {
+        return new WriteToolkit();
     }
 
     @Override
     public URLFile getEntry(String entryName)
             throws IOException {
         URL url = new URL(this.url, entryName);
-        return new URLFile(this, url);
+        return new URLFile(url);
     }
 
     @Override
@@ -248,7 +269,7 @@ public class URLFile
                     String childName = list[index++];
                     File childFile = new File(getFile(), childName);
                     URL childURL = childFile.toURI().toURL();
-                    return new URLFile(URLFile.this, childURL);
+                    return new URLFile(childURL);
                 }
 
             };

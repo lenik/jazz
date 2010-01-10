@@ -2,16 +2,14 @@ package net.bodz.bas.fs;
 
 import net.bodz.bas.type.traits.impl.Attributes;
 
-public abstract class AbstractEntry
+public abstract class AbstractFsEntry
         extends Attributes
-        implements IEntry {
+        implements IFsEntry {
 
-    private final IFolder parentFolder;
     private final String name;
     private boolean createParents;
 
-    public AbstractEntry(IFolder parentFolder, String name) {
-        this.parentFolder = parentFolder;
+    public AbstractFsEntry(String name) {
         this.name = name;
     }
 
@@ -39,11 +37,6 @@ public abstract class AbstractEntry
     }
 
     @Override
-    public IFolder getParentFolder() {
-        return parentFolder;
-    }
-
-    @Override
     public boolean isExisted() {
         return exists() == Boolean.TRUE;
     }
@@ -63,7 +56,7 @@ public abstract class AbstractEntry
         this.createParents = createParents;
     }
 
-    protected <T extends AbstractEntry> T clone(T o) {
+    protected <T extends AbstractFsEntry> T clone(T o) {
         o.createParents = createParents;
         return o;
     }
