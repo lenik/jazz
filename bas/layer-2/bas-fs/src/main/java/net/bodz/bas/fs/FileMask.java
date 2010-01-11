@@ -24,6 +24,8 @@ import static net.bodz.bas.fs.FileModifiers.format;
 import java.io.File;
 import java.io.IOException;
 
+import net.bodz.bas.fs.preparation.IProbePreparation;
+
 public class FileMask {
 
     private final int mask;
@@ -119,9 +121,8 @@ public class FileMask {
 
         if (masked(CNTTYPE) && (bits & EXIST) != 0) {
             try {
-                byte[] block;
-                block = new PlainFile(file).forRead().readBytes(TextOrBinary.textLookSize);
-                if (TextOrBinary.isText(block))
+                IProbePreparation probe = new PlainFile(file).forProbe(true);
+                if (probe.isText())
                     bits |= TEXT;
                 else
                     bits |= BINARY;

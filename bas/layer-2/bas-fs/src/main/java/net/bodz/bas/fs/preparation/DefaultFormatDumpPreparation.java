@@ -1,4 +1,4 @@
-package net.bodz.bas.fs;
+package net.bodz.bas.fs.preparation;
 
 import java.beans.XMLEncoder;
 import java.io.IOException;
@@ -6,21 +6,21 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.util.Collection;
 
-public class DefaultDumpToolkit
-        implements IDumpToolkit {
+public class DefaultFormatDumpPreparation
+        implements IFormatDumpPreparation {
 
-    private final IWriteToolkit wt;
+    private final IStreamWritePreparation writePrep;
 
-    public DefaultDumpToolkit(IWriteToolkit writeToolkit) {
-        if (writeToolkit == null)
-            throw new NullPointerException("writeToolkit");
-        this.wt = writeToolkit;
+    public DefaultFormatDumpPreparation(IStreamWritePreparation streamWritePreparation) {
+        if (streamWritePreparation == null)
+            throw new NullPointerException("streamWritePreparation");
+        this.writePrep = streamWritePreparation;
     }
 
     @Override
     public void dumpObject(Object o)
             throws IOException {
-        OutputStream out = wt.newOutputStream();
+        OutputStream out = writePrep.newOutputStream();
         ObjectOutputStream objOut = new ObjectOutputStream(out);
         try {
             objOut.writeObject(o);
@@ -32,7 +32,7 @@ public class DefaultDumpToolkit
     @Override
     public void dumpObjects(Collection<Object> objects)
             throws IOException {
-        OutputStream out = wt.newOutputStream();
+        OutputStream out = writePrep.newOutputStream();
         ObjectOutputStream objOut = new ObjectOutputStream(out);
         try {
             for (Object o : objects)
@@ -45,7 +45,7 @@ public class DefaultDumpToolkit
     @Override
     public void dumpXML(Object o)
             throws IOException {
-        OutputStream out = wt.newOutputStream();
+        OutputStream out = writePrep.newOutputStream();
         XMLEncoder encoder = new XMLEncoder(out);
         // encoder.setExceptionListener(exceptionBuffer);
         try {

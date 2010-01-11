@@ -1,4 +1,4 @@
-package net.bodz.bas.fs;
+package net.bodz.bas.fs.preparation;
 
 public class MIMETypes {
 

@@ -10,6 +10,16 @@
     <version>0.0.1-SNAPSHOT</version>
     <dependencies >
     	<dependency>
+    		<groupId>org.jmock</groupId>
+    		<artifactId>jmock</artifactId>
+    		<version>LATEST</version>
+    	</dependency>
+		<dependency>
+		  <groupId>commons-vfs</groupId>
+		  <artifactId>commons-vfs</artifactId>
+		  <version>LATEST</version>
+		</dependency>
+    	<dependency>
     		<groupId>net.bodz.bas</groupId>
     		<artifactId>bas-hint</artifactId>
     		<version>0.0.2-SNAPSHOT</version>

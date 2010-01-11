@@ -18,6 +18,8 @@ import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.collection.util.IteratorToList;
 import net.bodz.bas.exceptions.ReadOnlyException;
+import net.bodz.bas.fs.preparation.AbstractStreamReadPreparation;
+import net.bodz.bas.fs.preparation.AbstractStreamWritePreparation;
 
 public class ZippedFolder
         extends AbstractFsEntry
@@ -291,12 +293,12 @@ public class ZippedFolder
             throw new ReadOnlyException();
         }
 
-        class ReadToolkit
-                extends AbstractReadToolkit {
+        class ReadPreparation
+                extends AbstractStreamReadPreparation {
 
             private InputStream entryIn;
 
-            public ReadToolkit() {
+            public ReadPreparation() {
                 super(ZippedFile.this);
             }
 
@@ -311,12 +313,12 @@ public class ZippedFolder
         }
 
         @Override
-        public AbstractReadToolkit forRead() {
-            return new ReadToolkit();
+        public AbstractStreamReadPreparation forRead() {
+            return new ReadPreparation();
         }
 
         @Override
-        public AbstractWriteToolkit forWrite() {
+        public AbstractStreamWritePreparation forWrite() {
             throw new UnsupportedOperationException();
         }
 

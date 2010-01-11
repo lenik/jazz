@@ -1,8 +1,8 @@
-package net.bodz.bas.fs;
+package net.bodz.bas.fs.preparation;
 
 import java.io.IOException;
 
-public interface IProbeToolkit {
+public interface IProbePreparation {
 
     /**
      * @return <code>null</code> if MIME-Type is unknown.

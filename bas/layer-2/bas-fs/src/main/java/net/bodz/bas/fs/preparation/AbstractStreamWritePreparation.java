@@ -1,4 +1,4 @@
-package net.bodz.bas.fs;
+package net.bodz.bas.fs.preparation;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -8,15 +8,17 @@ import java.io.Writer;
 import java.nio.charset.Charset;
 import java.util.zip.ZipOutputStream;
 
-public abstract class AbstractWriteToolkit
-        implements IWriteToolkit {
+import net.bodz.bas.fs.IFile;
+
+public abstract class AbstractStreamWritePreparation
+        implements IStreamWritePreparation {
 
     private final IFile file;
 
     private boolean appendMode;
     private boolean autoFlush;
 
-    public AbstractWriteToolkit(IFile file) {
+    public AbstractStreamWritePreparation(IFile file) {
         if (file == null)
             throw new NullPointerException("file");
         this.file = file;

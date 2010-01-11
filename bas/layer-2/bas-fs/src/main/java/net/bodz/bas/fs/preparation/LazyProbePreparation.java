@@ -1,13 +1,15 @@
-package net.bodz.bas.fs;
+package net.bodz.bas.fs.preparation;
 
 import java.io.IOException;
 
-public class LazyProbeToolkit
-        implements IProbeToolkit {
+import net.bodz.bas.fs.IFile;
+
+public class LazyProbePreparation
+        implements IProbePreparation {
 
     protected final IFile file;
 
-    public LazyProbeToolkit(IFile file) {
+    public LazyProbePreparation(IFile file) {
         if (file == null)
             throw new NullPointerException("file");
         this.file = file;

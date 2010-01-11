@@ -2,6 +2,12 @@ package net.bodz.bas.fs;
 
 import java.nio.charset.Charset;
 
+import net.bodz.bas.fs.preparation.DefaultFormatDumpPreparation;
+import net.bodz.bas.fs.preparation.DefaultParseLoadPreparation;
+import net.bodz.bas.fs.preparation.HeuristicProbePreparation;
+import net.bodz.bas.fs.preparation.IProbePreparation;
+import net.bodz.bas.fs.preparation.LazyProbePreparation;
+
 public abstract class AbstractFile
         extends AbstractFsEntry
         implements IFile {
@@ -47,21 +53,21 @@ public abstract class AbstractFile
     }
 
     @Override
-    public DefaultLoadToolkit forLoad() {
-        return new DefaultLoadToolkit(forRead());
+    public DefaultParseLoadPreparation forLoad() {
+        return new DefaultParseLoadPreparation(forRead());
     }
 
     @Override
-    public DefaultDumpToolkit forDump() {
-        return new DefaultDumpToolkit(forWrite());
+    public DefaultFormatDumpPreparation forDump() {
+        return new DefaultFormatDumpPreparation(forWrite());
     }
 
     @Override
-    public IProbeToolkit forProbe(boolean heuristic) {
+    public IProbePreparation forProbe(boolean heuristic) {
         if (heuristic)
-            return new HeuristicProbeToolkit(this);
+            return new HeuristicProbePreparation(this);
         else
-            return new LazyProbeToolkit(this);
+            return new LazyProbePreparation(this);
     }
 
     @Override
