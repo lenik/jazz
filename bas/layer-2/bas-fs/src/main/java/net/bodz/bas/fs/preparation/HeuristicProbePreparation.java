@@ -1,15 +1,17 @@
-package net.bodz.bas.fs;
+package net.bodz.bas.fs.preparation;
 
 import java.io.IOException;
 
-public class HeuristicProbeToolkit
-        extends LazyProbeToolkit {
+import net.bodz.bas.fs.IFile;
 
-    private final IReadToolkit rt;
+public class HeuristicProbePreparation
+        extends LazyProbePreparation {
 
-    public HeuristicProbeToolkit(IFile file) {
+    private final IStreamReadPreparation readPrep;
+
+    public HeuristicProbePreparation(IFile file) {
         super(file);
-        this.rt = file.forRead();
+        this.readPrep = file.forRead();
     }
 
     @Override
@@ -17,7 +19,7 @@ public class HeuristicProbeToolkit
             throws IOException {
         byte[] block;
         try {
-            block = rt.readBytes(TextOrBinary.textLookSize);
+            block = readPrep.readBytes(TextOrBinary.textLookSize);
         } catch (IOException e) {
             return super.isText();
         }

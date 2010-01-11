@@ -1,9 +1,9 @@
-package net.bodz.bas.fs;
+package net.bodz.bas.fs.preparation;
 
 import java.io.IOException;
 import java.util.Collection;
 
-public interface IDumpToolkit {
+public interface IFormatDumpPreparation {
 
     void dumpObject(Object o)
             throws IOException;

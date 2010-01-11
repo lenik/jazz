@@ -1,4 +1,4 @@
-package net.bodz.bas.fs;
+package net.bodz.bas.fs.preparation;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -12,20 +12,20 @@ import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.collection.util.IteratorToList;
 
-public class DefaultLoadToolkit
-        implements ILoadToolkit {
+public class DefaultParseLoadPreparation
+        implements IParseLoadPreparation {
 
-    private final IReadToolkit rt;
+    private final IStreamReadPreparation readPrep;
 
-    public DefaultLoadToolkit(IReadToolkit rt) {
-        if (rt == null)
-            throw new NullPointerException("rt");
-        this.rt = rt;
+    public DefaultParseLoadPreparation(IStreamReadPreparation streamReadPreparation) {
+        if (streamReadPreparation == null)
+            throw new NullPointerException("streamReadPreparation");
+        this.readPrep = streamReadPreparation;
     }
 
     public Properties loadProperties()
             throws IOException {
-        Reader reader = rt.newReader();
+        Reader reader = readPrep.newReader();
         try {
             Properties properties = new Properties();
             properties.load(reader);
@@ -45,7 +45,7 @@ public class DefaultLoadToolkit
 
         return new AbstractImmediateIteratorX<Object, IOException>() {
 
-            InputStream in = rt.newInputStream();
+            InputStream in = readPrep.newInputStream();
             ObjectInputStream objIn = new ObjectInputStream(in);
 
             @Override

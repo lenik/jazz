@@ -1,4 +1,4 @@
-package net.bodz.bas.fs;
+package net.bodz.bas.fs.preparation;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,7 +10,7 @@ import java.util.zip.ZipFile;
 
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 
-public interface IReadToolkit {
+public interface IStreamReadPreparation {
 
     int getBlockSize();
 
@@ -24,7 +24,13 @@ public interface IReadToolkit {
     Reader newReader()
             throws IOException;
 
+    byte[] readBytes()
+            throws IOException;
+
     byte[] readBytes(int maxBytesToRead)
+            throws IOException;
+
+    String readString()
             throws IOException;
 
     String readString(int maxBytesToRead)

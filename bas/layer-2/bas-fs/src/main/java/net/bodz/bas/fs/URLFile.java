@@ -18,6 +18,10 @@ import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.collection.util.IteratorToList;
 import net.bodz.bas.exceptions.ReadOnlyException;
+import net.bodz.bas.fs.preparation.AbstractStreamReadPreparation;
+import net.bodz.bas.fs.preparation.AbstractStreamWritePreparation;
+import net.bodz.bas.fs.preparation.IStreamReadPreparation;
+import net.bodz.bas.fs.preparation.IStreamWritePreparation;
 
 public class URLFile
         extends AbstractFile
@@ -43,7 +47,7 @@ public class URLFile
 
     @Override
     public IFolder getParentFolder() {
-        
+
         return null;
     }
 
@@ -183,10 +187,10 @@ public class URLFile
         }
     }
 
-    class ReadToolkit
-            extends AbstractReadToolkit {
+    class ReadPreparation
+            extends AbstractStreamReadPreparation {
 
-        public ReadToolkit() {
+        public ReadPreparation() {
             super(URLFile.this);
         }
 
@@ -198,10 +202,10 @@ public class URLFile
 
     }
 
-    class WriteToolkit
-            extends AbstractWriteToolkit {
+    class WritePreparation
+            extends AbstractStreamWritePreparation {
 
-        public WriteToolkit() {
+        public WritePreparation() {
             super(URLFile.this);
         }
 
@@ -214,13 +218,13 @@ public class URLFile
     }
 
     @Override
-    public IReadToolkit forRead() {
-        return new ReadToolkit();
+    public IStreamReadPreparation forRead() {
+        return new ReadPreparation();
     }
 
     @Override
-    public IWriteToolkit forWrite() {
-        return new WriteToolkit();
+    public IStreamWritePreparation forWrite() {
+        return new WritePreparation();
     }
 
     @Override

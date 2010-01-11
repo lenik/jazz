@@ -1,4 +1,4 @@
-package net.bodz.bas.fs;
+package net.bodz.bas.fs.preparation;
 
 import net.bodz.bas.primitive.Bits;
 import net.bodz.bas.primitive.IntMath;

@@ -1,4 +1,4 @@
-package net.bodz.bas.fs;
+package net.bodz.bas.fs.preparation;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -17,15 +17,16 @@ import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.collection.iterator.OverlappedImmediateIteratorX;
 import net.bodz.bas.collection.util.IteratorToList;
+import net.bodz.bas.fs.IFile;
 import net.bodz.bas.io.LineReader;
 
-public abstract class AbstractReadToolkit
-        implements IReadToolkit {
+public abstract class AbstractStreamReadPreparation
+        implements IStreamReadPreparation {
 
     private final IFile file;
     private int blockSize = 4096;
 
-    public AbstractReadToolkit(IFile file) {
+    public AbstractStreamReadPreparation(IFile file) {
         if (file == null)
             throw new NullPointerException("file");
         this.file = file;
@@ -54,6 +55,26 @@ public abstract class AbstractReadToolkit
         return new InputStreamReader(in, getCharset());
     }
 
+    @Override
+    public byte[] readBytes()
+            throws IOException {
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        byte block[] = new byte[blockSize];
+        InputStream in = newInputStream();
+        try {
+            while (true) {
+                int readSize = block.length;
+                int n = in.read(block, 0, readSize);
+                if (n == -1)
+                    break;
+                buffer.write(block, 0, n);
+            }
+        } finally {
+            in.close();
+        }
+        return buffer.toByteArray();
+    }
+
     public byte[] readBytes(int maxBytesToRead)
             throws IOException {
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
@@ -78,10 +99,34 @@ public abstract class AbstractReadToolkit
         return buffer.toByteArray();
     }
 
+    @Override
+    public String readString()
+            throws IOException {
+        byte[] bytes = readBytes();
+        return new String(bytes, getCharset());
+    }
+
     public String readString(int maxBytesToRead)
             throws IOException {
         byte[] bytes = readBytes(maxBytesToRead);
         return new String(bytes, getCharset());
+    }
+
+    public String readTill(char term)
+            throws IOException {
+        Reader reader = newReader();
+        StringBuffer buffer = new StringBuffer();
+        int c;
+        try {
+            while ((c = reader.read()) >= 0) {
+                if (c == term)
+                    break;
+                buffer.append((char) c);
+            }
+        } finally {
+            reader.close();
+        }
+        return buffer.toString();
     }
 
     public List<byte[]> listBlocks(int maxBlocks)

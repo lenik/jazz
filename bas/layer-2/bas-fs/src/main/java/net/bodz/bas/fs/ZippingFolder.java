@@ -14,6 +14,9 @@ import java.util.zip.ZipOutputStream;
 import net.bodz.bas.closure.IFilter;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.collection.util.IteratorToList;
+import net.bodz.bas.fs.preparation.AbstractStreamWritePreparation;
+import net.bodz.bas.fs.preparation.IStreamReadPreparation;
+import net.bodz.bas.fs.preparation.IStreamWritePreparation;
 import net.bodz.bas.io.ZipEntryOutputStream;
 
 public class ZippingFolder
@@ -273,10 +276,10 @@ public class ZippingFolder
             throw new UnsupportedOperationException();
         }
 
-        class WriteToolkit
-                extends AbstractWriteToolkit {
+        class WritePreparation
+                extends AbstractStreamWritePreparation {
 
-            public WriteToolkit() {
+            public WritePreparation() {
                 super(ZippingFile.this);
             }
 
@@ -292,13 +295,13 @@ public class ZippingFolder
         }
 
         @Override
-        public IReadToolkit forRead() {
+        public IStreamReadPreparation forRead() {
             throw new UnsupportedOperationException();
         }
 
         @Override
-        public IWriteToolkit forWrite() {
-            return new WriteToolkit();
+        public IStreamWritePreparation forWrite() {
+            return new WritePreparation();
         }
 
     }
