@@ -3,6 +3,7 @@ package net.bodz.bas.fs.preparation;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -14,7 +15,11 @@ import java.util.jar.JarFile;
 import java.util.zip.ZipFile;
 
 import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
+import net.bodz.bas.collection.iterator.ImmIterIterator;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
+import net.bodz.bas.collection.iterator.IterableX;
+import net.bodz.bas.collection.iterator.IteratorTargetException;
+import net.bodz.bas.collection.iterator.IteratorX;
 import net.bodz.bas.collection.iterator.OverlappedImmediateIteratorX;
 import net.bodz.bas.collection.util.IteratorToList;
 import net.bodz.bas.fs.IFile;
@@ -47,10 +52,10 @@ public abstract class AbstractStreamReadPreparation
     }
 
     public abstract InputStream newInputStream()
-            throws IOException;
+            throws FileNotFoundException, IOException;
 
     public Reader newReader()
-            throws IOException {
+            throws FileNotFoundException, IOException {
         InputStream in = newInputStream();
         return new InputStreamReader(in, getCharset());
     }
@@ -214,6 +219,44 @@ public abstract class AbstractStreamReadPreparation
 
             };
         }
+    }
+
+    @Override
+    public IterableX<byte[], ? extends IOException> blocks()
+            throws IOException {
+        return new IterableX<byte[], IOException>() {
+
+            @Override
+            public IteratorX<byte[], IOException> iterator() {
+                ImmediateIteratorX<byte[], IOException> immIter;
+                try {
+                    immIter = blockIterator();
+                } catch (IOException e) {
+                    throw new IteratorTargetException(e);
+                }
+                return new ImmIterIterator<byte[], IOException>(immIter);
+            }
+
+        };
+    }
+
+    @Override
+    public IterableX<String, ? extends IOException> lines(final boolean chopped)
+            throws IOException {
+        return new IterableX<String, IOException>() {
+
+            @Override
+            public IteratorX<String, IOException> iterator() {
+                ImmediateIteratorX<String, IOException> immIter;
+                try {
+                    immIter = lineIterator(chopped);
+                } catch (IOException e) {
+                    throw new IteratorTargetException(e);
+                }
+                return new ImmIterIterator<String, IOException>(immIter);
+            }
+
+        };
     }
 
     public ZipFile newZipFile()
