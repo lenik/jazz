@@ -1,5 +1,6 @@
-package net.bodz.bas.types;
+package net.bodz.bas.c1.util;
 
+@Deprecated
 public class Key {
 
     private final String name;

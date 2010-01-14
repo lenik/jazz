@@ -1,4 +1,4 @@
-package net.bodz.bas.a;
+package net.bodz.bas.c1.annotations;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
