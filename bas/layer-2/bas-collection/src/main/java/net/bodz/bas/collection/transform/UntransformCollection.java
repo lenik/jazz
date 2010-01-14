@@ -11,12 +11,12 @@ import net.bodz.bas.collection.util.CollectionToString;
 public class UntransformCollection<S, T>
         implements Collection<S> {
 
-    private final ITransformer<S, T> transformer;
+    private final ElTransformer<S, T> transformer;
     // private final Class<S> S_TYPE;
     // private final Class<T> T_TYPE;
     private final Collection<T> transformedCollection;
 
-    public UntransformCollection(ITransformer<S, T> transformer, Collection<T> transformedCollection) {
+    public UntransformCollection(ElTransformer<S, T> transformer, Collection<T> transformedCollection) {
         if (transformer == null)
             throw new NullPointerException("transformer");
         if (transformedCollection == null)

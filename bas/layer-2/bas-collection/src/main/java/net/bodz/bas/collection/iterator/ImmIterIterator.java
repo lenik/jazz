@@ -1,12 +1,11 @@
 package net.bodz.bas.collection.iterator;
 
-import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class ImmIterIterator<T, X extends Throwable>
-        implements Iterator<T> {
+public class ImmIterIterator<T, X extends Exception>
+        implements IteratorX<T, X> {
 
-    private final ImmediateIterator<T, X> immIter;
+    private final ImmediateIteratorX<? extends T, ? extends X> immIter;
 
     private static final int UNKNOWN = 0;
     private static final int ITERATED = 1;
@@ -15,7 +14,7 @@ public class ImmIterIterator<T, X extends Throwable>
 
     private T lastIteratedValue;
 
-    public ImmIterIterator(ImmediateIterator<T, X> immIter) {
+    public ImmIterIterator(ImmediateIteratorX<? extends T, ? extends X> immIter) {
         if (immIter == null)
             throw new NullPointerException("immIter");
         this.immIter = immIter;
@@ -28,8 +27,8 @@ public class ImmIterIterator<T, X extends Throwable>
         default:
             try {
                 lastIteratedValue = immIter.next();
-            } catch (Throwable e) {
-                throw new RuntimeException(e.getMessage(), e);
+            } catch (Exception e) {
+                throw new IteratorTargetException(e.getMessage(), e);
             }
             if (lastIteratedValue == null)
                 if (immIter.isEnded()) {
@@ -51,8 +50,8 @@ public class ImmIterIterator<T, X extends Throwable>
         default:
             try {
                 lastIteratedValue = immIter.next();
-            } catch (Throwable e) {
-                throw new RuntimeException(e.getMessage(), e);
+            } catch (Exception e) {
+                throw new IteratorTargetException(e.getMessage(), e);
             }
             if (lastIteratedValue == null)
                 if (immIter.isEnded()) {

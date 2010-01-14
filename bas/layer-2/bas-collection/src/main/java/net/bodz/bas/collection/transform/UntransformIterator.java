@@ -5,10 +5,10 @@ import java.util.Iterator;
 public final class UntransformIterator<S, T>
         implements Iterator<S> {
 
-    private final ITransformer<S, T> transformer;
+    private final ElTransformer<S, T> transformer;
     private final Iterator<T> transformedIterator;
 
-    public UntransformIterator(ITransformer<S, T> transformer, Iterator<T> transformedIterator) {
+    public UntransformIterator(ElTransformer<S, T> transformer, Iterator<T> transformedIterator) {
         if (transformer == null)
             throw new NullPointerException("transformer");
         if (transformedIterator == null)

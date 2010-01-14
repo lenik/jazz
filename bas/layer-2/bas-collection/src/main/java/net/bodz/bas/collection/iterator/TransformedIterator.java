@@ -2,15 +2,15 @@ package net.bodz.bas.collection.iterator;
 
 import java.util.Iterator;
 
-import net.bodz.bas.collection.transform.ITransformer;
+import net.bodz.bas.collection.transform.ElTransformer;
 
-public class TransformedIterator<T>
+public class TransformedIterator<S, T>
         implements Iterator<T> {
 
-    private final Iterator<T> iterator;
-    private final ITransformer<T> transformer;
+    private final Iterator<S> iterator;
+    private final ElTransformer<S, T> transformer;
 
-    public TransformedIterator(Iterator<T> iterator, ITransformer<T> transformer) {
+    public TransformedIterator(Iterator<S> iterator, ElTransformer<S, T> transformer) {
         if (iterator == null)
             throw new NullPointerException("iterator");
         if (transformer == null)
@@ -26,7 +26,7 @@ public class TransformedIterator<T>
 
     @Override
     public T next() {
-        T item = iterator.next();
+        S item = iterator.next();
         return transformer.transform(item);
     }
 
