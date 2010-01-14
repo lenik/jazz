@@ -10,7 +10,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.file.Path;
 import java.util.List;
 
 import net.bodz.bas.closure.IFilter;
@@ -58,11 +57,6 @@ public class URLFile
         } catch (URISyntaxException e) {
             return null;
         }
-    }
-
-    @Override
-    public Path getPath() {
-        return getFile().toPath();
     }
 
     @Override

@@ -206,16 +206,6 @@ public class ZippedFolder
         }
 
         @Override
-        public File getFile() {
-            return null;
-        }
-
-        @Override
-        public Path getPath() {
-            return null;
-        }
-
-        @Override
         public URI getURI() {
             try {
                 return getURL().toURI();
