@@ -11,7 +11,7 @@ public class TransformValueMap<K, V, _V>
         implements Map<K, V> {
 
     class EntryTransformer
-            implements ITransformer<Entry<K, V>, Entry<K, _V>> {
+            implements ElTransformer<Entry<K, V>, Entry<K, _V>> {
 
         @SuppressWarnings("unchecked")
         @Override
@@ -45,13 +45,13 @@ public class TransformValueMap<K, V, _V>
 
     }
 
-    private final ITransformer<V, _V> transformer;
-    private final ITransformer<Entry<K, V>, Entry<K, _V>> entryTransformer;
+    private final ElTransformer<V, _V> transformer;
+    private final ElTransformer<Entry<K, V>, Entry<K, _V>> entryTransformer;
     // private final Class<V> S_TYPE;
     // private final Class<_V> T_TYPE;
     private final Map<K, _V> map;
 
-    public TransformValueMap(ITransformer<V, _V> transformer, Map<K, _V> map) {
+    public TransformValueMap(ElTransformer<V, _V> transformer, Map<K, _V> map) {
         if (transformer == null)
             throw new NullPointerException("transformer");
         if (map == null)

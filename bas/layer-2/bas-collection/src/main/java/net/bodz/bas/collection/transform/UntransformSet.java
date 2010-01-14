@@ -7,7 +7,7 @@ public class UntransformSet<S, T>
         extends UntransformCollection<S, T>
         implements Set<S> {
 
-    public UntransformSet(ITransformer<S, T> transformer, Collection<T> transformedCollection) {
+    public UntransformSet(ElTransformer<S, T> transformer, Collection<T> transformedCollection) {
         super(transformer, transformedCollection);
     }
 
