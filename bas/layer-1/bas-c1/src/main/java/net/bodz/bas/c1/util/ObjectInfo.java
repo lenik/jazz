@@ -1,4 +1,4 @@
-package net.bodz.bas.commons.helpinfo;
+package net.bodz.bas.c1.util;
 
 public class ObjectInfo {
 

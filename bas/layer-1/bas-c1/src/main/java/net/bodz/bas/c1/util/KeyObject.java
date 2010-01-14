@@ -1,4 +1,4 @@
-package net.bodz.bas.commons.pojos;
+package net.bodz.bas.c1.util;
 
 import java.util.HashMap;
 import java.util.Map;
