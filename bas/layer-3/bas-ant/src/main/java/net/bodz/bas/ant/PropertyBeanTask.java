@@ -18,7 +18,7 @@ import net.bodz.bas.collection.preorder.PrefixSet;
 import net.bodz.bas.collection.preorder.TypeHierSet;
 import net.bodz.bas.exceptions.CreateException;
 import net.bodz.bas.exceptions.IllegalUsageException;
-import net.bodz.bas.util.LogTerm;
+import net.bodz.bas.io.term.LogTerm;
 
 public class PropertyBeanTask extends Task implements IPureTask {
 

@@ -11,7 +11,7 @@ import net.bodz.bas.hint.ThreadUnsafe;
 import net.bodz.bas.lang.INegotiation;
 import net.bodz.bas.lang.NegotiationException;
 import net.bodz.bas.type.traits.ClassifyException;
-import net.bodz.bas.type.traits.IAnnotations;
+import net.bodz.bas.type.traits.IAttributes;
 import net.bodz.bas.type.traits.IClassifier;
 import net.bodz.bas.type.traits.IInstanceStore;
 import net.bodz.bas.type.traits.ISampleGenerator;
@@ -27,7 +27,7 @@ public abstract class CommonTypeInfo<T>
     private List<T> instances;
     private Map<String, Integer> instanceNames;
 
-    private Map<String, IAnnotations> classDict;
+    private Map<String, IAttributes> classDict;
 
     public CommonTypeInfo() {
     }
@@ -69,16 +69,16 @@ public abstract class CommonTypeInfo<T>
     }
 
     @Override
-    public IAnnotations getClassAnnotations(String classId) {
+    public IAttributes getClassAnnotations(String classId) {
         if (classDict == null)
             return null;
-        IAnnotations annotations = classDict.get(classId);
+        IAttributes annotations = classDict.get(classId);
         return annotations;
     }
 
-    protected final void addClassAnnotation(String classId, IAnnotations annotations) {
+    protected final void addClassAnnotation(String classId, IAttributes annotations) {
         if (classDict == null)
-            classDict = new TreeMap<String, IAnnotations>();
+            classDict = new TreeMap<String, IAttributes>();
         classDict.put(classId, annotations);
     }
 

@@ -6,66 +6,66 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MultiplexedTerminal extends _Terminal {
+public class MultiplexedTerminal extends AbstractTerminal {
 
-    private List<Terminal> terminals;
+    private List<ITerminal> terminals;
 
-    public MultiplexedTerminal(Terminal... terminals) {
-        this.terminals = new ArrayList<Terminal>(terminals.length);
-        for (Terminal t : terminals)
+    public MultiplexedTerminal(ITerminal... terminals) {
+        this.terminals = new ArrayList<ITerminal>(terminals.length);
+        for (ITerminal t : terminals)
             this.terminals.add(t);
     }
 
-    public boolean add(Terminal terminal) {
+    public boolean add(ITerminal terminal) {
         return terminals.add(terminal);
     }
 
-    public boolean remove(Terminal terminal) {
+    public boolean remove(ITerminal terminal) {
         return terminals.remove(terminal);
     }
 
     @Override
     public void f(String format, Object... args) {
-        for (Terminal t : terminals)
+        for (ITerminal t : terminals)
             t.f(format, args);
     }
 
     public void n(String s) {
-        for (Terminal t : terminals)
-            t.n(s);
+        for (ITerminal t : terminals)
+            t.p_(s);
     }
 
     public void p() {
-        for (Terminal t : terminals)
+        for (ITerminal t : terminals)
             t.p();
     }
 
     @Override
     public void p(String s) {
-        for (Terminal t : terminals)
+        for (ITerminal t : terminals)
             t.p(s);
     }
 
     public void t(String s) {
-        for (Terminal t : terminals)
+        for (ITerminal t : terminals)
             t.t(s);
     }
 
     @Override
     public void beep() {
-        for (Terminal t : terminals)
+        for (ITerminal t : terminals)
             t.beep();
     }
 
     @Override
     public void flush() throws IOException {
-        for (Terminal t : terminals)
+        for (ITerminal t : terminals)
             t.flush();
     }
 
     @Override
     public void close() throws IOException {
-        for (Terminal t : terminals)
+        for (ITerminal t : terminals)
             t.close();
     }
 

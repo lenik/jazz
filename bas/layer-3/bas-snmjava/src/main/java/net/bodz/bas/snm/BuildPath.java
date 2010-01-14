@@ -1,11 +1,11 @@
 package net.bodz.bas.snm;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -13,6 +13,11 @@ import java.util.jar.Manifest;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
+
+import net.bodz.bas.exceptions.ParseException;
+import net.bodz.bas.exceptions.UnexpectedException;
+import net.bodz.bas.fs.legacy.Files;
+import net.bodz.bas.xml.XMLs;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -130,7 +135,7 @@ public class BuildPath {
         }
         if (manifestFile != null && manifestFile.exists()) {
             try {
-                Manifest manifest = new Manifest(Files.getInputStream(manifestFile));
+                Manifest manifest = new Manifest(new FileInputStream(manifestFile));
                 java.util.jar.Attributes attributes = manifest.getMainAttributes();
                 String requireBundles = (String) attributes.get("Require-Bundle");
                 if (requireBundles != null) {

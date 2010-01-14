@@ -3,6 +3,9 @@ package net.bodz.bas.text.util;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import net.bodz.bas.hint.OverrideOption;
+import net.bodz.bas.io.out.CharOuts.BCharOut;
+
 public class PatternProcessor extends BCharOut {
 
     protected Pattern pattern;

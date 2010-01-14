@@ -1,0 +1,24 @@
+
+
+
+    信息层
+    
+    消息状态层
+    
+    StatusMessageLayer
+    
+    ClassStatusMessageLayer.getInstance(?.class);
+    
+    info = layer.getChannel(INFO);
+    info.p(Object) = put(Object)
+    info.p(Object...) = p(Concat(...))
+    info.p_(Object) = p(Continuation(o))
+    (x) info.sig(...)
+        -> layer.getChannel(STATUS)
+           status.p(...)
+    
+    Log4jChannel(logger, LEVEL): 
+        Logger logger;
+        put(o) = logger.log(LEVEL, o)
+    
+    EchoStatusMessageLayer

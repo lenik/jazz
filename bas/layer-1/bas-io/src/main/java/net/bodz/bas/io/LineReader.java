@@ -4,9 +4,12 @@ import java.io.IOException;
 import java.io.Reader;
 
 /**
- * @test LineReaderTest
+ * Line includes EOL characters.
+ * 
+ * @test {@link LineReaderTest}
  */
-public class LineReader extends Reader {
+public class LineReader
+        extends Reader {
 
     private final Reader reader;
     private StringBuffer buf;
@@ -34,12 +37,13 @@ public class LineReader extends Reader {
     /**
      * @param maxLineLength
      *            length includes line term chars.
-     * @return line text includes line term chars.
+     * @return line text includes line term chars, <code>null</code> if EOF is reached.
      * @throws IOException
      */
-    public synchronized String readLine(int maxLineLength) throws IOException {
+    public synchronized String readLine(int maxLineLength)
+            throws IOException {
         if (maxLineLength < 1)
-            throw new IllegalArgumentException("maxLineLength=" + maxLineLength); 
+            throw new IllegalArgumentException("maxLineLength=" + maxLineLength);
         int len = buf.length();
         int reject = 0;
         while (len < maxLineLength) {
@@ -75,17 +79,23 @@ public class LineReader extends Reader {
         return line;
     }
 
-    public String readLine() throws IOException {
+    /**
+     * @return <code>null</code> if EOF.
+     */
+    public String readLine()
+            throws IOException {
         return readLine(Integer.MAX_VALUE);
     }
 
     @Override
-    public void close() throws IOException {
+    public void close()
+            throws IOException {
         reader.close();
     }
 
     @Override
-    public int read() throws IOException {
+    public int read()
+            throws IOException {
         if (buf.length() != 0) {
             int c = buf.charAt(0);
             buf.delete(0, 1);
@@ -95,7 +105,8 @@ public class LineReader extends Reader {
     }
 
     @Override
-    public int read(char[] cbuf, int off, int len) throws IOException {
+    public int read(char[] cbuf, int off, int len)
+            throws IOException {
         if (buf.length() != 0) {
             int cc = Math.min(buf.length(), len);
             for (int i = 0; i < cc; i++)
@@ -107,12 +118,14 @@ public class LineReader extends Reader {
     }
 
     @Override
-    public boolean ready() throws IOException {
+    public boolean ready()
+            throws IOException {
         return buf.length() > 0 || reader.ready();
     }
 
     @Override
-    public long skip(long n) throws IOException {
+    public long skip(long n)
+            throws IOException {
         int cc = 0;
         if (buf.length() != 0) {
             cc = (int) Math.min(buf.length(), n);
@@ -128,13 +141,15 @@ public class LineReader extends Reader {
     }
 
     @Override
-    public void mark(int readAheadLimit) throws IOException {
+    public void mark(int readAheadLimit)
+            throws IOException {
         reader.mark(readAheadLimit);
         markedBuf = buf.length() == 0 ? null : buf.toString();
     }
 
     @Override
-    public void reset() throws IOException {
+    public void reset()
+            throws IOException {
         reader.reset();
         if (markedBuf != null) {
             buf.setLength(0);

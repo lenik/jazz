@@ -1,6 +1,5 @@
 package net.bodz.bas.loader;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -9,9 +8,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.bodz.bas.commons.exception.Err;
-import net.bodz.bas.exceptions.IdentifiedException;
-import sun.dyn.empty.Empty;
+import net.bodz.bas.exceptions.UnexpectedException;
+import net.bodz.bas.jvm.stack.Caller;
 
 public class UCL {
 
@@ -19,7 +17,7 @@ public class UCL {
     static {
         Class<?> clazz = URLClassLoader.class;
         try {
-            URLClassLoader_addURL = clazz.getDeclaredMethod("addURL", URL.class); 
+            URLClassLoader_addURL = clazz.getDeclaredMethod("addURL", URL.class);
             URLClassLoader_addURL.setAccessible(true);
         } catch (SecurityException e) {
         } catch (NoSuchMethodException e) {
@@ -56,7 +54,7 @@ public class UCL {
      */
     public static int addURL(URLClassLoader ucl, URL... urls) {
         if (URLClassLoader_addURL == null)
-            throw new Error("can\'t access URLClassLoader.addURL()"); 
+            throw new Error("can\'t access URLClassLoader.addURL()");
         int added = 0;
         try {
             for (URL url : urls) {
@@ -66,10 +64,8 @@ public class UCL {
                 URLClassLoader_addURL.invoke(ucl, url);
                 added++;
             }
-        } catch (IllegalAccessException e) {
-            throw new IdentifiedException(e.getMessage(), e);
-        } catch (InvocationTargetException e) {
-            Err.unwrap(e);
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException(e);
         }
         return added;
     }
@@ -84,7 +80,8 @@ public class UCL {
         return new URLClassLoader(urls, loader);
     }
 
-    private static class Collect extends Iter {
+    private static class Collect
+            extends Iter {
 
         private List<URL> list;
 
@@ -93,7 +90,7 @@ public class UCL {
         }
 
         public URL[] get() {
-            return list.toArray(Empty.URLs);
+            return list.toArray(new URL[0]);
         }
 
         @Override
@@ -147,7 +144,7 @@ public class UCL {
         public static final Set<String> stops;
         static {
             stops = new HashSet<String>();
-            stops.add("sun.misc.Launcher$ExtClassLoader"); 
+            stops.add("sun.misc.Launcher$ExtClassLoader");
         }
 
         protected boolean filter(ClassLoader loader) {
@@ -156,7 +153,8 @@ public class UCL {
 
     }
 
-    private static class Dumper extends Iter {
+    private static class Dumper
+            extends Iter {
 
         private final CharOut out;
         private boolean cont;
@@ -176,13 +174,13 @@ public class UCL {
             if (cont)
                 out.println();
             cont = true;
-            out.println("; loader " + loader); 
+            out.println("; loader " + loader);
             if (filter(loader)) {
                 if (!(loader instanceof URLClassLoader))
-                    out.println("; (no url info)"); 
+                    out.println("; (no url info)");
                 return true;
             } else {
-                out.println("; (stopped)"); 
+                out.println("; (stopped)");
                 return false;
             }
         }

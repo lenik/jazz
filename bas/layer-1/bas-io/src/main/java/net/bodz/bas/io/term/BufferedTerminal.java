@@ -1,6 +1,6 @@
 package net.bodz.bas.io.term;
 
-public abstract class BufferedTerminal extends _Terminal {
+public abstract class BufferedTerminal extends AbstractTerminal {
 
     boolean started = false;
     StringBuffer buf;
@@ -15,7 +15,7 @@ public abstract class BufferedTerminal extends _Terminal {
     }
 
     @Override
-    public void n(String s) {
+    public void p_(String s) {
         if (!started)
             restart();
         buf.append(s);

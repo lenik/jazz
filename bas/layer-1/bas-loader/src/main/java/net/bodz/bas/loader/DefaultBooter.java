@@ -3,9 +3,13 @@ package net.bodz.bas.loader;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import sun.dyn.empty.Empty;
+import net.bodz.bas.closure.alt.Pred1;
+import net.bodz.bas.io.out.CharOut;
+import net.bodz.bas.io.out.CharOuts;
+import net.bodz.bas.jvm.stack.Caller;
 
 /**
  * The default booter for {@link BootInfo}.
@@ -16,7 +20,8 @@ public class DefaultBooter {
 
     static boolean LOADFIX_DUMP = false;
 
-    public static Class<?> loadFix(ClassLoader initSysLoader, String className, URL... userlibs) throws LoadException {
+    public static Class<?> loadFix(ClassLoader initSysLoader, String className, URL... userlibs)
+            throws LoadException {
         ClassLoader bootSysLoader;
         if (userlibs == null)
             bootSysLoader = initSysLoader;
@@ -44,7 +49,8 @@ public class DefaultBooter {
         return load(initSysLoader, className, userlibs);
     }
 
-    public static Class<?> load(String className, URL... userlibs) throws LoadException {
+    public static Class<?> load(String className, URL... userlibs)
+            throws LoadException {
         ClassLoader sysLoader = Caller.getCallerClassLoader(0);
         return load(sysLoader, className, userlibs);
     }
@@ -55,7 +61,8 @@ public class DefaultBooter {
      * @param userlibs
      *            use {@link BootInfo#userlibs()}
      */
-    public static Class<?> load(ClassLoader sysLoader, String className, URL... userlibs) throws LoadException {
+    public static Class<?> load(ClassLoader sysLoader, String className, URL... userlibs)
+            throws LoadException {
         // get class0
         // WORKAROUND: let the boot bit more smooth.
         ClassLoader bootLoader = TempClassLoader.get(userlibs, sysLoader);
@@ -87,14 +94,14 @@ public class DefaultBooter {
         }
         ClassLoader userLoader = class1.getClassLoader();
         if (userLoader != realLoader) {
-            out.println("Warning: class loader cut: "); 
+            out.println("Warning: class loader cut: ");
             ClassLoader l = realLoader;
             while (l != null && l != userLoader) {
-                out.println("  may lose: " + l); 
+                out.println("  may lose: " + l);
                 if (l instanceof URLClassLoader) {
                     URLClassLoader ucl = (URLClassLoader) l;
                     for (URL url : ucl.getURLs())
-                        out.println("    " + url); 
+                        out.println("    " + url);
                 }
                 l = l.getParent();
             }
@@ -108,21 +115,24 @@ public class DefaultBooter {
         }
     }
 
-    static class Once extends Pred1<Throwable> {
+    static class Once
+            extends Pred1<Throwable> {
         @Override
         public boolean test(Throwable o) {
             return false;
         }
     }
 
-    static class Repeat extends Pred1<Throwable> {
+    static class Repeat
+            extends Pred1<Throwable> {
         @Override
         public boolean test(Throwable o) {
             return true;
         }
     }
 
-    static class Count extends Pred1<Throwable> {
+    static class Count
+            extends Pred1<Throwable> {
         int count;
         boolean errorContinue;
 
@@ -144,16 +154,17 @@ public class DefaultBooter {
      * 
      * @throws Throwable
      */
-    public static void main(String[] args) throws LoadException, Throwable {
+    public static void main(String[] args)
+            throws LoadException, Throwable {
         int index = 0;
         List<URL> userlibs = new ArrayList<URL>();
         Pred1<Throwable> loopPred = new Once();
         A: for (; index < args.length; index++) {
             String arg = args[index];
-            if (arg.startsWith("-")) { 
+            if (arg.startsWith("-")) {
                 if (arg.length() != 2)
                     break;
-                if ("--".equals(arg)) { 
+                if ("--".equals(arg)) {
                     index++;
                     break;
                 }
@@ -179,7 +190,7 @@ public class DefaultBooter {
                             @Override
                             public boolean test(Throwable o) {
                                 String val = System.getProperty(predProp);
-                                return "1".equals(val); 
+                                return "1".equals(val);
                             }
                         };
                     }
@@ -190,12 +201,12 @@ public class DefaultBooter {
             }
         }
         if (index == args.length)
-            throw new IllegalArgumentException("Main class name isn\'t specified."); 
+            throw new IllegalArgumentException("Main class name isn\'t specified.");
         String className = args[index++];
-        args = Arrays2.copyOf(args, index, args.length - index);
+        args = Arrays.copyOfRange(args, index, args.length - index);
 
         // reload and exec
-        URL[] urls = userlibs.toArray(Empty.URLs);
+        URL[] urls = userlibs.toArray(new URL[0]);
         Class<?> clazz = load(className, urls);
         while (true) {
             try {

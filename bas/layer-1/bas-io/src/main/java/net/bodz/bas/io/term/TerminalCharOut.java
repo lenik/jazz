@@ -6,9 +6,9 @@ import net.bodz.bas.io.out.CharOut;
 
 public class TerminalCharOut extends CharOut {
 
-    final Terminal terminal;
+    final ITerminal terminal;
 
-    public TerminalCharOut(Terminal terminal) {
+    public TerminalCharOut(ITerminal terminal) {
         if (terminal == null)
             throw new NullPointerException("terminal"); 
         this.terminal = terminal;
@@ -27,7 +27,7 @@ public class TerminalCharOut extends CharOut {
     @Override
     public void write(char[] chars, int off, int len) throws IOException {
         String s = new String(chars, off, len);
-        terminal.n(s);
+        terminal.p_(s);
     }
 
 }

@@ -1,4 +1,4 @@
-package net.bodz.bas.util;
+package net.bodz.bas.io.term;
 
 import java.io.IOException;
 import java.net.URL;

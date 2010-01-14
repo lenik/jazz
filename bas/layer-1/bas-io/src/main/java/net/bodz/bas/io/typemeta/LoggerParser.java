@@ -5,7 +5,7 @@ import java.io.PrintStream;
 
 import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.io.term.StreamTerminal;
-import net.bodz.bas.io.term.Terminal;
+import net.bodz.bas.io.term.ITerminal;
 import net.bodz.bas.type.traits.impl.AbstractParser;
 
 public class LoggerParser
@@ -23,7 +23,7 @@ public class LoggerParser
         final StreamTerminal sterm = new StreamTerminal(out);
         return new LogTerm() {
             @Override
-            public Terminal filter(int level) {
+            public ITerminal filter(int level) {
                 return sterm;
             }
         };

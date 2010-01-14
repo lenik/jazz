@@ -6,9 +6,9 @@ import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
 
-import net.bodz.bas.a.Doc;
 import net.bodz.bas.a.RcsKeywords;
-import net.bodz.bas.a.Version;
+import net.bodz.bas.c1.annotations.Doc;
+import net.bodz.bas.c1.annotations.Version;
 import net.bodz.bas.cli.BatchEditCLI;
 import net.bodz.bas.cli.EditResult;
 import net.bodz.bas.cli.a.Option;

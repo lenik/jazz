@@ -3,12 +3,13 @@ package net.bodz.bas.text.util;
 import java.nio.CharBuffer;
 import java.util.regex.Pattern;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import net.bodz.bas.exceptions.NotImplementedException;
 
-public class RegexProcessor extends Unescape {
+public class RegexProcessor
+        extends Unescape {
 
     public RegexProcessor() {
-        super("\\"); 
+        super("\\");
     }
 
     @Override
@@ -26,23 +27,23 @@ public class RegexProcessor extends Unescape {
         }
         // in.position(in.position() - 1);
         // return super.decode(in);
-        return "\\" + String.valueOf(c); 
+        return "\\" + String.valueOf(c);
     }
 
     protected String matchSpace() {
-        return "\\s"; 
+        return "\\s";
     }
 
     protected String matchNonspace() {
-        return "\\S"; 
+        return "\\S";
     }
 
     protected String matchWord() {
-        return "\\w"; 
+        return "\\w";
     }
 
     protected String matchNonword() {
-        return "\\W"; 
+        return "\\W";
     }
 
     @Override
@@ -69,15 +70,15 @@ public class RegexProcessor extends Unescape {
     }
 
     protected String matchDot() {
-        return "."; 
+        return ".";
     }
 
     protected String matchCaret() {
-        return "^"; 
+        return "^";
     }
 
     protected String matchDollar() {
-        return "$"; 
+        return "$";
     }
 
     public Pattern compile(String regex, int flags) {
@@ -89,14 +90,15 @@ public class RegexProcessor extends Unescape {
         return compile(regex, 0);
     }
 
-    public static class SpaceOverride extends RegexProcessor {
+    public static class SpaceOverride
+            extends RegexProcessor {
         private String spaceRegex;
         private String dotRegex;
 
         public SpaceOverride(String spaceRegex) {
-            this.spaceRegex = "(?:" + spaceRegex + ")";  
+            this.spaceRegex = "(?:" + spaceRegex + ")";
             // this.dotRegex = "(?:(?!" + spaceRegex + ").)";
-            this.dotRegex = "(?:" + spaceRegex + "|.)";  
+            this.dotRegex = "(?:" + spaceRegex + "|.)";
         }
 
         @Override
@@ -118,8 +120,8 @@ public class RegexProcessor extends Unescape {
     public static final SpaceOverride javaComments;
     public static final SpaceOverride unixComments;
     static {
-        javaComments = new SpaceOverride("\\s|//.*?\n|/\\*.*?\\*/"); 
-        unixComments = new SpaceOverride("\\s|#.*?\n"); 
+        javaComments = new SpaceOverride("\\s|//.*?\n|/\\*.*?\\*/");
+        unixComments = new SpaceOverride("\\s|#.*?\n");
     }
 
 }

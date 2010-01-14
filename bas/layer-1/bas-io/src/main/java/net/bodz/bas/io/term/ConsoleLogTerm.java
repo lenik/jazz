@@ -1,10 +1,11 @@
-package net.bodz.bas.util;
+package net.bodz.bas.io.term;
+
 
 
 public class ConsoleLogTerm extends LogTerm {
 
     @Override
-    public Terminal filter(int level) {
+    public ITerminal filter(int level) {
         if (level <= WARN)
             return Terminals.stderr;
         return Terminals.stdout;

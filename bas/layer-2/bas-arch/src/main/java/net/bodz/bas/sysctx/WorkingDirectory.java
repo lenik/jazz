@@ -3,6 +3,8 @@ package net.bodz.bas.sysctx;
 import java.io.File;
 import java.nio.file.Files;
 
+import net.bodz.bas.sysinfo.SystemInfo;
+
 public class WorkingDirectory {
 
     private static File cwd;

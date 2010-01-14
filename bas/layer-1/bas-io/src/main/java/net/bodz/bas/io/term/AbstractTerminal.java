@@ -10,7 +10,8 @@ import net.bodz.bas.exceptions.UnexpectedException;
 import net.bodz.bas.io.WriterOutputStream;
 import net.bodz.bas.io.out.CharOut;
 
-public abstract class _Terminal implements Terminal {
+public abstract class AbstractTerminal
+        implements ITerminal {
 
     @Override
     public CharOut getCharOut() {
@@ -24,7 +25,7 @@ public abstract class _Terminal implements Terminal {
 
     @Override
     public PrintStream getPrintStream() {
-        Charset charset = Charset.forName("utf-8"); 
+        Charset charset = Charset.forName("utf-8");
         WriterOutputStream out = new WriterOutputStream(getWriter(), charset);
         try {
             PrintStream printStream = new PrintStream(out, true, charset.name());
@@ -36,13 +37,13 @@ public abstract class _Terminal implements Terminal {
 
     @Override
     public void p(String s) {
-        n(s);
+        p_(s);
         p();
     }
 
     @Override
-    public void n(Object obj) {
-        n(String.valueOf(obj));
+    public void p_(Object obj) {
+        p_(String.valueOf(obj));
     }
 
     @Override
@@ -56,37 +57,39 @@ public abstract class _Terminal implements Terminal {
     }
 
     @Override
-    public void n(Object... args) {
-        String s = Strings.join("", args); 
-        n(s);
+    public void p_(Object... args) {
+        String s = Strings.join("", args);
+        p_(s);
     }
 
     @Override
     public void p(Object... args) {
-        String s = Strings.join("", args); 
+        String s = Strings.join("", args);
         p(s);
     }
 
     @Override
     public void t(Object... args) {
-        String s = Strings.join("", args); 
+        String s = Strings.join("", args);
         t(s);
     }
 
     @Override
     public void f(String format, Object... args) {
         String s = String.format(format, args);
-        n(s);
+        p_(s);
     }
 
     // new features
 
     @Override
-    public void flush() throws IOException {
+    public void flush()
+            throws IOException {
     }
 
     @Override
-    public void close() throws IOException {
+    public void close()
+            throws IOException {
     }
 
     @Override

@@ -1,6 +1,6 @@
 package net.bodz.bas.jvm.exit;
 
-import net.bodz.bas.closure.IExecutable;
+import net.bodz.bas.closure.IExecutableX;
 import net.bodz.bas.proxy.java.security.ProxySecurityManager;
 
 /**
@@ -23,8 +23,8 @@ public class CatchExit
         throw new SecurityControl(SecurityControl.EXIT, status);
     }
 
-    public <E extends Throwable> void catchExit(IExecutable<E> executable)
-            throws E, IllegalExitException {
+    public <X extends Exception> void catchExit(IExecutableX<X> executable)
+            throws X, IllegalExitException {
         SecurityManager security0 = System.getSecurityManager();
         try {
             System.setSecurityManager(this);

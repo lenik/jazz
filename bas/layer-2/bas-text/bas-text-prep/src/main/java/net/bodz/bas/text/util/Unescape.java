@@ -2,6 +2,9 @@ package net.bodz.bas.text.util;
 
 import java.nio.CharBuffer;
 
+import net.bodz.bas.io.out.CharOut;
+import net.bodz.bas.io.out.CharOuts.BCharOut;
+
 public class Unescape {
 
     private final char[] ESC;

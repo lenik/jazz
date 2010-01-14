@@ -1,7 +1,8 @@
-package net.bodz.bas.util;
+package net.bodz.bas.io.term;
 
 import net.bodz.bas.collection.preorder.PrefixMap;
 import net.bodz.bas.collection.preorder.TypeHierMap;
+import net.bodz.bas.util.ConsoleLogTerm;
 
 public class LogTerms {
 

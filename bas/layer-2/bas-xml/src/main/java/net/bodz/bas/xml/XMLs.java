@@ -17,7 +17,6 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
-import java.nio.file.Files;
 
 import javax.xml.bind.DataBindingException;
 import javax.xml.bind.JAXB;
@@ -44,28 +43,32 @@ public class XMLs {
 
     // SAX Parsers
 
-    public static void parse(File file, Object... handlers) throws SAXException, IOException {
-        assert file != null : "null file"; 
-        URL url = Files.getURL(file);
+    public static void parse(File file, Object... handlers)
+            throws SAXException, IOException {
+        assert file != null : "null file";
+        URL url = file.toURI().toURL();
         parse(new InputSource(url.toString()), handlers);
     }
 
-    public static void parse(Reader reader, Object... handlers) throws SAXException, IOException {
-        assert reader != null : "null reader"; 
+    public static void parse(Reader reader, Object... handlers)
+            throws SAXException, IOException {
+        assert reader != null : "null reader";
         parse(new InputSource(reader), handlers);
     }
 
-    public static void parse(InputStream in, Object... handlers) throws SAXException, IOException {
-        assert in != null : "null in"; 
+    public static void parse(InputStream in, Object... handlers)
+            throws SAXException, IOException {
+        assert in != null : "null in";
         parse(new InputSource(in), handlers);
     }
 
-    public static void parse(InputSource source, Object... handlers) throws SAXException, IOException {
-        assert source != null : "null source"; 
+    public static void parse(InputSource source, Object... handlers)
+            throws SAXException, IOException {
+        assert source != null : "null source";
         XMLReader xmlReader = XMLReaderFactory.createXMLReader();
         for (Object handler : handlers) {
             if (handler == null)
-                throw new NullPointerException("null handler"); 
+                throw new NullPointerException("null handler");
             if (handler instanceof DefaultHandler) {
                 DefaultHandler dh = (DefaultHandler) handler;
                 xmlReader.setContentHandler(dh);
@@ -138,22 +141,23 @@ public class XMLs {
     }
 
     public static void encode(int caller, Object obj, OutputStream out, ExceptionListener exceptionListener) {
-        encode(caller + 1, obj, out, "utf-8", exceptionListener); 
+        encode(caller + 1, obj, out, "utf-8", exceptionListener);
     }
 
     public static String encode(int caller, Object obj, ExceptionListener exceptionListener) {
         ByteArrayOutputStream buf = new ByteArrayOutputStream();
-        encode(caller + 1, obj, buf, "utf-8", exceptionListener); 
+        encode(caller + 1, obj, buf, "utf-8", exceptionListener);
         String xml;
         try {
-            xml = buf.toString("utf-8"); 
+            xml = buf.toString("utf-8");
         } catch (UnsupportedEncodingException e) {
             throw new UnexpectedException(e);
         }
         return xml;
     }
 
-    public static void encode(int caller, Object obj, OutputStream out) throws EncodeException {
+    public static void encode(int caller, Object obj, OutputStream out)
+            throws EncodeException {
         ExceptionBuffer eb = new ExceptionBuffer();
         encode(caller + 1, obj, out, eb);
         String errmesg = eb.summary();
@@ -161,7 +165,8 @@ public class XMLs {
             throw new EncodeException(errmesg);
     }
 
-    public static String encode(int caller, Object obj) throws EncodeException {
+    public static String encode(int caller, Object obj)
+            throws EncodeException {
         ExceptionBuffer eb = new ExceptionBuffer();
         String xml = encode(caller + 1, obj, eb);
         String errmesg = eb.summary();
@@ -178,7 +183,8 @@ public class XMLs {
         return obj;
     }
 
-    public static Object decode(int caller, InputStream in) throws DecodeException {
+    public static Object decode(int caller, InputStream in)
+            throws DecodeException {
         ExceptionBuffer eb = new ExceptionBuffer();
         Object obj = decode(caller + 1, in, eb);
         String errmesg = eb.summary();
@@ -190,7 +196,7 @@ public class XMLs {
     public static Object decode(int caller, String xml, ExceptionListener exceptionListener) {
         byte[] bytes;
         try {
-            bytes = xml.getBytes("utf-8"); 
+            bytes = xml.getBytes("utf-8");
         } catch (UnsupportedEncodingException e) {
             throw new UnexpectedException(e);
         }
@@ -198,7 +204,8 @@ public class XMLs {
         return decode(caller + 1, in, exceptionListener);
     }
 
-    public static Object decode(int caller, String xml) throws DecodeException {
+    public static Object decode(int caller, String xml)
+            throws DecodeException {
         ExceptionBuffer eb = new ExceptionBuffer();
         Object obj = decode(caller + 1, xml, eb);
         String errmesg = eb.summary();
@@ -213,7 +220,8 @@ public class XMLs {
         return decode(1, in, exceptionListener);
     }
 
-    public static Object decode(InputStream in) throws DecodeException {
+    public static Object decode(InputStream in)
+            throws DecodeException {
         return decode(1, in);
     }
 
@@ -221,7 +229,8 @@ public class XMLs {
         return decode(1, xml, exceptionListener);
     }
 
-    public static Object decode(String xml) throws DecodeException {
+    public static Object decode(String xml)
+            throws DecodeException {
         return decode(1, xml);
     }
 
@@ -237,21 +246,25 @@ public class XMLs {
         encode(1, obj, out, encoding, exceptionListener);
     }
 
-    public static void encode(Object obj, OutputStream out) throws EncodeException {
+    public static void encode(Object obj, OutputStream out)
+            throws EncodeException {
         encode(1, obj, out);
     }
 
-    public static String encode(Object obj) throws EncodeException {
+    public static String encode(Object obj)
+            throws EncodeException {
         return encode(1, obj);
     }
 
     // JAXB shortcuts
 
-    public static String marshal(Object jaxbObject) throws DataBindingException {
+    public static String marshal(Object jaxbObject)
+            throws DataBindingException {
         return marshal(jaxbObject, 1024);
     }
 
-    public static String marshal(Object jaxbObject, int appxSize) throws DataBindingException {
+    public static String marshal(Object jaxbObject, int appxSize)
+            throws DataBindingException {
         StringWriter buf = new StringWriter(appxSize);
         JAXB.marshal(jaxbObject, buf);
         return buf.toString();

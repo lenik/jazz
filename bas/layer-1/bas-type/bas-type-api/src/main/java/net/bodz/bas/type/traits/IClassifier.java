@@ -13,6 +13,6 @@ public interface IClassifier<T> {
     Map<String, Object> classify(T object, INegotiation negotiation)
             throws ClassifyException, NegotiationException;
 
-    IAnnotations getClassAnnotations(String classId);
+    IAttributes getClassAnnotations(String classId);
 
 }
