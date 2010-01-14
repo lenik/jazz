@@ -1,7 +1,7 @@
 package net.bodz.bas.commons.ref;
 
-import net.bodz.bas.commons.util.Objects;
 import net.bodz.bas.exceptions.ReadOnlyException;
+import net.bodz.bas.lang.Nullables;
 import net.bodz.bas.lang.Ref;
 
 public class ConstantRef<T>
@@ -25,9 +25,9 @@ public class ConstantRef<T>
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof ConstantRef) {
+        if (obj instanceof ConstantRef<?>) {
             Object thatValue = ((ConstantRef<?>) obj).constantValue;
-            return Objects.equals(constantValue, thatValue);
+            return Nullables.equals(constantValue, thatValue);
         }
         return false;
     }

@@ -29,10 +29,10 @@ import net.bodz.bas.cli.ext.CLIPlugin;
 import net.bodz.bas.cli.ext.CLIPlugins;
 import net.bodz.bas.exceptions.CreateException;
 import net.bodz.bas.hint.OverrideOption;
+import net.bodz.bas.io.term.LogTerm;
+import net.bodz.bas.io.term.LogTerms;
 import net.bodz.bas.ui.ConsoleUI;
 import net.bodz.bas.ui.UserInterface;
-import net.bodz.bas.util.LogTerm;
-import net.bodz.bas.util.LogTerms;
 import net.bodz.bas.util.PluginException;
 import net.bodz.bas.util.PluginTypeEx;
 import sun.dyn.empty.Empty;
@@ -329,7 +329,7 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
         if (prepared)
             return;
 
-        Terminal dbg = L.debug();
+        ITerminal dbg = L.debug();
         // dbg.p("parse boot info");
         // bootProc = BootProc.get(getClass());
         //
@@ -377,7 +377,7 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
      */
     @Override
     public synchronized void run(String... args) throws Exception {
-        Terminal dbg = L.debug();
+        ITerminal dbg = L.debug();
         dbg.p("cli prepare"); 
         _prepare();
         int preRestSize = restArgs.size(); // make climain() reentrant.

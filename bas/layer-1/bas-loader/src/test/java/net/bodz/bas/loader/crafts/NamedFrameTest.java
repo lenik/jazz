@@ -1,6 +1,7 @@
-package net.bodz.bas.jvm.stack;
+package net.bodz.bas.loader.crafts;
 
 import static org.junit.Assert.assertEquals;
+
 
 import org.junit.Test;
 

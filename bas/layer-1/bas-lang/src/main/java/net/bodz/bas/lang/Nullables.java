@@ -3,6 +3,8 @@ package net.bodz.bas.lang;
 import java.lang.reflect.Method;
 
 import net.bodz.bas.exceptions.IllegalUsageException;
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
+import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 
 public class Nullables {
 
@@ -54,8 +56,8 @@ public class Nullables {
         if (o == null)
             return null;
         try {
-            Method cloneMethod = o.getClass().getMethod("clone");
-            Object cloned = cloneMethod.invoke(o);
+            Method cloneMethod = Jdk7Reflect.getMethod(o.getClass(), "clone");
+            Object cloned = Jdk7Reflect.invoke(cloneMethod, o);
             return cloned;
         } catch (ReflectiveOperationException e) {
             throw new IllegalUsageException(e.getMessage(), e);

@@ -2,17 +2,22 @@ package net.bodz.bas.type.traits;
 
 import java.util.Collection;
 
-public interface IAnnotations {
+public interface IAttributes {
 
     /**
      * @return Never <code>null</code>, returns empty {@link Collection} if no public annotation
      *         available.
      */
-    Collection<IAnnotationEntry> getPublicAnnotations();
+    Collection<String> getAttributeNames();
 
     /**
      * @return <code>null</code> if specified id doesn't exist.
      */
-    IAnnotationEntry getAnnotation(String id);
+    Object getAttribute(String attributeName);
+
+    /**
+     * @return <code>null</code> if no type info available.
+     */
+    ITypeInfo<?> getAttributeTypeInfo(String attributeName);
 
 }

@@ -5,7 +5,7 @@ import java.io.IOException;
 import net.bodz.bas.exceptions.OutOfDomainException;
 import net.bodz.bas.io.out.CharOut;
 
-public class ConsoleTerminal extends _Terminal {
+public class ConsoleTerminal extends AbstractTerminal {
 
     private CharOut out;
     private int width;
@@ -52,7 +52,7 @@ public class ConsoleTerminal extends _Terminal {
     }
 
     @Override
-    public void n(String s) {
+    public void p_(String s) {
         assert s != null : "null string"; 
         switch (state) {
         case START:

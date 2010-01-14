@@ -1,6 +1,6 @@
 package net.bodz.bas.ant;
 
-import net.bodz.bas.util.LogTerm;
+import net.bodz.bas.io.term.LogTerm;
 
 import com.sun.jmx.snmp.tasks.Task;
 
@@ -15,7 +15,7 @@ public class TaskLogTerm extends LogTerm {
     }
 
     @Override
-    public Terminal filter(final int level) {
+    public ITerminal filter(final int level) {
         return new BufferedTerminal() {
             @Override
             public void _p(String s) {

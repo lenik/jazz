@@ -8,9 +8,9 @@ import java.util.Date;
 public class ProtectedShell {
 
     private boolean enabled;
-    private Terminal out;
+    private ITerminal out;
 
-    public ProtectedShell(boolean enabled, Terminal out) {
+    public ProtectedShell(boolean enabled, ITerminal out) {
         this.enabled = enabled;
         this.out = out;
     }

@@ -9,7 +9,7 @@ import net.bodz.bas.io.NullWriter;
 import net.bodz.bas.io.out.CharOut;
 import net.bodz.bas.io.out.CharOuts;
 
-public class NullTerminal implements Terminal {
+public class NullTerminal implements ITerminal {
 
     @Override
     public CharOut getCharOut() {
@@ -31,7 +31,7 @@ public class NullTerminal implements Terminal {
     }
 
     @Override
-    public void n(String s) {
+    public void p_(String s) {
     }
 
     @Override
@@ -43,7 +43,7 @@ public class NullTerminal implements Terminal {
     }
 
     @Override
-    public void n(Object obj) {
+    public void p_(Object obj) {
     }
 
     @Override
@@ -55,7 +55,7 @@ public class NullTerminal implements Terminal {
     }
 
     @Override
-    public void n(Object... args) {
+    public void p_(Object... args) {
     }
 
     @Override

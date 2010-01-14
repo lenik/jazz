@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 
+/**
+ * @test InterpsTest
+ */
 public class Interps {
 
     public static String dereference(String format, Map<String, ?> map) {
@@ -75,7 +78,8 @@ public class Interps {
         return buffer.toString();
     }
 
-    public static class MatcherGroupList extends AbstractList<String> {
+    static class MatcherGroupList
+            extends AbstractList<String> {
 
         private final Matcher matcher;
 

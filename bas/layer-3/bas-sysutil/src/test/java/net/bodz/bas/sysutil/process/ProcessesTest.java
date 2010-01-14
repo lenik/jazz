@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 
-import net.bodz.bas.io.Files;
+import net.bodz.bas.fs.legacy.Files;
 
 import org.junit.Test;
 

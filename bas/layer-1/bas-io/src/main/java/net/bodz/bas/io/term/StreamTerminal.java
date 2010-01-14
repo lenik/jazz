@@ -6,7 +6,7 @@ import java.io.PrintStream;
 import net.bodz.bas.io.out.CharOut;
 import net.bodz.bas.io.out.CharOuts;
 
-public class StreamTerminal extends _Terminal {
+public class StreamTerminal extends AbstractTerminal {
 
     // private boolean dirty; ...
     private final PrintStream out;
@@ -33,7 +33,7 @@ public class StreamTerminal extends _Terminal {
     }
 
     @Override
-    public void n(String s) {
+    public void p_(String s) {
         out.print(s);
     }
 

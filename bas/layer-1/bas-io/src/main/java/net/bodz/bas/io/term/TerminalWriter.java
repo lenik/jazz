@@ -5,9 +5,9 @@ import java.io.Writer;
 
 public class TerminalWriter extends Writer {
 
-    private final Terminal terminal;
+    private final ITerminal terminal;
 
-    public TerminalWriter(Terminal terminal) {
+    public TerminalWriter(ITerminal terminal) {
         if (terminal == null)
             throw new NullPointerException("terminal"); 
         this.terminal = terminal;
@@ -26,7 +26,7 @@ public class TerminalWriter extends Writer {
     @Override
     public void write(char[] cbuf, int off, int len) throws IOException {
         String s = new String(cbuf, off, len);
-        terminal.n(s);
+        terminal.p_(s);
     }
 
 }

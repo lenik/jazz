@@ -18,10 +18,10 @@ import java.util.Map.Entry;
 
 import javax.script.ScriptException;
 
+import net.bodz.bas.c1.Pair;
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.cli.a.OptionGroup;
 import net.bodz.bas.collection.preorder.PrefixMap;
-import net.bodz.bas.commons.pojos.Pair;
 import net.bodz.bas.commons.util.Types;
 
 public class ClassOptions<CT> {

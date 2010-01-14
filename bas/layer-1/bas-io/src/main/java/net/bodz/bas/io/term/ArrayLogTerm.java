@@ -1,19 +1,20 @@
-package net.bodz.bas.util;
+package net.bodz.bas.io.term;
+
 
 
 public abstract class ArrayLogTerm extends LogTerm {
 
-    private Terminal[] array;
+    private ITerminal[] array;
 
-    public ArrayLogTerm(Terminal... array) {
+    public ArrayLogTerm(ITerminal... array) {
         setArray(array);
     }
 
-    public Terminal[] getArray() {
+    public ITerminal[] getArray() {
         return array;
     }
 
-    public void setArray(Terminal[] array) {
+    public void setArray(ITerminal[] array) {
         if (array == null)
             throw new NullPointerException("array"); 
         this.array = array;
@@ -22,9 +23,9 @@ public abstract class ArrayLogTerm extends LogTerm {
     protected abstract int getIndexOf(int level);
 
     @Override
-    public final Terminal filter(int level) {
+    public final ITerminal filter(int level) {
         int targetIndex = getIndexOf(level);
-        Terminal target = array[targetIndex];
+        ITerminal target = array[targetIndex];
         return target;
     }
 

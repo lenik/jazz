@@ -4,6 +4,9 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.bodz.bas.c1.annotations.Author;
+import net.bodz.bas.c1.annotations.Version;
+import net.bodz.bas.c1.annotations.WebSite;
 import net.bodz.bas.collection.util.ClassLocal;
 import net.bodz.bas.commons.util.Annotations;
 import net.bodz.bas.commons.util.Ns;

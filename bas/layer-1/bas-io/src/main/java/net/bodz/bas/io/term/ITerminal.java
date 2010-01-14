@@ -6,7 +6,7 @@ import java.io.Writer;
 
 import net.bodz.bas.io.out.CharOut;
 
-public interface Terminal {
+public interface ITerminal {
 
     CharOut getCharOut();
 
@@ -16,36 +16,24 @@ public interface Terminal {
 
     void p();
 
-    void n(String s);
+    void p_(String s);
 
     void p(String s);
 
-    void t(String s);
-
-    void n(Object obj);
+    void p_(Object obj);
 
     void p(Object obj);
 
-    void t(Object obj);
-
-    void n(Object... args);
+    void p_(Object... args);
 
     void p(Object... args);
 
-    void t(Object... args);
-
     void f(String format, Object... args);
 
-    void flush() throws IOException;
+    void flush()
+            throws IOException;
 
-    void close() throws IOException;
-
-    // extras
-
-    void setTextColor(int index);
-
-    void setBackColor(int index);
-
-    void beep();
+    void close()
+            throws IOException;
 
 }

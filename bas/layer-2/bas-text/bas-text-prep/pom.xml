@@ -16,6 +16,27 @@
     		<type>jar</type>
     		<scope>compile</scope>
     	</dependency>
+    	<dependency>
+    		<groupId>net.bodz.bas</groupId>
+    		<artifactId>bas-io</artifactId>
+    		<version>0.0.1-SNAPSHOT</version>
+    		<type>jar</type>
+    		<scope>compile</scope>
+    	</dependency>
+    	<dependency>
+    		<groupId>net.bodz.bas</groupId>
+    		<artifactId>bas-c1</artifactId>
+    		<version>0.0.1-SNAPSHOT</version>
+    		<type>jar</type>
+    		<scope>compile</scope>
+    	</dependency>
+    	<dependency>
+    		<groupId>net.bodz.bas</groupId>
+    		<artifactId>bas-text-diff</artifactId>
+    		<version>0.0.1-SNAPSHOT</version>
+    		<type>jar</type>
+    		<scope>compile</scope>
+    	</dependency>
     </dependencies>
     <name>BAS :: Layer 2 :: Text :: Preprocess</name>
 </project>

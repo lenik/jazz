@@ -5,6 +5,8 @@ import java.io.FileWriter;
 import java.io.FilterWriter;
 import java.io.IOException;
 
+import net.bodz.bas.fs.legacy.Files;
+
 public class TempWriter extends FilterWriter {
 
     private File file;

@@ -2,11 +2,10 @@ package net.bodz.bas.type.traits;
 
 import net.bodz.bas.lang.IQueryable;
 
-
 public interface ITypeInfo<T>
         extends IQueryable {
 
-    IAnnotations getAnnotations();
+    IAttributes getAttributes();
 
     IParser<T> getParser();
 

@@ -10,14 +10,15 @@ import org.junit.Test;
 public class SystemPropertiesTest {
 
     @Test
-    public void test() throws Exception {
+    public void test()
+            throws Exception {
 
     }
 
     static void generate() {
         Properties properties = System.getProperties();
-        List<Object> keys = new ArrayList<Object>(properties.keySet());
-        Collections.sort(keys, Comparators.STD);
+        List<String> keys = new ArrayList<String>(properties.stringPropertyNames());
+        Collections.sort(keys);
         for (Object key : keys) {
             String name = String.valueOf(key);
             String value = properties.getProperty(name);
@@ -29,10 +30,10 @@ public class SystemPropertiesTest {
                 value = Strings.escape(value);
 
             // System.getProperty(key)
-            System.out.println("    /** " + key + " = " + value + " */");   
+            System.out.println("    /** " + key + " = " + value + " */");
             System.out.println("    public static String get" + Strings.ucfirst(name) + "() {\n" + //  
                     "        return System.getProperty(\"" + key + "\"); \n" + //  
-                    "    }\n"); 
+                    "    }\n");
         }
     }
 

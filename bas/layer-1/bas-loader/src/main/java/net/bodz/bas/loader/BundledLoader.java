@@ -4,9 +4,8 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.net.URLStreamHandlerFactory;
 
-import sun.dyn.empty.Empty;
-
-public class BundledLoader extends URLClassLoader {
+public class BundledLoader
+        extends URLClassLoader {
 
     private LibInstaller installer = new LibInstaller();
 
@@ -23,7 +22,7 @@ public class BundledLoader extends URLClassLoader {
     }
 
     public BundledLoader() {
-        super(Empty.URLs);
+        super(new URL[0]);
     }
 
     @Override
@@ -33,7 +32,7 @@ public class BundledLoader extends URLClassLoader {
 
     public static BundledLoader replace(ClassLoader loader) {
         if (loader == null)
-            return new BundledLoader(Empty.URLs);
+            return new BundledLoader(new URL[0]);
         if (loader instanceof BundledLoader)
             return (BundledLoader) loader;
         if (loader instanceof URLClassLoader) {
@@ -42,8 +41,8 @@ public class BundledLoader extends URLClassLoader {
             ClassLoader parent = ucl.getParent();
             return new BundledLoader(urls, parent);
         }
-        throw new UnsupportedOperationException(String.format(
-                "Can\'t replace the given loader %s to BundledLoader", loader)); 
+        throw new UnsupportedOperationException(String.format("Can\'t replace the given loader %s to BundledLoader",
+                loader));
     }
 
 }

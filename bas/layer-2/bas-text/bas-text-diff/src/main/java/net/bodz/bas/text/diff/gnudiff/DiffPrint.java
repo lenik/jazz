@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-import net.bodz.bas.io.Files;
+import net.bodz.bas.fs.legacy.Files;
 import net.bodz.bas.io.out.CharOut;
 import net.bodz.bas.io.out.CharOuts;
 import net.bodz.bas.text.diff.DiffInfo;

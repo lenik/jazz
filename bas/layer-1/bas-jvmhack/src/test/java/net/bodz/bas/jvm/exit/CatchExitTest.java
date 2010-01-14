@@ -1,14 +1,14 @@
 package net.bodz.bas.jvm.exit;
 
 import static org.junit.Assert.assertEquals;
-import net.bodz.bas.closure.IExecutable;
+import net.bodz.bas.closure.IExecutableX;
 
 import org.junit.Test;
 
 public class CatchExitTest {
 
     static class TestProgram
-            implements IExecutable<Exception> {
+            implements IExecutableX<Exception> {
 
         private int status;
 

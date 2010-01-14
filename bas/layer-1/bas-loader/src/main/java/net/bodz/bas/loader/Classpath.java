@@ -4,9 +4,14 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
 
+import net.bodz.bas.io.out.CharOut;
+import net.bodz.bas.io.term.ITerminal;
+import net.bodz.bas.io.term.Terminals;
+import net.bodz.bas.jvm.stack.Caller;
+
 public class Classpath {
 
-    static Terminal out = Terminals.nil;
+    static ITerminal out = Terminals.nil;
 
     /**
      * @return <code>false</code> if url is existed.

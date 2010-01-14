@@ -7,7 +7,7 @@ import javax.script.ScriptException;
 
 import net.bodz.bas.cli.BasicCLI;
 import net.bodz.bas.cli.CLIException;
-import net.bodz.bas.util.LogTerm;
+import net.bodz.bas.io.term.LogTerm;
 import sun.dyn.empty.Empty;
 
 public class CLITask extends Task {

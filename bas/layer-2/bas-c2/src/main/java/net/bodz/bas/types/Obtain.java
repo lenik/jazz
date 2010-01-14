@@ -15,7 +15,7 @@ public @interface Obtain {
     /**
      * Can obtain by parsing a string.
      */
-    Class<? extends Parser<?>> parser();
+    Class<? extends IParser<?>> parser();
 
     /**
      * Can obtain by accessing a registry

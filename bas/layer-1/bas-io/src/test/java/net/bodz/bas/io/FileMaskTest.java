@@ -5,6 +5,9 @@ import static org.junit.Assert.assertEquals;
 import java.io.File;
 import java.io.IOException;
 
+import net.bodz.bas.fs.FileMask;
+import net.bodz.bas.fs.legacy.Files;
+
 import org.junit.Test;
 
 public class FileMaskTest {

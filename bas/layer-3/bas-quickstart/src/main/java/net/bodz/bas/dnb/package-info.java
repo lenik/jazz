@@ -1,6 +1,6 @@
 /**
  * dotNet Bridge
  */
-@net.bodz.bas.a.Doc("dotNet Bridge")
+@net.bodz.bas.c1.annotations.Doc("dotNet Bridge")
 package net.bodz.bas.dnb;
 

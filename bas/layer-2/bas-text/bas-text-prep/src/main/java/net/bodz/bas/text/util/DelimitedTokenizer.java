@@ -5,7 +5,16 @@ import java.io.Reader;
 import java.util.Arrays;
 import java.util.List;
 
-public class DelimitedTokenizer implements DirectIterable<String, IOException> {
+import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
+import net.bodz.bas.collection.iterator.ImmIterIterator;
+import net.bodz.bas.collection.iterator.ImmediateIterableX;
+import net.bodz.bas.collection.iterator.ImmediateIteratorX;
+import net.bodz.bas.collection.iterator.IterableX;
+import net.bodz.bas.collection.iterator.IteratorX;
+import net.bodz.bas.exceptions.NotImplementedException;
+
+public class DelimitedTokenizer
+        implements ImmediateIterableX<String, IOException>, IterableX<String, IOException> {
 
     private List<Delimiter> delimiters;
 
@@ -35,30 +44,34 @@ public class DelimitedTokenizer implements DirectIterable<String, IOException> {
         TD_MAXLEN = TD_SPAN / 2;
     }
 
-    void next() throws IOException {
+    void next()
+            throws IOException {
         int c;
         while ((c = in.read()) != -1) {
 
         }
     }
 
-    class Iter extends _DirectIterator<String, IOException> {
+    class Iter
+            extends AbstractImmediateIteratorX<String, IOException> {
 
         @Override
-        public boolean next() throws IOException {
-            return false;
-        }
-
-        @Override
-        public String get() {
-            return null;
+        public String next()
+                throws IOException {
+            throw new NotImplementedException();
+            // return end();
         }
 
     }
 
     @Override
-    public DirectIterator<? extends String, IOException> iterator(boolean allowOverlap) {
-        return null;
+    public IteratorX<String, IOException> iterator() {
+        return new ImmIterIterator<String, IOException>(new Iter());
+    }
+
+    @Override
+    public ImmediateIteratorX<String, ? extends IOException> iterator(boolean allowOverlap) {
+        return new Iter();
     }
 
 }

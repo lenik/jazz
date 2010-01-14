@@ -2,6 +2,9 @@ package net.bodz.bas.jvm.stack;
 
 import java.lang.reflect.Method;
 
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
+import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
+
 public class Caller {
 
     public static StackTraceElement stackTrace(int caller) {
@@ -18,8 +21,8 @@ public class Caller {
     static final Method Reflection_getCallerClass;
     static {
         try {
-            Reflection_class = Class.forName("sun.reflect.Reflection");
-            Reflection_getCallerClass = Reflection_class.getMethod("getCallerClass", int.class);
+            Reflection_class = Jdk7Reflect.forName("sun.reflect.Reflection");
+            Reflection_getCallerClass = Jdk7Reflect.getMethod(Reflection_class, "getCallerClass", int.class);
         } catch (ReflectiveOperationException e) {
             throw new UnsupportedOperationException("Get caller isn't supported. ", e);
         }
@@ -27,7 +30,7 @@ public class Caller {
 
     public static Class<?> getCallerClass(int caller) {
         try {
-            return (Class<?>) Reflection_getCallerClass.invoke(null, caller + 2);
+            return (Class<?>) Jdk7Reflect.invoke(Reflection_getCallerClass, null, caller + 2);
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
