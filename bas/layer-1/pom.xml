@@ -16,6 +16,7 @@
 		<module>bas-jvmhack</module>
 		<module>bas-lang</module>
 		<module>bas-loader</module>
+		<module>bas-log</module>
 		<module>bas-memoryio</module>
 		<module>bas-natives</module>
 		<module>bas-network</module>
