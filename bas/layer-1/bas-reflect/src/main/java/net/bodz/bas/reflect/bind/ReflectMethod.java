@@ -1,4 +1,4 @@
-package net.bodz.bas.commons.scripting;
+package net.bodz.bas.reflect.bind;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,10 +7,10 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target( { ElementType.FIELD })
-public @interface ReflectField {
+public @interface ReflectMethod {
 
     /**
-     * Field name.
+     * Method name.
      * 
      * It's recommended to set the name, for working with obfuscator.
      */
@@ -18,11 +18,8 @@ public @interface ReflectField {
 
     Class<?> _class() default void.class;
 
-    Class<?> type() default Object.class;
+    Class<?>[] parameters() default {};
 
-    /**
-     * only bind to public accessible members
-     */
     boolean secure() default false;
 
 }

@@ -10,6 +10,7 @@
 	<packaging>pom</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<modules>
+		<module>bas-bean</module>
 		<module>bas-closure</module>
 		<module>bas-hint</module>
 		<module>bas-io</module>
@@ -22,6 +23,7 @@
 		<module>bas-network</module>
 		<module>bas-primitive</module>
 		<module>bas-proxy</module>
+		<module>bas-reflect</module>
 		<module>bas-sysinfo</module>
 		<module>bas-type</module>
 	</modules>
