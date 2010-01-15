@@ -11,6 +11,7 @@ public class StdoutLogSink
 
     @Override
     public void put(Object obj) {
+        System.out.println(obj);
     }
 
 }

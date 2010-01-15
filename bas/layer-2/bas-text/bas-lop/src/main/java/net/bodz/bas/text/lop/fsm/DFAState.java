@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 
+import net.bodz.bas.io.out.CharOut;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**

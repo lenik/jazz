@@ -3,6 +3,9 @@ package net.bodz.bas.text.lop.impl;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import net.bodz.bas.reflect.bind.ReflectBind;
+import net.bodz.bas.reflect.bind.ReflectField;
+import net.bodz.bas.reflect.bind.ReflectMethod;
 import net.bodz.bas.text.lop._Parser;
 
 /**
@@ -17,7 +20,8 @@ import net.bodz.bas.text.lop._Parser;
  * </ul>
  * </code>
  */
-public abstract class ByaccjParser extends _Parser {
+public abstract class ByaccjParser
+        extends _Parser {
 
     @ReflectField("yystate")
     private Field yystate;
@@ -40,19 +44,19 @@ public abstract class ByaccjParser extends _Parser {
     @Override
     public int state(int stackRelative) {
         if (stackRelative == 0)
-            return (Integer) Reflects.get(this, yystate);
+            return (Integer) ReflectBind.get(this, yystate);
         else
-            return (Integer) Reflects.invoke(this, state_peek, (stackRelative - 1));
+            return (Integer) ReflectBind.invoke(this, state_peek, (stackRelative - 1));
     }
 
     @Override
     public Object getValue() {
-        return Reflects.get(this, yylval);
+        return ReflectBind.get(this, yylval);
     }
 
     @Override
     public void setValue(Object value) {
-        Reflects.set(this, yylval, value);
+        ReflectBind.set(this, yylval, value);
     }
 
 }

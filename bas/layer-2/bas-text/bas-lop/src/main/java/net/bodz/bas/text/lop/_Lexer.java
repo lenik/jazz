@@ -3,12 +3,19 @@ package net.bodz.bas.text.lop;
 import java.io.Reader;
 import java.util.Stack;
 
+import net.bodz.bas.collection.map.IndexMap;
+import net.bodz.bas.io.out.CharOut;
+import net.bodz.bas.io.out.CharOuts.BCharOut;
+import net.bodz.bas.reflect.ReflectReverseSearch;
 import net.bodz.bas.text.lop.util.XYPosition;
 import net.bodz.bas.text.lop.util.XYTellable;
+import net.bodz.bas.text.util.StringPrep;
 
-public abstract class _Lexer implements Lexer {
+public abstract class _Lexer
+        implements Lexer {
 
-    protected class Token extends _Token {
+    protected class Token
+            extends _Token {
 
         private final String text = _Lexer.this.getText();
 
@@ -139,12 +146,12 @@ public abstract class _Lexer implements Lexer {
     @Override
     public String getTokenName(int id) {
         if (id >= 0 && id < 256)
-            return Strings.escape((char) id);
+            return StringPrep.escape((char) id);
         if (tokenNames == null)
             tokenNames = new IndexMap<String>();
         String name = tokenNames.get(id);
         if (name == null) {
-            name = ReflectUtil.getFirstFieldName(getTokenDeclClass(), null, id);
+            name = ReflectReverseSearch.getFirstFieldName(getTokenDeclClass(), null, id);
             if (name == null)
                 name = String.valueOf(id);
             tokenNames.set(id, name);
@@ -176,7 +183,7 @@ public abstract class _Lexer implements Lexer {
             stateNames = new IndexMap<String>();
         String name = stateNames.get(state);
         if (name == null) {
-            name = ReflectUtil.getFirstFieldName(getClass(), null, state);
+            name = ReflectReverseSearch.getFirstFieldName(getClass(), null, state);
             if (name == null)
                 name = String.valueOf(state);
             stateNames.set(state, name);

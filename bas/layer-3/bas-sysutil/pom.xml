@@ -16,6 +16,16 @@
     		<type>jar</type>
     		<scope>compile</scope>
     	</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.bodz.bas</groupId>
+			<artifactId>bas-text-util</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
     </dependencies>
     <name>BAS :: Layer 3 :: System Utilities</name>
 </project>

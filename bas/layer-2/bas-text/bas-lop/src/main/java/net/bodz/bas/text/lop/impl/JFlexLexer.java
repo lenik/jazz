@@ -4,6 +4,9 @@ import java.io.Reader;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import net.bodz.bas.reflect.bind.ReflectBind;
+import net.bodz.bas.reflect.bind.ReflectField;
+import net.bodz.bas.reflect.bind.ReflectMethod;
 import net.bodz.bas.text.lop._Lexer;
 import net.bodz.bas.text.lop.util.XYTellable;
 
@@ -28,7 +31,9 @@ import net.bodz.bas.text.lop.util.XYTellable;
  * 
  * @since JFlex 1.4.1
  */
-public abstract class JFlexLexer extends _Lexer implements XYTellable {
+public abstract class JFlexLexer
+        extends _Lexer
+        implements XYTellable {
 
     @ReflectMethod("yylex")
     private Method yylex; // public int()
@@ -77,65 +82,65 @@ public abstract class JFlexLexer extends _Lexer implements XYTellable {
      */
 
     protected JFlexLexer() {
-        Reflects.bind(JFlexLexer.class, this);
+        ReflectBind.bind(JFlexLexer.class, this);
     }
 
     protected JFlexLexer(Reader in) {
         this();
         // set zzReader=in is slightly faster then reset(in).
-        Reflects.set(this, zzReader, in);
+        ReflectBind.set(this, zzReader, in);
     }
 
     @Override
     public void reset(Reader in) {
-        Reflects.invoke(this, yyreset, in);
+        ReflectBind.invoke(this, yyreset, in);
     }
 
     @Override
     public void close() {
-        Reflects.invoke(this, yyclose);
+        ReflectBind.invoke(this, yyclose);
     }
 
     @Override
     public long tell() {
-        return (Integer) Reflects.get(this, zzCurrentPos);
+        return ReflectBind.getInt(this, zzCurrentPos);
     }
 
     @Override
     public int tellY() {
-        int lines = (Integer) Reflects.get(this, yyline);
+        int lines = ReflectBind.getInt(this, yyline);
         return lines;
     }
 
     @Override
     public int tellX() {
-        int columns = (Integer) Reflects.get(this, yycolumn);
+        int columns = (Integer) ReflectBind.get(this, yycolumn);
         return columns;
     }
 
     @Override
     public String getText() {
-        return (String) Reflects.invoke(this, yytext);
+        return (String) ReflectBind.invoke(this, yytext);
     }
 
     @Override
     public int getLength() {
-        return (Integer) Reflects.invoke(this, yylength);
+        return (Integer) ReflectBind.invoke(this, yylength);
     }
 
     @Override
     public char getChar(int index) {
-        return (Character) Reflects.invoke(this, yycharat, index);
+        return (Character) ReflectBind.invoke(this, yycharat, index);
     }
 
     @Override
     protected void setState(int state) {
-        Reflects.invoke(this, yybegin, state);
+        ReflectBind.invoke(this, yybegin, state);
     }
 
     @Override
     public int state() {
-        int state = (Integer) Reflects.invoke(this, yystate);
+        int state = (Integer) ReflectBind.invoke(this, yystate);
         return state;
     }
 
@@ -145,9 +150,9 @@ public abstract class JFlexLexer extends _Lexer implements XYTellable {
      */
     @Override
     protected int _read() {
-        int c = (Integer) Reflects.invoke(this, yylex);
+        int c = (Integer) ReflectBind.invoke(this, yylex);
         if (c == 0) {
-            if ((Boolean) Reflects.get(this, zzAtEOF))
+            if (ReflectBind.getBoolean(this, zzAtEOF))
                 return -1;
         }
         return c;

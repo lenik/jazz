@@ -1,5 +1,9 @@
 package net.bodz.bas.text.lop.fsm;
 
+import net.bodz.bas.annotations.ChainOrder;
+import net.bodz.bas.annotations.ChainUsage;
+import net.bodz.bas.hint.OverrideOption;
+
 
 public interface CharSet extends Comparable<CharSet> {
 

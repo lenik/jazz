@@ -4,29 +4,30 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 
-import net.bodz.bas.fs.legacy.Files;
-
 import org.junit.Test;
 
 public class ProcessesTest {
 
-    String charset = "utf-8"; 
+    String charset = "utf-8";
 
-    String iocap(String cmdline) throws Exception {
+    String iocap(String cmdline)
+            throws Exception {
         Process process = Processes.shellExec(cmdline);
         String out = Processes.iocap(process, charset);
-        out = out.replaceAll("\r\n", "\n");  
+        out = out.replaceAll("\r\n", "\n");
         return out;
     }
 
     @Test
-    public void testIocapProcessString() throws Exception {
+    public void testIocapProcessString()
+            throws Exception {
         assertEquals("hello\n", iocap("echo hello"));
         assertEquals("world \n", iocap("echo world 1>&2"));
     }
 
     @Test
-    public void testMtpulse() throws Exception {
+    public void testMtpulse()
+            throws Exception {
         File mtpulse = Files.which("mtpulse");
         if (mtpulse != null) {
             System.out.println("mtpulse: " + mtpulse);

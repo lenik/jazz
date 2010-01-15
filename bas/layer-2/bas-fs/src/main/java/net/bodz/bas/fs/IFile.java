@@ -25,6 +25,8 @@ public interface IFile
      */
     void setCharset(Charset charset);
 
+    void setCharset(String charsetName);
+
     /**
      * @return <code>null</code> is length is unknown.
      */

@@ -1,8 +1,9 @@
 package net.bodz.bas.text.lop.fsm;
 
-import java.rmi.UnexpectedException;
+import net.bodz.bas.exceptions.UnexpectedException;
 
-public final class CharSetInv extends _CharSet {
+public final class CharSetInv
+        extends _CharSet {
 
     private final CharSet orig;
 

@@ -4,6 +4,7 @@ import net.bodz.bas.log.AbstractLogLayer;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.NullLogSink;
 import net.bodz.bas.log.StdoutLogSink;
+import net.bodz.bas.log.StdoutStatusSink;
 import net.bodz.bas.log.adapters.Log4jLogSink.DebugSink;
 import net.bodz.bas.log.adapters.Log4jLogSink.ErrorSink;
 import net.bodz.bas.log.adapters.Log4jLogSink.FatalSink;
@@ -59,6 +60,8 @@ public class Log4jLogLayer
             break;
         case STDOUT:
             return new StdoutLogSink();
+        case STATUS:
+            return new StdoutStatusSink();
         }
         return NullLogSink.getInstance();
     }

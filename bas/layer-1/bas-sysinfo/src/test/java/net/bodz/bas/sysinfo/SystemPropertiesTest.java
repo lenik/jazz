@@ -5,6 +5,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
+import net.bodz.bas.text.util.StringPrep;
+import net.bodz.bas.text.util.Strings;
+
 import org.junit.Test;
 
 public class SystemPropertiesTest {
@@ -27,7 +30,7 @@ public class SystemPropertiesTest {
                         + Strings.ucfirst(name.substring(dot + 1));
             }
             if (value != null)
-                value = Strings.escape(value);
+                value = StringPrep.escape(value);
 
             // System.getProperty(key)
             System.out.println("    /** " + key + " = " + value + " */");

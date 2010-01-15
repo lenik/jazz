@@ -8,6 +8,13 @@
     </parent>
     <artifactId>bas-c1</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <dependencies />
+    <dependencies >
+    	<dependency>
+    		<groupId>net.bodz.bas</groupId>
+    		<artifactId>bas-hint</artifactId>
+    		<version>0.0.2-SNAPSHOT</version>
+    		<scope>compile</scope>
+    	</dependency>
+    </dependencies>
     <name>BAS :: Layer 1 :: Commons</name>
 </project>

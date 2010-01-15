@@ -31,5 +31,5 @@
     		<scope>compile</scope>
     	</dependency>
     </dependencies>
-    <name>BAS :: Layer 2 :: Log</name>
+    <name>BAS :: Layer 1 :: Log</name>
 </project>

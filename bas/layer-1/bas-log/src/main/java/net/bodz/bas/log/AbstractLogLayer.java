@@ -58,4 +58,14 @@ public abstract class AbstractLogLayer
         return get(TRACE, verboseLevel);
     }
 
+    @Override
+    public IStatusSink getStatusSink() {
+        return (IStatusSink) get(STATUS, LEVEL_DEFAULT);
+    }
+
+    @Override
+    public IStatusSink getStatusSink(int verboseLevel) {
+        return (IStatusSink) get(STATUS, verboseLevel);
+    }
+
 }

@@ -2,7 +2,6 @@ package net.bodz.bas.fs;
 
 import java.io.File;
 import java.nio.charset.Charset;
-import java.nio.file.Path;
 
 import net.bodz.bas.fs.preparation.DefaultFormatDumpPreparation;
 import net.bodz.bas.fs.preparation.DefaultParseLoadPreparation;
@@ -37,6 +36,13 @@ public abstract class AbstractFile
         if (charset == null)
             throw new NullPointerException("charset");
         this.charset = charset;
+    }
+
+    @Override
+    public void setCharset(String charsetName) {
+        if (charsetName == null)
+            throw new NullPointerException("charsetName");
+        setCharset(Charset.forName(charsetName));
     }
 
     @Override

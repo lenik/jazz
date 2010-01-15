@@ -1,11 +1,12 @@
 package net.bodz.bas.text.lop.fsm;
 
-import java.rmi.UnexpectedException;
+import net.bodz.bas.exceptions.UnexpectedException;
 
 /**
  * @test {@link CharSetSubtractionTest}
  */
-public final class CharSetSubtraction extends _CharSet {
+public final class CharSetSubtraction
+        extends _CharSet {
 
     private final CharSet a;
     private final CharSet b;
