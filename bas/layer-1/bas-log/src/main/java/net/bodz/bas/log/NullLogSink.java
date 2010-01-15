@@ -1,5 +1,7 @@
 package net.bodz.bas.log;
 
+import net.bodz.bas.log.objects.ILogEvent;
+
 public class NullLogSink
         implements ILogSink {
 
@@ -10,6 +12,10 @@ public class NullLogSink
 
     @Override
     public void setVerboseLevel(int level) {
+    }
+
+    @Override
+    public void p(ILogEvent event) {
     }
 
     @Override

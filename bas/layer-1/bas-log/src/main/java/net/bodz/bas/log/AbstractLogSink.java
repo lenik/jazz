@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.bodz.bas.log.objects.DelayedConcat;
 import net.bodz.bas.log.objects.DelayedFormat;
+import net.bodz.bas.log.objects.ILogEvent;
 import net.bodz.bas.log.objects.WithThrown;
 
 public abstract class AbstractLogSink
@@ -37,10 +38,46 @@ public abstract class AbstractLogSink
     /**
      * Invoked only if verbose-level is greater than configured level.
      */
-    public abstract void put(Object obj);
+    public void put(ILogEvent event) {
+        Object message = event.getMessage();
+        Throwable exception = event.getException();
+        if (exception == null)
+            put(message);
+        else
+            put(message, exception);
+    }
 
-    public void put(Object obj, Throwable t) {
-        put(new WithThrown(obj, t));
+    /**
+     * Invoked only if verbose-level is greater than configured level.
+     */
+    public abstract void put(Object message);
+
+    /**
+     * Invoked only if verbose-level is greater than configured level.
+     */
+    public void put(Object message, Throwable t) {
+        put(new WithThrown(message, t).toString());
+    }
+
+    @Override
+    public void p(Object message) {
+        if (enabled) {
+            if (!buffer.isEmpty()) {
+                buffer.add(message);
+                Object[] array = buffer.toArray();
+                buffer.clear();
+                DelayedConcat concat = new DelayedConcat(array);
+                message = concat;
+            }
+            put(message);
+        } else
+            buffer.clear();
+    }
+
+    @Override
+    public void p(ILogEvent event) {
+        p_();
+        put(event);
     }
 
     @Override
@@ -57,41 +94,26 @@ public abstract class AbstractLogSink
     }
 
     @Override
-    public void p(Object obj) {
-        if (enabled) {
-            if (!buffer.isEmpty()) {
-                buffer.add(obj);
-                Object[] array = buffer.toArray();
-                buffer.clear();
-                DelayedConcat concat = new DelayedConcat(array);
-                obj = concat;
-            }
-            put(obj);
-        } else
-            buffer.clear();
-    }
-
-    @Override
-    public void p(Object... concatObjs) {
-        DelayedConcat concat = new DelayedConcat(concatObjs);
+    public void p(Object... concatMessages) {
+        DelayedConcat concat = new DelayedConcat(concatMessages);
         p(concat);
     }
 
     @Override
-    public void p(Object obj, Throwable t) {
+    public void p(Object message, Throwable t) {
         p_();
         if (enabled)
-            put(obj, t);
+            put(message, t);
     }
 
     @Override
-    public void p_(Object obj) {
-        buffer.add(obj);
+    public void p_(Object message) {
+        buffer.add(message);
     }
 
     @Override
-    public void p_(Object... concatObjs) {
-        DelayedConcat concat = new DelayedConcat(concatObjs);
+    public void p_(Object... concatMessages) {
+        DelayedConcat concat = new DelayedConcat(concatMessages);
         p_(concat);
     }
 

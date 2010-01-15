@@ -1,6 +1,7 @@
 package net.bodz.bas.log.objects;
 
-public class DelayedConcat {
+public class DelayedConcat
+        extends AbstractLogEvent {
 
     private Object[] parts;
     private String joined;

@@ -1,6 +1,7 @@
 package net.bodz.bas.log.objects;
 
-public final class WithThrown {
+public final class WithThrown
+        extends AbstractLogEvent {
 
     private final Object object;
     private final Throwable thrown;
@@ -14,10 +15,12 @@ public final class WithThrown {
         this.thrown = thrown;
     }
 
-    public Object getObject() {
+    @Override
+    public Object getMessage() {
         return object;
     }
 
+    @Override
     public Throwable getException() {
         return thrown;
     }

@@ -3,6 +3,7 @@ package net.bodz.bas.log.adapters;
 import net.bodz.bas.log.AbstractLogLayer;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.NullLogSink;
+import net.bodz.bas.log.StdoutLogSink;
 import net.bodz.bas.log.adapters.Log4jLogSink.DebugSink;
 import net.bodz.bas.log.adapters.Log4jLogSink.ErrorSink;
 import net.bodz.bas.log.adapters.Log4jLogSink.FatalSink;
@@ -25,12 +26,12 @@ public class Log4jLogLayer
     }
 
     @Override
-    public ILogSink get(int index, int verboseLevel) {
+    public ILogSink get(int eventType, int verboseLevel) {
         // Mix the LogLayer and Log4j log levels,
         // so a LogLayer(INFO, LEVEL_MORE) is equals to Log4j(DEBUG)
-        index = mixLevel(index, verboseLevel);
+        eventType = mixLevel(eventType, verboseLevel);
 
-        switch (index) {
+        switch (eventType) {
         case ERROR:
             if (verboseLevel < ILogSink.LEVEL_DEFAULT) {
                 if (log4j.isEnabledFor(Level.FATAL))

@@ -8,9 +8,9 @@ public abstract class AbstractLogLayer
 
     static final int DEFAULT_ROUND = LEVEL_DEFAULT - LEVEL_STEPLEN / 2;
 
-    protected int mixLevel(int id, int verboseLevel) {
-        id += (verboseLevel - DEFAULT_ROUND) / LEVEL_STEPLEN;
-        return id;
+    protected int mixLevel(int eventType, int verboseLevel) {
+        eventType += (verboseLevel - DEFAULT_ROUND) / LEVEL_STEPLEN;
+        return eventType;
     }
 
     @Override
