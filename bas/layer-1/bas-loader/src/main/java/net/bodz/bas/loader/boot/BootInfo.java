@@ -1,9 +1,12 @@
-package net.bodz.bas.a;
+package net.bodz.bas.loader.boot;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import net.bodz.bas.loader.DefaultBooter;
+import net.bodz.bas.loader.LoadConfig;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)

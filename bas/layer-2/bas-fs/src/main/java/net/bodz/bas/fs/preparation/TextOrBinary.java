@@ -1,6 +1,6 @@
 package net.bodz.bas.fs.preparation;
 
-import net.bodz.bas.primitive.Bits;
+import net.bodz.bas.bits.IBits;
 import net.bodz.bas.primitive.IntMath;
 
 public class TextOrBinary {
@@ -8,9 +8,9 @@ public class TextOrBinary {
     /**
      * @see CharFeature Part.1, is-text
      */
-    static Bits textBits;
+    static IBits textBits;
     static {
-        textBits = new Bits.IntvLE( //
+        textBits = new IBits.IntvLE( //
                 134231808, -1, -1, -1, -1, -1, -1, -1);
     }
 

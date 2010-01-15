@@ -37,6 +37,10 @@
     		<type>jar</type>
     		<scope>compile</scope>
     	</dependency>
+    	<dependency>
+    		<groupId>commons-lang</groupId>
+    		<artifactId>commons-lang</artifactId>
+    	</dependency>
     </dependencies>
     <name>BAS :: Layer 2 :: Text :: Utilities</name>
 </project>

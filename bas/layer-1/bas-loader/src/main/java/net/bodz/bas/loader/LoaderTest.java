@@ -1,5 +1,7 @@
 package net.bodz.bas.loader;
 
+import net.bodz.bas.loader.boot.BootInfo;
+
 @BootInfo(configs = LoaderTest.Config1.class)
 public class LoaderTest {
 

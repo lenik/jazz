@@ -1,10 +1,10 @@
-package net.bodz.bas.commons.util;
+package net.bodz.bas.c1.util;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 /**
- * @test DatesTest
+ * @test {@link DatesTest}
  */
 public class Dates {
 
@@ -31,13 +31,13 @@ public class Dates {
         sysTimeFormat = DateFormat.getTimeInstance();
         sysDateTimeFormat = DateFormat.getDateTimeInstance();
 
-        YYYY_MM_DD = getFormat("yyyy-MM-dd"); 
-        MM_DD_YYYY = getFormat("MM/dd/yyyy"); 
-        YYYYMMDD = getFormat("yyyyMMdd"); 
-        YYMMDD = getFormat("yyMMdd"); 
+        YYYY_MM_DD = getFormat("yyyy-MM-dd");
+        MM_DD_YYYY = getFormat("MM/dd/yyyy");
+        YYYYMMDD = getFormat("yyyyMMdd");
+        YYMMDD = getFormat("yyMMdd");
 
-        HH_MM_SS = getFormat("hh:mm:ss"); 
-        HHMMSS = getFormat("hhmmss"); 
+        HH_MM_SS = getFormat("hh:mm:ss");
+        HHMMSS = getFormat("hhmmss");
     }
 
     public static DateFormat dateFormat;
@@ -46,7 +46,7 @@ public class Dates {
     static {
         dateFormat = YYYY_MM_DD;
         timeFormat = HH_MM_SS;
-        dateTimeFormat = getFormat("yyyy-MM-dd hh:mm:ss"); 
+        dateTimeFormat = getFormat("yyyy-MM-dd hh:mm:ss");
     }
 
     public static DateFormat getFormat(String dateFormatString) {

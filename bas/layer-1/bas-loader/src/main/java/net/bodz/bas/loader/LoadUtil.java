@@ -4,11 +4,13 @@ import java.io.File;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.exceptions.ParseException;
+import net.bodz.bas.fs.legacy.Files;
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
+import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.snm.EclipseProject;
 import net.bodz.bas.snm.SJLibLoader;
 
@@ -109,8 +111,8 @@ public class LoadUtil {
 
     public static void execMain(Class<?> clazz, String... args)
             throws ReflectiveOperationException {
-        Method mainf = clazz.getMethod("main", String[].class);
-        mainf.invoke(null, (Object) args);
+        Method mainf = Jdk7Reflect.getMethod(clazz, "main", String[].class);
+        Jdk7Reflect.invoke(mainf, null, (Object) args);
     }
 
 }

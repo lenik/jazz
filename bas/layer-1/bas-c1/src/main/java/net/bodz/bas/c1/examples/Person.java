@@ -1,7 +1,7 @@
-package net.bodz.bas.test.types;
+package net.bodz.bas.c1.examples;
 
-import net.bodz.bas.commons.util.Objects;
 import net.bodz.bas.exceptions.OutOfDomainException;
+import net.bodz.bas.lang.Nullables;
 
 public class Person {
 
@@ -38,7 +38,7 @@ public class Person {
 
     public void setAge(int age) {
         if (age < 0 || age > 1000)
-            throw new OutOfDomainException("Not a valid age: " + age); 
+            throw new OutOfDomainException("Not a valid age: " + age);
         this.age = age;
     }
 
@@ -80,9 +80,9 @@ public class Person {
             return false;
         if (sex != p.sex)
             return false;
-        if (!Objects.equals(name, p.name))
+        if (!Nullables.equals(name, p.name))
             return false;
-        if (!Objects.equals(location, p.location))
+        if (!Nullables.equals(location, p.location))
             return false;
         return true;
     }
@@ -90,7 +90,7 @@ public class Person {
     @Override
     public String toString() {
         return String.format("<Person name=%s age=%d %s location=\"%s\">", // 
-                name, age, sex ? "girl" : "boy", location);  
+                name, age, sex ? "girl" : "boy", location);
     }
 
     public static final Person Tom;
@@ -98,10 +98,10 @@ public class Person {
     public static final Person Shecti;
     public static final Person Lenik;
     static {
-        Tom = new Person("Tom", 18, false, Address.Marks100); 
-        Lucy = new Person("Lucy", 16, true, Address.Golf200); 
-        Shecti = new Person("Shecti", 20, true, Address.YHLib); 
-        Lenik = new Person("Lenik", 28, true, Address.HNHome); 
+        Tom = new Person("Tom", 18, false, Address.Marks100);
+        Lucy = new Person("Lucy", 16, true, Address.Golf200);
+        Shecti = new Person("Shecti", 20, true, Address.YHLib);
+        Lenik = new Person("Lenik", 28, true, Address.HNHome);
     }
 
 }

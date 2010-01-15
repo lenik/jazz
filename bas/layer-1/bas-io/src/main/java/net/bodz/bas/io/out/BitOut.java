@@ -2,14 +2,14 @@ package net.bodz.bas.io.out;
 
 import java.io.IOException;
 
-import net.bodz.bas.primitive.IBits;
-import net.bodz.bas.primitive.Bits.BytevLE;
-import net.bodz.bas.primitive.Bits.IntvLE;
+import net.bodz.bas.bits.ISimpleBits;
+import net.bodz.bas.bits.IBits.BytevLE;
+import net.bodz.bas.bits.IBits.IntvLE;
 
 public abstract class BitOut implements IBitOut {
 
     @Override
-    public void write(IBits bits) throws IOException {
+    public void write(ISimpleBits bits) throws IOException {
         int size = bits.size();
         for (int i = 0; i < size; i++)
             _write(bits.test(i));

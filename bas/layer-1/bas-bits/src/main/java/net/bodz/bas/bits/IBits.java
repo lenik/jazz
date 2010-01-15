@@ -1,7 +1,7 @@
-package net.bodz.bas.primitive;
+package net.bodz.bas.bits;
 
-
-public interface Bits extends IBits {
+public interface IBits
+        extends ISimpleBits {
 
     int size();
 
@@ -35,7 +35,8 @@ public interface Bits extends IBits {
 
     int[] toIntArray(boolean padOne);
 
-    public static class Boolv extends _Bits {
+    public static class Boolv
+            extends AbstractBits {
 
         private final boolean[] array;
 
@@ -64,7 +65,8 @@ public interface Bits extends IBits {
 
     }
 
-    public static class BytevLE extends _Bits {
+    public static class BytevLE
+            extends AbstractBits {
 
         private byte[] bytes;
         private int bits;
@@ -130,7 +132,8 @@ public interface Bits extends IBits {
         }
     }
 
-    public static class BytevBE extends _Bits {
+    public static class BytevBE
+            extends AbstractBits {
 
         private byte[] bytes;
         private int bits;
@@ -196,7 +199,8 @@ public interface Bits extends IBits {
         }
     }
 
-    public static class IntvLE extends _Bits {
+    public static class IntvLE
+            extends AbstractBits {
 
         private int[] ints;
         private int bits;
@@ -276,7 +280,8 @@ public interface Bits extends IBits {
         }
     }
 
-    public static class IntvBE extends _Bits {
+    public static class IntvBE
+            extends AbstractBits {
 
         private int[] ints;
         private int bits;

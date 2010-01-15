@@ -1,4 +1,4 @@
-package net.bodz.bas.types;
+package net.bodz.bas.bits;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertTrue;

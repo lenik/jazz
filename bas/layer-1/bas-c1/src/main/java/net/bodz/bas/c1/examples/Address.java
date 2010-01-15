@@ -1,6 +1,6 @@
-package net.bodz.bas.test.types;
+package net.bodz.bas.c1.examples;
 
-import net.bodz.bas.commons.util.Objects;
+import net.bodz.bas.lang.Nullables;
 
 public class Address {
 
@@ -68,13 +68,13 @@ public class Address {
         Address a = (Address) obj;
         if (postCode != a.postCode)
             return false;
-        if (!Objects.equals(address, a.address))
+        if (!Nullables.equals(address, a.address))
             return false;
-        if (!Objects.equals(city, a.city))
+        if (!Nullables.equals(city, a.city))
             return false;
-        if (!Objects.equals(country, a.country))
+        if (!Nullables.equals(country, a.country))
             return false;
-        if (!Objects.equals(phoneNumber, a.phoneNumber))
+        if (!Nullables.equals(phoneNumber, a.phoneNumber))
             return false;
         return true;
     }
@@ -90,18 +90,10 @@ public class Address {
     public static final Address YHLib;
     public static final Address HNHome;
     static {
-        Marks100 = new Address(
-                "100 Marks Street", "London", "England", 12345,   
-                "123-456-789"); 
-        Golf200 = new Address(
-                "200 Golf Road", "New York", "USA", 23456,   
-                "234-567-888"); 
-        YHLib = new Address(
-                "300 Culture Park", "Hangzhou", "CHINA", 34567,   
-                "034-5678999"); 
-        HNHome = new Address(
-                "297 Changdai Rd.", "Haining", "CHINA", 314400,   
-                "138-19471680"); 
+        Marks100 = new Address("100 Marks Street", "London", "England", 12345, "123-456-789");
+        Golf200 = new Address("200 Golf Road", "New York", "USA", 23456, "234-567-888");
+        YHLib = new Address("300 Culture Park", "Hangzhou", "CHINA", 34567, "034-5678999");
+        HNHome = new Address("297 Changdai Rd.", "Haining", "CHINA", 314400, "138-19471680");
     }
 
 }

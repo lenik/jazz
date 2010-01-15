@@ -1,4 +1,4 @@
-package net.bodz.bas.a;
+package net.bodz.bas.loader.boot;
 
 import java.lang.reflect.Constructor;
 import java.net.URL;
@@ -8,7 +8,14 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.bodz.bas.exceptions.CreateException;
-import sun.dyn.empty.Empty;
+import net.bodz.bas.io.out.CharOut;
+import net.bodz.bas.io.out.CharOuts.BCharOut;
+import net.bodz.bas.jvm.stack.Caller;
+import net.bodz.bas.loader.DefaultBooter;
+import net.bodz.bas.loader.LoadConfig;
+import net.bodz.bas.loader.LoadException;
+import net.bodz.bas.loader.LoadUtil;
+import net.bodz.bas.text.util.StringArray;
 
 public class BootProc {
 
@@ -64,7 +71,7 @@ public class BootProc {
         }
         if (info == null)
             return prev;
-        String desc = clazz.getName() + "@" + System.identityHashCode(clazz); 
+        String desc = clazz.getName() + "@" + System.identityHashCode(clazz);
         return new BootProc(desc, prev, info);
     }
 
@@ -93,13 +100,13 @@ public class BootProc {
     public String[] getSysLibs() {
         List<String> buf = new ArrayList<String>();
         dumpSysLibs(buf);
-        return buf.toArray(Empty.Strings);
+        return buf.toArray(new String[0]);
     }
 
     public String[] getUserLibs() {
         List<String> buf = new ArrayList<String>();
         dumpUserLibs(buf);
-        return buf.toArray(Empty.Strings);
+        return buf.toArray(new String[0]);
     }
 
     public String getBooterClassName() {
@@ -131,7 +138,8 @@ public class BootProc {
             this.args = args;
         }
 
-        public LoadConfig getInstance() throws CreateException {
+        public LoadConfig getInstance()
+                throws CreateException {
             if (instance == null) {
                 instance = create();
                 clazz = null;
@@ -140,7 +148,8 @@ public class BootProc {
             return instance;
         }
 
-        LoadConfig create() throws CreateException {
+        LoadConfig create()
+                throws CreateException {
             if (args == null || args.length == 0)
                 try {
                     return clazz.newInstance();
@@ -162,7 +171,8 @@ public class BootProc {
             }
         }
 
-        LoadConfig createv() throws CreateException {
+        LoadConfig createv()
+                throws CreateException {
             try {
                 Constructor<? extends LoadConfig> vctor = clazz.getConstructor(String[].class);
                 return vctor.newInstance((Object) args);
@@ -173,7 +183,8 @@ public class BootProc {
 
     }
 
-    public ClassLoader configLoader(ClassLoader parent) throws LoadException {
+    public ClassLoader configLoader(ClassLoader parent)
+            throws LoadException {
         if (prev != null)
             parent = prev.configLoader(parent);
         for (ConfigParam configParam : configs) {
@@ -187,7 +198,8 @@ public class BootProc {
         return parent;
     }
 
-    public void load(int stageFrom, int stageTo) throws LoadException {
+    public void load(int stageFrom, int stageTo)
+            throws LoadException {
         if (prev != null)
             prev.load(stageFrom, stageTo);
         for (ConfigParam configParam : configs) {
@@ -204,7 +216,7 @@ public class BootProc {
         if (prev != null)
             prev.dumpBootArgs(args);
         for (String libspec : userlibs) {
-            args.add("-l"); 
+            args.add("-l");
             args.add(libspec);
         }
     }
@@ -222,26 +234,26 @@ public class BootProc {
     public String[] getBootArgs() {
         List<String> buf = new ArrayList<String>();
         dumpBootArgs(buf);
-        return buf.toArray(Empty.Strings);
+        return buf.toArray(new String[0]);
     }
 
     void dump(CharOut out) {
-        out.println("BootProc: " + description); 
+        out.println("BootProc: " + description);
         if (syslibs.length != 0)
-            out.println("    syslibs=" + Strings.join(", ", syslibs));  
+            out.println("    syslibs=" + StringArray.join(", ", syslibs));
         if (userlibs.length != 0)
-            out.println("    userlibs=" + Strings.join(", ", userlibs));  
+            out.println("    userlibs=" + StringArray.join(", ", userlibs));
         if (booterClassName != null)
-            out.println("    booter=" + booterClassName); 
+            out.println("    booter=" + booterClassName);
         if (configs != null && configs.length != 0) {
-            out.println("    Configs: "); 
+            out.println("    Configs: ");
             for (ConfigParam config : configs) {
-                out.print("        " + config.clazz); 
-                out.println("(" + Strings.join(", ", config.args) + ")");   
+                out.print("        " + config.clazz);
+                out.println("(" + StringArray.join(", ", config.args) + ")");
             }
         }
         if (prev != null) {
-            out.print("prev "); 
+            out.print("prev ");
             prev.dump(out);
         }
     }

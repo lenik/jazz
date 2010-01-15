@@ -8,9 +8,9 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.charset.Charset;
 
-import net.bodz.bas.a.BootInfo;
-import net.bodz.bas.a.BootProc;
 import net.bodz.bas.exceptions.OutOfDomainException;
+import net.bodz.bas.loader.annotation.BootInfo;
+import net.bodz.bas.loader.annotation.BootProc;
 
 @BootInfo(syslibs = "bodz_bas")
 public abstract class JavaLauncher implements Launcher {

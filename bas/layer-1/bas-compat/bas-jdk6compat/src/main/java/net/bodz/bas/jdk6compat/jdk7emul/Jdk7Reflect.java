@@ -37,7 +37,7 @@ public class Jdk7Reflect {
     /**
      * @see Class#newInstance()
      */
-    public static Object newInstance(Class<?> clazz)
+    public static <T> T newInstance(Class<T> clazz)
             throws InstantiationException, IllegalAccessException {
         try {
             return clazz.newInstance();

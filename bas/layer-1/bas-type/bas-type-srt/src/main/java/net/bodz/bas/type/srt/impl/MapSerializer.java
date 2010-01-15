@@ -6,6 +6,8 @@ import java.io.Writer;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
+import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.type.srt.SerializeException;
 import net.bodz.bas.type.srt.SimpleSerializerRegistry;
 
@@ -18,7 +20,7 @@ public class MapSerializer
             throws IOException, SerializeException {
         Map<?, ?> map = (Map<?, ?>) o;
         Class<?> type = map.getClass();
-        s.write(type.getName() + ":" + map.size() + ":{");  
+        s.write(type.getName() + ":" + map.size() + ":{");
         for (Entry<?, ?> entry : map.entrySet()) {
             Object key = entry.getKey();
             Object value = entry.getValue();
@@ -39,8 +41,8 @@ public class MapSerializer
 
         Map<Object, Object> map;
         try {
-            Class<?> type = Class.forName(stype);
-            map = (Map<Object, Object>) type.newInstance();
+            Class<?> type = Jdk7Reflect.forName(stype);
+            map = (Map<Object, Object>) Jdk7Reflect.newInstance(type);
         } catch (ReflectiveOperationException e) {
             throw new SerializeException(e.getMessage(), e);
         }

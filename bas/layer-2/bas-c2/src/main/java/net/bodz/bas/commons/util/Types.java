@@ -5,10 +5,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -17,6 +15,8 @@ import net.bodz.bas.collection.comparator.TypeComparator;
 import net.bodz.bas.exceptions.CreateException;
 import net.bodz.bas.exceptions.OutOfDomainException;
 import net.bodz.bas.exceptions.UnexpectedException;
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
+import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 
 public class Types {
 
@@ -28,40 +28,6 @@ public class Types {
         } catch (ClassNotFoundException e) {
             throw new UnexpectedException(e.getMessage(), e);
         }
-    }
-
-    private static Map<Class<?>, Class<?>> p2w;
-    private static Map<Class<?>, Class<?>> w2p;
-    static {
-        p2w = new HashMap<Class<?>, Class<?>>();
-        p2w.put(void.class, Void.class);
-        p2w.put(byte.class, Byte.class);
-        p2w.put(short.class, Short.class);
-        p2w.put(int.class, Integer.class);
-        p2w.put(long.class, Long.class);
-        p2w.put(float.class, Float.class);
-        p2w.put(double.class, Double.class);
-        p2w.put(char.class, Character.class);
-        p2w.put(boolean.class, Boolean.class);
-        w2p = new HashMap<Class<?>, Class<?>>();
-        w2p.put(Void.class, void.class);
-        w2p.put(Byte.class, byte.class);
-        w2p.put(Short.class, short.class);
-        w2p.put(Integer.class, int.class);
-        w2p.put(Long.class, long.class);
-        w2p.put(Float.class, float.class);
-        w2p.put(Double.class, double.class);
-        w2p.put(Character.class, char.class);
-        w2p.put(Boolean.class, boolean.class);
-    }
-
-    public static Class<?> box(Class<?> type) {
-        return type.isPrimitive() ? p2w.get(type) : type;
-    }
-
-    public static Class<?> unbox(Class<?> type) {
-        Class<?> primitive = w2p.get(type);
-        return primitive == null ? type : primitive;
     }
 
     public static Class<?>[] getTypeChain(Class<?> clazz) {
@@ -198,10 +164,10 @@ public class Types {
         return igcd.trueSet.toArray(new Class<?>[0]);
     }
 
-    public static <T> T newInstance(Class<T> clazz, Class<?>[] argtypes, Object... args) {
+    public static <T> T newInstance(Class<T> clazz, Class<?>[] argTypes, Object... args) {
         try {
-            Constructor<T> ctor = clazz.getConstructor(argtypes);
-            return ctor.newInstance(args);
+            Constructor<T> ctor = Jdk7Reflect.getConstructor(clazz, argTypes);
+            return Jdk7Reflect.newInstance(ctor, args);
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
@@ -214,7 +180,7 @@ public class Types {
 
     public static <T> T newInstance(Class<T> clazz) {
         try {
-            return clazz.newInstance();
+            return Jdk7Reflect.newInstance(clazz);
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
@@ -231,8 +197,8 @@ public class Types {
             return null;
         Class<?>[] argTypes = Types.getTypes(args);
         try {
-            Method method = clazz.getMethod("getInstance", argTypes);
-            return (T) method.invoke(null, args);
+            Method method = Jdk7Reflect.getMethod(clazz, "getInstance", argTypes);
+            return (T) Jdk7Reflect.invoke(method, null, args);
         } catch (ReflectiveOperationException e) {
             throw new CreateException(e);
         }

@@ -1,6 +1,6 @@
 package net.bodz.bas.a;
 
-import net.bodz.bas.commons.util.Dates;
+import net.bodz.bas.c1.util.Dates;
 
 public class VersionInfo implements Comparable<VersionInfo> {
 
