@@ -54,9 +54,9 @@ public abstract class AbstractBits
         bitOff %= Byte.SIZE;
         for (int i = bitStart; i < bitEnd; i++) {
             if (test(i))
-                buf[off] |= BytevLE.SET[bitOff];
+                buf[off] |= Byte_leBits.SET[bitOff];
             else
-                buf[off] &= BytevLE.CLEAR[bitOff];
+                buf[off] &= Byte_leBits.CLEAR[bitOff];
             if (++bitOff >= Byte.SIZE) {
                 off++;
                 bitOff = 0;
@@ -67,7 +67,7 @@ public abstract class AbstractBits
     /**
      * Implemented in little-endian version.
      * 
-     * @see IntvLE
+     * @see Int_leBits
      */
     @Override
     public void get(int[] buf, int bitOff, int bitStart, int bitEnd) {
@@ -75,9 +75,9 @@ public abstract class AbstractBits
         bitOff %= Integer.SIZE;
         for (int i = bitStart; i < bitEnd; i++) {
             if (test(i))
-                buf[off] |= IntvLE.SET[bitOff];
+                buf[off] |= Int_leBits.SET[bitOff];
             else
-                buf[off] &= IntvLE.CLEAR[bitOff];
+                buf[off] &= Int_leBits.CLEAR[bitOff];
             if (++bitOff >= Integer.SIZE) {
                 off++;
                 bitOff = 0;
@@ -95,7 +95,7 @@ public abstract class AbstractBits
         int off = bitOff / Byte.SIZE;
         bitOff %= Byte.SIZE;
         for (int i = bitStart; i < bitEnd; i++) {
-            set(i, (buf[off] & BytevLE.SET[bitOff]) != 0);
+            set(i, (buf[off] & Byte_leBits.SET[bitOff]) != 0);
             if (++bitOff >= Byte.SIZE) {
                 off++;
                 bitOff = 0;
@@ -106,14 +106,14 @@ public abstract class AbstractBits
     /**
      * Implemented in little-endian version.
      * 
-     * @see IntvLE
+     * @see Int_leBits
      */
     @Override
     public void set(int[] buf, int bitOff, int bitStart, int bitEnd) {
         int off = bitOff / Integer.SIZE;
         bitOff %= Integer.SIZE;
         for (int i = bitStart; i < bitEnd; i++) {
-            set(i, (buf[off] & IntvLE.CLEAR[bitOff]) != 0);
+            set(i, (buf[off] & Int_leBits.CLEAR[bitOff]) != 0);
             if (++bitOff >= Integer.SIZE) {
                 off++;
                 bitOff = 0;
