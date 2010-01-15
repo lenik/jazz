@@ -9,5 +9,8 @@
     <artifactId>bas-compat</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
+	<modules>
+		<module>bas-jdk6compat</module>
+	</modules>
     <name>BAS :: Layer 1 :: Compatible</name>
 </project>

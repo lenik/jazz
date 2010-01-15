@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>net.bodz.bas</groupId>
-        <artifactId>layer-1</artifactId>
+        <artifactId>bas-compat</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>bas-jdk6compat</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <dependencies />
-    <name>BAS :: Layer 1 :: J2SE 1.6 Compatibles</name>
+    <name>BAS :: Layer 1 :: Compatible :: J2SE 1.6</name>
 </project>
