@@ -18,7 +18,6 @@ import java.util.Map.Entry;
 import javax.script.ScriptException;
 
 import net.bodz.bas.a.A_bas;
-import net.bodz.bas.a.BootInfo;
 import net.bodz.bas.a.ClassInfo;
 import net.bodz.bas.a.RcsKeywords;
 import net.bodz.bas.a.VersionInfo;
@@ -31,6 +30,7 @@ import net.bodz.bas.exceptions.CreateException;
 import net.bodz.bas.hint.OverrideOption;
 import net.bodz.bas.io.term.LogTerm;
 import net.bodz.bas.io.term.LogTerms;
+import net.bodz.bas.loader.annotation.BootInfo;
 import net.bodz.bas.ui.ConsoleUI;
 import net.bodz.bas.ui.UserInterface;
 import net.bodz.bas.util.PluginException;

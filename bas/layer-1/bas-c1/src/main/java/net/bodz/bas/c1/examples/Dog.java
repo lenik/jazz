@@ -1,6 +1,6 @@
-package net.bodz.bas.test.types;
+package net.bodz.bas.c1.examples;
 
-import net.bodz.bas.commons.util.Objects;
+import net.bodz.bas.lang.Nullables;
 
 public class Dog {
 
@@ -8,7 +8,7 @@ public class Dog {
     private boolean drunk;
 
     public Dog() {
-        this.name = "Little White"; 
+        this.name = "Little White";
     }
 
     public Dog(String name) {
@@ -25,32 +25,27 @@ public class Dog {
     }
 
     public String bark() {
-        return out("Wang wang!!"); 
+        return out("Wang wang!!");
     }
 
     public String bark(String target) {
-        out("Hi, " + target + "!");  
+        out("Hi, " + target + "!");
         return target;
-    }
-
-    static final Quotable spliter;
-    static {
-        spliter = new Quotable("'".toCharArray()); 
     }
 
     public String bark(String target, boolean lazy) {
         if (!lazy)
             return bark(target);
-        String[] words = spliter.splitDequote("\\s+", target); 
-        String abbr = ""; 
+        String[] words = target.split("\\s+");
+        String abbr = "";
         for (String w : words)
             abbr += w.charAt(0);
-        out("H, " + abbr + "!");  
+        out("H, " + abbr + "!");
         return abbr;
     }
 
     public String intro() {
-        return out("My name is " + name + "!");  
+        return out("My name is " + name + "!");
     }
 
     public void drink() {
@@ -75,7 +70,7 @@ public class Dog {
         Dog dog = (Dog) obj;
         if (drunk != dog.drunk)
             return false;
-        if (Objects.equals(name, dog.name))
+        if (Nullables.equals(name, dog.name))
             return false;
         return true;
     }
@@ -92,7 +87,7 @@ public class Dog {
 
     @Override
     public String toString() {
-        return "<Dog name=" + name + " drunk=" + drunk + ">";   
+        return "<Dog name=" + name + " drunk=" + drunk + ">";
     }
 
 }

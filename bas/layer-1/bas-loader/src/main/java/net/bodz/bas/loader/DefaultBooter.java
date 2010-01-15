@@ -10,6 +10,8 @@ import net.bodz.bas.closure.alt.Pred1;
 import net.bodz.bas.io.out.CharOut;
 import net.bodz.bas.io.out.CharOuts;
 import net.bodz.bas.jvm.stack.Caller;
+import net.bodz.bas.loader.boot.BootInfo;
+import net.bodz.bas.loader.boot.BootProc;
 
 /**
  * The default booter for {@link BootInfo}.

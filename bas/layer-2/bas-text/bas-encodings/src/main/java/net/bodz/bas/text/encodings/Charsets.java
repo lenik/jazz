@@ -5,15 +5,18 @@ import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CharsetEncoder;
 import java.nio.charset.spi.CharsetProvider;
 import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
 
 import net.bodz.bas.exceptions.IllegalArgumentTypeException;
 
 /**
  * Literal Charset Provider Literal charset is designed for debug or special purpose.
  */
-public class Charsets extends CharsetProvider {
+public class Charsets
+        extends CharsetProvider {
 
-    private TextMap<Charset> charsetsImpl = new TreeTextMap<Charset>();
+    private Map<String, Charset> charsetsImpl = new TreeMap<String, Charset>();
 
     public Charsets() {
         implCharset(new HexCharset());
@@ -43,7 +46,7 @@ public class Charsets extends CharsetProvider {
     // utilities
 
     public static Charset DEFAULT = Charset.defaultCharset();
-    public static Charset ASCII = Charset.forName("ascii"); 
+    public static Charset ASCII = Charset.forName("ascii");
 
     public static Charset get(Object charset) {
         if (charset == null)
@@ -52,7 +55,7 @@ public class Charsets extends CharsetProvider {
             return (Charset) charset;
         if (charset instanceof String)
             return Charset.forName((String) charset);
-        throw new IllegalArgumentTypeException(charset, "String or Charset"); 
+        throw new IllegalArgumentTypeException(charset, "String or Charset");
     }
 
     public static CharsetEncoder getEncoder(Object charset) {

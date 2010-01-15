@@ -1,8 +1,7 @@
-package net.bodz.bas.primitive;
+package net.bodz.bas.bits;
 
-
-public abstract class _Bits
-        implements Bits {
+public abstract class AbstractBits
+        implements IBits {
 
     protected static int units(int bits, int unitSize) {
         return (bits + unitSize - 1) / unitSize;
@@ -163,9 +162,9 @@ public abstract class _Bits
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof Bits))
+        if (!(obj instanceof IBits))
             return false;
-        Bits b = (Bits) obj;
+        IBits b = (IBits) obj;
         int size = size();
         if (size != b.size())
             return false;

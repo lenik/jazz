@@ -1,6 +1,6 @@
 package net.bodz.bas.lang.annotations;
 
-import net.bodz.bas.commons.util.Annotations;
+import net.bodz.bas.annotation.util.Annotations;
 import net.bodz.bas.hint.OverrideOption;
 
 import org.junit.Test;

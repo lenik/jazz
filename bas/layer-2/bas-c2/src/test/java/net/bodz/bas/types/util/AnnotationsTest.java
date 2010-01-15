@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.lang.annotation.Annotation;
 
-import net.bodz.bas.commons.util.Annotations;
+import net.bodz.bas.annotation.util.Annotations;
 
 import org.junit.Test;
 

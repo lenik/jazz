@@ -14,7 +14,6 @@ import java.util.Map;
 import java.util.Set;
 
 import net.bodz.bas.a.A_bas;
-import net.bodz.bas.a.BootProc;
 import net.bodz.bas.a.ClassInfo;
 import net.bodz.bas.a.ProgramName;
 import net.bodz.bas.a.RcsKeywords;
@@ -30,6 +29,7 @@ import net.bodz.bas.exceptions.IdentifiedException;
 import net.bodz.bas.fs.URLFile;
 import net.bodz.bas.io.out.CharOuts;
 import net.bodz.bas.io.out.CharOuts.BCharOut;
+import net.bodz.bas.loader.annotation.BootProc;
 
 @Doc("Generate program launcher for java applications")
 @ProgramName("mkbat")

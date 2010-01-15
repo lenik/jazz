@@ -12,6 +12,7 @@
 	<modules>
 		<module>bas-annotation</module>
 		<module>bas-bean</module>
+		<module>bas-bits</module>
 		<module>bas-compat</module>
 		<module>bas-closure</module>
 		<module>bas-hint</module>

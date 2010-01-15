@@ -1,6 +1,8 @@
-package net.bodz.bas.loader;
+package net.bodz.bas.loader.boot;
 
 import static org.junit.Assert.assertEquals;
+import net.bodz.bas.loader.DefaultBooter;
+import net.bodz.bas.loader.LoadException;
 
 import org.junit.Test;
 
@@ -18,9 +20,10 @@ public class DefaultBooterTest {
     }
 
     @Test
-    public void testArgs() throws LoadException, Throwable {
+    public void testArgs()
+            throws LoadException, Throwable {
         String[] args = { "-l", "bodz_icons", "--",//   
-                TestArgs.class.getName(), "1", "2", };  
+                TestArgs.class.getName(), "1", "2", };
         sum = 0;
         DefaultBooter.main(args);
         assertEquals(3, sum);

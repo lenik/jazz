@@ -1,6 +1,6 @@
-package net.bodz.bas.primitive;
+package net.bodz.bas.bits;
 
-public interface IBits {
+public interface ISimpleBits {
 
     int size();
 

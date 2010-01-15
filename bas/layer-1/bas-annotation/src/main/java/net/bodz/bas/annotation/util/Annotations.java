@@ -1,4 +1,4 @@
-package net.bodz.bas.commons.util;
+package net.bodz.bas.annotation.util;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;

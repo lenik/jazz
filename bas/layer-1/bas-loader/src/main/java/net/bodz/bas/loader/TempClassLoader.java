@@ -4,6 +4,8 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.net.URLStreamHandlerFactory;
 
+import org.apache.commons.lang.ArrayUtils;
+
 public class TempClassLoader
         extends URLClassLoader {
 
@@ -39,7 +41,7 @@ public class TempClassLoader
         if (parent instanceof URLClassLoader) {
             URLClassLoader ucl = (URLClassLoader) parent;
             URL[] orig = ucl.getURLs();
-            merged = Arrays2.concat(orig, urls);
+            merged = (URL[]) ArrayUtils.addAll(orig, urls);
         }
         if (recursive) {
             if (parent != null)

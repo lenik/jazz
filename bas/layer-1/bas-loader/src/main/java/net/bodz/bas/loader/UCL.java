@@ -9,6 +9,10 @@ import java.util.List;
 import java.util.Set;
 
 import net.bodz.bas.exceptions.UnexpectedException;
+import net.bodz.bas.io.out.CharOut;
+import net.bodz.bas.io.out.CharOuts.BCharOut;
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
+import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.jvm.stack.Caller;
 
 public class UCL {
@@ -61,7 +65,7 @@ public class UCL {
                 URLClassLoader exists = exists(ucl, url, true);
                 if (exists != null)
                     continue;
-                URLClassLoader_addURL.invoke(ucl, url);
+                Jdk7Reflect.invoke(URLClassLoader_addURL, ucl, url);
                 added++;
             }
         } catch (ReflectiveOperationException e) {

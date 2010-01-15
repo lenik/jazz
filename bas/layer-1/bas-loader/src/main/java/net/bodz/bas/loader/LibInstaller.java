@@ -5,19 +5,22 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.nio.file.Files;
+import java.util.HashMap;
+import java.util.Map;
+
+import net.bodz.bas.fs.legacy.Files;
 
 public class LibInstaller {
 
     static boolean ignoreCase;
     static String libSuffix;
     static {
-        String osName = System.getProperty("os.name"); 
+        String osName = System.getProperty("os.name");
         if (osName != null) {
-            if (osName.startsWith("Windows")) 
+            if (osName.startsWith("Windows"))
                 ignoreCase = true;
         }
-        libSuffix = System.mapLibraryName("name").substring(4); 
+        libSuffix = System.mapLibraryName("name").substring(4);
         if (ignoreCase)
             libSuffix = libSuffix.toLowerCase();
     }
@@ -31,7 +34,7 @@ public class LibInstaller {
 
     private static File deflDir;
     static {
-        deflDir = new File(Files.getTmpDir(), "BundledLib"); 
+        deflDir = new File(Files.getTmpDir(), "BundledLib");
         deflDir.mkdirs();
     }
 
@@ -40,10 +43,10 @@ public class LibInstaller {
     }
 
     // libname -> libfile
-    private TextMap<File> installedLibraries;
+    private Map<String, File> installedLibraries;
 
     private void init() {
-        installedLibraries = new HashTextMap<File>();
+        installedLibraries = new HashMap<String, File>();
         File[] files = installDir.listFiles(new FilenameFilter() {
             @Override
             public boolean accept(File dir, String name) {
