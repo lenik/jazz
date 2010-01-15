@@ -7,7 +7,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 
-import net.bodz.bas.fs.legacy.Files;
+import net.bodz.bas.text.util.StringArray;
+
+import org.apache.commons.lang.ArrayUtils;
 
 /**
  * @test {@link ProcessesTest}
@@ -17,49 +19,58 @@ public class Processes {
     private static String[] shvec;
     private static String shprefix;
     static {
-        String os = System.getProperty("os.name"); 
-        if (os.startsWith("Windows")) { 
-            String comspec = System.getenv("COMSPEC"); 
+        String os = System.getProperty("os.name");
+        if (os.startsWith("Windows")) {
+            String comspec = System.getenv("COMSPEC");
             if (comspec == null)
-                comspec = "cmd"; 
-            shvec = new String[] { comspec, "/c" }; 
+                comspec = "cmd";
+            shvec = new String[] { comspec, "/c" };
         } else {
-            String shell = System.getenv("SHELL"); 
+            String shell = System.getenv("SHELL");
             if (shell == null)
-                shell = "sh"; 
+                shell = "sh";
             shvec = new String[] { shell };
         }
-        shprefix = Strings.join(" ", shvec) + " ";  
+        shprefix = StringArray.join(" ", shvec) + " ";
     }
 
-    public static Process shellExec(String command) throws IOException {
+    public static Process shellExec(String command)
+            throws IOException {
         Runtime runtime = Runtime.getRuntime();
         return runtime.exec(shprefix + command);
     }
 
-    public static Process shellExec(String command, String[] envp) throws IOException {
+    public static Process shellExec(String command, String[] envp)
+            throws IOException {
         Runtime runtime = Runtime.getRuntime();
         return runtime.exec(shprefix + command, envp);
     }
 
-    public static Process shellExec(String command, String[] envp, File dir) throws IOException {
+    public static Process shellExec(String command, String[] envp, File dir)
+            throws IOException {
         Runtime runtime = Runtime.getRuntime();
         return runtime.exec(shprefix + command, envp, dir);
     }
 
-    public static Process shellExec(String[] cmdarray) throws IOException {
+    public static Process shellExec(String[] cmdarray)
+            throws IOException {
         Runtime runtime = Runtime.getRuntime();
-        return runtime.exec(Arrays2.concat(shvec, cmdarray));
+        cmdarray = (String[]) ArrayUtils.addAll(shvec, cmdarray);
+        return runtime.exec(cmdarray);
     }
 
-    public static Process shellExec(String[] cmdarray, String[] envp) throws IOException {
+    public static Process shellExec(String[] cmdarray, String[] envp)
+            throws IOException {
         Runtime runtime = Runtime.getRuntime();
-        return runtime.exec(Arrays2.concat(shvec, cmdarray), envp);
+        cmdarray = (String[]) ArrayUtils.addAll(shvec, cmdarray);
+        return runtime.exec(cmdarray, envp);
     }
 
-    public static Process shellExec(String[] cmdarray, String[] envp, File dir) throws IOException {
+    public static Process shellExec(String[] cmdarray, String[] envp, File dir)
+            throws IOException {
         Runtime runtime = Runtime.getRuntime();
-        return runtime.exec(Arrays2.concat(shvec, cmdarray), envp, dir);
+        cmdarray = (String[]) ArrayUtils.addAll(shvec, cmdarray);
+        return runtime.exec(cmdarray, envp, dir);
     }
 
     /**
@@ -68,11 +79,13 @@ public class Processes {
      * @return exit code returned by the <code>process</code>.
      */
     public static int iocap(Process process, final InputStream sendSrc, final OutputStream outSink,
-            final OutputStream errSink) throws InterruptedException {
+            final OutputStream errSink)
+            throws InterruptedException {
         ManagedProcess mp = new ManagedProcess(new _IOCallback() {
 
             @Override
-            public void sendProc(OutputStream out) throws IOException {
+            public void sendProc(OutputStream out)
+                    throws IOException {
                 if (sendSrc == null) {
                     out.close();
                     // super.sendProc(out, sendSrc);
@@ -81,13 +94,15 @@ public class Processes {
             }
 
             @Override
-            public void recvIn(byte[] buf, int off, int len) throws IOException {
+            public void recvIn(byte[] buf, int off, int len)
+                    throws IOException {
                 if (outSink != null)
                     outSink.write(buf, off, len);
             }
 
             @Override
-            public void recvErr(byte[] buf, int off, int len) throws IOException {
+            public void recvErr(byte[] buf, int off, int len)
+                    throws IOException {
                 if (errSink != null)
                     errSink.write(buf, off, len);
             }
@@ -95,41 +110,9 @@ public class Processes {
         return mp.takeOver(process);
     }
 
-    public static int iocap(Process process, Object sendSrc, Object outSink, Object errSink)
+    public static int iocap(Process process, OutputStream outErrSink)
             throws InterruptedException, IOException {
-        InputStream send = Files.getInputStream(sendSrc);
-        boolean sendc = Files.shouldClose(send);
-        try {
-            OutputStream out = Files.getOutputStream(outSink);
-            boolean outc = Files.shouldClose(out);
-            try {
-                OutputStream err = Files.getOutputStream(errSink);
-                boolean errc = Files.shouldClose(err);
-                try {
-                    return iocap(process, send, out, err);
-                } finally {
-                    if (errc)
-                        err.close();
-                }
-            } finally {
-                if (outc)
-                    out.close();
-            }
-        } finally {
-            if (sendc)
-                send.close();
-        }
-    }
-
-    public static int iocap(Process process, Object outerrSink) throws InterruptedException, IOException {
-        OutputStream outerr = Files.getOutputStream(outerrSink);
-        boolean outerrc = Files.shouldClose(outerrSink);
-        try {
-            return iocap(process, null, outerr, outerr);
-        } finally {
-            if (outerrc)
-                outerr.close();
-        }
+        return iocap(process, null, outErrSink, outErrSink);
     }
 
     static ThreadLocal<Integer> exitCode;
@@ -140,22 +123,25 @@ public class Processes {
     public static int getLastExitCode() {
         Integer code = exitCode.get();
         if (code == null)
-            throw new IllegalStateException("last exit code hasn\'t been set yet."); 
+            throw new IllegalStateException("last exit code hasn\'t been set yet.");
         return code;
     }
 
-    public static byte[] iocap(Process process) throws InterruptedException {
+    public static byte[] iocap(Process process)
+            throws InterruptedException {
         ByteArrayOutputStream buf = new ByteArrayOutputStream();
         int code = iocap(process, null, buf, buf);
         exitCode.set(code);
         return buf.toByteArray();
     }
 
-    public static String iocap(Process process, String charset) throws InterruptedException {
+    public static String iocap(Process process, String charset)
+            throws InterruptedException {
         return iocap(process, Charset.forName(charset));
     }
 
-    public static String iocap(Process process, Charset charset) throws InterruptedException {
+    public static String iocap(Process process, Charset charset)
+            throws InterruptedException {
         byte[] out = iocap(process);
         return new String(out, charset);
     }

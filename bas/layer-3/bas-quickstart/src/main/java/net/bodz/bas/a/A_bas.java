@@ -1,17 +1,20 @@
 package net.bodz.bas.a;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Member;
 import java.net.URL;
-import java.nio.file.Files;
 import java.text.ParseException;
 import java.util.Properties;
 
 import net.bodz.bas.c1.annotations.DisplayName;
 import net.bodz.bas.c1.annotations.Doc;
+import net.bodz.bas.c1.annotations.Ns;
 import net.bodz.bas.commons.util.Dates;
-import net.bodz.bas.commons.util.Ns;
+import net.bodz.bas.exceptions.NotImplementedException;
+import net.bodz.bas.fs.PlainFile;
+import net.bodz.bas.fs.URLFile;
 
 @RcsKeywords(id = "$Id$")
 public class A_bas {
@@ -66,13 +69,15 @@ public class A_bas {
     }
 
     static String parseDocString(String doc) {
-        if (doc.startsWith("#")) { 
+        if (doc.startsWith("#")) {
             // #bundle.property
             throw new NotImplementedException();
-        } else if (doc.startsWith("/")) { 
+        } else if (doc.startsWith("/")) {
             // doc = doc.substring(1);
             try {
-                doc = Files.readAll(doc, "utf-8"); 
+                PlainFile file = new PlainFile(new File(doc));
+                file.setCharset("utf-8");
+                doc = file.forRead().readString();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -82,7 +87,7 @@ public class A_bas {
 
     public static VersionInfo parseId(String id) {
         id = id.substring(0, id.length() - 1);
-        String[] parts = id.split("\\s+"); 
+        String[] parts = id.split("\\s+");
         VersionInfo info = new VersionInfo();
         switch (parts.length) {
         case 7: // state
@@ -104,7 +109,7 @@ public class A_bas {
             }
             info.time += _date;
         case 3: // 784
-            String[] revs = parts[2].split("\\."); 
+            String[] revs = parts[2].split("\\.");
             info.revision = new int[revs.length];
             for (int i = 0; i < revs.length; i++)
                 info.revision[i] = Integer.parseInt(revs[i]);
@@ -127,14 +132,15 @@ public class A_bas {
      * @return <code>null</code> if build info is unknown.
      * @throws IOException
      */
-    public static Properties getBuildInfo(Class<?> clazz) throws IOException {
+    public static Properties getBuildInfo(Class<?> clazz)
+            throws IOException {
         String resname = Ns._getValue(clazz, BuildInfo.class);
         if (resname == null)
             return null;
         URL url = clazz.getResource(resname);
         if (url == null)
             throw new NullPointerException("BuildInfo resource isn't existed: " + resname);
-        return Files.loadProperties(url);
+        return new URLFile(url).forLoad().loadProperties();
     }
 
 }

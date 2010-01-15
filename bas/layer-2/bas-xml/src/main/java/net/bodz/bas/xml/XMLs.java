@@ -24,6 +24,7 @@ import javax.xml.bind.JAXB;
 import net.bodz.bas.exceptions.DecodeException;
 import net.bodz.bas.exceptions.EncodeException;
 import net.bodz.bas.exceptions.UnexpectedException;
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7XMLEncoder;
 import net.bodz.bas.jvm.stack.Caller;
 
 import org.xml.sax.ContentHandler;
@@ -123,7 +124,7 @@ public class XMLs {
 
     public static void encode(int caller, Object obj, OutputStream out, String encoding,
             ExceptionListener exceptionListener) {
-        XMLEncoder encoder = new XMLEncoder(out, encoding, true, 0);
+        XMLEncoder encoder = Jdk7XMLEncoder.getInstance(out, encoding, true, 0);
         encoder.setPersistenceDelegate(URL.class, //
                 new PersistenceDelegate() {
                     @Override

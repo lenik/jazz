@@ -1,7 +1,10 @@
 package net.bodz.bas.text.lop;
 
+import net.bodz.bas.io.out.CharOuts.BCharOut;
 import net.bodz.bas.text.lop.util.XYPosition;
 import net.bodz.bas.text.lop.util.XYTellable;
+import net.bodz.bas.text.util.StringPrep;
+import net.bodz.bas.text.util.Strings;
 
 public abstract class _Token implements Token {
 
@@ -118,7 +121,7 @@ public abstract class _Token implements Token {
             else {
                 String textBrief = Strings.ellipse(text, 20);
                 out.print("(\"");
-                out.print(Strings.escape(textBrief));
+                out.print(StringPrep.escape(textBrief));
                 out.print("\")");
             }
         }

@@ -1,8 +1,9 @@
 package net.bodz.bas.text.lop.fsm;
 
-import java.rmi.UnexpectedException;
+import net.bodz.bas.exceptions.UnexpectedException;
 
-public abstract class _CharSet implements CharSet {
+public abstract class _CharSet
+        implements CharSet {
 
     @Override
     public boolean isAbstract() {

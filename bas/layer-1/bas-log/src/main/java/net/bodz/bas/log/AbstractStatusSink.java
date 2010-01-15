@@ -26,12 +26,6 @@ public abstract class AbstractStatusSink
     int MAX_100 = Integer.MAX_VALUE / 100;
 
     @Override
-    public void put(Object message) {
-        String string = message.toString();
-
-    }
-
-    @Override
     public void progress(int value, int scale) {
         if (scale < MAX_100)
             value = value * 100 / scale;

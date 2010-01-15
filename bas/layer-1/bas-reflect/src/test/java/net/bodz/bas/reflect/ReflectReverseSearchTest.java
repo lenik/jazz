@@ -1,4 +1,4 @@
-package net.bodz.bas.text.lop;
+package net.bodz.bas.reflect;
 
 import static org.junit.Assert.assertEquals;
 
@@ -7,9 +7,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.bodz.bas.closure.alt.Pred1;
+
 import org.junit.Test;
 
-public class ReflectUtilTest {
+public class ReflectReverseSearchTest {
 
     public static final String X = "X";
     public static final String XX = "X";
@@ -20,7 +22,8 @@ public class ReflectUtilTest {
     public static int HYAKU = 100;
     public static int FIVE = 5;
 
-    static class CatNames extends Pred1<Field> {
+    static class CatNames
+            extends Pred1<Field> {
         List<String> list = new ArrayList<String>();
 
         @Override
@@ -32,7 +35,13 @@ public class ReflectUtilTest {
         @Override
         public String toString() {
             Collections.sort(list);
-            return Strings.join(",", list);
+            StringBuffer buf = new StringBuffer(list.size() * 16);
+            for (int i = 0; i < list.size(); i++) {
+                if (i != 0)
+                    buf.append(",");
+                buf.append(list.get(i));
+            }
+            return buf.toString();
         }
     }
 
@@ -41,7 +50,7 @@ public class ReflectUtilTest {
         class D {
             void o(Object value, String expected) {
                 CatNames catNames = new CatNames();
-                ReflectUtil.findField(ReflectUtilTest.class, null, value, catNames);
+                ReflectReverseSearch.findField(ReflectReverseSearchTest.class, null, value, catNames);
                 String actual = catNames.toString();
                 assertEquals(expected, actual);
             }
@@ -56,11 +65,11 @@ public class ReflectUtilTest {
 
     @Test
     public void testFindFieldObjectObjectPredicateOfField() {
-        final ReflectUtilTest obj = new ReflectUtilTest();
+        final ReflectReverseSearchTest obj = new ReflectReverseSearchTest();
         class D {
             void o(Object value, String expected) {
                 CatNames catNames = new CatNames();
-                ReflectUtil.findField(obj, value, catNames);
+                ReflectReverseSearch.findField(obj, value, catNames);
                 String actual = catNames.toString();
                 assertEquals(expected, actual);
             }
@@ -77,7 +86,7 @@ public class ReflectUtilTest {
     public void testGetFirstFieldNameClassOfQObjectObject() {
         class D {
             void o(Object value, String expected) {
-                String actual = ReflectUtil.getFirstFieldName(ReflectUtilTest.class, null, value);
+                String actual = ReflectReverseSearch.getFirstFieldName(ReflectReverseSearchTest.class, null, value);
                 assertEquals(expected, actual);
             }
         }

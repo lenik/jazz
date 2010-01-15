@@ -3,10 +3,13 @@ package net.bodz.bas.text.lop.fsm;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bodz.bas.text.util.StringPrep;
+
 /**
  * @test {@link CharRangeTest}
  */
-public class CharRange extends _CharSet {
+public class CharRange
+        extends _CharSet {
 
     private final int begin;
     private final int end;
@@ -154,14 +157,14 @@ public class CharRange extends _CharSet {
 
     @Override
     public String toString() {
-        String c = Strings.escape(begin);
+        String c = StringPrep.escape(begin);
         switch (end - begin) {
         case 0:
             return "[]";
         case 1:
             return c;
         }
-        String d = Strings.escape(end - 1);
+        String d = StringPrep.escape(end - 1);
         return "[" + c + "-" + d + "]";
     }
 

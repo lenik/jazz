@@ -1,4 +1,4 @@
-package net.bodz.bas.commons.util;
+package net.bodz.bas.c1.annotations;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
