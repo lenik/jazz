@@ -1,6 +1,7 @@
 package net.bodz.bas.log.objects;
 
-public class DelayedFormat {
+public class DelayedFormat
+        extends AbstractLogEvent {
 
     private final String format;
     private Object[] args;

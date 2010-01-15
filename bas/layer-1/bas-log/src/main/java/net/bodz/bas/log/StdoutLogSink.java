@@ -1,6 +1,5 @@
-package net.bodz.bas.log.adapters;
+package net.bodz.bas.log;
 
-import net.bodz.bas.log.AbstractLogSink;
 
 public class StdoutLogSink
         extends AbstractLogSink {

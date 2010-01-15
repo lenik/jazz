@@ -3,6 +3,7 @@ package net.bodz.bas.log.adapters;
 import net.bodz.bas.log.AbstractLogLayer;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.NullLogSink;
+import net.bodz.bas.log.StdoutLogSink;
 import net.bodz.bas.log.adapters.JCLLogSink.DebugSink;
 import net.bodz.bas.log.adapters.JCLLogSink.InfoSink;
 import net.bodz.bas.log.adapters.JCLLogSink.TraceSink;
@@ -24,12 +25,12 @@ public class JCLLogLayer
     }
 
     @Override
-    public ILogSink get(int index, int verboseLevel) {
+    public ILogSink get(int eventType, int verboseLevel) {
         // Mix the LogLayer and JCL log levels,
         // so a LogLayer(INFO, LEVEL_MORE) is equals to JCL(DEBUG)
-        index = mixLevel(index, verboseLevel);
+        eventType = mixLevel(eventType, verboseLevel);
 
-        switch (index) {
+        switch (eventType) {
         case ERROR:
             if (jclLog.isErrorEnabled())
                 return new InfoSink(jclLog);

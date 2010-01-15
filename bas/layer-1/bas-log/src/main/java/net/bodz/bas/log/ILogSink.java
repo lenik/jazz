@@ -2,6 +2,7 @@ package net.bodz.bas.log;
 
 import net.bodz.bas.log.objects.DelayedConcat;
 import net.bodz.bas.log.objects.DelayedFormat;
+import net.bodz.bas.log.objects.ILogEvent;
 import net.bodz.bas.log.objects.WithThrown;
 
 public interface ILogSink {
@@ -17,24 +18,26 @@ public interface ILogSink {
 
     void setVerboseLevel(int level);
 
-    void p(Object obj);
+    void p(ILogEvent event);
+
+    void p(Object message);
 
     /**
      * @see DelayedConcat
      */
-    void p(Object... concatObjs);
+    void p(Object... concatMessages);
 
     /**
      * @see WithThrown
      */
-    void p(Object obj, Throwable t);
+    void p(Object message, Throwable t);
 
-    void p_(Object obj);
+    void p_(Object message);
 
     /**
      * @see DelayedConcat
      */
-    void p_(Object... concatObjs);
+    void p_(Object... concatMessages);
 
     /**
      * Finalize/flush any pending prefixes.

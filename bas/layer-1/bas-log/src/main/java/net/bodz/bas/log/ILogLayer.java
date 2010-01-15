@@ -8,14 +8,15 @@ public interface ILogLayer {
     int INFO = 4;
     int DEBUG = 5;
     int TRACE = 6;
+    int STATUS = 10;
     int USER = 100;
 
     /**
-     * @return {@link NullLogSink} if {@link ILogSink} for the specified <code>index</code> doesn't
-     *         exist, or the specified <code>verboseLevel</code> is larger than the configured level
-     *         and so logging is suppressed.
+     * @return {@link NullLogSink} if {@link ILogSink} for the specified <code>eventType</code>
+     *         doesn't exist, or the specified <code>verboseLevel</code> is larger than the
+     *         configured level and so logging is suppressed.
      */
-    ILogSink get(int index, int verboseLevel);
+    ILogSink get(int eventType, int verboseLevel);
 
     /**
      * Equals to {@link #get(int, int) get}({@link #STDOUT}, {@link ILogSink#LEVEL_DEFAULT})
@@ -52,5 +53,9 @@ public interface ILogLayer {
     ILogSink getTraceSink();
 
     ILogSink getTraceSink(int verboseLevel);
+
+    IStatusSink getStatusSink();
+
+    IStatusSink getStatusSink(int verboseLevel);
 
 }

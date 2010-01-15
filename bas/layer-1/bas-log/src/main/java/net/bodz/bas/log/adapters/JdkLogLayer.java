@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 import net.bodz.bas.log.AbstractLogLayer;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.NullLogSink;
+import net.bodz.bas.log.StdoutLogSink;
 import net.bodz.bas.log.adapters.JdkLogSink.FineSink;
 import net.bodz.bas.log.adapters.JdkLogSink.FinerSink;
 import net.bodz.bas.log.adapters.JdkLogSink.FinestSink;
@@ -25,12 +26,12 @@ public class JdkLogLayer
     }
 
     @Override
-    public ILogSink get(int index, int verboseLevel) {
+    public ILogSink get(int eventType, int verboseLevel) {
         // Mix the LogLayer and Jdk log levels,
         // so a LogLayer(INFO, LEVEL_MORE) is equals to Jdk(DEBUG)
-        index = mixLevel(index, verboseLevel);
+        eventType = mixLevel(eventType, verboseLevel);
 
-        switch (index) {
+        switch (eventType) {
         case ERROR:
             if (jdkLogger.isLoggable(Level.SEVERE))
                 return new SevereSink(jdkLogger);
