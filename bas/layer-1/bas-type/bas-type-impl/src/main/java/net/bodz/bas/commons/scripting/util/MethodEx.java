@@ -2,8 +2,8 @@ package net.bodz.bas.commons.scripting.util;
 
 import java.lang.reflect.Method;
 
-import net.bodz.bas.commons.scripting.Reflects;
 import net.bodz.bas.exceptions.OutOfDomainException;
+import net.bodz.bas.reflect.Reflects;
 
 /**
  * Method `extends'
