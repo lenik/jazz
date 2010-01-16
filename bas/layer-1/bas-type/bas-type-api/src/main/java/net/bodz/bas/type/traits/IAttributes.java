@@ -2,6 +2,8 @@ package net.bodz.bas.type.traits;
 
 import java.util.Collection;
 
+import net.bodz.bas.type.ITypeTraits;
+
 public interface IAttributes {
 
     /**
@@ -18,6 +20,6 @@ public interface IAttributes {
     /**
      * @return <code>null</code> if no type info available.
      */
-    ITypeInfo<?> getAttributeTypeInfo(String attributeName);
+    ITypeTraits<?> getAttributeTraits(String attributeName);
 
 }
