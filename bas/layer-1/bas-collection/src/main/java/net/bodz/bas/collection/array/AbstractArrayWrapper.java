@@ -232,4 +232,20 @@ public abstract class AbstractArrayWrapper<A, E>
         _sort(actualFrom, actualTo, comparator);
     }
 
+    @Override
+    public int indexOf(E val) {
+        int len = length();
+        if (len == 0)
+            return -1;
+        return indexOf(val, 0);
+    }
+
+    @Override
+    public int lastIndexOf(E val) {
+        int len = length();
+        if (len == 0)
+            return -1;
+        return lastIndexOf(val, --len);
+    }
+
 }

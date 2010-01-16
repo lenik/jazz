@@ -13,7 +13,7 @@ public class TypeTraitsResolve {
             Class<? super T> chain = type;
             while (true) {
                 try {
-                    method = chain.getDeclaredMethod("getTypeInfo");
+                    method = chain.getDeclaredMethod("getTypeTraits");
                     break;
                 } catch (NoSuchMethodException e) {
                     chain = chain.getSuperclass();
@@ -28,7 +28,7 @@ public class TypeTraitsResolve {
 
             return traits;
         } catch (Exception e) { // ReflectiveOperationException e) {
-            throw new IllegalUsageException("Can't access method getTypeInfo()", e);
+            throw new IllegalUsageException("Can't access method getTypeTraits()", e);
         }
     }
 

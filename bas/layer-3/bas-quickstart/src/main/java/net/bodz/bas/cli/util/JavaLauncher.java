@@ -167,7 +167,7 @@ public abstract class JavaLauncher implements Launcher {
     }
 
     public String getCapturedOutput(Object charset) {
-        Charset _charset = Charsets.get(charset);
+        Charset _charset = BasCharsetProvider.get(charset);
         return new String(getCapturedOutput(), _charset);
     }
 
@@ -176,7 +176,7 @@ public abstract class JavaLauncher implements Launcher {
     }
 
     public String getCapturedError(Object charset) {
-        Charset _charset = Charsets.get(charset);
+        Charset _charset = BasCharsetProvider.get(charset);
         return new String(getCapturedError(), _charset);
     }
 

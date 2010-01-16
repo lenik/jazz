@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.Random;
 
 import net.bodz.bas.exceptions.NotImplementedException;
+import net.bodz.bas.lang.Nullables;
 
 public class ArrayWrapper<T>
         extends AbstractArrayWrapper<T[], T> {
@@ -23,6 +24,14 @@ public class ArrayWrapper<T>
         if (end > array.length)
             throw new IndexOutOfBoundsException("Bad end index: " + end);
         this.array = array;
+    }
+
+    public static <T> ArrayWrapper<T> wrap(T[] array) {
+        return new ArrayWrapper<T>(array);
+    }
+
+    public static <T> ArrayWrapper<T> wrap(T[] array, int start, int end) {
+        return new ArrayWrapper<T>(array, start, end);
     }
 
     @SuppressWarnings("unchecked")
@@ -115,12 +124,22 @@ public class ArrayWrapper<T>
         throw new NotImplementedException();
     }
 
-    public static <T> ArrayWrapper<T> wrap(T[] array) {
-        return new ArrayWrapper<T>(array);
+    @Override
+    public int indexOf(T val, int start) {
+        int actualStart = checkIndex(start);
+        for (int i = actualStart; i < end; i++)
+            if (Nullables.equals(array[i], val))
+                return i;
+        return -1;
     }
 
-    public static <T> ArrayWrapper<T> wrap(T[] array, int start, int end) {
-        return new ArrayWrapper<T>(array, start, end);
+    @Override
+    public int lastIndexOf(T val, int start) {
+        int actualStart = checkIndex(start);
+        for (int i = actualStart; i >= start; i--)
+            if (Nullables.equals(array[i], val))
+                return i;
+        return -1;
     }
 
 }

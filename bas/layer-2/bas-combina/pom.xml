@@ -35,6 +35,10 @@
     		<version>0.0.2-SNAPSHOT</version>
     		<scope>compile</scope>
     	</dependency>
+    	<dependency>
+    		<groupId>commons-lang</groupId>
+    		<artifactId>commons-lang</artifactId>
+    	</dependency>
     </dependencies>
     <name>BAS :: Layer 2 :: Combinatorics</name>
 </project>
