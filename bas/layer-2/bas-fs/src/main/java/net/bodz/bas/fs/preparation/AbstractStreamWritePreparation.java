@@ -9,6 +9,7 @@ import java.nio.charset.Charset;
 import java.util.zip.ZipOutputStream;
 
 import net.bodz.bas.fs.IFile;
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7ZipOutputStream;
 
 public abstract class AbstractStreamWritePreparation
         implements IStreamWritePreparation {
@@ -57,7 +58,7 @@ public abstract class AbstractStreamWritePreparation
     public ZipOutputStream newZipOutputStream()
             throws IOException {
         OutputStream out = newOutputStream();
-        return new ZipOutputStream(out, getCharset());
+        return Jdk7ZipOutputStream.newInstance(out, getCharset());
     }
 
     public Writer newWriter()

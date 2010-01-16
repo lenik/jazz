@@ -24,6 +24,7 @@ import net.bodz.bas.collection.iterator.OverlappedImmediateIteratorX;
 import net.bodz.bas.collection.util.IteratorToList;
 import net.bodz.bas.fs.IFile;
 import net.bodz.bas.io.LineReader;
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7ZipFile;
 
 public abstract class AbstractStreamReadPreparation
         implements IStreamReadPreparation {
@@ -267,7 +268,7 @@ public abstract class AbstractStreamReadPreparation
         int mode = ZipFile.OPEN_READ;
         if (file.isDeleteOnExit())
             mode |= ZipFile.OPEN_DELETE;
-        return new ZipFile(f, mode, getCharset());
+        return Jdk7ZipFile.newInstance(f, mode, getCharset());
     }
 
     public JarFile newJarFile(boolean verify)

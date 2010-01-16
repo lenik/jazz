@@ -8,7 +8,8 @@ import java.util.NoSuchElementException;
  * @see StackedIterator
  * @test NestedIteratorTest
  */
-public class NestedIterator<T> implements Iterator<T> {
+public class NestedIterator<T>
+        implements Iterator<T> {
 
     private Iterator<Iterator<T>> iterators;
     private Iterator<T> currentIterator;
