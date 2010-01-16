@@ -1,4 +1,4 @@
-package net.bodz.bas.text.encodings;
+package net.bodz.bas.text.charsets;
 
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
@@ -13,12 +13,12 @@ import net.bodz.bas.exceptions.IllegalArgumentTypeException;
 /**
  * Literal Charset Provider Literal charset is designed for debug or special purpose.
  */
-public class Charsets
+public class BasCharsetProvider
         extends CharsetProvider {
 
     private Map<String, Charset> charsetsImpl = new TreeMap<String, Charset>();
 
-    public Charsets() {
+    public BasCharsetProvider() {
         implCharset(new HexCharset());
     }
 

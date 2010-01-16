@@ -1,4 +1,4 @@
-package net.bodz.bas.text.encodings;
+package net.bodz.bas.text.charsets;
 
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
@@ -10,7 +10,8 @@ import java.nio.charset.CoderResult;
  * Encodes each character(maybe latin-1, utf-8, ucs-4, etc..) into hex string; space(0x20) is used
  * for seperate each character, internally.
  */
-public class HexCharsetEncoder extends CharsetEncoder {
+public class HexCharsetEncoder
+        extends CharsetEncoder {
 
     private byte[] transtbl;
     private byte[] delimiter = { 0x20 };
@@ -32,7 +33,7 @@ public class HexCharsetEncoder extends CharsetEncoder {
      */
     public HexCharsetEncoder(Charset charset, char[] transtbl) {
         super(charset, 3.0f + transtbl.length, 8.0f + transtbl.length, //
-                " ? ".getBytes(Charsets.ASCII)); 
+                " ? ".getBytes(BasCharsetProvider.ASCII));
         this.transtbl = new byte[transtbl.length];
         for (int i = 0; i < transtbl.length; i++)
             this.transtbl[i] = (byte) transtbl[i];

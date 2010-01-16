@@ -1,4 +1,4 @@
-package net.bodz.bas.text.encodings;
+package net.bodz.bas.text.charsets;
 
 import java.nio.BufferOverflowException;
 import java.nio.ByteBuffer;
@@ -7,7 +7,10 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CoderResult;
 
-public class HexCharsetDecoder extends CharsetDecoder {
+import net.bodz.bas.primitive.IntMath;
+
+public class HexCharsetDecoder
+        extends CharsetDecoder {
 
     private byte[] transtbl = Lookups.c2n;
     private byte delimiter = 0x20;
