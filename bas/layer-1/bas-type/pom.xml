@@ -10,9 +10,10 @@
 	<packaging>pom</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<modules>
-		<module>bas-type-api</module>
-		<module>bas-type-impl</module>
-		<module>bas-type-srt</module>
+		<module>bas-srt</module>
+		<module>bas-traits</module>
+		<module>bas-traits-impl</module>
+		<module>bas-type-util</module>
 	</modules>
 	<name>BAS :: Layer 1 :: Type System</name>
 </project>
