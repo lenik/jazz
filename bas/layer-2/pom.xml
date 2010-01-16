@@ -12,7 +12,6 @@
 	<modules>
 		<module>bas-arch</module>
 		<module>bas-c2</module>
-		<module>bas-collection</module>
 		<module>bas-combina</module>
 		<module>bas-database</module>
 		<module>bas-flow</module>
