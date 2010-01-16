@@ -41,5 +41,5 @@
 			<scope>compile</scope>
 		</dependency>
 	</dependencies>
-	<name>BAS :: Layer 1 :: Type System :: API</name>
+	<name>BAS :: Layer 1 :: Type System :: Type Traits</name>
 </project>
