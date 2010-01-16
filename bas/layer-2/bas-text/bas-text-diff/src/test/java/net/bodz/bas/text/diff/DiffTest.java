@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.bodz.bas.io.out.CharOuts;
+import net.bodz.bas.text.diff.gnudiff.DiffPrint;
 import net.bodz.bas.text.diff.gnudiff._GNUDiff;
 
 import org.junit.Test;
@@ -35,8 +36,8 @@ import org.junit.Test;
  */
 public class DiffTest {
 
-    private static String[] f1 = { "hello" }; 
-    private static String[] f2 = { "hello", "bye" };  
+    private static String[] f1 = { "hello" };
+    private static String[] f2 = { "hello", "bye" };
 
     @Test
     public void testReverse() {
@@ -77,10 +78,8 @@ public class DiffTest {
         // p.print_script(script);
     }
 
-    private static String[] test1 = { "aaa", "bbb", "ccc", "ddd", "eee", "fff",      
-            "ggg", "hhh", "iii" };   
-    private static String[] test2 = { "aaa", "jjj", "kkk", "lll", "bbb", "ccc",      
-            "hhh", "iii", "mmm", "nnn", "ppp" };     
+    private static String[] test1 = { "aaa", "bbb", "ccc", "ddd", "eee", "fff", "ggg", "hhh", "iii" };
+    private static String[] test2 = { "aaa", "jjj", "kkk", "lll", "bbb", "ccc", "hhh", "iii", "mmm", "nnn", "ppp" };
 
     /**
      * Test context based output. Changes past the end of old file were causing an array out of

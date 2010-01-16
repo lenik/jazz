@@ -1,6 +1,6 @@
 package net.bodz.bas.fs;
 
-import net.bodz.bas.type.traits.impl.Attributes;
+import net.bodz.bas.type.traits.Attributes;
 
 public abstract class AbstractFsEntry
         extends Attributes

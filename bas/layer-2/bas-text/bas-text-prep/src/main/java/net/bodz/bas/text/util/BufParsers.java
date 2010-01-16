@@ -2,6 +2,8 @@ package net.bodz.bas.text.util;
 
 import java.nio.CharBuffer;
 
+import net.bodz.bas.text.encodings.Lookups;
+
 public class BufParsers {
 
     /**

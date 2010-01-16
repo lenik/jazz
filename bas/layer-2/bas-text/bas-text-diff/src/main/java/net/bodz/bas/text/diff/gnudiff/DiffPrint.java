@@ -1,10 +1,10 @@
 package net.bodz.bas.text.diff.gnudiff;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
-import net.bodz.bas.fs.legacy.Files;
+import net.bodz.bas.c1.util.Dates;
+import net.bodz.bas.closure.alt.Pred1;
 import net.bodz.bas.io.out.CharOut;
 import net.bodz.bas.io.out.CharOuts;
 import net.bodz.bas.text.diff.DiffInfo;
@@ -156,7 +156,7 @@ public class DiffPrint {
              * print the line number before the range, which is B.
              */
             if (++b > ++a)
-                outfile.print("" + a + sepchar + b); 
+                outfile.print("" + a + sepchar + b);
             else
                 outfile.print(b);
         }
@@ -174,7 +174,8 @@ public class DiffPrint {
     /**
      * Print a change list in the standard diff format.
      */
-    public static class NormalPrint extends Base {
+    public static class NormalPrint
+            extends Base {
 
         public NormalPrint(List<?> a, List<?> b, CharOut out) {
             super(a, b, out);
@@ -201,15 +202,15 @@ public class DiffPrint {
             /* Print the lines that the first file has. */
             if (deletes != 0)
                 for (int i = first0; i <= last0; i++)
-                    print_1_line("< ", file0.get(i)); 
+                    print_1_line("< ", file0.get(i));
 
             if (inserts != 0 && deletes != 0)
-                outfile.println("---"); 
+                outfile.println("---");
 
             /* Print the lines that the second file has. */
             if (inserts != 0)
                 for (int i = first1; i <= last1; i++)
-                    print_1_line("> ", file1.get(i)); 
+                    print_1_line("> ", file1.get(i));
         }
     }
 
@@ -217,7 +218,8 @@ public class DiffPrint {
      * Prints an edit script in a format suitable for input to <code>ed</code>. The edit script must
      * be generated with the reverse option to be useful as actual <code>ed</code> input.
      */
-    public static class EdPrint extends Base {
+    public static class EdPrint
+            extends Base {
 
         public EdPrint(List<?> a, List<?> b, CharOut out) {
             super(a, b, out);
@@ -242,7 +244,7 @@ public class DiffPrint {
                 for (int i = first1; i <= last1; i++) {
                     /* Resume the insert, if we stopped. */
                     if (!inserting)
-                        outfile.println(i - first1 + first0 + "a"); 
+                        outfile.println(i - first1 + first0 + "a");
                     inserting = true;
 
                     /*
@@ -251,20 +253,20 @@ public class DiffPrint {
                      * ed-command later to change the double dot into a single dot.
                      */
 
-                    if (".".equals(file1.get(i))) { 
-                        outfile.println(".."); 
-                        outfile.println("."); 
+                    if (".".equals(file1.get(i))) {
+                        outfile.println("..");
+                        outfile.println(".");
                         /* Now change that double dot to the desired single dot. */
-                        outfile.println(i - first1 + first0 + 1 + "s/^\\.\\././"); 
+                        outfile.println(i - first1 + first0 + 1 + "s/^\\.\\././");
                         inserting = false;
                     } else
                         /* Line is not `.', so output it unmodified. */
-                        print_1_line("", file1.get(i)); 
+                        print_1_line("", file1.get(i));
                 }
 
                 /* End insert mode, if we are still in it. */
                 if (inserting)
-                    outfile.println("."); 
+                    outfile.println(".");
             }
         }
     }
@@ -273,7 +275,8 @@ public class DiffPrint {
      * Prints an edit script in context diff format. This and its 'unified' variation is used for
      * source code patches.
      */
-    public static class ContextPrint extends Base {
+    public static class ContextPrint
+            extends Base {
 
         protected int context = 3;
 
@@ -293,8 +296,8 @@ public class DiffPrint {
 
         @Override
         public void print_header(String filea, String fileb) {
-            print_context_label("***", new File(filea), filea); 
-            print_context_label("---", new File(fileb), fileb); 
+            print_context_label("***", new File(filea), filea);
+            print_context_label("---", new File(fileb), fileb);
         }
 
         /** If function_regexp defined, search for start of function. */
@@ -305,7 +308,7 @@ public class DiffPrint {
         protected void print_function(List<?> file, int start) {
             String function = find_function(file0, first0);
             if (function != null) {
-                outfile.print(" "); 
+                outfile.print(" ");
                 outfile.print((function.length() < 40) ? function : function.substring(0, 40));
             }
         }
@@ -327,7 +330,7 @@ public class DiffPrint {
             last0 = Math.min(last0 + context, file0.size() - 1);
             last1 = Math.min(last1 + context, file1.size() - 1);
 
-            outfile.print("***************"); 
+            outfile.print("***************");
 
             /*
              * If we looked for and found a function this is part of, include its name in the header
@@ -336,9 +339,9 @@ public class DiffPrint {
             print_function(file0, first0);
 
             outfile.println();
-            outfile.print("*** "); 
+            outfile.print("*** ");
             print_number_range(',', first0, last0);
-            outfile.println(" ****"); 
+            outfile.println(" ****");
 
             if (deletes != 0) {
                 int off = start;
@@ -354,21 +357,21 @@ public class DiffPrint {
 
                     /* Compute the marking for line I. */
 
-                    String prefix = " "; 
+                    String prefix = " ";
                     if (next != null && next.index0 <= i)
                         /*
                          * The change NEXT covers this line. If lines were inserted here in file 1,
                          * this is "changed". Otherwise it is "deleted".
                          */
-                        prefix = (next.inserted > 0) ? "!" : "-";  
+                        prefix = (next.inserted > 0) ? "!" : "-";
 
                     print_1_line(prefix, file0.get(i));
                 }
             }
 
-            outfile.print("--- "); 
+            outfile.print("--- ");
             print_number_range(',', first1, last1);
-            outfile.println(" ----"); 
+            outfile.println(" ----");
 
             if (inserts != 0) {
                 int off = start;
@@ -384,13 +387,13 @@ public class DiffPrint {
 
                     /* Compute the marking for line I. */
 
-                    String prefix = " "; 
+                    String prefix = " ";
                     if (off < end && next.index1 <= i)
                         /*
                          * The change NEXT covers this line. If lines were deleted here in file 0,
                          * this is "changed". Otherwise it is "inserted".
                          */
-                        prefix = (next.deleted > 0) ? "!" : "+";  
+                        prefix = (next.deleted > 0) ? "!" : "+";
 
                     print_1_line(prefix, file1.get(i));
                 }
@@ -402,7 +405,8 @@ public class DiffPrint {
      * Prints an edit script in context diff format. This and its 'unified' variation is used for
      * source code patches.
      */
-    public static class UnifiedPrint extends ContextPrint {
+    public static class UnifiedPrint
+            extends ContextPrint {
 
         public UnifiedPrint(List<?> a, List<?> b, CharOut out) {
             super(a, b, out);
@@ -410,8 +414,8 @@ public class DiffPrint {
 
         @Override
         public void print_header(String filea, String fileb) {
-            print_context_label("---", new File(filea), filea); 
-            print_context_label("+++", new File(fileb), fileb); 
+            print_context_label("---", new File(filea), filea);
+            print_context_label("+++", new File(fileb), fileb);
         }
 
         private void print_number_range(int a, int b) {
@@ -422,7 +426,7 @@ public class DiffPrint {
              * print the line number before the range, which is B.
              */
             if (b < a)
-                outfile.print(b + ",0"); 
+                outfile.print(b + ",0");
             else
                 super.print_number_range(',', a, b);
         }
@@ -442,11 +446,11 @@ public class DiffPrint {
             last0 = Math.min(last0 + context, file0.size() - 1);
             last1 = Math.min(last1 + context, file1.size() - 1);
 
-            outfile.print("@@ -"); 
+            outfile.print("@@ -");
             print_number_range(first0, last0);
-            outfile.print(" +"); 
+            outfile.print(" +");
             print_number_range(first1, last1);
-            outfile.print(" @@"); 
+            outfile.print(" @@");
 
             /*
              * If we looked for and found a function this is part of, include its name in the header
@@ -468,7 +472,7 @@ public class DiffPrint {
                 if (start >= end || i < list.get(start).index0) {
                     if (i < file0.size()) {
                         outfile.print(' ');
-                        print_1_line("", file0.get(i++)); 
+                        print_1_line("", file0.get(i++));
                     }
                     j++;
                 } else {
@@ -478,7 +482,7 @@ public class DiffPrint {
                     int k = next.deleted;
                     while (k-- > 0) {
                         outfile.print('-');
-                        print_1_line("", file0.get(i++)); 
+                        print_1_line("", file0.get(i++));
                     }
 
                     /* Then output the inserted part. */
@@ -486,62 +490,12 @@ public class DiffPrint {
                     k = next.inserted;
                     while (k-- > 0) {
                         outfile.print('+');
-                        print_1_line("", file1.get(j++)); 
+                        print_1_line("", file1.get(j++));
                     }
 
                     /* We're done with this hunk, so on to the next! */
                 }
             }
-        }
-    }
-
-    public static void main(String[] argv) throws IOException {
-        String filea = argv[argv.length - 2];
-        String fileb = argv[argv.length - 1];
-        List<String> a = Files.readLines(new File(filea));
-        List<String> b = Files.readLines(new File(fileb));
-        _GNUDiff d = new _GNUDiff(a, b);
-        char style = 'n';
-        for (int i = 0; i < argv.length - 2; ++i) {
-            String f = argv[i];
-            if (f.startsWith("-")) { 
-                for (int j = 1; j < f.length(); ++j) {
-                    switch (f.charAt(j)) {
-                    case 'e': // Ed style
-                        style = 'e';
-                        break;
-                    case 'c': // Context diff
-                        style = 'c';
-                        break;
-                    case 'u':
-                        style = 'u';
-                        break;
-                    }
-                }
-            }
-        }
-        boolean reverse = style == 'e';
-        d.heuristic = true;
-        List<DiffInfo> script = d.diff_2(reverse);
-        if (script == null)
-            System.err.println("No differences"); 
-        else {
-            Base p;
-            switch (style) {
-            case 'e':
-                p = new EdPrint(a, b, CharOuts.stdout);
-                break;
-            case 'c':
-                p = new ContextPrint(a, b, CharOuts.stdout);
-                break;
-            case 'u':
-                p = new UnifiedPrint(a, b, CharOuts.stdout);
-                break;
-            default:
-                p = new NormalPrint(a, b, CharOuts.stdout);
-            }
-            p.print_header(filea, fileb);
-            p.print_script(script);
         }
     }
 

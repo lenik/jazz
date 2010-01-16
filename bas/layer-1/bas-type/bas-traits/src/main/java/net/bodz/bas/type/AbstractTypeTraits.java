@@ -1,5 +1,7 @@
 package net.bodz.bas.type;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -11,11 +13,13 @@ import net.bodz.bas.exceptions.CreateException;
 import net.bodz.bas.exceptions.NotImplementedException;
 import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.hint.ThreadUnsafe;
+import net.bodz.bas.jdk6compat.jdk7emul.IllegalAccessException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.lang.AbstractQueryable;
 import net.bodz.bas.lang.INegotiation;
 import net.bodz.bas.lang.NegotiationException;
+import net.bodz.bas.lang.QueryException;
 import net.bodz.bas.type.traits.Attributes;
 import net.bodz.bas.type.traits.ClassifyException;
 import net.bodz.bas.type.traits.IAttributes;
@@ -203,6 +207,26 @@ public abstract class AbstractTypeTraits<T>
         if (storeInstances == null)
             storeInstances = new TreeMap<String, T>();
         storeInstances.put(name, instance);
+    }
+
+    protected final void addStaticInstances(Class<?> declaringClass) {
+        if (declaringClass == null)
+            throw new NullPointerException("declaringClass");
+        for (Field field : declaringClass.getFields()) {
+            int modifiers = field.getModifiers();
+            if (Modifier.isStatic(modifiers)) {
+                try {
+                    String name = field.getName();
+                    Object object = Jdk7Reflect.get(field, null);
+                    if (type.isInstance(object)) {
+                        T instance = type.cast(object);
+                        addInstance(name, instance);
+                    }
+                } catch (IllegalAccessException e) {
+                    throw new QueryException();
+                }
+            }
+        }
     }
 
     // Default Implementatons

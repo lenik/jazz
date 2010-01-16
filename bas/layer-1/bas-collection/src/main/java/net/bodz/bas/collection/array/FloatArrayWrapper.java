@@ -24,6 +24,14 @@ public class FloatArrayWrapper
         this.array = array;
     }
 
+    public static FloatArrayWrapper wrap(float[] array) {
+        return new FloatArrayWrapper(array);
+    }
+
+    public static FloatArrayWrapper wrap(float[] array, int start, int end) {
+        return new FloatArrayWrapper(array, start, end);
+    }
+
     @Override
     public float[] allocate(int size) {
         return new float[size];
@@ -112,12 +120,24 @@ public class FloatArrayWrapper
         throw new NotImplementedException();
     }
 
-    public static FloatArrayWrapper wrap(float[] array) {
-        return new FloatArrayWrapper(array);
+    @Override
+    public int indexOf(Float val, int start) {
+        float _val = val;
+        int actualStart = checkIndex(start);
+        for (int i = actualStart; i < end; i++)
+            if (array[i] == _val)
+                return i;
+        return -1;
     }
 
-    public static FloatArrayWrapper wrap(float[] array, int start, int end) {
-        return new FloatArrayWrapper(array, start, end);
+    @Override
+    public int lastIndexOf(Float val, int start) {
+        float _val = val;
+        int actualStart = checkIndex(start);
+        for (int i = actualStart; i >= start; i--)
+            if (array[i] == _val)
+                return i;
+        return -1;
     }
 
 }

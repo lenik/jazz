@@ -6,7 +6,7 @@ import java.io.PrintStream;
 import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.io.term.StreamTerminal;
 import net.bodz.bas.io.term.ITerminal;
-import net.bodz.bas.type.traits.impl.AbstractParser;
+import net.bodz.bas.type.traits.AbstractParser;
 
 public class LoggerParser
         extends AbstractParser<LogTerm> {
