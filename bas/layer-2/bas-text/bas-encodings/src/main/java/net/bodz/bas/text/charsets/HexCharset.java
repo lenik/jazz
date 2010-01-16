@@ -1,13 +1,14 @@
-package net.bodz.bas.text.encodings;
+package net.bodz.bas.text.charsets;
 
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CharsetEncoder;
 
-public class HexCharset extends Charset {
+public class HexCharset
+        extends Charset {
 
     public HexCharset() {
-        super("hex", new String[] { "hex", });  
+        super("hex", new String[] { "hex", });
     }
 
     /**

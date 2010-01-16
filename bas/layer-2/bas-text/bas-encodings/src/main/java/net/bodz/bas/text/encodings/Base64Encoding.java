@@ -6,11 +6,12 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
 
+
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
 public class Base64Encoding
-        extends _Encoding {
+        extends AbstractEncoding {
 
     private static BASE64Encoder encoder;
     private static BASE64Decoder decoder;

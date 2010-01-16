@@ -4,19 +4,22 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.nio.file.Files;
 
-public abstract class _Encoding implements Encoding {
+import net.bodz.bas.exceptions.ParseException;
+
+public abstract class AbstractEncoding
+        implements Encoding {
 
     protected final String charset;
     private final float bpc;
     private final boolean streamOnly;
 
-    public _Encoding(int blockBytes, int blockChars) {
+    public AbstractEncoding(int blockBytes, int blockChars) {
         this.charset = preferredStringCharset();
         assert blockBytes != 0;
         assert blockChars != 0;
@@ -26,19 +29,22 @@ public abstract class _Encoding implements Encoding {
 
     @Override
     public String preferredStringCharset() {
-        return "ascii"; 
+        return "ascii";
     }
 
     protected boolean streamOnlyImplementation() {
         return false;
     }
 
-    protected void _encode(InputStream in, OutputStream out) throws IOException {
-        encode(in, Files.getWriter(out, charset));
+    protected void _encode(InputStream in, OutputStream out)
+            throws IOException {
+        OutputStreamWriter writer = new OutputStreamWriter(out, charset);
+        encode(in, writer);
     }
 
     @Override
-    public void encode(Object byteIn, Object charOut) throws IOException {
+    public void encode(Object byteIn, Object charOut)
+            throws IOException {
         InputStream in = Files.getInputStream(byteIn);
         boolean closeIn = Files.shouldClose(byteIn);
         try {
@@ -61,7 +67,8 @@ public abstract class _Encoding implements Encoding {
     }
 
     @Override
-    public String encode(Object byteIn, int cb) throws IOException {
+    public String encode(Object byteIn, int cb)
+            throws IOException {
         if (byteIn == null)
             return null;
         int cc = cb == 0 ? 0 : (int) (cb / bpc);
@@ -82,7 +89,8 @@ public abstract class _Encoding implements Encoding {
     }
 
     @Override
-    public String encode(Object bytesIn) throws IOException {
+    public String encode(Object bytesIn)
+            throws IOException {
         return encode(bytesIn, 0);
     }
 
@@ -103,12 +111,14 @@ public abstract class _Encoding implements Encoding {
         return encode(copy);
     }
 
-    protected void _decode(InputStream in, OutputStream out) throws IOException, ParseException {
+    protected void _decode(InputStream in, OutputStream out)
+            throws IOException, ParseException {
         decode(Files.getReader(in, charset), out);
     }
 
     @Override
-    public void decode(Object charIn, Object byteOut) throws IOException, ParseException {
+    public void decode(Object charIn, Object byteOut)
+            throws IOException, ParseException {
         OutputStream out = Files.getOutputStream(byteOut);
         boolean closeOut = Files.shouldClose(byteOut);
         try {
@@ -131,7 +141,8 @@ public abstract class _Encoding implements Encoding {
     }
 
     @Override
-    public byte[] decode(Object charIn, int cc) throws IOException, ParseException {
+    public byte[] decode(Object charIn, int cc)
+            throws IOException, ParseException {
         if (charIn == null)
             return null;
         int cb = cc == 0 ? 0 : (int) (cc * bpc);
@@ -144,12 +155,14 @@ public abstract class _Encoding implements Encoding {
     }
 
     @Override
-    public byte[] decode(Object charIn) throws IOException, ParseException {
+    public byte[] decode(Object charIn)
+            throws IOException, ParseException {
         return decode(charIn, 0);
     }
 
     @Override
-    public byte[] decode(String s) throws ParseException {
+    public byte[] decode(String s)
+            throws ParseException {
         if (s == null)
             return null;
         try {
@@ -160,7 +173,8 @@ public abstract class _Encoding implements Encoding {
     }
 
     @Override
-    public byte[] decode(char[] chars, int from, int to) throws ParseException {
+    public byte[] decode(char[] chars, int from, int to)
+            throws ParseException {
         String s = new String(chars, from, to - from);
         return decode(s);
     }

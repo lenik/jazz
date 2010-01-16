@@ -7,8 +7,9 @@ import java.io.Reader;
 import java.io.Writer;
 
 import net.bodz.bas.exceptions.ParseException;
+import net.bodz.bas.text.charsets.Lookups;
 
-public class HexEncoding extends _Encoding {
+public class HexEncoding extends AbstractEncoding {
 
     private final String IFS;
     private final char simpleIFS;
