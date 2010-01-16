@@ -16,6 +16,7 @@ import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.lang.AbstractQueryable;
 import net.bodz.bas.lang.INegotiation;
 import net.bodz.bas.lang.NegotiationException;
+import net.bodz.bas.type.traits.Attributes;
 import net.bodz.bas.type.traits.ClassifyException;
 import net.bodz.bas.type.traits.IAttributes;
 import net.bodz.bas.type.traits.IClassifier;
@@ -27,7 +28,6 @@ import net.bodz.bas.type.traits.ISearcher;
 import net.bodz.bas.type.traits.ITextForm;
 import net.bodz.bas.type.traits.IValidator;
 import net.bodz.bas.type.traits.ValidateException;
-import net.bodz.bas.type.traits.impl.Attributes;
 
 @ThreadUnsafe
 public abstract class AbstractTypeTraits<T>
