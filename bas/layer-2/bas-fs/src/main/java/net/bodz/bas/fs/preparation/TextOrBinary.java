@@ -1,6 +1,7 @@
 package net.bodz.bas.fs.preparation;
 
 import net.bodz.bas.bits.IBits;
+import net.bodz.bas.bits.Int_leBits;
 import net.bodz.bas.primitive.IntMath;
 
 public class TextOrBinary {
@@ -10,8 +11,8 @@ public class TextOrBinary {
      */
     static IBits textBits;
     static {
-        textBits = new IBits.IntvLE( //
-                134231808, -1, -1, -1, -1, -1, -1, -1);
+        textBits = new Int_leBits(0x8003700, //
+                -1, -1, -1, -1, -1, -1, -1);
     }
 
     static int textLookSize = 4096;

@@ -1,7 +1,6 @@
 package net.bodz.bas.collection.preorder;
 
 import java.io.File;
-import java.nio.file.Path;
 
 public class FileStartswithPreorder
         extends AbstractPreorder<File> {
@@ -13,13 +12,24 @@ public class FileStartswithPreorder
         return file.getParentFile();
     }
 
+    /**
+     * @see PathStartswithPreorder
+     */
     @Override
     public int precompare(File o1, File o2) {
         if (o1.equals(o2))
             return EQUALS;
-        Path p1 = o1.toPath();
-        Path p2 = o2.toPath();
-        return PathStartswithPreorder.getInstance().precompare(p1, p2);
+        String path1 = o1.getPath();
+        String path2 = o2.getPath();
+        if (o1.isDirectory())
+            path1 += "/";
+        if (o2.isDirectory())
+            path2 += "/";
+        if (path1.startsWith(path2))
+            return GREATER_THAN;
+        if (path2.startsWith(path1))
+            return LESS_THAN;
+        return UNKNOWN;
     }
 
     static final FileStartswithPreorder instance = new FileStartswithPreorder();
