@@ -20,5 +20,5 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
-	<name>BAS :: Layer 1 :: Type System :: Implementation</name>
+	<name>BAS :: Layer 1 :: Type System :: Traits Impl for Common Types</name>
 </project>
