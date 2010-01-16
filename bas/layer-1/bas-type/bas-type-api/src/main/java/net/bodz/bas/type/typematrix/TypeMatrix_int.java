@@ -1,4 +1,4 @@
-package net.bodz.bas.type;
+package net.bodz.bas.type.typematrix;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

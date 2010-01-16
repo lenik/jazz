@@ -1,21 +1,19 @@
-package net.bodz.bas.type.traits;
+package net.bodz.bas.type;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-
-
 /**
- * It's recommended to use static class method <code>getTypeInfo(): {@link ITypeInfo}</code>, rather then {@link UseTypeInfo} annotation to
- * implement {@link ITypeInfo} singletons.
+ * It's recommended to use static class method <code>getTypeInfo(): {@link ITypeTraits}</code>, rather then {@link TypeTraitsBy} annotation to
+ * implement {@link ITypeTraits} singletons.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target( { ElementType.TYPE, ElementType.FIELD, ElementType.PARAMETER })
 // , ElementType.TYPE_PARAMETER for Java-7
-public @interface UseTypeInfo {
+public @interface TypeTraitsBy {
 
-    Class<? extends ITypeInfo> value();
+    Class<? extends ITypeTraits<?>> value();
 
 }

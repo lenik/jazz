@@ -6,20 +6,20 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import net.bodz.bas.lang.Nullables;
+import net.bodz.bas.type.ITypeTraits;
 import net.bodz.bas.type.traits.IAttributes;
-import net.bodz.bas.type.traits.ITypeInfo;
 
-public abstract class Attributes
+public class Attributes
         implements IAttributes {
 
     private Map<String, Object> map;
-    private Map<String, ITypeInfo<?>> typeMap;;
+    private Map<String, ITypeTraits<?>> typeMap;;
 
     public Attributes() {
         this(null);
     }
 
-    public Attributes(Map<String, ITypeInfo<?>> typeMap) {
+    public Attributes(Map<String, ITypeTraits<?>> typeMap) {
         this.map = new TreeMap<String, Object>();
         this.typeMap = typeMap;
     }
@@ -35,7 +35,7 @@ public abstract class Attributes
     }
 
     @Override
-    public ITypeInfo<?> getAttributeTypeInfo(String attributeName) {
+    public ITypeTraits<?> getAttributeTraits(String attributeName) {
         if (typeMap != null)
             return typeMap.get(attributeName);
         return null;
@@ -47,13 +47,13 @@ public abstract class Attributes
         map.put(name, value);
     }
 
-    public void setAttributeTypeInfo(String name, ITypeInfo<?> typeInfo) {
+    public void setAttributeTypeInfo(String name, ITypeTraits<?> typeInfo) {
         if (name == null)
             throw new NullPointerException("name");
         if (typeInfo == null)
             throw new NullPointerException("typeInfo");
         if (typeMap == null)
-            typeMap = new HashMap<String, ITypeInfo<?>>();
+            typeMap = new HashMap<String, ITypeTraits<?>>();
         typeMap.put(name, typeInfo);
     }
 

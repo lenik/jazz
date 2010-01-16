@@ -1,28 +1,20 @@
 package net.bodz.bas.type.traits;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * Pre-defined instances provider.
  */
 public interface IInstanceStore<T> {
 
-    int getInstanceCount();
-
-    /**
-     * @return non-<code>null</code> instance.
-     * @throws IndexOutOfBoundsException
-     */
-    T getInstance(int index);
-
     /**
      * 
-     * @return Unmodifiable list of instance names, empty list if no instance name defined.
+     * @return Unmodifiable {@link Set} of instance names, empty if no instance available.
      */
-    List<String> getInstanceNames();
+    Set<String> getInstanceNames();
 
     /**
-     * @return <code>null</code> if instance with specified name doesn't exist.
+     * @return <code>null</code> If specified instance name doesn't exist.
      */
     T getInstance(String name);
 

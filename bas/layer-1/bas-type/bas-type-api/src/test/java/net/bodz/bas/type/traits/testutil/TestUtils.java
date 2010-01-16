@@ -1,4 +1,4 @@
-package net.bodz.bas.type;
+package net.bodz.bas.type.traits.testutil;
 
 import static org.junit.Assert.assertEquals;
 import net.bodz.bas.exceptions.ParseException;

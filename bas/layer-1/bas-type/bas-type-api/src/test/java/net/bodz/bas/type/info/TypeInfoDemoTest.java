@@ -7,8 +7,8 @@ import net.bodz.bas.lang.INegotiation;
 import net.bodz.bas.lang.NegotiationException;
 import net.bodz.bas.lang.NegotiationParameter;
 import net.bodz.bas.lang.UnsupportedNegotiationException;
+import net.bodz.bas.type.ITypeTraits;
 import net.bodz.bas.type.traits.IParser;
-import net.bodz.bas.type.traits.ITypeInfo;
 import net.bodz.bas.type.traits.impl.SelfDescribedTypeInfo;
 import net.bodz.bas.type.traits.impl.TypeInfoResolve;
 
@@ -48,9 +48,9 @@ public class TypeInfoDemoTest {
             return country + ":" + city + ":" + location;
         }
 
-        private static ITypeInfo typeInfo = new AddressTypeInfo(true);
+        private static ITypeTraits typeInfo = new AddressTypeInfo(true);
 
-        static ITypeInfo getTypeInfo() {
+        static ITypeTraits getTypeInfo() {
             return typeInfo;
         }
 
@@ -103,8 +103,8 @@ public class TypeInfoDemoTest {
         }
     }
 
-    static ITypeInfo postAddressType = (AddressTypeInfo) TypeInfoResolve.findTypeInfo(Address.class);
-    static ITypeInfo nonpostAddressType = new AddressTypeInfo(false);
+    static ITypeTraits postAddressType = (AddressTypeInfo) TypeInfoResolve.findTypeInfo(Address.class);
+    static ITypeTraits nonpostAddressType = new AddressTypeInfo(false);
 
     @Test
     public void testDefaultNoChange()

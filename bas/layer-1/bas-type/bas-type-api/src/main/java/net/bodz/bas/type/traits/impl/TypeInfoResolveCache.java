@@ -3,7 +3,7 @@ package net.bodz.bas.type.traits.impl;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.type.traits.ITypeInfo;
+import net.bodz.bas.type.ITypeTraits;
 
 
 /**
@@ -11,24 +11,24 @@ import net.bodz.bas.type.traits.ITypeInfo;
  */
 public class TypeInfoResolveCache {
 
-    private static final Map<Class<?>, ITypeInfo> typeInfoMap;
+    private static final Map<Class<?>, ITypeTraits> typeInfoMap;
     static {
-        typeInfoMap = new HashMap<Class<?>, ITypeInfo>();
+        typeInfoMap = new HashMap<Class<?>, ITypeTraits>();
     }
 
-    public static ITypeInfo getTypeInfo(Class<?> type) {
+    public static ITypeTraits getTypeInfo(Class<?> type) {
         return typeInfoMap.get(type);
     }
 
-    public static void setTypeInfo(Class<?> type, ITypeInfo typeInfo) {
+    public static void setTypeInfo(Class<?> type, ITypeTraits typeInfo) {
         typeInfoMap.put(type, typeInfo);
     }
 
     /**
      * Get type info from the cache, or update it.
      */
-    public static ITypeInfo findTypeInfo(Class<?> type) {
-        ITypeInfo typeInfo = typeInfoMap.get(type);
+    public static ITypeTraits findTypeInfo(Class<?> type) {
+        ITypeTraits typeInfo = typeInfoMap.get(type);
         if (typeInfo == null) {
             if (typeInfoMap.containsKey(type))
                 return null;
