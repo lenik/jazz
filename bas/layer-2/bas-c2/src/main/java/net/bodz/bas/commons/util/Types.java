@@ -11,12 +11,12 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.bodz.bas.annotations.null_class;
-import net.bodz.bas.collection.comparator.TypeComparator;
 import net.bodz.bas.exceptions.CreateException;
 import net.bodz.bas.exceptions.OutOfDomainException;
 import net.bodz.bas.exceptions.UnexpectedException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
+import net.bodz.bas.type.util.TypeComparator;
 
 public class Types {
 
