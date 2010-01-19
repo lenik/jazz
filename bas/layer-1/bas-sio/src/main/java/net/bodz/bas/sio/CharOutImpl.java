@@ -45,7 +45,13 @@ public class CharOutImpl
     @Override
     public void write(CharBuffer charBuffer)
             throws IOException {
-        super.write(charBuffer);
+        base.write(charBuffer);
+    }
+
+    @Override
+    public void flush(boolean strict)
+            throws IOException {
+        base.flush(strict);
     }
 
     @Override

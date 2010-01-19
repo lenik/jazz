@@ -33,9 +33,9 @@ public class ByteOutImpl
     }
 
     @Override
-    public void flush()
+    public void flush(boolean strict)
             throws IOException {
-        base.flush();
+        base.flush(strict);
     }
 
     @Override

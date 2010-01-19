@@ -53,7 +53,7 @@ public class PrintStreamCharOut
     }
 
     @Override
-    public void flush()
+    public void flush(boolean strict)
             throws IOException {
         ps.flush();
     }

@@ -46,123 +46,135 @@ public abstract class CharOut
     private final static char NL = '\n';
 
     public void print(String s)
-            throws IOException {
-        // char[] chars = s == null ? NULL : s.toCharArray();
-        // write(chars, 0, chars.length);
-        if (s == null)
-            write(NULL, 0, NULL.length);
-        else
-            write(s, 0, s.length());
+            throws SIOException {
+        try {
+            // char[] chars = s == null ? NULL : s.toCharArray();
+            // write(chars, 0, chars.length);
+            if (s == null)
+                write(NULL, 0, NULL.length);
+            else
+                write(s, 0, s.length());
+        } catch (IOException e) {
+            throw new SIOException(e);
+        }
     }
 
     public void print(boolean b)
-            throws IOException {
+            throws SIOException {
         print(String.valueOf(b));
     }
 
     public void print(char c)
-            throws IOException {
-        write(c);
+            throws SIOException {
+        try {
+            write(c);
+        } catch (IOException e) {
+            throw new SIOException(e.getMessage(), e);
+        }
     }
 
     public void print(char[] s)
-            throws IOException {
+            throws SIOException {
         assert s != null;
-        write(s, 0, s.length);
+        try {
+            write(s, 0, s.length);
+        } catch (IOException e) {
+            throw new SIOException(e.getMessage(), e);
+        }
     }
 
     public void print(double d)
-            throws IOException {
+            throws SIOException {
         print(String.valueOf(d));
     }
 
     public void print(float f)
-            throws IOException {
+            throws SIOException {
         print(String.valueOf(f));
     }
 
     public void print(int i)
-            throws IOException {
+            throws SIOException {
         print(String.valueOf(i));
     }
 
     public void print(long l)
-            throws IOException {
+            throws SIOException {
         print(String.valueOf(l));
     }
 
     public void print(Object obj)
-            throws IOException {
+            throws SIOException {
         print(String.valueOf(obj));
     }
 
     public void print(Object... args)
-            throws IOException {
+            throws SIOException {
         for (Object arg : args)
             print(arg);
     }
 
     public void println()
-            throws IOException {
+            throws SIOException {
         print(NL);
     }
 
     public void println(boolean x)
-            throws IOException {
+            throws SIOException {
         print(x);
         println();
     }
 
     public void println(char x)
-            throws IOException {
+            throws SIOException {
         print(x);
         println();
     }
 
     public void println(char[] x)
-            throws IOException {
+            throws SIOException {
         print(x);
         print("\n");
     }
 
     public void println(double x)
-            throws IOException {
+            throws SIOException {
         print(x);
         println();
     }
 
     public void println(float x)
-            throws IOException {
+            throws SIOException {
         print(x);
         println();
     }
 
     public void println(int x)
-            throws IOException {
+            throws SIOException {
         print(x);
         println();
     }
 
     public void println(long x)
-            throws IOException {
+            throws SIOException {
         print(x);
         println();
     }
 
     public void println(Object x)
-            throws IOException {
+            throws SIOException {
         print(x);
         println();
     }
 
     public void println(String x)
-            throws IOException {
+            throws SIOException {
         print(x);
         println();
     }
 
     public void println(Object... args)
-            throws IOException {
+            throws SIOException {
         if (args.length == 0) {
             println();
             return;
@@ -174,17 +186,27 @@ public abstract class CharOut
     }
 
     public void printf(Locale l, String format, Object... args)
-            throws IOException {
+            throws SIOException {
         print(String.format(l, format, args));
     }
 
     public void printf(String format, Object... args)
-            throws IOException {
+            throws SIOException {
         print(String.format(format, args));
     }
 
-    public void flush()
+    @Override
+    public void flush(boolean strict)
             throws IOException {
+    }
+
+    public void flush()
+            throws SIOException {
+        try {
+            flush(false);
+        } catch (IOException e) {
+            throw new SIOException();
+        }
     }
 
     class WriterAdapter

@@ -23,7 +23,7 @@ public class OutputStreamByteOut
     }
 
     @Override
-    public void flush()
+    public void flush(boolean strict)
             throws IOException {
         out.flush();
     }
