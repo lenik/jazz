@@ -7,6 +7,8 @@ import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.bodz.bas.sio.CharOut;
+
 public class Annotations {
 
     /**

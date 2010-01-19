@@ -28,13 +28,6 @@
 		</dependency>
 		<dependency>
 			<groupId>net.bodz.bas</groupId>
-			<artifactId>bas-io</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>net.bodz.bas</groupId>
 			<artifactId>bas-jdk6compat</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<type>jar</type>
@@ -43,6 +36,13 @@
 		<dependency>
 			<groupId>net.bodz.bas</groupId>
 			<artifactId>bas-text-util</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.bodz.bas</groupId>
+			<artifactId>bas-sio</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<type>jar</type>
 			<scope>compile</scope>

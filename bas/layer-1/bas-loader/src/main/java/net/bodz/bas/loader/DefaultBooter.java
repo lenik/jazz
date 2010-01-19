@@ -7,18 +7,17 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.bodz.bas.closure.alt.Pred1;
-import net.bodz.bas.io.out.CharOut;
-import net.bodz.bas.io.out.CharOuts;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.loader.boot.BootInfo;
 import net.bodz.bas.loader.boot.BootProc;
+import net.bodz.bas.sio.CharOut;
 
 /**
  * The default booter for {@link BootInfo}.
  */
 public class DefaultBooter {
 
-    private static CharOut out = CharOuts.stderr;
+    private static CharOut out = CharOut.stderr;
 
     static boolean LOADFIX_DUMP = false;
 

@@ -2,7 +2,6 @@ package net.bodz.bas.types;
 
 import java.io.File;
 import java.lang.reflect.AnnotatedElement;
-import java.nio.file.Files;
 import java.util.regex.Pattern;
 
 import net.bodz.bas.commons.util.Types;

@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.bodz.bas.hint.OverrideOption;
-import net.bodz.bas.io.out.CharOuts.BCharOut;
+import net.bodz.bas.sio.BCharOut;
 
 public class PatternProcessor extends BCharOut {
 

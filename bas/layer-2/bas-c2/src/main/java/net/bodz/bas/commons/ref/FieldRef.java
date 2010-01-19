@@ -2,7 +2,8 @@ package net.bodz.bas.commons.ref;
 
 import java.lang.reflect.Field;
 
-import net.bodz.bas.c1.ObjectInfo;
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
+import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.lang.Ref;
 
 public class FieldRef<T>
@@ -28,7 +29,7 @@ public class FieldRef<T>
     public T get() {
         Object fieldValue;
         try {
-            fieldValue = field.get(object);
+            fieldValue = Jdk7Reflect.get(field, object);
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
@@ -38,7 +39,7 @@ public class FieldRef<T>
     @Override
     public void set(T value) {
         try {
-            field.set(object, value);
+            Jdk7Reflect.set(field, object, value);
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
