@@ -1,4 +1,4 @@
-package net.bodz.bas.module;
+package net.bodz.bas.arch.module;
 
 import java.util.HashMap;
 import java.util.Locale;
