@@ -1,4 +1,4 @@
-package net.bodz.bas.io;
+package net.bodz.bas.collection.buffer;
 
 import java.io.IOException;
 import java.io.OutputStream;

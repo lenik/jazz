@@ -1,9 +1,7 @@
-package net.bodz.bas.io;
+package net.bodz.bas.collection.buffer;
 
 import java.io.IOException;
 import java.io.InputStream;
-
-import net.bodz.bas.collection.buffer.ByteRing;
 
 public class ByteRingInputStream extends InputStream {
 

@@ -7,7 +7,7 @@ import java.nio.BufferUnderflowException;
 import net.bodz.bas.exceptions.NotImplementedException;
 import net.bodz.bas.exceptions.OutOfDomainException;
 
-public abstract class _Ring<A, T> implements Ring<A, T> {
+public abstract class AbstractRingBuffer<A, T> implements IRingBuffer<A, T> {
 
     protected final A array;
     protected int capacity;
@@ -15,12 +15,12 @@ public abstract class _Ring<A, T> implements Ring<A, T> {
     protected int end;
     protected boolean full;
 
-    public _Ring(int capacity) {
+    public AbstractRingBuffer(int capacity) {
         array = create(capacity);
         this.capacity = capacity;
     }
 
-    public _Ring(A array) {
+    public AbstractRingBuffer(A array) {
         if (array == null)
             throw new NullPointerException("array");
         this.array = array;
@@ -48,7 +48,7 @@ public abstract class _Ring<A, T> implements Ring<A, T> {
     }
 
     @Override
-    public Ring<A, T> begin(int newBegin) {
+    public IRingBuffer<A, T> begin(int newBegin) {
         if (newBegin < 0)
             throw new OutOfDomainException("newBegin", newBegin, 0);
         if (newBegin > capacity)
@@ -63,7 +63,7 @@ public abstract class _Ring<A, T> implements Ring<A, T> {
     }
 
     @Override
-    public Ring<A, T> end(int newEnd) {
+    public IRingBuffer<A, T> end(int newEnd) {
         if (newEnd < 0)
             throw new OutOfDomainException("newEnd", newEnd, 0);
         if (newEnd > capacity)
@@ -83,7 +83,7 @@ public abstract class _Ring<A, T> implements Ring<A, T> {
     }
 
     @Override
-    public Ring<A, T> size(int newSize) {
+    public IRingBuffer<A, T> size(int newSize) {
         end = (begin + newSize) % capacity;
         full = newSize == capacity;
         return this;
