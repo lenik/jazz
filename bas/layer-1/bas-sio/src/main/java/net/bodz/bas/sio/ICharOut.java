@@ -18,7 +18,7 @@ public interface ICharOut
     void write(CharBuffer charBuffer)
             throws IOException;
 
-    void flush()
+    void flush(boolean strict)
             throws IOException;
 
 }

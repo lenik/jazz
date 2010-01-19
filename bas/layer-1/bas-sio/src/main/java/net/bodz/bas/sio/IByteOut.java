@@ -22,7 +22,7 @@ public interface IByteOut
     void write(ByteBuffer buffer)
             throws IOException;
 
-    void flush()
+    void flush(boolean strict)
             throws IOException;
 
 }

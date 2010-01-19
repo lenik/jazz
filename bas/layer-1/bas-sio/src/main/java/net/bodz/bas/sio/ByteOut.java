@@ -1,8 +1,6 @@
 package net.bodz.bas.sio;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 
@@ -26,59 +24,88 @@ public abstract class ByteOut
     }
 
     @Override
-    public void flush()
+    public void flush(boolean strict)
             throws IOException {
+    }
+
+    public void flush()
+            throws SIOException {
+        try {
+            flush(false);
+        } catch (IOException e) {
+            throw new SIOException();
+        }
     }
 
     public void print(byte[] buf)
-            throws IOException {
-        write(buf, 0, buf.length);
+            throws SIOException {
+        try {
+            write(buf, 0, buf.length);
+        } catch (IOException e) {
+            throw new SIOException(e);
+        }
     }
 
     public void print(byte b)
-            throws IOException {
-        write(b);
+            throws SIOException {
+        try {
+            write(b);
+        } catch (IOException e) {
+            throw new SIOException(e);
+        }
     }
 
     public void printLE(short s)
-            throws IOException {
-        write(s);
-        s >>= 8;
-        write(s);
+            throws SIOException {
+        try {
+            write(s);
+            s >>= 8;
+            write(s);
+        } catch (IOException e) {
+            throw new SIOException(e);
+        }
     }
 
     public void printLE(int n)
-            throws IOException {
-        write(n);
-        n >>= 8;
-        write(n);
-        n >>= 8;
-        write(n);
-        n >>= 8;
-        write(n);
+            throws SIOException {
+        try {
+            write(n);
+            n >>= 8;
+            write(n);
+            n >>= 8;
+            write(n);
+            n >>= 8;
+            write(n);
+        } catch (IOException e) {
+            throw new SIOException(e);
+        }
     }
 
     public void printLE(long l)
-            throws IOException {
+            throws SIOException {
         printLE((int) l);
         l >>= 32;
         printLE((int) l);
     }
 
     public void print(boolean b)
-            throws IOException {
+            throws SIOException {
         print(b ? (byte) 1 : (byte) 0);
     }
 
     public synchronized void printUtf16LE(char c)
-            throws IOException {
-        write(c);
-        c >>= 8;
-        write(c);
+            throws SIOException {
+        try {
+            write(c);
+            c >>= 8;
+            write(c);
+        } catch (IOException e) {
+            throw new SIOException(e);
+        }
     }
 
     public void printUtf16LE(char[] str)
-            throws IOException {
+            throws SIOException {
         if (str == null)
             throw new NullPointerException("str");
         int cb = str.length * 2;
@@ -90,27 +117,21 @@ public abstract class ByteOut
             c >>= 8;
             buf[j++] = (byte) c;
         }
-        write(buf, 0, cb);
+        try {
+            write(buf, 0, cb);
+        } catch (IOException e) {
+            throw new SIOException(e);
+        }
     }
 
     public void printIeee754(double d)
-            throws IOException {
+            throws SIOException {
         printLE(Double.doubleToLongBits(d));
     }
 
     public void printIeee754(float f)
-            throws IOException {
+            throws SIOException {
         printLE(Float.floatToIntBits(f));
-    }
-
-    public void printSerialization(Object obj)
-            throws IOException {
-        ByteArrayOutputStream buf = new ByteArrayOutputStream();
-        ObjectOutputStream out;
-        out = new ObjectOutputStream(buf);
-        out.writeObject(obj);
-
-        print(buf.toByteArray());
     }
 
     class OutputStreamAdapter
