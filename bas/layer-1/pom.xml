@@ -13,6 +13,7 @@
 		<module>bas-annotation</module>
 		<module>bas-bean</module>
 		<module>bas-bits</module>
+		<module>bas-c1</module>
 		<module>bas-compat</module>
 		<module>bas-closure</module>
 		<module>bas-collection</module>
@@ -28,6 +29,7 @@
 		<module>bas-primitive</module>
 		<module>bas-proxy</module>
 		<module>bas-reflect</module>
+		<module>bas-sio</module>
 		<module>bas-sysinfo</module>
 		<module>bas-type</module>
 	</modules>
