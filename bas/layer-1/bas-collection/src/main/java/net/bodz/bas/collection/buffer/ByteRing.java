@@ -4,9 +4,15 @@ import java.nio.BufferOverflowException;
 import java.nio.BufferUnderflowException;
 import java.nio.charset.Charset;
 
+import net.bodz.bas.collection.array.IArrayWrapper;
 import net.bodz.bas.exceptions.OutOfDomainException;
 
-public class ByteRing extends _Ring<byte[], Byte> {
+/**
+ * @see {@link IArrayWrapper}
+ */
+@Deprecated
+public class ByteRing
+        extends AbstractRingBuffer<byte[], Byte> {
 
     public ByteRing(byte[] array) {
         super(array);
@@ -73,7 +79,8 @@ public class ByteRing extends _Ring<byte[], Byte> {
     /**
      * @see #read()
      */
-    public byte readByte() throws BufferUnderflowException {
+    public byte readByte()
+            throws BufferUnderflowException {
         if (isEmpty())
             throw new BufferUnderflowException();
         byte x = _getByte(begin++);
@@ -85,7 +92,8 @@ public class ByteRing extends _Ring<byte[], Byte> {
     /**
      * @see #write(Object)
      */
-    public void writeByte(byte value) throws BufferOverflowException {
+    public void writeByte(byte value)
+            throws BufferOverflowException {
         if (isFull())
             throw new BufferOverflowException();
         _setByte(end++, value);

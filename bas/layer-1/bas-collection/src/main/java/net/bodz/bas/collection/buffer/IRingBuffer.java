@@ -3,7 +3,7 @@ package net.bodz.bas.collection.buffer;
 import java.nio.BufferOverflowException;
 import java.nio.BufferUnderflowException;
 
-public interface Ring<A, T> {
+public interface IRingBuffer<A, T> {
 
     A array();
 
@@ -11,15 +11,15 @@ public interface Ring<A, T> {
 
     int begin();
 
-    Ring<A, T> begin(int newBegin);
+    IRingBuffer<A, T> begin(int newBegin);
 
     int end();
 
-    Ring<A, T> end(int newEnd);
+    IRingBuffer<A, T> end(int newEnd);
 
     int size();
 
-    Ring<A, T> size(int newSize);
+    IRingBuffer<A, T> size(int newSize);
 
     boolean isEmpty();
 
