@@ -5,8 +5,7 @@ import java.util.List;
 
 import net.bodz.bas.c1.util.Dates;
 import net.bodz.bas.closure.alt.Pred1;
-import net.bodz.bas.io.out.CharOut;
-import net.bodz.bas.io.out.CharOuts;
+import net.bodz.bas.sio.CharOut;
 import net.bodz.bas.text.diff.DiffInfo;
 
 /**
@@ -34,7 +33,7 @@ public class DiffPrint {
      * provided as well.
      */
     public static abstract class Base {
-        protected CharOut outfile = CharOuts.stdout;
+        protected CharOut outfile = CharOut.stdout;
 
         protected Base(List<?> a, List<?> b, CharOut outfile) {
             file0 = a;

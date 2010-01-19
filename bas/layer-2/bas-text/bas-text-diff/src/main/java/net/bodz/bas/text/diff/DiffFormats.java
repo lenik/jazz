@@ -2,7 +2,7 @@ package net.bodz.bas.text.diff;
 
 import java.util.List;
 
-import net.bodz.bas.io.out.CharOut;
+import net.bodz.bas.sio.CharOut;
 import net.bodz.bas.text.diff.gnudiff.DiffPrint;
 
 public class DiffFormats {

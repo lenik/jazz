@@ -23,7 +23,7 @@ import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.List;
 
-import net.bodz.bas.io.out.CharOuts;
+import net.bodz.bas.sio.WriterCharOut;
 import net.bodz.bas.text.diff.gnudiff.DiffPrint;
 import net.bodz.bas.text.diff.gnudiff._GNUDiff;
 
@@ -90,7 +90,8 @@ public class DiffTest {
         _GNUDiff diff = new _GNUDiff(Arrays.asList(test1), Arrays.asList(test2));
         List<DiffInfo> script = diff.diff_2(false);
         StringWriter wtr = new StringWriter();
-        DiffPrint.Base p = new DiffPrint.UnifiedPrint(Arrays.asList(test1), Arrays.asList(test2), CharOuts.get(wtr));
+        DiffPrint.Base p = new DiffPrint.UnifiedPrint(Arrays.asList(test1), Arrays.asList(test2), //
+                new WriterCharOut(wtr));
         // p.print_header("test1","test2");
         p.print_script(script);
         /*

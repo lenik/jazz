@@ -3,6 +3,8 @@ package net.bodz.bas.commons.exception;
 import java.lang.reflect.Field;
 
 import net.bodz.bas.exceptions.RuntimizedException;
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
+import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.lang.err.ErrTest;
 
 /**
@@ -36,7 +38,7 @@ public class Err {
         Field field = null;
         boolean ok = false;
         try {
-            field = Throwable.class.getDeclaredField("detailMessage"); 
+            field = Throwable.class.getDeclaredField("detailMessage");
             field.setAccessible(true);
             ok = true;
         } catch (SecurityException e) {
@@ -52,7 +54,7 @@ public class Err {
         if (detailMessageField == null)
             return;
         try {
-            detailMessageField.set(t, mesg);
+            Jdk7Reflect.set(detailMessageField, t, mesg);
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
@@ -65,9 +67,9 @@ public class Err {
         if (mesg == null || mesg.isEmpty())
             mesg = prefix;
         else
-            mesg = prefix + ": " + mesg; 
+            mesg = prefix + ": " + mesg;
         try {
-            detailMessageField.set(t, mesg);
+            Jdk7Reflect.set(detailMessageField, t, mesg);
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }

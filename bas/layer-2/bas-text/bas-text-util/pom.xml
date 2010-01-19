@@ -31,15 +31,15 @@
     		<scope>compile</scope>
     	</dependency>
     	<dependency>
+    		<groupId>commons-lang</groupId>
+    		<artifactId>commons-lang</artifactId>
+    	</dependency>
+    	<dependency>
     		<groupId>net.bodz.bas</groupId>
-    		<artifactId>bas-io</artifactId>
+    		<artifactId>bas-sio</artifactId>
     		<version>0.0.1-SNAPSHOT</version>
     		<type>jar</type>
     		<scope>compile</scope>
-    	</dependency>
-    	<dependency>
-    		<groupId>commons-lang</groupId>
-    		<artifactId>commons-lang</artifactId>
     	</dependency>
     </dependencies>
     <name>BAS :: Layer 2 :: Text :: Utilities</name>

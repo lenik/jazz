@@ -6,8 +6,9 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 
-import net.bodz.bas.c1.ObjectInfo;
 import net.bodz.bas.exceptions.NoSuchKeyException;
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
+import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.lang.Ref;
 
 public class PropertyRef<PropertyType>
@@ -40,7 +41,7 @@ public class PropertyRef<PropertyType>
             Object... parameters) {
         if (bean == null)
             throw new NullPointerException("bean");
-        @SuppressWarnings ( "unchecked")
+        @SuppressWarnings("unchecked")
         Class<T> beanClass = (Class<T>) bean.getClass();
         return getInstance(bean, beanClass, propertyDescriptor, parameters);
     }
@@ -59,7 +60,7 @@ public class PropertyRef<PropertyType>
             throws IntrospectionException {
         if (bean == null)
             throw new NullPointerException("bean");
-        @SuppressWarnings ( "unchecked")
+        @SuppressWarnings("unchecked")
         Class<T> beanClass = (Class<T>) bean.getClass();
         return getInstance(bean, beanClass, propertyName, parameters);
     }
@@ -84,9 +85,9 @@ public class PropertyRef<PropertyType>
         Object propertyValue;
         try {
             if (parameters == null)
-                propertyValue = readMethod.invoke(bean);
+                propertyValue = Jdk7Reflect.invoke(readMethod, bean);
             else
-                propertyValue = readMethod.invoke(bean, parameters);
+                propertyValue = Jdk7Reflect.invoke(readMethod, bean, parameters);
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
@@ -98,7 +99,7 @@ public class PropertyRef<PropertyType>
         if (writeMethod == null)
             throw new UnsupportedOperationException("Can't write to property. ");
         try {
-            writeMethod.invoke(bean, value);
+            Jdk7Reflect.invoke(writeMethod, bean, value);
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
