@@ -28,6 +28,15 @@ public class Caller {
         }
     }
 
+    /**
+     * In the following, `<code>caller-method</code>' is the method which calls
+     * {@link #getCallerClass(int)}, and `<code>self-method</code>' is the
+     * {@link #getCallerClass(int)} method itself.
+     * 
+     * @param caller
+     *            Specify to 1 to get the <code>caller-method</code>, and 0 to get the
+     *            <code>self-method</code>.
+     */
     public static Class<?> getCallerClass(int caller) {
         try {
             return (Class<?>) Jdk7Reflect.invoke(Reflection_getCallerClass, null, caller + 2);
@@ -36,6 +45,15 @@ public class Caller {
         }
     }
 
+    /**
+     * In the following, `<code>caller-method</code>' is the method which calls
+     * {@link #getCallerClassLoader(int)}, and `<code>self-method</code>' is the
+     * {@link #getCallerClassLoader(int)} method itself.
+     * 
+     * @param caller
+     *            Specify to 1 to get the <code>caller-method</code>, and 0 to get the
+     *            <code>self-method</code>.
+     */
     public static ClassLoader getCallerClassLoader(int caller) {
         Class<?> callerClass = getCallerClass(caller + 1);
         if (callerClass == null) {
