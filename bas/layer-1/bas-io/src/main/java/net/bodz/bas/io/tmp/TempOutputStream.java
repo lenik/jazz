@@ -1,4 +1,4 @@
-package net.bodz.bas.io;
+package net.bodz.bas.io.tmp;
 
 import java.io.File;
 import java.io.FileOutputStream;

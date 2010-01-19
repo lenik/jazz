@@ -1,7 +1,9 @@
-package net.bodz.bas.sio;
+package net.bodz.bas.io.tmp;
 
 import java.io.File;
 import java.io.IOException;
+
+import net.bodz.bas.sio.WriterCharOut;
 
 public class TempCharOut
         extends WriterCharOut {
