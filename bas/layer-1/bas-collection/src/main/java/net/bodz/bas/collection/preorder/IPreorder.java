@@ -8,6 +8,12 @@ public interface IPreorder<T> {
     int UNKNOWN = Integer.MAX_VALUE;
 
     /**
+     *@param o1
+     *            non-<code>null</code> value.
+     *@param o2
+     *            non-<code>null</code> value.
+     * @throws NullPointerException
+     *             if any parameter is <code>null</code>.
      * @see #LESS_THAN
      * @see #EQUALS
      * @see #GREATER_THAN
@@ -15,27 +21,75 @@ public interface IPreorder<T> {
      */
     int precompare(T o1, T o2);
 
+    /**
+     *@param o1
+     *            non-<code>null</code> value.
+     *@param o2
+     *            non-<code>null</code> value.
+     * @throws NullPointerException
+     *             if any parameter is <code>null</code>.
+     */
     boolean isLessThan(T o1, T o2);
 
+    /**
+     *@param o1
+     *            non-<code>null</code> value.
+     *@param o2
+     *            non-<code>null</code> value.
+     * @throws NullPointerException
+     *             if any parameter is <code>null</code>.
+     */
     boolean isGreaterThan(T o1, T o2);
 
+    /**
+     *@param o1
+     *            non-<code>null</code> value.
+     *@param o2
+     *            non-<code>null</code> value.
+     * @throws NullPointerException
+     *             if any parameter is <code>null</code>.
+     */
     boolean isLessOrEquals(T o1, T o2);
 
+    /**
+     *@param o1
+     *            non-<code>null</code> value.
+     *@param o2
+     *            non-<code>null</code> value.
+     * @throws NullPointerException
+     *             if any parameter is <code>null</code>.
+     */
     boolean isGreaterOrEquals(T o1, T o2);
 
     /**
+     * @param o
+     *            non-<code>null</code> value.
      * @return The lowest value in upper bounds of <code>{o}</code> but excludes <code>{o}</code> in
      *         domain <code>T</code>. Return <code>null</code> if <code>{o}</code> is the min value.
+     * @throws NullPointerException
+     *             If <code>o</code> is <code>null</code>.
      */
     T getPreceding(T o);
 
     /**
+     * @param array
+     *            Non-empty array.
      * @return The greatest lower bound of <code>array</code> in domain <code>T</code>.
+     * @throws NullPointerException
+     *             If array is <code>null</code>.
+     * @throws IllegalArgumentException
+     *             If array is empty.
      */
     T meet(T... array);
 
     /**
+     *@param o1
+     *            non-<code>null</code> value.
+     *@param o2
+     *            non-<code>null</code> value.
      * @return The greatest lower bound of <code>{o1, o2}</code> in domain <code>T</code> .
+     * @throws NullPointerException
+     *             if any parameter is <code>null</code>.
      */
     T meet(T o1, T o2);
 
@@ -52,6 +106,15 @@ public interface IPreorder<T> {
 
     }
 
+    /**
+     *@param o1
+     *            non-<code>null</code> value.
+     *@param o2
+     *            non-<code>null</code> value.
+     * @return non-<code>null</code> {@link MeetX} struct.
+     * @throws NullPointerException
+     *             if any parameter is <code>null</code>.
+     */
     MeetX<T> meetX(T o1, T o2);
 
 }

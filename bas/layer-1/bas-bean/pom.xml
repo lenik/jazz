@@ -8,6 +8,18 @@
     </parent>
     <artifactId>bas-bean</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <dependencies />
+    <dependencies >
+    	<dependency>
+    		<groupId>net.bodz.bas</groupId>
+    		<artifactId>bas-hint</artifactId>
+    		<version>0.0.2-SNAPSHOT</version>
+    		<type>jar</type>
+    		<scope>compile</scope>
+    	</dependency>
+    	<dependency>
+    		<groupId>commons-beanutils</groupId>
+    		<artifactId>commons-beanutils</artifactId>
+    	</dependency>
+    </dependencies>
     <name>BAS :: Layer 1 :: Java Bean Utilities</name>
 </project>
