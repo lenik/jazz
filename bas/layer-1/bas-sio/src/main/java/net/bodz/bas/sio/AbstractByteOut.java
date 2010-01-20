@@ -166,37 +166,8 @@ public abstract class AbstractByteOut
         writeBE(Double.doubleToLongBits(d));
     }
 
-    class OutputStreamAdapter
-            extends OutputStream {
-
-        @Override
-        public void write(int b)
-                throws IOException {
-            AbstractByteOut.this.write(b);
-        }
-
-        @Override
-        public void write(byte[] b)
-                throws IOException {
-            AbstractByteOut.this.write(b);
-        }
-
-        @Override
-        public void write(byte[] b, int off, int len)
-                throws IOException {
-            AbstractByteOut.this.write(b, off, len);
-        }
-
-        @Override
-        public void flush()
-                throws IOException {
-            AbstractByteOut.this.flush();
-        }
-
-    }
-
     public OutputStream toOutputStream() {
-        return new OutputStreamAdapter();
+        return new ByteOutOutputStream(this);
     }
 
 }

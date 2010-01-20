@@ -36,30 +36,8 @@ public abstract class AbstractCharIn
         return new String(chars, 0, ccRead);
     }
 
-    class ReaderAdapter
-            extends Reader {
-
-        @Override
-        public void close()
-                throws IOException {
-        }
-
-        @Override
-        public int read()
-                throws IOException {
-            return AbstractCharIn.this.read();
-        }
-
-        @Override
-        public int read(char[] cbuf, int off, int len)
-                throws IOException {
-            return AbstractCharIn.this.read(cbuf, off, len);
-        }
-
-    }
-
     public Reader toReader() {
-        return new ReaderAdapter();
+        return new CharInReader(this);
     }
 
 }
