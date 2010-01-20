@@ -1,4 +1,4 @@
-package net.bodz.bas.text.encodings;
+package net.bodz.bas.text.codec;
 
 import static org.junit.Assert.assertEquals;
 

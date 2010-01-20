@@ -8,16 +8,16 @@ import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.ICharIn;
 import net.bodz.bas.sio.ICharOut;
-import net.bodz.bas.text.charsets.Lookups;
 import net.bodz.bas.text.codec.AbstractByteCodec;
+import net.bodz.bas.text.model.CharFeature;
 
 public class HexCodec
         extends AbstractByteCodec {
 
     private final String IFS;
     private final char simpleIFS;
-    private final char[] enctbl = Lookups.n2cl;
-    private final byte[] dectbl = Lookups.c2n;
+    private final char[] enctbl = CharFeature.n2cl;
+    private final byte[] dectbl = CharFeature.c2n;
 
     private final int width;
     private final String NL;

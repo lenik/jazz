@@ -12,7 +12,7 @@ import net.bodz.bas.io.ByteOuts.BByteOut;
 import net.bodz.bas.lang.err.ParseException;
 import net.bodz.bas.types.Bits;
 
-public class CharFeature {
+public class CharFeatureModel {
 
     public static final Map<String, byte[]> octf;
     public static final Map<String, Bits> bitf;
@@ -21,7 +21,7 @@ public class CharFeature {
         octf = new HashMap<String, byte[]>();
         bitf = new HashMap<String, Bits>();
 
-        URL part1 = Files.classData(CharFeature.class, "1"); 
+        URL part1 = Files.classData(CharFeatureModel.class, "1"); 
         PartRecords mf = new PartRecords(new URLResLink(part1));
         for (PartMap map : mf.iterate()) {
             String name = map.get("name"); 
