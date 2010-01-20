@@ -7,7 +7,7 @@ import java.util.Collection;
 
 import net.bodz.bas.flow.units.builtin.text.BreakLinesUnit;
 import net.bodz.bas.flow.util.WhatIf;
-import net.bodz.bas.text.util.Strings;
+import net.bodz.bas.text.util.StringArray;
 
 import org.junit.Test;
 
@@ -22,75 +22,83 @@ public class BreakLinesUnitTest {
     }
 
     @Test
-    public void testChopClear() throws IOException {
+    public void testChopClear()
+            throws IOException {
         class D {
-            void o(String in, String expected) throws IOException {
+            void o(String in, String expected)
+                    throws IOException {
                 Collection<Object> out = WhatIf.clearSend(chop, in, true);
-                String actual = Strings.join("|", out); 
+                String actual = StringArray.join("|", out);
                 assertEquals(expected, actual);
             }
         }
         D d = new D(); //
-        d.o("a", "a");  
-        d.o("a\n", "a");  
-        d.o("a\nb", "a|b");  
-        d.o("a\r\nb", "a|b");  
-        d.o("a\n\nb\n\rc", "a||b|\rc");  
-        d.o("a\n\n\n", "a||");  
+        d.o("a", "a");
+        d.o("a\n", "a");
+        d.o("a\nb", "a|b");
+        d.o("a\r\nb", "a|b");
+        d.o("a\n\nb\n\rc", "a||b|\rc");
+        d.o("a\n\n\n", "a||");
     }
 
     @Test
-    public void testNoChopClear() throws IOException {
+    public void testNoChopClear()
+            throws IOException {
         class D {
-            void o(String in, String expected) throws IOException {
+            void o(String in, String expected)
+                    throws IOException {
                 Collection<Object> out = WhatIf.clearSend(nochop, in, true);
-                String actual = Strings.join("|", out); 
+                String actual = StringArray.join("|", out);
                 assertEquals(expected, actual);
             }
         }
         D d = new D(); //
-        d.o("a", "a");  
-        d.o("a\n", "a\n");  
-        d.o("a\nb", "a\n|b");  
-        d.o("a\r\nb", "a\r\n|b");  
-        d.o("a\n\nb\n\rc", "a\n|\n|b\n|\rc");  
-        d.o("a\n\n\n", "a\n|\n|\n");  
+        d.o("a", "a");
+        d.o("a\n", "a\n");
+        d.o("a\nb", "a\n|b");
+        d.o("a\r\nb", "a\r\n|b");
+        d.o("a\n\nb\n\rc", "a\n|\n|b\n|\rc");
+        d.o("a\n\n\n", "a\n|\n|\n");
     }
 
     @Test
-    public void testChopCont() throws IOException {
+    public void testChopCont()
+            throws IOException {
         class D {
-            void o(String in, String expected) throws IOException {
+            void o(String in, String expected)
+                    throws IOException {
                 Collection<Object> out = WhatIf.send(chop, in);
-                String actual = Strings.join("|", out); 
+                String actual = StringArray.join("|", out);
                 assertEquals(expected, actual);
             }
         }
         D d = new D(); //
-        d.o("a", "");  
-        d.o("a\n", "aa");  
-        d.o("a\nb", "a");  
-        d.o("a\r\nb", "ba");  
-        d.o("a\n\nb\n\rc", "ba||b");  
-        d.o("a\n\n\n", "\rca||");  
+        d.o("a", "");
+        d.o("a\n", "aa");
+        d.o("a\nb", "a");
+        d.o("a\r\nb", "ba");
+        d.o("a\n\nb\n\rc", "ba||b");
+        d.o("a\n\n\n", "\rca||");
     }
 
     @Test
-    public void testNoChopCont() throws IOException {
+    public void testNoChopCont()
+            throws IOException {
         class D {
-            void o(String in, String expected) throws IOException {
+            void o(String in, String expected)
+                    throws IOException {
                 Collection<Object> out = WhatIf.send(nochop, in);
-                String actual = Strings.join("|", out); 
+                String actual = StringArray.join("|", out);
                 assertEquals(expected, actual);
             }
         }
         D d = new D(); //
-        d.o("a", "");  
-        d.o("a\n", "aa\n");  
-        d.o("a\nb", "a\n");  
-        d.o("a\r\nb", "ba\r\n");  
-        d.o("a\n\nb\n\rc", "ba\n|\n|b\n");  
-        d.o("a\n\n\n", "\rca\n|\n|\n");  
+        d.o("a", "");
+        d.o("a\n", "aa\n");
+        d.o("a\nb", "a\n");
+        d.o("a\r\nb", "ba\r\n");
+        d.o("a\n\nb\n\rc", "ba\n|\n|b\n");
+        d.o("a\n\n\n", "\rca\n|\n|\n");
     }
 
 }

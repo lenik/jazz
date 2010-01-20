@@ -3,23 +3,24 @@ package net.bodz.bas.io.term;
 import java.io.IOException;
 import java.io.PrintStream;
 
-import net.bodz.bas.io.out.CharOut;
-import net.bodz.bas.io.out.CharOuts;
+import net.bodz.bas.sio.ILineCharOut;
+import net.bodz.bas.sio.PrintStreamCharOut;
 
-public class StreamTerminal extends AbstractTerminal {
+public class StreamTerminal
+        extends AbstractTerminal {
 
     // private boolean dirty; ...
     private final PrintStream out;
 
     public StreamTerminal(PrintStream stream) {
         if (stream == null)
-            throw new NullPointerException("stream"); 
+            throw new NullPointerException("stream");
         this.out = stream;
     }
 
     @Override
-    public CharOut getCharOut() {
-        return CharOuts.get(out);
+    public ILineCharOut getCharOut() {
+        return new PrintStreamCharOut(out);
     }
 
     @Override
@@ -43,19 +44,9 @@ public class StreamTerminal extends AbstractTerminal {
     }
 
     @Override
-    public void t(String s) {
-        out.print(s);
-        out.print('\r');
-    }
-
-    @Override
-    public void flush() throws IOException {
+    public void flush()
+            throws IOException {
         out.flush();
-    }
-
-    @Override
-    public void close() throws IOException {
-        out.close();
     }
 
 }

@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.Map;
+import java.util.TreeMap;
 
+import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.files.PartRecordsTest;
 
 /**
@@ -13,9 +15,11 @@ import net.bodz.bas.files.PartRecordsTest;
  * 
  * @test {@link PartRecordsTest}
  */
-public class PartRecords extends _PartRecords<String, String> {
+public class PartRecords
+        extends _PartRecords<String, String> {
 
-    public class PartMap extends TreeTextMap<String> {
+    public class PartMap
+            extends TreeMap<String, String> {
 
         private static final long serialVersionUID = 7647573703380582923L;
 
@@ -24,7 +28,7 @@ public class PartRecords extends _PartRecords<String, String> {
         }
 
         public void setText(String text) {
-            put((String) getTextKey(), text);
+            put(getTextKey(), text);
         }
 
     }
@@ -76,12 +80,14 @@ public class PartRecords extends _PartRecords<String, String> {
     }
 
     @Override
-    protected String parseKey(String key) throws ParseException {
+    protected String parseKey(String key)
+            throws ParseException {
         return key;
     }
 
     @Override
-    protected String parseValue(String value) throws ParseException {
+    protected String parseValue(String value)
+            throws ParseException {
         return value;
     }
 

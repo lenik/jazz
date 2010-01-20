@@ -2,10 +2,13 @@ package net.bodz.bas.snm;
 
 import java.io.File;
 import java.net.URL;
-import java.nio.file.Files;
 import java.util.List;
 
 import net.bodz.bas.exceptions.IllegalUsageException;
+import net.bodz.bas.exceptions.NotImplementedException;
+import net.bodz.bas.exceptions.ParseException;
+import net.bodz.bas.exceptions.UnexpectedException;
+import net.bodz.bas.fs.legacy.Files;
 import net.bodz.bas.snm.BuildPath.ClassContainer;
 import net.bodz.bas.snm.BuildPath.SourceFolder;
 
@@ -17,18 +20,20 @@ public class EclipseProject {
     File baseDir;
     BuildPath buildPath;
 
-    public EclipseProject(File baseDir) throws ParseException {
-        assert baseDir != null : "null base"; 
+    public EclipseProject(File baseDir)
+            throws ParseException {
+        assert baseDir != null : "null base";
         this.baseDir = baseDir;
-        File classpathFile = new File(baseDir, ".classpath"); 
+        File classpathFile = new File(baseDir, ".classpath");
         File manifestFile = new File(baseDir, "META-INF/MANIFEST.MF");
         buildPath = new BuildPath(baseDir, classpathFile, manifestFile);
     }
 
-    public static EclipseProject findFromCWD() throws ParseException {
-        File base = findProjectBase(new File(".")); 
+    public static EclipseProject findFromCWD()
+            throws ParseException {
+        File base = findProjectBase(new File("."));
         if (base == null)
-            throw new RuntimeException("can\'t find the project"); 
+            throw new RuntimeException("can\'t find the project");
         return new EclipseProject(base);
     }
 
@@ -36,7 +41,7 @@ public class EclipseProject {
         if (dir != null && !dir.isDirectory())
             return null;
         while (dir != null) {
-            if (new File(dir, ".project").exists()) 
+            if (new File(dir, ".project").exists())
                 return dir;
             dir = dir.getParentFile();
         }
@@ -56,14 +61,16 @@ public class EclipseProject {
         return buildPath;
     }
 
-    public List<File> getFileClasspath() throws ParseException {
+    public List<File> getFileClasspath()
+            throws ParseException {
         return buildPath.getClasspath();
     }
 
     /**
      * Convert classpaths to URL[].
      */
-    public URL[] getURLClasspath() throws ParseException {
+    public URL[] getURLClasspath()
+            throws ParseException {
         List<File> classpaths = getFileClasspath();
         URL[] urls = new URL[classpaths.size()];
         int i = 0;

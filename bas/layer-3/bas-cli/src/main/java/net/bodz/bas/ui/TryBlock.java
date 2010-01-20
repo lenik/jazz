@@ -1,6 +1,7 @@
 package net.bodz.bas.ui;
 
-public abstract class TryBlock implements Runnable {
+public abstract class TryBlock
+        implements Runnable {
 
     public static final int INFINITE = -1;
 
@@ -67,7 +68,8 @@ public abstract class TryBlock implements Runnable {
     protected void init() {
     }
 
-    protected abstract void body() throws Exception;
+    protected abstract void body()
+            throws Exception;
 
     /**
      * called after this try.

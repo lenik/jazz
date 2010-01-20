@@ -6,10 +6,15 @@ import java.util.Map;
 
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.cli.a.OptionGroup;
+import net.bodz.bas.commons.scripting.ScriptField;
 import net.bodz.bas.exceptions.CreateException;
-import net.bodz.bas.type.util.Types;
+import net.bodz.bas.exceptions.ParseException;
+import net.bodz.bas.text.util.Strings;
+import net.bodz.bas.type.traits.IParser;
+import net.bodz.bas.type.util.ClassInstance;
 
-public abstract class _Option<T> implements ScriptField<T> {
+public abstract class _Option<T>
+        implements ScriptField<T> {
 
     protected String name; // listDetai l
     protected final String hname; // list-detail
@@ -20,7 +25,7 @@ public abstract class _Option<T> implements ScriptField<T> {
     protected final boolean multi;
     protected Class<T> valtype;
 
-    protected final TypeParser parser;
+    protected final IParser<?> parser;
     protected final ItemTypeParser valparser;
     protected final Checker check;
 
@@ -46,12 +51,12 @@ public abstract class _Option<T> implements ScriptField<T> {
         this.optgrp = optgrp == null ? null : optgrp.value();
 
         ParseBy parseBy = elm.getAnnotation(ParseBy.class);
-        Class<? extends TypeParser> parserClass = null;
+        Class<? extends IParser<?>> parserClass = null;
         String parserParam = null;
         if (parseBy != null) {
             parserClass = parseBy.value();
             parserParam = parseBy.param();
-            if (parserClass == TypeParser.class)
+            if (parserClass == IParser.class)
                 parserClass = null;
             if (parserParam.isEmpty())
                 parserParam = null;
@@ -64,8 +69,7 @@ public abstract class _Option<T> implements ScriptField<T> {
         multi = valtype != null;
         if (multi) {
             if (!(isArray() || isCollection() || isMap()))
-                throw new CLIError("valtype can only be specified on Array/Collection/Map types: " 
-                        + type);
+                throw new CLIError("valtype can only be specified on Array/Collection/Map types: " + type);
         } else
             valtype = (Class<T>) type;
 
@@ -75,11 +79,11 @@ public abstract class _Option<T> implements ScriptField<T> {
             check = null;
         } else {
             try {
-                TypeParser parser0;
+                IParser<?> parser0;
                 if (parserParam == null)
-                    parser0 = Types.getClassInstance(parserClass);
+                    parser0 = ClassInstance.getClassInstance(parserClass);
                 else
-                    parser0 = Types.getClassInstance(parserClass, parserParam);
+                    parser0 = ClassInstance.getClassInstance(parserClass, parserParam);
                 parser = Util.guessParser(parser0, valtype);
                 if (parser instanceof ItemTypeParser)
                     valparser = (ItemTypeParser) parser;
@@ -95,18 +99,18 @@ public abstract class _Option<T> implements ScriptField<T> {
                     else {
                         String checkinfo = checkBy.param();
                         if (checkinfo.isEmpty())
-                            check = Types.getClassInstance(check0);
+                            check = ClassInstance.getClassInstance(check0);
                         else
-                            check = Types.getClassInstance(check0, checkinfo);
+                            check = ClassInstance.getClassInstance(check0, checkinfo);
                     }
                 } else
                     check = null;
             } catch (CreateException e) {
-                throw new CLIError("can\'t init option " + reflectName, e); 
+                throw new CLIError("can\'t init option " + reflectName, e);
             } catch (CLIError e) {
-                throw new CLIError("can\'t init option " + reflectName, e); 
+                throw new CLIError("can\'t init option " + reflectName, e);
             } catch (ParseException e) {
-                throw new CLIError("can\'t init option " + reflectName, e); 
+                throw new CLIError("can\'t init option " + reflectName, e);
             }
         }
     }
@@ -159,7 +163,8 @@ public abstract class _Option<T> implements ScriptField<T> {
         return optgrp;
     }
 
-    public Object parse(String s) throws ParseException {
+    public Object parse(String s)
+            throws ParseException {
         Object val = parser.parse(s);
         if (check != null)
             try {
@@ -170,7 +175,8 @@ public abstract class _Option<T> implements ScriptField<T> {
         return val;
     }
 
-    public Object parse(String s, Object index) throws ParseException {
+    public Object parse(String s, Object index)
+            throws ParseException {
         Object val;
         if (valparser != null)
             val = valparser.parse(index, s);

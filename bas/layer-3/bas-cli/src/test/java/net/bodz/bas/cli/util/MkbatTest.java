@@ -2,8 +2,8 @@ package net.bodz.bas.cli.util;
 
 import java.io.File;
 import java.net.URL;
-import java.nio.file.Files;
 
+import net.bodz.bas.fs.legacy.Files;
 import net.bodz.bas.snm.EclipseProject;
 
 public class MkbatTest {

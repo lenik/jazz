@@ -8,13 +8,14 @@ import java.nio.charset.Charset;
 
 import net.bodz.bas.exceptions.UnexpectedException;
 import net.bodz.bas.io.WriterOutputStream;
-import net.bodz.bas.io.out.CharOut;
+import net.bodz.bas.sio.ILineCharOut;
+import net.bodz.bas.text.util.StringArray;
 
 public abstract class AbstractTerminal
         implements ITerminal {
 
     @Override
-    public CharOut getCharOut() {
+    public ILineCharOut getCharOut() {
         return new TerminalCharOut(this);
     }
 
@@ -42,36 +43,25 @@ public abstract class AbstractTerminal
     }
 
     @Override
-    public void p_(Object obj) {
-        p_(String.valueOf(obj));
-    }
-
-    @Override
     public void p(Object obj) {
         p(String.valueOf(obj));
     }
 
     @Override
-    public void t(Object obj) {
-        t(String.valueOf(obj));
-    }
-
-    @Override
-    public void p_(Object... args) {
-        String s = Strings.join("", args);
-        p_(s);
+    public void p_(Object obj) {
+        p_(String.valueOf(obj));
     }
 
     @Override
     public void p(Object... args) {
-        String s = Strings.join("", args);
+        String s = StringArray.join("", args);
         p(s);
     }
 
     @Override
-    public void t(Object... args) {
-        String s = Strings.join("", args);
-        t(s);
+    public void p_(Object... args) {
+        String s = StringArray.join("", args);
+        p_(s);
     }
 
     @Override
@@ -85,23 +75,6 @@ public abstract class AbstractTerminal
     @Override
     public void flush()
             throws IOException {
-    }
-
-    @Override
-    public void close()
-            throws IOException {
-    }
-
-    @Override
-    public void beep() {
-    }
-
-    @Override
-    public void setBackColor(int index) {
-    }
-
-    @Override
-    public void setTextColor(int index) {
     }
 
 }

@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.io.Writer;
 
-import net.bodz.bas.io.out.CharOut;
+import net.bodz.bas.sio.ILineCharOut;
 
 public interface ITerminal {
 
-    CharOut getCharOut();
+    ILineCharOut getCharOut();
 
     Writer getWriter();
 
@@ -31,9 +31,6 @@ public interface ITerminal {
     void f(String format, Object... args);
 
     void flush()
-            throws IOException;
-
-    void close()
             throws IOException;
 
 }

@@ -5,10 +5,14 @@ import java.io.IOException;
 import net.bodz.bas.annotation.util.InheritableAnnotation;
 import net.bodz.bas.annotations.MetaClass;
 import net.bodz.bas.collection.util.ClassLocal;
+import net.bodz.bas.exceptions.IllegalUsageError;
 import net.bodz.bas.exceptions.OutOfDomainException;
-import net.bodz.bas.type.util.Types;
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
+import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 
-public abstract class _InPort extends _Port implements InPort, ReceiverEx {
+public abstract class _InPort
+        extends _Port
+        implements InPort, ReceiverEx {
 
     private int index;
 
@@ -29,7 +33,11 @@ public abstract class _InPort extends _Port implements InPort, ReceiverEx {
         if (meta == null) {
             Class<?> metaClass = (Class<?>) InheritableAnnotation.getValue(clazz, MetaClass.class);
             if (metaClass != null)
-                meta = (PortMeta) Types.newInstance(metaClass);
+                try {
+                    meta = (PortMeta) Jdk7Reflect.newInstance(metaClass);
+                } catch (ReflectiveOperationException e) {
+                    throw new IllegalUsageError("Can't create instance for MetaClass: " + metaClass, e);
+                }
             else
                 meta = createPortMeta();
             metas.put(clazz, meta);
@@ -47,24 +55,29 @@ public abstract class _InPort extends _Port implements InPort, ReceiverEx {
     }
 
     @Override
-    public abstract void recv(Object data) throws IOException;
+    public abstract void recv(Object data)
+            throws IOException;
 
     @Override
-    public void recvNull() throws IOException {
-        throw new NullPointerException("recvNull"); 
+    public void recvNull()
+            throws IOException {
+        throw new NullPointerException("recvNull");
     }
 
     @Override
-    public void recvUnknown(Object data) throws IOException {
-        throw new OutOfDomainException("type", data.getClass()); 
+    public void recvUnknown(Object data)
+            throws IOException {
+        throw new OutOfDomainException("type", data.getClass());
     }
 
     @Override
-    public void addSrc(OutPort srcPort) throws IOException {
+    public void addSrc(OutPort srcPort)
+            throws IOException {
     }
 
     @Override
-    public void removeSrc(OutPort srcPort) throws IOException {
+    public void removeSrc(OutPort srcPort)
+            throws IOException {
     }
 
 }

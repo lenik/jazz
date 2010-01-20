@@ -3,16 +3,19 @@ package net.bodz.bas.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bodz.bas.collection.tree.TreeNode;
 import net.bodz.bas.commons.exception.RecoverableExceptionEvent;
 import net.bodz.bas.commons.exception.RecoverableExceptionListener;
 import net.bodz.bas.commons.util.Objects;
+import net.bodz.bas.exceptions.NotImplementedException;
 import net.bodz.bas.exceptions.OutOfDomainException;
 import net.bodz.bas.io.term.LogTerm;
 import net.bodz.bas.io.term.LogTerms;
 import net.bodz.bas.ui.ConsoleUI;
 import net.bodz.bas.ui.UserInterface;
 
-public abstract class _Job implements Job, TreeNode<_Job> {
+public abstract class _Job
+        implements Job, TreeNode<_Job> {
 
     protected UserInterface UI = ConsoleUI.stdout;
     protected LogTerm L = LogTerms.console;
@@ -148,7 +151,7 @@ public abstract class _Job implements Job, TreeNode<_Job> {
 
     protected void execute(Job child, double progressIncrement) {
         if (progressIncrement < 0)
-            throw new OutOfDomainException("progressIncrement", progressIncrement, 0); 
+            throw new OutOfDomainException("progressIncrement", progressIncrement, 0);
         ChildObserver childObserver = new ChildObserver(progressIncrement);
         childObserver.bind(child);
         try {
@@ -167,14 +170,14 @@ public abstract class _Job implements Job, TreeNode<_Job> {
     @Override
     public void setUserInterface(UserInterface userInterface) {
         if (userInterface == null)
-            throw new NullPointerException("interaction"); 
+            throw new NullPointerException("interaction");
         this.UI = userInterface;
     }
 
     @Override
     public void setLogger(LogTerm logger) {
         if (logger == null)
-            throw new NullPointerException("logger"); 
+            throw new NullPointerException("logger");
         this.L = logger;
     }
 
@@ -216,7 +219,7 @@ public abstract class _Job implements Job, TreeNode<_Job> {
 
     @Override
     public int getProgressIndex() {
-        return (int) progressIndex;
+        return progressIndex;
     }
 
     protected void setProgressIndex(int progressIndex) {
@@ -233,7 +236,7 @@ public abstract class _Job implements Job, TreeNode<_Job> {
     }
 
     public int getProgressSize() {
-        return (int) progressSize;
+        return progressSize;
     }
 
     protected void setProgressSize(int progressSize) {
@@ -324,7 +327,8 @@ public abstract class _Job implements Job, TreeNode<_Job> {
         return true;
     }
 
-    protected class ChildObserver extends JobObserver {
+    protected class ChildObserver
+            extends JobObserver {
 
         private double progressIncrement;
 

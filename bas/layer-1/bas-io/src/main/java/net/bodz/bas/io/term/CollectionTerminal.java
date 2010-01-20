@@ -3,14 +3,17 @@ package net.bodz.bas.io.term;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class CollectionTerminal extends BufferedTerminal {
+import net.bodz.bas.text.util.StringArray;
+
+public class CollectionTerminal
+        extends BufferedTerminal {
 
     private final Object prefix;
     private final Collection<String> collection;
 
     public CollectionTerminal(Object prefix, Collection<String> collection) {
         if (collection == null)
-            throw new NullPointerException("list"); 
+            throw new NullPointerException("list");
         this.prefix = prefix;
         this.collection = collection;
     }
@@ -33,7 +36,7 @@ public class CollectionTerminal extends BufferedTerminal {
 
     @Override
     public String toString() {
-        return Strings.join("\n", collection); 
+        return StringArray.join("\n", collection);
     }
 
 }

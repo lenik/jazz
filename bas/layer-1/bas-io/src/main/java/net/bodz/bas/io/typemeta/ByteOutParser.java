@@ -4,8 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 import net.bodz.bas.exceptions.ParseException;
-import net.bodz.bas.io.out.ByteOuts;
-import net.bodz.bas.io.out.IByteOut;
+import net.bodz.bas.sio.IByteOut;
+import net.bodz.bas.sio.OutputStreamByteOut;
 import net.bodz.bas.type.traits.AbstractParser;
 
 public class ByteOutParser
@@ -20,7 +20,7 @@ public class ByteOutParser
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
-        return ByteOuts.get(out);
+        return new OutputStreamByteOut(out);
     }
 
 }

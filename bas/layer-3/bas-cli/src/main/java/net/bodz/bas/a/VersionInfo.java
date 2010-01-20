@@ -1,6 +1,7 @@
 package net.bodz.bas.a;
 
 import net.bodz.bas.c1.util.Dates;
+import net.bodz.bas.text.util.StringArray;
 
 public class VersionInfo implements Comparable<VersionInfo> {
 
@@ -14,7 +15,7 @@ public class VersionInfo implements Comparable<VersionInfo> {
 
     public String getVersion() {
         if (revString == null)
-            revString = Strings.joinDot(revision);
+            revString = StringArray.joinDot(revision);
         return revString;
     }
 

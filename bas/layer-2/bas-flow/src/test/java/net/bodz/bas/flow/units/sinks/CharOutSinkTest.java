@@ -3,16 +3,17 @@ package net.bodz.bas.flow.units.sinks;
 import java.io.IOException;
 
 import net.bodz.bas.flow.units.builtin.sinks.CharOutSink;
-import net.bodz.bas.io.out.CharOut;
-import net.bodz.bas.io.out.CharOuts;
+import net.bodz.bas.sio.BCharOut;
+import net.bodz.bas.sio.ICharOut;
 
 public class CharOutSinkTest {
 
-    CharOut charOut;
+    ICharOut charOut;
     CharOutSink charOutSink;
 
-    public CharOutSinkTest() throws IOException {
-        charOut = new CharOuts.BCharOut();
+    public CharOutSinkTest()
+            throws IOException {
+        charOut = new BCharOut();
         charOutSink = new CharOutSink(charOut);
     }
 

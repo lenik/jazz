@@ -17,6 +17,9 @@ import java.util.Map.Entry;
 
 import javax.script.ScriptException;
 
+import net.bodz.bas.exceptions.ParseException;
+import net.bodz.bas.type.traits.IParser;
+
 class Util {
 
     @SuppressWarnings("unchecked")
@@ -38,7 +41,8 @@ class Util {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T> T addmulti(Class<?> type, T fieldobj, Object val) throws ScriptException {
+    public static <T> T addmulti(Class<?> type, T fieldobj, Object val)
+            throws ScriptException {
         if (type.isArray())
             return addarray(type, fieldobj, val);
         if (fieldobj == null)
@@ -57,7 +61,7 @@ class Util {
                     else if (Map.class.isAssignableFrom(type))
                         type = HashMap.class;
                     else
-                        throw new ScriptException("don\'t know how to create new instance of abstract class/interface " 
+                        throw new ScriptException("don\'t know how to create new instance of abstract class/interface "
                                 + type);
                 }
                 fieldobj = (T) type.newInstance();
@@ -76,63 +80,64 @@ class Util {
         return fieldobj;
     }
 
-    public static TypeParser guessParser(TypeParser parser, Class<?> clazz) throws ParseException {
+    public static IParser<?> guessParser(TypeParser parser, Class<?> clazz)
+            throws ParseException {
         if (parser == null)
-            parser = (TypeParser) TypeParsers.guess(clazz, true);
+            parser = (IParser<?>) TypeParsers.guess(clazz, true);
         return parser;
     }
 
     public static String dispval(Object o) {
         if (o == null)
-            return "null"; 
+            return "null";
         Class<?> type = o.getClass();
         StringBuffer buf = null;
         if (type.isArray()) {
             int l = Array.getLength(o);
             buf = new StringBuffer(l * 20);
-            buf.append("{"); 
+            buf.append("{");
             for (int i = 0; i < l; i++) {
                 if (i > 0)
-                    buf.append(", "); 
+                    buf.append(", ");
                 buf.append(dispval(Array.get(o, i)));
             }
-            buf.append("}"); 
+            buf.append("}");
         } else if (o instanceof Collection<?>) {
             Collection<?> col = (Collection<?>) o;
             buf = new StringBuffer(col.size() * 20);
-            buf.append(type.getSimpleName() + " {"); 
+            buf.append(type.getSimpleName() + " {");
             boolean first = true;
             for (Object c : col) {
                 if (first)
                     first = false;
                 else
-                    buf.append(", "); 
+                    buf.append(", ");
                 buf.append(dispval(c));
             }
             buf.append('}');
         } else if (o instanceof Map<?, ?>) {
             Map<?, ?> map = (Map<?, ?>) o;
             buf = new StringBuffer(map.size() * 20);
-            buf.append(type.getSimpleName() + " {"); 
+            buf.append(type.getSimpleName() + " {");
             boolean first = true;
             for (Map.Entry<?, ?> e : map.entrySet()) {
                 if (first)
                     first = false;
                 else
-                    buf.append(", "); 
-                buf.append(e.getKey() + "=" + dispval(e.getValue())); 
+                    buf.append(", ");
+                buf.append(e.getKey() + "=" + dispval(e.getValue()));
             }
             buf.append('}');
         } else if (o instanceof String) {
-            return "\"" + o + "\"";  
+            return "\"" + o + "\"";
         } else {
             String typeName = o.getClass().getName();
             int dot = typeName.lastIndexOf('.');
             if (dot != -1)
                 typeName = typeName.substring(dot + 1);
-            return typeName + "(" + String.valueOf(o) + ")";  
+            return typeName + "(" + String.valueOf(o) + ")";
         }
-        return buf == null ? "" : buf.toString(); 
+        return buf == null ? "" : buf.toString();
     }
 
     private static Map<Class<?>, Object> trueValues;
@@ -142,8 +147,8 @@ class Util {
         trueValues.put(Byte.class, (byte) 1);
         trueValues.put(short.class, (short) 1);
         trueValues.put(Short.class, (short) 1);
-        trueValues.put(int.class, (int) 1);
-        trueValues.put(Integer.class, (int) 1);
+        trueValues.put(int.class, 1);
+        trueValues.put(Integer.class, 1);
         trueValues.put(long.class, (long) 1);
         trueValues.put(Long.class, (long) 1);
         trueValues.put(float.class, (float) 1);
@@ -154,7 +159,7 @@ class Util {
         trueValues.put(Boolean.class, true);
         trueValues.put(char.class, '1');
         trueValues.put(Character.class, '1');
-        trueValues.put(String.class, ""); 
+        trueValues.put(String.class, "");
     }
 
     public static Object getTrueValue(Class<?> type) {

@@ -1,26 +1,27 @@
-package net.bodz.bas.types.util;
+package net.bodz.bas.annotation.util;
 
 import static org.junit.Assert.assertEquals;
 
 import java.lang.annotation.Annotation;
 
-import net.bodz.bas.annotation.util.Annotations;
+import net.bodz.bas.sio.BCharOut;
 
 import org.junit.Test;
 
-@Author("TeST")
+@XyzHint("TeST")
 public class AnnotationsTest {
 
     static String annPrefix(Class<? extends Annotation> annotationClass) {
-        return annotationClass + " @" + annotationClass.getName(); 
+        return annotationClass + " @" + annotationClass.getName();
     }
 
     @Test
     public void testDumpAnnotationMap() {
         BCharOut buffer = new BCharOut();
-        Annotations.dumpAnnotationMap(AnnotationsTest.class, buffer);
+        AnnotationAnalyze.dumpAnnotationMap(AnnotationsTest.class, buffer);
         // @net.bodz.bas.annotations.Author(value=[TeST])
-        assertEquals(annPrefix(Author.class) + "(value=[TeST])\n", // 
+        assertEquals(annPrefix(XyzHint.class) + "(value=[TeST])\n", // 
                 buffer.toString());
     }
+
 }

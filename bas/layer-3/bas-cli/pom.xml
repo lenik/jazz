@@ -5,7 +5,7 @@
 		<artifactId>layer-3</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<artifactId>bas-quickstart</artifactId>
+	<artifactId>bas-cli</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<dependencies>
 		<dependency>
@@ -42,6 +42,25 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>net.bodz.bas</groupId>
+			<artifactId>bas-snmjava</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.bodz.bas</groupId>
+			<artifactId>bas-loader</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.bodz.bas</groupId>
+			<artifactId>bas-l10n-en</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
-	<name>BAS :: Layer 3 :: Quickstart Application Framework</name>
+	<name>BAS :: Layer 3 :: CLI Application Framework</name>
 </project>

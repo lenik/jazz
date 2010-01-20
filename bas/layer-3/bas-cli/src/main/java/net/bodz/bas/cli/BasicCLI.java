@@ -6,10 +6,6 @@ import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.net.URL;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.PathMatcher;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,16 +22,31 @@ import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.cli.a.OptionGroup;
 import net.bodz.bas.cli.ext.CLIPlugin;
 import net.bodz.bas.cli.ext.CLIPlugins;
+import net.bodz.bas.commons.scripting.ScriptClass;
+import net.bodz.bas.commons.scripting.ScriptType;
+import net.bodz.bas.commons.scripting.Scripts;
 import net.bodz.bas.exceptions.CreateException;
+import net.bodz.bas.exceptions.NotImplementedException;
+import net.bodz.bas.exceptions.ParseException;
+import net.bodz.bas.fs.legacy.Files;
 import net.bodz.bas.hint.OverrideOption;
+import net.bodz.bas.io.term.ITerminal;
 import net.bodz.bas.io.term.LogTerm;
 import net.bodz.bas.io.term.LogTerms;
-import net.bodz.bas.loader.annotation.BootInfo;
+import net.bodz.bas.io.typemeta.CharOutParser;
+import net.bodz.bas.io.typemeta.LoggerParser;
+import net.bodz.bas.loader.boot.BootInfo;
+import net.bodz.bas.sio.ILineCharOut;
+import net.bodz.bas.sio.Stdio;
+import net.bodz.bas.text.util.StringArray;
+import net.bodz.bas.type.traits.AbstractParser;
 import net.bodz.bas.ui.ConsoleUI;
 import net.bodz.bas.ui.UserInterface;
 import net.bodz.bas.util.PluginException;
 import net.bodz.bas.util.PluginTypeEx;
-import sun.dyn.empty.Empty;
+
+import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.vfs.FileSystem;
 
 /**
  * Recommend eclipse template `cli':
@@ -69,11 +80,12 @@ import sun.dyn.empty.Empty;
 @OptionGroup(value = "standard", rank = -1)
 @RcsKeywords(id = "$Id$")
 @ScriptType(CLIScriptClass.class)
-public class BasicCLI implements Runnable, VRunnable<String, Exception> {
+public class BasicCLI
+        implements Runnable, VRunnable<String, Exception> {
 
     @Option(name = ".stdout", hidden = true)
     @ParseBy(CharOutParser.class)
-    protected CharOut _stdout = CharOuts.stdout;
+    protected ILineCharOut _stdout = Stdio.cout;
 
     @Option(name = "logger", hidden = true)
     @ParseBy(LoggerParser.class)
@@ -100,7 +112,8 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
     protected VarMap<String, Object> _vars;
 
     @Option(name = "define", alias = ".D", vnam = "NAM=VAL", doc = "define variables")
-    void _define(String exp) throws ParseException {
+    void _define(String exp)
+            throws ParseException {
         int eq = exp.indexOf('=');
         String nam = exp;
         Object val = null;
@@ -123,10 +136,12 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
 
     protected final CLIPlugins plugins = new CLIPlugins();
 
-    private class PluginParser implements TypeParser {
+    private class PluginParser
+            extends AbstractParser<CLIPlugin> {
 
         @Override
-        public CLIPlugin parse(String idCtor) throws ParseException {
+        public CLIPlugin parse(String idCtor)
+                throws ParseException {
             int eq = idCtor.indexOf('=');
             String id = idCtor;
             String arg = null;
@@ -147,11 +162,11 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
             }
         }
 
-        private CLIPlugin create(String pluginId, String ctorArg) throws CreateException, PluginException,
-                ParseException {
+        private CLIPlugin create(String pluginId, String ctorArg)
+                throws CreateException, PluginException, ParseException {
             PluginTypeEx typeEx = plugins.getTypeEx(CLIPlugin.class, pluginId);
             if (typeEx == null)
-                throw new PluginException("no plugin of " + pluginId); 
+                throw new PluginException("no plugin of " + pluginId);
             Class<?> clazz = typeEx.getType();
             Constructor<?>[] ctors = clazz.getConstructors(); // only get public
             Constructor<?> ctor = null;
@@ -164,7 +179,7 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
                 }
             }
             if (ctor == null)
-                throw new PluginException("no constructor in " + clazz); 
+                throw new PluginException("no constructor in " + clazz);
             int len = sigMaxLen.length;
             int off = 0;
             if (clazz.isMemberClass()) {
@@ -176,8 +191,7 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
                 return (CLIPlugin) typeEx.newInstance();
             }
             if (len != 1)
-                throw new PluginException("no suitable constructor to use: " 
-                        + typeEx);
+                throw new PluginException("no suitable constructor to use: " + typeEx);
 
             Class<?> sig0 = sigMaxLen[off];
             if (sig0 == String.class)
@@ -190,7 +204,7 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
             // ctor(E[] array)
             String[] args = {};
             if (ctorArg != null)
-                args = ctorArg.split(","); 
+                args = ctorArg.split(",");
             Class<?> valtype = sig0.getComponentType();
             if (valtype == String.class)
                 return (CLIPlugin) typeEx.newInstance((Object) args);
@@ -201,7 +215,7 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
                 Object val = parser.parse(args[i]);
                 Array.set(valarray, i, val);
             }
-            return (CLIPlugin) typeEx.newInstance((Object) valarray);
+            return (CLIPlugin) typeEx.newInstance(valarray);
         }
     }
 
@@ -250,9 +264,9 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
             else
                 author = verinfo.author;
             if (author == null)
-                author = "Lenik"; 
+                author = "Lenik";
             if (verinfo.state == null)
-                verinfo.state = "UNKNOWN"; 
+                verinfo.state = "UNKNOWN";
 
             info.setName(name);
             info.setDoc(doc);
@@ -267,26 +281,28 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
 
     @Option(doc = "show version info")
     protected final void _version() {
-        _version(CharOuts.stderr);
+        _version(Stdio.cerr);
         throw new ControlBreak();
     }
 
-    protected void _version(CharOut out) {
+    protected void _version(ILineCharOut out) {
         ClassInfo info = _loadClassInfo();
-        out.printf("[%s] %s\n", info.getName(), info.getDoc()); 
+        out.printf("[%s] %s\n", info.getName(), info.getDoc());
         out.printf("Written by %s,  Version %s,  Last updated at %s\n", // 
                 info.getAuthor(), //
-                Strings.joinDot(info.getVersion()), //
+                StringArray.joinDot(info.getVersion()), //
                 info.getDateString());
     }
 
     @Option(alias = ".h", doc = "show help info")
-    protected final void _help() throws CLIException {
-        _help(CharOuts.stderr);
+    protected final void _help()
+            throws CLIException {
+        _help(Stdio.cerr);
         throw new ControlBreak();
     }
 
-    protected void _help(CharOut out) throws CLIException {
+    protected void _help(ILineCharOut out)
+            throws CLIException {
         _version(out);
         out.println();
 
@@ -294,13 +310,13 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
         out.print(hlp_opts);
 
         if (plugins != null)
-            plugins.help(out, ""); 
+            plugins.help(out, "");
 
         out.flush();
     }
 
     protected String _helpRestSyntax() {
-        return "FILES"; 
+        return "FILES";
     }
 
     private boolean prepared;
@@ -314,18 +330,21 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
                 new HashMap<String, Object>());
     }
 
-    public ScriptClass<? extends BasicCLI> getScriptClass() throws ScriptException {
+    public ScriptClass<? extends BasicCLI> getScriptClass()
+            throws ScriptException {
         return Scripts.getScriptClass(this);
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends BasicCLI> ClassOptions<T> getOptions() throws CLIException {
+    public <T extends BasicCLI> ClassOptions<T> getOptions()
+            throws CLIException {
         Class<T> clazz = (Class<T>) this.getClass();
         ClassOptions<T> opts = ClassCLI.getClassOptions(clazz);
         return opts;
     }
 
-    private void _prepare() throws CLIException {
+    private void _prepare()
+            throws CLIException {
         if (prepared)
             return;
 
@@ -342,31 +361,33 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
         // }
         // }
 
-        dbg.p("cli get options"); 
+        dbg.p("cli get options");
         opts = getOptions();
 
         restArgs = new ArrayList<String>();
         prepared = true;
     }
 
-    public void addArguments(String... args) throws CLIException, ParseException {
+    public void addArguments(String... args)
+            throws CLIException, ParseException {
         _prepare();
         String[] rest = opts.load(this, args);
         for (String arg : rest)
             restArgs.add(arg);
     }
 
-    public void runExtra(String cmdline) throws Throwable {
+    public void runExtra(String cmdline)
+            throws Throwable {
         String[] args = {};
         if (cmdline != null)
-            args = Strings.split(cmdline);
+            args = StringArray.split(cmdline);
         run(args);
     }
 
     @Override
     public void run() {
         try {
-            run(Empty.Strings);
+            run(ArrayUtils.EMPTY_STRING_ARRAY);
         } catch (Exception e) {
             UI.alert(e.getMessage(), e);
         }
@@ -376,16 +397,17 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
      * public access: so derivations don't have to declare static main()s.
      */
     @Override
-    public synchronized void run(String... args) throws Exception {
+    public synchronized void run(String... args)
+            throws Exception {
         ITerminal dbg = L.debug();
-        dbg.p("cli prepare"); 
+        dbg.p("cli prepare");
         _prepare();
         int preRestSize = restArgs.size(); // make climain() reentrant.
 
         try {
             addArguments(args);
 
-            dbg.p("cli boot"); 
+            dbg.p("cli boot");
             _postInit();
             _boot();
 
@@ -407,20 +429,20 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
                     Object optval = opt.get(this);
                     if (optval instanceof CallInfo)
                         continue;
-                    dbg.p(optnam, " = ", Util.dispval(optval)); 
+                    dbg.p(optnam, " = ", Util.dispval(optval));
                 }
                 for (Entry<String, Object> entry : _vars.entrySet()) {
                     String name = entry.getKey();
                     Object value = entry.getValue();
-                    dbg.p("var ", name, " = ", value);  
+                    dbg.p("var ", name, " = ", value);
                 }
             }
-            String[] rest = restArgs.toArray(Empty.Strings);
+            String[] rest = restArgs.toArray(ArrayUtils.EMPTY_STRING_ARRAY);
 
-            dbg.p("cli main"); 
+            dbg.p("cli main");
             doMain(rest);
 
-            dbg.p("cli exit"); 
+            dbg.p("cli exit");
         } catch (ControlBreak b) {
             return;
         } finally {
@@ -431,18 +453,21 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
 
     /** Do nothing, to be overrided. */
     @OverrideOption(chain = ChainUsage.PREFERRED)
-    void _postInit() throws Exception {
+    void _postInit()
+            throws Exception {
     }
 
     /** Do nothing, to be overrided. */
-    protected void _boot() throws Exception {
+    protected void _boot()
+            throws Exception {
     }
 
     /**
      * @throws ControlBreak
      */
-    protected void _exit() throws Exception {
-        throw new ControlBreak("exit"); 
+    protected void _exit()
+            throws Exception {
+        throw new ControlBreak("exit");
     }
 
     /**
@@ -462,7 +487,8 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
      * {@link #doMainManaged(String[])}
      */
     @OverrideOption(group = "basicMain")
-    protected void doMain(String[] args) throws Exception {
+    protected void doMain(String[] args)
+            throws Exception {
         if (args.length == 0) {
             InputStream in = _getDefaultIn();
             if (in != null)
@@ -482,14 +508,16 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
      * {@link #doFileArgument(File)}
      */
     @OverrideOption(group = "basicMain")
-    protected void doMainManaged(String[] args) throws Exception {
+    protected void doMainManaged(String[] args)
+            throws Exception {
         for (String arg : args)
             expandFileArgument(CWD.get(arg));
     }
 
     boolean enableWildcards = false;
 
-    void expandFileArgument(File wildcards) throws Exception {
+    void expandFileArgument(File wildcards)
+            throws Exception {
         String name = wildcards.getName();
         if (enableWildcards && (name.contains("*") || name.contains("?"))) {
             FileSystem fs = FileSystems.getDefault();
@@ -512,7 +540,8 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
      *            canonical file
      */
     @OverrideOption(group = "basicMain")
-    protected void doFileArgument(File file) throws Exception {
+    protected void doFileArgument(File file)
+            throws Exception {
         assert file != null;
         FileInputStream in = new FileInputStream(file);
         try {
@@ -531,7 +560,8 @@ public class BasicCLI implements Runnable, VRunnable<String, Exception> {
      *            canonical file or null
      */
     @OverrideOption(group = "basicMain")
-    protected void doFileArgument(File file, InputStream in) throws Exception {
+    protected void doFileArgument(File file, InputStream in)
+            throws Exception {
         throw new NotImplementedException();
     }
 

@@ -18,11 +18,12 @@ import java.util.Map.Entry;
 
 import javax.script.ScriptException;
 
-import net.bodz.bas.c1.Pair;
+import net.bodz.bas.c1.util.Pair;
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.cli.a.OptionGroup;
 import net.bodz.bas.collection.preorder.PrefixMap;
-import net.bodz.bas.type.util.Types;
+import net.bodz.bas.exceptions.ParseException;
+import net.bodz.bas.type.util.TypeChain;
 
 public class ClassOptions<CT> {
 
@@ -42,7 +43,7 @@ public class ClassOptions<CT> {
             throw new CLIError(e.getMessage(), e);
         }
 
-        for (Class<?> c : Types.getTypeChain(clazz, true)) {
+        for (Class<?> c : TypeChain.listSuperFirst(clazz)) {
             if (c == Object.class) // opt for speed
                 continue;
             OptionGroup optgrp = c.getAnnotation(OptionGroup.class);
@@ -105,19 +106,17 @@ public class ClassOptions<CT> {
         String optnam = newopt.getCLIName();
         _Option<?> existing = all.get(optnam);
         if (existing != null && !existing.isWeak())
-            throw new IllegalArgumentException("option name " + optnam 
-                    + " is already existed"); 
+            throw new IllegalArgumentException("option name " + optnam + " is already existed");
         all.put(optnam, newopt);
         for (String newalias : newopt.o.alias()) {
-            boolean newweak = newalias.startsWith("."); 
+            boolean newweak = newalias.startsWith(".");
             if (newweak)
                 newalias = newalias.substring(1);
             newweak |= newopt.isWeak();
 
             boolean aliasExisted = all.containsKey(newalias) && !weaks.contains(newalias);
             if (aliasExisted)
-                throw new IllegalArgumentException("option alias " + newalias 
-                        + " is already existed"); 
+                throw new IllegalArgumentException("option alias " + newalias + " is already existed");
             all.put(newalias, newopt);
             if (newweak)
                 weaks.add(newalias);
@@ -157,16 +156,17 @@ public class ClassOptions<CT> {
      *                if option does not exist
      */
     @SuppressWarnings("unchecked")
-    public _Option<Object> findOption(String name) throws CLIException {
+    public _Option<Object> findOption(String name)
+            throws CLIException {
         if (name.isEmpty())
-            throw new CLIException("option name is empty"); 
-        if (name.startsWith("no-")) 
+            throw new CLIException("option name is empty");
+        if (name.startsWith("no-"))
             name = name.substring(3);
         if (all.containsKey(name))
             return (_Option<Object>) all.get(name);
         List<String> fullnames = Collections2.toList(all.ceilingKeys(name));
         if (fullnames.isEmpty())
-            throw new CLIException("no such option: " + name); 
+            throw new CLIException("no such option: " + name);
         if (fullnames.size() > 1) {
             StringBuffer cands = new StringBuffer();
             for (String nam : fullnames) {
@@ -176,8 +176,7 @@ public class ClassOptions<CT> {
                 if (nam == null || !nam.startsWith(name))
                     break;
             }
-            throw new CLIException("ambiguous option " + name + ": \n"  
-                    + cands.toString());
+            throw new CLIException("ambiguous option " + name + ": \n" + cands.toString());
         }
         String fullname = fullnames.get(0);
         return (_Option<Object>) all.get(fullname);
@@ -211,7 +210,8 @@ public class ClassOptions<CT> {
         return false;
     }
 
-    public String[] load(CT classobj, String... args) throws CLIException, ParseException {
+    public String[] load(CT classobj, String... args)
+            throws CLIException, ParseException {
         List<String> list = new ArrayList<String>(args.length);
         for (String arg : args)
             list.add(arg);
@@ -219,7 +219,8 @@ public class ClassOptions<CT> {
         return list.toArray(new String[0]);
     }
 
-    public void load(CT classobj, List<String> args) throws CLIException, ParseException {
+    public void load(CT classobj, List<String> args)
+            throws CLIException, ParseException {
         Set<?> missing = required == null ? null : (Set<?>) required.clone();
 
         boolean optionsEnd = false;
@@ -229,12 +230,12 @@ public class ClassOptions<CT> {
             String optnam = args.get(i);
             _Option<?> opt = null;
             if (!optionsEnd) {
-                if ("--".equals(optnam)) { 
+                if ("--".equals(optnam)) {
                     optionsEnd = true;
                     args.remove(i);
                     continue;
                 }
-                if (optnam.startsWith("--")) { 
+                if (optnam.startsWith("--")) {
                     optnam = optnam.substring(2);
                     int eq = optnam.indexOf('=');
                     if (eq != -1) {
@@ -244,14 +245,14 @@ public class ClassOptions<CT> {
                         args.remove(i);
                     }
                     opt = findOption(optnam);
-                } else if (optnam.startsWith("-")) { 
+                } else if (optnam.startsWith("-")) {
                     String chr = optnam.substring(1, 2);
                     opt = findOption(chr);
                     if (opt.getParameterCount() == 0 || !opt.o.optional().isEmpty()) {
                         // boolean option, or option has a default value,
                         if (optnam.length() > 2)
                             // remove the shortopt from --abcdefg => -bcdefg
-                            args.set(i, "-" + optnam.substring(2)); 
+                            args.set(i, "-" + optnam.substring(2));
                         else
                             // remove the shortopt entirely
                             args.remove(i);
@@ -286,12 +287,12 @@ public class ClassOptions<CT> {
             if (opt instanceof MethodOption) {
                 usedArgs = loadCall(classobj, (MethodOption) opt, args, i);
             } else if (opt.isBoolean()) {
-                optval = !optnam.startsWith("no-"); 
+                optval = !optnam.startsWith("no-");
             } else if (opt.getParameterCount() > 0) {
                 // assert opt.getParameterCount() == 1;
                 String optarg = null;
                 if (optarg == null && i < args.size())
-                    if (optionsEnd || !args.get(i).startsWith("-")) { 
+                    if (optionsEnd || !args.get(i).startsWith("-")) {
                         usedArgs++;
                         optarg = args.get(i);
                     }
@@ -314,7 +315,8 @@ public class ClassOptions<CT> {
     }
 
     @SuppressWarnings("unchecked")
-    public void load(CT classobj, Map<String, ?> argmap) throws CLIException, ParseException {
+    public void load(CT classobj, Map<String, ?> argmap)
+            throws CLIException, ParseException {
         Set<?> missing = required == null ? null : (Set<?>) required.clone();
 
         for (Map.Entry<String, ?> entry : argmap.entrySet()) {
@@ -329,7 +331,7 @@ public class ClassOptions<CT> {
             Object optval = entry.getValue();
             if (opt instanceof MethodOption) {
                 String arg = String.valueOf(optval);
-                String[] cargs = arg.split(","); 
+                String[] cargs = arg.split(",");
                 loadCall(classobj, (MethodOption) opt, Arrays.asList(cargs), 0);
             } else if (opt.getParameterCount() > 0) {
                 // assert opt.getParameterCount() == 1;
@@ -348,7 +350,8 @@ public class ClassOptions<CT> {
         _checkMissings(missing);
     }
 
-    private Object _parseOptVal(_Option<?> opt, String optarg) throws ParseException {
+    private Object _parseOptVal(_Option<?> opt, String optarg)
+            throws ParseException {
         Class<?> valtype = opt.getType();
         Object optval = null;
 
@@ -376,7 +379,7 @@ public class ClassOptions<CT> {
             try {
                 optval = opt.parse(optarg, key);
             } catch (ParseException e) {
-                throw new ParseException(String.format("Can\'t parse option %s of %s with argument %s", opt 
+                throw new ParseException(String.format("Can\'t parse option %s of %s with argument %s", opt
                         .getCLIName(), valtype, optarg), e);
             }
         if (key != null)
@@ -384,24 +387,24 @@ public class ClassOptions<CT> {
         return optval;
     }
 
-    private static void _checkMissings(Set<?> missing) throws CLIException {
+    private static void _checkMissings(Set<?> missing)
+            throws CLIException {
         if (missing != null && !missing.isEmpty()) {
             StringBuffer buf = new StringBuffer(missing.size() * 20);
             for (Object m : missing) {
                 _Option<?> mopt = (_Option<?>) m;
-                buf.append("    " + mopt.getCLIName() + "\n");  
+                buf.append("    " + mopt.getCLIName() + "\n");
             }
-            throw new CLIException("missing required option(s): \n" + buf); 
+            throw new CLIException("missing required option(s): \n" + buf);
         }
     }
 
-    private int loadCall(CT object, MethodOption optcall, List<String> args, int off) throws CLIException,
-            ParseException {
+    private int loadCall(CT object, MethodOption optcall, List<String> args, int off)
+            throws CLIException, ParseException {
         int argc = optcall.getParameterCount();
         int rest = args.size() - off;
         if (argc > rest)
-            throw new CLIException("not enough parameters for function-option " 
-                    + optcall.getCLIName());
+            throw new CLIException("not enough parameters for function-option " + optcall.getCLIName());
         String[] argv = args.subList(off, off + argc).toArray(new String[0]);
         try {
             optcall.call(object, argv);

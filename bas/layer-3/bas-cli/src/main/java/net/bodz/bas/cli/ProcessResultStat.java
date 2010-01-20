@@ -2,7 +2,14 @@ package net.bodz.bas.cli;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
+import net.bodz.bas.collection.comparator.TypeComparator;
+import net.bodz.bas.sio.ILineCharOut;
+import net.bodz.bas.text.util.Strings;
 
 public class ProcessResultStat {
 
@@ -16,12 +23,12 @@ public class ProcessResultStat {
     private int copied;
     private int errorred;
 
-    private TextMap<Integer> tagStat;
-    private TypeMap<Integer> errStat;
+    private Map<String, Integer> tagStat;
+    private Map<Class<?>, Integer> errStat;
 
     public ProcessResultStat() {
-        tagStat = new TreeTextMap<Integer>();
-        errStat = new HashTypeMap<Integer>();
+        tagStat = new TreeMap<String, Integer>();
+        errStat = new HashMap<Class<?>, Integer>();
     }
 
     public void add(EditResult result) {
@@ -54,8 +61,7 @@ public class ProcessResultStat {
                 copied++;
                 break;
             default:
-                throw new IllegalArgumentException("Unknown operation: " 
-                        + result.operation);
+                throw new IllegalArgumentException("Unknown operation: " + result.operation);
             }
 
         if (result.tags != null)
@@ -77,17 +83,17 @@ public class ProcessResultStat {
         }
     }
 
-    public void dumpBrief(CharOut out) {
-        String ignores = ""; 
+    public void dumpBrief(ILineCharOut out) {
+        String ignores = "";
         if (ignored > 0)
-            ignores = "(" + ignored + " ignored)";  
+            ignores = "(" + ignored + " ignored)";
         out.println(AppNLS.format("ProcessResultStat.stat_ddsdd", //
                 changed, total, ignores, saved, errorred));
     }
 
     static final int nameWidth = 40;
 
-    void dumpField(CharOut out, int indent, String name, int value, Integer value2) {
+    void dumpField(ILineCharOut out, int indent, String name, int value, Integer value2) {
         String tab = Strings.repeat(indent, ' ');
         out.print(tab);
         out.printf("%" + (nameWidth - indent) + "s: %8d file", name, value);
@@ -101,12 +107,12 @@ public class ProcessResultStat {
         out.println();
     }
 
-    void dumpField(CharOut out, int indent, String name, int value) {
+    void dumpField(ILineCharOut out, int indent, String name, int value) {
         dumpField(out, indent, name, value, null);
     }
 
-    public void dumpDetail(CharOut out) {
-        dumpField(out, 4, "Total/Ignored", total, ignored); 
+    public void dumpDetail(ILineCharOut out) {
+        dumpField(out, 4, "Total/Ignored", total, ignored);
 
         List<String> tags = new ArrayList<String>(tagStat.keySet());
         Collections.sort(tags);
@@ -116,22 +122,22 @@ public class ProcessResultStat {
         }
 
         if (changed > 0)
-            dumpField(out, 4, "Changed", changed, total - changed); 
+            dumpField(out, 4, "Changed", changed, total - changed);
         if (saved > 0)
-            dumpField(out, 4, "Saved", saved, total - saved); 
+            dumpField(out, 4, "Saved", saved, total - saved);
         if (deleted > 0)
-            dumpField(out, 4, "Deleted", deleted, total - deleted); 
+            dumpField(out, 4, "Deleted", deleted, total - deleted);
         if (renamed > 0)
-            dumpField(out, 4, "Renamed", renamed, total - renamed); 
+            dumpField(out, 4, "Renamed", renamed, total - renamed);
         if (moved > 0)
-            dumpField(out, 4, "Moved", moved, total - moved); 
+            dumpField(out, 4, "Moved", moved, total - moved);
         if (copied > 0)
-            dumpField(out, 4, "Copied", copied, total - copied); 
+            dumpField(out, 4, "Copied", copied, total - copied);
         if (errorred > 0)
-            dumpField(out, 4, "Errors", errorred, total - errorred); 
+            dumpField(out, 4, "Errors", errorred, total - errorred);
 
         List<Class<?>> errTypes = new ArrayList<Class<?>>(errStat.keySet());
-        Collections.sort(errTypes, Comparators.TYPE);
+        Collections.sort(errTypes, TypeComparator.getInstance());
         for (Class<?> errType : errTypes) {
             int count = errStat.get(errType);
             dumpField(out, 8, errType.getName(), count);

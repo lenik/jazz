@@ -5,15 +5,16 @@ import java.util.List;
 import java.util.TreeMap;
 import java.util.Map.Entry;
 
-import net.bodz.bas.io.out.CharOut;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import net.bodz.bas.exceptions.NotImplementedException;
+import net.bodz.bas.sio.ILineCharOut;
 
 /**
  * DFA State: For any two of transitions in a DFA State, their CharSet are not intersected.
  * 
  * @test
  */
-public class DFAState implements Comparable<DFAState> {
+public class DFAState
+        implements Comparable<DFAState> {
 
     private final DFA dfa;
     private final int id;
@@ -143,7 +144,7 @@ public class DFAState implements Comparable<DFAState> {
         return id - o.id;
     }
 
-    public void dumpTransitionMap(CharOut out, String prefix) {
+    public void dumpTransitionMap(ILineCharOut out, String prefix) {
         if (defaultTransition != null)
             out.println(prefix + "default => " + defaultTransition.getName());
         for (Entry<CharSet, DFAState> e : transitionMap.entrySet()) {

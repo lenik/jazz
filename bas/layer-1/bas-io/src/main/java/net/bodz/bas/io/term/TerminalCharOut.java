@@ -2,30 +2,36 @@ package net.bodz.bas.io.term;
 
 import java.io.IOException;
 
-import net.bodz.bas.io.out.CharOut;
+import net.bodz.bas.sio.AbstractCharOut;
 
-public class TerminalCharOut extends CharOut {
+public class TerminalCharOut
+        extends AbstractCharOut {
 
     final ITerminal terminal;
 
     public TerminalCharOut(ITerminal terminal) {
         if (terminal == null)
-            throw new NullPointerException("terminal"); 
+            throw new NullPointerException("terminal");
         this.terminal = terminal;
     }
 
     @Override
-    public void _close() throws IOException {
-        terminal.close();
-    }
-
-    @Override
-    public void _flush() throws IOException {
+    public void flush(boolean strict)
+            throws IOException {
         terminal.flush();
     }
 
     @Override
-    public void write(char[] chars, int off, int len) throws IOException {
+    public void write(int ch)
+            throws IOException {
+        char[] cv = new char[1];
+        cv[0] = (char) ch;
+        terminal.p_(new String(cv));
+    }
+
+    @Override
+    public void write(char[] chars, int off, int len)
+            throws IOException {
         String s = new String(chars, off, len);
         terminal.p_(s);
     }

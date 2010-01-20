@@ -4,18 +4,23 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.charset.Charset;
-import java.util.NoSuchElementException;
+import java.util.Map;
+import java.util.TreeMap;
 
+import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
+import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.files.INIRecordsTest;
+import net.bodz.bas.io.LineReader;
 
 /**
  * @test {@link INIRecordsTest}
  */
-public class INIRecords extends MapResRecords<String, String> {
+public class INIRecords
+        extends MapResRecords<String, String> {
 
     private boolean flatten;
-    private String delim = "."; 
-    private String existKey = "exist"; 
+    private String delim = ".";
+    private String existKey = "exist";
 
     public INIRecords(ResLink resLink, Charset charset, boolean flatten) {
         super(resLink, charset);
@@ -45,43 +50,44 @@ public class INIRecords extends MapResRecords<String, String> {
     }
 
     @Override
-    protected String parseKey(String key) throws ParseException {
+    protected String parseKey(String key)
+            throws ParseException {
         return key;
     }
 
     @Override
-    protected String parseValue(String value) throws ParseException {
+    protected String parseValue(String value)
+            throws ParseException {
         return value;
     }
 
     @Override
-    protected TextMap<String> newMap() {
-        return new TreeTextMap<String>();
+    protected Map<String, String> newMap() {
+        return new TreeMap<String, String>();
     }
 
-    class Iter extends _DirectIterator<TextMap<String>, IOException> {
+    class Iter
+            extends AbstractImmediateIteratorX<Map<String, String>, IOException> {
 
         private LineReader lineReader;
-        private boolean end;
         private String sectionName = null;
-        private TextMap<String> map;
 
         @Override
-        public boolean next() throws IOException {
-            if (end)
-                return false;
+        public Map<String, String> next()
+                throws IOException {
             if (lineReader == null) {
                 Reader reader = resLink.openReader(charset);
                 lineReader = new LineReader(reader);
             }
-            map = newMap();
+
+            Map<String, String> map = newMap();
             String line;
             while ((line = lineReader.readLine()) != null) {
                 line = line.trim();
-                if (line.isEmpty() || line.startsWith("#")) 
+                if (line.isEmpty() || line.startsWith("#"))
                     continue;
-                if (line.startsWith("[")) { 
-                    assert line.endsWith("]"); 
+                if (line.startsWith("[")) {
+                    assert line.endsWith("]");
                     String futureSection = line.substring(1, line.length() - 1).trim();
                     if (flatten) {
                         map.put(futureSection + delim + existKey, "true");
@@ -89,15 +95,15 @@ public class INIRecords extends MapResRecords<String, String> {
                         continue;
                     } else {
                         if (sectionName != null)
-                            map.put("_section", sectionName); 
+                            map.put("_section", sectionName);
                         sectionName = futureSection;
-                        return true;
+                        return map;
                     }
                 }
                 int eq = line.indexOf('=');
                 if (eq == -1) {
                     // BOM test.
-                    String mesg = "invalid entry: " + line; 
+                    String mesg = "invalid entry: " + line;
                     System.err.println(mesg);
                     // throw new ParseException(mesg);
                     continue;
@@ -109,20 +115,14 @@ public class INIRecords extends MapResRecords<String, String> {
                 map.put(key, value);
             } // lines
             if (!flatten && sectionName != null)
-                map.put("_section", sectionName); 
-            end = true;
-            return true;
-        }
-
-        @Override
-        public TextMap<String> get() throws NoSuchElementException {
-            return map;
+                map.put("_section", sectionName);
+            return end();
         }
 
     }
 
     @Override
-    public DirectIterator<TextMap<String>, IOException> iterator() {
+    public DirectIterator<Map<String, String>, IOException> iterator() {
         return new Iter();
     }
 

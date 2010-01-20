@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.bodz.bas.closure.IExecutableX;
 import net.bodz.bas.collection.map.IndexMap;
 
-public abstract class _UserInterface implements UserInterface {
+public abstract class AbstractUserInterface
+        implements UserInterface {
 
     @Override
     public void alert(String title) {
@@ -25,7 +27,7 @@ public abstract class _UserInterface implements UserInterface {
 
     @Override
     public String prompt(String title) {
-        return prompt(title, title, ""); 
+        return prompt(title, title, "");
     }
 
     @Override
@@ -35,7 +37,7 @@ public abstract class _UserInterface implements UserInterface {
 
     @Override
     public String prompt(String title, Object detail) {
-        return prompt(title, detail, ""); 
+        return prompt(title, detail, "");
     }
 
     @Override
@@ -102,15 +104,18 @@ public abstract class _UserInterface implements UserInterface {
         return unbox(choices);
     }
 
-    public int tryBlock(final Executable<? extends Exception> runnable) {
+    public <X extends Exception> int tryBlock(final IExecutableX<X> runnable)
+            throws X {
         return tryBlock(runnable, TryBlock.INFINITE);
     }
 
     @Override
-    public int tryBlock(final Executable<? extends Exception> runnable, int maxRetry) {
-        return new _TryBlock(this, maxRetry, false) {
+    public <X extends Exception> int tryBlock(final IExecutableX<X> runnable, int maxRetry)
+            throws X {
+        return new AbstractTryBlock(this, maxRetry, false) {
             @Override
-            protected void body() throws Exception {
+            protected void body()
+                    throws Exception {
                 runnable.execute();
             }
         }._run();

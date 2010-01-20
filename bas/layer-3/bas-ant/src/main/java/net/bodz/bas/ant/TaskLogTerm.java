@@ -1,16 +1,20 @@
 package net.bodz.bas.ant;
 
+import net.bodz.bas.io.term.BufferedTerminal;
+import net.bodz.bas.io.term.ITerminal;
 import net.bodz.bas.io.term.LogTerm;
 
-import com.sun.jmx.snmp.tasks.Task;
+import org.apache.tools.ant.Project;
+import org.apache.tools.ant.Task;
 
-public class TaskLogTerm extends LogTerm {
+public class TaskLogTerm
+        extends LogTerm {
 
     private final Task task;
 
     public TaskLogTerm(Task task) {
         if (task == null)
-            throw new NullPointerException("project"); 
+            throw new NullPointerException("project");
         this.task = task;
     }
 

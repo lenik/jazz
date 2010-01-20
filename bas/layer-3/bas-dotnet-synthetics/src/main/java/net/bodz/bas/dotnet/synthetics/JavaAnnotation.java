@@ -1,4 +1,4 @@
-package net.bodz.bas.dnb;
+package net.bodz.bas.dotnet.synthetics;
 
 public class JavaAnnotation {
 

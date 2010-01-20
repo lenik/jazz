@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import net.bodz.bas.collection.preorder.PrefixSet;
+import net.bodz.bas.text.util.StringArray;
 
 import org.junit.Test;
 
@@ -12,10 +13,10 @@ public class PrefixSetTest {
     PrefixSet set = new PrefixSet();
 
     public PrefixSetTest() {
-        set.add("name"); 
-        set.add("aa"); 
-        set.add("aaa"); 
-        set.add("aab"); 
+        set.add("name");
+        set.add("aa");
+        set.add("aaa");
+        set.add("aab");
     }
 
     @Test
@@ -23,18 +24,18 @@ public class PrefixSetTest {
         class D {
             void o(String input, String expected) {
                 Iterable<String> ceilings = set.ceilings(input);
-                String actual = Strings.join(",", ceilings); 
+                String actual = StringArray.join(",", ceilings);
                 assertEquals(expected, actual);
             }
         }
         D d = new D(); //
-        d.o("n", "name");  
-        d.o("na", "name");  
-        d.o("nam", "name");  
-        d.o("name", "name");  
-        d.o("a", "aa,aaa,aab");  
-        d.o("aa", "aa,aaa,aab");  
-        d.o("aaa", "aaa");  
+        d.o("n", "name");
+        d.o("na", "name");
+        d.o("nam", "name");
+        d.o("name", "name");
+        d.o("a", "aa,aaa,aab");
+        d.o("aa", "aa,aaa,aab");
+        d.o("aaa", "aaa");
     }
 
     @Test
@@ -49,24 +50,24 @@ public class PrefixSetTest {
             }
         }
         D d = new D(); //
-        d.T(""); 
-        d.T("n"); 
-        d.T("nam"); 
-        d.T("name"); 
-        d.T("a"); 
-        d.T("aa"); 
-        d.T("aaa"); 
-        d.F("bb"); 
+        d.T("");
+        d.T("n");
+        d.T("nam");
+        d.T("name");
+        d.T("a");
+        d.T("aa");
+        d.T("aaa");
+        d.F("bb");
     }
 
     @Test
     public void testCrossParent() {
         PrefixSet set = new PrefixSet();
-        set.add("cat"); 
-        set.add("catx"); 
-        set.add("catz"); 
-        assertEquals("catx", set.floor("catxy"));  
-        assertEquals("cat", set.floor("caty"));  
+        set.add("cat");
+        set.add("catx");
+        set.add("catz");
+        assertEquals("catx", set.floor("catxy"));
+        assertEquals("cat", set.floor("caty"));
     }
 
 }

@@ -3,27 +3,30 @@ package net.bodz.bas.flow.units.builtin.sinks;
 import java.io.Flushable;
 import java.io.IOException;
 
-import net.bodz.bas.io.out.ByteOut;
+import net.bodz.bas.sio.IByteOut;
 
-public class ByteOutSink extends ByteProcessSink {
+public class ByteOutSink
+        extends ByteProcessSink {
 
-    private ByteOut out;
+    private IByteOut out;
     private Flushable flushable;
 
-    public ByteOutSink(ByteOut out, boolean autoFlush) throws IOException {
+    public ByteOutSink(IByteOut out, boolean autoFlush)
+            throws IOException {
         this.out = out;
         setAutoFlush(autoFlush);
     }
 
-    public ByteOutSink(ByteOut out) throws IOException {
+    public ByteOutSink(IByteOut out)
+            throws IOException {
         this(out, false);
     }
 
-    public ByteOut getByteOut() {
+    public IByteOut getByteOut() {
         return out;
     }
 
-    public void setByteOut(ByteOut out) {
+    public void setByteOut(IByteOut out) {
         this.out = out;
     }
 
@@ -37,17 +40,20 @@ public class ByteOutSink extends ByteProcessSink {
     }
 
     @Override
-    public void reset() throws IOException {
+    public void reset()
+            throws IOException {
     }
 
     @Override
-    public void flush() throws IOException {
+    public void flush()
+            throws IOException {
         if (out instanceof Flushable)
             ((Flushable) out).flush();
     }
 
     @Override
-    public void recv(byte[] bytes, int start, int end) throws IOException {
+    public void recv(byte[] bytes, int start, int end)
+            throws IOException {
         int length = end - start;
         out.write(bytes, start, length);
         if (flushable != null)

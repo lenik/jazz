@@ -14,7 +14,13 @@ import java.util.TreeSet;
 import net.bodz.bas.a.A_bas;
 import net.bodz.bas.c1.annotations.Ns;
 import net.bodz.bas.cli.a.Option;
+import net.bodz.bas.closure.alt.Filt1;
+import net.bodz.bas.collection.comparator.StringLengthComparator;
 import net.bodz.bas.collection.util.ClassLocal;
+import net.bodz.bas.exceptions.ParseException;
+import net.bodz.bas.reflect.Reflects;
+import net.bodz.bas.reflect.util.Members;
+import net.bodz.bas.text.util.Strings;
 
 public class ClassCLI {
 
@@ -35,7 +41,8 @@ public class ClassCLI {
         return copt;
     }
 
-    public static String[] loadOptions(Object classobj, String[] args) throws CLIException {
+    public static String[] loadOptions(Object classobj, String[] args)
+            throws CLIException {
         List<String> list = new ArrayList<String>(args.length);
         for (String arg : args)
             list.add(arg);
@@ -44,7 +51,8 @@ public class ClassCLI {
     }
 
     @SuppressWarnings("unchecked")
-    public static void loadOptions(Object classobj, List<String> args) throws CLIException {
+    public static void loadOptions(Object classobj, List<String> args)
+            throws CLIException {
         assert classobj != null;
         Class<Object> clazz = (Class<Object>) classobj.getClass();
         ClassOptions<Object> copt = getClassOptions(clazz);
@@ -55,7 +63,8 @@ public class ClassCLI {
         }
     }
 
-    protected static abstract class OptionFormat extends Filt1<String, Set<_Option<?>>> {
+    protected static abstract class OptionFormat
+            extends Filt1<String, Set<_Option<?>>> {
 
         @Override
         public abstract String filter(Set<_Option<?>> a);
@@ -72,9 +81,9 @@ public class ClassCLI {
         Arrays.fill(tab, ' ');
 
         String program = A_bas.getProgramName(clazz);
-        buffer.append("Syntax: \n"); 
+        buffer.append("Syntax: \n");
         buffer.append(tab);
-        buffer.append(program + " [OPTION] [--]"); 
+        buffer.append(program + " [OPTION] [--]");
         if (copt.specfiles != null) {
             int ifile = 0;
             while (true) {
@@ -87,14 +96,14 @@ public class ClassCLI {
             }
         }
 
-        buffer.append(" "); 
+        buffer.append(" ");
         if (restSyntax == null) {
             boolean usingRestSyntax = false;
             if (usingRestSyntax) {
                 // getRestSyntax();
-                Method restf = Members.findDeclaredMethod(clazz, "getRestSyntax"); 
+                Method restf = Members.findDeclaredMethod(clazz, "getRestSyntax");
                 if (restf == null)
-                    buffer.append("..."); 
+                    buffer.append("...");
                 else {
                     restSyntax = (String) Reflects.invoke(null, restf);
                     buffer.append(restSyntax);
@@ -106,9 +115,9 @@ public class ClassCLI {
             }
         }
         buffer.append(restSyntax);
-        buffer.append("\n"); 
+        buffer.append("\n");
 
-        buffer.append("\n"); 
+        buffer.append("\n");
 
         Map<String, Set<_Option<?>>> groups = new HashMap<String, Set<_Option<?>>>();
         Comparator<_Option<?>> optnamsort = new Comparator<_Option<?>>() {
@@ -141,7 +150,7 @@ public class ClassCLI {
                 StringBuffer line = new StringBuffer(80);
                 for (_Option<?> opt : opts) {
                     String[] aliases = copt.getAliases(opt);
-                    Arrays.sort(aliases, Comparators.STRLEN);
+                    Arrays.sort(aliases, StringLengthComparator.getInstance());
 
                     line.setLength(0);
                     line.append(tab);
@@ -159,7 +168,7 @@ public class ClassCLI {
                             hasshort = true;
                             col += 2;
                         } else {
-                            line.append("--" + nam); 
+                            line.append("--" + nam);
                             col += 3 + nam.length();
                         }
                     }
@@ -198,10 +207,10 @@ public class ClassCLI {
             if (first)
                 first = false;
             else
-                buffer.append("\n"); 
+                buffer.append("\n");
             String name = group.getKey();
             Set<_Option<?>> grpopts = group.getValue();
-            buffer.append(Strings.ucfirst(name) + " options: \n"); 
+            buffer.append(Strings.ucfirst(name) + " options: \n");
             buffer.append(groupfmt.filter(grpopts));
         }
         return buffer.toString();

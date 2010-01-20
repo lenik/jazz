@@ -7,9 +7,14 @@ import net.bodz.bas.cli.CLIException;
 import net.bodz.bas.cli.ClassCLI;
 import net.bodz.bas.cli.ClassOptions;
 import net.bodz.bas.cli._Option;
+import net.bodz.bas.exceptions.ParseException;
+import net.bodz.bas.sio.ILineCharOut;
+import net.bodz.bas.text.util.Strings;
 import net.bodz.bas.util._Plugin;
 
-public class _CLIPlugin extends _Plugin implements CLIPlugin {
+public class _CLIPlugin
+        extends _Plugin
+        implements CLIPlugin {
 
     @SuppressWarnings("unchecked")
     protected ClassOptions<_CLIPlugin> getOptions() {
@@ -17,7 +22,8 @@ public class _CLIPlugin extends _Plugin implements CLIPlugin {
     }
 
     @Override
-    public void setParameters(Map<String, Object> parameters) throws CLIException, ParseException {
+    public void setParameters(Map<String, Object> parameters)
+            throws CLIException, ParseException {
         if (parameters.isEmpty())
             return;
         ClassOptions<_CLIPlugin> opts = getOptions();
@@ -41,7 +47,7 @@ public class _CLIPlugin extends _Plugin implements CLIPlugin {
     }
 
     @Override
-    public void help(CharOut out, String prefix) {
+    public void help(ILineCharOut out, String prefix) {
         ClassOptions<_CLIPlugin> opts = getOptions();
         TreeMap<String, _Option<?>> map = opts.getOptions();
         int maxlen = 0;
@@ -57,7 +63,7 @@ public class _CLIPlugin extends _Plugin implements CLIPlugin {
             out.print(prefix);
             out.print(name);
             if (!doc.isEmpty()) {
-                out.print(": "); 
+                out.print(": ");
                 if (name.length() < maxlen)
                     out.print(Strings.repeat(maxlen - name.length(), ' '));
                 out.print(doc);

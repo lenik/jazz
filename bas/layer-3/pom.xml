@@ -11,7 +11,8 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<modules>
 		<module>bas-ant</module>
-		<module>bas-quickstart</module>
+		<module>bas-cli</module>
+		<module>bas-snmjava</module>
 		<module>bas-sysutil</module>
 		<module>bas-unitperf</module>
 	</modules>

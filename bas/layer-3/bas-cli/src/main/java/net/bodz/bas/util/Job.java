@@ -4,7 +4,8 @@ import net.bodz.bas.commons.exception.RecoverableExceptionListener;
 import net.bodz.bas.io.term.LogTerm;
 import net.bodz.bas.ui.UserInterface;
 
-public interface Job extends ExceptionSourceRunnable {
+public interface Job
+        extends ExceptionSourceRunnable {
 
     int NOTSTART = 0;
     int RUNNING = 1;

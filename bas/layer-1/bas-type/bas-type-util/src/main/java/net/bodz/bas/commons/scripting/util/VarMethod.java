@@ -1,6 +1,7 @@
 package net.bodz.bas.commons.scripting.util;
 
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.collection.preorder.TypesHierMap;
@@ -68,7 +69,7 @@ public class VarMethod
     }
 
     public static void classify(Iterable<Method> methods, Map<String, VarMethod> map) {
-        TextMap<VarMethod> tmp = new HashTextMap<VarMethod>();
+        Map<String, VarMethod> tmp = new HashMap<String, VarMethod>();
         for (Method m : methods) {
             String name = m.getName();
             VarMethod varm = tmp.get(name);

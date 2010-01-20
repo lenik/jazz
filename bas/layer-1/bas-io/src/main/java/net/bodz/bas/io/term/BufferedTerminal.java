@@ -1,6 +1,7 @@
 package net.bodz.bas.io.term;
 
-public abstract class BufferedTerminal extends AbstractTerminal {
+public abstract class BufferedTerminal
+        extends AbstractTerminal {
 
     boolean started = false;
     StringBuffer buf;
@@ -19,24 +20,15 @@ public abstract class BufferedTerminal extends AbstractTerminal {
         if (!started)
             restart();
         buf.append(s);
-        if (s.endsWith("\n")) 
+        if (s.endsWith("\n"))
             p();
     }
 
     @Override
     public void p() {
-        String s = started ? buf.toString() : ""; 
+        String s = started ? buf.toString() : "";
         started = false;
         _p(s);
-    }
-
-    @Override
-    public void t(String s) {
-        if (started)
-            p();
-        // state: shall erase?
-        eraseLast();
-        _t(s);
     }
 
     @Override

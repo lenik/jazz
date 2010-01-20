@@ -5,6 +5,9 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.bodz.bas.fs.legacy.Files;
+import net.bodz.bas.text.util.Strings;
+
 public class LogTermTest {
 
     static void generate(String[] levels)

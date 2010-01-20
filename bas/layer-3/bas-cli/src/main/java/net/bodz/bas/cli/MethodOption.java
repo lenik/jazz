@@ -2,15 +2,19 @@ package net.bodz.bas.cli;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-
-import javax.script.ScriptException;
+import java.sql.Types;
 
 import net.bodz.bas.cli.a.ArgsParseBy;
 import net.bodz.bas.cli.a.OptionGroup;
+import net.bodz.bas.commons.scripting.ScriptMethod;
+import net.bodz.bas.commons.util.Objects;
 import net.bodz.bas.exceptions.CreateException;
-import net.bodz.bas.type.util.Types;
+import net.bodz.bas.exceptions.ParseException;
+import net.bodz.bas.type.traits.IParser;
 
-public class MethodOption extends _Option<CallInfo> implements ScriptMethod<Object> {
+public class MethodOption
+        extends _Option<CallInfo>
+        implements ScriptMethod<Object> {
 
     private final Method method;
     private final int argc;
@@ -51,11 +55,11 @@ public class MethodOption extends _Option<CallInfo> implements ScriptMethod<Obje
         }
     }
 
-    private static final Class<? extends TypeParser>[] _c0;
+    private static final Class<? extends IParser<?>>[] _c0;
     static {
         @SuppressWarnings("unchecked")
         //
-        Class<? extends TypeParser>[] c0 = (Class<? extends TypeParser>[]) new Class<?>[0];
+        Class<? extends IParser<?>>[] c0 = (Class<? extends IParser<?>>[]) new Class<?>[0];
         _c0 = c0;
     }
 
@@ -68,14 +72,16 @@ public class MethodOption extends _Option<CallInfo> implements ScriptMethod<Obje
         return argc;
     }
 
-    public Object parseParameter(String param, int paramIndex) throws ParseException {
+    public Object parseParameter(String param, int paramIndex)
+            throws ParseException {
         if (parsers == null || paramIndex < 0 || paramIndex >= argc)
-            throw new CLIError("param index out of bounds"); 
+            throw new CLIError("param index out of bounds");
         Object val = parsers[paramIndex].parse(param);
         return val;
     }
 
-    public Object call(Object object, String[] argv) throws ParseException, ScriptException {
+    public Object call(Object object, String[] argv)
+            throws ParseException, ScriptException {
         Object[] parameters = new Object[argc];
         for (int i = 0; i < argc; i++) {
             String arg = argv[i];
@@ -95,13 +101,15 @@ public class MethodOption extends _Option<CallInfo> implements ScriptMethod<Obje
     private static final CallInfo NULL = new CallInfo(0);
 
     @Override
-    public CallInfo get(Object object) throws ScriptException {
+    public CallInfo get(Object object)
+            throws ScriptException {
         return NULL;
     }
 
     @Override
     @Deprecated
-    public void set(Object object, CallInfo info) throws ScriptException {
+    public void set(Object object, CallInfo info)
+            throws ScriptException {
         info.returnValue = invoke(object, info.parameters);
     }
 
@@ -125,7 +133,8 @@ public class MethodOption extends _Option<CallInfo> implements ScriptMethod<Obje
     }
 
     @Override
-    public Object invoke(Object object, Object... parameters) throws ScriptException {
+    public Object invoke(Object object, Object... parameters)
+            throws ScriptException {
         String[] argv = new String[argc];
         Objects.copy(parameters, 0, argv, 0, argc);
         try {

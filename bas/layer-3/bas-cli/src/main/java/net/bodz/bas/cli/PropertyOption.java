@@ -8,7 +8,8 @@ import javax.script.ScriptException;
 
 import net.bodz.bas.cli.a.OptionGroup;
 
-public class PropertyOption<T> extends _Option<T> {
+public class PropertyOption<T>
+        extends _Option<T> {
 
     private final PropertyDescriptor property;
     private final Method readf;
@@ -17,7 +18,7 @@ public class PropertyOption<T> extends _Option<T> {
     @SuppressWarnings("unchecked")
     public PropertyOption(String name, PropertyDescriptor property, OptionGroup optgrp) {
         super(name, property.getReadMethod(), // AnnotatedElement
-                (Class<T>) property.getPropertyType(), optgrp);
+                property.getPropertyType(), optgrp);
         this.property = property;
         this.readf = property.getReadMethod();
         this.writef = property.getWriteMethod();
@@ -27,7 +28,8 @@ public class PropertyOption<T> extends _Option<T> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public T get(Object classobj) throws ScriptException {
+    public T get(Object classobj)
+            throws ScriptException {
         try {
             return (T) readf.invoke(classobj);
         } catch (IllegalArgumentException e) {
@@ -40,7 +42,8 @@ public class PropertyOption<T> extends _Option<T> {
     }
 
     @Override
-    public void set(Object classobj, T optval) throws ScriptException {
+    public void set(Object classobj, T optval)
+            throws ScriptException {
         Object propval;
         try {
             if (multi) {

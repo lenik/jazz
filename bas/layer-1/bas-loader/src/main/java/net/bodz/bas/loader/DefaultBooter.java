@@ -10,14 +10,15 @@ import net.bodz.bas.closure.alt.Pred1;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.loader.boot.BootInfo;
 import net.bodz.bas.loader.boot.BootProc;
-import net.bodz.bas.sio.CharOut;
+import net.bodz.bas.sio.ILineCharOut;
+import net.bodz.bas.sio.Stdio;
 
 /**
  * The default booter for {@link BootInfo}.
  */
 public class DefaultBooter {
 
-    private static CharOut out = CharOut.stderr;
+    private static ILineCharOut out = Stdio.cerr;
 
     static boolean LOADFIX_DUMP = false;
 
@@ -29,7 +30,7 @@ public class DefaultBooter {
         else
             bootSysLoader = TempClassLoader.get(userlibs, initSysLoader);
         if (LOADFIX_DUMP)
-            UCL.dump(bootSysLoader, CharOuts.stderr);
+            UCL.dump(bootSysLoader, Stdio.cerr);
 
         Class<?> class0 = null;
         // can found by bootSysLoader?

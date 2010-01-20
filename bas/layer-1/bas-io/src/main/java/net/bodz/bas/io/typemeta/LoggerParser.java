@@ -4,8 +4,9 @@ import java.io.FileNotFoundException;
 import java.io.PrintStream;
 
 import net.bodz.bas.exceptions.ParseException;
-import net.bodz.bas.io.term.StreamTerminal;
 import net.bodz.bas.io.term.ITerminal;
+import net.bodz.bas.io.term.LogTerm;
+import net.bodz.bas.io.term.StreamTerminal;
 import net.bodz.bas.type.traits.AbstractParser;
 
 public class LoggerParser

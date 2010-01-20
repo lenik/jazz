@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
+
 public class Map2VariantLookupMap<K, V>
         extends VariantLookupMap<K>
         implements Map<K, V>, Proxy<Map<K, V>> {

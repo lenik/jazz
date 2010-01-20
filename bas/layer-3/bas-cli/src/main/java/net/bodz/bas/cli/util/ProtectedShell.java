@@ -2,8 +2,11 @@ package net.bodz.bas.cli.util;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.Date;
+
+import net.bodz.bas.fs.legacy.Files;
+import net.bodz.bas.io.term.ITerminal;
+import net.bodz.bas.io.term.Terminals;
 
 public class ProtectedShell {
 

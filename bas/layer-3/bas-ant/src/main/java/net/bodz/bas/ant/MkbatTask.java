@@ -2,15 +2,18 @@ package net.bodz.bas.ant;
 
 import java.io.File;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.cli.util.CLITask;
 import net.bodz.bas.cli.util.Mkbat;
+import net.bodz.bas.fs.legacy.Files;
 
-public class MkbatTask extends CLITask {
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.types.Path;
+
+public class MkbatTask
+        extends CLITask {
 
     private final Mkbat mkbat;
 
@@ -22,7 +25,7 @@ public class MkbatTask extends CLITask {
     public MkbatTask() {
         super(new Mkbat());
         mkbat = (Mkbat) super.app;
-        addArguments("-rq", "--");  
+        addArguments("-rq", "--");
         classpathList = new ArrayList<Path>();
         findmainList = new ArrayList<Path>();
         runtimeLibs = new ArrayList<String>();
@@ -38,16 +41,16 @@ public class MkbatTask extends CLITask {
     }
 
     public File getOutdir() {
-        return (File) get("outputDirectory"); 
+        return (File) get("outputDirectory");
     }
 
     public void setOutdir(File outdir) {
-        set("outputDirectory", outdir); 
+        set("outputDirectory", outdir);
     }
 
     static String pathSeparator;
     static {
-        pathSeparator = ";"; 
+        pathSeparator = ";";
     }
 
     public void addClasspath(Path path) {
@@ -55,7 +58,8 @@ public class MkbatTask extends CLITask {
     }
 
     @Override
-    public void execute() throws BuildException {
+    public void execute()
+            throws BuildException {
         for (Path classpath : classpathList) {
             String[] paths = classpath.list();
             for (int i = 0; i < paths.length; i++) {

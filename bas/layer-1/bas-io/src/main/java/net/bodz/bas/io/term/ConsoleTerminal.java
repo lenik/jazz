@@ -3,11 +3,13 @@ package net.bodz.bas.io.term;
 import java.io.IOException;
 
 import net.bodz.bas.exceptions.OutOfDomainException;
-import net.bodz.bas.io.out.CharOut;
+import net.bodz.bas.sio.ILineCharOut;
+import net.bodz.bas.text.util.Strings;
 
-public class ConsoleTerminal extends AbstractTerminal {
+public class ConsoleTerminal
+        extends AbstractTerminal {
 
-    private CharOut out;
+    private ILineCharOut out;
     private int width;
 
     /** just commited */
@@ -25,22 +27,22 @@ public class ConsoleTerminal extends AbstractTerminal {
     private int state = START;
     private int blen;
 
-    public ConsoleTerminal(CharOut out, int width) {
+    public ConsoleTerminal(ILineCharOut out, int width) {
         if (out == null)
-            throw new NullPointerException("out"); 
+            throw new NullPointerException("out");
         if (width < 1)
-            throw new OutOfDomainException("width", width, 1); 
+            throw new OutOfDomainException("width", width, 1);
         this.out = out;
         this.width = width;
     }
 
     @Override
-    public CharOut getCharOut() {
+    public ILineCharOut getCharOut() {
         return out;
     }
 
     protected String getLead() {
-        return ""; 
+        return "";
     }
 
     private final boolean isEOL(String s) {
@@ -53,7 +55,7 @@ public class ConsoleTerminal extends AbstractTerminal {
 
     @Override
     public void p_(String s) {
-        assert s != null : "null string"; 
+        assert s != null : "null string";
         switch (state) {
         case START:
             out.print(getLead());
@@ -69,12 +71,12 @@ public class ConsoleTerminal extends AbstractTerminal {
 
     @Override
     public void p() {
-        p(""); 
+        p("");
     }
 
     @Override
     public void p(String s) {
-        assert s != null : "null string"; 
+        assert s != null : "null string";
         switch (state) {
         case START:
             out.print(getLead());
@@ -93,32 +95,28 @@ public class ConsoleTerminal extends AbstractTerminal {
         blen = 0;
     }
 
-    @Override
-    public void t(String s) {
-        assert s != null : "null string"; 
-        if (state == DIRTY)
-            out.println();
-        String t = getLead() + s;
-        t = Strings.ellipse(t, width);
-        out.print(t);
-        int len = t.length();
-        if (len < blen) {
-            String pad = Strings.repeat(blen - len, ' ');
-            out.print(pad);
-        }
-        blen = len;
-        out.print('\r');
-        state = TBUF;
-    }
+    // @Override
+    // public void p_(String s) {
+    // assert s != null : "null string";
+    // if (state == DIRTY)
+    // out.println();
+    // String t = getLead() + s;
+    // t = Strings.ellipse(t, width);
+    // out.print(t);
+    // int len = t.length();
+    // if (len < blen) {
+    // String pad = Strings.repeat(blen - len, ' ');
+    // out.print(pad);
+    // }
+    // blen = len;
+    // out.print('\r');
+    // state = TBUF;
+    // }
 
     @Override
-    public void flush() throws IOException {
+    public void flush()
+            throws IOException {
         out.flush();
-    }
-
-    @Override
-    public void close() throws IOException {
-        out.close();
     }
 
 }

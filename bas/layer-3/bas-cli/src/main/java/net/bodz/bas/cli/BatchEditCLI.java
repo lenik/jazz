@@ -7,18 +7,30 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
 import java.util.List;
 
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.cli.a.OptionGroup;
 import net.bodz.bas.cli.util.ProtectedShell;
 import net.bodz.bas.exceptions.IllegalUsageError;
+import net.bodz.bas.exceptions.NotImplementedException;
+import net.bodz.bas.exceptions.UnexpectedException;
+import net.bodz.bas.fs.legacy.Files;
 import net.bodz.bas.hint.OverrideOption;
+import net.bodz.bas.sio.ILineCharOut;
+import net.bodz.bas.sio.Stdio;
+import net.bodz.bas.sio.WriterCharOut;
+import net.bodz.bas.text.diff.DiffComparator;
+import net.bodz.bas.text.diff.DiffFormat;
+import net.bodz.bas.text.diff.DiffFormats;
+import net.bodz.bas.text.diff.DiffInfo;
+import net.bodz.bas.text.util.StringArray;
 
 @OptionGroup(value = "batch process", rank = -3)
-public class BatchEditCLI extends BatchCLI {
+public class BatchEditCLI
+        extends BatchCLI {
 
     @Option(alias = ".E", vnam = "ENCODING", doc = "default encoding of output files")
     Charset outputEncoding = Charset.defaultCharset();
@@ -42,7 +54,7 @@ public class BatchEditCLI extends BatchCLI {
     DiffFormat diffFormat = DiffFormats.Simdiff;
 
     @Option(alias = "Xo", vnam = "FILE", doc = "write diff output to specified file")
-    CharOut diffOutput = CharOuts.stdout;
+    ILineCharOut diffOutput = Stdio.cout;
 
     @Option(alias = "X3", doc = "diff between src/dst/out, when output to different file")
     boolean diff3 = false;
@@ -50,7 +62,8 @@ public class BatchEditCLI extends BatchCLI {
     @Option(alias = "X2", doc = "diff between src/out rather then src/dst, only used when output directory is different")
     boolean diffWithDest = false;
 
-    public class Parameters extends BatchCLI.Parameters {
+    public class Parameters
+            extends BatchCLI.Parameters {
 
         public Charset getOutputEncoding() {
             return outputEncoding;
@@ -108,11 +121,11 @@ public class BatchEditCLI extends BatchCLI {
             BatchEditCLI.this.diffFormat = diffFormat;
         }
 
-        public CharOut getDiffOutput() {
+        public ILineCharOut getDiffOutput() {
             return diffOutput;
         }
 
-        public void setDiffOutput(CharOut diffOutput) {
+        public void setDiffOutput(ILineCharOut diffOutput) {
             BatchEditCLI.this.diffOutput = diffOutput;
         }
 
@@ -161,25 +174,27 @@ public class BatchEditCLI extends BatchCLI {
     /**
      * @return canonical file
      */
-    protected File _getEditTmp(File file) throws IOException {
+    protected File _getEditTmp(File file)
+            throws IOException {
         String dotExt = Files.getExtension(file, true);
         return File.createTempFile(tmpPrefix, dotExt, tmpDir);
     }
 
-    private boolean diff(File a, File b) throws IOException {
+    private boolean diff(File a, File b)
+            throws IOException {
         assert a != null;
         assert b != null;
         if (a.exists() && !b.exists()) {
-            L.info("[new ]", a); 
+            L.info("[new ]", a);
             return true;
         } else if (!a.exists() && b.exists()) {
-            L.info("[miss]", a); 
+            L.info("[miss]", a);
             return true;
         }
         if (diffAlgorithm == null) {
             if (Files.equals(a, b))
                 return false;
-            L.info("[edit] ", a); 
+            L.info("[edit] ", a);
             return true;
         }
         List<String> al = Files.readLines(a, inputEncoding.name());
@@ -187,7 +202,7 @@ public class BatchEditCLI extends BatchCLI {
         List<DiffInfo> diffs = diffAlgorithm.diffCompare(al, bl);
         if (diffs.size() == 0)
             return false;
-        L.info("[edit] ", a); 
+        L.info("[edit] ", a);
         diffFormat.format(al, bl, diffs, diffOutput);
         return true;
     }
@@ -201,7 +216,7 @@ public class BatchEditCLI extends BatchCLI {
         File out = Files.getAbsoluteFile(outputDirectory, relative);
         File outd = out.getParentFile();
         if (outd.isFile())
-            throw new Error("Invalid output directory: " + outd); 
+            throw new Error("Invalid output directory: " + outd);
         return out;
     }
 
@@ -229,7 +244,7 @@ public class BatchEditCLI extends BatchCLI {
     protected void _processFile(File file) {
         Throwable err = null;
         try {
-            L.tinfo("[proc] ", file); 
+            L.tinfo("[proc] ", file);
             EditResult result = BatchEditCLI.this.doEdit(file);
             addResult(file, result);
         } catch (RuntimeException e) {
@@ -245,7 +260,7 @@ public class BatchEditCLI extends BatchCLI {
             // err before addResult() or raised inside addResult()
             if (err != null) {
                 stat.add(EditResult.err(err));
-                L.error("[fail] ", file, ": ", err);  
+                L.error("[fail] ", file, ": ", err);
             }
         }
     }
@@ -261,7 +276,8 @@ public class BatchEditCLI extends BatchCLI {
      *            canonical file
      */
     @OverrideOption(group = "batchEdit")
-    protected EditResult doEdit(File file) throws Exception {
+    protected EditResult doEdit(File file)
+            throws Exception {
         File editTmp = _getEditTmp(file);
         try {
             EditResult result = doEditWithTemp(file, editTmp);
@@ -278,7 +294,8 @@ public class BatchEditCLI extends BatchCLI {
      */
     @Override
     @Deprecated
-    protected void doFile(File file, InputStream in) throws Exception {
+    protected void doFile(File file, InputStream in)
+            throws Exception {
         throw new NotImplementedException();
     }
 
@@ -289,7 +306,8 @@ public class BatchEditCLI extends BatchCLI {
      *            canonical file
      */
     @OverrideOption(group = "batchEdit")
-    protected EditResult doEditWithTemp(File file, File editTmp) throws Exception {
+    protected EditResult doEditWithTemp(File file, File editTmp)
+            throws Exception {
         EditResult result = doEdit(file, editTmp);
         if (result == null) // ignored
             return null;
@@ -312,7 +330,8 @@ public class BatchEditCLI extends BatchCLI {
      *         PROCESS_EDIT: have the result written to the out file
      */
     @OverrideOption(group = "batchEdit")
-    protected EditResult doEdit(File in, File out) throws Exception {
+    protected EditResult doEdit(File in, File out)
+            throws Exception {
         InputStream ins = null;
         OutputStream outs = null;
         try {
@@ -337,11 +356,14 @@ public class BatchEditCLI extends BatchCLI {
      *         PROCESS_EDIT: have the result written to the output
      */
     @OverrideOption(group = "batchEdit")
-    protected EditResult doEditByIO(InputStream in, OutputStream out) throws Exception {
+    protected EditResult doEditByIO(InputStream in, OutputStream out)
+            throws Exception {
         Iterable<String> lines = Files.readByLine2(inputEncoding.name(), in);
-        CharOut cout = CharOuts.stdout;
-        if (out != null)
-            cout = CharOuts.get(out, outputEncoding.name());
+        ILineCharOut cout = Stdio.cout;
+        if (out != null) {
+            OutputStreamWriter writer = new OutputStreamWriter(out, outputEncoding.name());
+            cout = new WriterCharOut(writer);
+        }
         return doEditByLine(lines, cout);
     }
 
@@ -352,7 +374,8 @@ public class BatchEditCLI extends BatchCLI {
      *         PROCESS_EDIT: have the result written to the output
      */
     @OverrideOption(group = "batchEdit")
-    protected EditResult doEditByLine(Iterable<String> lines, CharOut out) throws Exception {
+    protected EditResult doEditByLine(Iterable<String> lines, ILineCharOut out)
+            throws Exception {
         throw new NotImplementedException();
     }
 
@@ -367,49 +390,54 @@ public class BatchEditCLI extends BatchCLI {
 
     protected final ProcessResultStat stat = new ProcessResultStat();
 
-    protected void addResult(EditResult result) throws IOException {
+    protected void addResult(EditResult result)
+            throws IOException {
         addResult(null, null, null, result);
     }
 
-    protected void addResult(File src, EditResult result) throws IOException, CLIException {
+    protected void addResult(File src, EditResult result)
+            throws IOException, CLIException {
         addResult(src, getOutputFile(src), result);
     }
 
-    protected void addResult(File src, File dst, EditResult result) throws IOException {
+    protected void addResult(File src, File dst, EditResult result)
+            throws IOException {
         addResult(src, dst, null, result);
     }
 
-    protected void addResult(File src, File dst, File edit, EditResult result) throws IOException {
+    protected void addResult(File src, File dst, File edit, EditResult result)
+            throws IOException {
         if (result == null)
-            L.detail("[skip] ", src); 
+            L.detail("[skip] ", src);
         else {
             if (src != null)
                 applyResult(src, dst, edit, result);
             stat.add(result);
             if (result.done)
-                L.info("[", result.getOperationName(), "] ", dst);  
+                L.info("[", result.getOperationName(), "] ", dst);
             if (result.error) {
                 String tags;
                 if (result.tags.length == 0)
-                    tags = ""; 
+                    tags = "";
                 else
-                    tags = "|" + Strings.join("|", result.tags);  
+                    tags = "|" + StringArray.join("|", result.tags);
                 if (result.cause != null)
-                    L.error("[fail", tags, "] ", src, ": ", result.cause);   
+                    L.error("[fail", tags, "] ", src, ": ", result.cause);
                 else
-                    L.error("[fail", tags, "] ", src);  
+                    L.error("[fail", tags, "] ", src);
             }
         }
     }
 
-    private void applyResult(File src, File dst, File edit, EditResult result) throws IOException {
+    private void applyResult(File src, File dst, File edit, EditResult result)
+            throws IOException {
         assert result != null;
 
         boolean diffPrinted = false;
         if (result.operation == EditResult.SAVE) {
             assert result.changed == null;
             if (edit == null)
-                throw new IllegalUsageError("can\'t save: not a batch editor"); 
+                throw new IllegalUsageError("can\'t save: not a batch editor");
             if (!diff3 && !diffWithDest) {
                 result.changed = diff(src, edit);
                 diffPrinted = true;
@@ -454,7 +482,7 @@ public class BatchEditCLI extends BatchCLI {
             boolean canOverwrite = saveLocal || force;
             if (dst.exists() && !canOverwrite)
                 // user interaction...
-                throw new IllegalStateException(String.format("File %s is already existed. ", dst)); 
+                throw new IllegalStateException(String.format("File %s is already existed. ", dst));
 
             File dstdir = dst.getParentFile();
             if (dstdir != null)
@@ -474,13 +502,13 @@ public class BatchEditCLI extends BatchCLI {
 
         case EditResult.SAVE:
         default:
-            throw new UnexpectedException("invalid operation: " 
-                    + result.operation);
+            throw new UnexpectedException("invalid operation: " + result.operation);
         }
     }
 
     @Override
-    protected void doMain(String[] args) throws Exception {
+    protected void doMain(String[] args)
+            throws Exception {
         super.doMain(args);
         if (L.showDetail())
             stat.dumpDetail(L.detail().getCharOut());
@@ -491,30 +519,37 @@ public class BatchEditCLI extends BatchCLI {
 
     @Override
     @OverrideOption(group = "batchEdit")
-    protected void doFileArgument(final File file) throws Exception {
-        L.tinfo("[start] ", file); 
+    protected void doFileArgument(final File file)
+            throws Exception {
+        L.tinfo("[start] ", file);
         super.doFileArgument(file);
     }
 
-    public class Methods extends net.bodz.bas.cli.BatchCLI.Methods {
+    public class Methods
+            extends net.bodz.bas.cli.BatchCLI.Methods {
 
-        public EditResult doEdit(File file) throws Exception {
+        public EditResult doEdit(File file)
+                throws Exception {
             return BatchEditCLI.this.doEdit(file);
         }
 
-        public EditResult doEdit(File in, File out) throws Exception {
+        public EditResult doEdit(File in, File out)
+                throws Exception {
             return BatchEditCLI.this.doEdit(in, out);
         }
 
-        public EditResult doEditByIO(InputStream in, OutputStream out) throws Throwable {
+        public EditResult doEditByIO(InputStream in, OutputStream out)
+                throws Throwable {
             return BatchEditCLI.this.doEditByIO(in, out);
         }
 
-        public EditResult doEditByLine(Iterable<String> lines, CharOut out) throws Throwable {
+        public EditResult doEditByLine(Iterable<String> lines, ILineCharOut out)
+                throws Throwable {
             return BatchEditCLI.this.doEditByLine(lines, out);
         }
 
-        public final byte[] doEditToBuffer(Object in) throws IOException {
+        public final byte[] doEditToBuffer(Object in)
+                throws IOException {
             InputStream ins = Files.getInputStream(in);
             boolean closeIn = Files.shouldClose(in);
             ByteArrayOutputStream outbuf = new ByteArrayOutputStream();

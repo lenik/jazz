@@ -1,7 +1,7 @@
 package net.bodz.bas.ui;
 
 import net.bodz.bas.collection.preorder.TypeHierMap;
-import net.bodz.bas.type.util.Types;
+import net.bodz.bas.primitive.Boxing;
 
 public abstract class RenderStrategy extends TypeHierMap<Renderer> {
 
@@ -38,7 +38,7 @@ public abstract class RenderStrategy extends TypeHierMap<Renderer> {
         Class<?> usingType = floorKey(type);
         if (usingType == null) {
             if (type.isPrimitive()) {
-                usingType = floorKey(Types.box(type));
+                usingType = floorKey(Boxing.box(type));
                 if (usingType == null)
                     return null;
             } else

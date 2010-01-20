@@ -3,7 +3,12 @@ package net.bodz.bas.db.filedb;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-public abstract class _ResRecords<T> implements ResRecords<T> {
+import net.bodz.bas.collection.iterator.ImmIterIterator;
+import net.bodz.bas.collection.iterator.ImmediateIteratorX;
+import net.bodz.bas.collection.iterator.IteratorX;
+
+public abstract class _ResRecords<T>
+        implements ResRecords<T> {
 
     protected final ResLink resLink;
     protected final Charset charset;
@@ -19,15 +24,16 @@ public abstract class _ResRecords<T> implements ResRecords<T> {
         this.charset = charset;
     }
 
-    public abstract DirectIterator<? extends T, IOException> iterator();
-
     @Override
-    public DirectIterator<? extends T, IOException> iterator(boolean allowOverlap) {
-        return iterator();
+    public ImmediateIteratorX<T, IOException> iterator(boolean allowOverlap)
+            throws IOException {
+        return null;
     }
 
-    public Iterable<? extends T> iterate() {
-        return Iterates.iterate(this);
+    @Override
+    public IteratorX<T, IOException> iterator() {
+        ImmediateIteratorX<T, IOException> immIter = iterator(false);
+        return new ImmIterIterator<T, IOException>(immIter);
     }
 
 }

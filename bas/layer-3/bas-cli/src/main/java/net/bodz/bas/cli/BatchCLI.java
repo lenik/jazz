@@ -6,16 +6,20 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
 import java.util.Comparator;
 import java.util.regex.Pattern;
 
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.cli.a.OptionGroup;
+import net.bodz.bas.exceptions.NotImplementedException;
+import net.bodz.bas.fs.FileMask;
+import net.bodz.bas.fs.legacy.Files;
+import net.bodz.bas.fs.traverse.FileFinder;
 import net.bodz.bas.hint.OverrideOption;
 
 @OptionGroup(value = "batch", rank = -2)
-public class BatchCLI extends BasicCLI {
+public class BatchCLI
+        extends BasicCLI {
 
     @Option(alias = ".e", vnam = "ENCODING", doc = "default encoding of input files")
     Charset inputEncoding = Charset.defaultCharset();
@@ -32,7 +36,7 @@ public class BatchCLI extends BasicCLI {
     boolean rootLast;
 
     @Option(alias = "Im", vnam = "FILEMASK", doc = "include specified type of files, default non-hidden files")
-    FileMask inclusiveMask = new FileMask("f/fH"); 
+    FileMask inclusiveMask = new FileMask("f/fH");
     @Option(alias = "IM", vnam = "FILEMASK", doc = "exclude specified type of files")
     FileMask exclusiveMask;
 
@@ -230,7 +234,8 @@ public class BatchCLI extends BasicCLI {
      */
     @Override
     @OverrideOption(group = "batch")
-    protected void doFileArgument(final File file) throws Exception {
+    protected void doFileArgument(final File file)
+            throws Exception {
         currentStartFile = file;
         FileFinder finder = new FileFinder(fileFilter, prune, recursive, file);
         if (rootLast)
@@ -250,7 +255,8 @@ public class BatchCLI extends BasicCLI {
      */
     @Override
     @Deprecated
-    protected void doFileArgument(File file, InputStream in) throws Exception {
+    protected void doFileArgument(File file, InputStream in)
+            throws Exception {
         doFile(file, in);
     }
 
@@ -266,7 +272,7 @@ public class BatchCLI extends BasicCLI {
         try {
             doFile(file);
         } catch (Throwable e) {
-            L.ferror("Failed to process %s: %s", file, e); 
+            L.ferror("Failed to process %s: %s", file, e);
             if (L.showDetail() || !errorContinue)
                 e.printStackTrace(L.error().getPrintStream());
             if (!errorContinue)
@@ -275,7 +281,8 @@ public class BatchCLI extends BasicCLI {
         }
     }
 
-    protected void doFile(File file) throws Exception {
+    protected void doFile(File file)
+            throws Exception {
         FileInputStream in = new FileInputStream(file);
         try {
             doFile(file, in);
@@ -288,21 +295,25 @@ public class BatchCLI extends BasicCLI {
      * if no argument and {@link #_getDefaultIn()} returns a non-null value, a null-file and the
      * default-in will be passed in.
      */
-    protected void doFile(File file, InputStream in) throws Exception {
+    protected void doFile(File file, InputStream in)
+            throws Exception {
         throw new NotImplementedException();
     }
 
     public class Methods {
 
-        public void doFileArgument(File file) throws Exception {
+        public void doFileArgument(File file)
+                throws Exception {
             BatchCLI.this.doFileArgument(file);
         }
 
-        public void doFile(File file) throws Exception {
+        public void doFile(File file)
+                throws Exception {
             BatchCLI.this.doFile(file);
         }
 
-        public void doFile(File file, InputStream in) throws Exception {
+        public void doFile(File file, InputStream in)
+                throws Exception {
             BatchCLI.this.doFile(file, in);
         }
 

@@ -1,4 +1,6 @@
-package net.bodz.bas.lang.util;
+package net.bodz.bas.loader;
+
+import net.bodz.bas.sio.Stdio;
 
 import org.junit.Test;
 
@@ -6,7 +8,7 @@ public class ClasspathTest {
 
     @Test
     public void test1() {
-        Classpath.dumpURLs(CharOuts.stdout);
+        Classpath.dumpURLs(Stdio.cout);
     }
 
 }

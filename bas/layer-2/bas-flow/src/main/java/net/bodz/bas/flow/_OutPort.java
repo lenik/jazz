@@ -3,9 +3,13 @@ package net.bodz.bas.flow;
 import net.bodz.bas.annotation.util.InheritableAnnotation;
 import net.bodz.bas.annotations.MetaClass;
 import net.bodz.bas.collection.util.ClassLocal;
-import net.bodz.bas.type.util.Types;
+import net.bodz.bas.exceptions.IllegalUsageError;
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
+import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 
-public abstract class _OutPort extends _Port implements OutPort {
+public abstract class _OutPort
+        extends _Port
+        implements OutPort {
 
     private int index;
 
@@ -26,7 +30,11 @@ public abstract class _OutPort extends _Port implements OutPort {
         if (meta == null) {
             Class<?> metaClass = (Class<?>) InheritableAnnotation.getValue(clazz, MetaClass.class);
             if (metaClass != null)
-                meta = (PortMeta) Types.newInstance(metaClass);
+                try {
+                    meta = (PortMeta) Jdk7Reflect.newInstance(metaClass);
+                } catch (ReflectiveOperationException e) {
+                    throw new IllegalUsageError("Can't create instance for MetaClass: " + metaClass, e);
+                }
             else
                 meta = createPortMeta();
             metas.put(clazz, meta);
