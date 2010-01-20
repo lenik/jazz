@@ -5,8 +5,8 @@ import java.io.IOException;
 import net.bodz.bas.annotation.util.Annotations;
 import net.bodz.bas.annotations.MetaClass;
 import net.bodz.bas.collection.util.ClassLocal;
-import net.bodz.bas.commons.util.Types;
 import net.bodz.bas.exceptions.OutOfDomainException;
+import net.bodz.bas.type.util.Types;
 
 public abstract class _InPort extends _Port implements InPort, ReceiverEx {
 

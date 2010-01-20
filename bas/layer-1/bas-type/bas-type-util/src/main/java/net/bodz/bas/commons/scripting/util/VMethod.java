@@ -1,17 +1,15 @@
 package net.bodz.bas.commons.scripting.util;
 
-import java.lang.reflect.InvocationTargetException;
+import net.bodz.bas.jdk6compat.jdk7emul.IllegalAccessException;
+import net.bodz.bas.jdk6compat.jdk7emul.InvocationTargetException;
+import net.bodz.bas.jdk6compat.jdk7emul.NoSuchMethodException;
 
 public interface VMethod {
 
-    Object invokel(Object obj, Class<?>[] paramTypes, Object... params) throws NoSuchMethodException,
-            IllegalArgumentException, IllegalAccessException, InvocationTargetException;
+    Object invokel(Object obj, Class<?>[] paramTypes, Object... params)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
-    Object invoke(Object obj, Object... params) throws IllegalArgumentException, NoSuchMethodException,
-            IllegalAccessException, InvocationTargetException;
-
-    Object _invokel(Object obj, Class<?>[] paramTypes, Object... params);
-
-    Object _invoke(Object obj, Object... params);
+    Object invoke(Object obj, Object... params)
+            throws NoSuchMethodException, IllegalAccessException, InvocationTargetException;
 
 }

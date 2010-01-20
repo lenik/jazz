@@ -1,14 +1,20 @@
 package net.bodz.bas.commons.scripting.util;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 
+import net.bodz.bas.collection.map.IndexMap;
 import net.bodz.bas.exceptions.IllegalUsageError;
 import net.bodz.bas.exceptions.ParseException;
+import net.bodz.bas.jdk6compat.jdk7emul.IllegalAccessException;
+import net.bodz.bas.jdk6compat.jdk7emul.InvocationTargetException;
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
+import net.bodz.bas.jdk6compat.jdk7emul.NoSuchMethodException;
+import net.bodz.bas.primitive.Boxing;
+import net.bodz.bas.type.util.TypeArray;
 
 public class VarArgcMethod
-        extends _VMethod {
+        extends AbstractVMethod {
 
     private final String name;
     private IndexMap<Method> argcMap;
@@ -40,7 +46,7 @@ public class VarArgcMethod
         if (argcMap.contains(index)) {
             Method m1 = argcMap.get(index);
             throw new IllegalUsageError("methods with same argc: \n" // 
-                    + m1 + "\n" + method); 
+                    + m1 + "\n" + method);
         }
         argcMap.set(index, method);
     }
@@ -54,15 +60,15 @@ public class VarArgcMethod
         int argc = params.length;
         Method method = get(argc);
         if (method == null)
-            throw new NoSuchMethodException(name + "([" + argc + "])");  
+            throw new NoSuchMethodException(name + "([" + argc + "])");
         if (autotype) {
             Class<?>[] declTypes = method.getParameterTypes();
-            Class<?>[] actuTypes = Types.getTypes(params);
+            Class<?>[] actuTypes = TypeArray.getClasses(params);
             Object[] argv = new Object[argc];
             for (int i = 0; i < argc; i++) {
                 Class<?> dt = declTypes[i];
                 Class<?> at = actuTypes[i];
-                if (params[i] != null && !Types.box(dt).isAssignableFrom(at))
+                if (params[i] != null && !Boxing.box(dt).isAssignableFrom(at))
                     if (at == String.class) {
                         String stringArg = (String) params[i];
                         try {
@@ -72,15 +78,14 @@ public class VarArgcMethod
                         }
                     } else
                         // OR: <dt>parse(at.toString())
-                        throw new IllegalArgumentException(
-                                "invalid argument type: " + at + ", while "  
-                                        + dt + " is expected. "); 
+                        throw new IllegalArgumentException("invalid argument type: " + at + ", while " + dt
+                                + " is expected. ");
                 else
                     argv[i] = params[i];
             }
             params = argv;
         }
-        return Control.invoke(method, obj, params);
+        return Jdk7Reflect.invoke(method, obj, params);
     }
 
     /**
@@ -94,19 +99,19 @@ public class VarArgcMethod
             throws NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
         if (paramTypes != null)
             if (paramTypes.length != params.length)
-                throw new IllegalArgumentException("number of param types differ to param vals"); 
+                throw new IllegalArgumentException("number of param types differ to param vals");
         int argc = params.length;
         Method method = get(argc);
         if (method == null)
-            throw new NoSuchMethodException("argc=" + argc); 
+            throw new NoSuchMethodException("argc=" + argc);
         if (paramTypes != null) {
             Class<?>[] declTypes = method.getParameterTypes();
             for (int i = 0; i < declTypes.length; i++) {
                 Class<?> decl = declTypes[i];
                 Class<?> actu = paramTypes[i];
                 if (!decl.isAssignableFrom(actu))
-                    throw new NoSuchMethodException("argc=" + paramTypes.length 
-                            + " [" + i + "]: decl=" + decl + ", actu=" + actu);   
+                    throw new NoSuchMethodException("argc=" + paramTypes.length + " [" + i + "]: decl=" + decl
+                            + ", actu=" + actu);
             }
         }
         return invoke(obj, params);

@@ -7,7 +7,7 @@ import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.bodz.bas.sio.CharOut;
+import net.bodz.bas.sio.ILineCharOut;
 
 public class Annotations {
 
@@ -77,7 +77,7 @@ public class Annotations {
         return null;
     }
 
-    public static <A extends Annotation> A getMethodAnnotation(Class<?> clazz, MethodSignature msig,
+    public static <A extends Annotation> A getMethodAnnotation(Class<?> clazz, MethodKey msig,
             Class<A> annotationClass) {
         assert clazz != null;
         assert msig != null;
@@ -102,7 +102,7 @@ public class Annotations {
         return null;
     }
 
-    public static <A extends Annotation> A getConstructorAnnotation(Class<?> clazz, MethodSignature msig,
+    public static <A extends Annotation> A getConstructorAnnotation(Class<?> clazz, MethodKey msig,
             Class<A> annotationClass) {
         assert clazz != null;
         assert msig != null;
@@ -137,7 +137,7 @@ public class Annotations {
     }
 
     @SuppressWarnings("unchecked")
-    public static void dumpAnnotationMap(Class<?> clazz, CharOut out, String indent) {
+    public static void dumpAnnotationMap(Class<?> clazz, ILineCharOut out, String indent) {
         initAccessors();
         try {
             Map<Class<?>, Annotation> annotations = (Map<Class<?>, Annotation>) Class_annotations.get(clazz);
@@ -148,7 +148,7 @@ public class Annotations {
         }
     }
 
-    public static void dumpAnnotationMap(Class<?> clazz, CharOut out) {
+    public static void dumpAnnotationMap(Class<?> clazz, ILineCharOut out) {
         dumpAnnotationMap(clazz, out, ""); 
     }
 

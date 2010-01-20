@@ -6,8 +6,8 @@ import java.util.Map;
 
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.cli.a.OptionGroup;
-import net.bodz.bas.commons.util.Types;
 import net.bodz.bas.exceptions.CreateException;
+import net.bodz.bas.type.util.Types;
 
 public abstract class _Option<T> implements ScriptField<T> {
 

@@ -1,13 +1,16 @@
-package net.bodz.bas.commons.scripting.util;
+package net.bodz.bas.reflect.util;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Iterator;
 
+import net.bodz.bas.collection.iterator.PrefetchedIterator;
+
 public class Members {
 
-    public static class PublicMethods extends PrefetchedIterator<Method> {
+    public static class PublicMethods
+            extends PrefetchedIterator<Method> {
 
         private final Method[] methods;
         private int index;
@@ -75,7 +78,8 @@ public class Members {
         };
     }
 
-    public static class AllMethods extends PrefetchedIterator<Method> {
+    public static class AllMethods
+            extends PrefetchedIterator<Method> {
         private Class<?> clazz;
         private Method[] methods;
         private int index;
@@ -160,78 +164,88 @@ public class Members {
         return all ? allMethods(clazz, methodName) : publicMethods(clazz, methodName);
     }
 
-    public static class PublicConstructors extends PrefetchedIterator<Constructor<?>> {
+    public static class PublicConstructors<T>
+            extends PrefetchedIterator<Constructor<T>> {
 
         private final Constructor<?>[] ctors;
         private int index;
 
-        public PublicConstructors(Class<?> clazz) {
+        public PublicConstructors(Class<T> clazz) {
             this.ctors = clazz.getConstructors();
         }
 
         @Override
-        protected Constructor<?> fetch() {
+        protected Constructor<T> fetch() {
             for (; index < ctors.length;) {
-                Constructor<?> ctor = ctors[index++];
+                @SuppressWarnings("unchecked")
+                Constructor<T> ctor = (Constructor<T>) ctors[index++];
                 if (accept(ctor))
                     return ctor;
             }
             return end();
         }
 
-        protected boolean accept(Constructor<?> ctor) {
+        protected boolean accept(Constructor<T> ctor) {
             return true;
         }
 
     }
 
-    public static Iterable<Constructor<?>> publicConstructors(final Class<?> clazz) {
-        return new Iterable<Constructor<?>>() {
+    public static <T> Iterable<Constructor<T>> publicConstructors(final Class<T> clazz) {
+        return new Iterable<Constructor<T>>() {
             @Override
-            public Iterator<Constructor<?>> iterator() {
-                return new PublicConstructors(clazz);
+            public Iterator<Constructor<T>> iterator() {
+                return new PublicConstructors<T>(clazz);
             }
         };
     }
 
-    public static class AllConstructors extends PrefetchedIterator<Constructor<?>> {
+    public static class AllConstructors<T>
+            extends PrefetchedIterator<Constructor<T>> {
+
+        // private final Class<T> clazz;
         private Constructor<?>[] ctors;
         private int index;
 
-        public AllConstructors(Class<?> clazz) {
+        public AllConstructors(Class<T> clazz) {
+            if (clazz == null)
+                throw new NullPointerException("clazz");
+            // this.clazz = clazz;
             ctors = clazz.getDeclaredConstructors();
         }
 
         @Override
-        protected Constructor<?> fetch() {
+        protected Constructor<T> fetch() {
             for (; index < ctors.length;) {
-                Constructor<?> ctor = ctors[index++];
+                @SuppressWarnings("unchecked")
+                Constructor<T> ctor = (Constructor<T>) ctors[index++];
                 if (accept(ctor))
                     return ctor;
             }
             return end();
         }
 
-        protected boolean accept(Constructor<?> m) {
+        protected boolean accept(Constructor<T> m) {
             return true;
         }
 
     }
 
-    public static Iterable<Constructor<?>> allConstructors(final Class<?> clazz) {
-        return new Iterable<Constructor<?>>() {
+    public static <T> Iterable<Constructor<T>> allConstructors(final Class<T> clazz) {
+        return new Iterable<Constructor<T>>() {
             @Override
-            public Iterator<Constructor<?>> iterator() {
-                return new AllConstructors(clazz);
+            public Iterator<Constructor<T>> iterator() {
+                return new AllConstructors<T>(clazz);
             }
         };
     }
 
-    public static Iterable<Constructor<?>> constructors(final Class<?> clazz, boolean all) {
+    public static <T> Iterable<Constructor<T>> constructors(final Class<T> clazz, boolean all) {
         return all ? allConstructors(clazz) : publicConstructors(clazz);
     }
 
-    public static class PublicFields extends PrefetchedIterator<Field> {
+    public static class PublicFields
+            extends PrefetchedIterator<Field> {
 
         private final Field[] fields;
         private int index;
@@ -280,7 +294,8 @@ public class Members {
         };
     }
 
-    public static class AllFields extends PrefetchedIterator<Field> {
+    public static class AllFields
+            extends PrefetchedIterator<Field> {
         private Class<?> clazz;
         private Field[] fields;
         private int index;

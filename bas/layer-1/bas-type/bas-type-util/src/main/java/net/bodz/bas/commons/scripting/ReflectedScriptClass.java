@@ -10,24 +10,30 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.TreeSet;
 
+import net.bodz.bas.collection.comparator.TypeVectorComparator;
 import net.bodz.bas.exceptions.ReadOnlyException;
+import net.bodz.bas.type.util.TypeArray;
 
-class ReflectedScriptClass<T> extends _ScriptClass<T> {
+class ReflectedScriptClass<T>
+        extends _ScriptClass<T> {
 
     private boolean forceAccess;
 
-    public ReflectedScriptClass(Class<T> origClass) throws ScriptException {
+    public ReflectedScriptClass(Class<T> origClass)
+            throws ScriptException {
         this(origClass, false);
     }
 
-    public ReflectedScriptClass(Class<T> origClass, boolean forceAccess) throws ScriptException {
+    public ReflectedScriptClass(Class<T> origClass, boolean forceAccess)
+            throws ScriptException {
         super(origClass, _get(origClass.getSuperclass(), forceAccess));
         this.forceAccess = forceAccess;
 
         load();
     }
 
-    protected void load() throws ScriptException {
+    protected void load()
+            throws ScriptException {
         BeanInfo beanInfo;
         try {
             beanInfo = Introspector.getBeanInfo(origClass);
@@ -60,7 +66,8 @@ class ReflectedScriptClass<T> extends _ScriptClass<T> {
                 }
 
                 @Override
-                public Object get(Object object) throws ScriptException {
+                public Object get(Object object)
+                        throws ScriptException {
                     boolean orig = field.isAccessible();
                     try {
                         if (forceAccess && !orig)
@@ -75,7 +82,8 @@ class ReflectedScriptClass<T> extends _ScriptClass<T> {
                 }
 
                 @Override
-                public void set(Object object, Object value) throws ScriptException {
+                public void set(Object object, Object value)
+                        throws ScriptException {
                     boolean orig = field.isAccessible();
                     try {
                         if (forceAccess && !orig)
@@ -110,7 +118,8 @@ class ReflectedScriptClass<T> extends _ScriptClass<T> {
                 }
 
                 @Override
-                public Object get(Object object) throws ScriptException {
+                public Object get(Object object)
+                        throws ScriptException {
                     if (read == null)
                         throw new UnsupportedOperationException();
                     try {
@@ -123,7 +132,8 @@ class ReflectedScriptClass<T> extends _ScriptClass<T> {
                 }
 
                 @Override
-                public void set(Object object, Object value) throws ScriptException {
+                public void set(Object object, Object value)
+                        throws ScriptException {
                     if (write == null)
                         throw new ReadOnlyException();
                     try {
@@ -150,21 +160,21 @@ class ReflectedScriptClass<T> extends _ScriptClass<T> {
     }
 
     protected void importMethods(Method... methods) {
-        final TreeSet<Object> sorted = new TreeSet<Object>(Comparators.METHOD);
+        final TreeSet<Method> sorted = new TreeSet<Method>(TypeVectorComparator.getMethodComparator());
         for (Method method : methods)
             sorted.add(method);
         importMethods(sorted);
     }
 
     protected void importMethods(MethodDescriptor... methods) {
-        final TreeSet<Object> sorted = new TreeSet<Object>(Comparators.METHOD);
+        final TreeSet<Method> sorted = new TreeSet<Method>(TypeVectorComparator.getMethodComparator());
         for (MethodDescriptor method : methods) {
             sorted.add(method.getMethod());
         }
         importMethods(sorted);
     }
 
-    protected void importMethods(final TreeSet<Object> sorted) {
+    protected void importMethods(final TreeSet<Method> sorted) {
         String lastName = null;
         for (Object o : sorted) {
             final Method method = (Method) o;
@@ -186,12 +196,12 @@ class ReflectedScriptClass<T> extends _ScriptClass<T> {
                 }
 
                 @Override
-                public Object invoke(Object object, Object... parameters) throws IllegalArgumentException,
-                        ScriptException {
-                    Class<?>[] ptypes = Types.getTypes(parameters);
-                    MethodSignature sig = new MethodSignature(name, ptypes);
+                public Object invoke(Object object, Object... parameters)
+                        throws IllegalArgumentException, ScriptException {
+                    Class<?>[] ptypes = TypeArray.getClasses(parameters);
+                    MethodKey sig = new MethodKey(name, ptypes);
                     Method m = (Method) sorted.floor(sig);
-                    for (; m != null; m = (Method) sorted.higher(m)) {
+                    for (; m != null; m = sorted.higher(m)) {
                         int cmp = m.getName().compareTo(name);
                         if (cmp < 0)
                             continue;
@@ -226,7 +236,8 @@ class ReflectedScriptClass<T> extends _ScriptClass<T> {
     }
 
     @SuppressWarnings("unchecked")
-    private static <R> ReflectedScriptClass<R> _get(Class<R> clazz, boolean forceAccess) throws ScriptException {
+    private static <R> ReflectedScriptClass<R> _get(Class<R> clazz, boolean forceAccess)
+            throws ScriptException {
         if (clazz == null)
             return null;
         return (ReflectedScriptClass<R>) Scripts.convertClass(clazz, forceAccess);

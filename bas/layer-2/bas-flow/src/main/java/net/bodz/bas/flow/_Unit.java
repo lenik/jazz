@@ -7,11 +7,11 @@ import java.util.Set;
 import net.bodz.bas.annotation.util.Annotations;
 import net.bodz.bas.annotations.MetaClass;
 import net.bodz.bas.collection.util.ClassLocal;
-import net.bodz.bas.commons.util.Types;
 import net.bodz.bas.flow.util.Naming;
 import net.bodz.bas.io.out.CharOut;
 import net.bodz.bas.io.out.CharOuts.BCharOut;
 import net.bodz.bas.text.util.Strings;
+import net.bodz.bas.type.util.Types;
 
 public abstract class _Unit implements Unit {
 

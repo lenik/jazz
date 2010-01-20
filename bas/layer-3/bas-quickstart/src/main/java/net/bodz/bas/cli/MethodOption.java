@@ -7,8 +7,8 @@ import javax.script.ScriptException;
 
 import net.bodz.bas.cli.a.ArgsParseBy;
 import net.bodz.bas.cli.a.OptionGroup;
-import net.bodz.bas.commons.util.Types;
 import net.bodz.bas.exceptions.CreateException;
+import net.bodz.bas.type.util.Types;
 
 public class MethodOption extends _Option<CallInfo> implements ScriptMethod<Object> {
 
