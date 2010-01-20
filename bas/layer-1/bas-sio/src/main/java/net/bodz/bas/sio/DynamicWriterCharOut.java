@@ -3,60 +3,56 @@ package net.bodz.bas.sio;
 import java.io.IOException;
 import java.io.Writer;
 
-public class WriterCharOut
+/**
+ * @see WriterCharOut
+ */
+public abstract class DynamicWriterCharOut
         extends AbstractCharOut {
 
-    private final Writer writer;
-
     /**
-     * @throws NullPointerException
-     *             If <code>writer</code> is <code>null</code>.
+     * @return non-<code>null</code> {@link Writer} instance.
      */
-    public WriterCharOut(Writer writer) {
-        if (writer == null)
-            throw new NullPointerException("writer");
-        this.writer = writer;
-    }
+    public abstract Writer getWriter();
 
     @Override
     public void write(int c)
             throws IOException {
-        writer.write(c);
+        getWriter().write(c);
     }
 
     @Override
     public void write(char[] chars)
             throws IOException {
-        writer.write(chars);
+        getWriter().write(chars);
     }
 
     @Override
     public void write(char[] chars, int off, int len)
             throws IOException {
-        writer.write(chars, off, len);
+        getWriter().write(chars, off, len);
     }
 
     @Override
     public void write(String s)
             throws IOException {
-        writer.write(s);
+        getWriter().write(s);
     }
 
     @Override
     public void write(String string, int off, int len)
             throws IOException {
-        writer.write(string, off, len);
+        getWriter().write(string, off, len);
     }
 
     @Override
     public void flush(boolean strict)
             throws IOException {
-        writer.flush();
+        getWriter().flush();
     }
 
     @Override
     public Writer toWriter() {
-        return writer;
+        return getWriter();
     }
 
 }

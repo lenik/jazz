@@ -3,42 +3,44 @@ package net.bodz.bas.sio;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class OutputStreamByteOut
+/**
+ * @see OutputStreamByteOut
+ */
+public abstract class DynamicOutputStreamByteOut
         extends AbstractByteOut {
 
-    protected final OutputStream out;
-
-    public OutputStreamByteOut(OutputStream stream) {
-        this.out = stream;
-    }
+    /**
+     * @return non-<code>null</code> {@link OutputStream} instance.
+     */
+    public abstract OutputStream getOutputStream();
 
     @Override
     public void write(int b)
             throws IOException {
-        out.write(b);
+        getOutputStream().write(b);
     }
 
     @Override
     public void write(byte[] buf)
             throws IOException {
-        out.write(buf);
+        getOutputStream().write(buf);
     }
 
     @Override
     public void write(byte[] buf, int off, int len)
             throws IOException {
-        out.write(buf, off, len);
+        getOutputStream().write(buf, off, len);
     }
 
     @Override
     public void flush(boolean strict)
             throws IOException {
-        out.flush();
+        getOutputStream().flush();
     }
 
     @Override
     public OutputStream toOutputStream() {
-        return out;
+        return getOutputStream();
     }
 
 }

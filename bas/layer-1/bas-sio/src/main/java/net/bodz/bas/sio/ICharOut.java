@@ -24,21 +24,21 @@ public interface ICharOut
      * @throws NullPointerException
      *             If <code>s</code> is <code>null</code>.
      */
-    public void write(String s)
+    void write(String s)
             throws IOException;
 
     /**
      * @throws NullPointerException
      *             If <code>s</code> is <code>null</code>.
      */
-    public void write(String s, int off, int len)
+    void write(String s, int off, int len)
             throws IOException;
 
     /**
      * @throws NullPointerException
      *             If <code>chars</code> is <code>null</code>.
      */
-    public void write(CharSequence chars, int off, int len)
+    void write(CharSequence chars, int off, int len)
             throws IOException;
 
     /**
