@@ -1,6 +1,6 @@
 package net.bodz.bas.text.encodings;
 
-import static net.bodz.bas.text.encodings.Encodings.BASE64;
+import static net.bodz.bas.text.codec.Encodings.BASE64;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;

@@ -1,15 +1,18 @@
-package net.bodz.bas.text.encodings;
+package net.bodz.bas.text.codec.builtin;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.io.Writer;
+import java.nio.charset.Charset;
 
-import net.bodz.bas.exceptions.ParseException;
+import net.bodz.bas.exceptions.EncodeException;
+import net.bodz.bas.sio.IByteIn;
+import net.bodz.bas.sio.IByteOut;
+import net.bodz.bas.sio.ICharIn;
+import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.text.charsets.Lookups;
+import net.bodz.bas.text.codec.AbstractByteCodec;
 
-public class HexEncoding extends AbstractEncoding {
+public class HexCodec
+        extends AbstractByteCodec {
 
     private final String IFS;
     private final char simpleIFS;
@@ -19,15 +22,15 @@ public class HexEncoding extends AbstractEncoding {
     private final int width;
     private final String NL;
 
-    public HexEncoding() {
-        this(" "); 
+    public HexCodec() {
+        this(" ");
     }
 
-    public HexEncoding(String IFS) {
+    public HexCodec(String IFS) {
         this(IFS, 0, null);
     }
 
-    public HexEncoding(String IFS, int width, String NL) {
+    public HexCodec(String IFS, int width, String NL) {
         super(1, 2 + IFS.length());
         this.IFS = IFS;
         this.simpleIFS = IFS.length() == 0 ? 0 : IFS.charAt(0);
@@ -35,9 +38,16 @@ public class HexEncoding extends AbstractEncoding {
         this.NL = NL;
     }
 
-    /** bin2hex */
+    static final Charset hexCharset = Charset.forName("ASCII");
+
     @Override
-    public void encode(InputStream in, Writer out) throws IOException {
+    public Charset getPreferredCharsetForEncodedContents() {
+        return hexCharset;
+    }
+
+    @Override
+    public void encode(IByteIn in, ICharOut out)
+            throws IOException, EncodeException {
         char[] buf = new char[2];
         boolean first = true;
         int col = 0;
@@ -59,9 +69,9 @@ public class HexEncoding extends AbstractEncoding {
         }
     }
 
-    /** hex2bin */
     @Override
-    public void decode(Reader in, OutputStream out) throws IOException, ParseException {
+    public void decode(ICharIn in, IByteOut out)
+            throws IOException, EncodeException {
         int byt = 0;
         int digits = 0;
         for (int c = in.read(); c != -1; c = in.read()) {
@@ -86,6 +96,15 @@ public class HexEncoding extends AbstractEncoding {
         }
         if (digits != 0)
             out.write(byt);
+    }
+
+    static final HexCodec instance = new HexCodec();
+
+    /**
+     * The default hex codec using ' ' (space) as byte separator.
+     */
+    public static HexCodec getInstance() {
+        return instance;
     }
 
 }
