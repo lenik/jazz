@@ -2,7 +2,7 @@ package net.bodz.bas.flow;
 
 import java.io.IOException;
 
-import net.bodz.bas.annotation.util.Annotations;
+import net.bodz.bas.annotation.util.InheritableAnnotation;
 import net.bodz.bas.annotations.MetaClass;
 import net.bodz.bas.collection.util.ClassLocal;
 import net.bodz.bas.exceptions.OutOfDomainException;
@@ -27,7 +27,7 @@ public abstract class _InPort extends _Port implements InPort, ReceiverEx {
         Class<? extends _Port> clazz = getClass();
         PortMeta meta = metas.get(clazz);
         if (meta == null) {
-            Class<?> metaClass = (Class<?>) Annotations.getValue(clazz, MetaClass.class);
+            Class<?> metaClass = (Class<?>) InheritableAnnotation.getValue(clazz, MetaClass.class);
             if (metaClass != null)
                 meta = (PortMeta) Types.newInstance(metaClass);
             else

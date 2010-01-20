@@ -6,7 +6,7 @@
         <artifactId>bas-text</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>bas-encodings</artifactId>
+    <artifactId>bas-text-codec</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <dependencies >
     	<dependency>

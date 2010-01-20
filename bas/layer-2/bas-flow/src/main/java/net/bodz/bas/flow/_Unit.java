@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.bodz.bas.annotation.util.Annotations;
+import net.bodz.bas.annotation.util.InheritableAnnotation;
 import net.bodz.bas.annotations.MetaClass;
 import net.bodz.bas.collection.util.ClassLocal;
 import net.bodz.bas.flow.util.Naming;
@@ -32,7 +32,7 @@ public abstract class _Unit implements Unit {
         Class<? extends _Unit> clazz = getClass();
         UnitMeta meta = metas.get(clazz);
         if (meta == null) {
-            Class<?> metaClass = (Class<?>) Annotations.getValue(clazz, MetaClass.class);
+            Class<?> metaClass = (Class<?>) InheritableAnnotation.getValue(clazz, MetaClass.class);
             if (metaClass != null)
                 meta = (UnitMeta) Types.newInstance(metaClass);
             else

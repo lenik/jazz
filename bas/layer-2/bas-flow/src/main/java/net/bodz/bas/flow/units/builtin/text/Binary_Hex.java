@@ -1,6 +1,6 @@
 package net.bodz.bas.flow.units.builtin.text;
 
-import static net.bodz.bas.text.encodings.Encodings.HEX;
+import static net.bodz.bas.text.codec.Encodings.HEX;
 
 import java.io.IOException;
 import java.util.Arrays;

@@ -1,6 +1,6 @@
 package net.bodz.bas.flow;
 
-import net.bodz.bas.annotation.util.Annotations;
+import net.bodz.bas.annotation.util.InheritableAnnotation;
 import net.bodz.bas.annotations.MetaClass;
 import net.bodz.bas.collection.util.ClassLocal;
 import net.bodz.bas.type.util.Types;
@@ -24,7 +24,7 @@ public abstract class _OutPort extends _Port implements OutPort {
         Class<? extends _Port> clazz = getClass();
         PortMeta meta = metas.get(clazz);
         if (meta == null) {
-            Class<?> metaClass = (Class<?>) Annotations.getValue(clazz, MetaClass.class);
+            Class<?> metaClass = (Class<?>) InheritableAnnotation.getValue(clazz, MetaClass.class);
             if (metaClass != null)
                 meta = (PortMeta) Types.newInstance(metaClass);
             else

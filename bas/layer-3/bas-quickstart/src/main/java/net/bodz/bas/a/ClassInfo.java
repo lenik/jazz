@@ -4,7 +4,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.annotation.util.Annotations;
+import net.bodz.bas.annotation.util.InheritableAnnotation;
 import net.bodz.bas.c1.annotations.Author;
 import net.bodz.bas.c1.annotations.Ns;
 import net.bodz.bas.c1.annotations.Version;
@@ -46,7 +46,7 @@ public class ClassInfo {
         name = A_bas.getDisplayName(clazz);
         doc = A_bas.getDoc(clazz);
 
-        String[] iconDefs = Annotations._getValue(clazz, Icon.class);
+        String[] iconDefs = InheritableAnnotation._getValue(clazz, Icon.class);
         if (iconDefs != null)
             for (String iconDef : iconDefs) {
                 int sep = iconDef.indexOf('|');
