@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.bodz.bas.closure.IExecutableX;
+
 /**
  * may throw exceptions in future:
  * <ul>
@@ -117,7 +119,8 @@ public interface UserInterface {
      */
     int[] choices(String title, Object detail, List<?> candidates, int... initial);
 
-    int tryBlock(Executable<? extends Exception> runnable);
+    <X extends Exception> int tryBlock(IExecutableX<X> runnable)
+            throws X;
 
     /**
      * @param maxRetry
@@ -128,7 +131,8 @@ public interface UserInterface {
      * @see TryBlock#IGNORED
      * @see TryBlock#CANCELED
      */
-    int tryBlock(Executable<? extends Exception> runnable, int maxRetry);
+    <X extends Exception> int tryBlock(IExecutableX<X> runnable, int maxRetry)
+            throws X;
 
     // void showProgress(Runnable runnable);
 

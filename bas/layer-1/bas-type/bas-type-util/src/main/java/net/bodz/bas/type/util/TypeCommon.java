@@ -7,6 +7,9 @@ import java.util.TreeSet;
 
 import net.bodz.bas.collection.comparator.TypeComparator;
 
+/**
+ * @test {@link TypeCommonTest}
+ */
 public class TypeCommon {
 
     public static Class<?> getCommonSuperclass(Class<?> a, Class<?> b) {

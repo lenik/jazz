@@ -5,14 +5,17 @@ import static org.junit.Assert.assertEquals;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
+import net.bodz.bas.text.util.StringArray;
+
 import org.junit.Test;
 
 public class Fix_BatBBTest {
 
     @Test
-    public void testDoFileEditInputStreamOutputStream() throws Throwable {
+    public void testDoFileEditInputStreamOutputStream()
+            throws Throwable {
         Fix_BatBB app = new Fix_BatBB();
-        Fix_BatBB.remPrefix = "::F".getBytes(); 
+        Fix_BatBB.remPrefix = "::F".getBytes();
         app.blockSize = 10;
         app.fillChar = '*';
 
@@ -28,25 +31,25 @@ public class Fix_BatBBTest {
                 "  :label8/" + // 
                 "   :label9/" + // 
                 "   :label10/" + // 
-                "").replace('/', '\n'); 
+                "").replace('/', '\n');
         System.out.println(src);
-        System.out.println("------------------------------"); 
+        System.out.println("------------------------------");
         ByteArrayInputStream in = new ByteArrayInputStream(src.getBytes());
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         app.doEditByIO(in, out);
         String dst = new String(out.toByteArray());
         dst = dst.replace(' ', '_');
         System.out.println(dst);
-        System.out.println("------------------------------"); 
-        System.out.println("Block: "); 
+        System.out.println("------------------------------");
+        System.out.println("Block: ");
         dst = dst.replace('\n', '/');
-        String[] oblks = Strings.splitBySize(dst, app.blockSize);
+        String[] oblks = StringArray.splitBySize(dst, app.blockSize);
         for (String oblk : oblks) {
             System.out.println(oblk);
         }
 
         assertEquals(
-                "123456789/:l/:la/::F/:lab/::F/:labe/::F/:label/::F/:label6/::F/_:label7/::F****/__:label8/::F******/___:label9/::F*****/___:label10/", 
+                "123456789/:l/:la/::F/:lab/::F/:labe/::F/:label/::F/:label6/::F/_:label7/::F****/__:label8/::F******/___:label9/::F*****/___:label10/",
                 dst);
     }
 

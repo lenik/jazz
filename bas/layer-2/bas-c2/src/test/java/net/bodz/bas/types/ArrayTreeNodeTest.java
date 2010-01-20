@@ -3,6 +3,7 @@ package net.bodz.bas.types;
 import net.bodz.bas.collection.tree.ArrayTreeNode;
 import net.bodz.bas.collection.tree.TreeCallback;
 import net.bodz.bas.collection.tree.TreeNodes;
+import net.bodz.bas.text.util.Strings;
 
 import org.junit.Test;
 
@@ -24,11 +25,12 @@ public class ArrayTreeNodeTest {
     }
 
     @Test
-    public void test1() throws Exception {
+    public void test1()
+            throws Exception {
         TreeNodes.traverse(helloTree, new TreeCallback<ArrayTreeNode>() {
             @Override
             public int each(ArrayTreeNode node, int level) {
-                String indent = Strings.repeat(level, "    "); 
+                String indent = Strings.repeat(level, "    ");
                 System.out.println(indent + node);
                 return OK;
             }

@@ -8,12 +8,24 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.charset.Charset;
 
+import net.bodz.bas.closure.IExecutableX;
 import net.bodz.bas.exceptions.OutOfDomainException;
-import net.bodz.bas.loader.annotation.BootInfo;
-import net.bodz.bas.loader.annotation.BootProc;
+import net.bodz.bas.jvm.exit.CatchExit;
+import net.bodz.bas.jvm.stack.Caller;
+import net.bodz.bas.loader.Classpath;
+import net.bodz.bas.loader.DefaultBooter;
+import net.bodz.bas.loader.LoadUtil;
+import net.bodz.bas.loader.UCL;
+import net.bodz.bas.loader.boot.BootInfo;
+import net.bodz.bas.loader.boot.BootProc;
+import net.bodz.bas.sio.Stdio;
+import net.bodz.bas.text.charsets.BasCharsetProvider;
+
+import org.apache.commons.lang.ArrayUtils;
 
 @BootInfo(syslibs = "bodz_bas")
-public abstract class JavaLauncher implements Launcher {
+public abstract class JavaLauncher
+        implements Launcher {
 
     private Class<?> mainClass;
 
@@ -39,7 +51,7 @@ public abstract class JavaLauncher implements Launcher {
                 Classpath.addURL(urls);
             }
             if (LOAD_DUMP)
-                UCL.dump(sysLoader, CharOuts.stderr);
+                UCL.dump(sysLoader, Stdio.cerr);
 
             String mainClassName = getMainClassName();
             mainClass = DefaultBooter.loadFix(sysLoader, mainClassName);
@@ -54,14 +66,16 @@ public abstract class JavaLauncher implements Launcher {
         return mainClass;
     }
 
-    protected Method getMainMethod() throws SecurityException, NoSuchMethodException {
+    protected Method getMainMethod()
+            throws SecurityException, NoSuchMethodException {
         Class<?> clazz = getMainClass();
-        Method main = clazz.getMethod("main", String[].class); 
+        Method main = clazz.getMethod("main", String[].class);
         return main;
     }
 
     @Override
-    public void launch(final String[] args) throws Exception {
+    public void launch(final String[] args)
+            throws Exception {
         final Method main = getMainMethod();
 
         InputStream origIn = null;
@@ -80,9 +94,10 @@ public abstract class JavaLauncher implements Launcher {
                 origErr = System.err;
                 System.setErr(redirectErr);
             }
-            Executable<Exception> doMain = new Executable<Exception>() {
+            IExecutableX<Exception> doMain = new IExecutableX<Exception>() {
                 @Override
-                public void execute() throws Exception {
+                public void execute()
+                        throws Exception {
                     try {
                         // (SecurityControl isnot-a Control)
                         Control.invoke(main, null, (Object) args);
@@ -154,7 +169,7 @@ public abstract class JavaLauncher implements Launcher {
             outbuf = errbuf = new ByteArrayOutputStream();
             break;
         default:
-            throw new OutOfDomainException("mode", mode); 
+            throw new OutOfDomainException("mode", mode);
         }
         if (outbuf != null)
             setRedirectOut(outbuf);
@@ -180,11 +195,12 @@ public abstract class JavaLauncher implements Launcher {
         return new String(getCapturedError(), _charset);
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args)
+            throws Exception {
         if (args.length < 1)
-            throw new IllegalArgumentException("classname expected"); 
+            throw new IllegalArgumentException("classname expected");
         final String className = args[0];
-        final String[] _args = Strings.shift(args);
+        final String[] _args = (String[]) ArrayUtils.remove(args, 0);
         new JavaLauncher() {
             @Override
             protected String getMainClassName() {

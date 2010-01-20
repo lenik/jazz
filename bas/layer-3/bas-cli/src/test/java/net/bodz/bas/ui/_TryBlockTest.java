@@ -6,7 +6,7 @@ public class _TryBlockTest {
 
     @Test
     public void testMaxRetry() throws Exception {
-        new _TryBlock(ConsoleUI.stderr, 3) {
+        new AbstractTryBlock(ConsoleUI.stderr, 3) {
 
             @Override
             protected void body() throws Exception {

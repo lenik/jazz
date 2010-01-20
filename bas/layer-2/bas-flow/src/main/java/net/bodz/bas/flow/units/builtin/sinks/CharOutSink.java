@@ -3,27 +3,30 @@ package net.bodz.bas.flow.units.builtin.sinks;
 import java.io.Flushable;
 import java.io.IOException;
 
-import net.bodz.bas.io.out.CharOut;
+import net.bodz.bas.sio.ICharOut;
 
-public class CharOutSink extends TextProcessSink {
+public class CharOutSink
+        extends TextProcessSink {
 
-    private CharOut out;
+    private ICharOut out;
     private Flushable flushable;
 
-    public CharOutSink(CharOut out, boolean autoFlush) throws IOException {
+    public CharOutSink(ICharOut out, boolean autoFlush)
+            throws IOException {
         this.out = out;
         setAutoFlush(autoFlush);
     }
 
-    public CharOutSink(CharOut out) throws IOException {
+    public CharOutSink(ICharOut out)
+            throws IOException {
         this(out, false);
     }
 
-    public CharOut getCharOut() {
+    public ICharOut getCharOut() {
         return out;
     }
 
-    public void setCharOut(CharOut out) {
+    public void setCharOut(ICharOut out) {
         this.out = out;
     }
 
@@ -37,17 +40,20 @@ public class CharOutSink extends TextProcessSink {
     }
 
     @Override
-    public void reset() throws IOException {
+    public void reset()
+            throws IOException {
     }
 
     @Override
-    public void flush() throws IOException {
+    public void flush()
+            throws IOException {
         if (out instanceof Flushable)
             ((Flushable) out).flush();
     }
 
     @Override
-    public void recv(char[] chars, int start, int end) throws IOException {
+    public void recv(char[] chars, int start, int end)
+            throws IOException {
         int length = end - start;
         out.write(chars, start, length);
         if (flushable != null)

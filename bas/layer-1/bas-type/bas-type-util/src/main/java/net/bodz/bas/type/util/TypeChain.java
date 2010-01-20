@@ -1,27 +1,28 @@
 package net.bodz.bas.type.util;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import net.bodz.bas.sio.ILineCharOut;
 import net.bodz.bas.sio.indent.IIndention;
 
+import org.apache.commons.lang.ArrayUtils;
+
 public class TypeChain {
 
-    public static Class<?>[] list(Class<?> clazz) {
-        return list(clazz, false);
-    }
-
-    public static Class<?>[] list(Class<?> clazz, boolean rootFirst) {
+    public static Class<?>[] listSuperLast(Class<?> clazz) {
         List<Class<?>> list = new ArrayList<Class<?>>();
         while (clazz != null) {
             list.add(clazz);
             clazz = clazz.getSuperclass();
         }
-        if (rootFirst)
-            Collections.reverse(list);
-        return list.toArray(new Class<?>[0]);
+        return list.toArray(ArrayUtils.EMPTY_CLASS_ARRAY);
+    }
+
+    public static Class<?>[] listSuperFirst(Class<?> clazz) {
+        Class<?>[] list = listSuperLast(clazz);
+        ArrayUtils.reverse(list);
+        return list;
     }
 
     public static <T extends ILineCharOut & IIndention> void dumpTypeTree(Class<?> type, T out) {

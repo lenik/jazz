@@ -2,7 +2,7 @@ package net.bodz.bas.text.diff;
 
 import java.util.List;
 
-import net.bodz.bas.sio.CharOut;
+import net.bodz.bas.sio.ILineCharOut;
 import net.bodz.bas.text.diff.gnudiff.DiffPrint;
 
 public class DiffFormats {
@@ -28,36 +28,36 @@ public class DiffFormats {
 
             @Override
             protected void edit0(char op, int index) {
-                out.printf(" %6d%c%s\n", index, op, al.get(index)); 
+                out.printf(" %6d%c%s\n", index, op, al.get(index));
             }
 
             @Override
             protected void edit1(char op, int index) {
-                out.printf("*%6d%c%s\n", index, op, bl.get(index)); 
+                out.printf("*%6d%c%s\n", index, op, bl.get(index));
             }
         };
 
         ED = new DiffFormat() {
             @Override
-            public void format(List<?> a, List<?> b, List<DiffInfo> diff, CharOut out) {
+            public void format(List<?> a, List<?> b, List<DiffInfo> diff, ILineCharOut out) {
                 new DiffPrint.EdPrint(a, b, out).print_script(diff);
             }
         };
         Context = new DiffFormat() {
             @Override
-            public void format(List<?> a, List<?> b, List<DiffInfo> diff, CharOut out) {
+            public void format(List<?> a, List<?> b, List<DiffInfo> diff, ILineCharOut out) {
                 new DiffPrint.ContextPrint(a, b, out).print_script(diff);
             }
         };
         Normal = new DiffFormat() {
             @Override
-            public void format(List<?> a, List<?> b, List<DiffInfo> diff, CharOut out) {
+            public void format(List<?> a, List<?> b, List<DiffInfo> diff, ILineCharOut out) {
                 new DiffPrint.NormalPrint(a, b, out).print_script(diff);
             }
         };
         Unified = new DiffFormat() {
             @Override
-            public void format(List<?> a, List<?> b, List<DiffInfo> diff, CharOut out) {
+            public void format(List<?> a, List<?> b, List<DiffInfo> diff, ILineCharOut out) {
                 new DiffPrint.UnifiedPrint(a, b, out).print_script(diff);
             }
         };

@@ -1,6 +1,8 @@
 package net.bodz.bas.ant;
 
 import net.bodz.bas.exceptions.CreateException;
+import net.bodz.bas.exceptions.ParseException;
+import net.bodz.bas.type.traits.IParser;
 
 /**
  * Utility class to help implement a custom tag in ant-xml.
@@ -30,13 +32,14 @@ public class Parameter {
 
     public void setType(Class<?> type) {
         if (type == null)
-            throw new NullPointerException("type"); 
+            throw new NullPointerException("type");
         this.type = type;
     }
 
-    public void setTypeName(String typeName) throws ClassNotFoundException {
+    public void setTypeName(String typeName)
+            throws ClassNotFoundException {
         if (typeName == null)
-            throw new NullPointerException("typeName"); 
+            throw new NullPointerException("typeName");
         this.type = Class.forName(typeName);
     }
 
@@ -62,11 +65,12 @@ public class Parameter {
     /**
      * @return <code>null</code> if text is <code>null</code>.
      */
-    public Object parseValue() throws ParseException {
+    public Object parseValue()
+            throws ParseException {
         if (text == null)
             return null;
         try {
-            TypeParser parser = TypeParsers.guess(type);
+            IParser<?> parser = TypeParsers.guess(type);
             return parser.parse(text);
         } catch (CreateException e) {
             throw new ParseException(e);

@@ -8,13 +8,13 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.bodz.bas.exceptions.CreateException;
-import net.bodz.bas.io.out.CharOut;
-import net.bodz.bas.io.out.CharOuts.BCharOut;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.loader.DefaultBooter;
 import net.bodz.bas.loader.LoadConfig;
 import net.bodz.bas.loader.LoadException;
 import net.bodz.bas.loader.LoadUtil;
+import net.bodz.bas.sio.BCharOut;
+import net.bodz.bas.sio.ILineCharOut;
 import net.bodz.bas.text.util.StringArray;
 
 public class BootProc {
@@ -237,7 +237,7 @@ public class BootProc {
         return buf.toArray(new String[0]);
     }
 
-    void dump(CharOut out) {
+    void dump(ILineCharOut out) {
         out.println("BootProc: " + description);
         if (syslibs.length != 0)
             out.println("    syslibs=" + StringArray.join(", ", syslibs));

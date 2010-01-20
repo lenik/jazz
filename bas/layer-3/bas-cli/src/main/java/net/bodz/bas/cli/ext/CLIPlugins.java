@@ -2,17 +2,20 @@ package net.bodz.bas.cli.ext;
 
 import net.bodz.bas.cli.CLIException;
 import net.bodz.bas.exceptions.OutOfDomainException;
+import net.bodz.bas.l10n.en.English;
+import net.bodz.bas.sio.ILineCharOut;
+import net.bodz.bas.text.util.Strings;
 import net.bodz.bas.util.Plugin;
 import net.bodz.bas.util.PluginCategory;
 import net.bodz.bas.util.Plugins;
 
-public class CLIPlugins extends Plugins {
+public class CLIPlugins
+        extends Plugins {
 
     @Override
     public boolean registerCategory(PluginCategory category) {
         if (!(category instanceof CLIPluginCategory))
-            throw new OutOfDomainException("category class", category 
-                    .getClass(), CLIPluginCategory.class);
+            throw new OutOfDomainException("category class", category.getClass(), CLIPluginCategory.class);
         return super.registerCategory(category);
     }
 
@@ -20,13 +23,13 @@ public class CLIPlugins extends Plugins {
     @Override
     public boolean registerCategory(String name, Class<? extends Plugin> baseType) {
         if (!CLIPlugin.class.isAssignableFrom(baseType))
-            throw new OutOfDomainException("baseType", baseType, 
-                    CLIPlugin.class);
+            throw new OutOfDomainException("baseType", baseType, CLIPlugin.class);
         CLIPluginCategory category = new CLIPluginCategory(name, (Class<? extends CLIPlugin>) baseType);
         return registerCategory(category);
     }
 
-    public void help(CharOut out, String prefix) throws CLIException {
+    public void help(ILineCharOut out, String prefix)
+            throws CLIException {
         int maxlen = 0;
         // List<String> typeNames = new ArrayList<String>();
         for (PluginCategory pluginType : categories.values()) {
@@ -47,13 +50,13 @@ public class CLIPlugins extends Plugins {
             out.println();
             out.print(prefix);
             out.print(name);
-            out.print(": "); 
+            out.print(": ");
             if (desc != null)
                 out.print(desc);
             out.println();
 
             CLIPluginCategory cliCategory = (CLIPluginCategory) category;
-            cliCategory.help(out, prefix + "    "); 
+            cliCategory.help(out, prefix + "    ");
         }
     }
 

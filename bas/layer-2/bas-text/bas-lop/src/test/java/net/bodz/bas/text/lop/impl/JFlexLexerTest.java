@@ -3,8 +3,8 @@ package net.bodz.bas.text.lop.impl;
 import static org.junit.Assert.assertEquals;
 
 import java.io.StringReader;
-import java.nio.file.Files;
 
+import net.bodz.bas.fs.legacy.Files;
 import net.bodz.bas.text.lop.Token;
 import net.bodz.bas.text.lop.util.XYTellable;
 
@@ -54,7 +54,8 @@ public class JFlexLexerTest {
     }
 
     @Test
-    public void test1() throws Exception {
+    public void test1()
+            throws Exception {
         String text = Files.readAll(Files.classData(getClass(), "1"));
         TD[] expected = {
         //

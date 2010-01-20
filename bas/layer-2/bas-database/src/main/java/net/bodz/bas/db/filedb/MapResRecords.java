@@ -4,12 +4,16 @@ import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class MapResRecords<K, V> extends _ResRecords<Map<K, V>> {
+import net.bodz.bas.exceptions.ParseException;
+import net.bodz.bas.type.traits.IParser;
+
+public abstract class MapResRecords<K, V>
+        extends _ResRecords<Map<K, V>> {
 
     protected Class<? extends K> keyClass;
     protected Class<? extends V> valueClass;
-    protected TypeParser keyParser;
-    protected TypeParser valueParser;
+    protected IParser<K> keyParser;
+    protected IParser<V> valueParser;
 
     public MapResRecords(ResLink resLink) {
         this(resLink, null);
@@ -25,16 +29,18 @@ public abstract class MapResRecords<K, V> extends _ResRecords<Map<K, V>> {
 
     protected abstract Class<? extends V> getValueClass();
 
-    protected K parseKey(String key) throws ParseException {
+    protected K parseKey(String key)
+            throws ParseException {
         if (keyParser == null)
-            keyParser = TypeParsers.guess(getKeyClass(), "KeyClass"); 
+            keyParser = TypeParsers.guess(getKeyClass(), "KeyClass");
         Object k = keyParser.parse(key);
         return keyClass.cast(k);
     }
 
-    protected V parseValue(String value) throws ParseException {
+    protected V parseValue(String value)
+            throws ParseException {
         if (valueParser == null)
-            valueParser = TypeParsers.guess(getValueClass(), "ValueClass"); 
+            valueParser = TypeParsers.guess(getValueClass(), "ValueClass");
         Object v = valueParser.parse(value);
         return valueClass.cast(v);
     }

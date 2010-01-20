@@ -6,10 +6,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
+
+import net.bodz.bas.text.util.StringArray;
 
 /**
  * @test {@link TraceTest}
@@ -17,13 +21,13 @@ import java.util.Map;
 public class Trace {
 
     public static boolean enabled = SystemProperties.isDevelopMode();
-    public static Object logPrefix = ""; 
+    public static Object logPrefix = "";
 
     public static void setLogDate(boolean enabled) {
         if (enabled)
-            setLogDate("yy/MM/dd HH:mm:ss.SSS"); 
+            setLogDate("yy/MM/dd HH:mm:ss.SSS");
         else
-            logPrefix = ""; 
+            logPrefix = "";
     }
 
     public static void setLogDate(String datePattern) {
@@ -32,22 +36,23 @@ public class Trace {
             @Override
             public String toString() {
                 String s = format.format(new Date());
-                return "[" + s + "] ";  
+                return "[" + s + "] ";
             }
         };
     }
 
-    static class RelationMap extends TreeTextMap<Collection<Object>> {
+    static class RelationMap
+            extends TreeMap<String, Collection<Object>> {
 
         private static final long serialVersionUID = -1723440822997163551L;
 
     }
 
-    static final TypeMap<Integer> typeNextId;
+    static final Map<Class<?>, Integer> typeNextId;
     static final IdentityHashMap<Object, Integer> allId;
 
     static {
-        typeNextId = new HashTypeMap<Integer>();
+        typeNextId = new HashMap<Class<?>, Integer>();
         allId = new IdentityHashMap<Object, Integer>();
     }
 
@@ -72,9 +77,9 @@ public class Trace {
 
     public static String getName(Object object) {
         if (object == null)
-            return "null"; 
+            return "null";
         int id = getId(object);
-        String name = object.getClass().getName() + "#" + id; 
+        String name = object.getClass().getName() + "#" + id;
         return name;
     }
 
@@ -83,7 +88,7 @@ public class Trace {
         if (object == null)
             return s;
         String name = getName(object);
-        return name + ": " + object; 
+        return name + ": " + object;
     }
 
     static boolean showString = true;
@@ -107,7 +112,7 @@ public class Trace {
 
     static List<String> getList(Object object) {
         if (object == null)
-            throw new NullPointerException("object"); 
+            throw new NullPointerException("object");
         List<String> list = allLogs.get(object);
         if (list == null) {
             list = new ArrayList<String>();
@@ -124,7 +129,7 @@ public class Trace {
             if (object == null)
                 return;
             List<String> list = getList(object);
-            String s = Strings.join("", mesg); 
+            String s = StringArray.join("", mesg);
             list.add(logPrefix + s);
         }
     }
@@ -137,7 +142,7 @@ public class Trace {
             if (object == null)
                 return;
             List<String> list = getList(object);
-            String s = Strings.join("", mesg); 
+            String s = StringArray.join("", mesg);
             if (list.isEmpty()) {
                 list.add(logPrefix + s);
             } else {
@@ -162,7 +167,7 @@ public class Trace {
 
     static RelationMap getRelationMap(Object object) {
         if (object == null)
-            throw new NullPointerException("object"); 
+            throw new NullPointerException("object");
         RelationMap relationMap = allRelations.get(object);
         if (relationMap == null) {
             relationMap = new RelationMap();
@@ -224,48 +229,49 @@ public class Trace {
         return false;
     }
 
-    static class DumpThread extends Thread {
+    static class DumpThread
+            extends Thread {
 
         PrintStream out = System.out;
 
         @Override
         public void run() {
-            out.println("Logs: "); 
+            out.println("Logs: ");
             for (Map.Entry<Object, List<String>> entry : allLogs.entrySet()) {
                 final Object object = entry.getKey();
                 final List<String> logs = entry.getValue();
                 String name = Trace.getNameOrString(object);
-                out.println("  Object: " + name); 
+                out.println("  Object: " + name);
                 for (String log : logs)
-                    out.println("    " + log); 
+                    out.println("    " + log);
             }
             out.println();
 
-            out.println("Relations: "); 
+            out.println("Relations: ");
             for (Map.Entry<Object, RelationMap> entry : allRelations.entrySet()) {
                 final Object object = entry.getKey();
                 final RelationMap relationMap = entry.getValue();
                 String name = Trace.getNameOrString(object);
-                out.println("  Object: " + name); 
+                out.println("  Object: " + name);
                 for (Map.Entry<String, Collection<Object>> relationEntry : relationMap.entrySet()) {
                     final String relation = relationEntry.getKey();
                     final Collection<Object> collection = relationEntry.getValue();
-                    out.print("      "); 
+                    out.print("      ");
                     out.print(relation);
                     int n = collection.size();
                     Iterator<Object> iter = collection.iterator();
                     if (n == 0)
-                        out.println(" -> (none)"); 
+                        out.println(" -> (none)");
                     else if (n == 1) {
                         Object dest0 = iter.next();
-                        out.print(" -> "); 
+                        out.print(" -> ");
                         out.println(Trace.getNameOrString(dest0));
                     } else {
-                        out.println(" -> "); 
+                        out.println(" -> ");
                         while (iter.hasNext()) {
                             Object dest = iter.next();
                             // out.print("     -> ");
-                            out.print("          "); 
+                            out.print("          ");
                             out.println(Trace.getNameOrString(dest));
                         }
                     }

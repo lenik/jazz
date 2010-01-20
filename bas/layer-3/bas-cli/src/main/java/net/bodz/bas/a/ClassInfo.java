@@ -1,6 +1,7 @@
 package net.bodz.bas.a;
 
 import java.net.URL;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,6 +11,7 @@ import net.bodz.bas.c1.annotations.Ns;
 import net.bodz.bas.c1.annotations.Version;
 import net.bodz.bas.c1.annotations.WebSite;
 import net.bodz.bas.collection.util.ClassLocal;
+import net.bodz.bas.text.util.StringArray;
 import net.bodz.bas.ui.a.Icon;
 
 public class ClassInfo {
@@ -37,7 +39,7 @@ public class ClassInfo {
     protected String join(String[] components) {
         if (components == null || components.length == 0)
             return null;
-        return Strings.join(", ", components); 
+        return StringArray.join(", ", components);
     }
 
     protected void load() {
@@ -51,7 +53,7 @@ public class ClassInfo {
             for (String iconDef : iconDefs) {
                 int sep = iconDef.indexOf('|');
                 if (sep == -1) {
-                    assert this.icon == null : "default icon duplicate"; 
+                    assert this.icon == null : "default icon duplicate";
                     this.icon = loadIcon(iconDef);
                 } else {
                     String usage = iconDef.substring(0, sep);
@@ -59,8 +61,7 @@ public class ClassInfo {
                     if (iconMap == null)
                         iconMap = new HashMap<String, URL>();
                     else
-                        assert !iconMap.containsKey(usage) : "duplicate icon usage: " 
-                                + usage;
+                        assert !iconMap.containsKey(usage) : "duplicate icon usage: " + usage;
                     iconMap.put(usage, loadIcon(iconDef));
                 }
             }
@@ -81,7 +82,7 @@ public class ClassInfo {
     protected URL loadIcon(String name) {
         URL url = loader.getResource(name);
         if (url == null)
-            throw new IllegalArgumentException("res isn't existed: " + name); 
+            throw new IllegalArgumentException("res isn't existed: " + name);
         return url;
     }
 
@@ -157,12 +158,12 @@ public class ClassInfo {
     public String getVersionString(boolean includeRevNumber) {
         int[] ver = getVersion();
         if (!includeRevNumber)
-            ver = Ints.copyOf(ver, ver.length - 1);
-        return Strings.joinDot(ver);
+            ver = Arrays.copyOf(ver, ver.length - 1);
+        return StringArray.joinDot(ver);
     }
 
     public void setVersionString(String version) {
-        String[] parts = version.split("\\."); 
+        String[] parts = version.split("\\.");
         this.version = new int[parts.length];
         for (int i = 0; i < parts.length; i++)
             this.version[i] = Integer.parseInt(parts[i]);

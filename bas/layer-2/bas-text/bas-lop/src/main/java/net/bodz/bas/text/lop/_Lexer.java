@@ -4,9 +4,8 @@ import java.io.Reader;
 import java.util.Stack;
 
 import net.bodz.bas.collection.map.IndexMap;
-import net.bodz.bas.io.out.CharOut;
-import net.bodz.bas.io.out.CharOuts.BCharOut;
 import net.bodz.bas.reflect.ReflectReverseSearch;
+import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.text.lop.util.XYPosition;
 import net.bodz.bas.text.lop.util.XYTellable;
 import net.bodz.bas.text.util.StringPrep;
@@ -216,7 +215,7 @@ public abstract class _Lexer
         currentRecord = new BCharOut(capacity);
     }
 
-    protected CharOut getRecordBuffer() {
+    protected BCharOut getRecordBuffer() {
         if (currentRecord == null)
             throw new IllegalStateException("recording is not started");
         return currentRecord;

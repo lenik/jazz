@@ -7,10 +7,14 @@ import javax.script.ScriptException;
 
 import net.bodz.bas.cli.BasicCLI;
 import net.bodz.bas.cli.CLIException;
+import net.bodz.bas.commons.scripting.ScriptClass;
+import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.io.term.LogTerm;
-import sun.dyn.empty.Empty;
 
-public class CLITask extends Task {
+import org.apache.commons.lang.ArrayUtils;
+
+public class CLITask
+        extends Task {
 
     protected final BasicCLI app;
     protected final ScriptClass<?> sclass;
@@ -129,15 +133,16 @@ public class CLITask extends Task {
     // }
 
     @Override
-    public void execute() throws BuildException {
+    public void execute()
+            throws BuildException {
         try {
             if (moreargs != null && !moreargs.isEmpty()) {
-                String[] moreargv = moreargs.toArray(Empty.Strings);
+                String[] moreargv = moreargs.toArray(ArrayUtils.EMPTY_STRING_ARRAY);
                 app.addArguments(moreargv);
             }
             // adapting attributes
             if (logLevel != 0) {
-                LogTerm L = (LogTerm) sclass.get(app, "logger"); 
+                LogTerm L = (LogTerm) sclass.get(app, "logger");
                 L.setLevel(L.getLevel() + logLevel);
             }
         } catch (CLIException e) {
@@ -159,7 +164,7 @@ public class CLITask extends Task {
     @Override
     protected void handleErrorOutput(String output) {
         errbuf.append(output);
-        if (output.endsWith("\n")) { 
+        if (output.endsWith("\n")) {
             super.handleErrorOutput(errbuf.toString());
             errbuf.setLength(0);
         }

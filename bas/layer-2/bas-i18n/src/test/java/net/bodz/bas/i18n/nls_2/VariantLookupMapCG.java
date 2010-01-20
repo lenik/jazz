@@ -1,6 +1,6 @@
 package net.bodz.bas.i18n.nls_2;
 
-import net.bodz.bas.i18n.nls_2.VariantLookupMap;
+import net.bodz.bas.collection.map.VariantLookupMap;
 
 /**
  * @see VariantLookupMap

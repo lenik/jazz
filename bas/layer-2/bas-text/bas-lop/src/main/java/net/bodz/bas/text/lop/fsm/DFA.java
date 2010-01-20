@@ -3,7 +3,7 @@ package net.bodz.bas.text.lop.fsm;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.io.out.CharOuts.BCharOut;
+import net.bodz.bas.sio.BCharOut;
 
 public class DFA {
 

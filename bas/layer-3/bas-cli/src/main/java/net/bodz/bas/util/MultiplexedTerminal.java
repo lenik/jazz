@@ -6,7 +6,13 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MultiplexedTerminal extends AbstractTerminal {
+import net.bodz.bas.exceptions.NotImplementedException;
+import net.bodz.bas.io.term.AbstractTerminal;
+import net.bodz.bas.io.term.ITerminal;
+import net.bodz.bas.sio.ILineCharOut;
+
+public class MultiplexedTerminal
+        extends AbstractTerminal {
 
     private List<ITerminal> terminals;
 
@@ -46,31 +52,21 @@ public class MultiplexedTerminal extends AbstractTerminal {
             t.p(s);
     }
 
-    public void t(String s) {
+    @Override
+    public void p_(String s) {
         for (ITerminal t : terminals)
-            t.t(s);
+            t.p_(s);
     }
 
     @Override
-    public void beep() {
-        for (ITerminal t : terminals)
-            t.beep();
-    }
-
-    @Override
-    public void flush() throws IOException {
+    public void flush()
+            throws IOException {
         for (ITerminal t : terminals)
             t.flush();
     }
 
     @Override
-    public void close() throws IOException {
-        for (ITerminal t : terminals)
-            t.close();
-    }
-
-    @Override
-    public CharOut getCharOut() {
+    public ILineCharOut getCharOut() {
         throw new NotImplementedException();
     }
 

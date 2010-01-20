@@ -8,10 +8,14 @@ import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+import net.bodz.bas.exceptions.ParseException;
+import net.bodz.bas.io.LineReader;
+
 /**
  * @see PartRecords
  */
-public abstract class _PartRecords<K, V> extends MapResRecords<K, V> {
+public abstract class _PartRecords<K, V>
+        extends MapResRecords<K, V> {
 
     public static final int TEXT_AFTER_HEADER = 0;
     public static final int FREE_FORM = 1;
@@ -59,18 +63,20 @@ public abstract class _PartRecords<K, V> extends MapResRecords<K, V> {
     public K getTextKey() {
         if (textKey == null)
             try {
-                textKey = parseKey("."); 
+                textKey = parseKey(".");
             } catch (ParseException e) {
-                throw new Error("error body key", e); 
+                throw new Error("error body key", e);
             }
         return textKey;
     }
 
-    protected Object parseText(String text) throws ParseException {
+    protected Object parseText(String text)
+            throws ParseException {
         return parseValue(text);
     }
 
-    private V _parseText(StringBuffer textBuf) throws ParseException {
+    private V _parseText(StringBuffer textBuf)
+            throws ParseException {
         String s = textBuf == null ? null : textBuf.toString();
         return parseValue(s);
     }
@@ -79,7 +85,7 @@ public abstract class _PartRecords<K, V> extends MapResRecords<K, V> {
      * Overrides {@link #isStartOfPart(String)}
      */
     protected boolean isPreHeaderComment(String line) {
-        return line.startsWith("#"); 
+        return line.startsWith("#");
     }
 
     /**
@@ -90,11 +96,11 @@ public abstract class _PartRecords<K, V> extends MapResRecords<K, V> {
      * </ul>
      */
     protected boolean isHeaderComment(String line) {
-        return line.startsWith("--"); 
+        return line.startsWith("--");
     }
 
     protected boolean isTextValue(String value) {
-        return "<<<".equals(value); 
+        return "<<<".equals(value);
     }
 
     protected boolean isIndentChar(char c) {
@@ -118,7 +124,8 @@ public abstract class _PartRecords<K, V> extends MapResRecords<K, V> {
         return null;
     }
 
-    class Iter extends _DirectIterator<Map<K, V>, IOException> {
+    class Iter
+            extends _DirectIterator<Map<K, V>, IOException> {
 
         private static final int PREHEADER = 0;
         private static final int HEADER = 1;
@@ -131,7 +138,8 @@ public abstract class _PartRecords<K, V> extends MapResRecords<K, V> {
         private Map<K, V> nextMap;
 
         @Override
-        public boolean next() throws IOException {
+        public boolean next()
+                throws IOException {
             if (end)
                 return false;
             if (lineReader == null) {
@@ -231,7 +239,8 @@ public abstract class _PartRecords<K, V> extends MapResRecords<K, V> {
         }
 
         @Override
-        public Map<K, V> get() throws NoSuchElementException {
+        public Map<K, V> get()
+                throws NoSuchElementException {
             return map;
         }
 

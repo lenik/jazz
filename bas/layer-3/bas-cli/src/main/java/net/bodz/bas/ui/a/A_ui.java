@@ -1,7 +1,7 @@
 package net.bodz.bas.ui.a;
 
-import net.bodz.bas.exceptions.CreateException;
-import net.bodz.bas.type.util.Types;
+import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
+import net.bodz.bas.type.util.ClassInstance;
 import net.bodz.bas.util.Factory;
 
 public class A_ui {
@@ -13,8 +13,8 @@ public class A_ui {
         if (factoryClass == Factory.class)
             return new Factory.Static<Object>(aicon.value());
         try {
-            return Types.getClassInstance(factoryClass);
-        } catch (CreateException e) {
+            return ClassInstance.getClassInstance(factoryClass);
+        } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e);
         }
     }
@@ -26,8 +26,8 @@ public class A_ui {
         if (factoryClass == Factory.class)
             return new Factory.Static<String>(alabel.value());
         try {
-            return Types.getClassInstance(factoryClass);
-        } catch (CreateException e) {
+            return ClassInstance.getClassInstance(factoryClass);
+        } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e);
         }
     }

@@ -3,13 +3,18 @@ package net.bodz.bas.ant;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
 
 import net.bodz.bas.exceptions.IllegalUsageError;
 import net.bodz.bas.exceptions.IllegalUsageException;
+import net.bodz.bas.fs.legacy.Files;
+import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.snm.JarLocations;
 
-import com.sun.jmx.snmp.tasks.Task;
+import org.apache.tools.ant.BuildLogger;
+import org.apache.tools.ant.DefaultLogger;
+import org.apache.tools.ant.Project;
+import org.apache.tools.ant.ProjectHelper;
+import org.apache.tools.ant.Task;
 
 /**
  * Example unit test for ant task:
@@ -49,35 +54,38 @@ public class TaskTestApp {
         logger.setMessageOutputLevel(Project.MSG_INFO);
     }
 
-    public TaskTestApp(int caller) throws IOException {
+    public TaskTestApp(int caller)
+            throws IOException {
         this(caller + 1, null);
     }
 
-    public TaskTestApp(int caller, String resourceName) throws IOException {
+    public TaskTestApp(int caller, String resourceName)
+            throws IOException {
         this();
         Class<?> callerClass = Caller.getCallerClass(caller);
         URL url = Files.classData(callerClass);
-        if ("jar".equals(url.getProtocol())) { 
+        if ("jar".equals(url.getProtocol())) {
             // if callerClass is in a jar, the default project helper is failed
             // to setBaseDir.
             File altBaseDir = JarLocations.getBaseClasspath(callerClass);
-            project.log("Using alternated base dir: " + altBaseDir, Project.MSG_WARN); 
+            project.log("Using alternated base dir: " + altBaseDir, Project.MSG_WARN);
             project.setBaseDir(altBaseDir);
         }
 
         load(caller + 1, resourceName);
     }
 
-    public void load(int caller, String resourceName) throws IOException {
+    public void load(int caller, String resourceName)
+            throws IOException {
         Class<?> callerClass = Caller.getCallerClass(caller);
         URL xmlURL;
         if (resourceName == null)
-            xmlURL = Files.classData(callerClass, "xml"); 
+            xmlURL = Files.classData(callerClass, "xml");
         else
             xmlURL = callerClass.getResource(resourceName);
         File buildFile = Files.getFile(xmlURL);
         if (!buildFile.exists())
-            throw new IllegalUsageException("The build file for test isn\'t existed: " + buildFile); 
+            throw new IllegalUsageException("The build file for test isn\'t existed: " + buildFile);
         load(buildFile);
     }
 
@@ -88,7 +96,7 @@ public class TaskTestApp {
     public void run() {
         String defaultTarget = project.getDefaultTarget();
         if (defaultTarget == null)
-            throw new IllegalUsageError("No default target in the project " + project); 
+            throw new IllegalUsageError("No default target in the project " + project);
         project.executeTarget(defaultTarget);
     }
 

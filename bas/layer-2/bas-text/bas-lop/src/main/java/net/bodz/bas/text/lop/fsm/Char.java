@@ -3,9 +3,10 @@ package net.bodz.bas.text.lop.fsm;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.text.util.Strings;
+import net.bodz.bas.text.util.StringPrep;
 
-public class Char extends _CharSet {
+public class Char
+        extends _CharSet {
 
     private final int ch;
 
@@ -82,7 +83,7 @@ public class Char extends _CharSet {
 
     @Override
     public String toString() {
-        return Strings.escape(ch);
+        return StringPrep.escape(ch);
     }
 
 }

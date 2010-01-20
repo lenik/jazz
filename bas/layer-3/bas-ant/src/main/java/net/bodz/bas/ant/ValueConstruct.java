@@ -3,15 +3,18 @@ package net.bodz.bas.ant;
 import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 import net.bodz.bas.exceptions.CreateException;
 import net.bodz.bas.exceptions.IllegalUsageException;
+import net.bodz.bas.fs.legacy.Files;
+import net.bodz.bas.jvm.stack.Caller;
+import net.bodz.bas.loader.UCL;
 import net.bodz.bas.util.Factory;
-import sun.dyn.empty.Empty;
 
-public class ValueConstruct extends WithParameters {
+import org.apache.tools.ant.types.Path;
+
+public class ValueConstruct
+        extends WithParameters {
 
     private Factory<Object> factory;
     private URLClassLoader loader;
@@ -23,7 +26,7 @@ public class ValueConstruct extends WithParameters {
 
     void setFactory(Factory<Object> factory) {
         if (this.factory != null)
-            throw new IllegalUsageException("Factory is already specified: " + this.factory); 
+            throw new IllegalUsageException("Factory is already specified: " + this.factory);
         this.factory = factory;
     }
 
@@ -59,13 +62,15 @@ public class ValueConstruct extends WithParameters {
         UCL.addURL(loader, urls);
     }
 
-    public Object create() throws CreateException {
+    public Object create()
+            throws CreateException {
         return create(null, null);
     }
 
-    public Object create(Class<?>[] prependTypes, Object[] prependValues) throws CreateException {
+    public Object create(Class<?>[] prependTypes, Object[] prependValues)
+            throws CreateException {
         if (factory == null)
-            throw new IllegalUsageException("Don\'t know how to get bean instance"); 
+            throw new IllegalUsageException("Don\'t know how to get bean instance");
         Class<?>[] types = prependTypes(prependTypes).toArray(Empty.Classes);
         Object[] values = prependValues(prependValues).toArray(Empty.Objects);
         return factory._create(types, values);

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Modifier;
 import java.net.URL;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -27,9 +26,18 @@ import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.collection.set.ArraySet;
 import net.bodz.bas.exceptions.IdentifiedException;
 import net.bodz.bas.fs.URLFile;
-import net.bodz.bas.io.out.CharOuts;
-import net.bodz.bas.io.out.CharOuts.BCharOut;
-import net.bodz.bas.loader.annotation.BootProc;
+import net.bodz.bas.fs.legacy.Files;
+import net.bodz.bas.jvm.stack.Caller;
+import net.bodz.bas.loader.DefaultBooter;
+import net.bodz.bas.loader.LoadException;
+import net.bodz.bas.loader.LoadUtil;
+import net.bodz.bas.loader.TempClassLoader;
+import net.bodz.bas.loader.UCL;
+import net.bodz.bas.loader.boot.BootProc;
+import net.bodz.bas.sio.BCharOut;
+import net.bodz.bas.sio.Stdio;
+import net.bodz.bas.snm.SJLibLoader;
+import net.bodz.bas.text.util.StringArray;
 
 @Doc("Generate program launcher for java applications")
 @ProgramName("mkbat")
@@ -94,7 +102,7 @@ public class Mkbat
         else
             bootSysLoader = TempClassLoader.get(classpath, initSysLoader);
         if (BOOT_DUMP)
-            UCL.dump(bootSysLoader, CharOuts.stderr);
+            UCL.dump(bootSysLoader, Stdio.cerr);
     }
 
     @Override
@@ -221,7 +229,7 @@ public class Mkbat
         String launch = "";
         if (bootArgs.length != 0) {
             // booter==null?
-            launch = booter + " " + Strings.join(" ", bootArgs) + " --";
+            launch = booter + " " + StringArray.join(" ", bootArgs) + " --";
         } else if (booter != null) {
             launch = booter + " --";
         }

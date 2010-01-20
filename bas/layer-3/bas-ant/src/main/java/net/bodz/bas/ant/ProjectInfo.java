@@ -1,9 +1,14 @@
 package net.bodz.bas.ant;
 
 import java.io.File;
-import java.nio.file.Path;
+import java.util.Map;
 
+import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.snm.EclipseProject;
+
+import org.apache.tools.ant.Project;
+import org.apache.tools.ant.types.FileSet;
+import org.apache.tools.ant.types.Path;
 
 /**
  * @test {@link ProjectInfoTest}
@@ -16,7 +21,7 @@ public class ProjectInfo {
     private Path classpath;
     private Path classpathWithTest;
 
-    private TextMap<Module> modules;
+    private Map<String, Module> modules;
 
     public static class Module {
 
@@ -25,18 +30,20 @@ public class ProjectInfo {
 
     }
 
-    public ProjectInfo(Project antProject) throws ParseException {
+    public ProjectInfo(Project antProject)
+            throws ParseException {
         this(antProject, CWD.getcwd());
     }
 
-    public ProjectInfo(Project antProject, File searchStart) throws ParseException {
+    public ProjectInfo(Project antProject, File searchStart)
+            throws ParseException {
         if (antProject == null)
-            throw new NullPointerException("project"); 
+            throw new NullPointerException("project");
         this.antProject = antProject;
 
         projectBase = EclipseProject.findProjectBase(searchStart);
         if (projectBase == null)
-            throw new RuntimeException("Can\'t find the eclipse project, search from " + searchStart); 
+            throw new RuntimeException("Can\'t find the eclipse project, search from " + searchStart);
 
         parse();
     }
@@ -44,7 +51,8 @@ public class ProjectInfo {
     /**
      * Convert classpath to ant.Path objects.
      */
-    void parse() throws ParseException {
+    void parse()
+            throws ParseException {
         EclipseProject eproj = new EclipseProject(projectBase);
         classpath = new Path(antProject);
         classpathWithTest = new Path(antProject);
@@ -69,7 +77,7 @@ public class ProjectInfo {
         return classpathWithTest;
     }
 
-    public TextMap<Module> getModules() {
+    public Map<String, Module> getModules() {
         return modules;
     }
 

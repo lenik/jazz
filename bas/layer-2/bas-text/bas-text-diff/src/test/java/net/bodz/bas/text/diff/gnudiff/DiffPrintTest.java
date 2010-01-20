@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.sio.CharOut;
+import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.text.diff.DiffInfo;
 import net.bodz.bas.text.diff.gnudiff.DiffPrint.Base;
 import net.bodz.bas.text.diff.gnudiff.DiffPrint.ContextPrint;
@@ -64,16 +64,16 @@ public class DiffPrintTest {
             Base p;
             switch (style) {
             case 'e':
-                p = new EdPrint(a, b, CharOut.stdout);
+                p = new EdPrint(a, b, Stdio.cout);
                 break;
             case 'c':
-                p = new ContextPrint(a, b, CharOut.stdout);
+                p = new ContextPrint(a, b, Stdio.cout);
                 break;
             case 'u':
-                p = new UnifiedPrint(a, b, CharOut.stdout);
+                p = new UnifiedPrint(a, b, Stdio.cout);
                 break;
             default:
-                p = new NormalPrint(a, b, CharOut.stdout);
+                p = new NormalPrint(a, b, Stdio.cout);
             }
             p.print_header(filea, fileb);
             p.print_script(script);

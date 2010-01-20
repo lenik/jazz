@@ -3,12 +3,14 @@ package net.bodz.bas.types;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.bas.commons.util.Objects;
 
 /**
  * @test {@link SimpleRequestTest}
  */
-public class SimpleRequest extends VarMap<String, Object> {
+public class SimpleRequest
+        extends VarMap<String, Object> {
 
     private final Object source;
     private String protocol;

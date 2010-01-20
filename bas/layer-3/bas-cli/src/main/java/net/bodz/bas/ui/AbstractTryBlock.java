@@ -1,24 +1,26 @@
 package net.bodz.bas.ui;
 
+import net.bodz.bas.exceptions.UnexpectedException;
 
-public abstract class _TryBlock extends TryBlock {
+public abstract class AbstractTryBlock
+        extends TryBlock {
 
     protected final UserInterface UI;
 
-    public _TryBlock(UserInterface ui, int maxRetry, boolean tryImmediately) {
+    public AbstractTryBlock(UserInterface ui, int maxRetry, boolean tryImmediately) {
         super(maxRetry, false);
         if (ui == null)
-            throw new NullPointerException("interaction"); 
+            throw new NullPointerException("interaction");
         this.UI = ui;
         if (tryImmediately)
             _run();
     }
 
-    public _TryBlock(UserInterface ui) {
+    public AbstractTryBlock(UserInterface ui) {
         this(ui, INFINITE, true);
     }
 
-    public _TryBlock(UserInterface ui, int maxRetry) {
+    public AbstractTryBlock(UserInterface ui, int maxRetry) {
         this(ui, maxRetry, true);
     }
 
@@ -34,7 +36,7 @@ public abstract class _TryBlock extends TryBlock {
         case 2:
             return CANCEL;
         case 3:
-            throw new RuntimeException("Debug"); 
+            throw new RuntimeException("Debug");
         }
         throw new UnexpectedException();
     }

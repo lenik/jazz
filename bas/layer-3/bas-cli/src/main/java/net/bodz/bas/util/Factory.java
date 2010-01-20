@@ -8,6 +8,9 @@ import java.lang.reflect.Constructor;
 
 import net.bodz.bas.exceptions.CreateException;
 import net.bodz.bas.exceptions.DecodeException;
+import net.bodz.bas.jvm.stack.Caller;
+import net.bodz.bas.reflect.util.CompatMethods;
+import net.bodz.bas.xml.XMLs;
 
 public interface Factory<T> {
 
@@ -20,13 +23,17 @@ public interface Factory<T> {
      * @param args
      *            each argument must be instance of corresponding argType, or <code>null</code>.
      */
-    T _create(Class<?>[] argTypes, Object... args) throws CreateException;
+    T _create(Class<?>[] argTypes, Object... args)
+            throws CreateException;
 
-    T create(Object... args) throws CreateException;
+    T create(Object... args)
+            throws CreateException;
 
-    T create() throws CreateException;
+    T create()
+            throws CreateException;
 
-    class Static<T> extends _Factory<T> {
+    class Static<T>
+            extends _Factory<T> {
 
         private final T instance;
 
@@ -48,7 +55,8 @@ public interface Factory<T> {
 
     }
 
-    class Ctor<T> extends _Factory<T> {
+    class Ctor<T>
+            extends _Factory<T> {
 
         private Class<? extends T> clazz;
         private Object outer;
@@ -57,7 +65,7 @@ public interface Factory<T> {
             assert clazz != null;
             if (clazz.isMemberClass()) {
                 if (outer == null)
-                    throw new NullPointerException("no outer specified for member " + clazz); 
+                    throw new NullPointerException("no outer specified for member " + clazz);
             }
             this.clazz = clazz;
             this.outer = outer;
@@ -73,7 +81,8 @@ public interface Factory<T> {
         }
 
         @Override
-        public T _create(Class<?>[] argTypes, Object... args) throws CreateException {
+        public T _create(Class<?>[] argTypes, Object... args)
+                throws CreateException {
             try {
                 if (clazz.isMemberClass())
                     return CompatMethods.newMemberInstance(clazz, outer, args);
@@ -85,7 +94,8 @@ public interface Factory<T> {
         }
     }
 
-    class ByClassName extends _Factory<Object> {
+    class ByClassName
+            extends _Factory<Object> {
 
         private final ClassLoader loader;
         private final String name;
@@ -96,9 +106,9 @@ public interface Factory<T> {
 
         public ByClassName(ClassLoader loader, String name) {
             if (loader == null)
-                throw new NullPointerException("classLoader"); 
+                throw new NullPointerException("classLoader");
             if (name == null)
-                throw new NullPointerException("className"); 
+                throw new NullPointerException("className");
             this.loader = loader;
             this.name = name;
         }
@@ -109,7 +119,8 @@ public interface Factory<T> {
         }
 
         @Override
-        public Object _create(Class<?>[] argTypes, Object... args) throws CreateException {
+        public Object _create(Class<?>[] argTypes, Object... args)
+                throws CreateException {
             try {
                 Class<?> clazz = Class.forName(name, true, loader);
                 if (argTypes == null)
@@ -127,7 +138,8 @@ public interface Factory<T> {
 
     }
 
-    class ByXML extends _Factory<Object> {
+    class ByXML
+            extends _Factory<Object> {
 
         // private ClassLoader loader;
         String xml;
@@ -135,7 +147,7 @@ public interface Factory<T> {
 
         public ByXML(String xml, ExceptionListener listener) {
             if (xml == null)
-                throw new NullPointerException("xml"); 
+                throw new NullPointerException("xml");
             this.xml = xml;
             this.listener = listener;
         }
@@ -146,7 +158,8 @@ public interface Factory<T> {
         }
 
         @Override
-        public Object _create(Class<?>[] argTypes, Object... args) throws CreateException {
+        public Object _create(Class<?>[] argTypes, Object... args)
+                throws CreateException {
             if (listener == null)
                 try {
                     return XMLs.decode(xml);
@@ -159,7 +172,8 @@ public interface Factory<T> {
 
     }
 
-    class ByXMLFile extends _Factory<Object> {
+    class ByXMLFile
+            extends _Factory<Object> {
 
         // private ClassLoader loader;
         File xmlFile;
@@ -167,7 +181,7 @@ public interface Factory<T> {
 
         public ByXMLFile(File xmlFile, ExceptionListener listener) {
             if (xmlFile == null)
-                throw new NullPointerException("xmlFile"); 
+                throw new NullPointerException("xmlFile");
             this.xmlFile = xmlFile;
             this.listener = listener;
         }
@@ -178,7 +192,8 @@ public interface Factory<T> {
         }
 
         @Override
-        public Object _create(Class<?>[] argTypes, Object... args) throws CreateException {
+        public Object _create(Class<?>[] argTypes, Object... args)
+                throws CreateException {
             FileInputStream in = null;
             try {
                 in = new FileInputStream(xmlFile);

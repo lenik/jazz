@@ -1,6 +1,6 @@
 package net.bodz.bas.text.lop;
 
-import net.bodz.bas.io.out.CharOuts.BCharOut;
+import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.text.lop.util.XYPosition;
 import net.bodz.bas.text.lop.util.XYTellable;
 import net.bodz.bas.text.util.StringPrep;

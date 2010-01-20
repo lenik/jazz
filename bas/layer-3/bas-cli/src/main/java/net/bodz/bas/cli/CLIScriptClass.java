@@ -5,6 +5,9 @@ import java.util.Map.Entry;
 
 import javax.script.ScriptException;
 
+import net.bodz.bas.commons.scripting.Scripts;
+import net.bodz.bas.commons.scripting._ScriptClass;
+
 public class CLIScriptClass<T extends BasicCLI> extends _ScriptClass<T> {
 
     private final T dynamicImpl;

@@ -4,12 +4,10 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.Map;
-import java.util.Map.Entry;
 
-import net.bodz.bas.sio.ILineCharOut;
+import net.bodz.bas.reflect.util.MethodKey;
 
-public class Annotations {
+public class InheritableAnnotation {
 
     /**
      * @return Object returned by value() of annotation instance
@@ -25,7 +23,7 @@ public class Annotations {
         if (annotation == null)
             return null;
         try {
-            Method valuef = annotationClass.getMethod("value"); 
+            Method valuef = annotationClass.getMethod("value");
             return valuef.invoke(annotation);
         } catch (NoSuchMethodException e) {
             return null;
@@ -77,24 +75,23 @@ public class Annotations {
         return null;
     }
 
-    public static <A extends Annotation> A getMethodAnnotation(Class<?> clazz, MethodKey msig,
-            Class<A> annotationClass) {
+    public static <A extends Annotation> A getMethodAnnotation(Class<?> clazz, MethodKey mkey, Class<A> annotationClass) {
         assert clazz != null;
-        assert msig != null;
+        assert mkey != null;
         assert annotationClass != null;
 
-        if (msig.getName() == null)
-            return getConstructorAnnotation(clazz, msig, annotationClass);
+        if (mkey.isConstructor())
+            return getConstructorAnnotation(clazz, mkey, annotationClass);
 
         try { // fast lookup
-            Method method = msig.getMethod(clazz);
+            Method method = mkey.getMethod(clazz);
             A annotation = method.getAnnotation(annotationClass);
             if (annotation != null)
                 return annotation;
         } catch (Exception e) {
         }
 
-        for (Method method : msig.getAllMethods(clazz)) {
+        for (Method method : mkey.matchAllMethods(clazz)) {
             A annotation = method.getAnnotation(annotationClass);
             if (annotation != null)
                 return annotation;
@@ -102,54 +99,22 @@ public class Annotations {
         return null;
     }
 
-    public static <A extends Annotation> A getConstructorAnnotation(Class<?> clazz, MethodKey msig,
+    public static <A extends Annotation> A getConstructorAnnotation(Class<?> clazz, MethodKey mkey,
             Class<A> annotationClass) {
-        assert clazz != null;
-        assert msig != null;
-        assert annotationClass != null;
+        if (clazz == null)
+            throw new NullPointerException("clazz");
+        if (mkey == null)
+            throw new NullPointerException("mkey");
+        if (annotationClass == null)
+            throw new NullPointerException("annotationClass");
+        assert mkey.isConstructor() : "Not a constructor method key";
 
-        for (Constructor<?> ctor : msig.getConstructors(clazz)) {
+        for (Constructor<?> ctor : mkey.matchConstructors(clazz)) {
             A annotation = ctor.getAnnotation(annotationClass);
             if (annotation != null)
                 return annotation;
         }
         return null;
-    }
-
-    static boolean _accessorsInited;
-    static Field Class_annotations;
-    static Field Class_declaredAnnotations;
-
-    static void initAccessors() {
-        if (_accessorsInited)
-            return;
-        try {
-            Class_annotations = Class.class.getDeclaredField(//
-                    "annotations"); 
-            Class_declaredAnnotations = Class.class.getDeclaredField(//
-                    "declaredAnnotations"); 
-            Class_annotations.setAccessible(true);
-            Class_declaredAnnotations.setAccessible(true);
-        } catch (NoSuchFieldException e) {
-            throw new Error(e.getMessage(), e);
-        }
-        _accessorsInited = true;
-    }
-
-    @SuppressWarnings("unchecked")
-    public static void dumpAnnotationMap(Class<?> clazz, ILineCharOut out, String indent) {
-        initAccessors();
-        try {
-            Map<Class<?>, Annotation> annotations = (Map<Class<?>, Annotation>) Class_annotations.get(clazz);
-            for (Entry<Class<?>, Annotation> ent : annotations.entrySet())
-                out.println(indent + ent.getKey() + " " + ent.getValue()); 
-        } catch (IllegalAccessException e) {
-            throw new Error(e.getMessage(), e);
-        }
-    }
-
-    public static void dumpAnnotationMap(Class<?> clazz, ILineCharOut out) {
-        dumpAnnotationMap(clazz, out, ""); 
     }
 
 }

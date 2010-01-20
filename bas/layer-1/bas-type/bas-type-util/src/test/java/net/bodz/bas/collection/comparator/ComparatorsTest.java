@@ -1,8 +1,11 @@
-package net.bodz.bas.types.util;
+package net.bodz.bas.collection.comparator;
 
 import static org.junit.Assert.assertArrayEquals;
 
 import java.util.Arrays;
+
+import net.bodz.bas.closure.alt.Proc1;
+import net.bodz.bas.combina.Permutation;
 
 import org.junit.Test;
 
@@ -11,31 +14,39 @@ public class ComparatorsTest {
     class Root {
     }
 
-    class Bar extends Root {
+    class Bar
+            extends Root {
     }
 
-    class ZBar extends Bar {
+    class ZBar
+            extends Bar {
     }
 
-    class Foo extends Root {
+    class Foo
+            extends Root {
     };
 
-    class AFoo extends Foo {
+    class AFoo
+            extends Foo {
     }
 
     interface RootI {
     }
 
-    interface BarI extends RootI {
+    interface BarI
+            extends RootI {
     }
 
-    interface ZBarI extends BarI {
+    interface ZBarI
+            extends BarI {
     }
 
-    interface FooI extends RootI {
+    interface FooI
+            extends RootI {
     };
 
-    interface AFooI extends FooI {
+    interface AFooI
+            extends FooI {
     }
 
     static String vstr(Class<?>[] v) {
@@ -44,7 +55,7 @@ public class ComparatorsTest {
             if (buf == null)
                 buf = new StringBuffer();
             else
-                buf.append(", "); 
+                buf.append(", ");
             buf.append(c.getSimpleName());
         }
         return buf.toString();
@@ -55,9 +66,9 @@ public class ComparatorsTest {
         class D {
             void o(Class<?>[] input, Class<?>[] expected) {
                 Class<?>[] typeHierOrder = Arrays.copyOf(input, input.length);
-                Arrays.sort(typeHierOrder, Comparators.TYPE_HIER);
+                Arrays.sort(typeHierOrder, ClassComparator.getInstance());
                 System.out.print(vstr(input));
-                System.out.print(" => "); 
+                System.out.print(" => ");
                 System.out.println(vstr(typeHierOrder));
                 Class<?>[] actual = typeHierOrder;
                 assertArrayEquals(expected, actual);
@@ -68,14 +79,14 @@ public class ComparatorsTest {
         final Class<?>[] correct = { Root.class, Bar.class, ZBar.class, Foo.class, AFoo.class };
 
         final Class<?>[] iv = { RootI.class, BarI.class, ZBarI.class, FooI.class, AFooI.class };
-        Perms.iterate(correct, new Proc1<Class<?>[]>() {
+        Permutation.iterate(correct, new Proc1<Class<?>[]>() {
             @Override
             public void exec(Class<?>[] everyCondition) {
                 d.o(everyCondition, correct);
             }
         });
 
-        Perms.iterate(iv, new Proc1<Class<?>[]>() {
+        Permutation.iterate(iv, new Proc1<Class<?>[]>() {
             @Override
             public void exec(Class<?>[] perm) {
                 d.o(perm, iv);

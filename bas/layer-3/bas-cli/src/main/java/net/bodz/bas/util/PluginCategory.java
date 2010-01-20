@@ -56,10 +56,9 @@ public class PluginCategory {
     public void register(String pluginId, PluginTypeEx typeEx) {
         assert typeEx != null;
         if (registry.containsKey(pluginId))
-            throw new IllegalArgumentException(String.format(AppNLS
-                    .getString("PluginCategory.pluginAlreadyRegistered_s"), pluginId)); 
+            throw new IllegalArgumentException("Plugin is already registered: " + pluginId);
         if (!categoryBaseType.isAssignableFrom(typeEx.getType()))
-            throw new OutOfDomainException("wrong category"); 
+            throw new OutOfDomainException("wrong category");
         registry.put(pluginId, typeEx);
     }
 

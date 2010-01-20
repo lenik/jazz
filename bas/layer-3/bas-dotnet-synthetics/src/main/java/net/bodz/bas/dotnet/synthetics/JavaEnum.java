@@ -1,4 +1,4 @@
-package net.bodz.bas.dnb;
+package net.bodz.bas.dotnet.synthetics;
 
 import java.lang.reflect.Array;
 import java.util.HashMap;
@@ -6,7 +6,8 @@ import java.util.Map;
 
 import net.bodz.bas.collection.util.ClassLocal;
 
-public abstract class JavaEnum implements Comparable<JavaEnum> {
+public abstract class JavaEnum
+        implements Comparable<JavaEnum> {
 
     private final String name;
     private final int ordinal;
@@ -28,7 +29,7 @@ public abstract class JavaEnum implements Comparable<JavaEnum> {
             nameMap = new HashMap<String, JavaEnum>();
             clNameMap.put(type, nameMap);
         } else {
-            assert !nameMap.containsKey(constDecl.name) : "name exists"; 
+            assert !nameMap.containsKey(constDecl.name) : "name exists";
             clValues.remove(type);
         }
         nameMap.put(constDecl.name, constDecl);
@@ -69,7 +70,7 @@ public abstract class JavaEnum implements Comparable<JavaEnum> {
             // }
         }
         // throw exception?
-        throw new NoSuchConstException(type + "." + name); 
+        throw new NoSuchConstException(type + "." + name);
     }
 
     @SuppressWarnings("unchecked")
