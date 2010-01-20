@@ -5,8 +5,8 @@ import java.io.Writer;
 import java.nio.CharBuffer;
 import java.util.Locale;
 
-public abstract class CharOut
-        implements ICharOut {
+public abstract class AbstractCharOut
+        implements ILineCharOut {
 
     @Override
     public void write(int c)
@@ -17,10 +17,22 @@ public abstract class CharOut
     }
 
     @Override
+    public void write(char[] chars)
+            throws IOException {
+        write(chars, 0, chars.length);
+    }
+
+    @Override
     public void write(CharSequence chars, int off, int len)
             throws IOException {
         CharBuffer charBuffer = CharBuffer.wrap(chars, off, off + len);
         write(charBuffer);
+    }
+
+    @Override
+    public void write(String s)
+            throws IOException {
+        write(s.toCharArray());
     }
 
     @Override
@@ -42,28 +54,46 @@ public abstract class CharOut
         write(array, offset, limit);
     }
 
+    @Override
+    public void flush(boolean strict)
+            throws IOException {
+    }
+
+    @Override
+    public void flush()
+            throws SIOException {
+        try {
+            flush(false);
+        } catch (IOException e) {
+            throw new SIOException();
+        }
+    }
+
     private final static char[] NULL = "(null)".toCharArray();
     private final static char NL = '\n';
 
+    @Override
     public void print(String s)
             throws SIOException {
         try {
             // char[] chars = s == null ? NULL : s.toCharArray();
             // write(chars, 0, chars.length);
             if (s == null)
-                write(NULL, 0, NULL.length);
+                write(NULL);
             else
-                write(s, 0, s.length());
+                write(s);
         } catch (IOException e) {
             throw new SIOException(e);
         }
     }
 
+    @Override
     public void print(boolean b)
             throws SIOException {
         print(String.valueOf(b));
     }
 
+    @Override
     public void print(char c)
             throws SIOException {
         try {
@@ -73,9 +103,11 @@ public abstract class CharOut
         }
     }
 
+    @Override
     public void print(char[] s)
             throws SIOException {
-        assert s != null;
+        if (s == null)
+            throw new NullPointerException("s");
         try {
             write(s, 0, s.length);
         } catch (IOException e) {
@@ -83,96 +115,117 @@ public abstract class CharOut
         }
     }
 
+    @Override
     public void print(double d)
             throws SIOException {
         print(String.valueOf(d));
     }
 
+    @Override
     public void print(float f)
             throws SIOException {
         print(String.valueOf(f));
     }
 
+    @Override
     public void print(int i)
             throws SIOException {
         print(String.valueOf(i));
     }
 
+    @Override
     public void print(long l)
             throws SIOException {
         print(String.valueOf(l));
     }
 
+    @Override
     public void print(Object obj)
             throws SIOException {
         print(String.valueOf(obj));
     }
 
+    @Override
     public void print(Object... args)
             throws SIOException {
         for (Object arg : args)
             print(arg);
     }
 
+    @Override
     public void println()
             throws SIOException {
-        print(NL);
+        try {
+            write(NL);
+        } catch (IOException e) {
+            throw new SIOException(e);
+        }
     }
 
+    @Override
     public void println(boolean x)
             throws SIOException {
         print(x);
         println();
     }
 
+    @Override
     public void println(char x)
             throws SIOException {
         print(x);
         println();
     }
 
+    @Override
     public void println(char[] x)
             throws SIOException {
         print(x);
-        print("\n");
+        println();
     }
 
+    @Override
     public void println(double x)
             throws SIOException {
         print(x);
         println();
     }
 
+    @Override
     public void println(float x)
             throws SIOException {
         print(x);
         println();
     }
 
+    @Override
     public void println(int x)
             throws SIOException {
         print(x);
         println();
     }
 
+    @Override
     public void println(long x)
             throws SIOException {
         print(x);
         println();
     }
 
+    @Override
     public void println(Object x)
             throws SIOException {
         print(x);
         println();
     }
 
+    @Override
     public void println(String x)
             throws SIOException {
         print(x);
         println();
     }
 
+    @Override
     public void println(Object... args)
             throws SIOException {
         if (args.length == 0) {
@@ -185,28 +238,16 @@ public abstract class CharOut
         println(args[max]);
     }
 
+    @Override
     public void printf(Locale l, String format, Object... args)
             throws SIOException {
         print(String.format(l, format, args));
     }
 
+    @Override
     public void printf(String format, Object... args)
             throws SIOException {
         print(String.format(format, args));
-    }
-
-    @Override
-    public void flush(boolean strict)
-            throws IOException {
-    }
-
-    public void flush()
-            throws SIOException {
-        try {
-            flush(false);
-        } catch (IOException e) {
-            throw new SIOException();
-        }
     }
 
     class WriterAdapter
@@ -220,25 +261,25 @@ public abstract class CharOut
         @Override
         public void flush()
                 throws IOException {
-            CharOut.this.flush();
+            AbstractCharOut.this.flush();
         }
 
         @Override
         public void write(int c)
                 throws IOException {
-            CharOut.this.write(c);
+            AbstractCharOut.this.write(c);
         }
 
         @Override
         public void write(String str, int off, int len)
                 throws IOException {
-            CharOut.this.write(str, off, len);
+            AbstractCharOut.this.write(str, off, len);
         }
 
         @Override
         public void write(char[] cbuf, int off, int len)
                 throws IOException {
-            CharOut.this.write(cbuf, off, len);
+            AbstractCharOut.this.write(cbuf, off, len);
         }
 
     }
@@ -246,9 +287,5 @@ public abstract class CharOut
     public Writer toWriter() {
         return new WriterAdapter();
     }
-
-    public static final CharOut nil = NullCharOut.getInstance();
-    public static final CharOut stdout = new PrintStreamCharOut(System.out);
-    public static final CharOut stderr = new PrintStreamCharOut(System.err);
 
 }

@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.Writer;
 
 public class WriterCharOut
-        extends CharOut {
+        extends AbstractCharOut {
 
     private final Writer writer;
 
@@ -25,9 +25,21 @@ public class WriterCharOut
     }
 
     @Override
+    public void write(char[] chars)
+            throws IOException {
+        writer.write(chars);
+    }
+
+    @Override
     public void write(char[] chars, int off, int len)
             throws IOException {
         writer.write(chars, off, len);
+    }
+
+    @Override
+    public void write(String s)
+            throws IOException {
+        writer.write(s);
     }
 
     @Override

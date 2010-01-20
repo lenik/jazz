@@ -5,7 +5,7 @@ import java.nio.BufferOverflowException;
 import java.nio.CharBuffer;
 
 public class CharBufferCharOut
-        extends CharOut {
+        extends AbstractCharOut {
 
     private final CharBuffer cb;
 
