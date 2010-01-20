@@ -17,8 +17,10 @@ public class CharBufferCharIn
     @Override
     public int read()
             throws IOException {
-        if (cb.hasRemaining())
-            return cb.get();
+        if (cb.hasRemaining()) {
+            char ch = cb.get();
+            return ch & 0xFFFF;
+        }
         return -1;
     }
 

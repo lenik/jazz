@@ -34,7 +34,7 @@ public class StringCharIn
             throw new NullPointerException("string");
         if (start < 0 || start >= string.length())
             throw new IndexOutOfBoundsException("bad start index: " + start);
-        if (end < start || end >= string.length())
+        if (end < start || end > string.length())
             throw new IndexOutOfBoundsException("bad end index: " + end);
         this.string = string;
         this.start = start;
