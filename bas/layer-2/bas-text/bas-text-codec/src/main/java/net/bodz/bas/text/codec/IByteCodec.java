@@ -42,7 +42,7 @@ public interface IByteCodec
     byte[] decode(char[] chars, int off, int len)
             throws DecodeException;
 
-    byte[] decode(String string, int off, int len)
+    byte[] decode(String string, int start, int end)
             throws DecodeException;
 
     /**

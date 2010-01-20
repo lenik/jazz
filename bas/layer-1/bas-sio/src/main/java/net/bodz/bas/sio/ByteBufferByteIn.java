@@ -17,8 +17,10 @@ public class ByteBufferByteIn
     @Override
     public int read()
             throws IOException {
-        if (bb.hasRemaining())
-            return bb.get();
+        if (bb.hasRemaining()) {
+            byte b = bb.get();
+            return b & 0xFF;
+        }
         return -1;
     }
 

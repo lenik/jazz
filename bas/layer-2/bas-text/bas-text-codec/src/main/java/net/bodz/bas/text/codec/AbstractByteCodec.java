@@ -86,10 +86,10 @@ public abstract class AbstractByteCodec
     }
 
     @Override
-    public byte[] decode(String string, int off, int len)
+    public byte[] decode(String string, int start, int end)
             throws DecodeException {
-        StringCharIn charIn = new StringCharIn(string, off, len);
-        int approxBytes = (int) (len * bytesPerChar) + 10;
+        StringCharIn charIn = new StringCharIn(string, start, end);
+        int approxBytes = (int) (end * bytesPerChar) + 10;
         BByteOut byteOut = new BByteOut(approxBytes);
         try {
             decode(charIn, byteOut);
