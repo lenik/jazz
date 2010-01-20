@@ -9,14 +9,6 @@ public abstract class AbstractCharOut
         implements ILineCharOut {
 
     @Override
-    public void write(int c)
-            throws IOException {
-        char[] cv = new char[1];
-        cv[0] = (char) c;
-        write(cv, 0, 1);
-    }
-
-    @Override
     public void write(char[] chars)
             throws IOException {
         write(chars, 0, chars.length);

@@ -8,13 +8,6 @@ public abstract class AbstractByteOut
         implements IByteOutLE, IByteOutBE {
 
     @Override
-    public void write(int b)
-            throws IOException {
-        byte[] buf = new byte[1];
-        write(buf, 0, 1);
-    }
-
-    @Override
     public void write(byte[] buf)
             throws IOException {
         write(buf, 0, buf.length);
