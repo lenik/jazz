@@ -10,6 +10,13 @@ public interface IByteOut
      * @throws NullPointerException
      *             If <code>buf</code> is <code>null</code>.
      */
+    void write(byte[] buf)
+            throws IOException;
+
+    /**
+     * @throws NullPointerException
+     *             If <code>buf</code> is <code>null</code>.
+     */
     void write(byte[] buf, int off, int len)
             throws IOException;
 
@@ -22,7 +29,18 @@ public interface IByteOut
     void write(ByteBuffer buffer)
             throws IOException;
 
+    /**
+     * @param strict
+     *            <code>true</code> means the call will return only after all buffered contents have
+     *            been written, <code>false</code> means the caller has finished its output.
+     */
     void flush(boolean strict)
             throws IOException;
+
+    /**
+     * The same to {@link #flush(boolean)} with <code>strict</code> set to <code>false</code>.
+     */
+    void flush()
+            throws SIOException;
 
 }

@@ -3,7 +3,7 @@ package net.bodz.bas.sio;
 import java.io.IOException;
 
 public class StringBuilderCharOut
-        extends CharOut {
+        extends AbstractCharOut {
 
     private final StringBuilder sb;
 

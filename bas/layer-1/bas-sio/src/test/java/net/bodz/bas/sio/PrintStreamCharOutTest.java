@@ -7,7 +7,7 @@ public class PrintStreamCharOutTest {
     @Test
     public void testStdout()
             throws Exception {
-        CharOut out = CharOut.stdout;
+        ILineCharOut out = CharOuts.stdout;
         out.println("line1");
         out.println("line2");
     }

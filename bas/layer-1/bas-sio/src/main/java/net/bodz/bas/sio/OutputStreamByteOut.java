@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class OutputStreamByteOut
-        extends ByteOut {
+        extends AbstractByteOut {
 
     protected final OutputStream out;
 
@@ -14,6 +14,12 @@ public class OutputStreamByteOut
 
     public OutputStream getOutputStream() {
         return out;
+    }
+
+    @Override
+    public void write(byte[] buf)
+            throws IOException {
+        out.write(buf);
     }
 
     @Override

@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 
 public class ByteOutImpl
-        extends ByteOut {
+        extends AbstractByteOut {
 
     private final IByteOut base;
 

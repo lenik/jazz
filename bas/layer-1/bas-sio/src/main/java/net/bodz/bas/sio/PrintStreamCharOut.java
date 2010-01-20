@@ -5,7 +5,7 @@ import java.io.PrintStream;
 import java.util.Arrays;
 
 public class PrintStreamCharOut
-        extends CharOut {
+        extends AbstractCharOut {
 
     private final PrintStream ps;
 
