@@ -1,7 +1,7 @@
 package net.bodz.bas.ui;
 
 import net.bodz.bas.collection.preorder.TypeHierMap;
-import net.bodz.bas.commons.util.Types;
+import net.bodz.bas.type.util.Types;
 
 public abstract class RenderStrategy extends TypeHierMap<Renderer> {
 

@@ -1,37 +1,39 @@
-package net.bodz.bas.commons.scripting;
+package net.bodz.bas.reflect.util;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.Objects;
 
-import net.bodz.bas.commons.scripting.util.CompatMethods;
-import net.bodz.bas.commons.scripting.util.Members.AllConstructors;
-import net.bodz.bas.commons.scripting.util.Members.AllMethods;
-import net.bodz.bas.commons.scripting.util.Members.PublicConstructors;
-import net.bodz.bas.commons.scripting.util.Members.PublicMethods;
+import net.bodz.bas.lang.Nullables;
+import net.bodz.bas.reflect.util.Members.AllConstructors;
+import net.bodz.bas.reflect.util.Members.AllMethods;
+import net.bodz.bas.reflect.util.Members.PublicConstructors;
+import net.bodz.bas.reflect.util.Members.PublicMethods;
+import net.bodz.bas.type.util.TypeName;
 
-public class MethodSignature {
+public class MethodKey {
 
     private final String name;
     private final Class<?>[] types;
 
-    public MethodSignature(String name, Class<?>... types) {
+    private transient Integer hash;
+
+    public MethodKey(String name, Class<?>... types) {
         assert types != null;
         this.name = name;
         this.types = types;
     }
 
-    public MethodSignature(Class<?>... types) {
+    public MethodKey(Class<?>... types) {
         this(null, types);
     }
 
-    public MethodSignature(Method method) {
+    public MethodKey(Method method) {
         this(method.getName(), method.getParameterTypes());
     }
 
-    public MethodSignature(Constructor<?> ctor) {
+    public MethodKey(Constructor<?> ctor) {
         this(ctor.getParameterTypes());
     }
 
@@ -45,10 +47,8 @@ public class MethodSignature {
 
     @Override
     public String toString() {
-        return "signature " + name + "(" + Types.joinNames(types) + ")";   
+        return "signature " + name + "(" + TypeName.join(types) + ")";
     }
-
-    private transient Integer hash;
 
     @Override
     public int hashCode() {
@@ -67,28 +67,28 @@ public class MethodSignature {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof MethodSignature))
+        if (!(o instanceof MethodKey))
             return false;
-        return equals((MethodSignature) o);
+        return equals((MethodKey) o);
     }
 
-    public boolean equals(MethodSignature msig) {
+    public boolean equals(MethodKey msig) {
         if (msig == this)
             return true;
-        if (!Objects.equals(name, msig.name))
+        if (!Nullables.equals(name, msig.name))
             return false;
         return Arrays.equals(types, msig.types);
     }
 
     public boolean matches(Method method) {
-        if (!Objects.equals(name, method.getName()))
+        if (!Nullables.equals(name, method.getName()))
             return false;
-        MethodSignature msig = new MethodSignature(method);
+        MethodKey msig = new MethodKey(method);
         return equals(msig);
     }
 
     public boolean matches(Constructor<?> ctor) {
-        MethodSignature msig = new MethodSignature(ctor);
+        MethodKey msig = new MethodKey(ctor);
         return equals(msig);
     }
 
@@ -136,13 +136,13 @@ public class MethodSignature {
         };
     }
 
-    public Iterable<Constructor<?>> getConstructors(final Class<?> clazz) {
-        return new Iterable<Constructor<?>>() {
+    public <T> Iterable<Constructor<T>> getConstructors(final Class<T> clazz) {
+        return new Iterable<Constructor<T>>() {
             @Override
-            public Iterator<Constructor<?>> iterator() {
-                return new PublicConstructors(clazz) {
+            public Iterator<Constructor<T>> iterator() {
+                return new PublicConstructors<T>(clazz) {
                     @Override
-                    protected boolean accept(Constructor<?> ctor) {
+                    protected boolean accept(Constructor<T> ctor) {
                         return matches(ctor);
                     }
                 };
@@ -150,13 +150,13 @@ public class MethodSignature {
         };
     }
 
-    public Iterable<Constructor<?>> getAllConstructors(final Class<?> clazz) {
-        return new Iterable<Constructor<?>>() {
+    public <T> Iterable<Constructor<T>> getAllConstructors(final Class<T> clazz) {
+        return new Iterable<Constructor<T>>() {
             @Override
-            public Iterator<Constructor<?>> iterator() {
-                return new AllConstructors(clazz) {
+            public Iterator<Constructor<T>> iterator() {
+                return new AllConstructors<T>(clazz) {
                     @Override
-                    protected boolean accept(Constructor<?> ctor) {
+                    protected boolean accept(Constructor<T> ctor) {
                         return matches(ctor);
                     }
                 };

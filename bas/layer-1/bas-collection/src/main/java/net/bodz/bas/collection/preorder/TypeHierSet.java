@@ -6,7 +6,7 @@ public class TypeHierSet
 
     private static final long serialVersionUID = 1L;
 
-    public TypeHierSet(IPreorder<Class<?>> preorder) {
+    public TypeHierSet() {
         super(ClassInheritancePreorder.getInstance());
     }
 

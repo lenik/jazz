@@ -5,7 +5,7 @@ public class TypeHierMap<V>
 
     private static final long serialVersionUID = 1L;
 
-    public TypeHierMap(IPreorder<Class<?>> preorder) {
+    public TypeHierMap() {
         super(ClassInheritancePreorder.getInstance());
     }
 

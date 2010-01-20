@@ -1,12 +1,17 @@
 package net.bodz.bas.commons.scripting.util;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 
+import net.bodz.bas.collection.preorder.TypesHierMap;
 import net.bodz.bas.exceptions.IllegalUsageError;
+import net.bodz.bas.jdk6compat.jdk7emul.IllegalAccessException;
+import net.bodz.bas.jdk6compat.jdk7emul.InvocationTargetException;
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
+import net.bodz.bas.type.util.TypeName;
 
-public class VarMethod extends _VMethod {
+public class VarMethod
+        extends AbstractVMethod {
 
     private final String name;
 
@@ -48,20 +53,18 @@ public class VarMethod extends _VMethod {
     }
 
     @Override
-    public Object invokel(Object obj, Class<?>[] paramTypes, Object... params) throws NoSuchMethodException,
-            IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+    public Object invokel(Object obj, Class<?>[] paramTypes, Object... params)
+            throws IllegalAccessException, InvocationTargetException, IllegalArgumentException, NoSuchMethodException {
         Method method = findMethod(paramTypes);
         if (method == null)
-            throw new NoSuchMethodException(name + "(" 
-                    + Types.joinNames(paramTypes) + ")"); 
+            throw new NoSuchMethodException(name + "(" + TypeName.join(paramTypes) + ")");
         if (obj != null) {
             Class<?> objClass = obj.getClass();
             Class<?> declClass = method.getDeclaringClass();
             if (!declClass.isAssignableFrom(objClass))
-                throw new IllegalUsageError("invoke method of different type, obj=" + objClass 
-                        + ", decl=" + declClass); 
+                throw new IllegalUsageError("invoke method of different type, obj=" + objClass + ", decl=" + declClass);
         }
-        return Control.invoke(method, obj, params);
+        return Jdk7Reflect.invoke(method, obj, params);
     }
 
     public static void classify(Iterable<Method> methods, Map<String, VarMethod> map) {

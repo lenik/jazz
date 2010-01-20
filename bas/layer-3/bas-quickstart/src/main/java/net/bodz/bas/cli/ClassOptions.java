@@ -22,7 +22,7 @@ import net.bodz.bas.c1.Pair;
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.cli.a.OptionGroup;
 import net.bodz.bas.collection.preorder.PrefixMap;
-import net.bodz.bas.commons.util.Types;
+import net.bodz.bas.type.util.Types;
 
 public class ClassOptions<CT> {
 

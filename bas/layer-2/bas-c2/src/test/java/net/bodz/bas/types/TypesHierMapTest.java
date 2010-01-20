@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.bodz.bas.collection.preorder.TypesHierMap;
-import net.bodz.bas.commons.util.Types;
+import net.bodz.bas.type.util.Types;
 import net.bodz.bas.types.testtypes.C;
 import net.bodz.bas.types.testtypes.CI;
 import net.bodz.bas.types.testtypes.CJ;
