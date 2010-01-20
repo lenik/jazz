@@ -7,10 +7,12 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CoderResult;
 
+import net.bodz.bas.text.model.CharFeature;
+
 public class HexCharsetDecoder
         extends CharsetDecoder {
 
-    private byte[] transtbl = Lookups.c2n;
+    private byte[] transtbl = CharFeature.c2n;
     private byte delimiter = 0x20;
     private int ch;
     private boolean chFill;

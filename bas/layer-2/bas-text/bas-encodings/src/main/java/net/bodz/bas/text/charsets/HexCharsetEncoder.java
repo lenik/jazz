@@ -6,6 +6,8 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 import java.nio.charset.CoderResult;
 
+import net.bodz.bas.text.model.CharFeature;
+
 /**
  * Encodes each character(maybe latin-1, utf-8, ucs-4, etc..) into hex string; space(0x20) is used
  * for seperate each character, internally.
@@ -18,7 +20,7 @@ public class HexCharsetEncoder
     private boolean leads = false;
 
     public HexCharsetEncoder(Charset charset) {
-        this(charset, Lookups.n2cl);
+        this(charset, CharFeature.n2cl);
     }
 
     /**
