@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import net.bodz.bas.io.out.CharOuts.BCharOut;
+import net.bodz.bas.sio.BCharOut;
 
 import org.junit.Test;
 
