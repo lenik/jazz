@@ -2,12 +2,12 @@ package net.bodz.bas.sio;
 
 import org.junit.Test;
 
-public class PrintStreamCharOutTest {
+public class StdioTest {
 
     @Test
-    public void testStdout()
+    public void testCout()
             throws Exception {
-        ILineCharOut out = SystemIO.cout;
+        ILineCharOut out = Stdio.cout;
         out.println("line1");
         out.println("line2");
     }

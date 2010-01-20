@@ -7,7 +7,7 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 
-public class SystemIO {
+public class Stdio {
 
     public static final ReaderCharIn cin = new ReaderCharIn(new InputStreamReader(System.in));
 

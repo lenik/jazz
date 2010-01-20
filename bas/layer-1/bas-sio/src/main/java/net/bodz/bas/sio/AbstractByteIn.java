@@ -29,31 +29,8 @@ public abstract class AbstractByteIn
         return cbRead;
     }
 
-    class InputStreamAdapter
-            extends InputStream {
-
-        @Override
-        public int read()
-                throws IOException {
-            return AbstractByteIn.this.read();
-        }
-
-        @Override
-        public int read(byte[] b)
-                throws IOException {
-            return AbstractByteIn.this.read(b);
-        }
-
-        @Override
-        public int read(byte[] b, int off, int len)
-                throws IOException {
-            return AbstractByteIn.this.read(b, off, len);
-        }
-
-    }
-
     public InputStream toInputStream() {
-        return new InputStreamAdapter();
+        return new ByteInInputStream(this);
     }
 
 }

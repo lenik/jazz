@@ -242,42 +242,8 @@ public abstract class AbstractCharOut
         print(String.format(format, args));
     }
 
-    class WriterAdapter
-            extends Writer {
-
-        @Override
-        public void close()
-                throws IOException {
-        }
-
-        @Override
-        public void flush()
-                throws IOException {
-            AbstractCharOut.this.flush();
-        }
-
-        @Override
-        public void write(int c)
-                throws IOException {
-            AbstractCharOut.this.write(c);
-        }
-
-        @Override
-        public void write(String str, int off, int len)
-                throws IOException {
-            AbstractCharOut.this.write(str, off, len);
-        }
-
-        @Override
-        public void write(char[] cbuf, int off, int len)
-                throws IOException {
-            AbstractCharOut.this.write(cbuf, off, len);
-        }
-
-    }
-
     public Writer toWriter() {
-        return new WriterAdapter();
+        return new CharOutWriter(this);
     }
 
 }

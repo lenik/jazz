@@ -9,8 +9,10 @@ public class CharBufferCharOut
 
     private final CharBuffer cb;
 
-    public CharBufferCharOut(CharBuffer cb) {
-        this.cb = cb;
+    public CharBufferCharOut(CharBuffer charBuffer) {
+        if (charBuffer == null)
+            throw new NullPointerException("charBuffer");
+        this.cb = charBuffer;
     }
 
     @Override
@@ -43,6 +45,24 @@ public class CharBufferCharOut
         } catch (BufferOverflowException e) {
             throw new IOException(e);
         }
+    }
+
+    @Override
+    public int hashCode() {
+        return 0x56ec273b + cb.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof CharBufferCharOut))
+            return false;
+        CharBufferCharOut o = (CharBufferCharOut) obj;
+        return cb.equals(o.cb);
+    }
+
+    @Override
+    public String toString() {
+        return cb.toString();
     }
 
 }

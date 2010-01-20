@@ -9,8 +9,10 @@ public class ByteBufferByteOut
 
     private final ByteBuffer bb;
 
-    public ByteBufferByteOut(ByteBuffer bb) {
-        this.bb = bb;
+    public ByteBufferByteOut(ByteBuffer byteBuffer) {
+        if (byteBuffer == null)
+            throw new NullPointerException("byteBuffer");
+        this.bb = byteBuffer;
     }
 
     @Override
@@ -38,6 +40,24 @@ public class ByteBufferByteOut
         } catch (BufferOverflowException e) {
             throw new IOException(e);
         }
+    }
+
+    @Override
+    public int hashCode() {
+        return 0xb499c40d + bb.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof ByteBufferByteOut))
+            return false;
+        ByteBufferByteOut o = (ByteBufferByteOut) obj;
+        return bb.equals(o.bb);
+    }
+
+    @Override
+    public String toString() {
+        return bb.toString();
     }
 
 }
