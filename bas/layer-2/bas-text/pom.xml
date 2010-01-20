@@ -10,7 +10,7 @@
 	<packaging>pom</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<modules>
-		<module>bas-encodings</module>
+		<module>bas-text-codec</module>
 		<module>bas-lop</module>
 		<module>bas-text-diff</module>
 		<module>bas-text-model</module>

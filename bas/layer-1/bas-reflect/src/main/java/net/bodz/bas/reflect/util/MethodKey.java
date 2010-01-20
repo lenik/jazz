@@ -20,7 +20,8 @@ public class MethodKey {
     private transient Integer hash;
 
     public MethodKey(String name, Class<?>... types) {
-        assert types != null;
+        if (types == null)
+            throw new NullPointerException("types");
         this.name = name;
         this.types = types;
     }
@@ -39,6 +40,10 @@ public class MethodKey {
 
     public String getName() {
         return name;
+    }
+
+    public boolean isConstructor() {
+        return name == null;
     }
 
     public Class<?>[] getParameterTypes() {
@@ -108,7 +113,7 @@ public class MethodKey {
         }
     }
 
-    public Iterable<Method> getMethods(final Class<?> clazz) {
+    public Iterable<Method> matchMethods(final Class<?> clazz) {
         return new Iterable<Method>() {
             @Override
             public Iterator<Method> iterator() {
@@ -122,7 +127,7 @@ public class MethodKey {
         };
     }
 
-    public Iterable<Method> getAllMethods(final Class<?> clazz) {
+    public Iterable<Method> matchAllMethods(final Class<?> clazz) {
         return new Iterable<Method>() {
             @Override
             public Iterator<Method> iterator() {
@@ -136,7 +141,7 @@ public class MethodKey {
         };
     }
 
-    public <T> Iterable<Constructor<T>> getConstructors(final Class<T> clazz) {
+    public <T> Iterable<Constructor<T>> matchConstructors(final Class<T> clazz) {
         return new Iterable<Constructor<T>>() {
             @Override
             public Iterator<Constructor<T>> iterator() {
@@ -150,7 +155,7 @@ public class MethodKey {
         };
     }
 
-    public <T> Iterable<Constructor<T>> getAllConstructors(final Class<T> clazz) {
+    public <T> Iterable<Constructor<T>> matchAllConstructors(final Class<T> clazz) {
         return new Iterable<Constructor<T>>() {
             @Override
             public Iterator<Constructor<T>> iterator() {
