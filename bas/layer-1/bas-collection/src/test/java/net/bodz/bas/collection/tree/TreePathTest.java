@@ -1,4 +1,4 @@
-package net.bodz.bas.types;
+package net.bodz.bas.collection.tree;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;

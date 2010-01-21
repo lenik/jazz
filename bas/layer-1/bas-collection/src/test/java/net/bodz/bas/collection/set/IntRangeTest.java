@@ -1,7 +1,6 @@
-package net.bodz.bas.types;
+package net.bodz.bas.collection.set;
 
 import static org.junit.Assert.assertEquals;
-import net.bodz.bas.collection.set.IntRange;
 
 import org.junit.Test;
 

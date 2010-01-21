@@ -2,10 +2,10 @@ package net.bodz.bas.commons.exception;
 
 import java.lang.reflect.Field;
 
+import net.bodz.bas.commons.exception.ErrTest;
 import net.bodz.bas.exceptions.RuntimizedException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
-import net.bodz.bas.lang.err.ErrTest;
 
 /**
  * Utility functions for {@link Throwable}s.
