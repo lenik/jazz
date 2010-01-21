@@ -1,8 +1,9 @@
 package net.bodz.bas.exceptions;
 
-public class CompileException extends Exception {
+public class CompileException
+        extends Exception {
 
-    private static final long serialVersionUID = 5116598465290015857L;
+    private static final long serialVersionUID = 1L;
 
     public CompileException() {
         super();

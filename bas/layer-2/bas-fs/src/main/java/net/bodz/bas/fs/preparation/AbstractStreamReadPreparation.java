@@ -3,7 +3,6 @@ package net.bodz.bas.fs.preparation;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -53,10 +52,10 @@ public abstract class AbstractStreamReadPreparation
     }
 
     public abstract InputStream newInputStream()
-            throws FileNotFoundException, IOException;
+            throws IOException;
 
     public Reader newReader()
-            throws FileNotFoundException, IOException {
+            throws IOException {
         InputStream in = newInputStream();
         return new InputStreamReader(in, getCharset());
     }
@@ -91,7 +90,7 @@ public abstract class AbstractStreamReadPreparation
             while (remaining != 0) {
                 int readSize = block.length;
                 if (remaining != -1 && readSize > remaining)
-                    readSize = (int) remaining;
+                    readSize = remaining;
                 int n = in.read(block, 0, readSize);
                 if (n == -1)
                     break;
@@ -262,26 +261,26 @@ public abstract class AbstractStreamReadPreparation
 
     public ZipFile newZipFile()
             throws IOException {
-        File f = file.getFile();
-        if (f == null)
+        File localFile = file.getFile();
+        if (localFile == null)
             throw new UnsupportedOperationException("Not a (java.io.)file");
         int mode = ZipFile.OPEN_READ;
         if (file.isDeleteOnExit())
             mode |= ZipFile.OPEN_DELETE;
-        return Jdk7ZipFile.newInstance(f, mode, getCharset());
+        return Jdk7ZipFile.newInstance(localFile, mode, getCharset());
     }
 
     public JarFile newJarFile(boolean verify)
             throws IOException {
-        File f = this.file.getFile();
-        if (f == null)
+        File localFile = this.file.getFile();
+        if (localFile == null)
             throw new UnsupportedOperationException("Not a (java.io.)file");
         if (!Charset.forName("UTF-8").equals(getCharset()))
             throw new UnsupportedOperationException("Jar is encoded by UTF-8 only");
         int mode = JarFile.OPEN_READ;
         if (this.file.isDeleteOnExit())
             mode |= JarFile.OPEN_DELETE;
-        return new JarFile(f, verify, mode);
+        return new JarFile(localFile, verify, mode);
     }
 
 }

@@ -1,8 +1,9 @@
 package net.bodz.bas.exceptions;
 
-public class CheckFailure extends Error {
+public class CheckFailure
+        extends Error {
 
-    private static final long serialVersionUID = 1740896623654551464L;
+    private static final long serialVersionUID = 1L;
 
     public CheckFailure() {
         super();

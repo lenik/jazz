@@ -7,6 +7,7 @@ import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.TreeMap;
 
+import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.files.PartRecordsTest;
 
@@ -93,14 +94,9 @@ public class PartRecords
 
     @SuppressWarnings("unchecked")
     @Override
-    public DirectIterator<PartMap, IOException> iterator() {
-        return (DirectIterator<PartMap, IOException>) super.iterator();
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public Iterable<PartMap> iterate() {
-        return (Iterable<PartMap>) super.iterate();
+    public ImmediateIteratorX<? extends PartMap, ? extends IOException> iterator(boolean allowOverlap)
+            throws IOException {
+        return (ImmediateIteratorX<? extends PartMap, ? extends IOException>) super.iterator(allowOverlap);
     }
 
     @Override

@@ -2,7 +2,8 @@ package net.bodz.bas.text.util;
 
 import java.nio.CharBuffer;
 
-import net.bodz.bas.text.encodings.Lookups;
+import net.bodz.bas.hint.GeneratedByCopyPaste;
+import net.bodz.bas.text.model.CharFeature;
 
 public class BufParsers {
 
@@ -14,14 +15,14 @@ public class BufParsers {
         int val = 0; // T
         int start = buf.position();
         int end = start;
-        int safeDigits = Lookups.getDigits(radix, max);
+        int safeDigits = CharFeature.getDigits(radix, max);
         if (safeDigits < 0)
             safeDigits = -safeDigits;
         int digits = 0;
         boolean tryMore = false;
         while (end < limit) {
             char c = buf.get(end);
-            int d = Lookups.c2n[c];
+            int d = CharFeature.c2n[c];
             if (d == -1 || d >= radix)
                 break;
             if (tryMore) {
@@ -60,20 +61,23 @@ public class BufParsers {
         return getInt(buf, 10);
     }
 
-    @Derived
+    /**
+     * @see #getInt(CharBuffer, int, int)
+     */
+    @GeneratedByCopyPaste
     public static long getLong(CharBuffer buf, int radix, long max) {
         int limit = buf.limit();
         long val = 0;
         int start = buf.position();
         int end = start;
-        int safeDigits = Lookups.getDigits(radix, max);
+        int safeDigits = CharFeature.getDigits(radix, max);
         if (safeDigits < 0)
             safeDigits = -safeDigits;
         int digits = 0;
         boolean tryMore = false;
         while (end < limit) {
             char c = buf.get(end);
-            int d = Lookups.c2n[c];
+            int d = CharFeature.c2n[c];
             if (d == -1 || d >= radix)
                 break;
             if (tryMore) {

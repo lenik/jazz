@@ -2,9 +2,10 @@ package net.bodz.bas.exceptions;
 
 import java.io.IOException;
 
-public class EncodeException extends IOException {
+public class EncodeException
+        extends IOException {
 
-    private static final long serialVersionUID = 3819822659799122378L;
+    private static final long serialVersionUID = 1L;
 
     public EncodeException() {
         super();

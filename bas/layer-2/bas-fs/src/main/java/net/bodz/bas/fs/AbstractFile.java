@@ -68,16 +68,6 @@ public abstract class AbstractFile
         return null;
     }
 
-    /**
-     * Default return the path of corresponding {@link #getFile() File}.
-     * 
-     * @return {@link Path}
-     */
-    @Override
-    public Path getPath() {
-        return getFile().toPath();
-    }
-
     @Override
     public DefaultParseLoadPreparation forLoad() {
         return new DefaultParseLoadPreparation(forRead());

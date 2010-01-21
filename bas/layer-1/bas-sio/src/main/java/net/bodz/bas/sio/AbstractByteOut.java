@@ -5,7 +5,7 @@ import java.io.OutputStream;
 import java.nio.ByteBuffer;
 
 public abstract class AbstractByteOut
-        implements IByteOutLE, IByteOutBE {
+        implements IByteOutNative {
 
     @Override
     public void write(byte[] buf)
@@ -38,7 +38,13 @@ public abstract class AbstractByteOut
     }
 
     @Override
-    public void write(boolean b)
+    public void writeLE(boolean b)
+            throws IOException {
+        write(b ? (byte) 1 : (byte) 0);
+    }
+
+    @Override
+    public void writeBE(boolean b)
             throws IOException {
         write(b ? (byte) 1 : (byte) 0);
     }

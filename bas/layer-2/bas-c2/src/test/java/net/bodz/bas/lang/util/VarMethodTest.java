@@ -1,18 +1,18 @@
 package net.bodz.bas.lang.util;
 
 import static org.junit.Assert.assertEquals;
-import net.bodz.bas.types.testtypes.C;
-import net.bodz.bas.types.testtypes.CI;
-import net.bodz.bas.types.testtypes.CJz;
-import net.bodz.bas.types.testtypes.CJzKI;
-import net.bodz.bas.types.testtypes.Cat;
-import net.bodz.bas.types.testtypes.D;
-import net.bodz.bas.types.testtypes.DIJ;
-import net.bodz.bas.types.testtypes.DIJy;
-import net.bodz.bas.types.testtypes.Dog;
-import net.bodz.bas.types.testtypes.Dx;
-import net.bodz.bas.types.testtypes.DxKI;
-import net.bodz.bas.types.testtypes.DxKIx;
+import net.bodz.bas.collection.preorder.testtype.C;
+import net.bodz.bas.collection.preorder.testtype.CI;
+import net.bodz.bas.collection.preorder.testtype.CJz;
+import net.bodz.bas.collection.preorder.testtype.CJzKI;
+import net.bodz.bas.collection.preorder.testtype.Cat;
+import net.bodz.bas.collection.preorder.testtype.D;
+import net.bodz.bas.collection.preorder.testtype.DIJ;
+import net.bodz.bas.collection.preorder.testtype.DIJy;
+import net.bodz.bas.collection.preorder.testtype.Dog;
+import net.bodz.bas.collection.preorder.testtype.Dx;
+import net.bodz.bas.collection.preorder.testtype.DxKI;
+import net.bodz.bas.collection.preorder.testtype.DxKIx;
 
 import org.junit.Test;
 

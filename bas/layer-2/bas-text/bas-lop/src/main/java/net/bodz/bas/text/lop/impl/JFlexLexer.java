@@ -7,8 +7,8 @@ import java.lang.reflect.Method;
 import net.bodz.bas.reflect.bind.ReflectBind;
 import net.bodz.bas.reflect.bind.ReflectField;
 import net.bodz.bas.reflect.bind.ReflectMethod;
+import net.bodz.bas.sio.position.IXYTellable;
 import net.bodz.bas.text.lop._Lexer;
-import net.bodz.bas.text.lop.util.XYTellable;
 
 /**
  * Subclass must implement following members: <code>
@@ -33,7 +33,7 @@ import net.bodz.bas.text.lop.util.XYTellable;
  */
 public abstract class JFlexLexer
         extends _Lexer
-        implements XYTellable {
+        implements IXYTellable {
 
     @ReflectMethod("yylex")
     private Method yylex; // public int()
@@ -159,7 +159,7 @@ public abstract class JFlexLexer
     }
 
     @Override
-    protected XYTellable getTokenStart() {
+    protected IXYTellable getTokenStart() {
         return this;
     }
 

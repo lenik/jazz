@@ -1,8 +1,9 @@
 package net.bodz.bas.exceptions;
 
-public class SystemException extends Exception {
+public class SystemException
+        extends Exception {
 
-    private static final long serialVersionUID = 3120686750988136459L;
+    private static final long serialVersionUID = 1L;
 
     public SystemException() {
         super();

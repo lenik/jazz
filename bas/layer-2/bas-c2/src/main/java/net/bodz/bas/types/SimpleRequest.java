@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.collection.tree.TreePath;
-import net.bodz.bas.commons.util.Objects;
+import net.bodz.bas.lang.Nullables;
 
 /**
  * @test {@link SimpleRequestTest}
@@ -192,15 +192,15 @@ public class SimpleRequest
         if (!(obj instanceof SimpleRequest))
             return false;
         SimpleRequest r = (SimpleRequest) obj;
-        if (!Objects.equals(source, source))
+        if (!Nullables.equals(source, source))
             return false;
-        if (!Objects.equals(protocol, r.protocol))
+        if (!Nullables.equals(protocol, r.protocol))
             return false;
-        if (!Objects.equals(path, r.path))
+        if (!Nullables.equals(path, r.path))
             return false;
-        if (!Objects.equals(anchor, r.anchor))
+        if (!Nullables.equals(anchor, r.anchor))
             return false;
-        if (!Objects.equals(proxy, r.proxy))
+        if (!Nullables.equals(proxy, r.proxy))
             return false;
         return true;
     }

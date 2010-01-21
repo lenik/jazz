@@ -1,8 +1,8 @@
 package net.bodz.bas.text.lop;
 
-import net.bodz.bas.text.lop.util.XYTellable;
+import net.bodz.bas.sio.position.IXYTellable;
 
-public interface Token extends XYTellable {
+public interface Token extends IXYTellable {
 
     int getId();
 
@@ -16,6 +16,6 @@ public interface Token extends XYTellable {
 
     Object getValue();
 
-    XYTellable end();
+    IXYTellable end();
 
 }

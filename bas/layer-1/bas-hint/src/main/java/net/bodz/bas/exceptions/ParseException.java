@@ -1,10 +1,9 @@
 package net.bodz.bas.exceptions;
 
-
 public class ParseException
         extends Exception {
 
-    private static final long serialVersionUID = 7260313523533602858L;
+    private static final long serialVersionUID = 1L;
 
     public String source;
     public int line;

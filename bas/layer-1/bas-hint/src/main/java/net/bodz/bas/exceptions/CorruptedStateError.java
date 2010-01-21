@@ -1,8 +1,9 @@
 package net.bodz.bas.exceptions;
 
-public class CorruptedStateError extends Error {
+public class CorruptedStateError
+        extends Error {
 
-    private static final long serialVersionUID = 7052201877382131673L;
+    private static final long serialVersionUID = 1L;
 
     public CorruptedStateError() {
         super();

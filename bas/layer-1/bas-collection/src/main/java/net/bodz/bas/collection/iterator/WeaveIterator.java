@@ -63,14 +63,14 @@ public class WeaveIterator<T extends Comparable<T>>
         this(new NaturalComparator<T>(), itr1, itr2);
     }
 
-    @SuppressWarnings ( "unchecked")
+    @SuppressWarnings("unchecked")
     public WeaveIterator(Comparator<? super T> cmp, Iterator<T> itr1, Iterator<T> itr2) {
         this(cmp, (Iterator<T>[]) (new Iterator<?>[] { itr1, itr2 }));
     }
 
     public WeaveIterator(Comparator<? super T> cmp, Iterator<T>... iterators) {
         if (cmp == null)
-            throw new NullPointerException("cmp"); 
+            throw new NullPointerException("cmp");
         if (iterators == null)
             throw new NullPointerException("iterators");
         this.cmp = cmp;
@@ -81,7 +81,7 @@ public class WeaveIterator<T extends Comparable<T>>
         for (int i = 0; i < iterators.length; i++) {
             Iterator<T> itr = iterators[i];
             if (itr == null)
-                throw new NullPointerException("itr[" + i + "]");  
+                throw new NullPointerException("itr[" + i + "]");
             if (!itr.hasNext()) // skips when preload.
                 continue;
             T first = itr.next();

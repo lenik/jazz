@@ -1,8 +1,9 @@
 package net.bodz.bas.exceptions;
 
-public class UnexpectedException extends RuntimeException {
+public class UnexpectedException
+        extends RuntimeException {
 
-    private static final long serialVersionUID = -893813012361065594L;
+    private static final long serialVersionUID = 1L;
 
     public UnexpectedException() {
         super();

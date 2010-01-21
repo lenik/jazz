@@ -2,9 +2,10 @@ package net.bodz.bas.exceptions;
 
 import java.io.IOException;
 
-public class DecodeException extends IOException {
+public class DecodeException
+        extends IOException {
 
-    private static final long serialVersionUID = 1115423726136046853L;
+    private static final long serialVersionUID = 1L;
 
     public DecodeException() {
         super();

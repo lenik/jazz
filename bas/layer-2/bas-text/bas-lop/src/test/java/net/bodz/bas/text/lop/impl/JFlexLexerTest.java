@@ -5,8 +5,8 @@ import static org.junit.Assert.assertEquals;
 import java.io.StringReader;
 
 import net.bodz.bas.fs.legacy.Files;
+import net.bodz.bas.sio.position.IXYTellable;
 import net.bodz.bas.text.lop.Token;
-import net.bodz.bas.text.lop.util.XYTellable;
 
 import org.junit.Test;
 
@@ -40,7 +40,7 @@ public class JFlexLexerTest {
         int i = 0;
         Token actual;
         while ((actual = lexer.read()) != null) {
-            XYTellable prev = lexer.getTokenStart(1);
+            IXYTellable prev = lexer.getTokenStart(1);
             System.out.printf("Read: %s .. %s\n", prev, actual);
             if (i >= testSeq.length)
                 break;

@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
+import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.files.INIRecordsTest;
 import net.bodz.bas.io.LineReader;
@@ -122,7 +123,8 @@ public class INIRecords
     }
 
     @Override
-    public DirectIterator<Map<String, String>, IOException> iterator() {
+    public ImmediateIteratorX<? extends Map<String, String>, ? extends IOException> iterator(boolean allowOverlap)
+            throws IOException {
         return new Iter();
     }
 

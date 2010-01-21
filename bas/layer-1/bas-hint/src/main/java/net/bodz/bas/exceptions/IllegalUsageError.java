@@ -1,8 +1,9 @@
 package net.bodz.bas.exceptions;
 
-public class IllegalUsageError extends Error {
+public class IllegalUsageError
+        extends Error {
 
-    private static final long serialVersionUID = 7369516357447712401L;
+    private static final long serialVersionUID = 1L;
 
     public IllegalUsageError() {
         super();

@@ -42,9 +42,10 @@ package net.bodz.bas.exceptions;
  * they would cancel the execution of program, and the compiler also not check throws statements
  * against them.
  */
-public class IdentifiedException extends RuntimeException {
+public class IdentifiedException
+        extends RuntimeException {
 
-    private static final long serialVersionUID = 3749253268735929927L;
+    private static final long serialVersionUID = 1L;
 
     public IdentifiedException() {
         super();

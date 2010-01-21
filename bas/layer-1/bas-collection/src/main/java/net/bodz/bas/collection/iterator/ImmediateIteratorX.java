@@ -1,5 +1,7 @@
 package net.bodz.bas.collection.iterator;
 
+import java.util.Iterator;
+
 /**
  * 
  */
@@ -72,5 +74,16 @@ public interface ImmediateIteratorX<T, X extends Exception> {
      * @return The duplicated iterator with the same iteration state like current position pointer.
      */
     ImmediateIteratorX<T, X> mark();
+
+    /**
+     * Convert immediate iterator to {@link Iterator}, if the immediate iterator is overlapped, then
+     * it's de-overlapped in the converted {@link Iterator}.
+     * <p>
+     * After this immediate iterator is converted, both iterators are iterable, but you should avoid
+     * to concurrent iterate thru the two iterators.
+     * 
+     * @return The converted {@link Iterator}.
+     */
+    IteratorX<T, X> toIterator();
 
 }

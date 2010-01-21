@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import net.bodz.bas.hint.GeneratedCode;
+import net.bodz.bas.hint.GeneratedByCopyPaste;
 
 public class ConcatInputStream
         extends InputStream {
@@ -23,7 +23,7 @@ public class ConcatInputStream
         this(defaultQueue(ins));
     }
 
-    @GeneratedCode(ConcatReader.class)
+    @GeneratedByCopyPaste(ConcatReader.class)
     static Queue<InputStream> defaultQueue(InputStream... ins) {
         LinkedList<InputStream> queue = new LinkedList<InputStream>();
         for (InputStream in : ins)
@@ -45,7 +45,7 @@ public class ConcatInputStream
         return avail;
     }
 
-    @GeneratedCode(ConcatReader.class)
+    @GeneratedByCopyPaste(ConcatReader.class)
     @Override
     public void close()
             throws IOException {
@@ -55,7 +55,7 @@ public class ConcatInputStream
         }
     }
 
-    @GeneratedCode(ConcatReader.class)
+    @GeneratedByCopyPaste(ConcatReader.class)
     @Override
     public int read()
             throws IOException {
@@ -70,7 +70,7 @@ public class ConcatInputStream
         return c;
     }
 
-    @GeneratedCode(ConcatReader.class)
+    @GeneratedByCopyPaste(ConcatReader.class)
     @Override
     public int read(byte[] b, int off, int len)
             throws IOException {
@@ -100,7 +100,7 @@ public class ConcatInputStream
         return sum;
     }
 
-    @GeneratedCode(ConcatReader.class)
+    @GeneratedByCopyPaste(ConcatReader.class)
     @Override
     public long skip(long n)
             throws IOException {
