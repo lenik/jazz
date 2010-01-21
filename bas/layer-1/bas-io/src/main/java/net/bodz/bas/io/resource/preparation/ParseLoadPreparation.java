@@ -1,9 +1,8 @@
-package net.bodz.bas.io.preparation;
+package net.bodz.bas.io.resource.preparation;
 
 import java.io.EOFException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
+import java.io.ObjectInput;
 import java.io.Reader;
 import java.util.List;
 import java.util.Properties;
@@ -11,21 +10,32 @@ import java.util.Properties;
 import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.collection.util.IteratorToList;
+import net.bodz.bas.exceptions.UnexpectedException;
+import net.bodz.bas.io.resource.IStreamInputSource;
 
-public class DefaultParseLoadPreparation
+public class ParseLoadPreparation
         implements IParseLoadPreparation {
 
-    private final IStreamReadPreparation readPrep;
+    private final IStreamInputSource source;
 
-    public DefaultParseLoadPreparation(IStreamReadPreparation streamReadPreparation) {
-        if (streamReadPreparation == null)
-            throw new NullPointerException("streamReadPreparation");
-        this.readPrep = streamReadPreparation;
+    public ParseLoadPreparation(IStreamInputSource source) {
+        if (source == null)
+            throw new NullPointerException("source");
+        this.source = source;
+    }
+
+    @Override
+    public IParseLoadPreparation clone() {
+        try {
+            return (IParseLoadPreparation) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new UnexpectedException(e.getMessage(), e);
+        }
     }
 
     public Properties loadProperties()
             throws IOException {
-        Reader reader = readPrep.newReader();
+        Reader reader = source.newReader();
         try {
             Properties properties = new Properties();
             properties.load(reader);
@@ -45,8 +55,7 @@ public class DefaultParseLoadPreparation
 
         return new AbstractImmediateIteratorX<Object, IOException>() {
 
-            InputStream in = readPrep.newInputStream();
-            ObjectInputStream objIn = new ObjectInputStream(in);
+            ObjectInput in = source.newObjectInput();
 
             @Override
             public Object next()
@@ -54,12 +63,12 @@ public class DefaultParseLoadPreparation
                 if (isEnded())
                     return null;
                 try {
-                    Object object = objIn.readObject();
+                    Object object = in.readObject();
                     return object;
                 } catch (ClassNotFoundException e) {
                     throw new IOException(e.getMessage(), e);
                 } catch (EOFException e) {
-                    objIn.close();
+                    in.close();
                     return end();
                 }
             }

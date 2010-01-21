@@ -5,6 +5,6 @@ import net.bodz.bas.flow.Unit;
 /**
  * tag interface
  */
-public interface Sink extends Unit {
+public interface SinkUnit extends Unit {
 
 }

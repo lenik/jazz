@@ -12,7 +12,7 @@ import net.bodz.bas.sio.ICharIn;
 import net.bodz.bas.sio.InputStreamByteIn;
 import net.bodz.bas.sio.ReaderCharIn;
 
-public class ReaderInputSource
+public class ReaderSource
         extends AbstractStreamInputSource {
 
     private final Reader in;
@@ -21,7 +21,7 @@ public class ReaderInputSource
      * @throws NullPointerException
      *             If <code>reader</code> is <code>null</code>.
      */
-    public ReaderInputSource(Reader in) {
+    public ReaderSource(Reader in) {
         if (in == null)
             throw new NullPointerException("in");
         this.in = in;

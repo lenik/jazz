@@ -3,17 +3,17 @@ package net.bodz.bas.flow.units.builtin.sinks;
 import java.io.IOException;
 import java.io.Writer;
 
-public class WriterSink extends TextProcessSink {
+public class WriterSinkUnit extends TextProcessSinkUnit {
 
     private Writer out;
     private boolean autoFlush;
 
-    public WriterSink(Writer out, boolean autoFlush) throws IOException {
+    public WriterSinkUnit(Writer out, boolean autoFlush) throws IOException {
         this.out = out;
         this.autoFlush = autoFlush;
     }
 
-    public WriterSink(Writer out) throws IOException {
+    public WriterSinkUnit(Writer out) throws IOException {
         this(out, false);
     }
 

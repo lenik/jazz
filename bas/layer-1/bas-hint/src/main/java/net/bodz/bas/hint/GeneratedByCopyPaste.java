@@ -14,4 +14,6 @@ public @interface GeneratedByCopyPaste {
      */
     Class<?> value() default void.class;
 
+    String method() default "";
+
 }

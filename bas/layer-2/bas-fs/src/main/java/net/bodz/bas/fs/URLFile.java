@@ -17,10 +17,10 @@ import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.collection.util.IteratorToList;
 import net.bodz.bas.exceptions.ReadOnlyException;
-import net.bodz.bas.io.preparation.AbstractStreamReadPreparation;
-import net.bodz.bas.io.preparation.AbstractStreamWritePreparation;
-import net.bodz.bas.io.preparation.IStreamReadPreparation;
-import net.bodz.bas.io.preparation.IStreamWritePreparation;
+import net.bodz.bas.io.resource.preparation.IStreamReadPreparation;
+import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
+import net.bodz.bas.io.resource.preparation.StreamReadPreparation;
+import net.bodz.bas.io.resource.preparation.StreamWritePreparation;
 
 public class URLFile
         extends AbstractFile
@@ -182,7 +182,7 @@ public class URLFile
     }
 
     class ReadPreparation
-            extends AbstractStreamReadPreparation {
+            extends StreamReadPreparation {
 
         public ReadPreparation() {
             super(URLFile.this);
@@ -197,7 +197,7 @@ public class URLFile
     }
 
     class WritePreparation
-            extends AbstractStreamWritePreparation {
+            extends StreamWritePreparation {
 
         public WritePreparation() {
             super(URLFile.this);

@@ -7,6 +7,8 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.Writer;
 
+import net.bodz.bas.io.resource.preparation.IFormatDumpPreparation;
+import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
 import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.IByteOutNative;
 import net.bodz.bas.sio.ICharOut;
@@ -77,6 +79,18 @@ public abstract class AbstractStreamResource
     public IByteOutNative newByteOutNative()
             throws IOException {
         return asotImpl.newByteOutNative();
+    }
+
+    @Override
+    public IFormatDumpPreparation forDump()
+            throws IOException {
+        return asotImpl.forDump();
+    }
+
+    @Override
+    public IStreamWritePreparation forWrite()
+            throws IOException {
+        return asotImpl.forWrite();
     }
 
 }

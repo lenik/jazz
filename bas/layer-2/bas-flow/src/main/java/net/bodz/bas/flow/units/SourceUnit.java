@@ -7,7 +7,7 @@ import net.bodz.bas.flow.Unit;
 /**
  * tag interface
  */
-public interface Source extends Unit {
+public interface SourceUnit extends Unit {
 
     /**
      * @param timeout

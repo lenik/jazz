@@ -17,8 +17,8 @@ import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.collection.util.IteratorToList;
 import net.bodz.bas.exceptions.ReadOnlyException;
-import net.bodz.bas.io.preparation.AbstractStreamReadPreparation;
-import net.bodz.bas.io.preparation.AbstractStreamWritePreparation;
+import net.bodz.bas.io.resource.preparation.StreamReadPreparation;
+import net.bodz.bas.io.resource.preparation.StreamWritePreparation;
 
 public class ZippedFolder
         extends AbstractFsEntry
@@ -278,7 +278,7 @@ public class ZippedFolder
         }
 
         class ReadPreparation
-                extends AbstractStreamReadPreparation {
+                extends StreamReadPreparation {
 
             private InputStream entryIn;
 
@@ -297,12 +297,12 @@ public class ZippedFolder
         }
 
         @Override
-        public AbstractStreamReadPreparation forRead() {
+        public StreamReadPreparation forRead() {
             return new ReadPreparation();
         }
 
         @Override
-        public AbstractStreamWritePreparation forWrite() {
+        public StreamWritePreparation forWrite() {
             throw new UnsupportedOperationException();
         }
 

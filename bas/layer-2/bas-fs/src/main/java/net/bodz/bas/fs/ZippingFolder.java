@@ -14,9 +14,9 @@ import net.bodz.bas.closure.IFilter;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.collection.util.IteratorToList;
 import net.bodz.bas.io.ZipEntryOutputStream;
-import net.bodz.bas.io.preparation.AbstractStreamWritePreparation;
-import net.bodz.bas.io.preparation.IStreamReadPreparation;
-import net.bodz.bas.io.preparation.IStreamWritePreparation;
+import net.bodz.bas.io.resource.preparation.IStreamReadPreparation;
+import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
+import net.bodz.bas.io.resource.preparation.StreamWritePreparation;
 
 public class ZippingFolder
         extends AbstractFsEntry
@@ -261,7 +261,7 @@ public class ZippingFolder
         }
 
         class WritePreparation
-                extends AbstractStreamWritePreparation {
+                extends StreamWritePreparation {
 
             public WritePreparation() {
                 super(ZippingFile.this);

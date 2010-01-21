@@ -1,15 +1,16 @@
 package net.bodz.bas.flow.units.builtin.text;
 
-import static net.bodz.bas.text.codec.Encodings.HEX;
-
 import java.io.IOException;
 import java.util.Arrays;
 
 import net.bodz.bas.flow.Stateless;
+import net.bodz.bas.text.codec.builtin.HexCodec;
 
 @Stateless
 public class Binary_Hex
         extends BinaryProcessUnit {
+
+    static final HexCodec hexCodec = HexCodec.getInstance();
 
     @Override
     public void reset()
@@ -31,7 +32,7 @@ public class Binary_Hex
     @Override
     public void recv(byte[] bytes)
             throws IOException {
-        String hex = HEX.encode(bytes);
+        String hex = hexCodec.encode(bytes);
         send(hex);
     }
 

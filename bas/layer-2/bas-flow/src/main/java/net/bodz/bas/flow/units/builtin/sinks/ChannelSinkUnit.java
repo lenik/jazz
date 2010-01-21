@@ -6,17 +6,17 @@ import java.nio.channels.WritableByteChannel;
 
 import net.bodz.bas.flow.units.builtin.DefaultConfig;
 
-public class ChannelSink
-        extends ByteProcessSink {
+public class ChannelSinkUnit
+        extends ByteProcessSinkUnit {
 
     private WritableByteChannel channel;
     private ByteBuffer buffer;
 
-    public ChannelSink() {
+    public ChannelSinkUnit() {
         this(DefaultConfig.defaultBlockSize);
     }
 
-    public ChannelSink(int blockSize) {
+    public ChannelSinkUnit(int blockSize) {
         buffer = ByteBuffer.allocate(blockSize);
     }
 

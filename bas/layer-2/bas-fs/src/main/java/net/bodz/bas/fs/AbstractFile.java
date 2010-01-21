@@ -6,8 +6,8 @@ import java.nio.charset.Charset;
 import net.bodz.bas.fs.preparation.HeuristicProbePreparation;
 import net.bodz.bas.fs.preparation.IProbePreparation;
 import net.bodz.bas.fs.preparation.LazyProbePreparation;
-import net.bodz.bas.io.preparation.DefaultFormatDumpPreparation;
-import net.bodz.bas.io.preparation.DefaultParseLoadPreparation;
+import net.bodz.bas.io.resource.preparation.FormatDumpPreparation;
+import net.bodz.bas.io.resource.preparation.ParseLoadPreparation;
 
 public abstract class AbstractFile
         extends AbstractFsEntry
@@ -69,13 +69,13 @@ public abstract class AbstractFile
     }
 
     @Override
-    public DefaultParseLoadPreparation forLoad() {
-        return new DefaultParseLoadPreparation(forRead());
+    public ParseLoadPreparation forLoad() {
+        return new ParseLoadPreparation(forRead());
     }
 
     @Override
-    public DefaultFormatDumpPreparation forDump() {
-        return new DefaultFormatDumpPreparation(forWrite());
+    public FormatDumpPreparation forDump() {
+        return new FormatDumpPreparation(forWrite());
     }
 
     @Override

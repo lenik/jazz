@@ -1,10 +1,12 @@
 package net.bodz.bas.sio;
 
+import java.io.Closeable;
+import java.io.Flushable;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
 public interface IByteOut
-        extends ISimpleByteOut {
+        extends ISimpleByteOut, Flushable, Closeable {
 
     /**
      * @throws NullPointerException
@@ -40,9 +42,11 @@ public interface IByteOut
     /**
      * The same to {@link #flush(boolean)} with <code>strict</code> set to <code>false</code>.
      */
+    @Override
     void flush()
             throws SIOException;
 
+    @Override
     void close()
             throws IOException;
 

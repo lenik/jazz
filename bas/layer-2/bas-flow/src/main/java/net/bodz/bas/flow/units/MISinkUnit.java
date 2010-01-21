@@ -2,7 +2,7 @@ package net.bodz.bas.flow.units;
 
 import net.bodz.bas.flow.OutPort;
 
-public abstract class SISink extends SIUnit implements Sink {
+public abstract class MISinkUnit extends MIUnit implements SinkUnit {
 
     @Override
     public int getOutPorts() {

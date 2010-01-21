@@ -77,7 +77,7 @@ public class A_bas {
             try {
                 PlainFile file = new PlainFile(new File(doc));
                 file.setCharset("utf-8");
-                doc = file.forRead().readString();
+                doc = file.forRead().readTextContents();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

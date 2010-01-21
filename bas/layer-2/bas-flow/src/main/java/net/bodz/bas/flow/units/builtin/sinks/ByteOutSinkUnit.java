@@ -5,19 +5,19 @@ import java.io.IOException;
 
 import net.bodz.bas.sio.IByteOut;
 
-public class ByteOutSink
-        extends ByteProcessSink {
+public class ByteOutSinkUnit
+        extends ByteProcessSinkUnit {
 
     private IByteOut out;
     private Flushable flushable;
 
-    public ByteOutSink(IByteOut out, boolean autoFlush)
+    public ByteOutSinkUnit(IByteOut out, boolean autoFlush)
             throws IOException {
         this.out = out;
         setAutoFlush(autoFlush);
     }
 
-    public ByteOutSink(IByteOut out)
+    public ByteOutSinkUnit(IByteOut out)
             throws IOException {
         this(out, false);
     }

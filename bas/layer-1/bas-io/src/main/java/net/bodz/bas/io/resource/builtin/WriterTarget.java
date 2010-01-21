@@ -12,7 +12,7 @@ import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.sio.OutputStreamByteOut;
 import net.bodz.bas.sio.WriterCharOut;
 
-public class WriterOutputTarget
+public class WriterTarget
         extends AbstractStreamOutputTarget {
 
     private final Writer out;
@@ -21,7 +21,7 @@ public class WriterOutputTarget
      * @throws NullPointerException
      *             If <code>out</code> is <code>null</code>.
      */
-    public WriterOutputTarget(Writer out) {
+    public WriterTarget(Writer out) {
         if (out == null)
             throw new NullPointerException("out");
         this.out = out;

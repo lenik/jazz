@@ -2,9 +2,9 @@ package net.bodz.bas.flow.units.builtin.sinks;
 
 import java.io.IOException;
 
-import net.bodz.bas.flow.units.SISink;
+import net.bodz.bas.flow.units.SISinkUnit;
 
-public class DumperSink extends SISink {
+public class DumperSinkUnit extends SISinkUnit {
 
     @Override
     public void flush() throws IOException {

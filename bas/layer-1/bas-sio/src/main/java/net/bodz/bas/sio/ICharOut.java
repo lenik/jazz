@@ -1,10 +1,12 @@
 package net.bodz.bas.sio;
 
+import java.io.Closeable;
+import java.io.Flushable;
 import java.io.IOException;
 import java.nio.CharBuffer;
 
 public interface ICharOut
-        extends ISimpleCharOut {
+        extends ISimpleCharOut, Flushable, Closeable {
 
     /**
      * @throws NullPointerException
@@ -59,9 +61,11 @@ public interface ICharOut
     /**
      * The same to {@link #flush(boolean)} with <code>strict</code> set to <code>false</code>.
      */
+    @Override
     void flush()
             throws SIOException;
 
+    @Override
     void close()
             throws IOException;
 
