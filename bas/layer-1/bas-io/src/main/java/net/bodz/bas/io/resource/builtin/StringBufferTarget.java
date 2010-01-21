@@ -1,10 +1,13 @@
 package net.bodz.bas.io.resource.builtin;
 
 import java.io.IOException;
+import java.nio.charset.CharsetDecoder;
 
 import net.bodz.bas.io.resource.AbstractStreamOutputTarget;
 import net.bodz.bas.sio.BCharOut;
+import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.ICharOut;
+import net.bodz.bas.sio.nio.DecodedByteOut;
 
 public class StringBufferTarget
         extends AbstractStreamOutputTarget {
@@ -21,14 +24,22 @@ public class StringBufferTarget
         this.buffer = buffer;
     }
 
+    public StringBuffer getBuffer() {
+        return buffer;
+    }
+
     @Override
     public ICharOut newCharOut()
             throws IOException {
         return new BCharOut(buffer);
     }
 
-    public StringBuffer getBuffer() {
-        return buffer;
+    @Override
+    public IByteOut newByteOut()
+            throws IOException {
+        ICharOut charOut = newCharOut();
+        CharsetDecoder decoder = getCharset().newDecoder();
+        return new DecodedByteOut(charOut, decoder);
     }
 
     @Override

@@ -6,8 +6,12 @@ import java.nio.CharBuffer;
 import net.bodz.bas.io.resource.AbstractStreamResource;
 import net.bodz.bas.sio.CharBufferCharIn;
 import net.bodz.bas.sio.CharBufferCharOut;
+import net.bodz.bas.sio.IByteIn;
+import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.ICharIn;
 import net.bodz.bas.sio.ICharOut;
+import net.bodz.bas.sio.nio.DecodedByteOut;
+import net.bodz.bas.sio.nio.EncodedByteIn;
 
 public class CharArrayResource
         extends AbstractStreamResource {
@@ -58,6 +62,18 @@ public class CharArrayResource
             throws IOException {
         CharBuffer charBuffer = CharBuffer.wrap(array, offset, length);
         return new CharBufferCharOut(charBuffer);
+    }
+
+    @Override
+    public IByteIn newByteIn()
+            throws IOException {
+        return new EncodedByteIn(newCharIn(), getCharset().newEncoder());
+    }
+
+    @Override
+    public IByteOut newByteOut()
+            throws IOException {
+        return new DecodedByteOut(newCharOut(), getCharset().newDecoder());
     }
 
 }

@@ -10,6 +10,10 @@ import java.io.PrintStream;
 import java.io.Writer;
 import java.nio.charset.Charset;
 
+import net.bodz.bas.io.resource.preparation.FormatDumpPreparation;
+import net.bodz.bas.io.resource.preparation.IFormatDumpPreparation;
+import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
+import net.bodz.bas.io.resource.preparation.StreamWritePreparation;
 import net.bodz.bas.sio.ByteOutNativeImpl;
 import net.bodz.bas.sio.ByteOutOutputStream;
 import net.bodz.bas.sio.CharOutImpl;
@@ -121,6 +125,18 @@ public abstract class AbstractStreamOutputTarget
         if (charOut instanceof ILineCharOut)
             return (ILineCharOut) charOut;
         return new CharOutImpl(charOut);
+    }
+
+    @Override
+    public IFormatDumpPreparation forDump()
+            throws IOException {
+        return new FormatDumpPreparation(this);
+    }
+
+    @Override
+    public IStreamWritePreparation forWrite()
+            throws IOException {
+        return new StreamWritePreparation(this);
     }
 
 }

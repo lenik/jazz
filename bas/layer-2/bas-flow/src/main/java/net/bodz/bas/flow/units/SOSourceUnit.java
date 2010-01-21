@@ -6,9 +6,9 @@ import net.bodz.bas.exceptions.IllegalUsageError;
 import net.bodz.bas.exceptions.UnexpectedException;
 import net.bodz.bas.flow.InPort;
 
-public abstract class SOSource
+public abstract class SOSourceUnit
         extends SOUnit
-        implements Source {
+        implements SourceUnit {
 
     @Override
     public int getInPorts() {

@@ -3,9 +3,9 @@ package net.bodz.bas.flow.units.builtin.sinks;
 import java.io.IOException;
 import java.nio.CharBuffer;
 
-import net.bodz.bas.flow.units.SISink;
+import net.bodz.bas.flow.units.SISinkUnit;
 
-public abstract class TextProcessSink extends SISink {
+public abstract class TextProcessSinkUnit extends SISinkUnit {
 
     public abstract void recv(char[] chars, int start, int end) throws IOException;
 

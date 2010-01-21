@@ -5,19 +5,19 @@ import java.io.IOException;
 
 import net.bodz.bas.sio.ICharOut;
 
-public class CharOutSink
-        extends TextProcessSink {
+public class CharOutSinkUnit
+        extends TextProcessSinkUnit {
 
     private ICharOut out;
     private Flushable flushable;
 
-    public CharOutSink(ICharOut out, boolean autoFlush)
+    public CharOutSinkUnit(ICharOut out, boolean autoFlush)
             throws IOException {
         this.out = out;
         setAutoFlush(autoFlush);
     }
 
-    public CharOutSink(ICharOut out)
+    public CharOutSinkUnit(ICharOut out)
             throws IOException {
         this(out, false);
     }

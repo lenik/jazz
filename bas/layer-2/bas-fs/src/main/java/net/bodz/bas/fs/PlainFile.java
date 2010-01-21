@@ -17,9 +17,9 @@ import net.bodz.bas.closure.IFilter;
 import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.collection.util.IteratorToList;
-import net.bodz.bas.io.preparation.AbstractStreamReadPreparation;
-import net.bodz.bas.io.preparation.AbstractStreamWritePreparation;
-import net.bodz.bas.io.preparation.IStreamReadPreparation;
+import net.bodz.bas.io.resource.preparation.IStreamReadPreparation;
+import net.bodz.bas.io.resource.preparation.StreamReadPreparation;
+import net.bodz.bas.io.resource.preparation.StreamWritePreparation;
 
 public class PlainFile
         extends AbstractFile
@@ -145,7 +145,7 @@ public class PlainFile
     }
 
     class ReadPreparation
-            extends AbstractStreamReadPreparation {
+            extends StreamReadPreparation {
 
         public ReadPreparation() {
             super(PlainFile.this);
@@ -160,7 +160,7 @@ public class PlainFile
     }
 
     class WritePreparation
-            extends AbstractStreamWritePreparation {
+            extends StreamWritePreparation {
 
         public WritePreparation() {
             super(PlainFile.this);
@@ -180,7 +180,7 @@ public class PlainFile
     }
 
     @Override
-    public AbstractStreamWritePreparation forWrite() {
+    public StreamWritePreparation forWrite() {
         return new WritePreparation();
     }
 

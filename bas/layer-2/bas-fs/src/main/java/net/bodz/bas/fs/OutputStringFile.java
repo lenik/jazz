@@ -11,10 +11,10 @@ import java.io.Writer;
 import java.net.URI;
 import java.net.URL;
 
-import net.bodz.bas.io.preparation.AbstractStreamReadPreparation;
-import net.bodz.bas.io.preparation.AbstractStreamWritePreparation;
-import net.bodz.bas.io.preparation.IStreamReadPreparation;
-import net.bodz.bas.io.preparation.IStreamWritePreparation;
+import net.bodz.bas.io.resource.preparation.IStreamReadPreparation;
+import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
+import net.bodz.bas.io.resource.preparation.StreamReadPreparation;
+import net.bodz.bas.io.resource.preparation.StreamWritePreparation;
 
 public class OutputStringFile
         extends AbstractFile {
@@ -133,7 +133,7 @@ public class OutputStringFile
     }
 
     class ReadPreparation
-            extends AbstractStreamReadPreparation {
+            extends StreamReadPreparation {
 
         public ReadPreparation() {
             super(OutputStringFile.this);
@@ -160,7 +160,7 @@ public class OutputStringFile
     }
 
     class WritePreparation
-            extends AbstractStreamWritePreparation {
+            extends StreamWritePreparation {
 
         public WritePreparation() {
             super(OutputStringFile.this);

@@ -3,8 +3,8 @@ package net.bodz.bas.flow;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-import net.bodz.bas.flow.units.builtin.sinks.DumperSink;
-import net.bodz.bas.flow.units.builtin.sources.InputStreamSource;
+import net.bodz.bas.flow.units.builtin.sinks.DumperSinkUnit;
+import net.bodz.bas.flow.units.builtin.sources.InputStreamSourceUnit;
 import net.bodz.bas.flow.units.builtin.text.BreakLinesUnit;
 import net.bodz.bas.flow.units.builtin.text.BreakOrCutLinesUnit;
 import net.bodz.bas.flow.units.builtin.text.DecodeUnit;
@@ -15,12 +15,12 @@ import org.junit.Test;
 
 public class _UnitTest {
 
-    InputStreamSource src;
+    InputStreamSourceUnit src;
     DecodeUnit decoder;
     TeeUnit tee;
     BreakLinesUnit breakLines;
     BreakOrCutLinesUnit breakOrCut;
-    DumperSink dumper;
+    DumperSinkUnit dumper;
     GrabberUnit lineGrabber;
 
     static final int BLOCKSIZE = 8;
@@ -28,7 +28,7 @@ public class _UnitTest {
 
     void init(byte[] bin) throws IOException {
         ByteArrayInputStream in = new ByteArrayInputStream(bin);
-        src = new InputStreamSource(in, BLOCKSIZE);
+        src = new InputStreamSourceUnit(in, BLOCKSIZE);
         src.setDst(decoder = new DecodeUnit("utf-8")); 
         decoder.setDst(tee = new TeeUnit());
         tee.addOutPort(breakLines = new BreakLinesUnit());

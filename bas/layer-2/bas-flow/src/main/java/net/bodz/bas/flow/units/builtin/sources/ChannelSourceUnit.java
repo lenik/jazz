@@ -4,20 +4,20 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.ReadableByteChannel;
 
-import net.bodz.bas.flow.units.SOSource;
+import net.bodz.bas.flow.units.SOSourceUnit;
 import net.bodz.bas.flow.units.builtin.DefaultConfig;
 
-public class ChannelSource
-        extends SOSource {
+public class ChannelSourceUnit
+        extends SOSourceUnit {
 
     private ReadableByteChannel channel;
     private ByteBuffer buffer;
 
-    public ChannelSource() {
+    public ChannelSourceUnit() {
         this(DefaultConfig.defaultBlockSize);
     }
 
-    public ChannelSource(int blockSize) {
+    public ChannelSourceUnit(int blockSize) {
         buffer = ByteBuffer.allocate(blockSize);
     }
 

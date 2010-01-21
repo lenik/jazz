@@ -273,7 +273,7 @@ public class Mkbat
     static {
         try {
             batTempl = Files.classData(Mkbat.class, "batTempl");
-            batTemplBody = new URLFile(batTempl).forRead().readString();
+            batTemplBody = new URLFile(batTempl).forRead().readTextContents();
         } catch (IOException e) {
             throw new IdentifiedException(e.getMessage(), e);
         }

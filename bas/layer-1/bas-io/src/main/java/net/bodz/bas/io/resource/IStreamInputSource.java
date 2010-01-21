@@ -9,6 +9,8 @@ import java.io.Reader;
 
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.lookahead.LAReader;
+import net.bodz.bas.io.resource.preparation.IParseLoadPreparation;
+import net.bodz.bas.io.resource.preparation.IStreamReadPreparation;
 
 public interface IStreamInputSource
         extends ISimpleStreamInputSource {
@@ -53,6 +55,12 @@ public interface IStreamInputSource
      * @return non-<code>null</code> value.
      */
     LAReader newLAReader()
+            throws IOException;
+
+    IStreamReadPreparation forRead()
+            throws IOException;
+
+    IParseLoadPreparation forLoad()
             throws IOException;
 
 }

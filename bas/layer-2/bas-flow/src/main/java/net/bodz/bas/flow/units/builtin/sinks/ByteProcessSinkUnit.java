@@ -3,9 +3,9 @@ package net.bodz.bas.flow.units.builtin.sinks;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
-import net.bodz.bas.flow.units.SISink;
+import net.bodz.bas.flow.units.SISinkUnit;
 
-public abstract class ByteProcessSink extends SISink {
+public abstract class ByteProcessSinkUnit extends SISinkUnit {
 
     public abstract void recv(byte[] bytes, int start, int end) throws IOException;
 

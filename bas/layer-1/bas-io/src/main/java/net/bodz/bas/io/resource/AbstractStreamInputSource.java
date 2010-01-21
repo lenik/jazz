@@ -12,6 +12,10 @@ import java.nio.charset.Charset;
 
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.lookahead.LAReader;
+import net.bodz.bas.io.resource.preparation.IParseLoadPreparation;
+import net.bodz.bas.io.resource.preparation.IStreamReadPreparation;
+import net.bodz.bas.io.resource.preparation.ParseLoadPreparation;
+import net.bodz.bas.io.resource.preparation.StreamReadPreparation;
 import net.bodz.bas.sio.ByteInInputStream;
 import net.bodz.bas.sio.CharInReader;
 import net.bodz.bas.sio.IByteIn;
@@ -122,6 +126,18 @@ public abstract class AbstractStreamInputSource
         if (reader instanceof LineReader)
             return (LineReader) reader;
         return new LineReader(reader);
+    }
+
+    @Override
+    public IStreamReadPreparation forRead()
+            throws IOException {
+        return new StreamReadPreparation(this);
+    }
+
+    @Override
+    public IParseLoadPreparation forLoad()
+            throws IOException {
+        return new ParseLoadPreparation(this);
     }
 
 }

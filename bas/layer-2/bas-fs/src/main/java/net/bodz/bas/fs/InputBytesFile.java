@@ -8,9 +8,9 @@ import java.io.StringReader;
 import java.net.URI;
 import java.net.URL;
 
-import net.bodz.bas.io.preparation.AbstractStreamReadPreparation;
-import net.bodz.bas.io.preparation.IStreamReadPreparation;
-import net.bodz.bas.io.preparation.IStreamWritePreparation;
+import net.bodz.bas.io.resource.preparation.IStreamReadPreparation;
+import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
+import net.bodz.bas.io.resource.preparation.StreamReadPreparation;
 
 public class InputBytesFile
         extends AbstractFile {
@@ -136,7 +136,7 @@ public class InputBytesFile
     }
 
     class ReadPreparation
-            extends AbstractStreamReadPreparation {
+            extends StreamReadPreparation {
 
         public ReadPreparation(IFile file) {
             super(InputBytesFile.this);

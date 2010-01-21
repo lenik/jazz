@@ -7,6 +7,8 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.Writer;
 
+import net.bodz.bas.io.resource.preparation.IFormatDumpPreparation;
+import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
 import net.bodz.bas.sio.IByteOutNative;
 import net.bodz.bas.sio.ILineCharOut;
 
@@ -53,6 +55,12 @@ public interface IStreamOutputTarget
      * @return non-<code>null</code> value.
      */
     Writer newWriter()
+            throws IOException;
+
+    IStreamWritePreparation forWrite()
+            throws IOException;
+
+    IFormatDumpPreparation forDump()
             throws IOException;
 
 }

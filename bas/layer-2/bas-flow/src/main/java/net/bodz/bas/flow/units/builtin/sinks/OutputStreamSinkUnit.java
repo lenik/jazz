@@ -3,17 +3,17 @@ package net.bodz.bas.flow.units.builtin.sinks;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class OutputStreamSink extends ByteProcessSink {
+public class OutputStreamSinkUnit extends ByteProcessSinkUnit {
 
     private OutputStream out;
     private boolean autoFlush;
 
-    public OutputStreamSink(OutputStream out, boolean autoFlush) throws IOException {
+    public OutputStreamSinkUnit(OutputStream out, boolean autoFlush) throws IOException {
         this.out = out;
         this.autoFlush = autoFlush;
     }
 
-    public OutputStreamSink(OutputStream out) throws IOException {
+    public OutputStreamSinkUnit(OutputStream out) throws IOException {
         this(out, false);
     }
 

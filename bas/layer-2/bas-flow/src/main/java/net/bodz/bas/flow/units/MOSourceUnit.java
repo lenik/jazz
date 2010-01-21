@@ -2,7 +2,7 @@ package net.bodz.bas.flow.units;
 
 import net.bodz.bas.flow.InPort;
 
-public abstract class MOSource extends MOUnit implements Source {
+public abstract class MOSourceUnit extends MOUnit implements SourceUnit {
 
     @Override
     public int getInPorts() {

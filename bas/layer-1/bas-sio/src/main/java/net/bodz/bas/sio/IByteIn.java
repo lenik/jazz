@@ -1,10 +1,11 @@
 package net.bodz.bas.sio;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
 public interface IByteIn
-        extends ISimpleByteIn {
+        extends ISimpleByteIn, Closeable {
 
     /**
      * @throws NullPointerException
@@ -29,6 +30,7 @@ public interface IByteIn
     int read(ByteBuffer buffer)
             throws IOException;
 
+    @Override
     void close()
             throws IOException;
 
