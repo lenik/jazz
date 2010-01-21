@@ -5,19 +5,24 @@ import java.nio.CharBuffer;
 
 import net.bodz.bas.flow.units.SISinkUnit;
 
-public abstract class TextProcessSinkUnit extends SISinkUnit {
+public abstract class TextProcessSinkUnit
+        extends SISinkUnit {
 
-    public abstract void recv(char[] chars, int start, int end) throws IOException;
+    public abstract void recv(char[] chars, int start, int end)
+            throws IOException;
 
-    public void recv(char[] chars) throws IOException {
+    public void recv(char[] chars)
+            throws IOException {
         recv(chars, 0, chars.length);
     }
 
-    public void recv(String string) throws IOException {
+    public void recv(String string)
+            throws IOException {
         recv(string.toCharArray());
     }
 
-    public void recv(CharBuffer chars) throws IOException {
+    public void recv(CharBuffer chars)
+            throws IOException {
         recv(chars.array(), chars.position(), chars.limit());
     }
 

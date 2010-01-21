@@ -1,8 +1,10 @@
 package net.bodz.bas.flow.units;
 
-import net.bodz.bas.flow.OutPort;
+import net.bodz.bas.flow.IOutPort;
 
-public abstract class MISinkUnit extends MIUnit implements SinkUnit {
+public abstract class MISinkUnit
+        extends MIUnit
+        implements ISinkUnit {
 
     @Override
     public int getOutPorts() {
@@ -10,7 +12,7 @@ public abstract class MISinkUnit extends MIUnit implements SinkUnit {
     }
 
     @Override
-    public OutPort getOutPort(int portIndex) {
+    public IOutPort getOutPort(int portIndex) {
         throw new IndexOutOfBoundsException();
     }
 

@@ -1,21 +1,21 @@
 package net.bodz.bas.flow.util;
 
-import net.bodz.bas.flow.Port;
-import net.bodz.bas.flow.Unit;
+import net.bodz.bas.flow.IPort;
+import net.bodz.bas.flow.IUnit;
 import net.bodz.bas.text.util.Strings;
 
 public class Naming {
 
-    public static String getDefaultName(Unit unit) {
+    public static String getDefaultName(IUnit unit) {
         String name = unit.getClass().getSimpleName();
-        if (name.endsWith("unit")) 
+        if (name.endsWith("unit"))
             name = name.substring(0, name.length() - 4);
         return Strings.lcfirst(name);
     }
 
-    public static String getDefaultName(Port port) {
+    public static String getDefaultName(IPort port) {
         String name = port.getClass().getSimpleName();
-        if (name.endsWith("port")) 
+        if (name.endsWith("port"))
             name = name.substring(0, name.length() - 4);
         return Strings.lcfirst(name);
     }

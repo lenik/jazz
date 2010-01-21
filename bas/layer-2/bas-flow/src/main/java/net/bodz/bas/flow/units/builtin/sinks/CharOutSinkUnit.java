@@ -3,8 +3,12 @@ package net.bodz.bas.flow.units.builtin.sinks;
 import java.io.Flushable;
 import java.io.IOException;
 
+import net.bodz.bas.flow.units.sinks.CharOutSinkUnitTest;
 import net.bodz.bas.sio.ICharOut;
 
+/**
+ * @test {@link CharOutSinkUnitTest}
+ */
 public class CharOutSinkUnit
         extends TextProcessSinkUnit {
 
@@ -36,7 +40,7 @@ public class CharOutSinkUnit
 
     public void setAutoFlush(boolean autoFlush) {
         if (autoFlush && out instanceof Flushable)
-            this.flushable = (Flushable) out;
+            this.flushable = out;
     }
 
     @Override

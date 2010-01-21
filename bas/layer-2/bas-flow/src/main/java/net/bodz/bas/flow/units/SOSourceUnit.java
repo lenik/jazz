@@ -4,11 +4,11 @@ import java.io.IOException;
 
 import net.bodz.bas.exceptions.IllegalUsageError;
 import net.bodz.bas.exceptions.UnexpectedException;
-import net.bodz.bas.flow.InPort;
+import net.bodz.bas.flow.IInPort;
 
 public abstract class SOSourceUnit
         extends SOUnit
-        implements SourceUnit {
+        implements ISourceUnit {
 
     @Override
     public int getInPorts() {
@@ -16,7 +16,7 @@ public abstract class SOSourceUnit
     }
 
     @Override
-    public InPort getInPort(int index) {
+    public IInPort getInPort(int index) {
         throw new IllegalUsageError();
     }
 

@@ -6,12 +6,12 @@ import net.bodz.bas.flow.units.builtin.sinks.CharOutSinkUnit;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.ICharOut;
 
-public class CharOutSinkTest {
+public class CharOutSinkUnitTest {
 
     ICharOut charOut;
     CharOutSinkUnit charOutSink;
 
-    public CharOutSinkTest()
+    public CharOutSinkUnitTest()
             throws IOException {
         charOut = new BCharOut();
         charOutSink = new CharOutSinkUnit(charOut);

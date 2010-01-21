@@ -3,17 +3,20 @@ package net.bodz.bas.flow.units.builtin.sinks;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class OutputStreamSinkUnit extends ByteProcessSinkUnit {
+public class OutputStreamSinkUnit
+        extends ByteProcessSinkUnit {
 
     private OutputStream out;
     private boolean autoFlush;
 
-    public OutputStreamSinkUnit(OutputStream out, boolean autoFlush) throws IOException {
+    public OutputStreamSinkUnit(OutputStream out, boolean autoFlush)
+            throws IOException {
         this.out = out;
         this.autoFlush = autoFlush;
     }
 
-    public OutputStreamSinkUnit(OutputStream out) throws IOException {
+    public OutputStreamSinkUnit(OutputStream out)
+            throws IOException {
         this(out, false);
     }
 
@@ -34,16 +37,19 @@ public class OutputStreamSinkUnit extends ByteProcessSinkUnit {
     }
 
     @Override
-    public void reset() throws IOException {
+    public void reset()
+            throws IOException {
     }
 
     @Override
-    public void flush() throws IOException {
+    public void flush()
+            throws IOException {
         out.flush();
     }
 
     @Override
-    public void recv(byte[] bytes, int start, int end) throws IOException {
+    public void recv(byte[] bytes, int start, int end)
+            throws IOException {
         int length = end - start;
         out.write(bytes, start, length);
         if (isAutoFlush())

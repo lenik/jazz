@@ -9,7 +9,8 @@ import java.nio.charset.CoderResult;
 
 import net.bodz.bas.exceptions.IllegalUsageError;
 
-public class EncodeUnit extends TextProcessUnit {
+public class EncodeUnit
+        extends TextProcessUnit {
 
     private CharsetEncoder encoder;
     private CharBuffer unconv;
@@ -35,20 +36,23 @@ public class EncodeUnit extends TextProcessUnit {
     }
 
     @Override
-    public void reset() throws IOException {
+    public void reset()
+            throws IOException {
         unconv.reset();
         convBuf.reset();
     }
 
     @Override
-    public void flush() throws IOException {
+    public void flush()
+            throws IOException {
         assert convBuf.position() == 0;
         if (unconv.position() != 0)
             conv(true);
     }
 
     @Override
-    public void recv(char[] chars, int start, int end) throws IOException {
+    public void recv(char[] chars, int start, int end)
+            throws IOException {
         int length = end - start;
         while (length > 0) {
             int block = Math.min(length, unconv.remaining());
@@ -59,7 +63,8 @@ public class EncodeUnit extends TextProcessUnit {
         }
     }
 
-    void conv(boolean endOfInput) throws IOException {
+    void conv(boolean endOfInput)
+            throws IOException {
         unconv.flip();
         CoderResult result;
         do {
@@ -71,7 +76,7 @@ public class EncodeUnit extends TextProcessUnit {
             }
             // avoid empty-loop.
             else if (result.isOverflow())
-                throw new IllegalUsageError("capacity too small"); 
+                throw new IllegalUsageError("capacity too small");
             if (result.isError()) {
                 // remove the error char
                 char errChar = unconv.get();

@@ -5,22 +5,27 @@ import java.nio.CharBuffer;
 
 import net.bodz.bas.flow.units.SISOUnit;
 
-public abstract class TextProcessUnit extends SISOUnit {
+public abstract class TextProcessUnit
+        extends SISOUnit {
 
-    public abstract void recv(char[] chars, int start, int end) throws IOException;
+    public abstract void recv(char[] chars, int start, int end)
+            throws IOException;
 
-    public void recv(char[] chars) throws IOException {
+    public void recv(char[] chars)
+            throws IOException {
         recv(chars, 0, chars.length);
     }
 
     /**
      * {@link CharSequence} is interface, which isn't supported by MethodEx
      */
-    public void recv(String string) throws IOException {
+    public void recv(String string)
+            throws IOException {
         recv(string.toCharArray());
     }
 
-    public void recv(CharBuffer chars) throws IOException {
+    public void recv(CharBuffer chars)
+            throws IOException {
         recv(chars.array(), chars.position(), chars.limit());
     }
 

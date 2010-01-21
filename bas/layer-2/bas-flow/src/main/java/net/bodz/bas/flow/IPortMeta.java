@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import net.bodz.bas.hint.MetaData;
 
-public interface PortMeta
+public interface IPortMeta
         extends MetaData {
 
     /**

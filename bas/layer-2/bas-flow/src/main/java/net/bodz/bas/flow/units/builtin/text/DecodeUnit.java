@@ -9,7 +9,8 @@ import java.nio.charset.CoderResult;
 
 import net.bodz.bas.exceptions.IllegalUsageError;
 
-public class DecodeUnit extends BinaryProcessUnit {
+public class DecodeUnit
+        extends BinaryProcessUnit {
 
     private CharsetDecoder decoder;
     private ByteBuffer unconv;
@@ -35,20 +36,23 @@ public class DecodeUnit extends BinaryProcessUnit {
     }
 
     @Override
-    public void reset() throws IOException {
+    public void reset()
+            throws IOException {
         unconv.reset();
         convBuf.reset();
     }
 
     @Override
-    public void flush() throws IOException {
+    public void flush()
+            throws IOException {
         assert convBuf.position() == 0;
         if (unconv.position() != 0)
             conv(true);
     }
 
     @Override
-    public void recv(byte[] bytes, int start, int end) throws IOException {
+    public void recv(byte[] bytes, int start, int end)
+            throws IOException {
         int length = end - start;
         while (length > 0) {
             int block = Math.min(length, unconv.remaining());
@@ -59,7 +63,8 @@ public class DecodeUnit extends BinaryProcessUnit {
         }
     }
 
-    void conv(boolean endOfInput) throws IOException {
+    void conv(boolean endOfInput)
+            throws IOException {
         unconv.flip();
         CoderResult result;
         do {
@@ -71,7 +76,7 @@ public class DecodeUnit extends BinaryProcessUnit {
             }
             // avoid empty-loop.
             else if (result.isOverflow())
-                throw new IllegalUsageError("capacity too small"); 
+                throw new IllegalUsageError("capacity too small");
             if (result.isError()) {
                 // remove the error byte
                 byte errByte = unconv.get();

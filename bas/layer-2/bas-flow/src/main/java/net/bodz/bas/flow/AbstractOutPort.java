@@ -7,31 +7,31 @@ import net.bodz.bas.exceptions.IllegalUsageError;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 
-public abstract class _OutPort
-        extends _Port
-        implements OutPort {
+public abstract class AbstractOutPort
+        extends AbstractPort
+        implements IOutPort {
 
     private int index;
 
-    public _OutPort(Unit unit, int index) {
+    public AbstractOutPort(IUnit unit, int index) {
         super(unit);
         this.index = index;
     }
 
-    private static ClassLocal<PortMeta> metas;
+    private static ClassLocal<IPortMeta> metas;
     static {
-        metas = new ClassLocal<PortMeta>();
+        metas = new ClassLocal<IPortMeta>();
     }
 
     @Override
-    public PortMeta getOutPortMeta() {
-        Class<? extends _Port> clazz = getClass();
-        PortMeta meta = metas.get(clazz);
+    public IPortMeta getOutPortMeta() {
+        Class<? extends AbstractPort> clazz = getClass();
+        IPortMeta meta = metas.get(clazz);
         if (meta == null) {
             Class<?> metaClass = (Class<?>) InheritableAnnotation.getValue(clazz, MetaClass.class);
             if (metaClass != null)
                 try {
-                    meta = (PortMeta) Jdk7Reflect.newInstance(metaClass);
+                    meta = (IPortMeta) Jdk7Reflect.newInstance(metaClass);
                 } catch (ReflectiveOperationException e) {
                     throw new IllegalUsageError("Can't create instance for MetaClass: " + metaClass, e);
                 }
@@ -42,7 +42,7 @@ public abstract class _OutPort
         return meta;
     }
 
-    protected PortMeta createPortMeta() {
+    protected IPortMeta createPortMeta() {
         return new STPortMeta(getName(), Object.class);
     }
 

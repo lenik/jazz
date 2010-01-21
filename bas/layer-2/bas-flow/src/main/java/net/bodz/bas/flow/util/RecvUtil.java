@@ -3,7 +3,7 @@ package net.bodz.bas.flow.util;
 import java.io.IOException;
 
 import net.bodz.bas.collection.util.ClassLocal;
-import net.bodz.bas.flow.ReceiverEx;
+import net.bodz.bas.flow.IReceiverEx;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.reflect.method.MethodEx;
 import net.bodz.bas.reflect.util.Members;
@@ -27,9 +27,9 @@ public class RecvUtil {
         recvExLocal = new ClassLocal<MethodEx>();
     }
 
-    public static void recvEx(ReceiverEx exReceiver, Object data)
+    public static void recvEx(IReceiverEx exReceiver, Object data)
             throws IOException, ReflectiveOperationException {
-        Class<? extends ReceiverEx> clazz = exReceiver.getClass();
+        Class<? extends IReceiverEx> clazz = exReceiver.getClass();
         MethodEx recvEx = recvExLocal.get(clazz);
         if (recvEx == null) {
             recvEx = getRecvEx(clazz);

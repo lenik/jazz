@@ -3,7 +3,8 @@ package net.bodz.bas.flow;
 import java.util.Arrays;
 import java.util.Collection;
 
-public class STPortMeta extends _PortMeta {
+public class STPortMeta
+        extends AbstractPortMeta {
 
     private final Class<?> baseType;
 

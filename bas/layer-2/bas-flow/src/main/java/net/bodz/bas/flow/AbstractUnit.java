@@ -15,31 +15,31 @@ import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.ILineCharOut;
 import net.bodz.bas.text.util.Strings;
 
-public abstract class _Unit
-        implements Unit {
+public abstract class AbstractUnit
+        implements IUnit {
 
     public void send(int portIndex, Object data)
             throws IOException {
         if (portIndex < 0 || portIndex >= getOutPorts())
             throw new IndexOutOfBoundsException("out " + portIndex);
-        OutPort outPort = getOutPort(portIndex);
+        IOutPort outPort = getOutPort(portIndex);
         outPort.send(data);
     }
 
-    private static ClassLocal<UnitMeta> metas;
+    private static ClassLocal<IUnitMeta> metas;
     static {
-        metas = new ClassLocal<UnitMeta>();
+        metas = new ClassLocal<IUnitMeta>();
     }
 
     @Override
-    public UnitMeta getUnitMeta() {
-        Class<? extends _Unit> clazz = getClass();
-        UnitMeta meta = metas.get(clazz);
+    public IUnitMeta getUnitMeta() {
+        Class<? extends AbstractUnit> clazz = getClass();
+        IUnitMeta meta = metas.get(clazz);
         if (meta == null) {
             Class<?> metaClass = (Class<?>) InheritableAnnotation.getValue(clazz, MetaClass.class);
             if (metaClass != null)
                 try {
-                    meta = (UnitMeta) Jdk7Reflect.newInstance(metaClass);
+                    meta = (IUnitMeta) Jdk7Reflect.newInstance(metaClass);
                 } catch (ReflectiveOperationException e) {
                     throw new IllegalUsageError("Can't create instance for MetaClass: " + metaClass, e);
                 }
@@ -57,31 +57,31 @@ public abstract class _Unit
         return Naming.getDefaultName(this) + "@" + System.identityHashCode(this);
     }
 
-    protected UnitMeta createUnitMeta() {
-        return new _UnitMeta(getName());
+    protected IUnitMeta createUnitMeta() {
+        return new AbstractUnitMeta(getName());
     }
 
-    public void dumpGraph(ILineCharOut out, int indent, Set<Unit> loops) {
+    public void dumpGraph(ILineCharOut out, int indent, Set<IUnit> loops) {
         String prefix = Strings.repeat(indent * 4, ' ');
         out.println(prefix + getName());
 
         int outPorts = getOutPorts();
         for (int i = 0; i < outPorts; i++) {
-            OutPort outPort = getOutPort(i);
+            IOutPort outPort = getOutPort(i);
             out.print(prefix + "  " + outPort.getOutPortMeta().getName() //   
                     + "[" + i + "]");
-            Receiver dst = outPort.getDst();
+            IReceiver dst = outPort.getDst();
             if (dst != null)
                 out.print(" -> ");
             out.println();
 
-            if (dst instanceof InPort) {
-                InPort dstIn = (InPort) dst;
-                Unit dstUnit = dstIn.getUnit();
-                if (dstUnit instanceof _Unit) {
-                    _Unit _dstUnit = (_Unit) dstUnit;
+            if (dst instanceof IInPort) {
+                IInPort dstIn = (IInPort) dst;
+                IUnit dstUnit = dstIn.getUnit();
+                if (dstUnit instanceof AbstractUnit) {
+                    AbstractUnit _dstUnit = (AbstractUnit) dstUnit;
                     if (loops == null)
-                        loops = new HashSet<Unit>();
+                        loops = new HashSet<IUnit>();
                     else if (loops.contains(_dstUnit)) {
                         out.print(prefix + "    (ref) ");
                         out.println(_dstUnit.getName());

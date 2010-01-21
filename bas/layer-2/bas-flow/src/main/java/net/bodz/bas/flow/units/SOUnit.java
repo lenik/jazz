@@ -2,20 +2,20 @@ package net.bodz.bas.flow.units;
 
 import java.io.IOException;
 
-import net.bodz.bas.flow.OutPort;
-import net.bodz.bas.flow.PortMeta;
-import net.bodz.bas.flow.Receiver;
+import net.bodz.bas.flow.IOutPort;
+import net.bodz.bas.flow.IPortMeta;
+import net.bodz.bas.flow.IReceiver;
 import net.bodz.bas.flow.STPortMeta;
-import net.bodz.bas.flow.Unit;
-import net.bodz.bas.flow._Unit;
+import net.bodz.bas.flow.IUnit;
+import net.bodz.bas.flow.AbstractUnit;
 
 // code copy-paste from SISOUnit.
 
 public abstract class SOUnit
-        extends _Unit
-        implements OutPort {
+        extends AbstractUnit
+        implements IOutPort {
 
-    protected Receiver dst;
+    protected IReceiver dst;
 
     @Override
     public int getOutPorts() {
@@ -23,19 +23,19 @@ public abstract class SOUnit
     }
 
     @Override
-    public OutPort getOutPort(int portIndex) {
+    public IOutPort getOutPort(int portIndex) {
         if (portIndex != 0)
             throw new IndexOutOfBoundsException("out " + portIndex);
         return this;
     }
 
     @Override
-    public Unit getUnit() {
+    public IUnit getUnit() {
         return this;
     }
 
     @Override
-    public PortMeta getOutPortMeta() {
+    public IPortMeta getOutPortMeta() {
         return new STPortMeta("out", Object.class);
     }
 
@@ -45,12 +45,12 @@ public abstract class SOUnit
     }
 
     @Override
-    public Receiver getDst() {
+    public IReceiver getDst() {
         return dst;
     }
 
     @Override
-    public void setDst(Receiver dst)
+    public void setDst(IReceiver dst)
             throws IOException {
         this.dst = dst;
     }

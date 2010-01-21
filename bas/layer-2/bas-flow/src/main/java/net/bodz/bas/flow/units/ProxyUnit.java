@@ -1,22 +1,23 @@
 package net.bodz.bas.flow.units;
 
-import net.bodz.bas.flow.InPort;
-import net.bodz.bas.flow.OutPort;
-import net.bodz.bas.flow.Unit;
-import net.bodz.bas.flow.UnitMeta;
+import net.bodz.bas.flow.IInPort;
+import net.bodz.bas.flow.IOutPort;
+import net.bodz.bas.flow.IUnit;
+import net.bodz.bas.flow.IUnitMeta;
 
-public abstract class ProxyUnit implements Unit {
+public abstract class ProxyUnit
+        implements IUnit {
 
-    protected final Unit proxy;
-    private InPort[] inPorts;
-    private OutPort[] outPorts;
+    protected final IUnit proxy;
+    private IInPort[] inPorts;
+    private IOutPort[] outPorts;
 
-    public ProxyUnit(Unit proxy) {
+    public ProxyUnit(IUnit proxy) {
         this.proxy = proxy;
     }
 
     @Override
-    public UnitMeta getUnitMeta() {
+    public IUnitMeta getUnitMeta() {
         return proxy.getUnitMeta();
     }
 
@@ -30,17 +31,17 @@ public abstract class ProxyUnit implements Unit {
         return proxy.getOutPorts();
     }
 
-    protected abstract InPort getInPort(int portIndex, InPort proxyPort);
+    protected abstract IInPort getInPort(int portIndex, IInPort proxyPort);
 
-    protected abstract OutPort getOutPort(int portIndex, OutPort proxyPort);
+    protected abstract IOutPort getOutPort(int portIndex, IOutPort proxyPort);
 
     @Override
-    public InPort getInPort(int portIndex) {
+    public IInPort getInPort(int portIndex) {
         if (inPorts == null)
-            inPorts = new InPort[proxy.getInPorts()];
-        InPort inPort = inPorts[portIndex];
+            inPorts = new IInPort[proxy.getInPorts()];
+        IInPort inPort = inPorts[portIndex];
         if (inPort == null) {
-            InPort proxyInPort = proxy.getInPort(portIndex);
+            IInPort proxyInPort = proxy.getInPort(portIndex);
             inPort = getInPort(portIndex, proxyInPort);
             inPorts[portIndex] = inPort;
         }
@@ -48,12 +49,12 @@ public abstract class ProxyUnit implements Unit {
     }
 
     @Override
-    public OutPort getOutPort(int portIndex) {
+    public IOutPort getOutPort(int portIndex) {
         if (outPorts == null)
-            outPorts = new OutPort[proxy.getOutPorts()];
-        OutPort outPort = outPorts[portIndex];
+            outPorts = new IOutPort[proxy.getOutPorts()];
+        IOutPort outPort = outPorts[portIndex];
         if (outPort == null) {
-            OutPort proxyOutPort = proxy.getOutPort(portIndex);
+            IOutPort proxyOutPort = proxy.getOutPort(portIndex);
             outPort = getOutPort(portIndex, proxyOutPort);
             outPorts[portIndex] = outPort;
         }

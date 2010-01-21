@@ -7,7 +7,8 @@ import net.bodz.bas.collection.preorder.TypeHierSet;
 /**
  * Multi-Type Port
  */
-public class MTPortMeta extends _PortMeta {
+public class MTPortMeta
+        extends AbstractPortMeta {
 
     private final TypeHierSet baseTypes;
 
