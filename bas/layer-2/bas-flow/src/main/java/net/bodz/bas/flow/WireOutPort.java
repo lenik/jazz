@@ -5,13 +5,14 @@ import java.io.IOException;
 /**
  * out sender -> dst-receiver
  */
-public class WireOutPort extends _OutPort {
+public class WireOutPort
+        extends AbstractOutPort {
 
     private String name;
-    private PortMeta meta;
-    protected Receiver dst;
+    private IPortMeta meta;
+    protected IReceiver dst;
 
-    public WireOutPort(String name, Unit unit, int index) {
+    public WireOutPort(String name, IUnit unit, int index) {
         super(unit, index);
         this.name = name;
     }
@@ -22,35 +23,38 @@ public class WireOutPort extends _OutPort {
     }
 
     @Override
-    public PortMeta getOutPortMeta() {
+    public IPortMeta getOutPortMeta() {
         if (meta == null)
             meta = createPortMeta();
         return meta;
     }
 
     @Override
-    protected PortMeta createPortMeta() {
+    protected IPortMeta createPortMeta() {
         return new STPortMeta(name, Object.class);
     }
 
     @Override
-    public Receiver getDst() {
+    public IReceiver getDst() {
         return dst;
     }
 
     @Override
-    public void setDst(Receiver dst) throws IOException {
+    public void setDst(IReceiver dst)
+            throws IOException {
         this.dst = dst;
     }
 
     @Override
-    public void send(Object data) throws IOException {
+    public void send(Object data)
+            throws IOException {
         if (dst != null)
             dst.recv(data);
     }
 
     @Override
-    public void flush() throws IOException {
+    public void flush()
+            throws IOException {
         if (dst != null)
             dst.flush();
     }

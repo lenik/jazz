@@ -1,10 +1,11 @@
 package net.bodz.bas.flow;
 
-public class _UnitMeta implements UnitMeta {
+public class AbstractUnitMeta
+        implements IUnitMeta {
 
     private final String name;
 
-    public _UnitMeta(String name) {
+    public AbstractUnitMeta(String name) {
         this.name = name;
     }
 

@@ -2,11 +2,12 @@ package net.bodz.bas.flow;
 
 import net.bodz.bas.flow.util.Naming;
 
-public abstract class _Port implements Port {
+public abstract class AbstractPort
+        implements IPort {
 
-    protected Unit unit;
+    protected IUnit unit;
 
-    public _Port(Unit unit) {
+    public AbstractPort(IUnit unit) {
         this.unit = unit;
     }
 
@@ -15,7 +16,7 @@ public abstract class _Port implements Port {
     }
 
     @Override
-    public Unit getUnit() {
+    public IUnit getUnit() {
         return unit;
     }
 

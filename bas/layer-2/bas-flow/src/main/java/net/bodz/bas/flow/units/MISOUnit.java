@@ -1,14 +1,16 @@
 package net.bodz.bas.flow.units;
 
-import net.bodz.bas.flow.InPort;
-import net.bodz.bas.flow.OutPort;
-import net.bodz.bas.flow.Sender;
-import net.bodz.bas.flow.Unit;
+import net.bodz.bas.flow.IInPort;
+import net.bodz.bas.flow.IOutPort;
+import net.bodz.bas.flow.ISender;
+import net.bodz.bas.flow.IUnit;
 
-public abstract class MISOUnit extends SOUnit implements Unit, Sender {
+public abstract class MISOUnit
+        extends SOUnit
+        implements IUnit, ISender {
 
-    private InPort[] inPorts;
-    private OutPort outPort;
+    private IInPort[] inPorts;
+    private IOutPort outPort;
 
     @Override
     public int getInPorts() {
@@ -21,12 +23,12 @@ public abstract class MISOUnit extends SOUnit implements Unit, Sender {
     }
 
     @Override
-    public InPort getInPort(int inPortIndex) {
+    public IInPort getInPort(int inPortIndex) {
         return inPorts[inPortIndex];
     }
 
     @Override
-    public OutPort getOutPort(int outPortIndex) {
+    public IOutPort getOutPort(int outPortIndex) {
         return outPort;
     }
 

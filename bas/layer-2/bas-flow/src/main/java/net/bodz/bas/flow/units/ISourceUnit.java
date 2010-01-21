@@ -2,19 +2,21 @@ package net.bodz.bas.flow.units;
 
 import java.io.IOException;
 
-import net.bodz.bas.flow.Unit;
+import net.bodz.bas.flow.IUnit;
 
 /**
  * tag interface
  */
-public interface SourceUnit extends Unit {
+public interface ISourceUnit
+        extends IUnit {
 
     /**
      * @param timeout
      *            the preferred max time to wait.
      * @return <code>false</code> if no more data, and the pump loop must quit.
      */
-    boolean pump(int timeout) throws IOException, InterruptedException;
+    boolean pump(int timeout)
+            throws IOException, InterruptedException;
 
     /**
      * pump immediately.
@@ -25,10 +27,13 @@ public interface SourceUnit extends Unit {
      * @return <code>false</code> if no immediately available data. this is different with
      *         {@link #pump(int)}.
      */
-    boolean pump() throws IOException;
+    boolean pump()
+            throws IOException;
 
-    void pumpLoop(int timeout) throws IOException, InterruptedException;
+    void pumpLoop(int timeout)
+            throws IOException, InterruptedException;
 
-    void pumpLoop() throws IOException;
+    void pumpLoop()
+            throws IOException;
 
 }

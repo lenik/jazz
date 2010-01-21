@@ -4,29 +4,33 @@ import java.io.IOException;
 
 import net.bodz.bas.exceptions.IllegalUsageError;
 
-public class SinkOutPort extends _OutPort {
+public class SinkOutPort
+        extends AbstractOutPort {
 
-    public SinkOutPort(Unit unit, int index) {
+    public SinkOutPort(IUnit unit, int index) {
         super(unit, index);
     }
 
     @Override
-    public InPort getDst() {
+    public IInPort getDst() {
         return null;
     }
 
     @Override
-    public void setDst(Receiver dst) throws IOException {
+    public void setDst(IReceiver dst)
+            throws IOException {
         throw new IllegalUsageError();
     }
 
     @Override
-    public void send(Object data) throws IOException {
+    public void send(Object data)
+            throws IOException {
         throw new IllegalUsageError();
     }
 
     @Override
-    public void flush() throws IOException {
+    public void flush()
+            throws IOException {
     }
 
 }

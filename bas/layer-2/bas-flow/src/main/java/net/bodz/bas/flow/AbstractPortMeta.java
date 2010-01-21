@@ -1,10 +1,11 @@
 package net.bodz.bas.flow;
 
-public abstract class _PortMeta implements PortMeta {
+public abstract class AbstractPortMeta
+        implements IPortMeta {
 
     private final String name;
 
-    public _PortMeta(String name) {
+    public AbstractPortMeta(String name) {
         this.name = name;
     }
 

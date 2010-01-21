@@ -1,6 +1,6 @@
 package net.bodz.bas.flow.qos;
 
-public interface TimeDriven {
+public interface ITimeDriven {
 
     void onSchedule();
 

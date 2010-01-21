@@ -1,10 +1,11 @@
 package net.bodz.bas.flow.units;
 
-import net.bodz.bas.flow.OutPort;
+import net.bodz.bas.flow.IOutPort;
 
-public abstract class SIMOUnit extends SIUnit {
+public abstract class SIMOUnit
+        extends SIUnit {
 
-    protected OutPort[] outPorts;
+    protected IOutPort[] outPorts;
 
     @Override
     public int getOutPorts() {
@@ -12,7 +13,7 @@ public abstract class SIMOUnit extends SIUnit {
     }
 
     @Override
-    public OutPort getOutPort(int outPortIndex) {
+    public IOutPort getOutPort(int outPortIndex) {
         return outPorts[outPortIndex];
     }
 

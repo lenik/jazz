@@ -3,17 +3,20 @@ package net.bodz.bas.flow.units.builtin.sinks;
 import java.io.IOException;
 import java.io.Writer;
 
-public class WriterSinkUnit extends TextProcessSinkUnit {
+public class WriterSinkUnit
+        extends TextProcessSinkUnit {
 
     private Writer out;
     private boolean autoFlush;
 
-    public WriterSinkUnit(Writer out, boolean autoFlush) throws IOException {
+    public WriterSinkUnit(Writer out, boolean autoFlush)
+            throws IOException {
         this.out = out;
         this.autoFlush = autoFlush;
     }
 
-    public WriterSinkUnit(Writer out) throws IOException {
+    public WriterSinkUnit(Writer out)
+            throws IOException {
         this(out, false);
     }
 
@@ -34,16 +37,19 @@ public class WriterSinkUnit extends TextProcessSinkUnit {
     }
 
     @Override
-    public void reset() throws IOException {
+    public void reset()
+            throws IOException {
     }
 
     @Override
-    public void flush() throws IOException {
+    public void flush()
+            throws IOException {
         out.flush();
     }
 
     @Override
-    public void recv(char[] chars, int start, int end) throws IOException {
+    public void recv(char[] chars, int start, int end)
+            throws IOException {
         int length = end - start;
         out.write(chars, start, length);
         if (autoFlush)

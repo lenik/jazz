@@ -2,7 +2,7 @@ package net.bodz.bas.flow;
 
 import net.bodz.bas.hint.MetaData;
 
-public interface UnitMeta
+public interface IUnitMeta
         extends MetaData {
 
     String getName();

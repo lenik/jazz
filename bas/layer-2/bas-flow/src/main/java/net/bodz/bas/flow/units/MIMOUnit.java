@@ -1,10 +1,11 @@
 package net.bodz.bas.flow.units;
 
-import net.bodz.bas.flow.OutPort;
+import net.bodz.bas.flow.IOutPort;
 
-public abstract class MIMOUnit extends MIUnit {
+public abstract class MIMOUnit
+        extends MIUnit {
 
-    private OutPort[] outPorts;
+    private IOutPort[] outPorts;
 
     @Override
     public int getOutPorts() {
@@ -12,7 +13,7 @@ public abstract class MIMOUnit extends MIUnit {
     }
 
     @Override
-    public OutPort getOutPort(int outPortIndex) {
+    public IOutPort getOutPort(int outPortIndex) {
         return outPorts[outPortIndex];
     }
 

@@ -1,6 +1,7 @@
 package net.bodz.bas.flow;
 
-public class BiosException extends Exception {
+public class BiosException
+        extends Exception {
 
     private static final long serialVersionUID = -2537553751509420233L;
 

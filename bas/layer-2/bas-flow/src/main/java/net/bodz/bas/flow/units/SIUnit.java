@@ -3,18 +3,18 @@ package net.bodz.bas.flow.units;
 import java.io.IOException;
 
 import net.bodz.bas.exceptions.OutOfDomainException;
-import net.bodz.bas.flow.InPort;
-import net.bodz.bas.flow.OutPort;
-import net.bodz.bas.flow.PortMeta;
-import net.bodz.bas.flow.ReceiverEx;
+import net.bodz.bas.flow.IInPort;
+import net.bodz.bas.flow.IOutPort;
+import net.bodz.bas.flow.IPortMeta;
+import net.bodz.bas.flow.IReceiverEx;
 import net.bodz.bas.flow.STPortMeta;
-import net.bodz.bas.flow.Unit;
-import net.bodz.bas.flow._Unit;
+import net.bodz.bas.flow.IUnit;
+import net.bodz.bas.flow.AbstractUnit;
 import net.bodz.bas.flow.util.RecvUtil;
 
 public abstract class SIUnit
-        extends _Unit
-        implements InPort, ReceiverEx {
+        extends AbstractUnit
+        implements IInPort, IReceiverEx {
 
     @Override
     public int getInPorts() {
@@ -22,19 +22,19 @@ public abstract class SIUnit
     }
 
     @Override
-    public InPort getInPort(int portIndex) {
+    public IInPort getInPort(int portIndex) {
         if (portIndex != 0)
             throw new IndexOutOfBoundsException("in " + portIndex);
         return this;
     }
 
     @Override
-    public Unit getUnit() {
+    public IUnit getUnit() {
         return this;
     }
 
     @Override
-    public PortMeta getInPortMeta() {
+    public IPortMeta getInPortMeta() {
         return new STPortMeta("in", Object.class);
     }
 
@@ -44,12 +44,12 @@ public abstract class SIUnit
     }
 
     @Override
-    public void addSrc(OutPort srcPort)
+    public void addSrc(IOutPort srcPort)
             throws IOException {
     }
 
     @Override
-    public void removeSrc(OutPort srcPort)
+    public void removeSrc(IOutPort srcPort)
             throws IOException {
     }
 

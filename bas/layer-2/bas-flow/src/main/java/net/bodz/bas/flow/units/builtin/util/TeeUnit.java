@@ -4,23 +4,25 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.flow.OutPort;
-import net.bodz.bas.flow.Receiver;
+import net.bodz.bas.flow.IOutPort;
+import net.bodz.bas.flow.IReceiver;
 import net.bodz.bas.flow.Stateless;
 import net.bodz.bas.flow.WireOutPort;
 import net.bodz.bas.flow.units.SIUnit;
 
 @Stateless
-public class TeeUnit extends SIUnit {
+public class TeeUnit
+        extends SIUnit {
 
-    private List<OutPort> outPorts;
+    private List<IOutPort> outPorts;
 
     public TeeUnit() {
-        outPorts = new ArrayList<OutPort>();
+        outPorts = new ArrayList<IOutPort>();
     }
 
-    public TeeUnit(int initialPorts) throws IOException {
-        outPorts = new ArrayList<OutPort>(initialPorts);
+    public TeeUnit(int initialPorts)
+            throws IOException {
+        outPorts = new ArrayList<IOutPort>(initialPorts);
         for (int i = 0; i < initialPorts; i++)
             addOutPort();
     }
@@ -31,25 +33,28 @@ public class TeeUnit extends SIUnit {
     }
 
     @Override
-    public OutPort getOutPort(int outPortIndex) {
+    public IOutPort getOutPort(int outPortIndex) {
         return outPorts.get(outPortIndex);
     }
 
     int displayIndex;
 
-    public void addOutPort(Receiver dst) throws IOException {
+    public void addOutPort(IReceiver dst)
+            throws IOException {
         int newIndex = outPorts.size();
-        String name = "out-" + displayIndex++; 
-        OutPort port = new WireOutPort(name, this, newIndex);
+        String name = "out-" + displayIndex++;
+        IOutPort port = new WireOutPort(name, this, newIndex);
         port.setDst(dst);
         outPorts.add(port);
     }
 
-    public void addOutPort() throws IOException {
+    public void addOutPort()
+            throws IOException {
         addOutPort(null);
     }
 
-    public void removeOutPort(int index) throws IOException {
+    public void removeOutPort(int index)
+            throws IOException {
         outPorts.remove(index);
     }
 
@@ -67,18 +72,21 @@ public class TeeUnit extends SIUnit {
      * @see #resetOutPorts()
      */
     @Override
-    public void reset() throws IOException {
+    public void reset()
+            throws IOException {
     }
 
     @Override
-    public void flush() throws IOException {
-        for (OutPort outPort : outPorts)
+    public void flush()
+            throws IOException {
+        for (IOutPort outPort : outPorts)
             outPort.flush();
     }
 
     @Override
-    public void recv(Object data) throws IOException {
-        for (OutPort outPort : outPorts)
+    public void recv(Object data)
+            throws IOException {
+        for (IOutPort outPort : outPorts)
             outPort.send(data);
     }
 

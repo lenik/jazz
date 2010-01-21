@@ -1,11 +1,12 @@
 package net.bodz.bas.flow.units;
 
-import net.bodz.bas.flow.InPort;
-import net.bodz.bas.flow._Unit;
+import net.bodz.bas.flow.IInPort;
+import net.bodz.bas.flow.AbstractUnit;
 
-public abstract class MIUnit extends _Unit {
+public abstract class MIUnit
+        extends AbstractUnit {
 
-    private InPort[] inPorts;
+    private IInPort[] inPorts;
 
     @Override
     public int getInPorts() {
@@ -13,7 +14,7 @@ public abstract class MIUnit extends _Unit {
     }
 
     @Override
-    public InPort getInPort(int inPortIndex) {
+    public IInPort getInPort(int inPortIndex) {
         return inPorts[inPortIndex];
     }
 

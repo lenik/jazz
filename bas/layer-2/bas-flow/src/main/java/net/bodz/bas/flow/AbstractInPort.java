@@ -10,31 +10,31 @@ import net.bodz.bas.exceptions.OutOfDomainException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 
-public abstract class _InPort
-        extends _Port
-        implements InPort, ReceiverEx {
+public abstract class AbstractInPort
+        extends AbstractPort
+        implements IInPort, IReceiverEx {
 
     private int index;
 
-    public _InPort(Unit unit, int index) {
+    public AbstractInPort(IUnit unit, int index) {
         super(unit);
         this.index = index;
     }
 
-    private static ClassLocal<PortMeta> metas;
+    private static ClassLocal<IPortMeta> metas;
     static {
-        metas = new ClassLocal<PortMeta>();
+        metas = new ClassLocal<IPortMeta>();
     }
 
     @Override
-    public PortMeta getInPortMeta() {
-        Class<? extends _Port> clazz = getClass();
-        PortMeta meta = metas.get(clazz);
+    public IPortMeta getInPortMeta() {
+        Class<? extends AbstractPort> clazz = getClass();
+        IPortMeta meta = metas.get(clazz);
         if (meta == null) {
             Class<?> metaClass = (Class<?>) InheritableAnnotation.getValue(clazz, MetaClass.class);
             if (metaClass != null)
                 try {
-                    meta = (PortMeta) Jdk7Reflect.newInstance(metaClass);
+                    meta = (IPortMeta) Jdk7Reflect.newInstance(metaClass);
                 } catch (ReflectiveOperationException e) {
                     throw new IllegalUsageError("Can't create instance for MetaClass: " + metaClass, e);
                 }
@@ -45,7 +45,7 @@ public abstract class _InPort
         return meta;
     }
 
-    protected PortMeta createPortMeta() {
+    protected IPortMeta createPortMeta() {
         return new STPortMeta(getName(), Object.class);
     }
 
@@ -71,12 +71,12 @@ public abstract class _InPort
     }
 
     @Override
-    public void addSrc(OutPort srcPort)
+    public void addSrc(IOutPort srcPort)
             throws IOException {
     }
 
     @Override
-    public void removeSrc(OutPort srcPort)
+    public void removeSrc(IOutPort srcPort)
             throws IOException {
     }
 

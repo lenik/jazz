@@ -1,9 +1,10 @@
 package net.bodz.bas.flow.units;
 
-import net.bodz.bas.flow.OutPort;
-import net.bodz.bas.flow._Unit;
+import net.bodz.bas.flow.IOutPort;
+import net.bodz.bas.flow.AbstractUnit;
 
-public abstract class MOUnit extends _Unit {
+public abstract class MOUnit
+        extends AbstractUnit {
 
     @Override
     public int getOutPorts() {
@@ -11,7 +12,7 @@ public abstract class MOUnit extends _Unit {
     }
 
     @Override
-    public OutPort getOutPort(int portIndex) {
+    public IOutPort getOutPort(int portIndex) {
         return null;
     }
 
