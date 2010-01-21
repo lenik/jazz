@@ -1,8 +1,9 @@
 package net.bodz.bas.exceptions;
 
-public class NotImplementedException extends UnsupportedOperationException {
+public class NotImplementedException
+        extends UnsupportedOperationException {
 
-    private static final long serialVersionUID = 5315693899871858268L;
+    private static final long serialVersionUID = 1L;
 
     public NotImplementedException() {
         super();

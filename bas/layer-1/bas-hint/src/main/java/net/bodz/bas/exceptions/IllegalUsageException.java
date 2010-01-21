@@ -1,8 +1,9 @@
 package net.bodz.bas.exceptions;
 
-public class IllegalUsageException extends RuntimeException {
+public class IllegalUsageException
+        extends RuntimeException {
 
-    private static final long serialVersionUID = -2599285515413217778L;
+    private static final long serialVersionUID = 1L;
 
     public IllegalUsageException() {
         super();

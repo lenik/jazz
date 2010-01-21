@@ -1,8 +1,9 @@
 package net.bodz.bas.exceptions;
 
-public class CancelException extends RuntimeException {
+public class CancelException
+        extends RuntimeException {
 
-    private static final long serialVersionUID = 2709788898818459284L;
+    private static final long serialVersionUID = 1L;
 
     public CancelException() {
         super();

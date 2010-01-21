@@ -2,13 +2,15 @@ package net.bodz.bas.types;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import net.bodz.bas.collection.tree.TreePath;
 
 import org.junit.Test;
 
 public class TreePathTest {
 
     @Test
-    public void test1() throws Exception {
+    public void test1()
+            throws Exception {
         TreePath p = new TreePath("/abc/def");
         assertTrue(p.isAbsolute());
         assertEquals("/abc/def", p.getPath());

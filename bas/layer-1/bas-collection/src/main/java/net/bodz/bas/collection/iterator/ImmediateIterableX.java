@@ -31,7 +31,7 @@ public interface ImmediateIterableX<T, X extends Exception> {
      * </tr>
      * </table>
      */
-    ImmediateIteratorX<T, X> iterator(boolean allowOverlap)
+    ImmediateIteratorX<? extends T, ? extends X> iterator(boolean allowOverlap)
             throws X;
 
     // /**

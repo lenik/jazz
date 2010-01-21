@@ -20,7 +20,7 @@ package net.bodz.bas.exceptions;
 public class OutOfDomainException
         extends IllegalArgumentException {
 
-    private static final long serialVersionUID = -673378255529233385L;
+    private static final long serialVersionUID = 1L;
 
     public OutOfDomainException() {
         super();
@@ -48,7 +48,7 @@ public class OutOfDomainException
     // 3 (n<)
     public static String format(String arg, Object actualValue) {
         return String.valueOf(actualValue) + //
-                " (" + arg + ")";  
+                " (" + arg + ")";
     }
 
 }

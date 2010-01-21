@@ -1,6 +1,5 @@
 package net.bodz.bas.type.traits;
 
-
 public class ValidateException
         extends TypeSystemException {
 

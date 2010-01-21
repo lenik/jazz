@@ -80,7 +80,7 @@ class Util {
         return fieldobj;
     }
 
-    public static IParser<?> guessParser(TypeParser parser, Class<?> clazz)
+    public static IParser<?> guessParser(IParser<?> parser, Class<?> clazz)
             throws ParseException {
         if (parser == null)
             parser = (IParser<?>) TypeParsers.guess(clazz, true);

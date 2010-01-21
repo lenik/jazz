@@ -1,16 +1,18 @@
 package net.bodz.bas.cli;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.sql.Types;
+import java.util.Arrays;
 
 import net.bodz.bas.cli.a.ArgsParseBy;
 import net.bodz.bas.cli.a.OptionGroup;
+import net.bodz.bas.commons.scripting.ScriptException;
 import net.bodz.bas.commons.scripting.ScriptMethod;
-import net.bodz.bas.commons.util.Objects;
 import net.bodz.bas.exceptions.CreateException;
 import net.bodz.bas.exceptions.ParseException;
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
+import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.type.traits.IParser;
+import net.bodz.bas.type.util.ClassInstance;
 
 public class MethodOption
         extends _Option<CallInfo>
@@ -18,7 +20,7 @@ public class MethodOption
 
     private final Method method;
     private final int argc;
-    private final TypeParser[] parsers;
+    private final IParser<?>[] parsers;
 
     public MethodOption(String name, Method method, OptionGroup optgrp) {
         super(name, method, CallInfo.class, optgrp);
@@ -26,7 +28,7 @@ public class MethodOption
         method.setAccessible(true); // ...
 
         ArgsParseBy argsParseBy = method.getAnnotation(ArgsParseBy.class);
-        Class<? extends TypeParser>[] wants = _c0;
+        Class<? extends IParser<?>>[] wants = _c0;
         String[] wantParams = null;
         if (argsParseBy != null) {
             wants = argsParseBy.value();
@@ -34,15 +36,15 @@ public class MethodOption
         }
         Class<?>[] types = method.getParameterTypes();
         argc = types.length;
-        parsers = new TypeParser[argc];
+        parsers = new IParser<?>[argc];
         try {
             for (int i = 0; i < wants.length; i++) {
-                TypeParser parserInst;
+                IParser<?> parserInst;
                 if (i < wantParams.length)
-                    parserInst = Types.getClassInstance(wants[i], //
+                    parserInst = ClassInstance.getClassInstance(wants[i], //
                             wantParams[i]);
                 else
-                    parserInst = Types.getClassInstance(wants[i]);
+                    parserInst = ClassInstance.getClassInstance(wants[i]);
                 parsers[i] = Util.guessParser(parserInst, types[i]);
             }
             for (int i = wants.length; i < argc; i++) {
@@ -88,10 +90,8 @@ public class MethodOption
             parameters[i] = parseParameter(arg, i);
         }
         try {
-            return Control.invoke(method, object, parameters);
-        } catch (IllegalAccessException e) {
-            throw new ScriptException(e.getMessage(), e);
-        } catch (InvocationTargetException e) {
+            return Jdk7Reflect.invoke(method, object, parameters);
+        } catch (ReflectiveOperationException e) {
             throw new ScriptException(e.getMessage(), e);
         }
     }
@@ -127,7 +127,7 @@ public class MethodOption
     public Class<?>[] getParameterTypes() {
         if (argvTypes == null) {
             argvTypes = new Class<?>[argc];
-            Objects.fill(argvTypes, String.class);
+            Arrays.fill(argvTypes, String.class);
         }
         return argvTypes;
     }
@@ -136,7 +136,7 @@ public class MethodOption
     public Object invoke(Object object, Object... parameters)
             throws ScriptException {
         String[] argv = new String[argc];
-        Objects.copy(parameters, 0, argv, 0, argc);
+        System.arraycopy(parameters, 0, argv, 0, argc);
         try {
             return call(object, argv);
         } catch (ParseException e) {

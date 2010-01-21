@@ -1,20 +1,20 @@
 package net.bodz.bas.files;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
+import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.db.filedb.PartRecords;
 import net.bodz.bas.db.filedb.PartRecords.PartMap;
+import net.bodz.bas.fs.legacy.Files;
 
 import org.junit.Test;
 
@@ -22,7 +22,7 @@ public class PartRecordsTest {
 
     static String map2str(Map<String, String> map) {
         if (map == null)
-            return "(null)"; 
+            return "(null)";
         List<String> keys = new ArrayList<String>(map.keySet());
         Collections.sort(keys);
         StringBuffer buf = null;
@@ -30,46 +30,42 @@ public class PartRecordsTest {
             if (buf == null)
                 buf = new StringBuffer();
             else
-                buf.append(", "); 
+                buf.append(", ");
             String v = map.get(k);
-            buf.append(k + "=" + v); 
+            buf.append(k + "=" + v);
         }
         if (buf == null)
-            return ""; 
-        return buf.toString().replace("\r", "");  
+            return "";
+        return buf.toString().replace("\r", "");
     }
 
     @Test
-    public void test1() throws IOException {
-        URL url = Files.classData(getClass(), "1"); 
+    public void test1()
+            throws IOException {
+        URL url = Files.classData(getClass(), "1");
         ResLink resLink = new URLResLink(url);
         PartRecords maps = new PartRecords(resLink);
-        DirectIterator<PartMap, IOException> it = maps.iterator();
+        ImmediateIteratorX<? extends PartMap, ? extends IOException> it = maps.iterator(false);
         PartMap part;
 
-        part = it.getNext();
-        assertEquals("part A", ".=hello\nworld\n, age=10, name=a",  
-                map2str(part));
+        part = it.next();
+        assertEquals("part A", ".=hello\nworld\n, age=10, name=a", map2str(part));
 
-        part = it.getNext();
-        assertEquals("part B", ".=BBB\n, age=20, location=home\n, name=b",  
-                map2str(part));
+        part = it.next();
+        assertEquals("part B", ".=BBB\n, age=20, location=home\n, name=b", map2str(part));
 
-        part = it.getNext();
-        assertEquals("part C", ".=CCC\n", map2str(part));  
+        part = it.next();
+        assertEquals("part C", ".=CCC\n", map2str(part));
 
-        part = it.getNext();
-        assertEquals("part D", ".=DDD\n, name=d", map2str(part));  
+        part = it.next();
+        assertEquals("part D", ".=DDD\n, name=d", map2str(part));
 
-        part = it.getNext();
-        assertEquals("part E", ".=EEE\nFFF\n", map2str(part));  
+        part = it.next();
+        assertEquals("part E", ".=EEE\nFFF\n", map2str(part));
 
-        assertFalse(it.next());
-        try {
-            part = it.get();
-            fail("extra part: " + map2str(part)); 
-        } catch (NoSuchElementException e) {
-        }
+        assertTrue(it.isEnded());
+
+        assertNull(it.next());
     }
 
 }

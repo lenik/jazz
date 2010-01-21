@@ -3,7 +3,10 @@ package net.bodz.bas.sio;
 import java.io.IOException;
 
 public interface IByteOutLE
-        extends IByteOutNative {
+        extends IByteOut {
+
+    void writeLE(boolean b)
+            throws IOException;
 
     void writeLE(short s)
             throws IOException;

@@ -1,8 +1,9 @@
 package net.bodz.bas.exceptions;
 
-public class DontKnowException extends RuntimeException {
+public class DontKnowException
+        extends RuntimeException {
 
-    private static final long serialVersionUID = 3241400062992357227L;
+    private static final long serialVersionUID = 1L;
 
     private Object guessValue;
 

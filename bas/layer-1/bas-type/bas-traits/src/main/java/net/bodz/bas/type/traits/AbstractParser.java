@@ -8,7 +8,7 @@ public abstract class AbstractParser<T>
         implements IParser<T> {
 
     @Override
-    public final T parse(String text, INegotiation negotiation)
+    public T parse(String text, INegotiation negotiation)
             throws ParseException, UnsupportedNegotiationException {
         if (negotiation != null)
             negotiation.bypass();

@@ -1,6 +1,6 @@
 package net.bodz.bas.primitive;
 
-import net.bodz.bas.hint.GeneratedCode;
+import net.bodz.bas.hint.GeneratedByCopyPaste;
 
 public class ErrorToleranceDouble
         extends Number {
@@ -145,7 +145,7 @@ public class ErrorToleranceDouble
         return CC(r.min - max, r.max - min);
     }
 
-    @GeneratedCode
+    @GeneratedByCopyPaste
     public ErrorToleranceDouble mul(double r) {
         switch (comb2(r)) {
         case PP_PP: // M-X

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
-import java.nio.file.Path;
 
 import net.bodz.bas.type.traits.IAttributes;
 
@@ -15,11 +14,6 @@ public interface IFsEntry
      * @return <code>null</code> if not a {@link File}.
      */
     File getFile();
-
-    /**
-     * @return <code>null</code> if no {@link Path}.
-     */
-    Path getPath();
 
     /**
      * @return <code>null</code> if no {@link URI}.

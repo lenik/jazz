@@ -40,6 +40,7 @@ import net.bodz.bas.sio.ILineCharOut;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.text.util.StringArray;
 import net.bodz.bas.type.traits.AbstractParser;
+import net.bodz.bas.type.traits.IParser;
 import net.bodz.bas.ui.ConsoleUI;
 import net.bodz.bas.ui.UserInterface;
 import net.bodz.bas.util.PluginException;
@@ -209,7 +210,7 @@ public class BasicCLI
             if (valtype == String.class)
                 return (CLIPlugin) typeEx.newInstance((Object) args);
 
-            TypeParser parser = TypeParsers.guess(valtype, true);
+            IParser<?> parser = TypeParsers.guess(valtype, true);
             Object valarray = Array.newInstance(valtype, args.length);
             for (int i = 0; i < args.length; i++) {
                 Object val = parser.parse(args[i]);

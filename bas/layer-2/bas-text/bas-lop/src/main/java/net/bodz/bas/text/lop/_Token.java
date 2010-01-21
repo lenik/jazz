@@ -1,8 +1,8 @@
 package net.bodz.bas.text.lop;
 
 import net.bodz.bas.sio.BCharOut;
-import net.bodz.bas.text.lop.util.XYPosition;
-import net.bodz.bas.text.lop.util.XYTellable;
+import net.bodz.bas.sio.position.IXYTellable;
+import net.bodz.bas.sio.position.XYPosition;
 import net.bodz.bas.text.util.StringPrep;
 import net.bodz.bas.text.util.Strings;
 
@@ -16,11 +16,11 @@ public abstract class _Token implements Token {
     private int y;
     private int x;
 
-    public _Token(Lexer lexer, int id, XYTellable start) {
+    public _Token(Lexer lexer, int id, IXYTellable start) {
         this(lexer, id, null, start);
     }
 
-    public _Token(Lexer lexer, int id, Object value, XYTellable start) {
+    public _Token(Lexer lexer, int id, Object value, IXYTellable start) {
         if (lexer == null)
             throw new NullPointerException("lexer");
         this.lexer = lexer;
@@ -89,7 +89,7 @@ public abstract class _Token implements Token {
     }
 
     @Override
-    public XYTellable end() {
+    public IXYTellable end() {
         String text = getText();
         XYPosition end = new XYPosition(this).add(text);
         return end;

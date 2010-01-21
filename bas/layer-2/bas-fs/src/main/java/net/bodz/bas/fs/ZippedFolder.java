@@ -7,7 +7,6 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Path;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.zip.ZipEntry;
@@ -60,11 +59,6 @@ public class ZippedFolder
     @Override
     public File getFile() {
         return file.getFile();
-    }
-
-    @Override
-    public Path getPath() {
-        return file.getPath();
     }
 
     @Override

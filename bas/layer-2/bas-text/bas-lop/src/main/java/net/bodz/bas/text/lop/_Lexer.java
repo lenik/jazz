@@ -6,8 +6,8 @@ import java.util.Stack;
 import net.bodz.bas.collection.map.IndexMap;
 import net.bodz.bas.reflect.ReflectReverseSearch;
 import net.bodz.bas.sio.BCharOut;
-import net.bodz.bas.text.lop.util.XYPosition;
-import net.bodz.bas.text.lop.util.XYTellable;
+import net.bodz.bas.sio.position.IXYTellable;
+import net.bodz.bas.sio.position.XYPosition;
 import net.bodz.bas.text.util.StringPrep;
 
 public abstract class _Lexer
@@ -53,11 +53,11 @@ public abstract class _Lexer
 
     protected abstract int _read();
 
-    protected abstract XYTellable getTokenStart();
+    protected abstract IXYTellable getTokenStart();
 
     @Override
     public Token read() {
-        XYTellable prev = getTokenStart();
+        IXYTellable prev = getTokenStart();
         prevOffset = prev.tell();
         prevY = prev.tellY();
         prevX = prev.tellX();
@@ -69,7 +69,7 @@ public abstract class _Lexer
         return new Token(tokenId, value);
     }
 
-    public XYTellable getTokenStart(int history) {
+    public IXYTellable getTokenStart(int history) {
         switch (history) {
         case 0:
             return getTokenStart();

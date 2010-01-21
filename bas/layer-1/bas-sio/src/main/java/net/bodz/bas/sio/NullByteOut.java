@@ -35,7 +35,12 @@ public class NullByteOut
     }
 
     @Override
-    public void write(boolean b)
+    public void writeBE(boolean b)
+            throws IOException {
+    }
+
+    @Override
+    public void writeLE(boolean b)
             throws IOException {
     }
 

@@ -3,9 +3,9 @@ package net.bodz.bas.flow.util;
 import java.io.IOException;
 
 import net.bodz.bas.collection.util.ClassLocal;
-import net.bodz.bas.commons.scripting.util.MethodEx;
 import net.bodz.bas.flow.ReceiverEx;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
+import net.bodz.bas.reflect.method.MethodEx;
 import net.bodz.bas.reflect.util.Members;
 
 @SuppressWarnings("deprecation")

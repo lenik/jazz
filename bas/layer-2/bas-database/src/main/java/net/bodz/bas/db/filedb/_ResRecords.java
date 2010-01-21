@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 import net.bodz.bas.collection.iterator.ImmIterIterator;
-import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.collection.iterator.IteratorX;
 
 public abstract class _ResRecords<T>
@@ -25,15 +24,8 @@ public abstract class _ResRecords<T>
     }
 
     @Override
-    public ImmediateIteratorX<T, IOException> iterator(boolean allowOverlap)
-            throws IOException {
-        return null;
-    }
-
-    @Override
     public IteratorX<T, IOException> iterator() {
-        ImmediateIteratorX<T, IOException> immIter = iterator(false);
-        return new ImmIterIterator<T, IOException>(immIter);
+        return new ImmIterIterator<T, IOException>(iterator(false));
     }
 
 }

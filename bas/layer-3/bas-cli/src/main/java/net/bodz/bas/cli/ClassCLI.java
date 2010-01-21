@@ -18,7 +18,8 @@ import net.bodz.bas.closure.alt.Filt1;
 import net.bodz.bas.collection.comparator.StringLengthComparator;
 import net.bodz.bas.collection.util.ClassLocal;
 import net.bodz.bas.exceptions.ParseException;
-import net.bodz.bas.reflect.Reflects;
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
+import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.reflect.util.Members;
 import net.bodz.bas.text.util.Strings;
 
@@ -105,7 +106,11 @@ public class ClassCLI {
                 if (restf == null)
                     buffer.append("...");
                 else {
-                    restSyntax = (String) Reflects.invoke(null, restf);
+                    try {
+                        restSyntax = (String) Jdk7Reflect.invoke(restf, null);
+                    } catch (ReflectiveOperationException e) {
+                        throw new CLIException(e.getMessage(), e);
+                    }
                     buffer.append(restSyntax);
                 }
             } else {

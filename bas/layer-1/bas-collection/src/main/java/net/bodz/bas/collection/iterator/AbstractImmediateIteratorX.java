@@ -42,4 +42,9 @@ public abstract class AbstractImmediateIteratorX<T, X extends Exception>
         throw new UnsupportedOperationException();
     }
 
+    @Override
+    public IteratorX<T, X> toIterator() {
+        return new ImmIterIterator<T, X>(this);
+    }
+
 }

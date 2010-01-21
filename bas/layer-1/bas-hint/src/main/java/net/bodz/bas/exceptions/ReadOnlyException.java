@@ -1,8 +1,9 @@
 package net.bodz.bas.exceptions;
 
-public class ReadOnlyException extends UnsupportedOperationException {
+public class ReadOnlyException
+        extends UnsupportedOperationException {
 
-    private static final long serialVersionUID = -7017976133370303436L;
+    private static final long serialVersionUID = 1L;
 
     public ReadOnlyException() {
         super();

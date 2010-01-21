@@ -6,8 +6,9 @@ import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
+import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
+import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.io.LineReader;
 
@@ -125,7 +126,7 @@ public abstract class _PartRecords<K, V>
     }
 
     class Iter
-            extends _DirectIterator<Map<K, V>, IOException> {
+            extends AbstractImmediateIteratorX<Map<K, V>, IOException> {
 
         private static final int PREHEADER = 0;
         private static final int HEADER = 1;
@@ -133,15 +134,12 @@ public abstract class _PartRecords<K, V>
         private static final int TEXT = 3;
 
         private LineReader lineReader;
-        private boolean end;
         private Map<K, V> map;
         private Map<K, V> nextMap;
 
         @Override
-        public boolean next()
+        public Map<K, V> next()
                 throws IOException {
-            if (end)
-                return false;
             if (lineReader == null) {
                 Reader reader = resLink.openReader(charset);
                 lineReader = new LineReader(reader);
@@ -169,7 +167,7 @@ public abstract class _PartRecords<K, V>
                     case HEADER:
                         nextMap = isStartOfPart(line);
                         if (nextMap != null)
-                            return true;
+                            return map;
                         if (isHeaderComment(line))
                             continue;
                         if (line.trim().isEmpty()) {
@@ -234,20 +232,14 @@ public abstract class _PartRecords<K, V>
             } catch (ParseException e) {
                 throw new IOException(e);
             }
-            end = true;
-            return true;
-        }
-
-        @Override
-        public Map<K, V> get()
-                throws NoSuchElementException {
-            return map;
+            return end();
         }
 
     }
 
     @Override
-    public DirectIterator<? extends Map<K, V>, IOException> iterator() {
+    public ImmediateIteratorX<? extends Map<K, V>, ? extends IOException> iterator(boolean allowOverlap)
+            throws IOException {
         return new Iter();
     }
 

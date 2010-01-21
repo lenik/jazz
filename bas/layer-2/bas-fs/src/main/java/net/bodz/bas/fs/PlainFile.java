@@ -11,7 +11,6 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
-import java.nio.file.Path;
 import java.util.List;
 
 import net.bodz.bas.closure.IFilter;
@@ -54,11 +53,6 @@ public class PlainFile
     @Override
     public java.io.File getFile() {
         return file;
-    }
-
-    @Override
-    public Path getPath() {
-        return file.toPath();
     }
 
     @Override
