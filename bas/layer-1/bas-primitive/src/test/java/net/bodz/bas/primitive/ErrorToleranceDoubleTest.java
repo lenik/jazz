@@ -1,8 +1,8 @@
-package net.bodz.bas.lang;
+package net.bodz.bas.primitive;
 
 import org.junit.Test;
 
-public class RRealTest {
+public class ErrorToleranceDoubleTest {
 
     @Test
     public void test1() {

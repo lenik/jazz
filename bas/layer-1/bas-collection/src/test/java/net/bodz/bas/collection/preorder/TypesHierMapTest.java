@@ -21,6 +21,7 @@ import net.bodz.bas.collection.preorder.testtype.Dx;
 import net.bodz.bas.collection.preorder.testtype.DxKI;
 import net.bodz.bas.collection.preorder.testtype.DxKIx;
 import net.bodz.bas.collection.preorder.testtype.I;
+import net.bodz.bas.collection.util.IterableToList;
 
 import org.junit.Test;
 
@@ -43,11 +44,23 @@ public class TypesHierMapTest {
         orig.put(r(CJzKI.class, DIJ.class), "CJzKI, DIJ");
     }
 
+    static String joinSimpleName(Class<?>[] classes) {
+        StringBuffer buf = null;
+        for (Class<?> c : classes) {
+            if (buf == null)
+                buf = new StringBuffer(classes.length * 30);
+            else
+                buf.append(", ");
+            buf.append(c.getSimpleName());
+        }
+        return buf.toString();
+    }
+
     void dumpOrig() {
         System.out.println("Orig entry order: ");
         for (Entry<Class<?>[], Object> e : orig.entrySet()) {
             Class<?>[] key = e.getKey();
-            System.out.println(TypeName.join(", ", true, key));
+            System.out.println(joinSimpleName(key));
         }
         System.out.println();
     }
@@ -60,19 +73,19 @@ public class TypesHierMapTest {
         // dump entry order
         for (Entry<Class<?>[], Object> e : map.entrySet()) {
             Class<?>[] key = e.getKey();
-            System.out.println(TypeName.join(", ", true, key));
+            System.out.println(joinSimpleName(key));
         }
 
         List<Object> children;
 
         assertEquals("CI, DxKI", map.floor(r(CI.class, DxKIx.class)));
 
-        children = Collections2.toList(map.ceilings(r(CI.class, D.class)));
+        children = IterableToList.toList(map.ceilings(r(CI.class, D.class)));
         assertEquals(2, children.size());
         assertEquals("CI, Dx", children.get(0));
         assertEquals("CI, DxKI", children.get(1));
 
-        children = Collections2.toList(map.ceilings(r(CJ.class, I.class)));
+        children = IterableToList.toList(map.ceilings(r(CJ.class, I.class)));
         assertEquals(3, children.size());
         // DIJy extends DIJ, but CJz order take precedence.
         assertEquals("CJz, DIJy", children.get(0)); // DIJy

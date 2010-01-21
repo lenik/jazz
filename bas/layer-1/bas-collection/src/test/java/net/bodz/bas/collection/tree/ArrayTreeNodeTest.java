@@ -1,9 +1,4 @@
-package net.bodz.bas.types;
-
-import net.bodz.bas.collection.tree.ArrayTreeNode;
-import net.bodz.bas.collection.tree.TreeCallback;
-import net.bodz.bas.collection.tree.TreeNodes;
-import net.bodz.bas.text.util.Strings;
+package net.bodz.bas.collection.tree;
 
 import org.junit.Test;
 
@@ -30,8 +25,9 @@ public class ArrayTreeNodeTest {
         TreeNodes.traverse(helloTree, new TreeCallback<ArrayTreeNode>() {
             @Override
             public int each(ArrayTreeNode node, int level) {
-                String indent = Strings.repeat(level, "    ");
-                System.out.println(indent + node);
+                for (int i = 0; i < level; i++)
+                    System.out.print("    "); // indent prefix.
+                System.out.println(node);
                 return OK;
             }
         });

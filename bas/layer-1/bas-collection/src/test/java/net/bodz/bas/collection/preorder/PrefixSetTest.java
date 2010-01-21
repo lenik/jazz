@@ -1,10 +1,8 @@
-package net.bodz.bas.types;
+package net.bodz.bas.collection.preorder;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import net.bodz.bas.collection.preorder.PrefixSet;
-import net.bodz.bas.text.util.StringArray;
 
 import org.junit.Test;
 
@@ -19,12 +17,24 @@ public class PrefixSetTest {
         set.add("aab");
     }
 
+    static String join(String delim, Iterable<?> vals) {
+        StringBuffer buf = null;
+        for (Object val : vals) {
+            if (buf == null)
+                buf = new StringBuffer();
+            else
+                buf.append(delim);
+            buf.append(val);
+        }
+        return buf.toString();
+    }
+
     @Test
     public void testGetChildren() {
         class D {
             void o(String input, String expected) {
                 Iterable<String> ceilings = set.ceilings(input);
-                String actual = StringArray.join(",", ceilings);
+                String actual = join(",", ceilings);
                 assertEquals(expected, actual);
             }
         }
