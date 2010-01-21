@@ -39,7 +39,13 @@ public class ByteOutOutputStream
     @Override
     public void flush()
             throws IOException {
-        byteOut.flush();
+        byteOut.flush(true);
+    }
+
+    @Override
+    public void close()
+            throws IOException {
+        byteOut.close();
     }
 
 }

@@ -8,9 +8,9 @@ import java.io.StringReader;
 import java.net.URI;
 import java.net.URL;
 
-import net.bodz.bas.fs.preparation.AbstractStreamReadPreparation;
-import net.bodz.bas.fs.preparation.IStreamReadPreparation;
-import net.bodz.bas.fs.preparation.IStreamWritePreparation;
+import net.bodz.bas.io.preparation.AbstractStreamReadPreparation;
+import net.bodz.bas.io.preparation.IStreamReadPreparation;
+import net.bodz.bas.io.preparation.IStreamWritePreparation;
 
 public class InputBytesFile
         extends AbstractFile {

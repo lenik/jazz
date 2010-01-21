@@ -17,8 +17,8 @@ import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.collection.util.IteratorToList;
 import net.bodz.bas.exceptions.ReadOnlyException;
-import net.bodz.bas.fs.preparation.AbstractStreamReadPreparation;
-import net.bodz.bas.fs.preparation.AbstractStreamWritePreparation;
+import net.bodz.bas.io.preparation.AbstractStreamReadPreparation;
+import net.bodz.bas.io.preparation.AbstractStreamWritePreparation;
 
 public class ZippedFolder
         extends AbstractFsEntry

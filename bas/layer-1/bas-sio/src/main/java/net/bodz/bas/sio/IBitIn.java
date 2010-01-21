@@ -18,4 +18,7 @@ public interface IBitIn {
     int readBit(ISimpleBits bits)
             throws IOException;
 
+    void close()
+            throws IOException;
+
 }

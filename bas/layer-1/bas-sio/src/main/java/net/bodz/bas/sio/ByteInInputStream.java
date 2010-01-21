@@ -36,4 +36,10 @@ public class ByteInInputStream
         return byteIn.read(b, off, len);
     }
 
+    @Override
+    public void close()
+            throws IOException {
+        byteIn.close();
+    }
+
 }

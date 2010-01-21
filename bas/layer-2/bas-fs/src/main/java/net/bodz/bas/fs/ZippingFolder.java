@@ -13,10 +13,10 @@ import java.util.zip.ZipOutputStream;
 import net.bodz.bas.closure.IFilter;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.collection.util.IteratorToList;
-import net.bodz.bas.fs.preparation.AbstractStreamWritePreparation;
-import net.bodz.bas.fs.preparation.IStreamReadPreparation;
-import net.bodz.bas.fs.preparation.IStreamWritePreparation;
 import net.bodz.bas.io.ZipEntryOutputStream;
+import net.bodz.bas.io.preparation.AbstractStreamWritePreparation;
+import net.bodz.bas.io.preparation.IStreamReadPreparation;
+import net.bodz.bas.io.preparation.IStreamWritePreparation;
 
 public class ZippingFolder
         extends AbstractFsEntry

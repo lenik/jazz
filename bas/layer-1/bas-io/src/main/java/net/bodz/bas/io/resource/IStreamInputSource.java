@@ -1,58 +1,58 @@
 package net.bodz.bas.io.resource;
 
-import java.io.DataOutput;
+import java.io.BufferedReader;
+import java.io.DataInput;
 import java.io.IOException;
-import java.io.ObjectOutput;
-import java.io.OutputStream;
-import java.io.PrintStream;
-import java.io.Writer;
+import java.io.InputStream;
+import java.io.ObjectInput;
+import java.io.Reader;
 
-import net.bodz.bas.sio.IByteOutNative;
-import net.bodz.bas.sio.ILineCharOut;
+import net.bodz.bas.io.LineReader;
+import net.bodz.bas.io.lookahead.LAReader;
 
-public interface IStreamWriteTarget
-        extends ISimpleStreamWriteTarget {
+public interface IStreamInputSource
+        extends ISimpleStreamInputSource {
 
     /**
      * @return non-<code>null</code> value.
      */
-    ILineCharOut newLineCharOut()
+    InputStream newInputStream()
             throws IOException;
 
     /**
      * @return non-<code>null</code> value.
      */
-    IByteOutNative newByteOutNative()
+    DataInput newDataInput()
             throws IOException;
 
     /**
      * @return non-<code>null</code> value.
      */
-    OutputStream newOutputStream()
+    ObjectInput newObjectInput()
             throws IOException;
 
     /**
      * @return non-<code>null</code> value.
      */
-    DataOutput newDataOutput()
+    Reader newReader()
             throws IOException;
 
     /**
      * @return non-<code>null</code> value.
      */
-    ObjectOutput newObjectOutput()
+    BufferedReader newBufferedReader()
             throws IOException;
 
     /**
      * @return non-<code>null</code> value.
      */
-    PrintStream newPrintStream()
+    LineReader newLineReader()
             throws IOException;
 
     /**
      * @return non-<code>null</code> value.
      */
-    Writer newWriter()
+    LAReader newLAReader()
             throws IOException;
 
 }

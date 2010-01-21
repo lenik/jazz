@@ -38,6 +38,12 @@ public class ReaderCharIn
     }
 
     @Override
+    public void close()
+            throws IOException {
+        reader.close();
+    }
+
+    @Override
     public Reader toReader() {
         return reader;
     }

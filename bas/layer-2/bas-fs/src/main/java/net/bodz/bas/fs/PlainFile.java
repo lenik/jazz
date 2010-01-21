@@ -17,9 +17,9 @@ import net.bodz.bas.closure.IFilter;
 import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.collection.util.IteratorToList;
-import net.bodz.bas.fs.preparation.AbstractStreamReadPreparation;
-import net.bodz.bas.fs.preparation.AbstractStreamWritePreparation;
-import net.bodz.bas.fs.preparation.IStreamReadPreparation;
+import net.bodz.bas.io.preparation.AbstractStreamReadPreparation;
+import net.bodz.bas.io.preparation.AbstractStreamWritePreparation;
+import net.bodz.bas.io.preparation.IStreamReadPreparation;
 
 public class PlainFile
         extends AbstractFile

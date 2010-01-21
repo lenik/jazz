@@ -6,7 +6,7 @@ import java.util.zip.ZipFile;
 
 import net.bodz.bas.exceptions.BadFormatException;
 
-public interface IRandomReadSource {
+public interface IRandomInputSource {
 
     /**
      * @return non-<code>null</code> value.

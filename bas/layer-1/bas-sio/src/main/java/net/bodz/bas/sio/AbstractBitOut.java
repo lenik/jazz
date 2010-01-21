@@ -6,7 +6,7 @@ import net.bodz.bas.bits.Byte_leBits;
 import net.bodz.bas.bits.ISimpleBits;
 import net.bodz.bas.bits.Int_leBits;
 
-public abstract class BitOut
+public abstract class AbstractBitOut
         implements IBitOut {
 
     @Override
@@ -42,6 +42,11 @@ public abstract class BitOut
     public void print(int[] ints, int bitOff, int bits)
             throws IOException {
         write(new Int_leBits(ints, bitOff, bits));
+    }
+
+    @Override
+    public void close()
+            throws IOException {
     }
 
 }

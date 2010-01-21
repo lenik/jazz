@@ -21,6 +21,12 @@ public abstract class DynamicInputStreamByteIn
     }
 
     @Override
+    public void close()
+            throws IOException {
+        getInputStream().close();
+    }
+
+    @Override
     public InputStream toInputStream() {
         return getInputStream();
     }

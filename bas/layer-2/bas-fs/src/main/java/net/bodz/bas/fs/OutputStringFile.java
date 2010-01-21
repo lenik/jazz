@@ -11,10 +11,10 @@ import java.io.Writer;
 import java.net.URI;
 import java.net.URL;
 
-import net.bodz.bas.fs.preparation.AbstractStreamReadPreparation;
-import net.bodz.bas.fs.preparation.AbstractStreamWritePreparation;
-import net.bodz.bas.fs.preparation.IStreamReadPreparation;
-import net.bodz.bas.fs.preparation.IStreamWritePreparation;
+import net.bodz.bas.io.preparation.AbstractStreamReadPreparation;
+import net.bodz.bas.io.preparation.AbstractStreamWritePreparation;
+import net.bodz.bas.io.preparation.IStreamReadPreparation;
+import net.bodz.bas.io.preparation.IStreamWritePreparation;
 
 public class OutputStringFile
         extends AbstractFile {

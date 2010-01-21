@@ -3,10 +3,10 @@ package net.bodz.bas.io.resource;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-import net.bodz.bas.sio.IByteIn;
-import net.bodz.bas.sio.ICharIn;
+import net.bodz.bas.sio.IByteOut;
+import net.bodz.bas.sio.ICharOut;
 
-public interface ISimpleStreamReadSource {
+public interface ISimpleStreamOutputTarget {
 
     Charset getCharset();
 
@@ -19,13 +19,13 @@ public interface ISimpleStreamReadSource {
     /**
      * @return non-<code>null</code> value.
      */
-    IByteIn newByteIn()
+    IByteOut newByteOut()
             throws IOException;
 
     /**
      * @return non-<code>null</code> value.
      */
-    ICharIn newCharIn()
+    ICharOut newCharOut()
             throws IOException;
 
 }

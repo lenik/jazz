@@ -39,12 +39,13 @@ public class CharOutWriter
     @Override
     public void flush()
             throws IOException {
-        charOut.flush();
+        charOut.flush(true);
     }
 
     @Override
     public void close()
             throws IOException {
+        charOut.close();
     }
 
 }

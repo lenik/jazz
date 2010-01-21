@@ -37,6 +37,12 @@ public class OutputStreamByteOut
     }
 
     @Override
+    public void close()
+            throws IOException {
+        out.close();
+    }
+
+    @Override
     public OutputStream toOutputStream() {
         return out;
     }

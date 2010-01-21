@@ -29,6 +29,7 @@ public class CharInReader
     @Override
     public void close()
             throws IOException {
+        charIn.close();
     }
 
 }
