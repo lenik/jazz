@@ -7,8 +7,7 @@ import java.security.NoSuchAlgorithmException;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.exceptions.RuntimizedException;
 import net.bodz.bas.exceptions.UnexpectedException;
-import net.bodz.bas.fs.FileWrapper;
-import net.bodz.bas.fs.IFile;
+import net.bodz.bas.io.resource.IStreamInputSource;
 
 public class Cryptos {
 
@@ -29,10 +28,9 @@ public class Cryptos {
         return newDigest("SHA1");
     }
 
-    static byte[] calc(Object in, MessageDigest digest)
+    static byte[] calc(IStreamInputSource in, MessageDigest digest)
             throws IOException {
-        IFile file = FileWrapper.toFile(in);
-        ImmediateIteratorX<byte[], IOException> blocks = file.forRead().blockIterator();
+        ImmediateIteratorX<byte[], ? extends IOException> blocks = in.forRead().byteBlocks(true);
         byte[] block;
         try {
             while ((block = blocks.next()) != null || !blocks.isEnded())
@@ -44,22 +42,12 @@ public class Cryptos {
         return digest.digest();
     }
 
-    Iterable<?> iterable;
-    {
-        try {
-            for (Object o : iterable) {
-            }
-        } catch (UnsupportedOperationException e) {
-
-        }
-    }
-
     public static byte[] md5(byte[] bin) {
         MessageDigest md5 = getMD5();
         return md5.digest(bin);
     }
 
-    public static byte[] md5(Object in)
+    public static byte[] md5(IStreamInputSource in)
             throws IOException {
         MessageDigest md5 = getMD5();
         return calc(in, md5);
@@ -70,7 +58,7 @@ public class Cryptos {
         return sha1.digest(bin);
     }
 
-    public static byte[] sha1(Object in)
+    public static byte[] sha1(IStreamInputSource in)
             throws IOException {
         MessageDigest sha1 = getSHA1();
         return calc(in, sha1);
