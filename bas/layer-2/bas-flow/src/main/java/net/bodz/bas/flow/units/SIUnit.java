@@ -3,14 +3,15 @@ package net.bodz.bas.flow.units;
 import java.io.IOException;
 
 import net.bodz.bas.exceptions.OutOfDomainException;
+import net.bodz.bas.flow.AbstractUnit;
 import net.bodz.bas.flow.IInPort;
 import net.bodz.bas.flow.IOutPort;
 import net.bodz.bas.flow.IPortMeta;
 import net.bodz.bas.flow.IReceiverEx;
-import net.bodz.bas.flow.STPortMeta;
 import net.bodz.bas.flow.IUnit;
-import net.bodz.bas.flow.AbstractUnit;
+import net.bodz.bas.flow.STPortMeta;
 import net.bodz.bas.flow.util.RecvUtil;
+import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 
 public abstract class SIUnit
         extends AbstractUnit
@@ -53,10 +54,17 @@ public abstract class SIUnit
             throws IOException {
     }
 
+    /**
+     * XXX - how to handle exceptions?
+     */
     @Override
     public void recv(Object data)
             throws IOException {
-        RecvUtil.recvEx(this, data);
+        try {
+            RecvUtil.recvEx(this, data);
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
     }
 
     @Override

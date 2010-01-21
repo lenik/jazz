@@ -1,4 +1,4 @@
-package net.bodz.bas.cli.util;
+package net.bodz.bas.snm.abc;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.fs.legacy.Files;
+import net.bodz.bas.sysinfo.SystemInfo;
 
 public class ModulesRoot {
 

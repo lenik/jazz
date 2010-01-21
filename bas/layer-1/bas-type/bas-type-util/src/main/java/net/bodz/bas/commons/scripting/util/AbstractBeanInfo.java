@@ -1,15 +1,13 @@
 package net.bodz.bas.commons.scripting.util;
 
 import java.beans.SimpleBeanInfo;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 
-public class _BeanInfo extends SimpleBeanInfo {
+public class AbstractBeanInfo
+        extends SimpleBeanInfo {
 
     private final String simpleName;
 
-    public _BeanInfo() {
+    public AbstractBeanInfo() {
         String name = getClass().getSimpleName();
         if (name.endsWith("BeanInfo"))
             name = name.substring(0, name.length() - 8);
@@ -18,11 +16,12 @@ public class _BeanInfo extends SimpleBeanInfo {
 
     @Override
     public java.awt.Image getIcon(int iconKind) {
-        try {
-            Files.append(new File("t:/geticon"), //
-                    "info=" + getClass() + ", kind=" + iconKind + "\n");
-        } catch (IOException e) {
-        }
+        // XXX - use Logger instead...
+        // try {
+        // Files.append(new File("t:/geticon"), //
+        // "info=" + getClass() + ", kind=" + iconKind + "\n");
+        // } catch (IOException e) {
+        // }
         switch (iconKind) {
         case ICON_MONO_16x16:
             return loadImage(simpleName + "-16x16x4.gif");

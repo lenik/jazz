@@ -56,11 +56,6 @@ public abstract class LogTerm {
             fatal().p_(o);
     }
 
-    public void tfatal(Object o) {
-        if (level >= FATAL)
-            fatal().t(o);
-    }
-
     public void fatal(Object... args) {
         if (level >= FATAL)
             fatal().p(args);
@@ -69,11 +64,6 @@ public abstract class LogTerm {
     public void nfatal(Object... args) {
         if (level >= FATAL)
             fatal().p_(args);
-    }
-
-    public void tfatal(Object... args) {
-        if (level >= FATAL)
-            fatal().t(args);
     }
 
     public void ffatal(String format, Object... args) {
@@ -101,11 +91,6 @@ public abstract class LogTerm {
             error().p_(o);
     }
 
-    public void terror(Object o) {
-        if (level >= ERROR)
-            error().t(o);
-    }
-
     public void error(Object... args) {
         if (level >= ERROR)
             error().p(args);
@@ -114,11 +99,6 @@ public abstract class LogTerm {
     public void nerror(Object... args) {
         if (level >= ERROR)
             error().p_(args);
-    }
-
-    public void terror(Object... args) {
-        if (level >= ERROR)
-            error().t(args);
     }
 
     public void ferror(String format, Object... args) {
@@ -146,11 +126,6 @@ public abstract class LogTerm {
             user().p_(o);
     }
 
-    public void tuser(Object o) {
-        if (level >= USER)
-            user().t(o);
-    }
-
     public void user(Object... args) {
         if (level >= USER)
             user().p(args);
@@ -159,11 +134,6 @@ public abstract class LogTerm {
     public void nuser(Object... args) {
         if (level >= USER)
             user().p_(args);
-    }
-
-    public void tuser(Object... args) {
-        if (level >= USER)
-            user().t(args);
     }
 
     public void fuser(String format, Object... args) {
@@ -191,11 +161,6 @@ public abstract class LogTerm {
             warn().p_(o);
     }
 
-    public void twarn(Object o) {
-        if (level >= WARN)
-            warn().t(o);
-    }
-
     public void warn(Object... args) {
         if (level >= WARN)
             warn().p(args);
@@ -204,11 +169,6 @@ public abstract class LogTerm {
     public void nwarn(Object... args) {
         if (level >= WARN)
             warn().p_(args);
-    }
-
-    public void twarn(Object... args) {
-        if (level >= WARN)
-            warn().t(args);
     }
 
     public void fwarn(String format, Object... args) {
@@ -236,11 +196,6 @@ public abstract class LogTerm {
             mesg().p_(o);
     }
 
-    public void tmesg(Object o) {
-        if (level >= MESG)
-            mesg().t(o);
-    }
-
     public void mesg(Object... args) {
         if (level >= MESG)
             mesg().p(args);
@@ -249,11 +204,6 @@ public abstract class LogTerm {
     public void nmesg(Object... args) {
         if (level >= MESG)
             mesg().p_(args);
-    }
-
-    public void tmesg(Object... args) {
-        if (level >= MESG)
-            mesg().t(args);
     }
 
     public void fmesg(String format, Object... args) {
@@ -281,11 +231,6 @@ public abstract class LogTerm {
             info().p_(o);
     }
 
-    public void tinfo(Object o) {
-        if (level >= INFO)
-            info().t(o);
-    }
-
     public void info(Object... args) {
         if (level >= INFO)
             info().p(args);
@@ -294,11 +239,6 @@ public abstract class LogTerm {
     public void ninfo(Object... args) {
         if (level >= INFO)
             info().p_(args);
-    }
-
-    public void tinfo(Object... args) {
-        if (level >= INFO)
-            info().t(args);
     }
 
     public void finfo(String format, Object... args) {
@@ -326,11 +266,6 @@ public abstract class LogTerm {
             detail().p_(o);
     }
 
-    public void tdetail(Object o) {
-        if (level >= DETAIL)
-            detail().t(o);
-    }
-
     public void detail(Object... args) {
         if (level >= DETAIL)
             detail().p(args);
@@ -339,11 +274,6 @@ public abstract class LogTerm {
     public void ndetail(Object... args) {
         if (level >= DETAIL)
             detail().p_(args);
-    }
-
-    public void tdetail(Object... args) {
-        if (level >= DETAIL)
-            detail().t(args);
     }
 
     public void fdetail(String format, Object... args) {
@@ -371,11 +301,6 @@ public abstract class LogTerm {
             debug().p_(o);
     }
 
-    public void tdebug(Object o) {
-        if (level >= DEBUG)
-            debug().t(o);
-    }
-
     public void debug(Object... args) {
         if (level >= DEBUG)
             debug().p(args);
@@ -384,11 +309,6 @@ public abstract class LogTerm {
     public void ndebug(Object... args) {
         if (level >= DEBUG)
             debug().p_(args);
-    }
-
-    public void tdebug(Object... args) {
-        if (level >= DEBUG)
-            debug().t(args);
     }
 
     public void fdebug(String format, Object... args) {
@@ -416,11 +336,6 @@ public abstract class LogTerm {
             trace().p_(o);
     }
 
-    public void ttrace(Object o) {
-        if (level >= TRACE)
-            trace().t(o);
-    }
-
     public void trace(Object... args) {
         if (level >= TRACE)
             trace().p(args);
@@ -429,11 +344,6 @@ public abstract class LogTerm {
     public void ntrace(Object... args) {
         if (level >= TRACE)
             trace().p_(args);
-    }
-
-    public void ttrace(Object... args) {
-        if (level >= TRACE)
-            trace().t(args);
     }
 
     public void ftrace(String format, Object... args) {

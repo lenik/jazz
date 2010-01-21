@@ -2,13 +2,16 @@ package net.bodz.bas.snm;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Map.Entry;
+
+import net.bodz.bas.fs.legacy.Files;
+import net.bodz.bas.io.resource.builtin.LocalFileResource;
+import net.bodz.bas.sysinfo.SystemInfo;
 
 public class SJLibLoader {
 
@@ -34,7 +37,8 @@ public class SJLibLoader {
     }
 
     /** library name -> properties */
-    static class LibDir extends HashMap<String, LibInfo> {
+    static class LibDir
+            extends HashMap<String, LibInfo> {
         private static final long serialVersionUID = 388938369034212989L;
     }
 
@@ -101,29 +105,28 @@ public class SJLibLoader {
         return lib.getTarget();
     }
 
-    public static String librariesIni = "libraries.ini"; 
+    public static String librariesIni = "libraries.ini";
 
     protected LibDir loadLibDir(File dir) {
         assert dir.isDirectory();
         LibDir libDir = new LibDir();
-        File ini = new File(dir, librariesIni);
-        if (ini.canRead()) {
+        File iniFile = new File(dir, librariesIni);
+        if (iniFile.canRead()) {
             Properties libraries;
             try {
-                libraries = Files.loadProperties(ini);
+                libraries = new LocalFileResource(iniFile).forLoad().loadProperties();
             } catch (IOException e) {
-                throw new Error("failed to load " + ini + ": " + e.getMessage(), e);  
+                throw new Error("failed to load " + iniFile + ": " + e.getMessage(), e);
             }
             for (Entry<Object, Object> e : libraries.entrySet()) {
                 String name = (String) e.getKey();
                 if (libDir.containsKey(name))
-                    throw new IllegalArgumentException("duplicated name: " 
-                            + name + " defined in " + ini); 
+                    throw new IllegalArgumentException("duplicated name: " + name + " defined in " + iniFile);
 
                 String value = (String) e.getValue();
 
                 File target = Files.canoniOf(dir, value);
-                assert target.isFile() : "invalid target " + target; 
+                assert target.isFile() : "invalid target " + target;
                 if (!target.isFile())
                     continue;
 
@@ -137,10 +140,10 @@ public class SJLibLoader {
     public static final SJLibLoader DEFAULT;
     static {
         DEFAULT = new SJLibLoader();
-        DEFAULT.addPath("."); 
-        DEFAULT.addPath(".."); 
-        DEFAULT.addPath("../lib"); 
-        String JAVA_LIB = System.getenv("JAVA_LIB"); 
+        DEFAULT.addPath(".");
+        DEFAULT.addPath("..");
+        DEFAULT.addPath("../lib");
+        String JAVA_LIB = System.getenv("JAVA_LIB");
         if (JAVA_LIB != null)
             DEFAULT.addPaths(JAVA_LIB);
     }
