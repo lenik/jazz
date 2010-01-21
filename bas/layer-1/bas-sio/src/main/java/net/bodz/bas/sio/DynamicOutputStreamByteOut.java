@@ -39,6 +39,12 @@ public abstract class DynamicOutputStreamByteOut
     }
 
     @Override
+    public void close()
+            throws IOException {
+        getOutputStream().close();
+    }
+
+    @Override
     public OutputStream toOutputStream() {
         return getOutputStream();
     }

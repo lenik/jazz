@@ -51,6 +51,12 @@ public abstract class DynamicWriterCharOut
     }
 
     @Override
+    public void close()
+            throws IOException {
+        getWriter().close();
+    }
+
+    @Override
     public Writer toWriter() {
         return getWriter();
     }

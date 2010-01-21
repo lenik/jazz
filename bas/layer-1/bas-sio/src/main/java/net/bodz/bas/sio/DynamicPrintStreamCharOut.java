@@ -51,4 +51,10 @@ public abstract class DynamicPrintStreamCharOut
         getPrintStream().flush();
     }
 
+    @Override
+    public void close()
+            throws IOException {
+        getPrintStream().close();
+    }
+
 }

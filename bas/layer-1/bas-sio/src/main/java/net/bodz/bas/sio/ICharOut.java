@@ -62,4 +62,7 @@ public interface ICharOut
     void flush()
             throws SIOException;
 
+    void close()
+            throws IOException;
+
 }

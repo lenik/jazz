@@ -55,6 +55,12 @@ public class WriterCharOut
     }
 
     @Override
+    public void close()
+            throws IOException {
+        writer.close();
+    }
+
+    @Override
     public Writer toWriter() {
         return writer;
     }

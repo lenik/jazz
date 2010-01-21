@@ -46,10 +46,16 @@ public class InputStreamByteIn
         InputStream_read_ByteBuffer = read_ByteBuffer;
     }
 
+    // @Override
+    // public int read(ByteBuffer buffer)
+    // throws IOException {
+    // return super.read(buffer);
+    // }
+
     @Override
-    public int read(ByteBuffer buffer)
+    public void close()
             throws IOException {
-        return super.read(buffer);
+        in.close();
     }
 
     @Override

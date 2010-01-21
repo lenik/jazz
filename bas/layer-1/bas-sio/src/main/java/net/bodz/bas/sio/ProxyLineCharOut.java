@@ -24,6 +24,12 @@ public class ProxyLineCharOut
         proxy.flush(strict);
     }
 
+    @Override
+    public void close()
+            throws IOException {
+        proxy.close();
+    }
+
     public void print(boolean b)
             throws SIOException {
         proxy.print(b);

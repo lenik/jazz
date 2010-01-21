@@ -38,6 +38,12 @@ public abstract class AbstractByteOut
     }
 
     @Override
+    public void close()
+            throws IOException {
+        flush(true);
+    }
+
+    @Override
     public void writeLE(boolean b)
             throws IOException {
         write(b ? (byte) 1 : (byte) 0);

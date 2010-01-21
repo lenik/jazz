@@ -43,4 +43,7 @@ public interface IByteOut
     void flush()
             throws SIOException;
 
+    void close()
+            throws IOException;
+
 }

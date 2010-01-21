@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.nio.CharBuffer;
 
 public class CharOutImpl
-        extends AbstractCharOut {
+        extends AbstractCharOut
+        implements ILineCharOut { // , IIndention
 
     private final ICharOut base;
 

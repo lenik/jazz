@@ -61,6 +61,12 @@ public abstract class AbstractCharOut
         }
     }
 
+    @Override
+    public void close()
+            throws IOException {
+        flush(true);
+    }
+
     private final static char[] NULL = "(null)".toCharArray();
     private final static char NL = '\n';
 

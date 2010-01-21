@@ -1,4 +1,4 @@
-package net.bodz.bas.fs.preparation;
+package net.bodz.bas.io.preparation;
 
 import java.io.EOFException;
 import java.io.IOException;

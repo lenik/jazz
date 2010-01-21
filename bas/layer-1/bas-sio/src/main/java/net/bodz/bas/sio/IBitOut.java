@@ -10,4 +10,7 @@ public interface IBitOut
     void write(ISimpleBits bits)
             throws IOException;
 
+    void close()
+            throws IOException;
+
 }

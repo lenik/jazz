@@ -3,11 +3,11 @@ package net.bodz.bas.fs;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-import net.bodz.bas.fs.preparation.IFormatDumpPreparation;
-import net.bodz.bas.fs.preparation.IParseLoadPreparation;
 import net.bodz.bas.fs.preparation.IProbePreparation;
-import net.bodz.bas.fs.preparation.IStreamReadPreparation;
-import net.bodz.bas.fs.preparation.IStreamWritePreparation;
+import net.bodz.bas.io.preparation.IFormatDumpPreparation;
+import net.bodz.bas.io.preparation.IParseLoadPreparation;
+import net.bodz.bas.io.preparation.IStreamReadPreparation;
+import net.bodz.bas.io.preparation.IStreamWritePreparation;
 
 public interface IFile
         extends IFsEntry, Cloneable {

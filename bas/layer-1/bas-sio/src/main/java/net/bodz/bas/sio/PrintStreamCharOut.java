@@ -58,4 +58,10 @@ public class PrintStreamCharOut
         ps.flush();
     }
 
+    @Override
+    public void close()
+            throws IOException {
+        ps.close();
+    }
+
 }

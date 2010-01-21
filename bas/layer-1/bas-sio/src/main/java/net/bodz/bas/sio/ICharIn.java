@@ -33,4 +33,7 @@ public interface ICharIn
     String readString(int maxCharacters)
             throws IOException;
 
+    void close()
+            throws IOException;
+
 }

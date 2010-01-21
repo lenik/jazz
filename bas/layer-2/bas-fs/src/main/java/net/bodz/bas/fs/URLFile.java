@@ -17,10 +17,10 @@ import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.collection.util.IteratorToList;
 import net.bodz.bas.exceptions.ReadOnlyException;
-import net.bodz.bas.fs.preparation.AbstractStreamReadPreparation;
-import net.bodz.bas.fs.preparation.AbstractStreamWritePreparation;
-import net.bodz.bas.fs.preparation.IStreamReadPreparation;
-import net.bodz.bas.fs.preparation.IStreamWritePreparation;
+import net.bodz.bas.io.preparation.AbstractStreamReadPreparation;
+import net.bodz.bas.io.preparation.AbstractStreamWritePreparation;
+import net.bodz.bas.io.preparation.IStreamReadPreparation;
+import net.bodz.bas.io.preparation.IStreamWritePreparation;
 
 public class URLFile
         extends AbstractFile

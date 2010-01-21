@@ -29,4 +29,7 @@ public interface IByteIn
     int read(ByteBuffer buffer)
             throws IOException;
 
+    void close()
+            throws IOException;
+
 }

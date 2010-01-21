@@ -29,6 +29,11 @@ public abstract class AbstractByteIn
         return cbRead;
     }
 
+    @Override
+    public void close()
+            throws IOException {
+    }
+
     public InputStream toInputStream() {
         return new ByteInInputStream(this);
     }

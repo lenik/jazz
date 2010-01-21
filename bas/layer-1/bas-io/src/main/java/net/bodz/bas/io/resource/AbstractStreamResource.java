@@ -1,0 +1,82 @@
+package net.bodz.bas.io.resource;
+
+import java.io.DataOutput;
+import java.io.IOException;
+import java.io.ObjectOutput;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.io.Writer;
+
+import net.bodz.bas.sio.IByteOut;
+import net.bodz.bas.sio.IByteOutNative;
+import net.bodz.bas.sio.ICharOut;
+import net.bodz.bas.sio.ILineCharOut;
+
+public abstract class AbstractStreamResource
+        extends AbstractStreamInputSource
+        implements IStreamOutputTarget {
+
+    private final AbstractStreamOutputTarget asotImpl;
+
+    public AbstractStreamResource() {
+        super();
+        asotImpl = new AbstractStreamOutputTarget() {
+
+            @Override
+            public ICharOut newCharOut()
+                    throws IOException {
+                return AbstractStreamResource.this.newCharOut();
+            }
+
+            @Override
+            public IByteOut newByteOut()
+                    throws IOException {
+                return AbstractStreamResource.this.newByteOut();
+            }
+
+        };
+    }
+
+    @Override
+    public OutputStream newOutputStream()
+            throws IOException {
+        return asotImpl.newOutputStream();
+    }
+
+    @Override
+    public Writer newWriter()
+            throws IOException {
+        return asotImpl.newWriter();
+    }
+
+    @Override
+    public PrintStream newPrintStream()
+            throws IOException {
+        return asotImpl.newPrintStream();
+    }
+
+    @Override
+    public DataOutput newDataOutput()
+            throws IOException {
+        return asotImpl.newDataOutput();
+    }
+
+    @Override
+    public ObjectOutput newObjectOutput()
+            throws IOException {
+        return asotImpl.newObjectOutput();
+    }
+
+    @Override
+    public ILineCharOut newLineCharOut()
+            throws IOException {
+        return asotImpl.newLineCharOut();
+    }
+
+    @Override
+    public IByteOutNative newByteOutNative()
+            throws IOException {
+        return asotImpl.newByteOutNative();
+    }
+
+}

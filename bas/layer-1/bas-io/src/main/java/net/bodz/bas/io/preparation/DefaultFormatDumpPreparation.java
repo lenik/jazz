@@ -1,4 +1,4 @@
-package net.bodz.bas.fs.preparation;
+package net.bodz.bas.io.preparation;
 
 import java.beans.XMLEncoder;
 import java.io.IOException;

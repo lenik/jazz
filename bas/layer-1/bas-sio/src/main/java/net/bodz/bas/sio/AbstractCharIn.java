@@ -36,6 +36,11 @@ public abstract class AbstractCharIn
         return new String(chars, 0, ccRead);
     }
 
+    @Override
+    public void close()
+            throws IOException {
+    }
+
     public Reader toReader() {
         return new CharInReader(this);
     }

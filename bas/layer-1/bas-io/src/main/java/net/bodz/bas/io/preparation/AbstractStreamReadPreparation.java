@@ -1,11 +1,10 @@
-package net.bodz.bas.fs.preparation;
+package net.bodz.bas.io.preparation;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
 import java.util.Arrays;
@@ -21,21 +20,13 @@ import net.bodz.bas.collection.iterator.IteratorTargetException;
 import net.bodz.bas.collection.iterator.IteratorX;
 import net.bodz.bas.collection.iterator.OverlappedImmediateIteratorX;
 import net.bodz.bas.collection.util.IteratorToList;
-import net.bodz.bas.fs.IFile;
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7ZipFile;
 
 public abstract class AbstractStreamReadPreparation
         implements IStreamReadPreparation {
 
-    private final IFile file;
     private int blockSize = 4096;
-
-    public AbstractStreamReadPreparation(IFile file) {
-        if (file == null)
-            throw new NullPointerException("file");
-        this.file = file;
-    }
 
     public int getBlockSize() {
         return blockSize;
@@ -45,19 +36,6 @@ public abstract class AbstractStreamReadPreparation
         if (blockSize <= 0)
             throw new IllegalArgumentException("blockSize must be positive: " + blockSize);
         this.blockSize = blockSize;
-    }
-
-    public Charset getCharset() {
-        return file.getCharset();
-    }
-
-    public abstract InputStream newInputStream()
-            throws IOException;
-
-    public Reader newReader()
-            throws IOException {
-        InputStream in = newInputStream();
-        return new InputStreamReader(in, getCharset());
     }
 
     @Override
@@ -189,7 +167,7 @@ public abstract class AbstractStreamReadPreparation
         return IteratorToList.toListLimited(lineIterator(chopped), maxLines);
     }
 
-    public ImmediateIteratorX<String, IOException> lineIterator(boolean chopped)
+    public ImmediateIteratorX<String, ? extends IOException> lineIterator(boolean chopped)
             throws IOException {
         Reader r = newReader();
         if (chopped) {
@@ -222,7 +200,7 @@ public abstract class AbstractStreamReadPreparation
     }
 
     @Override
-    public IterableX<byte[], ? extends IOException> blocks()
+    public IterableX<byte[], IOException> blocks()
             throws IOException {
         return new IterableX<byte[], IOException>() {
 
@@ -241,13 +219,13 @@ public abstract class AbstractStreamReadPreparation
     }
 
     @Override
-    public IterableX<String, ? extends IOException> lines(final boolean chopped)
+    public IterableX<String, IOException> lines(final boolean chopped)
             throws IOException {
         return new IterableX<String, IOException>() {
 
             @Override
             public IteratorX<String, IOException> iterator() {
-                ImmediateIteratorX<String, IOException> immIter;
+                ImmediateIteratorX<String, ? extends IOException> immIter;
                 try {
                     immIter = lineIterator(chopped);
                 } catch (IOException e) {

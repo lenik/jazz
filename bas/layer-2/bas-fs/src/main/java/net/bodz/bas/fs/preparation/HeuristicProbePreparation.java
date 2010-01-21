@@ -3,6 +3,7 @@ package net.bodz.bas.fs.preparation;
 import java.io.IOException;
 
 import net.bodz.bas.fs.IFile;
+import net.bodz.bas.io.preparation.IStreamReadPreparation;
 
 public class HeuristicProbePreparation
         extends LazyProbePreparation {

@@ -3,11 +3,11 @@ package net.bodz.bas.fs;
 import java.io.File;
 import java.nio.charset.Charset;
 
-import net.bodz.bas.fs.preparation.DefaultFormatDumpPreparation;
-import net.bodz.bas.fs.preparation.DefaultParseLoadPreparation;
 import net.bodz.bas.fs.preparation.HeuristicProbePreparation;
 import net.bodz.bas.fs.preparation.IProbePreparation;
 import net.bodz.bas.fs.preparation.LazyProbePreparation;
+import net.bodz.bas.io.preparation.DefaultFormatDumpPreparation;
+import net.bodz.bas.io.preparation.DefaultParseLoadPreparation;
 
 public abstract class AbstractFile
         extends AbstractFsEntry
