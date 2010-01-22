@@ -1,10 +1,10 @@
 package net.bodz.bas.db.filedb;
 
-import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.exceptions.ParseException;
+import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.type.traits.IParser;
 
 public abstract class MapResRecords<K, V>
@@ -15,12 +15,8 @@ public abstract class MapResRecords<K, V>
     protected IParser<K> keyParser;
     protected IParser<V> valueParser;
 
-    public MapResRecords(ResLink resLink) {
-        this(resLink, null);
-    }
-
-    public MapResRecords(ResLink resLink, Charset charset) {
-        super(resLink, charset);
+    public MapResRecords(IStreamInputSource source) {
+        super(source);
         keyClass = getKeyClass();
         valueClass = getValueClass();
     }

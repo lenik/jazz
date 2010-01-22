@@ -2,7 +2,6 @@ package net.bodz.bas.db.filedb;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.Reader;
 import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.TreeMap;
@@ -12,6 +11,8 @@ import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.files.INIRecordsTest;
 import net.bodz.bas.io.LineReader;
+import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.io.resource.builtin.LocalFileResource;
 
 /**
  * @test {@link INIRecordsTest}
@@ -23,21 +24,13 @@ public class INIRecords
     private String delim = ".";
     private String existKey = "exist";
 
-    public INIRecords(ResLink resLink, Charset charset, boolean flatten) {
-        super(resLink, charset);
+    public INIRecords(IStreamInputSource source, boolean flatten) {
+        super(source);
         this.flatten = flatten;
     }
 
-    public INIRecords(ResLink resLink, boolean flatten) {
-        this(resLink, null, flatten);
-    }
-
     public INIRecords(File file, String encoding) {
-        this(new FileResLink(file), encoding == null ? null : Charset.forName(encoding), false);
-    }
-
-    public INIRecords(File file) {
-        this(file, null);
+        this(new LocalFileResource(file).setCharset(Charset.forName(encoding)), false);
     }
 
     @Override
@@ -76,10 +69,8 @@ public class INIRecords
         @Override
         public Map<String, String> next()
                 throws IOException {
-            if (lineReader == null) {
-                Reader reader = resLink.openReader(charset);
-                lineReader = new LineReader(reader);
-            }
+            if (lineReader == null)
+                lineReader = source.newLineReader();
 
             Map<String, String> map = newMap();
             String line;

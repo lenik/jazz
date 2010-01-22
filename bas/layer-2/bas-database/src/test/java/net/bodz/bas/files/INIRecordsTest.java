@@ -10,22 +10,23 @@ import java.util.Map;
 
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.db.filedb.INIRecords;
+import net.bodz.bas.io.resource.IStreamInputSource;
 
 import org.junit.Test;
 
 public class INIRecordsTest {
 
-    ResLink resLink;
+    IStreamInputSource source;
 
     public INIRecordsTest() {
         URL classData = FileRes.classData(getClass(), "1");
-        resLink = new URLResLink(classData);
+        source = new URLResLink(classData);
     }
 
     @Test
     public void testByGroup()
             throws IOException {
-        INIRecords records = new INIRecords(resLink, false);
+        INIRecords records = new INIRecords(source, false);
         ImmediateIteratorX<? extends Map<String, String>, ? extends IOException> iter = records.iterator(true);
 
         Map<String, String> p1 = iter.next();
@@ -43,7 +44,7 @@ public class INIRecordsTest {
     @Test
     public void testFlatten()
             throws IOException {
-        INIRecords records = new INIRecords(resLink, true);
+        INIRecords records = new INIRecords(source, true);
         Map<String, String> all = records.iterator(true).next();
         assertEquals("a=1, b=2, c=hello, world!" + ", him.exist=true, him.location=home" // 
                 + ", you.age=[what], you.exist=true, you.name=hi", // 

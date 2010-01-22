@@ -1,6 +1,7 @@
 package net.bodz.bas.collection.iterator;
 
-public interface ImmediateIterableX<T, X extends Exception> {
+public interface ImmediateIterableX<T, X extends Exception>
+        extends IterableX<T, X> {
 
     /**
      * <table border="1">
@@ -34,12 +35,14 @@ public interface ImmediateIterableX<T, X extends Exception> {
     ImmediateIteratorX<? extends T, ? extends X> iterator(boolean allowOverlap)
             throws X;
 
-    // /**
-    // * Default overlap is disallowed.
-    // *
-    // * @see #iterator(boolean)
-    // */
-    // ImmediateIteratorX<? extends T, ? extends X> iterator()
-    // throws X;
+    /**
+     * Default overlap is dis-allowed.
+     * 
+     * @see #iterator(boolean)
+     * @throws IteratorTargetException
+     */
+    @Override
+    IteratorX<T, X> iterator()
+            throws IteratorTargetException;
 
 }

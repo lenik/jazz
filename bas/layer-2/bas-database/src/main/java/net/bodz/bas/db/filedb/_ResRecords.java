@@ -1,31 +1,33 @@
 package net.bodz.bas.db.filedb;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 
 import net.bodz.bas.collection.iterator.ImmIterIterator;
+import net.bodz.bas.collection.iterator.IteratorTargetException;
 import net.bodz.bas.collection.iterator.IteratorX;
+import net.bodz.bas.io.resource.IStreamInputSource;
 
 public abstract class _ResRecords<T>
         implements ResRecords<T> {
 
-    protected final ResLink resLink;
-    protected final Charset charset;
+    protected final IStreamInputSource source;
 
-    protected _ResRecords(ResLink resLink) {
-        this(resLink, null);
+    protected _ResRecords(IStreamInputSource source) {
+        if (source == null)
+            throw new NullPointerException("source");
+        this.source = source.clone();
     }
 
-    protected _ResRecords(ResLink resLink, Charset charset) {
-        if (resLink == null)
-            throw new NullPointerException("resLink");
-        this.resLink = resLink;
-        this.charset = charset;
-    }
-
+    /**
+     * @throws IteratorTargetException
+     */
     @Override
     public IteratorX<T, IOException> iterator() {
-        return new ImmIterIterator<T, IOException>(iterator(false));
+        try {
+            return new ImmIterIterator<T, IOException>(iterator(true));
+        } catch (IOException e) {
+            throw new IteratorTargetException(e.getMessage(), e);
+        }
     }
 
 }
