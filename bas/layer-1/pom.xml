@@ -17,6 +17,7 @@
 		<module>bas-compat</module>
 		<module>bas-closure</module>
 		<module>bas-collection</module>
+		<module>bas-files</module>
 		<module>bas-hint</module>
 		<module>bas-io</module>
 		<module>bas-jvmhack</module>
