@@ -169,7 +169,7 @@ public class PlainFile
         @Override
         public OutputStream newOutputStream()
                 throws IOException {
-            return new FileOutputStream(file, getAppendMode());
+            return new FileOutputStream(file, isAppendMode());
         }
 
     }

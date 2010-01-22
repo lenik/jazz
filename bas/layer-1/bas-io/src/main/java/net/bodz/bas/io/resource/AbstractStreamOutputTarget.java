@@ -10,28 +10,50 @@ import java.io.PrintStream;
 import java.io.Writer;
 import java.nio.charset.Charset;
 
+import net.bodz.bas.exceptions.UnexpectedException;
 import net.bodz.bas.io.resource.preparation.FormatDumpPreparation;
 import net.bodz.bas.io.resource.preparation.IFormatDumpPreparation;
 import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
 import net.bodz.bas.io.resource.preparation.StreamWritePreparation;
 import net.bodz.bas.sio.ByteOutNativeImpl;
 import net.bodz.bas.sio.ByteOutOutputStream;
-import net.bodz.bas.sio.CharOutImpl;
 import net.bodz.bas.sio.CharOutWriter;
 import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.IByteOutNative;
 import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.sio.ILineCharOut;
+import net.bodz.bas.sio.LineCharOutImpl;
 
 public abstract class AbstractStreamOutputTarget
         implements IStreamOutputTarget {
 
+    private boolean appendMode;
     private Charset charset;
 
     public AbstractStreamOutputTarget() {
         charset = getPreferredCharset();
         if (charset == null)
             throw new NullPointerException("preferredCharset");
+    }
+
+    @Override
+    public IStreamOutputTarget clone() {
+        try {
+            return (IStreamOutputTarget) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new UnexpectedException(e.getMessage(), e);
+        }
+    }
+
+    @Override
+    public boolean isAppendMode() {
+        return appendMode;
+    }
+
+    @Override
+    public IStreamOutputTarget setAppendMode(boolean appendMode) {
+        this.appendMode = appendMode;
+        return this;
     }
 
     static final Charset utf8Charset = Charset.forName("UTF-8");
@@ -50,10 +72,11 @@ public abstract class AbstractStreamOutputTarget
     }
 
     @Override
-    public void setCharset(Charset charset) {
+    public IStreamOutputTarget setCharset(Charset charset) {
         if (charset == null)
             throw new NullPointerException("charset");
         this.charset = charset;
+        return this;
     }
 
     @Override
@@ -124,7 +147,7 @@ public abstract class AbstractStreamOutputTarget
         ICharOut charOut = newCharOut();
         if (charOut instanceof ILineCharOut)
             return (ILineCharOut) charOut;
-        return new CharOutImpl(charOut);
+        return new LineCharOutImpl(charOut);
     }
 
     @Override

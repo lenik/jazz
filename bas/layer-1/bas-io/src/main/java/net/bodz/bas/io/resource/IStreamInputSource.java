@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInput;
 import java.io.Reader;
+import java.nio.charset.Charset;
 
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.lookahead.LAReader;
@@ -17,6 +18,9 @@ public interface IStreamInputSource
 
     @Override
     IStreamInputSource clone();
+
+    @Override
+    IStreamInputSource setCharset(Charset charset);
 
     /**
      * @return non-<code>null</code> value.

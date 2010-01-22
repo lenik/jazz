@@ -159,7 +159,7 @@ public class OutputBytesFile
                 throws IOException {
             if (buffer == null)
                 buffer = new ByteArrayOutputStream();
-            boolean append = getAppendMode();
+            boolean append = isAppendMode();
             if (!append)
                 buffer.reset();
             return null;

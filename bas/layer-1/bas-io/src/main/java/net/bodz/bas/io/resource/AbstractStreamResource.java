@@ -6,6 +6,7 @@ import java.io.ObjectOutput;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.Writer;
+import java.nio.charset.Charset;
 
 import net.bodz.bas.io.resource.preparation.IFormatDumpPreparation;
 import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
@@ -18,7 +19,7 @@ public abstract class AbstractStreamResource
         extends AbstractStreamInputSource
         implements IStreamOutputTarget {
 
-    private final AbstractStreamOutputTarget asotImpl;
+    private final IStreamOutputTarget asotImpl;
 
     public AbstractStreamResource() {
         super();
@@ -37,6 +38,29 @@ public abstract class AbstractStreamResource
             }
 
         };
+    }
+
+    @Override
+    public AbstractStreamResource clone() {
+        return (AbstractStreamResource) super.clone();
+    }
+
+    @Override
+    public boolean isAppendMode() {
+        return asotImpl.isAppendMode();
+    }
+
+    @Override
+    public IStreamOutputTarget setAppendMode(boolean appendMode) {
+        asotImpl.setAppendMode(appendMode);
+        return this;
+    }
+
+    @Override
+    public AbstractStreamResource setCharset(Charset charset) {
+        super.setCharset(charset);
+        asotImpl.setCharset(charset);
+        return this;
     }
 
     @Override

@@ -37,7 +37,7 @@ public class StreamWritePreparation
     }
 
     @Override
-    public boolean getAppendMode() {
+    public boolean isAppendMode() {
         return appendMode;
     }
 

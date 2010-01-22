@@ -52,7 +52,7 @@ public class LocalFileResource
     @Override
     public OutputStream newOutputStream()
             throws IOException {
-        return new FileOutputStream(file);
+        return new FileOutputStream(file, isAppendMode());
     }
 
     @Override
