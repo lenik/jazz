@@ -1,4 +1,4 @@
-package net.bodz.bas.io;
+package net.bodz.bas.files;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import net.bodz.bas.fs.legacy.Files;
+import net.bodz.bas.files.Files;
 
 import org.junit.Test;
 

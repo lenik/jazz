@@ -8,7 +8,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.fs.legacy.Files;
+import net.bodz.bas.files.Files;
 
 public class LibInstaller {
 

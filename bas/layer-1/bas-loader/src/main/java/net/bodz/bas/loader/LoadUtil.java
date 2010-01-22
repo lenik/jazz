@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.exceptions.ParseException;
-import net.bodz.bas.fs.legacy.Files;
+import net.bodz.bas.files.Files;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.snm.EclipseProject;
