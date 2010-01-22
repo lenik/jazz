@@ -2,6 +2,7 @@ package net.bodz.bas.arch.context.sysclg;
 
 import java.io.File;
 
+import net.bodz.bas.arch.context.ClassContext;
 import net.bodz.bas.arch.context.ContextLocal;
 import net.bodz.bas.arch.context.IContext;
 import net.bodz.bas.arch.context.sysctx.ContextCWDTest;
@@ -41,6 +42,19 @@ public class ContextCWD
         return !isAbsolutePath(path);
     }
 
+    static File join(File cwd, String name) {
+        return new File(cwd, name);
+    }
+
+    public File join(IContext context, String name) {
+        if (context == null)
+            throw new NullPointerException("context");
+        if (name == null)
+            throw new NullPointerException("name");
+        File cwd = get(context);
+        return join(cwd, name);
+    }
+
     /**
      * @throws NullPointerException
      *             If <code>context</code> or <code>dir</code> is <code>null</code>.
@@ -70,12 +84,24 @@ public class ContextCWD
             throw new NullPointerException("context");
         if (path == null)
             throw new NullPointerException("path");
-        File cwd = get(null);
+        File cwd = get(context);
         if (isRelativePath(path))
             cwd = new File(cwd, path);
         else
             cwd = new File(path);
         chdir(context, cwd);
+    }
+
+    public File join(Class<?> classContext, String name) {
+        return join(ClassContext.getInstance(classContext), name);
+    }
+
+    public void chdir(Class<?> classContext, File dir) {
+        chdir(ClassContext.getInstance(classContext), dir);
+    }
+
+    public void chdir(Class<?> classContext, String path) {
+        chdir(ClassContext.getInstance(classContext), path);
     }
 
     static final ContextCWD instance = new ContextCWD();

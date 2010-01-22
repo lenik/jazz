@@ -8,7 +8,7 @@ import net.bodz.bas.exceptions.IllegalUsageException;
 import net.bodz.bas.exceptions.NotImplementedException;
 import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.exceptions.UnexpectedException;
-import net.bodz.bas.fs.legacy.Files;
+import net.bodz.bas.files.FileURL;
 import net.bodz.bas.snm.BuildPath.ClassContainer;
 import net.bodz.bas.snm.BuildPath.SourceFolder;
 
@@ -75,7 +75,7 @@ public class EclipseProject {
         URL[] urls = new URL[classpaths.size()];
         int i = 0;
         for (File classpath : classpaths) {
-            URL url = Files.getURL(classpath);
+            URL url = FileURL.getURL(classpath);
             urls[i++] = url;
         }
         return urls;

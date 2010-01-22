@@ -25,8 +25,9 @@ import net.bodz.bas.cli.EditResult;
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.collection.set.ArraySet;
 import net.bodz.bas.exceptions.IdentifiedException;
+import net.bodz.bas.files.FilePath;
+import net.bodz.bas.files.FileRes;
 import net.bodz.bas.fs.URLFile;
-import net.bodz.bas.fs.legacy.Files;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.loader.DefaultBooter;
 import net.bodz.bas.loader.LoadException;
@@ -108,10 +109,10 @@ public class Mkbat
     @Override
     protected EditResult doEdit(File file)
             throws LoadException, IOException {
-        String ext = Files.getExtension(file, true);
+        String ext = FilePath.getExtension(file, true);
         if (!".java".equals(ext) && !".class".equals(ext))
             return EditResult.pass();
-        String name = Files.getName(file);
+        String name = FilePath.getName(file);
         if (name.contains("$")) // ignore inner classes
             return EditResult.pass("inner");
 
@@ -272,7 +273,7 @@ public class Mkbat
 
     static {
         try {
-            batTempl = Files.classData(Mkbat.class, "batTempl");
+            batTempl = FileRes.classData(Mkbat.class, "batTempl");
             batTemplBody = new URLFile(batTempl).forRead().readTextContents();
         } catch (IOException e) {
             throw new IdentifiedException(e.getMessage(), e);

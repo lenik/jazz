@@ -25,14 +25,14 @@
     	</dependency>
     	<dependency>
     		<groupId>net.bodz.bas</groupId>
-    		<artifactId>bas-fs</artifactId>
+    		<artifactId>bas-sysinfo</artifactId>
     		<version>0.0.1-SNAPSHOT</version>
     		<type>jar</type>
     		<scope>compile</scope>
     	</dependency>
     	<dependency>
     		<groupId>net.bodz.bas</groupId>
-    		<artifactId>bas-sysinfo</artifactId>
+    		<artifactId>bas-files</artifactId>
     		<version>0.0.1-SNAPSHOT</version>
     		<type>jar</type>
     		<scope>compile</scope>

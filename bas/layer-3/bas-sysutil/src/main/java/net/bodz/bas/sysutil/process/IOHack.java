@@ -40,14 +40,14 @@ public class IOHack {
     }
 
     static {
-        BufferedInputStream_in = hackField(BufferedInputStream.class, "in"); 
-        BufferedOutputStream_out = hackField(BufferedOutputStream.class, "out"); 
-        InputStreamReader_in = hackField(InputStreamReader.class, "in"); 
-        OutputStreamWriter_out = hackField(OutputStreamWriter.class, "out"); 
-        BufferedReader_reader = hackField(BufferedReader.class, "reader"); 
-        BufferedWriter_writer = hackField(BufferedWriter.class, "writer"); 
-        ReaderInputStream_reader = hackField(ReaderInputStream.class, "reader"); 
-        WriterOutputStream_writer = hackField(WriterOutputStream.class, "writer"); 
+        BufferedInputStream_in = hackField(BufferedInputStream.class, "in");
+        BufferedOutputStream_out = hackField(BufferedOutputStream.class, "out");
+        InputStreamReader_in = hackField(InputStreamReader.class, "in");
+        OutputStreamWriter_out = hackField(OutputStreamWriter.class, "out");
+        BufferedReader_reader = hackField(BufferedReader.class, "reader");
+        BufferedWriter_writer = hackField(BufferedWriter.class, "writer");
+        ReaderInputStream_reader = hackField(ReaderInputStream.class, "reader");
+        WriterOutputStream_writer = hackField(WriterOutputStream.class, "writer");
     }
 
     public static InputStream unwrap(InputStream in) {

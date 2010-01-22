@@ -5,7 +5,6 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.files.Files;
 import net.bodz.bas.text.util.Strings;
 
 public class LogTermTest {
@@ -13,6 +12,7 @@ public class LogTermTest {
     static void generate(String[] levels)
             throws IOException {
         URL url = LogTermTest.class.getResource("LogTerm.lm");
+//        new URLResource()
         String levelTempl = Files.readAll(url);
 
         System.out.println("static String generator = \"" + LogTermTest.class + "\";");

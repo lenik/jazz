@@ -14,7 +14,6 @@ import java.util.Map;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.db.filedb.PartRecords;
 import net.bodz.bas.db.filedb.PartRecords.PartMap;
-import net.bodz.bas.fs.legacy.Files;
 
 import org.junit.Test;
 
@@ -42,7 +41,7 @@ public class PartRecordsTest {
     @Test
     public void test1()
             throws IOException {
-        URL url = Files.classData(getClass(), "1");
+        URL url = FileRes.classData(getClass(), "1");
         ResLink resLink = new URLResLink(url);
         PartRecords maps = new PartRecords(resLink);
         ImmediateIteratorX<? extends PartMap, ? extends IOException> it = maps.iterator(false);

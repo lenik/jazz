@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
-import net.bodz.bas.fs.legacy.Files;
+import net.bodz.bas.files.FileRes;
 import net.bodz.bas.text.util.StringFeature;
 
 import org.junit.Test;
@@ -58,7 +58,7 @@ public class JarStuffTest {
     @Test
     public void testGetSrcURL_rtjar()
             throws IOException {
-        String classRes = Files.classData(Object.class).toString();
+        String classRes = FileRes.classData(Object.class).toString();
         String srcRes = BuildPath.getSrcURL(Object.class).toString();
         assertNotNull("can't find src of Object.class", srcRes);
         String srcExpected = classRes.replace(".class", ".java");

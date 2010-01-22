@@ -48,10 +48,11 @@ public abstract class AbstractStreamInputSource
     }
 
     @Override
-    public void setCharset(Charset charset) {
+    public AbstractStreamInputSource setCharset(Charset charset) {
         if (charset == null)
             throw new NullPointerException("charset");
         this.charset = charset;
+        return this;
     }
 
     @Override

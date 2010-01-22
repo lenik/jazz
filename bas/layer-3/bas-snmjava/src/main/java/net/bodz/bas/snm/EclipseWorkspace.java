@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import net.bodz.bas.fs.legacy.Files;
+import net.bodz.bas.io.resource.builtin.LocalFileResource;
 
 public class EclipseWorkspace {
 
@@ -32,7 +32,7 @@ public class EclipseWorkspace {
 
     public void reload()
             throws IOException {
-        Properties prefs = Files.loadProperties(new File(base, PREFS));
+        Properties prefs = new LocalFileResource(new File(base, PREFS)).forLoad().loadProperties();
         cpVars = new HashMap<String, String>();
         for (Object k : prefs.keySet()) {
             String name = (String) k;

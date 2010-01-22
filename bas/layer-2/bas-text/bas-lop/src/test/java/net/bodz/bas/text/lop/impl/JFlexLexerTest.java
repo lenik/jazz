@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.StringReader;
 
-import net.bodz.bas.fs.legacy.Files;
 import net.bodz.bas.sio.position.IXYTellable;
 import net.bodz.bas.text.lop.Token;
 
@@ -56,7 +55,7 @@ public class JFlexLexerTest {
     @Test
     public void test1()
             throws Exception {
-        String text = Files.readAll(Files.classData(getClass(), "1"));
+        String text = Files.readAll(FileRes.classData(getClass(), "1"));
         TD[] expected = {
         //
                 new TD(SampleLexer.ID, "hello", "hello"), //

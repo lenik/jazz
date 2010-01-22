@@ -5,7 +5,8 @@ import static org.junit.Assert.assertEquals;
 import java.io.File;
 import java.io.IOException;
 
-import net.bodz.bas.fs.legacy.Files;
+import net.bodz.bas.files.FileTemp;
+import net.bodz.bas.io.resource.builtin.LocalFileResource;
 
 import org.junit.Test;
 
@@ -23,10 +24,10 @@ public class FileMaskTest {
         }
         D d = new D(); //
 
-        File tmpDir = Files.getTmpDir();
+        File tmpDir = FileTemp.getTmpDir();
         File tmpf = File.createTempFile("filemasktest", "tmp");
         try {
-            Files.write(tmpf, "hello");
+            new LocalFileResource(tmpf).forWrite().write("hello");
 
             d.o(tmpDir, "drwxez");
             d.o(new File(tmpDir, "nonexist"), "fE");

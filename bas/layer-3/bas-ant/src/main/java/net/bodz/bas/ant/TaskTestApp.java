@@ -6,7 +6,7 @@ import java.net.URL;
 
 import net.bodz.bas.exceptions.IllegalUsageError;
 import net.bodz.bas.exceptions.IllegalUsageException;
-import net.bodz.bas.fs.legacy.Files;
+import net.bodz.bas.files.Files;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.snm.JarLocations;
 

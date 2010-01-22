@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Map.Entry;
 
-import net.bodz.bas.fs.legacy.Files;
+import net.bodz.bas.files.FilePath;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
 import net.bodz.bas.sysinfo.SystemInfo;
 
@@ -66,7 +66,7 @@ public class SJLibLoader {
      */
     public File findFile(String filename) {
         for (String path : findPaths) {
-            File canoni = Files.canoniOf(path);
+            File canoni = FilePath.canoniOf(path);
             if (!canoni.isDirectory())
                 continue;
             File file = new File(canoni, filename);
@@ -81,7 +81,7 @@ public class SJLibLoader {
      */
     public LibInfo findLibrary(String name) {
         for (String path : findPaths) {
-            File canoni = Files.canoniOf(path);
+            File canoni = FilePath.canoniOf(path);
             if (!canoni.isDirectory())
                 continue;
 
@@ -125,7 +125,7 @@ public class SJLibLoader {
 
                 String value = (String) e.getValue();
 
-                File target = Files.canoniOf(dir, value);
+                File target = FilePath.canoniOf(dir, value);
                 assert target.isFile() : "invalid target " + target;
                 if (!target.isFile())
                     continue;

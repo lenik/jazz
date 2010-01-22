@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.exceptions.ParseException;
-import net.bodz.bas.files.Files;
+import net.bodz.bas.files.FilePath;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.snm.EclipseProject;
@@ -82,7 +82,7 @@ public class LoadUtil {
 
     static URL[] findPack(String name) {
         if ("project".equals(name)) {
-            File start = Files.canoniOf(".");
+            File start = FilePath.canoniOf(".");
             File base = EclipseProject.findProjectBase(start);
             if (base == null)
                 throw new IllegalArgumentException("can\'t find project base: " + start);

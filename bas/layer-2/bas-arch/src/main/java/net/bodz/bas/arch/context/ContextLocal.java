@@ -73,4 +73,12 @@ public class ContextLocal<T> {
         map.put(concreteContext, value);
     }
 
+    public T get(Class<?> classContext) {
+        return get(ClassContext.getInstance(classContext));
+    }
+
+    public void set(Class<?> classContext, T value) {
+        set(ClassContext.getInstance(classContext), value);
+    }
+
 }

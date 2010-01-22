@@ -2,6 +2,8 @@ package net.bodz.bas.io.resource.preparation;
 
 import java.io.IOException;
 
+import net.bodz.bas.io.resource.IStreamInputSource;
+
 public interface IStreamWritePreparation
         extends Cloneable {
 
@@ -15,13 +17,35 @@ public interface IStreamWritePreparation
 
     IStreamWritePreparation setAutoFlush(boolean autoFlush);
 
-    void writeString(String string)
-            throws IOException;
+    int getBlockSize();
+
+    IStreamWritePreparation setBlockSize(int blockSize);
 
     void writeBytes(byte[] bytes, int off, int len)
             throws IOException;
 
     void writeBytes(byte[] bytes)
+            throws IOException;
+
+    void writeChars(char[] chars, int off, int len)
+            throws IOException;
+
+    void writeChars(char[] chars)
+            throws IOException;
+
+    void writeBytes(IStreamInputSource in, int maxLength)
+            throws IOException;
+
+    void writeBytes(IStreamInputSource in)
+            throws IOException;
+
+    void writeChars(IStreamInputSource in, int maxLength)
+            throws IOException;
+
+    void writeChars(IStreamInputSource in)
+            throws IOException;
+
+    void write(String string)
             throws IOException;
 
 }
