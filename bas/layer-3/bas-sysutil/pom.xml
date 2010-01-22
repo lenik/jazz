@@ -9,13 +9,6 @@
     <artifactId>bas-sysutil</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <dependencies >
-    	<dependency>
-    		<groupId>net.bodz.bas</groupId>
-    		<artifactId>bas-io</artifactId>
-    		<version>0.0.1-SNAPSHOT</version>
-    		<type>jar</type>
-    		<scope>compile</scope>
-    	</dependency>
 		<dependency>
 			<groupId>commons-lang</groupId>
 			<artifactId>commons-lang</artifactId>
@@ -23,6 +16,19 @@
 		<dependency>
 			<groupId>net.bodz.bas</groupId>
 			<artifactId>bas-text-util</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.bodz.bas</groupId>
+			<artifactId>bas-files</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>jar</type>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.bodz.bas</groupId>
+			<artifactId>bas-io</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>

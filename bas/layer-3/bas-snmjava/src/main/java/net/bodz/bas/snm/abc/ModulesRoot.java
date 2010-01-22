@@ -5,7 +5,7 @@ import java.io.FilenameFilter;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.fs.legacy.Files;
+import net.bodz.bas.files.FilePath;
 import net.bodz.bas.sysinfo.SystemInfo;
 
 public class ModulesRoot {
@@ -99,9 +99,9 @@ public class ModulesRoot {
         if (parent == null) {
             // absolute path?
             if (exp.startsWith("/"))
-                return findexp(exp.substring(1), Files.canoniOf("/"));
+                return findexp(exp.substring(1), FilePath.canoniOf("/"));
             if (SystemInfo.isWin32() && exp.length() > 2 && exp.charAt(1) == ':') {
-                File driveRoot = Files.canoniOf(exp.substring(0, 2));
+                File driveRoot = FilePath.canoniOf(exp.substring(0, 2));
                 return findexp(exp.substring(2), driveRoot);
             }
             // default root if relative path.
@@ -128,7 +128,7 @@ public class ModulesRoot {
                 String env = System.getenv(component.substring(1));
                 if (env == null)
                     return null;
-                newParent = Files.canoniOf(env);
+                newParent = FilePath.canoniOf(env);
             }
             if (newParent != null) {
                 if (!newParent.isDirectory())
@@ -159,7 +159,7 @@ public class ModulesRoot {
             String programFiles = System.getenv("ProgramFiles");
             if (programFiles == null)
                 programFiles = "C:/Program Files";
-            root = Files.canoniOf(programFiles);
+            root = FilePath.canoniOf(programFiles);
         }
         DEFAULT = new ModulesRoot(root);
     }

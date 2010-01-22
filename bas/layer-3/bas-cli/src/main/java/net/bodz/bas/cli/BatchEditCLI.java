@@ -17,8 +17,12 @@ import net.bodz.bas.cli.util.ProtectedShell;
 import net.bodz.bas.exceptions.IllegalUsageError;
 import net.bodz.bas.exceptions.NotImplementedException;
 import net.bodz.bas.exceptions.UnexpectedException;
-import net.bodz.bas.fs.legacy.Files;
+import net.bodz.bas.files.FilePath;
+import net.bodz.bas.files.FileTemp;
 import net.bodz.bas.hint.OverrideOption;
+import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.io.resource.builtin.InputStreamSource;
+import net.bodz.bas.io.resource.builtin.LocalFileResource;
 import net.bodz.bas.sio.ILineCharOut;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.sio.WriterCharOut;
@@ -26,6 +30,7 @@ import net.bodz.bas.text.diff.DiffComparator;
 import net.bodz.bas.text.diff.DiffFormat;
 import net.bodz.bas.text.diff.DiffFormats;
 import net.bodz.bas.text.diff.DiffInfo;
+import net.bodz.bas.text.diff.FileDiff;
 import net.bodz.bas.text.util.StringArray;
 
 @OptionGroup(value = "batch process", rank = -3)
@@ -176,7 +181,7 @@ public class BatchEditCLI
      */
     protected File _getEditTmp(File file)
             throws IOException {
-        String dotExt = Files.getExtension(file, true);
+        String dotExt = FilePath.getExtension(file, true);
         return File.createTempFile(tmpPrefix, dotExt, tmpDir);
     }
 
@@ -192,13 +197,13 @@ public class BatchEditCLI
             return true;
         }
         if (diffAlgorithm == null) {
-            if (Files.equals(a, b))
+            if (FileDiff.equals(a, b))
                 return false;
             L.info("[edit] ", a);
             return true;
         }
-        List<String> al = Files.readLines(a, inputEncoding.name());
-        List<String> bl = Files.readLines(b, outputEncoding.name());
+        List<String> al = new LocalFileResource(a).setCharset(inputEncoding).forRead().listLines();
+        List<String> bl = new LocalFileResource(b).setCharset(outputEncoding).forRead().listLines();
         List<DiffInfo> diffs = diffAlgorithm.diffCompare(al, bl);
         if (diffs.size() == 0)
             return false;
@@ -207,13 +212,13 @@ public class BatchEditCLI
         return true;
     }
 
-    private File tmpDir = Files.getTmpDir();
+    private File tmpDir = FileTemp.getTmpDir();
     private String tmpPrefix = getClass().getSimpleName();
 
     private File _getOutputFile(String relative, File in) {
         if (outputDirectory == null)
             return in;
-        File out = Files.getAbsoluteFile(outputDirectory, relative);
+        File out = FilePath.getAbsoluteFile(outputDirectory, relative);
         File outd = out.getParentFile();
         if (outd.isFile())
             throw new Error("Invalid output directory: " + outd);
@@ -221,7 +226,7 @@ public class BatchEditCLI
     }
 
     protected File getOutputFile(String relative, File defaultStart) {
-        File in = Files.getAbsoluteFile(defaultStart, relative);
+        File in = FilePath.getAbsoluteFile(defaultStart, relative);
         return _getOutputFile(relative, in);
     }
 
@@ -317,7 +322,7 @@ public class BatchEditCLI
             result.dest = new File(dst, relpath);
         }
         if (result.dest != null)
-            dst = Files.canoniOf(result.dest);
+            dst = FilePath.canoniOf(result.dest);
 
         addResult(file, dst, editTmp, result);
         return null;
@@ -358,7 +363,7 @@ public class BatchEditCLI
     @OverrideOption(group = "batchEdit")
     protected EditResult doEditByIO(InputStream in, OutputStream out)
             throws Exception {
-        Iterable<String> lines = Files.readByLine2(inputEncoding.name(), in);
+        Iterable<String> lines = new InputStreamSource(in).setCharset(inputEncoding).forRead().lines(false);
         ILineCharOut cout = Stdio.cout;
         if (out != null) {
             OutputStreamWriter writer = new OutputStreamWriter(out, outputEncoding.name());
@@ -442,7 +447,7 @@ public class BatchEditCLI
                 result.changed = diff(src, edit);
                 diffPrinted = true;
             } else
-                result.changed = Files.equals(src, edit);
+                result.changed = FileDiff.equals(src, edit);
             if (result.changed)
                 result.operation = EditResult.SAVE_DIFF;
             else
@@ -548,21 +553,19 @@ public class BatchEditCLI
             return BatchEditCLI.this.doEditByLine(lines, out);
         }
 
-        public final byte[] doEditToBuffer(Object in)
+        public final byte[] doEditToBuffer(IStreamInputSource source)
                 throws IOException {
-            InputStream ins = Files.getInputStream(in);
-            boolean closeIn = Files.shouldClose(in);
-            ByteArrayOutputStream outbuf = new ByteArrayOutputStream();
+            InputStream in = source.newInputStream();
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
             try {
                 // ProcessResult result =
-                doEditByIO(ins, outbuf);
+                doEditByIO(in, out);
             } catch (Throwable e) {
                 throw new RuntimeException(e.getMessage(), e);
             } finally {
-                if (closeIn)
-                    ins.close();
+                in.close();
             }
-            return outbuf.toByteArray();
+            return out.toByteArray();
         }
 
     }

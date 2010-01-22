@@ -11,12 +11,12 @@ import net.bodz.bas.c1.annotations.Version;
 import net.bodz.bas.cli.BatchEditCLI;
 import net.bodz.bas.cli.EditResult;
 import net.bodz.bas.cli.a.Option;
-import net.bodz.bas.fs.legacy.Files;
 
 @Doc("Fix: .bat goto labels must not cross 1k block boundary.")
 @Version( { 0, 0 })
 @RcsKeywords(id = "$Id$")
-public class Fix_BatBB extends BatchEditCLI {
+public class Fix_BatBB
+        extends BatchEditCLI {
 
     @Option(alias = "b", vnam = "SIZE", doc = "block size, default 1024")
     int blockSize = 1024;
@@ -25,11 +25,12 @@ public class Fix_BatBB extends BatchEditCLI {
     char fillChar = ':';
 
     @Override
-    protected EditResult doEditByIO(InputStream in, OutputStream out) throws Exception {
+    protected EditResult doEditByIO(InputStream in, OutputStream out)
+            throws Exception {
         int start = 0; // out
 
         ByteBuffer lineBuf = ByteBuffer.allocate(1024);
-        byte[] buf = new byte[Files.blockSize];
+        byte[] buf = new byte[4096];
         int cb;
         boolean leading = true;
         int leadChar = 0;
@@ -71,9 +72,10 @@ public class Fix_BatBB extends BatchEditCLI {
         return startBlock != endBlock;
     }
 
-    static byte[] remPrefix = ":: Fix_BatBB ::".getBytes(); 
+    static byte[] remPrefix = ":: Fix_BatBB ::".getBytes();
 
-    int fillUps(OutputStream out, int start) throws IOException {
+    int fillUps(OutputStream out, int start)
+            throws IOException {
         int fill = blockSize - start % blockSize;
         int filled = 0;
         while (filled < fill) {
@@ -92,7 +94,8 @@ public class Fix_BatBB extends BatchEditCLI {
         return filled;
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args)
+            throws Exception {
         new Fix_BatBB().run(args);
     }
 

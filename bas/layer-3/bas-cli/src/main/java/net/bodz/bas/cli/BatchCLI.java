@@ -12,8 +12,8 @@ import java.util.regex.Pattern;
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.cli.a.OptionGroup;
 import net.bodz.bas.exceptions.NotImplementedException;
+import net.bodz.bas.files.FilePath;
 import net.bodz.bas.fs.FileMask;
-import net.bodz.bas.fs.legacy.Files;
 import net.bodz.bas.fs.traverse.FileFinder;
 import net.bodz.bas.hint.OverrideOption;
 
@@ -226,7 +226,7 @@ public class BatchCLI
     protected File currentStartFile;
 
     protected String getRelativeName(File in) {
-        return Files.getRelativeName(in, currentStartFile);
+        return FilePath.getRelativeName(in, currentStartFile);
     }
 
     /**
@@ -243,7 +243,7 @@ public class BatchCLI
         if (sortComparator != null)
             finder.setComparator(sortComparator);
         for (File f : finder)
-            _processFile(Files.canoniOf(f));
+            _processFile(FilePath.canoniOf(f));
     }
 
     /**

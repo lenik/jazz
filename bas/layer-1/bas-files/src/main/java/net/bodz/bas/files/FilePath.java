@@ -112,4 +112,48 @@ public class FilePath {
         return FilePath.canoniOf(start, relativeName);
     }
 
+    /** get name without extension */
+    public static String getName(File file) {
+        String name = file.getName();
+        int dot = name.lastIndexOf('.');
+        if (dot != -1)
+            return name.substring(0, dot);
+        return name;
+    }
+
+    public static String getName(String file) {
+        return getName(new File(file));
+    }
+
+    /**
+     * @return "" if file has no extension.
+     */
+    public static String getExtension(String file, boolean includeDot) {
+        int dot = file.lastIndexOf('.');
+        if (dot != -1)
+            return file.substring(includeDot ? dot : dot + 1);
+        return ""; //$NON-NLS-1$
+    }
+
+    /**
+     * @return without dot, "" if file has no extension.
+     */
+    public static String getExtension(String file) {
+        return getExtension(file, false);
+    }
+
+    /**
+     * @return "" if file has no extension.
+     */
+    public static String getExtension(File file, boolean includeDot) {
+        return getExtension(file.getName(), includeDot);
+    }
+
+    /**
+     * @return without dot, "" if file has no extension.
+     */
+    public static String getExtension(File file) {
+        return getExtension(file.getName(), false);
+    }
+
 }

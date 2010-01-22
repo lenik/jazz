@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 
+import net.bodz.bas.files.FileWhich;
+
 import org.junit.Test;
 
 public class ProcessesTest {
@@ -28,7 +30,7 @@ public class ProcessesTest {
     @Test
     public void testMtpulse()
             throws Exception {
-        File mtpulse = Files.which("mtpulse");
+        File mtpulse = FileWhich.which("mtpulse");
         if (mtpulse != null) {
             System.out.println("mtpulse: " + mtpulse);
             assertEquals("123456789a", iocap("mtpulse C O1 X2 O3 X4 O5 X6 O7 X8 O9 Xa"));

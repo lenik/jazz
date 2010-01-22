@@ -12,13 +12,13 @@ import java.util.TreeSet;
 
 import org.junit.Test;
 
-public class TypeCommonTest {
+public class TypeGCDTest {
 
     @Test
     public void testGcdClassOfQClassOfQ() {
         class D {
             void o(Class<?>[] types, Class<?> expected) {
-                Class<?> actual = TypeCommon.getCommonSuperclass(Arrays.asList(types));
+                Class<?> actual = TypeGCD.getCommonSuperclass(Arrays.asList(types));
                 assertEquals(expected, actual);
             }
         }
@@ -33,7 +33,7 @@ public class TypeCommonTest {
     public void testIgcdClassOfQClassOfQ() {
         class D {
             void o(Class<?>[] types, Class<?>[] expected) {
-                Class<?>[] actual = TypeCommon.getCommonInterfaces(types[0], types[1], true);
+                Class<?>[] actual = TypeGCD.getCommonInterfaces(types[0], types[1], true);
                 assertArrayEquals(expected, actual);
             }
         }

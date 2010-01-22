@@ -18,6 +18,7 @@ import net.bodz.bas.a.ClassInfo;
 import net.bodz.bas.a.RcsKeywords;
 import net.bodz.bas.a.VersionInfo;
 import net.bodz.bas.annotations.ChainUsage;
+import net.bodz.bas.arch.context.sysclg.SystemCLG;
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.cli.a.OptionGroup;
 import net.bodz.bas.cli.ext.CLIPlugin;
@@ -28,7 +29,7 @@ import net.bodz.bas.commons.scripting.Scripts;
 import net.bodz.bas.exceptions.CreateException;
 import net.bodz.bas.exceptions.NotImplementedException;
 import net.bodz.bas.exceptions.ParseException;
-import net.bodz.bas.fs.legacy.Files;
+import net.bodz.bas.files.FileRes;
 import net.bodz.bas.hint.OverrideOption;
 import net.bodz.bas.io.term.ITerminal;
 import net.bodz.bas.io.term.LogTerm;
@@ -242,7 +243,7 @@ public class BasicCLI
                 verinfo = A_bas.parseId(keywords);
             } else {
                 verinfo = new VersionInfo();
-                URL url = Files.classData(clazz);
+                URL url = FileRes.classData(clazz);
                 try {
                     File file = new File(url.toURI());
                     verinfo.time = file.lastModified();
@@ -511,8 +512,10 @@ public class BasicCLI
     @OverrideOption(group = "basicMain")
     protected void doMainManaged(String[] args)
             throws Exception {
-        for (String arg : args)
-            expandFileArgument(CWD.get(arg));
+        for (String arg : args) {
+            File file = SystemCLG.cwd.join(getClass(), arg);
+            expandFileArgument(file);
+        }
     }
 
     boolean enableWildcards = false;

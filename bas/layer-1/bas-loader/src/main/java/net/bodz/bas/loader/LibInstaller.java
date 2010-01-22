@@ -8,7 +8,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.files.Files;
+import net.bodz.bas.files.FileTemp;
 
 public class LibInstaller {
 
@@ -34,7 +34,7 @@ public class LibInstaller {
 
     private static File deflDir;
     static {
-        deflDir = new File(Files.getTmpDir(), "BundledLib");
+        deflDir = new File(FileTemp.getTmpDir(), "BundledLib");
         deflDir.mkdirs();
     }
 

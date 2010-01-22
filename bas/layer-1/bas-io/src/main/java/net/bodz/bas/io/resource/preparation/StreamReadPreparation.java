@@ -22,6 +22,9 @@ import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.ICharIn;
 
+/**
+ * @test {@link StreamReadPreparationTest}
+ */
 public class StreamReadPreparation
         implements IStreamReadPreparation {
 

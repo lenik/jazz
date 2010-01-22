@@ -8,9 +8,9 @@ import java.util.TreeSet;
 import net.bodz.bas.collection.comparator.TypeComparator;
 
 /**
- * @test {@link TypeCommonTest}
+ * @test {@link TypeGCDTest}
  */
-public class TypeCommon {
+public class TypeGCD {
 
     public static Class<?> getCommonSuperclass(Class<?> a, Class<?> b) {
         while (a != null && !a.isAssignableFrom(b))

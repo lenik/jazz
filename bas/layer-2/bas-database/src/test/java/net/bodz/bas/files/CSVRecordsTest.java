@@ -7,7 +7,6 @@ import java.net.URL;
 
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.db.filedb.CSVRecords;
-import net.bodz.bas.fs.legacy.Files;
 
 import org.junit.Test;
 
@@ -16,7 +15,7 @@ public class CSVRecordsTest {
     @Test
     public void test1()
             throws IOException {
-        URL classData = Files.classData(getClass(), "1");
+        URL classData = FileRes.classData(getClass(), "1");
         CSVRecords csv = new CSVRecords(new URLResLink(classData));
         ImmediateIteratorX<? extends String[], IOException> it = csv.iterator(true);
         String[] head = it.next();

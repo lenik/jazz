@@ -16,7 +16,8 @@ import java.util.zip.ZipFile;
 
 import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.exceptions.UnexpectedException;
-import net.bodz.bas.fs.legacy.Files;
+import net.bodz.bas.files.FilePath;
+import net.bodz.bas.files.FileURL;
 import net.bodz.bas.xml.XMLs;
 
 import org.xml.sax.Attributes;
@@ -71,7 +72,7 @@ public class BuildPath {
             throw new UnexpectedException("Self resource error, maybe class extension isn't '.class'? ");
         File defaultClasspath;
         try {
-            defaultClasspath = Files.getFile(selfRes, selfResourceName);
+            defaultClasspath = FileURL.getFile(selfRes, selfResourceName);
             Library defaultLibrary = new Library();
             defaultLibrary.path = defaultClasspath;
             addLibrary(defaultLibrary);
@@ -80,7 +81,8 @@ public class BuildPath {
         }
     }
 
-    public BuildPath(final File baseDir, File classpathFile, File manifestFile) throws ParseException {
+    public BuildPath(final File baseDir, File classpathFile, File manifestFile)
+            throws ParseException {
         this();
         if (classpathFile != null && classpathFile.exists()) {
             try {
@@ -88,32 +90,32 @@ public class BuildPath {
                     @Override
                     public void startElement(String uri, String localName, String name, Attributes attributes)
                             throws SAXException {
-                        if (!"classpathentry".equals(name)) 
+                        if (!"classpathentry".equals(name))
                             return;
-                        String kind = attributes.getValue("kind"); 
-                        String path = attributes.getValue("path"); 
-                        if ("output".equals(kind)) // default 
-                            defaultOutput = Files.canoniOf(baseDir, path);
+                        String kind = attributes.getValue("kind");
+                        String path = attributes.getValue("path");
+                        if ("output".equals(kind)) // default
+                            defaultOutput = FilePath.canoniOf(baseDir, path);
                         if ("src".equals(kind)) {
-                            String output = attributes.getValue("output"); 
+                            String output = attributes.getValue("output");
                             String nativelib = attributes.getValue("nativelib");
                             SourceFolder source = new SourceFolder();
-                            source.path = Files.canoniOf(baseDir, path);
+                            source.path = FilePath.canoniOf(baseDir, path);
                             if (output != null)
-                                source.output = Files.canoniOf(baseDir, output);
+                                source.output = FilePath.canoniOf(baseDir, output);
                             if (nativelib != null)
-                                source.nativeLibraryLocation = Files.canoniOf(baseDir, nativelib);
+                                source.nativeLibraryLocation = FilePath.canoniOf(baseDir, nativelib);
                             sourceFolders.add(source);
                         }
                         if ("lib".equals(kind)) {
                             String sourcepath = attributes.getValue("sourcepath");
                             String javadoc = attributes.getValue("javadoc");
                             Library library = new Library();
-                            library.path = Files.canoniOf(baseDir, path);
+                            library.path = FilePath.canoniOf(baseDir, path);
                             if (sourcepath != null)
-                                library.sourceAttachment = Files.canoniOf(baseDir, sourcepath);
+                                library.sourceAttachment = FilePath.canoniOf(baseDir, sourcepath);
                             if (javadoc != null)
-                                library.javadocLocation = Files.canoniOf(baseDir, javadoc);
+                                library.javadocLocation = FilePath.canoniOf(baseDir, javadoc);
                             libraries.add(library);
                         }
                         if ("var".equals(kind)) {
@@ -191,7 +193,8 @@ public class BuildPath {
         this.trySrcSuffixes = srcSuffixes;
     }
 
-    public List<File> getClasspath() throws ParseException {
+    public List<File> getClasspath()
+            throws ParseException {
         List<File> list = new ArrayList<File>();
         if (defaultOutput != null)
             list.add(defaultOutput);
@@ -262,7 +265,7 @@ public class BuildPath {
     }
 
     public SourceFolder whichSourceFolder(File sourceFile) {
-        sourceFile = Files.canoniOf(sourceFile);
+        sourceFile = FilePath.canoniOf(sourceFile);
         for (SourceFolder s : sourceFolders) {
             if (isUnder(sourceFile, s.path))
                 return s;
@@ -291,8 +294,8 @@ public class BuildPath {
             if (sourcePath == null && trySrcSuffixes != null) {
                 File parentDir = classPath.getParentFile();
                 String classPathFileName = classPath.getName();
-                String classPathName = Files.getName(classPathFileName);
-                String classPathExtension = Files.getExtension(classPathFileName);
+                String classPathName = FilePath.getName(classPathFileName);
+                String classPathExtension = FilePath.getExtension(classPathFileName);
                 for (String trySrcSuffix : trySrcSuffixes) {
                     String srcName = classPathName + trySrcSuffix;
                     File srcPath = new File(parentDir, srcName + classPathExtension);
