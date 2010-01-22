@@ -6,7 +6,10 @@ import java.nio.charset.Charset;
 import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.ICharIn;
 
-public interface ISimpleStreamInputSource {
+public interface ISimpleStreamInputSource
+        extends Cloneable {
+
+    ISimpleStreamInputSource clone();
 
     Charset getCharset();
 

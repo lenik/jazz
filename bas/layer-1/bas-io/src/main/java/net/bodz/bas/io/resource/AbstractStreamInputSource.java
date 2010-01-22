@@ -10,6 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.Reader;
 import java.nio.charset.Charset;
 
+import net.bodz.bas.exceptions.UnexpectedException;
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.lookahead.LAReader;
 import net.bodz.bas.io.resource.preparation.IParseLoadPreparation;
@@ -30,6 +31,15 @@ public abstract class AbstractStreamInputSource
         charset = getPreferredCharset();
         if (charset == null)
             throw new NullPointerException("preferredCharset");
+    }
+
+    @Override
+    public AbstractStreamInputSource clone() {
+        try {
+            return (AbstractStreamInputSource) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new UnexpectedException(e.getMessage(), e);
+        }
     }
 
     static final Charset utf8Charset = Charset.forName("UTF-8");

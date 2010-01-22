@@ -15,6 +15,9 @@ import net.bodz.bas.io.resource.preparation.IStreamReadPreparation;
 public interface IStreamInputSource
         extends ISimpleStreamInputSource {
 
+    @Override
+    IStreamInputSource clone();
+
     /**
      * @return non-<code>null</code> value.
      */

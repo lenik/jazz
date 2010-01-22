@@ -3,13 +3,13 @@ package net.bodz.bas.db.filedb;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.TreeMap;
 
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.files.PartRecordsTest;
+import net.bodz.bas.io.resource.IStreamInputSource;
 
 /**
  * Preferred file name: *.maps
@@ -34,40 +34,28 @@ public class PartRecords
 
     }
 
-    public PartRecords(File file, String encoding, int flags) {
-        super(file, encoding, flags);
+    public PartRecords(IStreamInputSource source, int flags) {
+        super(source, flags);
+    }
+
+    public PartRecords(IStreamInputSource source) {
+        super(source);
     }
 
     public PartRecords(File file, String encoding) {
         super(file, encoding);
     }
 
-    public PartRecords(File file) {
-        super(file);
-    }
-
-    public PartRecords(ResLink resLink, Charset charset, int flags) {
-        super(resLink, charset, flags);
-    }
-
-    public PartRecords(ResLink resLink, Charset charset) {
-        super(resLink, charset);
-    }
-
-    public PartRecords(ResLink resLink) {
-        super(resLink);
-    }
-
-    public PartRecords(URL url, String encoding, int flags) {
-        super(url, encoding, flags);
+    public PartRecords(File file, String encoding, int flags) {
+        super(file, encoding, flags);
     }
 
     public PartRecords(URL url, String encoding) {
         super(url, encoding);
     }
 
-    public PartRecords(URL url) {
-        super(url);
+    public PartRecords(URL url, String encoding, int flags) {
+        super(url, encoding, flags);
     }
 
     @Override

@@ -2,7 +2,6 @@ package net.bodz.bas.db.filedb;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.Map;
@@ -11,6 +10,8 @@ import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.io.LineReader;
+import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.io.resource.builtin.LocalFileResource;
 
 /**
  * @see PartRecords
@@ -24,21 +25,13 @@ public abstract class _PartRecords<K, V>
     private int flags;
     private K textKey;
 
-    public _PartRecords(ResLink resLink) {
-        this(resLink, null, 0);
+    public _PartRecords(IStreamInputSource source) {
+        this(source, 0);
     }
 
-    public _PartRecords(ResLink resLink, Charset charset) {
-        this(resLink, charset, 0);
-    }
-
-    public _PartRecords(ResLink resLink, Charset charset, int flags) {
-        super(resLink, charset);
+    public _PartRecords(IStreamInputSource source, int flags) {
+        super(source);
         this.flags = flags;
-    }
-
-    public _PartRecords(File file) {
-        this(file, null, 0);
     }
 
     public _PartRecords(File file, String encoding) {
@@ -46,11 +39,7 @@ public abstract class _PartRecords<K, V>
     }
 
     public _PartRecords(File file, String encoding, int flags) {
-        this(new FileResLink(file), Charset.forName(encoding), flags);
-    }
-
-    public _PartRecords(URL url) {
-        this(url, null, 0);
+        this(new LocalFileResource(file).setCharset(Charset.forName(encoding)), flags);
     }
 
     public _PartRecords(URL url, String encoding) {
@@ -58,7 +47,7 @@ public abstract class _PartRecords<K, V>
     }
 
     public _PartRecords(URL url, String encoding, int flags) {
-        this(new URLResLink(url), Charset.forName(encoding), flags);
+        this(new URLResource(url), Charset.forName(encoding), flags);
     }
 
     public K getTextKey() {
@@ -140,10 +129,8 @@ public abstract class _PartRecords<K, V>
         @Override
         public Map<K, V> next()
                 throws IOException {
-            if (lineReader == null) {
-                Reader reader = resLink.openReader(charset);
-                lineReader = new LineReader(reader);
-            }
+            if (lineReader == null)
+                lineReader = source.newLineReader();
             int state = PREHEADER;
             boolean freeForm = (flags & FREE_FORM) != 0;
             K textKey = getTextKey();
