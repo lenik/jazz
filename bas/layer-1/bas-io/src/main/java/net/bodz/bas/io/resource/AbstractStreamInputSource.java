@@ -34,7 +34,7 @@ public abstract class AbstractStreamInputSource
     }
 
     @Override
-    public AbstractStreamInputSource clone() {
+    public IStreamInputSource clone() {
         try {
             return (AbstractStreamInputSource) super.clone();
         } catch (CloneNotSupportedException e) {

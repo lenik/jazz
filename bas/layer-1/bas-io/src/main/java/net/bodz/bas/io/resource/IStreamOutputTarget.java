@@ -6,6 +6,7 @@ import java.io.ObjectOutput;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.Writer;
+import java.nio.charset.Charset;
 
 import net.bodz.bas.io.resource.preparation.IFormatDumpPreparation;
 import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
@@ -14,6 +15,15 @@ import net.bodz.bas.sio.ILineCharOut;
 
 public interface IStreamOutputTarget
         extends ISimpleStreamOutputTarget {
+
+    @Override
+    IStreamOutputTarget clone();
+
+    @Override
+    IStreamOutputTarget setAppendMode(boolean appendMode);
+
+    @Override
+    IStreamOutputTarget setCharset(Charset charset);
 
     /**
      * @return non-<code>null</code> value.

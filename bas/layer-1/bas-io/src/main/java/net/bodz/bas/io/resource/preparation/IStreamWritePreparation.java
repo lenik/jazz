@@ -9,7 +9,7 @@ public interface IStreamWritePreparation
 
     IStreamWritePreparation clone();
 
-    boolean getAppendMode();
+    boolean isAppendMode();
 
     IStreamWritePreparation setAppendMode(boolean appendMode);
 

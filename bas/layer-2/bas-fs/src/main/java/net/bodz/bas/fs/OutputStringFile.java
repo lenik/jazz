@@ -171,7 +171,7 @@ public class OutputStringFile
                 throws IOException {
             if (buffer == null)
                 buffer = new StringBuffer();
-            boolean append = getAppendMode();
+            boolean append = isAppendMode();
             if (!append)
                 buffer.setLength(0);
             return null;
