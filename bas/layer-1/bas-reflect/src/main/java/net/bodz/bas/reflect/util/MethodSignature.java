@@ -2,14 +2,9 @@ package net.bodz.bas.reflect.util;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
-import net.bodz.bas.collection.iterator.RepeatIterable;
 import net.bodz.bas.lang.Nullables;
-import net.bodz.bas.reflect.members.FindMemberOptions;
 import net.bodz.bas.type.util.TypeDistance;
 import net.bodz.bas.type.util.TypeName;
 
@@ -131,7 +126,7 @@ public class MethodSignature {
         return equals(o);
     }
 
-    public Method getMatchedMethod(Class<?> clazz) {
+    public Method matchMethod(Class<?> clazz) {
         try {
             return clazz.getMethod(name, parameterTypes);
         } catch (NoSuchMethodException e) {
@@ -139,7 +134,7 @@ public class MethodSignature {
         }
     }
 
-    public Method getMatchedDeclaredMethod(Class<?> clazz) {
+    public Method matchDeclaredMethod(Class<?> clazz) {
         try {
             return clazz.getDeclaredMethod(name, parameterTypes);
         } catch (NoSuchMethodException e) {
@@ -147,7 +142,7 @@ public class MethodSignature {
         }
     }
 
-    public Constructor<?> getMatchedConstructor(Class<?> clazz) {
+    public Constructor<?> matchConstructor(Class<?> clazz) {
         try {
             return clazz.getConstructor(parameterTypes);
         } catch (NoSuchMethodException e) {
@@ -155,7 +150,7 @@ public class MethodSignature {
         }
     }
 
-    public Constructor<?> getMatchedDeclaredConstructor(Class<?> clazz) {
+    public Constructor<?> matchedDeclaredConstructor(Class<?> clazz) {
         try {
             return clazz.getDeclaredConstructor(parameterTypes);
         } catch (NoSuchMethodException e) {
@@ -163,35 +158,36 @@ public class MethodSignature {
         }
     }
 
-    /**
-     * @throws NullPointerException
-     *             If any argument is <code>null</code>.
-     */
-    public Iterable<Method> findMethods(Class<?> javaClass, FindMemberOptions options) {
-        if (javaClass == null)
-            throw new NullPointerException("javaClass");
-        if (options.isGetDeclaredMembers())
-            return findDeclaredMethods(javaClass, options);
-        if (this.hasNullParameterType()) {
-            Method[] publicMethods = javaClass.getMethods();
-            List<Method> list = new ArrayList<Method>(publicMethods.length);
-            for (Method m : javaClass.getMethods()) {
-                if (!name.equals(m.getName()))
-                    continue;
-                int dist = TypeDistance.dist(parameterTypes, m.getParameterTypes());
-                if (dist == -1 || dist > options.getMaxDistance())
-                    continue;
-                list.add(m);
+    public Method matchFinestMethod(Iterable<Method> methods) {
+        int mindist = -1;
+        Method finest = null;
+        for (Method m : methods) {
+            Class<?>[] o = m.getParameterTypes();
+            int dist = TypeDistance.dist(parameterTypes, o);
+            if (dist != -1) {
+                if (mindist == -1 || dist < mindist) {
+                    mindist = dist;
+                    finest = m;
+                }
             }
-            // if (options.isSortResults()) ;
-            return list;
-        } else {
-            Method strictlyMatchedMethod = this.getMatchedMethod(javaClass);
-            if (strictlyMatchedMethod == null)
-                return Collections.emptyList();
-            else
-                return new RepeatIterable<Method>(strictlyMatchedMethod, 1);
         }
+        return finest;
+    }
+
+    public Constructor<?> matchFinestConstructor(Iterable<Constructor<?>> constructors) {
+        int mindist = -1;
+        Constructor<?> finest = null;
+        for (Constructor<?> ctor : constructors) {
+            Class<?>[] o = ctor.getParameterTypes();
+            int dist = TypeDistance.dist(parameterTypes, o);
+            if (dist != -1) {
+                if (mindist == -1 || dist < mindist) {
+                    mindist = dist;
+                    finest = ctor;
+                }
+            }
+        }
+        return finest;
     }
 
 }

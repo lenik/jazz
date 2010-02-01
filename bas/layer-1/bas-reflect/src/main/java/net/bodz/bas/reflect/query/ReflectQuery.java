@@ -5,27 +5,27 @@ package net.bodz.bas.reflect.query;
  */
 public class ReflectQuery {
 
-    public static PublicMethods selectMethodsInClass(Class<?> clazz) {
+    public static PublicMethods selectMethods(Class<?> clazz) {
         return new PublicMethods(clazz);
     }
 
-    public static DeclaredMethods selectDeclaredMethodsInClass(Class<?> clazz) {
+    public static DeclaredMethods selectDeclaredMethods(Class<?> clazz) {
         return new DeclaredMethods(clazz);
     }
 
-    public static PublicConstructors selectConstructorsInClass(Class<?> clazz) {
+    public static PublicConstructors selectConstructors(Class<?> clazz) {
         return new PublicConstructors(clazz);
     }
 
-    public static DeclaredConstructors selectDeclaredConstructorsInClass(Class<?> clazz) {
+    public static DeclaredConstructors selectDeclaredConstructors(Class<?> clazz) {
         return new DeclaredConstructors(clazz);
     }
 
-    public static PublicFields selectFieldsInClass(Class<?> clazz) {
+    public static PublicFields selectFields(Class<?> clazz) {
         return new PublicFields(clazz);
     }
 
-    public static DeclaredFields selectDeclaredFieldsInClass(Class<?> clazz) {
+    public static DeclaredFields selectDeclaredFields(Class<?> clazz) {
         return new DeclaredFields(clazz);
     }
 
