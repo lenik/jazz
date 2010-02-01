@@ -1,6 +1,6 @@
 package net.bodz.bas.reflect.query;
 
-import java.lang.reflect.Method;
+import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.List;
 
@@ -9,19 +9,18 @@ import net.bodz.bas.collection.iterator.ImmediateIterableX;
 import net.bodz.bas.collection.iterator.IteratorX;
 import net.bodz.bas.collection.util.IterableToList;
 
-public abstract class MethodSelection
-        implements ImmediateIterableX<Method, RuntimeException> {
+public abstract class FieldSelection
+        implements ImmediateIterableX<Field, RuntimeException> {
 
     protected int modifierMask;
     protected int modifierTest;
 
     protected INamePredicate namePredicate;
-    protected IParametersPredicate parametersPredicate;
-    protected ITypePredicate returnTypePredicate;
+    protected ITypePredicate typePredicate;
 
     static final int accessModifierMask = Modifier.PUBLIC | Modifier.PROTECTED | Modifier.PRIVATE;
 
-    public MethodSelection withAccess(boolean includePublic, boolean includeProtected, boolean includePrivate) {
+    public FieldSelection withAccess(boolean includePublic, boolean includeProtected, boolean includePrivate) {
         modifierMask |= accessModifierMask;
         modifierTest &= ~accessModifierMask;
         if (includePublic)
@@ -33,13 +32,13 @@ public abstract class MethodSelection
         return this;
     }
 
-    public MethodSelection staticOnly() {
+    public FieldSelection staticOnly() {
         modifierMask |= Modifier.STATIC;
         modifierTest |= Modifier.STATIC;
         return this;
     }
 
-    public MethodSelection finalOnly() {
+    public FieldSelection finalOnly() {
         modifierMask |= Modifier.FINAL;
         modifierTest |= Modifier.FINAL;
         return this;
@@ -49,7 +48,7 @@ public abstract class MethodSelection
      * @throws NullPointerException
      *             If <code>namePrefix</code> is <code>null</code>.
      */
-    public MethodSelection withName(String name) {
+    public FieldSelection withName(String name) {
         namePredicate = new EqualsName(name, namePredicate);
         return this;
     }
@@ -58,7 +57,7 @@ public abstract class MethodSelection
      * @throws NullPointerException
      *             If <code>namePrefix</code> is <code>null</code>.
      */
-    public MethodSelection startsWithName(String namePrefix) {
+    public FieldSelection startsWithName(String namePrefix) {
         namePredicate = new StartsWithName(namePrefix, namePredicate);
         return this;
     }
@@ -67,51 +66,39 @@ public abstract class MethodSelection
      * @throws NullPointerException
      *             If <code>nameSuffix</code> is <code>null</code>.
      */
-    public MethodSelection endsWithName(String nameSuffix) {
+    public FieldSelection endsWithName(String nameSuffix) {
         namePredicate = new EndsWithName(nameSuffix, namePredicate);
         return this;
     }
 
     /**
      * @throws NullPointerException
-     *             If <code>parameters</code> is <code>null</code>.
+     *             If <code>type</code> is <code>null</code>.
      */
-
-    public MethodSelection withParameters(Class<?>... parameters) {
-        parametersPredicate = new PrefixParameters(parameters, parametersPredicate);
+    public FieldSelection of(Class<?> type) {
+        typePredicate = new MinType(type, typePredicate);
         return this;
     }
 
-    public MethodSelection withMinParameters(Class<?>... parameters) {
-        parametersPredicate = new MinPrefixParameters(parameters, parametersPredicate);
-        return this;
-    }
-
-    public MethodSelection withMaxParameters(Class<?>... parameters) {
-        parametersPredicate = new MinPrefixParameters(parameters, parametersPredicate);
-        return this;
-    }
-
-    public MethodSelection returns(Class<?> minReturnType) {
-        returnTypePredicate = new MinType(minReturnType, returnTypePredicate);
-        return this;
-    }
-
-    public MethodSelection returnsSuperOf(Class<?> maxReturnType) {
-        returnTypePredicate = new MaxType(maxReturnType, returnTypePredicate);
+    /**
+     * @throws NullPointerException
+     *             If <code>type</code> is <code>null</code>.
+     */
+    public FieldSelection superOf(Class<?> type) {
+        typePredicate = new MaxType(type, typePredicate);
         return this;
     }
 
     @Override
-    public IteratorX<Method, RuntimeException> iterator() {
-        return new ImmIterIterator<Method, RuntimeException>(this, true);
+    public IteratorX<Field, RuntimeException> iterator() {
+        return new ImmIterIterator<Field, RuntimeException>(this, true);
     }
 
-    public Method[] toArray() {
-        return toList().toArray(new Method[0]);
+    public Field[] toArray() {
+        return toList().toArray(new Field[0]);
     }
 
-    public List<? extends Method> toList() {
+    public List<? extends Field> toList() {
         return IterableToList.toList(this);
     }
 

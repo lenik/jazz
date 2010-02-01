@@ -1,15 +1,15 @@
 package net.bodz.bas.reflect.query;
 
-import java.lang.reflect.Method;
+import java.lang.reflect.Field;
 
 import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 
 /**
- * @test {@link DeclaredMethodsTest}
+ * @test {@link DeclaredFieldsTest}
  */
-public class DeclaredMethods
-        extends MethodSelection {
+public class DeclaredFields
+        extends FieldSelection {
 
     private final Class<?> clazz;
 
@@ -19,7 +19,7 @@ public class DeclaredMethods
      * @throws NullPointerException
      *             If <code>clazz</code> is <code>null</code>.
      */
-    public DeclaredMethods(Class<?> clazz) {
+    public DeclaredFields(Class<?> clazz) {
         if (clazz == null)
             throw new NullPointerException("clazz");
         this.clazz = clazz;
@@ -29,46 +29,46 @@ public class DeclaredMethods
      * @param stopClass
      *            <code>null</code> If not constrained.
      */
-    public DeclaredMethods stopAt(Class<?> stopClass) {
+    public DeclaredFields stopAt(Class<?> stopClass) {
         this.stopClass = stopClass;
         return this;
     }
 
     class Iter
-            extends AbstractImmediateIteratorX<Method, RuntimeException> {
+            extends AbstractImmediateIteratorX<Field, RuntimeException> {
 
         Class<?> currentClass;
-        Method[] declaredMethodsOfCurrentClass;
+        Field[] declaredFieldsOfCurrentClass;
         int currentIndex;
 
         public Iter() {
             if (stopClass == null || !clazz.isAssignableFrom(stopClass)) {
                 currentClass = clazz;
-                declaredMethodsOfCurrentClass = currentClass.getDeclaredMethods();
+                declaredFieldsOfCurrentClass = currentClass.getDeclaredFields();
                 currentIndex = -1;
             }
         }
 
         @Override
-        public Method next()
+        public Field next()
                 throws RuntimeException {
             while (currentClass != null) {
-                while (++currentIndex < declaredMethodsOfCurrentClass.length) {
-                    Method m = declaredMethodsOfCurrentClass[currentIndex];
-                    if (modifierTest != (modifierMask & m.getModifiers()))
+                while (++currentIndex < declaredFieldsOfCurrentClass.length) {
+                    Field field = declaredFieldsOfCurrentClass[currentIndex];
+                    if (modifierTest != (modifierMask & field.getModifiers()))
                         continue;
-                    if (namePredicate != null && !namePredicate.test(m.getName()))
+                    if (namePredicate != null && !namePredicate.test(field.getName()))
                         continue;
-                    if (parametersPredicate != null && !parametersPredicate.test(m.getParameterTypes()))
+                    if (typePredicate != null && !typePredicate.test(field.getType()))
                         continue;
-                    return m;
+                    return field;
                 }
                 currentClass = currentClass.getSuperclass();
                 if (currentClass == null)
                     break;
                 if (stopClass != null && currentClass.isAssignableFrom(stopClass))
                     break;
-                declaredMethodsOfCurrentClass = currentClass.getDeclaredMethods();
+                declaredFieldsOfCurrentClass = currentClass.getDeclaredFields();
                 currentIndex = -1;
             }
             return end();
@@ -76,7 +76,7 @@ public class DeclaredMethods
     }
 
     @Override
-    public ImmediateIteratorX<? extends Method, ? extends RuntimeException> iterator(boolean allowOverlap)
+    public ImmediateIteratorX<? extends Field, ? extends RuntimeException> iterator(boolean allowOverlap)
             throws RuntimeException {
         return new Iter();
     }
