@@ -194,12 +194,4 @@ public class MethodSignature {
         }
     }
 
-    public Iterable<Method> findDeclaredMethods(Class<?> javaClass, FindMemberOptions options) {
-        if (javaClass == null)
-            throw new NullPointerException("javaClass");
-        if (this.hasNullParameterType()) {
-            
-        }
-    }
-
 }
