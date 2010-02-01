@@ -8,6 +8,7 @@ import net.bodz.bas.collection.iterator.ImmIterIterator;
 import net.bodz.bas.collection.iterator.ImmediateIterableX;
 import net.bodz.bas.collection.iterator.IteratorX;
 import net.bodz.bas.collection.util.IterableToList;
+import net.bodz.bas.reflect.util.MethodSignature;
 
 public abstract class ConstructorSelection
         implements ImmediateIterableX<Constructor<?>, RuntimeException> {
@@ -47,20 +48,70 @@ public abstract class ConstructorSelection
      * @throws NullPointerException
      *             If <code>parameters</code> is <code>null</code>.
      */
-
     public ConstructorSelection withParameters(Class<?>... parameters) {
-        parametersPredicate = new PrefixParameters(parameters, parametersPredicate);
+        parametersPredicate = new EqualsParameters(parameters, false, parametersPredicate);
         return this;
     }
 
+    /**
+     * @throws NullPointerException
+     *             If <code>parameters</code> is <code>null</code>.
+     */
     public ConstructorSelection withMinParameters(Class<?>... parameters) {
-        parametersPredicate = new MinPrefixParameters(parameters, parametersPredicate);
+        parametersPredicate = new MinParameters(parameters, false, parametersPredicate);
         return this;
     }
 
+    /**
+     * @throws NullPointerException
+     *             If <code>parameters</code> is <code>null</code>.
+     */
     public ConstructorSelection withMaxParameters(Class<?>... parameters) {
-        parametersPredicate = new MinPrefixParameters(parameters, parametersPredicate);
+        parametersPredicate = new MinParameters(parameters, false, parametersPredicate);
         return this;
+    }
+
+    /**
+     * @throws NullPointerException
+     *             If <code>parameters</code> is <code>null</code>.
+     */
+    public ConstructorSelection prefixWithParameters(Class<?>... parameters) {
+        parametersPredicate = new EqualsParameters(parameters, true, parametersPredicate);
+        return this;
+    }
+
+    /**
+     * @throws NullPointerException
+     *             If <code>parameters</code> is <code>null</code>.
+     */
+    public ConstructorSelection prefixWithMinParameters(Class<?>... parameters) {
+        parametersPredicate = new MinParameters(parameters, true, parametersPredicate);
+        return this;
+    }
+
+    /**
+     * @throws NullPointerException
+     *             If <code>parameters</code> is <code>null</code>.
+     */
+    public ConstructorSelection prefixWithMaxParameters(Class<?>... parameters) {
+        parametersPredicate = new MinParameters(parameters, true, parametersPredicate);
+        return this;
+    }
+
+    public ConstructorSelection of(MethodSignature minSignature) {
+        ConstructorSelection result = this;
+        Class<?>[] params = minSignature.getParameterTypes();
+        assert params != null;
+        result = result.withMinParameters(params);
+        return result;
+    }
+
+    public ConstructorSelection superOf(MethodSignature minSignature) {
+        ConstructorSelection result = this;
+        Class<?>[] params = minSignature.getParameterTypes();
+        assert params != null;
+        result = result.withMaxParameters(params);
+        return result;
     }
 
     @Override

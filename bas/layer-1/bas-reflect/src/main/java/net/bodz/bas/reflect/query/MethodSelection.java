@@ -8,7 +8,12 @@ import net.bodz.bas.collection.iterator.ImmIterIterator;
 import net.bodz.bas.collection.iterator.ImmediateIterableX;
 import net.bodz.bas.collection.iterator.IteratorX;
 import net.bodz.bas.collection.util.IterableToList;
+import net.bodz.bas.reflect.util.MethodSignature;
 
+/**
+ * @see ReflectQuery#selectMethods(Class)
+ * @see ReflectQuery#selectDeclaredMethods(Class)
+ */
 public abstract class MethodSelection
         implements ImmediateIterableX<Method, RuntimeException> {
 
@@ -76,20 +81,76 @@ public abstract class MethodSelection
      * @throws NullPointerException
      *             If <code>parameters</code> is <code>null</code>.
      */
-
     public MethodSelection withParameters(Class<?>... parameters) {
-        parametersPredicate = new PrefixParameters(parameters, parametersPredicate);
+        parametersPredicate = new EqualsParameters(parameters, false, parametersPredicate);
         return this;
     }
 
+    /**
+     * @throws NullPointerException
+     *             If <code>parameters</code> is <code>null</code>.
+     */
     public MethodSelection withMinParameters(Class<?>... parameters) {
-        parametersPredicate = new MinPrefixParameters(parameters, parametersPredicate);
+        parametersPredicate = new MinParameters(parameters, false, parametersPredicate);
         return this;
     }
 
+    /**
+     * @throws NullPointerException
+     *             If <code>parameters</code> is <code>null</code>.
+     */
     public MethodSelection withMaxParameters(Class<?>... parameters) {
-        parametersPredicate = new MinPrefixParameters(parameters, parametersPredicate);
+        parametersPredicate = new MinParameters(parameters, false, parametersPredicate);
         return this;
+    }
+
+    /**
+     * @throws NullPointerException
+     *             If <code>parameters</code> is <code>null</code>.
+     */
+    public MethodSelection prefixWithParameters(Class<?>... parameters) {
+        parametersPredicate = new EqualsParameters(parameters, true, parametersPredicate);
+        return this;
+    }
+
+    /**
+     * @throws NullPointerException
+     *             If <code>parameters</code> is <code>null</code>.
+     */
+    public MethodSelection prefixWithMinParameters(Class<?>... parameters) {
+        parametersPredicate = new MinParameters(parameters, true, parametersPredicate);
+        return this;
+    }
+
+    /**
+     * @throws NullPointerException
+     *             If <code>parameters</code> is <code>null</code>.
+     */
+    public MethodSelection prefixWithMaxParameters(Class<?>... parameters) {
+        parametersPredicate = new MinParameters(parameters, true, parametersPredicate);
+        return this;
+    }
+
+    public MethodSelection of(MethodSignature minSignature) {
+        MethodSelection result = this;
+        String name = minSignature.getMethodName();
+        if (name != null)
+            result = result.withName(name);
+        Class<?>[] params = minSignature.getParameterTypes();
+        assert params != null;
+        result = result.withMinParameters(params);
+        return result;
+    }
+
+    public MethodSelection superOf(MethodSignature minSignature) {
+        MethodSelection result = this;
+        String name = minSignature.getMethodName();
+        if (name != null)
+            result = result.withName(name);
+        Class<?>[] params = minSignature.getParameterTypes();
+        assert params != null;
+        result = result.withMaxParameters(params);
+        return result;
     }
 
     public MethodSelection returns(Class<?> minReturnType) {

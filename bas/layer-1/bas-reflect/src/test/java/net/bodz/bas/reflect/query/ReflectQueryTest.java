@@ -10,13 +10,13 @@ public class ReflectQueryTest
     @Test
     public void testSelectMethods()
             throws Exception {
-        assertEquals(2, ReflectQuery.selectMethodsInClass(A2.class).startsWithName("f_").toArray().length);
+        assertEquals(2, ReflectQuery.selectMethods(A2.class).startsWithName("f_").toArray().length);
     }
 
     @Test
     public void testSelectDeclaredMethods()
             throws Exception {
-        assertEquals(8, ReflectQuery.selectDeclaredMethodsInClass(A2.class).startsWithName("f_").toArray().length);
+        assertEquals(8, ReflectQuery.selectDeclaredMethods(A2.class).startsWithName("f_").toArray().length);
     }
 
 }
