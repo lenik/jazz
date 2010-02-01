@@ -19,7 +19,7 @@ public class CompatMethods {
         Method min = null;
         for (Method method : Members.methods(clazz, name, all)) {
             Class<?>[] decltypes = method.getParameterTypes();
-            int dist = TypeDistance.sumExtendsDepth(decltypes, argtypes);
+            int dist = TypeDistance.dist(decltypes, argtypes);
             if (dist == -1)
                 continue;
             if (dist < mindist || mindist == -1) {
@@ -39,7 +39,7 @@ public class CompatMethods {
         Constructor<T> min = null;
         for (Constructor<T> ctor : Members.constructors(clazz, all)) {
             Class<?>[] decltypes = ctor.getParameterTypes();
-            int dist = TypeDistance.sumExtendsDepth(decltypes, argtypes);
+            int dist = TypeDistance.dist(decltypes, argtypes);
             if (dist == -1)
                 continue;
             if (dist < mindist || mindist == -1) {
