@@ -8,11 +8,12 @@ import net.bodz.bas.collection.iterator.ImmIterIterator;
 import net.bodz.bas.collection.iterator.ImmediateIterableX;
 import net.bodz.bas.collection.iterator.IteratorX;
 import net.bodz.bas.collection.util.IterableToList;
-import net.bodz.bas.reflect.util.MethodSignature;
+import net.bodz.bas.reflect.MethodSignature;
 
 /**
  * @see ReflectQuery#selectMethods(Class)
  * @see ReflectQuery#selectDeclaredMethods(Class)
+ * @test {@link MethodSelectionTest}
  */
 public abstract class MethodSelection
         implements ImmediateIterableX<Method, RuntimeException> {
@@ -75,6 +76,16 @@ public abstract class MethodSelection
     public MethodSelection endsWithName(String nameSuffix) {
         namePredicate = new EndsWithName(nameSuffix, namePredicate);
         return this;
+    }
+
+    /**
+     * @throws NullPointerException
+     *             If <code>method</code> is <code>null</code>.
+     */
+    public MethodSelection overrideOf(Method method) {
+        MethodSelection result = withName(method.getName());
+        result = result.withParameters(method.getParameterTypes());
+        return result;
     }
 
     /**
