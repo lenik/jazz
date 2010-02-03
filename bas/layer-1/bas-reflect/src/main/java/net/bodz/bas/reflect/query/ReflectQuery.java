@@ -29,4 +29,12 @@ public class ReflectQuery {
         return new DeclaredFields(clazz);
     }
 
+    public static ClassSelection selectClassChain(Class<?> clazz) {
+        return new ClassSelection(clazz);
+    }
+
+    public static ClassSelection selectClassTree(Class<?> clazz) {
+        return new ClassSelection(clazz).withInterfaces().unique();
+    }
+
 }

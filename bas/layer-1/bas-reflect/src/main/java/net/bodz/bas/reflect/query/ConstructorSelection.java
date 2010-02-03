@@ -8,7 +8,7 @@ import net.bodz.bas.collection.iterator.ImmIterIterator;
 import net.bodz.bas.collection.iterator.ImmediateIterableX;
 import net.bodz.bas.collection.iterator.IteratorX;
 import net.bodz.bas.collection.util.IterableToList;
-import net.bodz.bas.reflect.util.MethodSignature;
+import net.bodz.bas.reflect.MethodSignature;
 
 public abstract class ConstructorSelection
         implements ImmediateIterableX<Constructor<?>, RuntimeException> {

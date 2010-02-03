@@ -1,4 +1,4 @@
-package net.bodz.bas.reflect.util;
+package net.bodz.bas.reflect;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;

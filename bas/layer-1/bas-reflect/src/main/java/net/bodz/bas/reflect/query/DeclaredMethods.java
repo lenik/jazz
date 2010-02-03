@@ -73,6 +73,7 @@ public class DeclaredMethods
             }
             return end();
         }
+
     }
 
     @Override
