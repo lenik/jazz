@@ -4,22 +4,23 @@ import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
-import net.bodz.bas.exceptions.IllegalArgumentTypeException;
-import net.bodz.bas.exceptions.UnexpectedException;
+import org.apache.commons.vfs.FileObject;
+import org.apache.commons.vfs.FileSystemException;
+import org.apache.commons.vfs.VFS;
 
 /**
  * @test {@link FilePathTest}
  */
 public class FilePath {
 
-    private static String slash;
+    private static char fileSeparator;
     static {
-        slash = System.getProperty("file.separator");
-        if (slash == null)
-            slash = "/";
+        String fs = System.getProperty("file.separator");
+        if (fs == null || fs.isEmpty())
+            fileSeparator = '/';
+        else
+            fileSeparator = fs.charAt(0);
     }
 
     /**
@@ -35,9 +36,6 @@ public class FilePath {
         }
     }
 
-    /**
-     * @see CWD#get(String)
-     */
     public static File canoniOf(String path)
             throws NullPointerException {
         return canoniOf(new File(path));
@@ -61,99 +59,180 @@ public class FilePath {
         }
     }
 
-    public static File canoniOf(Object o) {
-        if (o == null)
+    public static File canoniOf(File parent, String childPath) {
+        parent = canoniOf(parent);
+        return canoniOf(new File(parent, childPath));
+    }
+
+    public static File canoniOf(String parentPath, String childPath) {
+        File parent = canoniOf(parentPath);
+        return canoniOf(new File(parent, childPath));
+    }
+
+    /**
+     * @param path
+     *            Should be in canonical form
+     * @param origPath
+     *            The start directory where <code>path</code> is originated. Should be in canonical
+     *            form, with no trailing slash (/) unless it's the root.
+     * @return <code>null</code> if the given <code>path</code> isn't with-in the
+     *         <code>origPath</code>, or the relative representation of <code>path</code> relative
+     *         to <code>origPath</code>.
+     * @throws NullPointerException
+     *             If any parameter is <code>null</code>.
+     */
+    public static String getRelativeName(String path, String origPath, char fileSeparator) {
+        int len = origPath.length();
+        while (origPath.charAt(len - 1) == fileSeparator)
+            origPath = origPath.substring(0, --len);
+        if (!path.startsWith(origPath))
             return null;
-        if (o instanceof File)
-            return canoniOf((File) o);
-        if (o instanceof String)
-            return canoniOf((String) o);
-        if (o instanceof URI)
-            return canoniOf((URI) o);
-        if (o instanceof URL)
-            return canoniOf((URL) o);
-        throw new IllegalArgumentTypeException(o);
-    }
-
-    public static File canoniOf(Object parent, String child) {
-        File _parent = canoniOf(parent);
-        return canoniOf(new File(_parent, child));
-    }
-
-    public static String getRelativeName(File file, File start) {
-        if (start == null)
-            throw new NullPointerException("start");
-        file = FilePath.canoniOf(file);
-        start = FilePath.canoniOf(start);
-        List<String> tails = new ArrayList<String>();
-        for (File look = file;; look = look.getParentFile()) {
-            if (look == null)
-                throw new UnexpectedException(String.format("File %s isn\'t in the start dir %s", file, start));
-            if (look.equals(start))
-                break;
-            tails.add(look.getName());
+        if (path.length() == len)
+            return ".";
+        if (path.charAt(len) == fileSeparator) {
+            String relative = path.substring(len + 1);
+            if (relative.isEmpty())
+                relative = ".";
+            return relative;
         }
-        StringBuffer buffer = null;
-        for (int i = tails.size() - 1; i >= 0; i--) {
-            if (buffer == null)
-                buffer = new StringBuffer(tails.size() * 16);
-            else
-                buffer.append(slash);
-            buffer.append(tails.get(i));
-        }
-        if (buffer == null)
-            return "";
-        return buffer.toString();
+        return null;
     }
 
-    public static File getAbsoluteFile(File start, String relativeName) {
+    /**
+     * @return <code>null</code> if the given <code>path</code> isn't with-in the
+     *         <code>origPath</code>, or the relative representation of <code>path</code> relative
+     *         to <code>origPath</code>.
+     * @throws NullPointerException
+     *             If any parameter is <code>null</code>.
+     */
+    public static String getRelativeName(String path, String origPath) {
+        return getRelativeName(path, origPath, fileSeparator);
+    }
+
+    /**
+     * @return <code>null</code> if the given <code>file</code> isn't with-in the
+     *         <code>origFile</code>, or the relative representation of <code>file</code> relative
+     *         to <code>origPath</code>.
+     * @throws NullPointerException
+     *             If any parameter is <code>null</code>.
+     */
+    public static String getRelativeName(File file, File origFile) {
+        String path = canoniOf(file).getPath();
+        String origPath = canoniOf(origFile).getPath();
+        return getRelativeName(path, origPath, fileSeparator);
+    }
+
+    /**
+     * @return <code>null</code> if the given <code>file</code> isn't with-in the
+     *         <code>origFile</code>, or the relative representation of <code>file</code> relative
+     *         to <code>origPath</code>.
+     * @throws NullPointerException
+     *             If any parameter is <code>null</code>.
+     */
+
+    public static String getRelativeName(FileObject file, FileObject origFile)
+            throws FileSystemException {
+        String path = file.getName().getPathDecoded();
+        String origPath = origFile.getName().getPathDecoded();
+        return getRelativeName(path, origPath, '/');
+    }
+
+    /**
+     * @return The relative URL string, keep encoded.<code>null</code> if the given <code>url</code>
+     *         isn't with-in the <code>origUrl</code>, or the relative representation of
+     *         <code>url</code> relative to <code>origUrl</code>.
+     * @throws NullPointerException
+     *             If any parameter is <code>null</code>.
+     */
+    public static String getRelativeName(URL url, URL origUrl) {
+        String relativeName = getRelativeName(url.getPath(), origUrl.getPath(), '/');
+        return relativeName;
+    }
+
+    /**
+     * @return The relative URL string, keep encoded.<code>null</code> if the given <code>uri</code>
+     *         isn't with-in the <code>origUri</code>, or the relative representation of
+     *         <code>uri</code> relative to <code>origUri</code>.
+     * @throws NullPointerException
+     *             If any parameter is <code>null</code>.
+     */
+    public static String getRelativeName(URI uri, URI origUri) {
+        return getRelativeName(uri.getPath(), origUri.getPath(), '/');
+    }
+
+    /**
+     * @param relativeName
+     *            If doesn't specified (empty or <code>null</code>), the <code>startFile</code> is
+     *            returned.
+     * @return The {@link File} of joined path.
+     */
+    public static File join(File startFile, String relativeName) {
         if (relativeName == null || relativeName.isEmpty())
-            return start;
-        return FilePath.canoniOf(start, relativeName);
+            return startFile;
+        return new File(startFile, relativeName);
     }
 
-    /** get name without extension */
-    public static String getName(File file) {
-        String name = file.getName();
+    /**
+     * @param relativeName
+     *            If doesn't specified (empty or <code>null</code>), the <code>startFile</code> is
+     *            returned.
+     * @return The {@link FileObject} of joined path.
+     */
+    public static FileObject join(FileObject startFile, String relativeName)
+            throws FileSystemException {
+        if (relativeName == null || relativeName.isEmpty())
+            return startFile;
+        return startFile.getChild(relativeName);
+    }
+
+    /**
+     * @return <code>null</code> if file has no extension.
+     * @throws NullPointerException
+     *             If <code>path</code> is <code>null</code>.
+     */
+    public static String getExtension(String path, boolean includeDot) {
+        int dot = path.lastIndexOf('.');
+        if (dot != -1)
+            return path.substring(includeDot ? dot : dot + 1);
+        return null;
+    }
+
+    /**
+     * @return without dot, "" if file has no extension.
+     */
+    public static String getExtension(String path) {
+        return getExtension(path, false);
+    }
+
+    /**
+     * Get the base name without extension
+     */
+    public static String stripExtension(String name) {
         int dot = name.lastIndexOf('.');
         if (dot != -1)
             return name.substring(0, dot);
         return name;
     }
 
-    public static String getName(String file) {
-        return getName(new File(file));
+    /**
+     * @throws NullPointerException
+     *             If <code>path</code> is <code>null</code>.
+     */
+    public static NameSplit splitExtension(String path) {
+        int dot = path.lastIndexOf('.');
+        if (dot == -1)
+            return new NameSplit(path, null);
+        return new NameSplit(path.substring(0, dot), path.substring(dot + 1));
     }
 
     /**
-     * @return "" if file has no extension.
+     * With support of CWD.
+     * 
+     * @return <code>null</code> If <code>path</code> is <code>null</code>.
      */
-    public static String getExtension(String file, boolean includeDot) {
-        int dot = file.lastIndexOf('.');
-        if (dot != -1)
-            return file.substring(includeDot ? dot : dot + 1);
-        return ""; //$NON-NLS-1$
-    }
-
-    /**
-     * @return without dot, "" if file has no extension.
-     */
-    public static String getExtension(String file) {
-        return getExtension(file, false);
-    }
-
-    /**
-     * @return "" if file has no extension.
-     */
-    public static String getExtension(File file, boolean includeDot) {
-        return getExtension(file.getName(), includeDot);
-    }
-
-    /**
-     * @return without dot, "" if file has no extension.
-     */
-    public static String getExtension(File file) {
-        return getExtension(file.getName(), false);
+    public static FileObject getFileObject(String path)
+            throws FileSystemException {
+        return VFS.getManager().resolveFile(path);
     }
 
 }

@@ -7,11 +7,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import javax.tools.FileObject;
+
 public class FileTemp {
 
-    static File TMPDIR;
+    static FileObject TMPDIR;
     static {
-        File t;
+        FileObject t;
         String TEMP;
         if ((TEMP = System.getenv("TEMP")) != null)
             t = FilePath.canoniOf(TEMP);
@@ -31,7 +33,7 @@ public class FileTemp {
      * @see File#createTempFile(String, String)
      * @see File#createTempFile(String, String, File)
      */
-    public static File getTmpDir() {
+    public static FileObject getTmpDir() {
         return TMPDIR;
     }
 
