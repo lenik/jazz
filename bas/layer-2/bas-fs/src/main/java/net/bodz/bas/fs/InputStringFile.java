@@ -1,13 +1,10 @@
 package net.bodz.bas.fs;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
-import java.io.StringReader;
 import java.net.URI;
 import java.net.URL;
 
+import net.bodz.bas.io.resource.builtin.StringSource;
 import net.bodz.bas.io.resource.preparation.IStreamReadPreparation;
 import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
 import net.bodz.bas.io.resource.preparation.StreamReadPreparation;
@@ -136,31 +133,9 @@ public class InputStringFile
         return Long.valueOf(len);
     }
 
-    class ReadPreparation
-            extends StreamReadPreparation {
-
-        public ReadPreparation(IFile file) {
-            super(InputStringFile.this);
-        }
-
-        @Override
-        public Reader newReader()
-                throws IOException {
-            return new StringReader(text);
-        }
-
-        @Override
-        public InputStream newInputStream()
-                throws IOException {
-            byte[] bytes = getBytes();
-            return new ByteArrayInputStream(bytes);
-        }
-
-    }
-
     @Override
     public IStreamReadPreparation forRead() {
-        return new ReadPreparation(InputStringFile.this);
+        return new StreamReadPreparation(new StringSource(text));
     }
 
     @Override

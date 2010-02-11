@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 import net.bodz.bas.fs.preparation.IProbePreparation;
+import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.io.resource.IStreamOutputTarget;
 import net.bodz.bas.io.resource.preparation.IFormatDumpPreparation;
 import net.bodz.bas.io.resource.preparation.IParseLoadPreparation;
 import net.bodz.bas.io.resource.preparation.IStreamReadPreparation;
@@ -45,6 +47,10 @@ public interface IFile
      */
     boolean delete()
             throws IOException;
+
+    IStreamInputSource toStreamInputSource();
+
+    IStreamOutputTarget toStreamOutputTarget();
 
     /**
      * @throw {@link UnsupportedOperationException} If read functionality isn't supported.

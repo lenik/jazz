@@ -33,7 +33,7 @@ public class ZippingFolder
             throws IOException {
         super(outputFile.getName());
         this.file = outputFile;
-        this.zipOut = file.forWrite().newZipOutputStream();
+        this.zipOut = new ZipOutputStream(file.toStreamOutputTarget().newOutputStream());
     }
 
     @Override

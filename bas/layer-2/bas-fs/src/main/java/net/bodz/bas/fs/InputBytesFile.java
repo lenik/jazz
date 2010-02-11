@@ -1,16 +1,13 @@
 package net.bodz.bas.fs;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.Reader;
-import java.io.StringReader;
 import java.net.URI;
 import java.net.URL;
 
-import net.bodz.bas.io.resource.preparation.IStreamReadPreparation;
-import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
-import net.bodz.bas.io.resource.preparation.StreamReadPreparation;
+import net.bodz.bas.exceptions.ReadOnlyException;
+import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.io.resource.IStreamOutputTarget;
+import net.bodz.bas.io.resource.builtin.ByteArrayResource;
 
 public class InputBytesFile
         extends AbstractFile {
@@ -135,37 +132,15 @@ public class InputBytesFile
         return (long) bytes.length;
     }
 
-    class ReadPreparation
-            extends StreamReadPreparation {
-
-        public ReadPreparation(IFile file) {
-            super(InputBytesFile.this);
-        }
-
-        @Override
-        public Reader newReader()
-                throws IOException {
-            String text = getText();
-            return new StringReader(text);
-        }
-
-        @Override
-        public InputStream newInputStream()
-                throws IOException {
-            byte[] bytes = getBytes();
-            return new ByteArrayInputStream(bytes);
-        }
-
+    @Override
+    public IStreamInputSource toStreamInputSource() {
+        return new ByteArrayResource(bytes);
     }
 
     @Override
-    public IStreamReadPreparation forRead() {
-        return new ReadPreparation(InputBytesFile.this);
-    }
-
-    @Override
-    public IStreamWritePreparation forWrite() {
-        throw new UnsupportedOperationException();
+    public IStreamOutputTarget toStreamOutputTarget() {
+        // return new ByteArrayResource(bytes);
+        throw new ReadOnlyException();
     }
 
 }
