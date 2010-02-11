@@ -7,7 +7,11 @@ import net.bodz.bas.fs.preparation.HeuristicProbePreparation;
 import net.bodz.bas.fs.preparation.IProbePreparation;
 import net.bodz.bas.fs.preparation.LazyProbePreparation;
 import net.bodz.bas.io.resource.preparation.FormatDumpPreparation;
+import net.bodz.bas.io.resource.preparation.IStreamReadPreparation;
+import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
 import net.bodz.bas.io.resource.preparation.ParseLoadPreparation;
+import net.bodz.bas.io.resource.preparation.StreamReadPreparation;
+import net.bodz.bas.io.resource.preparation.StreamWritePreparation;
 
 public abstract class AbstractFile
         extends AbstractFsEntry
@@ -69,13 +73,23 @@ public abstract class AbstractFile
     }
 
     @Override
+    public IStreamReadPreparation forRead() {
+        return new StreamReadPreparation(toStreamInputSource());
+    }
+
+    @Override
+    public IStreamWritePreparation forWrite() {
+        return new StreamWritePreparation(toStreamOutputTarget());
+    }
+
+    @Override
     public ParseLoadPreparation forLoad() {
-        return new ParseLoadPreparation(forRead());
+        return new ParseLoadPreparation(toStreamInputSource());
     }
 
     @Override
     public FormatDumpPreparation forDump() {
-        return new FormatDumpPreparation(forWrite());
+        return new FormatDumpPreparation(toStreamOutputTarget());
     }
 
     @Override
