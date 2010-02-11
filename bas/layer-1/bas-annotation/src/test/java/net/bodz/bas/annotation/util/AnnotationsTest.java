@@ -18,7 +18,7 @@ public class AnnotationsTest {
     @Test
     public void testDumpAnnotationMap() {
         BCharOut buffer = new BCharOut();
-        AnnotationAnalyze.dumpAnnotationMap(AnnotationsTest.class, buffer);
+        AnnotationDump.dumpAnnotationMap(AnnotationsTest.class, buffer);
         // @net.bodz.bas.annotations.Author(value=[TeST])
         assertEquals(annPrefix(XyzHint.class) + "(value=[TeST])\n", // 
                 buffer.toString());
