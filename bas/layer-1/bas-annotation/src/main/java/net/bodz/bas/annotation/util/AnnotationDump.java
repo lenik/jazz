@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 
 import net.bodz.bas.sio.ILineCharOut;
 
-public class AnnotationAnalyze {
+public class AnnotationDump {
 
     static final Field Class_annotations;
     static final Field Class_declaredAnnotations;
