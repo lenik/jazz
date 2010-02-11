@@ -7,13 +7,20 @@ import java.beans.PropertyDescriptor;
 import java.util.Arrays;
 import java.util.Comparator;
 
+import net.bodz.bas.collection.util.EnumerationToIterable;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.sio.ILineCharOut;
+import net.bodz.bas.sio.Stdio;
 
 public class BeanDump {
 
-    public static void dumpProperties(ILineCharOut out, Object bean)
+    public static void dumpProperties(Object bean)
+            throws IntrospectionException {
+        dumpProperties(bean, Stdio.cout);
+    }
+
+    public static void dumpProperties(Object bean, ILineCharOut out)
             throws IntrospectionException {
         if (bean == null)
             throw new NullPointerException("bean");
@@ -35,7 +42,13 @@ public class BeanDump {
                 value = e.toString();
             }
             out.println(name + ": " + value);
+            // out.println("    attributes: ");
+            for (String attr : EnumerationToIterable.toIterable(property.attributeNames())) {
+                Object attrValue = property.getValue(attr);
+                out.println("    ATTR " + attr + ": " + attrValue);
+            }
         }
+        out.flush();
     }
 
 }
