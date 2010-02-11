@@ -3,6 +3,8 @@ package net.bodz.bas.unitperf;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
+import net.bodz.bas.type.traits.IInstanceStore;
+
 public class Player {
 
     private static <A extends Annotation> A findAnnotation(Annotation[] annotations, Class<A> annotatypeType) {
@@ -21,7 +23,7 @@ public class Player {
         for (int i = 0; i < parameterTypes.length; i++) {
             Annotation[] parameterAnnotations = allParameterAnnotations[i];
             Class<?> parameterType = parameterTypes[i];
-            StoreClass storeClassAnnotation = findAnnotation(parameterAnnotations, StoreClass.class);
+            StoreClass storeClassAnnotation =  findAnnotation(parameterAnnotations, StoreClass.class);
             IInstanceStore<?> instanceStore = TypeInfoUtil.findInstanceStore(parameterType, storeClassAnnotation);
             parameterStores[i] = instanceStore;
         }

@@ -11,6 +11,8 @@ import net.bodz.bas.exceptions.CreateException;
 import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.text.util.Strings;
 import net.bodz.bas.type.traits.IParser;
+import net.bodz.bas.type.traits.IValidator;
+import net.bodz.bas.type.traits.ValidateException;
 import net.bodz.bas.type.util.ClassInstance;
 
 public abstract class _Option<T>
@@ -27,7 +29,7 @@ public abstract class _Option<T>
 
     protected final IParser<?> parser;
     protected final ItemTypeParser valparser;
-    protected final Checker check;
+    protected final IValidator<?> check;
 
     protected final String optgrp;
 
@@ -91,7 +93,7 @@ public abstract class _Option<T>
                     valparser = null;
 
                 ValidateBy checkBy = elm.getAnnotation(ValidateBy.class);
-                Class<? extends Checker> check0 = null;
+                Class<? extends IValidator<?>> check0 = null;
                 if (checkBy != null) {
                     check0 = checkBy.value();
                     if (check0 == Checker.class)
@@ -169,7 +171,7 @@ public abstract class _Option<T>
         if (check != null)
             try {
                 check.check(val);
-            } catch (CheckException e) {
+            } catch (ValidateException e) {
                 throw new ParseException(e);
             }
         return val;
@@ -185,7 +187,7 @@ public abstract class _Option<T>
         if (check != null)
             try {
                 check.check(val);
-            } catch (CheckException e) {
+            } catch (ValidateException e) {
                 throw new ParseException(e);
             }
         return val;

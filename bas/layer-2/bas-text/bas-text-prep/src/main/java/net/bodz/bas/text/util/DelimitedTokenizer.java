@@ -5,16 +5,15 @@ import java.io.Reader;
 import java.util.Arrays;
 import java.util.List;
 
+import net.bodz.bas.collection.iterator.AbstractImmediateIterableX;
 import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
 import net.bodz.bas.collection.iterator.ImmIterIterator;
-import net.bodz.bas.collection.iterator.ImmediateIterableX;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
-import net.bodz.bas.collection.iterator.IterableX;
 import net.bodz.bas.collection.iterator.IteratorX;
 import net.bodz.bas.exceptions.NotImplementedException;
 
 public class DelimitedTokenizer
-        implements ImmediateIterableX<String, IOException>, IterableX<String, IOException> {
+        extends AbstractImmediateIterableX<String, IOException> {
 
     private List<Delimiter> delimiters;
 

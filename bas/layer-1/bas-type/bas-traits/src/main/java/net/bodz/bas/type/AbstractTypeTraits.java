@@ -39,7 +39,7 @@ public abstract class AbstractTypeTraits<T>
         implements ITypeTraits<T>, IAttributes, ITextForm<T>, IValidator<T>, IClassifier<T>, ISearcher<T>,
         ISampleGenerator<T>, IInstanceStore<T> {
 
-    private Class<T> type;
+    protected final Class<T> type;
     private Attributes attributes;
     private Map<String, IAttributes> classicationAttributes;
     private Map<String, T> storeInstances;

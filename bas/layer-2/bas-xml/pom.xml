@@ -28,6 +28,12 @@
     		<version>0.0.1-SNAPSHOT</version>
     		<scope>compile</scope>
     	</dependency>
+    	<dependency>
+    		<groupId>net.bodz.bas</groupId>
+    		<artifactId>bas-lang</artifactId>
+    		<version>0.0.2-SNAPSHOT</version>
+    		<scope>compile</scope>
+    	</dependency>
     </dependencies>
     <name>BAS :: Layer 2 :: XML Utilities</name>
 </project>

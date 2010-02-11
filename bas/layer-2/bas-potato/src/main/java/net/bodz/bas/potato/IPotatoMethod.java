@@ -3,6 +3,8 @@ package net.bodz.bas.potato;
 public interface IPotatoMethod
         extends IPotatoElement {
 
+    IPotatoType<?> getDeclaringType();
+
     Class<?> getReturnType();
 
     Class<?>[] getParameterTypes();

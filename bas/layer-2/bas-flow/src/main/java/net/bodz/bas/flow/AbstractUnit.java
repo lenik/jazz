@@ -4,13 +4,13 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.bodz.bas.annotation.util.InheritableAnnotation;
 import net.bodz.bas.annotations.MetaClass;
 import net.bodz.bas.collection.util.ClassLocal;
 import net.bodz.bas.exceptions.IllegalUsageError;
 import net.bodz.bas.flow.util.Naming;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
+import net.bodz.bas.lang.Nullables;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.ILineCharOut;
 import net.bodz.bas.text.util.Strings;
@@ -36,7 +36,7 @@ public abstract class AbstractUnit
         Class<? extends AbstractUnit> clazz = getClass();
         IUnitMeta meta = metas.get(clazz);
         if (meta == null) {
-            Class<?> metaClass = (Class<?>) InheritableAnnotation.getValue(clazz, MetaClass.class);
+            Class<?> metaClass = Nullables.getAnnotation(clazz, MetaClass.class).value();
             if (metaClass != null)
                 try {
                     meta = (IUnitMeta) Jdk7Reflect.newInstance(metaClass);

@@ -5,12 +5,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.annotation.util.InheritableAnnotation;
 import net.bodz.bas.c1.annotations.Author;
-import net.bodz.bas.c1.annotations.Ns;
 import net.bodz.bas.c1.annotations.Version;
 import net.bodz.bas.c1.annotations.WebSite;
 import net.bodz.bas.collection.util.ClassLocal;
+import net.bodz.bas.lang.Nullables;
 import net.bodz.bas.text.util.StringArray;
 import net.bodz.bas.ui.a.Icon;
 
@@ -48,7 +47,7 @@ public class ClassInfo {
         name = A_bas.getDisplayName(clazz);
         doc = A_bas.getDoc(clazz);
 
-        String[] iconDefs = InheritableAnnotation._getValue(clazz, Icon.class);
+        String[] iconDefs = Nullables.getAnnotation(clazz, Icon.class).value();
         if (iconDefs != null)
             for (String iconDef : iconDefs) {
                 int sep = iconDef.indexOf('|');
@@ -66,15 +65,15 @@ public class ClassInfo {
                 }
             }
 
-        String[] author = Ns._getValue(clazz, Author.class);
+        String[] author = Nullables.getAnnotation(clazz, Author.class).value();
         if (author != null)
             this.author = join(author);
 
-        String[] webSites = Ns._getValue(clazz, WebSite.class);
+        String[] webSites = Nullables.getAnnotation(clazz, WebSite.class).value();
         if (webSites != null && webSites.length != 0)
             this.webSite = webSites[0];
 
-        int[] version = Ns._getValue(clazz, Version.class);
+        int[] version = Nullables.getAnnotation(clazz, Version.class).value();
         if (version != null)
             this.version = version;
     }

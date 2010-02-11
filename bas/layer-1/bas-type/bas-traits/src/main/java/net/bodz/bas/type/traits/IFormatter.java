@@ -10,7 +10,7 @@ public interface IFormatter<T> {
 
     /**
      * @param object
-     *            non-<code>null</code> value to be formatted.
+     *            (? extends <code>T</code>) non-<code>null</code> value to be formatted.
      * @return non-<code>null</code> formatted string.
      */
     String format(T object);
@@ -26,7 +26,7 @@ public interface IFormatter<T> {
      * </ul>
      * 
      * @param object
-     *            non-<code>null</code> value to be formatted.
+     *            (? extends <code>T</code>) non-<code>null</code> value to be formatted.
      * @return non-<code>null</code> formatted string.
      */
     String format(T object, INegotiation negotiation)

@@ -125,4 +125,9 @@ public abstract class AbstractPotatoElement
         return false;
     }
 
+    @Override
+    public String toString() {
+        return getName();
+    }
+
 }

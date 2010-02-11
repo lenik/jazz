@@ -8,7 +8,6 @@ import net.bodz.bas.potato.adapter.reflect.ReflectPotatoMethod;
 public class BeanPotatoMethod
         extends ReflectPotatoMethod {
 
-    private final BeanPotatoType<?> declaringPotatoType;
     private final MethodDescriptor methodDescriptor;
 
     /**
@@ -17,11 +16,7 @@ public class BeanPotatoMethod
      *             <code>null</code>.
      */
     public BeanPotatoMethod(BeanPotatoType<?> declaringPotatoType, MethodDescriptor methodDescriptor) {
-        super(methodDescriptor.getMethod());
-
-        if (declaringPotatoType == null)
-            throw new NullPointerException("declaringPotatoType");
-        this.declaringPotatoType = declaringPotatoType;
+        super(declaringPotatoType, methodDescriptor.getMethod());
 
         this.methodDescriptor = methodDescriptor;
     }
