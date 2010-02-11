@@ -31,12 +31,15 @@ public interface ImmediateIterableX<T, X extends Exception>
      * <td>Disabled</td>
      * </tr>
      * </table>
+     * 
+     * @throws UnsupportedOperationException
+     *             If specified overlap-mode isn't allowed.
      */
     ImmediateIteratorX<? extends T, ? extends X> iterator(boolean allowOverlap)
             throws X;
 
     /**
-     * Default overlap is dis-allowed.
+     * Default overlap is allowed..
      * 
      * @see #iterator(boolean)
      * @throws IteratorTargetException

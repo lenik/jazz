@@ -1,5 +1,8 @@
 package net.bodz.bas.collection.preorder;
 
+/**
+ * @test {@link TypeHierSetTest}
+ */
 @Deprecated
 public class TypeHierSet
         extends PreorderSet<Class<?>> {

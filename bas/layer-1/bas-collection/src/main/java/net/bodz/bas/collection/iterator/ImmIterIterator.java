@@ -14,6 +14,17 @@ public class ImmIterIterator<T, X extends Exception>
 
     private T lastIteratedValue;
 
+    public ImmIterIterator(ImmediateIterableX<T, X> iterable, boolean allowOverlap)
+            throws IteratorTargetException {
+        if (iterable == null)
+            throw new NullPointerException("iterable");
+        try {
+            this.immIter = iterable.iterator(allowOverlap);
+        } catch (Exception e) {
+            throw new IteratorTargetException(e.getMessage(), e);
+        }
+    }
+
     public ImmIterIterator(ImmediateIteratorX<? extends T, ? extends X> immIter) {
         if (immIter == null)
             throw new NullPointerException("immIter");
