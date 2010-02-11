@@ -1,8 +1,10 @@
 package net.bodz.bas.type.parser;
 
-import net.bodz.bas.exceptions.CreateException;
 import net.bodz.bas.exceptions.ParseException;
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
+import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.type.traits.AbstractParser;
+import net.bodz.bas.type.util.ClassInstance;
 
 public class GetInstanceParser
         extends AbstractParser<Object> {
@@ -11,11 +13,9 @@ public class GetInstanceParser
     public Object parse(String className)
             throws ParseException {
         try {
-            Class<?> clazz = Class.forName(className);
-            return Types.getClassInstance(clazz);
-        } catch (ClassNotFoundException e) {
-            throw new ParseException(e.getMessage(), e);
-        } catch (CreateException e) {
+            Class<?> clazz = Jdk7Reflect.forName(className);
+            return ClassInstance.getClassInstance(clazz);
+        } catch (ReflectiveOperationException e) {
             throw new ParseException(e.getMessage(), e);
         }
     }

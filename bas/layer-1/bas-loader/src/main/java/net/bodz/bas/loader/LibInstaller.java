@@ -10,6 +10,8 @@ import java.util.Map;
 
 import net.bodz.bas.files.FileTemp;
 
+import org.apache.commons.vfs.FileObject;
+
 public class LibInstaller {
 
     static boolean ignoreCase;
@@ -32,7 +34,7 @@ public class LibInstaller {
         init();
     }
 
-    private static File deflDir;
+    private static FileObject deflDir;
     static {
         deflDir = new File(FileTemp.getTmpDir(), "BundledLib");
         deflDir.mkdirs();

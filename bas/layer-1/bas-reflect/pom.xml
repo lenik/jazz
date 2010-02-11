@@ -34,6 +34,13 @@
     		<type>jar</type>
     		<scope>compile</scope>
     	</dependency>
+    	<dependency>
+    		<groupId>net.bodz.bas</groupId>
+    		<artifactId>bas-unitperf</artifactId>
+    		<version>0.0.1-SNAPSHOT</version>
+    		<type>jar</type>
+    		<scope>test</scope>
+    	</dependency>
     </dependencies>
     <name>BAS :: Layer 1 :: Java Reflect Utils</name>
 </project>

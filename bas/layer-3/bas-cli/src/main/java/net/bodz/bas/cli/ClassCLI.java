@@ -12,7 +12,6 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import net.bodz.bas.a.A_bas;
-import net.bodz.bas.c1.annotations.Ns;
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.closure.alt.Filt1;
 import net.bodz.bas.collection.comparator.StringLengthComparator;
@@ -20,7 +19,8 @@ import net.bodz.bas.collection.util.ClassLocal;
 import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
-import net.bodz.bas.reflect.util.Members;
+import net.bodz.bas.lang.Nullables;
+import net.bodz.bas.reflect.query.ReflectQuery;
 import net.bodz.bas.text.util.Strings;
 
 public class ClassCLI {
@@ -102,7 +102,8 @@ public class ClassCLI {
             boolean usingRestSyntax = false;
             if (usingRestSyntax) {
                 // getRestSyntax();
-                Method restf = Members.findDeclaredMethod(clazz, "getRestSyntax");
+                Method restf = ReflectQuery.selectDeclaredMethods(clazz).withName("getRestSyntax").iterator(true)
+                        .next();
                 if (restf == null)
                     buffer.append("...");
                 else {
@@ -114,7 +115,7 @@ public class ClassCLI {
                     buffer.append(restSyntax);
                 }
             } else {
-                Option appopt = Ns.getN(clazz, Option.class);
+                Option appopt = Nullables.getAnnotation(clazz, Option.class);
                 restSyntax = appopt.vnam();
                 buffer.append(restSyntax);
             }

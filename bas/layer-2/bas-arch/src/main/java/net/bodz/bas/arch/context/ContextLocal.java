@@ -11,17 +11,23 @@ import net.bodz.bas.exceptions.IllegalUsageException;
  */
 public class ContextLocal<T> {
 
+    private T defaultValue;
     private Map<IContext, T> map;
 
     public ContextLocal() {
         this.map = new HashMap<IContext, T>();
     }
 
+    public ContextLocal(T defaultValue) {
+        this();
+        this.defaultValue = defaultValue;
+    }
+
     // protected abstract T create(T valueInParentContext)
     // throws CreateException;
 
     protected T getDefault() {
-        return null;
+        return defaultValue;
     }
 
     public static final int maxDepth = 1024;

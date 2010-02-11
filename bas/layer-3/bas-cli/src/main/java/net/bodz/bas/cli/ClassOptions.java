@@ -22,6 +22,7 @@ import net.bodz.bas.c1.util.Pair;
 import net.bodz.bas.cli.a.Option;
 import net.bodz.bas.cli.a.OptionGroup;
 import net.bodz.bas.collection.preorder.PrefixMap;
+import net.bodz.bas.collection.util.IterableToList;
 import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.type.util.TypeChain;
 
@@ -164,7 +165,7 @@ public class ClassOptions<CT> {
             name = name.substring(3);
         if (all.containsKey(name))
             return (_Option<Object>) all.get(name);
-        List<String> fullnames = Collections2.toList(all.ceilingKeys(name));
+        List<String> fullnames = IterableToList.toList(all.ceilingKeys(name));
         if (fullnames.isEmpty())
             throw new CLIException("no such option: " + name);
         if (fullnames.size() > 1) {

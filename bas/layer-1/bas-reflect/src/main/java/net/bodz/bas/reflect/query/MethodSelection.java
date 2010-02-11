@@ -4,8 +4,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.List;
 
+import net.bodz.bas.collection.iterator.AbstractImmediateIterableX;
 import net.bodz.bas.collection.iterator.ImmIterIterator;
-import net.bodz.bas.collection.iterator.ImmediateIterableX;
 import net.bodz.bas.collection.iterator.IteratorX;
 import net.bodz.bas.collection.util.IterableToList;
 import net.bodz.bas.reflect.MethodSignature;
@@ -16,7 +16,7 @@ import net.bodz.bas.reflect.MethodSignature;
  * @test {@link MethodSelectionTest}
  */
 public abstract class MethodSelection
-        implements ImmediateIterableX<Method, RuntimeException> {
+        extends AbstractImmediateIterableX<Method, RuntimeException> {
 
     protected int modifierMask;
     protected int modifierTest;

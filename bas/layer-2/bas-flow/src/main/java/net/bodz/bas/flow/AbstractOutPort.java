@@ -1,11 +1,11 @@
 package net.bodz.bas.flow;
 
-import net.bodz.bas.annotation.util.InheritableAnnotation;
 import net.bodz.bas.annotations.MetaClass;
 import net.bodz.bas.collection.util.ClassLocal;
 import net.bodz.bas.exceptions.IllegalUsageError;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
+import net.bodz.bas.lang.Nullables;
 
 public abstract class AbstractOutPort
         extends AbstractPort
@@ -28,7 +28,7 @@ public abstract class AbstractOutPort
         Class<? extends AbstractPort> clazz = getClass();
         IPortMeta meta = metas.get(clazz);
         if (meta == null) {
-            Class<?> metaClass = (Class<?>) InheritableAnnotation.getValue(clazz, MetaClass.class);
+            Class<?> metaClass = Nullables.getAnnotation(clazz, MetaClass.class).value();
             if (metaClass != null)
                 try {
                     meta = (IPortMeta) Jdk7Reflect.newInstance(metaClass);

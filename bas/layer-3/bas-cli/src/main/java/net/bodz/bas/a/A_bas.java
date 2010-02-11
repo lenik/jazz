@@ -10,23 +10,23 @@ import java.util.Properties;
 
 import net.bodz.bas.c1.annotations.DisplayName;
 import net.bodz.bas.c1.annotations.Doc;
-import net.bodz.bas.c1.annotations.Ns;
 import net.bodz.bas.c1.util.Dates;
 import net.bodz.bas.exceptions.NotImplementedException;
 import net.bodz.bas.fs.PlainFile;
 import net.bodz.bas.fs.URLFile;
+import net.bodz.bas.lang.Nullables;
 
 @RcsKeywords(id = "$Id$")
 public class A_bas {
 
     public static String getDisplayName(Class<?> type) {
-        DisplayName dn = Ns.getN(type, DisplayName.class);
+        DisplayName dn = type.getAnnotation(DisplayName.class);
         String name = dn != null ? dn.value() : type.getSimpleName();
         return name;
     }
 
     public static <AM extends AnnotatedElement & Member> String getDisplayName(AM member) {
-        DisplayName dn = Ns.getN(member, DisplayName.class);
+        DisplayName dn = member.getAnnotation(DisplayName.class);
         String name = dn != null ? dn.value() : member.getName();
         return name;
     }
@@ -36,7 +36,7 @@ public class A_bas {
     }
 
     public static String getProgramName(Class<?> type, Boolean toUpperCase) {
-        ProgramName pn = Ns.getN(type, ProgramName.class);
+        ProgramName pn = type.getAnnotation(ProgramName.class);
         if (pn != null)
             return pn.value();
         String name = type.getSimpleName();
@@ -46,7 +46,7 @@ public class A_bas {
     }
 
     public static String getDoc(AnnotatedElement aobject) {
-        Doc adoc = Ns.getN(aobject, Doc.class);
+        Doc adoc = Nullables.getAnnotation(aobject, Doc.class);
         if (adoc == null)
             return null;
         return getDoc(adoc);
@@ -55,20 +55,7 @@ public class A_bas {
     public static String getDoc(Doc adoc) {
         if (adoc == null)
             return null;
-        String[] doc = adoc.value();
-        if (doc.length == 0)
-            return null;
-        if (doc.length == 1)
-            return parseDocString(doc[0]);
-        StringBuffer buf = new StringBuffer(doc.length * 80);
-        for (int i = 0; i < doc.length; i++) {
-            // if (i != 0) buf.append('\n');
-            buf.append(parseDocString(doc[i]));
-        }
-        return buf.toString();
-    }
-
-    static String parseDocString(String doc) {
+        String doc = adoc.value();
         if (doc.startsWith("#")) {
             // #bundle.property
             throw new NotImplementedException();
@@ -134,7 +121,7 @@ public class A_bas {
      */
     public static Properties getBuildInfo(Class<?> clazz)
             throws IOException {
-        String resname = Ns._getValue(clazz, BuildInfo.class);
+        String resname = Nullables.getAnnotation(clazz, BuildInfo.class).value();
         if (resname == null)
             return null;
         URL url = clazz.getResource(resname);

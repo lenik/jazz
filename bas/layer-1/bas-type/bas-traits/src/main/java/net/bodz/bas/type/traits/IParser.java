@@ -10,6 +10,9 @@ import net.bodz.bas.lang.NegotiationException;
 
 public interface IParser<T> {
 
+    /**
+     * @return ? extends <code>T</code>
+     */
     T parse(String text)
             throws ParseException;
 
@@ -25,6 +28,8 @@ public interface IParser<T> {
      * <li>Optional {@link ExceptionListener}: error handler/recover/user-interaction
      * <li>Optional {@link Logger}: info logger
      * </ul>
+     * 
+     * @return ? extends <code>T</code>
      */
     T parse(String text, INegotiation negotiation)
             throws ParseException, NegotiationException;

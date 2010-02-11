@@ -23,6 +23,14 @@ public class ByteArrayResource
     /**
      * @throws NullPointerException
      *             If <code>array</code> is <code>null</code>.
+     */
+    public ByteArrayResource(byte[] array) {
+        this(array, 0, array.length);
+    }
+
+    /**
+     * @throws NullPointerException
+     *             If <code>array</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException
      *             If either <code>off</code> or <code>len</code> is out of range.
      */

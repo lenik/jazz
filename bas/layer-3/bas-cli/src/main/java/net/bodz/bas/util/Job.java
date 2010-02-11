@@ -1,7 +1,7 @@
 package net.bodz.bas.util;
 
-import net.bodz.bas.commons.exception.RecoverableExceptionListener;
 import net.bodz.bas.io.term.LogTerm;
+import net.bodz.bas.lang.events.RecoverableExceptionListener;
 import net.bodz.bas.ui.UserInterface;
 
 public interface Job

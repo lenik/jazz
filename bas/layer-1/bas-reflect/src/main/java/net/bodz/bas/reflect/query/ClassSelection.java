@@ -6,9 +6,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import net.bodz.bas.collection.iterator.AbstractImmediateIterableX;
 import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
 import net.bodz.bas.collection.iterator.ImmIterIterator;
-import net.bodz.bas.collection.iterator.ImmediateIterableX;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.collection.iterator.IteratorX;
 import net.bodz.bas.collection.util.IterableToList;
@@ -17,7 +17,7 @@ import net.bodz.bas.collection.util.IterableToList;
  * @test {@link ClassSelectionTest}
  */
 public class ClassSelection
-        implements ImmediateIterableX<Class<?>, RuntimeException> {
+        extends AbstractImmediateIterableX<Class<?>, RuntimeException> {
 
     private final Class<?> clazz;
 

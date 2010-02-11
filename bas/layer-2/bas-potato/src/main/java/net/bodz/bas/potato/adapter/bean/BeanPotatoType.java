@@ -3,9 +3,12 @@ package net.bodz.bas.potato.adapter.bean;
 import java.beans.BeanDescriptor;
 import java.beans.BeanInfo;
 import java.beans.EventSetDescriptor;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
 import java.beans.MethodDescriptor;
 import java.beans.PropertyDescriptor;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
@@ -16,6 +19,9 @@ import net.bodz.bas.potato.IPotatoMethod;
 import net.bodz.bas.potato.IPotatoProperty;
 import net.bodz.bas.reflect.MethodSignature;
 
+/**
+ * @test {@link BeanPotatoTypeTest}
+ */
 public class BeanPotatoType<T>
         extends AbstractPotatoType<T> {
 
@@ -26,13 +32,18 @@ public class BeanPotatoType<T>
     private Map<MethodSignature, BeanPotatoMethod> methodMap;
     private Map<String, BeanPotatoEvent> eventMap;
 
+    public BeanPotatoType(Class<T> beanClass)
+            throws IntrospectionException {
+        this(beanClass, Introspector.getBeanInfo(beanClass));
+    }
+
     public BeanPotatoType(Class<T> beanClass, BeanInfo beanInfo) {
         super(beanClass);
         this.beanInfo = beanInfo;
         this.beanDescriptor = beanInfo.getBeanDescriptor();
 
         propertyMap = new TreeMap<String, BeanPotatoProperty>();
-        methodMap = new TreeMap<MethodSignature, BeanPotatoMethod>();
+        methodMap = new HashMap<MethodSignature, BeanPotatoMethod>();
         eventMap = new TreeMap<String, BeanPotatoEvent>();
 
         for (PropertyDescriptor propertyDescriptor : beanInfo.getPropertyDescriptors()) {

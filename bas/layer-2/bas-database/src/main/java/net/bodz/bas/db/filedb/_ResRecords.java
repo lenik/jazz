@@ -2,12 +2,14 @@ package net.bodz.bas.db.filedb;
 
 import java.io.IOException;
 
+import net.bodz.bas.collection.iterator.AbstractImmediateIterableX;
 import net.bodz.bas.collection.iterator.ImmIterIterator;
 import net.bodz.bas.collection.iterator.IteratorTargetException;
 import net.bodz.bas.collection.iterator.IteratorX;
 import net.bodz.bas.io.resource.IStreamInputSource;
 
 public abstract class _ResRecords<T>
+        extends AbstractImmediateIterableX<T, IOException>
         implements ResRecords<T> {
 
     protected final IStreamInputSource source;
