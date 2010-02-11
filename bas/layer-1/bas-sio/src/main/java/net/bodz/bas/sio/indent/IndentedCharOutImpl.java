@@ -4,18 +4,30 @@ import java.io.IOException;
 import java.util.Locale;
 
 import net.bodz.bas.sio.ILineCharOut;
-import net.bodz.bas.sio.ProxyLineCharOut;
+import net.bodz.bas.sio.LineCharOutImpl;
 import net.bodz.bas.sio.SIOException;
 
-public abstract class AbstractIndentCharOut
-        extends ProxyLineCharOut
-        implements IIndention {
+/**
+ * @test {@link IndentedCharOutImplTest}
+ */
+public class IndentedCharOutImpl
+        extends LineCharOutImpl
+        implements IIndentedCharOut {
 
-    private TextIndention indention;
+    private final ITextIndention textIndention;
     private boolean linePrefixPrinted;
 
-    public AbstractIndentCharOut(ILineCharOut proxy) {
-        super(proxy);
+    public IndentedCharOutImpl(ILineCharOut charOut) {
+        this(charOut, new TextIndention());
+    }
+
+    /**
+     * @throws NullPointerException
+     *             If any argument is <code>null</code>.
+     */
+    public IndentedCharOutImpl(ILineCharOut charOut, ITextIndention textIndention) {
+        super(charOut);
+        this.textIndention = textIndention;
     }
 
     void flushPrefix()
@@ -23,7 +35,7 @@ public abstract class AbstractIndentCharOut
         if (linePrefixPrinted)
             return;
         try {
-            write(indention.getCurrentLinePrefix());
+            write(textIndention.getCurrentLinePrefix());
         } catch (IOException e) {
             throw new SIOException(e);
         }
@@ -203,22 +215,62 @@ public abstract class AbstractIndentCharOut
 
     @Override
     public int getIndentLevel() {
-        return indention.getIndentLevel();
+        return textIndention.getIndentLevel();
     }
 
     @Override
     public void setIndentLevel(int indentLevel) {
-        indention.setIndentLevel(indentLevel);
+        textIndention.setIndentLevel(indentLevel);
     }
 
     @Override
     public void increaseIndentLevel() {
-        indention.increaseIndentLevel();
+        textIndention.increaseIndentLevel();
     }
 
     @Override
     public void decreaseIndentLevel() {
-        indention.decreaseIndentLevel();
+        textIndention.decreaseIndentLevel();
+    }
+
+    @Override
+    public int getIndentSize() {
+        return textIndention.getIndentSize();
+    }
+
+    @Override
+    public void setIndentSize(int indentSize) {
+        textIndention.setIndentSize(indentSize);
+    }
+
+    @Override
+    public int getTabSize() {
+        return textIndention.getTabSize();
+    }
+
+    @Override
+    public void setTabSize(int tabSize) {
+        textIndention.setTabSize(tabSize);
+    }
+
+    @Override
+    public boolean isMixedMode() {
+        return textIndention.isMixedMode();
+    }
+
+    @Override
+    public void setMixedMode(boolean mixedMode) {
+        textIndention.setMixedMode(mixedMode);
+    }
+
+    @Override
+    public String getCurrentLinePrefix() {
+        return textIndention.getCurrentLinePrefix();
+    }
+
+    @Override
+    public void setCurrentLinePrefix(String currentLinePrefix) {
+        textIndention.setCurrentLinePrefix(currentLinePrefix);
     }
 
 }
