@@ -1,23 +1,22 @@
 package net.bodz.bas.c1.util;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class KeyObject {
 
-    public KeyObject() {
-    }
+    private final String name;
 
-    public KeyObject(String name, boolean unique) {
-        if (unique) {
-            if (namedKeys.containsKey(name))
-                throw new IllegalArgumentException("Key " + name + "is existed");  
-        }
-        namedKeys.put(this, name);
+    public KeyObject() {
+        String typeName = getClass().getSimpleName();
+        this.name = typeName + ":" + System.identityHashCode(this);
     }
 
     public KeyObject(String name) {
-        this(name, false);
+        if (name == null)
+            throw new NullPointerException("name");
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override
@@ -27,12 +26,7 @@ public class KeyObject {
 
     @Override
     public String toString() {
-        String name = namedKeys.get(this);
-        if (name == null)
-            name = "" + hashCode(); 
-        return "<Key:" + name + ">";  
+        return getName();
     }
-
-    static Map<KeyObject, String> namedKeys = new HashMap<KeyObject, String>();
 
 }

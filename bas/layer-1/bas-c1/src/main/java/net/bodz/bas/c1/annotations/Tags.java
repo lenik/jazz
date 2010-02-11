@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
-public @interface WebSite {
+public @interface Tags {
 
     String[] value();
 
