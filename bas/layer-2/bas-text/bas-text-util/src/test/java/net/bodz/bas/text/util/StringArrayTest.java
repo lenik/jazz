@@ -18,7 +18,7 @@ public class StringArrayTest {
                 char[] delim = args[0].toCharArray();
                 int limit = Integer.parseInt(args[1]);
                 input = args[2];
-                String[] result = StringArray.split((Object) input, delim, limit, StringArray.TRIM | StringArray.QUOTE);
+                String[] result = StringArray.split(input, delim, limit, StringArray.TRIM | StringArray.QUOTE);
                 String actual = StringArray.join("|", result);
                 assertEquals(expected, actual);
             }
@@ -48,7 +48,7 @@ public class StringArrayTest {
                 String[] args = input.split("\\|", 2);
                 int limit = Integer.parseInt(args[0]);
                 input = args[1];
-                String[] result = StringArray.split((Object) input, null, limit, StringArray.QUOTE);
+                String[] result = StringArray.split(input, null, limit, StringArray.QUOTE);
                 String actual = StringArray.join("|", result);
                 assertEquals(expected, actual);
             }
