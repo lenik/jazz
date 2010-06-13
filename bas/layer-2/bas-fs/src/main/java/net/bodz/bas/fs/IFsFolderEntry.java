@@ -6,8 +6,11 @@ import java.util.List;
 import net.bodz.bas.closure.IFilter;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 
-public interface IFolder
-        extends IFsEntry, Cloneable {
+public interface IFsFolderEntry
+        extends IFsEntry {
+
+    @Override
+    IFsFolderEntry clone();
 
     boolean isIterable();
 

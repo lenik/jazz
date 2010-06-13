@@ -1,6 +1,5 @@
 package net.bodz.bas.fs;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -22,7 +21,7 @@ import net.bodz.bas.io.resource.preparation.StreamWritePreparation;
 
 public class ZippedFolder
         extends AbstractFsEntry
-        implements IFolder {
+        implements IFsFolderEntry {
 
     private final IFile file;
     private final ZipFile zipFile;
@@ -52,23 +51,8 @@ public class ZippedFolder
     }
 
     @Override
-    public IFolder getParentFolder() {
+    public IFsFolderEntry getParentFolder() {
         return file.getParentFolder();
-    }
-
-    @Override
-    public File getFile() {
-        return file.getFile();
-    }
-
-    @Override
-    public URI getURI() {
-        return file.getURI();
-    }
-
-    @Override
-    public URL getURL() {
-        return file.getURL();
     }
 
     @Override
@@ -190,7 +174,7 @@ public class ZippedFolder
         }
 
         @Override
-        public IFolder getParentFolder() {
+        public IFsFolderEntry getParentFolder() {
             return ZippedFolder.this;
         }
 

@@ -17,7 +17,7 @@ import net.bodz.bas.io.resource.preparation.StreamWritePreparation;
 public class OutputBytesFile
         extends AbstractFile {
 
-    private IFolder parentFolder;
+    private IFsFolderEntry parentFolder;
     private ByteArrayOutputStream buffer;
 
     private long createdTime;
@@ -49,22 +49,12 @@ public class OutputBytesFile
     }
 
     @Override
-    public IFolder getParentFolder() {
+    public IFsFolderEntry getParentFolder() {
         return parentFolder;
     }
 
-    public void setParentFolder(IFolder parentFolder) {
+    public void setParentFolder(IFsFolderEntry parentFolder) {
         this.parentFolder = parentFolder;
-    }
-
-    @Override
-    public URI getURI() {
-        return null;
-    }
-
-    @Override
-    public URL getURL() {
-        return null;
     }
 
     @Override
@@ -123,10 +113,15 @@ public class OutputBytesFile
     }
 
     @Override
-    public Long getLength() {
+    public long getLength() {
         if (buffer == null)
-            return null;
-        return (long) buffer.size();
+            return 0L;
+        return buffer.size();
+    }
+
+    @Override
+    public boolean isStream() {
+        return true;
     }
 
     class ReadPreparation

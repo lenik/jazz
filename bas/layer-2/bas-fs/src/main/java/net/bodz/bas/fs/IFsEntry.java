@@ -1,34 +1,36 @@
 package net.bodz.bas.fs;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URL;
 
+import net.bodz.bas.fs.path.IPath;
 import net.bodz.bas.type.traits.IAttributes;
 
 public interface IFsEntry
-        extends IAttributes {
+        extends Cloneable {
+
+    IFsEntry clone();
 
     /**
-     * @return <code>null</code> if not a {@link File}.
+     * @return non-<code>null</code> file container where this file entry belongs to.
      */
-    File getFile();
+    IFileContainer getContainer();
 
     /**
-     * @return <code>null</code> if no {@link URI}.
+     * @return non-<code>null</code> path which denotes this file entry.
      */
-    URI getURI();
+    IPath getPath();
 
     /**
-     * @return <code>null</code> if no {@link URL}.
-     */
-    URL getURL();
-
-    /**
+     * The same as {@link #getPath()}, {@link IPath#getBaseName()}
+     * 
      * @return <code>null</code> if file doesn't have a name
      */
     String getName();
+
+    /**
+     * @return <code>null</code> If no attribute.
+     */
+    IAttributes getAttributes();
 
     /**
      * @return <code>null</code> if file doesn't have a name, or empty string if file doesn't have
@@ -70,7 +72,7 @@ public interface IFsEntry
 
     boolean isDeletable();
 
-    IFolder getParentFolder();
+    IFsFolderEntry getParentFolder();
 
     boolean getCreateParentsMode();
 

@@ -8,9 +8,6 @@ import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
 import java.util.List;
 
 import net.bodz.bas.closure.IFilter;
@@ -23,7 +20,7 @@ import net.bodz.bas.io.resource.preparation.StreamWritePreparation;
 
 public class PlainFile
         extends AbstractFile
-        implements IFolder {
+        implements IFsFolderEntry {
 
     private final java.io.File file;
 
@@ -43,30 +40,11 @@ public class PlainFile
     }
 
     @Override
-    public IFolder getParentFolder() {
+    public IFsFolderEntry getParentFolder() {
         File parentFile = file.getParentFile();
         if (parentFile == null)
             return null;
         return new PlainFile(parentFile);
-    }
-
-    @Override
-    public java.io.File getFile() {
-        return file;
-    }
-
-    @Override
-    public URI getURI() {
-        return file.toURI();
-    }
-
-    @Override
-    public URL getURL() {
-        try {
-            return file.toURI().toURL();
-        } catch (MalformedURLException e) {
-            return null;
-        }
     }
 
     @Override
@@ -140,7 +118,7 @@ public class PlainFile
     }
 
     @Override
-    public Long getLength() {
+    public long getLength() {
         return file.length();
     }
 
