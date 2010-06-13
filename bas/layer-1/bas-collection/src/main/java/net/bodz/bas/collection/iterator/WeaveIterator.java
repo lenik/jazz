@@ -4,11 +4,14 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import net.bodz.bas.collection.comparator.NaturalComparator;
+import net.bodz.bas.collection.comparator.DefaultComparator;
 import net.bodz.bas.collection.list.DyingList;
 import net.bodz.bas.collection.list.SortedList;
 
-public class WeaveIterator<T extends Comparable<T>>
+/**
+ * Merge of sorted-iterator
+ */
+public class WeaveIterator<T>
         implements Iterator<T> {
 
     private static class ItrNxt<T> {
@@ -55,12 +58,20 @@ public class WeaveIterator<T extends Comparable<T>>
 
     private Iterator<T> lastIterator;
 
+    /**
+     * Deprecated cuz too slow.
+     */
+    @Deprecated
     public WeaveIterator(final Iterator<T>... itrs) {
-        this(new NaturalComparator<T>(), itrs);
+        this(DefaultComparator.getInstance(), itrs);
     }
 
+    /**
+     * Deprecated cuz too slow.
+     */
+    @Deprecated
     public WeaveIterator(Iterator<T> itr1, Iterator<T> itr2) {
-        this(new NaturalComparator<T>(), itr1, itr2);
+        this(DefaultComparator.getInstance(), itr1, itr2);
     }
 
     @SuppressWarnings("unchecked")

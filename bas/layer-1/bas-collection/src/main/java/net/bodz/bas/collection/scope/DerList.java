@@ -8,7 +8,9 @@ import java.util.List;
  * 
  * @test DerListTest
  */
-public abstract class DerList<E> extends AbstractList<E> implements Derivation<List<E>> {
+public abstract class DerList<E>
+        extends AbstractList<E>
+        implements Derivation<List<E>> {
 
     private final List<E> pList;
     private final List<E> qList;
@@ -21,7 +23,7 @@ public abstract class DerList<E> extends AbstractList<E> implements Derivation<L
      */
     public DerList(List<E> orig) {
         if (orig == null)
-            throw new NullPointerException("orig"); 
+            throw new NullPointerException("orig");
         this.pList = orig;
         this.delta = new DerListDelta();
         this.qList = createAllocList();
@@ -54,7 +56,7 @@ public abstract class DerList<E> extends AbstractList<E> implements Derivation<L
         delta.add(qNext, index);
         int pq = delta.map(index);
         int q = pq - pList.size();
-        assert q >= 0 : "should added to a new allocated unit"; 
+        assert q >= 0 : "should added to a new allocated unit";
         qList.add(q, e);
     }
 
