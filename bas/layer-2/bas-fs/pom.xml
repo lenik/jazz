@@ -54,6 +54,13 @@
     	</dependency>
     	<dependency>
     		<groupId>net.bodz.bas</groupId>
+    		<artifactId>bas-traits-impl</artifactId>
+    		<version>0.0.1-SNAPSHOT</version>
+    		<type>jar</type>
+    		<scope>compile</scope>
+    	</dependency>
+    	<dependency>
+    		<groupId>net.bodz.bas</groupId>
     		<artifactId>bas-files</artifactId>
     		<version>0.0.1-SNAPSHOT</version>
     		<type>jar</type>
