@@ -22,6 +22,9 @@ public abstract class AbstractByteOut
         write(array, off, len);
     }
 
+    /**
+     * Do nothing in default implementation.
+     */
     @Override
     public void flush(boolean strict)
             throws IOException {
