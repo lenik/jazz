@@ -1,22 +1,21 @@
-package net.bodz.bas.io.util;
+package net.bodz.bas.type.parser;
 
 import java.util.regex.Pattern;
-
-import net.bodz.bas.io.fs.traverse.GlobFilenameFilter;
 
 import org.junit.Assert;
 import org.junit.Test;
 
-public class GlobFilenameFilterTest {
+public class GlobPatternParserTest {
 
     static void assertEquals(Pattern a, Pattern b) {
         Assert.assertEquals(a.pattern(), b.pattern());
     }
 
     @Test
-    public void testCompileGlob() throws Exception {
+    public void testCompileGlob()
+            throws Exception {
         assertEquals(Pattern.compile("\\Q\\E.*\\Q.xml\\E"), //
-                GlobFilenameFilter.compileGlob("*.xml", 0));
+                GlobPatternParser._parse("*.xml", 0));
     }
 
 }

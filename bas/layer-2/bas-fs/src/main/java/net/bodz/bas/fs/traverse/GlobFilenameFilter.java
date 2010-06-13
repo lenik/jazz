@@ -1,11 +1,7 @@
 package net.bodz.bas.fs.traverse;
 
-import net.bodz.bas.io.util.GlobFilenameFilterTest;
 import net.bodz.bas.type.parser.GlobPatternParser;
 
-/**
- * @test {@link GlobFilenameFilterTest}
- */
 public class GlobFilenameFilter
         extends RegexFilenameFilter {
 
