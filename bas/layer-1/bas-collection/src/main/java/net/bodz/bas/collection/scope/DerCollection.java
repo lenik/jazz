@@ -6,7 +6,7 @@ import java.util.Iterator;
 
 import net.bodz.bas.collection.iterator.ConcatIterator;
 
-public class CompositeCollection<E>
+public class DerCollection<E>
         extends AbstractCollection<E> {
 
     private final Collection<E> parent;
@@ -27,9 +27,9 @@ public class CompositeCollection<E>
      * @throws NullPointerException
      *             if <code>orig</code> is <code>null</code>.
      */
-    public CompositeCollection(Collection<E> parent) {
+    public DerCollection(Collection<E> parent) {
         if (parent == null)
-            throw new NullPointerException("parent"); 
+            throw new NullPointerException("parent");
         this.parent = parent;
     }
 
