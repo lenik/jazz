@@ -1,8 +1,6 @@
 package net.bodz.bas.fs;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.URL;
 
 import net.bodz.bas.exceptions.ReadOnlyException;
 import net.bodz.bas.io.resource.IStreamInputSource;
@@ -18,7 +16,7 @@ public class InputBytesFile
     private long createdTime;
     private long modifiedTime;
 
-    private IFolder parentFolder;
+    private IFsFolderEntry parentFolder;
 
     public InputBytesFile(byte[] bytes) {
         this("(Unnamed)", bytes);
@@ -47,22 +45,12 @@ public class InputBytesFile
     }
 
     @Override
-    public IFolder getParentFolder() {
+    public IFsFolderEntry getParentFolder() {
         return parentFolder;
     }
 
-    public void setParentFolder(IFolder parentFolder) {
+    public void setParentFolder(IFsFolderEntry parentFolder) {
         this.parentFolder = parentFolder;
-    }
-
-    @Override
-    public URI getURI() {
-        return null;
-    }
-
-    @Override
-    public URL getURL() {
-        return null;
     }
 
     @Override
@@ -128,17 +116,17 @@ public class InputBytesFile
     }
 
     @Override
-    public Long getLength() {
-        return (long) bytes.length;
+    public long getLength() {
+        return bytes.length;
     }
 
     @Override
-    public IStreamInputSource toStreamInputSource() {
+    public IStreamInputSource asSource() {
         return new ByteArrayResource(bytes);
     }
 
     @Override
-    public IStreamOutputTarget toStreamOutputTarget() {
+    public IStreamOutputTarget asTarget() {
         // return new ByteArrayResource(bytes);
         throw new ReadOnlyException();
     }

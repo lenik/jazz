@@ -1,56 +1,36 @@
 package net.bodz.bas.fs.path;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+
+import net.bodz.bas.fs.IFile;
+import net.bodz.bas.fs.IFileContainer;
+import net.bodz.bas.fs.RelativeFileContainer;
+import net.bodz.bas.fs.path.align.IPathAlignment;
+
+/**
+ * @see org.apache.commons.vfs.FileName
+ */
 public interface IPath {
 
-    IPathAnchor getAnchor();
-
-    int getAnchorPoints();
+    String SEPARATOR = "/";
+    char SEPARATOR_CHAR = '/';
 
     /**
-     * @throws IndexOutOfBoundsException
+     * @return non-<code>null</code> file container, for relative path, a
+     *         {@link RelativeFileContainer} is returned.
      */
-    IPathAnchorPoint getAnchorPoint(int index);
+    IFileContainer getContainer();
 
     /**
-     * Count of path entries.
-     * Only 
-     */
-    int getEntryCount();
-
-    /**
-     * @throws IndexOutOfBoundsException
-     */
-    Object getEntry(int index);
-
-    /**
-     * Append by items.
+     * The alignment is used to anchor one path to another.
      * 
-     * @return non-<code>null</code> path.
+     * @return non-<code>null</code> value.
      */
-    IPath append(IPath append)
-            throws PathException;
-
-    /**
-     * @return <code>null</code> If no more parent.
-     */
-    IPath getParent();
-
-    /**
-     * @return <code>null</code> If no more parent.
-     */
-    IPath getParent(int n);
-
-    /**
-     * @return non-<code>null</code> path.
-     */
-    IPath getRoot();
-
-    int getLayerCount();
-
-    /**
-     * @throws IndexOutOfBoundsException
-     */
-    IPath getLayer(int layerIndex);
+    IPathAlignment getAlignment();
 
     /**
      * @return <code>null</code> If this is the root layer.
@@ -58,31 +38,85 @@ public interface IPath {
     IPath getParentLayer();
 
     /**
+     * If there is no parent layer, this path represents the current layer.
+     * 
      * @return non-<code>null</code> path.
      */
     IPath getRootLayer();
 
     /**
-     * The anchor of given <code>path</code> may be used to anchor at this path.
+     * Generally the parent path is the path without the last entry.
+     * 
+     * @return <code>null</code> If no parent.
      */
-    IPath resolve(IPath path)
-            throws PathException;
-
-    String SEPARATOR = "/";
-    char SEPARATOR_CHAR = '/';
+    IPath getParent();
 
     /**
-     * Which anchor is used depends on whether the specified <code>path</code> is starts with `/'.
+     * @return <code>null</code> If the specified level of parent doesn't exist.
+     */
+    IPath getParent(int n);
+
+    /**
+     * @return non-<code>null</code> root path, a root should have no parent, and generally has no
+     *         entry.
+     */
+    IPath getRoot();
+
+    /**
+     * The alignment of the given <code>path</code> is depended on whether the specified
+     * <code>path</code> is starts with `/'.
      */
     IPath resolve(String path)
             throws PathException;
 
     /**
-     * @return non-<code>null</code> path.
+     * Join two path, using the alignment of the specified <code>path</code>.
+     * 
      * @throws NullPointerException
-     *             If any parameter is <code>null</code>.
+     *             If <code>path</code> is <code>null</code>.
      */
-    IPath reanchor(IPath absolute, IPathAnchor newAnchor);
+    IPath resolve(IPath path)
+            throws PathException;
+
+    int getEntryCount();
+
+    String getEntry(int index);
+
+    String[] getEntries();
+
+    /**
+     * Get full path with all parent layers.
+     * 
+     * @return non-null URL string, which can be resolved to the same path.
+     */
+    String getURL();
+
+    URI toURI()
+            throws URISyntaxException;
+
+    URL toURL()
+            throws MalformedURLException;
+
+    /**
+     * @return non-null {@link IFile} which this path refers to.
+     */
+    IFile toFile();
+
+    /**
+     * Get the local path with-in this layer.
+     * <p>
+     * You can get the same path object by calling {@link IVolume#resolve(String)} of
+     * {@link #getVolume() this file system} with the local path.
+     * 
+     * @return non-null path string.
+     */
+    String getPath();
+
+    /**
+     * Returns the same as {@link #getParent}.{@link #getPath()}. If there is no parent,
+     * <code>null</code> is returned.
+     */
+    String getDirName();
 
     /**
      * @return non-<code>null</code> base name.
@@ -90,14 +124,49 @@ public interface IPath {
     String getBaseName();
 
     /**
+     * Remove extension (with dot) from the base name. If there is no extension, the result is the
+     * same as the base name.
+     * 
+     * @return non-<code>null</code> string. The extension name and dot(.) is removed.
+     */
+    String getStrippedName();
+
+    /**
+     * Get the extension name, without dot(.).
+     * 
      * @return <code>null</code> if file doesn't have a name, or empty string if file doesn't have
      *         an extension.
      */
-    String getExtension(boolean withDot, int maxWords);
+    String getExtension();
 
     /**
-     * @return non-<code>null</code> string.
+     * Get the extension name, with dot(.).
+     * 
+     * @return <code>null</code> if file doesn't have a name, or empty string if file doesn't have
+     *         an extension.
      */
-    String stripExtension();
+    String getExtensionWithDot();
+
+    /**
+     * Convert the path of the last layer to absolute form. The parent layer isn't affected.
+     */
+    IPath getAbsolutePath();
+
+    int FOLLOW_SYMLINK = 1;
+    int SYMLINK_MUST_EXIST = 2;
+
+    /**
+     * @see #FOLLOW_SYMLINK
+     * @see #SYMLINK_MUST_EXIST
+     */
+    IPath getCanonicalPath(int options)
+            throws IOException;
+
+    IPath getRelativePath(IPath path);
+
+    /**
+     * The default format result should be the same to {@link #toString()}. When the format
+     */
+    String format(PathFormatOptions formatOptions);
 
 }

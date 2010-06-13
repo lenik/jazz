@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
@@ -23,8 +21,7 @@ import net.bodz.bas.io.resource.preparation.StreamReadPreparation;
 import net.bodz.bas.io.resource.preparation.StreamWritePreparation;
 
 public class URLFile
-        extends AbstractFile
-        implements IFolder {
+        extends AbstractMixedFile {
 
     private final URL url;
 
@@ -45,32 +42,9 @@ public class URLFile
     }
 
     @Override
-    public IFolder getParentFolder() {
+    public IFsFolderEntry getParentFolder() {
 
         return null;
-    }
-
-    @Override
-    public File getFile() {
-        try {
-            return new File(url.toURI());
-        } catch (URISyntaxException e) {
-            return null;
-        }
-    }
-
-    @Override
-    public URI getURI() {
-        try {
-            return url.toURI();
-        } catch (URISyntaxException e) {
-            return null;
-        }
-    }
-
-    @Override
-    public URL getURL() {
-        return url;
     }
 
     @Override
@@ -169,16 +143,21 @@ public class URLFile
     }
 
     @Override
-    public Long getLength() {
+    public long getLength() {
         try {
             URLConnection connection = url.openConnection();
             long length = connection.getContentLengthLong();
             if (length == -1)
-                return null;
+                return 0L;
             return length;
         } catch (IOException e) {
-            return null;
+            return 0L;
         }
+    }
+
+    @Override
+    public boolean isStream() {
+        return true;
     }
 
     class ReadPreparation

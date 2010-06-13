@@ -1,12 +1,15 @@
-package net.bodz.bas.fs.path;
+package net.bodz.bas.fs.path.align;
 
-public class ParentAnchor
-        extends ChopPathAnchorPoint {
+import net.bodz.bas.fs.path.IPath;
+import net.bodz.bas.fs.path.PathException;
+
+public class ParentAlignment
+        extends TruncateOnlyAlignment {
 
     private final int parents;
     private final boolean keepInRoot;
 
-    public ParentAnchor(int parents) {
+    public ParentAlignment(int parents) {
         this(parents, false);
     }
 
@@ -15,7 +18,7 @@ public class ParentAnchor
      *            If <code>true</code> and the result parent is <code>null</code>, the root is
      *            returned instead.
      */
-    public ParentAnchor(int parents, boolean keepInRoot) {
+    public ParentAlignment(int parents, boolean keepInRoot) {
         if (parents < 0)
             throw new IllegalArgumentException("parents is negative: " + parents);
         this.parents = parents;
@@ -23,7 +26,7 @@ public class ParentAnchor
     }
 
     @Override
-    public IPath anchor(IPath context)
+    public IPath align(IPath context)
             throws PathException {
         IPath parent = context.getParent(parents);
         if (parent == null)

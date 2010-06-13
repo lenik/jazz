@@ -1,8 +1,6 @@
 package net.bodz.bas.fs;
 
 import java.io.IOException;
-import java.net.URI;
-import java.net.URL;
 
 import net.bodz.bas.io.resource.builtin.StringSource;
 import net.bodz.bas.io.resource.preparation.IStreamReadPreparation;
@@ -18,7 +16,7 @@ public class InputStringFile
     private long createdTime;
     private long modifiedTime;
 
-    private IFolder parentFolder;
+    private IFsFolderEntry parentFolder;
 
     public InputStringFile(String text) {
         this("(Unnamed)", text);
@@ -47,22 +45,12 @@ public class InputStringFile
     }
 
     @Override
-    public IFolder getParentFolder() {
+    public IFsFolderEntry getParentFolder() {
         return parentFolder;
     }
 
-    public void setParentFolder(IFolder parentFolder) {
+    public void setParentFolder(IFsFolderEntry parentFolder) {
         this.parentFolder = parentFolder;
-    }
-
-    @Override
-    public URI getURI() {
-        return null;
-    }
-
-    @Override
-    public URL getURL() {
-        return null;
     }
 
     @Override
@@ -128,9 +116,9 @@ public class InputStringFile
     }
 
     @Override
-    public Long getLength() {
+    public long getLength() {
         int len = getBytes().length;
-        return Long.valueOf(len);
+        return len;
     }
 
     @Override

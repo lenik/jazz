@@ -1,8 +1,8 @@
 package net.bodz.bas.fs;
 
-import java.io.File;
 import java.nio.charset.Charset;
 
+import net.bodz.bas.fs.path.IPath;
 import net.bodz.bas.fs.preparation.HeuristicProbePreparation;
 import net.bodz.bas.fs.preparation.IProbePreparation;
 import net.bodz.bas.fs.preparation.LazyProbePreparation;
@@ -20,15 +20,22 @@ public abstract class AbstractFile
     private Charset charset = Charset.defaultCharset();
     private boolean deleteOnExit;
 
-    public AbstractFile(String name) {
-        super(name);
+    public AbstractFile(IPath path) {
+        super(null, path);
     }
 
-    protected <T extends AbstractFile> T clone(T o) {
-        o.charset = charset;
-        o.deleteOnExit = deleteOnExit;
-        return super.clone(o);
+    public AbstractFile(IFileContainer container, IPath path) {
+        super(container, path);
     }
+
+    @Override
+    public abstract IFile clone();
+
+    // protected <T extends AbstractFile> T clone(T o) {
+    // o.charset = charset;
+    // o.deleteOnExit = deleteOnExit;
+    // return super.clone(o);
+    // }
 
     @Override
     public Charset getCharset() {
@@ -50,6 +57,11 @@ public abstract class AbstractFile
     }
 
     @Override
+    public boolean isStream() {
+        return false;
+    }
+
+    @Override
     public boolean isHidden() {
         return false;
     }
@@ -64,32 +76,24 @@ public abstract class AbstractFile
         this.deleteOnExit = deleteOnExit;
     }
 
-    /**
-     * Default to create a temporary file??
-     */
-    @Override
-    public File getFile() {
-        return null;
-    }
-
     @Override
     public IStreamReadPreparation forRead() {
-        return new StreamReadPreparation(toStreamInputSource());
+        return new StreamReadPreparation(asSource());
     }
 
     @Override
     public IStreamWritePreparation forWrite() {
-        return new StreamWritePreparation(toStreamOutputTarget());
+        return new StreamWritePreparation(asTarget());
     }
 
     @Override
     public ParseLoadPreparation forLoad() {
-        return new ParseLoadPreparation(toStreamInputSource());
+        return new ParseLoadPreparation(asSource());
     }
 
     @Override
     public FormatDumpPreparation forDump() {
-        return new FormatDumpPreparation(toStreamOutputTarget());
+        return new FormatDumpPreparation(asTarget());
     }
 
     @Override

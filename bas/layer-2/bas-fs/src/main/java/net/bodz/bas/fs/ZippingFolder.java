@@ -1,6 +1,5 @@
 package net.bodz.bas.fs;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URI;
@@ -20,7 +19,7 @@ import net.bodz.bas.io.resource.preparation.StreamWritePreparation;
 
 public class ZippingFolder
         extends AbstractFsEntry
-        implements IFolder {
+        implements IFsFolderEntry {
 
     private final IFile file;
     private final ZipOutputStream zipOut;
@@ -33,7 +32,7 @@ public class ZippingFolder
             throws IOException {
         super(outputFile.getName());
         this.file = outputFile;
-        this.zipOut = new ZipOutputStream(file.toStreamOutputTarget().newOutputStream());
+        this.zipOut = new ZipOutputStream(file.asTarget().newOutputStream());
     }
 
     @Override
@@ -49,28 +48,13 @@ public class ZippingFolder
     }
 
     @Override
-    public IFolder getParentFolder() {
+    public IFsFolderEntry getParentFolder() {
         return file.getParentFolder();
     }
 
     @Override
     public Boolean exists() {
         return file.exists();
-    }
-
-    @Override
-    public File getFile() {
-        return file.getFile();
-    }
-
-    @Override
-    public URI getURI() {
-        return file.getURI();
-    }
-
-    @Override
-    public URL getURL() {
-        return file.getURL();
     }
 
     @Override
@@ -180,7 +164,7 @@ public class ZippingFolder
         }
 
         @Override
-        public IFolder getParentFolder() {
+        public IFsFolderEntry getParentFolder() {
             return ZippingFolder.this;
         }
 

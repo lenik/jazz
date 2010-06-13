@@ -28,18 +28,18 @@ public class VfsTest {
         );
 
         System.out.println("FileObject: ");
-        BeanDump.dumpProperties(out, file);
+        BeanDump.dumpProperties(file, out);
 
         System.out.println();
         System.out.println("file.name:");
-        BeanDump.dumpProperties(out, file.getName());
+        BeanDump.dumpProperties(file.getName(), out);
 
         Class<?>[] operations = file.getFileOperations().getOperations();
         if (operations != null)
             for (Class<?> opt : operations) {
                 FileOperation op = file.getFileOperations().getOperation(opt);
                 System.out.println("File operation of " + opt);
-                BeanDump.dumpProperties(out, op);
+                BeanDump.dumpProperties(op, out);
                 System.out.println();
             }
     }

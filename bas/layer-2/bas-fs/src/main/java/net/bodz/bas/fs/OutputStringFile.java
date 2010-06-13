@@ -8,18 +8,18 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.Writer;
-import java.net.URI;
-import java.net.URL;
 
+import net.bodz.bas.fs.path.IPath;
 import net.bodz.bas.io.resource.preparation.IStreamReadPreparation;
 import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
 import net.bodz.bas.io.resource.preparation.StreamReadPreparation;
 import net.bodz.bas.io.resource.preparation.StreamWritePreparation;
+import net.bodz.bas.type.traits.IAttributes;
 
 public class OutputStringFile
         extends AbstractFile {
 
-    private IFolder parentFolder;
+    private IFsFolderEntry parentFolder;
     private StringBuffer buffer;
 
     private long createdTime;
@@ -51,22 +51,12 @@ public class OutputStringFile
     }
 
     @Override
-    public IFolder getParentFolder() {
+    public IFsFolderEntry getParentFolder() {
         return parentFolder;
     }
 
-    public void setParentFolder(IFolder parentFolder) {
+    public void setParentFolder(IFsFolderEntry parentFolder) {
         this.parentFolder = parentFolder;
-    }
-
-    @Override
-    public URI getURI() {
-        return null;
-    }
-
-    @Override
-    public URL getURL() {
-        return null;
     }
 
     @Override
@@ -125,11 +115,26 @@ public class OutputStringFile
     }
 
     @Override
-    public Long getLength() {
+    public long getLength() {
         if (buffer == null)
-            return null;
+            return 0L;
         int len = buffer.length();
-        return (long) len;
+        return len;
+    }
+
+    @Override
+    public boolean isStream() {
+        return true;
+    }
+
+    @Override
+    public IAttributes getAttributes() {
+        return null;
+    }
+
+    @Override
+    public IPath getPath() {
+        return null;
     }
 
     class ReadPreparation
