@@ -15,7 +15,6 @@
 		<module>bas-text-diff</module>
 		<module>bas-text-model</module>
 		<module>bas-text-prep</module>
-		<module>bas-text-util</module>
 	</modules>
 	<name>BAS :: Layer 2 :: Text</name>
 </project>
