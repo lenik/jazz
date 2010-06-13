@@ -25,6 +25,8 @@ public interface INibbleIn {
             throws IOException;
 
     /**
+     * Read <code>buf.length*2</code> nibbles into <code>buf</code>.
+     * 
      * @return nibble count successfully read, -1 if EOF reached.
      */
     int read4b(byte[] buf)

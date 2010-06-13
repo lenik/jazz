@@ -29,7 +29,7 @@ public class BNibbleIn
         if (nibbleOffset < 0 || nibbleOffset >= nc)
             throw new IndexOutOfBoundsException("nibbleOffset");
         nibbleEnd = nibbleOffset + nibbleCount;
-        if (nibbleEnd < nibbleOffset || nibbleEnd >= nc)
+        if (nibbleEnd < nibbleOffset || nibbleEnd > nc)
             throw new IndexOutOfBoundsException("nibbleCount");
 
         this.buf = buf;
