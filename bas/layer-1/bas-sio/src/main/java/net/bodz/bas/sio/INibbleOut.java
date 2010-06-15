@@ -26,7 +26,7 @@ public interface INibbleOut
 
     @Override
     void flush()
-            throws SIOException;
+            throws IOException;
 
     /**
      * @param strict

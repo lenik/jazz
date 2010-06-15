@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Arrays;
 
-public class PrintStreamCharOut
-        extends AbstractCharOut {
+public class PrintStreamPrintCharOut
+        extends AbstractPrintCharOut {
 
     private final PrintStream ps;
 
@@ -13,7 +13,7 @@ public class PrintStreamCharOut
      * @throws NullPointerException
      *             If <code>ps</code> is <code>null</code>.
      */
-    public PrintStreamCharOut(PrintStream ps) {
+    public PrintStreamPrintCharOut(PrintStream ps) {
         if (ps == null)
             throw new NullPointerException("ps");
         this.ps = ps;
@@ -53,13 +53,13 @@ public class PrintStreamCharOut
     }
 
     @Override
-    public void flush(boolean strict)
+    protected void _flush(boolean strict)
             throws IOException {
         ps.flush();
     }
 
     @Override
-    public void close()
+    protected void _close()
             throws IOException {
         ps.close();
     }

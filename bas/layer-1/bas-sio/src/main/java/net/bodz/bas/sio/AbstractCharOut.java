@@ -3,10 +3,9 @@ package net.bodz.bas.sio;
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.CharBuffer;
-import java.util.Locale;
 
 public abstract class AbstractCharOut
-        implements ILineCharOut {
+        implements ICharOut {
 
     @Override
     public void write(char[] chars)
@@ -53,199 +52,14 @@ public abstract class AbstractCharOut
 
     @Override
     public void flush()
-            throws SIOException {
-        try {
-            flush(false);
-        } catch (IOException e) {
-            throw new SIOException();
-        }
+            throws IOException {
+        flush(false);
     }
 
     @Override
     public void close()
             throws IOException {
         flush(true);
-    }
-
-    private final static char[] NULL = "(null)".toCharArray();
-    private final static char NL = '\n';
-
-    @Override
-    public void print(String s)
-            throws SIOException {
-        try {
-            // char[] chars = s == null ? NULL : s.toCharArray();
-            // write(chars, 0, chars.length);
-            if (s == null)
-                write(NULL);
-            else
-                write(s);
-        } catch (IOException e) {
-            throw new SIOException(e);
-        }
-    }
-
-    @Override
-    public void print(boolean b)
-            throws SIOException {
-        print(String.valueOf(b));
-    }
-
-    @Override
-    public void print(char c)
-            throws SIOException {
-        try {
-            write(c);
-        } catch (IOException e) {
-            throw new SIOException(e.getMessage(), e);
-        }
-    }
-
-    @Override
-    public void print(char[] s)
-            throws SIOException {
-        if (s == null)
-            throw new NullPointerException("s");
-        try {
-            write(s, 0, s.length);
-        } catch (IOException e) {
-            throw new SIOException(e.getMessage(), e);
-        }
-    }
-
-    @Override
-    public void print(double d)
-            throws SIOException {
-        print(String.valueOf(d));
-    }
-
-    @Override
-    public void print(float f)
-            throws SIOException {
-        print(String.valueOf(f));
-    }
-
-    @Override
-    public void print(int i)
-            throws SIOException {
-        print(String.valueOf(i));
-    }
-
-    @Override
-    public void print(long l)
-            throws SIOException {
-        print(String.valueOf(l));
-    }
-
-    @Override
-    public void print(Object obj)
-            throws SIOException {
-        print(String.valueOf(obj));
-    }
-
-    @Override
-    public void print(Object... args)
-            throws SIOException {
-        for (Object arg : args)
-            print(arg);
-    }
-
-    @Override
-    public void println()
-            throws SIOException {
-        try {
-            write(NL);
-        } catch (IOException e) {
-            throw new SIOException(e);
-        }
-    }
-
-    @Override
-    public void println(boolean x)
-            throws SIOException {
-        print(x);
-        println();
-    }
-
-    @Override
-    public void println(char x)
-            throws SIOException {
-        print(x);
-        println();
-    }
-
-    @Override
-    public void println(char[] x)
-            throws SIOException {
-        print(x);
-        println();
-    }
-
-    @Override
-    public void println(double x)
-            throws SIOException {
-        print(x);
-        println();
-    }
-
-    @Override
-    public void println(float x)
-            throws SIOException {
-        print(x);
-        println();
-    }
-
-    @Override
-    public void println(int x)
-            throws SIOException {
-        print(x);
-        println();
-    }
-
-    @Override
-    public void println(long x)
-            throws SIOException {
-        print(x);
-        println();
-    }
-
-    @Override
-    public void println(Object x)
-            throws SIOException {
-        print(x);
-        println();
-    }
-
-    @Override
-    public void println(String x)
-            throws SIOException {
-        print(x);
-        println();
-    }
-
-    @Override
-    public void println(Object... args)
-            throws SIOException {
-        if (args.length == 0) {
-            println();
-            return;
-        }
-        int max = args.length - 1;
-        for (int i = 0; i < max; i++)
-            print(args[i]);
-        println(args[max]);
-    }
-
-    @Override
-    public void printf(Locale l, String format, Object... args)
-            throws SIOException {
-        print(String.format(l, format, args));
-    }
-
-    @Override
-    public void printf(String format, Object... args)
-            throws SIOException {
-        print(String.format(format, args));
     }
 
     public Writer toWriter() {

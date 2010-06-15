@@ -4,8 +4,8 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Arrays;
 
-public abstract class DynamicPrintStreamCharOut
-        extends AbstractCharOut {
+public abstract class DynamicPrintStreamPrintCharOut
+        extends AbstractPrintCharOut {
 
     /**
      * @return non-<code>null</code> {@link PrintStream} instance.
@@ -46,13 +46,13 @@ public abstract class DynamicPrintStreamCharOut
     }
 
     @Override
-    public void flush(boolean strict)
+    protected void _flush(boolean strict)
             throws IOException {
         getPrintStream().flush();
     }
 
     @Override
-    public void close()
+    protected void _close()
             throws IOException {
         getPrintStream().close();
     }

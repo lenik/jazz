@@ -3,7 +3,7 @@ package net.bodz.bas.sio;
 import java.io.IOException;
 
 public class BCharOut
-        extends AbstractCharOut {
+        extends AbstractPrintCharOut {
 
     /**
      * @TODO set final in futuer.

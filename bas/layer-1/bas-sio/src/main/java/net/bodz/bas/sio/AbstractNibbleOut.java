@@ -67,12 +67,8 @@ public abstract class AbstractNibbleOut
 
     @Override
     public void flush()
-            throws SIOException {
-        try {
-            flush(false);
-        } catch (IOException e) {
-            throw new SIOException(e);
-        }
+            throws IOException {
+        flush(false);
     }
 
     /**

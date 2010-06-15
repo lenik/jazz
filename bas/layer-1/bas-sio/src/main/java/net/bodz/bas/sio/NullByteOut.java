@@ -26,7 +26,7 @@ public class NullByteOut
 
     @Override
     public void flush()
-            throws SIOException {
+            throws IOException {
     }
 
     @Override

@@ -20,13 +20,13 @@ public class Stdio {
         return new ReaderCharIn(new InputStreamReader(System.in, charsetName));
     }
 
-    public static final DynamicPrintStreamCharOut cout = new DynamicPrintStreamCharOut() {
+    public static final DynamicPrintStreamPrintCharOut cout = new DynamicPrintStreamPrintCharOut() {
         @Override
         public PrintStream getPrintStream() {
             return System.out;
         }
     };
-    public static final DynamicPrintStreamCharOut cerr = new DynamicPrintStreamCharOut() {
+    public static final DynamicPrintStreamPrintCharOut cerr = new DynamicPrintStreamPrintCharOut() {
         @Override
         public PrintStream getPrintStream() {
             return System.err;
