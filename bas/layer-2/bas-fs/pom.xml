@@ -41,12 +41,6 @@
     	</dependency>
     	<dependency>
     		<groupId>net.bodz.bas</groupId>
-    		<artifactId>bas-text-diff</artifactId>
-    		<version>0.0.1-SNAPSHOT</version>
-    		<scope>compile</scope>
-    	</dependency>
-    	<dependency>
-    		<groupId>net.bodz.bas</groupId>
     		<artifactId>bas-jdk6compat</artifactId>
     		<version>0.0.1-SNAPSHOT</version>
     		<type>jar</type>
@@ -55,13 +49,6 @@
     	<dependency>
     		<groupId>net.bodz.bas</groupId>
     		<artifactId>bas-traits-impl</artifactId>
-    		<version>0.0.1-SNAPSHOT</version>
-    		<type>jar</type>
-    		<scope>compile</scope>
-    	</dependency>
-    	<dependency>
-    		<groupId>net.bodz.bas</groupId>
-    		<artifactId>bas-files</artifactId>
     		<version>0.0.1-SNAPSHOT</version>
     		<type>jar</type>
     		<scope>compile</scope>
