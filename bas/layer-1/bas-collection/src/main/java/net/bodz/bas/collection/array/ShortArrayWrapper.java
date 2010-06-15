@@ -6,16 +6,16 @@ import java.util.Random;
 
 import net.bodz.bas.exceptions.NotImplementedException;
 
-public class IntArrayWrapper
-        extends AbstractArrayWrapper<int[], Integer> {
+public class ShortArrayWrapper
+        extends AbstractArrayWrapper<float[], Float> {
 
-    public final int[] array;
+    public final float[] array;
 
-    IntArrayWrapper(int[] array) {
+    ShortArrayWrapper(float[] array) {
         this(array, 0, array.length);
     }
 
-    IntArrayWrapper(int[] array, int start, int end) {
+    ShortArrayWrapper(float[] array, int start, int end) {
         super(start, end);
         if (array == null)
             throw new NullPointerException("array");
@@ -25,49 +25,49 @@ public class IntArrayWrapper
     }
 
     @Override
-    public int[] allocate(int size) {
-        return new int[size];
+    public float[] allocate(int size) {
+        return new float[size];
     }
 
     @Override
-    public int[] getArray() {
+    public float[] getArray() {
         return array;
     }
 
     @Override
-    protected IArrayWrapper<int[], Integer> _select(int actualFrom, int actualTo) {
+    protected IArrayWrapper<float[], Float> _select(int actualFrom, int actualTo) {
         return wrap(array, actualFrom, actualTo);
     }
 
     @Override
-    public Integer _get(int actualIndex) {
+    public Float _get(int actualIndex) {
         return array[actualIndex];
     }
 
     @Override
-    public void _set(int actualIndex, Integer value) {
+    public void _set(int actualIndex, Float value) {
         array[actualIndex] = value;
     }
 
     @Override
-    protected int _binarySearch(int actualFrom, int actualTo, Integer key) {
+    protected int _binarySearch(int actualFrom, int actualTo, Float key) {
         return Arrays.binarySearch(array, actualFrom, actualTo, key);
     }
 
     @Override
-    protected int[] _copyArray(int actualFrom, int actualTo) {
+    protected float[] _copyArray(int actualFrom, int actualTo) {
         return Arrays.copyOfRange(array, actualFrom, actualTo);
     }
 
     @Override
-    protected IArrayWrapper<int[], Integer> _copy(int actualFrom, int actualTo) {
-        int[] copyArray = _copyArray(actualFrom, actualTo);
+    protected IArrayWrapper<float[], Float> _copy(int actualFrom, int actualTo) {
+        float[] copyArray = _copyArray(actualFrom, actualTo);
         return wrap(copyArray);
     }
 
     @Override
-    public void _fill(int actualFrom, int actualTo, Integer val) {
-        Arrays.fill(array, actualFrom, actualTo, (Integer) val);
+    public void _fill(int actualFrom, int actualTo, Float val) {
+        Arrays.fill(array, actualFrom, actualTo, (Float) val);
     }
 
     @Override
@@ -77,7 +77,7 @@ public class IntArrayWrapper
         int left = actualFrom;
         int right = actualTo - 1;
         while (swaps-- != 0) {
-            int temp = array[left];
+            float temp = array[left];
             array[left] = array[right];
             array[right] = temp;
             ++left;
@@ -93,7 +93,7 @@ public class IntArrayWrapper
             int m = start + random.nextInt(length);
             if (n == m)
                 continue;
-            int temp = array[n];
+            float temp = array[n];
             array[n] = array[m];
             array[m] = temp;
         }
@@ -105,13 +105,13 @@ public class IntArrayWrapper
     }
 
     @Override
-    protected void _sort(int actualFrom, int actualTo, Comparator<? super Integer> comparator) {
+    protected void _sort(int actualFrom, int actualTo, Comparator<? super Float> comparator) {
         throw new NotImplementedException();
     }
 
     @Override
-    public int indexOf(Integer val, int start) {
-        int _val = val;
+    public int indexOf(Float val, int start) {
+        float _val = val;
         int actualStart = checkIndex(start);
         for (int i = actualStart; i < end; i++)
             if (array[i] == _val)
@@ -120,8 +120,8 @@ public class IntArrayWrapper
     }
 
     @Override
-    public int lastIndexOf(Integer val, int start) {
-        int _val = val;
+    public int lastIndexOf(Float val, int start) {
+        float _val = val;
         int actualStart = checkIndex(start);
         for (int i = actualStart; i >= start; i--)
             if (array[i] == _val)

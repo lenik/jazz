@@ -45,6 +45,8 @@ public interface IArrayWrapper<A, E> {
     IArrayWrapper<A, E> copy();
 
     /**
+     * @param key
+     *            non-<code>null</code> value to search.
      * @throws IndexOutOfBoundsException
      */
     IArrayWrapper<A, E> copy(int from, int to);
@@ -52,6 +54,8 @@ public interface IArrayWrapper<A, E> {
     int binarySearch(E key);
 
     /**
+     * @param key
+     *            non-<code>null</code> value to search.
      * @throws IndexOutOfBoundsException
      */
     int binarySearch(int from, int to, E key);
@@ -86,10 +90,17 @@ public interface IArrayWrapper<A, E> {
 
     void shuffle(Random random);
 
+    void shuffle(Random random, int strength);
+
     /**
      * @throws IndexOutOfBoundsException
      */
     void shuffle(Random random, int from, int to);
+
+    /**
+     * @throws IndexOutOfBoundsException
+     */
+    void shuffle(Random random, int from, int to, int strength);
 
     int indexOf(E val);
 

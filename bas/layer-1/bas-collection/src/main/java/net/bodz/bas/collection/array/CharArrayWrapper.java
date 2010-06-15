@@ -24,14 +24,6 @@ public class CharArrayWrapper
         this.array = array;
     }
 
-    public static CharArrayWrapper wrap(char[] array) {
-        return new CharArrayWrapper(array);
-    }
-
-    public static CharArrayWrapper wrap(char[] array, int start, int end) {
-        return new CharArrayWrapper(array, start, end);
-    }
-
     @Override
     public char[] allocate(int size) {
         return new char[size];
@@ -80,11 +72,11 @@ public class CharArrayWrapper
 
     @Override
     protected void _reverse(int actualFrom, int actualTo) {
-        int swaps = length() / 2;
+        int swaps = (actualTo - actualFrom) / 2;
         assert swaps >= 0;
         int left = actualFrom;
-        int right = actualTo;
-        while (swaps != 0) {
+        int right = actualTo - 1;
+        while (swaps-- != 0) {
             char temp = array[left];
             array[left] = array[right];
             array[right] = temp;
@@ -94,14 +86,11 @@ public class CharArrayWrapper
     }
 
     @Override
-    protected void _shuffle(Random random, int actualFrom, int actualTo) {
-        int length = length();
-        int swaps = length();
-        if (swaps < 2)
-            return;
-        while (swaps-- > 0) {
-            int n = random.nextInt(length);
-            int m = random.nextInt(length);
+    protected void _shuffle(Random random, int actualFrom, int actualTo, int strength) {
+        int length = actualTo - actualFrom;
+        while (strength-- > 0) {
+            int n = start + random.nextInt(length);
+            int m = start + random.nextInt(length);
             if (n == m)
                 continue;
             char temp = array[n];
@@ -138,6 +127,11 @@ public class CharArrayWrapper
             if (array[i] == _val)
                 return i;
         return -1;
+    }
+
+    @Override
+    public String toString() {
+        return new String(array, start, end);
     }
 
 }
