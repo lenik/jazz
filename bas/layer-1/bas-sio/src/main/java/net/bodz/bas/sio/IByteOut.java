@@ -40,11 +40,11 @@ public interface IByteOut
             throws IOException;
 
     /**
-     * The same to {@link #flush(boolean)} with <code>strict</code> set to <code>false</code>.
+     * The same to {@link #flush(boolean)} with <code>strict</code> set to <code>true</code>.
      */
     @Override
     void flush()
-            throws SIOException;
+            throws IOException;
 
     @Override
     void close()

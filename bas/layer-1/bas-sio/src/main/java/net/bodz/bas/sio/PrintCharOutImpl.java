@@ -3,9 +3,8 @@ package net.bodz.bas.sio;
 import java.io.IOException;
 import java.nio.CharBuffer;
 
-public class LineCharOutImpl
-        extends AbstractCharOut
-        implements ILineCharOut {
+public class PrintCharOutImpl
+        extends AbstractPrintCharOut {
 
     private final ICharOut base;
 
@@ -13,7 +12,7 @@ public class LineCharOutImpl
      * @throws NullPointerException
      *             If <code>base</code> is <code>null</code>.
      */
-    public LineCharOutImpl(ICharOut base) {
+    public PrintCharOutImpl(ICharOut base) {
         if (base == null)
             throw new NullPointerException("base");
         this.base = base;
@@ -50,9 +49,15 @@ public class LineCharOutImpl
     }
 
     @Override
-    public void flush(boolean strict)
+    protected void _flush(boolean strict)
             throws IOException {
         base.flush(strict);
+    }
+
+    @Override
+    protected void _close()
+            throws IOException {
+        base.close();
     }
 
     @Override
@@ -64,9 +69,9 @@ public class LineCharOutImpl
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof LineCharOutImpl))
+        if (!(obj instanceof PrintCharOutImpl))
             return false;
-        LineCharOutImpl o = (LineCharOutImpl) obj;
+        PrintCharOutImpl o = (PrintCharOutImpl) obj;
         if (!base.equals(o.base))
             return false;
         return true;

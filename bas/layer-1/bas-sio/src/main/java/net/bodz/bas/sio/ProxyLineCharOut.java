@@ -7,141 +7,121 @@ import java.util.Locale;
 import net.bodz.bas.proxy.AbstractProxy;
 
 public class ProxyLineCharOut
-        extends AbstractProxy<ILineCharOut>
-        implements ILineCharOut {
+        extends AbstractProxy<IPrintCharOut>
+        implements IPrintCharOut {
 
-    public ProxyLineCharOut(ILineCharOut proxy) {
+    public ProxyLineCharOut(IPrintCharOut proxy) {
         super(proxy);
     }
 
-    public void flush()
-            throws SIOException {
+    @Override
+    public void checkError(boolean reset)
+            throws IOException {
+        proxy.checkError(reset);
+    }
+
+    public void flush() {
         proxy.flush();
     }
 
-    public void flush(boolean strict)
-            throws IOException {
+    public void flush(boolean strict) {
         proxy.flush(strict);
     }
 
     @Override
-    public void close()
-            throws IOException {
+    public void close() {
         proxy.close();
     }
 
-    public void print(boolean b)
-            throws SIOException {
+    public void print(boolean b) {
         proxy.print(b);
     }
 
-    public void print(char c)
-            throws SIOException {
+    public void print(char c) {
         proxy.print(c);
     }
 
-    public void print(char[] s)
-            throws SIOException {
+    public void print(char[] s) {
         proxy.print(s);
     }
 
-    public void print(double d)
-            throws SIOException {
+    public void print(double d) {
         proxy.print(d);
     }
 
-    public void print(float f)
-            throws SIOException {
+    public void print(float f) {
         proxy.print(f);
     }
 
-    public void print(int i)
-            throws SIOException {
+    public void print(int i) {
         proxy.print(i);
     }
 
-    public void print(long l)
-            throws SIOException {
+    public void print(long l) {
         proxy.print(l);
     }
 
-    public void print(Object... args)
-            throws SIOException {
+    public void print(Object... args) {
         proxy.print(args);
     }
 
-    public void print(Object obj)
-            throws SIOException {
+    public void print(Object obj) {
         proxy.print(obj);
     }
 
-    public void print(String s)
-            throws SIOException {
+    public void print(String s) {
         proxy.print(s);
     }
 
-    public void printf(Locale l, String format, Object... args)
-            throws SIOException {
+    public void printf(Locale l, String format, Object... args) {
         proxy.printf(l, format, args);
     }
 
-    public void printf(String format, Object... args)
-            throws SIOException {
+    public void printf(String format, Object... args) {
         proxy.printf(format, args);
     }
 
-    public void println()
-            throws SIOException {
+    public void println() {
         proxy.println();
     }
 
-    public void println(boolean x)
-            throws SIOException {
+    public void println(boolean x) {
         proxy.println(x);
     }
 
-    public void println(char x)
-            throws SIOException {
+    public void println(char x) {
         proxy.println(x);
     }
 
-    public void println(char[] x)
-            throws SIOException {
+    public void println(char[] x) {
         proxy.println(x);
     }
 
-    public void println(double x)
-            throws SIOException {
+    public void println(double x) {
         proxy.println(x);
     }
 
-    public void println(float x)
-            throws SIOException {
+    public void println(float x) {
         proxy.println(x);
     }
 
-    public void println(int x)
-            throws SIOException {
+    public void println(int x) {
         proxy.println(x);
     }
 
-    public void println(long x)
-            throws SIOException {
+    public void println(long x) {
         proxy.println(x);
     }
 
-    public void println(Object... args)
-            throws SIOException {
+    public void println(Object... args) {
         proxy.println(args);
     }
 
-    public void println(Object x)
-            throws SIOException {
+    public void println(Object x) {
         proxy.println(x);
     }
 
-    public void println(String x)
-            throws SIOException {
+    public void println(String x) {
         proxy.println(x);
     }
 

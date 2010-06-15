@@ -7,7 +7,7 @@ public class StdioTest {
     @Test
     public void testCout()
             throws Exception {
-        ILineCharOut out = Stdio.cout;
+        IPrintCharOut out = Stdio.cout;
         out.println("line1");
         out.println("line2");
     }

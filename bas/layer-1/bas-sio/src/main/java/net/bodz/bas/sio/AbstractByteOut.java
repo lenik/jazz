@@ -32,12 +32,8 @@ public abstract class AbstractByteOut
 
     @Override
     public void flush()
-            throws SIOException {
-        try {
-            flush(false);
-        } catch (IOException e) {
-            throw new SIOException();
-        }
+            throws IOException {
+        flush(false);
     }
 
     @Override
