@@ -26,14 +26,6 @@ public class ArrayWrapper<T>
         this.array = array;
     }
 
-    public static <T> ArrayWrapper<T> wrap(T[] array) {
-        return new ArrayWrapper<T>(array);
-    }
-
-    public static <T> ArrayWrapper<T> wrap(T[] array, int start, int end) {
-        return new ArrayWrapper<T>(array, start, end);
-    }
-
     @SuppressWarnings("unchecked")
     @Override
     public T[] allocate(int size) {
@@ -84,11 +76,11 @@ public class ArrayWrapper<T>
 
     @Override
     protected void _reverse(int actualFrom, int actualTo) {
-        int swaps = length() / 2;
+        int swaps = (actualTo - actualFrom) / 2;
         assert swaps >= 0;
         int left = actualFrom;
-        int right = actualTo;
-        while (swaps != 0) {
+        int right = actualTo - 1;
+        while (swaps-- != 0) {
             T temp = array[left];
             array[left] = array[right];
             array[right] = temp;
@@ -98,14 +90,11 @@ public class ArrayWrapper<T>
     }
 
     @Override
-    protected void _shuffle(Random random, int actualFrom, int actualTo) {
-        int length = length();
-        int swaps = length();
-        if (swaps < 2)
-            return;
-        while (swaps-- > 0) {
-            int n = random.nextInt(length);
-            int m = random.nextInt(length);
+    protected void _shuffle(Random random, int actualFrom, int actualTo, int strength) {
+        int length = actualTo - actualFrom;
+        while (strength-- > 0) {
+            int n = start + random.nextInt(length);
+            int m = start + random.nextInt(length);
             if (n == m)
                 continue;
             T temp = array[n];
