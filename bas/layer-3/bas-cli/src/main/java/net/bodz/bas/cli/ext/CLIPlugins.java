@@ -3,7 +3,7 @@ package net.bodz.bas.cli.ext;
 import net.bodz.bas.cli.CLIException;
 import net.bodz.bas.exceptions.OutOfDomainException;
 import net.bodz.bas.l10n.en.English;
-import net.bodz.bas.sio.ILineCharOut;
+import net.bodz.bas.sio.IPrintCharOut;
 import net.bodz.bas.text.util.Strings;
 import net.bodz.bas.util.Plugin;
 import net.bodz.bas.util.PluginCategory;
@@ -28,7 +28,7 @@ public class CLIPlugins
         return registerCategory(category);
     }
 
-    public void help(ILineCharOut out, String prefix)
+    public void help(IPrintCharOut out, String prefix)
             throws CLIException {
         int maxlen = 0;
         // List<String> typeNames = new ArrayList<String>();

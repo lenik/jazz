@@ -10,7 +10,7 @@ import net.bodz.bas.closure.alt.Pred1;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.loader.boot.BootInfo;
 import net.bodz.bas.loader.boot.BootProc;
-import net.bodz.bas.sio.ILineCharOut;
+import net.bodz.bas.sio.IPrintCharOut;
 import net.bodz.bas.sio.Stdio;
 
 /**
@@ -18,7 +18,7 @@ import net.bodz.bas.sio.Stdio;
  */
 public class DefaultBooter {
 
-    private static ILineCharOut out = Stdio.cerr;
+    private static IPrintCharOut out = Stdio.cerr;
 
     static boolean LOADFIX_DUMP = false;
 

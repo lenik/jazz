@@ -5,7 +5,7 @@ import java.util.List;
 
 import net.bodz.bas.c1.util.Dates;
 import net.bodz.bas.closure.alt.Pred1;
-import net.bodz.bas.sio.ILineCharOut;
+import net.bodz.bas.sio.IPrintCharOut;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.text.diff.DiffInfo;
 
@@ -34,9 +34,9 @@ public class DiffPrint {
      * provided as well.
      */
     public static abstract class Base {
-        protected ILineCharOut outfile = Stdio.cout;
+        protected IPrintCharOut outfile = Stdio.cout;
 
-        protected Base(List<?> a, List<?> b, ILineCharOut outfile) {
+        protected Base(List<?> a, List<?> b, IPrintCharOut outfile) {
             file0 = a;
             file1 = b;
         }
@@ -177,7 +177,7 @@ public class DiffPrint {
     public static class NormalPrint
             extends Base {
 
-        public NormalPrint(List<?> a, List<?> b, ILineCharOut out) {
+        public NormalPrint(List<?> a, List<?> b, IPrintCharOut out) {
             super(a, b, out);
         }
 
@@ -221,7 +221,7 @@ public class DiffPrint {
     public static class EdPrint
             extends Base {
 
-        public EdPrint(List<?> a, List<?> b, ILineCharOut out) {
+        public EdPrint(List<?> a, List<?> b, IPrintCharOut out) {
             super(a, b, out);
         }
 
@@ -280,7 +280,7 @@ public class DiffPrint {
 
         protected int context = 3;
 
-        public ContextPrint(List<?> a, List<?> b, ILineCharOut out) {
+        public ContextPrint(List<?> a, List<?> b, IPrintCharOut out) {
             super(a, b, out);
         }
 
@@ -408,7 +408,7 @@ public class DiffPrint {
     public static class UnifiedPrint
             extends ContextPrint {
 
-        public UnifiedPrint(List<?> a, List<?> b, ILineCharOut out) {
+        public UnifiedPrint(List<?> a, List<?> b, IPrintCharOut out) {
             super(a, b, out);
         }
 

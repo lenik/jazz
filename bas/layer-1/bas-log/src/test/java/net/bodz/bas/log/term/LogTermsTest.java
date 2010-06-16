@@ -1,10 +1,10 @@
-package net.bodz.bas.io.term;
+package net.bodz.bas.log.term;
 
 import static org.junit.Assert.assertEquals;
 
-import net.bodz.bas.io.term.ConsoleLogTerm;
-import net.bodz.bas.io.term.LogTerm;
-import net.bodz.bas.io.term.LogTerms;
+import net.bodz.bas.log.term.ConsoleLogTerm;
+import net.bodz.bas.log.term.LogTerm;
+import net.bodz.bas.log.term.LogTerms;
 
 import org.junit.Test;
 

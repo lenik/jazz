@@ -6,17 +6,17 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.bodz.bas.exceptions.NotImplementedException;
+import net.bodz.bas.exceptions.UnexpectedException;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.ICharIn;
 import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.sio.ISimpleCharIn;
 import net.bodz.bas.sio.ISimpleCharOut;
-import net.bodz.bas.sio.SIOException;
 import net.bodz.bas.sio.StringCharIn;
 
 /**
  * @see <a href="http://www.unicode.org/charts/PDF/UFF00.pdf">Halfwidth and Fullwidth Forms</a>
- *@test {@link ConvertCharacterWidthTest}
+ * @test {@link ConvertCharacterWidthTest}
  */
 public class ConvertCharacterWidth {
 
@@ -81,7 +81,7 @@ public class ConvertCharacterWidth {
         try {
             toHalfWidth(new StringCharIn(s), buf);
         } catch (IOException e) {
-            throw new SIOException(e.getMessage(), e);
+            throw new UnexpectedException(e);
         }
         return buf.toString();
     }
@@ -181,7 +181,7 @@ public class ConvertCharacterWidth {
         try {
             toFullWidth(new StringCharIn(s), buf);
         } catch (IOException e) {
-            throw new SIOException(e.getMessage(), e);
+            throw new UnexpectedException(e);
         }
         return buf.toString();
     }
@@ -196,7 +196,7 @@ public class ConvertCharacterWidth {
         try {
             switchWidth(new StringCharIn(s), buf);
         } catch (IOException e) {
-            throw new SIOException(e.getMessage(), e);
+            throw new UnexpectedException(e);
         }
         return buf.toString();
     }

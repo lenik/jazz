@@ -1,9 +1,16 @@
 package net.bodz.bas.log.objects;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import net.bodz.bas.log.ILogSink;
 
 public abstract class AbstractLogEvent
         implements ILogEvent {
+
+    Object source;
+    IMessage message;
+    IExceptionBuffer exceptionBuffer;
 
     @Override
     public int getVerboseLevel() {
@@ -23,6 +30,11 @@ public abstract class AbstractLogEvent
     @Override
     public Throwable getException() {
         return null;
+    }
+
+    @Override
+    public Collection<Throwable> getExceptions() {
+        return Collections.emptyList();
     }
 
     @Override

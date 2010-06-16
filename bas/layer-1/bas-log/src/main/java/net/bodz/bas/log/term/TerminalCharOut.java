@@ -1,4 +1,4 @@
-package net.bodz.bas.io.term;
+package net.bodz.bas.log.term;
 
 import java.io.IOException;
 

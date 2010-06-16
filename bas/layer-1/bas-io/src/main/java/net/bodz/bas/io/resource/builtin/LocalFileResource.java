@@ -21,7 +21,7 @@ import net.bodz.bas.io.resource.IRandomOutputTarget;
 import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.ICharIn;
-import net.bodz.bas.sio.ILineCharOut;
+import net.bodz.bas.sio.IPrintCharOut;
 import net.bodz.bas.sio.InputStreamByteIn;
 import net.bodz.bas.sio.OutputStreamByteOut;
 import net.bodz.bas.sio.ReaderCharIn;
@@ -103,7 +103,7 @@ public class LocalFileResource
     }
 
     @Override
-    public ILineCharOut newCharOut()
+    public IPrintCharOut newCharOut()
             throws IOException {
         Writer writer = newWriter();
         if (writer == null)

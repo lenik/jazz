@@ -272,7 +272,7 @@ public class BatchCLI
         try {
             doFile(file);
         } catch (Throwable e) {
-            L.ferror("Failed to process %s: %s", file, e);
+            L.errorf("Failed to process %s: %s", file, e);
             if (L.showDetail() || !errorContinue)
                 e.printStackTrace(L.error().getPrintStream());
             if (!errorContinue)

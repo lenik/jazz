@@ -23,7 +23,7 @@ import net.bodz.bas.hint.OverrideOption;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.builtin.InputStreamSource;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
-import net.bodz.bas.sio.ILineCharOut;
+import net.bodz.bas.sio.IPrintCharOut;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.sio.WriterCharOut;
 import net.bodz.bas.text.diff.DiffComparator;
@@ -59,7 +59,7 @@ public class BatchEditCLI
     DiffFormat diffFormat = DiffFormats.Simdiff;
 
     @Option(alias = "Xo", vnam = "FILE", doc = "write diff output to specified file")
-    ILineCharOut diffOutput = Stdio.cout;
+    IPrintCharOut diffOutput = Stdio.cout;
 
     @Option(alias = "X3", doc = "diff between src/dst/out, when output to different file")
     boolean diff3 = false;
@@ -126,11 +126,11 @@ public class BatchEditCLI
             BatchEditCLI.this.diffFormat = diffFormat;
         }
 
-        public ILineCharOut getDiffOutput() {
+        public IPrintCharOut getDiffOutput() {
             return diffOutput;
         }
 
-        public void setDiffOutput(ILineCharOut diffOutput) {
+        public void setDiffOutput(IPrintCharOut diffOutput) {
             BatchEditCLI.this.diffOutput = diffOutput;
         }
 
@@ -364,7 +364,7 @@ public class BatchEditCLI
     protected EditResult doEditByIO(InputStream in, OutputStream out)
             throws Exception {
         Iterable<String> lines = new InputStreamSource(in).setCharset(inputEncoding).forRead().lines(false);
-        ILineCharOut cout = Stdio.cout;
+        IPrintCharOut cout = Stdio.cout;
         if (out != null) {
             OutputStreamWriter writer = new OutputStreamWriter(out, outputEncoding.name());
             cout = new WriterCharOut(writer);
@@ -379,7 +379,7 @@ public class BatchEditCLI
      *         PROCESS_EDIT: have the result written to the output
      */
     @OverrideOption(group = "batchEdit")
-    protected EditResult doEditByLine(Iterable<String> lines, ILineCharOut out)
+    protected EditResult doEditByLine(Iterable<String> lines, IPrintCharOut out)
             throws Exception {
         throw new NotImplementedException();
     }
@@ -548,7 +548,7 @@ public class BatchEditCLI
             return BatchEditCLI.this.doEditByIO(in, out);
         }
 
-        public EditResult doEditByLine(Iterable<String> lines, ILineCharOut out)
+        public EditResult doEditByLine(Iterable<String> lines, IPrintCharOut out)
                 throws Throwable {
             return BatchEditCLI.this.doEditByLine(lines, out);
         }

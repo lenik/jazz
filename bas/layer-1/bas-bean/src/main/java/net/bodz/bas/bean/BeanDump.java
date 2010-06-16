@@ -10,7 +10,7 @@ import java.util.Comparator;
 import net.bodz.bas.collection.util.EnumerationToIterable;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
-import net.bodz.bas.sio.ILineCharOut;
+import net.bodz.bas.sio.IPrintCharOut;
 import net.bodz.bas.sio.Stdio;
 
 public class BeanDump {
@@ -20,7 +20,7 @@ public class BeanDump {
         dumpProperties(bean, Stdio.cout);
     }
 
-    public static void dumpProperties(Object bean, ILineCharOut out)
+    public static void dumpProperties(Object bean, IPrintCharOut out)
             throws IntrospectionException {
         if (bean == null)
             throw new NullPointerException("bean");

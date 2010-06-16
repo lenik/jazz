@@ -1,4 +1,4 @@
-package net.bodz.bas.io.term;
+package net.bodz.bas.log.term;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -6,14 +6,14 @@ import java.io.Writer;
 
 import net.bodz.bas.io.NullPrintStream;
 import net.bodz.bas.io.NullWriter;
-import net.bodz.bas.sio.ILineCharOut;
+import net.bodz.bas.sio.IPrintCharOut;
 import net.bodz.bas.sio.NullCharOut;
 
 public class NullTerminal
         implements ITerminal {
 
     @Override
-    public ILineCharOut getCharOut() {
+    public IPrintCharOut getCharOut() {
         return NullCharOut.getInstance();
     }
 

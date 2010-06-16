@@ -8,7 +8,7 @@ import net.bodz.bas.cli.ClassCLI;
 import net.bodz.bas.cli.ClassOptions;
 import net.bodz.bas.cli._Option;
 import net.bodz.bas.exceptions.ParseException;
-import net.bodz.bas.sio.ILineCharOut;
+import net.bodz.bas.sio.IPrintCharOut;
 import net.bodz.bas.text.util.Strings;
 import net.bodz.bas.util._Plugin;
 
@@ -47,7 +47,7 @@ public class _CLIPlugin
     }
 
     @Override
-    public void help(ILineCharOut out, String prefix) {
+    public void help(IPrintCharOut out, String prefix) {
         ClassOptions<_CLIPlugin> opts = getOptions();
         TreeMap<String, _Option<?>> map = opts.getOptions();
         int maxlen = 0;

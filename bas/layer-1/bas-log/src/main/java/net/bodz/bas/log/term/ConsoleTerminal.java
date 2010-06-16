@@ -1,15 +1,15 @@
-package net.bodz.bas.io.term;
+package net.bodz.bas.log.term;
 
 import java.io.IOException;
 
 import net.bodz.bas.exceptions.OutOfDomainException;
-import net.bodz.bas.sio.ILineCharOut;
+import net.bodz.bas.sio.IPrintCharOut;
 import net.bodz.bas.text.util.Strings;
 
 public class ConsoleTerminal
         extends AbstractTerminal {
 
-    private ILineCharOut out;
+    private IPrintCharOut out;
     private int width;
 
     /** just commited */
@@ -27,7 +27,7 @@ public class ConsoleTerminal
     private int state = START;
     private int blen;
 
-    public ConsoleTerminal(ILineCharOut out, int width) {
+    public ConsoleTerminal(IPrintCharOut out, int width) {
         if (out == null)
             throw new NullPointerException("out");
         if (width < 1)
@@ -37,7 +37,7 @@ public class ConsoleTerminal
     }
 
     @Override
-    public ILineCharOut getCharOut() {
+    public IPrintCharOut getCharOut() {
         return out;
     }
 

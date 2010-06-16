@@ -1,4 +1,4 @@
-package net.bodz.bas.io.term;
+package net.bodz.bas.log.term;
 
 import net.bodz.bas.collection.preorder.PrefixMap;
 import net.bodz.bas.collection.preorder.TypeHierMap;

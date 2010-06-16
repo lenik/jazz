@@ -13,7 +13,7 @@ import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.sio.BCharOut;
-import net.bodz.bas.sio.ILineCharOut;
+import net.bodz.bas.sio.IPrintCharOut;
 
 public class UCL {
 
@@ -160,10 +160,10 @@ public class UCL {
     private static class Dumper
             extends Iter {
 
-        private final ILineCharOut out;
+        private final IPrintCharOut out;
         private boolean cont;
 
-        public Dumper(ILineCharOut out) {
+        public Dumper(IPrintCharOut out) {
             this.out = out;
         }
 
@@ -191,7 +191,7 @@ public class UCL {
 
     }
 
-    public static void dump(ClassLoader loader, ILineCharOut out) {
+    public static void dump(ClassLoader loader, IPrintCharOut out) {
         findURLs(loader, new Dumper(out));
     }
 

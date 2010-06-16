@@ -11,7 +11,7 @@ import java.nio.charset.Charset;
 import net.bodz.bas.io.resource.preparation.IFormatDumpPreparation;
 import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
 import net.bodz.bas.sio.IByteOutNative;
-import net.bodz.bas.sio.ILineCharOut;
+import net.bodz.bas.sio.IPrintCharOut;
 
 public interface IStreamOutputTarget
         extends ISimpleStreamOutputTarget {
@@ -28,7 +28,7 @@ public interface IStreamOutputTarget
     /**
      * @return non-<code>null</code> value.
      */
-    ILineCharOut newLineCharOut()
+    IPrintCharOut newLineCharOut()
             throws IOException;
 
     /**

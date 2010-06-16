@@ -1,31 +1,32 @@
-package net.bodz.bas.sio.indent;
+package net.bodz.bas.sio;
 
 import java.io.IOException;
 import java.util.Locale;
 
-import net.bodz.bas.sio.IPrintCharOut;
-import net.bodz.bas.sio.PrintCharOutImpl;
+import net.bodz.bas.sio.indent.IIndentedCharOut;
+import net.bodz.bas.sio.indent.ITextIndention;
+import net.bodz.bas.sio.indent.IndentedCharOutImpl;
+import net.bodz.bas.sio.indent.TextIndention;
 
 /**
- * @test {@link IndentedCharOutImplTest}
+ * @see IndentedCharOutImpl
  */
-public class IndentedCharOutImpl
-        extends PrintCharOutImpl
+public abstract class AbstractIndentedCharOut
+        extends AbstractPrintCharOut
         implements IIndentedCharOut {
 
     private final ITextIndention textIndention;
     private boolean linePrefixPrinted;
 
-    public IndentedCharOutImpl(IPrintCharOut charOut) {
-        this(charOut, new TextIndention());
+    public AbstractIndentedCharOut() {
+        this(new TextIndention());
     }
 
     /**
      * @throws NullPointerException
-     *             If any argument is <code>null</code>.
+     *             If <code>textIndention</code> is <code>null</code>.
      */
-    public IndentedCharOutImpl(IPrintCharOut charOut, ITextIndention textIndention) {
-        super(charOut);
+    public AbstractIndentedCharOut(ITextIndention textIndention) {
         if (textIndention == null)
             throw new NullPointerException("textIndention");
         this.textIndention = textIndention;

@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import net.bodz.bas.collection.comparator.TypeComparator;
-import net.bodz.bas.sio.ILineCharOut;
+import net.bodz.bas.sio.IPrintCharOut;
 import net.bodz.bas.text.util.Strings;
 
 public class ProcessResultStat {
@@ -83,7 +83,7 @@ public class ProcessResultStat {
         }
     }
 
-    public void dumpBrief(ILineCharOut out) {
+    public void dumpBrief(IPrintCharOut out) {
         String ignores = "";
         if (ignored > 0)
             ignores = "(" + ignored + " ignored)";
@@ -93,7 +93,7 @@ public class ProcessResultStat {
 
     static final int nameWidth = 40;
 
-    void dumpField(ILineCharOut out, int indent, String name, int value, Integer value2) {
+    void dumpField(IPrintCharOut out, int indent, String name, int value, Integer value2) {
         String tab = Strings.repeat(indent, ' ');
         out.print(tab);
         out.printf("%" + (nameWidth - indent) + "s: %8d file", name, value);
@@ -107,11 +107,11 @@ public class ProcessResultStat {
         out.println();
     }
 
-    void dumpField(ILineCharOut out, int indent, String name, int value) {
+    void dumpField(IPrintCharOut out, int indent, String name, int value) {
         dumpField(out, indent, name, value, null);
     }
 
-    public void dumpDetail(ILineCharOut out) {
+    public void dumpDetail(IPrintCharOut out) {
         dumpField(out, 4, "Total/Ignored", total, ignored);
 
         List<String> tags = new ArrayList<String>(tagStat.keySet());

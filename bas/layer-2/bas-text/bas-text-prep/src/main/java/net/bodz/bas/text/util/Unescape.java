@@ -3,7 +3,7 @@ package net.bodz.bas.text.util;
 import java.nio.CharBuffer;
 
 import net.bodz.bas.sio.BCharOut;
-import net.bodz.bas.sio.ILineCharOut;
+import net.bodz.bas.sio.IPrintCharOut;
 
 public class Unescape {
 
@@ -24,7 +24,7 @@ public class Unescape {
         return true;
     }
 
-    public void process(CharBuffer in, ILineCharOut out) {
+    public void process(CharBuffer in, IPrintCharOut out) {
         int limit = in.limit();
         StringBuffer t = new StringBuffer();
         int i = in.position();
