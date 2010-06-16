@@ -4,7 +4,7 @@ import java.util.Map;
 
 import net.bodz.bas.cli.CLIException;
 import net.bodz.bas.exceptions.ParseException;
-import net.bodz.bas.sio.ILineCharOut;
+import net.bodz.bas.sio.IPrintCharOut;
 import net.bodz.bas.util.Plugin;
 
 /**
@@ -16,7 +16,7 @@ public interface CLIPlugin
 
     // static methods
 
-    void help(ILineCharOut out, String prefix);
+    void help(IPrintCharOut out, String prefix);
 
     // instance methods
 

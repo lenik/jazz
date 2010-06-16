@@ -1,18 +1,18 @@
 package net.bodz.bas.log.objects;
 
-public final class WithThrown
+public final class ErrorLogEvent
         extends AbstractLogEvent {
 
     private final Object object;
-    private final Throwable thrown;
+    private final Throwable exception;
 
-    public WithThrown(Object object, Throwable thrown) {
+    public ErrorLogEvent(Object object, Throwable exception) {
         if (object == null)
             throw new NullPointerException("object");
-        if (thrown == null)
+        if (exception == null)
             throw new NullPointerException("thrown");
         this.object = object;
-        this.thrown = thrown;
+        this.exception = exception;
     }
 
     @Override
@@ -22,13 +22,13 @@ public final class WithThrown
 
     @Override
     public Throwable getException() {
-        return thrown;
+        return exception;
     }
 
     @Override
     public String toString() {
         return String.format("%s (%s: %s)", //
-                object, thrown.getClass().getName(), thrown.getLocalizedMessage());
+                object, exception.getClass().getName(), exception.getLocalizedMessage());
     }
 
 }

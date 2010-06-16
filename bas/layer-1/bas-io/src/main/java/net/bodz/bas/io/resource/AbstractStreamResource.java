@@ -13,7 +13,7 @@ import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
 import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.IByteOutNative;
 import net.bodz.bas.sio.ICharOut;
-import net.bodz.bas.sio.ILineCharOut;
+import net.bodz.bas.sio.IPrintCharOut;
 
 public abstract class AbstractStreamResource
         extends AbstractStreamInputSource
@@ -94,7 +94,7 @@ public abstract class AbstractStreamResource
     }
 
     @Override
-    public ILineCharOut newLineCharOut()
+    public IPrintCharOut newLineCharOut()
             throws IOException {
         return asotImpl.newLineCharOut();
     }

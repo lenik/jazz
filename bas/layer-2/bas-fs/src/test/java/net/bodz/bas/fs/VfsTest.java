@@ -3,7 +3,7 @@ package net.bodz.bas.fs;
 import java.net.URL;
 
 import net.bodz.bas.bean.BeanDump;
-import net.bodz.bas.sio.LineCharOutImpl;
+import net.bodz.bas.sio.PrintCharOutImpl;
 import net.bodz.bas.sio.Stdio;
 
 import org.apache.commons.vfs.FileObject;
@@ -12,7 +12,7 @@ import org.apache.commons.vfs.operations.FileOperation;
 
 public class VfsTest {
 
-    static LineCharOutImpl out = new LineCharOutImpl(Stdio.cout);
+    static PrintCharOutImpl out = new PrintCharOutImpl(Stdio.cout);
 
     static URL getClassFile(Class<?> clazz) {
         return clazz.getResource(clazz.getSimpleName() + ".class");

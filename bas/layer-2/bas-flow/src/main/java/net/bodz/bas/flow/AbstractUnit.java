@@ -12,7 +12,7 @@ import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.lang.Nullables;
 import net.bodz.bas.sio.BCharOut;
-import net.bodz.bas.sio.ILineCharOut;
+import net.bodz.bas.sio.IPrintCharOut;
 import net.bodz.bas.text.util.Strings;
 
 public abstract class AbstractUnit
@@ -61,7 +61,7 @@ public abstract class AbstractUnit
         return new AbstractUnitMeta(getName());
     }
 
-    public void dumpGraph(ILineCharOut out, int indent, Set<IUnit> loops) {
+    public void dumpGraph(IPrintCharOut out, int indent, Set<IUnit> loops) {
         String prefix = Strings.repeat(indent * 4, ' ');
         out.println(prefix + getName());
 

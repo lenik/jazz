@@ -1,4 +1,4 @@
-package net.bodz.bas.io.term;
+package net.bodz.bas.log.term;
 
 public abstract class BufferedTerminal
         extends AbstractTerminal {

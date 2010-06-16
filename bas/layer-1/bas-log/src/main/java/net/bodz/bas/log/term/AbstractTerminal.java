@@ -1,4 +1,4 @@
-package net.bodz.bas.io.term;
+package net.bodz.bas.log.term;
 
 import java.io.IOException;
 import java.io.PrintStream;
@@ -8,14 +8,14 @@ import java.nio.charset.Charset;
 
 import net.bodz.bas.exceptions.UnexpectedException;
 import net.bodz.bas.io.WriterOutputStream;
-import net.bodz.bas.sio.ILineCharOut;
+import net.bodz.bas.sio.IPrintCharOut;
 import net.bodz.bas.text.util.StringArray;
 
 public abstract class AbstractTerminal
         implements ITerminal {
 
     @Override
-    public ILineCharOut getCharOut() {
+    public IPrintCharOut getCharOut() {
         return new TerminalCharOut(this);
     }
 

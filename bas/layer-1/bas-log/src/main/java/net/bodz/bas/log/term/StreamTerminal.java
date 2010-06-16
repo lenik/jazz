@@ -1,10 +1,10 @@
-package net.bodz.bas.io.term;
+package net.bodz.bas.log.term;
 
 import java.io.IOException;
 import java.io.PrintStream;
 
-import net.bodz.bas.sio.ILineCharOut;
-import net.bodz.bas.sio.PrintStreamCharOut;
+import net.bodz.bas.sio.IPrintCharOut;
+import net.bodz.bas.sio.PrintStreamPrintCharOut;
 
 public class StreamTerminal
         extends AbstractTerminal {
@@ -19,8 +19,8 @@ public class StreamTerminal
     }
 
     @Override
-    public ILineCharOut getCharOut() {
-        return new PrintStreamCharOut(out);
+    public IPrintCharOut getCharOut() {
+        return new PrintStreamPrintCharOut(out);
     }
 
     @Override

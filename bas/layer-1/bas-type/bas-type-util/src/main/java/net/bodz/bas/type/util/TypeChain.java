@@ -3,7 +3,7 @@ package net.bodz.bas.type.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.sio.ILineCharOut;
+import net.bodz.bas.sio.IPrintCharOut;
 import net.bodz.bas.sio.indent.IIndention;
 
 import org.apache.commons.lang.ArrayUtils;
@@ -25,11 +25,11 @@ public class TypeChain {
         return list;
     }
 
-    public static <T extends ILineCharOut & IIndention> void dumpTypeTree(Class<?> type, T out) {
+    public static <T extends IPrintCharOut & IIndention> void dumpTypeTree(Class<?> type, T out) {
         dumpTypeTree(type, out, false);
     }
 
-    public static <T extends ILineCharOut & IIndention> void dumpTypeTree(Class<?> type, T out,
+    public static <T extends IPrintCharOut & IIndention> void dumpTypeTree(Class<?> type, T out,
             boolean removeDupInterfaces) {
         if (type == null)
             throw new NullPointerException("type");

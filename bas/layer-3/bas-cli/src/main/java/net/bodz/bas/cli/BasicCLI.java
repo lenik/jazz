@@ -37,7 +37,7 @@ import net.bodz.bas.io.term.LogTerms;
 import net.bodz.bas.io.typemeta.CharOutParser;
 import net.bodz.bas.io.typemeta.LoggerParser;
 import net.bodz.bas.loader.boot.BootInfo;
-import net.bodz.bas.sio.ILineCharOut;
+import net.bodz.bas.sio.IPrintCharOut;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.text.util.StringArray;
 import net.bodz.bas.type.traits.AbstractParser;
@@ -87,7 +87,7 @@ public class BasicCLI
 
     @Option(name = ".stdout", hidden = true)
     @ParseBy(CharOutParser.class)
-    protected ILineCharOut _stdout = Stdio.cout;
+    protected IPrintCharOut _stdout = Stdio.cout;
 
     @Option(name = "logger", hidden = true)
     @ParseBy(LoggerParser.class)
@@ -287,7 +287,7 @@ public class BasicCLI
         throw new ControlBreak();
     }
 
-    protected void _version(ILineCharOut out) {
+    protected void _version(IPrintCharOut out) {
         ClassInfo info = _loadClassInfo();
         out.printf("[%s] %s\n", info.getName(), info.getDoc());
         out.printf("Written by %s,  Version %s,  Last updated at %s\n", // 
@@ -303,7 +303,7 @@ public class BasicCLI
         throw new ControlBreak();
     }
 
-    protected void _help(ILineCharOut out)
+    protected void _help(IPrintCharOut out)
             throws CLIException {
         _version(out);
         out.println();
