@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 import net.bodz.bas.c1.util.Pair;
-import net.bodz.bas.collection.util.EnumerationToIterator;
 import net.bodz.bas.exceptions.NotImplementedException;
 import net.bodz.bas.exceptions.UnexpectedException;
 
@@ -48,7 +47,17 @@ public class StringArray {
     }
 
     public static String join(String separator, Enumeration<?> enumr) {
-        return join(separator, EnumerationToIterator.toIterator(enumr));
+        StringBuffer buffer = null;
+        while (enumr.hasMoreElements()) {
+            Object o = enumr.nextElement();
+            if (buffer == null)
+                buffer = new StringBuffer();
+            else
+                buffer.append(separator);
+            buffer.append(String.valueOf(o));
+        }
+        return buffer == null ? "" : buffer.toString();
+
     }
 
     public static Pair<String, String> join(String separatorKey, String separatorValue, Map<?, ?> map) {
