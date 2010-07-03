@@ -15,12 +15,12 @@ import javax.script.ScriptException;
 
 import net.bodz.bas.a.A_bas;
 import net.bodz.bas.a.ClassInfo;
-import net.bodz.bas.a.RcsKeywords;
-import net.bodz.bas.a.VersionInfo;
 import net.bodz.bas.annotations.ChainUsage;
 import net.bodz.bas.arch.context.sysclg.SystemCLG;
-import net.bodz.bas.cli.a.Option;
-import net.bodz.bas.cli.a.OptionGroup;
+import net.bodz.bas.c1.annotations.RcsKeywords;
+import net.bodz.bas.c1.annotations.util.VersionInfo;
+import net.bodz.bas.cli.annotations.Option;
+import net.bodz.bas.cli.annotations.OptionGroup;
 import net.bodz.bas.cli.ext.CLIPlugin;
 import net.bodz.bas.cli.ext.CLIPlugins;
 import net.bodz.bas.commons.scripting.ScriptClass;

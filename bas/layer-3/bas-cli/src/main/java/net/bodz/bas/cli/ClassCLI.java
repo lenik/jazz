@@ -12,7 +12,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import net.bodz.bas.a.A_bas;
-import net.bodz.bas.cli.a.Option;
+import net.bodz.bas.cli.annotations.Option;
 import net.bodz.bas.closure.alt.Filt1;
 import net.bodz.bas.collection.comparator.StringLengthComparator;
 import net.bodz.bas.collection.util.ClassLocal;

@@ -9,8 +9,8 @@ import java.nio.charset.Charset;
 import java.util.Comparator;
 import java.util.regex.Pattern;
 
-import net.bodz.bas.cli.a.Option;
-import net.bodz.bas.cli.a.OptionGroup;
+import net.bodz.bas.cli.annotations.Option;
+import net.bodz.bas.cli.annotations.OptionGroup;
 import net.bodz.bas.exceptions.NotImplementedException;
 import net.bodz.bas.files.FilePath;
 import net.bodz.bas.fs.FileMask;

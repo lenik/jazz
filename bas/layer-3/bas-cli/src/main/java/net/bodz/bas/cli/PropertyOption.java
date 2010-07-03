@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 
 import javax.script.ScriptException;
 
-import net.bodz.bas.cli.a.OptionGroup;
+import net.bodz.bas.cli.annotations.OptionGroup;
 
 public class PropertyOption<T>
         extends _Option<T> {

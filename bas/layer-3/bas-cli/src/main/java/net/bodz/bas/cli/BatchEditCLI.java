@@ -11,8 +11,8 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 import java.util.List;
 
-import net.bodz.bas.cli.a.Option;
-import net.bodz.bas.cli.a.OptionGroup;
+import net.bodz.bas.cli.annotations.Option;
+import net.bodz.bas.cli.annotations.OptionGroup;
 import net.bodz.bas.cli.util.ProtectedShell;
 import net.bodz.bas.exceptions.IllegalUsageError;
 import net.bodz.bas.exceptions.NotImplementedException;
