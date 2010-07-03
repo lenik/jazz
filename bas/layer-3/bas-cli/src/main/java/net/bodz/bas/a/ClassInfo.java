@@ -6,8 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.c1.annotations.Author;
+import net.bodz.bas.c1.annotations.SiteLink;
 import net.bodz.bas.c1.annotations.Version;
-import net.bodz.bas.c1.annotations.WebSite;
+import net.bodz.bas.c1.annotations.util.DisplayNameUtil;
+import net.bodz.bas.c1.annotations.util.DocUtil;
 import net.bodz.bas.collection.util.ClassLocal;
 import net.bodz.bas.lang.Nullables;
 import net.bodz.bas.text.util.StringArray;
@@ -44,8 +46,8 @@ public class ClassInfo {
     protected void load() {
         if (loaded)
             return;
-        name = A_bas.getDisplayName(clazz);
-        doc = A_bas.getDoc(clazz);
+        name = DisplayNameUtil.getDisplayName(clazz);
+        doc = DocUtil.getDoc(clazz);
 
         String[] iconDefs = Nullables.getAnnotation(clazz, Icon.class).value();
         if (iconDefs != null)
@@ -69,7 +71,7 @@ public class ClassInfo {
         if (author != null)
             this.author = join(author);
 
-        String[] webSites = Nullables.getAnnotation(clazz, WebSite.class).value();
+        String[] webSites = Nullables.getAnnotation(clazz, SiteLink.class).value();
         if (webSites != null && webSites.length != 0)
             this.webSite = webSites[0];
 

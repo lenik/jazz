@@ -3,7 +3,7 @@ package net.bodz.bas.cli;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import net.bodz.bas.cli.a.Option;
+import net.bodz.bas.cli.annotations.Option;
 
 import org.junit.Test;
 

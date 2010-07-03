@@ -14,15 +14,15 @@ import java.util.Set;
 
 import net.bodz.bas.a.A_bas;
 import net.bodz.bas.a.ClassInfo;
-import net.bodz.bas.a.ProgramName;
-import net.bodz.bas.a.RcsKeywords;
 import net.bodz.bas.a.StartMode;
 import net.bodz.bas.annotation.util.Ns;
 import net.bodz.bas.c1.annotations.Doc;
+import net.bodz.bas.c1.annotations.RcsKeywords;
 import net.bodz.bas.c1.annotations.Version;
 import net.bodz.bas.cli.BatchEditCLI;
 import net.bodz.bas.cli.EditResult;
-import net.bodz.bas.cli.a.Option;
+import net.bodz.bas.cli.annotations.Option;
+import net.bodz.bas.cli.annotations.ProgramName;
 import net.bodz.bas.collection.set.ArraySet;
 import net.bodz.bas.exceptions.IdentifiedException;
 import net.bodz.bas.files.FilePath;

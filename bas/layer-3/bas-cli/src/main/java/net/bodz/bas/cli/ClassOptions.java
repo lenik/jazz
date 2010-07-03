@@ -19,8 +19,8 @@ import java.util.Map.Entry;
 import javax.script.ScriptException;
 
 import net.bodz.bas.c1.util.Pair;
-import net.bodz.bas.cli.a.Option;
-import net.bodz.bas.cli.a.OptionGroup;
+import net.bodz.bas.cli.annotations.Option;
+import net.bodz.bas.cli.annotations.OptionGroup;
 import net.bodz.bas.collection.preorder.PrefixMap;
 import net.bodz.bas.collection.util.IterableToList;
 import net.bodz.bas.exceptions.ParseException;

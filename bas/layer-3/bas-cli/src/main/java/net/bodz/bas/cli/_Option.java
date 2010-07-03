@@ -4,8 +4,8 @@ import java.lang.reflect.AnnotatedElement;
 import java.util.Collection;
 import java.util.Map;
 
-import net.bodz.bas.cli.a.Option;
-import net.bodz.bas.cli.a.OptionGroup;
+import net.bodz.bas.cli.annotations.Option;
+import net.bodz.bas.cli.annotations.OptionGroup;
 import net.bodz.bas.commons.scripting.ScriptField;
 import net.bodz.bas.exceptions.CreateException;
 import net.bodz.bas.exceptions.ParseException;
