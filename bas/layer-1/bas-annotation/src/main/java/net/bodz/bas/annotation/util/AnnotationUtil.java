@@ -3,8 +3,9 @@ package net.bodz.bas.annotation.util;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 
-import net.bodz.bas.lang.Nullables;
-
+/**
+ * @test AnnotationUtilTest
+ */
 public class AnnotationUtil {
 
     /**
@@ -21,8 +22,8 @@ public class AnnotationUtil {
      * 
      * @throws NullPointerException
      *             If <code>annotationClass</code> or <code>startClass</code> is <code>null</code>.
-     * @see Nullables#getAnnotationValue(Annotation, Class)
-     * @see Nullables#getAnnotationValue(Annotation, Object)
+     * @see net.bodz.bas.lang.Nullables#getAnnotationValue(Annotation, Class)
+     * @see net.bodz.bas.lang.Nullables#getAnnotationValue(Annotation, Object)
      */
     public static <A extends Annotation> A findAnnotation(Class<A> annotationClass, Class<?> startClass,
             Class<?> stopClass) {
@@ -44,8 +45,8 @@ public class AnnotationUtil {
      * 
      * @throws NullPointerException
      *             If any parameter is <code>null</code>.
-     * @see Nullables#getAnnotationValue(Annotation, Class)
-     * @see Nullables#getAnnotationValue(Annotation, Object)
+     * @see net.bodz.bas.lang.Nullables#getAnnotationValue(Annotation, Class)
+     * @see net.bodz.bas.lang.Nullables#getAnnotationValue(Annotation, Object)
      */
     public static <A extends Annotation> A findAnnotation(Class<A> annotationClass,
             Iterable<? extends AnnotatedElement> many) {
@@ -53,6 +54,22 @@ public class AnnotationUtil {
             A annotation = element.getAnnotation(annotationClass);
             if (annotation != null)
                 return annotation;
+        }
+        return null;
+    }
+
+    /**
+     * @return <code>null</code> If specified annotation type isn't declared on the annotation
+     *         element.
+     */
+    public static <T extends Annotation> T getDeclaredAnnotation(AnnotatedElement annotatedElement,
+            Class<T> annotationType) {
+        // return annotatedElement.getDeclaredAnnotation(annotationType);
+        Annotation[] declv = annotatedElement.getDeclaredAnnotations();
+        for (int i = 0; i < declv.length; i++) {
+            Annotation _a = declv[i];
+            if (annotationType.equals(_a.annotationType()))
+                return annotationType.cast(_a);
         }
         return null;
     }

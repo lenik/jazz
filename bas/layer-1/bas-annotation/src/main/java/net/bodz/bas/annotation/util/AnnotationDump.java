@@ -1,11 +1,16 @@
 package net.bodz.bas.annotation.util;
 
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintStream;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.bodz.bas.sio.IPrintCharOut;
+import net.bodz.bas.exceptions.UnexpectedException;
 
 public class AnnotationDump {
 
@@ -27,11 +32,39 @@ public class AnnotationDump {
         Class_declaredAnnotations.setAccessible(true);
     }
 
-    public static void dumpAnnotationMap(Class<?> clazz, IPrintCharOut out) {
+    public static String dumpAnnotationMap(Class<?> clazz) {
+        return dumpAnnotationMap(clazz, false);
+    }
+
+    public static void dumpAnnotationMap(Class<?> clazz, PrintStream out) {
         dumpAnnotationMap(clazz, false, out);
     }
 
-    public static void dumpAnnotationMap(Class<?> clazz, boolean declaredOnly, IPrintCharOut out) {
+    public static void dumpAnnotationMap(Class<?> clazz, Writer out)
+            throws IOException {
+        dumpAnnotationMap(clazz, false, out);
+    }
+
+    public static String dumpAnnotationMap(Class<?> clazz, boolean declaredOnly) {
+        StringWriter buffer = new StringWriter();
+        try {
+            dumpAnnotationMap(clazz, declaredOnly, buffer);
+        } catch (IOException e) {
+        }
+        return buffer.toString();
+    }
+
+    public static void dumpAnnotationMap(Class<?> clazz, boolean declaredOnly, PrintStream out) {
+        Writer w = new OutputStreamWriter(out);
+        try {
+            dumpAnnotationMap(clazz, declaredOnly, w);
+        } catch (IOException e) {
+            throw new UnexpectedException("PrintStream should not throw exception");
+        }
+    }
+
+    public static void dumpAnnotationMap(Class<?> clazz, boolean declaredOnly, Writer out)
+            throws IOException {
         Map<?, ?> annotations;
         try {
             annotations = (Map<?, ?>) Class_annotations.get(clazz);
@@ -42,7 +75,7 @@ public class AnnotationDump {
         for (Entry<?, ?> entry : annotations.entrySet()) {
             Class<?> annotationClass = (Class<?>) entry.getKey();
             Annotation annotationImpl = (Annotation) entry.getValue();
-            out.println(annotationClass + " " + annotationImpl);
+            out.write(annotationClass + " " + annotationImpl + "\n");
         }
     }
 
