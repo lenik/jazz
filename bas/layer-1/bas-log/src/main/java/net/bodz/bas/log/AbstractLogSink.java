@@ -1,17 +1,21 @@
 package net.bodz.bas.log;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.log.objects.ArrayJoinMessage;
-import net.bodz.bas.log.objects.ILogEvent;
+import net.bodz.bas.log.objects.ILogEntry;
 import net.bodz.bas.log.objects.IMessage;
+import net.bodz.bas.log.objects.LogEntry;
 import net.bodz.bas.log.objects.StringFormatMessage;
 import net.bodz.bas.sio.AbstractIndentedCharOut;
 
 public abstract class AbstractLogSink
         extends AbstractIndentedCharOut
         implements ILogSink {
+
+// private Object source;
 
     private int verboseLevel;
     protected boolean enabled;
@@ -42,17 +46,18 @@ public abstract class AbstractLogSink
     /**
      * Invoked only if verbose-level is greater than configured level.
      */
-    public void put(ILogEvent event) {
-        Object message = event.getMessage();
-        Throwable exception = event.getException();
-        switch (event.getExceptionCount()) {
-        case 0:
-            put(message);
-        case 1:
-            put(message, event.getException());
-        default:
-            put(message, event.getExceptions());
-        }
+    public abstract void put(ILogEntry event);
+
+    protected void put(Object message) {
+        // Object source = Caller.getCaller
+        LogEntry entry = new LogEntry(null, message, null);
+        put(entry);
+    }
+
+    protected void put(Object message, Throwable exception) {
+        // Object source = Caller.getCaller
+        LogEntry entry = new LogEntry(null, message, exception);
+        put(entry);
     }
 
     @Override
@@ -70,8 +75,8 @@ public abstract class AbstractLogSink
     }
 
     @Override
-    public void p(ILogEvent event) {
-        p_();
+    public void p(ILogEntry event) {
+        flush();
         put(event);
     }
 
@@ -83,22 +88,9 @@ public abstract class AbstractLogSink
 
     @Override
     public void p(Throwable exception, Object message) {
-        p_();
+        flush();
         if (enabled)
             put(message, exception);
-    }
-
-    @Override
-    public void flush() {
-        if (enabled) {
-            if (!prependMessageBuffer.isEmpty()) {
-                Object[] array = prependMessageBuffer.toArray();
-                prependMessageBuffer.clear();
-                IMessage message = new ArrayJoinMessage(array);
-                put(message);
-            }
-        } else
-            prependMessageBuffer.clear();
     }
 
     @Override
@@ -114,6 +106,7 @@ public abstract class AbstractLogSink
 
     @Override
     public void p_(Throwable exception) {
+        put(null, exception);
     }
 
     @Override
@@ -122,6 +115,8 @@ public abstract class AbstractLogSink
 
     @Override
     public void p_(Throwable exception, Object... messagePieces) {
+        IMessage message = new ArrayJoinMessage(messagePieces);
+        put(message, exception);
     }
 
     @Override
@@ -132,6 +127,22 @@ public abstract class AbstractLogSink
 
     @Override
     public void f(Throwable exception, String format, Object... args) {
+        IMessage message = new StringFormatMessage(format, args);
+        p(exception, message);
+    }
+
+    @Override
+    protected void _flush(boolean strict)
+            throws IOException {
+        if (enabled) {
+            if (!prependMessageBuffer.isEmpty()) {
+                Object[] array = prependMessageBuffer.toArray();
+                prependMessageBuffer.clear();
+                IMessage message = new ArrayJoinMessage(array);
+                put(message);
+            }
+        } else
+            prependMessageBuffer.clear();
     }
 
 }
