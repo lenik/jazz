@@ -1,5 +1,7 @@
 package net.bodz.bas.log;
 
+import org.apache.log4j.Category;
+
 public interface ILogLayer {
 
     String STDOUT = "stdout";
@@ -142,5 +144,57 @@ public interface ILogLayer {
      *         logging is suppressed.
      */
     IStatusSink getStatusSink(int verboseLevel);
+
+    // Log4j compatible methods
+
+    /**
+     * @see Category#error(Object)
+     */
+    void fatal(Object message);
+
+    /**
+     * @see Category#error(Object)
+     */
+    void fatal(Object message, Throwable t);
+
+    /**
+     * @see Category#error(Object)
+     */
+    void error(Object message);
+
+    /**
+     * @see Category#error(Object)
+     */
+    void error(Object message, Throwable t);
+
+    /**
+     * @see Category#warn(Object)
+     */
+    void warn(Object message);
+
+    /**
+     * @see Category#warn(Object)
+     */
+    void warn(Object message, Throwable t);
+
+    /**
+     * @see Category#info(Object)
+     */
+    void info(Object message);
+
+    /**
+     * @see Category#info(Object)
+     */
+    void info(Object message, Throwable t);
+
+    /**
+     * @see Category#debug(Object)
+     */
+    void debug(Object message);
+
+    /**
+     * @see Category#debug(Object)
+     */
+    void debug(Object message, Throwable t);
 
 }

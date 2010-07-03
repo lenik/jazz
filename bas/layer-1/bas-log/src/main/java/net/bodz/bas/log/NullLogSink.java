@@ -1,8 +1,10 @@
 package net.bodz.bas.log;
 
-import net.bodz.bas.log.objects.ILogEvent;
+import net.bodz.bas.log.objects.ILogEntry;
+import net.bodz.bas.sio.NullIndentedCharOut;
 
 public class NullLogSink
+        extends NullIndentedCharOut
         implements ILogSink {
 
     @Override
@@ -15,7 +17,7 @@ public class NullLogSink
     }
 
     @Override
-    public void p(ILogEvent event) {
+    public void p(ILogEntry entry) {
     }
 
     @Override
@@ -27,11 +29,11 @@ public class NullLogSink
     }
 
     @Override
-    public void p(Object obj, Throwable t) {
+    public void p(Throwable t, Object obj) {
     }
 
     @Override
-    public void p_(Object... concatObjs) {
+    public void p(Throwable exception, Object... messagePieces) {
     }
 
     @Override
@@ -39,14 +41,30 @@ public class NullLogSink
     }
 
     @Override
-    public void p_() {
+    public void p_(Object... concatObjs) {
+    }
+
+    @Override
+    public void p_(Throwable exception) {
+    }
+
+    @Override
+    public void p_(Throwable exception, Object message) {
+    }
+
+    @Override
+    public void p_(Throwable exception, Object... messagePieces) {
     }
 
     @Override
     public void f(String format, Object... args) {
     }
 
-    static final NullLogSink instance = new NullLogSink();
+    @Override
+    public void f(Throwable exception, String format, Object... args) {
+    }
+
+    private static final NullLogSink instance = new NullLogSink();
 
     public static NullLogSink getInstance() {
         return instance;

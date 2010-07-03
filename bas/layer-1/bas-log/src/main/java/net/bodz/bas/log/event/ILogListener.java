@@ -1,7 +1,7 @@
 package net.bodz.bas.log.event;
 
 import net.bodz.bas.log.ILogLayer;
-import net.bodz.bas.log.objects.ILogEvent;
+import net.bodz.bas.log.objects.ILogEntry;
 
 public interface ILogListener {
 
@@ -19,6 +19,6 @@ public interface ILogListener {
      */
     void log(int eventType, int verboseLevel, Object simpleMessage);
 
-    void log(int eventType, int verboseLevel, ILogEvent event);
+    void log(int eventType, int verboseLevel, ILogEntry event);
 
 }

@@ -68,4 +68,56 @@ public abstract class AbstractLogLayer
         return (IStatusSink) get(STATUS, verboseLevel);
     }
 
+    @Override
+    public void fatal(Object message) {
+        getErrorSink().p(message);
+    }
+
+    @Override
+    public void fatal(Object message, Throwable t) {
+        getErrorSink().p(t, message);
+    }
+
+    @Override
+    public void error(Object message) {
+        getErrorSink().p(message);
+    }
+
+    @Override
+    public void error(Object message, Throwable t) {
+        getErrorSink().p(t, message);
+    }
+
+    @Override
+    public void warn(Object message) {
+        getWarnSink().p(message);
+    }
+
+    @Override
+    public void warn(Object message, Throwable t) {
+        getWarnSink().p(t, message);
+    }
+
+    @Override
+    public void info(Object message) {
+        getInfoSink().p(message);
+    }
+
+    @Override
+    public void info(Object message, Throwable t) {
+        getInfoSink().p(t, message);
+    }
+
+    @Override
+    public void debug(Object message) {
+        getDebugSink().p(message);
+    }
+
+    @Override
+    public void debug(Object message, Throwable t) {
+        getDebugSink().p(t, message);
+    }
+
+    // Log4j compatibles
+
 }
