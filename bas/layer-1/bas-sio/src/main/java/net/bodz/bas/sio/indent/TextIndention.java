@@ -102,7 +102,7 @@ public class TextIndention
     }
 
     @Override
-    public void increaseIndentLevel() {
+    public int increaseIndentLevel() {
         switch (mode) {
         case SPACEONLY: // ignore tabSize
             ++indentLevel;
@@ -133,10 +133,11 @@ public class TextIndention
                         + repeat(addTabs, '\t') + repeat(newSpaces, ' ');
             break;
         }
+        return indentLevel;
     }
 
     @Override
-    public void decreaseIndentLevel() {
+    public int decreaseIndentLevel() {
         if (indentLevel == 0)
             throw new IllegalStateException("Not indented at all");
         switch (mode) {
@@ -168,6 +169,7 @@ public class TextIndention
                         + repeat(newSpaces, ' ');
             break;
         }
+        return indentLevel;
     }
 
     static String repeat(int count, String pattern) {
