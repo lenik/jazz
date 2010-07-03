@@ -4,10 +4,9 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-
 public class Map2VariantLookupMap<K, V>
         extends VariantLookupMap<K>
-        implements Map<K, V>, Proxy<Map<K, V>> {
+        implements Map<K, V> {
 
     private final Map<K, V> proxy;
 
@@ -15,13 +14,6 @@ public class Map2VariantLookupMap<K, V>
         if (proxy == null)
             throw new NullPointerException("proxy");
         this.proxy = proxy;
-    }
-
-    // interface Proxy
-
-    @Override
-    public Map<K, V> getProxyTarget() {
-        return proxy;
     }
 
     // interface Queryable

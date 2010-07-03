@@ -1,7 +1,9 @@
 package net.bodz.bas.i18n.dict;
 
+import net.bodz.bas.c1.annotations.util.DisplayNameUtil;
 
-public abstract class _NLSDict implements NLSDict {
+public abstract class _NLSDict
+        implements NLSDict {
 
     private final String title;
     private final NLSDict next;
@@ -12,7 +14,7 @@ public abstract class _NLSDict implements NLSDict {
 
     public _NLSDict(String title, NLSDict next) {
         if (title == null)
-            title = A_bas.getDisplayName(getClass());
+            title = DisplayNameUtil.getDisplayName(getClass());
         this.title = title;
         this.next = next;
     }
@@ -79,7 +81,7 @@ public abstract class _NLSDict implements NLSDict {
     public final String format(String key, Object... args) {
         String format = getString(key);
         if (format == null)
-            throw new NullPointerException("key isn't existed: " + key); 
+            throw new NullPointerException("key isn't existed: " + key);
         String s = String.format(format, args);
         return s;
     }
