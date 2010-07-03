@@ -12,15 +12,15 @@ public class IndentedCharOutImplTest {
             throws Exception {
         BCharOut buffer = new BCharOut();
         IIndentedCharOut out = new IndentedCharOutImpl(buffer);
-        out.setIndentSize(2);
+        out.getTextIndention().setIndentSize(2);
         out.println("a");
-        out.increaseIndentLevel();
+        out.enter();
         out.println("b");
-        out.increaseIndentLevel();
+        out.enter();
         out.println("c");
-        out.decreaseIndentLevel();
+        out.leave();
         out.println("d");
-        out.decreaseIndentLevel();
+        out.leave();
         out.println("e");
         assertEquals("a\n  b\n    c\n  d\ne\n", buffer.toString());
     }

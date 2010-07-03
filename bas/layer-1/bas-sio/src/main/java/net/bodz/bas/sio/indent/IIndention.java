@@ -10,12 +10,16 @@ public interface IIndention {
      */
     void setIndentLevel(int indentLevel);
 
-    void increaseIndentLevel();
+    /**
+     * @return indent-level after increased.
+     */
+    int increaseIndentLevel();
 
     /**
      * @throws IllegalStateException
      *             If can't unindent any more.
+     * @return indent-level after decreased.
      */
-    void decreaseIndentLevel();
+    int decreaseIndentLevel();
 
 }

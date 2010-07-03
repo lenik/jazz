@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.CharBuffer;
 
 public class NullCharOut
-        extends AbstractCharOut {
+        implements ICharOut {
 
     @Override
     public void write(int ch)
@@ -41,7 +41,22 @@ public class NullCharOut
             throws IOException {
     }
 
-    static final NullCharOut instance = new NullCharOut();
+    @Override
+    public void flush(boolean strict)
+            throws IOException {
+    }
+
+    @Override
+    public void flush()
+            throws IOException {
+    }
+
+    @Override
+    public void close()
+            throws IOException {
+    }
+
+    private static final NullCharOut instance = new NullCharOut();
 
     public static NullCharOut getInstance() {
         return instance;

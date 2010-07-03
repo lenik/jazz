@@ -191,63 +191,18 @@ public class IndentedCharOutImpl
     }
 
     @Override
-    public int getIndentLevel() {
-        return textIndention.getIndentLevel();
+    public ITextIndention getTextIndention() {
+        return textIndention;
     }
 
     @Override
-    public void setIndentLevel(int indentLevel) {
-        textIndention.setIndentLevel(indentLevel);
+    public int enter() {
+        return textIndention.increaseIndentLevel();
     }
 
     @Override
-    public void increaseIndentLevel() {
-        textIndention.increaseIndentLevel();
-    }
-
-    @Override
-    public void decreaseIndentLevel() {
-        textIndention.decreaseIndentLevel();
-    }
-
-    @Override
-    public int getIndentSize() {
-        return textIndention.getIndentSize();
-    }
-
-    @Override
-    public void setIndentSize(int indentSize) {
-        textIndention.setIndentSize(indentSize);
-    }
-
-    @Override
-    public int getTabSize() {
-        return textIndention.getTabSize();
-    }
-
-    @Override
-    public void setTabSize(int tabSize) {
-        textIndention.setTabSize(tabSize);
-    }
-
-    @Override
-    public boolean isMixedMode() {
-        return textIndention.isMixedMode();
-    }
-
-    @Override
-    public void setMixedMode(boolean mixedMode) {
-        textIndention.setMixedMode(mixedMode);
-    }
-
-    @Override
-    public String getCurrentLinePrefix() {
-        return textIndention.getCurrentLinePrefix();
-    }
-
-    @Override
-    public void setCurrentLinePrefix(String currentLinePrefix) {
-        textIndention.setCurrentLinePrefix(currentLinePrefix);
+    public int leave() {
+        return textIndention.decreaseIndentLevel();
     }
 
 }
