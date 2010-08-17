@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>net.bodz.bas</groupId>
+		<artifactId>bas-parent</artifactId>
+		<version>0.2</version>
+	</parent>
+	<artifactId>lenik</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<dependencyManagement>
+		<dependencies/>
+	</dependencyManagement>
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+	<modules>
+		<module>trackdiary</module>
+	</modules>
+	<name>Lenik's Personal Stuff</name>
+	<url>http://lenik.bodz.net/</url>
+	<inceptionYear>2010</inceptionYear>
+	<developers>
+		<developer>
+			<id>lenik</id>
+			<name>Lenik (谢继雷)</name>
+			<email>lenik@bodz.net</email>
+			<roles>
+				<role>Project Leader</role>
+			</roles>
+			<timezone>GMT+8</timezone>
+		</developer>
+	</developers>
+	<scm>
+		<connection>scm:svn:svn://svn.bodz.net/jazz/lenik/trunk</connection>
+	</scm>
+</project>
