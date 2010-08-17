@@ -6,19 +6,20 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import junit.framework.TestCase;
 import net.bodz.bas.collection.list.LinkedStack;
-import net.bodz.bas.collection.tree.ArrayTreeNode;
-import net.bodz.bas.collection.tree.TreePosition;
 
 import org.junit.Test;
 
 /**
  * @see TreePosition
  */
-public class TreePositionTest {
+public class TreePositionTest
+        extends TestCase {
 
     @Test
-    public void test1() throws Exception {
+    public void test1()
+            throws Exception {
         ArrayTreeNode tree = ArrayTreeNodeTest.helloTree;
         TreePosition<ArrayTreeNode> pos = new TreePosition<ArrayTreeNode>(tree, 1, 2);
         List<Object> buf = new ArrayList<Object>();
@@ -27,7 +28,7 @@ public class TreePositionTest {
         while (iter.hasNext()) {
             ArrayTreeNode succ = iter.next();
             TreePosition<ArrayTreeNode> succPos = posBuf.pop();
-            System.out.println(succPos + " => " + succ); 
+            System.out.println(succPos + " => " + succ);
             buf.add(succ.get());
         }
         Object[] expected = { 30, 40, 41, 42, 50 };

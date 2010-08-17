@@ -1,10 +1,11 @@
 package net.bodz.bas.l10n.zh;
 
-import static org.junit.Assert.assertEquals;
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
-public class ConvertCharacterWidthTest {
+public class ConvertCharacterWidthTest
+        extends TestCase {
 
     @Test
     public void testToFullWidth()

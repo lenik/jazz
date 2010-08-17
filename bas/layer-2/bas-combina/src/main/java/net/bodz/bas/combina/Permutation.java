@@ -7,9 +7,6 @@ import net.bodz.bas.collection.list.IntSList;
 import net.bodz.bas.exceptions.IllegalUsageException;
 import net.bodz.bas.exceptions.OutOfDomainException;
 
-/**
- * @test {@link PermutationTest}
- */
 public class Permutation {
 
     /**

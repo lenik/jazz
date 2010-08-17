@@ -5,9 +5,6 @@ import net.bodz.bas.fs.path.IPath;
 import net.bodz.bas.fs.path.IPathSystem;
 import net.bodz.bas.fs.path.PathException;
 
-/**
- * @test XFSTest
- */
 public class XFS {
 
     private static IPathSystem pathSystem;

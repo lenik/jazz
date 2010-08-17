@@ -12,30 +12,28 @@ public class NLSTest
 
     ResourceBundleNLS NLS_zh_CN_var;
 
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
-        NLS_zh_CN_var = new ResourceBundleNLS( NLSTest.class, new Locale( "zh", "CN", "var" ) );
+    public NLSTest() {
+        NLS_zh_CN_var = new ResourceBundleNLS(NLSTest.class, new Locale("zh", "CN", "var"));
     }
 
     @Test
     public void testLocaleOverrideDefault() {
-        assertEquals( "value0", NLS_zh_CN_var.getString( "key0" ) );
+        assertEquals("value0", NLS_zh_CN_var.getString("key0"));
     }
 
     @Test
     public void testLocaleOverrideLang() {
-        assertEquals( "zh1", NLS_zh_CN_var.getString( "key1" ) );
+        assertEquals("zh1", NLS_zh_CN_var.getString("key1"));
     }
 
     @Test
     public void testLocaleOverrideCountry() {
-        assertEquals( "zh_CN2", NLS_zh_CN_var.getString( "key2" ) );
+        assertEquals("zh_CN2", NLS_zh_CN_var.getString("key2"));
     }
 
     @Test
     public void testLocaleOverrideVar() {
-        assertEquals( "zh_CN_var3", NLS_zh_CN_var.getString( "key3" ) );
+        assertEquals("zh_CN_var3", NLS_zh_CN_var.getString("key3"));
     }
 
 }

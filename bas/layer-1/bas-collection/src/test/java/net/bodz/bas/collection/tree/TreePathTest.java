@@ -1,12 +1,11 @@
 package net.bodz.bas.collection.tree;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import net.bodz.bas.collection.tree.TreePath;
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
-public class TreePathTest {
+public class TreePathTest
+        extends TestCase {
 
     @Test
     public void test1()

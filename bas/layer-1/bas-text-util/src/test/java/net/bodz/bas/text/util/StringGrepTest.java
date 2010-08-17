@@ -1,12 +1,13 @@
 package net.bodz.bas.text.util;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.regex.Pattern;
+
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
-public class StringGrepTest {
+public class StringGrepTest
+        extends TestCase {
 
     @Test
     public void testFindAll() {

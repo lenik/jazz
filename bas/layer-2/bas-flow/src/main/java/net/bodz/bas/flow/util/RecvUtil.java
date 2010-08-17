@@ -1,25 +1,19 @@
 package net.bodz.bas.flow.util;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 
 import net.bodz.bas.collection.util.ClassLocal;
 import net.bodz.bas.flow.IReceiverEx;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
-import net.bodz.bas.reflect.method.MethodEx;
-import net.bodz.bas.reflect.util.Members;
+import net.bodz.bas.reflect.query.MethodSelection;
+import net.bodz.bas.reflect.query.ReflectQuery;
 
-@SuppressWarnings("deprecation")
 public class RecvUtil {
 
-    public static MethodEx getMethodEx(Class<?> clazz, String methodName) {
-        MethodEx ex = new MethodEx(Members.publicMethods(clazz, methodName), Object.class);
-        if (ex.isEmpty())
-            return null;
-        return ex;
-    }
+    public static Method getRecvEx(Class<?> clazz) {
+        MethodSelection recvMethods = ReflectQuery.selectMethods(clazz).withName("recv");
 
-    public static MethodEx getRecvEx(Class<?> clazz) {
-        return getMethodEx(clazz, "recv");
     }
 
     private static final ClassLocal<MethodEx> recvExLocal;

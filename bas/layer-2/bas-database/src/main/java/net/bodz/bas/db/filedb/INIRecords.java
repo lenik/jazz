@@ -9,14 +9,10 @@ import java.util.TreeMap;
 import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.exceptions.ParseException;
-import net.bodz.bas.files.INIRecordsTest;
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
 
-/**
- * @test {@link INIRecordsTest}
- */
 public class INIRecords
         extends MapResRecords<String, String> {
 

@@ -3,9 +3,12 @@ package net.bodz.bas.files;
 import java.io.File;
 import java.util.List;
 
+import junit.framework.TestCase;
+
 import org.junit.Test;
 
-public class FileFindTest {
+public class FileFindTest
+        extends TestCase {
 
     @Test
     public void testFind1() {

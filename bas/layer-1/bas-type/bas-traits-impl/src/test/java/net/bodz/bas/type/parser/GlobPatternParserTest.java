@@ -2,10 +2,13 @@ package net.bodz.bas.type.parser;
 
 import java.util.regex.Pattern;
 
+import junit.framework.TestCase;
+
 import org.junit.Assert;
 import org.junit.Test;
 
-public class GlobPatternParserTest {
+public class GlobPatternParserTest
+        extends TestCase {
 
     static void assertEquals(Pattern a, Pattern b) {
         Assert.assertEquals(a.pattern(), b.pattern());

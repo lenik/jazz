@@ -1,10 +1,5 @@
 package net.bodz.bas.log.term;
 
-import net.bodz.bas.log.term.LogTermTest;
-
-/**
- * @test {@link LogTermTest}
- */
 public abstract class LogTerm {
 
     public static final int USER = -4;

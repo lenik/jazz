@@ -6,9 +6,6 @@ import java.io.InputStream;
 
 import net.bodz.bas.sio.position.ITellable;
 
-/**
- * @test {@link TellableInputStreamTest}
- */
 public class TellableInputStream extends FilterInputStream implements ITellable {
 
     private long pos;

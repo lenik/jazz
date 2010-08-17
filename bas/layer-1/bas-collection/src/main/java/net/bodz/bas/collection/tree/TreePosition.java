@@ -8,9 +8,6 @@ import net.bodz.bas.collection.iterator.PrefetchedIterator;
 import net.bodz.bas.collection.list.ArrayStack;
 import net.bodz.bas.lang.Nullables;
 
-/**
- * @test {@link TreePositionTest}
- */
 public class TreePosition<N extends TreeNode<? extends N>>
         implements Iterable<N> {
 

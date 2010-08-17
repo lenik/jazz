@@ -1,8 +1,5 @@
 package net.bodz.bas.sio.position;
 
-/**
- * @test {@link XYPositionTest}
- */
 public class XYPosition
         implements IXYTellable {
 
@@ -90,7 +87,7 @@ public class XYPosition
         if (!(obj instanceof XYPosition))
             return false;
         XYPosition xyp = (XYPosition) obj;
-        return offset == xyp.offset // 
+        return offset == xyp.offset //
                 && y == xyp.y //
                 && x == xyp.x;
     }

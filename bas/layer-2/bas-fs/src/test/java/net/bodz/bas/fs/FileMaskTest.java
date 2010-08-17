@@ -1,16 +1,15 @@
 package net.bodz.bas.fs;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.File;
 import java.io.IOException;
 
-import net.bodz.bas.files.FileTemp;
+import junit.framework.TestCase;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
 
 import org.junit.Test;
 
-public class FileMaskTest {
+public class FileMaskTest
+        extends TestCase {
 
     @Test
     public void testFormat()

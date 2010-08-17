@@ -1,11 +1,12 @@
 package net.bodz.bas.c1.annotations.util;
 
 import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
-public class RcsKeywordsUtilTest {
+public class RcsKeywordsUtilTest
+        extends TestCase {
 
     @Test
     public void testParseId() {

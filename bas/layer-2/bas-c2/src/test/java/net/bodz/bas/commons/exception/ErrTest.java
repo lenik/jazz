@@ -1,10 +1,11 @@
 package net.bodz.bas.commons.exception;
 
-import static org.junit.Assert.assertEquals;
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
-public class ErrTest {
+public class ErrTest
+        extends TestCase {
 
     @Test
     public void test1() {

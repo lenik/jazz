@@ -4,9 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
+import junit.framework.TestCase;
+
 import org.junit.Test;
 
-public class FileResTest {
+public class FileResTest
+        extends TestCase {
 
     @Test
     public void testGetClassFile()
@@ -28,7 +31,7 @@ public class FileResTest {
     public void testGetFile2()
             throws IOException {
         Class<?>[] classes = {
-        //
+                //
                 getClass(),//
                 String.class, //
         };

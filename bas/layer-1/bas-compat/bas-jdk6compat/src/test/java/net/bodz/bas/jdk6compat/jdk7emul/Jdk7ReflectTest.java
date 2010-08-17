@@ -1,12 +1,13 @@
 package net.bodz.bas.jdk6compat.jdk7emul;
 
-import static org.junit.Assert.assertEquals;
-
 import java.lang.reflect.Method;
+
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
-public class Jdk7ReflectTest {
+public class Jdk7ReflectTest
+        extends TestCase {
 
     public static class Dog {
 

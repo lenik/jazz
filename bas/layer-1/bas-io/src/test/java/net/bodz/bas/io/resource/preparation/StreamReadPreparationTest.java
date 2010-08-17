@@ -1,17 +1,16 @@
 package net.bodz.bas.io.resource.preparation;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
+import junit.framework.TestCase;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.io.resource.builtin.InputStreamSource;
-import net.bodz.bas.io.resource.preparation.IStreamReadPreparation;
 
 import org.junit.Test;
 
-public class StreamReadPreparationTest {
+public class StreamReadPreparationTest
+        extends TestCase {
 
     @Test
     public void testReadByBlock()

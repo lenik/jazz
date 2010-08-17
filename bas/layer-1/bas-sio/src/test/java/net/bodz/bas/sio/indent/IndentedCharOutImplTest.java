@@ -1,11 +1,12 @@
 package net.bodz.bas.sio.indent;
 
-import static org.junit.Assert.assertEquals;
+import junit.framework.TestCase;
 import net.bodz.bas.sio.BCharOut;
 
 import org.junit.Test;
 
-public class IndentedCharOutImplTest {
+public class IndentedCharOutImplTest
+        extends TestCase {
 
     @Test
     public void testIndentPrint()

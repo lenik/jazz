@@ -1,14 +1,15 @@
 package net.bodz.bas.collection.buffer;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
-public class CharRingTest {
+public class CharRingTest
+        extends TestCase {
 
     @Test
-    public void test1() throws Exception {
+    public void test1()
+            throws Exception {
         CharRing cr = new CharRing("hello");
         assertTrue(cr.isFull());
         assertEquals('h', cr.readChar());

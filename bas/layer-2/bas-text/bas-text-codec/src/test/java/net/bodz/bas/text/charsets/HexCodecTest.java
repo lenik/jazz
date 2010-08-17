@@ -1,4 +1,4 @@
-package net.bodz.bas.text.codec;
+package net.bodz.bas.text.charsets;
 
 import static org.junit.Assert.assertEquals;
 import net.bodz.bas.text.codec.builtin.HexCodec;

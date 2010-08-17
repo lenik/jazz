@@ -1,13 +1,13 @@
 package net.bodz.bas.c1.annotations.util;
 
 import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import junit.framework.TestCase;
 import net.bodz.bas.c1.annotations.SiteLink;
 
 import org.junit.Test;
 
-public class SiteLinkUtilTest {
+public class SiteLinkUtilTest
+        extends TestCase {
 
     @SiteLink({ "http://example.com/1", "http://example.com/2" })
     static class ClassA {

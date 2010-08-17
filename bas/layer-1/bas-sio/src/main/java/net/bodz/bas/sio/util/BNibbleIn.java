@@ -4,9 +4,6 @@ import java.io.IOException;
 
 import net.bodz.bas.sio.AbstractNibbleIn;
 
-/**
- * @test
- */
 public class BNibbleIn
         extends AbstractNibbleIn {
 

@@ -1,11 +1,11 @@
 package net.bodz.bas.loader.crafts;
 
-import static org.junit.Assert.assertEquals;
-
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
-public class NamedFrameTest {
+public class NamedFrameTest
+        extends TestCase {
 
     @Test
     public void testWrapRunnable()
@@ -22,7 +22,7 @@ public class NamedFrameTest {
                 assertEquals("MyFrame", namedFrame.getClassName());
                 assertEquals("我的方法123", namedFrame.getMethodName());
             }
-        }, "My Frame", "我的 方法 123", "This is a named frame");   
+        }, "My Frame", "我的 方法 123", "This is a named frame");
         entry.run();
     }
 

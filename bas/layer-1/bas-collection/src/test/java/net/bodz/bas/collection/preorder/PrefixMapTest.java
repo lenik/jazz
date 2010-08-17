@@ -1,12 +1,11 @@
 package net.bodz.bas.collection.preorder;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
-public class PrefixMapTest {
+public class PrefixMapTest
+        extends TestCase {
 
     PrefixMap<String> map = new PrefixMap<String>();
 

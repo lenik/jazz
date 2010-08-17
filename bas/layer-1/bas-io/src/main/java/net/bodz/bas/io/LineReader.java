@@ -5,8 +5,6 @@ import java.io.Reader;
 
 /**
  * Line includes EOL characters.
- * 
- * @test {@link LineReaderTest}
  */
 public class LineReader
         extends Reader {

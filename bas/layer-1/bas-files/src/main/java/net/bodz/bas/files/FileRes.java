@@ -9,9 +9,6 @@ import java.util.jar.Manifest;
 import net.bodz.bas.exceptions.IdentifiedException;
 import net.bodz.bas.exceptions.UnexpectedException;
 
-/**
- * @test {@link FileResTest}
- */
 public class FileRes {
 
     /**

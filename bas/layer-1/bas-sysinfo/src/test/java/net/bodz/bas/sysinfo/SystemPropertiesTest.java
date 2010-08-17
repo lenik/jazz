@@ -5,12 +5,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
+import junit.framework.TestCase;
 import net.bodz.bas.text.util.StringPrep;
 import net.bodz.bas.text.util.Strings;
 
 import org.junit.Test;
 
-public class SystemPropertiesTest {
+public class SystemPropertiesTest
+        extends TestCase {
 
     @Test
     public void test()
@@ -34,8 +36,8 @@ public class SystemPropertiesTest {
 
             // System.getProperty(key)
             System.out.println("    /** " + key + " = " + value + " */");
-            System.out.println("    public static String get" + Strings.ucfirst(name) + "() {\n" + //  
-                    "        return System.getProperty(\"" + key + "\"); \n" + //  
+            System.out.println("    public static String get" + Strings.ucfirst(name) + "() {\n" + //
+                    "        return System.getProperty(\"" + key + "\"); \n" + //
                     "    }\n");
         }
     }

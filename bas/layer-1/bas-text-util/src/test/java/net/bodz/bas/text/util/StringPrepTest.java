@@ -1,10 +1,11 @@
 package net.bodz.bas.text.util;
 
-import static org.junit.Assert.assertEquals;
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
-public class StringPrepTest {
+public class StringPrepTest
+        extends TestCase {
 
     @Test
     public void testEscape() {

@@ -1,11 +1,16 @@
 package net.bodz.bas.text.lop.fsm;
 
+import junit.framework.TestCase;
+
 import org.junit.Test;
 
-public class CharSetIntersectionTest extends TestData {
+public class CharSetIntersectionTest
+        extends TestCase
+        implements TestData {
 
     @Test
-    public void test() throws Exception {
+    public void test()
+            throws Exception {
         CharSetIntersection s = new CharSetIntersection(_3to7, _5to9);
 
         assert !s.contains('4');

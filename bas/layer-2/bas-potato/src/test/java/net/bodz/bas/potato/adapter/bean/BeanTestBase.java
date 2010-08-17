@@ -3,9 +3,11 @@ package net.bodz.bas.potato.adapter.bean;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+import junit.framework.TestCase;
 import net.bodz.bas.c1.annotations.Doc;
 
-public class BeanTestBase {
+public class BeanTestBase
+        extends TestCase {
 
     public static class AddressBean {
 

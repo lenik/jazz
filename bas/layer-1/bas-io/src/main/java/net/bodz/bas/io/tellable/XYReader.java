@@ -7,10 +7,9 @@ import java.nio.CharBuffer;
 
 import net.bodz.bas.sio.position.IXYTellable;
 
-/**
- * @test {@link XYReaderTest}
- */
-public class XYReader extends FilterReader implements IXYTellable {
+public class XYReader
+        extends FilterReader
+        implements IXYTellable {
 
     private long offset;
     private int y;
@@ -40,7 +39,8 @@ public class XYReader extends FilterReader implements IXYTellable {
     }
 
     @Override
-    public void mark(int readAheadLimit) throws IOException {
+    public void mark(int readAheadLimit)
+            throws IOException {
         super.mark(readAheadLimit);
         markOffset = offset;
         markY = y;
@@ -48,7 +48,8 @@ public class XYReader extends FilterReader implements IXYTellable {
     }
 
     @Override
-    public void reset() throws IOException {
+    public void reset()
+            throws IOException {
         super.reset();
         offset = markOffset;
         y = markY;
@@ -65,7 +66,8 @@ public class XYReader extends FilterReader implements IXYTellable {
     }
 
     @Override
-    public int read() throws IOException {
+    public int read()
+            throws IOException {
         int c = super.read();
         if (c != -1) {
             offset++;
@@ -75,7 +77,8 @@ public class XYReader extends FilterReader implements IXYTellable {
     }
 
     @Override
-    public int read(char[] cbuf, int off, int len) throws IOException {
+    public int read(char[] cbuf, int off, int len)
+            throws IOException {
         int cc = super.read(cbuf, off, len);
         if (cc != -1) {
             offset += cc;
@@ -86,7 +89,8 @@ public class XYReader extends FilterReader implements IXYTellable {
     }
 
     @Override
-    public int read(char[] cbuf) throws IOException {
+    public int read(char[] cbuf)
+            throws IOException {
         int cc = super.read(cbuf);
         if (cc != -1) {
             offset += cc;
@@ -97,7 +101,8 @@ public class XYReader extends FilterReader implements IXYTellable {
     }
 
     @Override
-    public int read(CharBuffer target) throws IOException {
+    public int read(CharBuffer target)
+            throws IOException {
         int cc = super.read(target);
         if (cc != -1) {
             offset += cc;
@@ -108,7 +113,8 @@ public class XYReader extends FilterReader implements IXYTellable {
     }
 
     @Override
-    public long skip(long n) throws IOException {
+    public long skip(long n)
+            throws IOException {
         long cc = super.skip(n);
         if (cc != 0) {
             offset += cc;

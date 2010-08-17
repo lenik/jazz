@@ -1,10 +1,11 @@
 package net.bodz.bas.type.util;
 
-import static org.junit.Assert.assertEquals;
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
-public class TypeNameTest {
+public class TypeNameTest
+        extends TestCase {
 
     @Test
     public void testJoinNamesClassOfQArray() {

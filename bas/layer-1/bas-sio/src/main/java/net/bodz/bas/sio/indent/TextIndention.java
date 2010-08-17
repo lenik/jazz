@@ -2,9 +2,6 @@ package net.bodz.bas.sio.indent;
 
 import java.util.Arrays;
 
-/**
- * @test {@link TextIndentionTest}
- */
 public class TextIndention
         implements ITextIndention {
 

@@ -10,9 +10,6 @@ import net.bodz.bas.jdk6compat.jdk7emul.InvocationTargetException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.NoSuchFieldException;
 
-/**
- * @test {@link ReflectsTest}
- */
 public class Reflects {
 
     public static Object get(Object obj, PropertyDescriptor property)

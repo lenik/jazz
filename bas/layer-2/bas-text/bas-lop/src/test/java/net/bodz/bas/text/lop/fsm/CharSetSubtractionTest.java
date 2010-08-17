@@ -1,11 +1,16 @@
 package net.bodz.bas.text.lop.fsm;
 
+import junit.framework.TestCase;
+
 import org.junit.Test;
 
-public class CharSetSubtractionTest extends TestData {
+public class CharSetSubtractionTest
+        extends TestCase
+        implements TestData {
 
     @Test
-    public void test() throws Exception {
+    public void test()
+            throws Exception {
 
         CharSetSubtraction s = new CharSetSubtraction(_3to7, _5to9);
 

@@ -1,9 +1,5 @@
 package net.bodz.bas.files;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -11,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import junit.framework.TestCase;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.db.filedb.PartRecords;
 import net.bodz.bas.db.filedb.PartRecords.PartMap;
@@ -18,7 +15,8 @@ import net.bodz.bas.io.resource.IStreamInputSource;
 
 import org.junit.Test;
 
-public class PartRecordsTest {
+public class PartRecordsTest
+        extends TestCase {
 
     static String map2str(Map<String, String> map) {
         if (map == null)

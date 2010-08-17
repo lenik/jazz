@@ -1,11 +1,12 @@
 package net.bodz.bas.text.util;
 
 import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
-public class QuotableTest {
+public class QuotableTest
+        extends TestCase {
 
     static Object[] _(Object... args) {
         return args;
@@ -72,7 +73,7 @@ public class QuotableTest {
         d.o("'''''", "<><>[']");
 
         d.o("a'\\'x'b", "[a]<'x>[b]"); // 11
-        d.o("a'\\\\'x'b", "[a]<\\>[x'b]"); //   
+        d.o("a'\\\\'x'b", "[a]<\\>[x'b]"); //
     }
 
 }

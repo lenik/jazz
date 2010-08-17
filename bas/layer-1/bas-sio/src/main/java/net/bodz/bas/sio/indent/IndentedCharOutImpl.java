@@ -6,9 +6,6 @@ import java.util.Locale;
 import net.bodz.bas.sio.IPrintCharOut;
 import net.bodz.bas.sio.PrintCharOutImpl;
 
-/**
- * @test {@link IndentedCharOutImplTest}
- */
 public class IndentedCharOutImpl
         extends PrintCharOutImpl
         implements IIndentedCharOut {

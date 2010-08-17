@@ -6,13 +6,9 @@ import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
 import net.bodz.bas.collection.iterator.ImmIterIterator;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.collection.iterator.IteratorX;
-import net.bodz.bas.files.CSVRecordsTest;
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.resource.IStreamInputSource;
 
-/**
- * @test {@link CSVRecordsTest}
- */
 public class CSVRecords
         extends _ResRecords<String[]> {
 

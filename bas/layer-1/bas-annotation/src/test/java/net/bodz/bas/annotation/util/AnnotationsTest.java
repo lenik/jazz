@@ -1,13 +1,14 @@
 package net.bodz.bas.annotation.util;
 
-import static org.junit.Assert.assertEquals;
-
 import java.lang.annotation.Annotation;
+
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
 @XyzHint("TeST")
-public class AnnotationsTest {
+public class AnnotationsTest
+        extends TestCase {
 
     static String annPrefix(Class<? extends Annotation> annotationClass) {
         return annotationClass + " @" + annotationClass.getName();

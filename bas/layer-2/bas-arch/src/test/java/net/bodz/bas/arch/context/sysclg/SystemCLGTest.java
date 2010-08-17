@@ -1,16 +1,16 @@
 package net.bodz.bas.arch.context.sysclg;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.File;
 import java.nio.charset.Charset;
 import java.util.Locale;
 
+import junit.framework.TestCase;
 import net.bodz.bas.arch.context.StaticContext;
 
 import org.junit.Test;
 
-public class SystemCLGTest {
+public class SystemCLGTest
+        extends TestCase {
 
     @Test
     public void testDefault()

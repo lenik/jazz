@@ -1,7 +1,5 @@
 package net.bodz.bas.collection.iterator;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.Iterator;
 
 import org.junit.Test;
@@ -9,6 +7,8 @@ import org.junit.Test;
 public class WeaveIteratorTest
         extends IteratorTestBase {
 
+    @Deprecated
+    @SuppressWarnings("unchecked")
     @Test
     public void testWeave() {
         Iterator<Integer> w1 = new WeaveIterator<Integer>(al.iterator());

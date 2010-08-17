@@ -3,6 +3,7 @@ package net.bodz.bas.flow;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
+import junit.framework.TestCase;
 import net.bodz.bas.flow.units.builtin.sinks.DumperSinkUnit;
 import net.bodz.bas.flow.units.builtin.sources.InputStreamSourceUnit;
 import net.bodz.bas.flow.units.builtin.text.BreakLinesUnit;
@@ -13,7 +14,8 @@ import net.bodz.bas.flow.units.builtin.util.TeeUnit;
 
 import org.junit.Test;
 
-public class AbstractUnitTest {
+public class AbstractUnitTest
+        extends TestCase {
 
     InputStreamSourceUnit src;
     DecodeUnit decoder;

@@ -6,8 +6,12 @@ import static org.junit.Assert.assertNotNull;
 import net.bodz.bas.c1.annotations.Language;
 
 import org.junit.Test;
+anguage;
 
-public class LanguageUtilTest {
+import org.junit.Test;
+
+public class LanguageUtilTest
+        extends TestCase {
 
     @Language({ "Lang1", "Lang2" })
     static class ClassA {

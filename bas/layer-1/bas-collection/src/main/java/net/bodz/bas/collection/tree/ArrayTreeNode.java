@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * @test {@link ArrayTreeNodeTest}
- */
-public class ArrayTreeNode implements TreeNode<ArrayTreeNode> {
+public class ArrayTreeNode
+        implements TreeNode<ArrayTreeNode> {
 
     private Object var;
 
@@ -46,7 +44,7 @@ public class ArrayTreeNode implements TreeNode<ArrayTreeNode> {
     @Override
     public String toString() {
         if (array != null) {
-            return "array(" + array.length + ")";  
+            return "array(" + array.length + ")";
         }
         return String.valueOf(var);
     }

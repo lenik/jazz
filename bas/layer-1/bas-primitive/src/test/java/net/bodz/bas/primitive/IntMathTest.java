@@ -5,8 +5,12 @@ import static org.junit.Assert.assertEquals;
 import java.math.BigInteger;
 
 import org.junit.Test;
+estCase;
 
-public class IntMathTest {
+import org.junit.Test;
+
+public class IntMathTest
+        extends TestCase {
 
     @Test
     public void testOnesInt() {

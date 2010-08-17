@@ -7,9 +7,6 @@ import java.nio.CharBuffer;
 
 import net.bodz.bas.sio.position.ITellable;
 
-/**
- * @test {@link TellableReaderTest}
- */
 public class TellableReader extends FilterReader implements ITellable {
 
     private long pos;

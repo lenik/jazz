@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+/**
+ * Dump map to text contents.
+ */
 public class DumpMap {
 
     public static <K, V> String dump(Map<K, V> map) {

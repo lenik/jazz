@@ -1,8 +1,11 @@
 package net.bodz.bas.sio;
 
+import junit.framework.TestCase;
+
 import org.junit.Test;
 
-public class StdioTest {
+public class StdioTest
+        extends TestCase {
 
     @Test
     public void testCout()

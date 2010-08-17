@@ -1,6 +1,6 @@
 package net.bodz.bas.lang.util;
 
-import static org.junit.Assert.assertEquals;
+import junit.framework.TestCase;
 import net.bodz.bas.collection.preorder.testtype.C;
 import net.bodz.bas.collection.preorder.testtype.CI;
 import net.bodz.bas.collection.preorder.testtype.CJz;
@@ -16,58 +16,60 @@ import net.bodz.bas.collection.preorder.testtype.DxKIx;
 
 import org.junit.Test;
 
-public class VarMethodTest {
+public class VarMethodTest
+        extends TestCase {
 
     public String play(Cat a, Dog b) {
-        return "Cat, Dog"; 
+        return "Cat, Dog";
     }
 
     public String play(C a, Dog b) {
-        return "C, Dog"; 
+        return "C, Dog";
     }
 
     public String play(Cat a, D b) {
-        return "Cat, D"; 
+        return "Cat, D";
     }
 
     public String play(C a, D b) {
-        return "C, D"; 
+        return "C, D";
     }
 
     public String play(CI a, Dx b) {
-        return "CI, Dx"; 
+        return "CI, Dx";
     }
 
     public String play(CI a, DxKI b) {
-        return "CI, DxKI"; 
+        return "CI, DxKI";
     }
 
     public String play(CJz a, DxKI b) {
-        return "CJz, DxKI"; 
+        return "CJz, DxKI";
     }
 
     public String play(CJz a, DIJy b) {
-        return "CJz, DIJy"; 
+        return "CJz, DIJy";
     }
 
     public String play(CJzKI a, DIJ b) {
-        return "CJzKI, DIJ"; 
+        return "CJzKI, DIJ";
     }
 
     VarMethod playf;
     {
-        playf = new VarMethod("play", Members.publicMethods( 
-                VarMethodTest.class, "play")); 
+        playf = new VarMethod("play", Members.publicMethods(VarMethodTest.class, "play"));
     }
 
     @Test
-    public void test1() throws Exception {
+    public void test1()
+            throws Exception {
         Object ret = playf.invoke(this, new CI(), new DxKIx());
-        assertEquals("CI, DxKI", ret); 
+        assertEquals("CI, DxKI", ret);
     }
 
     @Test(expected = NoSuchMethodException.class)
-    public void test2() throws Exception {
+    public void test2()
+            throws Exception {
         playf.invoke(this, new CJzKI(), new Dx());
     }
 

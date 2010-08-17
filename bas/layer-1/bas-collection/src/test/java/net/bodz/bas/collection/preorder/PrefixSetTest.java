@@ -1,12 +1,11 @@
 package net.bodz.bas.collection.preorder;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
-public class PrefixSetTest {
+public class PrefixSetTest
+        extends TestCase {
 
     PrefixSet set = new PrefixSet();
 

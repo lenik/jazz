@@ -1,12 +1,13 @@
 package net.bodz.bas.files;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.File;
+
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
-public class FileGCDTest {
+public class FileGCDTest
+        extends TestCase {
 
     @Test
     void testFindBase(String expected, String a, String b) {

@@ -5,9 +5,6 @@ import java.io.OutputStream;
 
 import net.bodz.bas.sio.util.NibbleUtil;
 
-/**
- * @test {@link OutputStreamNibbleOutTest}
- */
 public class OutputStreamNibbleOut
         extends AbstractNibbleOut {
 

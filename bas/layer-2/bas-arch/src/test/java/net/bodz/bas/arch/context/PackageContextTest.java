@@ -1,11 +1,11 @@
 package net.bodz.bas.arch.context;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
-public class PackageContextTest {
+public class PackageContextTest
+        extends TestCase {
 
     static class ContextAddress
             extends ContextLocal<String> {

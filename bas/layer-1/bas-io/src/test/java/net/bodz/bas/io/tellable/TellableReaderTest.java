@@ -1,18 +1,20 @@
 package net.bodz.bas.io.tellable;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.IOException;
 import java.io.StringReader;
 
+import junit.framework.TestCase;
+
 import org.junit.Test;
 
-public class TellableReaderTest {
+public class TellableReaderTest
+        extends TestCase {
 
     static String hello = "hello, abcdefg";
 
     @Test
-    public void test1() throws IOException {
+    public void test1()
+            throws IOException {
         TellableReader r = new TellableReader(new StringReader(hello));
 
         assertEquals(0, r.tell());

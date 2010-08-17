@@ -2,9 +2,6 @@ package net.bodz.bas.sio;
 
 import java.io.IOException;
 
-/**
- * @test {@link LANibbleInTest}
- */
 public class LANibbleIn
         implements INibbleIn {
 

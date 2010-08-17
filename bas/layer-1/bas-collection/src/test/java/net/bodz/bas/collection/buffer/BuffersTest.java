@@ -1,15 +1,17 @@
 package net.bodz.bas.collection.buffer;
 
-import static org.junit.Assert.assertEquals;
-
 import java.nio.ByteBuffer;
+
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
-public class BuffersTest {
+public class BuffersTest
+        extends TestCase {
 
     @Test
-    public void testInsert() throws Exception {
+    public void testInsert()
+            throws Exception {
         String s = "0123456789________________________";
         byte[] v1 = s.getBytes();
         ByteBuffer bb1 = ByteBuffer.wrap(v1);

@@ -2,21 +2,21 @@ package net.bodz.bas.combina;
 
 import static net.bodz.bas.collection.array.AbstractArrayWrapper.wrap;
 import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import junit.framework.TestCase;
 import net.bodz.bas.closure.alt.Proc1;
 import net.bodz.bas.collection.primitive.IntegerCollection;
 import net.bodz.bas.primitive.IntMath;
 
 import org.junit.Test;
 
-public class PermutationTest {
+public class PermutationTest
+        extends TestCase {
 
     int count = 0;
 

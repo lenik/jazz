@@ -1,13 +1,13 @@
 package net.bodz.bas.c1.annotations.util;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import junit.framework.TestCase;
 import net.bodz.bas.c1.annotations.Doc;
 import net.bodz.bas.exceptions.ParseException;
 
 import org.junit.Test;
 
-public class DocUtilTest {
+public class DocUtilTest
+        extends TestCase {
 
     @Test
     public void testDoc_NoDoc()

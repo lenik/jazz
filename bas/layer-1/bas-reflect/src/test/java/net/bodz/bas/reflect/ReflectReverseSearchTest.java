@@ -1,17 +1,17 @@
 package net.bodz.bas.reflect;
 
-import static org.junit.Assert.assertEquals;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import junit.framework.TestCase;
 import net.bodz.bas.closure.alt.Pred1;
 
 import org.junit.Test;
 
-public class ReflectReverseSearchTest {
+public class ReflectReverseSearchTest
+        extends TestCase {
 
     public static final String X = "X";
     public static final String XX = "X";

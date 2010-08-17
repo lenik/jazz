@@ -1,10 +1,12 @@
 package net.bodz.bas.types;
 
-import static org.junit.Assert.assertEquals;
+import junit.framework.TestCase;
+import net.bodz.bas.collection.tree.TreePath;
 
 import org.junit.Test;
 
-public class SimpleRequestTest {
+public class SimpleRequestTest
+        extends TestCase {
 
     @Test
     public void test1() {

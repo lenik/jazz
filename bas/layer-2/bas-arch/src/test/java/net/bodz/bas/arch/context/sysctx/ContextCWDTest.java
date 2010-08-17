@@ -1,15 +1,15 @@
 package net.bodz.bas.arch.context.sysctx;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.File;
 
+import junit.framework.TestCase;
 import net.bodz.bas.arch.context.ClassContext;
 import net.bodz.bas.arch.context.sysclg.ContextCWD;
 
 import org.junit.Test;
 
-public class ContextCWDTest {
+public class ContextCWDTest
+        extends TestCase {
 
     @Test
     public void testInnerClassCwd()

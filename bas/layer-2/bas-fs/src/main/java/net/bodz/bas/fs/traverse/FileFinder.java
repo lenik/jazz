@@ -14,9 +14,6 @@ import net.bodz.bas.collection.iterator.ArrayIterator;
 import net.bodz.bas.collection.iterator.PrefetchedIterator;
 import net.bodz.bas.collection.iterator.StackedIterator;
 
-/**
- * @test FileFinderTest
- */
 public class FileFinder
         implements Iterable<File> {
 

@@ -1,8 +1,5 @@
 package net.bodz.bas.type.util;
 
-/**
- * @test {@link TypeDistanceTest}
- */
 public class TypeDistance {
 
     /**

@@ -6,10 +6,9 @@ import java.io.InputStream;
 
 import net.bodz.bas.sio.position.IXYTellable;
 
-/**
- * @test {@link XYInputStreamTest}
- */
-public class XYInputStream extends FilterInputStream implements IXYTellable {
+public class XYInputStream
+        extends FilterInputStream
+        implements IXYTellable {
 
     private long offset;
     private int y;
@@ -31,7 +30,8 @@ public class XYInputStream extends FilterInputStream implements IXYTellable {
     }
 
     @Override
-    public void reset() throws IOException {
+    public void reset()
+            throws IOException {
         super.reset();
         offset = markOffset;
         y = markY;
@@ -63,7 +63,8 @@ public class XYInputStream extends FilterInputStream implements IXYTellable {
     }
 
     @Override
-    public int read() throws IOException {
+    public int read()
+            throws IOException {
         int b = super.read();
         if (b != -1) {
             offset++;
@@ -73,7 +74,8 @@ public class XYInputStream extends FilterInputStream implements IXYTellable {
     }
 
     @Override
-    public int read(byte[] b, int off, int len) throws IOException {
+    public int read(byte[] b, int off, int len)
+            throws IOException {
         int cb = super.read(b, off, len);
         if (cb != -1) {
             offset += cb;
@@ -84,7 +86,8 @@ public class XYInputStream extends FilterInputStream implements IXYTellable {
     }
 
     @Override
-    public int read(byte[] b) throws IOException {
+    public int read(byte[] b)
+            throws IOException {
         int cb = super.read(b);
         if (cb != -1) {
             offset += cb;
@@ -95,7 +98,8 @@ public class XYInputStream extends FilterInputStream implements IXYTellable {
     }
 
     @Override
-    public long skip(long n) throws IOException {
+    public long skip(long n)
+            throws IOException {
         long cb = super.skip(n);
         if (cb != 0) {
             offset += cb;

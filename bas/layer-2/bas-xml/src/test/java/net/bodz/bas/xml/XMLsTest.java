@@ -1,13 +1,11 @@
 package net.bodz.bas.xml;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.Map;
 import java.util.TreeMap;
 
+import junit.framework.TestCase;
 import net.bodz.bas.exceptions.DecodeException;
 import net.bodz.bas.exceptions.EncodeException;
 
@@ -16,16 +14,17 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-public class XMLsTest {
+public class XMLsTest
+        extends TestCase {
 
     @Test
     public void testParse1()
             throws Exception {
-        String xml = "<root>" + // 
-                "<a>A</a>" + // 
-                "<b>BB</b>" + // 
-                "<a>AA</a>" + // 
-                "</root>"; 
+        String xml = "<root>" + //
+                "<a>A</a>" + //
+                "<b>BB</b>" + //
+                "<a>AA</a>" + //
+                "</root>";
         final Map<String, Integer> tagstat = new TreeMap<String, Integer>();
 
         XMLs.parse(new StringReader(xml), new DefaultHandler() {
@@ -41,17 +40,17 @@ public class XMLsTest {
             }
         });
 
-        assertEquals((Integer) 2, tagstat.get("a")); 
-        assertEquals((Integer) 1, tagstat.get("b")); 
+        assertEquals((Integer) 2, tagstat.get("a"));
+        assertEquals((Integer) 1, tagstat.get("b"));
     }
 
     void testXmlCodec(String name, Object val)
             throws EncodeException, DecodeException {
-        System.out.println("XML encode/decode test of " + name); 
+        System.out.println("XML encode/decode test of " + name);
         String xml = XMLs.encode(val);
-        System.out.println("  Encoded to" + name + ": \n" + xml);  
+        System.out.println("  Encoded to" + name + ": \n" + xml);
         Object decoded = XMLs.decode(xml);
-        System.out.println("  Decoded to " + decoded); 
+        System.out.println("  Decoded to " + decoded);
         System.out.println();
     }
 
@@ -59,7 +58,7 @@ public class XMLsTest {
     public void testEncodeNull()
             throws IOException {
         String nullXml = XMLs.encode(null);
-        System.out.println("null-xml = " + nullXml); 
+        System.out.println("null-xml = " + nullXml);
         Object null2 = XMLs.decode(nullXml);
         assertNull(null2);
     }
@@ -67,17 +66,17 @@ public class XMLsTest {
     @Test
     public void testEncodeString()
             throws IOException {
-        testXmlCodec("string", "Hello, <&world>!\n");  
+        testXmlCodec("string", "Hello, <&world>!\n");
     }
 
     @Test
     public void testEncodeArray()
             throws IOException {
-        testXmlCodec("array", new Object[] { 
+        testXmlCodec("array", new Object[] {
                 //
-                        10, //
-                        new Integer[] { 20, 21, 22 }, //
-                        30 });
+                10, //
+                new Integer[] { 20, 21, 22 }, //
+                30 });
     }
 
 }

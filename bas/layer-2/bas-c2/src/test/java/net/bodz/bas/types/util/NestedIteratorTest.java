@@ -1,15 +1,15 @@
 package net.bodz.bas.types.util;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.Arrays;
 import java.util.Iterator;
 
+import junit.framework.TestCase;
 import net.bodz.bas.collection.iterator.NestedIterator;
 
 import org.junit.Test;
 
-public class NestedIteratorTest {
+public class NestedIteratorTest
+        extends TestCase {
 
     static <T> Iterator<T> iter(Iterable<T> iterable) {
         return iterable.iterator();
@@ -21,7 +21,8 @@ public class NestedIteratorTest {
 
     @SuppressWarnings("unchecked")
     @Test
-    public void test1() throws Exception {
+    public void test1()
+            throws Exception {
         Integer[] v1 = { 10, 20, 30 };
         Integer[] v2 = {};
         Integer[] v3 = {};
@@ -29,12 +30,12 @@ public class NestedIteratorTest {
         Integer[] v5 = { 50 };
         Integer[] v6 = {};
         NestedIterator<Integer> nit = new NestedIterator<Integer>(//
-                iter(v1), // 
-                iter(v2), // 
-                iter(v3), // 
-                iter(v4), // 
-                iter(v5), // 
-                iter(v6) // 
+                iter(v1), //
+                iter(v2), //
+                iter(v3), //
+                iter(v4), //
+                iter(v5), //
+                iter(v6) //
         );
         assertEquals(true, nit.hasNext());
         assertEquals((Integer) 10, nit.next());

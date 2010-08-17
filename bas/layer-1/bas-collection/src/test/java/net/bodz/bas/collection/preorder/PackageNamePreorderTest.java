@@ -1,10 +1,11 @@
 package net.bodz.bas.collection.preorder;
 
-import static org.junit.Assert.assertEquals;
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
-public class PackageNamePreorderTest {
+public class PackageNamePreorderTest
+        extends TestCase {
 
     PackageNamePreorder preorder = PackageNamePreorder.getInstance();
 

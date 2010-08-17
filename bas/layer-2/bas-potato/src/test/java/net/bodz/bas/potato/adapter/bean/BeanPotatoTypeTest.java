@@ -1,8 +1,5 @@
 package net.bodz.bas.potato.adapter.bean;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-
 import org.junit.Test;
 
 public class BeanPotatoTypeTest

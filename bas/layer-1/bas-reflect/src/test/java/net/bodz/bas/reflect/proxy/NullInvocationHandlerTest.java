@@ -2,12 +2,14 @@ package net.bodz.bas.reflect.proxy;
 
 import java.lang.reflect.Proxy;
 
+import junit.framework.TestCase;
 import net.bodz.bas.unitperf.duration.Benchmark;
 import net.bodz.bas.unitperf.duration.IBenchmarkTarget;
 
 import org.junit.Test;
 
-public class NullInvocationHandlerTest {
+public class NullInvocationHandlerTest
+        extends TestCase {
 
     static interface IDog {
         String bark();

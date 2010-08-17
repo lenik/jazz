@@ -1,12 +1,13 @@
 package net.bodz.bas.files;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.File;
+
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
-public class FilePathTest {
+public class FilePathTest
+        extends TestCase {
 
     static Object[] _(Object... args) {
         return args;

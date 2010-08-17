@@ -1,15 +1,15 @@
 package net.bodz.bas.text.lop.impl;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.StringReader;
 
+import junit.framework.TestCase;
 import net.bodz.bas.sio.position.IXYTellable;
 import net.bodz.bas.text.lop.Token;
 
 import org.junit.Test;
 
-public class JFlexLexerTest {
+public class JFlexLexerTest
+        extends TestCase {
 
     static class TD {
 
@@ -57,7 +57,7 @@ public class JFlexLexerTest {
             throws Exception {
         String text = Files.readAll(FileRes.classData(getClass(), "1"));
         TD[] expected = {
-        //
+                //
                 new TD(SampleLexer.ID, "hello", "hello"), //
                 new TD(','), //
                 new TD(SampleLexer.ID, "world", "world"), //

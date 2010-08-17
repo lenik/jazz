@@ -2,15 +2,12 @@ package net.bodz.bas.commons.exception;
 
 import java.lang.reflect.Field;
 
-import net.bodz.bas.commons.exception.ErrTest;
 import net.bodz.bas.exceptions.RuntimizedException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 
 /**
  * Utility functions for {@link Throwable}s.
- * 
- * @test {@link ErrTest}
  */
 public class Err {
 

@@ -23,7 +23,7 @@ public interface ILogSink
      * @throws NullPointerException
      *             If <code>event</code> is <code>null</code>.
      */
-    void p(ILogEntry entry);
+    void drop(ILogEntry entry);
 
     void p(Object message);
 
@@ -45,32 +45,6 @@ public interface ILogSink
      */
     void p(Throwable exception, Object... messagePieces);
 
-    void p_(Object message);
-
-    /**
-     * @see ArrayJoinMessage
-     */
-    void p_(Object... messagePieces);
-
-    /**
-     * @param exception
-     *            Can be <code>null</code> if no exception.
-     */
-    void p_(Throwable exception);
-
-    /**
-     * @param exception
-     *            Can be <code>null</code> if no exception.
-     */
-    void p_(Throwable exception, Object message);
-
-    /**
-     * @param exception
-     *            Can be <code>null</code> if no exception.
-     * @see ArrayJoinMessage
-     */
-    void p_(Throwable exception, Object... messagePieces);
-
     /**
      * @see StringFormatMessage
      */
@@ -82,5 +56,25 @@ public interface ILogSink
      * @see StringFormatMessage
      */
     void f(Throwable exception, String format, Object... args);
+
+    void _(Object message);
+
+    /**
+     * @see ArrayJoinMessage
+     */
+    void _(Object... messagePieces);
+
+    /**
+     * All buffered messages composed to a log entry. If there is none, do nothing.
+     */
+    void _done();
+
+    /**
+     * All buffered messages composed to a log entry. If there is none, do nothing.
+     * 
+     * @param exception
+     *            Can be <code>null</code> if no exception.
+     */
+    void _done(Throwable exception);
 
 }
