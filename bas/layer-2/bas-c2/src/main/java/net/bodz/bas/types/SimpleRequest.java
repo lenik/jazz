@@ -6,9 +6,6 @@ import java.util.Map;
 import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.bas.lang.Nullables;
 
-/**
- * @test {@link SimpleRequestTest}
- */
 public class SimpleRequest
         extends VarMap<String, Object> {
 

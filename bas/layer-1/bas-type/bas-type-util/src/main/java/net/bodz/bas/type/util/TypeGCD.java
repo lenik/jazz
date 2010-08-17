@@ -7,9 +7,6 @@ import java.util.TreeSet;
 
 import net.bodz.bas.collection.comparator.TypeComparator;
 
-/**
- * @test {@link TypeGCDTest}
- */
 public class TypeGCD {
 
     public static Class<?> getCommonSuperclass(Class<?> a, Class<?> b) {

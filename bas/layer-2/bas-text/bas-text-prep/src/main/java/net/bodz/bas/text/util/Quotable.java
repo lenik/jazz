@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-
-public class Quotable extends PatternProcessor {
+public class Quotable
+        extends PatternProcessor {
 
     int leftTrim = 0;
     int rightTrim = 0;
@@ -41,7 +41,7 @@ public class Quotable extends PatternProcessor {
     private static Pattern compile(char open, char close) {
         String _open = Pattern.quote(String.valueOf(open));
         String _close = Pattern.quote(String.valueOf(close));
-        String regex = _open + "((?:\\\\.|.)*?)" + _close; 
+        String regex = _open + "((?:\\\\.|.)*?)" + _close;
         return Pattern.compile(regex);
     }
 
@@ -51,10 +51,10 @@ public class Quotable extends PatternProcessor {
             if (regexBuf == null)
                 regexBuf = new StringBuffer(chars.length * 10);
             else
-                regexBuf.append("|"); 
+                regexBuf.append("|");
             char c = chars[i];
             String qc = Pattern.quote(String.valueOf(c));
-            regexBuf.append(qc + "((?:\\\\.|.)*?)" + qc); 
+            regexBuf.append(qc + "((?:\\\\.|.)*?)" + qc);
         }
         String regex = regexBuf.toString();
         return Pattern.compile(regex);
@@ -149,7 +149,7 @@ public class Quotable extends PatternProcessor {
             }
         }
         if (parts.isEmpty())
-            return new String[] { "" }; 
+            return new String[] { "" };
         return parts.toArray(new String[0]);
     }
 

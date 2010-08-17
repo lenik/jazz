@@ -1,20 +1,20 @@
 package net.bodz.bas.files;
 
 import static net.bodz.bas.files.PartRecordsTest.map2str;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 
+import junit.framework.TestCase;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.db.filedb.INIRecords;
 import net.bodz.bas.io.resource.IStreamInputSource;
 
 import org.junit.Test;
 
-public class INIRecordsTest {
+public class INIRecordsTest
+        extends TestCase {
 
     IStreamInputSource source;
 
@@ -46,8 +46,8 @@ public class INIRecordsTest {
             throws IOException {
         INIRecords records = new INIRecords(source, true);
         Map<String, String> all = records.iterator(true).next();
-        assertEquals("a=1, b=2, c=hello, world!" + ", him.exist=true, him.location=home" // 
-                + ", you.age=[what], you.exist=true, you.name=hi", // 
+        assertEquals("a=1, b=2, c=hello, world!" + ", him.exist=true, him.location=home" //
+                + ", you.age=[what], you.exist=true, you.name=hi", //
                 map2str(all));
     }
 

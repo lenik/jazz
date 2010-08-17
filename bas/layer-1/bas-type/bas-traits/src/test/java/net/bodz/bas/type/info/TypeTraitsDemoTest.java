@@ -1,6 +1,6 @@
 package net.bodz.bas.type.info;
 
-import static org.junit.Assert.assertEquals;
+import junit.framework.TestCase;
 import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.lang.FinalNegotiation;
 import net.bodz.bas.lang.INegotiation;
@@ -14,7 +14,8 @@ import net.bodz.bas.type.traits.IParser;
 
 import org.junit.Test;
 
-public class TypeTraitsDemoTest {
+public class TypeTraitsDemoTest
+        extends TestCase {
 
     static class CountryAlias {
         public String unalias(String alias) {

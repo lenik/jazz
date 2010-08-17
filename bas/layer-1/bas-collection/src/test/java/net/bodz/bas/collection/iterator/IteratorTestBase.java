@@ -4,7 +4,10 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-public class IteratorTestBase {
+import junit.framework.TestCase;
+
+public class IteratorTestBase
+        extends TestCase {
 
     Integer a[] = { 10, 20, 30, 40, 50 };
     Integer b[] = { 22, 23, 24, 25 };

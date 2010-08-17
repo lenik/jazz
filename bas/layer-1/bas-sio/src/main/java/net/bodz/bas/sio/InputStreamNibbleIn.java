@@ -3,9 +3,6 @@ package net.bodz.bas.sio;
 import java.io.IOException;
 import java.io.InputStream;
 
-/**
- * @test {@link InputStreamNibbleInTest}
- */
 public class InputStreamNibbleIn
         extends AbstractNibbleIn {
 

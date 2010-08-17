@@ -16,7 +16,6 @@ import net.bodz.bas.sio.StringCharIn;
 
 /**
  * @see <a href="http://www.unicode.org/charts/PDF/UFF00.pdf">Halfwidth and Fullwidth Forms</a>
- * @test {@link ConvertCharacterWidthTest}
  */
 public class ConvertCharacterWidth {
 

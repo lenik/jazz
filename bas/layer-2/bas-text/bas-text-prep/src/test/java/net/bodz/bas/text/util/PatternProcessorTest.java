@@ -1,13 +1,16 @@
 package net.bodz.bas.text.util;
 
+import junit.framework.TestCase;
+
 import org.junit.Test;
 
-public class PatternProcessorTest {
+public class PatternProcessorTest
+        extends TestCase {
 
     @Test
     public void testAdd() {
 
-        PatternProcessor pp = new PatternProcessor("\\d+") { 
+        PatternProcessor pp = new PatternProcessor("\\d+") {
 
             @Override
             protected void matched(String part) {
@@ -22,8 +25,7 @@ public class PatternProcessorTest {
 
         };
 
-        String[] lines = new String[] { "hello 123, 456 world!", 
-                "22-12, and oh 666", "nothing!", };  
+        String[] lines = new String[] { "hello 123, 456 world!", "22-12, and oh 666", "nothing!", };
 
         for (String line : lines) {
             String out = pp.process(line);

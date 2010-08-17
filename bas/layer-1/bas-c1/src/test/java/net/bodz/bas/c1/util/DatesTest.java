@@ -1,13 +1,14 @@
 package net.bodz.bas.c1.util;
 
-import static org.junit.Assert.assertEquals;
-
 import java.text.ParseException;
 import java.util.Date;
 
+import junit.framework.TestCase;
+
 import org.junit.Test;
 
-public class DatesTest {
+public class DatesTest
+        extends TestCase {
 
     @Test
     public void test1()

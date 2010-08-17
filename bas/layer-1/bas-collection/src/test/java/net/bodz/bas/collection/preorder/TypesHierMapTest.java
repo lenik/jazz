@@ -1,12 +1,11 @@
 package net.bodz.bas.collection.preorder;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import junit.framework.TestCase;
 import net.bodz.bas.collection.preorder.testtype.C;
 import net.bodz.bas.collection.preorder.testtype.CI;
 import net.bodz.bas.collection.preorder.testtype.CJ;
@@ -25,7 +24,8 @@ import net.bodz.bas.collection.util.IterableToList;
 
 import org.junit.Test;
 
-public class TypesHierMapTest {
+public class TypesHierMapTest
+        extends TestCase {
 
     static Class<?>[] r(Class<?>... classes) {
         return classes;

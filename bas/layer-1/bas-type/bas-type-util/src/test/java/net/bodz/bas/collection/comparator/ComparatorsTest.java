@@ -4,12 +4,14 @@ import static org.junit.Assert.assertArrayEquals;
 
 import java.util.Arrays;
 
+import junit.framework.TestCase;
 import net.bodz.bas.closure.alt.Proc1;
 import net.bodz.bas.combina.Permutation;
 
 import org.junit.Test;
 
-public class ComparatorsTest {
+public class ComparatorsTest
+        extends TestCase {
 
     static class C {
     }

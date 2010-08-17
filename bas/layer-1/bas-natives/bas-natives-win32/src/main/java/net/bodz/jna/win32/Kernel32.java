@@ -5,9 +5,6 @@ import java.nio.Buffer;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.LongByReference;
 
-/**
- * @TestBy Kernel32Test
- */
 public interface Kernel32 extends W32API {
 
     /**

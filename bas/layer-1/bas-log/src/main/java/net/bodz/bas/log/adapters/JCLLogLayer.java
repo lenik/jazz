@@ -1,5 +1,8 @@
 package net.bodz.bas.log.adapters;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import net.bodz.bas.log.AbstractLogLayer;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.NullLogSink;
@@ -17,11 +20,13 @@ public class JCLLogLayer
         extends AbstractLogLayer {
 
     private final Log jclLog;
+    private final Map<String, ILogSink> sinks;
 
     public JCLLogLayer(Log jclLog) {
         if (jclLog == null)
             throw new NullPointerException("jclLog");
         this.jclLog = jclLog;
+        this.sinks = new HashMap<String, ILogSink>();
     }
 
     @Override

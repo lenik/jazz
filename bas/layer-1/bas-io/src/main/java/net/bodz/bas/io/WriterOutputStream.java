@@ -11,9 +11,6 @@ import java.nio.charset.CoderResult;
 
 import net.bodz.bas.exceptions.UnexpectedException;
 
-/**
- * @test {@link WriterOutputStreamTest}
- */
 public class WriterOutputStream extends OutputStream {
 
     protected final Writer writer;

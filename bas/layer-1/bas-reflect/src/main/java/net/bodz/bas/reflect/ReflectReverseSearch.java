@@ -4,9 +4,6 @@ import java.lang.reflect.Field;
 
 import net.bodz.bas.closure.alt.Pred1;
 
-/**
- * @test {@link ReflectReverseSearchTest}
- */
 public class ReflectReverseSearch {
 
     public static void findField(Class<?> clazz, Object object, Object fieldValue, Pred1<Field> pred) {

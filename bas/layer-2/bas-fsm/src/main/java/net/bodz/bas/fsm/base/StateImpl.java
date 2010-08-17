@@ -3,14 +3,16 @@ package net.bodz.bas.fsm.base;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.bodz.bas.c1.annotations.util.DisplayNameUtil;
 import net.bodz.bas.exceptions.NotImplementedException;
 
 /**
  * Implemented Features: - Composition
  */
-public abstract class StateImpl implements State {
+public abstract class StateImpl
+        implements State {
 
-    private static final long serialVersionUID = -5084131581390074137L;
+    private static final long serialVersionUID = 1L;
 
     private static final Map<Object, State> DummyMap = new HashMap<Object, State>();
 
@@ -22,7 +24,7 @@ public abstract class StateImpl implements State {
     }
 
     public String getName() {
-        return A_bas.getDisplayName(getClass());
+        return DisplayNameUtil.getDisplayName(getClass());
     }
 
     public int getType() {

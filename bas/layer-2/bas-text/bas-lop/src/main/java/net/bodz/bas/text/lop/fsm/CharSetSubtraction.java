@@ -2,9 +2,6 @@ package net.bodz.bas.text.lop.fsm;
 
 import net.bodz.bas.exceptions.UnexpectedException;
 
-/**
- * @test {@link CharSetSubtractionTest}
- */
 public final class CharSetSubtraction
         extends _CharSet {
 

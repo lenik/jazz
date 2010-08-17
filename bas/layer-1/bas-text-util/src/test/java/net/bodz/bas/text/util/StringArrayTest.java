@@ -1,12 +1,13 @@
 package net.bodz.bas.text.util;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.IOException;
+
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
-public class StringArrayTest {
+public class StringArrayTest
+        extends TestCase {
 
     @Test
     public void testSplit_Comma()

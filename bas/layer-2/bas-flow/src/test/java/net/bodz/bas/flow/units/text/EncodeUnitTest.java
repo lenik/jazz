@@ -1,11 +1,10 @@
 package net.bodz.bas.flow.units.text;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Collection;
 
+import junit.framework.TestCase;
 import net.bodz.bas.flow.units.SISOUnit;
 import net.bodz.bas.flow.units.builtin.text.Binary_Hex;
 import net.bodz.bas.flow.units.builtin.text.EncodeUnit;
@@ -14,7 +13,8 @@ import net.bodz.bas.text.util.StringArray;
 
 import org.junit.Test;
 
-public class EncodeUnitTest {
+public class EncodeUnitTest
+        extends TestCase {
 
     EncodeUnit encode;
     SISOUnit tostr;

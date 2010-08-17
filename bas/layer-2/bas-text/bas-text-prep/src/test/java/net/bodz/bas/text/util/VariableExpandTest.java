@@ -1,23 +1,24 @@
 package net.bodz.bas.text.util;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.HashMap;
 import java.util.Map;
 
+import junit.framework.TestCase;
+
 import org.junit.Test;
 
-public class VariableExpandTest {
+public class VariableExpandTest
+        extends TestCase {
 
     @Test
     public void test() {
         Map<String, Object> vars = new HashMap<String, Object>();
-        vars.put("name", "world");  
-        vars.put("age", 13); 
-        vars.put("home 1", "where");  
-        vars.put("$", "dollar");  
-        vars.put("{", "left brace");  
-        vars.put("}", "right brace");  
+        vars.put("name", "world");
+        vars.put("age", 13);
+        vars.put("home 1", "where");
+        vars.put("$", "dollar");
+        vars.put("{", "left brace");
+        vars.put("}", "right brace");
 
         final VariableExpand ve = new VariableExpand(vars);
 
@@ -28,12 +29,12 @@ public class VariableExpandTest {
             }
         }
         D d = new D(); //
-        d.o("hello", "hello");  
-        d.o("hello, $name", "hello, world");  
-        d.o("hello, ${name}", "hello, world");  
-        d.o("${\\$}", "dollar");  
-        d.o("${\\{}", "left brace");  
-        d.o("${\\}}", "right brace");  
+        d.o("hello", "hello");
+        d.o("hello, $name", "hello, world");
+        d.o("hello, ${name}", "hello, world");
+        d.o("${\\$}", "dollar");
+        d.o("${\\{}", "left brace");
+        d.o("${\\}}", "right brace");
     }
 
 }

@@ -3,8 +3,8 @@ package net.bodz.bas.collection.list;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-
-public class SortedArrayList<E> extends SortedList<E> {
+public class SortedArrayList<E>
+        extends SortedList<E> {
 
     private static final long serialVersionUID = 6924338303261196419L;
 

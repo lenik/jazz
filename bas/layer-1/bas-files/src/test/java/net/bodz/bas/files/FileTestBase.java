@@ -4,10 +4,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import junit.framework.TestCase;
+
 /**
  * XXX - create under test directory
  */
-public class FileTestBase {
+public class FileTestBase
+        extends TestCase {
 
     protected File create(String path, String contents)
             throws IOException {

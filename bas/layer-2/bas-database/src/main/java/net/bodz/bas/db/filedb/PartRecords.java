@@ -8,13 +8,10 @@ import java.util.TreeMap;
 
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.exceptions.ParseException;
-import net.bodz.bas.files.PartRecordsTest;
 import net.bodz.bas.io.resource.IStreamInputSource;
 
 /**
  * Preferred file name: *.maps
- * 
- * @test {@link PartRecordsTest}
  */
 public class PartRecords
         extends _PartRecords<String, String> {

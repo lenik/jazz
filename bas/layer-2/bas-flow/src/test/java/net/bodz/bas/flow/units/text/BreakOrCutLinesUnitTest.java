@@ -1,17 +1,17 @@
 package net.bodz.bas.flow.units.text;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.IOException;
 import java.util.Collection;
 
+import junit.framework.TestCase;
 import net.bodz.bas.flow.units.builtin.text.BreakOrCutLinesUnit;
 import net.bodz.bas.flow.util.WhatIf;
 import net.bodz.bas.text.util.StringArray;
 
 import org.junit.Test;
 
-public class BreakOrCutLinesUnitTest {
+public class BreakOrCutLinesUnitTest
+        extends TestCase {
 
     BreakOrCutLinesUnit nochop;
     {

@@ -1,16 +1,14 @@
 package net.bodz.bas.sio;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import java.io.IOException;
 
+import junit.framework.TestCase;
 import net.bodz.bas.sio.util.BNibbleIn;
 
 import org.junit.Test;
 
-public class LANibbleInTest {
+public class LANibbleInTest
+        extends TestCase {
 
     static final byte[] seq = { 0x01, 0x23, 0x45, 0x67, (byte) 0x89, (byte) 0xab, (byte) 0xcd, (byte) 0xef };
 

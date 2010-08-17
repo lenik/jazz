@@ -1,12 +1,11 @@
 package net.bodz.bas.files;
 
-import static org.junit.Assert.assertEquals;
-
-import net.bodz.bas.files.FileDiff;
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
-public class FileDiffTest {
+public class FileDiffTest
+        extends TestCase {
 
     @Test
     public void testDiff()

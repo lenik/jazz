@@ -7,9 +7,6 @@ import java.io.RandomAccessFile;
 
 import net.bodz.bas.sio.position.ITellable;
 
-/**
- * @test {@link TellableRandomAccessFileTest}
- */
 public class TellableRandomAccessFile
         extends RandomAccessFile
         implements ITellable {

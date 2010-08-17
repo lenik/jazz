@@ -1,8 +1,11 @@
 package net.bodz.bas.collection.tree;
 
+import junit.framework.TestCase;
+
 import org.junit.Test;
 
-public class ArrayTreeNodeTest {
+public class ArrayTreeNodeTest
+        extends TestCase {
 
     static Object[] array(Object... args) {
         return args;
@@ -12,8 +15,8 @@ public class ArrayTreeNodeTest {
     public static final ArrayTreeNode helloTree;
     static {
         helloVar = array(//
-                "Hello", // 
-                array(10, 20, 30), // 
+                "Hello", //
+                array(10, 20, 30), //
                 array(40, array(41, 42)), //
                 50);
         helloTree = new ArrayTreeNode(helloVar);

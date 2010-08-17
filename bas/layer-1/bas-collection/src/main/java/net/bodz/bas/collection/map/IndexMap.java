@@ -2,7 +2,8 @@ package net.bodz.bas.collection.map;
 
 import java.util.TreeMap;
 
-public class IndexMap<V> extends TreeMap<Integer, V> {
+public class IndexMap<V>
+        extends TreeMap<Integer, V> {
 
     private static final long serialVersionUID = -3711088749059166963L;
 
@@ -48,7 +49,7 @@ public class IndexMap<V> extends TreeMap<Integer, V> {
     }
 
     public boolean add(V e) {
-        throw new UnsupportedOperationException("see addFree"); 
+        throw new UnsupportedOperationException("see addFree");
     }
 
     public int addFree(V e) {

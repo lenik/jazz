@@ -4,8 +4,8 @@ import net.bodz.bas.annotations.ChainOrder;
 import net.bodz.bas.annotations.ChainUsage;
 import net.bodz.bas.hint.OverrideOption;
 
-
-public interface CharSet extends Comparable<CharSet> {
+public interface CharSet
+        extends Comparable<CharSet> {
 
     /**
      * It's safe to iterate from begin to end of a limited {@link CharSet}.

@@ -38,9 +38,6 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.helpers.XMLReaderFactory;
 
-/**
- * @test {@link XMLsTest}
- */
 public class XMLs {
 
     // SAX Parsers

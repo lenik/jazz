@@ -1,10 +1,11 @@
 package net.bodz.bas.type.util;
 
-import static org.junit.Assert.assertEquals;
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
-public class TypeDistanceTest {
+public class TypeDistanceTest
+        extends TestCase {
 
     static class A
             implements Y {

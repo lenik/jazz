@@ -1,8 +1,11 @@
 package net.bodz.bas.primitive;
 
+import junit.framework.TestCase;
+
 import org.junit.Test;
 
-public class ErrorToleranceDoubleTest {
+public class ErrorToleranceDoubleTest
+        extends TestCase {
 
     @Test
     public void test1() {

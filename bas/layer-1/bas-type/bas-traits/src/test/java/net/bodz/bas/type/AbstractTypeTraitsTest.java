@@ -2,12 +2,14 @@ package net.bodz.bas.type;
 
 import java.util.Map;
 
+import junit.framework.TestCase;
 import net.bodz.bas.c1.examples.Person;
 
 import org.junit.Test;
 
 @TypeTraitsBy(PersonTraits.class)
-public class AbstractTypeTraitsTest {
+public class AbstractTypeTraitsTest
+        extends TestCase {
 
     @Test
     public void test1()

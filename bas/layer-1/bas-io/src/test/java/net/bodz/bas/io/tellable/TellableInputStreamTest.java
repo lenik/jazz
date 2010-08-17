@@ -1,18 +1,20 @@
 package net.bodz.bas.io.tellable;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
+import junit.framework.TestCase;
+
 import org.junit.Test;
 
-public class TellableInputStreamTest {
+public class TellableInputStreamTest
+        extends TestCase {
 
     static byte[] hello = "hello, abcdefg".getBytes();
 
     @Test
-    public void test1() throws IOException {
+    public void test1()
+            throws IOException {
         TellableInputStream r = new TellableInputStream(new ByteArrayInputStream(hello));
 
         assertEquals(0, r.tell());

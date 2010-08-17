@@ -1,11 +1,12 @@
 package net.bodz.bas.jvm.exit;
 
-import static org.junit.Assert.assertEquals;
+import junit.framework.TestCase;
 import net.bodz.bas.closure.IExecutableX;
 
 import org.junit.Test;
 
-public class CatchExitTest {
+public class CatchExitTest
+        extends TestCase {
 
     static class TestProgram
             implements IExecutableX<Exception> {

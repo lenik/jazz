@@ -3,9 +3,6 @@ package net.bodz.bas.reflect.proxy;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 
-/**
- * @test {@link NullInvocationHandlerTest}
- */
 public class NullInvocationHandler
         implements InvocationHandler {
 

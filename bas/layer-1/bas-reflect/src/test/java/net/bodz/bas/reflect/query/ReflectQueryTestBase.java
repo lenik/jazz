@@ -1,6 +1,9 @@
 package net.bodz.bas.reflect.query;
 
-public class ReflectQueryTestBase {
+import junit.framework.TestCase;
+
+public class ReflectQueryTestBase
+        extends TestCase {
 
     public static class A {
         public void f_public() {

@@ -1,8 +1,5 @@
 package net.bodz.bas.sysinfo;
 
-/**
- * @test {@link SystemPropertiesTest}
- */
 public class SystemProperties {
 
     public static boolean developMode;

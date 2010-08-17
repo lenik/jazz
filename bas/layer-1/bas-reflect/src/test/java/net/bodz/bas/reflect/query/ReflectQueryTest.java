@@ -1,7 +1,5 @@
 package net.bodz.bas.reflect.query;
 
-import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
 
 public class ReflectQueryTest

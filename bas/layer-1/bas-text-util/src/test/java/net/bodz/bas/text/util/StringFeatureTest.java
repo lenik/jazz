@@ -3,8 +3,12 @@ package net.bodz.bas.text.util;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
+estCase;
 
-public class StringFeatureTest {
+import org.junit.Test;
+
+public class StringFeatureTest
+        extends TestCase {
 
     @Test
     public void testCount_CharPattern()

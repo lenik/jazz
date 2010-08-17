@@ -1,10 +1,11 @@
 package net.bodz.bas.sio.indent;
 
-import static org.junit.Assert.assertEquals;
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
-public class TextIndentionTest {
+public class TextIndentionTest
+        extends TestCase {
 
     @Test(expected = IllegalStateException.class)
     public void testUnindentTooMuch() {

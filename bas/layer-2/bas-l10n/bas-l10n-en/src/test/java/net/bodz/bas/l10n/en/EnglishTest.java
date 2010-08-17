@@ -1,12 +1,11 @@
 package net.bodz.bas.l10n.en;
 
-import static org.junit.Assert.assertEquals;
-
-import net.bodz.bas.l10n.en.English;
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
-public class EnglishTest {
+public class EnglishTest
+        extends TestCase {
 
     @Test
     public void testPluralOf() {
@@ -17,10 +16,10 @@ public class EnglishTest {
             }
         }
         D d = new D(); //
-        d.o("cat", "cats");  
-        d.o("foot", "foots"); // TODO - irregular plural  
-        d.o("baby", "babies");  
-        d.o("homo", "homoes");  
+        d.o("cat", "cats");
+        d.o("foot", "foots"); // TODO - irregular plural
+        d.o("baby", "babies");
+        d.o("homo", "homoes");
     }
 
     @Test
@@ -32,12 +31,12 @@ public class EnglishTest {
             }
         }
         D d = new D(); //
-        d.o("cry", "crying");  
-        d.o("eat", "eating");  
-        d.o("hob", "hobbing");  
-        d.o("go", "going");  
-        d.o("die", "dying");  
-        d.o("live", "living");  
+        d.o("cry", "crying");
+        d.o("eat", "eating");
+        d.o("hob", "hobbing");
+        d.o("go", "going");
+        d.o("die", "dying");
+        d.o("live", "living");
     }
 
     @Test
@@ -49,10 +48,10 @@ public class EnglishTest {
             }
         }
         D d = new D(); //
-        d.o("eat", "ate");  
+        d.o("eat", "ate");
         // d.o("play", "played"); //
-        d.o("late", "lated");  
-        d.o("hob", "hobbed");  
+        d.o("late", "lated");
+        d.o("hob", "hobbed");
         // d.o("answer", "answered"); //
     }
 
@@ -65,10 +64,10 @@ public class EnglishTest {
             }
         }
         D d = new D(); //
-        d.o("eat", "eaten");  
+        d.o("eat", "eaten");
         // d.o("play", "played"); //
-        d.o("late", "lated");  
-        d.o("hob", "hobbed");  
+        d.o("late", "lated");
+        d.o("hob", "hobbed");
         // d.o("answer", "answered"); //
     }
 

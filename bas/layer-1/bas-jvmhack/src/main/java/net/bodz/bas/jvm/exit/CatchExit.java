@@ -3,9 +3,6 @@ package net.bodz.bas.jvm.exit;
 import net.bodz.bas.closure.IExecutableX;
 import net.bodz.bas.proxy.java.security.ProxySecurityManager;
 
-/**
- * @test {@link CatchExitTest}
- */
 public class CatchExit
         extends ProxySecurityManager {
 

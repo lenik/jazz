@@ -1,14 +1,14 @@
 package net.bodz.bas.annotation.util;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+import junit.framework.TestCase;
+
 import org.junit.Test;
 
-public class AnnotationUtilTest {
+public class AnnotationUtilTest
+        extends TestCase {
 
     @Retention(RetentionPolicy.RUNTIME)
     static @interface ExampleAnnotation {

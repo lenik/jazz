@@ -1,16 +1,16 @@
 package net.bodz.bas.files;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.IOException;
 import java.net.URL;
 
+import junit.framework.TestCase;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.db.filedb.CSVRecords;
 
 import org.junit.Test;
 
-public class CSVRecordsTest {
+public class CSVRecordsTest
+        extends TestCase {
 
     @Test
     public void test1()

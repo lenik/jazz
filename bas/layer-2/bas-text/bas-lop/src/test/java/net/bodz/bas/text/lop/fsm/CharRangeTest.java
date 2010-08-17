@@ -1,13 +1,15 @@
 package net.bodz.bas.text.lop.fsm;
 
-import static org.junit.Assert.assertEquals;
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
-public class CharRangeTest {
+public class CharRangeTest
+        extends TestCase {
 
     @Test
-    public void test() throws Exception {
+    public void test()
+            throws Exception {
         CharRange a = TestData._0to9;
         CharRange b = TestData._3to7;
         CharRange c = TestData._5to9;

@@ -1,7 +1,6 @@
 package net.bodz.bas.type.util;
 
 import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
 
 import java.util.AbstractSet;
 import java.util.Arrays;
@@ -10,9 +9,12 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import junit.framework.TestCase;
+
 import org.junit.Test;
 
-public class TypeGCDTest {
+public class TypeGCDTest
+        extends TestCase {
 
     @Test
     public void testGcdClassOfQClassOfQ() {

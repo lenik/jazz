@@ -1,11 +1,10 @@
 package net.bodz.bas.flow.units.text;
 
-import static org.junit.Assert.assertEquals;
-
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Collection;
 
+import junit.framework.TestCase;
 import net.bodz.bas.flow.units.SISOUnit;
 import net.bodz.bas.flow.units.builtin.text.DecodeUnit;
 import net.bodz.bas.flow.units.builtin.text.Text_String;
@@ -16,7 +15,8 @@ import net.bodz.bas.text.util.StringArray;
 import org.apache.commons.lang.ArrayUtils;
 import org.junit.Test;
 
-public class DecodeUnitTest {
+public class DecodeUnitTest
+        extends TestCase {
 
     DecodeUnit decode;
     SISOUnit tostr;

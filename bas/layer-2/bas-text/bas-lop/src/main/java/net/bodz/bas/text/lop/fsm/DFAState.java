@@ -2,16 +2,14 @@ package net.bodz.bas.text.lop.fsm;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TreeMap;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import net.bodz.bas.exceptions.NotImplementedException;
 import net.bodz.bas.sio.IPrintCharOut;
 
 /**
  * DFA State: For any two of transitions in a DFA State, their CharSet are not intersected.
- * 
- * @test
  */
 public class DFAState
         implements Comparable<DFAState> {

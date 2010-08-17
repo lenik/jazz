@@ -1,11 +1,12 @@
 package net.bodz.bas.lang.util;
 
-import static org.junit.Assert.assertEquals;
+import junit.framework.TestCase;
 import net.bodz.bas.exceptions.IllegalUsageError;
 
 import org.junit.Test;
 
-public class VarArgcMethodTest {
+public class VarArgcMethodTest
+        extends TestCase {
 
     public int play() {
         return 0;
@@ -37,30 +38,32 @@ public class VarArgcMethodTest {
 
     VarArgcMethod playf;
     {
-        playf = new VarArgcMethod("play", Members.publicMethods( 
-                VarArgcMethodTest.class, "play")); 
+        playf = new VarArgcMethod("play", Members.publicMethods(VarArgcMethodTest.class, "play"));
     }
 
     @Test
-    public void test1() throws Exception {
+    public void test1()
+            throws Exception {
         assertEquals(0, playf.invoke(this));
-        assertEquals(1, playf.invoke(this, "Hello")); 
+        assertEquals(1, playf.invoke(this, "Hello"));
         assertEquals(2, playf.invoke(this, null, 3.14));
         assertEquals(3, playf.invoke(this, 1.0f, 3.14, 100));
     }
 
     @Test
-    public void testParser() throws Exception {
+    public void testParser()
+            throws Exception {
         assertEquals(0, playf.invoke(this));
-        assertEquals(1, playf.invoke(this, "Hello")); 
-        assertEquals(2, playf.invoke(this, "java.util.List", "3.14"));  
-        assertEquals(3, playf.invoke(this, "1.0", "3.14", "100"));   
+        assertEquals(1, playf.invoke(this, "Hello"));
+        assertEquals(2, playf.invoke(this, "java.util.List", "3.14"));
+        assertEquals(3, playf.invoke(this, "1.0", "3.14", "100"));
     }
 
     @Test(expected = IllegalUsageError.class)
-    public void testBad() throws Exception {
-        new VarArgcMethod("bad", Members.publicMethods(// 
-                VarArgcMethodTest.class, "bad")); 
+    public void testBad()
+            throws Exception {
+        new VarArgcMethod("bad", Members.publicMethods(//
+                VarArgcMethodTest.class, "bad"));
     }
 
 }

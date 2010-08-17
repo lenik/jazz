@@ -5,9 +5,6 @@ import java.util.List;
 
 import net.bodz.bas.text.util.StringPrep;
 
-/**
- * @test {@link CharRangeTest}
- */
 public class CharRange
         extends _CharSet {
 

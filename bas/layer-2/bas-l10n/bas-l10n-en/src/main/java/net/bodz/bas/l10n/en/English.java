@@ -5,12 +5,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import net.bodz.bas.l10n.en.EnglishTest;
 import net.bodz.bas.l10n.en.IrregularPlural.Handler;
 
-/**
- * @test {@link EnglishTest}
- */
 public class English {
 
     private static Map<String, String> pastTense;

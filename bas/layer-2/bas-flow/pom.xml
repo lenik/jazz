@@ -50,6 +50,12 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
+		<dependency>
+			<groupId>net.bodz.bas</groupId>
+			<artifactId>bas-reflect</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<scope>compile</scope>
+		</dependency>
 	</dependencies>
 	<name>BAS :: Layer 2 :: Flow Driven Architecture</name>
 </project>

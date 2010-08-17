@@ -8,7 +8,6 @@ import net.bodz.bas.collection.list.Stack;
 
 /**
  * @see NestedIterator
- * @test StackedIteratorTest
  */
 public class StackedIterator<T> implements Iterator<T> {
 

@@ -3,9 +3,6 @@ package net.bodz.bas.text.lop.fsm;
 import net.bodz.bas.exceptions.IllegalUsageException;
 import net.bodz.bas.exceptions.UnexpectedException;
 
-/**
- * @test {@link CharSetIntersectionTest}
- */
 public final class CharSetIntersection
         extends _CharSet {
 

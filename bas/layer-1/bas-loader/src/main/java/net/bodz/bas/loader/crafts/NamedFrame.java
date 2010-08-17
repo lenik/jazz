@@ -13,9 +13,6 @@ import org.objectweb.asm.FieldVisitor;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
-/**
- * @test {@link NamedFrameTest}
- */
 public class NamedFrame {
 
     static CustomClassLoader frameClassLoader;

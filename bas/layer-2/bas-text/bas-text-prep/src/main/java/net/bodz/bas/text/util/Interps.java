@@ -5,9 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 
-/**
- * @test InterpsTest
- */
 public class Interps {
 
     public static String dereference(String format, Map<String, ?> map) {

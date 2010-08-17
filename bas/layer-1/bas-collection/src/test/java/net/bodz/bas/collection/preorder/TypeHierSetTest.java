@@ -1,13 +1,14 @@
 package net.bodz.bas.collection.preorder;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.List;
 import java.util.Set;
 
+import junit.framework.TestCase;
+
 import org.junit.Test;
 
-public class TypeHierSetTest {
+public class TypeHierSetTest
+        extends TestCase {
 
     static String join(String delim, Set<?> set) {
         StringBuffer buf = null;

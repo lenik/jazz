@@ -1,13 +1,13 @@
 package net.bodz.bas.c1.annotations.util;
 
 import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import junit.framework.TestCase;
 import net.bodz.bas.c1.annotations.Tags;
 
 import org.junit.Test;
 
-public class TagsUtilTest {
+public class TagsUtilTest
+        extends TestCase {
 
     @Tags({ "Tag1", "Tag2" })
     static class ClassA {

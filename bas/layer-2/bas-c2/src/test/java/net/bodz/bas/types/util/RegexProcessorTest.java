@@ -1,15 +1,15 @@
 package net.bodz.bas.types.util;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.regex.Pattern;
 
+import junit.framework.TestCase;
 import net.bodz.bas.text.util.StringArray;
 import net.bodz.bas.text.util.StringGrep;
 
 import org.junit.Test;
 
-public class RegexProcessorTest {
+public class RegexProcessorTest
+        extends TestCase {
 
     static class TestFindAll {
         final Pattern pattern;

@@ -6,13 +6,6 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
-import net.bodz.bas.text.diff.DiffComparator;
-import net.bodz.bas.text.diff.DiffInfo;
-import net.bodz.bas.text.diff.FileDiffTest;
-
-/**
- * @test {@link FileDiffTest}
- */
 public class FileDiff {
 
     /**

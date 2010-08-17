@@ -16,13 +16,11 @@
  */
 package net.bodz.bas.text.diff;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.List;
 
+import junit.framework.TestCase;
 import net.bodz.bas.sio.WriterPrintCharOut;
 import net.bodz.bas.text.diff.gnudiff.DiffPrint;
 import net.bodz.bas.text.diff.gnudiff._GNUDiff;
@@ -34,7 +32,8 @@ import org.junit.Test;
  * 
  * @author Stuart D. Gathman Copyright (C) 2002 Business Management Systems, Inc.
  */
-public class DiffTest {
+public class DiffTest
+        extends TestCase {
 
     private static String[] f1 = { "hello" };
     private static String[] f2 = { "hello", "bye" };

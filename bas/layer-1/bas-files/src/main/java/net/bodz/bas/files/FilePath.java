@@ -9,9 +9,6 @@ import org.apache.commons.vfs.FileObject;
 import org.apache.commons.vfs.FileSystemException;
 import org.apache.commons.vfs.VFS;
 
-/**
- * @test {@link FilePathTest}
- */
 public class FilePath {
 
     private static char fileSeparator;

@@ -1,10 +1,11 @@
 package net.bodz.bas.sio.util;
 
-import static org.junit.Assert.assertEquals;
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
-public class NibbleUtilTest {
+public class NibbleUtilTest
+        extends TestCase {
 
     static final byte[] seq = { 0x01, 0x23, 0x45, 0x67, (byte) 0x89, (byte) 0xab, (byte) 0xcd, (byte) 0xef };
 

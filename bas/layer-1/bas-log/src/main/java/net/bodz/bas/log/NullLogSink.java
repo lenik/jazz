@@ -17,7 +17,7 @@ public class NullLogSink
     }
 
     @Override
-    public void p(ILogEntry entry) {
+    public void drop(ILogEntry entry) {
     }
 
     @Override

@@ -2,6 +2,7 @@ package net.bodz.bas.log.adapters;
 
 import net.bodz.bas.log.AbstractLogSink;
 import net.bodz.bas.log.ILogSink;
+import net.bodz.bas.log.objects.ILogEntry;
 
 import org.apache.commons.logging.Log;
 
@@ -23,7 +24,14 @@ public abstract class JCLLogSink
     }
 
     @Override
-    public abstract void put(Object obj, Throwable t);
+    public void drop(ILogEntry entry) {
+        Object message = entry.getMessage();
+        Throwable exception = entry.getException();
+        if (exception == null)
+            _drop(message);
+        else
+            _drop(message, exception);
+    }
 
     public static class ErrorSink
             extends JCLLogSink {
@@ -33,12 +41,12 @@ public abstract class JCLLogSink
         }
 
         @Override
-        public void put(Object obj) {
+        public void _drop(Object obj) {
             jclLog.error(obj);
         }
 
         @Override
-        public void put(Object obj, Throwable t) {
+        public void _drop(Object obj, Throwable t) {
             jclLog.error(obj, t);
         }
 
@@ -52,12 +60,12 @@ public abstract class JCLLogSink
         }
 
         @Override
-        public void put(Object obj) {
+        public void _drop(Object obj) {
             jclLog.warn(obj);
         }
 
         @Override
-        public void put(Object obj, Throwable t) {
+        public void _drop(Object obj, Throwable t) {
             jclLog.warn(obj, t);
         }
 
@@ -71,12 +79,12 @@ public abstract class JCLLogSink
         }
 
         @Override
-        public void put(Object obj) {
+        public void _drop(Object obj) {
             jclLog.info(obj);
         }
 
         @Override
-        public void put(Object obj, Throwable t) {
+        public void _drop(Object obj, Throwable t) {
             jclLog.info(obj, t);
         }
 
@@ -90,12 +98,12 @@ public abstract class JCLLogSink
         }
 
         @Override
-        public void put(Object obj) {
+        public void _drop(Object obj) {
             jclLog.debug(obj);
         }
 
         @Override
-        public void put(Object obj, Throwable t) {
+        public void _drop(Object obj, Throwable t) {
             jclLog.debug(obj, t);
         }
 
@@ -109,12 +117,12 @@ public abstract class JCLLogSink
         }
 
         @Override
-        public void put(Object obj) {
+        public void _drop(Object obj) {
             jclLog.trace(obj);
         }
 
         @Override
-        public void put(Object obj, Throwable t) {
+        public void _drop(Object obj, Throwable t) {
             jclLog.trace(obj, t);
         }
 

@@ -2,9 +2,6 @@ package net.bodz.bas.files;
 
 import java.io.File;
 
-/**
- * @test {@link FileTreeTest}
- */
 public class FileTree {
 
     // File system operations

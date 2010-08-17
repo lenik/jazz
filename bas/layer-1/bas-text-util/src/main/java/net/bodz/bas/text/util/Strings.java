@@ -3,9 +3,6 @@ package net.bodz.bas.text.util;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
-/**
- * @test {@link StringsTest}
- */
 public class Strings {
 
     static final char PADCHAR = ' ';

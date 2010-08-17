@@ -1,8 +1,5 @@
 package net.bodz.bas.sio.util;
 
-/**
- * @test {@link NibbleUtilTest}
- */
 public class NibbleUtil {
 
     static char hextbl[] = "0123456789abcdef".toCharArray();

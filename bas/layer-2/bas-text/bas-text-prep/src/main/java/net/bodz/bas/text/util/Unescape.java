@@ -117,7 +117,7 @@ public class Unescape {
 
     private static final Unescape cUnescape;
     static {
-        cUnescape = new Unescape("\\"); 
+        cUnescape = new Unescape("\\");
     }
 
     public static String unescape(String s) {

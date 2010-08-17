@@ -1,10 +1,11 @@
 package net.bodz.bas.loader.dev;
 
-import static org.junit.Assert.assertEquals;
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
-public class IncompletedLoadedClassTest {
+public class IncompletedLoadedClassTest
+        extends TestCase {
 
     static int seq = 0;
 
@@ -14,6 +15,7 @@ public class IncompletedLoadedClassTest {
         }
     }
 
+    @Deprecated
     @Test
     public void testLoad() {
         assertEquals("seq before load", 0, seq);

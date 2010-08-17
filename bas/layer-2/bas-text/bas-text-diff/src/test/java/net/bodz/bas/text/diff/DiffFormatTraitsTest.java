@@ -1,13 +1,17 @@
 package net.bodz.bas.text.diff;
 
-import static org.junit.Assert.assertEquals;
+import junit.framework.TestCase;
 import net.bodz.bas.type.ITypeTraits;
 import net.bodz.bas.type.TypeTraitsResolve;
 import net.bodz.bas.type.traits.IInstanceStore;
 
 import org.junit.Test;
 
-public class DiffFormatTraitsTest {
+/**
+ * @see DiffFormatTraits
+ */
+public class DiffFormatTraitsTest
+        extends TestCase {
 
     @Test
     public void testDefaultStoreInstance()
