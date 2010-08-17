@@ -32,7 +32,7 @@
 	<developers>
 		<developer>
 			<id>lenik</id>
-			<name>Lenik (谢继陿</name>
+			<name>Lenik (谢继雷)</name>
 			<email>lenik@bodz.net</email>
 			<roles>
 				<role>Project Leader</role>
@@ -50,6 +50,6 @@
 		</mailingList>
 	</mailingLists>
 	<scm>
-		<connection>scm:svn:svn://svn.bodz.net/n/net.bodz.bas/trunk</connection>
+		<connection>scm:svn:svn://svn.bodz.net/jazz/bas/trunk</connection>
 	</scm>
 </project>
