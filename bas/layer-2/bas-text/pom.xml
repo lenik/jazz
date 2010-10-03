@@ -14,7 +14,6 @@
 		<module>bas-lop</module>
 		<module>bas-text-diff</module>
 		<module>bas-text-model</module>
-		<module>bas-text-prep</module>
 	</modules>
 	<name>BAS :: Layer 2 :: Text</name>
 </project>
