@@ -7,7 +7,7 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
-public class VariableExpandTest
+public class UnixStyleVarProcessorTest
         extends TestCase {
 
     @Test
@@ -20,7 +20,7 @@ public class VariableExpandTest
         vars.put("{", "left brace");
         vars.put("}", "right brace");
 
-        final VariableExpand ve = new VariableExpand(vars);
+        final UnixStyleVarProcessor ve = new UnixStyleVarProcessor(vars);
 
         class D {
             void o(String input, String expected) {

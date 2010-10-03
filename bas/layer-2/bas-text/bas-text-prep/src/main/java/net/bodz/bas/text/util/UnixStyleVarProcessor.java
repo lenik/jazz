@@ -3,17 +3,18 @@ package net.bodz.bas.text.util;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public class VariableExpand extends PatternProcessor {
+public class UnixStyleVarProcessor
+        extends PatternProcessor {
 
     private static Pattern variableRefPattern;
     static {
         variableRefPattern = Pattern.compile( //
-                "\\$(?:(\\w+)|\\{((?:\\\\.|.)*?)\\})"); 
+                "\\$(?:(\\w+)|\\{((?:\\\\.|.)*?)\\})");
     }
 
     private Map<String, ?> map;
 
-    public VariableExpand() {
+    public UnixStyleVarProcessor() {
         super(variableRefPattern);
     }
 
@@ -21,7 +22,7 @@ public class VariableExpand extends PatternProcessor {
      * @param map
      *            is referenced, any changes to the map are reflected by this class.
      */
-    public VariableExpand(Map<String, ?> map) {
+    public UnixStyleVarProcessor(Map<String, ?> map) {
         super(variableRefPattern);
         this.map = map;
     }
@@ -30,7 +31,7 @@ public class VariableExpand extends PatternProcessor {
         return Unescape.unescape(name);
     }
 
-    protected String expand(String name) {
+    protected String processVariable(String name) {
         if (map != null && map.containsKey(name)) {
             Object val = map.get(name);
             return String.valueOf(val);
@@ -45,7 +46,7 @@ public class VariableExpand extends PatternProcessor {
             name = unescapeBracedName(matcher.group(2));
         }
         assert name != null;
-        String expanded = expand(name);
+        String expanded = processVariable(name);
         if (expanded == null)
             undefined(name, start, end);
         else

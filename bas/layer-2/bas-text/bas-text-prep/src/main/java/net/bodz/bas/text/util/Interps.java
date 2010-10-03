@@ -8,8 +8,8 @@ import java.util.regex.Matcher;
 public class Interps {
 
     public static String dereference(String format, Map<String, ?> map) {
-        VariableExpand expand = new VariableExpand(map);
-        return expand.process(format);
+        UnixStyleVarProcessor proc = new UnixStyleVarProcessor(map);
+        return proc.process(format);
     }
 
     public static String dereference(String format, List<String> list) {
