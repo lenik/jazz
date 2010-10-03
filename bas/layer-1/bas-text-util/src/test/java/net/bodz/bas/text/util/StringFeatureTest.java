@@ -1,9 +1,6 @@
 package net.bodz.bas.text.util;
 
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
-estCase;
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
