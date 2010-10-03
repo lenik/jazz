@@ -1,7 +1,6 @@
 package net.bodz.bas.text.util;
 
 import java.util.Arrays;
-import java.util.regex.Pattern;
 
 public class Strings {
 
@@ -60,15 +59,19 @@ public class Strings {
         return lcfirst + s.substring(1);
     }
 
-    static Pattern words = Pattern.compile("\\w+");
-
     public static String ucfirstWords(String s) {
-        return new PatternProcessor(words) {
-            @Override
-            protected void matched(String part) {
-                print(ucfirst(part));
-            }
-        }.process(s);
+        boolean boundary = true;
+        int len = s.length();
+        StringBuffer buf = new StringBuffer(len);
+        for (int i = 0; i < len; i++) {
+            char c = s.charAt(i);
+            boolean isLetter = Character.isLetter(c);
+            if (boundary && isLetter)
+                c = Character.toUpperCase(c);
+            boundary = !isLetter;
+            buf.append(c);
+        }
+        return buf.toString();
     }
 
     /**

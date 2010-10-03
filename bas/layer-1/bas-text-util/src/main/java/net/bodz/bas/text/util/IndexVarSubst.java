@@ -2,25 +2,19 @@ package net.bodz.bas.text.util;
 
 import java.util.AbstractList;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 
-public class Interps {
+public class IndexVarSubst {
 
-    public static String dereference(String format, Map<String, ?> map) {
-        UnixStyleVarProcessor proc = new UnixStyleVarProcessor(map);
-        return proc.process(format);
+    public static String subst(String format, List<String> list) {
+        return subst(format, list, null);
     }
 
-    public static String dereference(String format, List<String> list) {
-        return dereference(format, list, null);
+    public static String subst(String format, List<String> list, String missing) {
+        return subst(format, 0, list, missing);
     }
 
-    public static String dereference(String format, List<String> list, String missing) {
-        return dereference(format, 0, list, missing);
-    }
-
-    public static String dereference(String format, int indexBase, List<String> list, String missing) {
+    public static String subst(String format, int indexBase, List<String> list, String missing) {
         int len = format.length();
         StringBuffer buffer = new StringBuffer(len);
         for (int i = 0; i < len; i++) {
@@ -97,12 +91,12 @@ public class Interps {
 
     }
 
-    public static String dereference(String format, Matcher matcher) {
-        return dereference(format, new MatcherGroupList(matcher));
+    public static String subst(String format, Matcher matcher) {
+        return subst(format, new MatcherGroupList(matcher));
     }
 
-    public static String dereference(String format, Matcher matcher, String missing) {
-        return dereference(format, new MatcherGroupList(matcher), missing);
+    public static String subst(String format, Matcher matcher, String missing) {
+        return subst(format, new MatcherGroupList(matcher), missing);
     }
 
 }

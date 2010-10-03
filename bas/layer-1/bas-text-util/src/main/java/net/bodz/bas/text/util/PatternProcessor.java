@@ -6,7 +6,8 @@ import java.util.regex.Pattern;
 import net.bodz.bas.hint.OverrideOption;
 import net.bodz.bas.sio.BCharOut;
 
-public class PatternProcessor extends BCharOut {
+public class PatternProcessor
+        extends BCharOut {
 
     protected Pattern pattern;
     protected String source;
@@ -15,7 +16,7 @@ public class PatternProcessor extends BCharOut {
     protected int matchIndex;
 
     /** end() position of last match */
-    protected int matchBegin;
+    protected int lastPosition;
 
     protected int count;
 
@@ -53,30 +54,30 @@ public class PatternProcessor extends BCharOut {
         this.source = source;
         matcher = pattern.matcher(source);
         matchIndex = 0;
-        matchBegin = 0;
+        lastPosition = 0;
         count = 0;
-        setBuffer(new StringBuffer());
+        buffer = new StringBuffer();
         while (matcher.find()) {
             int start = matcher.start();
             int end = matcher.end();
 
             // Head (groups)
-            if (start > matchBegin)
-                unmatched(matchBegin, start);
+            if (start > lastPosition)
+                unmatched(lastPosition, start);
 
             // Body (groups)
             // if (end > start)
             matched(start, end);
 
-            matchBegin = end;
+            lastPosition = end;
             matchIndex++;
 
             count++;
         }
 
         // Foot (suffix)
-        if (matchBegin < source.length())
-            unmatched(matchBegin, source.length());
+        if (lastPosition < source.length())
+            unmatched(lastPosition, source.length());
 
         return super.toString();
     }
@@ -87,7 +88,7 @@ public class PatternProcessor extends BCharOut {
 
     @Override
     public String toString() {
-        return getClass() + "-" + System.identityHashCode(this); 
+        return getClass() + "-" + System.identityHashCode(this);
     }
 
 }

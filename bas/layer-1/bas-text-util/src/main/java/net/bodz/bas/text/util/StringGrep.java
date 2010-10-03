@@ -24,7 +24,7 @@ public class StringGrep {
         Matcher m = pattern.matcher(s);
         List<String> list = new ArrayList<String>();
         while (m.find()) {
-            String deref = Interps.dereference(replacement, m);
+            String deref = IndexVarSubst.subst(replacement, m);
             list.add(deref);
         }
         return list.toArray(new String[0]);
