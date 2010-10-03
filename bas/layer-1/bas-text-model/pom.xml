@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>net.bodz.bas</groupId>
-        <artifactId>bas-text</artifactId>
+        <artifactId>layer-1</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>bas-text-model</artifactId>
@@ -16,5 +16,5 @@
     		<scope>compile</scope>
     	</dependency>
     </dependencies>
-    <name>BAS :: Layer 2 :: Text :: Text Model</name>
+    <name>BAS :: Layer 1 :: Text :: Text Model</name>
 </project>
