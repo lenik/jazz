@@ -7,7 +7,7 @@
 	<name>BAS Parent</name>
 	<url>http://bas.bodz.net/</url>
 	<properties>
-		<bodz.dist.base.url>http://m2.bodz.net/archiva/repository</bodz.dist.base.url>
+		<bodz.dist.base.url>http://m2.bodz.net</bodz.dist.base.url>
 		<bodz.dist.release.url>${bodz.dist.base.url}/releases</bodz.dist.release.url>
 		<bodz.dist.snapshot.url>${bodz.dist.base.url}/snapshots</bodz.dist.snapshot.url>
 	</properties>
