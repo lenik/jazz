@@ -1,11 +1,8 @@
 package net.bodz.bas.primitive;
 
-import static org.junit.Assert.assertEquals;
-
 import java.math.BigInteger;
 
-import org.junit.Test;
-estCase;
+import junit.framework.TestCase;
 
 import org.junit.Test;
 
