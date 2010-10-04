@@ -3,6 +3,8 @@ package net.bodz.bas.types.util;
 import java.util.regex.Pattern;
 
 import junit.framework.TestCase;
+import net.bodz.bas.text.regex.RegexProcessor;
+import net.bodz.bas.text.regex.RegexProcessor.SpaceOverride;
 import net.bodz.bas.text.util.StringArray;
 import net.bodz.bas.text.util.StringGrep;
 

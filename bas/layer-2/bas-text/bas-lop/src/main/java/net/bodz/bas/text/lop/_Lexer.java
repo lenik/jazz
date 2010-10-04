@@ -8,7 +8,7 @@ import net.bodz.bas.reflect.ReflectReverseSearch;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.position.IXYTellable;
 import net.bodz.bas.sio.position.XYPosition;
-import net.bodz.bas.text.util.StringPrep;
+import net.bodz.bas.text.regex.StringQuote;
 
 public abstract class _Lexer
         implements Lexer {
@@ -145,7 +145,7 @@ public abstract class _Lexer
     @Override
     public String getTokenName(int id) {
         if (id >= 0 && id < 256)
-            return StringPrep.escape((char) id);
+            return StringQuote.escape((char) id);
         if (tokenNames == null)
             tokenNames = new IndexMap<String>();
         String name = tokenNames.get(id);

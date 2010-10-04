@@ -1,8 +1,7 @@
 package net.bodz.bas.log.term;
 
-
-
-public class ConsoleLogTerm extends LogTerm {
+public class ConsoleLogTerm
+        extends LogTerm {
 
     @Override
     public ITerminal filter(int level) {
