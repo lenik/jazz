@@ -28,6 +28,9 @@ public class BCharOut
         return buffer;
     }
 
+    /**
+     * Access the {@link #buffer} field instead. 
+     */
     @Deprecated
     public void setBuffer(StringBuffer buffer) {
         this.buffer = buffer;

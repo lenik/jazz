@@ -1,10 +1,7 @@
 package net.bodz.bas.text.charsets;
 
-import static org.junit.Assert.assertEquals;
+import junit.framework.TestCase;
 import net.bodz.bas.text.codec.builtin.Base64Codec;
-
-import org.junit.Test;
-Codec;
 
 import org.junit.Test;
 

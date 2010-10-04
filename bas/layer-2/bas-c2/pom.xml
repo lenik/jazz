@@ -43,9 +43,8 @@
 		</dependency>
 		<dependency>
 			<groupId>net.bodz.bas</groupId>
-			<artifactId>bas-text-util</artifactId>
+			<artifactId>bas-text-prep</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-			<scope>test</scope>
 			<optional>true</optional>
 		</dependency>
 	</dependencies>

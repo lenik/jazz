@@ -33,8 +33,8 @@
 		<module>bas-sio</module>
 		<module>bas-sysinfo</module>
 		<module>bas-text-model</module>
+		<module>bas-text-regex</module>
 		<module>bas-text-util</module>
-		<module>bas-text-prep</module>
 		<module>bas-type</module>
 	</modules>
 	<name>BAS :: Layer 1</name>
