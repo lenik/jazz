@@ -1,11 +1,6 @@
-package net.bodz.bas.log.objects;
+package net.bodz.bas.log;
 
 public interface ILogEntry {
-
-    /**
-     * The verbose level of this this log event.
-     */
-    int getVerboseLevel();
 
     /**
      * The object on which the Event initially occurred.

@@ -1,4 +1,4 @@
-package net.bodz.bas.log.objects;
+package net.bodz.bas.log.message;
 
 import java.io.Serializable;
 

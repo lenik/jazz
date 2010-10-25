@@ -1,19 +1,19 @@
 package net.bodz.bas.log.event;
 
-import net.bodz.bas.log.ILogLayer;
-import net.bodz.bas.log.objects.ILogEntry;
+import net.bodz.bas.log.ILogEntry;
+import net.bodz.bas.log.ILogComposite;
 
 public interface ILogListener {
 
     /**
      * <code>eventType</code> may be one of:
      * <ul>
-     * <li> {@link ILogLayer#STDOUT}
-     * <li> {@link ILogLayer#ERROR}
-     * <li> {@link ILogLayer#WARN}
-     * <li> {@link ILogLayer#INFO}
-     * <li> {@link ILogLayer#DEBUG}
-     * <li> {@link ILogLayer#TRACE}
+     * <li> {@link ILogComposite#STDOUT}
+     * <li> {@link ILogComposite#ERROR}
+     * <li> {@link ILogComposite#WARN}
+     * <li> {@link ILogComposite#INFO}
+     * <li> {@link ILogComposite#DEBUG}
+     * <li> {@link ILogComposite#TRACE}
      * </ul>
      * or other user defined id.
      */

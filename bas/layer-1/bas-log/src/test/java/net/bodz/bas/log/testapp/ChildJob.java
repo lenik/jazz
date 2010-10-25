@@ -3,7 +3,7 @@ package net.bodz.bas.log.testapp;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import net.bodz.bas.log.ILogLayer;
+import net.bodz.bas.log.ILogComposite;
 import net.bodz.bas.log.ILogSink;
 
 public class ChildJob {
@@ -11,23 +11,23 @@ public class ChildJob {
     private ParentJob parent;
     private String name;
 
-    private ILogLayer logLayer;
+    private ILogComposite log;
 
     public ChildJob(ParentJob parent, String name) {
         this.parent = parent;
         this.name = name;
     }
 
-    public ILogLayer getLogLayer() {
-        if (logLayer == null)
-            throw new IllegalStateException("Log Layer doesn't configured");
-        return logLayer;
+    public ILogComposite getLogger() {
+        if (log == null)
+            throw new IllegalStateException("Log doesn't configured");
+        return log;
     }
 
-    public void setLogLayer(ILogLayer logLayer) {
-        if (logLayer == null)
-            throw new NullPointerException("logLayer");
-        this.logLayer = logLayer;
+    public void setLogger(ILogComposite log) {
+        if (log == null)
+            throw new NullPointerException("log");
+        this.log = log;
     }
 
     public ParentJob getParent() {
@@ -39,16 +39,16 @@ public class ChildJob {
     }
 
     public void exec() {
-        ILogSink info = getLogLayer().getInfoSink();
+        ILogSink info = getLogger().getInfoSink();
 
-        info.p_("Loading...   ");
+        info._("Loading...   ");
         try {
             new FileInputStream("/!@#$Not-exist file!");
         } catch (FileNotFoundException e) {
-            logLayer.getErrorSink().p("Open failed", e);
+            log.getErrorSink().p("Open failed", e);
         }
 
-        info.p_("Child execute...");
+        info._("Child execute...");
 
         parent.query("query from child");
 

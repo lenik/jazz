@@ -19,7 +19,6 @@
     	<dependency>
     		<groupId>commons-logging</groupId>
     		<artifactId>commons-logging</artifactId>
-    		<version>LATEST</version>
     		<type>jar</type>
     		<scope>compile</scope>
     		<optional>true</optional>
@@ -27,7 +26,8 @@
     	<dependency>
     		<groupId>log4j</groupId>
     		<artifactId>log4j</artifactId>
-    		<version>LATEST</version>
+    		<!-- LATEST: 1.2.16 -->
+    		<version>1.2.16</version>
     		<type>jar</type>
     		<scope>compile</scope>
     		<optional>true</optional>
@@ -38,6 +38,14 @@
     		<version>0.0.1-SNAPSHOT</version>
     		<type>jar</type>
     		<scope>compile</scope>
+    	</dependency>
+    	<dependency>
+    		<groupId>com.googlecode.sli4j</groupId>
+    		<artifactId>sli4j-slf4j</artifactId>
+    		<version>2.0</version>
+    		<type>jar</type>
+    		<scope>compile</scope>
+    		<optional>true</optional>
     	</dependency>
     </dependencies>
     <name>BAS :: Layer 1 :: Log</name>
