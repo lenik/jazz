@@ -1,12 +1,12 @@
 package net.bodz.bas.log.testapp;
 
-import net.bodz.bas.log.ILogLayer;
+import net.bodz.bas.log.ILogComposite;
 import net.bodz.bas.log.ILogSink;
 
 public class ParentJob {
 
     private String name;
-    private ILogLayer logLayer;
+    private ILogComposite log;
 
     public ParentJob(String name) {
         if (name == null)
@@ -14,16 +14,16 @@ public class ParentJob {
         this.name = name;
     }
 
-    public ILogLayer getLogLayer() {
-        if (logLayer == null)
+    public ILogComposite getLogger() {
+        if (log == null)
             throw new IllegalStateException("Log Layer doesn't configured");
-        return logLayer;
+        return log;
     }
 
-    public void setLogLayer(ILogLayer logLayer) {
-        if (logLayer == null)
-            throw new NullPointerException("logLayer");
-        this.logLayer = logLayer;
+    public void setLogger(ILogComposite log) {
+        if (log == null)
+            throw new NullPointerException("log");
+        this.log = log;
     }
 
     public String getName() {
@@ -31,8 +31,8 @@ public class ParentJob {
     }
 
     public void exec() {
-        ILogSink info = getLogLayer().getInfoSink();
-        ILogSink more = getLogLayer().getInfoSink(ILogSink.LEVEL_MORE);
+        ILogSink info = getLogger().getInfoSink();
+        ILogSink more = getLogger().getInfoSink(ILogComposite.LEVEL_LOW);
         info.p("Start");
         more.p("Parameter info...");
         // ChildJob child = new ChildJob(this, "child-1");
@@ -41,7 +41,7 @@ public class ParentJob {
     }
 
     public String query(String question) {
-        ILogSink debug = getLogLayer().getDebugSink();
+        ILogSink debug = getLogger().getDebugSink();
         debug.p("Query() called: " + question);
         return "answer";
     }

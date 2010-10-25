@@ -1,4 +1,4 @@
-package net.bodz.bas.log.adapters;
+package net.bodz.bas.log.impl;
 
 import net.bodz.bas.log.AbstractLogSink;
 
@@ -15,13 +15,6 @@ public abstract class Log4jLogSink
         this.log4j = log4jLogger;
     }
 
-    @Override
-    protected int getConfiguredVerboseLevel() {
-        return LEVEL_DEFAULT;
-    }
-
-    public abstract void put(Object obj, Throwable t);
-
     public static class FatalSink
             extends Log4jLogSink {
 
@@ -30,12 +23,12 @@ public abstract class Log4jLogSink
         }
 
         @Override
-        public void put(Object obj) {
+        public void logMessage(Object obj) {
             log4j.fatal(obj);
         }
 
         @Override
-        public void put(Object obj, Throwable t) {
+        public void logException(Object obj, Throwable t) {
             log4j.fatal(obj, t);
         }
 
@@ -49,12 +42,12 @@ public abstract class Log4jLogSink
         }
 
         @Override
-        public void put(Object obj) {
+        public void logMessage(Object obj) {
             log4j.error(obj);
         }
 
         @Override
-        public void put(Object obj, Throwable t) {
+        public void logException(Object obj, Throwable t) {
             log4j.error(obj, t);
         }
 
@@ -68,12 +61,12 @@ public abstract class Log4jLogSink
         }
 
         @Override
-        public void put(Object obj) {
+        public void logMessage(Object obj) {
             log4j.warn(obj);
         }
 
         @Override
-        public void put(Object obj, Throwable t) {
+        public void logException(Object obj, Throwable t) {
             log4j.warn(obj, t);
         }
 
@@ -87,12 +80,12 @@ public abstract class Log4jLogSink
         }
 
         @Override
-        public void put(Object obj) {
+        public void logMessage(Object obj) {
             log4j.info(obj);
         }
 
         @Override
-        public void put(Object obj, Throwable t) {
+        public void logException(Object obj, Throwable t) {
             log4j.info(obj, t);
         }
 
@@ -106,12 +99,12 @@ public abstract class Log4jLogSink
         }
 
         @Override
-        public void put(Object obj) {
+        public void logMessage(Object obj) {
             log4j.debug(obj);
         }
 
         @Override
-        public void put(Object obj, Throwable t) {
+        public void logException(Object obj, Throwable t) {
             log4j.debug(obj, t);
         }
 
@@ -125,12 +118,12 @@ public abstract class Log4jLogSink
         }
 
         @Override
-        public void put(Object obj) {
+        public void logMessage(Object obj) {
             log4j.trace(obj);
         }
 
         @Override
-        public void put(Object obj, Throwable t) {
+        public void logException(Object obj, Throwable t) {
             log4j.trace(obj, t);
         }
 

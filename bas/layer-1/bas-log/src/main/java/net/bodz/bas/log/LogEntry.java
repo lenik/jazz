@@ -1,6 +1,4 @@
-package net.bodz.bas.log.objects;
-
-import net.bodz.bas.log.ILogSink;
+package net.bodz.bas.log;
 
 public class LogEntry
         implements ILogEntry {
@@ -20,11 +18,6 @@ public class LogEntry
     }
 
     @Override
-    public int getVerboseLevel() {
-        return ILogSink.LEVEL_DEFAULT;
-    }
-
-    @Override
     public Object getSource() {
         return source;
     }
@@ -41,13 +34,18 @@ public class LogEntry
 
     @Override
     public String toString() {
+        String messageText = null;
         StringBuffer buf;
         if (messageObject != null) {
-            String messageText = messageObject.toString();
+            messageText = messageObject.toString();
+            assert messageText != null;
+            if (exception == null)
+                return messageText;
             buf = new StringBuffer(messageText.length() + 100);
             buf.append(messageText);
         } else
             buf = new StringBuffer(100);
+
         if (exception != null) {
             buf.append(" (Exception ");
             buf.append(exception.getClass().getName());
@@ -55,6 +53,7 @@ public class LogEntry
             buf.append(exception.getLocalizedMessage());
             buf.append(")");
         }
+
         return buf.toString();
     }
 

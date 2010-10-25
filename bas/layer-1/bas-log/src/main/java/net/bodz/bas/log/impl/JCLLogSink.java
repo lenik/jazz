@@ -1,8 +1,6 @@
-package net.bodz.bas.log.adapters;
+package net.bodz.bas.log.impl;
 
 import net.bodz.bas.log.AbstractLogSink;
-import net.bodz.bas.log.ILogSink;
-import net.bodz.bas.log.objects.ILogEntry;
 
 import org.apache.commons.logging.Log;
 
@@ -10,7 +8,6 @@ public abstract class JCLLogSink
         extends AbstractLogSink {
 
     protected final Log jclLog;
-    protected int configuredLevel = ILogSink.LEVEL_DEFAULT;
 
     public JCLLogSink(Log jclLog) {
         if (jclLog == null)
@@ -18,19 +15,23 @@ public abstract class JCLLogSink
         this.jclLog = jclLog;
     }
 
-    @Override
-    protected int getConfiguredVerboseLevel() {
-        return configuredLevel;
-    }
+    public static class FatalSink
+            extends JCLLogSink {
 
-    @Override
-    public void drop(ILogEntry entry) {
-        Object message = entry.getMessage();
-        Throwable exception = entry.getException();
-        if (exception == null)
-            _drop(message);
-        else
-            _drop(message, exception);
+        public FatalSink(Log jclLog) {
+            super(jclLog);
+        }
+
+        @Override
+        public void logMessage(Object obj) {
+            jclLog.fatal(obj);
+        }
+
+        @Override
+        public void logException(Object obj, Throwable t) {
+            jclLog.fatal(obj, t);
+        }
+
     }
 
     public static class ErrorSink
@@ -41,12 +42,12 @@ public abstract class JCLLogSink
         }
 
         @Override
-        public void _drop(Object obj) {
+        public void logMessage(Object obj) {
             jclLog.error(obj);
         }
 
         @Override
-        public void _drop(Object obj, Throwable t) {
+        public void logException(Object obj, Throwable t) {
             jclLog.error(obj, t);
         }
 
@@ -60,12 +61,12 @@ public abstract class JCLLogSink
         }
 
         @Override
-        public void _drop(Object obj) {
+        public void logMessage(Object obj) {
             jclLog.warn(obj);
         }
 
         @Override
-        public void _drop(Object obj, Throwable t) {
+        public void logException(Object obj, Throwable t) {
             jclLog.warn(obj, t);
         }
 
@@ -79,12 +80,12 @@ public abstract class JCLLogSink
         }
 
         @Override
-        public void _drop(Object obj) {
+        public void logMessage(Object obj) {
             jclLog.info(obj);
         }
 
         @Override
-        public void _drop(Object obj, Throwable t) {
+        public void logException(Object obj, Throwable t) {
             jclLog.info(obj, t);
         }
 
@@ -98,12 +99,12 @@ public abstract class JCLLogSink
         }
 
         @Override
-        public void _drop(Object obj) {
+        public void logMessage(Object obj) {
             jclLog.debug(obj);
         }
 
         @Override
-        public void _drop(Object obj, Throwable t) {
+        public void logException(Object obj, Throwable t) {
             jclLog.debug(obj, t);
         }
 
@@ -117,12 +118,12 @@ public abstract class JCLLogSink
         }
 
         @Override
-        public void _drop(Object obj) {
+        public void logMessage(Object obj) {
             jclLog.trace(obj);
         }
 
         @Override
-        public void _drop(Object obj, Throwable t) {
+        public void logException(Object obj, Throwable t) {
             jclLog.trace(obj, t);
         }
 

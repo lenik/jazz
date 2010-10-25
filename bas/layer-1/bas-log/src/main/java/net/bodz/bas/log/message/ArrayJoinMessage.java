@@ -1,4 +1,4 @@
-package net.bodz.bas.log.objects;
+package net.bodz.bas.log.message;
 
 public class ArrayJoinMessage
         implements IMessage {

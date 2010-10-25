@@ -5,10 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.hint.ThreadUnsafe;
-import net.bodz.bas.log.objects.ArrayJoinMessage;
-import net.bodz.bas.log.objects.IMessage;
-import net.bodz.bas.log.objects.LogEntry;
-import net.bodz.bas.log.objects.StringFormatMessage;
+import net.bodz.bas.log.message.ArrayJoinMessage;
+import net.bodz.bas.log.message.IMessage;
+import net.bodz.bas.log.message.StringFormatMessage;
 import net.bodz.bas.sio.AbstractIndentedCharOut;
 
 @ThreadUnsafe
@@ -18,41 +17,25 @@ public abstract class AbstractLogSink
 
     // private Object source;
 
-    private int verboseLevel;
-    protected boolean visible;
-
     private List<Object> prependMessageBuffer;
 
     public AbstractLogSink() {
         prependMessageBuffer = new ArrayList<Object>();
-        setVerboseLevel(LEVEL_DEFAULT);
     }
 
     @Override
-    public int getVerboseLevel() {
-        return verboseLevel;
+    public void log(ILogEntry entry) {
+        Object message = entry.getMessage();
+        Throwable exception = entry.getException();
+        if (exception == null)
+            logMessage(message);
+        else
+            logException(message, exception);
     }
 
-    @Override
-    public void setVerboseLevel(int level) {
-        this.verboseLevel = level;
-        int configuredLevel = getConfiguredVerboseLevel();
-        visible = verboseLevel >= configuredLevel;
-    }
+    protected abstract void logMessage(Object message);
 
-    protected abstract int getConfiguredVerboseLevel();
-
-    protected void _drop(Object message) {
-        // Object source = Caller.getCaller
-        LogEntry entry = new LogEntry(null, message, null);
-        drop(entry);
-    }
-
-    protected void _drop(Object message, Throwable exception) {
-        // Object source = Caller.getCaller
-        LogEntry entry = new LogEntry(null, message, exception);
-        drop(entry);
-    }
+    protected abstract void logException(Object message, Throwable exception);
 
     private Object endup() {
         switch (prependMessageBuffer.size()) {
@@ -93,35 +76,28 @@ public abstract class AbstractLogSink
     }
 
     @Override
+    public void p(String message) {
+        logMessage(endup(message));
+    }
+
+    @Override
     public void p(Object message) {
-        if (visible)
-            _drop(endup(message));
-        else
-            prependMessageBuffer.clear();
+        logMessage(endup(message));
     }
 
     @Override
     public void p(Object... messagePieces) {
-        if (visible)
-            _drop(endup(messagePieces));
-        else
-            prependMessageBuffer.clear();
+        logMessage(endup(messagePieces));
     }
 
     @Override
     public void p(Throwable exception, Object message) {
-        if (visible)
-            _drop(endup(message), exception);
-        else
-            prependMessageBuffer.clear();
+        logException(endup(message), exception);
     }
 
     @Override
     public void p(Throwable exception, Object... messagePieces) {
-        if (visible)
-            _drop(endup(messagePieces), exception);
-        else
-            prependMessageBuffer.clear();
+        logException(endup(messagePieces), exception);
     }
 
     @Override
@@ -154,20 +130,14 @@ public abstract class AbstractLogSink
         if (prependMessageBuffer.isEmpty())
             return;
 
-        if (visible) {
-            Object message = endup();
-            assert message != null;
-            _drop(message);
-        } else
-            prependMessageBuffer.clear();
+        Object message = endup();
+        assert message != null;
+        logMessage(message);
     }
 
     @Override
     public void _done(Throwable exception) {
-        if (visible)
-            _drop(endup(), exception);
-        else
-            prependMessageBuffer.clear();
+        logException(endup(), exception);
     }
 
     @Override

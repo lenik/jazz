@@ -1,29 +1,33 @@
 package net.bodz.bas.log;
 
-import net.bodz.bas.log.objects.ArrayJoinMessage;
-import net.bodz.bas.log.objects.ILogEntry;
-import net.bodz.bas.log.objects.StringFormatMessage;
+import net.bodz.bas.log.message.ArrayJoinMessage;
+import net.bodz.bas.log.message.StringFormatMessage;
+import net.bodz.bas.sio.IPrintCharOut;
 import net.bodz.bas.sio.indent.IIndentedCharOut;
 
+/**
+ * Features:
+ * 
+ * <ul>
+ * <li>Short function names ({@link #p(Object)}, {@link #_(Object)}, etc.)
+ * <li>{@link IPrintCharOut} functions are optional to the underlying.
+ * </ul>
+ */
 public interface ILogSink
         extends IIndentedCharOut {
 
-    int LEVEL_CRITICAL = -20000;
-    int LEVEL_LESS = -10000;
-    int LEVEL_DEFAULT = 0;
-    int LEVEL_MORE = 10000;
-
-    int LEVEL_STEPLEN = 10000;
-
-    int getVerboseLevel();
-
-    void setVerboseLevel(int level);
-
     /**
+     * Device log function, discard any verbose level.
+     * 
      * @throws NullPointerException
      *             If <code>event</code> is <code>null</code>.
      */
-    void drop(ILogEntry entry);
+    void log(ILogEntry entry);
+
+    /**
+     * The most simple function for optimization.
+     */
+    void p(String message);
 
     void p(Object message);
 
@@ -57,6 +61,9 @@ public interface ILogSink
      */
     void f(Throwable exception, String format, Object... args);
 
+    /**
+     * Message may be buffered, without new line.
+     */
     void _(Object message);
 
     /**

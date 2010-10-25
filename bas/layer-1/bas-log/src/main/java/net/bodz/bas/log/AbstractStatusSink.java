@@ -4,7 +4,14 @@ public abstract class AbstractStatusSink
         extends AbstractLogSink
         implements IStatusSink {
 
-    public static int defaultColumns = 80;
+    public static int DEFAULT_COLUMNS = 80;
+
+    private int scale = 100;
+    private int index;
+
+    public AbstractStatusSink() {
+        super();
+    }
 
     protected int getScreenColumns() {
         // System.console();
@@ -15,23 +22,42 @@ public abstract class AbstractStatusSink
             } catch (NumberFormatException e) {
             }
         }
-        return defaultColumns;
+        return DEFAULT_COLUMNS;
+    }
+
+    private static int SMALLINT_MAX = Integer.MAX_VALUE / 100;
+
+    @Override
+    public int getProgressScale() {
+        return scale;
     }
 
     @Override
-    public void clear() {
-        p_();
+    public void setProgressScale(int scale) {
+        if (scale <= 0)
+            throw new IllegalArgumentException("scale must be positive: " + scale);
+        this.scale = scale;
     }
 
-    int MAX_100 = Integer.MAX_VALUE / 100;
+    @Override
+    public int getProgressIndex() {
+        return index;
+    }
 
     @Override
-    public void progress(int value, int scale) {
-        if (scale < MAX_100)
-            value = value * 100 / scale;
+    public void setProgressIndex(int index) {
+        if (index < 0)
+            index = 0;
+        else if (index >= scale)
+            index = scale;
+
+        this.index = index;
+
+        if (scale < SMALLINT_MAX)
+            index = index * 100 / scale;
         else
-            value = value / (scale / 100);
-        put(value + "%");
+            index = index / (scale / 100);
+        p(index + "%");
     }
 
 }

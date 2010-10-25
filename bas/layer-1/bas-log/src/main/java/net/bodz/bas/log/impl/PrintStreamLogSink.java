@@ -1,0 +1,36 @@
+package net.bodz.bas.log.impl;
+
+import java.io.PrintStream;
+
+import net.bodz.bas.log.AbstractLogSink;
+import net.bodz.bas.log.ILogEntry;
+
+public class PrintStreamLogSink
+        extends AbstractLogSink {
+
+    private final PrintStream stream;
+
+    public PrintStreamLogSink(PrintStream printStream) {
+        if (printStream == null)
+            throw new NullPointerException("printStream");
+        this.stream = printStream;
+    }
+
+    @Override
+    public void log(ILogEntry entry) {
+        stream.println(entry);
+    }
+
+    @Override
+    protected void logMessage(Object message) {
+        stream.println(message);
+    }
+
+    @Override
+    protected void logException(Object message, Throwable exception) {
+        stream.println(message);
+        if (exception != null)
+            exception.printStackTrace(stream);
+    }
+
+}

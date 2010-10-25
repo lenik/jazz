@@ -1,6 +1,5 @@
 package net.bodz.bas.log;
 
-import net.bodz.bas.log.objects.ILogEntry;
 import net.bodz.bas.sio.NullIndentedCharOut;
 
 public class NullLogSink
@@ -8,16 +7,11 @@ public class NullLogSink
         implements ILogSink {
 
     @Override
-    public int getVerboseLevel() {
-        return 0;
+    public void log(ILogEntry entry) {
     }
 
     @Override
-    public void setVerboseLevel(int level) {
-    }
-
-    @Override
-    public void drop(ILogEntry entry) {
+    public void p(String message) {
     }
 
     @Override
@@ -37,31 +31,27 @@ public class NullLogSink
     }
 
     @Override
-    public void p_(Object obj) {
-    }
-
-    @Override
-    public void p_(Object... concatObjs) {
-    }
-
-    @Override
-    public void p_(Throwable exception) {
-    }
-
-    @Override
-    public void p_(Throwable exception, Object message) {
-    }
-
-    @Override
-    public void p_(Throwable exception, Object... messagePieces) {
-    }
-
-    @Override
     public void f(String format, Object... args) {
     }
 
     @Override
     public void f(Throwable exception, String format, Object... args) {
+    }
+
+    @Override
+    public void _(Object message) {
+    }
+
+    @Override
+    public void _(Object... messagePieces) {
+    }
+
+    @Override
+    public void _done() {
+    }
+
+    @Override
+    public void _done(Throwable exception) {
     }
 
     private static final NullLogSink instance = new NullLogSink();
