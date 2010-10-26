@@ -1,0 +1,16 @@
+package net.bodz.bas.vfs.impl.local;
+
+import net.bodz.bas.vfs.path.IPath;
+import net.bodz.bas.vfs.path.IPathResolver;
+import net.bodz.bas.vfs.path.PathException;
+
+public class LocalPathResolver
+        implements IPathResolver {
+
+    @Override
+    public IPath resolve(String path)
+            throws PathException {
+        return null;
+    }
+
+}

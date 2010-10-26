@@ -27,7 +27,6 @@ import net.bodz.bas.collection.set.ArraySet;
 import net.bodz.bas.exceptions.IdentifiedException;
 import net.bodz.bas.files.FilePath;
 import net.bodz.bas.files.FileRes;
-import net.bodz.bas.fs.URLFile;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.loader.DefaultBooter;
 import net.bodz.bas.loader.LoadException;
@@ -39,6 +38,7 @@ import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.snm.SJLibLoader;
 import net.bodz.bas.text.util.StringArray;
+import net.bodz.bas.vfs.URLFile;
 
 @Doc("Generate program launcher for java applications")
 @ProgramName("mkbat")
