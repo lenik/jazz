@@ -16,6 +16,7 @@
 		<module>bas-database</module>
 		<module>bas-flow</module>
 		<module>bas-vfs</module>
+		<module>bas-vfsutils</module>
 		<module>bas-fsm</module>
 		<module>bas-i18n</module>
 		<module>bas-l10n</module>
