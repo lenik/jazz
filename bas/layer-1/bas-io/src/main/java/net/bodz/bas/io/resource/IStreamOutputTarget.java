@@ -11,8 +11,12 @@ import java.nio.charset.Charset;
 import net.bodz.bas.io.resource.preparation.IFormatDumpPreparation;
 import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
 import net.bodz.bas.sio.IByteOutNative;
-import net.bodz.bas.sio.IPrintCharOut;
+import net.bodz.bas.sio.ICharOut;
+import net.bodz.bas.sio.IPrintOut;
 
+/**
+ * 提供更多的打开方式。
+ */
 public interface IStreamOutputTarget
         extends ISimpleStreamOutputTarget {
 
@@ -28,7 +32,14 @@ public interface IStreamOutputTarget
     /**
      * @return non-<code>null</code> value.
      */
-    IPrintCharOut newLineCharOut()
+    @Override
+    ICharOut newCharOut()
+            throws IOException;
+
+    /**
+     * @return non-<code>null</code> value.
+     */
+    IPrintOut newPrintOut()
             throws IOException;
 
     /**

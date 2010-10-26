@@ -3,9 +3,9 @@ package net.bodz.bas.sio;
 import java.io.IOException;
 import java.util.Locale;
 
-public abstract class AbstractPrintCharOut
+public abstract class AbstractPrintOut
         extends AbstractCharOut
-        implements IPrintCharOut {
+        implements IPrintOut {
 
     private final static char[] NULL = "(null)".toCharArray();
     private final static char NEWLINE = '\n';

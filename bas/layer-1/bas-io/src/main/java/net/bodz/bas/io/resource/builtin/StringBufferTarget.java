@@ -29,7 +29,7 @@ public class StringBufferTarget
     }
 
     @Override
-    public ICharOut newCharOut()
+    public BCharOut newPrintOut()
             throws IOException {
         return new BCharOut(buffer);
     }

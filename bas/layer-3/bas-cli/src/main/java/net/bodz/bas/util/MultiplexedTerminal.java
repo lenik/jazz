@@ -9,7 +9,7 @@ import java.util.List;
 import net.bodz.bas.exceptions.NotImplementedException;
 import net.bodz.bas.io.term.AbstractTerminal;
 import net.bodz.bas.io.term.ITerminal;
-import net.bodz.bas.sio.IPrintCharOut;
+import net.bodz.bas.sio.IPrintOut;
 
 public class MultiplexedTerminal
         extends AbstractTerminal {
@@ -66,7 +66,7 @@ public class MultiplexedTerminal
     }
 
     @Override
-    public IPrintCharOut getCharOut() {
+    public IPrintOut getCharOut() {
         throw new NotImplementedException();
     }
 

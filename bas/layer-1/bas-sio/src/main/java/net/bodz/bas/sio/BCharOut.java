@@ -3,7 +3,7 @@ package net.bodz.bas.sio;
 import java.io.IOException;
 
 public class BCharOut
-        extends AbstractPrintCharOut {
+        extends AbstractPrintOut {
 
     /**
      * @TODO set final in futuer.
@@ -29,7 +29,7 @@ public class BCharOut
     }
 
     /**
-     * Access the {@link #buffer} field instead. 
+     * Access the {@link #buffer} field instead.
      */
     @Deprecated
     public void setBuffer(StringBuffer buffer) {

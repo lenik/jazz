@@ -4,7 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import junit.framework.TestCase;
-import net.bodz.bas.sio.util.NibByteArrayOutputStream;
+import net.bodz.bas.sio.nibbles.NibByteArrayOutputStream;
+import net.bodz.bas.sio.nibbles.OutputStreamNibbleOut;
 
 import org.junit.Test;
 

@@ -4,64 +4,57 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.Arrays;
 
-public class PrintStreamPrintCharOut
-        extends AbstractPrintCharOut {
-
-    private final PrintStream ps;
+public abstract class DynamicPrintStreamPrintOut
+        extends AbstractPrintOut {
 
     /**
-     * @throws NullPointerException
-     *             If <code>ps</code> is <code>null</code>.
+     * @return non-<code>null</code> {@link PrintStream} instance.
      */
-    public PrintStreamPrintCharOut(PrintStream ps) {
-        if (ps == null)
-            throw new NullPointerException("ps");
-        this.ps = ps;
-    }
+    public abstract PrintStream getPrintStream();
 
     @Override
     public void write(int c)
             throws IOException {
-        ps.print((char) c);
+        getPrintStream().print((char) c);
     }
 
     @Override
     public void write(char[] chars, int off, int len)
             throws IOException {
-        ps.print(Arrays.copyOfRange(chars, off, off + len));
+        getPrintStream().print(Arrays.copyOfRange(chars, off, off + len));
     }
 
     @Override
     public void write(String string, int off, int len)
             throws IOException {
-        ps.print(string.substring(off, off + len));
+        getPrintStream().print(string.substring(off, off + len));
     }
 
     @Override
     public void println() {
-        ps.println();
+        getPrintStream().println();
     }
 
     @Override
     public void print(Object obj) {
-        ps.print(obj);
+        getPrintStream().print(obj);
     }
 
     @Override
     public void print(String s) {
-        ps.print(s);
+        getPrintStream().print(s);
     }
 
     @Override
     protected void _flush(boolean strict)
             throws IOException {
-        ps.flush();
+        getPrintStream().flush();
     }
 
     @Override
     protected void _close()
             throws IOException {
-        ps.close();
+        getPrintStream().close();
     }
 
 }

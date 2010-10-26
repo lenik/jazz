@@ -9,11 +9,11 @@ import net.bodz.bas.io.resource.AbstractStreamResource;
 import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.ICharIn;
-import net.bodz.bas.sio.ICharOut;
+import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.InputStreamByteIn;
 import net.bodz.bas.sio.OutputStreamByteOut;
 import net.bodz.bas.sio.ReaderCharIn;
-import net.bodz.bas.sio.WriterCharOut;
+import net.bodz.bas.sio.WriterPrintOut;
 
 public class URLResource
         extends AbstractStreamResource {
@@ -61,9 +61,9 @@ public class URLResource
     }
 
     @Override
-    public ICharOut newCharOut()
+    public IPrintOut newCharOut()
             throws IOException {
-        return new WriterCharOut(newWriter());
+        return new WriterPrintOut(newWriter());
     }
 
 }

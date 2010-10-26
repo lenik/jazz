@@ -1,9 +1,9 @@
 package net.bodz.bas.sio.indent;
 
-import net.bodz.bas.sio.IPrintCharOut;
+import net.bodz.bas.sio.IPrintOut;
 
-public interface IIndentedCharOut
-        extends IPrintCharOut {
+public interface IIndentedOut
+        extends IPrintOut {
 
     /**
      * @return non-<code>null</code> {@link ITextIndention}.

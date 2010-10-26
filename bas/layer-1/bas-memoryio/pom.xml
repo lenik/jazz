@@ -10,11 +10,6 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<dependencies>
 		<dependency>
-			<groupId>net.bodz.bas</groupId>
-			<artifactId>bas-c2</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
@@ -29,7 +24,7 @@
 			<groupId>net.bodz.bas</groupId>
 			<artifactId>bas-text-codec</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-			<scope>compile</scope>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 	<name>BAS :: Layer 1 :: Memory I/O</name>

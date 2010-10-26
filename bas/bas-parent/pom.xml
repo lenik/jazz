@@ -182,35 +182,5 @@
 				</pluginManagement>
 			</build>
 		</profile>
-		<profile>
-			<id>repository-registry</id>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-			<repositories>
-				<repository>
-					<id>bas.repo.release</id>
-					<name>BAS Release Repository</name>
-					<url>${bodz.dist.release.url}</url>
-					<releases>
-						<enabled>true</enabled>
-					</releases>
-					<snapshots>
-						<enabled>false</enabled>
-					</snapshots>
-				</repository>
-				<repository>
-					<id>bas.repo.snapshot</id>
-					<name>BAS Snapshot Repository</name>
-					<url>${bodz.dist.snapshot.url}</url>
-					<releases>
-						<enabled>false</enabled>
-					</releases>
-					<snapshots>
-						<enabled>true</enabled>
-					</snapshots>
-				</repository>
-			</repositories>
-		</profile>
 	</profiles>
 </project>

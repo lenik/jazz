@@ -23,7 +23,7 @@
     	</dependency>
     	<dependency>
     		<groupId>net.bodz.bas</groupId>
-    		<artifactId>bas-quickstart</artifactId>
+    		<artifactId>bas-cli</artifactId>
     		<version>0.0.1-SNAPSHOT</version>
     		<type>jar</type>
     		<scope>compile</scope>

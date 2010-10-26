@@ -6,11 +6,11 @@ import java.util.Locale;
 
 import net.bodz.bas.proxy.AbstractProxy;
 
-public class ProxyLineCharOut
-        extends AbstractProxy<IPrintCharOut>
-        implements IPrintCharOut {
+public class ProxyPrintOut
+        extends AbstractProxy<IPrintOut>
+        implements IPrintOut {
 
-    public ProxyLineCharOut(IPrintCharOut proxy) {
+    public ProxyPrintOut(IPrintOut proxy) {
         super(proxy);
     }
 

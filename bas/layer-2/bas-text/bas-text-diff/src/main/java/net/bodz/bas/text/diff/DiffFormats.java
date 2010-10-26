@@ -2,7 +2,7 @@ package net.bodz.bas.text.diff;
 
 import java.util.List;
 
-import net.bodz.bas.sio.IPrintCharOut;
+import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.text.diff.gnudiff.DiffPrint;
 
 public class DiffFormats {
@@ -39,25 +39,25 @@ public class DiffFormats {
 
         ED = new DiffFormat() {
             @Override
-            public void format(List<?> a, List<?> b, List<DiffInfo> diff, IPrintCharOut out) {
+            public void format(List<?> a, List<?> b, List<DiffInfo> diff, IPrintOut out) {
                 new DiffPrint.EdPrint(a, b, out).print_script(diff);
             }
         };
         Context = new DiffFormat() {
             @Override
-            public void format(List<?> a, List<?> b, List<DiffInfo> diff, IPrintCharOut out) {
+            public void format(List<?> a, List<?> b, List<DiffInfo> diff, IPrintOut out) {
                 new DiffPrint.ContextPrint(a, b, out).print_script(diff);
             }
         };
         Normal = new DiffFormat() {
             @Override
-            public void format(List<?> a, List<?> b, List<DiffInfo> diff, IPrintCharOut out) {
+            public void format(List<?> a, List<?> b, List<DiffInfo> diff, IPrintOut out) {
                 new DiffPrint.NormalPrint(a, b, out).print_script(diff);
             }
         };
         Unified = new DiffFormat() {
             @Override
-            public void format(List<?> a, List<?> b, List<DiffInfo> diff, IPrintCharOut out) {
+            public void format(List<?> a, List<?> b, List<DiffInfo> diff, IPrintOut out) {
                 new DiffPrint.UnifiedPrint(a, b, out).print_script(diff);
             }
         };

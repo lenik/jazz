@@ -1,9 +1,8 @@
-package net.bodz.bas.sio;
+package net.bodz.bas.sio.nibbles;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
-import net.bodz.bas.sio.util.NibbleUtil;
 
 public class OutputStreamNibbleOut
         extends AbstractNibbleOut {

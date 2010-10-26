@@ -8,11 +8,11 @@ import net.bodz.bas.hint.ThreadUnsafe;
 import net.bodz.bas.log.message.ArrayJoinMessage;
 import net.bodz.bas.log.message.IMessage;
 import net.bodz.bas.log.message.StringFormatMessage;
-import net.bodz.bas.sio.AbstractIndentedCharOut;
+import net.bodz.bas.sio.AbstractIndentedOut;
 
 @ThreadUnsafe
 public abstract class AbstractLogSink
-        extends AbstractIndentedCharOut
+        extends AbstractIndentedOut
         implements ILogSink {
 
     // private Object source;

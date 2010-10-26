@@ -1,2 +1,1 @@
-
-net.bodz.bas.text.encodings.Charsets
+net.bodz.bas.text.charsets.BasCharsetProvider

@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import junit.framework.TestCase;
-import net.bodz.bas.sio.WriterPrintCharOut;
+import net.bodz.bas.sio.WriterPrintOut;
 import net.bodz.bas.text.diff.gnudiff.DiffPrint;
 import net.bodz.bas.text.diff.gnudiff._GNUDiff;
 
@@ -90,7 +90,7 @@ public class DiffTest
         List<DiffInfo> script = diff.diff_2(false);
         StringWriter wtr = new StringWriter();
         DiffPrint.Base p = new DiffPrint.UnifiedPrint(Arrays.asList(test1), Arrays.asList(test2), //
-                new WriterPrintCharOut(wtr));
+                new WriterPrintOut(wtr));
         // p.print_header("test1","test2");
         p.print_script(script);
         /*

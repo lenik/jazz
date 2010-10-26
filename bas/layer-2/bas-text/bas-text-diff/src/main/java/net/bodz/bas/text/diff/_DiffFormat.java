@@ -2,17 +2,17 @@ package net.bodz.bas.text.diff;
 
 import java.util.List;
 
-import net.bodz.bas.sio.IPrintCharOut;
+import net.bodz.bas.sio.IPrintOut;
 
 public abstract class _DiffFormat
         implements DiffFormat {
 
     protected List<?> al;
     protected List<?> bl;
-    protected IPrintCharOut out;
+    protected IPrintOut out;
 
     @Override
-    public synchronized void format(List<?> al, List<?> bl, List<DiffInfo> diffs, IPrintCharOut out) {
+    public synchronized void format(List<?> al, List<?> bl, List<DiffInfo> diffs, IPrintOut out) {
         assert al != null;
         assert bl != null;
         assert diffs != null;

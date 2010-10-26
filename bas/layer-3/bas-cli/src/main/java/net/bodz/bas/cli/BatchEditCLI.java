@@ -17,20 +17,20 @@ import net.bodz.bas.cli.util.ProtectedShell;
 import net.bodz.bas.exceptions.IllegalUsageError;
 import net.bodz.bas.exceptions.NotImplementedException;
 import net.bodz.bas.exceptions.UnexpectedException;
+import net.bodz.bas.files.FileDiff;
 import net.bodz.bas.files.FilePath;
 import net.bodz.bas.files.FileTemp;
 import net.bodz.bas.hint.OverrideOption;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.builtin.InputStreamSource;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
-import net.bodz.bas.sio.IPrintCharOut;
+import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.sio.WriterCharOut;
 import net.bodz.bas.text.diff.DiffComparator;
 import net.bodz.bas.text.diff.DiffFormat;
 import net.bodz.bas.text.diff.DiffFormats;
 import net.bodz.bas.text.diff.DiffInfo;
-import net.bodz.bas.text.diff.FileDiff;
 import net.bodz.bas.text.util.StringArray;
 
 @OptionGroup(value = "batch process", rank = -3)
@@ -59,7 +59,7 @@ public class BatchEditCLI
     DiffFormat diffFormat = DiffFormats.Simdiff;
 
     @Option(alias = "Xo", vnam = "FILE", doc = "write diff output to specified file")
-    IPrintCharOut diffOutput = Stdio.cout;
+    IPrintOut diffOutput = Stdio.cout;
 
     @Option(alias = "X3", doc = "diff between src/dst/out, when output to different file")
     boolean diff3 = false;
@@ -126,11 +126,11 @@ public class BatchEditCLI
             BatchEditCLI.this.diffFormat = diffFormat;
         }
 
-        public IPrintCharOut getDiffOutput() {
+        public IPrintOut getDiffOutput() {
             return diffOutput;
         }
 
-        public void setDiffOutput(IPrintCharOut diffOutput) {
+        public void setDiffOutput(IPrintOut diffOutput) {
             BatchEditCLI.this.diffOutput = diffOutput;
         }
 
@@ -364,10 +364,10 @@ public class BatchEditCLI
     protected EditResult doEditByIO(InputStream in, OutputStream out)
             throws Exception {
         Iterable<String> lines = new InputStreamSource(in).setCharset(inputEncoding).forRead().lines(false);
-        IPrintCharOut cout = Stdio.cout;
+        IPrintOut cout = Stdio.cout;
         if (out != null) {
             OutputStreamWriter writer = new OutputStreamWriter(out, outputEncoding.name());
-            cout = new WriterCharOut(writer);
+            cout = new WriterPrintOut(writer);
         }
         return doEditByLine(lines, cout);
     }
@@ -379,7 +379,7 @@ public class BatchEditCLI
      *         PROCESS_EDIT: have the result written to the output
      */
     @OverrideOption(group = "batchEdit")
-    protected EditResult doEditByLine(Iterable<String> lines, IPrintCharOut out)
+    protected EditResult doEditByLine(Iterable<String> lines, IPrintOut out)
             throws Exception {
         throw new NotImplementedException();
     }
@@ -548,7 +548,7 @@ public class BatchEditCLI
             return BatchEditCLI.this.doEditByIO(in, out);
         }
 
-        public EditResult doEditByLine(Iterable<String> lines, IPrintCharOut out)
+        public EditResult doEditByLine(Iterable<String> lines, IPrintOut out)
                 throws Throwable {
             return BatchEditCLI.this.doEditByLine(lines, out);
         }

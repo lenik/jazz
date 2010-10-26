@@ -5,7 +5,7 @@ import java.util.Locale;
 
 public class NullPrintCharOut
         extends NullCharOut
-        implements IPrintCharOut {
+        implements IPrintOut {
 
     @Override
     public void checkError(boolean reset)

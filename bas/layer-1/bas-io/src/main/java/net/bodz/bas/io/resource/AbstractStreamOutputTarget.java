@@ -21,8 +21,6 @@ import net.bodz.bas.sio.CharOutWriter;
 import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.IByteOutNative;
 import net.bodz.bas.sio.ICharOut;
-import net.bodz.bas.sio.IPrintCharOut;
-import net.bodz.bas.sio.PrintCharOutImpl;
 
 public abstract class AbstractStreamOutputTarget
         implements IStreamOutputTarget {
@@ -142,12 +140,9 @@ public abstract class AbstractStreamOutputTarget
     }
 
     @Override
-    public IPrintCharOut newLineCharOut()
+    public ICharOut newCharOut()
             throws IOException {
-        ICharOut charOut = newCharOut();
-        if (charOut instanceof IPrintCharOut)
-            return (IPrintCharOut) charOut;
-        return new PrintCharOutImpl(charOut);
+        return newPrintOut();
     }
 
     @Override

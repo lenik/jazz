@@ -8,9 +8,9 @@ import java.io.Writer;
 
 import net.bodz.bas.io.resource.AbstractStreamOutputTarget;
 import net.bodz.bas.sio.IByteOut;
-import net.bodz.bas.sio.ICharOut;
+import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.OutputStreamByteOut;
-import net.bodz.bas.sio.WriterCharOut;
+import net.bodz.bas.sio.WriterPrintOut;
 
 public class OutputStreamTarget
         extends AbstractStreamOutputTarget {
@@ -54,9 +54,9 @@ public class OutputStreamTarget
     }
 
     @Override
-    public ICharOut newCharOut()
+    public IPrintOut newPrintOut()
             throws IOException {
-        return new WriterCharOut(newWriter());
+        return new WriterPrintOut(newWriter());
     }
 
 }

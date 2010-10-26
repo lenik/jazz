@@ -6,7 +6,7 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import net.bodz.bas.exceptions.NotImplementedException;
-import net.bodz.bas.sio.IPrintCharOut;
+import net.bodz.bas.sio.IPrintOut;
 
 /**
  * DFA State: For any two of transitions in a DFA State, their CharSet are not intersected.
@@ -142,7 +142,7 @@ public class DFAState
         return id - o.id;
     }
 
-    public void dumpTransitionMap(IPrintCharOut out, String prefix) {
+    public void dumpTransitionMap(IPrintOut out, String prefix) {
         if (defaultTransition != null)
             out.println(prefix + "default => " + defaultTransition.getName());
         for (Entry<CharSet, DFAState> e : transitionMap.entrySet()) {
