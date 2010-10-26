@@ -24,7 +24,7 @@
     	</dependency>
     	<dependency>
     		<groupId>net.bodz.bas</groupId>
-    		<artifactId>bas-fs</artifactId>
+    		<artifactId>bas-vfs</artifactId>
     		<version>0.0.1-SNAPSHOT</version>
     		<scope>compile</scope>
     	</dependency>

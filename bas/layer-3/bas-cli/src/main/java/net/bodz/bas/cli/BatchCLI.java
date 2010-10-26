@@ -13,9 +13,9 @@ import net.bodz.bas.cli.annotations.Option;
 import net.bodz.bas.cli.annotations.OptionGroup;
 import net.bodz.bas.exceptions.NotImplementedException;
 import net.bodz.bas.files.FilePath;
-import net.bodz.bas.fs.FileMask;
-import net.bodz.bas.fs.traverse.FileFinder;
 import net.bodz.bas.hint.OverrideOption;
+import net.bodz.bas.vfs.FileMask;
+import net.bodz.bas.vfs.traverse.FileFinder;
 
 @OptionGroup(value = "batch", rank = -2)
 public class BatchCLI
