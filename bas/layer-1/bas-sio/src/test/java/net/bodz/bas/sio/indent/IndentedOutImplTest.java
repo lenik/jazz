@@ -5,14 +5,14 @@ import net.bodz.bas.sio.BCharOut;
 
 import org.junit.Test;
 
-public class IndentedCharOutImplTest
+public class IndentedOutImplTest
         extends TestCase {
 
     @Test
     public void testIndentPrint()
             throws Exception {
         BCharOut buffer = new BCharOut();
-        IIndentedCharOut out = new IndentedCharOutImpl(buffer);
+        IIndentedOut out = new IndentedOutImpl(buffer);
         out.getTextIndention().setIndentSize(2);
         out.println("a");
         out.enter();

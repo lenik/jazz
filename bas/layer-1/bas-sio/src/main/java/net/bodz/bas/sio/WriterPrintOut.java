@@ -3,15 +3,16 @@ package net.bodz.bas.sio;
 import java.io.IOException;
 import java.io.Writer;
 
-public class WriterPrintCharOut
-        extends AbstractPrintCharOut {
+public class WriterPrintOut
+        extends AbstractPrintOut {
+
     private final Writer writer;
 
     /**
      * @throws NullPointerException
      *             If <code>writer</code> is <code>null</code>.
      */
-    public WriterPrintCharOut(Writer writer) {
+    public WriterPrintOut(Writer writer) {
         if (writer == null)
             throw new NullPointerException("writer");
         this.writer = writer;

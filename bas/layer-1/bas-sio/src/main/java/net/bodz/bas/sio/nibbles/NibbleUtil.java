@@ -1,4 +1,4 @@
-package net.bodz.bas.sio.util;
+package net.bodz.bas.sio.nibbles;
 
 public class NibbleUtil {
 

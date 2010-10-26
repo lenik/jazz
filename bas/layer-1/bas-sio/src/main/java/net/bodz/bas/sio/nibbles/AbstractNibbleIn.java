@@ -1,6 +1,7 @@
-package net.bodz.bas.sio;
+package net.bodz.bas.sio.nibbles;
 
 import java.io.IOException;
+
 
 public abstract class AbstractNibbleIn
         implements INibbleIn {

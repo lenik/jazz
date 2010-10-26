@@ -1,4 +1,4 @@
-package net.bodz.bas.sio;
+package net.bodz.bas.sio.nibbles;
 
 import java.io.Closeable;
 import java.io.Flushable;

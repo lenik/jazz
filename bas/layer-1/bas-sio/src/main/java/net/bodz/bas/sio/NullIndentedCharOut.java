@@ -1,12 +1,12 @@
 package net.bodz.bas.sio;
 
-import net.bodz.bas.sio.indent.IIndentedCharOut;
+import net.bodz.bas.sio.indent.IIndentedOut;
 import net.bodz.bas.sio.indent.ITextIndention;
 import net.bodz.bas.sio.indent.TextIndention;
 
 public class NullIndentedCharOut
         extends NullPrintCharOut
-        implements IIndentedCharOut {
+        implements IIndentedOut {
 
     private ITextIndention dummy = new TextIndention();
 

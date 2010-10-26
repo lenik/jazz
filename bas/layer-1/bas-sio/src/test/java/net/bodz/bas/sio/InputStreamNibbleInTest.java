@@ -6,6 +6,8 @@ import java.io.InputStream;
 
 import junit.framework.TestCase;
 
+import net.bodz.bas.sio.nibbles.InputStreamNibbleIn;
+
 import org.junit.Test;
 
 public class InputStreamNibbleInTest

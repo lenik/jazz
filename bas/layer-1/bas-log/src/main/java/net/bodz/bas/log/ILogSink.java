@@ -2,19 +2,19 @@ package net.bodz.bas.log;
 
 import net.bodz.bas.log.message.ArrayJoinMessage;
 import net.bodz.bas.log.message.StringFormatMessage;
-import net.bodz.bas.sio.IPrintCharOut;
-import net.bodz.bas.sio.indent.IIndentedCharOut;
+import net.bodz.bas.sio.IPrintOut;
+import net.bodz.bas.sio.indent.IIndentedOut;
 
 /**
  * Features:
  * 
  * <ul>
  * <li>Short function names ({@link #p(Object)}, {@link #_(Object)}, etc.)
- * <li>{@link IPrintCharOut} functions are optional to the underlying.
+ * <li>{@link IPrintOut} functions are optional to the underlying.
  * </ul>
  */
 public interface ILogSink
-        extends IIndentedCharOut {
+        extends IIndentedOut {
 
     /**
      * Device log function, discard any verbose level.

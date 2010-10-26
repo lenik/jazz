@@ -1,4 +1,4 @@
-package net.bodz.bas.sio;
+package net.bodz.bas.sio.bits;
 
 import java.io.IOException;
 

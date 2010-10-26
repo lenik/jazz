@@ -13,7 +13,7 @@ import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
 import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.IByteOutNative;
 import net.bodz.bas.sio.ICharOut;
-import net.bodz.bas.sio.IPrintCharOut;
+import net.bodz.bas.sio.IPrintOut;
 
 public abstract class AbstractStreamResource
         extends AbstractStreamInputSource
@@ -22,13 +22,18 @@ public abstract class AbstractStreamResource
     private final IStreamOutputTarget asotImpl;
 
     public AbstractStreamResource() {
-        super();
         asotImpl = new AbstractStreamOutputTarget() {
 
             @Override
             public ICharOut newCharOut()
                     throws IOException {
                 return AbstractStreamResource.this.newCharOut();
+            }
+
+            @Override
+            public IPrintOut newPrintOut()
+                    throws IOException {
+                return AbstractStreamResource.this.newPrintOut();
             }
 
             @Override
@@ -94,9 +99,15 @@ public abstract class AbstractStreamResource
     }
 
     @Override
-    public IPrintCharOut newLineCharOut()
+    public ICharOut newCharOut()
             throws IOException {
-        return asotImpl.newLineCharOut();
+        return asotImpl.newCharOut();
+    }
+
+    @Override
+    public IPrintOut newPrintOut()
+            throws IOException {
+        return asotImpl.newPrintOut();
     }
 
     @Override

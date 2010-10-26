@@ -5,15 +5,15 @@ import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 
 import net.bodz.bas.exceptions.ParseException;
-import net.bodz.bas.sio.IPrintCharOut;
-import net.bodz.bas.sio.WriterCharOut;
+import net.bodz.bas.sio.IPrintOut;
+import net.bodz.bas.sio.WriterPrintOut;
 import net.bodz.bas.type.traits.AbstractParser;
 
 public class CharOutParser
-        extends AbstractParser<IPrintCharOut> {
+        extends AbstractParser<IPrintOut> {
 
     @Override
-    public IPrintCharOut parse(String path)
+    public IPrintOut parse(String path)
             throws ParseException {
         FileOutputStream out;
         try {
@@ -23,7 +23,7 @@ public class CharOutParser
         }
 
         OutputStreamWriter writer = new OutputStreamWriter(out);
-        return new WriterCharOut(writer);
+        return new WriterPrintOut(writer);
     }
 
 }

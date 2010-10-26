@@ -3,7 +3,7 @@ package net.bodz.bas.sio;
 import java.io.IOException;
 import java.util.Locale;
 
-public interface IPrintCharOut
+public interface IPrintOut
         extends ICharOut {
 
     /**

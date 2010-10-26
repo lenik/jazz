@@ -3,7 +3,8 @@ package net.bodz.bas.sio;
 import java.io.IOException;
 
 import junit.framework.TestCase;
-import net.bodz.bas.sio.util.BNibbleIn;
+import net.bodz.bas.sio.nibbles.BNibbleIn;
+import net.bodz.bas.sio.nibbles.LANibbleIn;
 
 import org.junit.Test;
 

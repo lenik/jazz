@@ -7,7 +7,7 @@ import java.net.URLClassLoader;
 import net.bodz.bas.io.term.ITerminal;
 import net.bodz.bas.io.term.Terminals;
 import net.bodz.bas.jvm.stack.Caller;
-import net.bodz.bas.sio.IPrintCharOut;
+import net.bodz.bas.sio.IPrintOut;
 
 public class Classpath {
 
@@ -39,7 +39,7 @@ public class Classpath {
         return addURL(ClassLoader.getSystemClassLoader(), urls);
     }
 
-    public static void dumpURLs(IPrintCharOut out) {
+    public static void dumpURLs(IPrintOut out) {
         UCL.dump(Caller.getCallerClassLoader(0), out);
         out.flush();
     }

@@ -21,11 +21,11 @@ import net.bodz.bas.io.resource.IRandomOutputTarget;
 import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.ICharIn;
-import net.bodz.bas.sio.IPrintCharOut;
+import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.InputStreamByteIn;
 import net.bodz.bas.sio.OutputStreamByteOut;
 import net.bodz.bas.sio.ReaderCharIn;
-import net.bodz.bas.sio.WriterCharOut;
+import net.bodz.bas.sio.WriterPrintOut;
 
 public class LocalFileResource
         extends AbstractStreamResource
@@ -103,12 +103,12 @@ public class LocalFileResource
     }
 
     @Override
-    public IPrintCharOut newCharOut()
+    public IPrintOut newCharOut()
             throws IOException {
         Writer writer = newWriter();
         if (writer == null)
             throw new NullPointerException("writer");
-        return new WriterCharOut(writer);
+        return new WriterPrintOut(writer);
     }
 
     // private AbstractRandomInputSource arisImpl;

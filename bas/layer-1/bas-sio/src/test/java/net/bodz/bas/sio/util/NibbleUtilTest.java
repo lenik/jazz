@@ -2,6 +2,8 @@ package net.bodz.bas.sio.util;
 
 import junit.framework.TestCase;
 
+import net.bodz.bas.sio.nibbles.NibbleUtil;
+
 import org.junit.Test;
 
 public class NibbleUtilTest
