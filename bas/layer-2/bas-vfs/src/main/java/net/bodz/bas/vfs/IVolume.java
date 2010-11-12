@@ -6,10 +6,13 @@ import net.bodz.bas.exceptions.NotImplementedException;
 import net.bodz.bas.type.traits.IAttributes;
 import net.bodz.bas.vfs.path.IPath;
 
+import org.apache.commons.vfs.Capability;
+import org.apache.commons.vfs.FileSystem;
+
 /**
  * @see org.apache.commons.vfs.FileSystem
  */
-public interface IFileContainer {
+public interface IVolume {
 
     /**
      * Same as:
@@ -37,18 +40,16 @@ public interface IFileContainer {
     // IFsEntry resolveEntry(String path);
     // IFsEntry resolveEntry(IPath path);
 
-    IFile get(IPath path);
+    IPath resolve(String localPath);
 
-    IFile get(String containerSpecificPath);
-
-    IPath resolve(String containerSpecificPath);
+    IFile resolveFile(String localPath);
 
     IAttributes getAttributes();
 
-    // /**
-    // * @see FileSystem#hasCapability(org.apache.commons.vfs.Capability)
-    // */
-    // boolean hasCapability(Capability capability);
+    /**
+     * @see FileSystem#hasCapability(org.apache.commons.vfs.Capability)
+     */
+    boolean hasCapability(Capability capability);
 
     /**
      * @return non-<code>null</code> volume label. If a volume doesn't have a label, an empty string
@@ -57,21 +58,21 @@ public interface IFileContainer {
     String getLabel();
 
     /**
-     * Get the capacity of the volume.
+     * Get total space in bytes.
      * 
-     * @return Positive integer, or 0 if unknown.
+     * @return <code>null</code> if unknown.
      */
-    long getCapacity();
+    Long getCapacity();
 
     /**
-     * Get the available space in bytes.
+     * Get available space in bytes.
      * 
-     * @return Positive integer, or 0 if unknown.
+     * @return <code>null</code> unknown.
      */
-    long getFreeSpace();
+    Long getFreeSpace();
 
     /**
-     * @return Positive (generally 2^n) cluster size, or 0 if the cluster size is unknown.
+     * @return Positive (generally 2^n) cluster size, <code>0</code> if the cluster size is unknown.
      */
     int getClusterSize();
 

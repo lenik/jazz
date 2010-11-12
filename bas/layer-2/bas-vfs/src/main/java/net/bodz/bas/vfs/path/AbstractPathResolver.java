@@ -1,7 +1,7 @@
 package net.bodz.bas.vfs.path;
 
-import net.bodz.bas.vfs.IFileContainer;
-import net.bodz.bas.vfs.RelativeFileContainer;
+import net.bodz.bas.vfs.IVolume;
+import net.bodz.bas.vfs.impl.RelativeFileContainer;
 
 public abstract class AbstractPathResolver
         implements IPathResolver {
@@ -24,12 +24,12 @@ public abstract class AbstractPathResolver
     public IPath resolve(String path)
             throws PathException {
         int prefixLength = getPrefixLength(path);
-        IFileContainer container;
+        IVolume container;
         if (prefixLength == 0)
             container = RelativeFileContainer.getInstance();
         else {
             String containerPath = path.substring(0, prefixLength);
-            container = getFileContainer(containerPath);
+            container = getVolume(containerPath);
         }
 
         String containerSpecificPath = path.substring(prefixLength);

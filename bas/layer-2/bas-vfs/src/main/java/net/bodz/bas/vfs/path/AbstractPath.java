@@ -1,5 +1,6 @@
 package net.bodz.bas.vfs.path;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -14,31 +15,63 @@ public abstract class AbstractPath
         implements IPath {
 
     private final IVolume volume;
-    private final IPathAlignment align;
+    private final String localPath;
+    private final IPathAlignment alignment;
 
-    private final IPath parentLayer;
-
-    public AbstractPath(IVolume fileSystem, IPathAlignment alignment, IPath parentLayer) {
+    public AbstractPath(IVolume volume, String localPath, IPathAlignment alignment) {
+        if (volume == null)
+            throw new NullPointerException("volume");
         if (alignment == null)
             throw new NullPointerException("alignment");
-        this.volume = fileSystem;
-        this.align = alignment;
-        this.parentLayer = parentLayer;
+        if (localPath == null)
+            throw new NullPointerException("localPath");
+        this.volume = volume;
+        this.localPath = localPath;
+        this.alignment = alignment;
     }
 
     @Override
-    public IPathAlignment getAlignment() {
-        return align;
+    public final IPathAlignment getAlignment() {
+        return alignment;
     }
 
     @Override
-    public IVolume getVolume() {
+    public final IVolume getVolume() {
         return volume;
     }
 
     @Override
+    public IFile toFile() {
+        return volume.resolveFile(localPath);
+    }
+
+    @Override
     public IPath getParentLayer() {
-        return parentLayer;
+        IFile deviceFile = volume.getDeviceFile();
+        if (deviceFile == null)
+            return null;
+        return deviceFile.getPath();
+    }
+
+    @Override
+    public final IPath getRootLayer() {
+        IPath rootLayer = this;
+        while (true) {
+            IPath parentLayer = rootLayer.getParentLayer();
+            if (parentLayer == null)
+                break;
+            rootLayer = parentLayer;
+        }
+        return rootLayer;
+    }
+
+    @Override
+    public IPath getParent() {
+        int last = localPath.lastIndexOf(SEPARATOR_CHAR);
+        if (last == -1)
+            return null;
+        String localParentPath = localPath.substring(0, last);
+        return volume.resolve(localParentPath);
     }
 
     @Override
@@ -67,45 +100,66 @@ public abstract class AbstractPath
     }
 
     @Override
-    public IPath getRootLayer() {
-        IPath rootLayer = this;
-        while (true) {
-            IPath parentLayer = rootLayer.getParentLayer();
-            if (parentLayer == null)
-                break;
-            rootLayer = parentLayer;
+    public IPath join(String path)
+            throws PathException {
+        if (path == null)
+            throw new NullPointerException("path");
+
+        String joinedLocalPath;
+        if (path.startsWith(SEPARATOR))
+            joinedLocalPath = path;
+        else {
+            if (localPath.endsWith(SEPARATOR))
+                joinedLocalPath = localPath + path;
+            else
+                joinedLocalPath = localPath + SEPARATOR + path;
         }
-        return rootLayer;
+
+        return volume.resolve(joinedLocalPath);
     }
 
     @Override
-    public String getURL() {
-        IVolume volume = getVolume();
+    public IPath join(IPath path)
+            throws PathException {
+        if (path == null)
+            throw new NullPointerException("path");
+
+        IPath alignedPath = path.getAlignment().align(this);
+        return alignedPath;
+    }
+
+    /**
+     * TODO ..
+     */
+    @Override
+    public IPath getRelativePath(IPath basePath) {
         throw new NotImplementedException();
     }
 
     @Override
-    public URI toURI()
-            throws URISyntaxException {
-        String url = getURL();
-        return new URI(url);
+    public final String getLocalPath() {
+        return localPath;
     }
 
     @Override
-    public URL toURL()
-            throws MalformedURLException {
-        String url = getURL();
-        return new URL(url);
+    public String[] getLocalEntries() {
+        return localPath.split(SEPARATOR);
     }
 
     @Override
-    public IFile toFile() {
-        return volume.resolveFile(this);
+    public int getLocalEntryCount() {
+        return getLocalEntries().length;
+    }
+
+    @Override
+    public String getLocalEntry(int index) {
+        String[] entries = getLocalEntries();
+        return entries[index];
     }
 
     @Override
     public String getDirName() {
-        String path = getPath();
+        String path = getLocalPath();
         assert path != null;
         int slash = path.lastIndexOf(SEPARATOR_CHAR);
         if (slash == -1)
@@ -116,9 +170,18 @@ public abstract class AbstractPath
 
     @Override
     public String getBaseName() {
-        int n = getEntryCount();
+        int n = getLocalEntryCount();
         assert n > 0;
-        return getEntry(n - 1);
+        return getLocalEntry(n - 1);
+    }
+
+    @Override
+    public String getStrippedName() {
+        String name = getBaseName();
+        int dot = name.lastIndexOf('.');
+        if (dot != -1)
+            name = name.substring(0, dot - 1);
+        return name;
     }
 
     @Override
@@ -140,12 +203,35 @@ public abstract class AbstractPath
     }
 
     @Override
-    public String getStrippedName() {
-        String name = getBaseName();
-        int dot = name.lastIndexOf('.');
-        if (dot != -1)
-            name = name.substring(0, dot - 1);
-        return name;
+    public String getURL() {
+        PathFormatOptions urlFormatOptions = null;
+        String url = format(urlFormatOptions);
+        return url;
+    }
+
+    @Override
+    public URL toURL()
+            throws MalformedURLException {
+        String url = getURL();
+        return new URL(url);
+    }
+
+    @Override
+    public URI toURI()
+            throws URISyntaxException {
+        String url = getURL();
+        return new URI(url);
+    }
+
+    @Override
+    public IPath canonicalize(PathCanonicalizeOptions canonicalizeOptions)
+            throws IOException {
+        return null;
+    }
+
+    @Override
+    public String format(PathFormatOptions formatOptions) {
+        return null;
     }
 
 }

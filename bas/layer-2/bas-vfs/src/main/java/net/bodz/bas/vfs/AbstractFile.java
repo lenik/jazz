@@ -17,83 +17,76 @@ public abstract class AbstractFile
         extends AbstractFsEntry
         implements IFile {
 
-    private Charset charset = Charset.defaultCharset();
-    private boolean deleteOnExit;
+    private Charset preferredCharset = Charset.defaultCharset();
 
     public AbstractFile(IPath path) {
         super(null, path);
     }
 
-    public AbstractFile(IFileContainer container, IPath path) {
+    public AbstractFile(IVolume container, IPath path) {
         super(container, path);
     }
 
     @Override
     public abstract IFile clone();
 
-    // protected <T extends AbstractFile> T clone(T o) {
-    // o.charset = charset;
-    // o.deleteOnExit = deleteOnExit;
-    // return super.clone(o);
-    // }
-
     @Override
-    public Charset getCharset() {
-        return charset;
+    public Charset getPreferredCharset() {
+        return preferredCharset;
     }
 
     @Override
-    public void setCharset(Charset charset) {
+    public void setPreferredCharset(Charset charset) {
         if (charset == null)
             throw new NullPointerException("charset");
-        this.charset = charset;
+        this.preferredCharset = charset;
     }
 
     @Override
-    public void setCharset(String charsetName) {
+    public void setPreferredCharset(String charsetName) {
         if (charsetName == null)
             throw new NullPointerException("charsetName");
-        setCharset(Charset.forName(charsetName));
+        setPreferredCharset(Charset.forName(charsetName));
     }
 
+    /**
+     * Implementation:
+     * <p>
+     * Returns <code>true</code>.
+     */
     @Override
     public boolean isStream() {
-        return false;
+        return true;
     }
 
+    /**
+     * Implementation:
+     * <p>
+     * Returns <code>false</code>.
+     */
     @Override
     public boolean isHidden() {
         return false;
     }
 
     @Override
-    public boolean isDeleteOnExit() {
-        return deleteOnExit;
-    }
-
-    @Override
-    public void setDeleteOnExit(boolean deleteOnExit) {
-        this.deleteOnExit = deleteOnExit;
-    }
-
-    @Override
     public IStreamReadPreparation forRead() {
-        return new StreamReadPreparation(asSource());
+        return new StreamReadPreparation(toSource());
     }
 
     @Override
     public IStreamWritePreparation forWrite() {
-        return new StreamWritePreparation(asTarget());
+        return new StreamWritePreparation(toTarget());
     }
 
     @Override
     public ParseLoadPreparation forLoad() {
-        return new ParseLoadPreparation(asSource());
+        return new ParseLoadPreparation(toSource());
     }
 
     @Override
     public FormatDumpPreparation forDump() {
-        return new FormatDumpPreparation(asTarget());
+        return new FormatDumpPreparation(toTarget());
     }
 
     @Override
@@ -107,10 +100,8 @@ public abstract class AbstractFile
     @Override
     public int hashCode() {
         int hash = super.hashCode();
-        assert charset != null;
-        hash += charset.hashCode();
-        if (deleteOnExit)
-            hash += 0x8876588d;
+        assert preferredCharset != null;
+        hash += preferredCharset.hashCode();
         return hash;
     }
 
@@ -119,9 +110,7 @@ public abstract class AbstractFile
         if (!(obj instanceof AbstractFile))
             return false;
         AbstractFile o = (AbstractFile) obj;
-        if (deleteOnExit != o.deleteOnExit)
-            return false;
-        if (!charset.equals(o.charset))
+        if (!preferredCharset.equals(o.preferredCharset))
             return false;
         return super.equals(o);
     }

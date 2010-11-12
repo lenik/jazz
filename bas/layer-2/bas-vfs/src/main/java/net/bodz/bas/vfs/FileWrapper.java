@@ -3,6 +3,11 @@ package net.bodz.bas.vfs;
 import java.io.File;
 import java.net.URL;
 
+import net.bodz.bas.vfs.impl.InputBytesFile;
+import net.bodz.bas.vfs.impl.InputStringFile;
+import net.bodz.bas.vfs.impl.URLFile;
+import net.bodz.bas.vfs.impl.local.FileFile;
+
 public class FileWrapper {
 
     /**
@@ -14,7 +19,7 @@ public class FileWrapper {
      */
     public static IFile toFile(Object var) {
         if (var instanceof File)
-            return new PlainFile((File) var);
+            return new FileFile((File) var);
         if (var instanceof URL)
             return new URLFile((URL) var);
         if (var instanceof String)

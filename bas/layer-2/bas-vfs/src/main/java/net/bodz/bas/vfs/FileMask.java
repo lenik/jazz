@@ -24,6 +24,7 @@ import static net.bodz.bas.vfs.FileModifiers.format;
 import java.io.File;
 import java.io.IOException;
 
+import net.bodz.bas.vfs.impl.local.FileFile;
 import net.bodz.bas.vfs.preparation.IProbePreparation;
 
 public class FileMask {
@@ -121,7 +122,7 @@ public class FileMask {
 
         if (masked(CNTTYPE) && (bits & EXIST) != 0) {
             try {
-                IProbePreparation probe = new PlainFile(file).forProbe(true);
+                IProbePreparation probe = new FileFile(file).forProbe(true);
                 if (probe.isText())
                     bits |= TEXT;
                 else

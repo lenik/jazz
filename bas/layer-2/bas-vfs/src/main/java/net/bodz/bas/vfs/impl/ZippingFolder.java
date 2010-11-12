@@ -1,4 +1,4 @@
-package net.bodz.bas.vfs;
+package net.bodz.bas.vfs.impl;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -16,10 +16,15 @@ import net.bodz.bas.io.ZipEntryOutputStream;
 import net.bodz.bas.io.resource.preparation.IStreamReadPreparation;
 import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
 import net.bodz.bas.io.resource.preparation.StreamWritePreparation;
+import net.bodz.bas.vfs.AbstractFile;
+import net.bodz.bas.vfs.AbstractFsEntry;
+import net.bodz.bas.vfs.IFile;
+import net.bodz.bas.vfs.IFolder;
+import net.bodz.bas.vfs.IFsEntry;
 
 public class ZippingFolder
         extends AbstractFsEntry
-        implements IFsFolderEntry {
+        implements IFolder {
 
     private final IFile file;
     private final ZipOutputStream zipOut;
@@ -32,7 +37,7 @@ public class ZippingFolder
             throws IOException {
         super(outputFile.getName());
         this.file = outputFile;
-        this.zipOut = new ZipOutputStream(file.asTarget().newOutputStream());
+        this.zipOut = new ZipOutputStream(file.toTarget().newOutputStream());
     }
 
     @Override
@@ -48,7 +53,7 @@ public class ZippingFolder
     }
 
     @Override
-    public IFsFolderEntry getParentFolder() {
+    public IFolder getParentFolder() {
         return file.getParentFolder();
     }
 
@@ -109,19 +114,19 @@ public class ZippingFolder
     }
 
     @Override
-    public List<? extends IFsEntry> listEntries()
+    public List<? extends IFsEntry> listChildren()
             throws IOException {
-        return IteratorToList.toList(entryIterator(null));
+        return IteratorToList.toList(childIterator(null));
     }
 
     @Override
-    public List<? extends IFsEntry> listEntries(IFilter<String> entryNameFilter)
+    public List<? extends IFsEntry> listChildren(IFilter<String> entryNameFilter)
             throws IOException {
-        return IteratorToList.toList(entryIterator(entryNameFilter));
+        return IteratorToList.toList(childIterator(entryNameFilter));
     }
 
     @Override
-    public ImmediateIteratorX<? extends IFsEntry, IOException> entryIterator(final IFilter<String> entryNameFilter)
+    public ImmediateIteratorX<? extends IFsEntry, IOException> childIterator(final IFilter<String> entryNameFilter)
             throws IOException {
         throw new UnsupportedOperationException("Not accessible");
     }
@@ -130,7 +135,7 @@ public class ZippingFolder
     private ZipEntry currentEntry;
 
     @Override
-    public IFsEntry getEntry(String entryName)
+    public IFsEntry getChild(String entryName)
             throws IOException {
         if (currentEntry != null)
             zipOut.closeEntry(); // repeat close a same entry is allowed.
@@ -164,7 +169,7 @@ public class ZippingFolder
         }
 
         @Override
-        public IFsFolderEntry getParentFolder() {
+        public IFolder getParentFolder() {
             return ZippingFolder.this;
         }
 

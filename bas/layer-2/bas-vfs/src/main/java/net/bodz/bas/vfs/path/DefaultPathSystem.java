@@ -93,7 +93,7 @@ public class DefaultPathSystem
         }
 
         IPath context = getDefaultContext();
-        return context.resolve(path);
+        return context.join(path);
     }
 
     @Override

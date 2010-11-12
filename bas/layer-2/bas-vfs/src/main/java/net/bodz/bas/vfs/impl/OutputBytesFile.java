@@ -1,44 +1,44 @@
-package net.bodz.bas.vfs;
+package net.bodz.bas.vfs.impl;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.Reader;
-import java.io.StringReader;
-import java.io.Writer;
+import java.net.URI;
+import java.net.URL;
 
 import net.bodz.bas.io.resource.preparation.IStreamReadPreparation;
 import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
 import net.bodz.bas.io.resource.preparation.StreamReadPreparation;
 import net.bodz.bas.io.resource.preparation.StreamWritePreparation;
-import net.bodz.bas.type.traits.IAttributes;
-import net.bodz.bas.vfs.path.IPath;
+import net.bodz.bas.vfs.AbstractFile;
+import net.bodz.bas.vfs.IFolder;
 
-public class OutputStringFile
+public class OutputBytesFile
         extends AbstractFile {
 
-    private IFsFolderEntry parentFolder;
-    private StringBuffer buffer;
+    private IFolder parentFolder;
+    private ByteArrayOutputStream buffer;
 
     private long createdTime;
     private long modifiedTime;
 
-    public OutputStringFile() {
+    public OutputBytesFile() {
         this("(unnamed)");
     }
 
-    public OutputStringFile(String name) {
+    public OutputBytesFile(String name) {
         super(name);
-        this.buffer = new StringBuffer();
+        this.buffer = new ByteArrayOutputStream();
         this.createdTime = System.currentTimeMillis();
     }
 
     @Override
-    protected OutputStringFile clone()
+    protected OutputBytesFile clone()
             throws CloneNotSupportedException {
-        OutputStringFile o = new OutputStringFile(getName());
+        OutputBytesFile o = new OutputBytesFile(getName());
         o.createdTime = createdTime;
         o.modifiedTime = modifiedTime;
         o.buffer = buffer;
@@ -51,11 +51,11 @@ public class OutputStringFile
     }
 
     @Override
-    public IFsFolderEntry getParentFolder() {
+    public IFolder getParentFolder() {
         return parentFolder;
     }
 
-    public void setParentFolder(IFsFolderEntry parentFolder) {
+    public void setParentFolder(IFolder parentFolder) {
         this.parentFolder = parentFolder;
     }
 
@@ -118,8 +118,7 @@ public class OutputStringFile
     public long getLength() {
         if (buffer == null)
             return 0L;
-        int len = buffer.length();
-        return len;
+        return buffer.size();
     }
 
     @Override
@@ -127,21 +126,11 @@ public class OutputStringFile
         return true;
     }
 
-    @Override
-    public IAttributes getAttributes() {
-        return null;
-    }
-
-    @Override
-    public IPath getPath() {
-        return null;
-    }
-
     class ReadPreparation
             extends StreamReadPreparation {
 
         public ReadPreparation() {
-            super(OutputStringFile.this);
+            super(OutputBytesFile.this);
         }
 
         @Override
@@ -149,17 +138,8 @@ public class OutputStringFile
                 throws IOException {
             if (buffer == null)
                 throw new FileNotFoundException(getName());
-            byte[] bytes = buffer.toString().getBytes(getCharset());
+            byte[] bytes = buffer.toByteArray();
             return new ByteArrayInputStream(bytes);
-        }
-
-        @Override
-        public Reader newReader()
-                throws IOException {
-            if (buffer == null)
-                throw new FileNotFoundException(getName());
-            String s = buffer.toString();
-            return new StringReader(s);
         }
 
     }
@@ -168,42 +148,18 @@ public class OutputStringFile
             extends StreamWritePreparation {
 
         public WritePreparation() {
-            super(OutputStringFile.this);
+            super(OutputBytesFile.this);
         }
 
         @Override
         public OutputStream newOutputStream()
                 throws IOException {
             if (buffer == null)
-                buffer = new StringBuffer();
+                buffer = new ByteArrayOutputStream();
             boolean append = isAppendMode();
             if (!append)
-                buffer.setLength(0);
+                buffer.reset();
             return null;
-        }
-
-        @Override
-        public Writer newWriter()
-                throws IOException {
-            final StringBuffer buf = buffer;
-
-            return new Writer() {
-                @Override
-                public void write(char[] cbuf, int off, int len)
-                        throws IOException {
-                    buf.append(cbuf, off, len);
-                }
-
-                @Override
-                public void flush()
-                        throws IOException {
-                }
-
-                @Override
-                public void close()
-                        throws IOException {
-                }
-            };
         }
 
     }

@@ -1,7 +1,9 @@
-package net.bodz.bas.vfs;
+package net.bodz.bas.vfs.impl;
+
+import net.bodz.bas.vfs.AbstractVolume;
 
 public class RelativeFileContainer
-        extends AbstractFileContainer {
+        extends AbstractVolume {
 
     private static RelativeFileContainer instance = new RelativeFileContainer();
 

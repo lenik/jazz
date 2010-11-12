@@ -1,4 +1,4 @@
-package net.bodz.bas.vfs;
+package net.bodz.bas.vfs.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,10 +18,15 @@ import net.bodz.bas.collection.util.IteratorToList;
 import net.bodz.bas.exceptions.ReadOnlyException;
 import net.bodz.bas.io.resource.preparation.StreamReadPreparation;
 import net.bodz.bas.io.resource.preparation.StreamWritePreparation;
+import net.bodz.bas.vfs.AbstractFile;
+import net.bodz.bas.vfs.AbstractFsEntry;
+import net.bodz.bas.vfs.IFile;
+import net.bodz.bas.vfs.IFolder;
+import net.bodz.bas.vfs.IFsEntry;
 
 public class ZippedFolder
         extends AbstractFsEntry
-        implements IFsFolderEntry {
+        implements IFolder {
 
     private final IFile file;
     private final ZipFile zipFile;
@@ -39,7 +44,7 @@ public class ZippedFolder
     }
 
     @Override
-    protected ZippedFolder clone()
+    public ZippedFolder clone()
             throws CloneNotSupportedException {
         ZippedFolder o;
         try {
@@ -51,7 +56,7 @@ public class ZippedFolder
     }
 
     @Override
-    public IFsFolderEntry getParentFolder() {
+    public IFolder getParentFolder() {
         return file.getParentFolder();
     }
 
@@ -112,19 +117,19 @@ public class ZippedFolder
     }
 
     @Override
-    public List<? extends IFsEntry> listEntries()
+    public List<? extends IFsEntry> listChildren()
             throws IOException {
-        return IteratorToList.toList(entryIterator(null));
+        return IteratorToList.toList(childIterator(null));
     }
 
     @Override
-    public List<? extends IFsEntry> listEntries(IFilter<String> entryNameFilter)
+    public List<? extends IFsEntry> listChildren(IFilter<String> entryNameFilter)
             throws IOException {
-        return IteratorToList.toList(entryIterator(entryNameFilter));
+        return IteratorToList.toList(childIterator(entryNameFilter));
     }
 
     @Override
-    public ImmediateIteratorX<? extends IFsEntry, IOException> entryIterator(final IFilter<String> entryNameFilter)
+    public ImmediateIteratorX<? extends IFsEntry, IOException> childIterator(final IFilter<String> entryNameFilter)
             throws IOException {
         final Enumeration<? extends ZipEntry> entryEnum = zipFile.entries();
         return new AbstractImmediateIteratorX<IFsEntry, IOException>() {
@@ -144,7 +149,7 @@ public class ZippedFolder
     }
 
     @Override
-    public IFsEntry getEntry(String entryName)
+    public IFsEntry getChild(String entryName)
             throws IOException {
         ZipEntry zipEntry = zipFile.getEntry(entryName);
         if (zipEntry == null)
@@ -174,7 +179,7 @@ public class ZippedFolder
         }
 
         @Override
-        public IFsFolderEntry getParentFolder() {
+        public IFolder getParentFolder() {
             return ZippedFolder.this;
         }
 

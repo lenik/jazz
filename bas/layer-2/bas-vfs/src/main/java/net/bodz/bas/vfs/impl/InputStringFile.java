@@ -1,4 +1,4 @@
-package net.bodz.bas.vfs;
+package net.bodz.bas.vfs.impl;
 
 import java.io.IOException;
 
@@ -6,6 +6,8 @@ import net.bodz.bas.io.resource.builtin.StringSource;
 import net.bodz.bas.io.resource.preparation.IStreamReadPreparation;
 import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
 import net.bodz.bas.io.resource.preparation.StreamReadPreparation;
+import net.bodz.bas.vfs.AbstractFile;
+import net.bodz.bas.vfs.IFolder;
 
 public class InputStringFile
         extends AbstractFile {
@@ -16,7 +18,7 @@ public class InputStringFile
     private long createdTime;
     private long modifiedTime;
 
-    private IFsFolderEntry parentFolder;
+    private IFolder parentFolder;
 
     public InputStringFile(String text) {
         this("(Unnamed)", text);
@@ -45,11 +47,11 @@ public class InputStringFile
     }
 
     @Override
-    public IFsFolderEntry getParentFolder() {
+    public IFolder getParentFolder() {
         return parentFolder;
     }
 
-    public void setParentFolder(IFsFolderEntry parentFolder) {
+    public void setParentFolder(IFolder parentFolder) {
         this.parentFolder = parentFolder;
     }
 
@@ -111,7 +113,7 @@ public class InputStringFile
 
     public byte[] getBytes() {
         if (bytes == null)
-            bytes = text.getBytes(getCharset());
+            bytes = text.getBytes(getPreferredCharset());
         return bytes;
     }
 

@@ -1,4 +1,4 @@
-package net.bodz.bas.vfs;
+package net.bodz.bas.vfs.impl;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -19,9 +19,11 @@ import net.bodz.bas.io.resource.preparation.IStreamReadPreparation;
 import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
 import net.bodz.bas.io.resource.preparation.StreamReadPreparation;
 import net.bodz.bas.io.resource.preparation.StreamWritePreparation;
+import net.bodz.bas.vfs.AbstractFile;
+import net.bodz.bas.vfs.IFolder;
 
 public class URLFile
-        extends AbstractMixedFile {
+        extends AbstractFile {
 
     private final URL url;
 
@@ -42,7 +44,7 @@ public class URLFile
     }
 
     @Override
-    public IFsFolderEntry getParentFolder() {
+    public IFolder getParentFolder() {
 
         return null;
     }
@@ -201,26 +203,26 @@ public class URLFile
     }
 
     @Override
-    public URLFile getEntry(String entryName)
+    public URLFile getChild(String entryName)
             throws IOException {
         URL url = new URL(this.url, entryName);
         return new URLFile(url);
     }
 
     @Override
-    public List<? extends URLFile> listEntries()
+    public List<? extends URLFile> listChildren()
             throws IOException {
-        return IteratorToList.toList(entryIterator(null));
+        return IteratorToList.toList(childIterator(null));
     }
 
     @Override
-    public List<? extends URLFile> listEntries(IFilter<String> entryNameFilter)
+    public List<? extends URLFile> listChildren(IFilter<String> entryNameFilter)
             throws IOException {
-        return IteratorToList.toList(entryIterator(entryNameFilter));
+        return IteratorToList.toList(childIterator(entryNameFilter));
     }
 
     @Override
-    public ImmediateIteratorX<? extends URLFile, IOException> entryIterator(final IFilter<String> entryNameFilter) {
+    public ImmediateIteratorX<? extends URLFile, IOException> childIterator(final IFilter<String> entryNameFilter) {
         File file = getFile();
         if (file.isDirectory()) {
             final String[] list;

@@ -1,26 +1,25 @@
-package net.bodz.bas.vfs;
+package net.bodz.bas.vfs.impl.local;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.List;
 
 import net.bodz.bas.closure.IFilter;
 import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.collection.util.IteratorToList;
-import net.bodz.bas.io.resource.preparation.IStreamReadPreparation;
-import net.bodz.bas.io.resource.preparation.StreamReadPreparation;
-import net.bodz.bas.io.resource.preparation.StreamWritePreparation;
+import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.io.resource.IStreamOutputTarget;
+import net.bodz.bas.io.resource.builtin.LocalFileResource;
+import net.bodz.bas.vfs.AbstractFile;
+import net.bodz.bas.vfs.IFolder;
+import net.bodz.bas.vfs.IFsEntry;
 
-public class PlainFile
+public class FileFile
         extends AbstractFile
-        implements IFsFolderEntry {
+        implements IFolder {
 
     private final java.io.File file;
 
@@ -28,23 +27,23 @@ public class PlainFile
      * @throws NullPointerException
      *             if <code>file</code> is <code>null</code>
      */
-    public PlainFile(java.io.File file) {
+    public FileFile(java.io.File file) {
         super(file.getName());
         this.file = file;
     }
 
     @Override
-    protected PlainFile clone() {
-        PlainFile o = new PlainFile(file);
+    protected FileFile clone() {
+        FileFile o = new FileFile(file);
         return super.clone(o);
     }
 
     @Override
-    public IFsFolderEntry getParentFolder() {
+    public IFolder getParentFolder() {
         File parentFile = file.getParentFile();
         if (parentFile == null)
             return null;
-        return new PlainFile(parentFile);
+        return new FileFile(parentFile);
     }
 
     @Override
@@ -76,14 +75,6 @@ public class PlainFile
     @Override
     public boolean isFolder() {
         return file.isDirectory();
-    }
-
-    @Override
-    public boolean isDeletable() {
-        // File parent = file.getParentFile();
-        // if (parent != null)
-        // return parent.canWrite();
-        return file.exists();
     }
 
     @Override
@@ -121,52 +112,23 @@ public class PlainFile
     public long getLength() {
         return file.length();
     }
-
-    class ReadPreparation
-            extends StreamReadPreparation {
-
-        public ReadPreparation() {
-            super(PlainFile.this);
-        }
-
-        @Override
-        public InputStream newInputStream()
-                throws IOException {
-            return new FileInputStream(file);
-        }
-
-    }
-
-    class WritePreparation
-            extends StreamWritePreparation {
-
-        public WritePreparation() {
-            super(PlainFile.this);
-        }
-
-        @Override
-        public OutputStream newOutputStream()
-                throws IOException {
-            return new FileOutputStream(file, isAppendMode());
-        }
-
-    }
-
+ 
+    
     @Override
-    public IStreamReadPreparation forRead() {
-        return new ReadPreparation();
+    public IStreamInputSource toSource() {
+        return new LocalFileResource(file);
     }
-
+    
     @Override
-    public StreamWritePreparation forWrite() {
-        return new WritePreparation();
+    public IStreamOutputTarget toTarget() {
+        return new LocalFileResource(file);
     }
-
+    
     @Override
-    public PlainFile getEntry(String entryName)
+    public FileFile getChild(String entryName)
             throws IOException {
         File file = new File(this.file, entryName);
-        return new PlainFile(file);
+        return new FileFile(file);
     }
 
     public List<? extends IFsEntry> listEntries(FileFilter fileFilter)
@@ -194,36 +156,36 @@ public class PlainFile
     }
 
     ImmediateIteratorX<? extends IFsEntry, IOException> iteratorFiles(final File[] list) {
-        return new AbstractImmediateIteratorX<PlainFile, IOException>() {
+        return new AbstractImmediateIteratorX<FileFile, IOException>() {
 
             int index = 0;
 
             @Override
-            public PlainFile next()
+            public FileFile next()
                     throws IOException {
                 if (index >= list.length)
                     return end();
                 File childFile = list[index++];
-                return new PlainFile(childFile);
+                return new FileFile(childFile);
             }
 
         };
     }
 
     @Override
-    public List<? extends PlainFile> listEntries()
+    public List<? extends FileFile> listChildren()
             throws IOException {
-        return IteratorToList.toList(entryIterator((IFilter<String>) null));
+        return IteratorToList.toList(childIterator((IFilter<String>) null));
     }
 
     @Override
-    public List<? extends PlainFile> listEntries(IFilter<String> entryNameFilter)
+    public List<? extends FileFile> listChildren(IFilter<String> entryNameFilter)
             throws IOException {
-        return IteratorToList.toList(entryIterator(entryNameFilter));
+        return IteratorToList.toList(childIterator(entryNameFilter));
     }
 
     @Override
-    public ImmediateIteratorX<? extends PlainFile, IOException> entryIterator(final IFilter<String> entryNameFilter) {
+    public ImmediateIteratorX<? extends FileFile, IOException> childIterator(final IFilter<String> entryNameFilter) {
         final String[] list;
         if (entryNameFilter == null)
             list = file.list();
@@ -235,18 +197,18 @@ public class PlainFile
                 }
             });
 
-        return new AbstractImmediateIteratorX<PlainFile, IOException>() {
+        return new AbstractImmediateIteratorX<FileFile, IOException>() {
 
             int index = 0;
 
             @Override
-            public PlainFile next()
+            public FileFile next()
                     throws IOException {
                 if (index >= list.length)
                     return end();
                 String childName = list[index++];
                 File childFile = new File(getFile(), childName);
-                return new PlainFile(childFile);
+                return new FileFile(childFile);
             }
 
         };
@@ -262,9 +224,9 @@ public class PlainFile
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof PlainFile))
+        if (!(obj instanceof FileFile))
             return false;
-        PlainFile o = (PlainFile) obj;
+        FileFile o = (FileFile) obj;
         if (!file.equals(o.file))
             return false;
         return true;

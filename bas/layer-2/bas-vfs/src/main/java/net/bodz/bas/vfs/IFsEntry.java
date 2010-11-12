@@ -13,7 +13,7 @@ public interface IFsEntry
     /**
      * @return non-<code>null</code> file container where this file entry belongs to.
      */
-    IFileContainer getContainer();
+    IVolume getVolume();
 
     /**
      * @return non-<code>null</code> path which denotes this file entry.
@@ -28,6 +28,8 @@ public interface IFsEntry
     String getName();
 
     /**
+     * Extension attributes.
+     * 
      * @return <code>null</code> If no attribute.
      */
     IAttributes getAttributes();
@@ -70,9 +72,7 @@ public interface IFsEntry
 
     boolean isHidden();
 
-    boolean isDeletable();
-
-    IFsFolderEntry getParentFolder();
+    IFolder getParentFolder();
 
     boolean getCreateParentsMode();
 
