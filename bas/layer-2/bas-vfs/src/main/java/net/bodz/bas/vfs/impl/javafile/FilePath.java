@@ -1,4 +1,4 @@
-package net.bodz.bas.vfs.impl.local;
+package net.bodz.bas.vfs.impl.javafile;
 
 import net.bodz.bas.vfs.IVolume;
 import net.bodz.bas.vfs.path.AbstractPath;

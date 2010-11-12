@@ -1,4 +1,4 @@
-package net.bodz.bas.vfs.impl.local;
+package net.bodz.bas.vfs.impl.javafile;
 
 import java.io.File;
 import java.io.FileFilter;
