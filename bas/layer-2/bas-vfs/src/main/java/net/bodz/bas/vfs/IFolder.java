@@ -6,19 +6,19 @@ import java.util.List;
 import net.bodz.bas.closure.IFilter;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 
-public interface IFsFolderEntry
+public interface IFolder
         extends IFsEntry {
 
     @Override
-    IFsFolderEntry clone();
+    IFolder clone();
 
     boolean isIterable();
 
     /**
-     * @return <code>null</code> If <code>entryName</code> isn't existed, or the folder isn't
+     * @return <code>null</code> If <code>childName</code> isn't existed, or the folder isn't
      *         accessible.
      */
-    IFsEntry getEntry(String entryName)
+    IFsEntry getChild(String childName)
             throws IOException;
 
     /**
@@ -26,7 +26,7 @@ public interface IFsFolderEntry
      *             If not iterable.
      * @see #isIterable()
      */
-    ImmediateIteratorX<? extends IFsEntry, IOException> entryIterator(IFilter<String> entryNameFilter)
+    ImmediateIteratorX<? extends IFsEntry, IOException> childIterator(IFilter<String> nameFilter)
             throws IOException;
 
     /**
@@ -34,7 +34,7 @@ public interface IFsFolderEntry
      *             If not iterable.
      * @see #isIterable()
      */
-    List<? extends IFsEntry> listEntries()
+    List<? extends IFsEntry> listChildren()
             throws IOException;
 
     /**
@@ -42,7 +42,7 @@ public interface IFsFolderEntry
      *             If not iterable.
      * @see #isIterable()
      */
-    List<? extends IFsEntry> listEntries(IFilter<String> entryNameFilter)
+    List<? extends IFsEntry> listChildren(IFilter<String> nameFilter)
             throws IOException;
 
 }

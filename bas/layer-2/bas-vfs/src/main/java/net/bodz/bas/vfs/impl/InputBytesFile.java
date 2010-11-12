@@ -1,4 +1,4 @@
-package net.bodz.bas.vfs;
+package net.bodz.bas.vfs.impl;
 
 import java.io.IOException;
 
@@ -6,6 +6,8 @@ import net.bodz.bas.exceptions.ReadOnlyException;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
 import net.bodz.bas.io.resource.builtin.ByteArrayResource;
+import net.bodz.bas.vfs.AbstractFile;
+import net.bodz.bas.vfs.IFolder;
 
 public class InputBytesFile
         extends AbstractFile {
@@ -16,7 +18,7 @@ public class InputBytesFile
     private long createdTime;
     private long modifiedTime;
 
-    private IFsFolderEntry parentFolder;
+    private IFolder parentFolder;
 
     public InputBytesFile(byte[] bytes) {
         this("(Unnamed)", bytes);
@@ -31,7 +33,7 @@ public class InputBytesFile
     }
 
     @Override
-    protected InputBytesFile clone()
+    public InputBytesFile clone()
             throws CloneNotSupportedException {
         InputBytesFile o = new InputBytesFile(getName(), bytes);
         o.createdTime = createdTime;
@@ -45,11 +47,11 @@ public class InputBytesFile
     }
 
     @Override
-    public IFsFolderEntry getParentFolder() {
+    public IFolder getParentFolder() {
         return parentFolder;
     }
 
-    public void setParentFolder(IFsFolderEntry parentFolder) {
+    public void setParentFolder(IFolder parentFolder) {
         this.parentFolder = parentFolder;
     }
 
@@ -107,7 +109,7 @@ public class InputBytesFile
 
     public String getText() {
         if (text == null)
-            text = new String(bytes, getCharset());
+            text = new String(bytes, getPreferredCharset());
         return text;
     }
 
@@ -121,12 +123,12 @@ public class InputBytesFile
     }
 
     @Override
-    public IStreamInputSource asSource() {
+    public IStreamInputSource toSource() {
         return new ByteArrayResource(bytes);
     }
 
     @Override
-    public IStreamOutputTarget asTarget() {
+    public IStreamOutputTarget toTarget() {
         // return new ByteArrayResource(bytes);
         throw new ReadOnlyException();
     }

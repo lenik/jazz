@@ -1,6 +1,5 @@
 package net.bodz.bas.vfs.path;
 
-import net.bodz.bas.vfs.IFileContainer;
 
 public interface IPathResolver {
 
@@ -14,23 +13,6 @@ public interface IPathResolver {
      *         resolver.
      */
     boolean accepts(String protocol);
-
-    /**
-     * Returns the length of the file container prefix. The returned value is then used to split the
-     * path into container path and container-specific path.
-     * 
-     * @return 0 if path is relative, or positive index to the start of container-specific path.
-     */
-    int getPrefixLength(String path);
-
-    /**
-     * @return non-<code>null</code> {@link IFileContainer}, if the path is relative, a
-     *         {@link IPathResolver} is returned.
-     * @throws PathException
-     *             If container-path is in bad format.
-     */
-    IFileContainer getFileContainer(String containerPath)
-            throws PathException;
 
     /**
      * @return non-<code>null</code> path.

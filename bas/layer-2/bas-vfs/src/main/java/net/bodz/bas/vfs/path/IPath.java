@@ -7,8 +7,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 
 import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.IFileContainer;
-import net.bodz.bas.vfs.RelativeFileContainer;
+import net.bodz.bas.vfs.IVolume;
 import net.bodz.bas.vfs.path.align.IPathAlignment;
 
 /**
@@ -20,17 +19,27 @@ public interface IPath {
     char SEPARATOR_CHAR = '/';
 
     /**
-     * @return non-<code>null</code> file container, for relative path, a
-     *         {@link RelativeFileContainer} is returned.
-     */
-    IFileContainer getContainer();
-
-    /**
      * The alignment is used to anchor one path to another.
      * 
      * @return non-<code>null</code> value.
      */
     IPathAlignment getAlignment();
+
+    /**
+     * @return non-<code>null</code> file volume.
+     */
+    IVolume getVolume();
+
+    /**
+     * The same as:
+     * 
+     * <pre>
+     * getVolume().resolveFile(this.getLocalPath)
+     * </pre>
+     * 
+     * @return non-null {@link IFile} which this path refers to.
+     */
+    IFile toFile();
 
     /**
      * @return <code>null</code> If this is the root layer.
@@ -66,7 +75,7 @@ public interface IPath {
      * The alignment of the given <code>path</code> is depended on whether the specified
      * <code>path</code> is starts with `/'.
      */
-    IPath resolve(String path)
+    IPath join(String path)
             throws PathException;
 
     /**
@@ -75,32 +84,13 @@ public interface IPath {
      * @throws NullPointerException
      *             If <code>path</code> is <code>null</code>.
      */
-    IPath resolve(IPath path)
+    IPath join(IPath path)
             throws PathException;
 
-    int getEntryCount();
-
-    String getEntry(int index);
-
-    String[] getEntries();
-
     /**
-     * Get full path with all parent layers.
-     * 
-     * @return non-null URL string, which can be resolved to the same path.
+     * The relative path biased from <code>basePath</code>.
      */
-    String getURL();
-
-    URI toURI()
-            throws URISyntaxException;
-
-    URL toURL()
-            throws MalformedURLException;
-
-    /**
-     * @return non-null {@link IFile} which this path refers to.
-     */
-    IFile toFile();
+    IPath getRelativePath(IPath basePath);
 
     /**
      * Get the local path with-in this layer.
@@ -108,12 +98,31 @@ public interface IPath {
      * You can get the same path object by calling {@link IVolume#resolve(String)} of
      * {@link #getVolume() this file system} with the local path.
      * 
-     * @return non-null path string.
+     * @return non-<code>null</code> path string.
      */
-    String getPath();
+    String getLocalPath();
 
     /**
-     * Returns the same as {@link #getParent}.{@link #getPath()}. If there is no parent,
+     * @return non-<code>null</code> entry array of local path.
+     */
+    String[] getLocalEntries();
+
+    /**
+     * @return Count of entries of local path.
+     */
+    int getLocalEntryCount();
+
+    /**
+     * @param index
+     *            0-based entry index.
+     * @return The indexed entry.
+     * @throws IndexOutOfBoundsException
+     *             If <code>index</code> is out of range.
+     */
+    String getLocalEntry(int index);
+
+    /**
+     * Returns the same as {@link #getParent}.{@link #getLocalPath()}. If there is no parent,
      * <code>null</code> is returned.
      */
     String getDirName();
@@ -148,24 +157,29 @@ public interface IPath {
     String getExtensionWithDot();
 
     /**
-     * Convert the path of the last layer to absolute form. The parent layer isn't affected.
+     * Get full path with all parent layers.
+     * 
+     * @return non-null URL string, which can be resolved to the same path.
      */
-    IPath getAbsolutePath();
+    String getURL();
 
-    int FOLLOW_SYMLINK = 1;
-    int SYMLINK_MUST_EXIST = 2;
+    URL toURL()
+            throws MalformedURLException;
+
+    URI toURI()
+            throws URISyntaxException;
 
     /**
-     * @see #FOLLOW_SYMLINK
-     * @see #SYMLINK_MUST_EXIST
+     * Get canonicalized form of local part of this path.
      */
-    IPath getCanonicalPath(int options)
+    IPath canonicalize(PathCanonicalizeOptions canonicalizeOptions)
             throws IOException;
 
-    IPath getRelativePath(IPath path);
-
     /**
-     * The default format result should be the same to {@link #toString()}. When the format
+     * The default format result should be the same to {@link #toString()}.
+     * 
+     * @param formatOptions
+     *            May be <code>null</code>.
      */
     String format(PathFormatOptions formatOptions);
 

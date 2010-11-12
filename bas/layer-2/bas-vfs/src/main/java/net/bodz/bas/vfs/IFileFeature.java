@@ -11,16 +11,16 @@ import net.bodz.bas.io.resource.preparation.IStreamReadPreparation;
 import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
 import net.bodz.bas.vfs.preparation.IProbePreparation;
 
-public interface IFsFileEntry
+public interface IFileFeature
         extends IFsEntry {
 
     @Override
-    IFsFileEntry clone();
+    IFileFeature clone();
 
     /**
      * @return <code>null</code> if {@link Charset} is unknown.
      */
-    Charset getCharset();
+    Charset getPreferredCharset();
 
     /**
      * Override default charset.
@@ -28,22 +28,17 @@ public interface IFsFileEntry
      * @see #newReader(Charset)
      * @see #newWriter(Charset, boolean)
      */
-    void setCharset(Charset charset);
+    void setPreferredCharset(Charset charset);
 
-    void setCharset(String charsetName);
+    void setPreferredCharset(String charsetName);
 
     long getLength();
 
     /**
-     * For stream files, the value returned by {@link #getLength()} means the approx file size.
+     * For stream files, the value returned by {@link #getLength()} is not accuraccy and maybe
+     * <code>0</code>.
      */
     boolean isStream();
-
-    boolean isExecutable();
-
-    boolean isDeleteOnExit();
-
-    void setDeleteOnExit(boolean deleteOnExit);
 
     /**
      * @throws IOException
@@ -53,34 +48,18 @@ public interface IFsFileEntry
     boolean delete()
             throws IOException;
 
-    IStreamInputSource asSource();
+    IStreamInputSource toSource();
 
-    IStreamOutputTarget asTarget();
+    IStreamOutputTarget toTarget();
 
-    /**
-     * @throw {@link UnsupportedOperationException} If read functionality isn't supported.
-     * 
-     */
     IStreamReadPreparation forRead();
 
-    /**
-     * @throw {@link UnsupportedOperationException} If write functionality isn't supported.
-     */
     IStreamWritePreparation forWrite();
 
-    /**
-     * @throw {@link UnsupportedOperationException} If load functionality isn't supported.
-     */
     IParseLoadPreparation forLoad();
 
-    /**
-     * @throw {@link UnsupportedOperationException} If dump functionality isn't supported.
-     */
     IFormatDumpPreparation forDump();
 
-    /**
-     * @throw {@link UnsupportedOperationException} If probe functionality isn't supported.
-     */
     IProbePreparation forProbe(boolean heuristic);
 
 }

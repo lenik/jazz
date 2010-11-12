@@ -1,6 +1,5 @@
 package net.bodz.bas.vfs.path;
 
-
 public class PathResolver
         implements IPathResolver {
 

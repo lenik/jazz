@@ -4,7 +4,7 @@ import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.IPathResolver;
 import net.bodz.bas.vfs.path.PathException;
 
-public class LocalPathResolver
+public class FilePathResolver
         implements IPathResolver {
 
     @Override

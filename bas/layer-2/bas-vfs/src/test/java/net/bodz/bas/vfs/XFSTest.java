@@ -4,7 +4,7 @@ import java.io.File;
 
 import junit.framework.TestCase;
 import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.IFileContainer;
+import net.bodz.bas.vfs.IVolume;
 import net.bodz.bas.vfs.XFS;
 import net.bodz.bas.vfs.path.IPath;
 
@@ -21,7 +21,7 @@ public class XFSTest
 
         IFile file = XFS.resolveFile(pathstr);
         IPath path = file.getPath();
-        IFileContainer container = path.getContainer();
+        IVolume container = path.getVolume();
         // container.getFileSystem();
     }
 

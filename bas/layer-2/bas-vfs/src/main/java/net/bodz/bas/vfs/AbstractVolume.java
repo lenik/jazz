@@ -2,23 +2,28 @@ package net.bodz.bas.vfs;
 
 import java.io.IOException;
 
-import net.bodz.bas.exceptions.NotImplementedException;
 import net.bodz.bas.type.traits.EmptyAttributes;
 import net.bodz.bas.type.traits.IAttributes;
-import net.bodz.bas.vfs.path.IPath;
 
-public abstract class AbstractFileContainer
-        implements IFileContainer {
+import org.apache.commons.vfs.Capability;
+
+public abstract class AbstractVolume
+        implements IVolume {
 
     private final IFile deviceFile;
 
-    public AbstractFileContainer(IFile deviceFile) {
+    public AbstractVolume(IFile deviceFile) {
         this.deviceFile = deviceFile;
     }
 
     @Override
     public IAttributes getAttributes() {
         return EmptyAttributes.getInstance();
+    }
+
+    @Override
+    public boolean hasCapability(Capability capability) {
+        return false;
     }
 
     @Override
@@ -31,14 +36,10 @@ public abstract class AbstractFileContainer
         return getRootPath().toFile();
     }
 
-    @Override
-    public IFile get(String containerSpecificPath) {
-        IPath path = resolve(containerSpecificPath);
-        return get(path);
-    }
-
     /**
-     * @return Empty string (<code>""</code>).
+     * Implementation:
+     * 
+     * Return empty string (<code>""</code>).
      */
     @Override
     public String getLabel() {
@@ -46,11 +47,19 @@ public abstract class AbstractFileContainer
     }
 
     /**
-     * @return <code>0</code>.
+     * Implementation: Return <code>null</code>.
      */
     @Override
-    public long getCapacity() {
-        return 0;
+    public Long getCapacity() {
+        return null;
+    }
+
+    /**
+     * Implementation: Return <code>null</code>.
+     */
+    @Override
+    public Long getFreeSpace() {
+        return null;
     }
 
     /**
@@ -65,38 +74,30 @@ public abstract class AbstractFileContainer
      * @return <code>0</code>.
      */
     @Override
-    public long getFreeSpace() {
-        return 0;
-    }
-
-    /**
-     * @return <code>0</code>.
-     */
-    @Override
     public int getTimeAccuracy() {
         return 0;
     }
 
     @Override
     public void addFileListener(IFile watchFile, IFileListener listener) {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void removeFileListener(IFile watchFile, IFileListener listener) {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public synchronized void addJunction(String junctionPoint, IFile targetFile)
             throws IOException {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public synchronized void removeJunction(String junctionPoint)
             throws IOException {
-        throw new NotImplementedException();
+        throw new UnsupportedOperationException();
     }
 
 }

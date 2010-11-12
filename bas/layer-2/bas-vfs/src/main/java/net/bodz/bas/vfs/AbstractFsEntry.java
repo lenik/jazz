@@ -7,7 +7,7 @@ public abstract class AbstractFsEntry
         extends Attributes
         implements IFsEntry {
 
-    private final IFileContainer container;
+    private final IVolume volume;
     private final IPath path;
     private final String baseName;
 
@@ -17,12 +17,12 @@ public abstract class AbstractFsEntry
         this(null, path);
     }
 
-    public AbstractFsEntry(IFileContainer fileContainer, IPath path) {
-        if (fileContainer == null)
-            throw new NullPointerException("fileContainer");
+    public AbstractFsEntry(IVolume volume, IPath path) {
+        if (volume == null)
+            throw new NullPointerException("volume");
         if (path == null)
             throw new NullPointerException("path");
-        this.container = fileContainer;
+        this.volume = volume;
         this.path = path;
         this.baseName = path.getBaseName();
         assert baseName != null;
@@ -32,8 +32,8 @@ public abstract class AbstractFsEntry
     public abstract IFsEntry clone();
 
     @Override
-    public IFileContainer getContainer() {
-        return container;
+    public IVolume getVolume() {
+        return volume;
     }
 
     @Override
