@@ -28,15 +28,16 @@
     		<scope>compile</scope>
     	</dependency>
     	<dependency>
-    		<groupId>commons-vfs</groupId>
-    		<artifactId>commons-vfs</artifactId>
-    		<version>1.0</version>
+    		<groupId>net.bodz.bas</groupId>
+    		<artifactId>bas-io</artifactId>
+    		<version>0.0.1-SNAPSHOT</version>
     		<scope>compile</scope>
     	</dependency>
     	<dependency>
     		<groupId>net.bodz.bas</groupId>
-    		<artifactId>bas-bean</artifactId>
+    		<artifactId>bas-config</artifactId>
     		<version>0.0.1-SNAPSHOT</version>
+    		<type>jar</type>
     		<scope>compile</scope>
     	</dependency>
     </dependencies>

@@ -7,13 +7,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import javax.tools.FileObject;
+import net.bodz.bas.collection.iterator.ImmediateIteratorX;
+import net.bodz.bas.io.resource.IStreamInputSource;
 
 public class FileTemp {
 
-    static FileObject TMPDIR;
+    static File TMPDIR;
     static {
-        FileObject t;
+        File t;
         String TEMP;
         if ((TEMP = System.getenv("TEMP")) != null)
             t = FilePath.canoniOf(TEMP);
@@ -33,7 +34,7 @@ public class FileTemp {
      * @see File#createTempFile(String, String)
      * @see File#createTempFile(String, String, File)
      */
-    public static FileObject getTmpDir() {
+    public static File getTmpDir() {
         return TMPDIR;
     }
 
@@ -43,14 +44,14 @@ public class FileTemp {
         invalidFilenameChars = Pattern.compile("[^a-zA-Z0-9-_]");
     }
 
-    public static File convertToFile(Object key, Object in)
+    public static File convertToFile(Object key, IStreamInputSource in)
             throws IOException {
         String name = String.valueOf(key);
         name = invalidFilenameChars.matcher(name).replaceAll("_");
         return convertToFile(key, in, "CTF-" + name, ".tmp", FileTemp.TMPDIR);
     }
 
-    public static File convertToFile(Object key, Object in, String prefix, String suffix, File tmpdir)
+    public static File convertToFile(Object key, IStreamInputSource in, String prefix, String suffix, File tmpdir)
             throws IOException {
         if (temps == null)
             temps = new HashMap<Object, File>();
@@ -62,9 +63,10 @@ public class FileTemp {
         File tmpFile = File.createTempFile(prefix, suffix, tmpdir);
         try {
             FileOutputStream out = new FileOutputStream(tmpFile);
-            for (byte[] block : readByBlock(in)) {
+            ImmediateIteratorX<byte[], ? extends IOException> blocks = in.forRead().byteBlocks(true);
+            byte[] block;
+            while ((block = blocks.next()) != null)
                 out.write(block);
-            }
             out.close();
             tmpFile.deleteOnExit();
             if (key != null)
