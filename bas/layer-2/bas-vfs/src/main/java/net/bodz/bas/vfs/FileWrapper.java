@@ -6,7 +6,7 @@ import java.net.URL;
 import net.bodz.bas.vfs.impl.InputBytesFile;
 import net.bodz.bas.vfs.impl.InputStringFile;
 import net.bodz.bas.vfs.impl.URLFile;
-import net.bodz.bas.vfs.impl.local.FileFile;
+import net.bodz.bas.vfs.impl.javafile.FileFile;
 
 public class FileWrapper {
 

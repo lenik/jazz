@@ -3,6 +3,9 @@ package net.bodz.bas.vfs.path;
 import net.bodz.bas.vfs.IVolume;
 import net.bodz.bas.vfs.impl.RelativeFileContainer;
 
+/**
+ * Volume-based path resolver. 
+ */
 public abstract class AbstractPathResolver
         implements IPathResolver {
 

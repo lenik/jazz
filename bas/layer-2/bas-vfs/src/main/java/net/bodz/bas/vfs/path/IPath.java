@@ -1,6 +1,7 @@
 package net.bodz.bas.vfs.path;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -13,7 +14,8 @@ import net.bodz.bas.vfs.path.align.IPathAlignment;
 /**
  * @see org.apache.commons.vfs.FileName
  */
-public interface IPath {
+public interface IPath
+        extends Serializable {
 
     String SEPARATOR = "/";
     char SEPARATOR_CHAR = '/';

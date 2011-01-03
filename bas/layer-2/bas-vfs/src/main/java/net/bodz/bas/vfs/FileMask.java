@@ -24,7 +24,7 @@ import static net.bodz.bas.vfs.FileModifiers.format;
 import java.io.File;
 import java.io.IOException;
 
-import net.bodz.bas.vfs.impl.local.FileFile;
+import net.bodz.bas.vfs.impl.javafile.FileFile;
 import net.bodz.bas.vfs.preparation.IProbePreparation;
 
 public class FileMask {

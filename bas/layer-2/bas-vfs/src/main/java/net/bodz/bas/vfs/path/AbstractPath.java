@@ -6,26 +6,23 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+import net.bodz.bas.annotations.PoorImpl;
 import net.bodz.bas.exceptions.NotImplementedException;
-import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.IVolume;
 import net.bodz.bas.vfs.path.align.IPathAlignment;
 
 public abstract class AbstractPath
         implements IPath {
 
-    private final IVolume volume;
-    private final String localPath;
+    private static final long serialVersionUID = 1L;
+
+    protected final String localPath;
     private final IPathAlignment alignment;
 
-    public AbstractPath(IVolume volume, String localPath, IPathAlignment alignment) {
-        if (volume == null)
-            throw new NullPointerException("volume");
+    public AbstractPath(String localPath, IPathAlignment alignment) {
         if (alignment == null)
             throw new NullPointerException("alignment");
         if (localPath == null)
             throw new NullPointerException("localPath");
-        this.volume = volume;
         this.localPath = localPath;
         this.alignment = alignment;
     }
@@ -33,24 +30,6 @@ public abstract class AbstractPath
     @Override
     public final IPathAlignment getAlignment() {
         return alignment;
-    }
-
-    @Override
-    public final IVolume getVolume() {
-        return volume;
-    }
-
-    @Override
-    public IFile toFile() {
-        return volume.resolveFile(localPath);
-    }
-
-    @Override
-    public IPath getParentLayer() {
-        IFile deviceFile = volume.getDeviceFile();
-        if (deviceFile == null)
-            return null;
-        return deviceFile.getPath();
     }
 
     @Override
@@ -65,15 +44,23 @@ public abstract class AbstractPath
         return rootLayer;
     }
 
+    /**
+     * @param localPath
+     *            non-<code>null</code> path with-in the same volume.
+     * @return non-<code>null</code> {@link IPath} instance.
+     */
+    protected abstract IPath resolveLocal(String localPath);
+
     @Override
     public IPath getParent() {
         int last = localPath.lastIndexOf(SEPARATOR_CHAR);
         if (last == -1)
             return null;
         String localParentPath = localPath.substring(0, last);
-        return volume.resolve(localParentPath);
+        return resolveLocal(localParentPath);
     }
 
+    @PoorImpl
     @Override
     public IPath getParent(int n) {
         IPath np = this;
@@ -89,14 +76,7 @@ public abstract class AbstractPath
 
     @Override
     public IPath getRoot() {
-        IPath root = this;
-        while (true) {
-            IPath parent = root.getParent();
-            if (parent == null)
-                break;
-            root = parent;
-        }
-        return root;
+        return resolveLocal("/");
     }
 
     @Override
@@ -115,7 +95,7 @@ public abstract class AbstractPath
                 joinedLocalPath = localPath + SEPARATOR + path;
         }
 
-        return volume.resolve(joinedLocalPath);
+        return resolveLocal(joinedLocalPath);
     }
 
     @Override
