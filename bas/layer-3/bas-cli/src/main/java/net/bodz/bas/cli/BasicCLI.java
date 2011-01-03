@@ -91,7 +91,7 @@ public class BasicCLI
 
     @Option(name = "logger", hidden = true)
     @ParseBy(LoggerParser.class)
-    protected LogTerm L = LogTerms.get(1);
+    protected LogTerm L = LogTerms.resolveFile(1);
 
     protected UserInterface UI = ConsoleUI.stdout;
 
@@ -428,7 +428,7 @@ public class BasicCLI
                     String optnam = opt.getCLIName();
                     if (!optnam.equals(entry.getKey()))
                         continue;
-                    Object optval = opt.get(this);
+                    Object optval = opt.resolveFile(this);
                     if (optval instanceof CallInfo)
                         continue;
                     dbg.p(optnam, " = ", Util.dispval(optval));

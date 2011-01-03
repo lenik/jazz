@@ -6,21 +6,19 @@ import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
+import net.bodz.bas.io.resource.IStreamInputSource;
+
 public class FileDiff {
 
     /**
      * @return first position of difference, or -1 if the two are same.
      */
-    public static long diff_1(Object src, Object dst)
+    public static long findFirstDifferentByte(IStreamInputSource src, IStreamInputSource dst)
             throws IOException {
         if (src == dst)
             return -1;
         if (src == null || dst == null)
             return 0;
-        if (src instanceof String)
-            src = new File((String) src);
-        if (dst instanceof String)
-            dst = new File((String) dst);
         File srcf = null;
         File dstf = null;
         if (src instanceof File)
@@ -33,8 +31,6 @@ public class FileDiff {
             if (srcf.length() != dstf.length())
                 return 0;
         }
-        boolean closeSrc = shouldClose(src);
-        boolean closeDst = shouldClose(dst);
         InputStream s = getInputStream(src);
         InputStream d = null;
         try {
@@ -73,9 +69,9 @@ public class FileDiff {
         return -1;
     }
 
-    public static boolean equals(Object src, Object dst)
+    public static boolean equals(IStreamInputSource src, IStreamInputSource dst)
             throws IOException {
-        return diff_1(src, dst) == -1;
+        return findFirstDifferentByte(src, dst) == -1;
     }
 
     /**

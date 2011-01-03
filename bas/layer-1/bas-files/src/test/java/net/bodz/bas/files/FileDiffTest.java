@@ -16,7 +16,7 @@ public class FileDiffTest
                 int vert = pair.indexOf('|');
                 byte[] src = pair.substring(0, vert).getBytes();
                 byte[] dst = pair.substring(vert + 1).getBytes();
-                long actual = FileDiff.diff_1(src, dst);
+                long actual = FileDiff.findFirstDifferentByte(src, dst);
                 assertEquals(expected, actual);
             }
         }

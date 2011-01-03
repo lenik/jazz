@@ -15,7 +15,6 @@ import java.util.Set;
 import net.bodz.bas.a.A_bas;
 import net.bodz.bas.a.ClassInfo;
 import net.bodz.bas.a.StartMode;
-import net.bodz.bas.annotation.util.Ns;
 import net.bodz.bas.c1.annotations.Doc;
 import net.bodz.bas.c1.annotations.RcsKeywords;
 import net.bodz.bas.c1.annotations.Version;
@@ -37,13 +36,14 @@ import net.bodz.bas.loader.boot.BootProc;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.snm.SJLibLoader;
+import net.bodz.bas.text.regex.UnixStyleVarProcessor;
 import net.bodz.bas.text.util.StringArray;
-import net.bodz.bas.vfs.URLFile;
+import net.bodz.bas.vfs.impl.URLFile;
 
 @Doc("Generate program launcher for java applications")
 @ProgramName("mkbat")
 @RcsKeywords(id = "$Id$")
-@Version( { 0, 3 })
+@Version({ 0, 3 })
 public class Mkbat
         extends BatchEditCLI {
 
@@ -64,7 +64,7 @@ public class Mkbat
         varmap = new HashMap<String, String>();
         ClassInfo classInfo = _loadClassInfo();
         String generator = Mkbat.class.getSimpleName() //
-                + " " + classInfo.getVersionString(false) // 
+                + " " + classInfo.getVersionString(false) //
         // + ", " + classInfo.getDateString()
         ;
         varmap.put("GENERATOR", generator);
@@ -255,7 +255,9 @@ public class Mkbat
         // varmap.put("LOADLIBS_0", "");
         varmap.put("LOADLIBS", batEscape(loadSection.toString()));
 
-        String inst = Interps.dereference(batTemplBody, varmap);
+        UnixStyleVarProcessor ve = new UnixStyleVarProcessor(varmap);
+
+        String inst = ve.process(batTemplBody);
         byte[] batData = inst.getBytes();
         byte[] batFixed = fix_BatBB.methods().doEditToBuffer(batData);
         if (!Arrays.equals(batData, batFixed))

@@ -6,7 +6,7 @@ import java.util.Properties;
 
 import net.bodz.bas.c1.annotations.RcsKeywords;
 import net.bodz.bas.lang.Nullables;
-import net.bodz.bas.vfs.URLFile;
+import net.bodz.bas.vfs.impl.URLFile;
 
 @RcsKeywords(id = "$Id$")
 public class A_bas {
