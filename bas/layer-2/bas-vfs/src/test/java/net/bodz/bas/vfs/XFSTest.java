@@ -4,7 +4,6 @@ import java.io.File;
 
 import junit.framework.TestCase;
 import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.IVolume;
 import net.bodz.bas.vfs.XFS;
 import net.bodz.bas.vfs.path.IPath;
 
