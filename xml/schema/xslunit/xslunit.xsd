@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xu="http://xml.bodz.net/xslunit" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://xml.bodz.net/xslunit" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:schema xmlns:xu="http://xml.bodz.net/schema/xslunit" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://xml.bodz.net/schema/xslunit" elementFormDefault="qualified" attributeFormDefault="unqualified">
     <xs:element name="TestCases" type="xu:TestCaseGroupType"/>
     <xs:element name="TestCase">
         <xs:complexType>
@@ -11,7 +11,7 @@
                         </xs:choice>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="Result">
+                <xs:element name="Actual">
                     <xs:complexType mixed="true">
                         <xs:choice minOccurs="0" maxOccurs="unbounded">
                             <xs:any namespace="##any"/>
@@ -28,5 +28,6 @@
             <xs:element ref="xu:TestCase"/>
             <xs:element name="Group" type="xu:TestCaseGroupType"/>
         </xs:choice>
+        <xs:attribute name="title" type="xs:string"/>
     </xs:complexType>
 </xs:schema>
