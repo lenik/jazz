@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pdb xmlns="http://xml.bodz.net/p/pdb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xml.bodz.net/p/pdb
+<pdb xmlns="http://xml.bodz.net/schema/pdb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xml.bodz.net/schema/pdb
 ..\pdb.xsd" package="net.bodz.mis.base" name="MisBase" category="net.bodz.mis" label="Mis.Base">
 	<!--Base Def-->
 	<table name="_Docobj" opts="c" label="General Object">

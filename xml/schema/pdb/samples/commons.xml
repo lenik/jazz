@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pdb name="MisCommons" qname="net.bodz.mis.commons" cat="net.bodz.mis" label="Mis.Commons" xmlns="http://xml.bodz.net/p/pdb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xml.bodz.net/p/pdb
+<pdb name="MisCommons" qname="net.bodz.mis.commons" cat="net.bodz.mis" label="Mis.Commons" xmlns="http://xml.bodz.net/schema/pdb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xml.bodz.net/schema/pdb
 ..\pdb.xsd">
 	<import href="base.pdb.xml"/>
 	<!--User System-->

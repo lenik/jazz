@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pdb xmlns="http://xml.bodz.net/p/pdb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xml.bodz.net/p/pdb
-http://xml.bodz.net/p/pdb/pdb.xsd" package="com.AppName.accounts" name="AppNameAccounts" label="应用数据库">
+<pdb xmlns="http://xml.bodz.net/schema/pdb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xml.bodz.net/schema/pdb
+http://xml.bodz.net/schema/pdb/pdb.xsd" package="com.AppName.accounts" name="AppNameAccounts" label="应用数据库">
 	<table name="Group" label="用户组" opts="D" ts="both" doc="组是指可共享资源的用户的集合。">
 		<field name="id" type="Id" opts="KDi"/>
 		<field name="name" label="组名称" type="C[]" doc="显示的组名称。"/>
