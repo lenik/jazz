@@ -26,7 +26,7 @@ import net.bodz.xml.util.TermParser;
 @XmlRootElement(name = "instance", namespace = Instance.NS)
 public class Instance implements PDBElement {
 
-    public static final String NS = "http://xml.bodz.net/p/pdb";
+    public static final String NS = "http://xml.bodz.net/schema/pdb";
 
     @XmlAttribute
     protected String           name;

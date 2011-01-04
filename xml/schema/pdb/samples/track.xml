@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pdb xmlns="http://xml.bodz.net/p/pdb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xml.bodz.net/p/pdb
-http://xml.bodz.net/p/pdb/pdb.xsd" package="com.AppName.appdb" name="AppNameTrack" label="应用数据库">
-	<import href="http://xml.bodz.net/p/pdb/samples/accounts.xml"/>
-	<import href="http://xml.bodz.net/p/pdb/samples/forum.xml"/>
+<pdb xmlns="http://xml.bodz.net/schema/pdb" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xml.bodz.net/schema/pdb
+http://xml.bodz.net/schema/pdb/pdb.xsd" package="com.AppName.appdb" name="AppNameTrack" label="应用数据库">
+	<import href="http://xml.bodz.net/schema/pdb/samples/accounts.xml"/>
+	<import href="http://xml.bodz.net/schema/pdb/samples/forum.xml"/>
 	<table name="Arch" label="机器架构列表">
 		<field name="id" type="Id" opts="KDi"/>
 		<field name="name" label="名称" type="C[, 50]" doc="机器架构的名称。"/>

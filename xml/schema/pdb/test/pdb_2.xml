@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pdb xmlns="http://xml.bodz.net/p/pdb" xmlns:u="http://xml.bodz.net/p/pdb/user" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xml.bodz.net/p/pdb
+<pdb xmlns="http://xml.bodz.net/schema/pdb" xmlns:u="http://xml.bodz.net/schema/pdb/user" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xml.bodz.net/schema/pdb
 ..\pdb.xsd" cat="biz/support/spy" name="VicTalk" qname="com.ebja.victalk" label="Successful Negotiation Support" doc="成功谈判支持">
 	<table name="Prp" opts="D" label="属性" doc="量化属性类别。">
 		<field name="id" label="id/prp" type="I" opts="KDi"/>

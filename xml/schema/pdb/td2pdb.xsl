@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fn="http://www.w3.org/2004/07/xpath-functions" xmlns:xdt="http://www.w3.org/2004/07/xpath-datatypes" xmlns:td="TableDef" xmlns:pdb="http://xml.bodz.net/p/pdb" xmlns:u="http://xml.bodz.net/p/pdb/user">
+<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fn="http://www.w3.org/2004/07/xpath-functions" xmlns:xdt="http://www.w3.org/2004/07/xpath-datatypes" xmlns:td="TableDef" xmlns:pdb="http://xml.bodz.net/schema/pdb" xmlns:u="http://xml.bodz.net/schema/pdb/user">
 	<xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes"/>
 	<xsl:template match="/td:Section">
-		<xsl:element namespace="http://xml.bodz.net/p/pdb" name="pdb">
-			<xsl:attribute namespace="http://www.w3.org/2001/XMLSchema-instance" name="schemaLocation">http://xml.bodz.net/p/pdb http://xml.bodz.net/p/pdb/pdb.xsd</xsl:attribute>
+		<xsl:element namespace="http://xml.bodz.net/schema/pdb" name="pdb">
+			<xsl:attribute namespace="http://www.w3.org/2001/XMLSchema-instance" name="schemaLocation">http://xml.bodz.net/schema/pdb http://xml.bodz.net/schema/pdb/pdb.xsd</xsl:attribute>
 			<xsl:attribute name="name" select="@name"/>
 			<xsl:attribute name="label" select="concat(@title, td:Title)"/>
 			<xsl:apply-templates select="td:Table"/>
 		</xsl:element>
 	</xsl:template>
 	<xsl:template match="td:Table">
-		<xsl:element namespace="http://xml.bodz.net/p/pdb" name="table">
+		<xsl:element namespace="http://xml.bodz.net/schema/pdb" name="table">
 			<xsl:attribute name="name" select="td:Name"/>
 			<xsl:attribute name="label" select="td:Comment"/>
 			<xsl:if test="contains(td:Comment, '[典]')">
@@ -21,7 +21,7 @@
 		</xsl:element>
 	</xsl:template>
 	<xsl:template match="td:Field">
-		<xsl:element namespace="http://xml.bodz.net/p/pdb" name="field">
+		<xsl:element namespace="http://xml.bodz.net/schema/pdb" name="field">
 			<xsl:attribute name="name" select="td:Name"/>
 			<xsl:attribute name="label" select="td:Tip"/>
 			<xsl:attribute name="type"><xsl:variable name="type"><xsl:call-template name="t-lc"><xsl:with-param name="text"><xsl:choose><xsl:when test="contains(td:Type, '(')"><xsl:value-of select="normalize-space(
@@ -91,9 +91,9 @@ $type = 'image'">B[,]</xsl:when><xsl:when test="$type = 'object'">O</xsl:when><x
 	</xsl:template>
 	<xsl:template match="td:Comment"/>
 	<xsl:template match="td:Row">
-		<xsl:element namespace="http://xml.bodz.net/p/pdb" name="instance">
+		<xsl:element namespace="http://xml.bodz.net/schema/pdb" name="instance">
 			<xsl:for-each select="*">
-				<xsl:element namespace="http://xml.bodz.net/p/pdb" name="{ local-name() }">
+				<xsl:element namespace="http://xml.bodz.net/schema/pdb" name="{ local-name() }">
 					<xsl:value-of select="text()"/>
 				</xsl:element>
 			</xsl:for-each>
