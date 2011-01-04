@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../xslunit-xslt2.xsl"?>
+<xu:TestCases xmlns:xu="http://xml.bodz.net/schema/xslunit" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xml.bodz.net/xslunit
+../xslunit.xsd" title="Top-Level">
+    <xu:TestCase name="good">
+        <xu:Expected>Dog</xu:Expected>
+        <xu:Actual>'Dog'</xu:Actual>
+    </xu:TestCase>
+    <xu:TestCase name="bad">
+        <xu:Expected>Dog</xu:Expected>
+        <xu:Actual>'Cat'</xu:Actual>
+    </xu:TestCase>
+    <xu:Group title="Inner1">
+        <xu:TestCase name="good">
+            <xu:Expected>Dog</xu:Expected>
+            <xu:Actual>'Dog'</xu:Actual>
+        </xu:TestCase>
+        <xu:TestCase name="bad">
+            <xu:Expected>Dog</xu:Expected>
+            <xu:Actual>'Cat'</xu:Actual>
+        </xu:TestCase>
+    </xu:Group>
+    <xu:Group title="Inner2">
+        <xu:TestCase name="good">
+            <xu:Expected>Dog</xu:Expected>
+            <xu:Actual>'Dog'</xu:Actual>
+        </xu:TestCase>
+        <xu:TestCase name="bad">
+            <xu:Expected>Dog</xu:Expected>
+            <xu:Actual>'Cat'</xu:Actual>
+        </xu:TestCase>
+    </xu:Group>
+    <xu:TestCase name="good">
+        <xu:Expected>Dog</xu:Expected>
+        <xu:Actual>'Dog'</xu:Actual>
+    </xu:TestCase>
+    <xu:TestCase name="bad">
+        <xu:Expected>Dog</xu:Expected>
+        <xu:Actual>'Cat'</xu:Actual>
+    </xu:TestCase>
+</xu:TestCases>

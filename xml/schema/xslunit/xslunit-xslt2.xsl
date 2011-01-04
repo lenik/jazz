@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:xu="http://xml.bodz.net/schema/xslunit">
+<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:xu="http://xml.bodz.net/schema/xslunit">
     <xsl:output method="html" encoding="utf-8"/>
     <xsl:template match="/">
         <html>
@@ -23,7 +23,7 @@
                 <tr>
                     <th>Test Case</th>
                     <th>Expected</th>
-                    <th>Result</th>
+                    <th>Actual</th>
                     <th>Description</th>
                 </tr>
             </thead>
@@ -40,7 +40,7 @@
     </xsl:template>
     <xsl:template match="xu:TestCase">
         <xsl:variable name="expected" select="xu:Expected/text()"/>
-        <xsl:variable name="result" select="xu:Result/text()"/>
+        <xsl:variable name="Actual" select="xu:Actual/text()"/>
         <tr>
             <td>
                 <xsl:value-of select="@name"/>
@@ -50,14 +50,14 @@
             </td>
             <xsl:element name="td">
                 <xsl:choose>
-                    <xsl:when test="$expected = $result">
+                    <xsl:when test="$expected = $Actual">
                         <xsl:attribute name="class">done</xsl:attribute>
                     </xsl:when>
                     <xsl:otherwise>
                         <xsl:attribute name="class">failed</xsl:attribute>
                     </xsl:otherwise>
                 </xsl:choose>
-                <xsl:value-of select="xu:Result"/>
+                <xsl:value-of select="xu:Actual"/>
             </xsl:element>
             <td>
                 <xsl:value-of select="xu:Description"/>
