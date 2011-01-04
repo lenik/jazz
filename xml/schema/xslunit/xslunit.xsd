@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xu="http://xml.bodz.net/xslunit" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://xml.bodz.net/xslunit" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:element name="TestCases" type="xu:TestCaseGroupType"/>
+    <xs:element name="TestCase">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Expected">
+                    <xs:complexType mixed="true">
+                        <xs:choice minOccurs="0" maxOccurs="unbounded">
+                            <xs:any namespace="##any"/>
+                        </xs:choice>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Result">
+                    <xs:complexType mixed="true">
+                        <xs:choice minOccurs="0" maxOccurs="unbounded">
+                            <xs:any namespace="##any"/>
+                        </xs:choice>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Description" type="xs:string" minOccurs="0"/>
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="TestCaseGroupType">
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element ref="xu:TestCase"/>
+            <xs:element name="Group" type="xu:TestCaseGroupType"/>
+        </xs:choice>
+    </xs:complexType>
+</xs:schema>
