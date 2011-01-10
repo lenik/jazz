@@ -38,7 +38,7 @@ import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.snm.SJLibLoader;
 import net.bodz.bas.text.regex.UnixStyleVarProcessor;
 import net.bodz.bas.text.util.StringArray;
-import net.bodz.bas.vfs.impl.URLFile;
+import net.bodz.bas.vfs.impl.url.URLFile;
 
 @Doc("Generate program launcher for java applications")
 @ProgramName("mkbat")
