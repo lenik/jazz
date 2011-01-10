@@ -8,18 +8,19 @@ import net.bodz.bas.vfs.IFile;
 public class HeuristicProbePreparation
         extends LazyProbePreparation {
 
-    private final IStreamReadPreparation readPrep;
-
     public HeuristicProbePreparation(IFile file) {
         super(file);
-        this.readPrep = file.forRead();
     }
 
     @Override
     public boolean isText()
             throws IOException {
+        if (!file.isBlob())
+            return false;
+
         byte[] block;
         try {
+            IStreamReadPreparation readPrep = file.forRead();
             block = readPrep.readBytes(TextOrBinary.textLookSize);
         } catch (IOException e) {
             return super.isText();
@@ -30,7 +31,7 @@ public class HeuristicProbePreparation
     @Override
     public boolean isBinary()
             throws IOException {
-        return !isText();
+        return file.isBlob() ? !isText() : false;
     }
 
 }

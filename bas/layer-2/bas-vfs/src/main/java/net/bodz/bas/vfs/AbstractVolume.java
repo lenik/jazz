@@ -10,12 +10,6 @@ import org.apache.commons.vfs.Capability;
 public abstract class AbstractVolume
         implements IVolume {
 
-    private final IFile deviceFile;
-
-    public AbstractVolume(IFile deviceFile) {
-        this.deviceFile = deviceFile;
-    }
-
     @Override
     public IAttributes getAttributes() {
         return EmptyAttributes.getInstance();
@@ -28,7 +22,7 @@ public abstract class AbstractVolume
 
     @Override
     public IFile getDeviceFile() {
-        return deviceFile;
+        return null;
     }
 
     @Override

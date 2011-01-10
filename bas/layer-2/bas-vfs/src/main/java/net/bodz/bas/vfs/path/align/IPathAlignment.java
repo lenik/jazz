@@ -1,7 +1,6 @@
 package net.bodz.bas.vfs.path.align;
 
 import net.bodz.bas.vfs.path.IPath;
-import net.bodz.bas.vfs.path.PathException;
 
 /**
  * The alignment determines how to anchor to the context path.
@@ -15,8 +14,9 @@ public interface IPathAlignment {
      * @throws NullPointerException
      *             If any parameter is <code>null</code>.
      */
-    IPath align(IPath context)
-            throws PathException;
+    IPath align(IPath context);
+
+    String decorate(String localPath);
 
     // IPath move(IPath context, IPath path) throws PathException;
 

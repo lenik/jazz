@@ -78,7 +78,7 @@ public interface IPath
      * <code>path</code> is starts with `/'.
      */
     IPath join(String path)
-            throws PathException;
+            throws BadPathException;
 
     /**
      * Join two path, using the alignment of the specified <code>path</code>.
@@ -87,7 +87,7 @@ public interface IPath
      *             If <code>path</code> is <code>null</code>.
      */
     IPath join(IPath path)
-            throws PathException;
+            throws BadPathException;
 
     /**
      * The relative path biased from <code>basePath</code>.
@@ -124,13 +124,19 @@ public interface IPath
     String getLocalEntry(int index);
 
     /**
-     * Returns the same as {@link #getParent}.{@link #getLocalPath()}. If there is no parent,
-     * <code>null</code> is returned.
+     * The dir name is the left part of a path without the base name. The return value of
+     * {@link #getDirName()} is the same as {@link #getParent}. {@link #getLocalPath()}.
+     * <p>
+     * If there is no parent, <code>null</code> is returned.
+     * 
+     * @return The dir name with no trailing slash.
      */
     String getDirName();
 
     /**
-     * @return non-<code>null</code> base name.
+     * The base name is the rightmost part of a path without any parent dir names.
+     * 
+     * @return non-<code>null</code> base name, with no leading slash.
      */
     String getBaseName();
 
@@ -165,9 +171,21 @@ public interface IPath
      */
     String getURL();
 
+    /**
+     * Convert this path object to a {@link URL}.
+     * 
+     * @throws MalformedURLException
+     *             If it couldn't build a {@link URL} object to represent this path.
+     */
     URL toURL()
             throws MalformedURLException;
 
+    /**
+     * Convert this path object to a {@link URI}.
+     * 
+     * @throws URISyntaxException
+     *             If this path can't be represented in RFC 2396 URI syntax.
+     */
     URI toURI()
             throws URISyntaxException;
 
@@ -178,11 +196,17 @@ public interface IPath
             throws IOException;
 
     /**
-     * The default format result should be the same to {@link #toString()}.
+     * Format the path in specific path format.
+     * <p>
+     * This is a shortcut for
      * 
-     * @param formatOptions
-     *            May be <code>null</code>.
+     * <pre>
+     * getVolume().format(this, pathFormat)
+     * </pre>.
+     * 
+     * @param pathFormat
+     *            non-<code>null</code> {@link PathFormat} object.
      */
-    String format(PathFormatOptions formatOptions);
+    String format(PathFormat pathFormat);
 
 }

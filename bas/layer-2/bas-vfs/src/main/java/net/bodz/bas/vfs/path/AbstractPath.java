@@ -8,6 +8,7 @@ import java.net.URL;
 
 import net.bodz.bas.annotations.PoorImpl;
 import net.bodz.bas.exceptions.NotImplementedException;
+import net.bodz.bas.vfs.IVolume;
 import net.bodz.bas.vfs.path.align.IPathAlignment;
 
 public abstract class AbstractPath
@@ -17,6 +18,10 @@ public abstract class AbstractPath
 
     protected final String localPath;
     private final IPathAlignment alignment;
+
+    public AbstractPath(String localPath) {
+        this(localPath, IPathAlignment.ROOT);
+    }
 
     public AbstractPath(String localPath, IPathAlignment alignment) {
         if (alignment == null)
@@ -49,15 +54,18 @@ public abstract class AbstractPath
      *            non-<code>null</code> path with-in the same volume.
      * @return non-<code>null</code> {@link IPath} instance.
      */
-    protected abstract IPath resolveLocal(String localPath);
+    protected final IPath resolveLocal(String localPath) {
+        IVolume volume = getVolume();
+        return volume.resolve(localPath);
+    }
 
     @Override
     public IPath getParent() {
         int last = localPath.lastIndexOf(SEPARATOR_CHAR);
         if (last == -1)
             return null;
-        String localParentPath = localPath.substring(0, last);
-        return resolveLocal(localParentPath);
+        String parent = localPath.substring(0, last);
+        return resolveLocal(parent);
     }
 
     @PoorImpl
@@ -81,7 +89,7 @@ public abstract class AbstractPath
 
     @Override
     public IPath join(String path)
-            throws PathException {
+            throws BadPathException {
         if (path == null)
             throw new NullPointerException("path");
 
@@ -100,7 +108,7 @@ public abstract class AbstractPath
 
     @Override
     public IPath join(IPath path)
-            throws PathException {
+            throws BadPathException {
         if (path == null)
             throw new NullPointerException("path");
 
@@ -184,7 +192,7 @@ public abstract class AbstractPath
 
     @Override
     public String getURL() {
-        PathFormatOptions urlFormatOptions = null;
+        PathFormat urlFormatOptions = null;
         String url = format(urlFormatOptions);
         return url;
     }
@@ -210,8 +218,16 @@ public abstract class AbstractPath
     }
 
     @Override
-    public String format(PathFormatOptions formatOptions) {
-        return null;
+    public String format(PathFormat pathFormat) {
+        return getVolume().format(this, pathFormat);
+    }
+
+    /**
+     * Returns the path string in {@link PathFormats#DEFAULT default} format.
+     */
+    @Override
+    public String toString() {
+        return format(PathFormats.DEFAULT);
     }
 
 }

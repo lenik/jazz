@@ -1,6 +1,5 @@
 package net.bodz.bas.vfs.path;
 
-
 public interface IPathResolver {
 
     /**
@@ -15,11 +14,13 @@ public interface IPathResolver {
     boolean accepts(String protocol);
 
     /**
+     * The request path with protocol name.
+     * 
      * @return non-<code>null</code> path.
      * @throws NullPointerException
      *             If <code>path</code> is <code>null</code>.
      */
     IPath resolve(String path)
-            throws PathException;
+            throws BadPathException;
 
 }

@@ -6,6 +6,7 @@ import net.bodz.bas.exceptions.NotImplementedException;
 import net.bodz.bas.type.traits.IAttributes;
 import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.IllegalPathException;
+import net.bodz.bas.vfs.path.PathFormat;
 
 import org.apache.commons.vfs.Capability;
 import org.apache.commons.vfs.FileSystem;
@@ -62,7 +63,15 @@ public interface IVolume {
     IFile resolveFile(String localPath)
             throws IllegalPathException;
 
+    /**
+     * @see FileSystem#getAttribute(String)
+     */
     IAttributes getAttributes();
+
+// /**
+// * @see FileProvider#getCapabilities()
+// */
+// Collection<Capability> getCapabilities();
 
     /**
      * @see FileSystem#hasCapability(org.apache.commons.vfs.Capability)
@@ -147,5 +156,10 @@ public interface IVolume {
 
     // File replicateFile(IFile file, FileSelector selector)
     // throws IOException
+
+    /**
+     * Format the given path with-in the volume.
+     */
+    String format(IPath path, PathFormat pathFormat);
 
 }
