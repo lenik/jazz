@@ -4,7 +4,7 @@ import java.io.File;
 
 import junit.framework.TestCase;
 import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.XFS;
+import net.bodz.bas.vfs.VFS;
 import net.bodz.bas.vfs.path.IPath;
 
 import org.junit.Test;
@@ -18,7 +18,7 @@ public class XFSTest
         String pathstr = "c:/boot.ini";
         File javaFile = new File(pathstr);
 
-        IFile file = XFS.resolveFile(pathstr);
+        IFile file = VFS.resolveFile(pathstr);
         IPath path = file.getPath();
         IVolume container = path.getVolume();
         // container.getFileSystem();

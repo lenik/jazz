@@ -1,14 +1,14 @@
 package net.bodz.bas.vfs.path.align;
 
+import net.bodz.bas.exceptions.NotImplementedException;
 import net.bodz.bas.vfs.path.IPath;
-import net.bodz.bas.vfs.path.PathException;
 
 public class ParentLayerAlignment
         extends TruncateOnlyAlignment {
 
     public static final int FAIL_DEFAULT = 0;
-    public static final int FAIL_PARENT = 2;
     public static final int FAIL_ROOT = 1;
+    public static final int FAIL_PARENT = 2;
 
     private int failMode;
 
@@ -17,8 +17,7 @@ public class ParentLayerAlignment
     }
 
     @Override
-    public IPath align(IPath context)
-            throws PathException {
+    public IPath align(IPath context) {
         if (context == null)
             throw new NullPointerException("context");
 
@@ -37,6 +36,11 @@ public class ParentLayerAlignment
         default:
             return context;
         }
+    }
+
+    @Override
+    public String decorate(String localPath) {
+        throw new NotImplementedException();
     }
 
 }

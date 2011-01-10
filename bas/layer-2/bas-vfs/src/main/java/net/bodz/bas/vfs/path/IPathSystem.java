@@ -53,6 +53,6 @@ public interface IPathSystem {
      *             If <code>path</code> is <code>null</code>.
      */
     IPath resolve(String path)
-            throws PathException;
+            throws BadPathException;
 
 }

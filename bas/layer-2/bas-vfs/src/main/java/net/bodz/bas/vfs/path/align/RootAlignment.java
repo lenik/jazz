@@ -10,4 +10,9 @@ public class RootAlignment
         return context.getRoot();
     }
 
+    @Override
+    public String decorate(String localPath) {
+        return "/" + localPath;
+    }
+
 }

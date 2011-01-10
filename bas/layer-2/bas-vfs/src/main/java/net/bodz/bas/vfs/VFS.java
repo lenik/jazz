@@ -3,9 +3,9 @@ package net.bodz.bas.vfs;
 import net.bodz.bas.vfs.path.DefaultPathSystem;
 import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.IPathSystem;
-import net.bodz.bas.vfs.path.PathException;
+import net.bodz.bas.vfs.path.BadPathException;
 
-public class XFS {
+public class VFS {
 
     private static IPathSystem pathSystem;
 
@@ -18,12 +18,12 @@ public class XFS {
     }
 
     public static IPath resolve(String path)
-            throws PathException {
+            throws BadPathException {
         return pathSystem.resolve(path);
     }
 
     public static IFile resolveFile(String path)
-            throws PathException {
+            throws BadPathException {
         IPath p = resolve(path);
         return p.toFile();
     }

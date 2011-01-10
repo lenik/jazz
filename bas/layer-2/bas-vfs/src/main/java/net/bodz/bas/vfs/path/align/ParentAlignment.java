@@ -1,7 +1,6 @@
 package net.bodz.bas.vfs.path.align;
 
 import net.bodz.bas.vfs.path.IPath;
-import net.bodz.bas.vfs.path.PathException;
 
 public class ParentAlignment
         extends TruncateOnlyAlignment {
@@ -26,8 +25,7 @@ public class ParentAlignment
     }
 
     @Override
-    public IPath align(IPath context)
-            throws PathException {
+    public IPath align(IPath context) {
         IPath parent = context.getParent(parents);
         if (parent == null)
             if (keepInRoot)
@@ -36,6 +34,15 @@ public class ParentAlignment
                 return null;
         else
             return parent;
+    }
+
+    @Override
+    public String decorate(String localPath) {
+        StringBuffer buf = new StringBuffer(parents * 3 + localPath.length());
+        for (int i = 0; i < parents; i++)
+            buf.append("../");
+        buf.append(localPath);
+        return buf.toString();
     }
 
 }

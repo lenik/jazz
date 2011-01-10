@@ -1,0 +1,128 @@
+package net.bodz.bas.vfs.impl.url;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+
+import net.bodz.bas.vfs.AbstractFile;
+import net.bodz.bas.vfs.IVolume;
+import net.bodz.bas.vfs.path.IPath;
+
+public class URLFile
+        extends AbstractFile.TransientPath {
+
+    private final URL url;
+
+    public URLFile(URL url) {
+        super(url.getPath());
+        this.url = url;
+    }
+
+    @Override
+    public IVolume getVolume() {
+        return URLVolume.getInstance();
+    }
+
+    @Override
+    public IPath getPath() {
+        return new URLPath("");
+    }
+
+    @Override
+    public URLFile clone() {
+        return new URLFile(url).populate(this);
+    }
+
+    @Override
+    protected URLFile populate(Object obj) {
+        super.populate(obj);
+        return this;
+    }
+
+    @Override
+    public Long getLastModifiedTime() {
+        try {
+            return url.openConnection().getLastModified();
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public boolean isBlob() {
+        return true;
+    }
+
+    @Override
+    public boolean isTree() {
+        return true;
+    }
+
+    @Override
+    public boolean isReadable() {
+        return true;
+    }
+
+    static String _getName(URL url) {
+        String name = url.getFile();
+        int slash = name.lastIndexOf('/');
+        if (slash != -1)
+            name = name.substring(slash + 1);
+        return name;
+    }
+
+    @Override
+    public boolean delete() {
+        try {
+            URLConnection connection = url.openConnection();
+
+            if (connection instanceof HttpURLConnection) {
+                HttpURLConnection http = (HttpURLConnection) connection;
+                http.setRequestMethod("DELETE");
+                int responseCode = http.getResponseCode();
+                if (responseCode < 300)
+                    return true;
+                if (responseCode == 404) // Not found
+                    return false;
+                // http.getErrorStream();
+                throw new IOException(http.getResponseMessage());
+            } // HTTP
+
+            else
+                return false;
+
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    public long getLength() {
+        try {
+            URLConnection connection = url.openConnection();
+
+            // TODO - connection.getContentLengthLong();
+            long length = connection.getContentLength();
+            if (length == -1)
+                return 0L;
+            return length;
+
+        } catch (IOException e) {
+            return 0L;
+        }
+    }
+
+    @Override
+    public boolean isStream() {
+        return true;
+    }
+
+    @Override
+    public URLFile getChild(String entryName)
+            throws IOException {
+        URL url = new URL(this.url, entryName);
+        return new URLFile(url);
+    }
+
+}

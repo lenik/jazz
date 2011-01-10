@@ -73,7 +73,7 @@ public class DefaultPathSystem
 
     @Override
     public IPath resolve(String path)
-            throws PathException {
+            throws BadPathException {
         if (path == null)
             throw new NullPointerException("path");
         int colon = path.indexOf(':');

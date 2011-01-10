@@ -6,11 +6,11 @@ import java.util.List;
 import net.bodz.bas.closure.IFilter;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 
-public interface IFolder
+public interface IFsTree
         extends IFsEntry {
 
     @Override
-    IFolder clone();
+    IFsTree clone();
 
     boolean isIterable();
 
@@ -44,5 +44,12 @@ public interface IFolder
      */
     List<? extends IFsEntry> listChildren(IFilter<String> nameFilter)
             throws IOException;
+
+    /**
+     * Create the tree represent by this object, along with all parents which are not existed.
+     * 
+     * @return <code>true</code> If the tree is existed or succeeded to create.
+     */
+    boolean createTree();
 
 }
