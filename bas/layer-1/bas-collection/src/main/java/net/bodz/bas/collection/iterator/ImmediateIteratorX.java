@@ -34,7 +34,7 @@ public interface ImmediateIteratorX<T, X extends Exception> {
      * iterated, or the end of iteration.
      * 
      * <p>
-     * If last {@link #next()} call returns non-<code>null</code> value, the iteration MUST be not
+     * If last {@link #next()} call returns non-<code>null</code> value, the iteration MUST NOT be
      * ended, so the test of {@link #isEnded()} is only needed if the last call to {@link #next()}
      * returns <code>null</code>.
      * 
