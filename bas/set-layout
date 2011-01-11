@@ -45,7 +45,7 @@ function setopt() {
 }
 
 function main() {
-    if [ $# = 0 ]; then set /dev/stdin; fi
+    if [ $# = 0 ]; then set LAYERS; fi
 
     layer=
     while read name comments; do
