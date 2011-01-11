@@ -109,6 +109,8 @@ public class FileModifier {
         for (int i = 0; i < len; i++) {
             int c = str.charAt(i);
             switch (c) {
+            case '-':
+                continue;
             case 'r':
                 bits |= READABLE;
                 break;
@@ -167,9 +169,15 @@ public class FileModifier {
      * , but that's too verbose and hard to read. So only the defined bits are converted and
      * included in the result string.
      * 
-     * @return Non-<code>null</code> modifier string.
+     * @param bits
+     *            The modifier bits to be formatted.
+     * @return Non-empty modifier string. If there is no bits, a single <code>'-'</code> is
+     *         returned.
      */
     public static String format(int bits) {
+        if (bits == 0)
+            return "-";
+
         StringBuffer buf = new StringBuffer();
         int mask = 1;
         for (int i = 0; i < 32; i++) {
