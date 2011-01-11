@@ -2,7 +2,7 @@ package net.bodz.bas.lang.events;
 
 import java.beans.ExceptionListener;
 
-import net.bodz.bas.hint.EventSource;
+import net.bodz.bas.meta.oop.EventSource;
 
 public interface ExceptionSource
         extends EventSource {

@@ -1,4 +1,4 @@
-package net.bodz.bas.hint;
+package net.bodz.bas.meta.oop;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -6,8 +6,6 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import net.bodz.bas.annotations.ChainOrder;
-import net.bodz.bas.annotations.ChainUsage;
 
 @Documented
 @Retention(RetentionPolicy.SOURCE)

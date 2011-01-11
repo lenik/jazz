@@ -5,7 +5,7 @@
         <artifactId>layer-1</artifactId>
         <version>0.0.2-SNAPSHOT</version>
     </parent>
-    <artifactId>bas-hint</artifactId>
+    <artifactId>bas-meta</artifactId>
     <version>0.0.2-SNAPSHOT</version>
     <dependencies/>
     <name>BAS :: Layer 1 :: Hint API</name>

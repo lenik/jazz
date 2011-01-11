@@ -14,7 +14,7 @@
     <modules>
         <module>bas-annotation</module>
         <module>bas-chars</module>
-        <module>bas-hint</module>
+        <module>bas-meta</module>
         <module>bas-lang</module>
         <module>bas-primitive</module>
         <module>bas-reflect</module>

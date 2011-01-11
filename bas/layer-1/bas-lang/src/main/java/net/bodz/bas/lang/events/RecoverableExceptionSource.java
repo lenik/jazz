@@ -1,6 +1,6 @@
 package net.bodz.bas.lang.events;
 
-import net.bodz.bas.hint.EventSource;
+import net.bodz.bas.meta.oop.EventSource;
 
 public interface RecoverableExceptionSource
         extends EventSource {

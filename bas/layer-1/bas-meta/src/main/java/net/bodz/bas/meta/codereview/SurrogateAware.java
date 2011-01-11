@@ -1,4 +1,4 @@
-package net.bodz.bas.hint;
+package net.bodz.bas.meta.codereview;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

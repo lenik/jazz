@@ -1,9 +1,9 @@
 package net.bodz.bas.mem.types;
 
-import net.bodz.bas.hint.ThreadUnsafe;
 import net.bodz.bas.mem.AccessException;
 import net.bodz.bas.mem.Memory;
 import net.bodz.bas.mem._Type;
+import net.bodz.bas.meta.codereview.ThreadUnsafe;
 
 public class Int8 extends _Type {
 

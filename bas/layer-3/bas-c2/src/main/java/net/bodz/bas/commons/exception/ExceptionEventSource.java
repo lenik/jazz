@@ -1,6 +1,6 @@
 package net.bodz.bas.commons.exception;
 
-import net.bodz.bas.lang.events.RecoverableExceptionListener;
+import net.bodz.bas.meta.lang.events.RecoverableExceptionListener;
 
 public interface ExceptionEventSource {
 

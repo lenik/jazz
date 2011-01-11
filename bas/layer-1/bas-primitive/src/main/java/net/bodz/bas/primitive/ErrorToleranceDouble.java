@@ -1,6 +1,6 @@
 package net.bodz.bas.primitive;
 
-import net.bodz.bas.hint.GeneratedByCopyPaste;
+import net.bodz.bas.meta.codereview.GeneratedByCopyPaste;
 
 public class ErrorToleranceDouble
         extends Number {

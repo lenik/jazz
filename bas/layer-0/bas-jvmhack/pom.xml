@@ -19,7 +19,7 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-hint</artifactId>
+            <artifactId>bas-meta</artifactId>
             <version>0.0.2-SNAPSHOT</version>
         </dependency>
         <dependency>

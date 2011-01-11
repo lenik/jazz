@@ -10,7 +10,7 @@ layer-1 核心语言增强与语言工具
     bas-c1
     bas-annotation
     bas-lang
-    bas-hint
+    bas-meta
     bas-primitive
     bas-reflect
     bas-chars

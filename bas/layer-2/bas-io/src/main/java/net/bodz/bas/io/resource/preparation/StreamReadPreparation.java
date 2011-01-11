@@ -16,9 +16,9 @@ import net.bodz.bas.collection.iterator.IteratorX;
 import net.bodz.bas.collection.iterator.OverlappedImmediateIteratorX;
 import net.bodz.bas.collection.util.IteratorToList;
 import net.bodz.bas.exceptions.UnexpectedException;
-import net.bodz.bas.hint.GeneratedByCopyPaste;
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.meta.codereview.GeneratedByCopyPaste;
 import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.ICharIn;
 

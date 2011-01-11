@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.collection.tree.TreePath;
-import net.bodz.bas.lang.Nullables;
+import net.bodz.bas.meta.lang.Nullables;
 
 public class SimpleRequest
         extends VarMap<String, Object> {
