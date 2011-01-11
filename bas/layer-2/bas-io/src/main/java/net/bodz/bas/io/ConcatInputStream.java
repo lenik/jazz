@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import net.bodz.bas.hint.GeneratedByCopyPaste;
+import net.bodz.bas.meta.codereview.GeneratedByCopyPaste;
 
 public class ConcatInputStream
         extends InputStream {

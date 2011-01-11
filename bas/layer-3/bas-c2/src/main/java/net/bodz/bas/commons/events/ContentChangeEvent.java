@@ -2,7 +2,7 @@ package net.bodz.bas.commons.events;
 
 import java.util.EventObject;
 
-import net.bodz.bas.lang.Ref;
+import net.bodz.bas.meta.lang.Ref;
 
 public class ContentChangeEvent
         extends EventObject {

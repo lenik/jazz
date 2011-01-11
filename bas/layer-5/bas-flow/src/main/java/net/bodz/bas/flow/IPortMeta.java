@@ -2,7 +2,7 @@ package net.bodz.bas.flow;
 
 import java.util.Collection;
 
-import net.bodz.bas.hint.MetaData;
+import net.bodz.bas.meta.tags.MetaData;
 
 public interface IPortMeta
         extends MetaData {

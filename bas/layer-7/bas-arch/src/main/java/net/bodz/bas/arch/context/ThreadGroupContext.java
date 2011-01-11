@@ -1,6 +1,6 @@
 package net.bodz.bas.arch.context;
 
-import net.bodz.bas.lang.Nullables;
+import net.bodz.bas.meta.lang.Nullables;
 
 public class ThreadGroupContext
         extends AbstractContext {

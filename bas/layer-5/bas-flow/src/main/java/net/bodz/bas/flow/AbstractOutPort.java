@@ -1,11 +1,11 @@
 package net.bodz.bas.flow;
 
-import net.bodz.bas.annotations.MetaClass;
 import net.bodz.bas.collection.util.ClassLocal;
 import net.bodz.bas.exceptions.IllegalUsageError;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.lang.Nullables;
+import net.bodz.bas.meta.tags.MetaClass;
 
 public abstract class AbstractOutPort
         extends AbstractPort

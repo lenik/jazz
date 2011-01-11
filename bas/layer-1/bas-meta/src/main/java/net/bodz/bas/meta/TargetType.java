@@ -1,17 +1,14 @@
-package net.bodz.bas.annotations;
+package net.bodz.bas.meta;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Retention(RetentionPolicy.SOURCE)
+@Retention(RetentionPolicy.CLASS)
 @Target( { ElementType.ANNOTATION_TYPE })
-public @interface TargetSide {
+public @interface TargetType {
 
-    int BEAN = 0;
-    int GUI = 1;
-
-    int value();
+    Class<?>[] value();
 
 }

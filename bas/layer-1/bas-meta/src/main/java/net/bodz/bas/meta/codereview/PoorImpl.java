@@ -1,4 +1,4 @@
-package net.bodz.bas.annotations;
+package net.bodz.bas.meta.codereview;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

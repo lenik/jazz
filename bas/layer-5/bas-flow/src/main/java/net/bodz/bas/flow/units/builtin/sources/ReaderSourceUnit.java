@@ -6,9 +6,9 @@ import java.io.Reader;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.flow.units.SOSourceUnit;
 import net.bodz.bas.flow.units.builtin.DefaultConfig;
-import net.bodz.bas.hint.GeneratedByCopyPaste;
 import net.bodz.bas.io.resource.builtin.ReaderSource;
 import net.bodz.bas.io.resource.preparation.IStreamReadPreparation;
+import net.bodz.bas.meta.codereview.GeneratedByCopyPaste;
 
 public class ReaderSourceUnit
         extends SOSourceUnit {

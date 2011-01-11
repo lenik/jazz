@@ -6,8 +6,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import net.bodz.bas.annotations.PoorImpl;
 import net.bodz.bas.exceptions.NotImplementedException;
+import net.bodz.bas.meta.codereview.PoorImpl;
 import net.bodz.bas.vfs.IVolume;
 import net.bodz.bas.vfs.path.align.IPathAlignment;
 

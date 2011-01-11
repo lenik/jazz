@@ -1,4 +1,4 @@
-package net.bodz.bas.hint;
+package net.bodz.bas.meta.lang;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;

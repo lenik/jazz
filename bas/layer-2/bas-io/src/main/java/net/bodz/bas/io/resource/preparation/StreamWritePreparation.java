@@ -3,9 +3,9 @@ package net.bodz.bas.io.resource.preparation;
 import java.io.IOException;
 
 import net.bodz.bas.exceptions.UnexpectedException;
-import net.bodz.bas.hint.GeneratedByCopyPaste;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
+import net.bodz.bas.meta.codereview.GeneratedByCopyPaste;
 import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.ICharIn;

@@ -3,7 +3,7 @@ package net.bodz.bas.regex;
 import java.nio.CharBuffer;
 
 import net.bodz.bas.chars.CharFeature;
-import net.bodz.bas.hint.GeneratedByCopyPaste;
+import net.bodz.bas.meta.codereview.GeneratedByCopyPaste;
 
 public class BufParsers {
 

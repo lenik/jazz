@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.hint.ThreadUnsafe;
 import net.bodz.bas.log.message.ArrayJoinMessage;
 import net.bodz.bas.log.message.IMessage;
 import net.bodz.bas.log.message.StringFormatMessage;
+import net.bodz.bas.meta.codereview.ThreadUnsafe;
 import net.bodz.bas.sio.AbstractIndentedOut;
 
 @ThreadUnsafe

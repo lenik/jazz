@@ -1,4 +1,4 @@
-package net.bodz.bas.hint;
+package net.bodz.bas.meta.tags;
 
 /**
  * Tag interface for Class meta data.
