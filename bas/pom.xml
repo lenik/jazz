@@ -1,14 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>net.bodz.bas</groupId>
-		<artifactId>bas-parent</artifactId>
-		<version>0.3</version>
-	</parent>
-	<artifactId>bas</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
-	<packaging>pom</packaging>
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>net.bodz.bas</groupId>
+        <artifactId>bas-parent</artifactId>
+        <version>0.3</version>
+    </parent>
+    <artifactId>bas</artifactId>
+    <version>0.0.2-SNAPSHOT</version>
+    <packaging>pom</packaging>
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -108,45 +107,50 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<scope>test</scope>
-			<optional>true</optional>
-		</dependency>
-	</dependencies>
-	<modules>
-		<module>bas-config</module>
-		<module>layer-1</module>
-		<module>layer-2</module>
-		<module>layer-3</module>
-		<module>bas-incubator</module>
-	</modules>
-	<name>BAS Framework</name>
-	<url>http://bas.bodz.net/</url>
-	<inceptionYear>2004</inceptionYear>
-	<developers>
-		<developer>
-			<id>lenik</id>
-			<name>Lenik (谢继雷)</name>
-			<email>lenik@bodz.net</email>
-			<roles>
-				<role>Project Leader</role>
-			</roles>
-			<timezone>GMT+8</timezone>
-		</developer>
-	</developers>
-	<mailingLists>
-		<mailingList>
-			<name>boDz Software Foundation</name>
-			<archive>http://list.bodz.net/bsf/archive</archive>
-			<post>post@bsf.list.bodz.net</post>
-			<subscribe>subscribe@bsf.list.bodz.net</subscribe>
-			<unsubscribe>unsubscribe@bsf.list.bodz.net</unsubscribe>
-		</mailingList>
-	</mailingLists>
-	<scm>
-		<connection>scm:svn:svn://svn.bodz.net/jazz/bas/trunk</connection>
-	</scm>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+    <modules>
+        <module>bas-config</module>
+        <module>layer-0</module>
+        <module>layer-1</module>
+        <module>layer-2</module>
+        <module>layer-3</module>
+        <module>layer-4</module>
+        <module>layer-5</module>
+        <module>layer-6</module>
+        <module>layer-7</module>
+        <module>bas-incubator</module>
+    </modules>
+    <name>BAS Framework</name>
+    <url>http://bas.bodz.net/</url>
+    <inceptionYear>2004</inceptionYear>
+    <developers>
+        <developer>
+            <id>lenik</id>
+            <name>Lenik (谢继雷)</name>
+            <email>lenik@bodz.net</email>
+            <roles>
+                <role>Project Leader</role>
+            </roles>
+            <timezone>GMT+8</timezone>
+        </developer>
+    </developers>
+    <mailingLists>
+        <mailingList>
+            <name>boDz Software Foundation</name>
+            <archive>http://list.bodz.net/bsf/archive</archive>
+            <post>post@bsf.list.bodz.net</post>
+            <subscribe>subscribe@bsf.list.bodz.net</subscribe>
+            <unsubscribe>unsubscribe@bsf.list.bodz.net</unsubscribe>
+        </mailingList>
+    </mailingLists>
+    <scm>
+        <connection>scm:svn:svn://svn.bodz.net/jazz/bas/trunk</connection>
+    </scm>
 </project>
