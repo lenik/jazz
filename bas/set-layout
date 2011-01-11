@@ -74,6 +74,8 @@ function main() {
             ;;
         esac
 
+        [ "$from" = "$layer" ] && continue
+
         [ "$dry_run" = 1 ] && continue
         if [ ! -d "$layer" ]; then
             _log1 "Create directory $layer/"
