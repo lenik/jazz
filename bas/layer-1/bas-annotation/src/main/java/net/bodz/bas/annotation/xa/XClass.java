@@ -6,8 +6,6 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.exceptions.NotImplementedException;
-
 public class XClass {
 
     private final Class<?> declaringType;
@@ -23,15 +21,15 @@ public class XClass {
     }
 
     public <A extends Annotation> A getAnnotation(Class<A> annotationType) {
-        throw new NotImplementedException();
+        throw new RuntimeException("Not implemented");
     }
 
     public <A extends Annotation> A getFieldAnnotation(Field field, Class<A> annotationType) {
-        throw new NotImplementedException();
+        throw new RuntimeException("Not implemented");
     }
 
     public <A extends Annotation> A getMethodAnnotation(Method method, Class<A> annotationType) {
-        throw new NotImplementedException();
+        throw new RuntimeException("Not implemented");
     }
 
     private static Map<Class<?>, XClass> parsedTypes = new HashMap<Class<?>, XClass>();

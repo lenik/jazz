@@ -2,8 +2,6 @@ package net.bodz.bas.lang.events;
 
 import java.util.EventObject;
 
-import net.bodz.bas.lang.Nullables;
-
 public class RecoverableExceptionEvent
         extends EventObject {
 
@@ -38,8 +36,12 @@ public class RecoverableExceptionEvent
         if (!(obj instanceof RecoverableExceptionEvent))
             return false;
         RecoverableExceptionEvent o = (RecoverableExceptionEvent) obj;
-        if (!Nullables.equals(exception, o.exception))
-            return false;
+        if (exception != o.exception) {
+            if (exception == null || o.exception == null)
+                return false;
+            if (!exception.equals(o.exception))
+                return false;
+        }
         if (recovered != o.recovered)
             return false;
         return true;

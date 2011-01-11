@@ -3,7 +3,7 @@ package net.bodz.bas.text.lop.fsm;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.string.StringQuote;
+import net.bodz.bas.string.StringEscape;
 
 public class CharRange
         extends _CharSet {
@@ -154,14 +154,14 @@ public class CharRange
 
     @Override
     public String toString() {
-        String c = StringQuote.escape(begin);
+        String c = StringEscape.java(begin);
         switch (end - begin) {
         case 0:
             return "[]";
         case 1:
             return c;
         }
-        String d = StringQuote.escape(end - 1);
+        String d = StringEscape.java(end - 1);
         return "[" + c + "-" + d + "]";
     }
 

@@ -1,10 +1,8 @@
 package net.bodz.bas.jvm.stack;
 
-import java.lang.reflect.Method;
+import sun.reflect.Reflection;
 
-import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
-import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
-
+@SuppressWarnings("restriction")
 public class Caller {
 
     public static StackTraceElement stackTrace(int caller) {
@@ -17,17 +15,6 @@ public class Caller {
         return stackTrace[caller + 1].getClass();
     }
 
-    static final Class<?> Reflection_class;
-    static final Method Reflection_getCallerClass;
-    static {
-        try {
-            Reflection_class = Jdk7Reflect.forName("sun.reflect.Reflection");
-            Reflection_getCallerClass = Jdk7Reflect.getMethod(Reflection_class, "getCallerClass", int.class);
-        } catch (ReflectiveOperationException e) {
-            throw new UnsupportedOperationException("Get caller isn't supported. ", e);
-        }
-    }
-
     /**
      * In the following, `<code>caller-method</code>' is the method which calls
      * {@link #getCallerClass(int)}, and `<code>self-method</code>' is the
@@ -38,11 +25,7 @@ public class Caller {
      *            <code>self-method</code>.
      */
     public static Class<?> getCallerClass(int caller) {
-        try {
-            return (Class<?>) Jdk7Reflect.invoke(Reflection_getCallerClass, null, caller + 2);
-        } catch (ReflectiveOperationException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
+        return Reflection.getCallerClass(caller + 2);
     }
 
     /**

@@ -24,10 +24,10 @@ public interface IStreamOutputTarget
     IStreamOutputTarget clone();
 
     @Override
-    IStreamOutputTarget setAppendMode(boolean appendMode);
+    void setAppendMode(boolean appendMode);
 
     @Override
-    IStreamOutputTarget setCharset(Charset charset);
+    void setCharset(Charset charset);
 
     /**
      * @return non-<code>null</code> value.

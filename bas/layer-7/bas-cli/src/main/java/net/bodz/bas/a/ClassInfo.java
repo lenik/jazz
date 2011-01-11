@@ -5,13 +5,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.c1.annotations.Author;
-import net.bodz.bas.c1.annotations.SiteLink;
-import net.bodz.bas.c1.annotations.Version;
-import net.bodz.bas.c1.annotations.util.DisplayNameUtil;
-import net.bodz.bas.c1.annotations.util.DocUtil;
+import net.bodz.bas.c1.util.Nullables;
 import net.bodz.bas.collection.util.ClassLocal;
-import net.bodz.bas.lang.Nullables;
+import net.bodz.bas.meta.build.Version;
+import net.bodz.bas.meta.info.Author;
+import net.bodz.bas.meta.info.DisplayNameUtil;
+import net.bodz.bas.meta.info.DocUtil;
+import net.bodz.bas.meta.info.SiteLink;
 import net.bodz.bas.string.StringArray;
 import net.bodz.bas.ui.a.Icon;
 

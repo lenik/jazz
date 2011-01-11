@@ -17,7 +17,7 @@ public interface ISimpleStreamInputSource
      * @throws NullPointerException
      *             If <code>charset</code> is <code>null</code>.
      */
-    ISimpleStreamInputSource setCharset(Charset charset);
+    void setCharset(Charset charset);
 
     /**
      * @return non-<code>null</code> value.

@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>bas-bits</module>
+        <module>bas-c2</module>
         <module>bas-closure</module>
         <module>bas-collection</module>
         <module>bas-io</module>
@@ -22,6 +23,7 @@
         <module>bas-string</module>
         <module>bas-traits-impl</module>
         <module>bas-valtype</module>
+        <module>bas-variant</module>
     </modules>
     <name>BAS :: Layer 2</name>
 </project>

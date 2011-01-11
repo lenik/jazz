@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import junit.framework.TestCase;
-import net.bodz.bas.c1.annotations.Doc;
+import net.bodz.bas.meta.info.Doc;
 
 public class BeanTestBase
         extends TestCase {

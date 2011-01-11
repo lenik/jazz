@@ -1,9 +1,7 @@
 package net.bodz.bas.jvm.stack;
 
-import net.bodz.bas.exceptions.UnexpectedException;
-
 public class FrameConstructException
-        extends UnexpectedException {
+        extends Exception {
 
     private static final long serialVersionUID = 1L;
 
@@ -11,16 +9,16 @@ public class FrameConstructException
         super();
     }
 
-    public FrameConstructException( String message, Throwable cause ) {
-        super( message, cause );
+    public FrameConstructException(String message, Throwable cause) {
+        super(message, cause);
     }
 
-    public FrameConstructException( String message ) {
-        super( message );
+    public FrameConstructException(String message) {
+        super(message);
     }
 
-    public FrameConstructException( Throwable cause ) {
-        super( cause );
+    public FrameConstructException(Throwable cause) {
+        super(cause);
     }
 
 }

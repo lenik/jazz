@@ -1,6 +1,6 @@
 package net.bodz.bas.i18n.dict;
 
-import net.bodz.bas.c1.annotations.util.DisplayNameUtil;
+import net.bodz.bas.meta.info.DisplayNameUtil;
 
 public abstract class _NLSDict
         implements NLSDict {

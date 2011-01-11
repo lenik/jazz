@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-import net.bodz.bas.lang.Nullables;
+import net.bodz.bas.c1.util.Nullables;
 import net.bodz.bas.type.ITypeTraits;
 
 public class Attributes

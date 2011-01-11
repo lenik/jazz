@@ -2,7 +2,7 @@ package net.bodz.bas.reflect.query;
 
 import java.util.Arrays;
 
-import net.bodz.bas.lang.Nullables;
+import net.bodz.bas.c1.util.Nullables;
 
 public class EqualsParameters
         implements IParametersPredicate {

@@ -3,7 +3,7 @@ package net.bodz.bas.text.lop.fsm;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.string.StringQuote;
+import net.bodz.bas.string.StringEscape;
  
 public class Char
         extends _CharSet {
@@ -83,7 +83,7 @@ public class Char
 
     @Override
     public String toString() {
-        return StringQuote.escape(ch);
+        return StringEscape.java(ch);
     }
 
 }

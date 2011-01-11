@@ -3,8 +3,8 @@ package net.bodz.bas.fsm.base;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.c1.annotations.util.DisplayNameUtil;
 import net.bodz.bas.exceptions.NotImplementedException;
+import net.bodz.bas.meta.info.DisplayNameUtil;
 
 /**
  * Implemented Features: - Composition
