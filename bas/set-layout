@@ -83,6 +83,9 @@ function main() {
         fi
         vcs mv $from/$name $layer/$name
     done <"$1"
+
+    _log1 "Fix the poms."
+    ./fix-layer-poms
 }
 
 boot "$@"
