@@ -8,17 +8,17 @@
         <artifactId>bas</artifactId>
         <version>0.0.2-SNAPSHOT</version>
     </parent>
-    <artifactId>layer-2</artifactId>
+    <artifactId>layer-7</artifactId>
     <version>0.0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>bas-bits</module>
-        <module>bas-closure</module>
-        <module>bas-collection</module>
-        <module>bas-io</module>
-        <module>bas-nio</module>
-        <module>bas-regex</module>
-        <module>bas-sio</module>
+        <module>bas-ant</module>
+        <module>bas-arch</module>
+        <module>bas-cli</module>
+        <module>bas-dotnet-synthetics</module>
+        <module>bas-loader</module>
+        <module>bas-netserv</module>
+        <module>bas-unitperf</module>
     </modules>
-    <name>BAS :: Layer 2</name>
+    <name>BAS :: Layer 7</name>
 </project>

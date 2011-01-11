@@ -8,17 +8,20 @@
         <artifactId>bas</artifactId>
         <version>0.0.2-SNAPSHOT</version>
     </parent>
-    <artifactId>layer-2</artifactId>
+    <artifactId>layer-5</artifactId>
     <version>0.0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>bas-bits</module>
-        <module>bas-closure</module>
-        <module>bas-collection</module>
-        <module>bas-io</module>
-        <module>bas-nio</module>
-        <module>bas-regex</module>
-        <module>bas-sio</module>
+        <module>bas-bean</module>
+        <module>bas-database</module>
+        <module>bas-flow</module>
+        <module>bas-i18n</module>
+        <module>bas-l10n</module>
+        <module>bas-log</module>
+        <module>bas-potato</module>
+        <module>bas-type</module>
+        <module>bas-vfs</module>
+        <module>bas-xml</module>
     </modules>
-    <name>BAS :: Layer 2</name>
+    <name>BAS :: Layer 5</name>
 </project>

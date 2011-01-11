@@ -1,60 +1,59 @@
-<?xml version="1.0"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>net.bodz.bas</groupId>
-        <artifactId>layer-1</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <artifactId>layer-2</artifactId>
+        <version>0.0.2-SNAPSHOT</version>
     </parent>
     <artifactId>bas-io</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <dependencies>
-    	<dependency>
-    		<groupId>net.bodz.bas</groupId>
-    		<artifactId>bas-primitive</artifactId>
-    		<version>0.0.1-SNAPSHOT</version>
-    		<type>jar</type>
-    		<scope>compile</scope>
-    	</dependency>
-    	<dependency>
-    		<groupId>net.bodz.bas</groupId>
-    		<artifactId>bas-bits</artifactId>
-    		<version>0.0.1-SNAPSHOT</version>
-    		<type>jar</type>
-    		<scope>compile</scope>
-    	</dependency>
-    	<dependency>
-    		<groupId>net.bodz.bas</groupId>
-    		<artifactId>bas-hint</artifactId>
-    		<version>0.0.2-SNAPSHOT</version>
-    		<scope>compile</scope>
-    	</dependency>
-    	<dependency>
-    		<groupId>net.bodz.bas</groupId>
-    		<artifactId>bas-sio</artifactId>
-    		<version>0.0.1-SNAPSHOT</version>
-    		<type>jar</type>
-    		<scope>compile</scope>
-    	</dependency>
-    	<dependency>
-    		<groupId>net.bodz.bas</groupId>
-    		<artifactId>bas-text-util</artifactId>
-    		<version>0.0.1-SNAPSHOT</version>
-    		<scope>compile</scope>
-    	</dependency>
-    	<dependency>
-    		<groupId>net.bodz.bas</groupId>
-    		<artifactId>bas-traits</artifactId>
-    		<version>0.0.1-SNAPSHOT</version>
-    		<scope>compile</scope>
-    	</dependency>
-    	<dependency>
-    		<groupId>commons-vfs</groupId>
-    		<artifactId>commons-vfs</artifactId>
-    		<version>1.0</version>
-    		<type>jar</type>
-    		<scope>compile</scope>
-    	</dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-primitive</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-bits</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-hint</artifactId>
+            <version>0.0.2-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-sio</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-text-util</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-traits</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-vfs</groupId>
+            <artifactId>commons-vfs</artifactId>
+            <version>1.0</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
-    <name>BAS :: Layer 1 :: I/O Utilities</name>
+    <name>BAS :: Layer 2 :: I/O Utilities</name>
 </project>
