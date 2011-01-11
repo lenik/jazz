@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Properties;
 
 import junit.framework.TestCase;
-import net.bodz.bas.text.regex.StringQuote;
+import net.bodz.bas.regex.StringQuote;
 import net.bodz.bas.text.util.Strings;
 
 import org.junit.Test;

@@ -13,7 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>bas-annotation</module>
-        <module>bas-char</module>
+        <module>bas-chars</module>
         <module>bas-hint</module>
         <module>bas-lang</module>
         <module>bas-primitive</module>

@@ -5,10 +5,10 @@ import java.util.Stack;
 
 import net.bodz.bas.collection.map.IndexMap;
 import net.bodz.bas.reflect.ReflectReverseSearch;
+import net.bodz.bas.regex.StringQuote;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.position.IXYTellable;
 import net.bodz.bas.sio.position.XYPosition;
-import net.bodz.bas.text.regex.StringQuote;
 
 public abstract class _Lexer
         implements Lexer {

@@ -12,21 +12,51 @@
 	<dependencies>
 		<dependency>
 			<groupId>net.bodz.bas</groupId>
+			<artifactId>layer-0</artifactId>
+			<type>pom</type>
+			<version>0.0.2-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>net.bodz.bas</groupId>
 			<artifactId>layer-1</artifactId>
 			<type>pom</type>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>net.bodz.bas</groupId>
 			<artifactId>layer-2</artifactId>
 			<type>pom</type>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>net.bodz.bas</groupId>
 			<artifactId>layer-3</artifactId>
 			<type>pom</type>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.2-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>net.bodz.bas</groupId>
+			<artifactId>layer-4</artifactId>
+			<type>pom</type>
+			<version>0.0.2-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>net.bodz.bas</groupId>
+			<artifactId>layer-5</artifactId>
+			<type>pom</type>
+			<version>0.0.2-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>net.bodz.bas</groupId>
+			<artifactId>layer-6</artifactId>
+			<type>pom</type>
+			<version>0.0.2-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>net.bodz.bas</groupId>
+			<artifactId>layer-7</artifactId>
+			<type>pom</type>
+			<version>0.0.2-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 	<modules>

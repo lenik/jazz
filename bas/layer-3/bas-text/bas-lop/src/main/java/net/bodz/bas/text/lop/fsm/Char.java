@@ -3,7 +3,7 @@ package net.bodz.bas.text.lop.fsm;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.text.regex.StringQuote;
+import net.bodz.bas.regex.StringQuote;
  
 public class Char
         extends _CharSet {

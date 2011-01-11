@@ -10,16 +10,8 @@
     <version>0.0.1-SNAPSHOT</version>
     <modules>
         <module>bas-text-codec</module>
-        <module>
-            
-            
-            
-        bas-lop</module>
-        <module>
-            
-            
-            
-        bas-text-diff</module>
+        <module>bas-lop</module>
+        <module>bas-text-diff</module>
     </modules>
     <name>BAS :: Layer 3 :: Text</name>
 </project>

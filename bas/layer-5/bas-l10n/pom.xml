@@ -17,11 +17,7 @@
     </dependencies>
     <modules>
         <module>bas-l10n-en</module>
-        <module>
-            
-            
-            
-        bas-l10n-zh</module>
+        <module>bas-l10n-zh</module>
     </modules>
     <name>BAS :: Layer 5 :: Localization</name>
 </project>
