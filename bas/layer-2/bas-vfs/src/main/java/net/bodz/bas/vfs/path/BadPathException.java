@@ -1,9 +1,7 @@
 package net.bodz.bas.vfs.path;
 
-import java.io.IOException;
-
 public class BadPathException
-        extends IOException {
+        extends IllegalArgumentException {
 
     private static final long serialVersionUID = 1L;
 
