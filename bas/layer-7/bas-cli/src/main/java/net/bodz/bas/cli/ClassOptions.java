@@ -24,7 +24,7 @@ import net.bodz.bas.cli.annotations.OptionGroup;
 import net.bodz.bas.collection.preorder.PrefixMap;
 import net.bodz.bas.collection.util.IterableToList;
 import net.bodz.bas.exceptions.ParseException;
-import net.bodz.bas.type.util.TypeChain;
+import net.bodz.bas.valtype.util.TypeChain;
 
 public class ClassOptions<CT> {
 

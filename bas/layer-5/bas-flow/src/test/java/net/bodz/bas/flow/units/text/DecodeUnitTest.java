@@ -9,8 +9,8 @@ import net.bodz.bas.flow.units.SISOUnit;
 import net.bodz.bas.flow.units.builtin.text.DecodeUnit;
 import net.bodz.bas.flow.units.builtin.text.Text_String;
 import net.bodz.bas.flow.util.WhatIf;
+import net.bodz.bas.string.StringArray;
 import net.bodz.bas.text.codec.builtin.HexCodec;
-import net.bodz.bas.text.util.StringArray;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.junit.Test;

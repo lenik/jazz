@@ -1,8 +1,8 @@
 package net.bodz.bas.ui.a;
 
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
-import net.bodz.bas.type.util.ClassInstance;
 import net.bodz.bas.util.Factory;
+import net.bodz.bas.valtype.util.ClassInstance;
 
 public class A_ui {
 

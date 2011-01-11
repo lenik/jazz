@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
-import net.bodz.bas.type.util.TypeArray;
+import net.bodz.bas.valtype.util.TypeArray;
 
 public abstract class AbstractPotatoType<T>
         // extends AbstractTypeTraits<T>

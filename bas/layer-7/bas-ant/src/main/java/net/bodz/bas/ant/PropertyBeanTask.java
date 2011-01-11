@@ -20,7 +20,7 @@ import net.bodz.bas.exceptions.IllegalUsageException;
 import net.bodz.bas.exceptions.NotImplementedException;
 import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.io.term.LogTerm;
-import net.bodz.bas.text.util.Strings;
+import net.bodz.bas.string.Strings;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;

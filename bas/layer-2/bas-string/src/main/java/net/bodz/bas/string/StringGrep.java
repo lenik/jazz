@@ -1,4 +1,4 @@
-package net.bodz.bas.text.util;
+package net.bodz.bas.string;
 
 import java.util.ArrayList;
 import java.util.List;

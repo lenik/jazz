@@ -12,7 +12,7 @@ import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.type.traits.IParser;
-import net.bodz.bas.type.util.ClassInstance;
+import net.bodz.bas.valtype.util.ClassInstance;
 
 public class MethodOption
         extends _Option<CallInfo>

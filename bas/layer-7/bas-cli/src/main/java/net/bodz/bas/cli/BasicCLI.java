@@ -39,7 +39,7 @@ import net.bodz.bas.loader.boot.BootInfo;
 import net.bodz.bas.log.typemeta.LoggerParser;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.Stdio;
-import net.bodz.bas.text.util.StringArray;
+import net.bodz.bas.string.StringArray;
 import net.bodz.bas.type.traits.AbstractParser;
 import net.bodz.bas.type.traits.IParser;
 import net.bodz.bas.ui.ConsoleUI;

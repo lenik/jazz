@@ -6,7 +6,7 @@ import java.util.Collection;
 import junit.framework.TestCase;
 import net.bodz.bas.flow.units.builtin.text.BreakOrCutLinesUnit;
 import net.bodz.bas.flow.util.WhatIf;
-import net.bodz.bas.text.util.StringArray;
+import net.bodz.bas.string.StringArray;
 
 import org.junit.Test;
 

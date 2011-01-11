@@ -21,7 +21,7 @@ import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.lang.Nullables;
 import net.bodz.bas.reflect.query.ReflectQuery;
-import net.bodz.bas.text.util.Strings;
+import net.bodz.bas.string.Strings;
 
 public class ClassCLI {
 

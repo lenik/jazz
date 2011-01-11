@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import net.bodz.bas.text.util.StringArray;
+import net.bodz.bas.string.StringArray;
 
 /**
  * @test {@link TraceTest}

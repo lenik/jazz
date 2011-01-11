@@ -27,11 +27,11 @@ import net.bodz.bas.io.resource.builtin.LocalFileResource;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.sio.WriterCharOut;
+import net.bodz.bas.string.StringArray;
 import net.bodz.bas.text.diff.DiffComparator;
 import net.bodz.bas.text.diff.DiffFormat;
 import net.bodz.bas.text.diff.DiffFormats;
 import net.bodz.bas.text.diff.DiffInfo;
-import net.bodz.bas.text.util.StringArray;
 
 @OptionGroup(value = "batch process", rank = -3)
 public class BatchEditCLI

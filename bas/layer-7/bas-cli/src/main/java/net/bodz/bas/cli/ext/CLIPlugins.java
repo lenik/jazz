@@ -4,7 +4,7 @@ import net.bodz.bas.cli.CLIException;
 import net.bodz.bas.exceptions.OutOfDomainException;
 import net.bodz.bas.l10n.en.English;
 import net.bodz.bas.sio.IPrintOut;
-import net.bodz.bas.text.util.Strings;
+import net.bodz.bas.string.Strings;
 import net.bodz.bas.util.Plugin;
 import net.bodz.bas.util.PluginCategory;
 import net.bodz.bas.util.Plugins;
