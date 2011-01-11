@@ -15,7 +15,7 @@ import net.bodz.bas.loader.LoadException;
 import net.bodz.bas.loader.LoadUtil;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.IPrintOut;
-import net.bodz.bas.text.util.StringArray;
+import net.bodz.bas.string.StringArray;
 
 public class BootProc {
 

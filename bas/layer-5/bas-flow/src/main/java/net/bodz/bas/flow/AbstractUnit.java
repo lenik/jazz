@@ -13,7 +13,7 @@ import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.lang.Nullables;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.IPrintOut;
-import net.bodz.bas.text.util.Strings;
+import net.bodz.bas.string.Strings;
 
 public abstract class AbstractUnit
         implements IUnit {

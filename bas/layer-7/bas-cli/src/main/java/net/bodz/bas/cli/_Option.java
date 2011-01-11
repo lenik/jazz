@@ -9,11 +9,11 @@ import net.bodz.bas.cli.annotations.OptionGroup;
 import net.bodz.bas.commons.scripting.ScriptField;
 import net.bodz.bas.exceptions.CreateException;
 import net.bodz.bas.exceptions.ParseException;
-import net.bodz.bas.text.util.Strings;
+import net.bodz.bas.string.Strings;
 import net.bodz.bas.type.traits.IParser;
 import net.bodz.bas.type.traits.IValidator;
 import net.bodz.bas.type.traits.ValidateException;
-import net.bodz.bas.type.util.ClassInstance;
+import net.bodz.bas.valtype.util.ClassInstance;
 
 public abstract class _Option<T>
         implements ScriptField<T> {

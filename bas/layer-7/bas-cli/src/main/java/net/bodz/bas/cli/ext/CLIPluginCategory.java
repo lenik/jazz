@@ -7,7 +7,7 @@ import java.util.List;
 import net.bodz.bas.cli.CLIException;
 import net.bodz.bas.exceptions.CreateException;
 import net.bodz.bas.sio.IPrintOut;
-import net.bodz.bas.text.util.Strings;
+import net.bodz.bas.string.Strings;
 import net.bodz.bas.util.PluginCategory;
 import net.bodz.bas.util.PluginTypeEx;
 

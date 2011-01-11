@@ -12,7 +12,7 @@ import net.bodz.bas.c1.annotations.util.DisplayNameUtil;
 import net.bodz.bas.c1.annotations.util.DocUtil;
 import net.bodz.bas.collection.util.ClassLocal;
 import net.bodz.bas.lang.Nullables;
-import net.bodz.bas.text.util.StringArray;
+import net.bodz.bas.string.StringArray;
 import net.bodz.bas.ui.a.Icon;
 
 public class ClassInfo {

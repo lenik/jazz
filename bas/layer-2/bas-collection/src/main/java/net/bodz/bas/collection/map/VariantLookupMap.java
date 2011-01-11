@@ -5,17 +5,17 @@ import java.math.BigInteger;
 import java.util.Date;
 
 import net.bodz.bas.exceptions.TypeConvertException;
-import net.bodz.bas.type.typematrix.TypeMatrix_BigDecimal;
-import net.bodz.bas.type.typematrix.TypeMatrix_BigInteger;
-import net.bodz.bas.type.typematrix.TypeMatrix_Date;
-import net.bodz.bas.type.typematrix.TypeMatrix_boolean;
-import net.bodz.bas.type.typematrix.TypeMatrix_byte;
-import net.bodz.bas.type.typematrix.TypeMatrix_char;
-import net.bodz.bas.type.typematrix.TypeMatrix_double;
-import net.bodz.bas.type.typematrix.TypeMatrix_float;
-import net.bodz.bas.type.typematrix.TypeMatrix_int;
-import net.bodz.bas.type.typematrix.TypeMatrix_long;
-import net.bodz.bas.type.typematrix.TypeMatrix_short;
+import net.bodz.bas.valtype.conv.TypeMatrix_BigDecimal;
+import net.bodz.bas.valtype.conv.TypeMatrix_BigInteger;
+import net.bodz.bas.valtype.conv.TypeMatrix_Date;
+import net.bodz.bas.valtype.conv.TypeMatrix_boolean;
+import net.bodz.bas.valtype.conv.TypeMatrix_byte;
+import net.bodz.bas.valtype.conv.TypeMatrix_char;
+import net.bodz.bas.valtype.conv.TypeMatrix_double;
+import net.bodz.bas.valtype.conv.TypeMatrix_float;
+import net.bodz.bas.valtype.conv.TypeMatrix_int;
+import net.bodz.bas.valtype.conv.TypeMatrix_long;
+import net.bodz.bas.valtype.conv.TypeMatrix_short;
 
 public abstract class VariantLookupMap<K>
         implements ILookupMap<K, Object> {

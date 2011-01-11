@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import net.bodz.bas.files.FileRes;
-import net.bodz.bas.text.util.StringFeature;
+import net.bodz.bas.string.StringFeature;
 
 import org.junit.Test;
 

@@ -7,6 +7,7 @@ layer-0 系统兼容层，系统周边环境准备
     bas-desktop (iocapture -> bas-io)
     
 layer-1 核心语言增强与语言工具
+    bas-c1
     bas-annotation
     bas-lang
     bas-hint
@@ -24,9 +25,10 @@ layer-2 基础数据类型扩展
     bas-collection
     bas-valtype
     bas-traits-impl
+    bas-string
+    bas-regex
     
 layer-3 通用工具
-    bas-c1
     bas-c2
         # Event, Err/ExceptionCauses, ScopedRef, JoinableThreadGroup, Objects
         # SimpleRequest
@@ -35,8 +37,6 @@ layer-3 通用工具
     
     bas-files
     bas-tmpfile (-> -files)
-    bas-string
-    bas-regex
     bas-text (-codec, -diff)
 
         

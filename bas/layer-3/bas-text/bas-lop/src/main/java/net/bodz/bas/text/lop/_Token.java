@@ -4,7 +4,7 @@ import net.bodz.bas.regex.StringQuote;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.position.IXYTellable;
 import net.bodz.bas.sio.position.XYPosition;
-import net.bodz.bas.text.util.Strings;
+import net.bodz.bas.string.Strings;
 
 public abstract class _Token implements Token {
 

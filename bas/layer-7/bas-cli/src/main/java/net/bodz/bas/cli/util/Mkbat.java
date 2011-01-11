@@ -37,7 +37,7 @@ import net.bodz.bas.regex.UnixStyleVarProcessor;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.snm.SJLibLoader;
-import net.bodz.bas.text.util.StringArray;
+import net.bodz.bas.string.StringArray;
 import net.bodz.bas.vfs.impl.url.URLFile;
 
 @Doc("Generate program launcher for java applications")

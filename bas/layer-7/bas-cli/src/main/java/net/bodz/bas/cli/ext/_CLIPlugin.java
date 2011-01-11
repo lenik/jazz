@@ -9,7 +9,7 @@ import net.bodz.bas.cli.ClassOptions;
 import net.bodz.bas.cli._Option;
 import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.sio.IPrintOut;
-import net.bodz.bas.text.util.Strings;
+import net.bodz.bas.string.Strings;
 import net.bodz.bas.util._Plugin;
 
 public class _CLIPlugin

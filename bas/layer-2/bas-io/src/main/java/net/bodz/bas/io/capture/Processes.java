@@ -7,7 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 
-import net.bodz.bas.text.util.StringArray;
+import net.bodz.bas.string.StringArray;
 
 import org.apache.commons.lang.ArrayUtils;
 

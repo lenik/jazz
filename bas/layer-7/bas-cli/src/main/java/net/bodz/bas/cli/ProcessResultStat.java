@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import net.bodz.bas.collection.comparator.TypeComparator;
 import net.bodz.bas.sio.IPrintOut;
-import net.bodz.bas.text.util.Strings;
+import net.bodz.bas.string.Strings;
+import net.bodz.bas.type.comparator.TypeComparator;
 
 public class ProcessResultStat {
 

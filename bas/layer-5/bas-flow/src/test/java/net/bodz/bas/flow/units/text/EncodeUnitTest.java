@@ -9,7 +9,7 @@ import net.bodz.bas.flow.units.SISOUnit;
 import net.bodz.bas.flow.units.builtin.text.Binary_Hex;
 import net.bodz.bas.flow.units.builtin.text.EncodeUnit;
 import net.bodz.bas.flow.util.WhatIf;
-import net.bodz.bas.text.util.StringArray;
+import net.bodz.bas.string.StringArray;
 
 import org.junit.Test;
 

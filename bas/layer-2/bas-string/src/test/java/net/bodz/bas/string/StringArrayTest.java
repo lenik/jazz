@@ -1,8 +1,10 @@
-package net.bodz.bas.text.util;
+package net.bodz.bas.string;
 
 import java.io.IOException;
 
 import junit.framework.TestCase;
+
+import net.bodz.bas.string.StringArray;
 
 import org.junit.Test;
 
