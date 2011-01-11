@@ -12,7 +12,6 @@ layer-1 核心语言增强与语言工具
     bas-lang
     bas-meta
     bas-primitive
-    bas-reflect
     bas-chars
     bas-traits
     
@@ -36,9 +35,8 @@ layer-3 通用工具
     bas-fsm
     
     bas-files
-    bas-tmpfile (-> -files)
     bas-text (-codec, -diff)
-
+    bas-reflect
         
 layer-4 特殊工具
     bas-combina
