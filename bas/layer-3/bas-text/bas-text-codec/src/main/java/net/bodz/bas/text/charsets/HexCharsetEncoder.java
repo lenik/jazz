@@ -6,7 +6,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
 import java.nio.charset.CoderResult;
 
-import net.bodz.bas.text.model.CharFeature;
+import net.bodz.bas.chars.CharFeature;
 
 /**
  * Encodes each character(maybe latin-1, utf-8, ucs-4, etc..) into hex string; space(0x20) is used

@@ -82,7 +82,7 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-type-util</artifactId>
+            <artifactId>bas-valtype</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>

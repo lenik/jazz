@@ -16,11 +16,11 @@
         <module>bas-c2</module>
         <module>bas-files</module>
         <module>bas-fsm</module>
+        <module>bas-regex</module>
         <module>bas-snmjava</module>
         <module>bas-string</module>
         <module>bas-text</module>
         <module>bas-tmpfile</module>
-        <module>bas-traits-impl</module>
     </modules>
     <name>BAS :: Layer 3</name>
 </project>

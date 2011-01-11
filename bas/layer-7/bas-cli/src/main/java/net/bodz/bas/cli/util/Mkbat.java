@@ -33,10 +33,10 @@ import net.bodz.bas.loader.LoadUtil;
 import net.bodz.bas.loader.TempClassLoader;
 import net.bodz.bas.loader.UCL;
 import net.bodz.bas.loader.boot.BootProc;
+import net.bodz.bas.regex.UnixStyleVarProcessor;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.snm.SJLibLoader;
-import net.bodz.bas.text.regex.UnixStyleVarProcessor;
 import net.bodz.bas.text.util.StringArray;
 import net.bodz.bas.vfs.impl.url.URLFile;
 

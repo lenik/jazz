@@ -30,7 +30,7 @@
     	</dependency>
     	<dependency>
     		<groupId>net.bodz.bas</groupId>
-    		<artifactId>bas-text-model</artifactId>
+    		<artifactId>bas-chars</artifactId>
     		<version>0.0.1-SNAPSHOT</version>
     		<type>jar</type>
     		<scope>compile</scope>

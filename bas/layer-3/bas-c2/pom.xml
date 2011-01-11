@@ -41,12 +41,6 @@
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-text-prep</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <optional>true</optional>
-        </dependency>
     </dependencies>
     <name>BAS :: Layer 3 :: Commons</name>
 </project>
