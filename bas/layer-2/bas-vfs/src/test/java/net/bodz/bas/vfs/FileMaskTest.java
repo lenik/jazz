@@ -6,7 +6,7 @@ import java.io.IOException;
 import junit.framework.TestCase;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
 import net.bodz.bas.vfs.FileMask;
-import net.bodz.bas.vfs.FileModifiers;
+import net.bodz.bas.vfs.FileModifier;
 
 import org.junit.Test;
 
@@ -18,8 +18,8 @@ public class FileMaskTest
             throws IOException {
         class D {
             void o(File input, String expected) {
-                int maskedBits = FileMask.BASIC.getMask() & FileModifiers.getFileBits(input);
-                String actual = FileModifiers.format(maskedBits);
+                int maskedBits = FileMask.BASIC.getMask() & FileModifier.getFileBits(input);
+                String actual = FileModifier.format(maskedBits);
                 assertEquals(expected, actual);
             }
         }

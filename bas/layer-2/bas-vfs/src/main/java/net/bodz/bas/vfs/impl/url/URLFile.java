@@ -98,24 +98,17 @@ public class URLFile
     }
 
     @Override
-    public long getLength() {
+    public Long getLength() {
         try {
             URLConnection connection = url.openConnection();
 
             // TODO - connection.getContentLengthLong();
             long length = connection.getContentLength();
-            if (length == -1)
-                return 0L;
-            return length;
 
+            return length == -1 ? null : length;
         } catch (IOException e) {
-            return 0L;
+            return null;
         }
-    }
-
-    @Override
-    public boolean isStream() {
-        return true;
     }
 
     @Override

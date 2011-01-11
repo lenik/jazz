@@ -58,15 +58,11 @@ public class OutputBytesFile
     }
 
     @Override
-    public long getLength() {
+    public Long getLength() {
         if (buffer == null)
-            return 0L;
-        return buffer.size();
-    }
-
-    @Override
-    public boolean isStream() {
-        return true;
+            return null;
+        long size = buffer.size();
+        return size;
     }
 
     /**

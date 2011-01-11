@@ -39,8 +39,8 @@ public class InputBytesFile
     }
 
     @Override
-    public long getLength() {
-        return bytes.length;
+    public Long getLength() {
+        return Long.valueOf(bytes.length);
     }
 
     @Override
