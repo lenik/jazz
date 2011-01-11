@@ -59,6 +59,18 @@
     		<version>2.0.2</version>
     		<scope>compile</scope>
     	</dependency>
+    	<dependency>
+    		<groupId>net.bodz.bas</groupId>
+    		<artifactId>bas-files</artifactId>
+    		<version>0.0.1-SNAPSHOT</version>
+    		<scope>test</scope>
+    	</dependency>
+    	<dependency>
+    		<groupId>net.bodz.bas</groupId>
+    		<artifactId>bas-bean</artifactId>
+    		<version>0.0.1-SNAPSHOT</version>
+    		<scope>test</scope>
+    	</dependency>
     </dependencies>
     <name>BAS :: Layer 2 :: File System</name>
 </project>
