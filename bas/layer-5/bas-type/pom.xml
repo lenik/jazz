@@ -1,19 +1,21 @@
-<?xml version="1.0"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>net.bodz.bas</groupId>
-		<artifactId>layer-1</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
-	</parent>
-	<artifactId>bas-type</artifactId>
-	<packaging>pom</packaging>
-	<version>0.0.1-SNAPSHOT</version>
-	<modules>
-		<module>bas-srt</module>
-		<module>bas-traits</module>
-		<module>bas-traits-impl</module>
-		<module>bas-type-util</module>
-	</modules>
-	<name>BAS :: Layer 1 :: Type System</name>
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>net.bodz.bas</groupId>
+        <artifactId>layer-5</artifactId>
+        <version>0.0.2-SNAPSHOT</version>
+    </parent>
+    <artifactId>bas-type</artifactId>
+    <packaging>pom</packaging>
+    <version>0.0.1-SNAPSHOT</version>
+    <modules>
+        <module>bas-srt</module>
+        <module>
+        bas-traits</module>
+        <module>
+        bas-traits-impl</module>
+        <module>
+        bas-type-util</module>
+    </modules>
+    <name>BAS :: Layer 5 :: Type System</name>
 </project>

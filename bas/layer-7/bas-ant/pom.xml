@@ -1,53 +1,52 @@
-<?xml version="1.0"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>net.bodz.bas</groupId>
-        <artifactId>layer-3</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <artifactId>layer-7</artifactId>
+        <version>0.0.2-SNAPSHOT</version>
     </parent>
     <artifactId>bas-ant</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <dependencies >
-    	<dependency>
-    		<groupId>org.apache.ant</groupId>
-    		<artifactId>ant</artifactId>
-    		<version>1.7.1</version>
-    	</dependency>
-    	<dependency>
-    		<groupId>net.bodz.bas</groupId>
-    		<artifactId>bas-hint</artifactId>
-    		<version>0.0.2-SNAPSHOT</version>
-    		<type>jar</type>
-    		<scope>compile</scope>
-    	</dependency>
-    	<dependency>
-    		<groupId>net.bodz.bas</groupId>
-    		<artifactId>bas-cli</artifactId>
-    		<version>0.0.1-SNAPSHOT</version>
-    		<type>jar</type>
-    		<scope>compile</scope>
-    	</dependency>
-    	<dependency>
-    		<groupId>net.bodz.bas</groupId>
-    		<artifactId>bas-snmjava</artifactId>
-    		<version>0.0.1-SNAPSHOT</version>
-    		<type>jar</type>
-    		<scope>compile</scope>
-    	</dependency>
-    	<dependency>
-    		<groupId>net.bodz.bas</groupId>
-    		<artifactId>bas-jvmhack</artifactId>
-    		<version>0.0.1-SNAPSHOT</version>
-    		<scope>compile</scope>
-    	</dependency>
-    	<dependency>
-    		<groupId>net.bodz.bas</groupId>
-    		<artifactId>bas-loader</artifactId>
-    		<version>0.0.1-SNAPSHOT</version>
-    		<type>jar</type>
-    		<scope>compile</scope>
-    	</dependency>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.ant</groupId>
+            <artifactId>ant</artifactId>
+            <version>1.7.1</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-hint</artifactId>
+            <version>0.0.2-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-cli</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-snmjava</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-jvmhack</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-loader</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
-    <name>BAS :: Layer 3 :: Ant Tasks</name>
+    <name>BAS :: Layer 7 :: Ant Tasks</name>
 </project>
