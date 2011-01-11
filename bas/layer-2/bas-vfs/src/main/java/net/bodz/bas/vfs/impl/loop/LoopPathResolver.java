@@ -25,7 +25,7 @@ public abstract class LoopPathResolver
 
         int colon = path.indexOf(':');
         if (colon == -1)
-            throw new BadPathException("No protocol specified: " + path);
+            throw new BadPathException("No protocol specified", path);
 
         String parentLayerPath = path.substring(colon + 1);
 

@@ -3,7 +3,7 @@ package net.bodz.bas.vfs.impl.fake;
 import net.bodz.bas.vfs.AbstractVolume;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.path.IPath;
-import net.bodz.bas.vfs.path.IllegalPathException;
+import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.PathFormat;
 
 public class FakeVolume
@@ -16,13 +16,13 @@ public class FakeVolume
 
     @Override
     public IPath resolve(String localPath)
-            throws IllegalPathException {
+            throws BadPathException {
         return null;
     }
 
     @Override
     public IFile resolveFile(String localPath)
-            throws IllegalPathException {
+            throws BadPathException {
         return null;
     }
 

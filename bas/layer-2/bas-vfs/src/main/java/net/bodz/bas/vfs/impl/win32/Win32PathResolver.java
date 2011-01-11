@@ -48,7 +48,7 @@ public class Win32PathResolver
         char driveLetter = Character.toUpperCase(path.charAt(0));
         if (!allowSpecialLetters)
             if (!Character.isLetterOrDigit(driveLetter))
-                throw new BadPathException("Invalid drive letter: " + driveLetter);
+                throw new BadPathException("Invalid drive letter", path);
 
         Win32Drive drive;
         synchronized (drives) {

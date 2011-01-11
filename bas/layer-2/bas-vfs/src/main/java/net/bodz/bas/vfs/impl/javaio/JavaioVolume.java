@@ -2,7 +2,7 @@ package net.bodz.bas.vfs.impl.javaio;
 
 import net.bodz.bas.vfs.AbstractVolume;
 import net.bodz.bas.vfs.path.IPath;
-import net.bodz.bas.vfs.path.IllegalPathException;
+import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.PathFormat;
 
 public class JavaioVolume
@@ -15,13 +15,13 @@ public class JavaioVolume
 
     @Override
     public JavaioPath resolve(String localPath)
-            throws IllegalPathException {
+            throws BadPathException {
         return new JavaioPath(localPath);
     }
 
     @Override
     public JavaioFile resolveFile(String localPath)
-            throws IllegalPathException {
+            throws BadPathException {
         return new JavaioFile(localPath);
     }
 

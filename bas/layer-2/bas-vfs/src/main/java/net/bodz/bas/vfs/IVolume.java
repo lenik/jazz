@@ -5,7 +5,7 @@ import java.io.IOException;
 import net.bodz.bas.exceptions.NotImplementedException;
 import net.bodz.bas.type.traits.IAttributes;
 import net.bodz.bas.vfs.path.IPath;
-import net.bodz.bas.vfs.path.IllegalPathException;
+import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.PathFormat;
 
 import org.apache.commons.vfs.Capability;
@@ -45,11 +45,11 @@ public interface IVolume {
      * @return non-<code>null</code> {@link IPath} reference.
      * @throws NullPointerException
      *             If <code>localPath</code> is <code>null</code>.
-     * @throws IllegalPathException
+     * @throws BadPathException
      *             If <code>localPath</code> is invalid.
      */
     IPath resolve(String localPath)
-            throws IllegalPathException;
+            throws BadPathException;
 
     /**
      * @param localPath
@@ -57,11 +57,11 @@ public interface IVolume {
      * @return non-<code>null</code> {@link IFile} reference.
      * @throws NullPointerException
      *             If <code>localPath</code> is <code>null</code>.
-     * @throws IllegalPathException
+     * @throws BadPathException
      *             If <code>localPath</code> is invalid.
      */
     IFile resolveFile(String localPath)
-            throws IllegalPathException;
+            throws BadPathException;
 
     /**
      * @see FileSystem#getAttribute(String)
