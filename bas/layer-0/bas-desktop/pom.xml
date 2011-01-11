@@ -7,7 +7,6 @@
     </parent>
     <artifactId>bas-desktop</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <dependencies>
-    </dependencies>
+    <dependencies/>
     <name>BAS :: Layer 0 :: System Utilities</name>
 </project>

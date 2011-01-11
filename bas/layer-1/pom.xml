@@ -13,11 +13,11 @@
     <packaging>pom</packaging>
     <modules>
         <module>bas-annotation</module>
+        <module>bas-c1</module>
         <module>bas-chars</module>
-        <module>bas-meta</module>
         <module>bas-lang</module>
+        <module>bas-meta</module>
         <module>bas-primitive</module>
-        <module>bas-reflect</module>
         <module>bas-traits</module>
     </modules>
     <name>BAS :: Layer 1</name>

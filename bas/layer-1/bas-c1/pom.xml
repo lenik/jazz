@@ -5,28 +5,28 @@
         <artifactId>layer-1</artifactId>
         <version>0.0.2-SNAPSHOT</version>
     </parent>
-    <artifactId>bas-reflect</artifactId>
+    <artifactId>bas-c1</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <dependencies>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-jdk6compat</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <artifactId>bas-meta</artifactId>
+            <version>0.0.2-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-closure</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-valtype</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <artifactId>bas-lang</artifactId>
+            <version>0.0.2-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-annotation</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
-    <name>BAS :: Layer 1 :: Java Reflect Utils</name>
+    <name>BAS :: Layer 1 :: Commons</name>
 </project>
