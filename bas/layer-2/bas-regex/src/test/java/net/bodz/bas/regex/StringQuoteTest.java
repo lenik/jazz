@@ -2,7 +2,7 @@ package net.bodz.bas.regex;
 
 import junit.framework.TestCase;
 
-import net.bodz.bas.regex.StringQuote;
+import net.bodz.bas.string.StringQuote;
 
 import org.junit.Test;
 

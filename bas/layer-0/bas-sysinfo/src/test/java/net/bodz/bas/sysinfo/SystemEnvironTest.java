@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import junit.framework.TestCase;
-import net.bodz.bas.regex.StringQuote;
-import net.bodz.bas.text.util.Strings;
+import net.bodz.bas.string.StringEscape;
+import net.bodz.bas.string.Strings;
 
 import org.junit.Test;
 
@@ -32,7 +32,7 @@ public class SystemEnvironTest
                         + Strings.ucfirst(name.substring(dot + 1));
             }
             if (value != null)
-                value = StringQuote.escape(value);
+                value = StringEscape.java(value);
 
             // System.getProperty(key)
             System.out.println("    /** " + key + " = " + value + " */");

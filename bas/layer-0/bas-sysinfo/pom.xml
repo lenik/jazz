@@ -7,6 +7,14 @@
     </parent>
     <artifactId>bas-sysinfo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <dependencies/>
+    <dependencies>
+    	<dependency>
+    		<groupId>net.bodz.bas</groupId>
+    		<artifactId>bas-string</artifactId>
+    		<version>0.0.1-SNAPSHOT</version>
+    		<type>jar</type>
+    		<scope>test</scope>
+    	</dependency>
+    </dependencies>
     <name>BAS :: Layer 0 :: System Info</name>
 </project>
