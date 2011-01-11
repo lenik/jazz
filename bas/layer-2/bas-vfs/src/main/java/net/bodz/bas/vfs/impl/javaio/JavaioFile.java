@@ -118,13 +118,13 @@ public class JavaioFile
     }
 
     @Override
-    public long getLength() {
+    public Long getLength() {
         return jdkFile.length();
     }
 
     @Override
-    public boolean isStream() {
-        return false;
+    public boolean isSeekable() {
+        return true;
     }
 
     @Override

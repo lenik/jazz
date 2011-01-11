@@ -125,6 +125,11 @@ public abstract class AbstractFsEntry
     }
 
     @Override
+    public int getModifiers() {
+        return getModifiers(FileModifier.MASK_ALL);
+    }
+
+    @Override
     public Boolean exists() {
         return null;
     }

@@ -13,8 +13,7 @@ public class InputStringFile
 
     private final String text;
 
-    private boolean sizeUnknown = true;
-    private int sizeInBytes;
+    private Long sizeInBytes;
 
     public InputStringFile(String text) {
         this(ObjectInfo.getObjectId(text), text);
@@ -53,15 +52,15 @@ public class InputStringFile
         Charset oldCharset = getPreferredCharset();
         if (!oldCharset.equals(charset)) {
             super.setPreferredCharset(charset);
-            sizeUnknown = true;
+            sizeInBytes = null;
         }
     }
 
     @Override
-    public long getLength() {
-        if (sizeUnknown) {
+    public Long getLength() {
+        if (sizeInBytes == null) {
             byte[] bytes = text.getBytes(getPreferredCharset());
-            sizeInBytes = bytes.length;
+            sizeInBytes = Long.valueOf(bytes.length);
         }
         return sizeInBytes;
     }

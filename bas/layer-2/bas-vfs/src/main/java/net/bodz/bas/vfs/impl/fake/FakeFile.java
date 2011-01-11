@@ -51,11 +51,6 @@ public abstract class FakeFile
     }
 
     @Override
-    public boolean isStream() {
-        return true;
-    }
-
-    @Override
     public Long getCreationTime() {
         return creationTime;
     }

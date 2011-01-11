@@ -51,15 +51,11 @@ public class OutputStringFile
     }
 
     @Override
-    public long getLength() {
+    public Long getLength() {
         if (buffer == null)
-            return 0L;
-        return buffer.length();
-    }
-
-    @Override
-    public boolean isStream() {
-        return true;
+            return null;
+        long len = buffer.length();
+        return len;
     }
 
 }

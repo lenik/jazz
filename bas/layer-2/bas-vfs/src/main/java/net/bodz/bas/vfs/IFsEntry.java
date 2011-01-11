@@ -65,6 +65,29 @@ public interface IFsEntry
             throws IOException;
 
     /**
+     * Get modifier bits of interesting selection only.
+     * <p>
+     * Some modifier bits are expensive to test, so only the interesting bits should be specified to
+     * reduce the test cost.
+     * 
+     * @param mask
+     *            Bit mask to select which file modifiers are interesting and will be tested.
+     * @return Modifier bits, may contains the bits which are not interesting.
+     *         <p>
+     *         If you want to restrict the returned bits to only the <code>mask</code> specified,
+     *         then a post bit-wise AND operation should be performed.
+     * @see FileModifier
+     */
+    int getModifiers(int mask);
+
+    /**
+     * Get all file modifiers.
+     * 
+     * @see FileModifier
+     */
+    int getModifiers();
+
+    /**
      * @return <code>null</code> if the existence of this file is unknown.
      */
     Boolean exists();

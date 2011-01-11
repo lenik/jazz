@@ -1,5 +1,25 @@
 package net.bodz.bas.vfs;
 
+import static net.bodz.bas.vfs.FileModifier.BINARY;
+import static net.bodz.bas.vfs.FileModifier.CNTTYPE;
+import static net.bodz.bas.vfs.FileModifier.DIRECTORY;
+import static net.bodz.bas.vfs.FileModifier.EMPTY;
+import static net.bodz.bas.vfs.FileModifier.EXECUTABLE;
+import static net.bodz.bas.vfs.FileModifier.EXIST;
+import static net.bodz.bas.vfs.FileModifier.FILE;
+import static net.bodz.bas.vfs.FileModifier.HIDDEN;
+import static net.bodz.bas.vfs.FileModifier.MASK_ACCESSIBLE;
+import static net.bodz.bas.vfs.FileModifier.MASK_ATTRIB;
+import static net.bodz.bas.vfs.FileModifier.MASK_EXISTENCE;
+import static net.bodz.bas.vfs.FileModifier.MASK_LENGTHY;
+import static net.bodz.bas.vfs.FileModifier.MASK_OBJTYPE;
+import static net.bodz.bas.vfs.FileModifier.NEMPTY;
+import static net.bodz.bas.vfs.FileModifier.NEXIST;
+import static net.bodz.bas.vfs.FileModifier.READABLE;
+import static net.bodz.bas.vfs.FileModifier.SEEKABLE;
+import static net.bodz.bas.vfs.FileModifier.TEXT;
+import static net.bodz.bas.vfs.FileModifier.WRITABLE;
+
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.List;
@@ -105,8 +125,89 @@ public abstract class AbstractFile
     }
 
     @Override
-    public long getLength() {
-        return 0;
+    public Long getLength() {
+        return null;
+    }
+
+    @Override
+    public final long length() {
+        Long len = getLength();
+        if (len == null)
+            return 0;
+        else
+            return len.longValue();
+    }
+
+    @Override
+    public boolean isSeekable() {
+        return false;
+    }
+
+    @Override
+    public int getModifiers(int mask) {
+        int bits = 0;
+
+        if ((mask & MASK_ACCESSIBLE) != 0) {
+            if (this.isReadable())
+                bits |= READABLE;
+            if (this.isWritable())
+                bits |= WRITABLE;
+            if (this.isExecutable())
+                bits |= EXECUTABLE;
+            if (this.isSeekable())
+                bits |= SEEKABLE;
+        }
+
+        if (0 != (mask & MASK_ATTRIB)) {
+            if (0 != (mask & HIDDEN))
+                if (this.isHidden())
+                    bits |= HIDDEN;
+        }
+
+        if (0 != (mask & MASK_EXISTENCE)) {
+            Boolean exists = this.exists();
+            if (exists == Boolean.TRUE)
+                bits |= EXIST;
+            if (exists == Boolean.FALSE)
+                bits |= NEXIST;
+        }
+
+        if (0 != (mask & MASK_LENGTHY)) {
+            Long length = this.getLength();
+            if (length != null) {
+                if (length == 0)
+                    bits |= EMPTY;
+                else
+                    bits |= NEMPTY;
+            }
+        }
+
+        if (0 != (mask & MASK_OBJTYPE))
+            if (isTree())
+                bits |= DIRECTORY;
+            else
+                bits |= FILE;
+
+        if (0 != (mask & CNTTYPE) && (bits & EXIST) != 0) {
+            IProbePreparation probe;
+            try {
+                probe = forProbe(true);
+                if (probe.isText())
+                    bits |= TEXT;
+                else
+                    bits |= BINARY;
+            } catch (IOException e) {
+                probe = forProbe(false);
+                try {
+                    if (probe.isText())
+                        bits |= TEXT;
+                    else
+                        bits |= BINARY;
+                } catch (IOException e1) {
+                }
+            }
+        }
+        return bits;
     }
 
     @Override

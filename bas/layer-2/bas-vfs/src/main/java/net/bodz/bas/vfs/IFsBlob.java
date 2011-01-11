@@ -46,19 +46,31 @@ public interface IFsBlob
     boolean isExecutable();
 
     /**
-     * Get the file length of a non-stream fs blob.
+     * Get the file length.
+     * <p>
+     * <i> If you override this method, you should override the {@link #length()} at the same time.
+     * </i>
      * 
-     * If this is a stream blob, the returned length is undetermined.
-     * 
-     * @return File length in bytes.
+     * @return <code>null</code> if the file length is unknown, or the file length in bytes, .
      */
-    long getLength();
+    Long getLength();
 
     /**
-     * For stream files, the value returned by {@link #getLength()} is not accuraccy and maybe
-     * <code>0</code>.
+     * Get the file length.
+     * <p>
+     * <i> If you override this method, you should override the {@link #length()} at the same time.
+     * </i>
+     * 
+     * @return <code>0</code> if the file length is unknown, or the file length in bytes.
      */
-    boolean isStream();
+    long length();
+
+    /**
+     * Return whether this file is random seekable.
+     * 
+     * @return <code>true</code> If this file is ramdom seekable.
+     */
+    boolean isSeekable();
 
     /**
      * @return <code>null</code> If this isn't a file blob.
