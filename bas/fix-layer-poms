@@ -90,7 +90,7 @@ function main() {
                 -e "s|BAS :: Layer .|BAS :: Layer $layer|" \
                 -e "s|/project/parent/artifactId=.*|/project/parent/artifactId=layer-$layer|" \
                 -e "s|/project/parent/version=.*|/project/parent/version=$ver|" \
-                | 2xml | xmlindent -fnbe >$tmp
+                | 2xml | tr -d '\n' | xmlindent -fnbe >$tmp
             cp -f $tmp $mod/pom.xml
         done
         
