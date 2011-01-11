@@ -4,7 +4,7 @@ layer-0 系统兼容层，系统周边环境准备
     bas-natives
     bas-compat
     bas-sysinfo (SystemInfo)
-    bas-desktop (iocap -> bas-io)
+    bas-desktop (iocapture -> bas-io)
     
 layer-1 核心语言增强与语言工具
     bas-annotation
@@ -35,7 +35,6 @@ layer-3 通用工具
     
     bas-files
     bas-tmpfile (-> -files)
-
     bas-string
     bas-regex
     bas-text (-codec, -diff)
@@ -60,6 +59,7 @@ layer-5 框架基础
 
 layer-6 框架工具
     bas-vfsutils
+    bas-snmjava
     
 layer-7 应用框架
     bas-arch

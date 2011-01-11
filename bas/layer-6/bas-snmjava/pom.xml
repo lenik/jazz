@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>net.bodz.bas</groupId>
-        <artifactId>layer-3</artifactId>
+        <artifactId>layer-6</artifactId>
         <version>0.0.2-SNAPSHOT</version>
     </parent>
     <artifactId>bas-snmjava</artifactId>
@@ -37,5 +37,5 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 3 :: SNM Java Project Layout</name>
+    <name>BAS :: Layer 6 :: SNM Java Project Layout</name>
 </project>
