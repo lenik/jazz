@@ -16,6 +16,7 @@ layer-1 核心语言增强与语言工具
     bas-traits
     
 layer-2 基础数据类型扩展
+    bas-c2
     bas-bits
     bas-sio
     bas-io
@@ -28,10 +29,9 @@ layer-2 基础数据类型扩展
     bas-regex
     
 layer-3 通用工具
-    bas-c2
         # Event, Err/ExceptionCauses, ScopedRef, JoinableThreadGroup, Objects
         # SimpleRequest
-        
+    bas-c3
     bas-fsm
     
     bas-files

@@ -17,7 +17,7 @@ import net.bodz.bas.sio.IPrintOut;
 
 public abstract class AbstractStreamResource
         extends AbstractStreamInputSource
-        implements IStreamOutputTarget {
+        implements IStreamResource {
 
     private final IStreamOutputTarget asotImpl;
 
@@ -56,16 +56,14 @@ public abstract class AbstractStreamResource
     }
 
     @Override
-    public IStreamOutputTarget setAppendMode(boolean appendMode) {
+    public void setAppendMode(boolean appendMode) {
         asotImpl.setAppendMode(appendMode);
-        return this;
     }
 
     @Override
-    public AbstractStreamResource setCharset(Charset charset) {
+    public void setCharset(Charset charset) {
         super.setCharset(charset);
         asotImpl.setCharset(charset);
-        return this;
     }
 
     @Override

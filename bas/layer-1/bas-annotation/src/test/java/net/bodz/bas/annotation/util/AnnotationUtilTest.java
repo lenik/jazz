@@ -5,6 +5,8 @@ import java.lang.annotation.RetentionPolicy;
 
 import junit.framework.TestCase;
 
+import net.bodz.bas.annotation.util.AnnotationUtil;
+
 import org.junit.Test;
 
 public class AnnotationUtilTest

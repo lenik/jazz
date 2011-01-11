@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.bodz.bas.c1.util.Nullables;
 import net.bodz.bas.collection.iterator.PrefetchedIterator;
 import net.bodz.bas.collection.list.ArrayStack;
-import net.bodz.bas.lang.Nullables;
 
 public class TreePosition<N extends TreeNode<? extends N>>
         implements Iterable<N> {

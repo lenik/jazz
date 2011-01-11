@@ -16,7 +16,7 @@ public interface ISimpleStreamOutputTarget
 
     boolean isAppendMode();
 
-    ISimpleStreamOutputTarget setAppendMode(boolean appendMode);
+    void setAppendMode(boolean appendMode);
 
     Charset getCharset();
 
@@ -25,7 +25,7 @@ public interface ISimpleStreamOutputTarget
      *             If <code>charset</code> is <code>null</code>.
      * @return this self.
      */
-    ISimpleStreamOutputTarget setCharset(Charset charset);
+    void setCharset(Charset charset);
 
     /**
      * @return non-<code>null</code> value.

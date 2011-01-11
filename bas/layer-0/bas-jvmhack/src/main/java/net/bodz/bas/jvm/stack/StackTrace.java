@@ -4,14 +4,12 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-import net.bodz.bas.exceptions.ExpectedException;
-
 public class StackTrace {
 
     public static String get() {
         try {
-            throw new ExpectedException("Stack trace"); 
-        } catch (ExpectedException hack) {
+            throw new Exception("Stack trace");
+        } catch (Exception hack) {
             StringWriter buf = new StringWriter();
             hack.printStackTrace(new PrintWriter(buf));
             return buf.toString();
@@ -21,12 +19,12 @@ public class StackTrace {
     public static String get(Thread thread) {
         StackTraceElement[] stackTrace = thread.getStackTrace();
         StringBuffer buf = new StringBuffer(stackTrace.length * 40);
-        buf.append("Stack trace: "); 
+        buf.append("Stack trace: ");
         buf.append(thread);
-        buf.append("\n"); 
+        buf.append("\n");
         for (int i = 0; i < stackTrace.length; i++) {
             StackTraceElement e = stackTrace[i];
-            buf.append("\tat "); 
+            buf.append("\tat ");
             buf.append(e.getClassName());
             buf.append('.');
             buf.append(e.getMethodName());
@@ -34,11 +32,11 @@ public class StackTrace {
             String fileName = e.getFileName();
             if (fileName != null) {
                 buf.append(fileName);
-                buf.append(": "); 
+                buf.append(": ");
                 buf.append(e.getLineNumber());
             }
             buf.append(')');
-            buf.append("\n"); 
+            buf.append("\n");
         }
         return buf.toString();
     }

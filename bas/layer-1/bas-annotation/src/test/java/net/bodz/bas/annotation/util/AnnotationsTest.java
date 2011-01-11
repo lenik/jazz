@@ -4,6 +4,8 @@ import java.lang.annotation.Annotation;
 
 import junit.framework.TestCase;
 
+import net.bodz.bas.annotation.util.AnnotationDump;
+
 import org.junit.Test;
 
 @XyzHint("TeST")

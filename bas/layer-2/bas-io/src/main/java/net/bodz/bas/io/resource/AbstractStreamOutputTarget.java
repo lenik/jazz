@@ -49,9 +49,8 @@ public abstract class AbstractStreamOutputTarget
     }
 
     @Override
-    public IStreamOutputTarget setAppendMode(boolean appendMode) {
+    public void setAppendMode(boolean appendMode) {
         this.appendMode = appendMode;
-        return this;
     }
 
     static final Charset utf8Charset = Charset.forName("UTF-8");
@@ -70,11 +69,10 @@ public abstract class AbstractStreamOutputTarget
     }
 
     @Override
-    public IStreamOutputTarget setCharset(Charset charset) {
+    public void setCharset(Charset charset) {
         if (charset == null)
             throw new NullPointerException("charset");
         this.charset = charset;
-        return this;
     }
 
     @Override

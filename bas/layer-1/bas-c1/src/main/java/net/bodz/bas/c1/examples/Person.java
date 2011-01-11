@@ -1,7 +1,6 @@
 package net.bodz.bas.c1.examples;
 
-import net.bodz.bas.exceptions.OutOfDomainException;
-import net.bodz.bas.lang.Nullables;
+import net.bodz.bas.c1.util.Nullables;
 
 public class Person {
 
@@ -38,7 +37,7 @@ public class Person {
 
     public void setAge(int age) {
         if (age < 0 || age > 1000)
-            throw new OutOfDomainException("Not a valid age: " + age);
+            throw new IllegalArgumentException("Not a valid age: " + age);
         this.age = age;
     }
 
@@ -89,7 +88,7 @@ public class Person {
 
     @Override
     public String toString() {
-        return String.format("<Person name=%s age=%d %s location=\"%s\">", // 
+        return String.format("<Person name=%s age=%d %s location=\"%s\">", //
                 name, age, sex ? "girl" : "boy", location);
     }
 

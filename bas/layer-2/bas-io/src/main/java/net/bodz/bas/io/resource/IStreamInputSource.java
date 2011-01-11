@@ -20,7 +20,7 @@ public interface IStreamInputSource
     IStreamInputSource clone();
 
     @Override
-    IStreamInputSource setCharset(Charset charset);
+    void setCharset(Charset charset);
 
     /**
      * @return non-<code>null</code> value.

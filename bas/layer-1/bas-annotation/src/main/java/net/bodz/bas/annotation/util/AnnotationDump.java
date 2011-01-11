@@ -10,8 +10,6 @@ import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.bodz.bas.exceptions.UnexpectedException;
-
 public class AnnotationDump {
 
     static final Field Class_annotations;
@@ -59,7 +57,7 @@ public class AnnotationDump {
         try {
             dumpAnnotationMap(clazz, declaredOnly, w);
         } catch (IOException e) {
-            throw new UnexpectedException("PrintStream should not throw exception");
+            throw new RuntimeException("Unexpected", e);
         }
     }
 

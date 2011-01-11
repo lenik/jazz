@@ -3,8 +3,8 @@ package net.bodz.bas.reflect.proxy;
 import java.lang.reflect.Proxy;
 
 import junit.framework.TestCase;
-import net.bodz.bas.unitperf.duration.Benchmark;
-import net.bodz.bas.unitperf.duration.IBenchmarkTarget;
+import net.bodz.bas.c1.timing.ITimingTarget;
+import net.bodz.bas.c1.timing.MultipassTimer;
 
 import org.junit.Test;
 
@@ -28,9 +28,9 @@ public class NullInvocationHandlerTest
         final IDog indirectRun = (IDog) Proxy.newProxyInstance(getClass().getClassLoader(), //
                 new Class<?>[] { IDog.class }, NullInvocationHandler.getInstance());
 
-        Benchmark benchmark = new Benchmark();
+        MultipassTimer timer = new MultipassTimer();
 
-        double directCost = benchmark.measureAverageDuration(new IBenchmarkTarget() {
+        double directCost = timer.measureAverageDuration(new ITimingTarget() {
 
             @Override
             public void run() {
@@ -40,7 +40,7 @@ public class NullInvocationHandlerTest
 
         });
 
-        double indirectCost = benchmark.measureAverageDuration(new IBenchmarkTarget() {
+        double indirectCost = timer.measureAverageDuration(new ITimingTarget() {
 
             @Override
             public void run() {

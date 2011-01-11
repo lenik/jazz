@@ -3,10 +3,11 @@ package net.bodz.bas.text.lop;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.position.IXYTellable;
 import net.bodz.bas.sio.position.XYPosition;
-import net.bodz.bas.string.StringQuote;
+import net.bodz.bas.string.StringEscape;
 import net.bodz.bas.string.Strings;
 
-public abstract class _Token implements Token {
+public abstract class _Token
+        implements Token {
 
     private final Lexer lexer;
     private final int id;
@@ -121,7 +122,7 @@ public abstract class _Token implements Token {
             else {
                 String textBrief = Strings.ellipse(text, 20);
                 out.print("(\"");
-                out.print(StringQuote.escape(textBrief));
+                out.print(StringEscape.java(textBrief));
                 out.print("\")");
             }
         }

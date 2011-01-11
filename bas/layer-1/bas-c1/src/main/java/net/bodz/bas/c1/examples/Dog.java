@@ -1,6 +1,6 @@
 package net.bodz.bas.c1.examples;
 
-import net.bodz.bas.lang.Nullables;
+import net.bodz.bas.c1.util.Nullables;
 
 public class Dog {
 

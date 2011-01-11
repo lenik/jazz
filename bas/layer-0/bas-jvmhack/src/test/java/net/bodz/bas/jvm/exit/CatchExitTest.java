@@ -1,15 +1,13 @@
 package net.bodz.bas.jvm.exit;
 
-import junit.framework.TestCase;
-import net.bodz.bas.closure.IExecutableX;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class CatchExitTest
-        extends TestCase {
+        extends Assert {
 
     static class TestProgram
-            implements IExecutableX<Exception> {
+            implements ExitableProgram<Exception> {
 
         private int status;
 
@@ -37,11 +35,12 @@ public class CatchExitTest
     public void test2()
             throws Exception {
         CatchExit catcher = new CatchExit();
-        for (int i = 0; i < 10; i++) {
+        for (int status = 0; status < 10; status++) {
             try {
-                catcher.catchExit(new TestProgram(i));
+                catcher.catchExit(new TestProgram(status));
+                fail();
             } catch (IllegalExitException e) {
-                assertEquals(i, e.getStatus());
+                assertEquals(status, e.getStatus());
             }
         }
     }

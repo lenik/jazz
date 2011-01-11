@@ -4,9 +4,9 @@ import java.beans.FeatureDescriptor;
 import java.lang.annotation.Annotation;
 import java.util.Locale;
 
-import net.bodz.bas.c1.annotations.DisplayName;
-import net.bodz.bas.c1.annotations.Doc;
-import net.bodz.bas.c1.annotations.Tags;
+import net.bodz.bas.meta.info.DisplayName;
+import net.bodz.bas.meta.info.Doc;
+import net.bodz.bas.meta.info.Tags;
 
 import org.apache.commons.lang.ArrayUtils;
 

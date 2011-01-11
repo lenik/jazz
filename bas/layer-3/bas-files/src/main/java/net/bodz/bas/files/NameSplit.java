@@ -2,7 +2,7 @@ package net.bodz.bas.files;
 
 import java.io.Serializable;
 
-import net.bodz.bas.lang.Nullables;
+import net.bodz.bas.c1.util.Nullables;
 
 public class NameSplit
         implements Serializable {

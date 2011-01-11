@@ -4,5 +4,5 @@
 @Doc("Interpolators")
 package net.bodz.bas.regex;
 
-import net.bodz.bas.c1.annotations.Doc;
+import net.bodz.bas.meta.info.Doc;
 

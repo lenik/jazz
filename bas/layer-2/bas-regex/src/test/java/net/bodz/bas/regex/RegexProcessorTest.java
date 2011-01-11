@@ -4,10 +4,10 @@ import java.util.regex.Pattern;
 
 import junit.framework.TestCase;
 import net.bodz.bas.regex.RegexProcessor.SpaceOverride;
+import net.bodz.bas.string.StringArray;
+import net.bodz.bas.string.StringGrep;
 
 import org.junit.Test;
-
-import com.sun.xml.internal.fastinfoset.util.StringArray;
 
 public class RegexProcessorTest
         extends TestCase {

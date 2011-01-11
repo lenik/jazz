@@ -1,7 +1,5 @@
 package net.bodz.bas.lang;
 
-import net.bodz.bas.exceptions.ReadOnlyException;
-
 public class FinalRef<T>
         implements Ref<T> {
 
@@ -18,16 +16,21 @@ public class FinalRef<T>
 
     @Override
     public void set(T value) {
-        throw new ReadOnlyException();
+        throw new RuntimeException("Can't set on a final reference");
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof FinalRef<?>) {
-            Object thatValue = ((FinalRef<?>) obj).constantValue;
-            return Nullables.equals(constantValue, thatValue);
+        if (!(obj instanceof FinalRef<?>))
+            return false;
+        Object thatValue = ((FinalRef<?>) obj).constantValue;
+        if (constantValue != thatValue) {
+            if (constantValue == null || thatValue == null)
+                return false;
+            if (!constantValue.equals(thatValue))
+                return false;
         }
-        return false;
+        return true;
     }
 
     @Override
