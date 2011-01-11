@@ -19,6 +19,7 @@
         <module>bas-nio</module>
         <module>bas-regex</module>
         <module>bas-sio</module>
+        <module>bas-valtype</module>
     </modules>
     <name>BAS :: Layer 2</name>
 </project>

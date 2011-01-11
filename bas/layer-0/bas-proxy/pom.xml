@@ -10,10 +10,8 @@
     <version>0.0.2-SNAPSHOT</version>
     <modules>
         <module>bas-proxy-api</module>
-        <module>
-        bas-proxy-java-security</module>
-        <module>
-        bas-proxy-java-util</module>
+        <module>bas-proxy-java-security</module>
+        <module>bas-proxy-java-util</module>
     </modules>
     <name>BAS :: Layer 0 :: Proxy Wrappers</name>
 </project>
