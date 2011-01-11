@@ -132,9 +132,13 @@ public interface IFsEntry
     /**
      * Once deletion has been requested, it is not possible to cancel the request. This method
      * should therefore be used with care.
+     * <p>
+     * <i>Don't use delete on exit feature whenever possible. </i>
      * 
      * @return <code>false</code> If delete on exit isn't supported by underlying system.
+     * @see
      */
+    @Deprecated
     boolean deleteOnExit();
 
 }
