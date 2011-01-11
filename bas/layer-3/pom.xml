@@ -20,6 +20,7 @@
         <module>bas-string</module>
         <module>bas-text</module>
         <module>bas-tmpfile</module>
+        <module>bas-traits-impl</module>
     </modules>
     <name>BAS :: Layer 3</name>
 </project>

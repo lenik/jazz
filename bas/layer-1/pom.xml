@@ -18,6 +18,7 @@
         <module>bas-lang</module>
         <module>bas-primitive</module>
         <module>bas-reflect</module>
+        <module>bas-traits</module>
     </modules>
     <name>BAS :: Layer 1</name>
 </project>

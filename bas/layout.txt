@@ -13,6 +13,7 @@ layer-1 核心语言增强与语言工具
     bas-primitive
     bas-reflect
     bas-char
+    bas-traits
     
 layer-2 基础数据类型扩展
     bas-bits
@@ -22,6 +23,8 @@ layer-2 基础数据类型扩展
     bas-closure
     bas-collection
     bas-regex
+    bas-valtype
+    bas-traits-impl
     
 layer-3 通用工具
     bas-c1
@@ -34,17 +37,18 @@ layer-3 通用工具
     bas-files
     bas-tmpfile (-> -files)
 
-    bas-string)
+    bas-string
     bas-text (-codec, -diff)
+
         
 layer-4 特殊工具
     bas-combina
     bas-memoryio
     bas-crypto
+    bas-srt
         
 layer-5 框架基础
     bas-log
-    bas-type
     bas-vfs
     bas-i18n
     bas-l10n

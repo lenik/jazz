@@ -15,6 +15,7 @@
         <module>bas-combina</module>
         <module>bas-crypto</module>
         <module>bas-memoryio</module>
+        <module>bas-srt</module>
     </modules>
     <name>BAS :: Layer 4</name>
 </project>
