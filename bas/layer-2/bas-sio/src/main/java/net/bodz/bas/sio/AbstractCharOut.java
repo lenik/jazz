@@ -41,8 +41,21 @@ public abstract class AbstractCharOut
             throw new NullPointerException("charBuffer");
         char[] array = charBuffer.array();
         int offset = charBuffer.arrayOffset();
-        int limit = charBuffer.limit();
-        write(array, offset, limit);
+        int length = charBuffer.position();
+        write(array, offset, length);
+    }
+
+    public void dump(ICharIn charIn)
+            throws IOException {
+        if (charIn == null)
+            throw new NullPointerException("charIn");
+        char[] buf = new char[4096];
+        while (true) {
+            int cc = charIn.read(buf);
+            if (cc == -1)
+                return;
+            write(buf, 0, cc);
+        }
     }
 
     @Override

@@ -14,12 +14,27 @@ public abstract class AbstractByteOut
     }
 
     @Override
-    public void write(ByteBuffer buffer)
+    public void write(ByteBuffer byteBuffer)
             throws IOException {
-        byte[] array = buffer.array();
-        int off = buffer.arrayOffset();
-        int len = buffer.limit();
-        write(array, off, len);
+        if (byteBuffer == null)
+            throw new NullPointerException("byteBuffer");
+        byte[] array = byteBuffer.array();
+        int offset = byteBuffer.arrayOffset();
+        int length = byteBuffer.position();
+        write(array, offset, length);
+    }
+
+    public void dump(IByteIn byteIn)
+            throws IOException {
+        if (byteIn == null)
+            throw new NullPointerException("byteIn");
+        byte[] buf = new byte[4096];
+        while (true) {
+            int cb = byteIn.read(buf);
+            if (cb == -1)
+                return;
+            write(buf, 0, cb);
+        }
     }
 
     /**
