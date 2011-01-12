@@ -3,9 +3,9 @@ package net.bodz.bas.cli.util;
 import java.io.File;
 import java.net.URL;
 
-import net.bodz.bas.files.FilePath;
-import net.bodz.bas.files.FileRes;
 import net.bodz.bas.snm.EclipseProject;
+import net.bodz.bas.util.file.ClassResource;
+import net.bodz.bas.util.file.FilePath;
 
 public class MkbatTest {
 
@@ -16,7 +16,7 @@ public class MkbatTest {
             System.err.println("can't find project base");
             return;
         }
-        URL outurl = FileRes.classData(MkbatTest.class, "out");
+        URL outurl = ClassResource.classData(MkbatTest.class, "out");
         File outdir = FilePath.canoniOf(outurl);
         outdir.mkdirs();
 

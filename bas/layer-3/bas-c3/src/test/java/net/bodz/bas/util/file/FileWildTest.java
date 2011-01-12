@@ -1,0 +1,24 @@
+package net.bodz.bas.util.file;
+
+import java.io.File;
+import java.util.List;
+
+import junit.framework.TestCase;
+
+import org.junit.Test;
+
+public class FileWildTest
+        extends TestCase {
+
+    @Test
+    public void testListFiles() {
+
+        List<File> find = FileWild.listFiles("K:/workspace/net.bodz/*/mod/*/src/net/bodz");
+        if (find == null)
+            System.out.println("no match");
+        else
+            for (File f : find)
+                System.out.println(f);
+    }
+
+}

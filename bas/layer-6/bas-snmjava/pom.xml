@@ -31,10 +31,16 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-files</artifactId>
+            <artifactId>bas-c3</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
+        </dependency>
+        <dependency>
+        	<groupId>net.bodz.bas</groupId>
+        	<artifactId>bas-regex</artifactId>
+        	<version>0.0.1-SNAPSHOT</version>
+        	<scope>compile</scope>
         </dependency>
     </dependencies>
     <name>BAS :: Layer 6 :: SNM Java Project Layout</name>

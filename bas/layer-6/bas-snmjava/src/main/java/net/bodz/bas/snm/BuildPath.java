@@ -14,15 +14,16 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
-import net.bodz.bas.files.FilePath;
-import net.bodz.bas.files.FileURL;
 import net.bodz.bas.util.exception.ParseException;
 import net.bodz.bas.util.exception.UnexpectedException;
+import net.bodz.bas.util.file.FilePath;
 import net.bodz.bas.xml.XMLs;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
+import com.sun.org.apache.xml.internal.resolver.helpers.FileURL;
 
 /**
  * @test {@link BuildPathTest}

@@ -13,7 +13,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>bas-c3</module>
-        <module>bas-files</module>
         <module>bas-fsm</module>
         <module>bas-reflect</module>
         <module>bas-text</module>
