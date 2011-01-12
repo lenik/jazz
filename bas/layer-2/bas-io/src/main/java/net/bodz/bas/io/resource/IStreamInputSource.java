@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.ObjectInput;
 import java.io.Reader;
 import java.nio.charset.Charset;
+import java.nio.charset.IllegalCharsetNameException;
 
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.lookahead.LAReader;
@@ -21,6 +22,12 @@ public interface IStreamInputSource
 
     @Override
     void setCharset(Charset charset);
+
+    /**
+     * @throws IllegalCharsetNameException
+     *             If <code>charsetName</code> isn't existed.
+     */
+    void setCharset(String charsetName);
 
     /**
      * @return non-<code>null</code> value.

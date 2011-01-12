@@ -64,6 +64,13 @@ public abstract class AbstractStreamInputSource
         this.charset = charset;
     }
 
+    @Override
+    public void setCharset(String charsetName) {
+        if (charsetName == null)
+            throw new NullPointerException("charsetName");
+        this.charset = Charset.forName(charsetName);
+    }
+
     /**
      * @def newByteInInputStream(newByteIn())
      */
