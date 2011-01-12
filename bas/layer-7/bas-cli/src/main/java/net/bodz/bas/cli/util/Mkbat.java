@@ -20,8 +20,6 @@ import net.bodz.bas.cli.EditResult;
 import net.bodz.bas.cli.annotations.Option;
 import net.bodz.bas.cli.annotations.ProgramName;
 import net.bodz.bas.collection.set.ArraySet;
-import net.bodz.bas.files.FilePath;
-import net.bodz.bas.files.FileRes;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.loader.DefaultBooter;
 import net.bodz.bas.loader.LoadException;
@@ -38,6 +36,8 @@ import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.snm.SJLibLoader;
 import net.bodz.bas.string.StringArray;
 import net.bodz.bas.util.exception.IdentifiedException;
+import net.bodz.bas.util.file.ClassResource;
+import net.bodz.bas.util.file.FilePath;
 import net.bodz.bas.vfs.impl.url.URLFile;
 
 @Doc("Generate program launcher for java applications")
@@ -275,7 +275,7 @@ public class Mkbat
 
     static {
         try {
-            batTempl = FileRes.classData(Mkbat.class, "batTempl");
+            batTempl = ClassResource.classData(Mkbat.class, "batTempl");
             batTemplBody = new URLFile(batTempl).forRead().readTextContents();
         } catch (IOException e) {
             throw new IdentifiedException(e.getMessage(), e);

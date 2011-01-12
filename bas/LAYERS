@@ -34,8 +34,6 @@ layer-3 通用工具
         # SimpleRequest
     bas-c3
     bas-fsm
-    
-    bas-files
     bas-text (-codec, -diff)
     bas-reflect
         

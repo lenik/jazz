@@ -14,9 +14,6 @@ import java.util.List;
 import net.bodz.bas.cli.annotations.Option;
 import net.bodz.bas.cli.annotations.OptionGroup;
 import net.bodz.bas.cli.util.ProtectedShell;
-import net.bodz.bas.files.FileDiff;
-import net.bodz.bas.files.FilePath;
-import net.bodz.bas.files.FileTemp;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.builtin.InputStreamSource;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
@@ -32,6 +29,9 @@ import net.bodz.bas.text.diff.DiffInfo;
 import net.bodz.bas.util.exception.IllegalUsageError;
 import net.bodz.bas.util.exception.NotImplementedException;
 import net.bodz.bas.util.exception.UnexpectedException;
+import net.bodz.bas.util.file.FileDiff;
+import net.bodz.bas.util.file.FilePath;
+import net.bodz.bas.util.file.FileTemp;
 
 @OptionGroup(value = "batch process", rank = -3)
 public class BatchEditCLI

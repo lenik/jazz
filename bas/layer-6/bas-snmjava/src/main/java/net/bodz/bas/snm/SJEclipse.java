@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
-import net.bodz.bas.files.FilePath;
-import net.bodz.bas.files.FileURL;
+import net.bodz.bas.regex.Patterns;
 import net.bodz.bas.snm.abc.ModulesRoot;
+import net.bodz.bas.util.file.FilePath;
 
 public class SJEclipse {
 
@@ -126,7 +126,7 @@ public class SJEclipse {
         for (ModulesRoot mroot : searches) {
             File find = mroot.findexp(exp);
             if (find != null)
-                return FileURL.getURL(find);
+                return find.toURI().toURL();
         }
         if (errorFail)
             throw new Error("can\'t find, prefix=" + prefix);

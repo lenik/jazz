@@ -23,7 +23,6 @@ import net.bodz.bas.cli.ext.CLIPlugins;
 import net.bodz.bas.commons.scripting.ScriptClass;
 import net.bodz.bas.commons.scripting.ScriptType;
 import net.bodz.bas.commons.scripting.Scripts;
-import net.bodz.bas.files.FileRes;
 import net.bodz.bas.io.term.ITerminal;
 import net.bodz.bas.io.term.LogTerm;
 import net.bodz.bas.io.term.LogTerms;
@@ -46,6 +45,7 @@ import net.bodz.bas.util.PluginTypeEx;
 import net.bodz.bas.util.exception.CreateException;
 import net.bodz.bas.util.exception.NotImplementedException;
 import net.bodz.bas.util.exception.ParseException;
+import net.bodz.bas.util.file.ClassResource;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.vfs.FileSystem;
@@ -243,7 +243,7 @@ public class BasicCLI
                 verinfo = A_bas.parseId(keywords);
             } else {
                 verinfo = new VersionInfo();
-                URL url = FileRes.classData(clazz);
+                URL url = ClassResource.classData(clazz);
                 try {
                     File file = new File(url.toURI());
                     verinfo.time = file.lastModified();
