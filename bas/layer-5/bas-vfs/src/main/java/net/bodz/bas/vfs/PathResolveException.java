@@ -2,24 +2,24 @@ package net.bodz.bas.vfs;
 
 import java.io.IOException;
 
-public class FileSystemException
+public class PathResolveException
         extends IOException {
 
     private static final long serialVersionUID = 1L;
 
-    public FileSystemException() {
+    public PathResolveException() {
         super();
     }
 
-    public FileSystemException(String message, Throwable cause) {
+    public PathResolveException(String message, Throwable cause) {
         super(message, cause);
     }
 
-    public FileSystemException(String message) {
+    public PathResolveException(String message) {
         super(message);
     }
 
-    public FileSystemException(Throwable cause) {
+    public PathResolveException(Throwable cause) {
         super(cause);
     }
 

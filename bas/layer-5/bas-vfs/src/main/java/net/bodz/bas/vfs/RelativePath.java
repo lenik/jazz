@@ -2,6 +2,7 @@ package net.bodz.bas.vfs;
 
 import net.bodz.bas.vfs.impl.fake.FakeVolume;
 import net.bodz.bas.vfs.path.AbstractPath;
+import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.align.IPathAlignment;
 import net.bodz.bas.vfs.path.align.ParentAlignment;
@@ -21,7 +22,8 @@ public class RelativePath
     }
 
     @Override
-    public IFile toFile() {
+    public IFile toFile()
+            throws BadPathException {
         String path = getAlignment().decorate(localPath);
         // XXX - Is `FakeVolume` suitable to use here?
         return FakeVolume.getInstance().resolveFile(path);

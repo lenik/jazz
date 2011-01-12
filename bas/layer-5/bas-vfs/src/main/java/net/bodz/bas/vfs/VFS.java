@@ -1,9 +1,9 @@
 package net.bodz.bas.vfs;
 
+import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.DefaultPathSystem;
 import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.IPathSystem;
-import net.bodz.bas.vfs.path.BadPathException;
 
 public class VFS {
 
@@ -23,7 +23,7 @@ public class VFS {
     }
 
     public static IFile resolveFile(String path)
-            throws BadPathException {
+            throws PathResolveException {
         IPath p = resolve(path);
         return p.toFile();
     }

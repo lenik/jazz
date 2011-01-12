@@ -2,7 +2,6 @@ package net.bodz.bas.vfs.impl.javaio;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.io.IOException;
 
 import net.bodz.bas.closure.IFilter;
 import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
@@ -12,6 +11,7 @@ import net.bodz.bas.io.resource.IStreamOutputTarget;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
 import net.bodz.bas.vfs.AbstractFile;
 import net.bodz.bas.vfs.IFsTree;
+import net.bodz.bas.vfs.VFSException;
 import net.bodz.bas.vfs.path.IPath;
 
 public class JavaioFile
@@ -82,8 +82,7 @@ public class JavaioFile
     }
 
     @Override
-    public boolean setLastModifiedTime(long date)
-            throws IOException {
+    public boolean setLastModifiedTime(long date) {
         return jdkFile.setLastModified(date);
     }
 
@@ -157,7 +156,7 @@ public class JavaioFile
 
     @Override
     public JavaioFile getChild(String entryName)
-            throws IOException {
+            throws VFSException {
         File file = new File(this.jdkFile, entryName);
         return new JavaioFile(file);
     }
@@ -166,7 +165,7 @@ public class JavaioFile
      * 
      */
     @Override
-    public ImmediateIteratorX<? extends JavaioFile, IOException> childIterator(final IFilter<String> entryNameFilter) {
+    public ImmediateIteratorX<? extends JavaioFile, VFSException> childIterator(final IFilter<String> entryNameFilter) {
         final String[] list;
         if (entryNameFilter == null)
             list = jdkFile.list();
@@ -178,13 +177,13 @@ public class JavaioFile
                 }
             });
 
-        return new AbstractImmediateIteratorX<JavaioFile, IOException>() {
+        return new AbstractImmediateIteratorX<JavaioFile, VFSException>() {
 
             int index = 0;
 
             @Override
             public JavaioFile next()
-                    throws IOException {
+                    throws VFSException {
                 if (index >= list.length)
                     return end();
                 String childName = list[index++];

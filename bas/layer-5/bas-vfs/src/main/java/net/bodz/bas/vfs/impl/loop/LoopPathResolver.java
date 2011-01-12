@@ -2,6 +2,7 @@ package net.bodz.bas.vfs.impl.loop;
 
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IVolume;
+import net.bodz.bas.vfs.PathResolveException;
 import net.bodz.bas.vfs.VFS;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
@@ -38,9 +39,13 @@ public abstract class LoopPathResolver
             parentLayerPath = parentLayerPath.substring(0, bang);
         }
 
-        IFile parentLayer = VFS.resolveFile(parentLayerPath);
-        IVolume volume = newVolume(parentLayer);
-        return volume.resolve(localPath);
+        try {
+            IFile parentLayer = VFS.resolveFile(parentLayerPath);
+            IVolume volume = newVolume(parentLayer);
+            return volume.resolve(localPath);
+        } catch (PathResolveException e) {
+            throw new BadPathException("Failed to resolve the device file " + parentLayerPath, e);
+        }
     }
 
     public abstract IVolume newVolume(IFile parentLayer);

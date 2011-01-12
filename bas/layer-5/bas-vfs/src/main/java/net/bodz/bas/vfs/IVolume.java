@@ -1,11 +1,8 @@
 package net.bodz.bas.vfs;
 
-import java.io.IOException;
-
-import net.bodz.bas.exceptions.NotImplementedException;
 import net.bodz.bas.type.traits.IAttributes;
-import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.BadPathException;
+import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.PathFormat;
 
 import org.apache.commons.vfs.Capability;
@@ -26,8 +23,11 @@ public interface IVolume {
      * </pre>
      * 
      * @return <code>null</code> If this volume is a top-level (physical) volume.
+     * @throws VFSException
+     *             If failed to resolve the device file.
      */
-    IFile getDeviceFile();
+    IFile getDeviceFile()
+            throws PathResolveException;
 
     /**
      * @return non-<code>null</code> root path.
@@ -36,8 +36,11 @@ public interface IVolume {
 
     /**
      * @return non-<code>null</code> root file.
+     * @throws VFSException
+     *             If failed to resolve the root file.
      */
-    IFile getRootFile();
+    IFile getRootFile()
+            throws PathResolveException;
 
     /**
      * @param localPath
@@ -57,11 +60,11 @@ public interface IVolume {
      * @return non-<code>null</code> {@link IFile} reference.
      * @throws NullPointerException
      *             If <code>localPath</code> is <code>null</code>.
-     * @throws BadPathException
+     * @throws VFSException
      *             If <code>localPath</code> is invalid.
      */
     IFile resolveFile(String localPath)
-            throws BadPathException;
+            throws PathResolveException;
 
     /**
      * @see FileSystem#getAttribute(String)
@@ -118,41 +121,45 @@ public interface IVolume {
      *            immediated children are watched.
      * @param listener
      *            Be called when the file to be watched has changed.
-     * @throws NotImplementedException
-     *             If the file system doesn't support file listener.
+     * @throws VFSException
+     *             If the file system doesn't support file listener, or failed to register the
+     *             listener.
      * @throws NullPointerException
      *             If any parameter is <code>null</code>.
      * @see org.apache.commons.vfs.FileSystem#addListener(org.apache.commons.vfs.FileObject,
      *      org.apache.commons.vfs.FileListener)
      */
-    void addFileListener(IFile watchFile, IFileListener listener);
+    void addFileListener(IFile watchFile, IFileListener listener)
+            throws VFSException;
 
     /**
-     * @throws NotImplementedException
-     *             If the file system doesn't support file listener.
+     * @throws VFSException
+     *             If the file system doesn't support file listener, or failed to removethe
+     *             listener.
      * @throws NullPointerException
      *             If any parameter is <code>null</code>.
      */
-    void removeFileListener(IFile watchFile, IFileListener listener);
+    void removeFileListener(IFile watchFile, IFileListener listener)
+            throws VFSException;
 
     /**
-     * @throws NotImplementedException
-     *             If the file system doesn't support junction.
+     * @throws VFSException
+     *             If the file system doesn't support junction, or failed to setup the junction.
      * @throws NullPointerException
      *             If any parameter is <code>null</code>.
      * @see org.apache.commons.vfs.FileSystem#addJunction(String, org.apache.commons.vfs.FileObject)
      */
     void addJunction(String junctionPoint, IFile targetFile)
-            throws IOException;
+            throws VFSException;
 
     /**
-     * @throws NotImplementedException
-     *             If the file system doesn't support junction.
+     * @throws VFSException
+     *             If the file system doesn't support junction, or failed to remove the junction.
      * @throws NullPointerException
      *             If any parameter is <code>null</code>.
      */
     void removeJunction(String junctionPoint)
-            throws IOException;
+            throws VFSException;
 
     // File replicateFile(IFile file, FileSelector selector)
     // throws IOException

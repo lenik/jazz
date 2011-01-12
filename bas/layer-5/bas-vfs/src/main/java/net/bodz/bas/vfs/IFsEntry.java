@@ -1,7 +1,5 @@
 package net.bodz.bas.vfs;
 
-import java.io.IOException;
-
 import net.bodz.bas.type.traits.IAttributes;
 import net.bodz.bas.vfs.path.IPath;
 
@@ -57,12 +55,9 @@ public interface IFsEntry
     /**
      * Change the last modified time of an fs entry.
      * 
-     * @return <code>false</code> If there is no last modified time attribute.
-     * @throws IOException
-     *             If failed to set the last modified time.
+     * @return <code>false</code> If failed to set the last modified time attribute.
      */
-    boolean setLastModifiedTime(long date)
-            throws IOException;
+    boolean setLastModifiedTime(long lastModifiedTime);
 
     /**
      * Get modifier bits of interesting selection only.
@@ -112,8 +107,11 @@ public interface IFsEntry
      * Generally, this is the same as: <code>getPath().getParent().toFile()</code>.
      * 
      * @return Parent {@link IFsTree} object or <code>null</code> if there's none.
+     * @throws VFSException
+     *             If faield to resolve the parent file.
      */
-    IFsTree getParentFile();
+    IFsTree getParentFile()
+            throws PathResolveException;
 
     boolean getCreateParentsMode();
 

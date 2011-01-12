@@ -1,6 +1,7 @@
 package net.bodz.bas.sio.nio;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 
 import net.bodz.bas.sio.AbstractCharIn;
@@ -11,6 +12,13 @@ public class DecodedCharIn
 
     private final IByteIn byteIn;
     private final CharsetDecoder decoder;
+
+    /**
+     * @def ~ctor(byteIn, charset.newDecoder())
+     */
+    public DecodedCharIn(IByteIn byteIn, Charset charset) {
+        this(byteIn, charset.newDecoder());
+    }
 
     public DecodedCharIn(IByteIn byteIn, CharsetDecoder decoder) {
         if (byteIn == null)

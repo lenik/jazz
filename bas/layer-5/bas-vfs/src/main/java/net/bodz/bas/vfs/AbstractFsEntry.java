@@ -1,7 +1,5 @@
 package net.bodz.bas.vfs;
 
-import java.io.IOException;
-
 import net.bodz.bas.type.traits.Attributes;
 import net.bodz.bas.type.traits.IAttributes;
 import net.bodz.bas.vfs.path.BadPathException;
@@ -119,8 +117,7 @@ public abstract class AbstractFsEntry
     }
 
     @Override
-    public boolean setLastModifiedTime(long date)
-            throws IOException {
+    public boolean setLastModifiedTime(long lastModifiedTime) {
         return false;
     }
 

@@ -88,7 +88,8 @@ public abstract class AbstractFile
     }
 
     @Override
-    public IFile getParentFile() {
+    public IFile getParentFile()
+            throws PathResolveException {
         IPath parentPath = getPath().getParent();
         if (parentPath == null)
             return null;
@@ -270,7 +271,7 @@ public abstract class AbstractFile
 
     @Override
     public IFile getChild(String childName)
-            throws IOException {
+            throws VFSException {
         return null;
     }
 
@@ -278,8 +279,8 @@ public abstract class AbstractFile
      * @def Return an empty iterator.
      */
     @Override
-    public ImmediateIteratorX<? extends IFile, IOException> childIterator(IFilter<String> nameFilter)
-            throws IOException {
+    public ImmediateIteratorX<? extends IFile, VFSException> childIterator(IFilter<String> nameFilter)
+            throws VFSException {
         return EmptyImmediateIteratorX.getInstance();
     }
 
@@ -288,7 +289,7 @@ public abstract class AbstractFile
      */
     @Override
     public List<? extends IFile> listChildren()
-            throws IOException {
+            throws VFSException {
         return IteratorToList.toList(childIterator((IFilter<String>) null));
     }
 
@@ -297,7 +298,7 @@ public abstract class AbstractFile
      */
     @Override
     public List<? extends IFile> listChildren(IFilter<String> entryNameFilter)
-            throws IOException {
+            throws VFSException {
         return IteratorToList.toList(childIterator(entryNameFilter));
     }
 

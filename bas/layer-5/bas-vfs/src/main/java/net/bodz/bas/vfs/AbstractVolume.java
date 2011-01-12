@@ -1,7 +1,5 @@
 package net.bodz.bas.vfs;
 
-import java.io.IOException;
-
 import net.bodz.bas.type.traits.EmptyAttributes;
 import net.bodz.bas.type.traits.IAttributes;
 
@@ -26,7 +24,8 @@ public abstract class AbstractVolume
     }
 
     @Override
-    public IFile getRootFile() {
+    public IFile getRootFile()
+            throws PathResolveException {
         return getRootPath().toFile();
     }
 
@@ -73,25 +72,27 @@ public abstract class AbstractVolume
     }
 
     @Override
-    public void addFileListener(IFile watchFile, IFileListener listener) {
-        throw new UnsupportedOperationException();
+    public void addFileListener(IFile watchFile, IFileListener listener)
+            throws VFSException {
+        throw new VFSException("File listener is unsupported");
     }
 
     @Override
-    public void removeFileListener(IFile watchFile, IFileListener listener) {
-        throw new UnsupportedOperationException();
+    public void removeFileListener(IFile watchFile, IFileListener listener)
+            throws VFSException {
+        throw new VFSException("File listener is unsupported");
     }
 
     @Override
     public synchronized void addJunction(String junctionPoint, IFile targetFile)
-            throws IOException {
-        throw new UnsupportedOperationException();
+            throws VFSException {
+        throw new VFSException("Junction is unsupported");
     }
 
     @Override
     public synchronized void removeJunction(String junctionPoint)
-            throws IOException {
-        throw new UnsupportedOperationException();
+            throws VFSException {
+        throw new VFSException("Junction is unsupported");
     }
 
 }
