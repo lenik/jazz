@@ -16,17 +16,17 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-        	<groupId>net.bodz.bas</groupId>
-        	<artifactId>bas-io</artifactId>
-        	<version>0.0.1-SNAPSHOT</version>
-        	<type>jar</type>
-        	<scope>compile</scope>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-io</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>compile</scope>
         </dependency>
         <dependency>
-        	<groupId>net.bodz.bas</groupId>
-        	<artifactId>bas-test</artifactId>
-        	<version>0.0.1-SNAPSHOT</version>
-        	<scope>test</scope>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-test</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <name>BAS :: Layer 3 :: Commons</name>

@@ -8,16 +8,16 @@
     <artifactId>bas-test</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <dependencies>
-    	<dependency>
-    		<groupId>junit</groupId>
-    		<artifactId>junit</artifactId>
-    	</dependency>
-    	<dependency>
-    		<groupId>net.bodz.bas</groupId>
-    		<artifactId>bas-c1</artifactId>
-    		<version>0.0.1-SNAPSHOT</version>
-    		<scope>compile</scope>
-    	</dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-c1</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
     <name>BAS :: Layer 1 :: Test</name>
 </project>
