@@ -3,7 +3,7 @@ package net.bodz.bas.type;
 import java.util.Map;
 
 import junit.framework.TestCase;
-import net.bodz.bas.c1.examples.Person;
+import net.bodz.bas.util.example.Person;
 
 import org.junit.Test;
 

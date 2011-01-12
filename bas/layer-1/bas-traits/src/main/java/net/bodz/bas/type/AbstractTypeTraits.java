@@ -9,9 +9,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-import net.bodz.bas.exceptions.CreateException;
-import net.bodz.bas.exceptions.NotImplementedException;
-import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.jdk6compat.jdk7emul.IllegalAccessException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
@@ -32,6 +29,9 @@ import net.bodz.bas.type.traits.ISearcher;
 import net.bodz.bas.type.traits.ITextForm;
 import net.bodz.bas.type.traits.IValidator;
 import net.bodz.bas.type.traits.ValidateException;
+import net.bodz.bas.util.exception.CreateException;
+import net.bodz.bas.util.exception.NotImplementedException;
+import net.bodz.bas.util.exception.ParseException;
 
 @ThreadUnsafe
 public abstract class AbstractTypeTraits<T>

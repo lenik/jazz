@@ -3,7 +3,7 @@ package net.bodz.bas.regex;
 import java.nio.CharBuffer;
 import java.util.regex.Pattern;
 
-import net.bodz.bas.exceptions.NotImplementedException;
+import net.bodz.bas.util.exception.NotImplementedException;
 
 public class RegexProcessor
         extends Unescape {

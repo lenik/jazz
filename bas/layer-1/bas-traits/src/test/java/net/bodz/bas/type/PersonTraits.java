@@ -1,6 +1,6 @@
 package net.bodz.bas.type;
 
-import net.bodz.bas.c1.examples.Person;
+import net.bodz.bas.util.example.Person;
 
 public class PersonTraits
         extends AbstractTypeTraits<Person> {

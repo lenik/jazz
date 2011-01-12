@@ -11,9 +11,9 @@ import java.util.Collections;
 import java.util.List;
 
 import net.bodz.bas.annotation.util.AnnotationUtil;
-import net.bodz.bas.exceptions.NotImplementedException;
-import net.bodz.bas.exceptions.ParseException;
-import net.bodz.bas.exceptions.UnexpectedException;
+import net.bodz.bas.util.exception.NotImplementedException;
+import net.bodz.bas.util.exception.ParseException;
+import net.bodz.bas.util.exception.UnexpectedException;
 
 /**
  * @test DocUtilTest

@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import net.bodz.bas.c1.util.Nullables;
 import net.bodz.bas.collection.map.VariantLookupMap;
 import net.bodz.bas.collection.tree.TreePath;
+import net.bodz.bas.util.Nullables;
 
 public class SimpleRequest
         extends VariantLookupMap<String> {

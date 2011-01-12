@@ -7,7 +7,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CoderResult;
 
-import net.bodz.bas.exceptions.IllegalUsageError;
+import net.bodz.bas.util.exception.IllegalUsageError;
 
 public class DecodeUnit
         extends BinaryProcessUnit {

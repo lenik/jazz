@@ -4,12 +4,12 @@ import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
 
-import net.bodz.bas.exceptions.CreateException;
-import net.bodz.bas.exceptions.IllegalUsageException;
 import net.bodz.bas.files.Files;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.loader.UCL;
 import net.bodz.bas.util.Factory;
+import net.bodz.bas.util.exception.CreateException;
+import net.bodz.bas.util.exception.IllegalUsageException;
 
 import org.apache.tools.ant.types.Path;
 

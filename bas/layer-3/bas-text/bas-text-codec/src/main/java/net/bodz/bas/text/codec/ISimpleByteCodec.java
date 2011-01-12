@@ -2,12 +2,12 @@ package net.bodz.bas.text.codec;
 
 import java.io.IOException;
 
-import net.bodz.bas.exceptions.DecodeException;
-import net.bodz.bas.exceptions.EncodeException;
 import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.ICharIn;
 import net.bodz.bas.sio.ICharOut;
+import net.bodz.bas.util.exception.DecodeException;
+import net.bodz.bas.util.exception.EncodeException;
 
 public interface ISimpleByteCodec {
 

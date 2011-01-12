@@ -9,7 +9,6 @@ import java.net.URL;
 import java.nio.charset.Charset;
 
 import net.bodz.bas.closure.IExecutableX;
-import net.bodz.bas.exceptions.OutOfDomainException;
 import net.bodz.bas.jvm.exit.CatchExit;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.loader.Classpath;
@@ -20,6 +19,7 @@ import net.bodz.bas.loader.boot.BootInfo;
 import net.bodz.bas.loader.boot.BootProc;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.text.charsets.BasCharsetProvider;
+import net.bodz.bas.util.exception.OutOfDomainException;
 
 import org.apache.commons.lang.ArrayUtils;
 

@@ -1,7 +1,6 @@
 package net.bodz.bas.type.info;
 
 import junit.framework.TestCase;
-import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.lang.FinalNegotiation;
 import net.bodz.bas.lang.INegotiation;
 import net.bodz.bas.lang.NegotiationException;
@@ -11,6 +10,7 @@ import net.bodz.bas.type.AbstractTypeTraits;
 import net.bodz.bas.type.ITypeTraits;
 import net.bodz.bas.type.TypeTraitsResolve;
 import net.bodz.bas.type.traits.IParser;
+import net.bodz.bas.util.exception.ParseException;
 
 import org.junit.Test;
 

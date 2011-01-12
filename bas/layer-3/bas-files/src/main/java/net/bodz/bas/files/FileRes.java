@@ -6,8 +6,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.jar.Manifest;
 
-import net.bodz.bas.exceptions.IdentifiedException;
-import net.bodz.bas.exceptions.UnexpectedException;
+import net.bodz.bas.util.exception.IdentifiedException;
+import net.bodz.bas.util.exception.UnexpectedException;
 
 public class FileRes {
 

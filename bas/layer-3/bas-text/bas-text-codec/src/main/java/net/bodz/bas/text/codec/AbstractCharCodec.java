@@ -8,8 +8,6 @@ import java.io.Writer;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 
-import net.bodz.bas.exceptions.DecodeException;
-import net.bodz.bas.exceptions.EncodeException;
 import net.bodz.bas.sio.BByteOut;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.ByteBufferByteIn;
@@ -21,6 +19,8 @@ import net.bodz.bas.sio.OutputStreamByteOut;
 import net.bodz.bas.sio.ReaderCharIn;
 import net.bodz.bas.sio.StringCharIn;
 import net.bodz.bas.sio.WriterCharOut;
+import net.bodz.bas.util.exception.DecodeException;
+import net.bodz.bas.util.exception.EncodeException;
 
 public abstract class AbstractCharCodec
         implements ICharCodec {

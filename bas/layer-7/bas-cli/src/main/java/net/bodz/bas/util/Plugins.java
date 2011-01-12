@@ -3,7 +3,7 @@ package net.bodz.bas.util;
 import java.util.Map.Entry;
 
 import net.bodz.bas.collection.preorder.TypeHierMap;
-import net.bodz.bas.exceptions.CreateException;
+import net.bodz.bas.util.exception.CreateException;
 
 public class Plugins {
 

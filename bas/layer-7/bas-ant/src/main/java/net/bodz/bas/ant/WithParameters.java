@@ -3,7 +3,7 @@ package net.bodz.bas.ant;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.exceptions.ParseException;
+import net.bodz.bas.util.exception.ParseException;
 
 public class WithParameters {
 

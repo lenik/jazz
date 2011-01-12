@@ -1,6 +1,6 @@
 package net.bodz.bas.unitperf.matrix;
 
-import net.bodz.bas.exceptions.IllegalUsageException;
+import net.bodz.bas.util.exception.IllegalUsageException;
 
 public interface Matrix {
 

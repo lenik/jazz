@@ -2,7 +2,6 @@ package net.bodz.bas.flow.units;
 
 import java.io.IOException;
 
-import net.bodz.bas.exceptions.OutOfDomainException;
 import net.bodz.bas.flow.AbstractUnit;
 import net.bodz.bas.flow.IInPort;
 import net.bodz.bas.flow.IOutPort;
@@ -12,6 +11,7 @@ import net.bodz.bas.flow.IUnit;
 import net.bodz.bas.flow.STPortMeta;
 import net.bodz.bas.flow.util.RecvUtil;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
+import net.bodz.bas.util.exception.OutOfDomainException;
 
 public abstract class SIUnit
         extends AbstractUnit

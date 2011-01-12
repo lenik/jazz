@@ -9,7 +9,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CoderResult;
 
-import net.bodz.bas.exceptions.UnexpectedException;
+import net.bodz.bas.util.exception.UnexpectedException;
 
 public class WriterOutputStream extends OutputStream {
 

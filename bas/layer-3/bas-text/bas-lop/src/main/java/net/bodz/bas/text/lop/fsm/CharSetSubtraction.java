@@ -1,6 +1,6 @@
 package net.bodz.bas.text.lop.fsm;
 
-import net.bodz.bas.exceptions.UnexpectedException;
+import net.bodz.bas.util.exception.UnexpectedException;
 
 public final class CharSetSubtraction
         extends _CharSet {

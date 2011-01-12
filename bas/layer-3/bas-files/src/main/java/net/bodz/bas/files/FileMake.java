@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.closure.alt.Pred2;
-import net.bodz.bas.exceptions.IllegalArgumentTypeException;
+import net.bodz.bas.util.exception.IllegalArgumentTypeException;
 
 public class FileMake {
 

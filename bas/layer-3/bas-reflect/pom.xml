@@ -35,9 +35,9 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-c1</artifactId>
+            <artifactId>bas-test</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <name>BAS :: Layer 3 :: Java Reflect Utils</name>

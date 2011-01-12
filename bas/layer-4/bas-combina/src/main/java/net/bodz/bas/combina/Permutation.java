@@ -4,8 +4,8 @@ import net.bodz.bas.closure.alt.Proc1;
 import net.bodz.bas.collection.array.ArrayWrapper;
 import net.bodz.bas.collection.array.IArrayWrapper;
 import net.bodz.bas.collection.list.IntSList;
-import net.bodz.bas.exceptions.IllegalUsageException;
-import net.bodz.bas.exceptions.OutOfDomainException;
+import net.bodz.bas.util.exception.IllegalUsageException;
+import net.bodz.bas.util.exception.OutOfDomainException;
 
 public class Permutation {
 

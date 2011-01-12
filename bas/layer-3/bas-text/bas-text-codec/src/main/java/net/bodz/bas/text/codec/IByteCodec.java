@@ -9,8 +9,8 @@ import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 
-import net.bodz.bas.exceptions.DecodeException;
-import net.bodz.bas.exceptions.EncodeException;
+import net.bodz.bas.util.exception.DecodeException;
+import net.bodz.bas.util.exception.EncodeException;
 
 public interface IByteCodec
         extends ISimpleByteCodec {

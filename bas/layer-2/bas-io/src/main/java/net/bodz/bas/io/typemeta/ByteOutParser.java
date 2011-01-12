@@ -3,10 +3,10 @@ package net.bodz.bas.io.typemeta;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
-import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.OutputStreamByteOut;
 import net.bodz.bas.type.traits.AbstractParser;
+import net.bodz.bas.util.exception.ParseException;
 
 public class ByteOutParser
         extends AbstractParser<IByteOut> {

@@ -3,7 +3,7 @@ package net.bodz.bas.i18n.dict;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
-import net.bodz.bas.exceptions.UnexpectedException;
+import net.bodz.bas.util.exception.UnexpectedException;
 
 public class ResourceBundleDict
         extends _NLSDict {

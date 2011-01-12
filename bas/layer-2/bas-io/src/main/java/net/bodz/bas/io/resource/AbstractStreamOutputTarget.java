@@ -10,7 +10,6 @@ import java.io.PrintStream;
 import java.io.Writer;
 import java.nio.charset.Charset;
 
-import net.bodz.bas.exceptions.UnexpectedException;
 import net.bodz.bas.io.resource.preparation.FormatDumpPreparation;
 import net.bodz.bas.io.resource.preparation.IFormatDumpPreparation;
 import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
@@ -21,6 +20,7 @@ import net.bodz.bas.sio.CharOutWriter;
 import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.IByteOutNative;
 import net.bodz.bas.sio.ICharOut;
+import net.bodz.bas.util.exception.UnexpectedException;
 
 public abstract class AbstractStreamOutputTarget
         implements IStreamOutputTarget {

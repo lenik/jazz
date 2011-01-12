@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 import net.bodz.bas.chars.CharFeature;
-import net.bodz.bas.exceptions.EncodeException;
 import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.ICharIn;
 import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.text.codec.AbstractByteCodec;
+import net.bodz.bas.util.exception.EncodeException;
 
 public class HexCodec
         extends AbstractByteCodec {

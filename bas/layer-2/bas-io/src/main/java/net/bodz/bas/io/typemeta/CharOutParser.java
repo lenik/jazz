@@ -4,10 +4,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 
-import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.WriterPrintOut;
 import net.bodz.bas.type.traits.AbstractParser;
+import net.bodz.bas.util.exception.ParseException;
 
 public class CharOutParser
         extends AbstractParser<IPrintOut> {

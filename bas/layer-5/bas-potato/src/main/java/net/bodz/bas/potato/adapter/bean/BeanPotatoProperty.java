@@ -5,12 +5,12 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Locale;
 
-import net.bodz.bas.exceptions.UnexpectedException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.potato.AbstarctPotatoProperty;
 import net.bodz.bas.potato.PotatoException;
 import net.bodz.bas.potato.PotatoTargetException;
+import net.bodz.bas.util.exception.UnexpectedException;
 
 public class BeanPotatoProperty
         extends AbstarctPotatoProperty {

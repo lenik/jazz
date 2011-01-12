@@ -1,6 +1,6 @@
 package net.bodz.bas.util;
 
-import net.bodz.bas.exceptions.CreateException;
+import net.bodz.bas.util.exception.CreateException;
 
 import org.apache.commons.lang.ArrayUtils;
 

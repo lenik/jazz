@@ -3,8 +3,8 @@ package net.bodz.bas.ant;
 import java.io.File;
 import java.util.Map;
 
-import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.snm.EclipseProject;
+import net.bodz.bas.util.exception.ParseException;
 
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.FileSet;

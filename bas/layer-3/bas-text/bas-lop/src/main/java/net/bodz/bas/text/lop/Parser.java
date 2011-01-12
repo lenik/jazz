@@ -3,7 +3,7 @@ package net.bodz.bas.text.lop;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 
-import net.bodz.bas.exceptions.ParseException;
+import net.bodz.bas.util.exception.ParseException;
 
 public interface Parser {
 

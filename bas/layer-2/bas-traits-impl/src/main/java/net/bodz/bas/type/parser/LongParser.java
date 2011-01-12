@@ -1,8 +1,8 @@
 package net.bodz.bas.type.parser;
 
-import net.bodz.bas.exceptions.ParseException;
-import net.bodz.bas.exceptions.TypeConvertException;
 import net.bodz.bas.type.traits.AbstractParser;
+import net.bodz.bas.util.exception.ParseException;
+import net.bodz.bas.util.exception.TypeConvertException;
 
 public class LongParser
         extends AbstractParser<Long> {

@@ -8,8 +8,8 @@ import javax.script.ScriptException;
 import net.bodz.bas.cli.BasicCLI;
 import net.bodz.bas.cli.CLIException;
 import net.bodz.bas.commons.scripting.ScriptClass;
-import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.io.term.LogTerm;
+import net.bodz.bas.util.exception.ParseException;
 
 import org.apache.commons.lang.ArrayUtils;
 

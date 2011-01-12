@@ -5,9 +5,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import net.bodz.bas.exceptions.NotImplementedException;
-import net.bodz.bas.exceptions.UnexpectedException;
 import net.bodz.bas.meta.codereview.PoorImpl;
+import net.bodz.bas.util.exception.NotImplementedException;
+import net.bodz.bas.util.exception.UnexpectedException;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IVolume;

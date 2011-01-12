@@ -5,7 +5,7 @@ import java.nio.BufferUnderflowException;
 import java.nio.charset.Charset;
 
 import net.bodz.bas.collection.array.IArrayWrapper;
-import net.bodz.bas.exceptions.OutOfDomainException;
+import net.bodz.bas.util.exception.OutOfDomainException;
 
 /**
  * @see {@link IArrayWrapper}

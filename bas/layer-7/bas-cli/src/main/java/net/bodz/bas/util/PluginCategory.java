@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.a.ClassInfo;
-import net.bodz.bas.exceptions.OutOfDomainException;
+import net.bodz.bas.util.exception.OutOfDomainException;
 
 /**
  * Plugin Category

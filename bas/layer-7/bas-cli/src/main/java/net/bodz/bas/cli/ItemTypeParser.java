@@ -1,6 +1,6 @@
 package net.bodz.bas.cli;
 
-import net.bodz.bas.exceptions.ParseException;
+import net.bodz.bas.util.exception.ParseException;
 
 /** reserved for future use */
 public interface ItemTypeParser {

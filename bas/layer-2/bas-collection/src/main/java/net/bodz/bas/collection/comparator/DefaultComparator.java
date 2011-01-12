@@ -1,6 +1,6 @@
 package net.bodz.bas.collection.comparator;
 
-import net.bodz.bas.exceptions.IllegalUsageException;
+import net.bodz.bas.util.exception.IllegalUsageException;
 
 public class DefaultComparator
         implements NonNullComparator<Object> {

@@ -5,9 +5,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
-import net.bodz.bas.exceptions.RuntimizedException;
-import net.bodz.bas.exceptions.UnexpectedException;
 import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.util.exception.RuntimizedException;
+import net.bodz.bas.util.exception.UnexpectedException;
 
 public class Cryptos {
 

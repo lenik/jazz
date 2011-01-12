@@ -2,7 +2,7 @@ package net.bodz.bas.type;
 
 import java.lang.reflect.Method;
 
-import net.bodz.bas.exceptions.IllegalUsageException;
+import net.bodz.bas.util.exception.IllegalUsageException;
 
 public class TypeTraitsResolve {
 

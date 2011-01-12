@@ -7,7 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import net.bodz.bas.exceptions.TypeConvertException;
+import net.bodz.bas.util.exception.TypeConvertException;
 
 public class TypeMatrix_Date {
 

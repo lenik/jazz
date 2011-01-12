@@ -1,7 +1,7 @@
 package net.bodz.bas.ant;
 
-import net.bodz.bas.exceptions.CreateException;
 import net.bodz.bas.io.term.LogTerm;
+import net.bodz.bas.util.exception.CreateException;
 
 public class Logger extends ValueConstruct {
 

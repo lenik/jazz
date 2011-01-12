@@ -2,7 +2,7 @@
 
 package net.bodz.bas.text.lop.impl;
 
-import net.bodz.bas.exceptions.ParseException;
+import net.bodz.bas.util.exception.ParseException;
 
 @SuppressWarnings("unused")
 /**

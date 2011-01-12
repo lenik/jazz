@@ -5,8 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-import net.bodz.bas.exceptions.OutOfDomainException;
 import net.bodz.bas.primitive.IntMath;
+import net.bodz.bas.util.exception.OutOfDomainException;
 
 public class RandomAccessFileMemory extends _Memory {
 
