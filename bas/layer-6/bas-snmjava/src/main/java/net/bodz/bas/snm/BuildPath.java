@@ -17,13 +17,12 @@ import java.util.zip.ZipFile;
 import net.bodz.bas.util.exception.ParseException;
 import net.bodz.bas.util.exception.UnexpectedException;
 import net.bodz.bas.util.file.FilePath;
+import net.bodz.bas.util.file.FileURL;
 import net.bodz.bas.xml.XMLs;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
-
-import com.sun.org.apache.xml.internal.resolver.helpers.FileURL;
 
 /**
  * @test {@link BuildPathTest}
@@ -68,18 +67,13 @@ public class BuildPath {
     public BuildPath(Class<?> virtualProjectForClass) {
         this();
         String selfResourceName = "/" + virtualProjectForClass.getName().replace('.', '/') + ".class";
-        URL selfRes = virtualProjectForClass.getResource(selfResourceName);
-        if (selfRes == null)
+        URL selfurl = virtualProjectForClass.getResource(selfResourceName);
+        if (selfurl == null)
             throw new UnexpectedException("Self resource error, maybe class extension isn't '.class'? ");
-        File defaultClasspath;
-        try {
-            defaultClasspath = FileURL.getFile(selfRes, selfResourceName);
-            Library defaultLibrary = new Library();
-            defaultLibrary.path = defaultClasspath;
-            addLibrary(defaultLibrary);
-        } catch (MalformedURLException e) {
-            ; // warn: non-local class is not supported
-        }
+        File defaultClasspath = FileURL.getFile(selfurl, selfResourceName);
+        Library defaultLibrary = new Library();
+        defaultLibrary.path = defaultClasspath;
+        addLibrary(defaultLibrary);
     }
 
     public BuildPath(final File baseDir, File classpathFile, File manifestFile)
@@ -295,10 +289,10 @@ public class BuildPath {
             if (sourcePath == null && trySrcSuffixes != null) {
                 File parentDir = classPath.getParentFile();
                 String classPathFileName = classPath.getName();
-                String classPathName = FilePath.getName(classPathFileName);
+                String classPathNameOnly = FilePath.stripExtension(classPathFileName);
                 String classPathExtension = FilePath.getExtension(classPathFileName);
                 for (String trySrcSuffix : trySrcSuffixes) {
-                    String srcName = classPathName + trySrcSuffix;
+                    String srcName = classPathNameOnly + trySrcSuffix;
                     File srcPath = new File(parentDir, srcName + classPathExtension);
                     if (srcPath.exists()) {
                         sourcePath = srcPath;

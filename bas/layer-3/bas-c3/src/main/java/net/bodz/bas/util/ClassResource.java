@@ -38,12 +38,10 @@ public class ClassResource {
     }
 
     /**
-     * Same as {@link #_classData(Class, String)} with ".class" as <code>extension</code>.
+     * The class bytes resource of the <code>clazz</code>.
      */
     public static URLResource classData(Class<?> clazz) {
-        String classSimpleName = clazz.getSimpleName();
-        URL url = clazz.getResource(classSimpleName + ".class"); //$NON-NLS-1$
-        return new URLResource(url);
+        return new URLResource(classDataURL(clazz));
     }
 
     /**
@@ -51,36 +49,53 @@ public class ClassResource {
      *            don't include the dot(.)
      */
     public static URLResource classData(Class<?> clazz, String extension) {
-        return _classData(clazz, "." + extension); //$NON-NLS-1$
+        return new URLResource(classDataURL(clazz, extension));
+    }
+
+    /**
+     * Same as {@link #classDataURLBySuffix(Class, String)} with ".class" as <code>extension</code>.
+     */
+    public static URL classDataURL(Class<?> clazz) {
+        String classSimpleName = clazz.getSimpleName();
+        URL url = clazz.getResource(classSimpleName + ".class"); //$NON-NLS-1$
+        return url;
     }
 
     /**
      * @param extension
+     *            don't include the dot(.)
+     */
+    public static URL classDataURL(Class<?> clazz, String extension) {
+        return classDataURLBySuffix(clazz, "." + extension); //$NON-NLS-1$
+    }
+
+    /**
+     * @param suffix
      *            must include the dot(.), if necessary
      */
-    public static URLResource _classData(Class<?> clazz, String extension) {
+    public static URL classDataURLBySuffix(Class<?> clazz, String suffix) {
         String classSimpleName = clazz.getSimpleName();
         URL context = clazz.getResource(classSimpleName + ".class"); //$NON-NLS-1$
-        String spec = classSimpleName + extension;
+        String spec = classSimpleName + suffix;
         try {
             URL url = new URL(context, spec);
-            return new URLResource(url);
+            return url;
         } catch (MalformedURLException e) {
             throw new IllegalArgumentException(e);
         }
     }
 
-    public static URL getRootResource(Class<?> clazz) {
+    public static URL getRootResourceURL(Class<?> clazz) {
         ClassLoader classLoader = clazz.getClassLoader();
         if (classLoader == null)
             throw new NullPointerException("can't getClassLoader"); //$NON-NLS-1$
         String pkg = clazz.getPackage().getName();
         String base = clazz.getSimpleName() + ".class"; //$NON-NLS-1$
         String name = pkg.replace('.', '/') + '/' + base;
-        return getRootResource(classLoader, name);
+        return getRootResourceURL(classLoader, name);
     }
 
-    public static URL getRootResource(ClassLoader classLoader, String hintPath) {
+    public static URL getRootResourceURL(ClassLoader classLoader, String hintPath) {
         hintPath = hintPath.replace('\\', '/');
         URL url = classLoader.getResource(hintPath);
         String s = url.toString();
