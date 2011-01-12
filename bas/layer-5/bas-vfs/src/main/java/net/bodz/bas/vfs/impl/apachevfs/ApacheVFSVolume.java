@@ -1,7 +1,8 @@
-package net.bodz.bas.vfs.impl.win32.apachevfs;
+package net.bodz.bas.vfs.impl.apachevfs;
 
 import net.bodz.bas.vfs.AbstractVolume;
-import net.bodz.bas.vfs.PathResolveException;
+import net.bodz.bas.vfs.FileResolveException;
+import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.PathFormat;
@@ -33,6 +34,14 @@ public class ApacheVFSVolume
         return fileSystemManager;
     }
 
+    /**
+     * It's impossible to get the parent layer in Apache VFS, though this delegate.
+     */
+    @Override
+    public IFile getDeviceFile() {
+        return null;
+    }
+
     @Override
     public ApacheVFSPath getRootPath() {
         if (internalRootPath == null) {
@@ -42,27 +51,27 @@ public class ApacheVFSVolume
     }
 
     @Override
-    public ApacheVFSPath resolve(String localPath)
+    public ApacheVFSPath resolve(String uri)
             throws BadPathException {
-        ApacheVFSPath path = new ApacheVFSPath(this, localPath);
+        ApacheVFSPath path = new ApacheVFSPath(this, uri);
         return path;
     }
 
     public ApacheVFSPath resolve(FileName fileName)
             throws BadPathException {
-        String localPath = fileName.getURI();
-        ApacheVFSPath path = new ApacheVFSPath(this, localPath);
+        String uri = fileName.getURI();
+        ApacheVFSPath path = new ApacheVFSPath(this, uri);
         return path;
     }
 
     @Override
     public ApacheVFSFile resolveFile(String localPath)
-            throws PathResolveException {
+            throws FileResolveException {
         ApacheVFSPath path = resolve(localPath);
         try {
             return new ApacheVFSFile(this, path);
         } catch (FileSystemException e) {
-            throw new PathResolveException("Failed to resolve file", e);
+            throw new FileResolveException("Failed to resolve file", e);
         }
     }
 

@@ -1,4 +1,4 @@
-package net.bodz.bas.net.protocols;
+package net.bodz.bas.net.serv.protocols;
 
 import java.io.IOException;
 

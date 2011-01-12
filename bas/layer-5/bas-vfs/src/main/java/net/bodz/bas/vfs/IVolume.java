@@ -14,20 +14,11 @@ import org.apache.commons.vfs.FileSystem;
 public interface IVolume {
 
     /**
-     * Same as:
-     * 
-     * <pre>
-     * {
-     *     getRootFile().getPath().getParentLayer().toFile();
-     * }
-     * </pre>
+     * Return the underlying device on which this volume is implemented.
      * 
      * @return <code>null</code> If this volume is a top-level (physical) volume.
-     * @throws VFSException
-     *             If failed to resolve the device file.
      */
-    IFile getDeviceFile()
-            throws PathResolveException;
+    IFile getDeviceFile();
 
     /**
      * @return non-<code>null</code> root path.
@@ -36,11 +27,11 @@ public interface IVolume {
 
     /**
      * @return non-<code>null</code> root file.
-     * @throws VFSException
+     * @throws FileResolveException
      *             If failed to resolve the root file.
      */
     IFile getRootFile()
-            throws PathResolveException;
+            throws FileResolveException;
 
     /**
      * @param localPath
@@ -64,7 +55,7 @@ public interface IVolume {
      *             If <code>localPath</code> is invalid.
      */
     IFile resolveFile(String localPath)
-            throws PathResolveException;
+            throws FileResolveException;
 
     /**
      * @see FileSystem#getAttribute(String)

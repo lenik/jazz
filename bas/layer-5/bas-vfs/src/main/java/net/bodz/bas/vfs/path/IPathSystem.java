@@ -1,6 +1,5 @@
 package net.bodz.bas.vfs.path;
 
-
 public interface IPathSystem {
 
     int HIGH_PRIORITY = -100;
@@ -14,13 +13,13 @@ public interface IPathSystem {
      * @throws NullPointerException
      *             If any parameter is <code>null</code>.
      */
-    void setPathResolver(String protocol, IPathResolver resolver);
+    void addPathResolver(String protocol, IPathResolver resolver);
 
     /**
      * @throws NullPointerException
      *             If <code>protocol</code> is <code>null</code>.
      */
-    void unsetPathResolver(String protocol);
+    void removePathResolver(String protocol);
 
     /**
      * @throws NullPointerException
@@ -41,11 +40,29 @@ public interface IPathSystem {
     void removeGenericPathResolver(IPathResolver resolver);
 
     /**
-     * The default context path is used to expand a relative path to absolute path.
+     * Get the context path.
+     * <p>
+     * The context path is used to expand a relative path to absolute path.
+     * <p>
+     * You should avoid to use context path whenever possible, because it may be changed.
      * 
      * @return non-<code>null</code> context path, whose alignment should be absolute.
      */
-    IPath getDefaultContext();
+    IPath getContextPath();
+
+    /**
+     * Change the context path.
+     * <p>
+     * The context path is used to expand a relative path to absolute path.
+     * 
+     * Change context path won't affect those already joined relative paths,
+     * <p>
+     * <i>Warning: You should know what you are doing, before change the context path. </i>
+     * 
+     * @throws NullPointerException
+     *             If <code>path</code> is <code>null</code>.
+     */
+    void setContextPath(IPath path);
 
     /**
      * @return non-<code>null</code> path.

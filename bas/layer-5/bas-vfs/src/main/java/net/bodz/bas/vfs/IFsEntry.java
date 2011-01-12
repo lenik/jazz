@@ -111,7 +111,7 @@ public interface IFsEntry
      *             If faield to resolve the parent file.
      */
     IFsTree getParentFile()
-            throws PathResolveException;
+            throws FileResolveException;
 
     boolean getCreateParentsMode();
 

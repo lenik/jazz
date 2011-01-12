@@ -6,9 +6,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IVolume;
-import net.bodz.bas.vfs.PathResolveException;
+import net.bodz.bas.vfs.VFSException;
 import net.bodz.bas.vfs.path.align.IPathAlignment;
 
 /**
@@ -44,9 +45,15 @@ public interface IPath
      *             If error occurred when resolve the path.
      */
     IFile toFile()
-            throws PathResolveException;
+            throws FileResolveException;
 
     /**
+     * The same as
+     * 
+     * <pre>
+     * getVolume().getDeviceFile().getPath()
+     * </pre>
+     * 
      * @return <code>null</code> If this is the root layer.
      */
     IPath getParentLayer();
@@ -196,7 +203,7 @@ public interface IPath
      * Get canonicalized form of local part of this path.
      */
     IPath canonicalize(PathCanonicalizeOptions canonicalizeOptions)
-            throws PathResolveException;
+            throws FileResolveException;
 
     /**
      * Format the path in specific path format.

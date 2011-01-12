@@ -3,7 +3,6 @@ package net.bodz.bas.vfs.impl.fake;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IVolume;
 import net.bodz.bas.vfs.path.AbstractPath;
-import net.bodz.bas.vfs.path.IPath;
 
 public class FakePath
         extends AbstractPath {
@@ -27,11 +26,6 @@ public class FakePath
     @Override
     public IFile toFile() {
         return file;
-    }
-
-    @Override
-    public IPath getParentLayer() {
-        return null;
     }
 
 }

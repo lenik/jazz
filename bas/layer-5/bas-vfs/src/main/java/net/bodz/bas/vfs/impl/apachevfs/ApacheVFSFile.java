@@ -1,4 +1,4 @@
-package net.bodz.bas.vfs.impl.win32.apachevfs;
+package net.bodz.bas.vfs.impl.apachevfs;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,7 +25,6 @@ public class ApacheVFSFile
 
     private final FileSystemManager manager;
     private final FileObject fileObject;
-    private InputStream inputStream;
 
     public ApacheVFSFile(ApacheVFSVolume volume, ApacheVFSPath path)
             throws FileSystemException {

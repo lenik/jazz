@@ -89,7 +89,7 @@ public abstract class AbstractFile
 
     @Override
     public IFile getParentFile()
-            throws PathResolveException {
+            throws FileResolveException {
         IPath parentPath = getPath().getParent();
         if (parentPath == null)
             return null;

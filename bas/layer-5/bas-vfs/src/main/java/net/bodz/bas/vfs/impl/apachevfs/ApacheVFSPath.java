@@ -1,13 +1,9 @@
-package net.bodz.bas.vfs.impl.win32.apachevfs;
+package net.bodz.bas.vfs.impl.apachevfs;
 
 import net.bodz.bas.vfs.IVolume;
-import net.bodz.bas.vfs.PathResolveException;
 import net.bodz.bas.vfs.path.AbstractPath;
-import net.bodz.bas.vfs.path.IPath;
 
 import org.apache.commons.vfs.FileName;
-import org.apache.commons.vfs.FileObject;
-import org.apache.commons.vfs.FileSystemException;
 
 public class ApacheVFSPath
         extends AbstractPath {
@@ -55,22 +51,11 @@ public class ApacheVFSPath
         return fileName;
     }
 
-    @Override
-    public IPath getParentLayer() {
-        if (isInternalPath())
-            return null;
-        try {
-            ApacheVFSFile file = volume.resolveFile(localPath);
-            FileObject fileObject = file.getFileObject();
-            FileObject parentLayer = fileObject.getFileSystem().getParentLayer();
-            FileName parentLayerName = parentLayer.getName();
-            ApacheVFSPath parentPath = volume.resolve(parentLayerName);
-            return parentPath;
-        } catch (PathResolveException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        } catch (FileSystemException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
-    }
+    /**
+     * It's impossible to get the parent layer in Apache VFS, though this delegate.
+     */
+    // public IPath getParentLayer() {
+    // return null;
+    // }
 
 }
