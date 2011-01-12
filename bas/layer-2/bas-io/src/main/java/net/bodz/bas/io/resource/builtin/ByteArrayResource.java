@@ -39,9 +39,9 @@ public class ByteArrayResource
     public ByteArrayResource(byte[] array, int offset, int length) {
         if (array == null)
             throw new NullPointerException("array");
-        if (offset < 0 || offset >= array.length)
+        if (offset < 0 || offset > array.length)
             throw new IndexOutOfBoundsException("Bad offset: " + offset);
-        if (length < 0 || (offset + length) >= array.length)
+        if (length < 0 || (offset + length) > array.length)
             throw new IndexOutOfBoundsException("Bad length: " + length);
         this.array = array;
         this.offset = offset;
