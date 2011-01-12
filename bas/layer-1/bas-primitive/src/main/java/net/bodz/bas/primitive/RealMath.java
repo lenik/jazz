@@ -1,6 +1,6 @@
 package net.bodz.bas.primitive;
 
-import net.bodz.bas.exceptions.NotImplementedException;
+import net.bodz.bas.util.exception.NotImplementedException;
 
 public class RealMath {
 

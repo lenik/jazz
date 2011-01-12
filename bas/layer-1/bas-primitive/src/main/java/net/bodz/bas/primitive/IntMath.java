@@ -2,7 +2,7 @@ package net.bodz.bas.primitive;
 
 import java.math.BigInteger;
 
-import net.bodz.bas.exceptions.OutOfDomainException;
+import net.bodz.bas.util.exception.OutOfDomainException;
 
 public class IntMath {
 

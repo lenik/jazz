@@ -3,8 +3,8 @@ package net.bodz.bas.reflect.proxy;
 import java.lang.reflect.Proxy;
 
 import junit.framework.TestCase;
-import net.bodz.bas.c1.timing.ITimingTarget;
-import net.bodz.bas.c1.timing.MultipassTimer;
+import net.bodz.bas.test.timing.ITimingTarget;
+import net.bodz.bas.test.timing.MultipassTimer;
 
 import org.junit.Test;
 

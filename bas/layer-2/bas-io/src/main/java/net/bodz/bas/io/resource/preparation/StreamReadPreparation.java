@@ -15,12 +15,12 @@ import net.bodz.bas.collection.iterator.IteratorTargetException;
 import net.bodz.bas.collection.iterator.IteratorX;
 import net.bodz.bas.collection.iterator.OverlappedImmediateIteratorX;
 import net.bodz.bas.collection.util.IteratorToList;
-import net.bodz.bas.exceptions.UnexpectedException;
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.meta.codereview.GeneratedByCopyPaste;
 import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.ICharIn;
+import net.bodz.bas.util.exception.UnexpectedException;
 
 public class StreamReadPreparation
         implements IStreamReadPreparation {

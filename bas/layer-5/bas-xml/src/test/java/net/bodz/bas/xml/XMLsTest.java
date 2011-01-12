@@ -6,8 +6,8 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import junit.framework.TestCase;
-import net.bodz.bas.exceptions.DecodeException;
-import net.bodz.bas.exceptions.EncodeException;
+import net.bodz.bas.util.exception.DecodeException;
+import net.bodz.bas.util.exception.EncodeException;
 
 import org.junit.Test;
 import org.xml.sax.Attributes;

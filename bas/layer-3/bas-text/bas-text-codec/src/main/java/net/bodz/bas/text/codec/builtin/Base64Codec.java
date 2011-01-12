@@ -3,9 +3,6 @@ package net.bodz.bas.text.codec.builtin;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-import net.bodz.bas.exceptions.DecodeException;
-import net.bodz.bas.exceptions.EncodeException;
-import net.bodz.bas.exceptions.NotImplementedException;
 import net.bodz.bas.sio.ByteInInputStream;
 import net.bodz.bas.sio.ByteOutOutputStream;
 import net.bodz.bas.sio.CharInReader;
@@ -15,6 +12,9 @@ import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.ICharIn;
 import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.text.codec.AbstractByteCodec;
+import net.bodz.bas.util.exception.DecodeException;
+import net.bodz.bas.util.exception.EncodeException;
+import net.bodz.bas.util.exception.NotImplementedException;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 

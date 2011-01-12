@@ -1,9 +1,9 @@
 package net.bodz.bas.meta.info;
 
 import junit.framework.TestCase;
-import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.meta.info.Doc;
 import net.bodz.bas.meta.info.DocUtil;
+import net.bodz.bas.util.exception.ParseException;
 
 import org.junit.Test;
 

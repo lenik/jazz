@@ -7,6 +7,11 @@
     </parent>
     <artifactId>bas-test</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <dependencies/>
+    <dependencies>
+    	<dependency>
+    		<groupId>junit</groupId>
+    		<artifactId>junit</artifactId>
+    	</dependency>
+    </dependencies>
     <name>BAS :: Layer 1 :: Test</name>
 </project>

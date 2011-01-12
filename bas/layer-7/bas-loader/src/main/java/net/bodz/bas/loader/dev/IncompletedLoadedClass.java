@@ -1,6 +1,6 @@
 package net.bodz.bas.loader.dev;
 
-import net.bodz.bas.exceptions.UnexpectedException;
+import net.bodz.bas.util.exception.UnexpectedException;
 
 public class IncompletedLoadedClass {
 

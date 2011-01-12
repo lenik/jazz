@@ -3,11 +3,11 @@ package net.bodz.bas.text.diff.gnudiff;
 import java.io.File;
 import java.util.List;
 
-import net.bodz.bas.c1.util.Dates;
 import net.bodz.bas.closure.alt.Pred1;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.text.diff.DiffInfo;
+import net.bodz.bas.util.Dates;
 
 /**
  * A simple framework for printing change lists produced by <code>Diff</code>.

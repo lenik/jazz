@@ -2,7 +2,7 @@ package net.bodz.bas.flow;
 
 import java.io.IOException;
 
-import net.bodz.bas.exceptions.IllegalUsageError;
+import net.bodz.bas.util.exception.IllegalUsageError;
 
 public class SinkOutPort
         extends AbstractOutPort {

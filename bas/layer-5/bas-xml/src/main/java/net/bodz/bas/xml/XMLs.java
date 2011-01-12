@@ -21,12 +21,12 @@ import java.net.URL;
 import javax.xml.bind.DataBindingException;
 import javax.xml.bind.JAXB;
 
-import net.bodz.bas.exceptions.DecodeException;
-import net.bodz.bas.exceptions.EncodeException;
-import net.bodz.bas.exceptions.UnexpectedException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7XMLEncoder;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.lang.events.ExceptionBuffer;
+import net.bodz.bas.util.exception.DecodeException;
+import net.bodz.bas.util.exception.EncodeException;
+import net.bodz.bas.util.exception.UnexpectedException;
 
 import org.xml.sax.ContentHandler;
 import org.xml.sax.DTDHandler;

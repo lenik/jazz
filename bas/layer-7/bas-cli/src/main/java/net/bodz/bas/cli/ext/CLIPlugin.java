@@ -3,9 +3,9 @@ package net.bodz.bas.cli.ext;
 import java.util.Map;
 
 import net.bodz.bas.cli.CLIException;
-import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.util.Plugin;
+import net.bodz.bas.util.exception.ParseException;
 
 /**
  * Implementations must have at least a default constructor, while more constructors may be useful

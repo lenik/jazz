@@ -10,7 +10,7 @@ import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
 import net.bodz.bas.collection.iterator.ImmIterIterator;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.collection.iterator.IteratorX;
-import net.bodz.bas.exceptions.NotImplementedException;
+import net.bodz.bas.util.exception.NotImplementedException;
 
 public class DelimitedTokenizer
         extends AbstractImmediateIterableX<String, IOException> {

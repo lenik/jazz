@@ -8,10 +8,10 @@ import java.util.Map;
 
 import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
-import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
+import net.bodz.bas.util.exception.ParseException;
 
 /**
  * @see PartRecords

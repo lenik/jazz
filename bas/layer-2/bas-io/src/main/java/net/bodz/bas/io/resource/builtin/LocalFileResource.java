@@ -14,7 +14,6 @@ import java.nio.charset.Charset;
 import java.util.jar.JarFile;
 import java.util.zip.ZipFile;
 
-import net.bodz.bas.exceptions.BadFormatException;
 import net.bodz.bas.io.resource.AbstractStreamResource;
 import net.bodz.bas.io.resource.IRandomInputSource;
 import net.bodz.bas.io.resource.IRandomOutputTarget;
@@ -26,6 +25,7 @@ import net.bodz.bas.sio.InputStreamByteIn;
 import net.bodz.bas.sio.OutputStreamByteOut;
 import net.bodz.bas.sio.ReaderCharIn;
 import net.bodz.bas.sio.WriterPrintOut;
+import net.bodz.bas.util.exception.BadFormatException;
 
 public class LocalFileResource
         extends AbstractStreamResource

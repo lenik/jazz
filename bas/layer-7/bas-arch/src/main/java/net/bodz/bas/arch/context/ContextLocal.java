@@ -3,8 +3,8 @@ package net.bodz.bas.arch.context;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.exceptions.IllegalUsageError;
-import net.bodz.bas.exceptions.IllegalUsageException;
+import net.bodz.bas.util.exception.IllegalUsageError;
+import net.bodz.bas.util.exception.IllegalUsageException;
 
 /**
  * @test {@link ContextLocalTest}

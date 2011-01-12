@@ -6,7 +6,7 @@ import java.io.Reader;
 import java.io.StringReader;
 import java.nio.CharBuffer;
 
-import net.bodz.bas.exceptions.OutOfDomainException;
+import net.bodz.bas.util.exception.OutOfDomainException;
 
 public class LAReader extends FilterReader implements Lookable {
 

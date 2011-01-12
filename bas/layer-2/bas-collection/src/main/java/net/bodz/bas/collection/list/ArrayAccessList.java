@@ -3,7 +3,7 @@ package net.bodz.bas.collection.list;
 import java.util.AbstractList;
 import java.util.Arrays;
 
-import net.bodz.bas.exceptions.ReadOnlyException;
+import net.bodz.bas.util.exception.ReadOnlyException;
 
 public class ArrayAccessList<T> extends AbstractList<T> {
 

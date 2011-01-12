@@ -2,11 +2,11 @@ package net.bodz.bas.vfs.impl.fake;
 
 import java.nio.charset.Charset;
 
-import net.bodz.bas.c1.util.ObjectInfo;
 import net.bodz.bas.io.resource.builtin.StringSource;
 import net.bodz.bas.io.resource.preparation.IStreamReadPreparation;
 import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
 import net.bodz.bas.io.resource.preparation.StreamReadPreparation;
+import net.bodz.bas.util.ObjectInfo;
 
 public class InputStringFile
         extends FakeFile {

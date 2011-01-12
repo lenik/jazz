@@ -10,9 +10,9 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 
-import net.bodz.bas.c1.util.Pair;
-import net.bodz.bas.exceptions.NotImplementedException;
-import net.bodz.bas.exceptions.UnexpectedException;
+import net.bodz.bas.util.Pair;
+import net.bodz.bas.util.exception.NotImplementedException;
+import net.bodz.bas.util.exception.UnexpectedException;
 
 public class StringArray {
 

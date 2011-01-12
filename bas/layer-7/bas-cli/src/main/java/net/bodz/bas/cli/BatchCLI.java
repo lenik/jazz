@@ -11,9 +11,9 @@ import java.util.regex.Pattern;
 
 import net.bodz.bas.cli.annotations.Option;
 import net.bodz.bas.cli.annotations.OptionGroup;
-import net.bodz.bas.exceptions.NotImplementedException;
 import net.bodz.bas.files.FilePath;
 import net.bodz.bas.meta.oop.OverrideOption;
+import net.bodz.bas.util.exception.NotImplementedException;
 import net.bodz.bas.vfs.FileMask;
 import net.bodz.bas.vfs.traverse.FileFinder;
 

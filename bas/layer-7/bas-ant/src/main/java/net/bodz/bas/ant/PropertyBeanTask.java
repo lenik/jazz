@@ -15,12 +15,12 @@ import java.util.Map.Entry;
 
 import net.bodz.bas.collection.preorder.PrefixSet;
 import net.bodz.bas.collection.preorder.TypeHierSet;
-import net.bodz.bas.exceptions.CreateException;
-import net.bodz.bas.exceptions.IllegalUsageException;
-import net.bodz.bas.exceptions.NotImplementedException;
-import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.io.term.LogTerm;
 import net.bodz.bas.string.Strings;
+import net.bodz.bas.util.exception.CreateException;
+import net.bodz.bas.util.exception.IllegalUsageException;
+import net.bodz.bas.util.exception.NotImplementedException;
+import net.bodz.bas.util.exception.ParseException;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;

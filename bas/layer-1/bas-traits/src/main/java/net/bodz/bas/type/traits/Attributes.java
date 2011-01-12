@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-import net.bodz.bas.c1.util.Nullables;
 import net.bodz.bas.type.ITypeTraits;
+import net.bodz.bas.util.Nullables;
 
 public class Attributes
         implements IAttributes {

@@ -1,6 +1,6 @@
 package net.bodz.bas.vfs.path.align;
 
-import net.bodz.bas.exceptions.NotImplementedException;
+import net.bodz.bas.util.exception.NotImplementedException;
 import net.bodz.bas.vfs.path.IPath;
 
 public class ParentLayerAlignment

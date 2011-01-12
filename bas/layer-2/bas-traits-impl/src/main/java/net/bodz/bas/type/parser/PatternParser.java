@@ -2,8 +2,8 @@ package net.bodz.bas.type.parser;
 
 import java.util.regex.Pattern;
 
-import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.type.traits.AbstractParser;
+import net.bodz.bas.util.exception.ParseException;
 
 public class PatternParser
         extends AbstractParser<Pattern> {

@@ -5,14 +5,14 @@ import java.util.List;
 
 import net.bodz.bas.collection.tree.TreeNode;
 import net.bodz.bas.commons.util.Objects;
-import net.bodz.bas.exceptions.NotImplementedException;
-import net.bodz.bas.exceptions.OutOfDomainException;
 import net.bodz.bas.io.term.LogTerm;
 import net.bodz.bas.io.term.LogTerms;
 import net.bodz.bas.lang.events.RecoverableExceptionEvent;
 import net.bodz.bas.lang.events.RecoverableExceptionListener;
 import net.bodz.bas.ui.ConsoleUI;
 import net.bodz.bas.ui.UserInterface;
+import net.bodz.bas.util.exception.NotImplementedException;
+import net.bodz.bas.util.exception.OutOfDomainException;
 
 public abstract class _Job
         implements Job, TreeNode<_Job> {

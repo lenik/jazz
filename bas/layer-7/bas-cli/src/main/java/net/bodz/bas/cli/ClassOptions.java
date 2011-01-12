@@ -18,12 +18,12 @@ import java.util.Map.Entry;
 
 import javax.script.ScriptException;
 
-import net.bodz.bas.c1.util.Pair;
 import net.bodz.bas.cli.annotations.Option;
 import net.bodz.bas.cli.annotations.OptionGroup;
 import net.bodz.bas.collection.preorder.PrefixMap;
 import net.bodz.bas.collection.util.IterableToList;
-import net.bodz.bas.exceptions.ParseException;
+import net.bodz.bas.util.Pair;
+import net.bodz.bas.util.exception.ParseException;
 import net.bodz.bas.valtype.util.TypeChain;
 
 public class ClassOptions<CT> {

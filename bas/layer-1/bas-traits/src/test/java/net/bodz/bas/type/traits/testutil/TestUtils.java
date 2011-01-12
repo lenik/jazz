@@ -1,9 +1,9 @@
 package net.bodz.bas.type.traits.testutil;
 
 import static org.junit.Assert.assertEquals;
-import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.type.traits.IFormatter;
 import net.bodz.bas.type.traits.IParser;
+import net.bodz.bas.util.exception.ParseException;
 
 public class TestUtils {
 

@@ -4,8 +4,8 @@ import java.lang.reflect.Array;
 import java.nio.BufferOverflowException;
 import java.nio.BufferUnderflowException;
 
-import net.bodz.bas.exceptions.NotImplementedException;
-import net.bodz.bas.exceptions.OutOfDomainException;
+import net.bodz.bas.util.exception.NotImplementedException;
+import net.bodz.bas.util.exception.OutOfDomainException;
 
 public abstract class AbstractRingBuffer<A, T> implements IRingBuffer<A, T> {
 

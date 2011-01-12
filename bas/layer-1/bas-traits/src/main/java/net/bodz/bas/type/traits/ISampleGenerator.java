@@ -3,9 +3,9 @@ package net.bodz.bas.type.traits;
 import java.util.Map;
 import java.util.Random;
 
-import net.bodz.bas.exceptions.CreateException;
 import net.bodz.bas.lang.INegotiation;
 import net.bodz.bas.lang.NegotiationException;
+import net.bodz.bas.util.exception.CreateException;
 
 public interface ISampleGenerator<T> {
 

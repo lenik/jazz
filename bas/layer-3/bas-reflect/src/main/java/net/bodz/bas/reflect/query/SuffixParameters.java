@@ -2,7 +2,7 @@ package net.bodz.bas.reflect.query;
 
 import java.util.Arrays;
 
-import net.bodz.bas.c1.util.Nullables;
+import net.bodz.bas.util.Nullables;
 
 public class SuffixParameters
         implements IParametersPredicate {

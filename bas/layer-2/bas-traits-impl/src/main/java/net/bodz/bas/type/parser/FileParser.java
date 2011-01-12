@@ -2,8 +2,8 @@ package net.bodz.bas.type.parser;
 
 import java.io.File;
 
-import net.bodz.bas.exceptions.ParseException;
 import net.bodz.bas.type.traits.AbstractParser;
+import net.bodz.bas.util.exception.ParseException;
 
 public class FileParser
         extends AbstractParser<File> {
