@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Map.Entry;
+import java.util.Properties;
 
-import net.bodz.bas.files.FilePath;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
 import net.bodz.bas.sysinfo.SystemInfo;
+import net.bodz.bas.util.file.FilePath;
 
 public class SJLibLoader {
 

@@ -8,9 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import net.bodz.bas.io.resource.builtin.LocalFileResource;
 import net.bodz.bas.regex.Patterns;
 import net.bodz.bas.snm.abc.ModulesRoot;
 import net.bodz.bas.util.file.FilePath;
+import net.bodz.bas.util.file.FileURL;
 
 public class SJEclipse {
 
@@ -95,7 +97,7 @@ public class SJEclipse {
         for (String link : linkDir.list(linkFilter)) {
             File linkFile = new File(linkDir, link);
             try {
-                String s = FilePath.readLine(linkFile);
+                String s = new LocalFileResource(linkFile).forRead().lines(true).iterator().next();
                 assert s != null;
                 int eq = s.indexOf('=');
                 if (eq == -1)
@@ -126,7 +128,7 @@ public class SJEclipse {
         for (ModulesRoot mroot : searches) {
             File find = mroot.findexp(exp);
             if (find != null)
-                return find.toURI().toURL();
+                return FileURL.getURL(find);
         }
         if (errorFail)
             throw new Error("can\'t find, prefix=" + prefix);

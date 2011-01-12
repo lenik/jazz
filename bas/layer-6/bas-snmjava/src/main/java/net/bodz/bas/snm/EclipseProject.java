@@ -10,8 +10,7 @@ import net.bodz.bas.util.exception.IllegalUsageException;
 import net.bodz.bas.util.exception.NotImplementedException;
 import net.bodz.bas.util.exception.ParseException;
 import net.bodz.bas.util.exception.UnexpectedException;
-
-import com.sun.org.apache.xml.internal.resolver.helpers.FileURL;
+import net.bodz.bas.util.file.FileURL;
 
 /**
  * @test {@link EclipseProjectTest}

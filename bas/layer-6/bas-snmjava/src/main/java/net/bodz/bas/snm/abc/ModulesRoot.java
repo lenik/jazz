@@ -5,8 +5,8 @@ import java.io.FilenameFilter;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.files.FilePath;
 import net.bodz.bas.sysinfo.SystemInfo;
+import net.bodz.bas.util.file.FilePath;
 
 public class ModulesRoot {
 
