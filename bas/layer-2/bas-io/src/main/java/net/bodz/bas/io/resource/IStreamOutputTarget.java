@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.Writer;
 import java.nio.charset.Charset;
+import java.nio.charset.IllegalCharsetNameException;
 
 import net.bodz.bas.io.resource.preparation.IFormatDumpPreparation;
 import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
@@ -28,6 +29,12 @@ public interface IStreamOutputTarget
 
     @Override
     void setCharset(Charset charset);
+
+    /**
+     * @throws IllegalCharsetNameException
+     *             If <code>charsetName</code> isn't existed.
+     */
+    void setCharset(String charsetName);
 
     /**
      * @return non-<code>null</code> value.

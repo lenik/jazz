@@ -76,6 +76,13 @@ public abstract class AbstractStreamOutputTarget
     }
 
     @Override
+    public void setCharset(String charsetName) {
+        if (charsetName == null)
+            throw new NullPointerException("charsetName");
+        this.charset = Charset.forName(charsetName);
+    }
+
+    @Override
     public Writer newWriter()
             throws IOException {
         ICharOut charOut = newCharOut();
