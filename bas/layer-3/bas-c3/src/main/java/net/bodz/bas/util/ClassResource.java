@@ -88,13 +88,10 @@ public class ClassResource {
             throw new UnexpectedException("Got bad resource URL: " + s);
         s = s.substring(0, s.length() - hintPath.length());
         try {
-            url = new URL(s);
+            return new URL(s);
         } catch (MalformedURLException e) {
             throw new IdentifiedException(e.getMessage(), e);
         }
-        if (url == null)
-            throw new Error("Can't find root resource: " + s);
-        return url;
     }
 
 }

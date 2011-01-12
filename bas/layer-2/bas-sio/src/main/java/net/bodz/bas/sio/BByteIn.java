@@ -1,11 +1,12 @@
 package net.bodz.bas.sio;
 
 import java.io.IOException;
+import java.util.Arrays;
 
-public class StringCharIn
-        extends AbstractCharIn {
+public class BByteIn
+        extends AbstractByteIn {
 
-    private final String string;
+    private final byte[] src;
     private final int start;
     private final int end;
 
@@ -13,30 +14,30 @@ public class StringCharIn
 
     /**
      * @throws NullPointerException
-     *             If <code>string</code> is <code>null</code>.
+     *             If <code>byteArray</code> is <code>null</code>.
      */
-    public StringCharIn(String string) {
-        if (string == null)
-            throw new NullPointerException("string");
-        this.string = string;
+    public BByteIn(byte[] byteArray) {
+        if (byteArray == null)
+            throw new NullPointerException("byteArray");
+        this.src = byteArray;
         position = start = 0;
-        end = string.length();
+        end = byteArray.length;
     }
 
     /**
      * @throws NullPointerException
-     *             If <code>string</code> is <code>null</code>.
+     *             If <code>byteArray</code> is <code>null</code>.
      * @throws IndexOutOfBoundsException
      *             If <code>start</code> or <code>end</code> is out of bound.
      */
-    public StringCharIn(String string, int start, int end) {
-        if (string == null)
-            throw new NullPointerException("string");
-        if (start < 0 || start > string.length())
+    public BByteIn(byte[] byteArray, int start, int end) {
+        if (byteArray == null)
+            throw new NullPointerException("byteArray");
+        if (start < 0 || start > byteArray.length)
             throw new IndexOutOfBoundsException("bad start index: " + start);
-        if (end < start || end > string.length())
+        if (end < start || end > byteArray.length)
             throw new IndexOutOfBoundsException("bad end index: " + end);
-        this.string = string;
+        this.src = byteArray;
         this.start = start;
         this.end = end;
         this.position = start;
@@ -46,46 +47,47 @@ public class StringCharIn
     public int read()
             throws IOException {
         if (position < end)
-            return string.charAt(position++);
+            return src[position++];
         return -1;
     }
 
     @Override
-    public int read(char[] chars, int off, int len)
+    public int read(byte[] dst, int off, int len)
             throws IOException {
         int cbRead = Math.min(len, end - position);
         if (cbRead <= 0)
             return -1;
-        string.getChars(position, position + cbRead, chars, off);
+        System.arraycopy(src, position, dst, off, cbRead);
         position += cbRead;
         return cbRead;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0xeeecb441;
-        hash += string.hashCode();
-        hash += start * 13;
-        hash += end * 17;
-        hash += position * 253;
+        int hash = 0x93cfab31;
+        hash += src.hashCode();
+        hash += start * 3;
+        hash += end * 53;
+        hash += position * 113;
         return hash;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof StringCharIn))
+        if (!(obj instanceof BByteIn))
             return false;
-        StringCharIn o = (StringCharIn) obj;
+        BByteIn o = (BByteIn) obj;
         if (start != o.start || end != o.end || position != o.position)
             return false;
-        if (string.equals(o.string))
+        if (!Arrays.equals(src, o.src))
             return false;
         return true;
     }
 
     @Override
     public String toString() {
-        String graph = string.substring(start, position) + "|" + string.substring(position, end);
+        String graph = new String(src, start, position - start) //
+                + "|" + new String(src, position, end - position);
         return graph;
     }
 

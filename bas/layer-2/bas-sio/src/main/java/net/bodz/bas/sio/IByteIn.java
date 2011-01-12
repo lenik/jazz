@@ -22,12 +22,13 @@ public interface IByteIn
             throws IOException;
 
     /**
-     * @param buffer
-     *            Selection to limit instead of buffer.capacity();
+     * Fill the remaing as much as possible, and advance the position.
+     * 
+     * @return Count of bytes filled in the <code>byteBuffer</code>. Return -1 If reaches the end.
      * @throws NullPointerException
-     *             If <code>buffer</code> is <code>null</code>.
+     *             If <code>byteBuffer</code> is <code>null</code>.
      */
-    int read(ByteBuffer buffer)
+    int read(ByteBuffer byteBuffer)
             throws IOException;
 
     @Override

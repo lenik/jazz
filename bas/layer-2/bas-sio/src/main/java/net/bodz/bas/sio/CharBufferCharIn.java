@@ -6,19 +6,19 @@ import java.nio.CharBuffer;
 public class CharBufferCharIn
         extends AbstractCharIn {
 
-    private final CharBuffer cb;
+    private final CharBuffer charBuffer;
 
     public CharBufferCharIn(CharBuffer charBuffer) {
         if (charBuffer == null)
             throw new NullPointerException("charBuffer");
-        this.cb = charBuffer;
+        this.charBuffer = charBuffer;
     }
 
     @Override
     public int read()
             throws IOException {
-        if (cb.hasRemaining()) {
-            char ch = cb.get();
+        if (charBuffer.hasRemaining()) {
+            char ch = charBuffer.get();
             return ch & 0xFFFF;
         }
         return -1;
@@ -27,11 +27,11 @@ public class CharBufferCharIn
     @Override
     public int read(char[] chars, int off, int len)
             throws IOException {
-        int remaining = cb.remaining();
+        int remaining = charBuffer.remaining();
         if (remaining == 0)
             return -1;
         int ccRead = Math.min(remaining, len);
-        cb.get(chars, off, len);
+        charBuffer.get(chars, off, len);
         return ccRead;
     }
 
@@ -40,12 +40,12 @@ public class CharBufferCharIn
             throws IOException {
         if (buffer == null)
             throw new NullPointerException("buffer");
-        return cb.read(buffer);
+        return charBuffer.read(buffer);
     }
 
     @Override
     public int hashCode() {
-        return 0x56ec273b + cb.hashCode();
+        return 0x56ec273b + charBuffer.hashCode();
     }
 
     @Override
@@ -53,12 +53,12 @@ public class CharBufferCharIn
         if (!(obj instanceof CharBufferCharIn))
             return false;
         CharBufferCharIn o = (CharBufferCharIn) obj;
-        return cb.equals(o.cb);
+        return charBuffer.equals(o.charBuffer);
     }
 
     @Override
     public String toString() {
-        return cb.toString();
+        return charBuffer.toString();
     }
 
 }

@@ -24,7 +24,10 @@ public interface ICharIn
             throws IOException;
 
     /**
-     * @return -1 If reaches the end.
+     * Fill the remaing as much as possible, and advance the position.
+     * 
+     * @return Count of characters filled in the <code>charBuffer</code>. Return -1 If reaches the
+     *         end.
      * @throws NullPointerException
      *             If <code>charBuffer</code> is <code>null</code>.
      */
