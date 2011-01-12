@@ -25,6 +25,7 @@ public abstract class AbstractByteIn
             if (b == -1)
                 return cbRead == 0 ? -1 : cbRead;
             buffer.put((byte) b);
+            cbRead++;
         }
         return cbRead;
     }

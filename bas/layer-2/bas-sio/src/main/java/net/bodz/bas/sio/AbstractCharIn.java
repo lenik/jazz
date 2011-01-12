@@ -22,6 +22,7 @@ public abstract class AbstractCharIn
             if (ch == -1)
                 return ccRead == 0 ? -1 : ccRead;
             buffer.put((char) ch);
+            ccRead++;
         }
         return ccRead;
     }
