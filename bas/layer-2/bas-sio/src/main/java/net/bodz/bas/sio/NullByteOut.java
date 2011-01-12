@@ -25,12 +25,12 @@ public class NullByteOut
     }
 
     @Override
-    public void flush()
+    public void flush(boolean strict)
             throws IOException {
     }
 
     @Override
-    public void flush(boolean strict)
+    public void flush()
             throws IOException {
     }
 

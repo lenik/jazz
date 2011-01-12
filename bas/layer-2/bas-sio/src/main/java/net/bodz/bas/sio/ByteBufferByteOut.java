@@ -7,24 +7,24 @@ import java.nio.ByteBuffer;
 public class ByteBufferByteOut
         extends AbstractByteOut {
 
-    private final ByteBuffer bb;
+    private final ByteBuffer byteBuffer;
 
     public ByteBufferByteOut(ByteBuffer byteBuffer) {
         if (byteBuffer == null)
             throw new NullPointerException("byteBuffer");
-        this.bb = byteBuffer;
+        this.byteBuffer = byteBuffer;
     }
 
     @Override
     public void write(int b) {
-        bb.put((byte) b);
+        byteBuffer.put((byte) b);
     }
 
     @Override
     public void write(byte[] buf, int off, int len)
             throws IOException {
         try {
-            bb.put(buf, off, len);
+            byteBuffer.put(buf, off, len);
         } catch (BufferOverflowException e) {
             throw new IOException(e);
         }
@@ -36,7 +36,7 @@ public class ByteBufferByteOut
         if (buffer == null)
             throw new NullPointerException("buffer");
         try {
-            bb.put(buffer);
+            byteBuffer.put(buffer);
         } catch (BufferOverflowException e) {
             throw new IOException(e);
         }
@@ -44,7 +44,7 @@ public class ByteBufferByteOut
 
     @Override
     public int hashCode() {
-        return 0xb499c40d + bb.hashCode();
+        return 0xb499c40d + byteBuffer.hashCode();
     }
 
     @Override
@@ -52,12 +52,12 @@ public class ByteBufferByteOut
         if (!(obj instanceof ByteBufferByteOut))
             return false;
         ByteBufferByteOut o = (ByteBufferByteOut) obj;
-        return bb.equals(o.bb);
+        return byteBuffer.equals(o.byteBuffer);
     }
 
     @Override
     public String toString() {
-        return bb.toString();
+        return byteBuffer.toString();
     }
 
 }
