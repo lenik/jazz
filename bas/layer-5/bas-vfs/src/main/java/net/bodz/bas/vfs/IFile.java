@@ -14,7 +14,7 @@ public interface IFile
 
     @Override
     IFile getParentFile()
-            throws PathResolveException;
+            throws FileResolveException;
 
     @Override
     IFile getChild(String childName)

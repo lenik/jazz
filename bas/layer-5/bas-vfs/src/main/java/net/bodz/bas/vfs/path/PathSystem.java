@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
 
-public class DefaultPathSystem
+public class PathSystem
         implements IPathSystem {
 
     static class PathResolverKey
@@ -28,18 +28,15 @@ public class DefaultPathSystem
     private final Map<String, IPathResolver> protocols;
     private final TreeSet<PathResolverKey> generics;
 
-    private IPath defaultContext;
+    private IPath contextPath;
 
-    public DefaultPathSystem() {
+    public PathSystem() {
         protocols = new HashMap<String, IPathResolver>();
         generics = new TreeSet<PathResolverKey>();
-
-        String userDir = System.getProperty("user.dir");
-        // defaultContext =
     }
 
     @Override
-    public void setPathResolver(String protocol, IPathResolver resolver) {
+    public void addPathResolver(String protocol, IPathResolver resolver) {
         if (protocol == null)
             throw new NullPointerException("protocol");
         if (resolver == null)
@@ -48,7 +45,7 @@ public class DefaultPathSystem
     }
 
     @Override
-    public void unsetPathResolver(String protocol) {
+    public void removePathResolver(String protocol) {
         if (protocol == null)
             throw new NullPointerException("protocol");
         protocols.remove(protocol);
@@ -76,36 +73,39 @@ public class DefaultPathSystem
         if (path == null)
             throw new NullPointerException("path");
         int colon = path.indexOf(':');
-        if (colon != -1) {
-            String protocol = path.substring(0, colon);
-            IPathResolver protocolResolver = protocols.get(protocol);
-            if (protocolResolver != null) {
-                String protocolSpecificPath = path.substring(colon + 1);
-                return protocolResolver.resolve(protocolSpecificPath);
-            }
+        String protocol = colon == -1 ? null : path.substring(0, colon);
+
+        IPathResolver explicitResolver = protocols.get(protocol);
+        if (explicitResolver != null) {
+            // assert explicitResolver.accepts(protocol);
+            // String protocolSpecificPath = path.substring(colon + 1);
+            return explicitResolver.resolve(path);
         }
 
         for (PathResolverKey key : generics) {
-            IPath resolved = key.resolver.resolve(path);
-            if (resolved != null)
-                return resolved;
+            IPathResolver genericResolver = key.resolver;
+            if (!genericResolver.accepts(protocol))
+                continue;
+            IPath resolvedPath = genericResolver.resolve(path);
+            return resolvedPath;
         }
 
-        IPath context = getDefaultContext();
+        IPath context = getContextPath();
         return context.join(path);
     }
 
     @Override
-    public IPath getDefaultContext() {
-        if (defaultContext == null)
+    public IPath getContextPath() {
+        if (contextPath == null)
             throw new IllegalStateException("Default context wasn't set");
-        return defaultContext;
+        return contextPath;
     }
 
-    public void setDefaultBase(IPath defaultContext) {
-        if (defaultContext == null)
+    @Override
+    public void setContextPath(IPath contextPath) {
+        if (contextPath == null)
             throw new NullPointerException("defaultContext");
-        this.defaultContext = defaultContext;
+        this.contextPath = contextPath;
     }
 
 }

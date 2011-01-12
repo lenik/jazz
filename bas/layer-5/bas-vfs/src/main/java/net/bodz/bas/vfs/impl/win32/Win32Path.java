@@ -2,7 +2,6 @@ package net.bodz.bas.vfs.impl.win32;
 
 import net.bodz.bas.vfs.IVolume;
 import net.bodz.bas.vfs.path.AbstractPath;
-import net.bodz.bas.vfs.path.IPath;
 
 public class Win32Path
         extends AbstractPath {
@@ -21,12 +20,6 @@ public class Win32Path
     @Override
     public IVolume getVolume() {
         return volume;
-    }
-
-    @Override
-    public IPath getParentLayer() {
-        toString();
-        return null;
     }
 
 }

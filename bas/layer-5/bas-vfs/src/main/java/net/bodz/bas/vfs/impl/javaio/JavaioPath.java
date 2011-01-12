@@ -2,7 +2,6 @@ package net.bodz.bas.vfs.impl.javaio;
 
 import net.bodz.bas.vfs.IVolume;
 import net.bodz.bas.vfs.path.AbstractPath;
-import net.bodz.bas.vfs.path.IPath;
 
 public class JavaioPath
         extends AbstractPath {
@@ -18,11 +17,6 @@ public class JavaioPath
     @Override
     public IVolume getVolume() {
         return volume;
-    }
-
-    @Override
-    public IPath getParentLayer() {
-        return null;
     }
 
 }

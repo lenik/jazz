@@ -25,7 +25,7 @@ public abstract class AbstractVolume
 
     @Override
     public IFile getRootFile()
-            throws PathResolveException {
+            throws FileResolveException {
         return getRootPath().toFile();
     }
 

@@ -1,4 +1,4 @@
-package net.bodz.bas.net;
+package net.bodz.bas.net.serv;
 
 import java.nio.channels.Channel;
 

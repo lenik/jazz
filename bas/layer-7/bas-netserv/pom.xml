@@ -5,7 +5,7 @@
         <artifactId>layer-7</artifactId>
         <version>0.0.2-SNAPSHOT</version>
     </parent>
-    <artifactId>bas-network</artifactId>
+    <artifactId>bas-netserv</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <dependencies>
         <dependency>

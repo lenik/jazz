@@ -8,9 +8,9 @@ import java.net.URL;
 import net.bodz.bas.exceptions.NotImplementedException;
 import net.bodz.bas.exceptions.UnexpectedException;
 import net.bodz.bas.meta.codereview.PoorImpl;
+import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IVolume;
-import net.bodz.bas.vfs.PathResolveException;
 import net.bodz.bas.vfs.path.align.IPathAlignment;
 
 public abstract class AbstractPath
@@ -35,14 +35,22 @@ public abstract class AbstractPath
     }
 
     @Override
+    public final IPathAlignment getAlignment() {
+        return alignment;
+    }
+
+    @Override
     public IFile toFile()
-            throws PathResolveException {
+            throws FileResolveException {
         return getVolume().resolveFile(localPath);
     }
 
     @Override
-    public final IPathAlignment getAlignment() {
-        return alignment;
+    public final IPath getParentLayer() {
+        IFile deviceFile = getVolume().getDeviceFile();
+        if (deviceFile != null)
+            return deviceFile.getPath();
+        return null;
     }
 
     @Override
@@ -231,7 +239,7 @@ public abstract class AbstractPath
 
     @Override
     public IPath canonicalize(PathCanonicalizeOptions canonicalizeOptions)
-            throws PathResolveException {
+            throws FileResolveException {
         throw new NotImplementedException();
     }
 
