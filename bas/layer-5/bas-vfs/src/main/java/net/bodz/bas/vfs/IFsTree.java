@@ -1,6 +1,5 @@
 package net.bodz.bas.vfs;
 
-import java.io.IOException;
 import java.util.List;
 
 import net.bodz.bas.closure.IFilter;
@@ -19,15 +18,15 @@ public interface IFsTree
      *         accessible.
      */
     IFsEntry getChild(String childName)
-            throws IOException;
+            throws VFSException;
 
     /**
      * @throws UnsupportedOperationException
      *             If not iterable.
      * @see #isIterable()
      */
-    ImmediateIteratorX<? extends IFsEntry, IOException> childIterator(IFilter<String> nameFilter)
-            throws IOException;
+    ImmediateIteratorX<? extends IFsEntry, VFSException> childIterator(IFilter<String> nameFilter)
+            throws VFSException;
 
     /**
      * @throws UnsupportedOperationException
@@ -35,7 +34,7 @@ public interface IFsTree
      * @see #isIterable()
      */
     List<? extends IFsEntry> listChildren()
-            throws IOException;
+            throws VFSException;
 
     /**
      * @throws UnsupportedOperationException
@@ -43,7 +42,7 @@ public interface IFsTree
      * @see #isIterable()
      */
     List<? extends IFsEntry> listChildren(IFilter<String> nameFilter)
-            throws IOException;
+            throws VFSException;
 
     /**
      * Create the tree represent by this object, along with all parents which are not existed.

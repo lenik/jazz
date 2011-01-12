@@ -1,7 +1,5 @@
 package net.bodz.bas.vfs.impl.fake;
 
-import java.io.IOException;
-
 import net.bodz.bas.vfs.AbstractFile;
 import net.bodz.bas.vfs.IVolume;
 import net.bodz.bas.vfs.path.BadPathException;
@@ -61,8 +59,7 @@ public abstract class FakeFile
     }
 
     @Override
-    public boolean setLastModifiedTime(long date)
-            throws IOException {
+    public boolean setLastModifiedTime(long date) {
         this.lastModifiedTime = date;
         return true;
     }

@@ -1,14 +1,16 @@
 package net.bodz.bas.vfs.path;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
 import net.bodz.bas.exceptions.NotImplementedException;
+import net.bodz.bas.exceptions.UnexpectedException;
 import net.bodz.bas.meta.codereview.PoorImpl;
+import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IVolume;
+import net.bodz.bas.vfs.PathResolveException;
 import net.bodz.bas.vfs.path.align.IPathAlignment;
 
 public abstract class AbstractPath
@@ -33,6 +35,12 @@ public abstract class AbstractPath
     }
 
     @Override
+    public IFile toFile()
+            throws PathResolveException {
+        return getVolume().resolveFile(localPath);
+    }
+
+    @Override
     public final IPathAlignment getAlignment() {
         return alignment;
     }
@@ -53,19 +61,25 @@ public abstract class AbstractPath
      * @param localPath
      *            non-<code>null</code> path with-in the same volume.
      * @return non-<code>null</code> {@link IPath} instance.
+     * @throws BadPathException
      */
-    protected final IPath resolveLocal(String localPath) {
+    protected final IPath resolveLocal(String localPath)
+            throws BadPathException {
         IVolume volume = getVolume();
         return volume.resolve(localPath);
     }
 
     @Override
     public IPath getParent() {
-        int last = localPath.lastIndexOf(SEPARATOR_CHAR);
-        if (last == -1)
-            return null;
-        String parent = localPath.substring(0, last);
-        return resolveLocal(parent);
+        try {
+            int last = localPath.lastIndexOf(SEPARATOR_CHAR);
+            if (last == -1)
+                return null;
+            String parent = localPath.substring(0, last);
+            return resolveLocal(parent);
+        } catch (BadPathException e) {
+            throw new UnexpectedException("Bad parent path", e);
+        }
     }
 
     @PoorImpl
@@ -84,7 +98,11 @@ public abstract class AbstractPath
 
     @Override
     public IPath getRoot() {
-        return resolveLocal("/");
+        try {
+            return resolveLocal("");
+        } catch (BadPathException e) {
+            throw new UnexpectedException("Bad root path", e);
+        }
     }
 
     @Override
@@ -213,8 +231,8 @@ public abstract class AbstractPath
 
     @Override
     public IPath canonicalize(PathCanonicalizeOptions canonicalizeOptions)
-            throws IOException {
-        return null;
+            throws PathResolveException {
+        throw new NotImplementedException();
     }
 
     @Override

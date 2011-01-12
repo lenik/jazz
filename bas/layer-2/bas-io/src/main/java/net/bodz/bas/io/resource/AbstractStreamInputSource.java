@@ -64,6 +64,9 @@ public abstract class AbstractStreamInputSource
         this.charset = charset;
     }
 
+    /**
+     * @def newByteInInputStream(newByteIn())
+     */
     @Override
     public InputStream newInputStream()
             throws IOException {
@@ -73,6 +76,9 @@ public abstract class AbstractStreamInputSource
         return new ByteInInputStream(byteIn);
     }
 
+    /**
+     * @def new CharInReader(newCharIn())
+     */
     @Override
     public Reader newReader()
             throws IOException {
@@ -82,6 +88,9 @@ public abstract class AbstractStreamInputSource
         return new CharInReader(charIn);
     }
 
+    /**
+     * @def new BufferedReader(newReader())
+     */
     @Override
     public BufferedReader newBufferedReader()
             throws IOException {
@@ -93,6 +102,9 @@ public abstract class AbstractStreamInputSource
         return new BufferedReader(reader);
     }
 
+    /**
+     * @def new DataInputStream(newInputStream())
+     */
     @Override
     public DataInput newDataInput()
             throws IOException {
@@ -105,6 +117,9 @@ public abstract class AbstractStreamInputSource
         return dataIn;
     }
 
+    /**
+     * @def new ObjectInputStream(newInputStream())
+     */
     @Override
     public ObjectInput newObjectInput()
             throws IOException {
@@ -116,6 +131,9 @@ public abstract class AbstractStreamInputSource
         return new ObjectInputStream(inputStream);
     }
 
+    /**
+     * @def new LAReader(newReader())
+     */
     @Override
     public LAReader newLAReader()
             throws IOException {
@@ -127,6 +145,9 @@ public abstract class AbstractStreamInputSource
         return new LAReader(reader);
     }
 
+    /**
+     * @def new LineReader(newReader())
+     */
     @Override
     public LineReader newLineReader()
             throws IOException {

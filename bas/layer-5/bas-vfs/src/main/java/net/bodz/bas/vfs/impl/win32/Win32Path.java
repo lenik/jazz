@@ -1,6 +1,5 @@
 package net.bodz.bas.vfs.impl.win32;
 
-import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IVolume;
 import net.bodz.bas.vfs.path.AbstractPath;
 import net.bodz.bas.vfs.path.IPath;
@@ -22,11 +21,6 @@ public class Win32Path
     @Override
     public IVolume getVolume() {
         return volume;
-    }
-
-    @Override
-    public IFile toFile() {
-        return volume.resolveFile(localPath);
     }
 
     @Override

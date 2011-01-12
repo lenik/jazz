@@ -1,6 +1,5 @@
 package net.bodz.bas.vfs.path;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -9,6 +8,7 @@ import java.net.URL;
 
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IVolume;
+import net.bodz.bas.vfs.PathResolveException;
 import net.bodz.bas.vfs.path.align.IPathAlignment;
 
 /**
@@ -40,8 +40,11 @@ public interface IPath
      * </pre>
      * 
      * @return non-null {@link IFile} which this path refers to.
+     * @throws VFSException
+     *             If error occurred when resolve the path.
      */
-    IFile toFile();
+    IFile toFile()
+            throws PathResolveException;
 
     /**
      * @return <code>null</code> If this is the root layer.
@@ -193,7 +196,7 @@ public interface IPath
      * Get canonicalized form of local part of this path.
      */
     IPath canonicalize(PathCanonicalizeOptions canonicalizeOptions)
-            throws IOException;
+            throws PathResolveException;
 
     /**
      * Format the path in specific path format.

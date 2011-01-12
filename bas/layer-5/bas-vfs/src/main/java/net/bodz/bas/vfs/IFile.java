@@ -1,6 +1,5 @@
 package net.bodz.bas.vfs;
 
-import java.io.IOException;
 import java.util.List;
 
 import net.bodz.bas.closure.IFilter;
@@ -14,23 +13,49 @@ public interface IFile
     IFile clone();
 
     @Override
-    IFile getParentFile();
+    IFile getParentFile()
+            throws PathResolveException;
 
     @Override
     IFile getChild(String childName)
-            throws IOException;
+            throws VFSException;
 
     @Override
-    ImmediateIteratorX<? extends IFile, IOException> childIterator(IFilter<String> nameFilter)
-            throws IOException;
+    ImmediateIteratorX<? extends IFile, VFSException> childIterator(IFilter<String> nameFilter)
+            throws VFSException;
 
+    /**
+     * List all children files.
+     * <p>
+     * To ignore hidden files, pass an file system option, or filtered them using
+     * {@link #listChildren(IFilter)}.
+     * 
+     * @return List of all children files.
+     *         <p>
+     *         The behavior of modifying the list is undetermined.
+     * @throws VFSException
+     *             If failed to list.
+     *             <p>
+     *             This maybe caused by no permission.
+     */
     @Override
     List<? extends IFile> listChildren()
-            throws IOException;
+            throws VFSException;
 
+    /**
+     * List children files with a name filter.
+     * 
+     * @return List of children files which passed the filter.
+     *         <p>
+     *         The behavior of modifying the list is undetermined.
+     * @throws VFSException
+     *             If failed to list.
+     *             <p>
+     *             This maybe caused by no permission.
+     */
     @Override
     List<? extends IFile> listChildren(IFilter<String> nameFilter)
-            throws IOException;
+            throws VFSException;
 
     /**
      * There are two probe modes: mime-based probe and heuristic-based probe.
