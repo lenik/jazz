@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>net.bodz.bas</groupId>
-        <artifactId>layer-7</artifactId>
+        <artifactId>layer-5</artifactId>
         <version>0.0.2-SNAPSHOT</version>
     </parent>
     <artifactId>bas-arch</artifactId>
@@ -27,11 +27,11 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-        	<groupId>net.bodz.bas</groupId>
-        	<artifactId>bas-i18n</artifactId>
-        	<version>0.0.1-SNAPSHOT</version>
-        	<scope>compile</scope>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-i18n</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 7 :: Arch</name>
+    <name>BAS :: Layer 5 :: Arch</name>
 </project>

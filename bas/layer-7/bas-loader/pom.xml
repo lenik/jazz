@@ -36,25 +36,25 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-        	<groupId>net.bodz.bas</groupId>
-        	<artifactId>bas-closure</artifactId>
-        	<version>0.0.1-SNAPSHOT</version>
-        	<type>jar</type>
-        	<scope>compile</scope>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-closure</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>compile</scope>
         </dependency>
         <dependency>
-        	<groupId>net.bodz.bas</groupId>
-        	<artifactId>bas-snmjava</artifactId>
-        	<version>0.0.1-SNAPSHOT</version>
-        	<type>jar</type>
-        	<scope>compile</scope>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-snmjava</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>compile</scope>
         </dependency>
         <dependency>
-        	<groupId>net.bodz.bas</groupId>
-        	<artifactId>bas-log</artifactId>
-        	<version>0.0.1-SNAPSHOT</version>
-        	<type>jar</type>
-        	<scope>compile</scope>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-log</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
     <name>BAS :: Layer 7 :: Class Loader</name>
