@@ -9,6 +9,7 @@ import static net.bodz.bas.log.LogCategory.STDERR;
 import static net.bodz.bas.log.LogCategory.STDERR_ID;
 import static net.bodz.bas.log.LogCategory.STDOUT;
 import static net.bodz.bas.log.LogCategory.STDOUT_ID;
+import net.bodz.bas.log.api.Logger;
 import net.bodz.bas.log.impl.PrintStreamLogSink;
 import net.bodz.bas.log.impl.PrintStreamStatusSink;
 import net.bodz.bas.meta.oop.ChainOrder;
@@ -16,7 +17,7 @@ import net.bodz.bas.meta.oop.ChainUsage;
 import net.bodz.bas.meta.oop.OverrideOption;
 
 public abstract class AbstractLogComposite
-        implements ILogComposite {
+        implements ILogComposite, Logger {
 
     /**
      * Should be overrided.

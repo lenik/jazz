@@ -5,13 +5,14 @@ import java.io.FileNotFoundException;
 
 import net.bodz.bas.log.ILogComposite;
 import net.bodz.bas.log.ILogSink;
+import net.bodz.bas.log.api.Logger;
 
 public class ChildJob {
 
     private ParentJob parent;
     private String name;
 
-    private ILogComposite log;
+    private Logger logger;
 
     public ChildJob(ParentJob parent, String name) {
         this.parent = parent;
@@ -19,15 +20,15 @@ public class ChildJob {
     }
 
     public ILogComposite getLogger() {
-        if (log == null)
-            throw new IllegalStateException("Log doesn't configured");
-        return log;
+        if (logger == null)
+            throw new IllegalStateException("Logger doesn't configured");
+        return logger;
     }
 
-    public void setLogger(ILogComposite log) {
-        if (log == null)
-            throw new NullPointerException("log");
-        this.log = log;
+    public void setLogger(Logger logger) {
+        if (logger == null)
+            throw new NullPointerException("logger");
+        this.logger = logger;
     }
 
     public ParentJob getParent() {
@@ -45,7 +46,7 @@ public class ChildJob {
         try {
             new FileInputStream("/!@#$Not-exist file!");
         } catch (FileNotFoundException e) {
-            log.getErrorSink().p("Open failed", e);
+            logger.getErrorSink().p("Open failed", e);
         }
 
         info._("Child execute...");
