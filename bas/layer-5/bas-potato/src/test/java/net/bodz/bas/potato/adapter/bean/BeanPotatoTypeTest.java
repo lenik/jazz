@@ -1,29 +1,40 @@
 package net.bodz.bas.potato.adapter.bean;
 
+import java.beans.IntrospectionException;
+
+import net.bodz.bas.potato.PotatoException;
+import net.bodz.bas.potato.adapter.bean.user.AddressBean;
+
+import org.junit.Assert;
 import org.junit.Test;
 
 public class BeanPotatoTypeTest
-        extends BeanTestBase {
+        extends Assert {
+
+    AddressBean addressBean = new AddressBean();
+
+    BeanPotatoType<AddressBean> addressType;
+
+    public BeanPotatoTypeTest()
+            throws IntrospectionException {
+        addressType = new BeanPotatoType<AddressBean>(AddressBean.class);
+    }
 
     @Test
-    public void testOverall()
-            throws Exception {
-        AddressBean myAddr = new AddressBean();
-
-        BeanPotatoType<AddressBean> addressType = new BeanPotatoType<AddressBean>(AddressBean.class);
-
+    public void testGetProperties() {
         // 3 country props + 1 ("getClass").
         assertEquals(4, addressType.getProperties().size());
+    }
 
+    @Test
+    public void testGetProperty()
+            throws PotatoException {
         BeanPotatoProperty cityProp = addressType.getProperty("city");
         assertEquals("city", cityProp.getName());
-
-        cityProp.set(myAddr, "New York");
-        assertEquals("New York", cityProp.get(myAddr));
-
         assertSame(addressType, cityProp.getDeclaringType());
 
-        // addressType.getMethods();
+        cityProp.set(addressBean, "New York");
+        assertEquals("New York", cityProp.get(addressBean));
     }
 
 }
