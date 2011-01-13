@@ -5,12 +5,15 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 import net.bodz.bas.jvm.stack.Caller;
+import net.bodz.bas.log.ILogSink;
+import net.bodz.bas.log.NullLogSink;
+import net.bodz.bas.log.api.Logger;
 import net.bodz.bas.sio.IPrintOut;
 
 public class Classpath {
 
-    static ILogComposite log;
-    static IPrintOut out = Terminals.nil;
+    static Logger logger;
+    static ILogSink out = NullLogSink.getInstance();
 
     /**
      * @return <code>false</code> if url is existed.
