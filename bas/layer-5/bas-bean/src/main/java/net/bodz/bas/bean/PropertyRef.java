@@ -37,45 +37,8 @@ public class PropertyRef<PropertyType>
         this.parameters = parameters;
     }
 
-    public static <T> PropertyRef<Object> getInstance(T bean, PropertyDescriptor propertyDescriptor,
-            Object... parameters) {
-        if (bean == null)
-            throw new NullPointerException("bean");
-        @SuppressWarnings("unchecked")
-        Class<T> beanClass = (Class<T>) bean.getClass();
-        return getInstance(bean, beanClass, propertyDescriptor, parameters);
-    }
-
-    public static <T> PropertyRef<Object> getInstance(T bean, Class<T> beanClass,
-            PropertyDescriptor propertyDescriptor, Object... parameters) {
-        String propertyName = propertyDescriptor.getName();
-        Method readMethod = propertyDescriptor.getReadMethod();
-        Method writeMethod = propertyDescriptor.getWriteMethod();
-        PropertyRef<Object> propertyRef = new PropertyRef<Object>(bean, propertyName, Object.class, readMethod,
-                writeMethod, parameters);
-        return propertyRef;
-    }
-
-    public static <T> PropertyRef<Object> getInstance(T bean, String propertyName, Object... parameters)
-            throws IntrospectionException {
-        if (bean == null)
-            throw new NullPointerException("bean");
-        @SuppressWarnings("unchecked")
-        Class<T> beanClass = (Class<T>) bean.getClass();
-        return getInstance(bean, beanClass, propertyName, parameters);
-    }
-
-    public static <T> PropertyRef<Object> getInstance(T bean, Class<T> beanClass, String propertyName,
-            Object... parameters)
-            throws IntrospectionException {
-        BeanInfo beanInfo = Introspector.getBeanInfo(beanClass);
-        for (PropertyDescriptor descriptor : beanInfo.getPropertyDescriptors()) {
-            String name = descriptor.getName();
-            if (name.equals(propertyName)) {
-                return getInstance(bean, beanClass, descriptor, parameters);
-            }
-        }
-        throw new NoSuchKeyException(propertyName);
+    public String getPropertyName() {
+        return propertyName;
     }
 
     @Override
@@ -108,6 +71,51 @@ public class PropertyRef<PropertyType>
     @Override
     public String toString() {
         return String.valueOf(bean);
+    }
+
+    public static <T> PropertyRef<T> wrap(T bean, Class<T> propertyType, PropertyDescriptor propertyDescriptor,
+            Object... parameters) {
+        if (bean == null)
+            throw new NullPointerException("bean");
+
+        Class<?> beanClass = (Class<?>) bean.getClass();
+        return wrap(beanClass, bean, propertyType, propertyDescriptor, parameters);
+    }
+
+    public static <T> PropertyRef<T> wrap(Class<?> beanClass, T bean, Class<T> propertyType,
+            PropertyDescriptor propertyDescriptor, Object... parameters) {
+        Class<?> actualType = propertyDescriptor.getPropertyType();
+        if (!propertyType.isAssignableFrom(actualType))
+            throw new IllegalArgumentException("Incompatible with actual property type: " + propertyType);
+
+        String propertyName = propertyDescriptor.getName();
+        Method readMethod = propertyDescriptor.getReadMethod();
+        Method writeMethod = propertyDescriptor.getWriteMethod();
+
+        PropertyRef<T> propertyRef = new PropertyRef<T>(bean, propertyName, propertyType, readMethod, writeMethod,
+                parameters);
+        return propertyRef;
+    }
+
+    public static <T> PropertyRef<T> wrap(T bean, Class<T> propertyType, String propertyName, Object... parameters)
+            throws IntrospectionException {
+        if (bean == null)
+            throw new NullPointerException("bean");
+        Class<?> beanClass = (Class<?>) bean.getClass();
+        return wrap(beanClass, bean, propertyType, propertyName, parameters);
+    }
+
+    public static <T> PropertyRef<T> wrap(Class<?> beanClass, T bean, Class<T> propertyType, String propertyName,
+            Object... parameters)
+            throws IntrospectionException {
+        BeanInfo beanInfo = Introspector.getBeanInfo(beanClass);
+        for (PropertyDescriptor descriptor : beanInfo.getPropertyDescriptors()) {
+            String name = descriptor.getName();
+            if (name.equals(propertyName)) {
+                return wrap(beanClass, bean, propertyType, descriptor, parameters);
+            }
+        }
+        throw new NoSuchKeyException(propertyName);
     }
 
 }

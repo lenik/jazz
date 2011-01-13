@@ -39,12 +39,6 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-arch</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
             <artifactId>bas-valtype</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>

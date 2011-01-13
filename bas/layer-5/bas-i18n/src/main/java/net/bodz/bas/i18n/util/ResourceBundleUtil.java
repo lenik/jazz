@@ -1,93 +1,9 @@
-package net.bodz.bas.i18n.nls_2;
+package net.bodz.bas.i18n.util;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.Set;
 
-public class ResourceBundleNLS
-        extends NLS {
-
-    private final ResourceBundle resourceBundle;
-
-    public ResourceBundleNLS(ResourceBundle resourceBundle) {
-        if (resourceBundle == null)
-            throw new NullPointerException("resourceBundle");
-        this.resourceBundle = resourceBundle;
-    }
-
-    public ResourceBundleNLS(String baseName, Locale locale) {
-        if (baseName == null)
-            throw new NullPointerException("baseName");
-        if (locale == null)
-            throw new NullPointerException("locale");
-        resourceBundle = ResourceBundle.getBundle(baseName, locale);
-    }
-
-    public ResourceBundleNLS(String baseName) {
-        this(baseName, Locale.getDefault());
-    }
-
-    public ResourceBundleNLS(Class<?> baseClass, Locale locale) {
-        this(baseClass.getName(), locale);
-    }
-
-    public ResourceBundleNLS(Class<?> baseClass) {
-        this(baseClass.getName(), Locale.getDefault());
-    }
-
-    @Override
-    public Locale getLocale() {
-        return resourceBundle.getLocale();
-    }
-
-    @Override
-    public boolean containsKey(String key) {
-        return resourceBundle.containsKey(key);
-    }
-
-    @Override
-    public Set<String> keySet() {
-        return resourceBundle.keySet();
-    }
-
-    @Override
-    public Object get(String key) {
-        return resourceBundle.getObject(key);
-    }
-
-    @Override
-    public Object getObject(String key, Object defaultValue) {
-        if (resourceBundle.containsKey(key))
-            return resourceBundle.getObject(key);
-        else
-            return defaultValue;
-    }
-
-    @Override
-    public String getString(String key) {
-        return resourceBundle.getString(key);
-    }
-
-    @Override
-    public String getString(String key, String defaultString) {
-        if (resourceBundle.containsKey(key))
-            return resourceBundle.getString(key);
-        else
-            return defaultString;
-    }
-
-    @Override
-    public String[] getStringArray(String key) {
-        return resourceBundle.getStringArray(key);
-    }
-
-    @Override
-    public String[] getStringArray(String key, String[] defaultValue) {
-        if (resourceBundle.containsKey(key))
-            return resourceBundle.getStringArray(key);
-        else
-            return defaultValue;
-    }
+public class ResourceBundleUtil {
 
     // static accessors.
     // These acessors can be configured as code templates.

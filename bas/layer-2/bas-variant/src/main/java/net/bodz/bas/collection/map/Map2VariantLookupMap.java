@@ -1,12 +1,10 @@
 package net.bodz.bas.collection.map;
 
-import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
 public class Map2VariantLookupMap<K, V>
-        extends VariantLookupMap<K>
-        implements Map<K, V> {
+        extends AbstractVariantLookupMap<K> {
 
     private final Map<K, V> proxy;
 
@@ -16,33 +14,9 @@ public class Map2VariantLookupMap<K, V>
         this.proxy = proxy;
     }
 
-    // interface Queryable
-
-    @Override
-    public Object getObject(K key) {
-        return proxy.get(key);
-    }
-
-    // interface Map<K, V>
-
-    @Override
-    public void clear() {
-        proxy.clear();
-    }
-
     @Override
     public boolean containsKey(Object key) {
         return proxy.containsKey(key);
-    }
-
-    @Override
-    public boolean containsValue(Object value) {
-        return proxy.containsValue(value);
-    }
-
-    @Override
-    public Set<java.util.Map.Entry<K, V>> entrySet() {
-        return proxy.entrySet();
     }
 
     @Override
@@ -51,38 +25,8 @@ public class Map2VariantLookupMap<K, V>
     }
 
     @Override
-    public boolean isEmpty() {
-        return proxy.isEmpty();
-    }
-
-    @Override
     public Set<K> keySet() {
         return proxy.keySet();
-    }
-
-    @Override
-    public V put(K key, V value) {
-        return proxy.put(key, value);
-    }
-
-    @Override
-    public void putAll(Map<? extends K, ? extends V> m) {
-        proxy.putAll(m);
-    }
-
-    @Override
-    public V remove(Object key) {
-        return proxy.remove(key);
-    }
-
-    @Override
-    public int size() {
-        return proxy.size();
-    }
-
-    @Override
-    public Collection<V> values() {
-        return proxy.values();
     }
 
     @Override

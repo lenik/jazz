@@ -1,18 +1,18 @@
-package net.bodz.bas.i18n.nls_2;
+package user;
 
-import net.bodz.bas.collection.map.VariantLookupMap;
+import net.bodz.bas.collection.map.AbstractVariantLookupMap_MatrixImpl;
 
 /**
- * @see VariantLookupMap
+ * @see AbstractVariantLookupMap_MatrixImpl
  */
-public class VariantLookupMapCG {
+public class VariantLookupMapGenerator {
 
     public static void main(String[] args) {
         String[] types = { // "Object", "String", //
         "byte", "short", "int", "long", "float", "double", "boolean", "char", //
                 "BigInteger", "BigDecimal", //
                 "Date", //
-                "URI", "URL", "Path", "File", //   
+                "URI", "URL", "Path", "File", //
         };
 
         System.out.println("Interface Declaration: ");

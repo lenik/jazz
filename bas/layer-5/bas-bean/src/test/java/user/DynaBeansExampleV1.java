@@ -1,10 +1,12 @@
-package net.bodz.bas.bean;
+package user;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import net.bodz.bas.bean.BeanDump;
 
 import org.apache.commons.beanutils.BasicDynaClass;
 import org.apache.commons.beanutils.BeanUtils;
@@ -43,7 +45,7 @@ public class DynaBeansExampleV1 {
         movieBean.set("dateOfRelease", new GregorianCalendar(1969, 0, 1).getTime());
         movieBean.set("keywords", new String[] { "Italy", "Bank Robbery" });
 
-        Map genre = new HashMap();
+        Map<String, String> genre = new HashMap<String, String>();
         genre.put("THR", "Thriller");
 
         movieBean.set("genre", genre);
