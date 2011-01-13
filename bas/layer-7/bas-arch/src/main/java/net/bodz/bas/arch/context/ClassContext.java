@@ -3,9 +3,6 @@ package net.bodz.bas.arch.context;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.util.Nullables;
 
-/**
- * @test {@link PackageContextTest}
- */
 public class ClassContext
         extends AbstractContext {
 

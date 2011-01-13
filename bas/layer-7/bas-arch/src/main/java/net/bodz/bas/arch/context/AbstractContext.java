@@ -18,7 +18,7 @@ public abstract class AbstractContext
     }
 
     @Override
-    public boolean isPenetrated() {
+    public boolean isTransient() {
         return false;
     }
 
@@ -40,21 +40,5 @@ public abstract class AbstractContext
     public String toString() {
         return contextName + "@" + getClass().getSimpleName();
     }
-
-    // static ContextLocal<Charset> contextCharset;
-    // static ContextLocal<Locale> contextLocale;
-    // static ContextLocal<File> contextCwd;
-    //
-    // public Charset getCharset() {
-    // return contextCharset.get(this);
-    // }
-    //
-    // public Locale getLocale() {
-    // return contextLocale.get(this);
-    // }
-    //
-    // public File getCwd() {
-    // return contextCwd.get(this);
-    // }
 
 }
