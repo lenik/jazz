@@ -2,6 +2,11 @@ package net.bodz.bas.potato;
 
 import java.util.Collection;
 
+/**
+ * Unlike Java Beans, A potato type exports its members at runtime.
+ * <p>
+ * You can easily convert a Java Bean object into a potato object.
+ */
 public interface IPotatoType<T>
         extends IPotatoElement { // , ITypeTraits<T> {
 
