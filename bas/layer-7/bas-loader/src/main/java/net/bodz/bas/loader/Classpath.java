@@ -9,6 +9,7 @@ import net.bodz.bas.sio.IPrintOut;
 
 public class Classpath {
 
+    static ILogComposite log;
     static IPrintOut out = Terminals.nil;
 
     /**
