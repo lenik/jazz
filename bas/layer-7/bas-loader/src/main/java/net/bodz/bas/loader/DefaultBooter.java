@@ -210,24 +210,7 @@ public class DefaultBooter {
         // reload and exec
         URL[] urls = userlibs.toArray(new URL[0]);
         Class<?> clazz = load(className, urls);
-        while (true) {
-            try {
-                LoadUtil.execMain(clazz, args);
-                if (loopPred.eval(null))
-                    continue;
-                break;
-            } catch (ControlBreak b) {
-                break;
-            } catch (ControlContinue c) {
-                continue;
-            } catch (ControlExit exit) {
-                System.exit(exit.getStatus());
-            } catch (Throwable t) {
-                if (loopPred.eval(t))
-                    continue;
-                throw t;
-            }
-        }
+        LoadUtil.execMain(clazz, args);
     }
 
 }

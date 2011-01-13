@@ -3,14 +3,13 @@ package net.bodz.bas.loader;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.files.FileTemp;
-
-import org.apache.commons.vfs.FileObject;
+import net.bodz.bas.io.resource.builtin.LocalFileResource;
+import net.bodz.bas.io.resource.builtin.URLResource;
+import net.bodz.bas.util.TempFile;
 
 public class LibInstaller {
 
@@ -34,9 +33,9 @@ public class LibInstaller {
         init();
     }
 
-    private static FileObject deflDir;
+    private static File deflDir;
     static {
-        deflDir = new File(FileTemp.getTmpDir(), "BundledLib");
+        deflDir = new File(TempFile.getTmpDir(), "BundledLib");
         deflDir.mkdirs();
     }
 
@@ -68,30 +67,29 @@ public class LibInstaller {
      * @return <code>null</code> if not found.
      */
     public String findLibrary(ClassLoader loader, String libname) {
-        String filename = System.mapLibraryName(libname);
+        String libFilename = System.mapLibraryName(libname);
 
         // the libfile must belong to this class loader
         // XXX - any parents loader?
-        URL url = loader.getResource(filename);
-        if (url == null)
+        URL libURL = loader.getResource(libFilename);
+        if (libURL == null)
             return null;
 
-        File libfile = installedLibraries.get(libname);
+        File installedLibFile = installedLibraries.get(libname);
         // TODO - how to get url's timestamp?
-        if (libfile == null) {
-            libfile = new File(installDir, filename);
+        if (installedLibFile == null) {
+            URLResource libResource = new URLResource(libURL);
+            installedLibFile = new File(installDir, libFilename);
             try {
-                InputStream libdata = url.openStream();
-                Files.copy(libdata, libfile);
-                libdata.close();
-                installedLibraries.put(libname, libfile);
+                new LocalFileResource(installedLibFile).forWrite().writeBytes(libResource);
+                installedLibraries.put(libname, installedLibFile);
             } catch (IOException e) {
                 throw new Error(e.getMessage(), e);
             } finally {
                 // libfile.deleteOnExit();
             }
         }
-        return libfile.getAbsolutePath();
+        return installedLibFile.getAbsolutePath();
     }
 
 }
