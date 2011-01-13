@@ -1,7 +1,6 @@
 package net.bodz.bas.files;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -12,6 +11,7 @@ import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.db.filedb.PartRecords;
 import net.bodz.bas.db.filedb.PartRecords.PartMap;
 import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.util.ClassResource;
 
 import org.junit.Test;
 
@@ -40,8 +40,7 @@ public class PartRecordsTest
     @Test
     public void test1()
             throws IOException {
-        URL url = FileRes.classData(getClass(), "1");
-        IStreamInputSource source = new URLResLink(url);
+        IStreamInputSource source = ClassResource.classData(getClass(), "1");
         PartRecords maps = new PartRecords(source);
         ImmediateIteratorX<? extends PartMap, ? extends IOException> it = maps.iterator(false);
         PartMap part;

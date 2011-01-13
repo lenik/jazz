@@ -3,13 +3,13 @@ package net.bodz.bas.files;
 import static net.bodz.bas.files.PartRecordsTest.map2str;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.Map;
 
 import junit.framework.TestCase;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.db.filedb.INIRecords;
 import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.util.ClassResource;
 
 import org.junit.Test;
 
@@ -19,8 +19,7 @@ public class INIRecordsTest
     IStreamInputSource source;
 
     public INIRecordsTest() {
-        URL classData = FileRes.classData(getClass(), "1");
-        source = new URLResLink(classData);
+        source = ClassResource.classData(getClass(), "1");
     }
 
     @Test

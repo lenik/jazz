@@ -1,11 +1,12 @@
 package net.bodz.bas.files;
 
 import java.io.IOException;
-import java.net.URL;
 
 import junit.framework.TestCase;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.db.filedb.CSVRecords;
+import net.bodz.bas.io.resource.builtin.URLResource;
+import net.bodz.bas.util.ClassResource;
 
 import org.junit.Test;
 
@@ -15,8 +16,8 @@ public class CSVRecordsTest
     @Test
     public void test1()
             throws IOException {
-        URL classData = FileRes.classData(getClass(), "1");
-        CSVRecords csv = new CSVRecords(new URLResLink(classData));
+        URLResource classData = ClassResource.classData(getClass(), "1");
+        CSVRecords csv = new CSVRecords(classData);
         ImmediateIteratorX<? extends String[], IOException> it = csv.iterator(true);
         String[] head = it.next();
         assertEquals(3, head.length);
