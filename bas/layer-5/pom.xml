@@ -12,6 +12,7 @@
     <version>0.0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
+        <module>bas-arch</module>
         <module>bas-bean</module>
         <module>bas-database</module>
         <module>bas-flow</module>

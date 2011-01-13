@@ -44,6 +44,7 @@ layer-4 特殊工具
     bas-srt
         
 layer-5 框架基础
+    bas-arch
     bas-log
     bas-vfs
     bas-i18n
@@ -59,7 +60,6 @@ layer-6 框架工具
     bas-snmjava
     
 layer-7 应用框架
-    bas-arch
     bas-netserv
     bas-loader
     bas-cli
