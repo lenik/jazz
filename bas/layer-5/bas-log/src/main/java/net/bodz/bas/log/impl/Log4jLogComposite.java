@@ -17,12 +17,12 @@ import net.bodz.bas.log.impl.Log4jLogSink.WarnSink;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-public class Log4jLogLayer
+public class Log4jLogComposite
         extends AbstractLogComposite {
 
     private final Logger log4j;
 
-    public Log4jLogLayer(Logger logger) {
+    public Log4jLogComposite(Logger logger) {
         if (logger == null)
             throw new NullPointerException("logger");
         this.log4j = logger;
@@ -116,12 +116,12 @@ public class Log4jLogLayer
         log4j.debug(message, t);
     }
 
-    public static Log4jLogLayer getInstance(Class<?> clazz) {
-        return new Log4jLogLayer(Logger.getLogger(clazz));
+    public static Log4jLogComposite getInstance(Class<?> clazz) {
+        return new Log4jLogComposite(Logger.getLogger(clazz));
     }
 
-    public static Log4jLogLayer getInstance(String name) {
-        return new Log4jLogLayer(Logger.getLogger(name));
+    public static Log4jLogComposite getInstance(String name) {
+        return new Log4jLogComposite(Logger.getLogger(name));
     }
 
 }
