@@ -3,12 +3,12 @@ package net.bodz.bas.collection.map;
 import java.util.Map;
 import java.util.Set;
 
-public class Map2VariantLookupMap<K, V>
+public class Map2VariantLookupMap<K>
         extends AbstractVariantLookupMap<K> {
 
-    private final Map<K, V> proxy;
+    private final Map<K, ?> proxy;
 
-    public Map2VariantLookupMap(Map<K, V> proxy) {
+    public Map2VariantLookupMap(Map<K, ?> proxy) {
         if (proxy == null)
             throw new NullPointerException("proxy");
         this.proxy = proxy;
@@ -20,7 +20,7 @@ public class Map2VariantLookupMap<K, V>
     }
 
     @Override
-    public V get(Object key) {
+    public Object get(Object key) {
         return proxy.get(key);
     }
 
