@@ -1,13 +1,11 @@
 package net.bodz.bas.arch.module;
 
-import java.util.Locale;
+import net.bodz.bas.i18n.nls.NLS;
 
 public interface IModuleInfo {
 
     String getPackageName();
 
     NLS getNLS();
-
-    NLS getNLS(Locale locale);
 
 }
