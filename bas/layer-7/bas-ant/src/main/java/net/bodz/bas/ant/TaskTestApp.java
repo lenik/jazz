@@ -6,9 +6,10 @@ import java.net.URL;
 
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.snm.JarLocations;
+import net.bodz.bas.util.ClassResource;
 import net.bodz.bas.util.exception.IllegalUsageError;
 import net.bodz.bas.util.exception.IllegalUsageException;
-import net.bodz.bas.util.file.Files;
+import net.bodz.bas.util.file.FileURL;
 
 import org.apache.tools.ant.BuildLogger;
 import org.apache.tools.ant.DefaultLogger;
@@ -63,7 +64,7 @@ public class TaskTestApp {
             throws IOException {
         this();
         Class<?> callerClass = Caller.getCallerClass(caller);
-        URL url = Files.classData(callerClass);
+        URL url = ClassResource.classDataURL(callerClass);
         if ("jar".equals(url.getProtocol())) {
             // if callerClass is in a jar, the default project helper is failed
             // to setBaseDir.
@@ -80,10 +81,10 @@ public class TaskTestApp {
         Class<?> callerClass = Caller.getCallerClass(caller);
         URL xmlURL;
         if (resourceName == null)
-            xmlURL = Files.classData(callerClass, "xml");
+            xmlURL = ClassResource.classDataURL(callerClass, "xml");
         else
             xmlURL = callerClass.getResource(resourceName);
-        File buildFile = Files.getFile(xmlURL);
+        File buildFile = FileURL.getFile(xmlURL); // Must be a File, not resource in zip.
         if (!buildFile.exists())
             throw new IllegalUsageException("The build file for test isn\'t existed: " + buildFile);
         load(buildFile);

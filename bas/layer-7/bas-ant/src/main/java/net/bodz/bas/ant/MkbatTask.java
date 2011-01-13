@@ -5,9 +5,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.cli.util.CLITask;
 import net.bodz.bas.cli.util.Mkbat;
-import net.bodz.bas.util.file.Files;
+import net.bodz.bas.util.file.FileURL;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.types.Path;
@@ -64,7 +63,7 @@ public class MkbatTask
             String[] paths = classpath.list();
             for (int i = 0; i < paths.length; i++) {
                 File file = new File(paths[i]);
-                URL url = Files.getURL(file);
+                URL url = FileURL.getURL(file);
                 mkbat.addClasspath(url);
             }
         }

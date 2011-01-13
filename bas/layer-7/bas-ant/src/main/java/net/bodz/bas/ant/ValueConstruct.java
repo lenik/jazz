@@ -9,7 +9,7 @@ import net.bodz.bas.loader.UCL;
 import net.bodz.bas.util.Factory;
 import net.bodz.bas.util.exception.CreateException;
 import net.bodz.bas.util.exception.IllegalUsageException;
-import net.bodz.bas.util.file.Files;
+import net.bodz.bas.util.file.FileURL;
 
 import org.apache.tools.ant.types.Path;
 
@@ -56,7 +56,7 @@ public class ValueConstruct
         URL[] urls = new URL[paths.length];
         for (int i = 0; i < paths.length; i++) {
             File loc = new File(paths[i]);
-            URL url = Files.getURL(loc);
+            URL url = FileURL.getURL(loc);
             urls[i] = url;
         }
         UCL.addURL(loader, urls);
@@ -71,8 +71,8 @@ public class ValueConstruct
             throws CreateException {
         if (factory == null)
             throw new IllegalUsageException("Don\'t know how to get bean instance");
-        Class<?>[] types = prependTypes(prependTypes).toArray(Empty.Classes);
-        Object[] values = prependValues(prependValues).toArray(Empty.Objects);
+        Class<?>[] types = prependTypes(prependTypes).toArray(new Class[0]);
+        Object[] values = prependValues(prependValues).toArray(new Object[0]);
         return factory._create(types, values);
     }
 
