@@ -4,6 +4,7 @@ import java.io.File;
 
 import net.bodz.bas.arch.context.ClassContext;
 import net.bodz.bas.arch.context.ContextLocal;
+import net.bodz.bas.arch.context.DefaultContext;
 import net.bodz.bas.arch.context.IContext;
 import net.bodz.bas.arch.context.sysctx.ContextCWDTest;
 import net.bodz.bas.sysinfo.SystemInfo;
@@ -92,6 +93,22 @@ public class ContextCWD
         chdir(context, cwd);
     }
 
+    // Shortcuts for DefaultContext
+
+    public File join(String name) {
+        return join(DefaultContext.getInstance(), name);
+    }
+
+    public void chdir(File dir) {
+        chdir(DefaultContext.getInstance(), dir);
+    }
+
+    public void chdir(String path) {
+        chdir(DefaultContext.getInstance(), path);
+    }
+
+    // Shortcuts for ClassContext
+
     public File join(Class<?> classContext, String name) {
         return join(ClassContext.getInstance(classContext), name);
     }
@@ -104,7 +121,7 @@ public class ContextCWD
         chdir(ClassContext.getInstance(classContext), path);
     }
 
-    static final ContextCWD instance = new ContextCWD();
+    private static final ContextCWD instance = new ContextCWD();
 
     public static ContextCWD getInstance() {
         return instance;

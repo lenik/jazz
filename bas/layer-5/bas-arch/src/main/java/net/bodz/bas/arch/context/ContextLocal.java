@@ -106,6 +106,27 @@ public class ContextLocal<T> {
     }
 
     /**
+     * A shortcut to get the value in the default context.
+     * 
+     * @return Context thread local value.
+     * @def get(DefaultContext.getInstance())
+     * @see DefaultContext
+     */
+    public T get() {
+        return get(DefaultContext.getInstance());
+    }
+
+    /**
+     * A shortcut to set the value in the default context.
+     * 
+     * @def set(DefaultContext.getInstance(), value)
+     * @see DefaultContext
+     */
+    public void set(T value) {
+        set(DefaultContext.getInstance(), value);
+    }
+
+    /**
      * A shortcut to get the value in the context of the given class.
      * 
      * @param clazz
