@@ -2,7 +2,6 @@ package net.bodz.bas.db.filedb;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -26,7 +25,7 @@ public class INIRecords
     }
 
     public INIRecords(File file, String encoding) {
-        this(new LocalFileResource(file).setCharset(Charset.forName(encoding)), false);
+        this(new LocalFileResource(file, encoding), false);
     }
 
     @Override

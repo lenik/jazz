@@ -39,8 +39,26 @@ public class LocalFileResource
         this.file = file;
     }
 
+    public LocalFileResource(File file, Charset charset) {
+        this(file);
+        this.setCharset(charset);
+    }
+
+    public LocalFileResource(File file, String charsetName) {
+        this(file);
+        this.setCharset(charsetName);
+    }
+
     public LocalFileResource(String filename) {
         this(new File(filename));
+    }
+
+    public LocalFileResource(String filename, Charset charset) {
+        this(new File(filename), charset);
+    }
+
+    public LocalFileResource(String filename, String charsetName) {
+        this(new File(filename), charsetName);
     }
 
     @Override

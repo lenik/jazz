@@ -3,7 +3,6 @@ package net.bodz.bas.db.filedb;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.charset.Charset;
 import java.util.Map;
 
 import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
@@ -11,6 +10,7 @@ import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
+import net.bodz.bas.io.resource.builtin.URLResource;
 import net.bodz.bas.util.exception.ParseException;
 
 /**
@@ -39,7 +39,7 @@ public abstract class _PartRecords<K, V>
     }
 
     public _PartRecords(File file, String encoding, int flags) {
-        this(new LocalFileResource(file).setCharset(Charset.forName(encoding)), flags);
+        this(new LocalFileResource(file, encoding), flags);
     }
 
     public _PartRecords(URL url, String encoding) {
@@ -47,7 +47,7 @@ public abstract class _PartRecords<K, V>
     }
 
     public _PartRecords(URL url, String encoding, int flags) {
-        this(new URLResource(url), Charset.forName(encoding), flags);
+        this(new URLResource(url, encoding), flags);
     }
 
     public K getTextKey() {
