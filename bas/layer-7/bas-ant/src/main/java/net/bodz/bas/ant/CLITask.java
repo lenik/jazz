@@ -1,4 +1,4 @@
-package net.bodz.bas.cli.util;
+package net.bodz.bas.ant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,11 +7,11 @@ import javax.script.ScriptException;
 
 import net.bodz.bas.cli.BasicCLI;
 import net.bodz.bas.cli.CLIException;
-import net.bodz.bas.commons.scripting.ScriptClass;
-import net.bodz.bas.io.term.LogTerm;
 import net.bodz.bas.util.exception.ParseException;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.Task;
 
 public class CLITask
         extends Task {

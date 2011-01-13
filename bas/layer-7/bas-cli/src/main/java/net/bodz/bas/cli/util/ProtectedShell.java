@@ -2,23 +2,24 @@ package net.bodz.bas.cli.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Date;
 
-import net.bodz.bas.io.term.ITerminal;
-import net.bodz.bas.io.term.Terminals;
+import net.bodz.bas.log.ILogSink;
+import net.bodz.bas.log.impl.PrintStreamLogSink;
 
 public class ProtectedShell {
 
     private boolean enabled;
-    private ITerminal out;
+    private ILogSink out;
 
-    public ProtectedShell(boolean enabled, ITerminal out) {
+    public ProtectedShell(boolean enabled, ILogSink out) {
         this.enabled = enabled;
         this.out = out;
     }
 
     public ProtectedShell(boolean enabled) {
-        this(enabled, Terminals.stderr);
+        this(enabled, new PrintStreamLogSink(System.err));
     }
 
     public boolean isEnabled() {

@@ -13,9 +13,11 @@ import java.util.Enumeration;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.bodz.bas.arch.context.sysclg.SystemCLG;
 import net.bodz.bas.collection.preorder.PrefixSet;
 import net.bodz.bas.collection.preorder.TypeHierSet;
-import net.bodz.bas.io.term.LogTerm;
+import net.bodz.bas.collection.set.IdentityHashSet;
+import net.bodz.bas.log.api.Logger;
 import net.bodz.bas.string.Strings;
 import net.bodz.bas.util.exception.CreateException;
 import net.bodz.bas.util.exception.IllegalUsageException;
@@ -71,7 +73,7 @@ public class PropertyBeanTask
     private boolean userProperties;
 
     private boolean verbose;
-    private LogTerm logger = new TaskLogTerm(this);
+    private Logger logger = new TaskLogComposite(this);
 
     public PropertyBeanTask() {
         vCtor = new ValueConstruct();
@@ -162,7 +164,7 @@ public class PropertyBeanTask
         this.verbose = verbose;
     }
 
-    public void addConfiguredLogFile(Logger logger) {
+    public void addConfiguredLogFile(LoggerVC logger) {
         // logger=new ChainedLogTerm();
         throw new NotImplementedException();
     }
@@ -200,7 +202,7 @@ public class PropertyBeanTask
         final Project project = getProject();
         File baseDir = project.getBaseDir();
         if (baseDir != null)
-            CWD.chdir(baseDir);
+            SystemCLG.cwd.chdir(baseDir);
 
         try {
             Class<?>[] tryProjectTypes = { Project.class };
@@ -225,13 +227,13 @@ public class PropertyBeanTask
     class Traverser {
 
         Project project;
-        IdentSet uniqSet;
+        IdentityHashSet uniqSet;
         PrefixSet stp;
 
         public Traverser(Project project) {
             this.project = project;
             if (unique)
-                this.uniqSet = new IdentSet();
+                this.uniqSet = new IdentityHashSet();
             if ((stp = stopTypePrefixes) == null)
                 stp = defaultStopTypePrefixes;
         }
@@ -240,7 +242,7 @@ public class PropertyBeanTask
                 throws Exception {
             if (verbose) {
                 String abbr = Strings.ellipse(String.valueOf(node), 30);
-                logger.detail(Strings.repeat(level, ' '), _name, " = " + abbr);
+                logger.debug(Strings.repeat(level, ' ') + _name + " = " + abbr);
             }
 
             if (node == null) {

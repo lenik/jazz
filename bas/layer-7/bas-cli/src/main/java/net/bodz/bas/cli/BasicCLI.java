@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.net.URL;
+import java.nio.file.FileSystems;
+import java.nio.file.PathMatcher;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,20 +17,17 @@ import javax.script.ScriptException;
 
 import net.bodz.bas.a.A_bas;
 import net.bodz.bas.a.ClassInfo;
-import net.bodz.bas.arch.context.sysclg.SystemCLG;
 import net.bodz.bas.cli.annotations.Option;
 import net.bodz.bas.cli.annotations.OptionGroup;
 import net.bodz.bas.cli.ext.CLIPlugin;
 import net.bodz.bas.cli.ext.CLIPlugins;
-import net.bodz.bas.commons.scripting.ScriptClass;
-import net.bodz.bas.commons.scripting.ScriptType;
-import net.bodz.bas.commons.scripting.Scripts;
-import net.bodz.bas.io.term.ITerminal;
-import net.bodz.bas.io.term.LogTerm;
-import net.bodz.bas.io.term.LogTerms;
+import net.bodz.bas.collection.map.IVariantLookupMap;
+import net.bodz.bas.collection.map.Map2VariantLookupMap;
 import net.bodz.bas.io.typemeta.CharOutParser;
 import net.bodz.bas.loader.boot.BootInfo;
-import net.bodz.bas.log.typemeta.LoggerParser;
+import net.bodz.bas.log.ILogSink;
+import net.bodz.bas.log.api.Logger;
+import net.bodz.bas.log.api.LoggerFactory;
 import net.bodz.bas.meta.build.RcsKeywords;
 import net.bodz.bas.meta.build.VersionInfo;
 import net.bodz.bas.meta.oop.ChainUsage;
@@ -91,7 +90,8 @@ public class BasicCLI
 
     @Option(name = "logger", hidden = true)
     @ParseBy(LoggerParser.class)
-    protected LogTerm L = LogTerms.resolveFile(1);
+    protected Logger L = LoggerFactory.getLogger(BasicCLI.class);
+    // LogTerms.resolveFile(1);
 
     protected UserInterface UI = ConsoleUI.stdout;
 
@@ -111,7 +111,7 @@ public class BasicCLI
         L.setLevel(L.getLevel() - 1);
     }
 
-    protected VarMap<String, Object> _vars;
+    protected IVariantLookupMap<Object> _vars;
 
     @Option(name = "define", alias = ".D", vnam = "NAM=VAL", doc = "define variables")
     void _define(String exp)
@@ -290,7 +290,7 @@ public class BasicCLI
     protected void _version(IPrintOut out) {
         ClassInfo info = _loadClassInfo();
         out.printf("[%s] %s\n", info.getName(), info.getDoc());
-        out.printf("Written by %s,  Version %s,  Last updated at %s\n", // 
+        out.printf("Written by %s,  Version %s,  Last updated at %s\n", //
                 info.getAuthor(), //
                 StringArray.joinDot(info.getVersion()), //
                 info.getDateString());
@@ -328,8 +328,7 @@ public class BasicCLI
 
     public BasicCLI() {
         TypeParsers.register(CLIPlugin.class, new PluginParser());
-        _vars = new VarMap<String, Object>(//
-                new HashMap<String, Object>());
+        _vars = new Map2VariantLookupMap<Object>(new HashMap<Object, Object>());
     }
 
     public ScriptClass<? extends BasicCLI> getScriptClass()
@@ -350,7 +349,7 @@ public class BasicCLI
         if (prepared)
             return;
 
-        ITerminal dbg = L.debug();
+        ILogSink dbg = L.debug();
         // dbg.p("parse boot info");
         // bootProc = BootProc.get(getClass());
         //
@@ -401,7 +400,7 @@ public class BasicCLI
     @Override
     public synchronized void run(String... args)
             throws Exception {
-        ITerminal dbg = L.debug();
+        ILogSink dbg = L.getDebugSink();
         dbg.p("cli prepare");
         _prepare();
         int preRestSize = restArgs.size(); // make climain() reentrant.
