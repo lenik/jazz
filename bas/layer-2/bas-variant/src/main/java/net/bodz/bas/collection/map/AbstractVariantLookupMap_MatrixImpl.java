@@ -16,60 +16,21 @@ import net.bodz.bas.valtype.conv.TypeMatrix_float;
 import net.bodz.bas.valtype.conv.TypeMatrix_int;
 import net.bodz.bas.valtype.conv.TypeMatrix_long;
 import net.bodz.bas.valtype.conv.TypeMatrix_short;
+import user.VariantLookupMapGenerator;
 
-public abstract class VariantLookupMap<K>
-        implements ILookupMap<K, Object> {
+/**
+ * see {@link VariantLookupMapGenerator}
+ */
+public abstract class AbstractVariantLookupMap_MatrixImpl<K>
+        implements IVariantLookupMap<K> {
 
-    public String format(K formatKey, Object... args) {
-        String format = getString(formatKey);
-        return String.format(format, args);
-    }
-
-    public Object getObject(K key) {
-        return get(key);
-    }
-
-    public Object getObject(K key, Object defaultValue) {
-        Object value = get(key);
-        if (value == null)
-            return containsKey(key) ? null : defaultValue;
-        return value;
-    }
-
-    public String getString(K key, String defaultString) {
-        Object value = get(key);
-        if (value == null)
-            return containsKey(key) ? null : defaultString;
-        return value.toString();
-    }
-
-    public String getString(K key) {
-        return getString(key, null);
-    }
-
-    public String[] getStringArray(K key, String[] defaultValue) {
-        Object value = get(key);
-        if (value == null)
-            return containsKey(key) ? null : defaultValue;
-        if (value instanceof String[])
-            return (String[]) value;
-        return new String[] { value.toString() };
-    }
-
-    public String[] getStringArray(K key) {
-        return getStringArray(key, null);
-    }
-
-    /**
-     * see {@link VariantLookupMapCG}
-     */
-
-    /***/
+    @Override
     public byte getByte(K key) {
         Object value = get(key);
         return TypeMatrix_byte.fromObject(value);
     }
 
+    @Override
     public byte getByte(K key, byte defaultValue) {
         Object value = get(key);
         if (value == null && !containsKey(key))
@@ -81,11 +42,13 @@ public abstract class VariantLookupMap<K>
         }
     }
 
+    @Override
     public short getShort(K key) {
         Object value = get(key);
         return TypeMatrix_short.fromObject(value);
     }
 
+    @Override
     public short getShort(K key, short defaultValue) {
         Object value = get(key);
         if (value == null && !containsKey(key))
@@ -97,11 +60,13 @@ public abstract class VariantLookupMap<K>
         }
     }
 
+    @Override
     public int getInt(K key) {
         Object value = get(key);
         return TypeMatrix_int.fromObject(value);
     }
 
+    @Override
     public int getInt(K key, int defaultValue) {
         Object value = get(key);
         if (value == null && !containsKey(key))
@@ -113,11 +78,13 @@ public abstract class VariantLookupMap<K>
         }
     }
 
+    @Override
     public long getLong(K key) {
         Object value = get(key);
         return TypeMatrix_long.fromObject(value);
     }
 
+    @Override
     public long getLong(K key, long defaultValue) {
         Object value = get(key);
         if (value == null && !containsKey(key))
@@ -129,11 +96,13 @@ public abstract class VariantLookupMap<K>
         }
     }
 
+    @Override
     public float getFloat(K key) {
         Object value = get(key);
         return TypeMatrix_float.fromObject(value);
     }
 
+    @Override
     public float getFloat(K key, float defaultValue) {
         Object value = get(key);
         if (value == null && !containsKey(key))
@@ -145,11 +114,13 @@ public abstract class VariantLookupMap<K>
         }
     }
 
+    @Override
     public double getDouble(K key) {
         Object value = get(key);
         return TypeMatrix_double.fromObject(value);
     }
 
+    @Override
     public double getDouble(K key, double defaultValue) {
         Object value = get(key);
         if (value == null && !containsKey(key))
@@ -161,11 +132,13 @@ public abstract class VariantLookupMap<K>
         }
     }
 
+    @Override
     public boolean getBoolean(K key) {
         Object value = get(key);
         return TypeMatrix_boolean.fromObject(value);
     }
 
+    @Override
     public boolean getBoolean(K key, boolean defaultValue) {
         Object value = get(key);
         if (value == null && !containsKey(key))
@@ -177,11 +150,13 @@ public abstract class VariantLookupMap<K>
         }
     }
 
+    @Override
     public char getChar(K key) {
         Object value = get(key);
         return TypeMatrix_char.fromObject(value);
     }
 
+    @Override
     public char getChar(K key, char defaultValue) {
         Object value = get(key);
         if (value == null && !containsKey(key))
@@ -193,11 +168,13 @@ public abstract class VariantLookupMap<K>
         }
     }
 
+    @Override
     public BigInteger getBigInteger(K key) {
         Object value = get(key);
         return TypeMatrix_BigInteger.fromObject(value);
     }
 
+    @Override
     public BigInteger getBigInteger(K key, BigInteger defaultValue) {
         Object value = get(key);
         if (value == null && !containsKey(key))
@@ -209,11 +186,13 @@ public abstract class VariantLookupMap<K>
         }
     }
 
+    @Override
     public BigDecimal getBigDecimal(K key) {
         Object value = get(key);
         return TypeMatrix_BigDecimal.fromObject(value);
     }
 
+    @Override
     public BigDecimal getBigDecimal(K key, BigDecimal defaultValue) {
         Object value = get(key);
         if (value == null && !containsKey(key))
@@ -225,11 +204,13 @@ public abstract class VariantLookupMap<K>
         }
     }
 
+    @Override
     public Date getDate(K key) {
         Object value = get(key);
         return TypeMatrix_Date.fromObject(value);
     }
 
+    @Override
     public Date getDate(K key, Date defaultValue) {
         Object value = get(key);
         if (value == null && !containsKey(key))
