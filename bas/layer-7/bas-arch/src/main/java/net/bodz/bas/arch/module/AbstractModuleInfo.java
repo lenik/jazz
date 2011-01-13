@@ -1,8 +1,7 @@
 package net.bodz.bas.arch.module;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import net.bodz.bas.i18n.nls.NLS;
+import net.bodz.bas.i18n.nls.ResourceBundleNLS;
 
 /**
  * To make the default {@link #getPackageName()} and all the related methods work, your direct
@@ -11,43 +10,32 @@ import java.util.Map;
 public abstract class AbstractModuleInfo
         implements IModuleInfo {
 
-    private NLS defaultNLS;
-    private Map<Locale, NLS> localeNLS;
+    private String packageName;
+    private NLS NLS;
 
     public AbstractModuleInfo() {
+        this.packageName = getClass().getPackage().getName();
+
+        String moduleClassName = getClass().getName();
+        String moduleName;
+        if (moduleClassName.endsWith("ModuleInfo"))
+            moduleName = moduleClassName.substring(0, moduleClassName.length() - "ModuleInfo".length());
+        else if (moduleClassName.endsWith("Info"))
+            moduleName = moduleClassName.substring(0, moduleClassName.length() - "Info".length());
+        else
+            moduleName = moduleClassName;
+
+        ResourceBundleNLS rbNLS = new ResourceBundleNLS(null, moduleName);
+        this.NLS = rbNLS;
     }
 
     public String getPackageName() {
-        return getClass().getPackage().getName();
+        return packageName;
     }
 
+    @Override
     public NLS getNLS() {
-        if (defaultNLS == null)
-            defaultNLS = createNLS(Locale.getDefault());
-        return defaultNLS;
-    }
-
-    public NLS getNLS(Locale locale) {
-        if (locale == null)
-            throw new NullPointerException("locale");
-        if (locale.equals(Locale.getDefault()))
-            return getNLS();
-
-        if (localeNLS == null)
-            localeNLS = new HashMap<Locale, NLS>();
-
-        NLS nls = localeNLS.get(locale);
-        if (nls == null) {
-            nls = createNLS(locale);
-            localeNLS.put(locale, nls);
-        }
-        return nls;
-    }
-
-    protected NLS createNLS(Locale locale) {
-        String defaultBaseName = getPackageName() + ".NLS";
-        NLS nls = new ResourceBundleNLS(defaultBaseName, locale);
-        return nls;
+        return NLS;
     }
 
 }

@@ -23,7 +23,15 @@ public class ResourceBundleNLS
         reload();
     }
 
-    public ResourceBundleNLS(NLS parent, String baseName, ResourceBundle resourceBundle) {
+    public ResourceBundleNLS(NLS parent, String baseName) {
+        this(parent, baseName, Locale.getDefault());
+    }
+
+    public ResourceBundleNLS(NLS parent, String baseName, Locale locale) {
+        this(parent, baseName, ResourceBundle.getBundle(baseName, locale));
+    }
+
+    protected ResourceBundleNLS(NLS parent, String baseName, ResourceBundle resourceBundle) {
         super(parent, resourceBundle.getLocale());
         if (baseName == null)
             throw new NullPointerException("baseName");
