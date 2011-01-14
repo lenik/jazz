@@ -4,12 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import net.bodz.bas.collection.map.AbstractVariantLookupMap_MatrixImpl;
+import net.bodz.bas.collection.map.AbstractVariantLookupMap;
 import net.bodz.bas.collection.tree.TreePath;
-import net.bodz.bas.util.Nullables;
 
 public class SimpleRequest
-        extends AbstractVariantLookupMap_MatrixImpl<String> {
+        extends AbstractVariantLookupMap<String> {
 
     private final Object source;
     private String protocol;
