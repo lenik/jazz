@@ -5,7 +5,7 @@ import java.io.FileOutputStream;
 
 import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.OutputStreamByteOut;
-import net.bodz.bas.type.traits.AbstractParser;
+import net.bodz.bas.traits.AbstractParser;
 import net.bodz.bas.util.exception.ParseException;
 
 public class ByteOutParser

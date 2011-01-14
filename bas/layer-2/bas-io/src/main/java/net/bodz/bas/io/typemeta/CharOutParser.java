@@ -6,7 +6,7 @@ import java.io.OutputStreamWriter;
 
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.WriterPrintOut;
-import net.bodz.bas.type.traits.AbstractParser;
+import net.bodz.bas.traits.AbstractParser;
 import net.bodz.bas.util.exception.ParseException;
 
 public class CharOutParser

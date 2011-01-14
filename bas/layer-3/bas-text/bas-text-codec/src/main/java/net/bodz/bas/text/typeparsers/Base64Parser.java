@@ -3,7 +3,7 @@ package net.bodz.bas.text.typeparsers;
 import java.nio.charset.Charset;
 
 import net.bodz.bas.text.codec.builtin.Base64Codec;
-import net.bodz.bas.type.traits.AbstractParser;
+import net.bodz.bas.traits.AbstractParser;
 import net.bodz.bas.util.exception.DecodeException;
 import net.bodz.bas.util.exception.ParseException;
 

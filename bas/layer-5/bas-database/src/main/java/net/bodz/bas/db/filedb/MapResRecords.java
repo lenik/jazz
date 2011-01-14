@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.io.resource.IStreamInputSource;
-import net.bodz.bas.type.traits.IParser;
+import net.bodz.bas.traits.IParser;
 import net.bodz.bas.util.exception.ParseException;
 
 public abstract class MapResRecords<K, V>

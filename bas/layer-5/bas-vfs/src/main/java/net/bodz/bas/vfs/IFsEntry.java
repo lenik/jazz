@@ -1,6 +1,6 @@
 package net.bodz.bas.vfs;
 
-import net.bodz.bas.type.traits.IAttributes;
+import net.bodz.bas.traits.IAttributes;
 import net.bodz.bas.vfs.path.IPath;
 
 public interface IFsEntry

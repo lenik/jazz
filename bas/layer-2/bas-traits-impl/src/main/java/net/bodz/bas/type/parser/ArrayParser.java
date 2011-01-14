@@ -3,9 +3,9 @@ package net.bodz.bas.type.parser;
 import java.lang.reflect.Array;
 import java.util.regex.Pattern;
 
-import net.bodz.bas.type.traits.AbstractParser;
-import net.bodz.bas.type.traits.IParser;
-import net.bodz.bas.type.traits.impl.ParserResolve;
+import net.bodz.bas.traits.AbstractParser;
+import net.bodz.bas.traits.IParser;
+import net.bodz.bas.traits.impl.ParserResolve;
 import net.bodz.bas.util.exception.CreateException;
 import net.bodz.bas.util.exception.ParseException;
 

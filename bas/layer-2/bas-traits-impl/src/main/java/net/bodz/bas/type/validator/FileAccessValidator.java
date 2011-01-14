@@ -2,8 +2,8 @@ package net.bodz.bas.type.validator;
 
 import java.io.File;
 
-import net.bodz.bas.type.traits.AbstractValidator;
-import net.bodz.bas.type.traits.ValidateException;
+import net.bodz.bas.traits.AbstractValidator;
+import net.bodz.bas.traits.ValidateException;
 
 public class FileAccessValidator
         extends AbstractValidator<File> {

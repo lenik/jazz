@@ -2,8 +2,8 @@ package net.bodz.bas.type.validator;
 
 import java.util.regex.Pattern;
 
-import net.bodz.bas.type.traits.AbstractValidator;
-import net.bodz.bas.type.traits.ValidateException;
+import net.bodz.bas.traits.AbstractValidator;
+import net.bodz.bas.traits.ValidateException;
 
 public class RegexValidator
         extends AbstractValidator<String> {

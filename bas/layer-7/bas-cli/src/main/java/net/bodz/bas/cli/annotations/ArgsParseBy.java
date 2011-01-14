@@ -5,7 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import net.bodz.bas.type.traits.IParser;
+import net.bodz.bas.traits.IParser;
 
 /** for method/callback only */
 @Retention(RetentionPolicy.RUNTIME)
