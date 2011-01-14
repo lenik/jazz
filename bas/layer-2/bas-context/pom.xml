@@ -2,38 +2,12 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>net.bodz.bas</groupId>
-        <artifactId>layer-7</artifactId>
+        <artifactId>layer-2</artifactId>
         <version>0.0.2-SNAPSHOT</version>
     </parent>
-    <artifactId>bas-ant</artifactId>
+    <artifactId>bas-context</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <dependencies>
-        <dependency>
-            <groupId>org.apache.ant</groupId>
-            <artifactId>ant</artifactId>
-            <version>1.7.1</version>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-meta</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-cli</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-snmjava</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <type>jar</type>
-            <scope>compile</scope>
-        </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-jvmhack</artifactId>
@@ -42,18 +16,22 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-loader</artifactId>
+            <artifactId>bas-closure</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-            <type>jar</type>
             <scope>compile</scope>
         </dependency>
         <dependency>
-        	<groupId>net.bodz.bas</groupId>
-        	<artifactId>bas-context</artifactId>
-        	<version>0.0.1-SNAPSHOT</version>
-        	<type>jar</type>
-        	<scope>compile</scope>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-collection</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-sysinfo</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 7 :: Ant Tasks</name>
+    <name>BAS :: Layer 2 :: Context</name>
 </project>

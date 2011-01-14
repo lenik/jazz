@@ -24,6 +24,7 @@ layer-2 基础数据类型扩展
     bas-nio
     bas-closure
     bas-collection
+    bas-context
     bas-valtype
     bas-traits-impl
     bas-string
@@ -44,7 +45,7 @@ layer-4 特殊工具
     bas-srt
         
 layer-5 框架基础
-    bas-arch
+    bas-module
     bas-log
     bas-vfs
     bas-i18n
