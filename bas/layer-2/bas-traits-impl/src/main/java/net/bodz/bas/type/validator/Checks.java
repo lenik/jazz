@@ -2,7 +2,7 @@ package net.bodz.bas.type.validator;
 
 import java.lang.reflect.AnnotatedElement;
 
-import net.bodz.bas.type.traits.IValidator;
+import net.bodz.bas.traits.IValidator;
 import net.bodz.bas.util.exception.CreateException;
 import net.bodz.bas.valtype.util.ClassInstance;
 

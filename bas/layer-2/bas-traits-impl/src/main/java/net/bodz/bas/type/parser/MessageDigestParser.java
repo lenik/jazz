@@ -4,7 +4,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 
-import net.bodz.bas.type.traits.AbstractParser;
+import net.bodz.bas.traits.AbstractParser;
 import net.bodz.bas.util.exception.ParseException;
 
 public class MessageDigestParser

@@ -3,7 +3,7 @@ package net.bodz.bas.unitperf;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
-import net.bodz.bas.type.traits.IInstanceStore;
+import net.bodz.bas.traits.IInstanceStore;
 
 public class Player {
 

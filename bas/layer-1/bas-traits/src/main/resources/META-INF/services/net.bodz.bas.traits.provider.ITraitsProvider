@@ -1,0 +1,4 @@
+net.bodz.bas.traits.provider.builtin.AnnotationTraitsProvider
+net.bodz.bas.traits.provider.builtin.CompanionTraitsProvider
+net.bodz.bas.traits.provider.builtin.GetTraitsMethodTraitsProvider
+net.bodz.bas.traits.provider.builtin.ImmediateCastTraitsProvider

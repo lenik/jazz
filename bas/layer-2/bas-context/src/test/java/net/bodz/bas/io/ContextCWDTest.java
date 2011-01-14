@@ -4,7 +4,6 @@ import java.io.File;
 
 import junit.framework.TestCase;
 import net.bodz.bas.context.ClassContext;
-import net.bodz.bas.io.ContextDirectory;
 
 import org.junit.Test;
 

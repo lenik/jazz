@@ -1,6 +1,6 @@
 package net.bodz.bas.ant;
 
-import net.bodz.bas.type.traits.IParser;
+import net.bodz.bas.traits.IParser;
 import net.bodz.bas.util.exception.CreateException;
 import net.bodz.bas.util.exception.ParseException;
 

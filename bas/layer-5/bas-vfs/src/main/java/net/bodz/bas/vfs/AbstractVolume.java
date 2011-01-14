@@ -1,7 +1,7 @@
 package net.bodz.bas.vfs;
 
-import net.bodz.bas.type.traits.EmptyAttributes;
-import net.bodz.bas.type.traits.IAttributes;
+import net.bodz.bas.traits.EmptyAttributes;
+import net.bodz.bas.traits.IAttributes;
 
 import org.apache.commons.vfs.Capability;
 
