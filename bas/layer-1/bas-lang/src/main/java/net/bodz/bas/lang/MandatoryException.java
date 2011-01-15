@@ -1,12 +1,11 @@
 package net.bodz.bas.lang;
 
-
-public class UnsupportedNegotiationException
+public class MandatoryException
         extends NegotiationException {
 
     private static final long serialVersionUID = 1L;
 
-    public UnsupportedNegotiationException(NegotiationParameter parameter) {
+    public MandatoryException(NegotiationParameter parameter) {
         super(parameter);
     }
 

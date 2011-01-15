@@ -1,6 +1,8 @@
 package net.bodz.bas.traits;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.ServiceLoader;
 import java.util.TreeSet;
 
@@ -52,19 +54,36 @@ public class Traits {
      */
     public static <T> T getTraits(Class<?> objType, Class<T> traitsType)
             throws QueryException {
-        for (ITraitsProvider traitsProvider : traitsProviders) {
-            T traits = traitsProvider.getTraits(objType, traitsType);
+        List<ITraitsProvider> nonDefinedTraitsProviders = null;
+        int index = 0;
+        for (ITraitsProvider provider : traitsProviders) {
+            T traits = provider.getTraits(objType, traitsType);
             if (traits != null)
                 return traits;
+            if (!provider.isDefined()) {
+                if (nonDefinedTraitsProviders == null)
+                    nonDefinedTraitsProviders = new ArrayList<ITraitsProvider>(traitsProviders.size() - index);
+                nonDefinedTraitsProviders.add(provider);
+            }
+            index++;
         }
+
+        // Continue to query on non-defined providers for superclasses.
+        if (nonDefinedTraitsProviders != null) {
+            // assert !nonDefinedTraitsProviders.isEmpty();
+            while ((objType = objType.getSuperclass()) != null)
+                for (ITraitsProvider provider : nonDefinedTraitsProviders) {
+                    T traits = provider.getTraits(objType, traitsType);
+                    if (traits != null)
+                        return traits;
+                }
+        }
+
         return null;
     }
 
     /**
      * Query for specific traits on the object instance.
-     * <p>
-     * For specific traits on the instance object, {@link #getTraits(Class, Object, Class)} should
-     * be called.
      * 
      * @param objType
      *            The user object type to be queryed, non-<code>null</code>.

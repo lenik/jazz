@@ -8,12 +8,12 @@ public interface INegotiation
     NegotiationParameter getParameter(int index);
 
     /**
-     * The callee doesn't support negotation.
+     * Callee ignore the negotation.
      * 
      * This is also a chance for caller to adjust its default strategy to conform to the
      * non-negotiated session.
      */
     void bypass()
-            throws UnsupportedNegotiationException;
+            throws MandatoryException;
 
 }

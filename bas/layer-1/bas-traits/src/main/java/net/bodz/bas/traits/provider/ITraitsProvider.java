@@ -39,6 +39,21 @@ public interface ITraitsProvider {
     int getPriority();
 
     /**
+     * A defined traits provider will include inherited traits in the results.
+     * <p>
+     * For a specific traits query on the user type, the defined traits provider will be called only
+     * once.
+     * <p>
+     * Correspondingly, for non-defined traits provider, if the concerned traits wasn't included in
+     * the query results, then this provider will be later called again with the super class (or
+     * interface) of the user type.
+     * 
+     * @return <code>true</code> If inherited traits are included in the results provided by this
+     *         traits provider.
+     */
+    boolean isDefined();
+
+    /**
      * Query for specific traits about the user object type.
      * <p>
      * For specific traits on the instance object, {@link #getTraits(Class, Object, Class)} should
@@ -59,9 +74,6 @@ public interface ITraitsProvider {
 
     /**
      * Query for specific traits on the object instance.
-     * <p>
-     * For specific traits on the instance object, {@link #getTraits(Class, Object, Class)} should
-     * be called.
      * 
      * @param objType
      *            The user object type to be queryed, non-<code>null</code>.

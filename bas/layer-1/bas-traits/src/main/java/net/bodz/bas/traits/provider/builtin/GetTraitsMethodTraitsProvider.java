@@ -2,7 +2,6 @@ package net.bodz.bas.traits.provider.builtin;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 
 import net.bodz.bas.lang.QueryException;
 import net.bodz.bas.traits.provider.AbstractTraitsProvider;
@@ -22,17 +21,22 @@ import net.bodz.bas.traits.provider.AbstractTraitsProvider;
 public class GetTraitsMethodTraitsProvider
         extends AbstractTraitsProvider {
 
-    public static String GET_TRAITS_METHOD = "getTraits";
+    public static String getTraitsMethodName = "getTraits";
 
     @Override
     public int getPriority() {
-        return BuiltinProviderOrder.PRIORITY_GETMETHOD;
+        return BuiltinProviderOrder.getTraitsMethod.getPriority();
+    }
+
+    @Override
+    public boolean isDefined() {
+        return true;
     }
 
     @Override
     public <T> T getTraits(Class<?> objType, Class<T> traitsType)
             throws QueryException {
-        Method staticMethod = findGetTraitsMethod(objType, true);
+        Method staticMethod = findGetTraitsMethod(objType);
         if (staticMethod == null)
             return null;
 
@@ -50,7 +54,7 @@ public class GetTraitsMethodTraitsProvider
     @Override
     public <T> T getTraits(Class<?> objType, Object obj, Class<T> traitsType)
             throws QueryException {
-        Method method = findGetTraitsMethod(objType, false);
+        Method method = findGetTraitsMethod(objType);
         if (method == null)
             return null;
 
@@ -65,35 +69,18 @@ public class GetTraitsMethodTraitsProvider
         }
     }
 
-    private static Method findGetTraitsMethod(Class<?> objType, boolean wantStatic) {
-        Method method = null;
-        Class<?> clazz = null;
-
-        while (true) {
-            if (clazz == null)
-                clazz = objType;
-            else {
-                clazz = clazz.getSuperclass();
-                if (clazz == null || clazz == Object.class)
-                    return null;
-            }
-
+    private static Method findGetTraitsMethod(Class<?> objType) {
+        Method method;
+        try {
+            method = objType.getMethod(getTraitsMethodName, Class.class);
+        } catch (NoSuchMethodException e) {
             try {
-                method = clazz.getDeclaredMethod(GET_TRAITS_METHOD, Class.class);
-            } catch (NoSuchMethodException e) {
-                continue;
+                method = objType.getDeclaredMethod(getTraitsMethodName, Class.class);
+                method.setAccessible(true);
+            } catch (NoSuchMethodException e1) {
+                return null;
             }
-
-            // Check the method signature.
-            if (wantStatic) {
-                int modifiers = method.getModifiers();
-                boolean isStatic = Modifier.isStatic(modifiers);
-                if (!isStatic)
-                    continue;
-            }
-            break;
         }
-        method.setAccessible(true);
         return method;
     }
 

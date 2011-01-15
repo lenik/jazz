@@ -54,10 +54,22 @@ public class FinalNegotiation
 
     @Override
     public void bypass()
-            throws UnsupportedNegotiationException {
+            throws MandatoryException {
         for (NegotiationParameter param : params)
-            if (param.isMandatory())
-                throw new UnsupportedNegotiationException(param);
+            param.bypass();
+    }
+
+    @Override
+    public String toString() {
+        StringBuffer buf = null;
+        for (NegotiationParameter param : params) {
+            if (buf == null)
+                buf = new StringBuffer(params.size() * 100);
+            else
+                buf.append('\n');
+            buf.append(param);
+        }
+        return buf.toString();
     }
 
 }

@@ -1,9 +1,8 @@
 package net.bodz.bas.text.diff;
 
 import junit.framework.TestCase;
-import net.bodz.bas.traits.ICommonTraits;
 import net.bodz.bas.traits.IInstanceStore;
-import net.bodz.bas.traits.provider.TypeTraitsResolve;
+import net.bodz.bas.traits.Traits;
 
 import org.junit.Test;
 
@@ -16,8 +15,9 @@ public class DiffComparatorTraitsTest
     @Test
     public void testDefaultStoreInstance()
             throws Exception {
-        ICommonTraits<? super DiffComparator> traits = TypeTraitsResolve.findTraits(DiffComparator.class);
-        IInstanceStore<? super DiffComparator> store = traits.getInstanceStore();
+        @SuppressWarnings("unchecked")
+        IInstanceStore<? super DiffComparator> store = Traits.getTraits(DiffComparator.class, IInstanceStore.class);
+
         String defaultName = store.getInstanceNames().iterator().next();
         assertEquals("gnudiff", defaultName);
         Object gnudiff = store.getInstance("gnudiff");
