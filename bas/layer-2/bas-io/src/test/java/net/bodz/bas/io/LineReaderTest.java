@@ -4,12 +4,11 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 
-import junit.framework.TestCase;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class LineReaderTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void test1()

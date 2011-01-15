@@ -2,13 +2,13 @@ package net.bodz.bas.io;
 
 import java.io.File;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
 import net.bodz.bas.context.ClassContext;
 
 import org.junit.Test;
 
 public class ContextCWDTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void testInnerClassCwd()

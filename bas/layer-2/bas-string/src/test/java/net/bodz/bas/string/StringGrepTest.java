@@ -2,15 +2,11 @@ package net.bodz.bas.string;
 
 import java.util.regex.Pattern;
 
-import junit.framework.TestCase;
-
-import net.bodz.bas.string.StringArray;
-import net.bodz.bas.string.StringGrep;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class StringGrepTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void testFindAll() {

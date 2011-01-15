@@ -4,12 +4,11 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 
-import junit.framework.TestCase;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class ConcatReaderTest
-        extends TestCase {
+        extends Assert {
 
     ConcatReader read(String... sv) {
         StringReader[] rv = new StringReader[sv.length];

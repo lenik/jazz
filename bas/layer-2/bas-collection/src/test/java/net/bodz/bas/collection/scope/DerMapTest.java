@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import junit.framework.TestCase;
 import net.bodz.bas.collection.comparator.DefaultComparator;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class DerMapTest
-        extends TestCase {
+        extends Assert {
 
     String scan(Map<?, ?> map) {
         List<Object> keys = new ArrayList<Object>(map.keySet());

@@ -1,17 +1,14 @@
 package net.bodz.bas.text.model;
 
-import static org.junit.Assert.assertArrayEquals;
-
 import java.lang.reflect.Array;
-
-import junit.framework.TestCase;
 
 import net.bodz.bas.chars.CharFeature;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class CharFeatureTest
-        extends TestCase {
+        extends Assert {
 
     static String join(String delim, Object array) {
         int len = Array.getLength(array);

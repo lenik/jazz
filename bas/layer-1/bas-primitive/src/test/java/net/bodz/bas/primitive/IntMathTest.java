@@ -2,12 +2,11 @@ package net.bodz.bas.primitive;
 
 import java.math.BigInteger;
 
-import junit.framework.TestCase;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class IntMathTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void testOnesInt() {

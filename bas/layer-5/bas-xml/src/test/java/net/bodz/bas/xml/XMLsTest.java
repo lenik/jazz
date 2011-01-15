@@ -5,17 +5,17 @@ import java.io.StringReader;
 import java.util.Map;
 import java.util.TreeMap;
 
-import junit.framework.TestCase;
 import net.bodz.bas.util.exception.DecodeException;
 import net.bodz.bas.util.exception.EncodeException;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 public class XMLsTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void testParse1()

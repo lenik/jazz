@@ -4,7 +4,6 @@ import java.io.InputStream;
 
 import net.bodz.bas.traits.AbstractCommonTraits;
 import net.bodz.bas.traits.IFormatter;
-import net.bodz.bas.traits.provider.builtin.GetTraitsMethodTraitsProvider;
 
 import org.junit.Assert;
 import org.junit.Test;

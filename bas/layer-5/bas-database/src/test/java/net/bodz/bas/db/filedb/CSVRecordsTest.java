@@ -2,15 +2,15 @@ package net.bodz.bas.db.filedb;
 
 import java.io.IOException;
 
-import junit.framework.TestCase;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.io.resource.builtin.URLResource;
 import net.bodz.bas.util.ClassResource;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class CSVRecordsTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void test1()

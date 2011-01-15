@@ -1,8 +1,8 @@
 package net.bodz.bas.vfs.impl.loop;
 
+import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IVolume;
-import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.VFS;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;

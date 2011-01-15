@@ -3,12 +3,11 @@ package net.bodz.bas.io.tellable;
 import java.io.IOException;
 import java.io.StringReader;
 
-import junit.framework.TestCase;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class TellableReaderTest
-        extends TestCase {
+        extends Assert {
 
     static String hello = "hello, abcdefg";
 

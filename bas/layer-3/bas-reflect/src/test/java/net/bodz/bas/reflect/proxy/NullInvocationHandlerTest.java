@@ -2,14 +2,14 @@ package net.bodz.bas.reflect.proxy;
 
 import java.lang.reflect.Proxy;
 
-import junit.framework.TestCase;
 import net.bodz.bas.test.timing.ITimingTarget;
 import net.bodz.bas.test.timing.MultipassTimer;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class NullInvocationHandlerTest
-        extends TestCase {
+        extends Assert {
 
     static interface IDog {
         String bark();

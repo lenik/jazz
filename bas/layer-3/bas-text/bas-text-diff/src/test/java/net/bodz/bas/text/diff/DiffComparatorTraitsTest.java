@@ -1,16 +1,16 @@
 package net.bodz.bas.text.diff;
 
-import junit.framework.TestCase;
 import net.bodz.bas.traits.IInstanceStore;
 import net.bodz.bas.traits.Traits;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @see DiffComparatorTraits
  */
 public class DiffComparatorTraitsTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void testDefaultStoreInstance()

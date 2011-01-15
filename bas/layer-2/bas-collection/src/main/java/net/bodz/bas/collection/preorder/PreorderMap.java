@@ -1,8 +1,8 @@
 package net.bodz.bas.collection.preorder;
 
 import java.util.Iterator;
-import java.util.TreeMap;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import net.bodz.bas.collection.iterator.PrefetchedIterator;
 

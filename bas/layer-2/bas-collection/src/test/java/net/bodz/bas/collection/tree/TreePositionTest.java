@@ -1,21 +1,19 @@
 package net.bodz.bas.collection.tree;
 
-import static org.junit.Assert.assertArrayEquals;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import junit.framework.TestCase;
 import net.bodz.bas.collection.list.LinkedStack;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @see TreePosition
  */
 public class TreePositionTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void test1()

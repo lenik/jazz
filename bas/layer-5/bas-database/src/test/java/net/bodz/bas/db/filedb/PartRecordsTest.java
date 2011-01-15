@@ -6,16 +6,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import junit.framework.TestCase;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.db.filedb.PartRecords.PartMap;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.util.ClassResource;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class PartRecordsTest
-        extends TestCase {
+        extends Assert {
 
     static String map2str(Map<String, String> map) {
         if (map == null)

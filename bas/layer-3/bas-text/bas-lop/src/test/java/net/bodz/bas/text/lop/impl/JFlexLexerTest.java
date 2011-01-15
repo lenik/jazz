@@ -2,15 +2,15 @@ package net.bodz.bas.text.lop.impl;
 
 import java.io.StringReader;
 
-import junit.framework.TestCase;
 import net.bodz.bas.sio.position.IXYTellable;
 import net.bodz.bas.text.lop.Token;
 import net.bodz.bas.util.ClassResource;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class JFlexLexerTest
-        extends TestCase {
+        extends Assert {
 
     static class TD {
 

@@ -1,9 +1,9 @@
 package net.bodz.bas.vfs;
 
 import net.bodz.bas.vfs.path.BadPathException;
-import net.bodz.bas.vfs.path.PathSystem;
 import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.IPathSystem;
+import net.bodz.bas.vfs.path.PathSystem;
 
 public class VFS {
 

@@ -3,6 +3,8 @@ package net.bodz.bas.regex;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import net.bodz.bas.string.Strings;
+
 public class QuoteFormat {
 
     final Pattern quotePattern;

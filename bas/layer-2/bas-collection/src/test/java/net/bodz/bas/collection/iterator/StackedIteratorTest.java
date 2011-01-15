@@ -1,11 +1,10 @@
 package net.bodz.bas.collection.iterator;
 
-import junit.framework.TestCase;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class StackedIteratorTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void test()

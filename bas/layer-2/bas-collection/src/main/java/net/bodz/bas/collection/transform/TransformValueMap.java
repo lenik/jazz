@@ -1,9 +1,9 @@
 package net.bodz.bas.collection.transform;
 
+import java.util.AbstractMap.SimpleEntry;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
-import java.util.AbstractMap.SimpleEntry;
 
 import net.bodz.bas.collection.util.CollectionToString;
 

@@ -1,12 +1,12 @@
 package net.bodz.bas.loader;
 
-import junit.framework.TestCase;
 import net.bodz.bas.sio.Stdio;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class ClasspathTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void test1() {

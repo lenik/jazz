@@ -1,11 +1,10 @@
 package net.bodz.bas.regex;
 
-import junit.framework.TestCase;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class InterpsTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void testMatchGroupsExpand()

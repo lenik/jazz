@@ -20,7 +20,7 @@ import net.bodz.bas.io.resource.builtin.LocalFileResource;
 import net.bodz.bas.meta.util.OverrideOption;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.Stdio;
-import net.bodz.bas.sio.WriterCharOut;
+import net.bodz.bas.sio.WriterPrintOut;
 import net.bodz.bas.string.StringArray;
 import net.bodz.bas.text.diff.DiffComparator;
 import net.bodz.bas.text.diff.DiffFormat;

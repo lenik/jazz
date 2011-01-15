@@ -1,12 +1,11 @@
 package net.bodz.bas.jvm.stack;
 
-import junit.framework.TestCase;
-
+import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
 public class CallerTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void test_neg2_SunReflect() {

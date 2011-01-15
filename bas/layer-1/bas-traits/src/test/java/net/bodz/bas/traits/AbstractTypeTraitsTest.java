@@ -2,18 +2,16 @@ package net.bodz.bas.traits;
 
 import java.util.Map;
 
-import junit.framework.TestCase;
 import net.bodz.bas.meta.lang.TraitsClass;
-import net.bodz.bas.traits.AbstractCommonTraits;
-import net.bodz.bas.traits.ICommonTraits;
 import net.bodz.bas.util.example.Person;
 import net.bodz.bas.util.example.PersonTraits;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 @TraitsClass(PersonTraits.class)
 public class AbstractTypeTraitsTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void test1()

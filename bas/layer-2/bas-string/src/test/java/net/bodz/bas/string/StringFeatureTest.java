@@ -1,13 +1,10 @@
 package net.bodz.bas.string;
 
-import junit.framework.TestCase;
-
-import net.bodz.bas.string.StringFeature;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class StringFeatureTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void testCount_CharPattern()

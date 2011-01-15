@@ -1,12 +1,12 @@
 package net.bodz.bas.lang.util;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
 import net.bodz.bas.exceptions.IllegalUsageError;
 
 import org.junit.Test;
 
 public class VarArgcMethodTest
-        extends TestCase {
+        extends Assert {
 
     public int play() {
         return 0;

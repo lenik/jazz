@@ -3,15 +3,15 @@ package net.bodz.bas.flow.units.text;
 import java.io.IOException;
 import java.util.Collection;
 
-import junit.framework.TestCase;
 import net.bodz.bas.flow.units.builtin.text.BreakOrCutLinesUnit;
 import net.bodz.bas.flow.util.WhatIf;
 import net.bodz.bas.string.StringArray;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class BreakOrCutLinesUnitTest
-        extends TestCase {
+        extends Assert {
 
     BreakOrCutLinesUnit nochop;
     {

@@ -1,14 +1,10 @@
 package net.bodz.bas.meta.info;
 
-import static org.junit.Assert.assertArrayEquals;
-import junit.framework.TestCase;
-import net.bodz.bas.meta.info.SiteLink;
-import net.bodz.bas.meta.info.SiteLinkUtil;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class SiteLinkUtilTest
-        extends TestCase {
+        extends Assert {
 
     @SiteLink({ "http://example.com/1", "http://example.com/2" })
     static class ClassA {

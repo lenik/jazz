@@ -2,12 +2,12 @@ package net.bodz.bas.flow.units;
 
 import java.io.IOException;
 
+import net.bodz.bas.flow.AbstractUnit;
 import net.bodz.bas.flow.IOutPort;
 import net.bodz.bas.flow.IPortMeta;
 import net.bodz.bas.flow.IReceiver;
-import net.bodz.bas.flow.STPortMeta;
 import net.bodz.bas.flow.IUnit;
-import net.bodz.bas.flow.AbstractUnit;
+import net.bodz.bas.flow.STPortMeta;
 
 // code copy-paste from SISOUnit.
 

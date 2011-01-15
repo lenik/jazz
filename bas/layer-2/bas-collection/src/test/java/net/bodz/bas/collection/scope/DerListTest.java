@@ -3,12 +3,11 @@ package net.bodz.bas.collection.scope;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.TestCase;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class DerListTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void test1() {

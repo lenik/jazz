@@ -5,15 +5,14 @@ import static net.bodz.jna.win32.Win32.kernel32;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 
-import junit.framework.TestCase;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.LongByReference;
 
 public class Kernel32Test
-        extends TestCase {
+        extends Assert {
 
     public static String getAsciz(ByteBuffer buffer) {
         return getAsciz(buffer, Charset.defaultCharset());

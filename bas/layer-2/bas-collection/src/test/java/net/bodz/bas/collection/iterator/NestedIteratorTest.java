@@ -3,12 +3,11 @@ package net.bodz.bas.collection.iterator;
 import java.util.Arrays;
 import java.util.Iterator;
 
-import junit.framework.TestCase;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class NestedIteratorTest
-        extends TestCase {
+        extends Assert {
 
     static <T> Iterator<T> iter(Iterable<T> iterable) {
         return iterable.iterator();

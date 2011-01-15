@@ -1,8 +1,6 @@
 package net.bodz.bas.type.comparator;
 
 import net.bodz.bas.collection.comparator.NonNullComparator;
-import net.bodz.bas.type.comparator.ClassComparator;
-import net.bodz.bas.type.comparator.InterfaceComparator;
 
 public class TypeComparator
         implements NonNullComparator<Class<?>> {

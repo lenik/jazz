@@ -4,14 +4,14 @@ import java.io.File;
 import java.nio.charset.Charset;
 import java.util.Locale;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
 import net.bodz.bas.context.StaticContext;
 import net.bodz.bas.context.clg.SystemCLG;
 
 import org.junit.Test;
 
 public class SystemCLGTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void testDefault()

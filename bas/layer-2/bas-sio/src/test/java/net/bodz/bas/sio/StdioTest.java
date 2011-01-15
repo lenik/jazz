@@ -1,11 +1,10 @@
 package net.bodz.bas.sio;
 
-import junit.framework.TestCase;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class StdioTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void testCout()

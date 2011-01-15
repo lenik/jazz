@@ -1,13 +1,13 @@
 package net.bodz.bas.loader.boot;
 
-import junit.framework.TestCase;
 import net.bodz.bas.loader.DefaultBooter;
 import net.bodz.bas.loader.LoadException;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class DefaultBooterTest
-        extends TestCase {
+        extends Assert {
 
     static int sum = 0;
 

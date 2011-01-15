@@ -1,12 +1,12 @@
 package net.bodz.bas.util;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
 import net.bodz.bas.io.resource.builtin.URLResource;
 
 import org.junit.Test;
 
 public class ClassResourceTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void testClassData()

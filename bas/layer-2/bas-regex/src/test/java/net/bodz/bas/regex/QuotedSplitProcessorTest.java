@@ -1,14 +1,10 @@
 package net.bodz.bas.regex;
 
-import static org.junit.Assert.assertArrayEquals;
-import junit.framework.TestCase;
-
-import net.bodz.bas.regex.QuoteFormat;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class QuotedSplitProcessorTest
-        extends TestCase {
+        extends Assert {
 
     static Object[] _(Object... args) {
         return args;

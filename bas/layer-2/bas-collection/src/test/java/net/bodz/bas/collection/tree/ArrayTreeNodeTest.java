@@ -1,11 +1,10 @@
 package net.bodz.bas.collection.tree;
 
-import junit.framework.TestCase;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class ArrayTreeNodeTest
-        extends TestCase {
+        extends Assert {
 
     static Object[] array(Object... args) {
         return args;

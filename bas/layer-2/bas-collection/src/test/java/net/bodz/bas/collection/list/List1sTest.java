@@ -1,12 +1,10 @@
 package net.bodz.bas.collection.list;
 
-import junit.framework.TestCase;
-import net.bodz.bas.collection.list.List1s;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class List1sTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void test1() {

@@ -1,14 +1,14 @@
 package net.bodz.bas.log.adapters;
 
-import junit.framework.TestCase;
 import net.bodz.bas.log.impl.JCLLogComposite;
 import net.bodz.bas.log.testapp.ChildJob;
 import net.bodz.bas.log.testapp.ParentJob;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class JCLLogCompositeTest
-        extends TestCase {
+        extends Assert {
 
     ParentJob parent1 = new ParentJob("parent1");
     ChildJob child1 = new ChildJob(parent1, "child1");

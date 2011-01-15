@@ -2,12 +2,12 @@ package net.bodz.bas.util.file;
 
 import java.io.File;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
 
 import org.junit.Test;
 
 public class FilePathTest
-        extends TestCase {
+        extends Assert {
 
     static Object[] _(Object... args) {
         return args;

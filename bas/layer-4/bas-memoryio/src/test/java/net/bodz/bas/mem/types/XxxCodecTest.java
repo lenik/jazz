@@ -1,20 +1,18 @@
 package net.bodz.bas.mem.types;
 
-import static org.junit.Assert.assertArrayEquals;
-
 import java.util.Arrays;
 import java.util.Random;
 
-import junit.framework.TestCase;
 import net.bodz.bas.mem.ArrayMemory;
 import net.bodz.bas.mem.Memory;
 import net.bodz.bas.mem.Type;
 import net.bodz.bas.text.codec.builtin.HexCodec;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class XxxCodecTest
-        extends TestCase {
+        extends Assert {
 
     Random random = new Random();
     HexCodec hexCodec = HexCodec.getInstance();
