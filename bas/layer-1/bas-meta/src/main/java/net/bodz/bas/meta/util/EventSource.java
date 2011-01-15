@@ -1,4 +1,4 @@
-package net.bodz.bas.meta.oop;
+package net.bodz.bas.meta.util;
 
 /**
  * Tag interface.
