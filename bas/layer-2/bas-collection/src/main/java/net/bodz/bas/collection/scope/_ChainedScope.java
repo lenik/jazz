@@ -1,7 +1,7 @@
 package net.bodz.bas.collection.scope;
 
-import net.bodz.bas.meta.oop.ChainUsage;
-import net.bodz.bas.meta.oop.OverrideOption;
+import net.bodz.bas.meta.util.ChainUsage;
+import net.bodz.bas.meta.util.OverrideOption;
 
 public abstract class _ChainedScope<T> implements ChainedScope<T> {
 
