@@ -1,4 +1,4 @@
-package net.bodz.bas.files;
+package net.bodz.bas.db.filedb;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,7 +8,6 @@ import java.util.Map;
 
 import junit.framework.TestCase;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
-import net.bodz.bas.db.filedb.PartRecords;
 import net.bodz.bas.db.filedb.PartRecords.PartMap;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.util.ClassResource;
