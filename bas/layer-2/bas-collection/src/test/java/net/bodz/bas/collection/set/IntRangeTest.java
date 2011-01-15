@@ -1,11 +1,10 @@
 package net.bodz.bas.collection.set;
 
-import junit.framework.TestCase;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class IntRangeTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void test1() {

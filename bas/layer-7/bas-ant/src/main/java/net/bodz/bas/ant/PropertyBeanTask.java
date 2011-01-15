@@ -13,10 +13,10 @@ import java.util.Enumeration;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.bodz.bas.arch.context.sysclg.SystemCLG;
 import net.bodz.bas.collection.preorder.PrefixSet;
 import net.bodz.bas.collection.preorder.TypeHierSet;
 import net.bodz.bas.collection.set.IdentityHashSet;
+import net.bodz.bas.context.clg.SystemCLG;
 import net.bodz.bas.log.api.Logger;
 import net.bodz.bas.string.Strings;
 import net.bodz.bas.util.exception.CreateException;

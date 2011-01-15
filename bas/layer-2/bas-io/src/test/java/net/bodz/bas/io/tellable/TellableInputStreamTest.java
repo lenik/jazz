@@ -3,12 +3,11 @@ package net.bodz.bas.io.tellable;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-import junit.framework.TestCase;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class TellableInputStreamTest
-        extends TestCase {
+        extends Assert {
 
     static byte[] hello = "hello, abcdefg".getBytes();
 

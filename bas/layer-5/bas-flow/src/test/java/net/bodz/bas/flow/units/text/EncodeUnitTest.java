@@ -4,17 +4,17 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Collection;
 
-import junit.framework.TestCase;
 import net.bodz.bas.flow.units.SISOUnit;
 import net.bodz.bas.flow.units.builtin.text.Binary_Hex;
 import net.bodz.bas.flow.units.builtin.text.EncodeUnit;
 import net.bodz.bas.flow.util.WhatIf;
 import net.bodz.bas.string.StringArray;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class EncodeUnitTest
-        extends TestCase {
+        extends Assert {
 
     EncodeUnit encode;
     SISOUnit tostr;

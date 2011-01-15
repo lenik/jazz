@@ -3,7 +3,7 @@ package net.bodz.bas.ant;
 import java.io.File;
 import java.util.Map;
 
-import net.bodz.bas.arch.context.sysclg.SystemCLG;
+import net.bodz.bas.context.clg.SystemCLG;
 import net.bodz.bas.snm.EclipseProject;
 import net.bodz.bas.util.exception.ParseException;
 

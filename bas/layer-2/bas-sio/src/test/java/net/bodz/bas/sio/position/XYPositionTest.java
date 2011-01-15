@@ -1,11 +1,10 @@
 package net.bodz.bas.sio.position;
 
-import junit.framework.TestCase;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class XYPositionTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void testAdd()

@@ -1,14 +1,10 @@
 package net.bodz.bas.meta.info;
 
-import static org.junit.Assert.assertArrayEquals;
-import junit.framework.TestCase;
-import net.bodz.bas.meta.info.Tags;
-import net.bodz.bas.meta.info.TagsUtil;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class TagsUtilTest
-        extends TestCase {
+        extends Assert {
 
     @Tags({ "Tag1", "Tag2" })
     static class ClassA {

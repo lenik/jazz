@@ -1,12 +1,12 @@
 package net.bodz.bas.regex;
 
-import junit.framework.TestCase;
 import net.bodz.bas.string.StringEscape;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class StringEscapeTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void testEscape() {

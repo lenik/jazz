@@ -1,13 +1,10 @@
 package net.bodz.bas.valtype.util;
 
-import junit.framework.TestCase;
-
-import net.bodz.bas.valtype.util.TypeDistance;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class TypeDistanceTest
-        extends TestCase {
+        extends Assert {
 
     static class A
             implements Y {

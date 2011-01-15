@@ -1,7 +1,5 @@
 package net.bodz.bas.collection.iterator;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.Iterator;
 
 public class ConcatIteratorTest

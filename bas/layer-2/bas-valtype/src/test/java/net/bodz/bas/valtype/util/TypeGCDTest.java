@@ -1,7 +1,5 @@
 package net.bodz.bas.valtype.util;
 
-import static org.junit.Assert.assertArrayEquals;
-
 import java.util.AbstractSet;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -9,14 +7,11 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import junit.framework.TestCase;
-
-import net.bodz.bas.valtype.util.TypeGCD;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class TypeGCDTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void testGcdClassOfQClassOfQ() {

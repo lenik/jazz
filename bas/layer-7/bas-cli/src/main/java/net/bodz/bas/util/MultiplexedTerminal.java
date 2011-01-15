@@ -6,8 +6,6 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.io.term.AbstractTerminal;
-import net.bodz.bas.io.term.ITerminal;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.util.exception.NotImplementedException;
 

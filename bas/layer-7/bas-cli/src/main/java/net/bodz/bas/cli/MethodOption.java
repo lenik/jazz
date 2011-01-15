@@ -3,10 +3,10 @@ package net.bodz.bas.cli;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
+import javax.script.ScriptException;
+
 import net.bodz.bas.cli.annotations.ArgsParseBy;
 import net.bodz.bas.cli.annotations.OptionGroup;
-import net.bodz.bas.commons.scripting.ScriptException;
-import net.bodz.bas.commons.scripting.ScriptMethod;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.traits.IParser;

@@ -1,14 +1,10 @@
 package net.bodz.bas.meta.i18n;
 
-import static org.junit.Assert.assertArrayEquals;
-import junit.framework.TestCase;
-import net.bodz.bas.meta.i18n.Language;
-import net.bodz.bas.meta.i18n.LanguageUtil;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class LanguageUtilTest
-        extends TestCase {
+        extends Assert {
 
     @Language({ "Lang1", "Lang2" })
     static class ClassA {

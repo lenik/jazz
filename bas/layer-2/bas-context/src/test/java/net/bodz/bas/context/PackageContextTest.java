@@ -1,6 +1,6 @@
 package net.bodz.bas.context;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
 
 import net.bodz.bas.context.ContextLocal;
 import net.bodz.bas.context.IContext;
@@ -9,7 +9,7 @@ import net.bodz.bas.context.PackageContext;
 import org.junit.Test;
 
 public class PackageContextTest
-        extends TestCase {
+        extends Assert {
 
     static class ContextAddress
             extends ContextLocal<String> {

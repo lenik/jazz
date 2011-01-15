@@ -1,7 +1,7 @@
 package net.bodz.bas.flow.units;
 
-import net.bodz.bas.flow.IInPort;
 import net.bodz.bas.flow.AbstractUnit;
+import net.bodz.bas.flow.IInPort;
 
 public abstract class MIUnit
         extends AbstractUnit {

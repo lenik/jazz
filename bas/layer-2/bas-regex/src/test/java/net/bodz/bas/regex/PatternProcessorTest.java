@@ -1,14 +1,10 @@
 package net.bodz.bas.regex;
 
-import junit.framework.TestCase;
-
-
-import net.bodz.bas.regex.PatternProcessor;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class PatternProcessorTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void testAdd() {

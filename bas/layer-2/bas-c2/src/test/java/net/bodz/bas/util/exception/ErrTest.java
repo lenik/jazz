@@ -1,13 +1,10 @@
 package net.bodz.bas.util.exception;
 
-import junit.framework.TestCase;
-
-import net.bodz.bas.util.exception.Err;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class ErrTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void test1() {

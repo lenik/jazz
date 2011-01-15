@@ -3,14 +3,11 @@ package net.bodz.bas.annotation.util;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import junit.framework.TestCase;
-
-import net.bodz.bas.annotation.util.AnnotationUtil;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class AnnotationUtilTest
-        extends TestCase {
+        extends Assert {
 
     @Retention(RetentionPolicy.RUNTIME)
     static @interface ExampleAnnotation {

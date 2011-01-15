@@ -4,7 +4,6 @@ import java.lang.reflect.Field;
 
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
-import net.bodz.bas.util.exception.RuntimizedException;
 
 /**
  * Utility functions for {@link Throwable}s.

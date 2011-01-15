@@ -5,13 +5,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import junit.framework.TestCase;
 import net.bodz.bas.closure.alt.Pred1;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class ReflectReverseSearchTest
-        extends TestCase {
+        extends Assert {
 
     public static final String X = "X";
     public static final String XX = "X";

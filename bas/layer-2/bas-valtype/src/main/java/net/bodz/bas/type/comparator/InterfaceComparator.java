@@ -3,7 +3,6 @@ package net.bodz.bas.type.comparator;
 import java.util.Arrays;
 
 import net.bodz.bas.collection.comparator.NonNullComparator;
-import net.bodz.bas.type.comparator.InterfaceComparatorTest;
 
 /**
  * @test {@link InterfaceComparatorTest}

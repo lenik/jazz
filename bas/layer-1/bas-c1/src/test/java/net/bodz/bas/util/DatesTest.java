@@ -3,12 +3,11 @@ package net.bodz.bas.util;
 import java.text.ParseException;
 import java.util.Date;
 
-import junit.framework.TestCase;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class DatesTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void testConvertDateFormat()

@@ -2,8 +2,8 @@ package net.bodz.bas.vfs.impl.fake;
 
 import net.bodz.bas.vfs.AbstractVolume;
 import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.BadPathException;
+import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.PathFormat;
 
 public class FakeVolume

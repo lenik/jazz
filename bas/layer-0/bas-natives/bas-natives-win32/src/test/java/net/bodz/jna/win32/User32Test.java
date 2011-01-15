@@ -1,18 +1,18 @@
 package net.bodz.jna.win32;
 
 import static net.bodz.jna.win32.Win32.user32;
-import junit.framework.TestCase;
 import net.bodz.jna.win32.GDI32.RECT;
 import net.bodz.jna.win32.User32.POINT;
 import net.bodz.jna.win32.User32.WNDENUMPROC;
 import net.bodz.jna.win32.W32API.HWND;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import com.sun.jna.Pointer;
 
 public class User32Test
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void testGetCursorPos()

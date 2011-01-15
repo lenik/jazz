@@ -5,15 +5,15 @@ import static net.bodz.bas.db.filedb.PartRecordsTest.map2str;
 import java.io.IOException;
 import java.util.Map;
 
-import junit.framework.TestCase;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.util.ClassResource;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class INIRecordsTest
-        extends TestCase {
+        extends Assert {
 
     IStreamInputSource source;
 

@@ -1,9 +1,9 @@
 package net.bodz.bas.reflect.query;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
 
 public class ReflectQueryTestBase
-        extends TestCase {
+        extends Assert {
 
     public static class A {
         public void f_public() {

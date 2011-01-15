@@ -1,12 +1,12 @@
 package net.bodz.bas.text.charsets;
 
-import junit.framework.TestCase;
 import net.bodz.bas.text.codec.builtin.Base64Codec;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class Base64CodecTest
-        extends TestCase {
+        extends Assert {
 
     Base64Codec base64Codec = Base64Codec.getInstance();
 

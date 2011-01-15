@@ -1,15 +1,12 @@
 package net.bodz.bas.bits;
 
-import static org.junit.Assert.assertArrayEquals;
-
 import java.util.Arrays;
 
-import junit.framework.TestCase;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class Int_beBitsTest
-        extends TestCase {
+        extends Assert {
 
     // 00010010 00110100 01010110 01111000 10101011 11001101
     int[] va = { 0x12345678, 0xabcd0000, };

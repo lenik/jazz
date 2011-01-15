@@ -1,15 +1,10 @@
 package net.bodz.bas.meta.build;
 
-import static org.junit.Assert.assertArrayEquals;
-import junit.framework.TestCase;
-
-import net.bodz.bas.meta.build.RcsKeywordsUtil;
-import net.bodz.bas.meta.build.VersionInfo;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class RcsKeywordsUtilTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void testParseId() {

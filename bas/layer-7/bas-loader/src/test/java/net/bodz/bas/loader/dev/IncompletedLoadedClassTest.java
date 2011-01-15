@@ -1,11 +1,10 @@
 package net.bodz.bas.loader.dev;
 
-import junit.framework.TestCase;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class IncompletedLoadedClassTest
-        extends TestCase {
+        extends Assert {
 
     static int seq = 0;
 

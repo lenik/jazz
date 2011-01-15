@@ -1,12 +1,12 @@
 package net.bodz.bas.reflect;
 
-import junit.framework.TestCase;
 import net.bodz.bas.jdk6compat.jdk7emul.IllegalAccessException;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class ReflectsTest
-        extends TestCase {
+        extends Assert {
 
     public static class Outer {
 

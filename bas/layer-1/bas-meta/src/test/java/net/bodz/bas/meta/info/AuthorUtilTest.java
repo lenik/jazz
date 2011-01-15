@@ -1,14 +1,10 @@
 package net.bodz.bas.meta.info;
 
-import static org.junit.Assert.assertArrayEquals;
-import junit.framework.TestCase;
-import net.bodz.bas.meta.info.Author;
-import net.bodz.bas.meta.info.AuthorUtil;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class AuthorUtilTest
-        extends TestCase {
+        extends Assert {
 
     @Author({ "U1", "U2" })
     static class ClassA {

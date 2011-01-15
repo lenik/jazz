@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.lang.reflect.Constructor;
 
 import net.bodz.bas.jvm.stack.Caller;
-import net.bodz.bas.reflect.util.CompatMethods;
 import net.bodz.bas.util.exception.CreateException;
 import net.bodz.bas.util.exception.DecodeException;
 import net.bodz.bas.xml.XMLs;

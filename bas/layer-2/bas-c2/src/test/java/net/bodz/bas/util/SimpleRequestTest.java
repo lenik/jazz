@@ -1,13 +1,12 @@
 package net.bodz.bas.util;
 
-import junit.framework.TestCase;
 import net.bodz.bas.collection.tree.TreePath;
-import net.bodz.bas.util.SimpleRequest;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class SimpleRequestTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void test1() {

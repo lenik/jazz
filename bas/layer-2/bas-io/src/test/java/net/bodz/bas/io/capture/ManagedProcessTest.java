@@ -6,9 +6,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import net.bodz.bas.io.capture.ManagedProcess;
-import net.bodz.bas.io.capture.Processes;
-import net.bodz.bas.io.capture._IOCallback;
 import net.bodz.bas.sio.BCharOut;
 
 import org.junit.Test;

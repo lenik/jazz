@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Collection;
 
-import junit.framework.TestCase;
 import net.bodz.bas.flow.units.SISOUnit;
 import net.bodz.bas.flow.units.builtin.text.DecodeUnit;
 import net.bodz.bas.flow.units.builtin.text.Text_String;
@@ -13,10 +12,11 @@ import net.bodz.bas.string.StringArray;
 import net.bodz.bas.text.codec.builtin.HexCodec;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class DecodeUnitTest
-        extends TestCase {
+        extends Assert {
 
     DecodeUnit decode;
     SISOUnit tostr;

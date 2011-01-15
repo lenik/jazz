@@ -1,13 +1,13 @@
 package net.bodz.bas.util.file;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
 import net.bodz.bas.io.resource.builtin.ByteArrayResource;
 import net.bodz.bas.util.file.FileDiff;
 
 import org.junit.Test;
 
 public class FileDiffTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void testDiff()

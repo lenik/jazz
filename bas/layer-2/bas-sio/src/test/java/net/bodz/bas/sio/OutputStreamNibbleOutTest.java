@@ -3,14 +3,14 @@ package net.bodz.bas.sio;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import junit.framework.TestCase;
 import net.bodz.bas.sio.nibbles.NibByteArrayOutputStream;
 import net.bodz.bas.sio.nibbles.OutputStreamNibbleOut;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class OutputStreamNibbleOutTest
-        extends TestCase {
+        extends Assert {
 
     static final byte[] seq = { 0x01, 0x23, 0x45, 0x67, (byte) 0x89, (byte) 0xab, (byte) 0xcd, (byte) 0xef };
 

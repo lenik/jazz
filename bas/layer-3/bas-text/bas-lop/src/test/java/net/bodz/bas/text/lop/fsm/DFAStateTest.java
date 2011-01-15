@@ -1,11 +1,10 @@
 package net.bodz.bas.text.lop.fsm;
 
-import junit.framework.TestCase;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class DFAStateTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void test()

@@ -2,14 +2,11 @@ package net.bodz.bas.collection.list;
 
 import java.util.Iterator;
 
-import junit.framework.TestCase;
-import net.bodz.bas.collection.list.SortedArrayList;
-import net.bodz.bas.collection.list.SortedList;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class SortedListTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void test1() {

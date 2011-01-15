@@ -1,11 +1,10 @@
 package net.bodz.bas.l10n.en;
 
-import junit.framework.TestCase;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class EnglishTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void testPluralOf() {

@@ -3,12 +3,11 @@ package net.bodz.bas.collection.preorder;
 import java.util.List;
 import java.util.Set;
 
-import junit.framework.TestCase;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class TypeHierSetTest
-        extends TestCase {
+        extends Assert {
 
     static String join(String delim, Set<?> set) {
         StringBuffer buf = null;

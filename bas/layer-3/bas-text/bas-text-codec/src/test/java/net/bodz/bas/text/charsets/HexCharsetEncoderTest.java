@@ -1,14 +1,13 @@
 package net.bodz.bas.text.charsets;
 
-import junit.framework.TestCase;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * @see HexCharsetEncoder
  */
 public class HexCharsetEncoderTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void testEncode()

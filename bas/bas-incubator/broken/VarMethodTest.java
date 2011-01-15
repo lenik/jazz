@@ -1,6 +1,6 @@
 package net.bodz.bas.lang.util;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
 import net.bodz.bas.collection.preorder.testtype.C;
 import net.bodz.bas.collection.preorder.testtype.CI;
 import net.bodz.bas.collection.preorder.testtype.CJz;
@@ -17,7 +17,7 @@ import net.bodz.bas.collection.preorder.testtype.DxKIx;
 import org.junit.Test;
 
 public class VarMethodTest
-        extends TestCase {
+        extends Assert {
 
     public String play(Cat a, Dog b) {
         return "Cat, Dog";

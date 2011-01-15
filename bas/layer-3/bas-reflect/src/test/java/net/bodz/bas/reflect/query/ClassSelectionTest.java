@@ -1,7 +1,5 @@
 package net.bodz.bas.reflect.query;
 
-import static org.junit.Assert.assertArrayEquals;
-
 import java.util.Arrays;
 
 import org.junit.Test;

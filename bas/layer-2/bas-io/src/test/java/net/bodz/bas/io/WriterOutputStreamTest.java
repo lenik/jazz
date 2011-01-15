@@ -4,12 +4,11 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.nio.ByteBuffer;
 
-import junit.framework.TestCase;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class WriterOutputStreamTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void testWrite()

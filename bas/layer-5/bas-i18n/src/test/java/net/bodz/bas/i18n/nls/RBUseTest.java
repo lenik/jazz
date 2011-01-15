@@ -3,15 +3,14 @@ package net.bodz.bas.i18n.nls;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import junit.framework.TestCase;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * ResourceBundle use case to demonstrate multilayered locale in ResourceBundle usage.
  */
 public class RBUseTest
-        extends TestCase {
+        extends Assert {
 
     ResourceBundle rb;
 

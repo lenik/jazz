@@ -12,9 +12,9 @@ import java.util.regex.Pattern;
 import net.bodz.bas.cli.annotations.Option;
 import net.bodz.bas.cli.annotations.OptionGroup;
 import net.bodz.bas.meta.util.OverrideOption;
+import net.bodz.bas.traits.provider.extra.GetInstanceParser;
 import net.bodz.bas.util.exception.NotImplementedException;
 import net.bodz.bas.util.file.FilePath;
-import net.bodz.bas.vfs.FileMask;
 import net.bodz.bas.vfs.traverse.FileFinder;
 
 @OptionGroup(value = "batch", rank = -2)

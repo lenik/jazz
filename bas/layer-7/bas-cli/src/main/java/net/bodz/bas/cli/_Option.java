@@ -6,7 +6,6 @@ import java.util.Map;
 
 import net.bodz.bas.cli.annotations.Option;
 import net.bodz.bas.cli.annotations.OptionGroup;
-import net.bodz.bas.commons.scripting.ScriptField;
 import net.bodz.bas.string.Strings;
 import net.bodz.bas.traits.IParser;
 import net.bodz.bas.traits.IValidator;

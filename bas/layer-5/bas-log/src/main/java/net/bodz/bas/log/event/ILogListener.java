@@ -1,7 +1,7 @@
 package net.bodz.bas.log.event;
 
-import net.bodz.bas.log.ILogEntry;
 import net.bodz.bas.log.ILogComposite;
+import net.bodz.bas.log.ILogEntry;
 
 public interface ILogListener {
 

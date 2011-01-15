@@ -1,14 +1,13 @@
 package net.bodz.bas.io.tellable;
 
-import junit.framework.TestCase;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
  * TODO not impl.
  */
 public class XYInputStreamTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void test()

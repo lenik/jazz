@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.collection.tree.TreeNode;
-import net.bodz.bas.commons.util.Objects;
-import net.bodz.bas.io.term.LogTerm;
-import net.bodz.bas.io.term.LogTerms;
 import net.bodz.bas.lang.events.RecoverableExceptionEvent;
 import net.bodz.bas.lang.events.RecoverableExceptionListener;
 import net.bodz.bas.ui.ConsoleUI;

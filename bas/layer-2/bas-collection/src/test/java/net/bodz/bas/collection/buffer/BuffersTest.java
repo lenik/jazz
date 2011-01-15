@@ -2,12 +2,11 @@ package net.bodz.bas.collection.buffer;
 
 import java.nio.ByteBuffer;
 
-import junit.framework.TestCase;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class BuffersTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void testInsert()

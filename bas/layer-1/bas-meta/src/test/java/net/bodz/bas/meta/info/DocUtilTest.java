@@ -1,14 +1,12 @@
 package net.bodz.bas.meta.info;
 
-import junit.framework.TestCase;
-import net.bodz.bas.meta.info.Doc;
-import net.bodz.bas.meta.info.DocUtil;
 import net.bodz.bas.util.exception.ParseException;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class DocUtilTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void testDoc_NoDoc()

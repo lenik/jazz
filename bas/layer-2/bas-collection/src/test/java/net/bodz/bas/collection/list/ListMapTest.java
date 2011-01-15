@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import junit.framework.TestCase;
 import net.bodz.bas.collection.map.ListMap;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class ListMapTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void test1() {

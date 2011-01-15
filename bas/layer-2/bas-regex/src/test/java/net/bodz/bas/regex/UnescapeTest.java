@@ -1,13 +1,10 @@
 package net.bodz.bas.regex;
 
-import junit.framework.TestCase;
-
-import net.bodz.bas.regex.Unescape;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class UnescapeTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void testInterpString() {

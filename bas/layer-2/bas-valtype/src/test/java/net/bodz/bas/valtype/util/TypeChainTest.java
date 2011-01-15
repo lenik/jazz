@@ -1,12 +1,12 @@
 package net.bodz.bas.valtype.util;
 
-import junit.framework.TestCase;
 import net.bodz.bas.sio.BCharOut;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class TypeChainTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void testDumpFileReader()

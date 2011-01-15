@@ -3,12 +3,12 @@ package net.bodz.bas.util.file;
 import java.io.File;
 import java.util.List;
 
-import junit.framework.TestCase;
+import org.junit.Assert;
 
 import org.junit.Test;
 
 public class FileWildTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void testListFiles() {

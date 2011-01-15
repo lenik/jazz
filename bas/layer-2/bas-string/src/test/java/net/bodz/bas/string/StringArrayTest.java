@@ -2,14 +2,11 @@ package net.bodz.bas.string;
 
 import java.io.IOException;
 
-import junit.framework.TestCase;
-
-import net.bodz.bas.string.StringArray;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class StringArrayTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void testSplit_Comma()

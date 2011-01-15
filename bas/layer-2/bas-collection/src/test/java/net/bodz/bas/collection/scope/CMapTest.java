@@ -2,12 +2,11 @@ package net.bodz.bas.collection.scope;
 
 import java.util.Map;
 
-import junit.framework.TestCase;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class CMapTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void test1() {

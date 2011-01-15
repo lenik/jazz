@@ -2,15 +2,15 @@ package net.bodz.bas.regex;
 
 import java.util.regex.Pattern;
 
-import junit.framework.TestCase;
 import net.bodz.bas.regex.RegexProcessor.SpaceOverride;
 import net.bodz.bas.string.StringArray;
 import net.bodz.bas.string.StringGrep;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class RegexProcessorTest
-        extends TestCase {
+        extends Assert {
 
     static class TestFindAll {
         final Pattern pattern;

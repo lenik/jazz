@@ -1,14 +1,10 @@
 package net.bodz.bas.regex;
 
-import junit.framework.TestCase;
-
-import net.bodz.bas.regex.QuoteFormat;
-import net.bodz.bas.regex.QuotedStringProcessor;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class QuotedStringProcessorTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void testProcess() {

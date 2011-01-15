@@ -2,14 +2,11 @@ package net.bodz.bas.regex;
 
 import java.nio.CharBuffer;
 
-import junit.framework.TestCase;
-
-import net.bodz.bas.regex.BufParsers;
-
+import org.junit.Assert;
 import org.junit.Test;
 
 public class BufParsersTest
-        extends TestCase {
+        extends Assert {
 
     @Test
     public void testGetIntCharBuffer() {
