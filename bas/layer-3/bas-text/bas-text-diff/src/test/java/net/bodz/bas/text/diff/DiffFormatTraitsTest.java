@@ -1,9 +1,8 @@
 package net.bodz.bas.text.diff;
 
 import junit.framework.TestCase;
-import net.bodz.bas.traits.ICommonTraits;
 import net.bodz.bas.traits.IInstanceStore;
-import net.bodz.bas.traits.provider.TypeTraitsResolve;
+import net.bodz.bas.traits.Traits;
 
 import org.junit.Test;
 
@@ -16,9 +15,10 @@ public class DiffFormatTraitsTest
     @Test
     public void testDefaultStoreInstance()
             throws Exception {
-        ICommonTraits<? super DiffFormat> traits = TypeTraitsResolve.findTraits(DiffFormat.class);
-        IInstanceStore<? super DiffFormat> store = traits.getInstanceStore();
-        Object Simdiff = store.getInstance("Simdiff");
+        @SuppressWarnings("unchecked")
+        IInstanceStore<? super DiffFormat> diffStore = Traits.getTraits(DiffFormat.class, IInstanceStore.class);
+
+        Object Simdiff = diffStore.getInstance("Simdiff");
         assertEquals(DiffFormats.Simdiff, Simdiff);
     }
 

@@ -9,7 +9,12 @@ public class AnnotationTraitsProvider
 
     @Override
     public int getPriority() {
-        return BuiltinProviderOrder.PRIORITY_ANNOTATION;
+        return BuiltinProviderOrder.annotation.getPriority();
+    }
+
+    @Override
+    public boolean isDefined() {
+        return true;
     }
 
     @Override

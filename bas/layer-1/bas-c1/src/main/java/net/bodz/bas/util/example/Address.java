@@ -13,6 +13,10 @@ public class Address {
     public Address() {
     }
 
+    public Address(String address, String city, String country) {
+        this(address, city, country, 0, null);
+    }
+
     public Address(String address, String city, String country, int postCode, String phoneNumber) {
         this.address = address;
         this.city = city;
@@ -81,7 +85,7 @@ public class Address {
 
     @Override
     public String toString() {
-        return String.format("%s, %s, %s PO[%d] TEL[%s]", // 
+        return String.format("%s, %s, %s PO[%d] TEL[%s]", //
                 address, city, country, postCode, phoneNumber);
     }
 

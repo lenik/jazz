@@ -49,45 +49,51 @@ public final class NegotiationParameter
         return type.cast(value);
     }
 
+    /**
+     * A mandatory parameter must be processed by the callee..
+     */
     public boolean isMandatory() {
         return mandatory;
     }
 
-    public boolean isWanted(Class<?> type)
-            throws UnsupportedNegotiationException {
-        return isWanted(type.getName(), true);
+    public boolean accept(Class<?> forType)
+            throws MandatoryException {
+        return accept(forType.getName());
     }
 
-    public boolean isWanted(String id)
-            throws UnsupportedNegotiationException {
-        return isWanted(id, true);
+    public boolean accept(String forId)
+            throws MandatoryException {
+        return this.id.equals(forId);
     }
 
-    public boolean isWanted(Class<?> type, boolean isSupported)
-            throws UnsupportedNegotiationException {
-        return isWanted(type.getName(), isSupported);
+    public boolean accept(Class<?> forType, boolean isChecked)
+            throws MandatoryException {
+        return accept(forType.getName(), isChecked);
     }
 
-    public boolean isWanted(String id, boolean isSupported)
-            throws UnsupportedNegotiationException {
-        if (!this.id.equals(id))
+    public boolean accept(String forId, boolean isChecked)
+            throws MandatoryException {
+        if (!this.id.equals(forId))
             return false;
-        if (isSupported)
-            return true;
+        if (isMandatory() && !isChecked)
+            throw new MandatoryException(this);
+        return true;
+    }
+
+    public void bypass()
+            throws MandatoryException {
         if (isMandatory())
-            throw new UnsupportedNegotiationException(this);
-        else
-            return false;
+            throw new MandatoryException(this);
     }
 
     public <T> T utilize(Class<T> type)
-            throws UnsupportedNegotiationException {
+            throws MandatoryException {
         return utilize(type, true);
     }
 
-    public <T> T utilize(Class<T> type, boolean isSupported)
-            throws UnsupportedNegotiationException {
-        if (isWanted(type.getName(), isSupported))
+    public <T> T utilize(Class<T> type, boolean isChecked)
+            throws MandatoryException {
+        if (accept(type.getName(), isChecked))
             return type.cast(value);
         else
             return null;

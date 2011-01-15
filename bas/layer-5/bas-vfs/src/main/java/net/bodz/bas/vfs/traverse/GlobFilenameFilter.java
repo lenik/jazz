@@ -1,7 +1,20 @@
 package net.bodz.bas.vfs.traverse;
 
-import net.bodz.bas.type.java.util.regex.GlobPatternParser;
+import static net.bodz.bas.type.java.util.regex.PatternTraits.globTextformMode;
+import static net.bodz.bas.type.java.util.regex.PatternTraits.textformMode;
 
+import java.util.regex.Pattern;
+
+import net.bodz.bas.lang.FinalNegotiation;
+import net.bodz.bas.lang.INegotiation;
+import net.bodz.bas.lang.NegotiationException;
+import net.bodz.bas.lang.NegotiationParameter;
+import net.bodz.bas.traits.IParser;
+import net.bodz.bas.traits.Traits;
+import net.bodz.bas.util.exception.ParseException;
+import net.bodz.bas.util.exception.UnexpectedException;
+
+@SuppressWarnings("unchecked")
 public class GlobFilenameFilter
         extends RegexFilenameFilter {
 
@@ -10,7 +23,25 @@ public class GlobFilenameFilter
     }
 
     public GlobFilenameFilter(String pattern, boolean whole, boolean fullpath) {
-        super(GlobPatternParser._parse(pattern, 0), whole, fullpath);
+        super(parseGlob(pattern), whole, fullpath);
+    }
+
+    static IParser<Pattern> patternParser;
+    static INegotiation globNegotiation;
+    static {
+        patternParser = Traits.getTraits(Pattern.class, IParser.class);
+        globNegotiation = new FinalNegotiation(//
+                new NegotiationParameter(textformMode, globTextformMode));
+    }
+
+    static Pattern parseGlob(String pattern) {
+        try {
+            return patternParser.parse(pattern, globNegotiation);
+        } catch (ParseException e) {
+            throw new UnexpectedException(e.getMessage(), e);
+        } catch (NegotiationException e) {
+            throw new UnexpectedException(e.getMessage(), e);
+        }
     }
 
 }

@@ -11,6 +11,11 @@ public abstract class AbstractTraitsProvider
     }
 
     @Override
+    public boolean isDefined() {
+        return false;
+    }
+
+    @Override
     public <T> T getTraits(Class<?> objType, Object obj, Class<T> traitsType)
             throws QueryException {
         return getTraits(objType, traitsType);

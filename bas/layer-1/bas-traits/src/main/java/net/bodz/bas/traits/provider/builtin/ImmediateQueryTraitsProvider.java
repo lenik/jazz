@@ -1,17 +1,23 @@
 package net.bodz.bas.traits.provider.builtin;
 
+import net.bodz.bas.lang.IQueryable;
 import net.bodz.bas.lang.QueryException;
 import net.bodz.bas.traits.provider.AbstractTraitsProvider;
 
 /**
  * A simple direct cast traits providier.
  */
-public class ImmediateCastTraitsProvider
+public class ImmediateQueryTraitsProvider
         extends AbstractTraitsProvider {
 
     @Override
     public int getPriority() {
-        return BuiltinProviderOrder.PRIORITY_CAST;
+        return BuiltinProviderOrder.immediateQuery.getPriority();
+    }
+
+    @Override
+    public boolean isDefined() {
+        return true;
     }
 
     @Override
@@ -23,9 +29,10 @@ public class ImmediateCastTraitsProvider
     @Override
     public <T> T getTraits(Class<?> objType, Object obj, Class<T> traitsType)
             throws QueryException {
-        if (traitsType.isInstance(obj))
-            return traitsType.cast(obj);
+        if (obj instanceof IQueryable) {
+            T traits = ((IQueryable) obj).query(traitsType);
+            return traits;
+        }
         return null;
     }
-
 }
