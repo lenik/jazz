@@ -9,7 +9,7 @@ public class PerformanceTestCase
         extends TestCase {
     {
         FinalNegotiation fn = new FinalNegotiation(//
-                new NegotiationParameter(ISampleGenerator.SAMPLE_USAGE, "test"));
+                new NegotiationParameter(ISampleGenerator.sampleUsage, "test"));
 
     }
 }

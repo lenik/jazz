@@ -1,10 +1,15 @@
-package net.bodz.bas.type.parser.simple;
+package net.bodz.bas.type.java.lang;
 
-import net.bodz.bas.traits.AbstractParser;
+import net.bodz.bas.traits.AbstractCommonTraits;
 import net.bodz.bas.util.exception.ParseException;
 
-public class ClassParser
-        extends AbstractParser<Class<?>> {
+@SuppressWarnings("rawtypes")
+public class ClassTraits
+        extends AbstractCommonTraits<Class> {
+
+    public ClassTraits() {
+        super(Class.class);
+    }
 
     @Override
     public Class<?> parse(String name)

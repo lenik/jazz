@@ -1,6 +1,6 @@
 package net.bodz.bas.vfs.traverse;
 
-import net.bodz.bas.type.parser.regex.GlobPatternParser;
+import net.bodz.bas.type.java.util.regex.GlobPatternParser;
 
 public class GlobFilenameFilter
         extends RegexFilenameFilter {

@@ -5,6 +5,7 @@ import java.util.Random;
 
 import net.bodz.bas.lang.INegotiation;
 import net.bodz.bas.lang.NegotiationException;
+import net.bodz.bas.meta.util.ValueType;
 import net.bodz.bas.util.exception.CreateException;
 
 public interface ISampleGenerator<T> {
@@ -25,12 +26,13 @@ public interface ISampleGenerator<T> {
      * <li><code>"performance"</code> for Performance Test</li>
      * </ul>
      */
-    String SAMPLE_USAGE = "SampleUsage";
+    @ValueType(String.class)
+    String sampleUsage = "sample.usage";
 
     /**
      * Negotiations:
      * <ul>
-     * <li>Optional {@link #SAMPLE_USAGE}: Generate samples for specified usage.
+     * <li>Optional {@link #sampleUsage}: Generate samples for specified usage.
      * <li>Optional {@link Random}.class: Build random samples rather than meaningful ones, with the
      * specified {@link Random} generator when possible.
      * </ul>

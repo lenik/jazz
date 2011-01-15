@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -31,6 +32,8 @@ public abstract class AbstractCommonTraits<T>
     private Attributes attributes;
     private Map<String, IAttributes> classicationAttributes;
     private Map<String, T> storeInstances;
+
+    protected static final Random random = new Random();
 
     public AbstractCommonTraits(Class<T> type) {
         if (type == null)
