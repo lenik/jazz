@@ -5,6 +5,7 @@ import java.io.StringReader;
 import junit.framework.TestCase;
 import net.bodz.bas.sio.position.IXYTellable;
 import net.bodz.bas.text.lop.Token;
+import net.bodz.bas.util.ClassResource;
 
 import org.junit.Test;
 
@@ -55,7 +56,7 @@ public class JFlexLexerTest
     @Test
     public void test1()
             throws Exception {
-        String text = Files.readAll(FileRes.classData(getClass(), "1"));
+        String text = ClassResource.classData(getClass(), "1").forRead().readTextContents();
         TD[] expected = {
                 //
                 new TD(SampleLexer.ID, "hello", "hello"), //
