@@ -5,6 +5,7 @@ import java.util.Map;
 
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.traits.IParser;
+import net.bodz.bas.traits.Traits;
 import net.bodz.bas.util.exception.ParseException;
 
 public abstract class MapResRecords<K, V>
@@ -25,18 +26,20 @@ public abstract class MapResRecords<K, V>
 
     protected abstract Class<? extends V> getValueClass();
 
+    @SuppressWarnings("unchecked")
     protected K parseKey(String key)
             throws ParseException {
         if (keyParser == null)
-            keyParser = TypeParsers.guess(getKeyClass(), "KeyClass");
+            keyParser = Traits.getTraits(getKeyClass(), IParser.class);
         Object k = keyParser.parse(key);
         return keyClass.cast(k);
     }
 
+    @SuppressWarnings("unchecked")
     protected V parseValue(String value)
             throws ParseException {
         if (valueParser == null)
-            valueParser = TypeParsers.guess(getValueClass(), "ValueClass");
+            valueParser = Traits.getTraits(getValueClass(), IParser.class);
         Object v = valueParser.parse(value);
         return valueClass.cast(v);
     }
