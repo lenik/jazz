@@ -13,7 +13,7 @@ import net.bodz.bas.meta.build.Version;
 import net.bodz.bas.meta.info.Doc;
 
 @Doc("Fix: .bat goto labels must not cross 1k block boundary.")
-@Version( { 0, 0 })
+@Version({ 0, 0 })
 @RcsKeywords(id = "$Id$")
 public class Fix_BatBB
         extends BatchEditCLI {
@@ -96,7 +96,7 @@ public class Fix_BatBB
 
     public static void main(String[] args)
             throws Exception {
-        new Fix_BatBB().run(args);
+        new Fix_BatBB().execute(args);
     }
 
 }

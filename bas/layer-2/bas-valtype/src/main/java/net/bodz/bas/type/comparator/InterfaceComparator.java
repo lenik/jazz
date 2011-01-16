@@ -2,13 +2,13 @@ package net.bodz.bas.type.comparator;
 
 import java.util.Arrays;
 
-import net.bodz.bas.collection.comparator.NonNullComparator;
+import net.bodz.bas.collection.comparator.AbstractNonNullComparator;
 
 /**
  * @test {@link InterfaceComparatorTest}
  */
 public class InterfaceComparator
-        implements NonNullComparator<Class<?>> {
+        extends AbstractNonNullComparator<Class<?>> {
 
     Class<?> getRootOfFirstBranch(Class<?> iface) {
         assert iface != null;
@@ -19,7 +19,7 @@ public class InterfaceComparator
     }
 
     @Override
-    public int compare(Class<?> o1, Class<?> o2) {
+    public int compareNonNull(Class<?> o1, Class<?> o2) {
         assert o1.isInterface();
         assert o2.isInterface();
 

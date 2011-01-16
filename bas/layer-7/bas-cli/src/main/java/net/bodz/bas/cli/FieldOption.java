@@ -6,7 +6,8 @@ import javax.script.ScriptException;
 
 import net.bodz.bas.cli.annotations.OptionGroup;
 
-public class FieldOption<T> extends _Option<T> {
+public class FieldOption<T>
+        extends _Option<T> {
 
     private final Field field;
 
@@ -19,7 +20,8 @@ public class FieldOption<T> extends _Option<T> {
 
     @SuppressWarnings("unchecked")
     @Override
-    public T get(Object classobj) throws ScriptException {
+    public T get(Object classobj)
+            throws ScriptException {
         try {
             return (T) field.get(classobj);
         } catch (IllegalArgumentException e) {
@@ -30,7 +32,8 @@ public class FieldOption<T> extends _Option<T> {
     }
 
     @Override
-    public void set(Object classobj, T optval) throws ScriptException {
+    public void set(Object classobj, T optval)
+            throws ScriptException {
         Object fieldval;
         try {
             if (multi) {

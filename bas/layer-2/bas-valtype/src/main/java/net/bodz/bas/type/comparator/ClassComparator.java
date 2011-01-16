@@ -1,6 +1,6 @@
 package net.bodz.bas.type.comparator;
 
-import net.bodz.bas.collection.comparator.NonNullComparator;
+import net.bodz.bas.collection.comparator.AbstractNonNullComparator;
 
 /**
  * Compare two classes by their tree position.
@@ -9,10 +9,10 @@ import net.bodz.bas.collection.comparator.NonNullComparator;
  * <code>interface</code>.
  */
 public class ClassComparator
-        implements NonNullComparator<Class<?>> {
+        extends AbstractNonNullComparator<Class<?>> {
 
     @Override
-    public int compare(Class<?> c1, Class<?> c2) {
+    public int compareNonNull(Class<?> c1, Class<?> c2) {
         if (c1.isInterface())
             throw new IllegalArgumentException("Can't compare instance: " + c1);
         if (c2.isInterface())

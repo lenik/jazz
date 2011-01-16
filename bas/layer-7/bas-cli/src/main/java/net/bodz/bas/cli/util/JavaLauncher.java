@@ -11,6 +11,8 @@ import java.nio.charset.Charset;
 import net.bodz.bas.closure.IExecutableX;
 import net.bodz.bas.jvm.exit.CatchExit;
 import net.bodz.bas.jvm.stack.Caller;
+import net.bodz.bas.lang.Control;
+import net.bodz.bas.lang.ControlExit;
 import net.bodz.bas.loader.Classpath;
 import net.bodz.bas.loader.DefaultBooter;
 import net.bodz.bas.loader.LoadUtil;
@@ -107,7 +109,7 @@ public abstract class JavaLauncher
                 }
             };
             try {
-                CatchExit.run(doMain);
+                CatchExit.execute(doMain);
             } catch (ControlExit e) {
                 _exit(e.getStatus());
             }

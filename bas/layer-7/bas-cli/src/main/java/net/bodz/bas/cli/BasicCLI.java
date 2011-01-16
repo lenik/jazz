@@ -6,38 +6,40 @@ import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.net.URL;
-import java.nio.file.FileSystems;
-import java.nio.file.PathMatcher;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.script.ScriptException;
 
-import net.bodz.bas.a.A_bas;
 import net.bodz.bas.a.ClassInfo;
 import net.bodz.bas.cli.annotations.Option;
 import net.bodz.bas.cli.annotations.OptionGroup;
 import net.bodz.bas.cli.ext.CLIPlugin;
 import net.bodz.bas.cli.ext.CLIPlugins;
-import net.bodz.bas.collection.map.IVariantLookupMap;
-import net.bodz.bas.collection.map.Map2VariantLookupMap;
+import net.bodz.bas.closure.IExecutableVarArgsX;
 import net.bodz.bas.context.clg.SystemCLG;
-import net.bodz.bas.io.typemeta.CharOutParser;
+import net.bodz.bas.lang.ControlBreak;
 import net.bodz.bas.loader.boot.BootInfo;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.api.Logger;
 import net.bodz.bas.log.api.LoggerFactory;
 import net.bodz.bas.meta.build.RcsKeywords;
+import net.bodz.bas.meta.build.RcsKeywordsUtil;
 import net.bodz.bas.meta.build.VersionInfo;
+import net.bodz.bas.meta.info.DisplayNameUtil;
 import net.bodz.bas.meta.util.ChainUsage;
 import net.bodz.bas.meta.util.OverrideOption;
+import net.bodz.bas.potato.traits.IType;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.string.StringArray;
 import net.bodz.bas.traits.AbstractParser;
 import net.bodz.bas.traits.IParser;
+import net.bodz.bas.traits.ParserUtil;
+import net.bodz.bas.traits.Traits;
 import net.bodz.bas.ui.ConsoleUI;
 import net.bodz.bas.ui.UserInterface;
 import net.bodz.bas.util.PluginException;
@@ -48,7 +50,6 @@ import net.bodz.bas.util.exception.ParseException;
 import net.bodz.bas.util.file.ClassResource;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.commons.vfs.FileSystem;
 
 /**
  * Recommend eclipse template `cli':
@@ -81,16 +82,13 @@ import org.apache.commons.vfs.FileSystem;
 @BootInfo(syslibs = "bodz_bas")
 @OptionGroup(value = "standard", rank = -1)
 @RcsKeywords(id = "$Id$")
-@ScriptType(CLIScriptClass.class)
 public class BasicCLI
-        implements Runnable, VRunnable<String, Exception> {
+        implements Runnable, IExecutableVarArgsX<String, Exception> {
 
     @Option(name = ".stdout", hidden = true)
-    @ParseBy(CharOutParser.class)
     protected IPrintOut _stdout = Stdio.cout;
 
     @Option(name = "logger", hidden = true)
-    @ParseBy(LoggerParser.class)
     protected Logger L = LoggerFactory.getLogger(BasicCLI.class);
     // LogTerms.resolveFile(1);
 
@@ -112,7 +110,7 @@ public class BasicCLI
         L.setLevel(L.getLevel() - 1);
     }
 
-    protected IVariantLookupMap<Object> _vars;
+    protected Map<String, Object> _vars;
 
     @Option(name = "define", alias = ".D", vnam = "NAM=VAL", doc = "define variables")
     void _define(String exp)
@@ -128,7 +126,7 @@ public class BasicCLI
             val = true;
         else {
             Class<?> type = _getVarType(nam);
-            val = TypeParsers.parse(type, exp);
+            val = ParserUtil.parse(type, exp);
         }
         _vars.put(nam, val);
     }
@@ -200,7 +198,7 @@ public class BasicCLI
             if (sig0 == String.class)
                 return (CLIPlugin) typeEx.newInstance(ctorArg);
             if (!sig0.isArray()) {
-                Object val = TypeParsers.parse(sig0, ctorArg);
+                Object val = ParserUtil.parse(sig0, ctorArg);
                 return (CLIPlugin) typeEx.newInstance(val);
             }
 
@@ -212,7 +210,7 @@ public class BasicCLI
             if (valtype == String.class)
                 return (CLIPlugin) typeEx.newInstance((Object) args);
 
-            IParser<?> parser = TypeParsers.guess(valtype, true);
+            IParser<?> parser = Traits.getTraits(valtype, IParser.class);
             Object valarray = Array.newInstance(valtype, args.length);
             for (int i = 0; i < args.length; i++) {
                 Object val = parser.parse(args[i]);
@@ -229,7 +227,7 @@ public class BasicCLI
             Class<? extends BasicCLI> clazz = getClass();
             ClassInfo info = ClassInfo.get(clazz);
 
-            String name = A_bas.getDisplayName(clazz);
+            String name = DisplayNameUtil.getDisplayName(clazz);
             String doc = info.getDoc();
             if (doc == null)
                 doc = clazz.getName();
@@ -241,7 +239,7 @@ public class BasicCLI
             RcsKeywords keywords = clazz.getAnnotation(RcsKeywords.class);
             VersionInfo verinfo;
             if (keywords != null) {
-                verinfo = A_bas.parseId(keywords);
+                verinfo = RcsKeywordsUtil.getVersionInfo(keywords);
             } else {
                 verinfo = new VersionInfo();
                 URL url = ClassResource.classData(clazz);
@@ -328,13 +326,12 @@ public class BasicCLI
     private List<String> restArgs;
 
     public BasicCLI() {
-        TypeParsers.register(CLIPlugin.class, new PluginParser());
-        _vars = new Map2VariantLookupMap<Object>(new HashMap<Object, Object>());
+        _vars = new HashMap<String, Object>();
     }
 
-    public ScriptClass<? extends BasicCLI> getScriptClass()
+    public IType getScriptClass()
             throws ScriptException {
-        return Scripts.getScriptClass(this);
+        return Traits.getTraits(getClass(), IType.class);
     }
 
     @SuppressWarnings("unchecked")
@@ -350,7 +347,7 @@ public class BasicCLI
         if (prepared)
             return;
 
-        ILogSink dbg = L.debug();
+        ILogSink dbg = L.getDebugSink();
         // dbg.p("parse boot info");
         // bootProc = BootProc.get(getClass());
         //
@@ -383,13 +380,13 @@ public class BasicCLI
         String[] args = {};
         if (cmdline != null)
             args = StringArray.split(cmdline);
-        run(args);
+        execute(args);
     }
 
     @Override
     public void run() {
         try {
-            run(ArrayUtils.EMPTY_STRING_ARRAY);
+            execute(new String[0]);
         } catch (Exception e) {
             UI.alert(e.getMessage(), e);
         }
@@ -399,7 +396,7 @@ public class BasicCLI
      * public access: so derivations don't have to declare static main()s.
      */
     @Override
-    public synchronized void run(String... args)
+    public synchronized void execute(String... args)
             throws Exception {
         ILogSink dbg = L.getDebugSink();
         dbg.p("cli prepare");
@@ -524,13 +521,13 @@ public class BasicCLI
             throws Exception {
         String name = wildcards.getName();
         if (enableWildcards && (name.contains("*") || name.contains("?"))) {
-            FileSystem fs = FileSystems.getDefault();
-            PathMatcher pathMatcher = fs.getPathMatcher("glob:name");
-            for (File sibling : wildcards.getParentFile().listFiles())
-                if (pathMatcher.matches(sibling.toPath())) {
-                    L.debug("Wildcard expansion: ", wildcards, " -> ", sibling);
-                    doFileArgument(sibling);
-                }
+//            FileSystem fs = FileSystems.getDefault();
+//            PathMatcher pathMatcher = fs.getPathMatcher("glob:name");
+//            for (File sibling : wildcards.getParentFile().listFiles())
+//                if (pathMatcher.matches(sibling.toPath())) {
+//                    L.debug("Wildcard expansion: ", wildcards, " -> ", sibling);
+//                    doFileArgument(sibling);
+//                }
             return;
         }
         doFileArgument(wildcards);

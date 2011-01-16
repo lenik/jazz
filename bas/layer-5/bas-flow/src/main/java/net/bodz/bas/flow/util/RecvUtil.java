@@ -1,36 +1,31 @@
 package net.bodz.bas.flow.util;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
 
 import net.bodz.bas.collection.util.ClassLocal;
 import net.bodz.bas.flow.IReceiverEx;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
-import net.bodz.bas.reflect.query.MethodSelection;
-import net.bodz.bas.reflect.query.ReflectQuery;
+import net.bodz.bas.potato.traits.IMethod;
+import net.bodz.bas.traits.Traits;
 
 public class RecvUtil {
 
-    public static Method getRecvEx(Class<?> clazz) {
-        MethodSelection recvMethods = ReflectQuery.selectMethods(clazz).withName("recv");
-
-    }
-
-    private static final ClassLocal<MethodEx> recvExLocal;
+    private static final ClassLocal<IMethod> recvLocal;
     static {
-        recvExLocal = new ClassLocal<MethodEx>();
+        recvLocal = new ClassLocal<IMethod>();
     }
 
     public static void recvEx(IReceiverEx exReceiver, Object data)
             throws IOException, ReflectiveOperationException {
         Class<? extends IReceiverEx> clazz = exReceiver.getClass();
-        MethodEx recvEx = recvExLocal.get(clazz);
-        if (recvEx == null) {
-            recvEx = getRecvEx(clazz);
-            recvExLocal.put(clazz, recvEx);
+        IMethod recv = recvLocal.get(clazz);
+        if (recv == null) {
+            // new MethodKey()
+            recv = Traits.getTraits(clazz, IMethod.class);
+            recvLocal.put(clazz, recv);
         }
         // TODO - unwrap IOException
-        recvEx.invoke(exReceiver, data);
+        recv.invoke(exReceiver, data);
     }
 
 }

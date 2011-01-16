@@ -292,7 +292,7 @@ public class Mkbat
 
     public static void main(String[] args)
             throws Exception {
-        new Mkbat().run(args);
+        new Mkbat().execute(args);
     }
 
 }

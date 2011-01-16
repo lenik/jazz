@@ -1,7 +1,6 @@
 package net.bodz.bas.ant;
 
-import net.bodz.bas.traits.IParser;
-import net.bodz.bas.util.exception.CreateException;
+import net.bodz.bas.traits.ParserUtil;
 import net.bodz.bas.util.exception.ParseException;
 
 /**
@@ -69,12 +68,7 @@ public class Parameter {
             throws ParseException {
         if (text == null)
             return null;
-        try {
-            IParser<?> parser = TypeParsers.guess(type);
-            return parser.parse(text);
-        } catch (CreateException e) {
-            throw new ParseException(e);
-        }
+        return ParserUtil.parse(type, text);
     }
 
     @Override

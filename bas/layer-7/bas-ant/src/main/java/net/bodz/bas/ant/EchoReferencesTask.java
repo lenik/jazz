@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 
-import net.bodz.bas.collection.comparator.DefaultComparator;
+import net.bodz.bas.collection.comparator.ComparableComparator;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
@@ -21,7 +21,7 @@ public class EchoReferencesTask
 
         Hashtable<?, ?> references = project.getReferences();
         List<Object> keys = new ArrayList<Object>(references.keySet());
-        Collections.sort(keys, DefaultComparator.getInstance());
+        Collections.sort(keys, ComparableComparator.getRawInstance());
 
         for (Object key : keys) {
             Object value = references.get(key);

@@ -10,6 +10,7 @@ import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.util.ClassResource;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class INIRecordsTest
@@ -21,6 +22,7 @@ public class INIRecordsTest
         source = ClassResource.classData(getClass(), "1");
     }
 
+    @Ignore
     @Test
     public void testByGroup()
             throws IOException {
@@ -39,6 +41,7 @@ public class INIRecordsTest
         assertNull(iter.next());
     }
 
+    @Ignore
     @Test
     public void testFlatten()
             throws IOException {

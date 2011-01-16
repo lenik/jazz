@@ -12,6 +12,7 @@ import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.util.ClassResource;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class PartRecordsTest
@@ -36,6 +37,7 @@ public class PartRecordsTest
         return buf.toString().replace("\r", "");
     }
 
+    @Ignore
     @Test
     public void test1()
             throws IOException {
