@@ -1,4 +1,4 @@
-package net.bodz.bas.traits.provider;
+package net.bodz.bas.traits;
 
 import java.util.Comparator;
 

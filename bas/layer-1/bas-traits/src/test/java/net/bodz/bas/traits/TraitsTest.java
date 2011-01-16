@@ -3,7 +3,6 @@ package net.bodz.bas.traits;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.bodz.bas.traits.provider.ITraitsProvider;
 import net.bodz.bas.traits.provider.builtin.AnnotationTraitsProvider;
 import net.bodz.bas.traits.provider.builtin.BasFriendTraitsProvider;
 import net.bodz.bas.traits.provider.builtin.FriendTraitsProvider;

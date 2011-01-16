@@ -1,7 +1,7 @@
 package net.bodz.bas.traits.provider.builtin;
 
 import net.bodz.bas.lang.QueryException;
-import net.bodz.bas.traits.provider.AbstractTraitsProvider;
+import net.bodz.bas.traits.AbstractTraitsProvider;
 
 public class FriendTraitsProvider
         extends AbstractTraitsProvider {

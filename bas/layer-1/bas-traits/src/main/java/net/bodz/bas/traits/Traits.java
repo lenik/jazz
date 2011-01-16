@@ -1,14 +1,14 @@
 package net.bodz.bas.traits;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ServiceLoader;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 import net.bodz.bas.lang.QueryException;
-import net.bodz.bas.traits.provider.ITraitsProvider;
-import net.bodz.bas.traits.provider.TraitsProviderComparator;
 
 public class Traits {
 
@@ -33,6 +33,10 @@ public class Traits {
 
     static {
         reload();
+    }
+
+    public static SortedSet<ITraitsProvider> getTraitsProviders() {
+        return Collections.unmodifiableSortedSet(traitsProviders);
     }
 
     /**

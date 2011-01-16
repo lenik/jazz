@@ -2,7 +2,7 @@ package net.bodz.bas.traits.provider.builtin;
 
 import net.bodz.bas.lang.IQueryable;
 import net.bodz.bas.meta.lang.TraitsClass;
-import net.bodz.bas.traits.provider.AbstractTraitsProvider;
+import net.bodz.bas.traits.AbstractTraitsProvider;
 
 public class AnnotationTraitsProvider
         extends AbstractTraitsProvider {

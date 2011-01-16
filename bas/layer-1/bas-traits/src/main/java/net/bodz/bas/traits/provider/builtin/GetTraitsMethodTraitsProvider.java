@@ -1,10 +1,12 @@
 package net.bodz.bas.traits.provider.builtin;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
+import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.lang.QueryException;
-import net.bodz.bas.traits.provider.AbstractTraitsProvider;
+import net.bodz.bas.traits.AbstractTraitsProvider;
 
 /**
  * The GetTraitsMethod traits provider allow user to define type traits by declare a getTraits
@@ -39,14 +41,15 @@ public class GetTraitsMethodTraitsProvider
         Method staticMethod = findGetTraitsMethod(objType);
         if (staticMethod == null)
             return null;
+        boolean isStatic = Modifier.isStatic(staticMethod.getModifiers());
+        if (!isStatic)
+            return null;
 
         try {
-            Object returnValue = staticMethod.invoke(null, traitsType);
+            Object returnValue = Jdk7Reflect.invoke(staticMethod, null, traitsType);
             T traits = traitsType.cast(returnValue);
             return traits;
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        } catch (Exception e) {
+        } catch (ReflectiveOperationException e) {
             throw new QueryException(e);
         }
     }
@@ -59,12 +62,10 @@ public class GetTraitsMethodTraitsProvider
             return null;
 
         try {
-            Object returnValue = method.invoke(obj, traitsType);
+            Object returnValue = Jdk7Reflect.invoke(method, obj, traitsType);
             T traits = traitsType.cast(returnValue);
             return traits;
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        } catch (Exception e) {
+        } catch (ReflectiveOperationException e) {
             throw new QueryException(e);
         }
     }
