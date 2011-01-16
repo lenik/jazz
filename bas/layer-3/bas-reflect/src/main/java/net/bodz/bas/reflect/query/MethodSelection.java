@@ -144,7 +144,7 @@ public abstract class MethodSelection
 
     public MethodSelection of(MethodSignature minSignature) {
         MethodSelection result = this;
-        String name = minSignature.getMethodName();
+        String name = minSignature.getName();
         if (name != null)
             result = result.withName(name);
         Class<?>[] params = minSignature.getParameterTypes();
@@ -155,7 +155,7 @@ public abstract class MethodSelection
 
     public MethodSelection superOf(MethodSignature minSignature) {
         MethodSelection result = this;
-        String name = minSignature.getMethodName();
+        String name = minSignature.getName();
         if (name != null)
             result = result.withName(name);
         Class<?>[] params = minSignature.getParameterTypes();
