@@ -1,13 +1,10 @@
 package net.bodz.bas.collection.comparator;
 
 public class IntegerComparator
-        implements NonNullComparator<Integer> {
-
-    private IntegerComparator() {
-    }
+        extends AbstractNonNullComparator<Integer> {
 
     @Override
-    public int compare(Integer a, Integer b) {
+    public int compareNonNull(Integer a, Integer b) {
         return a - b;
     }
 

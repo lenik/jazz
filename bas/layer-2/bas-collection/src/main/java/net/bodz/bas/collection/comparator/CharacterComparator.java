@@ -1,13 +1,10 @@
 package net.bodz.bas.collection.comparator;
 
 public class CharacterComparator
-        implements NonNullComparator<Character> {
-
-    private CharacterComparator() {
-    }
+        extends AbstractNonNullComparator<Character> {
 
     @Override
-    public int compare(Character a, Character b) {
+    public int compareNonNull(Character a, Character b) {
         return (int) a - (int) b;
     }
 

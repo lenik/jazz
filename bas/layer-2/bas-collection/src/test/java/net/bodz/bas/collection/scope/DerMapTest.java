@@ -8,17 +8,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.bodz.bas.collection.comparator.DefaultComparator;
-
 import org.junit.Assert;
 import org.junit.Test;
 
 public class DerMapTest
         extends Assert {
 
-    String scan(Map<?, ?> map) {
-        List<Object> keys = new ArrayList<Object>(map.keySet());
-        Collections.sort(keys, DefaultComparator.getInstance());
+    String scan(Map<String, ?> map) {
+        List<String> keys = new ArrayList<String>(map.keySet());
+        Collections.sort(keys);
         StringBuffer buf = null;
         for (Object k : keys) {
             Object v = map.get(k);

@@ -1,10 +1,10 @@
 package net.bodz.bas.collection.comparator;
 
 public class DecoratedComparator<T>
-        implements NonNullComparator<T> {
+        extends AbstractNonNullComparator<T> {
 
     @Override
-    public int compare(T o1, T o2) {
+    public int compareNonNull(T o1, T o2) {
         return 0;
     }
 

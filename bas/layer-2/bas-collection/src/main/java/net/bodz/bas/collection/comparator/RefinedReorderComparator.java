@@ -15,7 +15,7 @@ public abstract class RefinedReorderComparator<TargetType, OrderType>
     }
 
     @Override
-    public int compare(TargetType o1, TargetType o2) {
+    public int compareNonNull(TargetType o1, TargetType o2) {
         int cmp = super.compare(o1, o2);
         if (cmp != 0)
             return cmp;

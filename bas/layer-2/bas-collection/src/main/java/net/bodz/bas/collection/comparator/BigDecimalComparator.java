@@ -3,13 +3,10 @@ package net.bodz.bas.collection.comparator;
 import java.math.BigDecimal;
 
 public class BigDecimalComparator
-        implements NonNullComparator<BigDecimal> {
-
-    private BigDecimalComparator() {
-    }
+        extends AbstractNonNullComparator<BigDecimal> {
 
     @Override
-    public int compare(BigDecimal a, BigDecimal b) {
+    public int compareNonNull(BigDecimal a, BigDecimal b) {
         return a.compareTo(b);
     }
 

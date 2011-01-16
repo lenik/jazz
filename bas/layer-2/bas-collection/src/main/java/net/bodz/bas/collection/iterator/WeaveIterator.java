@@ -4,7 +4,6 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import net.bodz.bas.collection.comparator.DefaultComparator;
 import net.bodz.bas.collection.list.DyingList;
 import net.bodz.bas.collection.list.SortedList;
 
@@ -57,22 +56,6 @@ public class WeaveIterator<T>
     private final SortedList<ItrNxt<T>> alive;
 
     private Iterator<T> lastIterator;
-
-    /**
-     * Deprecated cuz too slow.
-     */
-    @Deprecated
-    public WeaveIterator(final Iterator<T>... itrs) {
-        this(DefaultComparator.getInstance(), itrs);
-    }
-
-    /**
-     * Deprecated cuz too slow.
-     */
-    @Deprecated
-    public WeaveIterator(Iterator<T> itr1, Iterator<T> itr2) {
-        this(DefaultComparator.getInstance(), itr1, itr2);
-    }
 
     @SuppressWarnings("unchecked")
     public WeaveIterator(Comparator<? super T> cmp, Iterator<T> itr1, Iterator<T> itr2) {

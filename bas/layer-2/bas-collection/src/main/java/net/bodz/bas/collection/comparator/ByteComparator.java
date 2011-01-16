@@ -1,13 +1,10 @@
 package net.bodz.bas.collection.comparator;
 
 public class ByteComparator
-        implements NonNullComparator<Byte> {
-
-    private ByteComparator() {
-    }
+        extends AbstractNonNullComparator<Byte> {
 
     @Override
-    public int compare(Byte a, Byte b) {
+    public int compareNonNull(Byte a, Byte b) {
         return a - b;
     }
 

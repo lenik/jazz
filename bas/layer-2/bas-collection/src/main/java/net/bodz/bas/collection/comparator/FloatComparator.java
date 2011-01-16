@@ -1,13 +1,10 @@
 package net.bodz.bas.collection.comparator;
 
 public class FloatComparator
-        implements NonNullComparator<Float> {
-
-    private FloatComparator() {
-    }
+        extends AbstractNonNullComparator<Float> {
 
     @Override
-    public int compare(Float a, Float b) {
+    public int compareNonNull(Float a, Float b) {
         return a < b ? -1 : a > b ? 1 : 0;
     }
 
