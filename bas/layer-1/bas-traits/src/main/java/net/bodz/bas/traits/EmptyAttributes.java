@@ -3,7 +3,6 @@ package net.bodz.bas.traits;
 import java.util.Collection;
 import java.util.Collections;
 
-
 public class EmptyAttributes
         implements IAttributes {
 
