@@ -13,6 +13,7 @@ public class MethodSignature {
     private final String name;
     private final Class<?>[] parameterTypes;
     private final Class<?> returnType;
+
     private Boolean hasNullParameterType;
 
     // public static final String CONSTRUCTOR = "~ctor";
@@ -47,7 +48,7 @@ public class MethodSignature {
         this(ctor.getName(), ctor.getParameterTypes());
     }
 
-    public String getMethodName() {
+    public String getName() {
         return name;
     }
 
@@ -68,17 +69,19 @@ public class MethodSignature {
         return hasNullParameterType();
     }
 
-    private transient Integer hash;
+    private transient boolean hashInited;
+    private transient int hash;
 
     @Override
     public int hashCode() {
-        if (this.hash == null) {
+        if (!hashInited) {
             int hash = 0xbae56896;
             hash += name.hashCode();
             hash += Arrays.hashCode(parameterTypes);
             if (returnType != null)
                 hash += returnType.hashCode();
             this.hash = hash;
+            hashInited = true;
         }
         return hash;
     }
