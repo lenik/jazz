@@ -7,6 +7,9 @@ import javax.script.ScriptException;
 
 import net.bodz.bas.cli.BasicCLI;
 import net.bodz.bas.cli.CLIException;
+import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
+import net.bodz.bas.log.api.Logger;
+import net.bodz.bas.potato.traits.IType;
 import net.bodz.bas.util.exception.ParseException;
 
 import org.apache.commons.lang.ArrayUtils;
@@ -17,7 +20,7 @@ public class CLITask
         extends Task {
 
     protected final BasicCLI app;
-    protected final ScriptClass<?> sclass;
+    protected final IType sclass;
 
     public CLITask(BasicCLI cliApp) {
         this.app = cliApp;
@@ -57,16 +60,16 @@ public class CLITask
 
     protected Object get(String cliFieldName) {
         try {
-            return sclass.get(app, cliFieldName);
-        } catch (ScriptException e) {
+            return sclass.getProperty(cliFieldName).get(app);
+        } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
 
     protected void set(String cliFieldName, Object newValue) {
         try {
-            sclass.set(app, cliFieldName, newValue);
-        } catch (ScriptException e) {
+            sclass.getProperty(cliFieldName).set(app, newValue);
+        } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
@@ -142,7 +145,7 @@ public class CLITask
             }
             // adapting attributes
             if (logLevel != 0) {
-                LogTerm L = (LogTerm) sclass.get(app, "logger");
+                Logger L = (Logger) sclass.getProperty("logger").get(app);
                 L.setLevel(L.getLevel() + logLevel);
             }
         } catch (CLIException e) {

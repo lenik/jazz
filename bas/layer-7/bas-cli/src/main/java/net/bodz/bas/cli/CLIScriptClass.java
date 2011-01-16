@@ -5,12 +5,16 @@ import java.util.TreeMap;
 
 import javax.script.ScriptException;
 
-public class CLIScriptClass<T extends BasicCLI> extends _ScriptClass<T> {
+import net.bodz.bas.potato.traits.AbstractType;
+
+public class CLIScriptClass<T extends BasicCLI>
+        extends AbstractType {
 
     private final T dynamicImpl;
 
     @SuppressWarnings("unchecked")
-    public CLIScriptClass(Class<T> origClass, Object dynamicImpl, boolean inheritsConvert) throws ScriptException {
+    public CLIScriptClass(Class<T> origClass, Object dynamicImpl, boolean inheritsConvert)
+            throws ScriptException {
         super(origClass, inheritsConvert ? Scripts.convertClass(origClass) : null);
         this.dynamicImpl = (T) dynamicImpl;
         try {
@@ -20,16 +24,19 @@ public class CLIScriptClass<T extends BasicCLI> extends _ScriptClass<T> {
         }
     }
 
-    public CLIScriptClass(Class<T> origClass, Object dynamicImpl) throws ScriptException {
+    public CLIScriptClass(Class<T> origClass, Object dynamicImpl)
+            throws ScriptException {
         this(origClass, dynamicImpl, false);
     }
 
     @SuppressWarnings("unchecked")
-    public CLIScriptClass(Object dynamicImpl) throws ScriptException {
+    public CLIScriptClass(Object dynamicImpl)
+            throws ScriptException {
         this((Class<T>) dynamicImpl.getClass(), dynamicImpl);
     }
 
-    protected void load() throws CLIException {
+    protected void load()
+            throws CLIException {
         ClassOptions<BasicCLI> copts = dynamicImpl.getOptions();
         TreeMap<String, _Option<?>> map = copts.getOptions();
         for (Entry<String, _Option<?>> e : map.entrySet()) {

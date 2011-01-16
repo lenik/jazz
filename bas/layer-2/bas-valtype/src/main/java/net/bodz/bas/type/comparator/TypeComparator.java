@@ -1,12 +1,12 @@
 package net.bodz.bas.type.comparator;
 
-import net.bodz.bas.collection.comparator.NonNullComparator;
+import net.bodz.bas.collection.comparator.AbstractNonNullComparator;
 
 public class TypeComparator
-        implements NonNullComparator<Class<?>> {
+        extends AbstractNonNullComparator<Class<?>> {
 
     @Override
-    public int compare(Class<?> t1, Class<?> t2) {
+    public int compareNonNull(Class<?> t1, Class<?> t2) {
         if (t1.isInterface()) {
             if (t2.isInterface())
                 return InterfaceComparator.getInstance().compare(t1, t2);

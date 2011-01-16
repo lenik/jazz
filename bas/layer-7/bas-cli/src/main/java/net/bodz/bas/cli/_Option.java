@@ -6,16 +6,17 @@ import java.util.Map;
 
 import net.bodz.bas.cli.annotations.Option;
 import net.bodz.bas.cli.annotations.OptionGroup;
+import net.bodz.bas.potato.traits.AbstractProperty;
 import net.bodz.bas.string.Strings;
 import net.bodz.bas.traits.IParser;
 import net.bodz.bas.traits.IValidator;
+import net.bodz.bas.traits.Traits;
 import net.bodz.bas.traits.ValidateException;
 import net.bodz.bas.util.exception.CreateException;
 import net.bodz.bas.util.exception.ParseException;
-import net.bodz.bas.valtype.util.ClassInstance;
 
 public abstract class _Option<T>
-        implements ScriptField<T> {
+        extends AbstractProperty {
 
     protected String name; // listDetai l
     protected final String hname; // list-detail
@@ -28,7 +29,7 @@ public abstract class _Option<T>
 
     protected final IParser<?> parser;
     protected final ItemTypeParser valparser;
-    protected final IValidator<?> check;
+    protected final IValidator<Object> check;
 
     protected final String optgrp;
 
@@ -51,18 +52,6 @@ public abstract class _Option<T>
         this.type = type;
         this.optgrp = optgrp == null ? null : optgrp.value();
 
-        ParseBy parseBy = elm.getAnnotation(ParseBy.class);
-        Class<? extends IParser<?>> parserClass = null;
-        String parserParam = null;
-        if (parseBy != null) {
-            parserClass = parseBy.value();
-            parserParam = parseBy.param();
-            if (parserClass == IParser.class)
-                parserClass = null;
-            if (parserParam.isEmpty())
-                parserParam = null;
-        }
-
         if (type.isArray() && parserClass == null)
             valtype = (Class<T>) type.getComponentType();
         if (option.valtype() != void.class)
@@ -80,32 +69,13 @@ public abstract class _Option<T>
             check = null;
         } else {
             try {
-                IParser<?> parser0;
-                if (parserParam == null)
-                    parser0 = ClassInstance.getClassInstance(parserClass);
-                else
-                    parser0 = ClassInstance.getClassInstance(parserClass, parserParam);
-                parser = Util.guessParser(parser0, valtype);
+                parser = Traits.getTraits(elm, IParser.class);
                 if (parser instanceof ItemTypeParser)
                     valparser = (ItemTypeParser) parser;
                 else
                     valparser = null;
 
-                ValidateBy checkBy = elm.getAnnotation(ValidateBy.class);
-                Class<? extends IValidator<?>> check0 = null;
-                if (checkBy != null) {
-                    check0 = checkBy.value();
-                    if (check0 == Checker.class)
-                        check = null;
-                    else {
-                        String checkinfo = checkBy.param();
-                        if (checkinfo.isEmpty())
-                            check = ClassInstance.getClassInstance(check0);
-                        else
-                            check = ClassInstance.getClassInstance(check0, checkinfo);
-                    }
-                } else
-                    check = null;
+                check = Traits.getTraits(elm, IValidator.class);
             } catch (CreateException e) {
                 throw new CLIError("can\'t init option " + reflectName, e);
             } catch (CLIError e) {
@@ -169,7 +139,7 @@ public abstract class _Option<T>
         Object val = parser.parse(s);
         if (check != null)
             try {
-                check.check(val);
+                check.validate(val);
             } catch (ValidateException e) {
                 throw new ParseException(e);
             }
@@ -185,7 +155,7 @@ public abstract class _Option<T>
             val = parser.parse(s);
         if (check != null)
             try {
-                check.check(val);
+                check.validate(val);
             } catch (ValidateException e) {
                 throw new ParseException(e);
             }

@@ -3,17 +3,17 @@ package net.bodz.bas.type.comparator;
 import java.lang.reflect.Method;
 import java.util.Comparator;
 
-import net.bodz.bas.collection.comparator.NonNullComparator;
+import net.bodz.bas.collection.comparator.AbstractNonNullComparator;
 import net.bodz.bas.collection.comparator.RefinedOrderComparator;
 import net.bodz.bas.collection.comparator.ReorderComparator;
 
 public class TypeVectorComparator
-        implements NonNullComparator<Class<?>[]> {
+        extends AbstractNonNullComparator<Class<?>[]> {
 
     private static final TypeComparator typecmp = TypeComparator.getInstance();
 
     @Override
-    public int compare(Class<?>[] o1, Class<?>[] o2) {
+    public int compareNonNull(Class<?>[] o1, Class<?>[] o2) {
         int share = Math.min(o1.length, o2.length);
         for (int i = 0; i < share; i++) {
             int cmp = typecmp.compare(o1[i], o2[i]);

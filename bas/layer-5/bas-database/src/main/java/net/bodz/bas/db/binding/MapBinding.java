@@ -5,20 +5,20 @@ import java.util.Map.Entry;
 
 import javax.script.ScriptException;
 
-import net.bodz.bas.potato.IPotatoProperty;
-import net.bodz.bas.potato.IPotatoType;
-import net.bodz.bas.potato.PotatoException;
-import net.bodz.bas.potato.adapter.reflect.ReflectPotatoType;
+import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
+import net.bodz.bas.potato.traits.IProperty;
+import net.bodz.bas.potato.traits.IPropertyMap;
+import net.bodz.bas.traits.Traits;
 
 public class MapBinding {
 
-    private final IPotatoType<?> sclass;
+    private final IPropertyMap propertyMap;
     private final Object instance;
 
     public MapBinding(Class<?> clazz, Object instance, boolean forceAccess)
             throws ScriptException {
         assert clazz != null;
-        this.sclass = ReflectPotatoType.getPotatoType(clazz);
+        this.propertyMap = Traits.getTraits(clazz, IPropertyMap.class);
         this.instance = instance;
     }
 
@@ -38,9 +38,9 @@ public class MapBinding {
     }
 
     public void getFields(Map<String, Object> map)
-            throws PotatoException {
+            throws ReflectiveOperationException {
         assert map != null;
-        for (IPotatoProperty property : sclass.getProperties()) {
+        for (IProperty property : propertyMap.values()) {
             String name = property.getName();
             Object value = property.get(instance);
             map.put(name, value);
@@ -48,16 +48,16 @@ public class MapBinding {
     }
 
     public void setFields(Map<String, ?> map)
-            throws PotatoException {
+            throws ReflectiveOperationException {
         assert map != null;
         for (Entry<String, ?> e : map.entrySet()) {
             String name = e.getKey();
             Object value = e.getValue();
-            IPotatoProperty sfield = sclass.getProperty(name);
-            if (sfield == null)
+            IProperty property = propertyMap.get(name);
+            if (property == null)
                 setNonexistField(name, value);
             else
-                sfield.set(instance, value);
+                property.set(instance, value);
         }
     }
 

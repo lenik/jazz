@@ -17,7 +17,7 @@ public class CLILauncher {
             throw new IllegalArgumentException("Not a CLI class: " + cliClass);
         BasicCLI cli = (BasicCLI) Jdk7Reflect.newInstance(cliClass);
 
-        cli.run(args);
+        cli.execute(args);
     }
 
 }

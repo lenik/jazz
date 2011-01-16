@@ -75,14 +75,15 @@ public class ClassResource {
      */
     public static URL classDataURLBySuffix(Class<?> clazz, String suffix) {
         String classSimpleName = clazz.getSimpleName();
-        URL context = clazz.getResource(classSimpleName + ".class"); //$NON-NLS-1$
-        String spec = classSimpleName + suffix;
-        try {
-            URL url = new URL(context, spec);
-            return url;
-        } catch (MalformedURLException e) {
-            throw new IllegalArgumentException(e);
-        }
+        String resourceName=classSimpleName+suffix;
+        return  clazz.getResource(resourceName); 
+//        String spec = classSimpleName + suffix;
+//        try {
+//            URL url = new URL(context, spec);
+//            return url;
+//        } catch (MalformedURLException e) {
+//            throw new IllegalArgumentException(e);
+//        }
     }
 
     public static URL getRootResourceURL(Class<?> clazz) {

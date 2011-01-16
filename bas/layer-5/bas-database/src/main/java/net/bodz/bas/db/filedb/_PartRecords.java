@@ -11,6 +11,7 @@ import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
 import net.bodz.bas.io.resource.builtin.URLResource;
+import net.bodz.bas.string.StringPart;
 import net.bodz.bas.util.exception.ParseException;
 
 /**
@@ -146,6 +147,7 @@ public abstract class _PartRecords<K, V>
             try {
                 String line;
                 while ((line = lineReader.readLine()) != null) {
+                    line = StringPart.trimRight(line);
                     switch (state) {
                     case PREHEADER:
                         if (isPreHeaderComment(line) || line.trim().isEmpty())
@@ -212,6 +214,7 @@ public abstract class _PartRecords<K, V>
                             removeIndent--;
                         }
                         text.append(line);
+                        text.append('\n');
                     } // switch section
                 } // lines
                 if (text != null)

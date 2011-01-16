@@ -189,6 +189,7 @@ public class BatchEditCLI
             throws IOException {
         assert a != null;
         assert b != null;
+
         if (a.exists() && !b.exists()) {
             L.info("[new ]", a);
             return true;
@@ -202,8 +203,8 @@ public class BatchEditCLI
             L.info("[edit] ", a);
             return true;
         }
-        List<String> al = new LocalFileResource(a).setCharset(inputEncoding).forRead().listLines();
-        List<String> bl = new LocalFileResource(b).setCharset(outputEncoding).forRead().listLines();
+        List<String> al = new LocalFileResource(a, inputEncoding).forRead().listLines();
+        List<String> bl = new LocalFileResource(b, outputEncoding).forRead().listLines();
         List<DiffInfo> diffs = diffAlgorithm.diffCompare(al, bl);
         if (diffs.size() == 0)
             return false;
