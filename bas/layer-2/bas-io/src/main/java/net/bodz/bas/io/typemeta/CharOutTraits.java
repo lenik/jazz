@@ -4,13 +4,18 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 
+import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.WriterPrintOut;
-import net.bodz.bas.traits.AbstractParser;
+import net.bodz.bas.traits.AbstractCommonTraits;
 import net.bodz.bas.util.exception.ParseException;
 
-public class CharOutParser
-        extends AbstractParser<IPrintOut> {
+public class CharOutTraits
+        extends AbstractCommonTraits<ICharOut> {
+
+    public CharOutTraits() {
+        super(ICharOut.class);
+    }
 
     @Override
     public IPrintOut parse(String path)
