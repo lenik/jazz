@@ -5,11 +5,15 @@ import java.io.FileOutputStream;
 
 import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.OutputStreamByteOut;
-import net.bodz.bas.traits.AbstractParser;
+import net.bodz.bas.traits.AbstractCommonTraits;
 import net.bodz.bas.util.exception.ParseException;
 
-public class ByteOutParser
-        extends AbstractParser<IByteOut> {
+public class ByteOutTraits
+        extends AbstractCommonTraits<IByteOut> {
+
+    public ByteOutTraits() {
+        super(IByteOut.class);
+    }
 
     @Override
     public IByteOut parse(String path)
