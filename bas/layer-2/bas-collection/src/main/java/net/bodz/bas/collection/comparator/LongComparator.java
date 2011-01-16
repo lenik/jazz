@@ -1,13 +1,10 @@
 package net.bodz.bas.collection.comparator;
 
 public class LongComparator
-        implements NonNullComparator<Long> {
-
-    private LongComparator() {
-    }
+        extends AbstractNonNullComparator<Long> {
 
     @Override
-    public int compare(Long a, Long b) {
+    public int compareNonNull(Long a, Long b) {
         return a < b ? -1 : a > b ? 1 : 0;
     }
 

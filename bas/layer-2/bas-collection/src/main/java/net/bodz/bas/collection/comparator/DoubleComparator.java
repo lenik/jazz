@@ -1,13 +1,10 @@
 package net.bodz.bas.collection.comparator;
 
 public class DoubleComparator
-        implements NonNullComparator<Double> {
-
-    private DoubleComparator() {
-    }
+        extends AbstractNonNullComparator<Double> {
 
     @Override
-    public int compare(Double a, Double b) {
+    public int compareNonNull(Double a, Double b) {
         return a < b ? -1 : a > b ? 1 : 0;
     }
 

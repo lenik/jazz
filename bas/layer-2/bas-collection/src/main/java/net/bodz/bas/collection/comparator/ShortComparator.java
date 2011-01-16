@@ -1,13 +1,10 @@
 package net.bodz.bas.collection.comparator;
 
 public class ShortComparator
-        implements NonNullComparator<Short> {
-
-    private ShortComparator() {
-    }
+        extends AbstractNonNullComparator<Short> {
 
     @Override
-    public int compare(Short a, Short b) {
+    public int compareNonNull(Short a, Short b) {
         return a - b;
     }
 
