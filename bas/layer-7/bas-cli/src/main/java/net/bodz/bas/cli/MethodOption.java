@@ -5,10 +5,10 @@ import java.util.Arrays;
 
 import javax.script.ScriptException;
 
-import net.bodz.bas.cli.annotations.ArgsParseBy;
-import net.bodz.bas.cli.annotations.OptionGroup;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
+import net.bodz.bas.meta.program.ArgsParseBy;
+import net.bodz.bas.meta.program.OptionGroup;
 import net.bodz.bas.traits.IParser;
 import net.bodz.bas.util.exception.CreateException;
 import net.bodz.bas.util.exception.ParseException;

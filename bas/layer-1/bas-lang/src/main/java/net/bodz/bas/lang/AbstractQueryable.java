@@ -51,6 +51,14 @@ public abstract class AbstractQueryable
         return impl.get(specificationId);
     }
 
+    @Override
+    public Object query(Object specification)
+            throws QueryException {
+        if (specification instanceof String)
+            return query((String) specification);
+        return null;
+    }
+
     public Map<String, Object> getImplementationMap() {
         Map<String, Object> impl = loadImplementations();
         return Collections.unmodifiableMap(impl);

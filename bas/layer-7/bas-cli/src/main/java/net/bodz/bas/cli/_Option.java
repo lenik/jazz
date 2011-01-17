@@ -4,8 +4,8 @@ import java.lang.reflect.AnnotatedElement;
 import java.util.Collection;
 import java.util.Map;
 
-import net.bodz.bas.cli.annotations.Option;
-import net.bodz.bas.cli.annotations.OptionGroup;
+import net.bodz.bas.meta.program.Option;
+import net.bodz.bas.meta.program.OptionGroup;
 import net.bodz.bas.potato.traits.AbstractProperty;
 import net.bodz.bas.string.Strings;
 import net.bodz.bas.traits.IParser;
@@ -77,11 +77,11 @@ public abstract class _Option<T>
 
                 check = Traits.getTraits(elm, IValidator.class);
             } catch (CreateException e) {
-                throw new CLIError("can\'t init option " + reflectName, e);
+                throw new CLIError("can't init option " + reflectName, e);
             } catch (CLIError e) {
-                throw new CLIError("can\'t init option " + reflectName, e);
+                throw new CLIError("can't init option " + reflectName, e);
             } catch (ParseException e) {
-                throw new CLIError("can\'t init option " + reflectName, e);
+                throw new CLIError("can't init option " + reflectName, e);
             }
         }
     }

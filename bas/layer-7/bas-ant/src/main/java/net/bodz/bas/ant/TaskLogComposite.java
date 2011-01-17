@@ -5,7 +5,7 @@ import java.util.Map;
 
 import net.bodz.bas.log.AbstractLogComposite;
 import net.bodz.bas.log.AbstractLogSink;
-import net.bodz.bas.log.LogCategory;
+import net.bodz.bas.log.LogLevel;
 
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
@@ -24,7 +24,7 @@ public class TaskLogComposite
     }
 
     @Override
-    public AntLogSink get(LogCategory category, int verboseLevel) {
+    public AntLogSink get(LogLevel category, int verboseLevel) {
         int antLevel = getAntLevel(category, verboseLevel);
         AntLogSink sink = sinks.get(antLevel);
         if (sink == null) {
@@ -34,14 +34,14 @@ public class TaskLogComposite
         return sink;
     }
 
-    public static int getAntLevel(LogCategory category, int level) {
-        if (category == LogCategory.ERROR) {
+    public static int getAntLevel(LogLevel category, int level) {
+        if (category == LogLevel.ERROR) {
             if (level <= LEVEL_DEFAULT)
                 return Project.MSG_ERR;
             else
                 return Project.MSG_WARN;
         }
-        if (category == LogCategory.INFO) {
+        if (category == LogLevel.INFO) {
             if (level <= LEVEL_CRITICAL)
                 return Project.MSG_WARN;
             if (level <= LEVEL_DEFAULT)

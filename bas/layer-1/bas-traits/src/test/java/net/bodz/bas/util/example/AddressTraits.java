@@ -1,10 +1,12 @@
 package net.bodz.bas.util.example;
 
-import net.bodz.bas.lang.INegotiation;
-import net.bodz.bas.lang.MandatoryException;
-import net.bodz.bas.lang.NegotiationException;
-import net.bodz.bas.lang.NegotiationParameter;
+import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.lang.negotiation.MandatoryException;
+import net.bodz.bas.lang.negotiation.NegotiationException;
+import net.bodz.bas.lang.negotiation.NegotiationParameter;
 import net.bodz.bas.traits.AbstractCommonTraits;
+import net.bodz.bas.traits.IFormatter;
+import net.bodz.bas.traits.IParser;
 import net.bodz.bas.util.exception.ParseException;
 
 public class AddressTraits
@@ -19,6 +21,11 @@ public class AddressTraits
     public AddressTraits(boolean resolvePostCode) {
         super(Address.class);
         this.resolvePostCode = resolvePostCode;
+    }
+
+    @Override
+    public IParser<Address> getParser() {
+        return this;
     }
 
     @Override
@@ -46,16 +53,21 @@ public class AddressTraits
         if (negotiation != null) {
             for (NegotiationParameter param : negotiation) {
                 if (param.accept(CountryAliasUtil.class))
-                    country = param.getValue(CountryAliasUtil.class).unalias(country);
+                    country = param.<CountryAliasUtil> value().unalias(country);
                 else if (param.accept(PostCodeUtil.class, resolvePostCode)) {
                     postCode = Integer.parseInt(city);
-                    city = param.getValue(PostCodeUtil.class).getCityFromCode(postCode);
+                    city = param.<PostCodeUtil> value().getCityFromCode(postCode);
                 } else
                     param.bypass();
             }
         }
 
         return new Address(address, city, country, postCode, null);
+    }
+
+    @Override
+    public IFormatter<Address> getFormatter() {
+        return this;
     }
 
     @Override

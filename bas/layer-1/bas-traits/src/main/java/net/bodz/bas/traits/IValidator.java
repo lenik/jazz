@@ -1,7 +1,7 @@
 package net.bodz.bas.traits;
 
-import net.bodz.bas.lang.INegotiation;
-import net.bodz.bas.lang.NegotiationException;
+import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.lang.negotiation.NegotiationException;
 
 public interface IValidator<T> {
 

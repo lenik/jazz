@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.traits.AbstractCommonTraits;
+import net.bodz.bas.traits.IParser;
+import net.bodz.bas.traits.ISampleGenerator;
 import net.bodz.bas.util.exception.CreateException;
 import net.bodz.bas.util.exception.ParseException;
 
@@ -17,6 +19,16 @@ public class MessageDigestTraits
 
     public MessageDigestTraits() {
         super(MessageDigest.class);
+    }
+
+    @Override
+    public IParser<MessageDigest> getParser() {
+        return this;
+    }
+
+    @Override
+    public ISampleGenerator<MessageDigest> getSampleGenerator() {
+        return this;
     }
 
     @Override

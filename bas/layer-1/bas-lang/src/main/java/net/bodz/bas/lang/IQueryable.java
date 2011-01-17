@@ -36,4 +36,21 @@ public interface IQueryable {
     <T> T query(Class<T> specificationType)
             throws QueryException;
 
+    /**
+     * If specification is String, this function should return the same result as
+     * {@link #query(String)}.
+     * 
+     * @param specification
+     *            Non-<code>null</code> specification variable in any type.
+     * @return <code>null</code> If no available implementation exists.
+     * @throws NullPointerException
+     *             If <code>specificationType</code> is <code>null</code>.
+     * @throws NullPointerException
+     *             If <code>specificationType</code> is <code>null</code>.
+     * @throws QueryException
+     *             If query is failed.
+     */
+    Object query(Object specification)
+            throws QueryException;
+
 }

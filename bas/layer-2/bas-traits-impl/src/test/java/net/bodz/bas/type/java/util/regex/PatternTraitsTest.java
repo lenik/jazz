@@ -2,9 +2,9 @@ package net.bodz.bas.type.java.util.regex;
 
 import java.util.regex.Pattern;
 
-import net.bodz.bas.lang.FinalNegotiation;
-import net.bodz.bas.lang.INegotiation;
-import net.bodz.bas.lang.NegotiationParameter;
+import net.bodz.bas.lang.negotiation.FinalNegotiation;
+import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.lang.negotiation.NegotiationParameter;
 
 import org.junit.Assert;
 import org.junit.Test;

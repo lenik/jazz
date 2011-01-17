@@ -1,4 +1,4 @@
-package net.bodz.bas.lang;
+package net.bodz.bas.lang.negotiation;
 
 public interface INegotiation
         extends Iterable<NegotiationParameter> {

@@ -9,8 +9,8 @@ import java.nio.charset.Charset;
 import java.util.Comparator;
 import java.util.regex.Pattern;
 
-import net.bodz.bas.cli.annotations.Option;
-import net.bodz.bas.cli.annotations.OptionGroup;
+import net.bodz.bas.meta.program.Option;
+import net.bodz.bas.meta.program.OptionGroup;
 import net.bodz.bas.meta.util.OverrideOption;
 import net.bodz.bas.traits.provider.extra.GetInstanceParser;
 import net.bodz.bas.util.exception.NotImplementedException;

@@ -1,8 +1,8 @@
 package net.bodz.bas.util.example;
 
-import net.bodz.bas.lang.FinalNegotiation;
-import net.bodz.bas.lang.MandatoryException;
-import net.bodz.bas.lang.NegotiationParameter;
+import net.bodz.bas.lang.negotiation.FinalNegotiation;
+import net.bodz.bas.lang.negotiation.MandatoryException;
+import net.bodz.bas.lang.negotiation.NegotiationParameter;
 import net.bodz.bas.traits.ICommonTraits;
 import net.bodz.bas.traits.IFormatter;
 import net.bodz.bas.traits.IParser;

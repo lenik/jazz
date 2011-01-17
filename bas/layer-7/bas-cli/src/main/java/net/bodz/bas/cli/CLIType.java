@@ -5,32 +5,33 @@ import java.util.TreeMap;
 
 import javax.script.ScriptException;
 
+import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.potato.traits.AbstractType;
 
-public class CLIScriptClass<T extends BasicCLI>
+public class CLIType<T extends BasicCLI>
         extends AbstractType {
 
     private final T dynamicImpl;
 
     @SuppressWarnings("unchecked")
-    public CLIScriptClass(Class<T> origClass, Object dynamicImpl, boolean inheritsConvert)
-            throws ScriptException {
+    public CLIType(Class<T> origClass, Object dynamicImpl, boolean inheritsConvert)
+            throws ReflectiveOperationException {
         super(origClass, inheritsConvert ? Scripts.convertClass(origClass) : null);
         this.dynamicImpl = (T) dynamicImpl;
         try {
             load();
         } catch (CLIException e) {
-            throw new ScriptException(e.getMessage(), e);
+            throw new ReflectiveOperationException(e.getMessage(), e);
         }
     }
 
-    public CLIScriptClass(Class<T> origClass, Object dynamicImpl)
+    public CLIType(Class<T> origClass, Object dynamicImpl)
             throws ScriptException {
         this(origClass, dynamicImpl, false);
     }
 
     @SuppressWarnings("unchecked")
-    public CLIScriptClass(Object dynamicImpl)
+    public CLIType(Object dynamicImpl)
             throws ScriptException {
         this((Class<T>) dynamicImpl.getClass(), dynamicImpl);
     }

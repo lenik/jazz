@@ -1,8 +1,5 @@
 package net.bodz.bas.reflect.query;
 
-/**
- * @test {@link ReflectQueryTest}
- */
 public class ReflectQuery {
 
     public static PublicMethods selectMethods(Class<?> clazz) {

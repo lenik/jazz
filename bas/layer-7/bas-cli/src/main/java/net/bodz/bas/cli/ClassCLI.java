@@ -11,13 +11,13 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import net.bodz.bas.a.A_bas;
-import net.bodz.bas.cli.annotations.Option;
 import net.bodz.bas.closure.alt.Filt1;
 import net.bodz.bas.collection.comparator.StringLengthComparator;
 import net.bodz.bas.collection.util.ClassLocal;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
+import net.bodz.bas.meta.build.BuildInfoUtil;
+import net.bodz.bas.meta.program.Option;
 import net.bodz.bas.reflect.query.ReflectQuery;
 import net.bodz.bas.string.Strings;
 import net.bodz.bas.util.Nullables;
@@ -81,7 +81,7 @@ public class ClassCLI {
         final char[] tab = new char[tabsize];
         Arrays.fill(tab, ' ');
 
-        String program = A_bas.getProgramName(clazz);
+        String program = BuildInfoUtil.getProgramName(clazz);
         buffer.append("Syntax: \n");
         buffer.append(tab);
         buffer.append(program + " [OPTION] [--]");

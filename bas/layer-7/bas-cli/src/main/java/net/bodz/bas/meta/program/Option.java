@@ -1,4 +1,4 @@
-package net.bodz.bas.cli.annotations;
+package net.bodz.bas.meta.program;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -72,12 +72,6 @@ public @interface Option {
      * </ul>
      */
     String optional() default "";
-
-    /**
-     * when valtype is specified, the value must be collection type and the parser and check are
-     * applied for each item in the collection.
-     */
-    Class<?> valtype() default void.class;
 
     /**
      * Get option also from FILES by index. for collection/map types, this is the starting index.

@@ -1,4 +1,4 @@
-package net.bodz.bas.a;
+package net.bodz.bas.meta.build;
 
 import java.net.URL;
 import java.util.Arrays;

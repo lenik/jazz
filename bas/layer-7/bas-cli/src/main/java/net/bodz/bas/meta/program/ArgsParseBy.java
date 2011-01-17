@@ -1,4 +1,4 @@
-package net.bodz.bas.cli.annotations;
+package net.bodz.bas.meta.program;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -9,7 +9,7 @@ import net.bodz.bas.traits.IParser;
 
 /** for method/callback only */
 @Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.METHOD })
+@Target({ ElementType.METHOD })
 public @interface ArgsParseBy {
 
     Class<? extends IParser<?>>[] value() default {};

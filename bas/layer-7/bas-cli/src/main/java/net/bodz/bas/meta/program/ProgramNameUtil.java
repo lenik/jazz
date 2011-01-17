@@ -1,4 +1,4 @@
-package net.bodz.bas.cli.annotations;
+package net.bodz.bas.meta.program;
 
 import net.bodz.bas.annotation.util.AnnotationParseUtil;
 
