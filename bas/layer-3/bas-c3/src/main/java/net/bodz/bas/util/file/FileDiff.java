@@ -8,6 +8,7 @@ import java.util.List;
 
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.IStreamResource;
+import net.bodz.bas.io.resource.builtin.LocalFileResource;
 import net.bodz.bas.text.diff.DiffComparator;
 import net.bodz.bas.text.diff.DiffInfo;
 
@@ -71,6 +72,11 @@ public class FileDiff {
                 d.close();
         }
         return -1;
+    }
+
+    public static boolean equals(File src, File dst)
+            throws IOException {
+        return equals(new LocalFileResource(src), new LocalFileResource(dst));
     }
 
     public static boolean equals(IStreamInputSource src, IStreamInputSource dst)

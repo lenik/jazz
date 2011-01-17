@@ -162,11 +162,19 @@ public class FilePath {
         return null;
     }
 
+    public static String getExtension(File file, boolean includeDot) {
+        return getExtension(file.getPath(), includeDot);
+    }
+
     /**
      * @return without dot, "" if file has no extension.
      */
     public static String getExtension(String path) {
         return getExtension(path, false);
+    }
+
+    public static String getExtension(File file) {
+        return getExtension(file.getPath());
     }
 
     /**

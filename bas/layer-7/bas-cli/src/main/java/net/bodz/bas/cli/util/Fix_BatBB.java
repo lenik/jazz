@@ -7,10 +7,10 @@ import java.nio.ByteBuffer;
 
 import net.bodz.bas.cli.BatchEditCLI;
 import net.bodz.bas.cli.EditResult;
-import net.bodz.bas.cli.annotations.Option;
 import net.bodz.bas.meta.build.RcsKeywords;
 import net.bodz.bas.meta.build.Version;
 import net.bodz.bas.meta.info.Doc;
+import net.bodz.bas.meta.program.Option;
 
 @Doc("Fix: .bat goto labels must not cross 1k block boundary.")
 @Version({ 0, 0 })

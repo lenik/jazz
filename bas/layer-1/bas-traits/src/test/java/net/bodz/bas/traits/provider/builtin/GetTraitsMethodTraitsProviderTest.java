@@ -50,6 +50,11 @@ public class GetTraitsMethodTraitsProviderTest
         }
 
         @Override
+        public IFormatter<Object> getFormatter() {
+            return this;
+        }
+
+        @Override
         public String format(Object object) {
             return message + " blah";
         }

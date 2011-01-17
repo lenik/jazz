@@ -1,8 +1,8 @@
-package net.bodz.bas.lang;
+package net.bodz.bas.lang.negotiation;
 
 import java.io.Serializable;
 
-public final class NegotiationParameter
+public class NegotiationParameter
         implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -45,8 +45,9 @@ public final class NegotiationParameter
         return value;
     }
 
-    public <T> T getValue(Class<T> type) {
-        return type.cast(value);
+    @SuppressWarnings("unchecked")
+    public <T> T value() {
+        return (T) value;
     }
 
     /**

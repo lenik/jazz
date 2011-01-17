@@ -1,4 +1,4 @@
-package net.bodz.bas.lang;
+package net.bodz.bas.lang.negotiation;
 
 public class MandatoryException
         extends NegotiationException {

@@ -4,8 +4,8 @@ import java.beans.ExceptionListener;
 import java.text.ParsePosition;
 import java.util.logging.Logger;
 
-import net.bodz.bas.lang.INegotiation;
-import net.bodz.bas.lang.NegotiationException;
+import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.util.exception.ParseException;
 
 public interface IParser<T> {

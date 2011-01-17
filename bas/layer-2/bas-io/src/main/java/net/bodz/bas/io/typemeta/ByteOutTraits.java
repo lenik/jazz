@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.OutputStreamByteOut;
 import net.bodz.bas.traits.AbstractCommonTraits;
+import net.bodz.bas.traits.IParser;
 import net.bodz.bas.util.exception.ParseException;
 
 public class ByteOutTraits
@@ -13,6 +14,11 @@ public class ByteOutTraits
 
     public ByteOutTraits() {
         super(IByteOut.class);
+    }
+
+    @Override
+    public IParser<IByteOut> getParser() {
+        return this;
     }
 
     @Override

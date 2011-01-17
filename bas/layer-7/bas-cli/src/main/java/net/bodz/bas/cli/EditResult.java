@@ -1,6 +1,5 @@
 package net.bodz.bas.cli;
 
-
 public class EditResult {
 
     public static final int NONE = 0;
@@ -34,21 +33,21 @@ public class EditResult {
     public String getOperationName() {
         switch (operation) {
         case NONE:
-            return "none"; 
+            return "none";
         case SAVE:
         case SAVE_DIFF:
         case SAVE_SAME:
-            return "save"; 
+            return "save";
         case DELETE:
-            return "none"; 
+            return "none";
         case RENAME:
-            return "renm"; 
+            return "renm";
         case MOVE:
-            return "move"; 
+            return "move";
         case COPY:
-            return "copy"; 
+            return "copy";
         }
-        return "????"; 
+        return "????";
     }
 
     public void save(Boolean changed) {

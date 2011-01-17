@@ -11,12 +11,12 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 import java.util.List;
 
-import net.bodz.bas.cli.annotations.Option;
-import net.bodz.bas.cli.annotations.OptionGroup;
 import net.bodz.bas.cli.util.ProtectedShell;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.builtin.InputStreamSource;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
+import net.bodz.bas.meta.program.Option;
+import net.bodz.bas.meta.program.OptionGroup;
 import net.bodz.bas.meta.util.OverrideOption;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.Stdio;
@@ -26,12 +26,12 @@ import net.bodz.bas.text.diff.DiffComparator;
 import net.bodz.bas.text.diff.DiffFormat;
 import net.bodz.bas.text.diff.DiffFormats;
 import net.bodz.bas.text.diff.DiffInfo;
+import net.bodz.bas.util.TempFile;
 import net.bodz.bas.util.exception.IllegalUsageError;
 import net.bodz.bas.util.exception.NotImplementedException;
 import net.bodz.bas.util.exception.UnexpectedException;
 import net.bodz.bas.util.file.FileDiff;
 import net.bodz.bas.util.file.FilePath;
-import net.bodz.bas.util.file.FileTemp;
 
 @OptionGroup(value = "batch process", rank = -3)
 public class BatchEditCLI
@@ -213,13 +213,13 @@ public class BatchEditCLI
         return true;
     }
 
-    private File tmpDir = FileTemp.getTmpDir();
+    private File tmpDir = TempFile.getTmpDir();
     private String tmpPrefix = getClass().getSimpleName();
 
     private File _getOutputFile(String relative, File in) {
         if (outputDirectory == null)
             return in;
-        File out = FilePath.getAbsoluteFile(outputDirectory, relative);
+        File out = FilePath.canoniOf(outputDirectory, relative);
         File outd = out.getParentFile();
         if (outd.isFile())
             throw new Error("Invalid output directory: " + outd);
@@ -227,7 +227,7 @@ public class BatchEditCLI
     }
 
     protected File getOutputFile(String relative, File defaultStart) {
-        File in = FilePath.getAbsoluteFile(defaultStart, relative);
+        File in = FilePath.canoniOf(defaultStart, relative);
         return _getOutputFile(relative, in);
     }
 
@@ -250,7 +250,7 @@ public class BatchEditCLI
     protected void _processFile(File file) {
         Throwable err = null;
         try {
-            L.tinfo("[proc] ", file);
+            L.info("[proc] ", file);
             EditResult result = BatchEditCLI.this.doEdit(file);
             addResult(file, result);
         } catch (RuntimeException e) {
@@ -388,10 +388,10 @@ public class BatchEditCLI
     protected ProtectedShell _getShell() {
         if (dryRun)
             // in common case, dry mode is provided for verbose purpose
-            return new ProtectedShell(false, L.info());
+            return new ProtectedShell(false, L.getInfoSink());
         else
             // when in real mode, the verbose info goes into debug out
-            return new ProtectedShell(true, L.debug());
+            return new ProtectedShell(true, L.getDebugSink());
     }
 
     protected final ProcessResultStat stat = new ProcessResultStat();
@@ -414,7 +414,7 @@ public class BatchEditCLI
     protected void addResult(File src, File dst, File edit, EditResult result)
             throws IOException {
         if (result == null)
-            L.detail("[skip] ", src);
+            L.info(1, "[skip] ", src);
         else {
             if (src != null)
                 applyResult(src, dst, edit, result);
@@ -516,10 +516,10 @@ public class BatchEditCLI
     protected void doMain(String[] args)
             throws Exception {
         super.doMain(args);
-        if (L.showDetail())
-            stat.dumpDetail(L.detail().getCharOut());
-        else if (L.showInfo())
-            stat.dumpBrief(L.info().getCharOut());
+        if (L.isInfoEnabled(1))
+            stat.dumpDetail(L.getInfoSink(1));
+        else if (L.isInfoEnabled())
+            stat.dumpBrief(L.getInfoSink());
         // System.exit(stat.errors);
     }
 
@@ -527,7 +527,7 @@ public class BatchEditCLI
     @OverrideOption(group = "batchEdit")
     protected void doFileArgument(final File file)
             throws Exception {
-        L.tinfo("[start] ", file);
+        L.status("[start] ", file);
         super.doFileArgument(file);
     }
 

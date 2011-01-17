@@ -13,13 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.bodz.bas.a.A_bas;
-import net.bodz.bas.a.ClassInfo;
-import net.bodz.bas.a.StartMode;
 import net.bodz.bas.cli.BatchEditCLI;
 import net.bodz.bas.cli.EditResult;
-import net.bodz.bas.cli.annotations.Option;
-import net.bodz.bas.cli.annotations.ProgramName;
 import net.bodz.bas.collection.set.ArraySet;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.loader.DefaultBooter;
@@ -28,9 +23,14 @@ import net.bodz.bas.loader.LoadUtil;
 import net.bodz.bas.loader.TempClassLoader;
 import net.bodz.bas.loader.UCL;
 import net.bodz.bas.loader.boot.BootProc;
+import net.bodz.bas.meta.build.BuildInfoUtil;
+import net.bodz.bas.meta.build.ClassInfo;
 import net.bodz.bas.meta.build.RcsKeywords;
 import net.bodz.bas.meta.build.Version;
 import net.bodz.bas.meta.info.Doc;
+import net.bodz.bas.meta.program.Option;
+import net.bodz.bas.meta.program.ProgramName;
+import net.bodz.bas.meta.program.StartMode;
 import net.bodz.bas.regex.UnixStyleVarProcessor;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.Stdio;
@@ -183,7 +183,7 @@ public class Mkbat
 
     protected void generate(Class<?> clazz)
             throws IOException {
-        String batName = A_bas.getProgramName(clazz, false);
+        String batName = BuildInfoUtil.getProgramName(clazz, false);
         File batf = getOutputFile(batName + ".bat");
         batf.getParentFile().mkdirs();
         String name = clazz.getName();

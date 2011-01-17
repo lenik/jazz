@@ -3,20 +3,18 @@ package net.bodz.bas.type.java.util;
 import java.lang.ref.WeakReference;
 import java.util.Locale;
 
-import net.bodz.bas.lang.INegotiation;
-import net.bodz.bas.lang.NegotiationException;
-import net.bodz.bas.lang.NegotiationParameter;
+import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.lang.negotiation.NegotiationException;
+import net.bodz.bas.lang.negotiation.NegotiationParameter;
 import net.bodz.bas.meta.util.ValueType;
 import net.bodz.bas.traits.AbstractCommonTraits;
+import net.bodz.bas.traits.IParser;
+import net.bodz.bas.traits.ISampleGenerator;
 import net.bodz.bas.util.exception.CreateException;
 import net.bodz.bas.util.exception.ParseException;
 
 public class LocaleTraits
         extends AbstractCommonTraits<Locale> {
-
-    public LocaleTraits() {
-        super(Locale.class);
-    }
 
     /**
      * The separator used to join locale components.
@@ -24,6 +22,20 @@ public class LocaleTraits
     @ValueType(String.class)
     public static final String textformSeparator = "separator";
     public static final String defaultTextformSeparator = "_";
+
+    public LocaleTraits() {
+        super(Locale.class);
+    }
+
+    @Override
+    public IParser<Locale> getParser() {
+        return this;
+    }
+
+    @Override
+    public ISampleGenerator<Locale> getSampleGenerator() {
+        return this;
+    }
 
     @Override
     public Locale parse(String localeName)

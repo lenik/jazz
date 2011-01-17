@@ -1,4 +1,4 @@
-package net.bodz.bas.lang;
+package net.bodz.bas.lang.negotiation;
 
 import java.util.AbstractList;
 import java.util.ArrayList;

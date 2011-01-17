@@ -1,4 +1,4 @@
-package net.bodz.bas.a;
+package net.bodz.bas.meta.build;
 
 import java.io.IOException;
 import java.net.URL;
@@ -9,7 +9,7 @@ import net.bodz.bas.util.Nullables;
 import net.bodz.bas.vfs.impl.url.URLFile;
 
 @RcsKeywords(id = "$Id$")
-public class A_bas {
+public class BuildInfoUtil {
 
     /**
      * @return <code>null</code> if build info is unknown.

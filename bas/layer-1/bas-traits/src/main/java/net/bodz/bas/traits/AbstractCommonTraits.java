@@ -14,9 +14,9 @@ import net.bodz.bas.jdk6compat.jdk7emul.IllegalAccessException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.lang.AbstractQueryable;
-import net.bodz.bas.lang.INegotiation;
-import net.bodz.bas.lang.NegotiationException;
 import net.bodz.bas.lang.QueryException;
+import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.meta.codereview.ThreadUnsafe;
 import net.bodz.bas.util.exception.CreateException;
 import net.bodz.bas.util.exception.NotImplementedException;
@@ -43,47 +43,47 @@ public abstract class AbstractCommonTraits<T>
 
     @Override
     public IAttributes getAttributes() {
-        return this;
+        return null;
     }
 
     @Override
     public IClassifier<T> getClassifier() {
-        return this;
+        return null;
     }
 
     @Override
     public IFormatter<T> getFormatter() {
-        return this;
+        return null;
     }
 
     @Override
     public IInstanceStore<T> getInstanceStore() {
-        return this;
+        return null;
     }
 
     @Override
     public IParser<T> getParser() {
-        return this;
+        return null;
     }
 
     @Override
     public ISampleGenerator<T> getSampleGenerator() {
-        return this;
+        return null;
     }
 
     @Override
     public ISearcher<T> getSearcher() {
-        return this;
+        return null;
     }
 
     @Override
     public ITextForm<T> getTextForm() {
-        return this;
+        return null;
     }
 
     @Override
     public IValidator<T> getValidator() {
-        return this;
+        return null;
     }
 
     @Override

@@ -14,9 +14,6 @@ import java.util.Map.Entry;
 
 import javax.script.ScriptException;
 
-import net.bodz.bas.a.ClassInfo;
-import net.bodz.bas.cli.annotations.Option;
-import net.bodz.bas.cli.annotations.OptionGroup;
 import net.bodz.bas.cli.ext.CLIPlugin;
 import net.bodz.bas.cli.ext.CLIPlugins;
 import net.bodz.bas.closure.IExecutableVarArgsX;
@@ -26,10 +23,13 @@ import net.bodz.bas.loader.boot.BootInfo;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.api.Logger;
 import net.bodz.bas.log.api.LoggerFactory;
+import net.bodz.bas.meta.build.ClassInfo;
 import net.bodz.bas.meta.build.RcsKeywords;
 import net.bodz.bas.meta.build.RcsKeywordsUtil;
 import net.bodz.bas.meta.build.VersionInfo;
 import net.bodz.bas.meta.info.DisplayNameUtil;
+import net.bodz.bas.meta.program.Option;
+import net.bodz.bas.meta.program.OptionGroup;
 import net.bodz.bas.meta.util.ChainUsage;
 import net.bodz.bas.meta.util.OverrideOption;
 import net.bodz.bas.potato.traits.IType;
@@ -42,12 +42,12 @@ import net.bodz.bas.traits.ParserUtil;
 import net.bodz.bas.traits.Traits;
 import net.bodz.bas.ui.ConsoleUI;
 import net.bodz.bas.ui.UserInterface;
+import net.bodz.bas.util.ClassResource;
 import net.bodz.bas.util.PluginException;
 import net.bodz.bas.util.PluginTypeEx;
 import net.bodz.bas.util.exception.CreateException;
 import net.bodz.bas.util.exception.NotImplementedException;
 import net.bodz.bas.util.exception.ParseException;
-import net.bodz.bas.util.file.ClassResource;
 
 import org.apache.commons.lang.ArrayUtils;
 
@@ -102,12 +102,12 @@ public class BasicCLI
 
     @Option(alias = "v", doc = "repeat to get more info")
     void _verbose() {
-        L.setLevel(L.getLevel() + 1);
+        L.verbose(1);
     }
 
     @Option(alias = "q", doc = "repeat to get less info")
     void _quiet() {
-        L.setLevel(L.getLevel() - 1);
+        L.verbose(-1);
     }
 
     protected Map<String, Object> _vars;
@@ -242,7 +242,7 @@ public class BasicCLI
                 verinfo = RcsKeywordsUtil.getVersionInfo(keywords);
             } else {
                 verinfo = new VersionInfo();
-                URL url = ClassResource.classData(clazz);
+                URL url = ClassResource.classDataURL(clazz);
                 try {
                     File file = new File(url.toURI());
                     verinfo.time = file.lastModified();
@@ -419,7 +419,7 @@ public class BasicCLI
             // }
             // }
 
-            if (L.showDebug()) {
+            if (L.isDebugEnabled()) {
                 for (Entry<String, _Option<?>> entry : opts.getOptions().entrySet()) {
                     _Option<?> opt = entry.getValue();
                     String optnam = opt.getCLIName();
@@ -521,13 +521,13 @@ public class BasicCLI
             throws Exception {
         String name = wildcards.getName();
         if (enableWildcards && (name.contains("*") || name.contains("?"))) {
-//            FileSystem fs = FileSystems.getDefault();
-//            PathMatcher pathMatcher = fs.getPathMatcher("glob:name");
-//            for (File sibling : wildcards.getParentFile().listFiles())
-//                if (pathMatcher.matches(sibling.toPath())) {
-//                    L.debug("Wildcard expansion: ", wildcards, " -> ", sibling);
-//                    doFileArgument(sibling);
-//                }
+// FileSystem fs = FileSystems.getDefault();
+// PathMatcher pathMatcher = fs.getPathMatcher("glob:name");
+// for (File sibling : wildcards.getParentFile().listFiles())
+// if (pathMatcher.matches(sibling.toPath())) {
+// L.debug("Wildcard expansion: ", wildcards, " -> ", sibling);
+// doFileArgument(sibling);
+// }
             return;
         }
         doFileArgument(wildcards);

@@ -4,7 +4,7 @@ import java.lang.reflect.Field;
 
 import javax.script.ScriptException;
 
-import net.bodz.bas.cli.annotations.OptionGroup;
+import net.bodz.bas.meta.program.OptionGroup;
 
 public class FieldOption<T>
         extends _Option<T> {

@@ -2,11 +2,12 @@ package net.bodz.bas.type.java.lang;
 
 import java.util.Map;
 
-import net.bodz.bas.lang.INegotiation;
-import net.bodz.bas.lang.NegotiationException;
-import net.bodz.bas.lang.NegotiationParameter;
+import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.lang.negotiation.NegotiationException;
+import net.bodz.bas.lang.negotiation.NegotiationParameter;
 import net.bodz.bas.meta.util.ValueType;
 import net.bodz.bas.traits.AbstractCommonTraits;
+import net.bodz.bas.traits.IParser;
 import net.bodz.bas.traits.ISampleGenerator;
 import net.bodz.bas.util.exception.CreateException;
 import net.bodz.bas.util.exception.ParseException;
@@ -37,6 +38,16 @@ public class StringTraits
 
     public StringTraits() {
         super(String.class);
+    }
+
+    @Override
+    public IParser<String> getParser() {
+        return this;
+    }
+
+    @Override
+    public ISampleGenerator<String> getSampleGenerator() {
+        return this;
     }
 
     @Override

@@ -1,6 +1,8 @@
 package net.bodz.bas.type.java.lang;
 
 import net.bodz.bas.traits.AbstractCommonTraits;
+import net.bodz.bas.traits.IParser;
+import net.bodz.bas.traits.ISampleGenerator;
 import net.bodz.bas.util.exception.CreateException;
 import net.bodz.bas.util.exception.ParseException;
 
@@ -9,6 +11,16 @@ public class LongTraits
 
     public LongTraits() {
         super(Long.class);
+    }
+
+    @Override
+    public IParser<Long> getParser() {
+        return this;
+    }
+
+    @Override
+    public ISampleGenerator<Long> getSampleGenerator() {
+        return this;
     }
 
     @Override

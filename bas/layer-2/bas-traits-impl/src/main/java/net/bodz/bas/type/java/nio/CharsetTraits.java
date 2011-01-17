@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import net.bodz.bas.traits.AbstractCommonTraits;
+import net.bodz.bas.traits.IParser;
+import net.bodz.bas.traits.ISampleGenerator;
 import net.bodz.bas.util.exception.CreateException;
 import net.bodz.bas.util.exception.ParseException;
 
@@ -15,6 +17,16 @@ public class CharsetTraits
 
     public CharsetTraits() {
         super(Charset.class);
+    }
+
+    @Override
+    public IParser<Charset> getParser() {
+        return this;
+    }
+
+    @Override
+    public ISampleGenerator<Charset> getSampleGenerator() {
+        return this;
     }
 
     @Override

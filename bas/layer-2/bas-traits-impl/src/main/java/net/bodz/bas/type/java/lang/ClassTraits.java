@@ -1,6 +1,7 @@
 package net.bodz.bas.type.java.lang;
 
 import net.bodz.bas.traits.AbstractCommonTraits;
+import net.bodz.bas.traits.IParser;
 import net.bodz.bas.util.exception.ParseException;
 
 @SuppressWarnings("rawtypes")
@@ -9,6 +10,11 @@ public class ClassTraits
 
     public ClassTraits() {
         super(Class.class);
+    }
+
+    @Override
+    public IParser<Class> getParser() {
+        return this;
     }
 
     @Override

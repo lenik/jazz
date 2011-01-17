@@ -3,8 +3,8 @@ package net.bodz.bas.traits;
 import java.util.Map;
 import java.util.Random;
 
-import net.bodz.bas.lang.INegotiation;
-import net.bodz.bas.lang.NegotiationException;
+import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.meta.util.ValueType;
 import net.bodz.bas.util.exception.CreateException;
 

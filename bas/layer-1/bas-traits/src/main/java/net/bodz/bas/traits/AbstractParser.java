@@ -1,7 +1,7 @@
 package net.bodz.bas.traits;
 
-import net.bodz.bas.lang.INegotiation;
-import net.bodz.bas.lang.MandatoryException;
+import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.lang.negotiation.MandatoryException;
 import net.bodz.bas.util.exception.ParseException;
 
 public abstract class AbstractParser<T>
