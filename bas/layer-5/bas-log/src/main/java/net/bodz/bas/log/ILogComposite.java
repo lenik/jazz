@@ -18,6 +18,11 @@ public interface ILogComposite {
     void setMaxPriority(int maxPriority);
 
     /**
+     * Set the max priority with current priority plus the specified <code>delta</code>.
+     */
+    void verbose(int delta);
+
+    /**
      * @return {@link NullLogSink} if {@link ILogSink} for the specified <code>eventType</code>
      *         doesn't exist, or the specified <code>actualLevel</code> is larger than the effective
      *         level and so logging is suppressed.
