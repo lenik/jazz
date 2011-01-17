@@ -1,0 +1,132 @@
+    
+    /**
+     * Check if @name@ logging is enabled. 
+     *
+     * @return <code>true</code> If @name@ logging is enabled.
+     */
+    boolean is@Name@Enabled();
+
+    /**
+     * Check if @name@ logging with a delta verbose is enabled.
+     *
+     * @param delta The verbose level delta.
+     * @return <code>true</code> IF @name@ logging with the specific delta is enabled.
+     */
+    boolean is@Name@Enabled(int delta);
+
+    /**
+     * Get the @name@ logging output sink.
+     * <p>
+     * If the specific logging is disabled, a NullLogSink will be returned.
+     *
+     * @return Non-<code>null</code> sink object.
+     */
+    ILogSink get@Name@Sink(); 
+    
+    /**
+     * Get the @name@ logging output sink with a delta verbose.
+     * <p>
+     * If the specific logging is disabled, a NullLogSink will be returned.
+     *
+     * @param delta The verbose level delta.
+     * @return Non-<code>null</code> sink object.
+     */
+    ILogSink get@Name@Sink(int delta); 
+    
+    /**
+     * Add a @name@ logging.
+     *
+     * @param message The logging message.
+     */
+    void @name@(Object message);
+
+    /**
+     * Add a @name@ logging with an exception.
+     *
+     * @param e The exception object.
+     * @param message The logging message.
+     */
+    void @name@(Throwable e, Object message);
+
+    /**
+     * Add a @name@ logging with a delta verbose.
+     *
+     * @param message The logging message.
+     */
+    void @name@(int delta, Object message);
+
+    /**
+     * Add a @name@ logging with a delta verbose with an exception.
+     *
+     * @param e The exception object.
+     * @param message The logging message.
+     */
+    void @name@(int delta, Throwable e, Object message);
+
+    /**
+     * Add a @name@ logging.
+     *
+     * @param messageArray The logging message in pieces, will be concated.
+     */
+    void @name@(Object... messageArray);
+
+    /**
+     * Add a @name@ logging with an exception.
+     *
+     * @param e The exception object.
+     * @param messageArray The logging message in pieces, will be concated.
+     */
+    void @name@(Throwable e, Object... messageArray);
+
+    /**
+     * Add a @name@ logging with a delta verbose.
+     *
+     * @param delta The verbose level delta.
+     * @param messageArray The logging message in pieces, will be concated.
+     */
+    void @name@(int delta, Object... messageArray);
+
+    /**
+     * Add a @name@ logging with a delta verbose with an exception.
+     *
+     * @param delta The verbose level delta.
+     * @param e The exception object.
+     * @param messageArray The logging message in pieces, will be concated.
+     */
+    void @name@(int delta, Throwable e, Object... messageArray);
+
+    /**
+     * Add formatted a @name@ logging.
+     *
+     * @param format The message format.
+     * @param args The arguments to the format.
+     */
+    void @name@Format(String format, Object... args);
+
+    /**
+     * Add formatted a @name@ logging with an exception.
+     *
+     * @param e The exception object.
+     * @param format The message format.
+     * @param args The arguments to the format.
+     */
+    void @name@Format(Throwable e, String format, Object... args);
+
+    /**
+     * Add formatted a @name@ logging with a delta verbose.
+     *
+     * @param delta The verbose level delta.
+     * @param format The message format.
+     * @param args The arguments to the format.
+     */
+    void @name@Format(int delta, String format, Object... args);
+
+    /**
+     * Add formatted a @name@ logging with a delta verbose with an exception.
+     *
+     * @param delta The verbose level delta.
+     * @param e The exception object.
+     * @param format The message format.
+     * @param args The arguments to the format.
+     */
+    void @name@Format(int delta, Throwable e, String format, Object... args);

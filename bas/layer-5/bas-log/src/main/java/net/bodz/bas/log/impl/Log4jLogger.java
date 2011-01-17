@@ -1,12 +1,9 @@
 package net.bodz.bas.log.impl;
 
-import static net.bodz.bas.log.LogLevel.DEBUG_ID;
-import static net.bodz.bas.log.LogLevel.ERROR_ID;
-import static net.bodz.bas.log.LogLevel.INFO_ID;
-import net.bodz.bas.log.AbstractLogger;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.log.NullLogSink;
+import net.bodz.bas.log.api.AbstractLogger;
 import net.bodz.bas.log.impl.Log4jLogSink.DebugSink;
 import net.bodz.bas.log.impl.Log4jLogSink.ErrorSink;
 import net.bodz.bas.log.impl.Log4jLogSink.FatalSink;
@@ -29,40 +26,40 @@ public class Log4jLogger
     }
 
     @Override
-    public ILogSink get(LogLevel category, int actualLevel) {
-        switch (category.getId()) {
-        case ERROR_ID:
-            if (actualLevel <= LEVEL_HIGH) {
-                if (log4j.isEnabledFor(Level.FATAL))
-                    return new FatalSink(log4j);
-            } else if (actualLevel < LEVEL_LOW) {
-                if (log4j.isEnabledFor(Level.ERROR))
-                    return new ErrorSink(log4j);
-            } else {
-                if (log4j.isEnabledFor(Level.WARN))
-                    return new WarnSink(log4j);
-            }
-            break;
+    public ILogSink get(LogLevel level, int delta) {
+        if (level.getGroup() != LogLevel.logGroup)
+            return super.get(level, delta);
 
-        case INFO_ID:
-            if (log4j.isEnabledFor(Level.INFO))
+        int priority = level.getPriority() + delta;
+        switch (priority) {
+        case -2:
+            if (log4j.isEnabledFor(Level.FATAL))
+                return new ErrorSink(log4j);
+            break;
+        case -1:
+            if (log4j.isEnabledFor(Level.WARN))
+                return new WarnSink(log4j);
+            break;
+        case 0:
+        case 1:
+        case 2:
+            if (log4j.isInfoEnabled())
                 return new InfoSink(log4j);
             break;
-
-        case DEBUG_ID:
-            if (actualLevel <= LEVEL_DEFAULT) {
-                if (log4j.isEnabledFor(Level.DEBUG))
-                    return new DebugSink(log4j);
+        case 3:
+            if (log4j.isDebugEnabled())
+                return new DebugSink(log4j);
+            break;
+        default:
+            if (priority <= -3) {
+                if (log4j.isEnabledFor(Level.FATAL))
+                    return new FatalSink(log4j);
             } else {
-                if (log4j.isEnabledFor(Level.TRACE))
+                if (log4j.isTraceEnabled())
                     return new TraceSink(log4j);
             }
             break;
-
-        default:
-            return super.get(category, actualLevel);
         }
-
         return NullLogSink.getInstance();
     }
 
