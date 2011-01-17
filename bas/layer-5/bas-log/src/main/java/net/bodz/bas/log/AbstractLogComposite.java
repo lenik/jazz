@@ -18,6 +18,11 @@ public abstract class AbstractLogComposite
         this.maxPriority = maxPriority;
     }
 
+    @Override
+    public void verbose(int delta) {
+        this.maxPriority += delta;
+    }
+
     /**
      * Should be overrided.
      */
