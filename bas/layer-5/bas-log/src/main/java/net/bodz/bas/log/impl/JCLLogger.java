@@ -1,11 +1,11 @@
 package net.bodz.bas.log.impl;
 
-import static net.bodz.bas.log.LogCategory.DEBUG_ID;
-import static net.bodz.bas.log.LogCategory.ERROR_ID;
-import static net.bodz.bas.log.LogCategory.INFO_ID;
-import net.bodz.bas.log.AbstractLogComposite;
+import static net.bodz.bas.log.LogLevel.DEBUG_ID;
+import static net.bodz.bas.log.LogLevel.ERROR_ID;
+import static net.bodz.bas.log.LogLevel.INFO_ID;
+import net.bodz.bas.log.AbstractLogger;
 import net.bodz.bas.log.ILogSink;
-import net.bodz.bas.log.LogCategory;
+import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.log.NullLogSink;
 import net.bodz.bas.log.impl.JCLLogSink.DebugSink;
 import net.bodz.bas.log.impl.JCLLogSink.ErrorSink;
@@ -18,25 +18,25 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogConfigurationException;
 import org.apache.commons.logging.LogFactory;
 
-public class JCLLogComposite
-        extends AbstractLogComposite {
+public class JCLLogger
+        extends AbstractLogger {
 
     private final Log jclLog;
 
-    public JCLLogComposite(Log jclLog) {
+    public JCLLogger(Log jclLog) {
         if (jclLog == null)
             throw new NullPointerException("jclLog");
         this.jclLog = jclLog;
     }
 
     @Override
-    public ILogSink get(LogCategory category, int verboseLevel) {
+    public ILogSink get(LogLevel category, int actualLevel) {
         switch (category.getId()) {
         case ERROR_ID:
-            if (verboseLevel <= LEVEL_HIGH) { // (..., HIGH]
+            if (actualLevel <= LEVEL_HIGH) { // (..., HIGH]
                 if (jclLog.isFatalEnabled())
                     return new FatalSink(jclLog);
-            } else if (verboseLevel < LEVEL_LOW) { // (HIGH, LOW)
+            } else if (actualLevel < LEVEL_LOW) { // (HIGH, LOW)
                 if (jclLog.isErrorEnabled())
                     return new ErrorSink(jclLog); // [LOW, ...)
             } else if (jclLog.isWarnEnabled())
@@ -49,7 +49,7 @@ public class JCLLogComposite
             break;
 
         case DEBUG_ID:
-            if (verboseLevel < LEVEL_LOW) {
+            if (actualLevel < LEVEL_LOW) {
                 if (jclLog.isDebugEnabled())
                     return new DebugSink(jclLog);
             } else if (jclLog.isTraceEnabled())
@@ -57,7 +57,7 @@ public class JCLLogComposite
             break;
 
         default:
-            return super.get(category, verboseLevel);
+            return super.get(category, actualLevel);
         }
 
         return NullLogSink.getInstance();
@@ -116,15 +116,15 @@ public class JCLLogComposite
     /**
      * @throws LogConfigurationException
      */
-    public static JCLLogComposite getInstance(Class<?> clazz) {
-        return new JCLLogComposite(LogFactory.getLog(clazz));
+    public static JCLLogger getInstance(Class<?> clazz) {
+        return new JCLLogger(LogFactory.getLog(clazz));
     }
 
     /**
      * @throws LogConfigurationException
      */
-    public static JCLLogComposite getInstance(String name) {
-        return new JCLLogComposite(LogFactory.getLog(name));
+    public static JCLLogger getInstance(String name) {
+        return new JCLLogger(LogFactory.getLog(name));
     }
 
 }

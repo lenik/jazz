@@ -1,15 +1,11 @@
 package net.bodz.bas.log;
 
-import static net.bodz.bas.log.LogCategory.DEBUG;
-import static net.bodz.bas.log.LogCategory.ERROR;
-import static net.bodz.bas.log.LogCategory.INFO;
-import static net.bodz.bas.log.LogCategory.STATUS;
-import static net.bodz.bas.log.LogCategory.STATUS_ID;
-import static net.bodz.bas.log.LogCategory.STDERR;
-import static net.bodz.bas.log.LogCategory.STDERR_ID;
-import static net.bodz.bas.log.LogCategory.STDOUT;
-import static net.bodz.bas.log.LogCategory.STDOUT_ID;
-import net.bodz.bas.log.api.Logger;
+import static net.bodz.bas.log.LogLevel.DEBUG;
+import static net.bodz.bas.log.LogLevel.ERROR;
+import static net.bodz.bas.log.LogLevel.INFO;
+import static net.bodz.bas.log.LogLevel.STATUS;
+import static net.bodz.bas.log.LogLevel.STDERR;
+import static net.bodz.bas.log.LogLevel.STDOUT;
 import net.bodz.bas.log.impl.PrintStreamLogSink;
 import net.bodz.bas.log.impl.PrintStreamStatusSink;
 import net.bodz.bas.meta.util.ChainOrder;
@@ -17,14 +13,14 @@ import net.bodz.bas.meta.util.ChainUsage;
 import net.bodz.bas.meta.util.OverrideOption;
 
 public abstract class AbstractLogComposite
-        implements ILogComposite, Logger {
+        implements ILogComposite {
 
     /**
      * Should be overrided.
      */
     @Override
     @OverrideOption(chain = ChainUsage.PREFERRED, order = ChainOrder.TAIL)
-    public ILogSink get(LogCategory category, int verboseLevel) {
+    public ILogSink get(LogLevel category, int actualLevel) {
         switch (category.getId()) {
         case STATUS_ID:
             return new PrintStreamStatusSink(System.out);
@@ -44,18 +40,8 @@ public abstract class AbstractLogComposite
     }
 
     @Override
-    public IStatusSink getStatusSink(int verboseLevel) {
-        return (IStatusSink) get(STATUS, verboseLevel);
-    }
-
-    @Override
     public ILogSink getStdoutSink() {
         return get(STDOUT, LEVEL_DEFAULT);
-    }
-
-    @Override
-    public ILogSink getStdoutSink(int verboseLevel) {
-        return get(STDOUT, verboseLevel);
     }
 
     @Override
@@ -64,18 +50,8 @@ public abstract class AbstractLogComposite
     }
 
     @Override
-    public ILogSink getStderrSink(int verboseLevel) {
-        return get(STDERR, verboseLevel);
-    }
-
-    @Override
     public ILogSink getFatalSink() {
         return get(ERROR, LEVEL_HIGH);
-    }
-
-    @Override
-    public ILogSink getFatalSink(int verboseLevel) {
-        return get(ERROR, LEVEL_HIGH + (verboseLevel - LEVEL_DEFAULT));
     }
 
     @Override
@@ -84,18 +60,8 @@ public abstract class AbstractLogComposite
     }
 
     @Override
-    public ILogSink getErrorSink(int verboseLevel) {
-        return get(ERROR, verboseLevel);
-    }
-
-    @Override
     public ILogSink getWarnSink() {
         return get(ERROR, LEVEL_LOW);
-    }
-
-    @Override
-    public ILogSink getWarnSink(int verboseLevel) {
-        return get(ERROR, LEVEL_LOW + (verboseLevel - LEVEL_DEFAULT));
     }
 
     @Override
@@ -104,68 +70,48 @@ public abstract class AbstractLogComposite
     }
 
     @Override
-    public ILogSink getInfoSink(int verboseLevel) {
-        return get(INFO, verboseLevel);
-    }
-
-    @Override
     public ILogSink getDebugSink() {
         return get(DEBUG, LEVEL_DEFAULT);
     }
 
     @Override
-    public ILogSink getDebugSink(int verboseLevel) {
-        return get(DEBUG, verboseLevel);
+    public boolean isStdoutEnabled() {
+        return getEffectiveLevel() >= LEVEL_DEFAULT;
     }
 
     @Override
-    public void fatal(Object message) {
-        getErrorSink().p(message);
+    public boolean isStderrEnabled() {
+        return getEffectiveLevel() >= LEVEL_DEFAULT;
     }
 
     @Override
-    public void fatal(Object message, Throwable t) {
-        getErrorSink().p(t, message);
+    public boolean isStatusEnabled() {
+        return getEffectiveLevel() >= LEVEL_LOW;
     }
 
     @Override
-    public void error(Object message) {
-        getErrorSink().p(message);
+    public boolean isFatalEnabled() {
+        return getEffectiveLevel() >= LEVEL_HIGH;
     }
 
     @Override
-    public void error(Object message, Throwable t) {
-        getErrorSink().p(t, message);
+    public boolean isErrorEnabled() {
+        return getEffectiveLevel() >= LEVEL_DEFAULT;
     }
 
     @Override
-    public void warn(Object message) {
-        getWarnSink().p(message);
+    public boolean isWarnEnabled() {
+        return getEffectiveLevel() >= LEVEL_LOW;
     }
 
     @Override
-    public void warn(Object message, Throwable t) {
-        getWarnSink().p(t, message);
+    public boolean isInfoEnabled() {
+        return getEffectiveLevel() >= LEVEL_DEFAULT;
     }
 
     @Override
-    public void info(Object message) {
-        getInfoSink().p(message);
-    }
-
-    @Override
-    public void info(Object message, Throwable t) {
-        getInfoSink().p(t, message);
-    }
-
-    @Override
-    public void debug(Object message) {
-        getDebugSink().p(message);
-    }
-
-    @Override
-    public void debug(Object message, Throwable t) {
-        getDebugSink().p(t, message);
+    public boolean isDebugEnabled() {
+        return getEffectiveLevel() >= LEVEL_LOW;
     }
 
 }

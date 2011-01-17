@@ -1,6 +1,6 @@
 package net.bodz.bas.log.adapters;
 
-import net.bodz.bas.log.impl.JCLLogComposite;
+import net.bodz.bas.log.impl.JCLLogger;
 import net.bodz.bas.log.testapp.ChildJob;
 import net.bodz.bas.log.testapp.ParentJob;
 
@@ -14,8 +14,8 @@ public class JCLLogCompositeTest
     ChildJob child1 = new ChildJob(parent1, "child1");
 
     public JCLLogCompositeTest() {
-        parent1.setLogger(JCLLogComposite.getInstance(parent1.getClass()));
-        child1.setLogger(JCLLogComposite.getInstance(child1.getClass()));
+        parent1.setLogger(JCLLogger.getInstance(parent1.getClass()));
+        child1.setLogger(JCLLogger.getInstance(child1.getClass()));
     }
 
     @Test

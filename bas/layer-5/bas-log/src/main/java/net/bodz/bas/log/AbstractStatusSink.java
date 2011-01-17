@@ -9,10 +9,6 @@ public abstract class AbstractStatusSink
     private int scale = 100;
     private int index;
 
-    public AbstractStatusSink() {
-        super();
-    }
-
     protected int getScreenColumns() {
         // System.console();
         String columns = System.getenv("COLUMNS");

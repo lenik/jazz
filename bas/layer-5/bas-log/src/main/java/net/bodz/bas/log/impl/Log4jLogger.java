@@ -1,11 +1,11 @@
 package net.bodz.bas.log.impl;
 
-import static net.bodz.bas.log.LogCategory.DEBUG_ID;
-import static net.bodz.bas.log.LogCategory.ERROR_ID;
-import static net.bodz.bas.log.LogCategory.INFO_ID;
-import net.bodz.bas.log.AbstractLogComposite;
+import static net.bodz.bas.log.LogLevel.DEBUG_ID;
+import static net.bodz.bas.log.LogLevel.ERROR_ID;
+import static net.bodz.bas.log.LogLevel.INFO_ID;
+import net.bodz.bas.log.AbstractLogger;
 import net.bodz.bas.log.ILogSink;
-import net.bodz.bas.log.LogCategory;
+import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.log.NullLogSink;
 import net.bodz.bas.log.impl.Log4jLogSink.DebugSink;
 import net.bodz.bas.log.impl.Log4jLogSink.ErrorSink;
@@ -17,25 +17,25 @@ import net.bodz.bas.log.impl.Log4jLogSink.WarnSink;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-public class Log4jLogComposite
-        extends AbstractLogComposite {
+public class Log4jLogger
+        extends AbstractLogger {
 
     private final Logger log4j;
 
-    public Log4jLogComposite(Logger logger) {
+    public Log4jLogger(Logger logger) {
         if (logger == null)
             throw new NullPointerException("logger");
         this.log4j = logger;
     }
 
     @Override
-    public ILogSink get(LogCategory category, int verboseLevel) {
+    public ILogSink get(LogLevel category, int actualLevel) {
         switch (category.getId()) {
         case ERROR_ID:
-            if (verboseLevel <= LEVEL_HIGH) {
+            if (actualLevel <= LEVEL_HIGH) {
                 if (log4j.isEnabledFor(Level.FATAL))
                     return new FatalSink(log4j);
-            } else if (verboseLevel < LEVEL_LOW) {
+            } else if (actualLevel < LEVEL_LOW) {
                 if (log4j.isEnabledFor(Level.ERROR))
                     return new ErrorSink(log4j);
             } else {
@@ -50,7 +50,7 @@ public class Log4jLogComposite
             break;
 
         case DEBUG_ID:
-            if (verboseLevel <= LEVEL_DEFAULT) {
+            if (actualLevel <= LEVEL_DEFAULT) {
                 if (log4j.isEnabledFor(Level.DEBUG))
                     return new DebugSink(log4j);
             } else {
@@ -60,7 +60,7 @@ public class Log4jLogComposite
             break;
 
         default:
-            return super.get(category, verboseLevel);
+            return super.get(category, actualLevel);
         }
 
         return NullLogSink.getInstance();
@@ -116,12 +116,12 @@ public class Log4jLogComposite
         log4j.debug(message, t);
     }
 
-    public static Log4jLogComposite getInstance(Class<?> clazz) {
-        return new Log4jLogComposite(Logger.getLogger(clazz));
+    public static Log4jLogger getInstance(Class<?> clazz) {
+        return new Log4jLogger(Logger.getLogger(clazz));
     }
 
-    public static Log4jLogComposite getInstance(String name) {
-        return new Log4jLogComposite(Logger.getLogger(name));
+    public static Log4jLogger getInstance(String name) {
+        return new Log4jLogger(Logger.getLogger(name));
     }
 
 }
