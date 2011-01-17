@@ -1,15 +1,15 @@
 package net.bodz.bas.log.impl;
 
-import static net.bodz.bas.log.LogCategory.DEBUG_ID;
-import static net.bodz.bas.log.LogCategory.ERROR_ID;
-import static net.bodz.bas.log.LogCategory.INFO_ID;
+import static net.bodz.bas.log.LogLevel.DEBUG_ID;
+import static net.bodz.bas.log.LogLevel.ERROR_ID;
+import static net.bodz.bas.log.LogLevel.INFO_ID;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import net.bodz.bas.log.AbstractLogComposite;
+import net.bodz.bas.log.AbstractLogger;
 import net.bodz.bas.log.ILogSink;
-import net.bodz.bas.log.LogCategory;
+import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.log.NullLogSink;
 import net.bodz.bas.log.impl.JdkLogSink.FineSink;
 import net.bodz.bas.log.impl.JdkLogSink.FinerSink;
@@ -18,22 +18,22 @@ import net.bodz.bas.log.impl.JdkLogSink.InfoSink;
 import net.bodz.bas.log.impl.JdkLogSink.SevereSink;
 import net.bodz.bas.log.impl.JdkLogSink.WarningSink;
 
-public class JdkLogComposite
-        extends AbstractLogComposite {
+public class JdkLogger
+        extends AbstractLogger {
 
     private final Logger jdkLogger;
 
-    public JdkLogComposite(Logger jdkLogger) {
+    public JdkLogger(Logger jdkLogger) {
         if (jdkLogger == null)
             throw new NullPointerException("jdkLogger");
         this.jdkLogger = jdkLogger;
     }
 
     @Override
-    public ILogSink get(LogCategory category, int verboseLevel) {
+    public ILogSink get(LogLevel category, int actualLevel) {
         switch (category.getId()) {
         case ERROR_ID:
-            if (verboseLevel < LEVEL_LOW) { // (..., HIGH, ... , DEFAULT, ..., LOW)
+            if (actualLevel < LEVEL_LOW) { // (..., HIGH, ... , DEFAULT, ..., LOW)
                 if (jdkLogger.isLoggable(Level.SEVERE))
                     return new SevereSink(jdkLogger);
             } else { // [LOW, ...)
@@ -43,7 +43,7 @@ public class JdkLogComposite
             break;
 
         case INFO_ID:
-            if (verboseLevel <= LEVEL_DEFAULT) {
+            if (actualLevel <= LEVEL_DEFAULT) {
                 if (jdkLogger.isLoggable(Level.INFO))
                     return new InfoSink(jdkLogger);
             } else if (jdkLogger.isLoggable(Level.FINE))
@@ -51,7 +51,7 @@ public class JdkLogComposite
             break;
 
         case DEBUG_ID:
-            if (verboseLevel <= LEVEL_DEFAULT) {
+            if (actualLevel <= LEVEL_DEFAULT) {
                 if (jdkLogger.isLoggable(Level.FINER))
                     return new FinerSink(jdkLogger);
             } else if (jdkLogger.isLoggable(Level.FINEST))
@@ -59,7 +59,7 @@ public class JdkLogComposite
             break;
 
         default:
-            return super.get(category, verboseLevel);
+            return super.get(category, actualLevel);
         }
 
         return NullLogSink.getInstance();
@@ -128,15 +128,15 @@ public class JdkLogComposite
     /**
      * @throws NullPointerException
      */
-    public static JdkLogComposite getInstance(Class<?> clazz) {
-        return new JdkLogComposite(Logger.getLogger(clazz.getName()));
+    public static JdkLogger getInstance(Class<?> clazz) {
+        return new JdkLogger(Logger.getLogger(clazz.getName()));
     }
 
     /**
      * @throws NullPointerException
      */
-    public static JdkLogComposite getInstance(String name) {
-        return new JdkLogComposite(Logger.getLogger(name));
+    public static JdkLogger getInstance(String name) {
+        return new JdkLogger(Logger.getLogger(name));
     }
 
 }

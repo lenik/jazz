@@ -17,8 +17,8 @@ public interface ILogListener {
      * </ul>
      * or other user defined id.
      */
-    void log(int eventType, int verboseLevel, Object simpleMessage);
+    void log(int eventType, int actualLevel, Object simpleMessage);
 
-    void log(int eventType, int verboseLevel, ILogEntry event);
+    void log(int eventType, int actualLevel, ILogEntry event);
 
 }
