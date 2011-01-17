@@ -1,12 +1,12 @@
 package net.bodz.bas.log.testapp;
 
-import net.bodz.bas.log.ILogComposite;
 import net.bodz.bas.log.ILogSink;
+import net.bodz.bas.log.api.Logger;
 
 public class ParentJob {
 
     private String name;
-    private ILogComposite log;
+    private Logger logger;
 
     public ParentJob(String name) {
         if (name == null)
@@ -14,16 +14,16 @@ public class ParentJob {
         this.name = name;
     }
 
-    public ILogComposite getLogger() {
-        if (log == null)
-            throw new IllegalStateException("Log Layer doesn't configured");
-        return log;
+    public Logger getLogger() {
+        if (logger == null)
+            throw new IllegalStateException("Logger doesn't configured");
+        return logger;
     }
 
-    public void setLogger(ILogComposite log) {
-        if (log == null)
-            throw new NullPointerException("log");
-        this.log = log;
+    public void setLogger(Logger logger) {
+        if (logger == null)
+            throw new NullPointerException("logger");
+        this.logger = logger;
     }
 
     public String getName() {
@@ -32,7 +32,7 @@ public class ParentJob {
 
     public void exec() {
         ILogSink info = getLogger().getInfoSink();
-        ILogSink more = getLogger().getInfoSink(ILogComposite.LEVEL_LOW);
+        ILogSink more = getLogger().getInfoSink();
         info.p("Start");
         more.p("Parameter info...");
         // ChildJob child = new ChildJob(this, "child-1");

@@ -3,7 +3,6 @@ package net.bodz.bas.log.testapp;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import net.bodz.bas.log.ILogComposite;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.api.Logger;
 
@@ -19,7 +18,7 @@ public class ChildJob {
         this.name = name;
     }
 
-    public ILogComposite getLogger() {
+    public Logger getLogger() {
         if (logger == null)
             throw new IllegalStateException("Logger doesn't configured");
         return logger;

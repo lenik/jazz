@@ -1,0 +1,80 @@
+
+    @Override
+    public boolean is@Name@Enabled() {
+        return LogLevel.@NAME@.getPriority() <= getMaxPriority();
+    }
+
+    @Override
+    public boolean is@Name@Enabled(int delta) {
+        return LogLevel.@NAME@.getPriority() + delta <= getMaxPriority();
+    }
+
+    @Override
+    public ILogSink get@Name@Sink() {
+        return get(LogLevel.@NAME@);
+    }
+
+    @Override
+    public ILogSink get@Name@Sink(int delta) {
+        return get(LogLevel.@NAME@, delta);
+    }
+
+    @Override
+    public void @name@(Object message) {
+        get@Name@Sink().p(message);
+    }
+
+    @Override
+    public void @name@(Throwable e, Object message) {
+        get@Name@Sink().p(e, message);
+    }
+
+    @Override
+    public void @name@(int delta, Object message) {
+        get@Name@Sink(delta).p(message);
+    }
+
+    @Override
+    public void @name@(int delta, Throwable e, Object message) {
+        get@Name@Sink(delta).p(e, message);
+    }
+
+    @Override
+    public void @name@(Object... messageArray) {
+        get@Name@Sink().p(messageArray);
+    }
+
+    @Override
+    public void @name@(Throwable e, Object... messageArray) {
+        get@Name@Sink().p(e, messageArray);
+    }
+
+    @Override
+    public void @name@(int delta, Object... messageArray) {
+        get@Name@Sink(delta).p(messageArray);
+    }
+
+    @Override
+    public void @name@(int delta, Throwable e, Object... messageArray) {
+        get@Name@Sink(delta).p(e, messageArray);
+    }
+
+    @Override
+    public void @name@Format(String format, Object... args) {
+        get@Name@Sink().f(format, args);
+    }
+
+    @Override
+    public void @name@Format(Throwable e, String format, Object... args) {
+        get@Name@Sink().f(e, format, args);
+    }
+
+    @Override
+    public void @name@Format(int delta, String format, Object... args) {
+        get@Name@Sink(delta).f(format, args);
+    }
+
+    @Override
+    public void @name@Format(int delta, Throwable e, String format, Object... args) {
+        get@Name@Sink(delta).f(e, format, args);
+    }

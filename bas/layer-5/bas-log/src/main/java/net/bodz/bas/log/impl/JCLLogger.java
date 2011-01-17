@@ -1,12 +1,9 @@
 package net.bodz.bas.log.impl;
 
-import static net.bodz.bas.log.LogLevel.DEBUG_ID;
-import static net.bodz.bas.log.LogLevel.ERROR_ID;
-import static net.bodz.bas.log.LogLevel.INFO_ID;
-import net.bodz.bas.log.AbstractLogger;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.log.NullLogSink;
+import net.bodz.bas.log.api.AbstractLogger;
 import net.bodz.bas.log.impl.JCLLogSink.DebugSink;
 import net.bodz.bas.log.impl.JCLLogSink.ErrorSink;
 import net.bodz.bas.log.impl.JCLLogSink.FatalSink;
@@ -30,36 +27,40 @@ public class JCLLogger
     }
 
     @Override
-    public ILogSink get(LogLevel category, int actualLevel) {
-        switch (category.getId()) {
-        case ERROR_ID:
-            if (actualLevel <= LEVEL_HIGH) { // (..., HIGH]
-                if (jclLog.isFatalEnabled())
-                    return new FatalSink(jclLog);
-            } else if (actualLevel < LEVEL_LOW) { // (HIGH, LOW)
-                if (jclLog.isErrorEnabled())
-                    return new ErrorSink(jclLog); // [LOW, ...)
-            } else if (jclLog.isWarnEnabled())
+    public ILogSink get(LogLevel level, int delta) {
+        if (level.getGroup() != LogLevel.logGroup)
+            return super.get(level, delta);
+
+        int priority = level.getPriority() + delta;
+        switch (priority) {
+        case -2:
+            if (jclLog.isErrorEnabled())
+                return new ErrorSink(jclLog);
+            break;
+        case -1:
+            if (jclLog.isWarnEnabled())
                 return new WarnSink(jclLog);
             break;
-
-        case INFO_ID:
+        case 0:
+        case 1:
+        case 2:
             if (jclLog.isInfoEnabled())
                 return new InfoSink(jclLog);
             break;
-
-        case DEBUG_ID:
-            if (actualLevel < LEVEL_LOW) {
-                if (jclLog.isDebugEnabled())
-                    return new DebugSink(jclLog);
-            } else if (jclLog.isTraceEnabled())
-                return new TraceSink(jclLog);
+        case 3:
+            if (jclLog.isDebugEnabled())
+                return new DebugSink(jclLog);
             break;
-
         default:
-            return super.get(category, actualLevel);
+            if (priority <= -3) {
+                if (jclLog.isFatalEnabled())
+                    return new FatalSink(jclLog);
+            } else {
+                if (jclLog.isTraceEnabled())
+                    return new TraceSink(jclLog);
+            }
+            break;
         }
-
         return NullLogSink.getInstance();
     }
 

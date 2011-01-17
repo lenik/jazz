@@ -1,16 +1,12 @@
 package net.bodz.bas.log.impl;
 
-import static net.bodz.bas.log.LogLevel.DEBUG_ID;
-import static net.bodz.bas.log.LogLevel.ERROR_ID;
-import static net.bodz.bas.log.LogLevel.INFO_ID;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import net.bodz.bas.log.AbstractLogger;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.log.NullLogSink;
+import net.bodz.bas.log.api.AbstractLogger;
 import net.bodz.bas.log.impl.JdkLogSink.FineSink;
 import net.bodz.bas.log.impl.JdkLogSink.FinerSink;
 import net.bodz.bas.log.impl.JdkLogSink.FinestSink;
@@ -30,38 +26,42 @@ public class JdkLogger
     }
 
     @Override
-    public ILogSink get(LogLevel category, int actualLevel) {
-        switch (category.getId()) {
-        case ERROR_ID:
-            if (actualLevel < LEVEL_LOW) { // (..., HIGH, ... , DEFAULT, ..., LOW)
-                if (jdkLogger.isLoggable(Level.SEVERE))
-                    return new SevereSink(jdkLogger);
-            } else { // [LOW, ...)
-                if (jdkLogger.isLoggable(Level.WARNING))
-                    return new WarningSink(jdkLogger);
-            }
-            break;
+    public ILogSink get(LogLevel level, int delta) {
+        if (level.getGroup() != LogLevel.logGroup)
+            return super.get(level, delta);
 
-        case INFO_ID:
-            if (actualLevel <= LEVEL_DEFAULT) {
-                if (jdkLogger.isLoggable(Level.INFO))
-                    return new InfoSink(jdkLogger);
-            } else if (jdkLogger.isLoggable(Level.FINE))
+        int priority = level.getPriority() + delta;
+        switch (priority) {
+        case -1:
+            if (jdkLogger.isLoggable(Level.WARNING))
+                return new WarningSink(jdkLogger);
+            break;
+        case 0:
+            if (jdkLogger.isLoggable(Level.INFO))
+                return new InfoSink(jdkLogger);
+            break;
+        case 1:
+            if (jdkLogger.isLoggable(Level.FINE))
                 return new FineSink(jdkLogger);
             break;
-
-        case DEBUG_ID:
-            if (actualLevel <= LEVEL_DEFAULT) {
-                if (jdkLogger.isLoggable(Level.FINER))
-                    return new FinerSink(jdkLogger);
-            } else if (jdkLogger.isLoggable(Level.FINEST))
+        case 2:
+            if (jdkLogger.isLoggable(Level.FINER))
+                return new FinerSink(jdkLogger);
+            break;
+        case 3:
+            if (jdkLogger.isLoggable(Level.FINEST))
                 return new FinestSink(jdkLogger);
             break;
-
         default:
-            return super.get(category, actualLevel);
+            if (priority <= -2) {
+                if (jdkLogger.isLoggable(Level.SEVERE))
+                    return new SevereSink(jdkLogger);
+            } else {
+                if (jdkLogger.isLoggable(Level.ALL))
+                    return new FinestSink(jdkLogger);
+            }
+            break;
         }
-
         return NullLogSink.getInstance();
     }
 
