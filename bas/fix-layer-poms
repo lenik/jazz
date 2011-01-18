@@ -102,13 +102,8 @@ function pom-cascade() {
     local layerX="$1"
     local dir="$2"
           dir="${dir%/}"
-    local parent_dir="${dir%/*}"
-    [ "$parent_dir" = "$dir" ] && parent_dir=.
-
     local parent_artifact_id="$3"
     local parent_version="$4"
-
-    [ -f "$parent_dir/pom.xml" ] || die "No parent pom found for $1"
 
     _log1 "Refresh $dir/pom.xml -> $parent_artifact_id:$parent_version"
 
@@ -119,7 +114,7 @@ function pom-cascade() {
         | 2xml | tr -d '\n' | xmlindent -fnbe >$tmp
     cp -f $tmp $dir/pom.xml
 
-    loadpom "$parent_dir/pom.xml" 1
+    loadpom "$dir/pom.xml" 1
 
     for subpom in "$dir"/*/pom.xml; do
         pom-cascade "$layerX" "${subpom%/pom.xml}" "$project_artifact_id" "$project_version"
