@@ -5,7 +5,7 @@ import net.bodz.bas.test.timing.MultipassTimer;
 
 import org.junit.Test;
 
-public class MultiipassTimerTest {
+public class MultipassTimerTest {
 
     @Test
     public void test1()
