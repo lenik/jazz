@@ -114,6 +114,8 @@ function pom-cascade() {
         | 2xml | tr -d '\n' | xmlindent -fnbe >$tmp
     cp -f $tmp $dir/pom.xml
 
+    local project_artifact_id
+    local project_version
     loadpom "$dir/pom.xml" 1
 
     for subpom in "$dir"/*/pom.xml; do
