@@ -86,12 +86,7 @@ function main() {
                 continue
             fi
             
-            xml2 <$mod/pom.xml | sed \
-                -e "s|BAS :: Layer .|BAS :: Layer $layer|" \
-                -e "s|/project/parent/artifactId=.*|/project/parent/artifactId=layer-$layer|" \
-                -e "s|/project/parent/version=.*|/project/parent/version=$ver|" \
-                | 2xml | tr -d '\n' | xmlindent -fnbe >$tmp
-            cp -f $tmp $mod/pom.xml
+            pom-cascade "$layerX" "$mod" "layer-$layer" "$ver"
         done
         
         echo "    </modules>"                             >>pom.xml
@@ -101,6 +96,34 @@ function main() {
     done
     
     rm -f $tmp
+}
+
+function pom-cascade() {
+    local layerX="$1"
+    local dir="$2"
+          dir="${dir%/}"
+    local parent_dir="${dir%/*}"
+    [ "$parent_dir" = "$dir" ] && parent_dir=.
+
+    local parent_artifact_id="$3"
+    local parent_version="$4"
+
+    [ -f "$parent_dir/pom.xml" ] || die "No parent pom found for $1"
+
+    _log1 "Refresh $dir/pom.xml -> $parent_artifact_id:$parent_version"
+
+    xml2 <$dir/pom.xml | sed \
+        -e "s|BAS :: Layer .|BAS :: Layer $layerX|" \
+        -e "s|/project/parent/artifactId=.*|/project/parent/artifactId=$parent_artifact_id|" \
+        -e "s|/project/parent/version=.*|/project/parent/version=$parent_version|" \
+        | 2xml | tr -d '\n' | xmlindent -fnbe >$tmp
+    cp -f $tmp $dir/pom.xml
+
+    loadpom "$parent_dir/pom.xml" 1
+
+    for subpom in "$dir"/*/pom.xml; do
+        pom-cascade "$layerX" "${subpom%/pom.xml}" "$project_artifact_id" "$project_version"
+    done
 }
 
 boot "$@"
