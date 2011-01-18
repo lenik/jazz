@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>net.bodz.bas</groupId>
-        <artifactId>bas-l10n-en</artifactId>
+        <artifactId>bas-l10n</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>bas-l10n-zh</artifactId>
