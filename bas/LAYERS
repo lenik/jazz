@@ -1,70 +1,69 @@
 layer-0 系统兼容层，系统周边环境准备
-    bas-jvmhack
-    bas-proxy
-    bas-natives
     bas-compat
-    bas-sysinfo (SystemInfo)
     bas-desktop (iocapture -> bas-io)
+    bas-jvmhack
+    bas-natives
+    bas-proxy
+    bas-sysinfo (SystemInfo)
     
 layer-1 核心语言增强与语言工具
-    bas-c1
     bas-annotation
+    bas-c1
+    bas-chars
     bas-lang
     bas-meta
     bas-primitive
-    bas-chars
-    bas-traits
     bas-test
+    bas-traits
     
 layer-2 基础数据类型扩展
-    bas-c2
     bas-bits
-    bas-sio
-    bas-io
-    bas-nio
+    bas-c2
     bas-closure
     bas-collection
     bas-context
-    bas-valtype
-    bas-traits-impl
-    bas-string
+    bas-io
+    bas-nio
     bas-regex
+    bas-sio
+    bas-string
+    bas-traits-impl
+    bas-valtype
     
 layer-3 通用工具
-        # Event, Err/ExceptionCauses, ScopedRef, JoinableThreadGroup, Objects
-        # SimpleRequest
     bas-c3
     bas-fsm
-    bas-text (-codec, -diff)
+    bas-javadoc
     bas-reflect
+    bas-text (-codec, -diff)
         
 layer-4 特殊工具
     bas-combina
-    bas-memoryio
     bas-crypto
+    bas-memoryio
     bas-srt
         
 layer-5 框架基础
-    bas-module
-    bas-log
-    bas-vfs
+    bas-bean
+    bas-database
+    bas-flow
     bas-i18n
     bas-l10n
-    bas-bean
-    bas-flow
+    bas-log
+    bas-module
     bas-potato
-    bas-database
+    bas-vfs
     bas-xml
 
 layer-6 框架工具
-    bas-vfsutils
     bas-snmjava
+    bas-vfsutils
     
 layer-7 应用框架
-    bas-netserv
-    bas-loader
-    bas-cli
     bas-ant
-    bas-unitperf
+    bas-cli
     bas-dotnet-synthetics   （For dotnet)
+    bas-loader
+    bas-netserv
+    bas-unitperf
 
