@@ -13,7 +13,7 @@ public class AnnotationTraitsProvider
     }
 
     @Override
-    public boolean isDefined() {
+    public boolean isAggressive() {
         return true;
     }
 
