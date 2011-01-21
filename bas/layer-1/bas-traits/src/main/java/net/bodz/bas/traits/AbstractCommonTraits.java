@@ -241,14 +241,14 @@ public abstract class AbstractCommonTraits<T>
     static final String autoNameFormat = "(%d)";
     private int nextInstanceIndex = 0;
 
-    protected final void addInstance(T instance) {
+    protected final void addStoreInstance(T instance) {
         if (instance == null)
             throw new NullPointerException("instance");
         String name = String.format(autoNameFormat, nextInstanceIndex++);
-        addInstance(name, instance);
+        addStoreInstance(name, instance);
     }
 
-    protected final void addInstance(String name, T instance) {
+    protected final void addStoreInstance(String name, T instance) {
         if (name == null)
             throw new NullPointerException("name");
         if (instance == null)
@@ -258,7 +258,7 @@ public abstract class AbstractCommonTraits<T>
         storeInstances.put(name, instance);
     }
 
-    protected final void addStaticInstances(Class<?> declaringClass) {
+    protected final void addStaticFieldsToStore(Class<?> declaringClass) {
         if (declaringClass == null)
             throw new NullPointerException("declaringClass");
         for (Field field : declaringClass.getFields()) {
@@ -269,7 +269,7 @@ public abstract class AbstractCommonTraits<T>
                     Object object = Jdk7Reflect.get(field, null);
                     if (type.isInstance(object)) {
                         T instance = type.cast(object);
-                        addInstance(name, instance);
+                        addStoreInstance(name, instance);
                     }
                 } catch (IllegalAccessException e) {
                     throw new QueryException();
