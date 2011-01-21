@@ -1,7 +1,9 @@
 package net.bodz.bas.traits.provider.builtin;
 
+import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.lang.QueryException;
 import net.bodz.bas.traits.AbstractTraitsProvider;
+import net.bodz.bas.traits.util.TraitsImplUtil;
 
 public class FriendTraitsProvider
         extends AbstractTraitsProvider {
@@ -58,19 +60,10 @@ public class FriendTraitsProvider
         } catch (ClassNotFoundException e) {
             return null;
         }
-
-        if (!traitsType.isAssignableFrom(friendTraitsType))
-            return null;
-
-        // @SuppressWarnings("unchecked")
-        // IInstanceStore<? extends T> friendTraitsInstanceStore = Traits
-        // .getTraits(friendTraitsType, IInstanceStore.class);
-        // T traits = friendTraitsInstanceStore.getInstance(null);
         try {
-            Object friendTraits = friendTraitsType.newInstance();
-            return traitsType.cast(friendTraits);
-        } catch (Exception e) {
-            throw new QueryException(e);
+            return TraitsImplUtil.getTraits(friendTraitsType, traitsType);
+        } catch (ReflectiveOperationException e) {
+            throw new QueryException(e.getMessage(), e);
         }
     }
 
