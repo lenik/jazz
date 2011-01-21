@@ -1,7 +1,5 @@
 package net.bodz.bas.traits;
 
-import java.util.Map;
-
 import net.bodz.bas.meta.lang.TraitsClass;
 import net.bodz.bas.util.example.Person;
 import net.bodz.bas.util.example.PersonTraits;
@@ -17,9 +15,6 @@ public class AbstractTypeTraitsTest
     public void test1()
             throws Exception {
         ICommonTraits<Person> traits = new PersonTraits();
-
-        Map<String, Object> implMap = ((AbstractCommonTraits<?>) traits).getImplementationMap();
-        System.out.println(implMap);
 
         traits.getValidator().validate(Person.Lenik);
         String lucyFormat = traits.getFormatter().format(Person.Lucy);
