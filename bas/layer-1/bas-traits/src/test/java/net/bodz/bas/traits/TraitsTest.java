@@ -6,8 +6,8 @@ import java.util.Set;
 import net.bodz.bas.traits.provider.builtin.AnnotationTraitsProvider;
 import net.bodz.bas.traits.provider.builtin.BasFriendTraitsProvider;
 import net.bodz.bas.traits.provider.builtin.FriendTraitsProvider;
-import net.bodz.bas.traits.provider.builtin.GetTraitsMethodTraitsProvider;
-import net.bodz.bas.traits.provider.builtin.ImmediateQueryTraitsProvider;
+import net.bodz.bas.traits.provider.builtin.QueryMethodTraitsProvider;
+import net.bodz.bas.traits.provider.builtin.QuerySelfTraitsProvider;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -23,8 +23,8 @@ public class TraitsTest
         assertTrue(providerClasses.contains(AnnotationTraitsProvider.class));
         assertTrue(providerClasses.contains(FriendTraitsProvider.class));
         assertTrue(providerClasses.contains(BasFriendTraitsProvider.class));
-        assertTrue(providerClasses.contains(GetTraitsMethodTraitsProvider.class));
-        assertTrue(providerClasses.contains(ImmediateQueryTraitsProvider.class));
+        assertTrue(providerClasses.contains(QueryMethodTraitsProvider.class));
+        assertTrue(providerClasses.contains(QuerySelfTraitsProvider.class));
     }
 
 }

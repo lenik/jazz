@@ -20,7 +20,7 @@ enum BuiltinProviderOrder {
     /**
      * If the friend-named classes are not for traits purpose, then getTraits() should be used.
      */
-    getTraitsMethod(PRIORITY_LOW), //
+    queryMethod(PRIORITY_LOW), //
 
     /**
      * Search in the same package namespace first, because this is in most cases, and a little speed

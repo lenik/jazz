@@ -8,12 +8,12 @@ import net.bodz.bas.traits.IFormatter;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class GetTraitsMethodTraitsProviderTest
+public class QueryMethodTraitsProviderTest
         extends Assert {
 
     static class StaticFoo {
 
-        static <T> T getTraits(Class<T> traitsType) {
+        static <T> T query(Class<T> traitsType) {
             if (traitsType.isAssignableFrom(BlahTraits.class)) {
                 BlahTraits traits = new BlahTraits("static");
                 return traitsType.cast(traits);
@@ -30,13 +30,14 @@ public class GetTraitsMethodTraitsProviderTest
             this.user = user;
         }
 
-        <T> T getTraits(Class<T> traitsType) {
+        <T> T query(Class<T> traitsType) {
             if (traitsType.isAssignableFrom(BlahTraits.class)) {
                 BlahTraits traits = new BlahTraits(user);
                 return traitsType.cast(traits);
             }
             return null;
         }
+
     }
 
     static class BlahTraits
@@ -50,8 +51,12 @@ public class GetTraitsMethodTraitsProviderTest
         }
 
         @Override
-        public IFormatter<Object> getFormatter() {
-            return this;
+        protected Object query(int traitsIndex) {
+            switch (traitsIndex) {
+            case IFormatter.traitsIndex:
+                return this;
+            }
+            return null;
         }
 
         @Override
@@ -61,7 +66,7 @@ public class GetTraitsMethodTraitsProviderTest
 
     }
 
-    GetTraitsMethodTraitsProvider provider = new GetTraitsMethodTraitsProvider();
+    QueryMethodTraitsProvider provider = new QueryMethodTraitsProvider();
 
     @Test
     public void testGetTraitsStaticDefined() {

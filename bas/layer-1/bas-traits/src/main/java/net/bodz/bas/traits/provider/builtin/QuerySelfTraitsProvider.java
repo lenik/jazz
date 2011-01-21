@@ -7,7 +7,7 @@ import net.bodz.bas.traits.AbstractTraitsProvider;
 /**
  * A simple direct cast traits providier.
  */
-public class ImmediateQueryTraitsProvider
+public class QuerySelfTraitsProvider
         extends AbstractTraitsProvider {
 
     @Override
@@ -16,7 +16,7 @@ public class ImmediateQueryTraitsProvider
     }
 
     @Override
-    public boolean isDefined() {
+    public boolean isAggressive() {
         return true;
     }
 
