@@ -11,12 +11,12 @@
         <dependency>
             <groupId>org.jmock</groupId>
             <artifactId>jmock</artifactId>
-            <version>LATEST</version>
+            <version>2.5.1</version>
         </dependency>
         <dependency>
             <groupId>commons-vfs</groupId>
             <artifactId>commons-vfs</artifactId>
-            <version>LATEST</version>
+            <version>20050307052300</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
@@ -55,7 +55,7 @@
         <dependency>
             <groupId>commons-httpclient</groupId>
             <artifactId>commons-httpclient</artifactId>
-            <version>2.0.2</version>
+            <version>3.1</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
