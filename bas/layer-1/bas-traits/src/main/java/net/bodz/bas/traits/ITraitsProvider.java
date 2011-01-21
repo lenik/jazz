@@ -1,11 +1,13 @@
 package net.bodz.bas.traits;
 
+import net.bodz.bas.lang.IQueryProxy;
 import net.bodz.bas.lang.QueryException;
 
 /**
  * Provide to resolve specific traits for a given class or object.
  */
-public interface ITraitsProvider {
+public interface ITraitsProvider
+        extends IQueryProxy {
 
     /**
      * High priority.
@@ -39,19 +41,19 @@ public interface ITraitsProvider {
     int getPriority();
 
     /**
-     * A defined traits provider will include inherited traits in the results.
+     * An aggressive traits provider will include all inherited traits in the results.
      * <p>
-     * For a specific traits query on the user type, the defined traits provider will be called only
-     * once.
+     * For a specific traits query on the user type, the aggressive traits provider will be called
+     * only once.
      * <p>
-     * Correspondingly, for non-defined traits provider, if the concerned traits wasn't included in
-     * the query results, then this provider will be later called again with the super class (or
+     * Correspondingly, for non-aggressive traits provider, if the concerned traits wasn't included
+     * in the query results, then this provider will be later called again with the super class (or
      * interface) of the user type.
      * 
      * @return <code>true</code> If inherited traits are included in the results provided by this
      *         traits provider.
      */
-    boolean isDefined();
+    boolean isAggressive();
 
     /**
      * Query for specific traits about the user object type.

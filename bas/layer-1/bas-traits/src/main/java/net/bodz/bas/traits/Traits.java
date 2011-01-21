@@ -64,7 +64,7 @@ public class Traits {
             T traits = provider.getTraits(objType, traitsType);
             if (traits != null)
                 return traits;
-            if (!provider.isDefined()) {
+            if (!provider.isAggressive()) {
                 if (nonDefinedTraitsProviders == null)
                     nonDefinedTraitsProviders = new ArrayList<ITraitsProvider>(traitsProviders.size() - index);
                 nonDefinedTraitsProviders.add(provider);
