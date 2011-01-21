@@ -8,6 +8,8 @@ import net.bodz.bas.lang.negotiation.NegotiationException;
 
 public interface ISearcher<T> {
 
+    int traitsIndex = -2141867074; // ISearcher
+
     /**
      * @param object
      *            non-<code>null</code> contents to be searched.

@@ -10,6 +10,8 @@ import net.bodz.bas.util.exception.ParseException;
 
 public interface IParser<T> {
 
+    int traitsIndex = -1548284472; // IParser
+
     /**
      * @return ? extends <code>T</code>
      */

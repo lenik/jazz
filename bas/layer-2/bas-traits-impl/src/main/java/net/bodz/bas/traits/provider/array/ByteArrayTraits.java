@@ -26,8 +26,10 @@ public class ByteArrayTraits
     }
 
     @Override
-    public IParser<byte[]> getParser() {
-        return this;
+    protected Object query(int traitsIndex) {
+        if (traitsIndex == IParser.traitsIndex)
+            return this;
+        return null;
     }
 
     @Override

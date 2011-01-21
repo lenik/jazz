@@ -5,6 +5,8 @@ import net.bodz.bas.lang.negotiation.NegotiationException;
 
 public interface IValidator<T> {
 
+    int traitsIndex = -566399735; // IValidator
+
     void validate(T o)
             throws ValidateException;
 

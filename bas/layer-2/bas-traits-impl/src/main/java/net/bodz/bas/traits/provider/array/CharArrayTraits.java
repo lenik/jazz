@@ -24,8 +24,10 @@ public class CharArrayTraits
     }
 
     @Override
-    public IParser<char[]> getParser() {
-        return this;
+    protected Object query(int traitsIndex) {
+        if (traitsIndex == IParser.traitsIndex)
+            return this;
+        return null;
     }
 
     @Override

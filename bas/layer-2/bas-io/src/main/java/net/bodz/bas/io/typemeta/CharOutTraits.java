@@ -19,8 +19,10 @@ public class CharOutTraits
     }
 
     @Override
-    public IParser<ICharOut> getParser() {
-        return this;
+    protected Object query(int traitsIndex) {
+        if (traitsIndex == IParser.traitsIndex)
+            return this;
+        return null;
     }
 
     @Override

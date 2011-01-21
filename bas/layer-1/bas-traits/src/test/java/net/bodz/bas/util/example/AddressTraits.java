@@ -24,8 +24,13 @@ public class AddressTraits
     }
 
     @Override
-    public IParser<Address> getParser() {
-        return this;
+    protected Object query(int traitsIndex) {
+        switch (traitsIndex) {
+        case IParser.traitsIndex:
+        case IFormatter.traitsIndex:
+            return this;
+        }
+        return null;
     }
 
     @Override
@@ -63,11 +68,6 @@ public class AddressTraits
         }
 
         return new Address(address, city, country, postCode, null);
-    }
-
-    @Override
-    public IFormatter<Address> getFormatter() {
-        return this;
     }
 
     @Override

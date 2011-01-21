@@ -8,6 +8,8 @@ import net.bodz.bas.lang.negotiation.NegotiationException;
 
 public interface IFormatter<T> {
 
+    int traitsIndex = -1939991935; // IFormatter
+
     /**
      * @param object
      *            (? extends <code>T</code>) non-<code>null</code> value to be formatted.

@@ -7,6 +7,8 @@ import java.util.Set;
  */
 public interface IInstanceStore<T> {
 
+    int traitsIndex = 1154332547; // IInstanceStore
+
     /**
      * 
      * @return Unmodifiable {@link Set} of instance names, empty if no instance available.

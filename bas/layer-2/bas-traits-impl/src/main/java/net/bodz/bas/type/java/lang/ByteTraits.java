@@ -14,13 +14,13 @@ public class ByteTraits
     }
 
     @Override
-    public IParser<Byte> getParser() {
-        return this;
-    }
-
-    @Override
-    public ISampleGenerator<Byte> getSampleGenerator() {
-        return this;
+    protected Object query(int traitsIndex) {
+        switch (traitsIndex) {
+        case IParser.traitsIndex:
+        case ISampleGenerator.traitsIndex:
+            return this;
+        }
+        return null;
     }
 
     @Override

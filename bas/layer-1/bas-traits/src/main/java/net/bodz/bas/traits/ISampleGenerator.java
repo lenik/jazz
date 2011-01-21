@@ -10,6 +10,8 @@ import net.bodz.bas.util.exception.CreateException;
 
 public interface ISampleGenerator<T> {
 
+    int traitsIndex = -1354170176; // ISampleGenerator
+
     /**
      * @return non-<code>null</code> sample instance.
      */
