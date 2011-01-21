@@ -20,13 +20,13 @@ public class CharsetTraits
     }
 
     @Override
-    public IParser<Charset> getParser() {
-        return this;
-    }
-
-    @Override
-    public ISampleGenerator<Charset> getSampleGenerator() {
-        return this;
+    protected Object query(int traitsIndex) {
+        switch (traitsIndex) {
+        case IParser.traitsIndex:
+        case ISampleGenerator.traitsIndex:
+            return this;
+        }
+        return null;
     }
 
     @Override

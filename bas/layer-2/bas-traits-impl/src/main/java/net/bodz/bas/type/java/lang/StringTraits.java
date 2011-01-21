@@ -41,13 +41,13 @@ public class StringTraits
     }
 
     @Override
-    public IParser<String> getParser() {
-        return this;
-    }
-
-    @Override
-    public ISampleGenerator<String> getSampleGenerator() {
-        return this;
+    protected Object query(int traitsIndex) {
+        switch (traitsIndex) {
+        case IParser.traitsIndex:
+        case ISampleGenerator.traitsIndex:
+            return this;
+        }
+        return null;
     }
 
     @Override

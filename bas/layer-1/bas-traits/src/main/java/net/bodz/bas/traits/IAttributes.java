@@ -2,8 +2,9 @@ package net.bodz.bas.traits;
 
 import java.util.Collection;
 
-
 public interface IAttributes {
+
+    int traitsIndex = 70680192; // IAttributes
 
     /**
      * @return Never <code>null</code>, returns empty {@link Collection} if no public annotation

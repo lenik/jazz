@@ -13,8 +13,12 @@ public class ClassTraits
     }
 
     @Override
-    public IParser<Class> getParser() {
-        return this;
+    protected Object query(int traitsIndex) {
+        switch (traitsIndex) {
+        case IParser.traitsIndex:
+            return this;
+        }
+        return null;
     }
 
     @Override

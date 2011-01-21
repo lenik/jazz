@@ -1,19 +1,18 @@
 package net.bodz.bas.text.diff;
 
 import net.bodz.bas.traits.AbstractCommonTraits;
-import net.bodz.bas.traits.IInstanceStore;
 
 public class DiffComparatorTraits
         extends AbstractCommonTraits<DiffComparator> {
 
     public DiffComparatorTraits() {
         super(DiffComparator.class);
-        addStaticInstances(DiffComparators.class);
+        addStaticFieldsToStore(DiffComparators.class);
     }
 
     @Override
-    public IInstanceStore<DiffComparator> getInstanceStore() {
-        return this;
+    protected Object query(int traitsIndex) {
+        return null;
     }
 
 }

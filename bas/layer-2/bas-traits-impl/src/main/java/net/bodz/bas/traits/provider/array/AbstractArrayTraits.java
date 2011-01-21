@@ -8,7 +8,6 @@ import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.lang.negotiation.NegotiationParameter;
 import net.bodz.bas.meta.util.ValueType;
 import net.bodz.bas.traits.AbstractCommonTraits;
-import net.bodz.bas.traits.ISampleGenerator;
 import net.bodz.bas.util.exception.CreateException;
 
 public abstract class AbstractArrayTraits<T>
@@ -28,13 +27,8 @@ public abstract class AbstractArrayTraits<T>
     public static final String sampleMaxLength = "sample.maxLength";
     public static final int defaultSampleMaxLength = 32;
 
-    public AbstractArrayTraits(Class<T> type) {
-        super(type);
-    }
-
-    @Override
-    public ISampleGenerator<T> getSampleGenerator() {
-        return this;
+    public AbstractArrayTraits(Class<T> arrayType) {
+        super(arrayType);
     }
 
     public static class ArraySampleParameters

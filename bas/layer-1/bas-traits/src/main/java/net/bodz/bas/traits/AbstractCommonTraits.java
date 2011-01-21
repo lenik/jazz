@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
@@ -17,6 +18,7 @@ import net.bodz.bas.lang.AbstractQueryable;
 import net.bodz.bas.lang.QueryException;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.NegotiationException;
+import net.bodz.bas.meta.codereview.GeneratedBy;
 import net.bodz.bas.meta.codereview.ThreadUnsafe;
 import net.bodz.bas.util.exception.CreateException;
 import net.bodz.bas.util.exception.NotImplementedException;
@@ -41,49 +43,105 @@ public abstract class AbstractCommonTraits<T>
         this.type = type;
     }
 
+    @GeneratedBy(CalcPreferredId.class)
+    static final Map<Class<?>, Integer> commonTraitsIndex;
+    static {
+        commonTraitsIndex = new HashMap<Class<?>, Integer>();
+        commonTraitsIndex.put(IAttributes.class, IAttributes.traitsIndex);
+        commonTraitsIndex.put(IClassifier.class, IClassifier.traitsIndex);
+        commonTraitsIndex.put(ICommonTraits.class, ICommonTraits.traitsIndex);
+        commonTraitsIndex.put(IFormatter.class, IFormatter.traitsIndex);
+        commonTraitsIndex.put(IInstanceStore.class, IInstanceStore.traitsIndex);
+        commonTraitsIndex.put(IParser.class, IParser.traitsIndex);
+        commonTraitsIndex.put(ISampleGenerator.class, ISampleGenerator.traitsIndex);
+        commonTraitsIndex.put(ISearcher.class, ISearcher.traitsIndex);
+        commonTraitsIndex.put(ITextForm.class, ITextForm.traitsIndex);
+        commonTraitsIndex.put(IValidator.class, IValidator.traitsIndex);
+    }
+
+    @Override
+    public <X> X query(Class<X> specificationType) {
+        Integer traitsIndex = commonTraitsIndex.get(specificationType);
+        if (traitsIndex == null)
+            return super.query(specificationType);
+        Object traits = queryRemix(traitsIndex);
+        return specificationType.cast(traits);
+    }
+
+    protected Object queryRemix(int traitsIndex) {
+        Object traits = query(traitsIndex);
+        if (traits != null)
+            return traits;
+
+        switch (traitsIndex) {
+        case ICommonTraits.traitsIndex:
+            return this;
+
+        case IAttributes.traitsIndex:
+            if (attributes != null)
+                return this;
+            break;
+
+        case ITextForm.traitsIndex:
+            Object parser = query(IParser.traitsIndex);
+            Object formatter = query(IFormatter.traitsIndex);
+            if (parser == formatter && parser != null)
+                return parser;
+            break;
+
+        case IInstanceStore.traitsIndex:
+            if (storeInstances != null)
+                return this;
+            break;
+        }
+        return null;
+    }
+
+    protected abstract Object query(int traitsIndex);
+
     @Override
     public IAttributes getAttributes() {
-        return null;
+        return this;
     }
 
     @Override
     public IClassifier<T> getClassifier() {
-        return null;
+        return this;
     }
 
     @Override
     public IFormatter<T> getFormatter() {
-        return null;
+        return this;
     }
 
     @Override
     public IInstanceStore<T> getInstanceStore() {
-        return null;
+        return this;
     }
 
     @Override
     public IParser<T> getParser() {
-        return null;
+        return this;
     }
 
     @Override
     public ISampleGenerator<T> getSampleGenerator() {
-        return null;
+        return this;
     }
 
     @Override
     public ISearcher<T> getSearcher() {
-        return null;
+        return this;
     }
 
     @Override
     public ITextForm<T> getTextForm() {
-        return null;
+        return this;
     }
 
     @Override
     public IValidator<T> getValidator() {
-        return null;
+        return this;
     }
 
     @Override

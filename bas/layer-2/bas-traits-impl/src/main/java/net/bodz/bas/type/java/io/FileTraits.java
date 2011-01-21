@@ -26,8 +26,12 @@ public class FileTraits
     }
 
     @Override
-    public IParser<File> getParser() {
-        return this;
+    protected Object query(int traitsIndex) {
+        switch (traitsIndex) {
+        case IParser.traitsIndex:
+            return this;
+        }
+        return null;
     }
 
     @Override

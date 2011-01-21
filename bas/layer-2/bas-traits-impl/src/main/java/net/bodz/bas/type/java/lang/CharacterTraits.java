@@ -14,13 +14,13 @@ public class CharacterTraits
     }
 
     @Override
-    public IParser<Character> getParser() {
-        return this;
-    }
-
-    @Override
-    public ISampleGenerator<Character> getSampleGenerator() {
-        return this;
+    protected Object query(int traitsIndex) {
+        switch (traitsIndex) {
+        case IParser.traitsIndex:
+        case ISampleGenerator.traitsIndex:
+            return this;
+        }
+        return null;
     }
 
     @Override
