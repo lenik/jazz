@@ -1,14 +1,13 @@
 package net.bodz.bas.lang;
 
-public interface IQueryable {
+public interface IQueryProxy {
 
     /**
      * If specification is String, this function should return the same result as
-     * {@link #query(String)}.
-     * <p>
-     * If specification is Class, this function should return the same result as
-     * {@link #query(Class)}.
+     * {@link #query(Object, String)}.
      * 
+     * @param obj
+     *            The object under query.
      * @param specification
      *            Non-<code>null</code> specification variable in any type.
      * @return <code>null</code> If no available implementation exists.
@@ -17,10 +16,12 @@ public interface IQueryable {
      * @throws QueryException
      *             If query is failed.
      */
-    Object query(Object specification)
+    Object query(Object obj, Object specification)
             throws QueryException;
 
     /**
+     * @param obj
+     *            The object under query.
      * @return <code>null</code> If no available implementation exists for the
      *         <code>specificationId</code>.
      * @throws NullPointerException
@@ -28,10 +29,12 @@ public interface IQueryable {
      * @throws QueryException
      *             If query is failed.
      */
-    Object query(String specificationId)
+    Object query(Object obj, String specificationId)
             throws QueryException;
 
     /**
+     * @param obj
+     *            The object under query.
      * @param specificationType
      *            The specification type to query about, the implementation should not consider any
      *            super or derived class or interface of the specified
@@ -48,7 +51,7 @@ public interface IQueryable {
      * @throws QueryException
      *             If query is failed.
      */
-    <T> T query(Class<T> specificationType)
+    <T> T query(Object obj, Class<T> specificationType)
             throws QueryException;
 
 }
