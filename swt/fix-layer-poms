@@ -1,0 +1,126 @@
+#!/bin/bash
+    . shlib
+    import cliboot
+    import loadpom
+    
+    shopt -s nullglob
+    
+    RCSID='$Id: bash.sh 2255 2011-01-01 06:58:58Z lenik $'
+    short_opts="hqv"
+    long_opts="help,quiet,verbose,version"
+
+function version() {
+    parse_id "$RCSID"
+    echo "[$BASENAME] Fix pom.xml in all layers"
+    echo "Written by Lenik, Version 0.$rcs_rev, Last updated at $rcs_date"
+}
+
+function help() {
+    version
+    echo
+    echo "Syntax: "
+    echo "    $0 [OPTION] [--] ..."
+    echo
+    echo "Options: "
+    echo "    -q, --quiet             Repeat to get less info"
+    echo "    -v, --verbose           Repeat to get more info"
+    echo "    -h, --help              Show this help page"
+    echo "        --version           Print the version info"
+}
+
+function setopt() {
+    case "$1" in
+        -h|--help)
+            help; exit;;
+        -q|--quiet)
+            LOGLEVEL=$((LOGLEVEL - 1));;
+        -v|--verbose)
+            LOGLEVEL=$((LOGLEVEL + 1));;
+        --version)
+            version; exit;;
+        *)
+            quit "invalid option: $1";;
+    esac
+}
+
+function main() {
+    loadpom pom.xml
+    
+    ver=$project_version
+    _log1 "The project version is $ver"
+    
+    tmp=`tempfile`
+
+    for layerdir in "layer-"*/; do
+        layerdir="${layerdir%/}"
+        layer="${layerdir#layer-}"
+        layerX="${layer//x/X}"
+        
+        (cd "$layerdir"
+        _log1 "Layer $layer"
+        
+        echo '<?xml version="1.0" encoding="UTF-8"?>'                           >pom.xml
+        echo '<project xmlns="http://maven.apache.org/POM/4.0.0"'               >>pom.xml
+        echo '         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"'   >>pom.xml
+        echo '         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">' >>pom.xml
+        echo "    <modelVersion>4.0.0</modelVersion>"     >>pom.xml
+        echo "    <parent>"                               >>pom.xml
+        echo "        <groupId>net.bodz.bas</groupId>"    >>pom.xml
+        echo "        <artifactId>bas</artifactId>"       >>pom.xml
+        echo "        <version>$ver</version>"            >>pom.xml
+        echo "    </parent>"                              >>pom.xml
+        echo "    <artifactId>layer-$layer</artifactId>"  >>pom.xml
+        echo "    <version>$ver</version>"                >>pom.xml
+        echo "    <packaging>pom</packaging>"             >>pom.xml
+        echo "    <modules>"                              >>pom.xml
+        
+        mods=()
+        nmod=0
+        for mod in */; do
+            mod="${mod%/}"
+            mods[nmod++]="$mod"
+            echo "        <module>$mod</module>"          >>pom.xml
+            
+            if [ ! -f "$mod/pom.xml" ]; then
+                _warn "No file: $layerdir/$mod/pom.xml"
+                continue
+            fi
+            
+            pom-cascade "$layerX" "$mod" "layer-$layer" "$ver"
+        done
+        
+        echo "    </modules>"                             >>pom.xml
+        echo "    <name>BAS :: Layer $layerX</name>"      >>pom.xml
+        echo "</project>"                                 >>pom.xml
+        )
+    done
+    
+    rm -f $tmp
+}
+
+function pom-cascade() {
+    local layerX="$1"
+    local dir="$2"
+          dir="${dir%/}"
+    local parent_artifact_id="$3"
+    local parent_version="$4"
+
+    _log1 "Refresh $dir/pom.xml -> $parent_artifact_id:$parent_version"
+
+    xml2 <$dir/pom.xml | sed \
+        -e "s|BAS :: Layer .|BAS :: Layer $layerX|" \
+        -e "s|/project/parent/artifactId=.*|/project/parent/artifactId=$parent_artifact_id|" \
+        -e "s|/project/parent/version=.*|/project/parent/version=$parent_version|" \
+        | 2xml | tr -d '\n' | xmlindent -fnbe >$tmp
+    cp -f $tmp $dir/pom.xml
+
+    local project_artifact_id
+    local project_version
+    loadpom "$dir/pom.xml" 1
+
+    for subpom in "$dir"/*/pom.xml; do
+        pom-cascade "$layerX" "${subpom%/pom.xml}" "$project_artifact_id" "$project_version"
+    done
+}
+
+boot "$@"

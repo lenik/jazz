@@ -1,0 +1,33 @@
+layer-0 系统兼容层，系统周边环境准备
+    swt-compat
+    swt-proxy
+    
+layer-1 基本数据结构与体系规范
+    swt-c1
+    swt-meta
+    swt-traits
+    
+layer-2 图元类型与结构
+    swt-c2
+    swt-geom
+    swt-image
+    
+layer-3 基本 UI 组件层
+    swt-c3
+    
+layer-4 特殊工具
+    
+layer-5 框架基础
+    swt-i18n
+    swt-module
+    swt-pfl
+    swt-reflect
+    swt-test
+    swt-ui
+    
+layer-6 框架工具
+
+layer-7 应用框架
+    swt-director
+    swt-program
+
