@@ -7,6 +7,14 @@
     </parent>
     <artifactId>swt-pfl</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <dependencies/>
+    <dependencies>
+    	<dependency>
+    		<groupId>net.bodz.swt</groupId>
+    		<artifactId>swt-dependency</artifactId>
+    		<version>3.6.0</version>
+    		<type>jar</type>
+    		<scope>compile</scope>
+    	</dependency>
+    </dependencies>
     <name>SWT :: Layer 0 :: Page Flow</name>
 </project>

@@ -8,13 +8,10 @@
         <artifactId>swt</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>layer-0</artifactId>
+    <artifactId>swt-incubator</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>swt-compat</module>
-        <module>swt-dependency</module>
-        <module>swt-proxy</module>
     </modules>
-    <name>BAS :: Layer 0</name>
+    <name>SWT :: Incubator</name>
 </project>
