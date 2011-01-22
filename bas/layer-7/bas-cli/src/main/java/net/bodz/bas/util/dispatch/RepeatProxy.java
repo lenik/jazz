@@ -1,25 +1,26 @@
-package net.bodz.bas.mt;
+package net.bodz.bas.util.dispatch;
 
-public class RunRepeat implements Runnable {
+public class RepeatProxy
+        implements Runnable {
 
     private final Runnable target;
     private final int delay;
     private final int repeatCount;
     private int count;
 
-    public RunRepeat(Runnable target, int delay, int repeatCount) {
+    public RepeatProxy(Runnable target, int delay, int repeatCount) {
         if (target == null)
-            throw new NullPointerException("target"); 
+            throw new NullPointerException("target");
         this.target = target;
         this.delay = delay;
         this.repeatCount = repeatCount;
     }
 
-    public RunRepeat(Runnable target, int delay) {
+    public RepeatProxy(Runnable target, int delay) {
         this(target, delay, Integer.MAX_VALUE);
     }
 
-    public RunRepeat(Runnable target) {
+    public RepeatProxy(Runnable target) {
         this(target, 0);
     }
 

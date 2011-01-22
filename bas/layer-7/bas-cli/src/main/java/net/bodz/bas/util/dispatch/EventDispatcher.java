@@ -1,4 +1,4 @@
-package net.bodz.bas.mt;
+package net.bodz.bas.util.dispatch;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,17 +7,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executor;
 
-public abstract class EventGenerator implements Runnable {
+public abstract class EventDispatcher
+        implements Runnable {
 
     private final Executor executor;
     private final Iterator<?> eventSource;
     private Map<Object, List<Runnable>> eventHandlers;
 
-    public EventGenerator(Executor executor, Iterator<?> eventSource) {
+    public EventDispatcher(Executor executor, Iterator<?> eventSource) {
         if (executor == null)
-            throw new NullPointerException("executor"); 
+            throw new NullPointerException("executor");
         if (eventSource == null)
-            throw new NullPointerException("eventSource"); 
+            throw new NullPointerException("eventSource");
         this.executor = executor;
         this.eventSource = eventSource;
         this.eventHandlers = new HashMap<Object, List<Runnable>>();
