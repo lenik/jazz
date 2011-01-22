@@ -12,10 +12,8 @@
     <version>0.0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-<!--
         <module>bas-ant</module>
         <module>bas-cli</module>
--->
         <module>bas-dotnet-synthetics</module>
         <module>bas-loader</module>
         <module>bas-netserv</module>

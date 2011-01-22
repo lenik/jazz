@@ -12,6 +12,7 @@ import java.util.Set;
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.string.StringSearch;
 import net.bodz.bas.string.Strings;
+import net.bodz.bas.traits.ParserUtil;
 import net.bodz.bas.util.exception.IllegalUsageException;
 import net.bodz.bas.util.exception.NotImplementedException;
 import net.bodz.bas.util.exception.ParseException;
@@ -144,7 +145,7 @@ public class ConsoleUI
                 String line = lineIn.readLine();
                 if (line == null)
                     return initial;
-                T val = TypeParsers.parse(type, line);
+                T val = ParserUtil.parse(type, line);
                 return val;
             } catch (ParseException e) {
                 System.err.println("Parse Error: " + e.getMessage());

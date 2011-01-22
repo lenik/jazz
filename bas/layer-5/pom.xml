@@ -21,6 +21,7 @@
         <module>bas-log</module>
         <module>bas-module</module>
         <module>bas-potato</module>
+        <module>bas-ui</module>
         <module>bas-vfs</module>
         <module>bas-xml</module>
     </modules>

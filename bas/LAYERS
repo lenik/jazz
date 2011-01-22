@@ -52,6 +52,7 @@ layer-5 框架基础
     bas-log
     bas-module
     bas-potato
+    bas-ui
     bas-vfs
     bas-xml
 
