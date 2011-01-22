@@ -2,16 +2,15 @@ package net.bodz.bas.string;
 
 import java.util.Locale;
 
-import org.apache.commons.lang.ArrayUtils;
-
 public class StringSearch {
 
     public static int indexOf(String s, char[] charSet, int fromIndex) {
         int len = s.length();
         for (int i = fromIndex; i < len; i++) {
             char c = s.charAt(i);
-            if (ArrayUtils.indexOf(charSet, c) != -1)
-                return i;
+            for (int j = 0; j < charSet.length; j++)
+                if (charSet[j] == c)
+                    return i;
         }
         return -1;
     }
@@ -41,8 +40,9 @@ public class StringSearch {
             fromIndex = len - 1;
         for (int i = fromIndex; i >= 0; i--) {
             char c = s.charAt(i);
-            if (ArrayUtils.indexOf(charSet, c) != -1)
-                return i;
+            for (int j = 0; j < charSet.length; j++)
+                if (charSet[j] == c)
+                    return i;
         }
         return -1;
     }
