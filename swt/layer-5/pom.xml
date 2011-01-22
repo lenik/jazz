@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>net.bodz.bas</groupId>
+        <artifactId>bas</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <artifactId>layer-5</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>swt-i18n</module>
+        <module>swt-module</module>
+        <module>swt-pfl</module>
+        <module>swt-reflect</module>
+        <module>swt-test</module>
+        <module>swt-ui</module>
+    </modules>
+    <name>BAS :: Layer 5</name>
+</project>
