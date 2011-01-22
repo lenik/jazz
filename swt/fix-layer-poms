@@ -65,8 +65,8 @@ function main() {
         echo '         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">' >>pom.xml
         echo "    <modelVersion>4.0.0</modelVersion>"     >>pom.xml
         echo "    <parent>"                               >>pom.xml
-        echo "        <groupId>net.bodz.bas</groupId>"    >>pom.xml
-        echo "        <artifactId>bas</artifactId>"       >>pom.xml
+        echo "        <groupId>net.bodz.swt</groupId>"    >>pom.xml
+        echo "        <artifactId>swt</artifactId>"       >>pom.xml
         echo "        <version>$ver</version>"            >>pom.xml
         echo "    </parent>"                              >>pom.xml
         echo "    <artifactId>layer-$layer</artifactId>"  >>pom.xml
