@@ -1,0 +1,4 @@
+#!/bin/bash
+
+m2rpn -wbas=freejava -pnet.bodz.bas=com.kenai.freejava ../bas kenai
+
