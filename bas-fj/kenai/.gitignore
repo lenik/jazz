@@ -1,0 +1,12 @@
+
+# Eclipse working projects
+.project
+.classpath
+.settings
+
+# Maven builds
+target
+
+# gitstats
+/stats
+
