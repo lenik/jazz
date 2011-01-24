@@ -9,6 +9,7 @@ import java.nio.charset.Charset;
 import java.util.Comparator;
 import java.util.regex.Pattern;
 
+import net.bodz.bas.lang.ControlBreak;
 import net.bodz.bas.meta.program.Option;
 import net.bodz.bas.meta.program.OptionGroup;
 import net.bodz.bas.meta.util.OverrideOption;

@@ -12,7 +12,7 @@ public class CLILauncher {
         String cliClassName = args[0];
         args = (String[]) ArrayUtils.remove(args, 0);
 
-        Class<?> cliClass = Class.forName(cliClassName);
+        Class<?> cliClass = Jdk7Reflect.forName(cliClassName);
         if (!BasicCLI.class.isAssignableFrom(cliClass))
             throw new IllegalArgumentException("Not a CLI class: " + cliClass);
         BasicCLI cli = (BasicCLI) Jdk7Reflect.newInstance(cliClass);

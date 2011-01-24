@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
+import net.bodz.bas.jdk6compat.jdk7emul.NoSuchMethodException;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.sio.BCharOut;
@@ -21,7 +22,7 @@ public class UCL {
     static {
         Class<?> clazz = URLClassLoader.class;
         try {
-            URLClassLoader_addURL = clazz.getDeclaredMethod("addURL", URL.class);
+            URLClassLoader_addURL = Jdk7Reflect.getDeclaredMethod(clazz, "addURL", URL.class);
             URLClassLoader_addURL.setAccessible(true);
         } catch (SecurityException e) {
         } catch (NoSuchMethodException e) {

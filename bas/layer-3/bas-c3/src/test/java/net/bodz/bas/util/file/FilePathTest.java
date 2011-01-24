@@ -3,7 +3,6 @@ package net.bodz.bas.util.file;
 import java.io.File;
 
 import org.junit.Assert;
-
 import org.junit.Test;
 
 public class FilePathTest

@@ -1,5 +1,7 @@
 package net.bodz.bas.type.java.lang;
 
+import net.bodz.bas.jdk6compat.jdk7emul.ClassNotFoundException;
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.traits.AbstractCommonTraits;
 import net.bodz.bas.traits.IParser;
 import net.bodz.bas.util.exception.ParseException;
@@ -25,7 +27,7 @@ public class ClassTraits
     public Class<?> parse(String name)
             throws ParseException {
         try {
-            return Class.forName(name);
+            return Jdk7Reflect.forName(name);
         } catch (ClassNotFoundException e) {
             throw new ParseException(e.getMessage(), e);
         }

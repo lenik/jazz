@@ -5,7 +5,6 @@ import java.util.TreeMap;
 
 import javax.script.ScriptException;
 
-import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.potato.traits.AbstractType;
 
 public class CLIType<T extends BasicCLI>

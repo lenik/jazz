@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.collection.util.ClassLocal;
-import net.bodz.bas.meta.build.Version;
 import net.bodz.bas.meta.info.Author;
 import net.bodz.bas.meta.info.DisplayNameUtil;
 import net.bodz.bas.meta.info.DocUtil;

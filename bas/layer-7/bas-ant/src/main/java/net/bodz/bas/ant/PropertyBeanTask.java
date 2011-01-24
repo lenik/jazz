@@ -17,6 +17,7 @@ import net.bodz.bas.collection.preorder.PrefixSet;
 import net.bodz.bas.collection.preorder.TypeHierSet;
 import net.bodz.bas.collection.set.IdentityHashSet;
 import net.bodz.bas.context.clg.SystemCLG;
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.log.api.Logger;
 import net.bodz.bas.string.Strings;
 import net.bodz.bas.util.exception.CreateException;
@@ -147,7 +148,7 @@ public class PropertyBeanTask
     public void addConfiguredRefType(TextElement refTypeText)
             throws ClassNotFoundException {
         String typeName = refTypeText.getText();
-        Class<?> type = Class.forName(typeName);
+        Class<?> type = Jdk7Reflect.forName(typeName);
         refTypes.add(type);
     }
 

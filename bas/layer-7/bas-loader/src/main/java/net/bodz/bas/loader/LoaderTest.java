@@ -1,5 +1,7 @@
 package net.bodz.bas.loader;
 
+import net.bodz.bas.jdk6compat.jdk7emul.ClassNotFoundException;
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.loader.boot.BootInfo;
 
 @BootInfo(configs = LoaderTest.Config1.class)
@@ -15,7 +17,7 @@ public class LoaderTest {
 
     public static Class<?> findClass(String className)
             throws ClassNotFoundException {
-        return Class.forName(className);
+        return Jdk7Reflect.forName(className);
     }
 
 }

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Properties;
 
-import net.bodz.bas.meta.build.RcsKeywords;
 import net.bodz.bas.util.Nullables;
 import net.bodz.bas.vfs.impl.url.URLFile;
 

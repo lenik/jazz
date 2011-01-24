@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
+import net.bodz.bas.jdk6compat.jdk7emul.NoSuchFieldException;
+import net.bodz.bas.jdk6compat.jdk7emul.NoSuchMethodException;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 
 public class ReflectBind {
@@ -53,7 +55,7 @@ public class ReflectBind {
                     name = declareField.getName();
                 if (f.secure()) {
                     try {
-                        def = _class.getField(name);
+                        def = Jdk7Reflect.getField(_class, name);
                     } catch (SecurityException e) {
                         throw new Error(e.getMessage(), e);
                     } catch (NoSuchFieldException e) {
@@ -61,7 +63,7 @@ public class ReflectBind {
                 } else {
                     do {
                         try {
-                            Field defField = _class.getDeclaredField(name);
+                            Field defField = Jdk7Reflect.getDeclaredField(_class, name);
                             defField.setAccessible(true);
                             def = defField;
                             break;
@@ -87,7 +89,7 @@ public class ReflectBind {
                 Class<?>[] parameters = m.parameters();
                 if (m.secure()) {
                     try {
-                        def = _class.getMethod(name, parameters);
+                        def = Jdk7Reflect.getMethod(_class, name, parameters);
                     } catch (SecurityException e) {
                         throw new Error(e.getMessage(), e);
                     } catch (NoSuchMethodException e) {
@@ -95,7 +97,7 @@ public class ReflectBind {
                 } else {
                     do {
                         try {
-                            Method defMethod = _class.getDeclaredMethod(name, parameters);
+                            Method defMethod = Jdk7Reflect.getDeclaredMethod(_class, name, parameters);
                             defMethod.setAccessible(true);
                             def = defMethod;
                             break;

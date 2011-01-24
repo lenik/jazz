@@ -3,6 +3,7 @@ package net.bodz.bas.util.exception;
 import java.lang.reflect.Field;
 
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
+import net.bodz.bas.jdk6compat.jdk7emul.NoSuchFieldException;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 
 /**
@@ -34,7 +35,7 @@ public class Err {
         Field field = null;
         boolean ok = false;
         try {
-            field = Throwable.class.getDeclaredField("detailMessage");
+            field = Jdk7Reflect.getDeclaredField(Throwable.class, "detailMessage");
             field.setAccessible(true);
             ok = true;
         } catch (SecurityException e) {

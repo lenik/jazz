@@ -105,7 +105,7 @@ public class LoadUtil {
 
     public static void execMain(ClassLoader realLoader, String className, String... args)
             throws Throwable {
-        Class<?> clazz = Class.forName(className, true, realLoader);
+        Class<?> clazz = Jdk7Reflect.forName(className, true, realLoader);
         execMain(clazz, args);
     }
 

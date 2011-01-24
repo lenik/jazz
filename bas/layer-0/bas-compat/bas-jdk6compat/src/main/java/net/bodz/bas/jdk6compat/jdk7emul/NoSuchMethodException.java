@@ -8,6 +8,10 @@ public class NoSuchMethodException
 
     private static final long serialVersionUID = 1L;
 
+    public NoSuchMethodException(java.lang.NoSuchMethodException cause) {
+        super(cause.getMessage(), cause.getCause());
+    }
+
     public NoSuchMethodException() {
         super();
     }

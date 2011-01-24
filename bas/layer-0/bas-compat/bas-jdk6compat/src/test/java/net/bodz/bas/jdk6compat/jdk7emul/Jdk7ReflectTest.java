@@ -1,5 +1,6 @@
 package net.bodz.bas.jdk6compat.jdk7emul;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 
 import org.junit.Assert;
@@ -64,6 +65,33 @@ public class Jdk7ReflectTest
             throws ReflectiveOperationException {
         Method errorMethod = Jdk7Reflect.getMethod(dogClass, "error");
         Jdk7Reflect.invoke(errorMethod, blackDog);
+    }
+
+    void throwSpecial()
+            throws Exception {
+        throw new IOException("Special");
+    }
+
+    void throwSpecialClassNotFoundException()
+            throws ClassNotFoundException {
+        try {
+            throwSpecial();
+        } catch (Exception e) {
+            java.lang.ClassNotFoundException origE = new java.lang.ClassNotFoundException("orig", e);
+            ClassNotFoundException wrapped = new ClassNotFoundException(origE);
+            throw wrapped;
+        }
+    }
+
+    @Test
+    public void testFilteredCause() {
+        try {
+            throwSpecialClassNotFoundException();
+            fail();
+        } catch (ClassNotFoundException e) {
+            Throwable cause = e.getCause();
+            assertTrue(cause instanceof IOException);
+        }
     }
 
 }

@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.bodz.bas.closure.alt.Pred1;
+import net.bodz.bas.jdk6compat.jdk7emul.ClassNotFoundException;
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.loader.boot.BootInfo;
 import net.bodz.bas.loader.boot.BootProc;
@@ -35,7 +37,7 @@ public class DefaultBooter {
         Class<?> class0 = null;
         // can found by bootSysLoader?
         try {
-            class0 = Class.forName(className, false, bootSysLoader);
+            class0 = Jdk7Reflect.forName(className, false, bootSysLoader);
         } catch (ClassNotFoundException e) {
             throw new LoadException(e);
         }
@@ -70,7 +72,7 @@ public class DefaultBooter {
         ClassLoader bootLoader = TempClassLoader.get(userlibs, sysLoader);
         Class<?> class0;
         try {
-            class0 = bootLoader.loadClass(className);
+            class0 = Jdk7Reflect.loadClass(bootLoader, className);
         } catch (ClassNotFoundException e) {
             throw new LoadException(e);
         }
@@ -90,7 +92,7 @@ public class DefaultBooter {
             UCL.dump(realLoader, out);
         Class<?> class1;
         try {
-            class1 = Class.forName(className, false, realLoader);
+            class1 = Jdk7Reflect.forName(className, false, realLoader);
         } catch (ClassNotFoundException e) {
             throw new LoadException(e);
         }
@@ -109,7 +111,7 @@ public class DefaultBooter {
             }
         }
         try {
-            return Class.forName(className, true, realLoader);
+            return Jdk7Reflect.forName(className, true, realLoader);
         } catch (ClassNotFoundException e) {
             throw new LoadException(e);
         } catch (NoClassDefFoundError e) {
