@@ -4,3 +4,6 @@
 [submodule "bas-fj/sourceforge"]
 	path = bas-fj/sourceforge
 	url = ssh://freejava.git.sourceforge.net/gitroot/freejava/freejava
+[submodule "bas-fj/kenai"]
+	path = bas-fj/kenai
+	url = ssh://git.kenai.com/freejava~fj
