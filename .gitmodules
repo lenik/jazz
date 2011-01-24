@@ -1,0 +1,6 @@
+[submodule "bas-fj/javax"]
+	path = bas-fj/javax
+	url = ssh://freejava.git.sourceforge.net/gitroot/freejava/freejava
+[submodule "bas-fj/sourceforge"]
+	path = bas-fj/sourceforge
+	url = ssh://freejava.git.sourceforge.net/gitroot/freejava/freejava
