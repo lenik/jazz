@@ -5,6 +5,10 @@ public class InvocationTargetException
 
     private static final long serialVersionUID = 1L;
 
+    public InvocationTargetException(java.lang.reflect.InvocationTargetException cause) {
+        super(cause.getMessage(), cause.getCause());
+    }
+
     public InvocationTargetException() {
         super();
     }

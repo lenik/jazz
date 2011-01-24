@@ -1,8 +1,5 @@
 package net.bodz.bas.test.timing;
 
-import net.bodz.bas.test.timing.ITimingTarget;
-import net.bodz.bas.test.timing.MultipassTimer;
-
 import org.junit.Test;
 
 public class MultipassTimerTest {

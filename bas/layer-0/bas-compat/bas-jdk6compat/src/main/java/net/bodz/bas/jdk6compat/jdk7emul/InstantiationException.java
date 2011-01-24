@@ -8,6 +8,10 @@ public class InstantiationException
 
     private static final long serialVersionUID = 1L;
 
+    public InstantiationException(java.lang.InstantiationException cause) {
+        super(cause.getMessage(), cause.getCause());
+    }
+
     public InstantiationException() {
         super();
     }

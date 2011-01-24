@@ -1,5 +1,7 @@
 package net.bodz.bas.loader.dev;
 
+import net.bodz.bas.jdk6compat.jdk7emul.ClassNotFoundException;
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.util.exception.UnexpectedException;
 
 public class IncompletedLoadedClass {
@@ -12,7 +14,7 @@ public class IncompletedLoadedClass {
         String name = clazz.getName();
         ClassLoader loader = clazz.getClassLoader();
         try {
-            Class.forName(name, true, loader);
+            Jdk7Reflect.forName(name, true, loader);
         } catch (ClassNotFoundException e) {
             throw new UnexpectedException(e.getMessage(), e);
         }

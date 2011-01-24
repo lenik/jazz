@@ -8,6 +8,10 @@ public class IllegalAccessException
 
     private static final long serialVersionUID = 1L;
 
+    public IllegalAccessException(java.lang.IllegalAccessException cause) {
+        super(cause.getMessage(), cause.getCause());
+    }
+
     public IllegalAccessException() {
         super();
     }

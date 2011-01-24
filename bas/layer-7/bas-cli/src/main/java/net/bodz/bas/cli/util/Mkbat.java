@@ -36,8 +36,8 @@ import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.snm.SJLibLoader;
 import net.bodz.bas.string.StringArray;
+import net.bodz.bas.util.ClassResource;
 import net.bodz.bas.util.exception.IdentifiedException;
-import net.bodz.bas.util.file.ClassResource;
 import net.bodz.bas.util.file.FilePath;
 import net.bodz.bas.vfs.impl.url.URLFile;
 
@@ -133,7 +133,7 @@ public class Mkbat
         try {
             L.detail("try " + className);
             class0 = bootSysLoader.loadClass(className);
-            // class0 = Class.forName(className, false, bootSysLoader);
+            // class0 = Jdk7Reflect.forName(className, false, bootSysLoader);
         } catch (ClassNotFoundException e) {
             return EditResult.err(e, "loadc");
         } catch (NoClassDefFoundError e) {

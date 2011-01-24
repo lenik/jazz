@@ -6,6 +6,8 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 
+import net.bodz.bas.jdk6compat.jdk7emul.ClassNotFoundException;
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.util.exception.CreateException;
 import net.bodz.bas.util.exception.DecodeException;
@@ -121,7 +123,7 @@ public interface Factory<T> {
         public Object _create(Class<?>[] argTypes, Object... args)
                 throws CreateException {
             try {
-                Class<?> clazz = Class.forName(name, true, loader);
+                Class<?> clazz = Jdk7Reflect.forName(name, true, loader);
                 if (argTypes == null)
                     return clazz.newInstance();
                 else {

@@ -15,7 +15,6 @@ import net.bodz.bas.closure.alt.Filt1;
 import net.bodz.bas.collection.comparator.StringLengthComparator;
 import net.bodz.bas.collection.util.ClassLocal;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
-import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.meta.build.BuildInfoUtil;
 import net.bodz.bas.meta.program.Option;
 import net.bodz.bas.reflect.query.ReflectQuery;

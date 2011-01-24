@@ -5,6 +5,10 @@ public class ClassNotFoundException
 
     private static final long serialVersionUID = 1L;
 
+    public ClassNotFoundException(java.lang.ClassNotFoundException cause) {
+        super(cause.getMessage(), cause.getCause());
+    }
+
     public ClassNotFoundException() {
         super();
     }

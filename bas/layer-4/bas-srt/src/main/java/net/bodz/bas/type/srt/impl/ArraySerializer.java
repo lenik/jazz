@@ -5,6 +5,8 @@ import java.io.Reader;
 import java.io.Writer;
 import java.lang.reflect.Array;
 
+import net.bodz.bas.jdk6compat.jdk7emul.ClassNotFoundException;
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.type.srt.SerializeException;
 import net.bodz.bas.type.srt.SimpleSerializerRegistry;
 
@@ -31,7 +33,7 @@ public class ArraySerializer
         String stype = readTill(s, ':');
         Class<?> type;
         try {
-            type = Class.forName(stype);
+            type = Jdk7Reflect.forName(stype);
         } catch (ClassNotFoundException e) {
             throw new SerializeException(e.getMessage(), e);
         }

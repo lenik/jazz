@@ -1,9 +1,8 @@
 package net.bodz.bas.util.file;
 
-import org.junit.Assert;
 import net.bodz.bas.io.resource.builtin.ByteArrayResource;
-import net.bodz.bas.util.file.FileDiff;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class FileDiffTest

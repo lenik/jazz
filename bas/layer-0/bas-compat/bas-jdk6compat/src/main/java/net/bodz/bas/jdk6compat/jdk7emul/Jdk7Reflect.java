@@ -18,7 +18,7 @@ public class Jdk7Reflect {
         try {
             return Class.forName(className);
         } catch (java.lang.ClassNotFoundException e) {
-            throw new ClassNotFoundException(e.getMessage(), e);
+            throw new ClassNotFoundException(e);
         }
     }
 
@@ -30,7 +30,7 @@ public class Jdk7Reflect {
         try {
             return Class.forName(name, initialize, loader);
         } catch (java.lang.ClassNotFoundException e) {
-            throw new ClassNotFoundException(e.getMessage(), e);
+            throw new ClassNotFoundException(e);
         }
     }
 
@@ -42,9 +42,9 @@ public class Jdk7Reflect {
         try {
             return clazz.newInstance();
         } catch (java.lang.InstantiationException e) {
-            throw new InstantiationException(e.getMessage(), e);
+            throw new InstantiationException(e);
         } catch (java.lang.IllegalAccessException e) {
-            throw new IllegalAccessException(e.getMessage(), e);
+            throw new IllegalAccessException(e);
         }
     }
 
@@ -56,11 +56,11 @@ public class Jdk7Reflect {
         try {
             return constructor.newInstance(initargs);
         } catch (java.lang.InstantiationException e) {
-            throw new InstantiationException(e.getMessage(), e);
+            throw new InstantiationException(e);
         } catch (java.lang.IllegalAccessException e) {
-            throw new IllegalAccessException(e.getMessage(), e);
+            throw new IllegalAccessException(e);
         } catch (java.lang.reflect.InvocationTargetException e) {
-            throw new InvocationTargetException(e.getMessage(), e);
+            throw new InvocationTargetException(e);
         }
     }
 
@@ -72,7 +72,7 @@ public class Jdk7Reflect {
         try {
             return clazz.getConstructor(parameterTypes);
         } catch (java.lang.NoSuchMethodException e) {
-            throw new NoSuchMethodException(e.getMessage(), e);
+            throw new NoSuchMethodException(e);
         }
     }
 
@@ -84,7 +84,7 @@ public class Jdk7Reflect {
         try {
             return clazz.getDeclaredConstructor(parameterTypes);
         } catch (java.lang.NoSuchMethodException e) {
-            throw new NoSuchMethodException(e.getMessage(), e);
+            throw new NoSuchMethodException(e);
         }
     }
 
@@ -96,7 +96,7 @@ public class Jdk7Reflect {
         try {
             return clazz.getDeclaredField(name);
         } catch (java.lang.NoSuchFieldException e) {
-            throw new NoSuchFieldException(e.getMessage(), e);
+            throw new NoSuchFieldException(e);
         }
     }
 
@@ -108,7 +108,7 @@ public class Jdk7Reflect {
         try {
             return clazz.getDeclaredMethod(name, parameterTypes);
         } catch (java.lang.NoSuchMethodException e) {
-            throw new NoSuchMethodException(e.getMessage(), e);
+            throw new NoSuchMethodException(e);
         }
     }
 
@@ -120,7 +120,7 @@ public class Jdk7Reflect {
         try {
             return clazz.getField(name);
         } catch (java.lang.NoSuchFieldException e) {
-            throw new NoSuchFieldException(e.getMessage(), e);
+            throw new NoSuchFieldException(e);
         }
     }
 
@@ -132,7 +132,7 @@ public class Jdk7Reflect {
         try {
             return clazz.getMethod(name, parameterTypes);
         } catch (java.lang.NoSuchMethodException e) {
-            throw new NoSuchMethodException(e.getMessage(), e);
+            throw new NoSuchMethodException(e);
         }
     }
 
@@ -144,7 +144,7 @@ public class Jdk7Reflect {
         try {
             return field.get(obj);
         } catch (java.lang.IllegalAccessException e) {
-            throw new IllegalAccessException(e.getMessage(), e);
+            throw new IllegalAccessException(e);
         }
     }
 
@@ -157,7 +157,7 @@ public class Jdk7Reflect {
         try {
             return field.getBoolean(obj);
         } catch (java.lang.IllegalAccessException e) {
-            throw new IllegalAccessException(e.getMessage(), e);
+            throw new IllegalAccessException(e);
         }
     }
 
@@ -170,7 +170,7 @@ public class Jdk7Reflect {
         try {
             return field.getByte(obj);
         } catch (java.lang.IllegalAccessException e) {
-            throw new IllegalAccessException(e.getMessage(), e);
+            throw new IllegalAccessException(e);
         }
     }
 
@@ -183,7 +183,7 @@ public class Jdk7Reflect {
         try {
             return field.getChar(obj);
         } catch (java.lang.IllegalAccessException e) {
-            throw new IllegalAccessException(e.getMessage(), e);
+            throw new IllegalAccessException(e);
         }
     }
 
@@ -196,7 +196,7 @@ public class Jdk7Reflect {
         try {
             return field.getDouble(obj);
         } catch (java.lang.IllegalAccessException e) {
-            throw new IllegalAccessException(e.getMessage(), e);
+            throw new IllegalAccessException(e);
         }
     }
 
@@ -209,7 +209,7 @@ public class Jdk7Reflect {
         try {
             return field.getFloat(obj);
         } catch (java.lang.IllegalAccessException e) {
-            throw new IllegalAccessException(e.getMessage(), e);
+            throw new IllegalAccessException(e);
         }
     }
 
@@ -222,7 +222,7 @@ public class Jdk7Reflect {
         try {
             return field.getInt(obj);
         } catch (java.lang.IllegalAccessException e) {
-            throw new IllegalAccessException(e.getMessage(), e);
+            throw new IllegalAccessException(e);
         }
     }
 
@@ -235,7 +235,7 @@ public class Jdk7Reflect {
         try {
             return field.getLong(obj);
         } catch (java.lang.IllegalAccessException e) {
-            throw new IllegalAccessException(e.getMessage(), e);
+            throw new IllegalAccessException(e);
         }
     }
 
@@ -248,7 +248,7 @@ public class Jdk7Reflect {
         try {
             return field.getShort(obj);
         } catch (java.lang.IllegalAccessException e) {
-            throw new IllegalAccessException(e.getMessage(), e);
+            throw new IllegalAccessException(e);
         }
     }
 
@@ -261,7 +261,7 @@ public class Jdk7Reflect {
         try {
             field.set(obj, value);
         } catch (java.lang.IllegalAccessException e) {
-            throw new IllegalAccessException(e.getMessage(), e);
+            throw new IllegalAccessException(e);
         }
     }
 
@@ -274,7 +274,7 @@ public class Jdk7Reflect {
         try {
             field.setBoolean(obj, z);
         } catch (java.lang.IllegalAccessException e) {
-            throw new IllegalAccessException(e.getMessage(), e);
+            throw new IllegalAccessException(e);
         }
     }
 
@@ -287,7 +287,7 @@ public class Jdk7Reflect {
         try {
             field.setByte(obj, b);
         } catch (java.lang.IllegalAccessException e) {
-            throw new IllegalAccessException(e.getMessage(), e);
+            throw new IllegalAccessException(e);
         }
     }
 
@@ -300,7 +300,7 @@ public class Jdk7Reflect {
         try {
             field.setChar(obj, c);
         } catch (java.lang.IllegalAccessException e) {
-            throw new IllegalAccessException(e.getMessage(), e);
+            throw new IllegalAccessException(e);
         }
     }
 
@@ -313,7 +313,7 @@ public class Jdk7Reflect {
         try {
             field.setDouble(obj, d);
         } catch (java.lang.IllegalAccessException e) {
-            throw new IllegalAccessException(e.getMessage(), e);
+            throw new IllegalAccessException(e);
         }
     }
 
@@ -326,7 +326,7 @@ public class Jdk7Reflect {
         try {
             field.setFloat(obj, f);
         } catch (java.lang.IllegalAccessException e) {
-            throw new IllegalAccessException(e.getMessage(), e);
+            throw new IllegalAccessException(e);
         }
     }
 
@@ -339,7 +339,7 @@ public class Jdk7Reflect {
         try {
             field.setInt(obj, i);
         } catch (java.lang.IllegalAccessException e) {
-            throw new IllegalAccessException(e.getMessage(), e);
+            throw new IllegalAccessException(e);
         }
     }
 
@@ -352,7 +352,7 @@ public class Jdk7Reflect {
         try {
             field.setLong(obj, l);
         } catch (java.lang.IllegalAccessException e) {
-            throw new IllegalAccessException(e.getMessage(), e);
+            throw new IllegalAccessException(e);
         }
     }
 
@@ -365,7 +365,7 @@ public class Jdk7Reflect {
         try {
             field.setShort(obj, s);
         } catch (java.lang.IllegalAccessException e) {
-            throw new IllegalAccessException(e.getMessage(), e);
+            throw new IllegalAccessException(e);
         }
     }
 
@@ -378,9 +378,22 @@ public class Jdk7Reflect {
         try {
             return method.invoke(obj, args);
         } catch (java.lang.IllegalAccessException e) {
-            throw new IllegalAccessException(e.getMessage(), e);
+            throw new IllegalAccessException(e);
         } catch (java.lang.reflect.InvocationTargetException e) {
-            throw new InvocationTargetException(e.getMessage(), e);
+            throw new InvocationTargetException(e);
+        }
+    }
+
+    /**
+     * @throws ClassNotFoundException
+     * @see ClassLoader#loadClass(String)
+     */
+    public static Class<?> loadClass(ClassLoader classLoader, String className)
+            throws ClassNotFoundException {
+        try {
+            return classLoader.loadClass(className);
+        } catch (java.lang.ClassNotFoundException e) {
+            throw new ClassNotFoundException(e);
         }
     }
 

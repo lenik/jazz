@@ -1,5 +1,6 @@
 package net.bodz.bas.ant;
 
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.traits.ParserUtil;
 import net.bodz.bas.util.exception.ParseException;
 
@@ -39,7 +40,7 @@ public class Parameter {
             throws ClassNotFoundException {
         if (typeName == null)
             throw new NullPointerException("typeName");
-        this.type = Class.forName(typeName);
+        this.type = Jdk7Reflect.forName(typeName);
     }
 
     public void setValue(String value) {

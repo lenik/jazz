@@ -8,6 +8,10 @@ public class NoSuchFieldException
 
     private static final long serialVersionUID = 1L;
 
+    public NoSuchFieldException(java.lang.NoSuchFieldException cause) {
+        super(cause.getMessage(), cause.getCause());
+    }
+
     public NoSuchFieldException() {
         super();
     }

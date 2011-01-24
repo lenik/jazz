@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
+import net.bodz.bas.jdk6compat.jdk7emul.NoSuchMethodException;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.lang.QueryException;
 import net.bodz.bas.traits.AbstractTraitsProvider;
@@ -73,10 +74,10 @@ public class QueryMethodTraitsProvider
     private static Method findQueryMethod(Class<?> objType) {
         Method method;
         try {
-            method = objType.getMethod(queryMethodName, Class.class);
+            method = Jdk7Reflect.getMethod(objType, queryMethodName, Class.class);
         } catch (NoSuchMethodException e) {
             try {
-                method = objType.getDeclaredMethod(queryMethodName, Class.class);
+                method = Jdk7Reflect.getDeclaredMethod(objType, queryMethodName, Class.class);
                 method.setAccessible(true);
             } catch (NoSuchMethodException e1) {
                 return null;
