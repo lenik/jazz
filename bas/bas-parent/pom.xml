@@ -5,7 +5,7 @@
 The Basics-->
     <groupId>net.bodz.bas</groupId>
     <artifactId>bas-parent</artifactId>
-    <version>0.4-SNAPSHOT</version>
+    <version>0.5-SNAPSHOT</version>
     <packaging>pom</packaging>
     <properties>
         <encoding>utf-8</encoding>
@@ -68,12 +68,12 @@ More Project Information-->
 Environment Settings-->
     <distributionManagement>
         <repository>
-            <id>bodz-release</id>
+            <id>z-m2</id>
             <name>boDz Release Distribution Repository</name>
             <url>http://m2.bodz.net/release</url>
         </repository>
         <snapshotRepository>
-            <id>bodz-snapshot</id>
+            <id>z-m2s</id>
             <name>boDz Snapshot Distribution Repository</name>
             <url>http://m2.bodz.net/snapshot</url>
         </snapshotRepository>
