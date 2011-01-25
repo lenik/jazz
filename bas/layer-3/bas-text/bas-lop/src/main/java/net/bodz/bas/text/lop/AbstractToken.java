@@ -6,7 +6,7 @@ import net.bodz.bas.sio.position.XYPosition;
 import net.bodz.bas.string.StringEscape;
 import net.bodz.bas.string.Strings;
 
-public abstract class _Token
+public abstract class AbstractToken
         implements Token {
 
     private final Lexer lexer;
@@ -17,11 +17,11 @@ public abstract class _Token
     private int y;
     private int x;
 
-    public _Token(Lexer lexer, int id, IXYTellable start) {
+    public AbstractToken(Lexer lexer, int id, IXYTellable start) {
         this(lexer, id, null, start);
     }
 
-    public _Token(Lexer lexer, int id, Object value, IXYTellable start) {
+    public AbstractToken(Lexer lexer, int id, Object value, IXYTellable start) {
         if (lexer == null)
             throw new NullPointerException("lexer");
         this.lexer = lexer;
@@ -32,11 +32,11 @@ public abstract class _Token
         this.x = start.tellX();
     }
 
-    public _Token(Lexer lexer, int id, long offset, int y, int x) {
+    public AbstractToken(Lexer lexer, int id, long offset, int y, int x) {
         this(lexer, id, null, offset, y, x);
     }
 
-    public _Token(Lexer lexer, int id, Object value, long offset, int y, int x) {
+    public AbstractToken(Lexer lexer, int id, Object value, long offset, int y, int x) {
         if (lexer == null)
             throw new NullPointerException("lexer");
         this.lexer = lexer;

@@ -3,7 +3,7 @@ package net.bodz.bas.mem;
 import net.bodz.bas.util.exception.OutOfDomainException;
 
 public class ArrayMemory
-        extends _Memory {
+        extends AbstractMemory {
 
     private final byte[] array;
     private final int start;

@@ -26,6 +26,6 @@ public abstract class LexMatchAcceptor {
 
     protected abstract void symbol(String name, String value);
 
-    protected abstract void rule(_LexMatch match, Method action, int mode);
+    protected abstract void rule(AbstractLexMatch match, Method action, int mode);
 
 }

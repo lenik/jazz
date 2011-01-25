@@ -12,7 +12,7 @@ import net.bodz.bas.util.Dates;
 /**
  * A simple framework for printing change lists produced by <code>Diff</code>.
  * 
- * @see _GNUDiff.util.GNUDiff
+ * @see GNUDiff.util.GNUDiffComparator
  * @author Stuart D. Gathman Copyright (C) 2000 Business Management Systems, Inc.
  *         <p>
  *         This program is free software; you can redistribute it and/or modify it under the terms

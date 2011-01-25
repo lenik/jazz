@@ -1,6 +1,6 @@
 package net.bodz.bas.text.lop;
 
-public class _LexMatch implements Comparable<_LexMatch> {
+public class AbstractLexMatch implements Comparable<AbstractLexMatch> {
 
     private int order;
     private int declOrder;
@@ -8,7 +8,7 @@ public class _LexMatch implements Comparable<_LexMatch> {
     private String value;
     private boolean mayReturn;
 
-    public _LexMatch(LexMatch a, int declOrder) {
+    public AbstractLexMatch(LexMatch a, int declOrder) {
         value = a.value();
         order = a.order();
         state = a.state();
@@ -17,7 +17,7 @@ public class _LexMatch implements Comparable<_LexMatch> {
     }
 
     @Override
-    public int compareTo(_LexMatch o) {
+    public int compareTo(AbstractLexMatch o) {
         int c = state.compareTo(o.state);
         if (c != 0)
             return c;

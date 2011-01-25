@@ -4,8 +4,9 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jvm.stack.FrameConstructError;
-import net.bodz.bas.jvm.stack._FrameTemplate;
+import net.bodz.bas.jvm.stack.FrameTemplate_forAsm;
 import net.bodz.bas.loader.CustomClassLoader;
 
 import org.objectweb.asm.ClassWriter;
@@ -22,7 +23,7 @@ public class NamedFrame {
 
     /**
      * @throws FrameConstructError
-     * @see _FrameTemplate
+     * @see FrameTemplate_forAsm
      */
     public static Runnable wrap(Runnable runnable, String className, String methodName, String description) {
         className = toSafeName(className);
@@ -32,7 +33,7 @@ public class NamedFrame {
         Class<?> craftClass = frameClassLoader._defineClass(className, bytes, 0, bytes.length);
 
         try {
-            Constructor<?> craftCtor = craftClass.getConstructor(String.class, Runnable.class);
+            Constructor<?> craftCtor = Jdk7Reflect.getConstructor(craftClass, String.class, Runnable.class);
             final Object craft = craftCtor.newInstance(description, runnable);
             Runnable craftWrapper;
             if (craft instanceof Runnable)

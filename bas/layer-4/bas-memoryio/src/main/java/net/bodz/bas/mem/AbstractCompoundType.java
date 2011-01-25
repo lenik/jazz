@@ -1,6 +1,6 @@
 package net.bodz.bas.mem;
 
-public abstract class _CompoundType extends _Type implements CompoundType {
+public abstract class AbstractCompoundType extends AbstractType implements CompoundType {
 
     @Override
     public int indexOf(String fieldName) {

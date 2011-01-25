@@ -2,9 +2,7 @@ package net.bodz.bas.util;
 
 import net.bodz.bas.util.exception.CreateException;
 
-import org.apache.commons.lang.ArrayUtils;
-
-public abstract class _Factory<T>
+public abstract class AbstractFactory<T>
         implements Factory<T> {
 
     @Override
@@ -17,10 +15,12 @@ public abstract class _Factory<T>
         return _create(null, args);
     }
 
+    private static final Object[] emptyObjectArray = new Object[0];
+
     @Override
     public T create()
             throws CreateException {
-        return _create(null, ArrayUtils.EMPTY_OBJECT_ARRAY);
+        return _create(null, emptyObjectArray);
     }
 
 }

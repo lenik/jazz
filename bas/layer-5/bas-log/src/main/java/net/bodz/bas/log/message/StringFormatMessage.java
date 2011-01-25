@@ -45,7 +45,7 @@ public class StringFormatMessage
     }
 
     private void readObject(ObjectInputStream in)
-            throws IOException, ClassNotFoundException {
+            throws IOException, java.lang.ClassNotFoundException {
         result = (String) in.readObject();
     }
 

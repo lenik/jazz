@@ -4,9 +4,9 @@ import net.bodz.bas.mem.AccessException;
 import net.bodz.bas.mem.Memory;
 import net.bodz.bas.mem.MemoryWrapOffset;
 import net.bodz.bas.mem.Type;
-import net.bodz.bas.mem._RefType;
+import net.bodz.bas.mem.AbstractRefType;
 
-public abstract class _Ptr32 extends _RefType {
+public abstract class _Ptr32 extends AbstractRefType {
 
     public _Ptr32(Type targetType) throws AccessException {
         super(targetType);

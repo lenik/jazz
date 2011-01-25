@@ -1,6 +1,6 @@
 package net.bodz.bas.mem;
 
-public abstract class _Type implements Type {
+public abstract class AbstractType implements Type {
 
     protected void load() {
     }

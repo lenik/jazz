@@ -8,56 +8,15 @@ import java.lang.reflect.Constructor;
 
 import net.bodz.bas.jdk6compat.jdk7emul.ClassNotFoundException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
-import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.util.exception.CreateException;
 import net.bodz.bas.util.exception.DecodeException;
+import net.bodz.bas.util.exception.NotImplementedException;
 import net.bodz.bas.xml.XMLs;
 
-public interface Factory<T> {
-
-    Class<? extends T> getType();
-
-    /**
-     * @param argTypes
-     *            may be <code>null</code> if not applicable. if argTypes isn't null, its length
-     *            must be equals to the number of args.
-     * @param args
-     *            each argument must be instance of corresponding argType, or <code>null</code>.
-     */
-    T _create(Class<?>[] argTypes, Object... args)
-            throws CreateException;
-
-    T create(Object... args)
-            throws CreateException;
-
-    T create()
-            throws CreateException;
-
-    class Static<T>
-            extends _Factory<T> {
-
-        private final T instance;
-
-        public Static(T instance) {
-            assert instance != null;
-            this.instance = instance;
-        }
-
-        @SuppressWarnings("unchecked")
-        @Override
-        public Class<? extends T> getType() {
-            return (Class<? extends T>) instance.getClass();
-        }
-
-        @Override
-        public T _create(Class<?>[] argTypes, Object... args) {
-            return instance;
-        }
-
-    }
+public interface Factorys {
 
     class Ctor<T>
-            extends _Factory<T> {
+            extends AbstractFactory<T> {
 
         private Class<? extends T> clazz;
         private Object outer;
@@ -86,9 +45,11 @@ public interface Factory<T> {
                 throws CreateException {
             try {
                 if (clazz.isMemberClass())
-                    return CompatMethods.newMemberInstance(clazz, outer, args);
+                    // return CompatMethods.newMemberInstance(clazz, outer, args);
+                    throw new NotImplementedException();
                 else
-                    return CompatMethods.newInstance(clazz, args);
+                    // return CompatMethods.newInstance(clazz, args);
+                    throw new NotImplementedException();
             } catch (Exception e) {
                 throw new CreateException(e.getMessage(), e);
             }
@@ -96,14 +57,10 @@ public interface Factory<T> {
     }
 
     class ByClassName
-            extends _Factory<Object> {
+            extends AbstractFactory<Object> {
 
         private final ClassLoader loader;
         private final String name;
-
-        public ByClassName(int caller, String name) {
-            this(Caller.getCallerClassLoader(caller + 0), name);
-        }
 
         public ByClassName(ClassLoader loader, String name) {
             if (loader == null)
@@ -127,7 +84,7 @@ public interface Factory<T> {
                 if (argTypes == null)
                     return clazz.newInstance();
                 else {
-                    Constructor<?> ctor = clazz.getConstructor(argTypes);
+                    Constructor<?> ctor = Jdk7Reflect.getConstructor(clazz, argTypes);
                     return ctor.newInstance(args);
                 }
             } catch (ClassNotFoundException e) {
@@ -140,7 +97,7 @@ public interface Factory<T> {
     }
 
     class ByXML
-            extends _Factory<Object> {
+            extends AbstractFactory<Object> {
 
         // private ClassLoader loader;
         String xml;
@@ -174,7 +131,7 @@ public interface Factory<T> {
     }
 
     class ByXMLFile
-            extends _Factory<Object> {
+            extends AbstractFactory<Object> {
 
         // private ClassLoader loader;
         File xmlFile;

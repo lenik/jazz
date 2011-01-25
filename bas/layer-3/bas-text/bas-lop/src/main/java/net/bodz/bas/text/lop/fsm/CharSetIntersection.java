@@ -4,7 +4,7 @@ import net.bodz.bas.util.exception.IllegalUsageException;
 import net.bodz.bas.util.exception.UnexpectedException;
 
 public final class CharSetIntersection
-        extends _CharSet {
+        extends AbstractCharSet {
 
     private final CharSet a;
     private final CharSet b;

@@ -3,7 +3,7 @@ package net.bodz.bas.text.lop.fsm;
 import net.bodz.bas.util.exception.UnexpectedException;
 
 public final class CharSetInv
-        extends _CharSet {
+        extends AbstractCharSet {
 
     private final CharSet orig;
 

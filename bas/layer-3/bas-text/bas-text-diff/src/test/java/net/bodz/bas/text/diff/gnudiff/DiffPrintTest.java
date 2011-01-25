@@ -35,7 +35,7 @@ public class DiffPrintTest {
         String fileb = argv[argv.length - 1];
         List<String> a = listLines(filea);
         List<String> b = listLines(fileb);
-        _GNUDiff d = new _GNUDiff(a, b);
+        GNUDiff d = new GNUDiff(a, b);
         char style = 'n';
         for (int i = 0; i < argv.length - 2; ++i) {
             String f = argv[i];

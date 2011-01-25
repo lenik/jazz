@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import net.bodz.bas.jdk6compat.jdk7emul.InstantiationException;
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
+import net.bodz.bas.jdk6compat.jdk7emul.NoSuchMethodException;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.loader.DefaultBooter;
 import net.bodz.bas.loader.LoadConfig;
@@ -152,7 +155,7 @@ public class BootProc {
                 throws CreateException {
             if (args == null || args.length == 0)
                 try {
-                    return clazz.newInstance();
+                    return Jdk7Reflect.newInstance(clazz);
                 } catch (InstantiationException e) {
                     // try ctor(String[])
                     return createv();
@@ -162,7 +165,7 @@ public class BootProc {
             Class<?>[] lv = new Class<?>[args.length];
             Arrays.fill(lv, String.class);
             try {
-                Constructor<? extends LoadConfig> lctor = clazz.getConstructor(lv);
+                Constructor<? extends LoadConfig> lctor = Jdk7Reflect.getConstructor(clazz, lv);
                 return lctor.newInstance((Object[]) args);
             } catch (NoSuchMethodException e) {
                 return createv();
@@ -174,7 +177,7 @@ public class BootProc {
         LoadConfig createv()
                 throws CreateException {
             try {
-                Constructor<? extends LoadConfig> vctor = clazz.getConstructor(String[].class);
+                Constructor<? extends LoadConfig> vctor = Jdk7Reflect.getConstructor(clazz, String[].class);
                 return vctor.newInstance((Object) args);
             } catch (Exception e) {
                 throw new CreateException(e);

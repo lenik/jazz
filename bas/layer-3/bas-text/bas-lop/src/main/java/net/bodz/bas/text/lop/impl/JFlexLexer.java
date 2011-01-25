@@ -8,7 +8,7 @@ import net.bodz.bas.reflect.bind.ReflectBind;
 import net.bodz.bas.reflect.bind.ReflectField;
 import net.bodz.bas.reflect.bind.ReflectMethod;
 import net.bodz.bas.sio.position.IXYTellable;
-import net.bodz.bas.text.lop._Lexer;
+import net.bodz.bas.text.lop.AbstractLexer;
 
 /**
  * Subclass must implement following members: <code>
@@ -32,7 +32,7 @@ import net.bodz.bas.text.lop._Lexer;
  * @since JFlex 1.4.1
  */
 public abstract class JFlexLexer
-        extends _Lexer
+        extends AbstractLexer
         implements IXYTellable {
 
     @ReflectMethod("yylex")

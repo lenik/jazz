@@ -4,7 +4,7 @@ import static net.bodz.bas.mem.types.Types.INT16LE;
 import static net.bodz.bas.mem.types.Types.INT32LE;
 import static net.bodz.bas.mem.types.Types.INT64LE;
 
-public abstract class _Memory implements Memory {
+public abstract class AbstractMemory implements Memory {
 
     @Override
     public void read(int addr, byte[] buf) throws AccessException {

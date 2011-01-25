@@ -1,7 +1,7 @@
 package net.bodz.bas.text.lop.fsm;
 
 public class CharCategory
-        extends _CharSet {
+        extends AbstractCharSet {
 
     private final int category;
 

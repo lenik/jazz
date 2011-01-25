@@ -22,7 +22,7 @@ import java.util.List;
 
 import net.bodz.bas.sio.WriterPrintOut;
 import net.bodz.bas.text.diff.gnudiff.DiffPrint;
-import net.bodz.bas.text.diff.gnudiff._GNUDiff;
+import net.bodz.bas.text.diff.gnudiff.GNUDiff;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -40,7 +40,7 @@ public class DiffTest
 
     @Test
     public void testReverse() {
-        _GNUDiff diff = new _GNUDiff(Arrays.asList(f1), Arrays.asList(f2));
+        GNUDiff diff = new GNUDiff(Arrays.asList(f1), Arrays.asList(f2));
         List<DiffInfo> script = diff.diff_2(true);
         assertTrue(script != null);
     }
@@ -59,7 +59,7 @@ public class DiffTest
     public void testSwap() {
         final Integer[] l1 = loadArray(new int[] { 1, 2, 4, 7, 9, 35, 56, 58, 76 });
         final Integer[] l2 = loadArray(new int[] { 1, 2, 4, 76, 9, 35, 56, 58, 7 });
-        _GNUDiff diff = new _GNUDiff(Arrays.asList(l1), Arrays.asList(l2));
+        GNUDiff diff = new GNUDiff(Arrays.asList(l1), Arrays.asList(l2));
         List<DiffInfo> script = diff.diff_2(false);
         // script should have two changes
         assertTrue(script != null);
@@ -86,7 +86,7 @@ public class DiffTest
      */
     // @Test
     public void testContext() {
-        _GNUDiff diff = new _GNUDiff(Arrays.asList(test1), Arrays.asList(test2));
+        GNUDiff diff = new GNUDiff(Arrays.asList(test1), Arrays.asList(test2));
         List<DiffInfo> script = diff.diff_2(false);
         StringWriter wtr = new StringWriter();
         DiffPrint.Base p = new DiffPrint.UnifiedPrint(Arrays.asList(test1), Arrays.asList(test2), //

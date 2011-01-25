@@ -2,6 +2,8 @@ package net.bodz.bas.traits.provider.extra;
 
 import java.lang.reflect.Field;
 
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
+import net.bodz.bas.jdk6compat.jdk7emul.NoSuchFieldException;
 import net.bodz.bas.traits.AbstractParser;
 import net.bodz.bas.util.exception.ParseException;
 
@@ -18,14 +20,12 @@ public class GetFromRegistryParser
     public Object parse(String entry)
             throws ParseException {
         try {
-            Field field = registryClass.getField(entry);
+            Field field = Jdk7Reflect.getField(registryClass, entry);
             return field.get(null);
         } catch (NoSuchFieldException e) {
-            throw new ParseException("Entry " + entry 
-                    + " isn\'t defined in registry " + registryClass, e); 
+            throw new ParseException("Entry " + entry + " isn\'t defined in registry " + registryClass, e);
         } catch (Exception e) {
-            throw new ParseException("Failed to load entry " + entry 
-                    + " in registry " + registryClass); 
+            throw new ParseException("Failed to load entry " + entry + " in registry " + registryClass);
         }
     }
 

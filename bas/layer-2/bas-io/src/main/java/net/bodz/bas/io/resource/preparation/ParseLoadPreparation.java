@@ -11,6 +11,8 @@ import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
 import net.bodz.bas.collection.util.IteratorToList;
 import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.jdk6compat.jdk7emul.ClassNotFoundException;
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.util.exception.UnexpectedException;
 
 public class ParseLoadPreparation
@@ -63,7 +65,7 @@ public class ParseLoadPreparation
                 if (isEnded())
                     return null;
                 try {
-                    Object object = in.readObject();
+                    Object object = Jdk7Reflect.readObject(in);
                     return object;
                 } catch (ClassNotFoundException e) {
                     throw new IOException(e.getMessage(), e);

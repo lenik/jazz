@@ -1,10 +1,10 @@
 package net.bodz.bas.text.lop;
 
-public abstract class _Parser implements Parser {
+public abstract class AbstractParser implements Parser {
 
     protected Lexer lexer;
 
-    public _Parser() {
+    public AbstractParser() {
     }
 
     protected Token read() {

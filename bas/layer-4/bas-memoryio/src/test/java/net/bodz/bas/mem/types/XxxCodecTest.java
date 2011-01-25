@@ -3,6 +3,9 @@ package net.bodz.bas.mem.types;
 import java.util.Arrays;
 import java.util.Random;
 
+import net.bodz.bas.jdk6compat.jdk7emul.IllegalAccessException;
+import net.bodz.bas.jdk6compat.jdk7emul.InstantiationException;
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.mem.ArrayMemory;
 import net.bodz.bas.mem.Memory;
 import net.bodz.bas.mem.Type;
@@ -25,7 +28,7 @@ public class XxxCodecTest
         Memory mem = new ArrayMemory(memv);
         Type type;
         try {
-            type = typeClass.newInstance();
+            type = Jdk7Reflect.newInstance(typeClass);
         } catch (InstantiationException e) {
             throw new RuntimeException(e);
         } catch (IllegalAccessException e) {
