@@ -6,7 +6,7 @@
 
 # Maven builds
 target
-*.versionBackup
+*.versionsBackup
 
 # gitstats
 /stats
