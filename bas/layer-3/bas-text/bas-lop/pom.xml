@@ -42,5 +42,5 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 3 :: Text :: Basic LOP</name>
+    <name>BAS :: Layer 3 :: Text :: Lop</name>
 </project>

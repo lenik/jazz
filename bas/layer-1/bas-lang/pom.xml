@@ -8,5 +8,5 @@
     <artifactId>bas-lang</artifactId>
     <version>0.0.2-SNAPSHOT</version>
     <dependencies/>
-    <name>BAS :: Layer 1 :: Core Language Enhancement</name>
+    <name>BAS :: Layer 1 :: Lang</name>
 </project>

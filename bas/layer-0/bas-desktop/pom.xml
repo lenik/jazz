@@ -8,5 +8,5 @@
     <artifactId>bas-desktop</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <dependencies/>
-    <name>BAS :: Layer 0 :: System Utilities</name>
+    <name>BAS :: Layer 0 :: Desktop</name>
 </project>

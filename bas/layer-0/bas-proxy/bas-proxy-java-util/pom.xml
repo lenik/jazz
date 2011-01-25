@@ -14,5 +14,5 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 0 :: Proxy :: java.util</name>
+    <name>BAS :: Layer 0 :: Proxy :: Proxy Java Util</name>
 </project>

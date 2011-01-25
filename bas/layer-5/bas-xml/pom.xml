@@ -34,5 +34,5 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 5 :: XML Utilities</name>
+    <name>BAS :: Layer 5 :: Xml</name>
 </project>

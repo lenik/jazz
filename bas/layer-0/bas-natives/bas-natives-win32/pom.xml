@@ -8,5 +8,5 @@
     <artifactId>bas-natives-win32</artifactId>
     <packaging>jar</packaging>
     <version>0.0.2-SNAPSHOT</version>
-    <name>BAS :: Layer 0 :: Natives :: Win32</name>
+    <name>BAS :: Layer 0 :: Natives :: Natives Win32</name>
 </project>

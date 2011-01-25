@@ -19,5 +19,5 @@
         <java.version>1.7</java.version>
         <java.home>${JAVA_SE_7_HOME}</java.home>
     </properties>
-    <name>BAS :: Layer 2 :: NIO</name>
+    <name>BAS :: Layer 2 :: Nio</name>
 </project>

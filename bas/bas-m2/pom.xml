@@ -5,14 +5,15 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>net.bodz.bas</groupId>
-        <artifactId>bas-parent</artifactId>
-        <version>0.4</version>
+        <artifactId>bas</artifactId>
+        <version>0.0.2-SNAPSHOT</version>
     </parent>
-    <groupId>net.bodz.bas</groupId>
     <artifactId>bas-m2</artifactId>
+    <version>0.0.2-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
+        <module>bas-m2-activator</module>
         <module>bas-m2-javadoc</module>
     </modules>
-    <name>BAS :: Maven 2</name>
+    <name>BAS :: M2</name>
 </project>

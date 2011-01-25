@@ -38,5 +38,5 @@
             <optional>true</optional>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 2 :: Type System :: Utilities</name>
+    <name>BAS :: Layer 2 :: Valtype</name>
 </project>

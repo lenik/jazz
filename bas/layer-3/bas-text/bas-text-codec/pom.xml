@@ -35,5 +35,5 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 3 :: Text :: More Encodings</name>
+    <name>BAS :: Layer 3 :: Text :: Text Codec</name>
 </project>

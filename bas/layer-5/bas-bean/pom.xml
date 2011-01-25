@@ -50,5 +50,5 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 5 :: Java Bean Utilities</name>
+    <name>BAS :: Layer 5 :: Bean</name>
 </project>

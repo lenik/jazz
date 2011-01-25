@@ -7,5 +7,5 @@
     </parent>
     <artifactId>bas-proxy-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>BAS :: Layer 0 :: Proxy :: API</name>
+    <name>BAS :: Layer 0 :: Proxy :: Proxy Api</name>
 </project>

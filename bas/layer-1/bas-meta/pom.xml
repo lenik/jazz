@@ -22,5 +22,5 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 1 :: Hint API</name>
+    <name>BAS :: Layer 1 :: Meta</name>
 </project>

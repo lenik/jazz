@@ -16,5 +16,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 0 :: System Info</name>
+    <name>BAS :: Layer 0 :: Sysinfo</name>
 </project>

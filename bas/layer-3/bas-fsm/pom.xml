@@ -26,5 +26,5 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 3 :: Finite State Machine</name>
+    <name>BAS :: Layer 3 :: Fsm</name>
 </project>

@@ -13,5 +13,5 @@
         <module>bas-proxy-java-security</module>
         <module>bas-proxy-java-util</module>
     </modules>
-    <name>BAS :: Layer 0 :: Proxy Wrappers</name>
+    <name>BAS :: Layer 0 :: Proxy</name>
 </project>

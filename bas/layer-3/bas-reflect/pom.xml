@@ -40,5 +40,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 3 :: Java Reflect Utils</name>
+    <name>BAS :: Layer 3 :: Reflect</name>
 </project>

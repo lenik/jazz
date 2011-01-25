@@ -64,5 +64,5 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 5 :: Flow Driven Architecture</name>
+    <name>BAS :: Layer 5 :: Flow</name>
 </project>

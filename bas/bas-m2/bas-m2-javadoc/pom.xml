@@ -1,13 +1,12 @@
-<?xml version="1.0"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>net.bodz.bas</groupId>
-        <artifactId>bas-parent</artifactId>
-        <version>0.4</version>
+        <artifactId>bas-m2</artifactId>
+        <version>0.0.2-SNAPSHOT</version>
     </parent>
     <artifactId>bas-m2-javadoc</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <dependencies />
-    <name>BAS :: Maven 2 :: Javadoc Modeler</name>
+    <dependencies/>
+    <name>BAS :: M2 :: M2 Javadoc</name>
 </project>

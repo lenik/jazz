@@ -42,5 +42,5 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 3 :: Text :: Diff</name>
+    <name>BAS :: Layer 3 :: Text :: Text Diff</name>
 </project>

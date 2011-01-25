@@ -8,5 +8,5 @@
     <artifactId>bas-vfsutils</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <dependencies/>
-    <name>BAS :: Layer 6 :: VFS utilities</name>
+    <name>BAS :: Layer 6 :: Vfsutils</name>
 </project>

@@ -22,5 +22,5 @@
         <module>bas-all-6</module>
         <module>bas-all-7</module>
     </modules>
-    <name>BAS Framework :: Build</name>
+    <name>BAS :: Build</name>
 </project>
