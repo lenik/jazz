@@ -136,6 +136,8 @@
         <module>layer-6</module>
         <module>layer-7</module>
         <module>bas-incubator</module>
+        <module>bas-m2</module>
+        <module>build</module>
     </modules>
     <properties>
         <java.version>1.6</java.version>
