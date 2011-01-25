@@ -62,9 +62,9 @@ layer-6 框架工具
     
 layer-7 应用框架
     bas-ant
-    bas-cli
     bas-dotnet-synthetics   （For dotnet)
     bas-loader
     bas-netserv
+    bas-program
     bas-unitperf
 
