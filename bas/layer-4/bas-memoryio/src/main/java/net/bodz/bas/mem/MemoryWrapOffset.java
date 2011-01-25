@@ -1,6 +1,6 @@
 package net.bodz.bas.mem;
 
-public class MemoryWrapOffset extends _Memory {
+public class MemoryWrapOffset extends AbstractMemory {
 
     private final Memory orig;
 

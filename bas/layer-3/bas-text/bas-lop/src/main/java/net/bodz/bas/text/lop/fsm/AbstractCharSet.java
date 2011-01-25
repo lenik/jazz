@@ -2,7 +2,7 @@ package net.bodz.bas.text.lop.fsm;
 
 import net.bodz.bas.util.exception.UnexpectedException;
 
-public abstract class _CharSet
+public abstract class AbstractCharSet
         implements CharSet {
 
     @Override

@@ -5,7 +5,7 @@ import java.util.NoSuchElementException;
 
 import net.bodz.bas.util.exception.ParseException;
 
-public class NullParser extends _Parser {
+public class NullParser extends AbstractParser {
 
     private Object value;
 

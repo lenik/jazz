@@ -1,10 +1,10 @@
 package net.bodz.bas.mem;
 
-public abstract class _RefType extends _Type implements RefType {
+public abstract class AbstractRefType extends AbstractType implements RefType {
 
     protected final Type targetType;
 
-    public _RefType(Type targetType) throws AccessException {
+    public AbstractRefType(Type targetType) throws AccessException {
         this.targetType = targetType;
     }
 

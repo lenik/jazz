@@ -10,12 +10,12 @@ import java.util.TreeMap;
 
 public class LexAnnotations {
 
-    private TreeMap<_LexMatch, Field> syms;
-    private TreeMap<_LexMatch, Method> rules;
+    private TreeMap<AbstractLexMatch, Field> syms;
+    private TreeMap<AbstractLexMatch, Method> rules;
 
     public LexAnnotations(Class<?> clazz, boolean inherits) {
-        syms = new TreeMap<_LexMatch, Field>();
-        rules = new TreeMap<_LexMatch, Method>();
+        syms = new TreeMap<AbstractLexMatch, Field>();
+        rules = new TreeMap<AbstractLexMatch, Method>();
         load(clazz, inherits);
     }
 
@@ -39,7 +39,7 @@ public class LexAnnotations {
                 continue;
             LexMatch a = field.getAnnotation(LexMatch.class);
             if (a != null)
-                loadSymbol(new _LexMatch(a, i), field);
+                loadSymbol(new AbstractLexMatch(a, i), field);
         }
 
         // rules
@@ -48,27 +48,27 @@ public class LexAnnotations {
             Method method = methods[i];
             LexMatch a = method.getAnnotation(LexMatch.class);
             if (a != null)
-                loadRule(new _LexMatch(a, i), method);
+                loadRule(new AbstractLexMatch(a, i), method);
         }
     }
 
-    void loadSymbol(_LexMatch symval, Field symdecl) {
+    void loadSymbol(AbstractLexMatch symval, Field symdecl) {
         syms.put(symval, symdecl);
     }
 
-    void loadRule(_LexMatch match, Method action) {
+    void loadRule(AbstractLexMatch match, Method action) {
         rules.put(match, action);
     }
 
     public synchronized void visit(LexMatchAcceptor acceptor) {
-        for (Entry<_LexMatch, Field> ent : syms.entrySet()) {
-            _LexMatch symval = ent.getKey();
+        for (Entry<AbstractLexMatch, Field> ent : syms.entrySet()) {
+            AbstractLexMatch symval = ent.getKey();
             Field symdecl = ent.getValue();
             acceptor.symbol(symdecl.getName(), symval.getValue());
         }
         String lastState = null;
-        for (Entry<_LexMatch, Method> ent : rules.entrySet()) {
-            _LexMatch match = ent.getKey();
+        for (Entry<AbstractLexMatch, Method> ent : rules.entrySet()) {
+            AbstractLexMatch match = ent.getKey();
             String state = match.getState();
             if (lastState == null) {
                 acceptor.enter(state);
@@ -125,7 +125,7 @@ public class LexAnnotations {
         }
 
         @Override
-        protected void rule(_LexMatch match, Method action, int mode) {
+        protected void rule(AbstractLexMatch match, Method action, int mode) {
             int len = match.getValue().length();
             if (len > ruleSize)
                 ruleSize = len;

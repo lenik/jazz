@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 import net.bodz.bas.reflect.bind.ReflectBind;
 import net.bodz.bas.reflect.bind.ReflectField;
 import net.bodz.bas.reflect.bind.ReflectMethod;
-import net.bodz.bas.text.lop._Parser;
+import net.bodz.bas.text.lop.AbstractParser;
 
 /**
  * Subclass must implement following members: <code>
@@ -21,7 +21,7 @@ import net.bodz.bas.text.lop._Parser;
  * </code>
  */
 public abstract class ByaccjParser
-        extends _Parser {
+        extends AbstractParser {
 
     @ReflectField("yystate")
     private Field yystate;

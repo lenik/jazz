@@ -56,13 +56,13 @@ public class TempClassLoader
 
     @Override
     protected synchronized Class<?> loadClass(String name, boolean resolve)
-            throws ClassNotFoundException {
+            throws java.lang.ClassNotFoundException {
         assert name != null : "null name";
         Class<?> c = findLoadedClass(name);
         if (c == null) {
             try {
                 c = findClass(name);
-            } catch (ClassNotFoundException e) {
+            } catch (java.lang.ClassNotFoundException e) {
                 // this may invoke findClass(name) again.
                 // it's just ok.
                 return super.loadClass(name, resolve);

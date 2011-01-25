@@ -6,7 +6,7 @@ import java.util.List;
 import net.bodz.bas.string.StringEscape;
 
 public class CharRange
-        extends _CharSet {
+        extends AbstractCharSet {
 
     private final int begin;
     private final int end;

@@ -18,7 +18,7 @@ public abstract class RenderStrategy extends TypeHierMap<Renderer> {
         Renderer renderer = findRenderer(var);
         if (renderer == null)
             throw new RenderException("Don\'t know how to render " 
-                    + var.getMeta().getType());
+                    + var.getType());
         return renderer.render(context, var);
     }
 
@@ -30,7 +30,7 @@ public abstract class RenderStrategy extends TypeHierMap<Renderer> {
     protected Renderer findRenderer(Var<?> var) {
         if (var == null)
             throw new NullPointerException();
-        Class<?> type = var.getMeta().getType();
+        Class<?> type = var.getType();
         return findRenderer(type);
     }
 

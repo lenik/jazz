@@ -1,6 +1,6 @@
 package net.bodz.bas.mem;
 
-public class StructType extends _CompoundType {
+public class StructType extends AbstractCompoundType {
 
     // Type
 

@@ -1,5 +1,7 @@
 package net.bodz.bas.jdk6compat.jdk7emul;
 
+import java.io.IOException;
+import java.io.ObjectInput;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -392,6 +394,15 @@ public class Jdk7Reflect {
             throws ClassNotFoundException {
         try {
             return classLoader.loadClass(className);
+        } catch (java.lang.ClassNotFoundException e) {
+            throw new ClassNotFoundException(e);
+        }
+    }
+
+    public static Object readObject(ObjectInput in)
+            throws IOException, ClassNotFoundException {
+        try {
+            return in.readObject();
         } catch (java.lang.ClassNotFoundException e) {
             throw new ClassNotFoundException(e);
         }

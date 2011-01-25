@@ -8,6 +8,8 @@ import java.io.ObjectOutputStream;
 import java.io.Reader;
 import java.io.Writer;
 
+import net.bodz.bas.jdk6compat.jdk7emul.ClassNotFoundException;
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.type.srt.SerializeException;
 
 /** o?; */
@@ -22,7 +24,7 @@ public class ObjectSerializer
         oos.writeObject(o);
         oos.flush();
         byte[] bytes = buf.toByteArray();
-        String cdata = new String(bytes, "iso-8859-1"); 
+        String cdata = new String(bytes, "iso-8859-1");
         super.serialize(s, cdata);
     }
 
@@ -30,11 +32,11 @@ public class ObjectSerializer
     public Object unserialize(Reader s)
             throws IOException, SerializeException {
         String cdata = (String) super.unserialize(s);
-        byte[] bytes = cdata.getBytes("iso-8859-1"); 
+        byte[] bytes = cdata.getBytes("iso-8859-1");
         ByteArrayInputStream buf = new ByteArrayInputStream(bytes);
         ObjectInputStream ois = new ObjectInputStream(buf);
         try {
-            return ois.readObject();
+            return Jdk7Reflect.readObject(ois);
         } catch (ClassNotFoundException e) {
             throw new SerializeException(e.getMessage(), e);
         }

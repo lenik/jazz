@@ -10,20 +10,20 @@ import net.bodz.bas.sio.position.IXYTellable;
 import net.bodz.bas.sio.position.XYPosition;
 import net.bodz.bas.string.StringEscape;
 
-public abstract class _Lexer
+public abstract class AbstractLexer
         implements Lexer {
 
     protected class Token
-            extends _Token {
+            extends AbstractToken {
 
-        private final String text = _Lexer.this.getText();
+        private final String text = AbstractLexer.this.getText();
 
         public Token(int id) {
             this(id, null);
         }
 
         public Token(int id, Object value) {
-            super(_Lexer.this, id, value, getTokenStart());
+            super(AbstractLexer.this, id, value, getTokenStart());
         }
 
         @Override
@@ -48,7 +48,7 @@ public abstract class _Lexer
     private int prevY;
     private int prevX;
 
-    public _Lexer() {
+    public AbstractLexer() {
     }
 
     protected abstract int _read();

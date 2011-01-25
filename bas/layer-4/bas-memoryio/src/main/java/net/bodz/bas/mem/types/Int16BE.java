@@ -2,10 +2,10 @@ package net.bodz.bas.mem.types;
 
 import net.bodz.bas.mem.AccessException;
 import net.bodz.bas.mem.Memory;
-import net.bodz.bas.mem._Type;
+import net.bodz.bas.mem.AbstractType;
 import net.bodz.bas.primitive.IntMath;
 
-public class Int16BE extends _Type {
+public class Int16BE extends AbstractType {
 
     @Override
     public Short get(Memory memory, int offset) throws AccessException {

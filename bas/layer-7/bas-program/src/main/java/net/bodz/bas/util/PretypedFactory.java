@@ -1,6 +1,6 @@
 package net.bodz.bas.util;
 
-public abstract class PretypedFactory<T> extends _Factory<T> {
+public abstract class PretypedFactory<T> extends AbstractFactory<T> {
 
     private final Class<T> type;
 
