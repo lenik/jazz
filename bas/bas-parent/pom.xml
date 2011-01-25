@@ -28,6 +28,7 @@ Build Settings-->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.3.2</version>
                     <configuration>
                         <source>${java.version}</source>
                         <target>${java.version}</target>
@@ -38,6 +39,7 @@ Build Settings-->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>2.7</version>
                     <configuration>
                         <source>${java.version}</source>
                         <encoding>${encoding}</encoding>
@@ -47,6 +49,7 @@ Build Settings-->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
+                    <version>2.4.3</version>
                     <configuration>
                         <encoding>${encoding}</encoding>
                     </configuration>
@@ -54,6 +57,7 @@ Build Settings-->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
+                    <version>2.1.2</version>
                     <executions>
                         <execution>
                             <goals>
@@ -66,6 +70,7 @@ Build Settings-->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
+                    <version>2.3.1</version>
                     <executions>
                         <execution>
                             <goals>
