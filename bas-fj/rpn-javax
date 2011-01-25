@@ -1,4 +1,4 @@
 #!/bin/bash
 
-m2rpn -wbas=freejava -pnet.bodz.bas=javax.free -f ../bas javax
+m2rpn -wbas=freejava -pnet.bodz.bas=javax.free -f "$@" ../bas javax
 

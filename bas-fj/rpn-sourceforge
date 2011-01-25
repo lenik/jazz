@@ -1,4 +1,4 @@
 #!/bin/bash
 
-m2rpn -wbas=freejava -pnet.bodz.bas=net.sourceforge.freejava ../bas sourceforge
+m2rpn -wbas=freejava -pnet.bodz.bas=net.sourceforge.freejava "$@" ../bas sourceforge
 
