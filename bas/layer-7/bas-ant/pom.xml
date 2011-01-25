@@ -55,5 +55,5 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 7 :: Ant Tasks</name>
+    <name>BAS :: Layer 7 :: Ant</name>
 </project>

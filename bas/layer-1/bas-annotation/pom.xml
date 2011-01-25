@@ -8,5 +8,5 @@
     <artifactId>bas-annotation</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <dependencies/>
-    <name>BAS :: Layer 1 :: Annotation Utils</name>
+    <name>BAS :: Layer 1 :: Annotation</name>
 </project>

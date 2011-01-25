@@ -32,5 +32,5 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 2 :: Type System :: Traits Impl for Common Types</name>
+    <name>BAS :: Layer 2 :: Traits Impl</name>
 </project>

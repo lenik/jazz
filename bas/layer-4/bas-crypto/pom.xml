@@ -28,5 +28,5 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 4 :: Security Utilities</name>
+    <name>BAS :: Layer 4 :: Crypto</name>
 </project>

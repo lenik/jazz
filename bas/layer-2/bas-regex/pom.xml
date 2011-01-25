@@ -49,5 +49,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 2 :: Text :: Preprocess</name>
+    <name>BAS :: Layer 2 :: Regex</name>
 </project>

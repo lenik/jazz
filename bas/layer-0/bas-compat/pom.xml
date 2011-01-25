@@ -11,5 +11,5 @@
     <modules>
         <module>bas-jdk6compat</module>
     </modules>
-    <name>BAS :: Layer 0 :: Compatible</name>
+    <name>BAS :: Layer 0 :: Compat</name>
 </project>

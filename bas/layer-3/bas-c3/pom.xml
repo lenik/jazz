@@ -29,5 +29,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 3 :: Commons</name>
+    <name>BAS :: Layer 3 :: C3</name>
 </project>

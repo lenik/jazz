@@ -1,4 +1,4 @@
-layer-0 系统兼容层，系统周边环境准备
+layer-0/ 系统兼容层，系统周边环境准备
     bas-compat
     bas-desktop (iocapture -> bas-io)
     bas-jvmhack
@@ -6,7 +6,7 @@ layer-0 系统兼容层，系统周边环境准备
     bas-proxy
     bas-sysinfo (SystemInfo)
     
-layer-1 核心语言增强与语言工具
+layer-1/ 核心语言增强与语言工具
     bas-annotation
     bas-c1
     bas-chars
@@ -16,7 +16,7 @@ layer-1 核心语言增强与语言工具
     bas-test
     bas-traits
     
-layer-2 基础数据类型扩展
+layer-2/ 基础数据类型扩展
     bas-bits
     bas-c2
     bas-closure
@@ -30,20 +30,20 @@ layer-2 基础数据类型扩展
     bas-traits-impl
     bas-valtype
     
-layer-3 通用工具
+layer-3/ 通用工具
     bas-c3
     bas-fsm
     bas-javadoc
     bas-reflect
     bas-text (-codec, -diff)
         
-layer-4 特殊工具
+layer-4/ 特殊工具
     bas-combina
     bas-crypto
     bas-memoryio
     bas-srt
         
-layer-5 框架基础
+layer-5/ 框架基础
     bas-bean
     bas-database
     bas-flow
@@ -56,11 +56,11 @@ layer-5 框架基础
     bas-vfs
     bas-xml
 
-layer-6 框架工具
+layer-6/ 框架工具
     bas-snmjava
     bas-vfsutils
     
-layer-7 应用框架
+layer-7/ 应用框架
     bas-ant
     bas-dotnet-synthetics   （For dotnet)
     bas-loader

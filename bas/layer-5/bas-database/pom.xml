@@ -46,5 +46,5 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 5 :: Database API</name>
+    <name>BAS :: Layer 5 :: Database</name>
 </project>

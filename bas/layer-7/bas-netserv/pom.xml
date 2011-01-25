@@ -15,5 +15,5 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 7 :: Network</name>
+    <name>BAS :: Layer 7 :: Netserv</name>
 </project>

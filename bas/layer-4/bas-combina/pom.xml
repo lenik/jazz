@@ -39,5 +39,5 @@
             <artifactId>commons-lang</artifactId>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 4 :: Combinatorics</name>
+    <name>BAS :: Layer 4 :: Combina</name>
 </project>

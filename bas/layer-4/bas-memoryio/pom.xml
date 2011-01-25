@@ -26,5 +26,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 4 :: Memory I/O</name>
+    <name>BAS :: Layer 4 :: Memoryio</name>
 </project>

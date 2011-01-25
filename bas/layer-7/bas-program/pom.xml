@@ -87,11 +87,11 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-        	<groupId>net.bodz.bas</groupId>
-        	<artifactId>bas-ui</artifactId>
-        	<version>0.0.1-SNAPSHOT</version>
-        	<type>jar</type>
-        	<scope>compile</scope>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-ui</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <type>jar</type>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
     <build>
@@ -118,5 +118,5 @@
             </plugins>
         </pluginManagement>
     </build>
-    <name>BAS :: Layer 7 :: CLI Application Framework</name>
+    <name>BAS :: Layer 7 :: Program</name>
 </project>

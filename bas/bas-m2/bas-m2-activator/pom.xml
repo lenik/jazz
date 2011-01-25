@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.bodz.bas</groupId>
     <artifactId>bas-m2-activator</artifactId>
@@ -19,11 +18,11 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-        	<groupId>org.apache.maven</groupId>
-        	<artifactId>maven-model-builder</artifactId>
-        	<version>3.0.3-SNAPSHOT</version>
-        	<type>test-jar</type>
-        	<scope>test</scope>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-model-builder</artifactId>
+            <version>3.0.3-SNAPSHOT</version>
+            <type>test-jar</type>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <build>
@@ -51,6 +50,6 @@
             </plugin>
         </plugins>
     </build>
-    <name>BAS :: Maven 2 :: Model Property Profile Activators</name>
+    <name>BAS :: M2 :: M2 Activator</name>
     <description>Custom Profile Activators</description>
 </project>

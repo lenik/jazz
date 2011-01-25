@@ -8,5 +8,5 @@
     <artifactId>bas-c1</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <dependencies/>
-    <name>BAS :: Layer 1 :: Commons</name>
+    <name>BAS :: Layer 1 :: C1</name>
 </project>

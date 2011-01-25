@@ -42,5 +42,5 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 7 :: Unit Performance Test</name>
+    <name>BAS :: Layer 7 :: Unitperf</name>
 </project>

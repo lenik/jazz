@@ -70,5 +70,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 5 :: File System</name>
+    <name>BAS :: Layer 5 :: Vfs</name>
 </project>

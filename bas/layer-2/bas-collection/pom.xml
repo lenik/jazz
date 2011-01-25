@@ -29,5 +29,5 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 2 :: Collection Types</name>
+    <name>BAS :: Layer 2 :: Collection</name>
 </project>

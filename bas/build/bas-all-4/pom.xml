@@ -8,5 +8,5 @@
     <artifactId>bas-all-4</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <dependencies/>
-    <name>BAS Framework :: Build :: Bas All 4</name>
+    <name>BAS :: Build :: All 4</name>
 </project>

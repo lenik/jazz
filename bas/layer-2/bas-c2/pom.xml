@@ -49,5 +49,5 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 2 :: Commons</name>
+    <name>BAS :: Layer 2 :: C2</name>
 </project>

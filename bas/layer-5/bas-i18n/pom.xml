@@ -36,5 +36,5 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 5 :: Internationalization</name>
+    <name>BAS :: Layer 5 :: I18n</name>
 </project>

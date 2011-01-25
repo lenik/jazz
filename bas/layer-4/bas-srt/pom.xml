@@ -21,5 +21,5 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 4 :: Type System :: Simple Serialization</name>
+    <name>BAS :: Layer 4 :: Srt</name>
 </project>

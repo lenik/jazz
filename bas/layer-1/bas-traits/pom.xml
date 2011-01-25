@@ -33,5 +33,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 1 :: Type System :: Type Traits</name>
+    <name>BAS :: Layer 1 :: Traits</name>
 </project>
