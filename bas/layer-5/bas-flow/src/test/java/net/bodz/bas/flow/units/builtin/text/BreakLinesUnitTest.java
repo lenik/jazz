@@ -1,14 +1,13 @@
-package net.bodz.bas.flow.units.text;
+package net.bodz.bas.flow.units.builtin.text;
 
 import java.io.IOException;
 import java.util.Collection;
 
-import net.bodz.bas.flow.units.builtin.text.BreakLinesUnit;
-import net.bodz.bas.flow.util.WhatIf;
-import net.bodz.bas.string.StringArray;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.flow.util.WhatIf;
+import net.bodz.bas.string.StringArray;
 
 public class BreakLinesUnitTest
         extends Assert {

@@ -46,7 +46,6 @@
             <artifactId>bas-string</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <type>jar</type>
-            <scope>test</scope>
         </dependency>
     </dependencies>
     <name>BAS :: Layer 2 :: Regex</name>

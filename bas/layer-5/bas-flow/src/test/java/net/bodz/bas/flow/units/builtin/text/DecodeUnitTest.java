@@ -1,19 +1,18 @@
-package net.bodz.bas.flow.units.text;
+package net.bodz.bas.flow.units.builtin.text;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Collection;
 
+import org.junit.Assert;
+import org.junit.Test;
+
+import org.apache.commons.lang.ArrayUtils;
+
 import net.bodz.bas.flow.units.SISOUnit;
-import net.bodz.bas.flow.units.builtin.text.DecodeUnit;
-import net.bodz.bas.flow.units.builtin.text.Text_String;
 import net.bodz.bas.flow.util.WhatIf;
 import net.bodz.bas.string.StringArray;
 import net.bodz.bas.text.codec.builtin.HexCodec;
-
-import org.apache.commons.lang.ArrayUtils;
-import org.junit.Assert;
-import org.junit.Test;
 
 public class DecodeUnitTest
         extends Assert {
