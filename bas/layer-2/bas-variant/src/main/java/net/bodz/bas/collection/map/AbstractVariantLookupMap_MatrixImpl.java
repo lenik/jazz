@@ -16,10 +16,9 @@ import net.bodz.bas.valtype.conv.TypeMatrix_float;
 import net.bodz.bas.valtype.conv.TypeMatrix_int;
 import net.bodz.bas.valtype.conv.TypeMatrix_long;
 import net.bodz.bas.valtype.conv.TypeMatrix_short;
-import user.VariantLookupMapGenerator;
 
 /**
- * see {@link VariantLookupMapGenerator}
+ * see {@link user.VariantLookupMapGenerator}
  */
 public abstract class AbstractVariantLookupMap_MatrixImpl<K>
         implements IVariantLookupMap<K> {

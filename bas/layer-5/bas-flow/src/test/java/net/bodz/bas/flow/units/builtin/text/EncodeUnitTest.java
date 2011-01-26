@@ -1,17 +1,15 @@
-package net.bodz.bas.flow.units.text;
+package net.bodz.bas.flow.units.builtin.text;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Collection;
 
-import net.bodz.bas.flow.units.SISOUnit;
-import net.bodz.bas.flow.units.builtin.text.Binary_Hex;
-import net.bodz.bas.flow.units.builtin.text.EncodeUnit;
-import net.bodz.bas.flow.util.WhatIf;
-import net.bodz.bas.string.StringArray;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.flow.units.SISOUnit;
+import net.bodz.bas.flow.util.WhatIf;
+import net.bodz.bas.string.StringArray;
 
 public class EncodeUnitTest
         extends Assert {

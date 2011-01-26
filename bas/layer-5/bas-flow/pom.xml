@@ -9,11 +9,6 @@
     <version>0.0.1-SNAPSHOT</version>
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-c2</artifactId>
             <version>0.0.1-SNAPSHOT</version>

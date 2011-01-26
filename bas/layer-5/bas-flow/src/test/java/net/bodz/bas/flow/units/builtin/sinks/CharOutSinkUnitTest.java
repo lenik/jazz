@@ -1,8 +1,7 @@
-package net.bodz.bas.flow.units.sinks;
+package net.bodz.bas.flow.units.builtin.sinks;
 
 import java.io.IOException;
 
-import net.bodz.bas.flow.units.builtin.sinks.CharOutSinkUnit;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.ICharOut;
 

@@ -18,7 +18,6 @@ import net.bodz.bas.lang.AbstractQueryable;
 import net.bodz.bas.lang.QueryException;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.NegotiationException;
-import net.bodz.bas.meta.codereview.GeneratedBy;
 import net.bodz.bas.meta.codereview.ThreadUnsafe;
 import net.bodz.bas.util.exception.CreateException;
 import net.bodz.bas.util.exception.NotImplementedException;
@@ -43,7 +42,7 @@ public abstract class AbstractCommonTraits<T>
         this.type = type;
     }
 
-    @GeneratedBy(CalcPreferredId.class)
+    /** @GeneratedBy CalcPreferredId.class */
     static final Map<Class<?>, Integer> commonTraitsIndex;
     static {
         commonTraitsIndex = new HashMap<Class<?>, Integer>();

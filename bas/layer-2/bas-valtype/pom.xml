@@ -31,11 +31,22 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
+        	<groupId>net.bodz.bas</groupId>
+        	<artifactId>bas-closure</artifactId>
+        	<version>0.0.1-SNAPSHOT</version>
+        	<scope>compile</scope>
+        </dependency>
+        <dependency>
+        	<groupId>net.bodz.bas</groupId>
+        	<artifactId>bas-collection</artifactId>
+        	<version>0.0.1-SNAPSHOT</version>
+        	<scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-combina</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>test</scope>
-            <optional>true</optional>
         </dependency>
     </dependencies>
     <name>BAS :: Layer 2 :: Valtype</name>
