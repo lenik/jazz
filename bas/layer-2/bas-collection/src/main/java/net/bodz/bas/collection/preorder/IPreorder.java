@@ -1,6 +1,17 @@
 package net.bodz.bas.collection.preorder;
 
-public interface IPreorder<T> {
+import java.util.Comparator;
+
+public interface IPreorder<T>
+        extends Comparator<T> {
+
+    /**
+     * Compare in dictionary order.
+     * 
+     * This comparation is used to flatten the preorder tree into dictionary order for sorting.
+     */
+    @Override
+    int compare(T o1, T o2);
 
     int LESS_THAN = -1;
     int EQUALS = 0;
@@ -8,9 +19,9 @@ public interface IPreorder<T> {
     int UNKNOWN = Integer.MAX_VALUE;
 
     /**
-     *@param o1
+     * @param o1
      *            non-<code>null</code> value.
-     *@param o2
+     * @param o2
      *            non-<code>null</code> value.
      * @throws NullPointerException
      *             if any parameter is <code>null</code>.
@@ -22,9 +33,9 @@ public interface IPreorder<T> {
     int precompare(T o1, T o2);
 
     /**
-     *@param o1
+     * @param o1
      *            non-<code>null</code> value.
-     *@param o2
+     * @param o2
      *            non-<code>null</code> value.
      * @throws NullPointerException
      *             if any parameter is <code>null</code>.
@@ -32,9 +43,9 @@ public interface IPreorder<T> {
     boolean isLessThan(T o1, T o2);
 
     /**
-     *@param o1
+     * @param o1
      *            non-<code>null</code> value.
-     *@param o2
+     * @param o2
      *            non-<code>null</code> value.
      * @throws NullPointerException
      *             if any parameter is <code>null</code>.
@@ -42,9 +53,9 @@ public interface IPreorder<T> {
     boolean isGreaterThan(T o1, T o2);
 
     /**
-     *@param o1
+     * @param o1
      *            non-<code>null</code> value.
-     *@param o2
+     * @param o2
      *            non-<code>null</code> value.
      * @throws NullPointerException
      *             if any parameter is <code>null</code>.
@@ -52,9 +63,9 @@ public interface IPreorder<T> {
     boolean isLessOrEquals(T o1, T o2);
 
     /**
-     *@param o1
+     * @param o1
      *            non-<code>null</code> value.
-     *@param o2
+     * @param o2
      *            non-<code>null</code> value.
      * @throws NullPointerException
      *             if any parameter is <code>null</code>.
@@ -83,9 +94,9 @@ public interface IPreorder<T> {
     T meet(T... array);
 
     /**
-     *@param o1
+     * @param o1
      *            non-<code>null</code> value.
-     *@param o2
+     * @param o2
      *            non-<code>null</code> value.
      * @return The greatest lower bound of <code>{o1, o2}</code> in domain <code>T</code> .
      * @throws NullPointerException
@@ -107,9 +118,9 @@ public interface IPreorder<T> {
     }
 
     /**
-     *@param o1
+     * @param o1
      *            non-<code>null</code> value.
-     *@param o2
+     * @param o2
      *            non-<code>null</code> value.
      * @return non-<code>null</code> {@link MeetX} struct.
      * @throws NullPointerException

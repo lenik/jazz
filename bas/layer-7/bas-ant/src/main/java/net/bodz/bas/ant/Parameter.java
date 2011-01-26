@@ -1,5 +1,6 @@
 package net.bodz.bas.ant;
 
+import net.bodz.bas.jdk6compat.jdk7emul.ClassNotFoundException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.traits.ParserUtil;
 import net.bodz.bas.util.exception.ParseException;
