@@ -3,6 +3,11 @@ package net.bodz.bas.collection.preorder;
 public class StartswithPreorder
         extends AbstractPreorder<String> {
 
+    @Override
+    public int compare(String o1, String o2) {
+        return o1.compareTo(o2);
+    }
+
     /**
      * @throws NullPointerException
      *             if <code>string</code> is <code>null</code>.

@@ -3,6 +3,18 @@ package net.bodz.bas.collection.preorder;
 public class TypeVectorInheritancePreorder
         extends AbstractPreorder<Class<?>[]> {
 
+    public int compare(Class<?>[] o1, Class<?>[] o2) {
+        int minLength = Math.min(o1.length, o2.length);
+        for (int i = 0; i < minLength; i++) {
+            String name1 = o1[i].getName();
+            String name2 = o2[i].getName();
+            int cmp = name1.compareTo(name2);
+            if (cmp != 0)
+                return cmp;
+        }
+        return o1.length - o2.length;
+    }
+
     @Override
     public Class<?>[] getPreceding(Class<?>[] v) {
         for (int i = v.length - 1; i >= 0; i--) {

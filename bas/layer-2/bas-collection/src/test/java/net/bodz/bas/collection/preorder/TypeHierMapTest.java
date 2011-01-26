@@ -12,6 +12,8 @@ public class TypeHierMapTest {
     Map<Class<?>, Object> orig = new HashMap<Class<?>, Object>();
     {
         orig.put(Number.class, "Number");
+        orig.put(Integer.class, "Integer");
+        orig.put(String.class, "String");
     }
 
     @Test(expected = ClassCastException.class)

@@ -6,6 +6,14 @@ public class LogLevelPreorder
         extends AbstractPreorder<LogLevel> {
 
     @Override
+    public int compare(LogLevel o1, LogLevel o2) {
+        int cmp = o1.getGroup() - o2.getGroup();
+        if (cmp != 0)
+            return cmp;
+        return o1.getPriority() - o2.getPriority();
+    }
+
+    @Override
     public LogLevel getPreceding(LogLevel o) {
         return new LogLevel("", o.getGroup(), o.getPriority() - 1, o.getSyslogEquiv());
     }

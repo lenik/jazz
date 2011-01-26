@@ -7,6 +7,7 @@ import java.net.URLClassLoader;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.loader.UCL;
 import net.bodz.bas.util.Factory;
+import net.bodz.bas.util.Factorys;
 import net.bodz.bas.util.exception.CreateException;
 import net.bodz.bas.util.exception.IllegalUsageException;
 import net.bodz.bas.util.file.FileURL;
@@ -40,15 +41,15 @@ public class ValueConstruct
      *            not in the bootstrap classpath,
      */
     public void setClassName(int caller, String className) {
-        setFactory(new Factory.ByClassName(loader, className));
+        setFactory(new Factorys.ByClassName(loader, className));
     }
 
     public void setXml(String xml) { // logger...
-        setFactory(new Factory.ByXML(xml, null));
+        setFactory(new Factorys.ByXML(xml, null));
     }
 
     public void setXmlFile(File xmlFile) { // logger
-        setFactory(new Factory.ByXMLFile(xmlFile, null));
+        setFactory(new Factorys.ByXMLFile(xmlFile, null));
     }
 
     public void addConfiguredClasspath(Path path) {
