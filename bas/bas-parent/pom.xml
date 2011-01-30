@@ -5,7 +5,7 @@
 The Basics-->
     <groupId>net.bodz.bas</groupId>
     <artifactId>bas-parent</artifactId>
-    <version>0.5-SNAPSHOT</version>
+    <version>0.4</version>
     <packaging>pom</packaging>
     <properties>
         <encoding>utf-8</encoding>
@@ -17,6 +17,7 @@ The Basics-->
         <JAVA_SE_7_HOME>${env.JAVA_HOME}</JAVA_SE_7_HOME>
         <JAVA_SE_8_HOME>${env.JAVA_HOME}</JAVA_SE_8_HOME>
         <java.version>1.4</java.version>
+        <class.version>${java.version}</class.version>
         <java.home>${J2SE_1_4_HOME}</java.home>
     </properties>
     <!--
@@ -31,7 +32,7 @@ Build Settings-->
                     <version>2.3.2</version>
                     <configuration>
                         <source>${java.version}</source>
-                        <target>${java.version}</target>
+                        <target>${class.version}</target>
                         <encoding>${encoding}</encoding>
                         <executable>${java.home}/bin/javac</executable>
                     </configuration>
@@ -248,7 +249,7 @@ Environment Settings-->
                             <artifactId>maven-compiler-plugin</artifactId>
                             <configuration>
                                 <source>1.7</source>
-                                <target>1.7</target>
+                                <target>1.6</target>
                                 <executable>${JAVA_SE_7_HOME}/bin/javac</executable>
                             </configuration>
                         </plugin>
@@ -279,7 +280,7 @@ Environment Settings-->
                             <artifactId>maven-compiler-plugin</artifactId>
                             <configuration>
                                 <source>1.8</source>
-                                <target>1.8</target>
+                                <target>1.6</target>
                                 <executable>${JAVA_SE_8_HOME}/bin/javac</executable>
                             </configuration>
                         </plugin>

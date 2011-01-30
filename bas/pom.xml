@@ -141,6 +141,7 @@
     </modules>
     <properties>
         <java.version>1.6</java.version>
+        <class.version>1.6</class.version>
         <java.home>${JAVA_SE_6_HOME}</java.home>
     </properties>
     <name>BAS Framework</name>
