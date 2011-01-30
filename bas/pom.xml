@@ -140,9 +140,7 @@
         <module>build</module>
     </modules>
     <properties>
-        <java.version>1.6</java.version>
-        <class.version>1.6</class.version>
-        <java.home>${JAVA_SE_6_HOME}</java.home>
+        <javaProfile>JavaSE-7</javaProfile>
     </properties>
     <name>BAS Framework</name>
     <url>http://bas.bodz.net/</url>
