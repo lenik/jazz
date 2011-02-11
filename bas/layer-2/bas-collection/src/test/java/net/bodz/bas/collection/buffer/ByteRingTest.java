@@ -3,6 +3,7 @@ package net.bodz.bas.collection.buffer;
 import org.junit.Assert;
 import org.junit.Test;
 
+@Deprecated
 public class ByteRingTest
         extends Assert {
 
