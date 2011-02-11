@@ -6,6 +6,7 @@ import java.util.Set;
 import org.junit.Assert;
 import org.junit.Test;
 
+@Deprecated
 public class TypeHierSetTest
         extends Assert {
 

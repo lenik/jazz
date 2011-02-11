@@ -7,6 +7,7 @@ import net.bodz.bas.collection.preorder.TypeHierSet;
 /**
  * Multi-Type Port
  */
+@SuppressWarnings("deprecation")
 public class MTPortMeta
         extends AbstractPortMeta {
 

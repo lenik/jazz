@@ -12,15 +12,15 @@ import net.bodz.bas.ui.UserInterface;
 import net.bodz.bas.util.exception.NotImplementedException;
 import net.bodz.bas.util.exception.OutOfDomainException;
 
-public abstract class _Job
-        implements Job, TreeNode<_Job> {
+public abstract class AbstractJob
+        implements Job, TreeNode<AbstractJob> {
 
     protected UserInterface UI = ConsoleUI.stdout;
     protected Logger Logger;
 
     private int state = NOTSTART;
 
-    private List<_Job> children;
+    private List<AbstractJob> children;
     private List<ChildObserver> observers;
     private List<Runnable> exitHooks;
 
@@ -78,7 +78,7 @@ public abstract class _Job
     protected void runTree() {
         _run();
         if (children != null)
-            for (_Job child : children) {
+            for (AbstractJob child : children) {
                 child.execute();
             }
     }
@@ -173,7 +173,7 @@ public abstract class _Job
     }
 
     @Override
-    public void setLogger(LogTerm logger) {
+    public void setLogger(Logger logger) {
         if (logger == null)
             throw new NullPointerException("logger");
         this.L = logger;
@@ -185,7 +185,7 @@ public abstract class _Job
     }
 
     protected void setStatus(Object status) {
-        if (Objects.equals(this.status, status)) {
+        if (Nullables.equals(this.status, status)) {
             this.status = status;
             StatusChangeEvent e = new StatusChangeEvent(this, status);
             fireStatusChange(e);
@@ -297,15 +297,15 @@ public abstract class _Job
      * Children jobs are executed after this job.
      */
     @Override
-    public List<? extends _Job> getChildren() {
+    public List<? extends AbstractJob> getChildren() {
         if (children == null)
             return null;
         return children;
     }
 
-    public void addChildJob(_Job job, double progressIncrement) {
+    public void addChildJob(AbstractJob job, double progressIncrement) {
         if (children == null) {
-            children = new ArrayList<_Job>();
+            children = new ArrayList<AbstractJob>();
             observers = new ArrayList<ChildObserver>();
         }
         children.add(job);
@@ -314,7 +314,7 @@ public abstract class _Job
         observers.add(observer);
     }
 
-    public boolean removeChildJob(_Job job) {
+    public boolean removeChildJob(AbstractJob job) {
         if (children == null)
             return false;
         int index = children.indexOf(job);
