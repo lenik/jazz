@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.BufferOverflowException;
 
-public class ByteRingOutputStream extends OutputStream {
+@Deprecated
+public class ByteRingOutputStream
+        extends OutputStream {
 
     private ByteRing ring;
 
@@ -15,11 +17,13 @@ public class ByteRingOutputStream extends OutputStream {
     }
 
     @Override
-    public void close() throws IOException {
+    public void close()
+            throws IOException {
         ring = null;
     }
 
-    void checkClosed() throws IOException {
+    void checkClosed()
+            throws IOException {
         if (ring == null)
             throw new IOException("closed");
     }
@@ -33,14 +37,16 @@ public class ByteRingOutputStream extends OutputStream {
     }
 
     @Override
-    public void write(byte[] b, int off, int len) throws IOException {
+    public void write(byte[] b, int off, int len)
+            throws IOException {
         if (len > ring.free())
             throw new IOException(String.format("Buffer[%d] to write is too large, free=%d", len, ring.free()));
         ring.write(b, off, len);
     }
 
     @Override
-    public void write(int b) throws IOException {
+    public void write(int b)
+            throws IOException {
         try {
             ring.writeByte((byte) b);
         } catch (BufferOverflowException e) {
