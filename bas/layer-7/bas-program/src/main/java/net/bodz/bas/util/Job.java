@@ -1,10 +1,13 @@
 package net.bodz.bas.util;
 
 import net.bodz.bas.lang.events.RecoverableExceptionListener;
+import net.bodz.bas.lang.events.RecoverableExceptionSource;
+import net.bodz.bas.log.api.Logger;
 import net.bodz.bas.ui.UserInterface;
 
 public interface Job
-        extends ExceptionSourceRunnable {
+        // It should be ExceptionSourceRunnable.
+        extends RecoverableExceptionSource, Runnable {
 
     int NOTSTART = 0;
     int RUNNING = 1;
@@ -63,6 +66,6 @@ public interface Job
 
     void setUserInterface(UserInterface userInterface);
 
-    void setLogger(LogTerm logger);
+    void setLogger(Logger logger);
 
 }
