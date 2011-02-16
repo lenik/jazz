@@ -5,6 +5,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+import net.bodz.bas.string.StringPart;
+
 public class FilePath {
 
     private static char fileSeparator;
@@ -150,6 +152,18 @@ public class FilePath {
         return new File(startFile, relativeName);
     }
 
+    public static String getDirName(String path) {
+        int lastSlash = path.lastIndexOf('/');
+        if (lastSlash == -1)
+            return ".";
+        else
+            return path.substring(0, lastSlash);
+    }
+
+    public static String getBaseName(String path) {
+        return StringPart.afterLast(path, '/');
+    }
+
     /**
      * @return <code>null</code> if file has no extension.
      * @throws NullPointerException
@@ -185,6 +199,14 @@ public class FilePath {
         if (dot != -1)
             return name.substring(0, dot);
         return name;
+    }
+
+    /**
+     * Get the base name without extension
+     */
+    public static String stripExtension(File file) {
+        String name = file.getName();
+        return stripExtension(name);
     }
 
     /**
