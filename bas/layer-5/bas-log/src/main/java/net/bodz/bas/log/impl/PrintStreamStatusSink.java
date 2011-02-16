@@ -16,14 +16,14 @@ public class PrintStreamStatusSink
     }
 
     @Override
-    protected void logMessage(Object message) {
+    public void logMessage(Object message) {
         stream.print('\r');
         // output(COLUMNS * ' ');
         stream.print(message);
     }
 
     @Override
-    protected void logException(Object message, Throwable exception) {
+    public void logException(Object message, Throwable exception) {
         stream.print('\r');
         stream.print(message);
         if (exception != null) {

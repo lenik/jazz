@@ -33,10 +33,6 @@ public abstract class AbstractLogSink
             logException(message, exception);
     }
 
-    protected abstract void logMessage(Object message);
-
-    protected abstract void logException(Object message, Throwable exception);
-
     private Object endup() {
         switch (prependMessageBuffer.size()) {
         case 0:

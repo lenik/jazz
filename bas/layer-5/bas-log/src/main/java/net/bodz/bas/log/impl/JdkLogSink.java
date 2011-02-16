@@ -29,7 +29,7 @@ public abstract class JdkLogSink
         }
 
         @Override
-        protected void logException(Object message, Throwable exception) {
+        public void logException(Object message, Throwable exception) {
             jdkLogger.log(Level.SEVERE, String.valueOf(message), exception);
         }
 
@@ -48,7 +48,7 @@ public abstract class JdkLogSink
         }
 
         @Override
-        protected void logException(Object message, Throwable exception) {
+        public void logException(Object message, Throwable exception) {
             jdkLogger.log(Level.WARNING, String.valueOf(message), exception);
         }
 
@@ -67,7 +67,7 @@ public abstract class JdkLogSink
         }
 
         @Override
-        protected void logException(Object message, Throwable exception) {
+        public void logException(Object message, Throwable exception) {
             jdkLogger.log(Level.CONFIG, String.valueOf(message), exception);
         }
 
@@ -86,7 +86,7 @@ public abstract class JdkLogSink
         }
 
         @Override
-        protected void logException(Object message, Throwable exception) {
+        public void logException(Object message, Throwable exception) {
             jdkLogger.log(Level.INFO, String.valueOf(message), exception);
         }
 
@@ -105,7 +105,7 @@ public abstract class JdkLogSink
         }
 
         @Override
-        protected void logException(Object message, Throwable exception) {
+        public void logException(Object message, Throwable exception) {
             jdkLogger.log(Level.FINE, String.valueOf(message), exception);
         }
 
@@ -124,7 +124,7 @@ public abstract class JdkLogSink
         }
 
         @Override
-        protected void logException(Object message, Throwable exception) {
+        public void logException(Object message, Throwable exception) {
             jdkLogger.log(Level.FINER, String.valueOf(message), exception);
         }
 
@@ -143,7 +143,7 @@ public abstract class JdkLogSink
         }
 
         @Override
-        protected void logException(Object message, Throwable exception) {
+        public void logException(Object message, Throwable exception) {
             jdkLogger.log(Level.FINEST, String.valueOf(message), exception);
         }
 

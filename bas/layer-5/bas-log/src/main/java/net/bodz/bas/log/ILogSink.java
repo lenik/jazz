@@ -25,6 +25,16 @@ public interface ILogSink
     void log(ILogEntry entry);
 
     /**
+     * The same as {@link #log(ILogEntry)} with message only {@link LogEntry}.
+     */
+    void logMessage(Object message);
+
+    /**
+     * The same as {@link #log(ILogEntry)} with composed {@link LogEntry}.
+     */
+    void logException(Object message, Throwable exception);
+
+    /**
      * The most simple function for optimization.
      */
     void p(String message);
