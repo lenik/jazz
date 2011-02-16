@@ -1,6 +1,9 @@
 package net.bodz.bas.vfs;
 
+import java.io.File;
 import java.io.Serializable;
+
+import net.bodz.bas.vfs.impl.javaio.JavaioFile;
 
 public class FileMaskedModifiers
         implements Serializable {
@@ -42,6 +45,11 @@ public class FileMaskedModifiers
     public boolean test(IFile file) {
         int modifiers = file.getModifiers();
         return (modifiers & mask) == this.modifiers;
+    }
+
+    public boolean test(File file) {
+        int modifiers = new JavaioFile(file).getModifiers(mask);
+        return modifiers == this.modifiers;
     }
 
     @Override
