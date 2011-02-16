@@ -20,6 +20,7 @@ import javax.script.ScriptException;
 
 import net.bodz.bas.collection.preorder.PrefixMap;
 import net.bodz.bas.collection.util.IterableToList;
+import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.meta.program.Option;
 import net.bodz.bas.meta.program.OptionGroup;
 import net.bodz.bas.util.Pair;
@@ -305,7 +306,7 @@ public class ClassOptions<CT> {
                     @SuppressWarnings("unchecked")
                     _Option<Object> _opt = (_Option<Object>) opt;
                     _opt.set(classobj, optval);
-                } catch (ScriptException e) {
+                } catch (ReflectiveOperationException e) {
                     throw new CLIException(e.getMessage(), e);
                 }
 
@@ -344,7 +345,7 @@ public class ClassOptions<CT> {
                 try {
                     _Option<Object> _opt = (_Option<Object>) opt;
                     _opt.set(classobj, optval);
-                } catch (ScriptException e) {
+                } catch (ReflectiveOperationException e) {
                     throw new CLIException(e.getMessage(), e);
                 }
         }

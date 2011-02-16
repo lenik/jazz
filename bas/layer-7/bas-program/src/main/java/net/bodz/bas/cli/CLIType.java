@@ -3,9 +3,11 @@ package net.bodz.bas.cli;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
-import javax.script.ScriptException;
-
 import net.bodz.bas.potato.traits.AbstractType;
+import net.bodz.bas.potato.traits.IConstructorMap;
+import net.bodz.bas.potato.traits.IEventMap;
+import net.bodz.bas.potato.traits.IMethodMap;
+import net.bodz.bas.potato.traits.IPropertyMap;
 
 public class CLIType<T extends BasicCLI>
         extends AbstractType {
@@ -25,13 +27,13 @@ public class CLIType<T extends BasicCLI>
     }
 
     public CLIType(Class<T> origClass, Object dynamicImpl)
-            throws ScriptException {
+            throws ReflectiveOperationException {
         this(origClass, dynamicImpl, false);
     }
 
     @SuppressWarnings("unchecked")
     public CLIType(Object dynamicImpl)
-            throws ScriptException {
+            throws ReflectiveOperationException {
         this((Class<T>) dynamicImpl.getClass(), dynamicImpl);
     }
 
@@ -56,6 +58,46 @@ public class CLIType<T extends BasicCLI>
 
     void loadMethod(String name, MethodOption opt) {
         putMethod(name, opt);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see net.bodz.bas.potato.traits.IType#getPropertyMap()
+     */
+    @Override
+    public IPropertyMap getPropertyMap() {
+        return null;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see net.bodz.bas.potato.traits.IType#getMethodMap()
+     */
+    @Override
+    public IMethodMap getMethodMap() {
+        return null;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see net.bodz.bas.potato.traits.IType#getConstructorMap()
+     */
+    @Override
+    public IConstructorMap getConstructorMap() {
+        return null;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see net.bodz.bas.potato.traits.IType#getEventMap()
+     */
+    @Override
+    public IEventMap getEventMap() {
+        return null;
     }
 
 }

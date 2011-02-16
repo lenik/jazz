@@ -74,7 +74,7 @@ public class PropertyBeanTask
     private boolean userProperties;
 
     private boolean verbose;
-    private Logger logger = new TaskLogComposite(this);
+    private Logger logger = new TaskLogger(this);
 
     public PropertyBeanTask() {
         vCtor = new ValueConstruct();

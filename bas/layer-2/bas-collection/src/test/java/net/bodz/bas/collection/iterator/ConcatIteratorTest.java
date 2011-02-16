@@ -2,10 +2,13 @@ package net.bodz.bas.collection.iterator;
 
 import java.util.Iterator;
 
+import org.junit.Test;
+
 public class ConcatIteratorTest
         extends IteratorTestBase {
 
     @SuppressWarnings("unchecked")
+    @Test
     public void testConcat() {
         Iterator<Integer> ad = new ConcatIterator<Integer>(al.iterator(), dl.iterator());
         assertEquals("[10, 20, 30, 40, 50, 60]", scan(ad));

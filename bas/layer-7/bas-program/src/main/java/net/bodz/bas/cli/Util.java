@@ -15,9 +15,12 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import javax.script.ScriptException;
-
+import net.bodz.bas.jdk6compat.jdk7emul.IllegalAccessException;
+import net.bodz.bas.jdk6compat.jdk7emul.InstantiationException;
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.traits.IParser;
+import net.bodz.bas.traits.Traits;
+import net.bodz.bas.util.exception.IllegalUsageError;
 import net.bodz.bas.util.exception.ParseException;
 
 class Util {
@@ -42,34 +45,29 @@ class Util {
 
     @SuppressWarnings("unchecked")
     public static <T> T addmulti(Class<?> type, T fieldobj, Object val)
-            throws ScriptException {
+            throws InstantiationException, IllegalAccessException {
         if (type.isArray())
             return addarray(type, fieldobj, val);
-        if (fieldobj == null)
-            try {
-                if (type.isInterface() || Modifier.isAbstract(type.getModifiers())) {
-                    if (List.class.isAssignableFrom(type))
-                        type = ArrayList.class;
-                    else if (SortedSet.class.isAssignableFrom(type))
-                        type = TreeSet.class;
-                    else if (Set.class.isAssignableFrom(type))
-                        type = HashSet.class;
-                    else if (Collection.class.isAssignableFrom(type))
-                        type = ArrayList.class;
-                    else if (SortedMap.class.isAssignableFrom(type))
-                        type = TreeMap.class;
-                    else if (Map.class.isAssignableFrom(type))
-                        type = HashMap.class;
-                    else
-                        throw new ScriptException("don\'t know how to create new instance of abstract class/interface "
-                                + type);
-                }
-                fieldobj = (T) type.newInstance();
-            } catch (InstantiationException e) {
-                throw new ScriptException(e.getMessage(), e);
-            } catch (IllegalAccessException e) {
-                throw new ScriptException(e.getMessage(), e);
+        if (fieldobj == null) {
+            if (type.isInterface() || Modifier.isAbstract(type.getModifiers())) {
+                if (List.class.isAssignableFrom(type))
+                    type = ArrayList.class;
+                else if (SortedSet.class.isAssignableFrom(type))
+                    type = TreeSet.class;
+                else if (Set.class.isAssignableFrom(type))
+                    type = HashSet.class;
+                else if (Collection.class.isAssignableFrom(type))
+                    type = ArrayList.class;
+                else if (SortedMap.class.isAssignableFrom(type))
+                    type = TreeMap.class;
+                else if (Map.class.isAssignableFrom(type))
+                    type = HashMap.class;
+                else
+                    throw new IllegalUsageError("don\'t know how to create new instance of abstract class/interface "
+                            + type);
             }
+            fieldobj = (T) Jdk7Reflect.newInstance(type);
+        }
         if (fieldobj instanceof Collection) {
             ((Collection<Object>) fieldobj).add(val);
         } else if (fieldobj instanceof Map) {
@@ -83,7 +81,7 @@ class Util {
     public static IParser<?> guessParser(IParser<?> parser, Class<?> clazz)
             throws ParseException {
         if (parser == null)
-            parser = (IParser<?>) TypeParsers.guess(clazz, true);
+            parser = Traits.getTraits(clazz, IParser.class);
         return parser;
     }
 

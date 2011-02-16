@@ -6,6 +6,7 @@ import java.util.Map;
 
 import net.bodz.bas.meta.program.Option;
 import net.bodz.bas.meta.program.OptionGroup;
+import net.bodz.bas.meta.util.ValueType;
 import net.bodz.bas.potato.traits.AbstractProperty;
 import net.bodz.bas.string.Strings;
 import net.bodz.bas.traits.IParser;
@@ -35,6 +36,7 @@ public abstract class _Option<T>
 
     @SuppressWarnings("unchecked")
     public _Option(String reflectName, AnnotatedElement elm, Class<?> type, OptionGroup optgrp) {
+        super(type, reflectName);
         Option option = elm.getAnnotation(Option.class);
         String optionName = option.name();
         if (!optionName.isEmpty()) {
@@ -54,8 +56,10 @@ public abstract class _Option<T>
 
         if (type.isArray() && parserClass == null)
             valtype = (Class<T>) type.getComponentType();
-        if (option.valtype() != void.class)
-            valtype = (Class<T>) option.valtype();
+
+        ValueType valueTypeAnn = elm.getAnnotation(ValueType.class);
+        if (valueTypeAnn != null)
+            valtype = (Class<T>) valueTypeAnn.value();
         multi = valtype != null;
         if (multi) {
             if (!(isArray() || isCollection() || isMap()))
