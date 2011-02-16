@@ -13,7 +13,7 @@ import net.bodz.bas.util.exception.DecodeException;
 import net.bodz.bas.util.exception.NotImplementedException;
 import net.bodz.bas.xml.XMLs;
 
-public interface Factorys {
+public interface Factories {
 
     class Ctor<T>
             extends AbstractFactory<T> {
