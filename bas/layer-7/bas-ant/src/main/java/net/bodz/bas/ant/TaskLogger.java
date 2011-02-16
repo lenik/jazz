@@ -53,12 +53,12 @@ public class TaskLogger
         }
 
         @Override
-        protected void logMessage(Object message) {
+        public void logMessage(Object message) {
             task.log(String.valueOf(message), msgLevel);
         }
 
         @Override
-        protected void logException(Object message, Throwable exception) {
+        public void logException(Object message, Throwable exception) {
             task.log(String.valueOf(message), exception, msgLevel);
         }
 

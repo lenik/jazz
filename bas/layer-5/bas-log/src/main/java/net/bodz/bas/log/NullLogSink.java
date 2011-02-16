@@ -11,6 +11,14 @@ public class NullLogSink
     }
 
     @Override
+    public void logMessage(Object message) {
+    }
+
+    @Override
+    public void logException(Object message, Throwable exception) {
+    }
+
+    @Override
     public void p(String message) {
     }
 
