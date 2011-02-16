@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Modifier;
 import java.net.URL;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -18,6 +17,8 @@ import java.util.Set;
 import net.bodz.bas.cli.BatchEditCLI;
 import net.bodz.bas.cli.EditResult;
 import net.bodz.bas.collection.set.ArraySet;
+import net.bodz.bas.io.resource.builtin.ByteArrayResource;
+import net.bodz.bas.io.resource.builtin.LocalFileResource;
 import net.bodz.bas.io.resource.builtin.URLResource;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.loader.DefaultBooter;
@@ -26,14 +27,15 @@ import net.bodz.bas.loader.LoadUtil;
 import net.bodz.bas.loader.TempClassLoader;
 import net.bodz.bas.loader.UCL;
 import net.bodz.bas.loader.boot.BootProc;
-import net.bodz.bas.meta.build.BuildInfoUtil;
 import net.bodz.bas.meta.build.ClassInfo;
 import net.bodz.bas.meta.build.RcsKeywords;
 import net.bodz.bas.meta.build.Version;
 import net.bodz.bas.meta.info.Doc;
 import net.bodz.bas.meta.program.Option;
 import net.bodz.bas.meta.program.ProgramName;
+import net.bodz.bas.meta.program.ProgramNameUtil;
 import net.bodz.bas.meta.program.StartMode;
+import net.bodz.bas.meta.program.StartModeUtil;
 import net.bodz.bas.regex.UnixStyleVarProcessor;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.Stdio;
@@ -116,7 +118,7 @@ public class Mkbat
         String ext = FilePath.getExtension(file, true);
         if (!".java".equals(ext) && !".class".equals(ext))
             return EditResult.pass();
-        String name = FilePath.getName(file);
+        String name = FilePath.stripExtension(file);
         if (name.contains("$")) // ignore inner classes
             return EditResult.pass("inner");
 
@@ -134,7 +136,7 @@ public class Mkbat
         Class<?> class0 = null;
         // can found by bootSysLoader?
         try {
-            L.detail("try " + className);
+            logger.info(2, "try " + className);
             class0 = bootSysLoader.loadClass(className);
             // class0 = Jdk7Reflect.forName(className, false, bootSysLoader);
         } catch (ClassNotFoundException e) {
@@ -171,7 +173,7 @@ public class Mkbat
         // has main()? [2, configLoader]
         try {
             class1.getMethod("main", String[].class);
-            L.info("    main-class: " + class1);
+            logger.info("    main-class: " + class1);
         } catch (NoSuchMethodException e) {
             return EditResult.pass("notapp");
             // return ProcessResult.err(e, "notapp");
@@ -186,19 +188,21 @@ public class Mkbat
 
     protected void generate(Class<?> clazz)
             throws IOException {
-        String batName = BuildInfoUtil.getProgramName(clazz, false);
-        File batf = getOutputFile(batName + ".bat");
-        batf.getParentFile().mkdirs();
+        String batName = ProgramNameUtil.getProgramName(clazz, false);
+
+        File batFile = getOutputFile(batName + ".bat");
+        batFile.getParentFile().mkdirs();
+
         String name = clazz.getName();
 
         // varmap.clear();
-        String templName = new File(batTempl.getPath()).getName();
-        varmap.put("TEMPLATE", batEscape(templName));
+        String templBaseName = FilePath.getBaseName(batTempl.getURL().getPath());
+        varmap.put("TEMPLATE", batEscape(templBaseName));
         varmap.put("NAME", batEscape(name));
 
         String start = "";
 
-        Integer startMode = (Integer) Ns.getValue(clazz, StartMode.class);
+        Integer startMode = StartModeUtil.getStartMode(clazz);
         if (startMode != null)
             switch (startMode) {
             case StartMode.CLI:
@@ -250,7 +254,7 @@ public class Mkbat
                     fname = lib;
                 else
                     fname = lib + ".jar";
-                L.warn("lib ", lib, " => ", fname);
+                logger.warn("lib ", lib, " => ", fname);
             } else
                 fname = f.getName();
             String loadlib = "call :load " + qq(lib) + " " + qq(fname);
@@ -261,16 +265,23 @@ public class Mkbat
 
         UnixStyleVarProcessor ve = new UnixStyleVarProcessor(varmap);
 
-        String inst = ve.process(batTemplBody);
-        byte[] batData = inst.getBytes();
-        byte[] batFixed = fix_BatBB.methods().doEditToBuffer(batData);
+        String expansion = ve.process(batTemplBody);
+        byte[] batData = expansion.getBytes();
+
+        ByteArrayResource batDataRes = new ByteArrayResource(batData);
+        byte[] batFixed = fix_BatBB.methods().doEditToBuffer(batDataRes);
+
+        ByteArrayResource batFixedRes = new ByteArrayResource(batFixed);
+
+        LocalFileResource batFileRes = new LocalFileResource(batFile);
+
         if (!Arrays.equals(batData, batFixed))
-            L.info("bat label boundary fixed: ", batf);
+            logger.info("bat label boundary fixed: ", batFile);
         if (force) {
-            Files.write(batf, batFixed, batf);
-            L.info("write ", batf);
-        } else if (FileDiff.copyDiff(batFixed, batf))
-            L.info("save ", batf);
+            logger.info("write ", batFile);
+            batFileRes.forWrite().writeBytes(batFixed);
+        } else if (FileDiff.copyDiff(batFixedRes, batFileRes))
+            logger.info("save ", batFile);
     }
 
     static URLResource batTempl;
