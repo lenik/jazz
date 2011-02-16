@@ -18,18 +18,17 @@ public class PluginTypeEx {
         this.factory = factory;
         Class<?> type = factory.getType();
         if (!Plugin.class.isAssignableFrom(type))
-            throw new IllegalArgumentException("wrong factory which create " 
-                    + type);
+            throw new IllegalArgumentException("wrong factory which create " + type);
         this.clazz = (Class<? extends Plugin>) type;
         this.info = ClassInfo.get(clazz);
     }
 
     public PluginTypeEx(Class<? extends Plugin> clazz) {
-        this(new Factory.Ctor<Plugin>(clazz));
+        this(new Factories.Ctor<Plugin>(clazz));
     }
 
     public PluginTypeEx(Class<? extends Plugin> clazz, Object outer) {
-        this(new Factory.Ctor<Plugin>(clazz, outer));
+        this(new Factories.Ctor<Plugin>(clazz, outer));
     }
 
     public PluginTypeEx(Plugin staticInstance) {
@@ -48,13 +47,14 @@ public class PluginTypeEx {
         return info.getVersionString();
     }
 
-    public Plugin newInstance(Object... args) throws CreateException {
+    public Plugin newInstance(Object... args)
+            throws CreateException {
         return (Plugin) factory.create(args);
     }
 
     @Override
     public String toString() {
-        return String.format("Plugin(%s)", clazz.getName()); 
+        return String.format("Plugin(%s)", clazz.getName());
     }
 
 }

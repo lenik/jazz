@@ -6,9 +6,11 @@ import java.util.Arrays;
 import javax.script.ScriptException;
 
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
+import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.meta.program.ArgsParseBy;
 import net.bodz.bas.meta.program.OptionGroup;
 import net.bodz.bas.traits.IParser;
+import net.bodz.bas.traits.Traits;
 import net.bodz.bas.util.exception.CreateException;
 import net.bodz.bas.util.exception.ParseException;
 import net.bodz.bas.valtype.util.ClassInstance;
@@ -47,7 +49,7 @@ public class MethodOption
                 parsers[i] = Util.guessParser(parserInst, types[i]);
             }
             for (int i = wants.length; i < argc; i++) {
-                parsers[i] = TypeParsers.guess(types[i], true);
+                parsers[i] = Traits.getTraits(types[i], IParser.class);
             }
         } catch (CreateException e) {
             throw new CLIError(e);
@@ -82,17 +84,13 @@ public class MethodOption
     }
 
     public Object call(Object object, String[] argv)
-            throws ParseException, ScriptException {
+            throws ParseException, ReflectiveOperationException {
         Object[] parameters = new Object[argc];
         for (int i = 0; i < argc; i++) {
             String arg = argv[i];
             parameters[i] = parseParameter(arg, i);
         }
-        try {
-            return Jdk7Reflect.invoke(method, object, parameters);
-        } catch (ReflectiveOperationException e) {
-            throw new ScriptException(e.getMessage(), e);
-        }
+        return Jdk7Reflect.invoke(method, object, parameters);
     }
 
     // interface ScriptField
@@ -101,14 +99,14 @@ public class MethodOption
 
     @Override
     public CallInfo get(Object object)
-            throws ScriptException {
+            throws ReflectiveOperationException {
         return NULL;
     }
 
     @Override
     @Deprecated
     public void set(Object object, CallInfo info)
-            throws ScriptException {
+            throws ReflectiveOperationException {
         info.returnValue = invoke(object, info.parameters);
     }
 
@@ -133,7 +131,7 @@ public class MethodOption
 
     @Override
     public Object invoke(Object object, Object... parameters)
-            throws ScriptException {
+            throws ReflectiveOperationException {
         String[] argv = new String[argc];
         System.arraycopy(parameters, 0, argv, 0, argc);
         try {

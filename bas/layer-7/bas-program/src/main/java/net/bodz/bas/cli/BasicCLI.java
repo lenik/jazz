@@ -89,7 +89,7 @@ public class BasicCLI
     protected IPrintOut _stdout = Stdio.cout;
 
     @Option(name = "logger", hidden = true)
-    protected Logger L = LoggerFactory.getLogger(BasicCLI.class);
+    protected Logger logger = LoggerFactory.getLogger(BasicCLI.class);
     // LogTerms.resolveFile(1);
 
     protected UserInterface UI = ConsoleUI.stdout;
@@ -102,12 +102,12 @@ public class BasicCLI
 
     @Option(alias = "v", doc = "repeat to get more info")
     void _verbose() {
-        L.verbose(1);
+        logger.verbose(1);
     }
 
     @Option(alias = "q", doc = "repeat to get less info")
     void _quiet() {
-        L.verbose(-1);
+        logger.verbose(-1);
     }
 
     protected Map<String, Object> _vars;
@@ -347,7 +347,7 @@ public class BasicCLI
         if (prepared)
             return;
 
-        ILogSink dbg = L.getDebugSink();
+        ILogSink dbg = logger.getDebugSink();
         // dbg.p("parse boot info");
         // bootProc = BootProc.get(getClass());
         //
@@ -398,7 +398,7 @@ public class BasicCLI
     @Override
     public synchronized void execute(String... args)
             throws Exception {
-        ILogSink dbg = L.getDebugSink();
+        ILogSink dbg = logger.getDebugSink();
         dbg.p("cli prepare");
         _prepare();
         int preRestSize = restArgs.size(); // make climain() reentrant.
@@ -419,7 +419,7 @@ public class BasicCLI
             // }
             // }
 
-            if (L.isDebugEnabled()) {
+            if (logger.isDebugEnabled()) {
                 for (Entry<String, _Option<?>> entry : opts.getOptions().entrySet()) {
                     _Option<?> opt = entry.getValue();
                     String optnam = opt.getCLIName();
