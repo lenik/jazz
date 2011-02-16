@@ -8,8 +8,8 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.charset.Charset;
 
-import net.bodz.bas.closure.IExecutableX;
 import net.bodz.bas.jvm.exit.CatchExit;
+import net.bodz.bas.jvm.exit.ExitableProgram;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.lang.Control;
 import net.bodz.bas.lang.ControlExit;
@@ -83,6 +83,7 @@ public abstract class JavaLauncher
         InputStream origIn = null;
         PrintStream origOut = null;
         PrintStream origErr = null;
+
         try {
             if (redirectIn != null) {
                 origIn = System.in;
@@ -96,7 +97,8 @@ public abstract class JavaLauncher
                 origErr = System.err;
                 System.setErr(redirectErr);
             }
-            IExecutableX<Exception> doMain = new IExecutableX<Exception>() {
+
+            ExitableProgram<Exception> doMain = new ExitableProgram<Exception>() {
                 @Override
                 public void execute()
                         throws Exception {
@@ -108,8 +110,10 @@ public abstract class JavaLauncher
                     }
                 }
             };
+
+            CatchExit catcher = new CatchExit();
             try {
-                CatchExit.execute(doMain);
+                catcher.catchExit(doMain);
             } catch (ControlExit e) {
                 _exit(e.getStatus());
             }

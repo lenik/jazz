@@ -87,7 +87,7 @@ public class ProcessResultStat {
         String ignores = "";
         if (ignored > 0)
             ignores = "(" + ignored + " ignored)";
-        out.println(AppNLS.format("ProcessResultStat.stat_ddsdd", //
+        out.println(String.format("Total: %d/%d changed, %d ignored, %d saved, %d errors", //
                 changed, total, ignores, saved, errorred));
     }
 

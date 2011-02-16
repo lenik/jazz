@@ -16,8 +16,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 
-import javax.script.ScriptException;
-
 import net.bodz.bas.collection.preorder.PrefixMap;
 import net.bodz.bas.collection.util.IterableToList;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
@@ -381,8 +379,8 @@ public class ClassOptions<CT> {
             try {
                 optval = opt.parse(optarg, key);
             } catch (ParseException e) {
-                throw new ParseException(String.format("Can\'t parse option %s of %s with argument %s", opt
-                        .getCLIName(), valtype, optarg), e);
+                throw new ParseException(String.format("Can\'t parse option %s of %s with argument %s",
+                        opt.getCLIName(), valtype, optarg), e);
             }
         if (key != null)
             optval = new Pair<String, Object>(key, optval);
@@ -410,7 +408,7 @@ public class ClassOptions<CT> {
         String[] argv = args.subList(off, off + argc).toArray(new String[0]);
         try {
             optcall.call(object, argv);
-        } catch (ScriptException e) {
+        } catch (ReflectiveOperationException e) {
             throw new CLIException(e.getMessage(), e);
         }
         return argc;

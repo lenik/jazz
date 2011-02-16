@@ -16,7 +16,7 @@ public abstract class AbstractJob
         implements Job, TreeNode<AbstractJob> {
 
     protected UserInterface UI = ConsoleUI.stdout;
-    protected Logger Logger;
+    protected Logger logger;
 
     private int state = NOTSTART;
 
@@ -176,7 +176,7 @@ public abstract class AbstractJob
     public void setLogger(Logger logger) {
         if (logger == null)
             throw new NullPointerException("logger");
-        this.L = logger;
+        this.logger = logger;
     }
 
     @Override

@@ -14,7 +14,6 @@ import net.bodz.bas.meta.program.Option;
 import net.bodz.bas.meta.program.OptionGroup;
 import net.bodz.bas.meta.util.OverrideOption;
 import net.bodz.bas.regex.GlobPattern;
-import net.bodz.bas.traits.provider.extra.GetInstanceParser;
 import net.bodz.bas.util.exception.NotImplementedException;
 import net.bodz.bas.util.file.FilePath;
 import net.bodz.bas.vfs.FileMaskedModifiers;
@@ -57,11 +56,11 @@ public class BatchCLI
     boolean prune;
 
     @Option(alias = "Ic", vnam = "CLASS(FileFilter)", doc = "using custom file filter, this will override other --I* options")
-    @ParseBy(GetInstanceParser.class)
+// @ParseBy(GetInstanceParser.class)
     FileFilter fileFilter;
 
     @Option(vnam = "CLASS(Comparator)", doc = "sort files in each directory")
-    @ParseBy(GetInstanceParser.class)
+// @ParseBy(GetInstanceParser.class)
     Comparator<File> sortComparator;
 
     public class Parameters {
@@ -273,9 +272,7 @@ public class BatchCLI
         try {
             doFile(file);
         } catch (Throwable e) {
-            L.errorf("Failed to process %s: %s", file, e);
-            if (L.showDetail() || !errorContinue)
-                e.printStackTrace(L.error().getPrintStream());
+            logger.errorFormat(/* 1, */e, "Failed to process %s: %s", file, e.getMessage());
             if (!errorContinue)
                 throw new ControlBreak();
         } finally {

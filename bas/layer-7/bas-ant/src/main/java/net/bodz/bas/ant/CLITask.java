@@ -145,14 +145,14 @@ public class CLITask
             }
             // adapting attributes
             if (logLevel != 0) {
-                Logger L = (Logger) sclass.getProperty("logger").get(app);
-                L.setLevel(L.getLevel() + logLevel);
+                Logger logger = (Logger) sclass.getProperty("logger").get(app);
+                logger.verbose(logLevel);
             }
         } catch (CLIException e) {
             throw new BuildException(e.getMessage(), e);
         } catch (ParseException e) {
             throw new BuildException(e.getMessage(), e);
-        } catch (ScriptException e) {
+        } catch (ReflectiveOperationException e) {
             throw new BuildException(e.getMessage(), e);
         }
         try {

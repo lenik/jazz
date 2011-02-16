@@ -17,6 +17,7 @@ import net.bodz.bas.collection.preorder.PrefixSet;
 import net.bodz.bas.collection.preorder.TypeHierSet;
 import net.bodz.bas.collection.set.IdentityHashSet;
 import net.bodz.bas.context.clg.SystemCLG;
+import net.bodz.bas.jdk6compat.jdk7emul.ClassNotFoundException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.log.api.Logger;
 import net.bodz.bas.string.Strings;

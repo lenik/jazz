@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import net.bodz.bas.collection.set.IdentityHashSet;
 import net.bodz.bas.string.StringArray;
 import net.bodz.bas.sysinfo.SystemProperties;
 
@@ -199,7 +200,7 @@ public class Trace {
             RelationMap relationMap = getRelationMap(src);
             Collection<Object> collection = relationMap.get(relation);
             if (collection == null) {
-                collection = new IdentSet();
+                collection = new IdentityHashSet();
                 relationMap.put(relation, collection);
             }
             for (Object dest : dests)
