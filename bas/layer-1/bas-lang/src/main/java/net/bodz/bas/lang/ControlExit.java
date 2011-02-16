@@ -5,20 +5,21 @@ public class ControlExit
 
     private static final long serialVersionUID = 1L;
 
+    private int status;
+
     public ControlExit() {
-        super();
     }
 
-    public ControlExit(String message, Throwable cause) {
-        super(message, cause);
+    public ControlExit(int status) {
+        this.status = status;
     }
 
-    public ControlExit(String message) {
-        super(message);
+    public int getStatus() {
+        return status;
     }
 
-    public ControlExit(Throwable cause) {
-        super(cause);
+    public void setStatus(int status) {
+        this.status = status;
     }
 
 }
