@@ -13,9 +13,11 @@ import net.bodz.bas.lang.ControlBreak;
 import net.bodz.bas.meta.program.Option;
 import net.bodz.bas.meta.program.OptionGroup;
 import net.bodz.bas.meta.util.OverrideOption;
+import net.bodz.bas.regex.GlobPattern;
 import net.bodz.bas.traits.provider.extra.GetInstanceParser;
 import net.bodz.bas.util.exception.NotImplementedException;
 import net.bodz.bas.util.file.FilePath;
+import net.bodz.bas.vfs.FileMaskedModifiers;
 import net.bodz.bas.vfs.traverse.FileFinder;
 
 @OptionGroup(value = "batch", rank = -2)
@@ -37,16 +39,14 @@ public class BatchCLI
     boolean rootLast;
 
     @Option(alias = "Im", vnam = "FILEMASK", doc = "include specified type of files, default non-hidden files")
-    FileMask inclusiveMask = new FileMask("f/fH");
+    FileMaskedModifiers inclusiveMask = new FileMaskedModifiers("f/fH");
     @Option(alias = "IM", vnam = "FILEMASK", doc = "exclude specified type of files")
-    FileMask exclusiveMask;
+    FileMaskedModifiers exclusiveMask;
 
     @Option(alias = "If", vnam = "WILDCARDS", doc = "include these filenames")
-    @ParseBy(GlobParser.class)
-    Pattern fileInclusivePattern;
+    GlobPattern fileInclusivePattern;
     @Option(alias = "IF", vnam = "WILDCARDS", doc = "exclude these filenames")
-    @ParseBy(GlobParser.class)
-    Pattern fileExclusivePattern;
+    GlobPattern fileExclusivePattern;
 
     @Option(alias = "Ip", vnam = "REGEXP", doc = "include these pathnames")
     Pattern pathInclusivePattern;
@@ -106,35 +106,35 @@ public class BatchCLI
             BatchCLI.this.rootLast = rootLast;
         }
 
-        public FileMask getInclusiveMask() {
+        public FileMaskedModifiers getInclusiveMask() {
             return inclusiveMask;
         }
 
-        public void setInclusiveMask(FileMask inclusiveMask) {
+        public void setInclusiveMask(FileMaskedModifiers inclusiveMask) {
             BatchCLI.this.inclusiveMask = inclusiveMask;
         }
 
-        public FileMask getExclusiveMask() {
+        public FileMaskedModifiers getExclusiveMask() {
             return exclusiveMask;
         }
 
-        public void setExclusiveMask(FileMask exclusiveMask) {
+        public void setExclusiveMask(FileMaskedModifiers exclusiveMask) {
             BatchCLI.this.exclusiveMask = exclusiveMask;
         }
 
-        public Pattern getFileInclusivePattern() {
+        public GlobPattern getFileInclusivePattern() {
             return fileInclusivePattern;
         }
 
-        public void setFileInclusivePattern(Pattern fileInclusivePattern) {
+        public void setFileInclusivePattern(GlobPattern fileInclusivePattern) {
             BatchCLI.this.fileInclusivePattern = fileInclusivePattern;
         }
 
-        public Pattern getFileExclusivePattern() {
+        public GlobPattern getFileExclusivePattern() {
             return fileExclusivePattern;
         }
 
-        public void setFileExclusivePattern(Pattern fileExclusivePattern) {
+        public void setFileExclusivePattern(GlobPattern fileExclusivePattern) {
             BatchCLI.this.fileExclusivePattern = fileExclusivePattern;
         }
 

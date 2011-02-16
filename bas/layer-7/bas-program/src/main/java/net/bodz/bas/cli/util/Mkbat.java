@@ -1,5 +1,7 @@
 package net.bodz.bas.cli.util;
 
+import static net.bodz.bas.string.StringQuote.qq;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Modifier;
@@ -16,6 +18,7 @@ import java.util.Set;
 import net.bodz.bas.cli.BatchEditCLI;
 import net.bodz.bas.cli.EditResult;
 import net.bodz.bas.collection.set.ArraySet;
+import net.bodz.bas.io.resource.builtin.URLResource;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.loader.DefaultBooter;
 import net.bodz.bas.loader.LoadException;
@@ -38,8 +41,8 @@ import net.bodz.bas.snm.SJLibLoader;
 import net.bodz.bas.string.StringArray;
 import net.bodz.bas.util.ClassResource;
 import net.bodz.bas.util.exception.IdentifiedException;
+import net.bodz.bas.util.file.FileDiff;
 import net.bodz.bas.util.file.FilePath;
-import net.bodz.bas.vfs.impl.url.URLFile;
 
 @Doc("Generate program launcher for java applications")
 @ProgramName("mkbat")
@@ -266,18 +269,18 @@ public class Mkbat
         if (force) {
             Files.write(batf, batFixed, batf);
             L.info("write ", batf);
-        } else if (Files.copyDiff(batFixed, batf))
+        } else if (FileDiff.copyDiff(batFixed, batf))
             L.info("save ", batf);
     }
 
-    static URL batTempl;
+    static URLResource batTempl;
     static String batTemplBody;
     static Fix_BatBB fix_BatBB;
 
     static {
         try {
             batTempl = ClassResource.classData(Mkbat.class, "batTempl");
-            batTemplBody = new URLFile(batTempl).forRead().readTextContents();
+            batTemplBody = batTempl.forRead().readTextContents();
         } catch (IOException e) {
             throw new IdentifiedException(e.getMessage(), e);
         }
