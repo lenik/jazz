@@ -14,8 +14,8 @@ public class FileMaskedModifiers
     private final int mask;
 
     public FileMaskedModifiers(int modifiers, int mask) {
-        this.modifiers = modifiers;
         this.mask = mask;
+        this.modifiers = modifiers & mask;
     }
 
     public FileMaskedModifiers(String s) {
@@ -25,13 +25,13 @@ public class FileMaskedModifiers
         } else {
             String modifiersStr = s.substring(0, slash);
             String maskStr = s.substring(slash + 1);
-            this.modifiers = FileModifier.parse(modifiersStr);
             this.mask = FileModifier.parse(maskStr);
+            this.modifiers = FileModifier.parse(modifiersStr) & mask;
         }
     }
 
     public int getModifier() {
-        return this.modifiers;
+        return modifiers;
     }
 
     public int getMask() {
@@ -43,11 +43,15 @@ public class FileMaskedModifiers
     }
 
     public boolean test(IFile file) {
+        if (this.mask == 0)
+            return true;
         int modifiers = file.getModifiers();
         return (modifiers & mask) == this.modifiers;
     }
 
     public boolean test(File file) {
+        if (this.mask == 0)
+            return true;
         int modifiers = new JavaioFile(file).getModifiers(mask);
         return modifiers == this.modifiers;
     }
