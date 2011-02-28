@@ -20,6 +20,9 @@ public class PreorderTreeMap<K, V>
         this.preorder = preorder;
     }
 
+    /**
+     * Using Preorder-Preceding to get the lessor key.
+     */
     @Override
     public K floorKey(K key) {
         K floor = super.floorKey(key);
@@ -34,6 +37,9 @@ public class PreorderTreeMap<K, V>
         return null;
     }
 
+    /**
+     * Using Preorder-Preceding to get the lessor key.
+     */
     @Override
     public Entry<K, V> floorEntry(K key) {
         Entry<K, V> floo = super.floorEntry(key);
@@ -48,6 +54,9 @@ public class PreorderTreeMap<K, V>
         return null;
     }
 
+    /**
+     * Using Preorder-Preceding to get the lessor key.
+     */
     public V floor(K key) {
         Entry<K, V> floo = floorEntry(key);
         if (floo == null)
@@ -55,6 +64,9 @@ public class PreorderTreeMap<K, V>
         return floo.getValue();
     }
 
+    /**
+     * Using Preorder-Preceding to get the greator key (only if available).
+     */
     @Override
     public K ceilingKey(K key) {
         K ceil = super.ceilingKey(key);
@@ -65,6 +77,9 @@ public class PreorderTreeMap<K, V>
         return null;
     }
 
+    /**
+     * Using Preorder-Preceding to get the greator key (only if available).
+     */
     @Override
     public Entry<K, V> ceilingEntry(K key) {
         Entry<K, V> ceil = super.ceilingEntry(key);
@@ -75,6 +90,9 @@ public class PreorderTreeMap<K, V>
         return null;
     }
 
+    /**
+     * Using Preorder-Preceding to get the greator key (only if available).
+     */
     public V ceiling(K key) {
         Entry<K, V> ceil = ceilingEntry(key);
         if (ceil == null)
@@ -84,6 +102,9 @@ public class PreorderTreeMap<K, V>
         return null;
     }
 
+    /**
+     * Using Preorder-Preceding to get the greator key (only if available).
+     */
     public Iterable<K> ceilingKeys(final K key) {
         final K start = ceilingKey(key);
 
@@ -146,6 +167,9 @@ public class PreorderTreeMap<K, V>
         };
     }
 
+    /**
+     * Using Preorder-Preceding to get the greator key (only if available).
+     */
     public Iterable<V> ceilings(final K key) {
         final Entry<K, V> start = ceilingEntry(key);
 
