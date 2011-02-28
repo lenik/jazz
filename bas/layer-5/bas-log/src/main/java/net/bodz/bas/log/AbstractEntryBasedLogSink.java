@@ -13,13 +13,13 @@ public abstract class AbstractEntryBasedLogSink
     @Override
     public abstract void log(ILogEntry entry);
 
-    protected final void logMessage(Object message) {
+    public final void logMessage(Object message) {
         // Object source = Caller.getCaller
         LogEntry entry = new LogEntry(null, message, null);
         log(entry);
     }
 
-    protected final void logException(Object message, Throwable exception) {
+    public final void logException(Object message, Throwable exception) {
         // Object source = Caller.getCaller
         LogEntry entry = new LogEntry(null, message, exception);
         log(entry);
