@@ -5,20 +5,24 @@ import net.bodz.bas.lang.IQueryable;
 public class BasFriendTraitsProvider
         extends FriendTraitsProvider {
 
-    public BasFriendTraitsProvider() {
-        super(getBasPackageName(), BuiltinProviderOrder.basFriend.getPriority());
-    }
+    static final String basPackage;
+    static final boolean basFlatten;
 
-    static String getBasPackageName() {
+    static {
         String basLangPackage = IQueryable.class.getPackage().getName();
-        String basPackage;
-        if (basLangPackage.endsWith(".lang"))
+        if (basLangPackage.endsWith(".lang")) {
             // The normal package hierachical
             basPackage = basLangPackage.substring(0, basLangPackage.length() - 5);
-        else
+            basFlatten = false;
+        } else {
             // The package hierachical is flattened.
             basPackage = basLangPackage;
-        return basPackage;
+            basFlatten = true;
+        }
+    }
+
+    public BasFriendTraitsProvider() {
+        super(basPackage, BuiltinProviderOrder.basFriend.getPriority(), basFlatten);
     }
 
 }
