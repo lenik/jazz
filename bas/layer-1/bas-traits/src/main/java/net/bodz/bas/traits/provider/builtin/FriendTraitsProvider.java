@@ -14,17 +14,24 @@ public class FriendTraitsProvider
 
     private final String prefixName;
     private final String commonSuffixName = "Traits";
+    private final boolean flatten;
 
     public FriendTraitsProvider() {
-        this.prefixName = "";
         this.priority = BuiltinProviderOrder.friend.getPriority();
+        this.prefixName = "";
+        this.flatten = false;
     }
 
     public FriendTraitsProvider(String searchPackageName, int priority) {
+        this(searchPackageName, priority, false);
+    }
+
+    public FriendTraitsProvider(String searchPackageName, int priority, boolean flatten) {
         if (searchPackageName == null)
             throw new NullPointerException("searchPackageName");
-        this.prefixName = searchPackageName + ".";
         this.priority = priority;
+        this.prefixName = searchPackageName + ".";
+        this.flatten = flatten;
     }
 
     @Override
@@ -35,7 +42,7 @@ public class FriendTraitsProvider
     @Override
     public <T> T getTraits(Class<?> objType, Class<T> traitsType)
             throws QueryException {
-        String objTypeName = objType.getName();
+        String objTypeName = flatten ? objType.getSimpleName() : objType.getName();
 
         String simpleTraitsTypeName = traitsType.getSimpleName();
         if (isStandardInterfaceName(simpleTraitsTypeName))
