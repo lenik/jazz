@@ -52,6 +52,8 @@ public class NegotiationParameter
 
     /**
      * A mandatory parameter must be processed by the callee..
+     * 
+     * @return <code>true</code> If this parameter is mandatory.
      */
     public boolean isMandatory() {
         return mandatory;
@@ -67,11 +69,35 @@ public class NegotiationParameter
         return this.id.equals(forId);
     }
 
+    /**
+     * The consumer iterates over this parameter, checked or not.
+     * 
+     * @param forType
+     *            The specific parameter class, may equal or not to this parameter.
+     * @param isChecked
+     *            <code>true</code> if the consumer wants to use the parameter, <code>false</code>
+     *            if the consumer wants to ignore the parameter.
+     * @return <code>true</code> If <code>forType</code> matches this parameter.
+     * @throws MandatoryException
+     *             If the consumer wants to ignore this parameter, but this parameter is mandatory.
+     */
     public boolean accept(Class<?> forType, boolean isChecked)
             throws MandatoryException {
         return accept(forType.getName(), isChecked);
     }
 
+    /**
+     * The consumer iterates over this parameter, checked or not.
+     * 
+     * @param forId
+     *            The specific parameter id, may equal or not to this parameter.
+     * @param isChecked
+     *            <code>true</code> if the consumer wants to use the parameter, <code>false</code>
+     *            if the consumer wants to ignore the parameter.
+     * @return <code>true</code> If <code>forId</code> matches this parameter.
+     * @throws MandatoryException
+     *             If the consumer wants to ignore this parameter, but this parameter is mandatory.
+     */
     public boolean accept(String forId, boolean isChecked)
             throws MandatoryException {
         if (!this.id.equals(forId))
@@ -81,6 +107,9 @@ public class NegotiationParameter
         return true;
     }
 
+    /**
+     * The consumer want to ignore this parameter.
+     */
     public void bypass()
             throws MandatoryException {
         if (isMandatory())
