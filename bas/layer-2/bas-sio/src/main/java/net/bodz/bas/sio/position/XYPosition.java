@@ -103,7 +103,7 @@ public class XYPosition
     public static String format(IXYTellable xyt) {
         int line = xyt.tellY() + 1;
         int column = xyt.tellX() + 1;
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         buf.append(line);
         buf.append(':');
         buf.append(column);

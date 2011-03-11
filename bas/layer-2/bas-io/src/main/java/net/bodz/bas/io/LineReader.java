@@ -10,13 +10,13 @@ public class LineReader
         extends Reader {
 
     private final Reader reader;
-    private StringBuffer buf;
+    private StringBuilder buf;
     private String markedBuf;
 
     public LineReader(Reader reader) {
         assert reader != null;
         this.reader = reader;
-        this.buf = new StringBuffer();
+        this.buf = new StringBuilder();
     }
 
     public Reader getReader() {

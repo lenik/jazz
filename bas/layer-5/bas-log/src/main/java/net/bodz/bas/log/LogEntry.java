@@ -35,16 +35,16 @@ public class LogEntry
     @Override
     public String toString() {
         String messageText = null;
-        StringBuffer buf;
+        StringBuilder buf;
         if (messageObject != null) {
             messageText = messageObject.toString();
             assert messageText != null;
             if (exception == null)
                 return messageText;
-            buf = new StringBuffer(messageText.length() + 100);
+            buf = new StringBuilder(messageText.length() + 100);
             buf.append(messageText);
         } else
-            buf = new StringBuffer(100);
+            buf = new StringBuilder(100);
 
         if (exception != null) {
             buf.append(" (Exception ");

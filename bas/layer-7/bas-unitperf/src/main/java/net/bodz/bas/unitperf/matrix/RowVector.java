@@ -28,7 +28,7 @@ public class RowVector
 
     @Override
     public String toString() {
-        StringBuffer buf = new StringBuffer(data.length * 8 + 5);
+        StringBuilder buf = new StringBuilder(data.length * 8 + 5);
         for (int i = 0; i < data.length; i++) {
             if (i != 0)
                 buf.append(", ");

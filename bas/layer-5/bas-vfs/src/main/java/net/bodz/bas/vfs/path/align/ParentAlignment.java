@@ -38,7 +38,7 @@ public class ParentAlignment
 
     @Override
     public String decorate(String localPath) {
-        StringBuffer buf = new StringBuffer(parents * 3 + localPath.length());
+        StringBuilder buf = new StringBuilder(parents * 3 + localPath.length());
         for (int i = 0; i < parents; i++)
             buf.append("../");
         buf.append(localPath);

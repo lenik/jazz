@@ -23,10 +23,10 @@ public class PartRecordsTest
             return "(null)";
         List<String> keys = new ArrayList<String>(map.keySet());
         Collections.sort(keys);
-        StringBuffer buf = null;
+        StringBuilder buf = null;
         for (String k : keys) {
             if (buf == null)
-                buf = new StringBuffer();
+                buf = new StringBuilder();
             else
                 buf.append(", ");
             String v = map.get(k);

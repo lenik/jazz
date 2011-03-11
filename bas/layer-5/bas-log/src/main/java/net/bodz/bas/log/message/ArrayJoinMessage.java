@@ -30,7 +30,7 @@ public class ArrayJoinMessage
     @Override
     public String toString() {
         if (joined == null) {
-            StringBuffer buf = new StringBuffer(messagePieces.length * 16);
+            StringBuilder buf = new StringBuilder(messagePieces.length * 16);
             for (int i = 0; i < messagePieces.length; i++)
                 buf.append(messagePieces[i]);
             joined = buf.toString();

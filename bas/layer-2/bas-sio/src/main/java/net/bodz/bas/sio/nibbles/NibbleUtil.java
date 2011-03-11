@@ -11,7 +11,7 @@ public class NibbleUtil {
         if (nibbleCount == 1)
             return String.valueOf(hextbl[nibbles & 0x0F]);
 
-        StringBuffer sb = new StringBuffer(8);
+        StringBuilder sb = new StringBuilder(8);
         for (int i = 0; i < nibbleCount; i++) {
             int nibble = nibbles & 0x0F;
             nibbles >>= 4;
@@ -41,7 +41,7 @@ public class NibbleUtil {
         if (lineSize > 0)
             appx += nibbleCount / lineSize;
 
-        StringBuffer sb = new StringBuffer(appx);
+        StringBuilder sb = new StringBuilder(appx);
         int byteOffset = nibbleOffset >> 1;
         boolean mid = (nibbleOffset & 1) != 0;
         int byt = buf[byteOffset] & 0xff;

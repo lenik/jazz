@@ -66,7 +66,7 @@ public abstract class _PartRecords<K, V>
         return parseValue(text);
     }
 
-    private V _parseText(StringBuffer textBuf)
+    private V _parseText(StringBuilder textBuf)
             throws ParseException {
         String s = textBuf == null ? null : textBuf.toString();
         return parseValue(s);
@@ -137,7 +137,7 @@ public abstract class _PartRecords<K, V>
             K textKey = getTextKey();
             K key = null;
             int indent = 0;
-            StringBuffer text = null;
+            StringBuilder text = null;
 
             if (nextMap == null)
                 nextMap = newMap();
@@ -206,7 +206,7 @@ public abstract class _PartRecords<K, V>
                         }
 
                         if (text == null)
-                            text = new StringBuffer();
+                            text = new StringBuilder();
                         // remove necessary indent
                         int removeIndent = indent;
                         while (removeIndent > 0 && isIndentChar(line.charAt(0))) {

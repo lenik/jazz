@@ -90,7 +90,7 @@ public class MethodSignature {
 
     @Override
     public String toString() {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         buf.append("(" + TypeName.join(parameterTypes) + ")");
         if (returnType != null) {
             buf.append(" -> ");

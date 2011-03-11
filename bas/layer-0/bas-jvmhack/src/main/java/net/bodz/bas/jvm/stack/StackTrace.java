@@ -18,7 +18,7 @@ public class StackTrace {
 
     public static String get(Thread thread) {
         StackTraceElement[] stackTrace = thread.getStackTrace();
-        StringBuffer buf = new StringBuffer(stackTrace.length * 40);
+        StringBuilder buf = new StringBuilder(stackTrace.length * 40);
         buf.append("Stack trace: ");
         buf.append(thread);
         buf.append("\n");

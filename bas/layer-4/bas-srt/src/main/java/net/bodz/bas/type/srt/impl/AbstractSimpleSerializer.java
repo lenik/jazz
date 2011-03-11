@@ -17,7 +17,7 @@ public abstract class AbstractSimpleSerializer
 
     protected static String readTill(Reader reader, char term)
             throws IOException {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         int c;
         while ((c = reader.read()) >= 0) {
             if (c == term)

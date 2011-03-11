@@ -47,10 +47,10 @@ public class QuoteFormat {
     }
 
     private static Pattern compileQuotePatterbByCharSet(char[] chars) {
-        StringBuffer regexBuf = null;
+        StringBuilder regexBuf = null;
         for (int i = 0; i < chars.length; i++) {
             if (regexBuf == null)
-                regexBuf = new StringBuffer(chars.length * 10);
+                regexBuf = new StringBuilder(chars.length * 10);
             else
                 regexBuf.append("|");
             char c = chars[i];

@@ -170,7 +170,7 @@ public class TextIndention
     }
 
     static String repeat(int count, String pattern) {
-        StringBuffer buf = new StringBuffer(pattern.length() * count);
+        StringBuilder buf = new StringBuilder(pattern.length() * count);
         while (--count >= 0)
             buf.append(pattern);
         return buf.toString();

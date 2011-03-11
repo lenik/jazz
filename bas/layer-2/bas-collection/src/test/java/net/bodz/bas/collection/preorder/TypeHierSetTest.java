@@ -11,10 +11,10 @@ public class TypeHierSetTest
         extends Assert {
 
     static String join(String delim, Set<?> set) {
-        StringBuffer buf = null;
+        StringBuilder buf = null;
         for (Object o : set) {
             if (buf == null)
-                buf = new StringBuffer(set.size() * 30);
+                buf = new StringBuilder(set.size() * 30);
             else
                 buf.append(delim);
             buf.append(o);

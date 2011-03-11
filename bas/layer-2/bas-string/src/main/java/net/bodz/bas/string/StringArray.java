@@ -21,11 +21,11 @@ public class StringArray {
             throw new NullPointerException("array");
         if (!array.getClass().isArray())
             throw new IllegalArgumentException("Not an array: " + array.getClass());
-        StringBuffer buffer = null;
+        StringBuilder buffer = null;
         int len = Array.getLength(array);
         for (int i = 0; i < len; i++) {
             if (buffer == null)
-                buffer = new StringBuffer();
+                buffer = new StringBuilder();
             else
                 buffer.append(separator);
             Object e = Array.get(array, i);
@@ -35,10 +35,10 @@ public class StringArray {
     }
 
     public static String join(String separator, Iterable<?> iterable) {
-        StringBuffer buffer = null;
+        StringBuilder buffer = null;
         for (Object o : iterable) {
             if (buffer == null)
-                buffer = new StringBuffer();
+                buffer = new StringBuilder();
             else
                 buffer.append(separator);
             buffer.append(String.valueOf(o));
@@ -47,11 +47,11 @@ public class StringArray {
     }
 
     public static String join(String separator, Enumeration<?> enumr) {
-        StringBuffer buffer = null;
+        StringBuilder buffer = null;
         while (enumr.hasMoreElements()) {
             Object o = enumr.nextElement();
             if (buffer == null)
-                buffer = new StringBuffer();
+                buffer = new StringBuilder();
             else
                 buffer.append(separator);
             buffer.append(String.valueOf(o));
@@ -61,13 +61,13 @@ public class StringArray {
     }
 
     public static Pair<String, String> join(String separatorKey, String separatorValue, Map<?, ?> map) {
-        StringBuffer bufferKey = null;
-        StringBuffer bufferValue = null;
+        StringBuilder bufferKey = null;
+        StringBuilder bufferValue = null;
         for (Object o : map.entrySet()) {
             Map.Entry<?, ?> entry = (Map.Entry<?, ?>) o;
             if (bufferKey == null) {
-                bufferKey = new StringBuffer();
-                bufferValue = new StringBuffer();
+                bufferKey = new StringBuilder();
+                bufferValue = new StringBuilder();
             } else {
                 bufferKey.append(separatorKey);
                 bufferValue.append(separatorValue);
@@ -88,10 +88,10 @@ public class StringArray {
     public static String joinDot(int... values) {
         if (values == null)
             return null;
-        StringBuffer buf = null;
+        StringBuilder buf = null;
         for (int rev : values) {
             if (buf == null)
-                buf = new StringBuffer(values.length * 4);
+                buf = new StringBuilder(values.length * 4);
             else
                 buf.append('.');
             buf.append(rev);
@@ -155,7 +155,7 @@ public class StringArray {
         List<String> list = new ArrayList<String>();
         int got = 0;
         int token;
-        StringBuffer buf = null;
+        StringBuilder buf = null;
         try {
             while (got < limit && (token = tokenizer.nextToken()) != StreamTokenizer.TT_EOF) {
                 // boolean quote = false;
@@ -171,7 +171,7 @@ public class StringArray {
                         got++;
                     }
                     if (buf == null) {
-                        buf = new StringBuffer(val.length());
+                        buf = new StringBuilder(val.length());
                         got++;
                     }
                     // if (quote) buf.append((char) token);
@@ -181,7 +181,7 @@ public class StringArray {
                 default: // ordinary char
                     // assert new String(delims).contains(tokenizer.sval);
                     if (buf == null)
-                        buf = new StringBuffer();
+                        buf = new StringBuilder();
                     if (list.size() == limit - 1)
                         buf.append((char) token);
                     list.add(buf.toString());
@@ -191,7 +191,7 @@ public class StringArray {
             }
             if (got == limit) {
                 if (buf == null)
-                    buf = new StringBuffer();
+                    buf = new StringBuilder();
 
                 // flush peek cache in StreamTokenizer
                 tokenizer.resetSyntax(); // make all chars ordinary

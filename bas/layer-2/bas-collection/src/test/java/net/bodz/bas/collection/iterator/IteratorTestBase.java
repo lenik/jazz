@@ -24,11 +24,11 @@ public class IteratorTestBase
     List<Integer> fl = Arrays.asList(f);
 
     String scan(Iterator<?> it) {
-        StringBuffer buf = null;
+        StringBuilder buf = null;
         while (it.hasNext()) {
             Object v = it.next();
             if (buf == null) {
-                buf = new StringBuffer();
+                buf = new StringBuilder();
                 buf.append("[");
             } else
                 buf.append(", ");

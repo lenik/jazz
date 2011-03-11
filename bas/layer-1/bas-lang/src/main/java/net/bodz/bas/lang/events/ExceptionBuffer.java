@@ -62,7 +62,7 @@ public class ExceptionBuffer
     public static String summary(Collection<Exception> exceptions) {
         if (exceptions.isEmpty())
             return null;
-        StringBuffer buf = new StringBuffer(exceptions.size() * 30);
+        StringBuilder buf = new StringBuilder(exceptions.size() * 30);
         for (Exception e : exceptions) {
             String line = e.getClass().getName() + ": " + e.getMessage();
             buf.append(line);

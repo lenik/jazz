@@ -6,10 +6,10 @@ package net.bodz.bas.ant;
 public class TextElement {
 
     private String value;
-    private StringBuffer buf;
+    private StringBuilder buf;
 
     public TextElement() {
-        buf = new StringBuffer();
+        buf = new StringBuilder();
     }
 
     public void setValue(String s) {

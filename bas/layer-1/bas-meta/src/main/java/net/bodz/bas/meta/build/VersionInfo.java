@@ -13,7 +13,7 @@ public class VersionInfo
 
     public String getVersion() {
         if (revString == null) {
-            StringBuffer buf = new StringBuffer(revision.length * 8);
+            StringBuilder buf = new StringBuilder(revision.length * 8);
             for (int i = 0; i < revision.length; i++) {
                 if (i != 0)
                     buf.append('.');

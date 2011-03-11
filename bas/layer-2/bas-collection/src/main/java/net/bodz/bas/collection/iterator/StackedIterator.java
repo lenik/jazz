@@ -96,7 +96,7 @@ public class StackedIterator<T> implements Iterator<T> {
     public String toString() {
         if (currentIterator == null)
             return "empty stack"; 
-        StringBuffer buf = new StringBuffer((1 + stack.size()) * 100);
+        StringBuilder buf = new StringBuilder((1 + stack.size()) * 100);
         buf.append("Iterators in stack: \n"); 
         buf.append("  * " + currentIterator.getClass().getSimpleName() + ": "  
                 + currentIterator + "\n"); 

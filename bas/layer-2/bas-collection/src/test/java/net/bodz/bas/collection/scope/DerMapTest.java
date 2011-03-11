@@ -17,11 +17,11 @@ public class DerMapTest
     String scan(Map<String, ?> map) {
         List<String> keys = new ArrayList<String>(map.keySet());
         Collections.sort(keys);
-        StringBuffer buf = null;
+        StringBuilder buf = null;
         for (Object k : keys) {
             Object v = map.get(k);
             if (buf == null) {
-                buf = new StringBuffer();
+                buf = new StringBuilder();
                 buf.append("[");
             } else {
                 buf.append(", ");

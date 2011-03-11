@@ -29,7 +29,7 @@ public class DumpMap {
             throw new NullPointerException("format");
         if (map == null)
             throw new NullPointerException("map");
-        StringBuffer buffer = new StringBuffer(map.size() * 100);
+        StringBuilder buffer = new StringBuilder(map.size() * 100);
         if (keyf == null) {
             for (Entry<K, V> e : map.entrySet()) {
                 K key = e.getKey();

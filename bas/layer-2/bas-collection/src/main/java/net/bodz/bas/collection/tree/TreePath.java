@@ -128,7 +128,7 @@ public class TreePath implements Comparable<TreePath>, Serializable {
     }
 
     public String getPath() {
-        StringBuffer buf = new StringBuffer(segments.length * 30);
+        StringBuilder buf = new StringBuilder(segments.length * 30);
         if (uplevel == ABSOLUTE)
             buf.append(FS);
         else

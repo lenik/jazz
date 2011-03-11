@@ -65,7 +65,7 @@ public abstract class ArrayMatrix
 
     @Override
     public String toString() {
-        StringBuffer buf = new StringBuffer(rows * (columns * 8 + 5));
+        StringBuilder buf = new StringBuilder(rows * (columns * 8 + 5));
         int index = 0;
         for (int y = 0; y < rows; y++) {
             buf.append("[ ");

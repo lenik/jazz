@@ -76,7 +76,7 @@ public class ClassCLI {
             throws CLIException {
         final ClassOptions<Object> copt = (ClassOptions<Object>) getClassOptions(clazz);
         TreeMap<String, _Option<?>> options = copt.getOptions();
-        StringBuffer buffer = new StringBuffer(options.size() * 80);
+        StringBuilder buffer = new StringBuilder(options.size() * 80);
         final char[] tab = new char[tabsize];
         Arrays.fill(tab, ' ');
 
@@ -151,8 +151,8 @@ public class ClassCLI {
         OptionFormat groupfmt = new OptionFormat() {
             @Override
             public String filter(Set<_Option<?>> opts) {
-                StringBuffer buffer = new StringBuffer(opts.size() * 80);
-                StringBuffer line = new StringBuffer(80);
+                StringBuilder buffer = new StringBuilder(opts.size() * 80);
+                StringBuilder line = new StringBuilder(80);
                 for (_Option<?> opt : opts) {
                     String[] aliases = copt.getAliases(opt);
                     Arrays.sort(aliases, StringLengthComparator.getInstance());

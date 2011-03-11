@@ -162,7 +162,7 @@ public class CLITask
         }
     }
 
-    private StringBuffer errbuf = new StringBuffer();
+    private StringBuilder errbuf = new StringBuilder();
 
     @Override
     protected void handleErrorOutput(String output) {

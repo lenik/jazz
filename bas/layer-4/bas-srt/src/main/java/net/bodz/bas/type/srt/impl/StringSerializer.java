@@ -19,7 +19,7 @@ public class StringSerializer
     }
 
     static String repeat(String pat, int count) {
-        StringBuffer buffer = new StringBuffer(pat.length() * count);
+        StringBuilder buffer = new StringBuilder(pat.length() * count);
         while (count-- > 0)
             buffer.append(pat);
         return buffer.toString();

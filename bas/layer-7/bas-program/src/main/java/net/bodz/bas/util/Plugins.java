@@ -79,7 +79,7 @@ public class Plugins {
 
     PluginTypeEx find(Class<?> type, final String pluginId) throws PluginException {
         PluginTypeEx found = null;
-        StringBuffer errmsg = null;
+        StringBuilder errmsg = null;
         for (Entry<Class<?>, PluginCategory> e : categories.ceilingEntries(type)) {
             PluginCategory category = e.getValue();
             PluginTypeEx typeEx = category.get(pluginId);
@@ -88,7 +88,7 @@ public class Plugins {
                     found = typeEx;
                 } else {
                     if (errmsg == null) {
-                        errmsg = new StringBuffer();
+                        errmsg = new StringBuilder();
                         errmsg.append("ambiguous plugin id: " + pluginId); 
                         errmsg.append(", candidates: \n"); 
                         errmsg.append(found);

@@ -66,7 +66,7 @@ public class DocUtil {
             }
             if (!reverseOrder)
                 Collections.reverse(pages);
-            StringBuffer buf = new StringBuffer(cc);
+            StringBuilder buf = new StringBuilder(cc);
             for (String page : pages) {
                 if (buf.length() != 0)
                     buf.append(pageSeparator);
@@ -87,7 +87,7 @@ public class DocUtil {
             URL resource = declaredClass.getResource(classResource);
             if (resource == null)
                 throw new ParseException("Bad class resource path: " + classResource);
-            StringBuffer contents = new StringBuffer();
+            StringBuilder contents = new StringBuilder();
             int lineNo = 1;
 
             InputStream in;

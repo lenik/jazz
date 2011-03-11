@@ -12,7 +12,7 @@ public class DesktopApps {
     static boolean _encode = false;
 
     public static void openMailer(String recipient, String subject, String body) throws IOException {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         buf.append("mailto:"); 
         buf.append(recipient);
         buf.append("?subject=" + _encode(subject)); 

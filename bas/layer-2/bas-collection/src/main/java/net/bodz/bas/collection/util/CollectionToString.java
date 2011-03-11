@@ -15,7 +15,7 @@ public class CollectionToString {
     public static String toString(Collection<?> collection, int estimatedSize) {
         if (collection == null)
             throw new NullPointerException("collection");
-        StringBuffer buf = new StringBuffer(estimatedSize);
+        StringBuilder buf = new StringBuilder(estimatedSize);
         buf.append("{ ");
         for (Object e : collection) {
             buf.append(e);
@@ -30,7 +30,7 @@ public class CollectionToString {
     }
 
     public static String toString(Map<?, ?> map, int estimatedSize) {
-        StringBuffer buf = new StringBuffer(estimatedSize);
+        StringBuilder buf = new StringBuilder(estimatedSize);
         buf.append("{ ");
         for (Entry<?, ?> e : map.entrySet()) {
             buf.append(e.getKey() + "=" + e.getValue() + ", ");

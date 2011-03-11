@@ -154,7 +154,7 @@ public class StreamReadPreparation
 
     public String readTill(char term)
             throws IOException {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         ICharIn in = source.newCharIn();
         int c;
         try {

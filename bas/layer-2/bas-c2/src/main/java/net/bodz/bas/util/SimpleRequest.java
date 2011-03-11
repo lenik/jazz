@@ -164,7 +164,7 @@ public class SimpleRequest
 
     @Override
     public String toString() {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         if (source != null)
             buf.append(source + "::");
         if (protocol != null)
