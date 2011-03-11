@@ -15,7 +15,7 @@ public class Polynome
 
     @Override
     public String toString() {
-        StringBuffer buf = new StringBuffer(data.length * 12);
+        StringBuilder buf = new StringBuilder(data.length * 12);
         int arg = 0;
         int index = data.length - 1;
         boolean cat = false;

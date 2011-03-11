@@ -92,7 +92,7 @@ public class StringTraits
     public String newSample(ISampleGenerator<Character> charSample, int minLength, int maxLength)
             throws CreateException {
         int length = minLength + random.nextInt(maxLength + 1 - minLength);
-        StringBuffer sample = new StringBuffer(length);
+        StringBuilder sample = new StringBuilder(length);
         for (int i = 0; i < length; i++)
             sample.append(charSample.newSample());
         return sample.toString();

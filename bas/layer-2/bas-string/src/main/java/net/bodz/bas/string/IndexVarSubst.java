@@ -16,7 +16,7 @@ public class IndexVarSubst {
 
     public static String subst(String format, int indexBase, List<String> list, String missing) {
         int len = format.length();
-        StringBuffer buffer = new StringBuffer(len);
+        StringBuilder buffer = new StringBuilder(len);
         for (int i = 0; i < len; i++) {
             char c = format.charAt(i);
             if (i == len - 1) {

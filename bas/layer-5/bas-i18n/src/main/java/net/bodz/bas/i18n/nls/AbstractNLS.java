@@ -42,7 +42,7 @@ public abstract class AbstractNLS
     public String getName() {
         if (name == null) {
             String parentName = parent == null ? "" : parent.getName();
-            StringBuffer buf = new StringBuffer(parentName.length() + 30);
+            StringBuilder buf = new StringBuilder(parentName.length() + 30);
             buf.append(parentName);
             buf.append('/');
             buf.append(localName());

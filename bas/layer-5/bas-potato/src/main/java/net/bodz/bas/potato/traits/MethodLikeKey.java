@@ -91,7 +91,7 @@ abstract class MethodLikeKey
     }
 
     String getSignature() {
-        StringBuffer buf = new StringBuffer(parameterTypes.length * 40);
+        StringBuilder buf = new StringBuilder(parameterTypes.length * 40);
         if (name != null)
             buf.append(name);
         buf.append('(');

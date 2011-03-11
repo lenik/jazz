@@ -329,7 +329,7 @@ public class BuildPath {
 
         @Override
         public String toString() {
-            StringBuffer buf = new StringBuffer();
+            StringBuilder buf = new StringBuilder();
             if (classPath != null)
                 buf.append("class-path: " + classPath);
             else if (classURL != null)

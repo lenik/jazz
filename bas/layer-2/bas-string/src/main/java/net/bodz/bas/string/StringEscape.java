@@ -33,7 +33,7 @@ public class StringEscape {
         if (s == null)
             return s;
         int len = s.length();
-        StringBuffer buf = new StringBuffer(len * 2);
+        StringBuilder buf = new StringBuilder(len * 2);
         for (int i = 0; i < len; i++) {
             char c = s.charAt(i);
             buf.append(java(c));

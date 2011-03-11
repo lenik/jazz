@@ -50,10 +50,10 @@ public class ComparatorsTest
     }
 
     static String joinSimpleNames(Class<?>[] typeArray) {
-        StringBuffer buf = null;
+        StringBuilder buf = null;
         for (Class<?> c : typeArray) {
             if (buf == null)
-                buf = new StringBuffer();
+                buf = new StringBuilder();
             else
                 buf.append(", ");
             buf.append(c.getSimpleName());

@@ -30,7 +30,7 @@ public final class CombinedNLS
 
     @Override
     protected String localName() {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         for (int i = 0; i < dicts.length; i++) {
             if (i != 0)
                 buf.append('+');

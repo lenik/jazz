@@ -30,7 +30,7 @@ public class ListJoinMessage
 
     @Override
     public String toString() {
-        StringBuffer buf = new StringBuffer(pieceList.size() * 16);
+        StringBuilder buf = new StringBuilder(pieceList.size() * 16);
         for (Object piece : pieceList)
             buf.append(piece);
         return buf.toString();

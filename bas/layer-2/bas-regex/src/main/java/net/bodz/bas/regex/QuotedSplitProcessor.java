@@ -12,7 +12,7 @@ public class QuotedSplitProcessor
 
     private int remainingPartCount;
     private List<String> parts;
-    private StringBuffer partBuffer;
+    private StringBuilder partBuffer;
 
     public QuotedSplitProcessor(QuoteFormat quoteFormat, boolean dequote, String delimitor, int limit) {
         super(quoteFormat);
@@ -52,7 +52,7 @@ public class QuotedSplitProcessor
             remainingPartCount = limit;
             parts = new ArrayList<String>(limit);
         }
-        partBuffer = new StringBuffer();
+        partBuffer = new StringBuilder();
         process(s);
         parts.add(partBuffer.toString());
         return parts;

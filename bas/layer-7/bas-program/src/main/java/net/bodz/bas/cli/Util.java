@@ -89,10 +89,10 @@ class Util {
         if (o == null)
             return "null";
         Class<?> type = o.getClass();
-        StringBuffer buf = null;
+        StringBuilder buf = null;
         if (type.isArray()) {
             int l = Array.getLength(o);
-            buf = new StringBuffer(l * 20);
+            buf = new StringBuilder(l * 20);
             buf.append("{");
             for (int i = 0; i < l; i++) {
                 if (i > 0)
@@ -102,7 +102,7 @@ class Util {
             buf.append("}");
         } else if (o instanceof Collection<?>) {
             Collection<?> col = (Collection<?>) o;
-            buf = new StringBuffer(col.size() * 20);
+            buf = new StringBuilder(col.size() * 20);
             buf.append(type.getSimpleName() + " {");
             boolean first = true;
             for (Object c : col) {
@@ -115,7 +115,7 @@ class Util {
             buf.append('}');
         } else if (o instanceof Map<?, ?>) {
             Map<?, ?> map = (Map<?, ?>) o;
-            buf = new StringBuffer(map.size() * 20);
+            buf = new StringBuilder(map.size() * 20);
             buf.append(type.getSimpleName() + " {");
             boolean first = true;
             for (Map.Entry<?, ?> e : map.entrySet()) {

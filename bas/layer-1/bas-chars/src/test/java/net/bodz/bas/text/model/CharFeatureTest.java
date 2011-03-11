@@ -12,7 +12,7 @@ public class CharFeatureTest
 
     static String join(String delim, Object array) {
         int len = Array.getLength(array);
-        StringBuffer buf = new StringBuffer(len * 30);
+        StringBuilder buf = new StringBuilder(len * 30);
         for (int i = 0; i < len; i++) {
             if (i != 0)
                 buf.append(delim);

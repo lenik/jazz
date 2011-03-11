@@ -26,7 +26,7 @@ public class Unescape {
 
     public void process(CharBuffer in, IPrintOut out) {
         int limit = in.limit();
-        StringBuffer t = new StringBuffer();
+        StringBuilder t = new StringBuilder();
         int i = in.position();
         while (i < limit) {
             if (getESC(in, i)) {

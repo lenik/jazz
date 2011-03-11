@@ -16,10 +16,10 @@ public class PrefixMapTest
     }
 
     static String join(String delim, Iterable<?> vals) {
-        StringBuffer buf = null;
+        StringBuilder buf = null;
         for (Object val : vals) {
             if (buf == null)
-                buf = new StringBuffer();
+                buf = new StringBuilder();
             else
                 buf.append(delim);
             buf.append(val);

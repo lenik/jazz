@@ -49,7 +49,7 @@ public class RegexProcessor
     @Override
     protected String unmatched(String s) {
         int len = s.length();
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         for (int i = 0; i < len; i++) {
             char c = s.charAt(i);
             switch (c) {

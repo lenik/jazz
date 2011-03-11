@@ -191,10 +191,10 @@ public abstract class AbstractLexer
     }
 
     public String getStackTrace() {
-        StringBuffer buffer = null;
+        StringBuilder buffer = null;
         for (int state : stateStack) {
             if (buffer == null)
-                buffer = new StringBuffer();
+                buffer = new StringBuilder();
             else
                 buffer.append('\n');
             buffer.append(getStateName(state));

@@ -176,7 +176,7 @@ public abstract class AbstractBits
 
     public String draw(int width, char zero, char one) {
         int size = size();
-        StringBuffer buf = new StringBuffer( //
+        StringBuilder buf = new StringBuilder( //
                 size * (width + 2) / width + 2);
         for (int i = 0; i < size; i++) {
             buf.append(test(i) ? one : zero);
@@ -193,7 +193,7 @@ public abstract class AbstractBits
         if (BITMAP_STRING)
             return draw(16, '.', '*');
         int size = size();
-        StringBuffer buf = new StringBuffer(size);
+        StringBuilder buf = new StringBuilder(size);
         for (int i = 0; i < size; i++)
             buf.append(test(i) ? '1' : '0');
         return buf.toString();

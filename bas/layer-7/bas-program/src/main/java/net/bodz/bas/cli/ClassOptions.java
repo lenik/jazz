@@ -168,7 +168,7 @@ public class ClassOptions<CT> {
         if (fullnames.isEmpty())
             throw new CLIException("no such option: " + name);
         if (fullnames.size() > 1) {
-            StringBuffer cands = new StringBuffer();
+            StringBuilder cands = new StringBuilder();
             for (String nam : fullnames) {
                 cands.append(nam);
                 cands.append('\n');
@@ -390,7 +390,7 @@ public class ClassOptions<CT> {
     private static void _checkMissings(Set<?> missing)
             throws CLIException {
         if (missing != null && !missing.isEmpty()) {
-            StringBuffer buf = new StringBuffer(missing.size() * 20);
+            StringBuilder buf = new StringBuilder(missing.size() * 20);
             for (Object m : missing) {
                 _Option<?> mopt = (_Option<?>) m;
                 buf.append("    " + mopt.getCLIName() + "\n");

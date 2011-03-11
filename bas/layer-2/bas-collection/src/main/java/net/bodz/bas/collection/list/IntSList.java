@@ -66,11 +66,11 @@ public class IntSList {
     public String toString() {
         if (size == 0)
             return ""; 
-        StringBuffer buf = null;
+        StringBuilder buf = null;
         int absoluteIndex = start;
         for (int i = 0; i < size; i++) {
             if (buf == null)
-                buf = new StringBuffer();
+                buf = new StringBuilder();
             else
                 buf.append("-"); 
             buf.append(absoluteIndex);

@@ -38,7 +38,7 @@ public class ToVerticalLayout {
                 if (srcfile.exists()) {
                     Reader in = new InputStreamReader(new FileInputStream(srcfile), charset);
                     int approxChars = (int) (charset.newDecoder().averageCharsPerByte() * (int) srcfile.length());
-                    StringBuffer buf = new StringBuffer(approxChars);
+                    StringBuilder buf = new StringBuilder(approxChars);
                     char[] block = new char[1024];
                     int cc;
                     while ((cc = in.read(block)) != -1)

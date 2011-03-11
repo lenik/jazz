@@ -45,10 +45,10 @@ public class TypesHierMapTest
     }
 
     static String joinSimpleName(Class<?>[] classes) {
-        StringBuffer buf = null;
+        StringBuilder buf = null;
         for (Class<?> c : classes) {
             if (buf == null)
-                buf = new StringBuffer(classes.length * 30);
+                buf = new StringBuilder(classes.length * 30);
             else
                 buf.append(", ");
             buf.append(c.getSimpleName());

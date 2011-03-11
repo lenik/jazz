@@ -10,7 +10,7 @@ public class BreakLinesUnit
     private char eolChar;
     private boolean chop;
 
-    private StringBuffer lineBuf;
+    private StringBuilder lineBuf;
 
     public BreakLinesUnit() {
         this(16);
@@ -23,7 +23,7 @@ public class BreakLinesUnit
     public BreakLinesUnit(char eolChar, boolean chop, int initCapacity) {
         this.eolChar = eolChar;
         this.chop = chop;
-        this.lineBuf = new StringBuffer(initCapacity);
+        this.lineBuf = new StringBuilder(initCapacity);
     }
 
     public char getEOLChar() {

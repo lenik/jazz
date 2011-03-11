@@ -3,7 +3,7 @@ package net.bodz.bas.vfs.impl.fake;
 public class OutputStringFile
         extends FakeFile {
 
-    private StringBuffer buffer;
+    private StringBuilder buffer;
 
     public OutputStringFile() {
         this("(no name)");
@@ -11,7 +11,7 @@ public class OutputStringFile
 
     public OutputStringFile(String name) {
         super(name);
-        this.buffer = new StringBuffer();
+        this.buffer = new StringBuilder();
     }
 
     @Override

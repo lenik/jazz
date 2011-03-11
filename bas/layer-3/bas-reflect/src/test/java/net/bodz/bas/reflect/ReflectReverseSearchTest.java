@@ -35,7 +35,7 @@ public class ReflectReverseSearchTest
         @Override
         public String toString() {
             Collections.sort(list);
-            StringBuffer buf = new StringBuffer(list.size() * 16);
+            StringBuilder buf = new StringBuilder(list.size() * 16);
             for (int i = 0; i < list.size(); i++) {
                 if (i != 0)
                     buf.append(",");

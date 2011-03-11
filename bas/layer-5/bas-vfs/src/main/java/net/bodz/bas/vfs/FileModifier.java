@@ -179,7 +179,7 @@ public class FileModifier {
         if (bits == 0)
             return "-";
 
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         int mask = 1;
         for (int i = 0; i < 32; i++) {
             if ((bits & mask) != 0)

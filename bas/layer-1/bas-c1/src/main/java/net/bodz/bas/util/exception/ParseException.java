@@ -75,7 +75,7 @@ public class ParseException
         String message = super.getMessage();
         if (source == null && line == 0 && column == 0)
             return message;
-        StringBuffer buf = new StringBuffer(message.length());
+        StringBuilder buf = new StringBuilder(message.length());
         boolean prefixed = false;
         if (source != null) {
             buf.append(source);

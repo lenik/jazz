@@ -61,10 +61,10 @@ public class FinalNegotiation
 
     @Override
     public String toString() {
-        StringBuffer buf = null;
+        StringBuilder buf = null;
         for (NegotiationParameter param : params) {
             if (buf == null)
-                buf = new StringBuffer(params.size() * 100);
+                buf = new StringBuilder(params.size() * 100);
             else
                 buf.append('\n');
             buf.append(param);

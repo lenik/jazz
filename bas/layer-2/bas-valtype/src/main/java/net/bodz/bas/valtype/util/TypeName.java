@@ -21,10 +21,10 @@ public class TypeName {
     }
 
     public static String join(String delim, boolean simpleNames, Collection<Class<?>> types) {
-        StringBuffer b = null;
+        StringBuilder b = null;
         for (Class<?> t : types) {
             if (b == null)
-                b = new StringBuffer(types.size() * 30);
+                b = new StringBuilder(types.size() * 30);
             else
                 b.append(delim);
             String n;

@@ -62,7 +62,7 @@ public class Strings {
     public static String ucfirstWords(String s) {
         boolean boundary = true;
         int len = s.length();
-        StringBuffer buf = new StringBuffer(len);
+        StringBuilder buf = new StringBuilder(len);
         for (int i = 0; i < len; i++) {
             char c = s.charAt(i);
             boolean isLetter = Character.isLetter(c);
@@ -80,7 +80,7 @@ public class Strings {
     public static String hyphenatize(String words) {
         while (words.startsWith("_"))
             words = words.substring(1);
-        StringBuffer buf = new StringBuffer(words.length() * 3 / 2);
+        StringBuilder buf = new StringBuilder(words.length() * 3 / 2);
         boolean breakNext = false;
         for (int wordStart = 0; wordStart < words.length();) {
             int wordEnd;
@@ -105,7 +105,7 @@ public class Strings {
      */
     public static String dehyphenatize(String hstr) {
         String[] parts = hstr.split("-");
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         for (int i = 0; i < parts.length; i++) {
             String part = parts[i];
             if (part.isEmpty())
@@ -120,7 +120,7 @@ public class Strings {
     }
 
     public static String repeat(int count, String pattern) {
-        StringBuffer buf = new StringBuffer(pattern.length() * count);
+        StringBuilder buf = new StringBuilder(pattern.length() * count);
         while (--count >= 0)
             buf.append(pattern);
         return buf.toString();
