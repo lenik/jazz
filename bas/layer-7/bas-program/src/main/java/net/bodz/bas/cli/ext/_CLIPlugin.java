@@ -16,7 +16,6 @@ public class _CLIPlugin
         extends _Plugin
         implements CLIPlugin {
 
-    @SuppressWarnings("unchecked")
     protected ClassOptions<_CLIPlugin> getOptions() {
         return (ClassOptions<_CLIPlugin>) ClassCLI.getClassOptions(getClass());
     }

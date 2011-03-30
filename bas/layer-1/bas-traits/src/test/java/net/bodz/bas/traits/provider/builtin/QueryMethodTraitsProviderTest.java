@@ -70,7 +70,6 @@ public class QueryMethodTraitsProviderTest
 
     @Test
     public void testGetTraitsStaticDefined() {
-        @SuppressWarnings("unchecked")
         IFormatter<StaticFoo> formatter = provider.getTraits(StaticFoo.class, IFormatter.class);
         assertNotNull(formatter);
 
@@ -84,7 +83,6 @@ public class QueryMethodTraitsProviderTest
         assertNull(traits);
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void testGetTraitsNonStaticDefined() {
         NonstaticFoo foo1 = new NonstaticFoo("foo1");

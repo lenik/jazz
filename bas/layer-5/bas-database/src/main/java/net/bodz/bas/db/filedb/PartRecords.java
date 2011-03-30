@@ -77,7 +77,6 @@ public class PartRecords
         return value;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public ImmediateIteratorX<? extends PartMap, ? extends IOException> iterator(boolean allowOverlap)
             throws IOException {

@@ -16,7 +16,6 @@ import org.junit.Test;
 public class AddressTraitsTest
         extends Assert {
 
-    @SuppressWarnings("unchecked")
     ICommonTraits<Address> addressTraits = Traits.getTraits(Address.class, ICommonTraits.class);
 
     IParser<Address> addressParser = addressTraits.getParser();

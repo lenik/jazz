@@ -5,7 +5,6 @@ import java.util.Map;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.NegotiationException;
 
-@SuppressWarnings("unchecked")
 public class ClassifierUtil {
 
     public static Map<String, Object> classify(Object object)

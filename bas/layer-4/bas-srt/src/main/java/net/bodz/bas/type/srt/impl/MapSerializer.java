@@ -30,7 +30,6 @@ public class MapSerializer
         s.write('}');
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public Object unserialize(Reader s)
             throws IOException, SerializeException {

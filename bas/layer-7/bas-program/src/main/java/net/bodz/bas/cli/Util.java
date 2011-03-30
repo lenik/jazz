@@ -25,7 +25,6 @@ import net.bodz.bas.util.exception.ParseException;
 
 class Util {
 
-    @SuppressWarnings("unchecked")
     public static <T> T addarray(Class<?> type, T fieldobj, Object val) {
         Class<?> valtype = type.getComponentType();
         int index;

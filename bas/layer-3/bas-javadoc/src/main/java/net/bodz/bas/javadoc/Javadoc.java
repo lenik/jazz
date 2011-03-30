@@ -33,14 +33,14 @@ public interface Javadoc {
      *            <code>"throws"</code> for @throws.
      * @return List of the annotation texts. <code>null</code> if the annotation doesn't exist.
      */
-    List getAnnotationList(String annotationName);
+    List<?> getAnnotationList(String annotationName);
 
     /**
      * 
      */
     String getAnnotation(String annotationName);
 
-    List getSeeAlsos();
+    List<?> getSeeAlsos();
 
     /**
      * Same as getAnnotation("author").

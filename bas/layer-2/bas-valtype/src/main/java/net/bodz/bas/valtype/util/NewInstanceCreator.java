@@ -28,7 +28,6 @@ public class NewInstanceCreator<T>
         this.parameters = parameters;
     }
 
-    @SuppressWarnings("unchecked")
     public NewInstanceCreator(Class<?> clazz)
             throws ReflectiveOperationException {
         if (clazz == null)
@@ -37,7 +36,6 @@ public class NewInstanceCreator<T>
         this.parameters = null;
     }
 
-    @SuppressWarnings("unchecked")
     public NewInstanceCreator(Class<?> clazz, Class<?>[] parameterTypes, Object... parameters)
             throws ReflectiveOperationException {
         if (clazz == null)

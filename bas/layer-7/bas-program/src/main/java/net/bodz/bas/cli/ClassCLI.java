@@ -15,8 +15,9 @@ import net.bodz.bas.closure.alt.Filt1;
 import net.bodz.bas.collection.comparator.StringLengthComparator;
 import net.bodz.bas.collection.util.ClassLocal;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
-import net.bodz.bas.meta.build.BuildInfoUtil;
+import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.meta.program.Option;
+import net.bodz.bas.meta.program.ProgramNameUtil;
 import net.bodz.bas.reflect.query.ReflectQuery;
 import net.bodz.bas.string.Strings;
 import net.bodz.bas.util.Nullables;
@@ -30,7 +31,6 @@ public class ClassCLI {
         clOptions = new ClassLocal<ClassOptions<?>>();
     }
 
-    @SuppressWarnings("unchecked")
     public static <T> ClassOptions<T> getClassOptions(Class<T> clazz) {
         ClassOptions<T> copt = (ClassOptions<T>) clOptions.get(clazz);
         if (copt == null) {
@@ -50,7 +50,6 @@ public class ClassCLI {
         return list.toArray(new String[0]);
     }
 
-    @SuppressWarnings("unchecked")
     public static void loadOptions(Object classobj, List<String> args)
             throws CLIException {
         assert classobj != null;
@@ -80,7 +79,7 @@ public class ClassCLI {
         final char[] tab = new char[tabsize];
         Arrays.fill(tab, ' ');
 
-        String program = BuildInfoUtil.getProgramName(clazz);
+        String program = ProgramNameUtil.getProgramName(clazz);
         buffer.append("Syntax: \n");
         buffer.append(tab);
         buffer.append(program + " [OPTION] [--]");

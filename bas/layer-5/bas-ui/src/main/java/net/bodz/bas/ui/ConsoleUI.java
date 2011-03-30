@@ -162,7 +162,7 @@ public class ConsoleUI
     public <K> K choice(String title, Object detail, Map<K, ?> candidates, K initial) {
         if (candidates.isEmpty())
             throw new IllegalUsageException("Nothing to choice");
-        @SuppressWarnings("unchecked")
+        
         K[] keys = (K[]) candidates.keySet().toArray();
         Map<String, K> keynames = new HashMap<String, K>();
         Set<String> dupkeys = new HashSet<String>();

@@ -15,7 +15,6 @@ public class DiffComparatorTraitsTest
     @Test
     public void testDefaultStoreInstance()
             throws Exception {
-        @SuppressWarnings("unchecked")
         IInstanceStore<? super DiffComparator> store = Traits.getTraits(DiffComparator.class, IInstanceStore.class);
 
         String defaultName = store.getInstanceNames().iterator().next();

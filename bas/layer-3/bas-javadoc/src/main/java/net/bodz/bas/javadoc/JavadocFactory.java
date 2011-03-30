@@ -13,7 +13,7 @@ public class JavadocFactory {
         return null;
     }
 
-    public static Javadoc getClassJavadoc(Class declaringType) {
+    public static Javadoc getClassJavadoc(Class<?> declaringType) {
         return null;
     }
 
