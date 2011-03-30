@@ -26,7 +26,6 @@ public abstract class MapResRecords<K, V>
 
     protected abstract Class<? extends V> getValueClass();
 
-    @SuppressWarnings("unchecked")
     protected K parseKey(String key)
             throws ParseException {
         if (keyParser == null)
@@ -35,7 +34,6 @@ public abstract class MapResRecords<K, V>
         return keyClass.cast(k);
     }
 
-    @SuppressWarnings("unchecked")
     protected V parseValue(String value)
             throws ParseException {
         if (valueParser == null)

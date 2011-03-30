@@ -54,7 +54,6 @@ public abstract class JavaEnum
         // return ordinal == e.ordinal;
     }
 
-    @SuppressWarnings("unchecked")
     public static <T extends JavaEnum> T valueOf(Class<T> type, String name) {
         Map<String, JavaEnum> nameMap = clNameMap.get(type);
         if (nameMap != null) {
@@ -73,16 +72,18 @@ public abstract class JavaEnum
         throw new NoSuchConstException(type + "." + name);
     }
 
-    @SuppressWarnings("unchecked")
     protected static <T extends JavaEnum> T[] _values(Class<T> type) {
         T[] values = (T[]) clValues.get(type);
+
         if (values == null) {
             Map<String, JavaEnum> nameMap = clNameMap.get(type);
+
             T[] empty = (T[]) Array.newInstance(type, 0);
             if (nameMap == null)
                 values = empty;
             else
                 values = nameMap.values().toArray(empty);
+
             clValues.put(type, values);
         }
         return values;

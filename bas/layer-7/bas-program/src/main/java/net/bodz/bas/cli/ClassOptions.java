@@ -155,7 +155,6 @@ public class ClassOptions<CT> {
      * @exception CLIException
      *                if option does not exist
      */
-    @SuppressWarnings("unchecked")
     public _Option<Object> findOption(String name)
             throws CLIException {
         if (name.isEmpty())

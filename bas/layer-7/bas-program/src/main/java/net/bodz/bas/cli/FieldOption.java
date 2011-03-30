@@ -11,14 +11,12 @@ public class FieldOption<T>
 
     private final Field field;
 
-    @SuppressWarnings("unchecked")
     public FieldOption(String name, Field field, OptionGroup optgrp) {
         super(name, field, (Class<T>) field.getType(), optgrp);
         this.field = field;
         field.setAccessible(true);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public Object get(Object instance)
             throws ReflectiveOperationException {

@@ -14,7 +14,6 @@ import net.bodz.bas.traits.Traits;
 import net.bodz.bas.util.exception.ParseException;
 import net.bodz.bas.util.exception.UnexpectedException;
 
-@SuppressWarnings("unchecked")
 public class GlobFilenameFilter
         extends RegexFilenameFilter {
 

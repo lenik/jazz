@@ -104,10 +104,12 @@ public class Nullables {
      */
     public static <T> T getAnnotationValue(Annotation annotation, T defaultValue)
             throws NoSuchMethodException {
+
         if (defaultValue == null)
             throw new NullPointerException("defaultValue");
-        @SuppressWarnings("unchecked")
+
         Class<T> valueClass = (Class<T>) defaultValue.getClass();
+
         return getAnnotationValue(annotation, valueClass);
     }
 
@@ -118,8 +120,10 @@ public class Nullables {
      */
     public static Object getAnnotationValue(Annotation annotation)
             throws NoSuchMethodException {
+        
         if (annotation == null)
             return null;
+        
         Object value = _invokeValue(annotation);
         assert value != null : "null annotation value";
         return value;

@@ -15,7 +15,6 @@ public class DiffFormatTraitsTest
     @Test
     public void testDefaultStoreInstance()
             throws Exception {
-        @SuppressWarnings("unchecked")
         IInstanceStore<? super DiffFormat> diffStore = Traits.getTraits(DiffFormat.class, IInstanceStore.class);
 
         Object Simdiff = diffStore.getInstance("Simdiff");

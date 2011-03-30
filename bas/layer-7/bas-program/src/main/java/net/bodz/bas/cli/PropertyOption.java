@@ -24,7 +24,6 @@ public class PropertyOption<T>
         writef.setAccessible(true);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public T get(Object classobj)
             throws ReflectiveOperationException {
