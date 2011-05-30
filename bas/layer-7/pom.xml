@@ -14,11 +14,11 @@
     <modules>
         <module>bas-ant</module>
         <module>bas-dotnet-synthetics</module>
-        <module>bas-history</module>
         <module>bas-loader</module>
         <module>bas-netserv</module>
         <module>bas-program</module>
         <module>bas-unitperf</module>
+        <module>bas-vcs</module>
     </modules>
     <name>BAS :: Layer 7</name>
 </project>
