@@ -5,8 +5,8 @@
         <artifactId>layer-7</artifactId>
         <version>0.0.2-SNAPSHOT</version>
     </parent>
-    <artifactId>bas-history</artifactId>
+    <artifactId>bas-vcs</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <dependencies/>
-    <name>BAS :: Layer 7 :: History</name>
+    <name>BAS :: Layer 7 :: Vcs</name>
 </project>

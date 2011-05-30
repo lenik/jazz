@@ -67,7 +67,7 @@ layer-7/ 应用框架
     bas-netserv
     bas-program
     bas-unitperf
-    bas-history
+    bas-vcs
 
 build/
     bas-all
