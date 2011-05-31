@@ -1,8 +1,8 @@
 package net.bodz.bas.log.impl;
 
-import net.bodz.bas.log.AbstractLogSink;
-
 import org.apache.log4j.Logger;
+
+import net.bodz.bas.log.AbstractLogSink;
 
 public abstract class Log4jLogSink
         extends AbstractLogSink {

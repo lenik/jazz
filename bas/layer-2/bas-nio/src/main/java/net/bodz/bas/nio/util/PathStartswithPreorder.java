@@ -1,6 +1,8 @@
-package net.bodz.bas.collection.preorder;
+package net.bodz.bas.nio.util;
 
 import java.nio.file.Path;
+
+import net.bodz.bas.collection.preorder.AbstractPreorder;
 
 public class PathStartswithPreorder
         extends AbstractPreorder<Path> {

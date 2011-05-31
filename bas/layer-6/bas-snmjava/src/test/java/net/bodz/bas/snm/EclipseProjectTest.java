@@ -3,9 +3,9 @@ package net.bodz.bas.snm;
 import java.io.File;
 import java.net.URL;
 
-import net.bodz.bas.snm.BuildPath.SourceFolder;
-
 import org.junit.Test;
+
+import net.bodz.bas.snm.BuildPath.SourceFolder;
 
 public class EclipseProjectTest {
 

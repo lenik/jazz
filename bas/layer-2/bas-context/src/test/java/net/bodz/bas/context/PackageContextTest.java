@@ -1,11 +1,6 @@
 package net.bodz.bas.context;
 
 import org.junit.Assert;
-
-import net.bodz.bas.context.ContextLocal;
-import net.bodz.bas.context.IContext;
-import net.bodz.bas.context.PackageContext;
-
 import org.junit.Test;
 
 public class PackageContextTest

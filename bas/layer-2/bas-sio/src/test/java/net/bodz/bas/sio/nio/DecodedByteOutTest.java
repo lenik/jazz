@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.nio.BufferUnderflowException;
 import java.nio.charset.Charset;
 
-import net.bodz.bas.sio.BCharOut;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.sio.BCharOut;
 
 public class DecodedByteOutTest
         extends Assert {

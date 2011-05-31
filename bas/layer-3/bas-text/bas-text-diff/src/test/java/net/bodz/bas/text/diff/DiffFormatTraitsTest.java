@@ -1,10 +1,10 @@
 package net.bodz.bas.text.diff;
 
-import net.bodz.bas.traits.IInstanceStore;
-import net.bodz.bas.traits.Traits;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.traits.IInstanceStore;
+import net.bodz.bas.traits.Traits;
 
 /**
  * @see DiffFormatTraits

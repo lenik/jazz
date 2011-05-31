@@ -3,9 +3,9 @@ package net.bodz.bas.io;
 import java.io.File;
 
 import org.junit.Assert;
-import net.bodz.bas.context.ClassContext;
-
 import org.junit.Test;
+
+import net.bodz.bas.context.ClassContext;
 
 public class ContextCWDTest
         extends Assert {

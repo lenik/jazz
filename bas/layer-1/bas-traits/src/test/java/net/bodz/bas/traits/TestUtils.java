@@ -1,6 +1,7 @@
 package net.bodz.bas.traits;
 
 import static org.junit.Assert.assertEquals;
+
 import net.bodz.bas.util.exception.ParseException;
 
 public class TestUtils {

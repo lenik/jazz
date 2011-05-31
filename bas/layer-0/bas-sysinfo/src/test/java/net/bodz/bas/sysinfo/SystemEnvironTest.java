@@ -5,11 +5,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import net.bodz.bas.string.StringEscape;
-import net.bodz.bas.string.Strings;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.string.StringEscape;
+import net.bodz.bas.string.Strings;
 
 public class SystemEnvironTest
         extends Assert {

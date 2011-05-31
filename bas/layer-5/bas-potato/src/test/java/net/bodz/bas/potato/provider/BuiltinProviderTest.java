@@ -3,13 +3,13 @@ package net.bodz.bas.potato.provider;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import net.bodz.bas.potato.provider.bean.BeanPotatoProvider;
 import net.bodz.bas.potato.provider.reflect.ReflectPotatoProvider;
 import net.bodz.bas.traits.ITraitsProvider;
 import net.bodz.bas.traits.Traits;
-
-import org.junit.Assert;
-import org.junit.Test;
 
 public class BuiltinProviderTest
         extends Assert {

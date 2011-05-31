@@ -1,9 +1,9 @@
 package net.bodz.bas.sio.util;
 
-import net.bodz.bas.sio.nibbles.NibbleUtil;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.sio.nibbles.NibbleUtil;
 
 public class NibbleUtilTest
         extends Assert {

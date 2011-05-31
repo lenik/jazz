@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import net.bodz.bas.collection.comparator.NaturalComparator;
+import net.bodz.bas.util.order.NaturalComparator;
 
 /**
  * @test {@link SortedListTest}

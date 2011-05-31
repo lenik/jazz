@@ -6,13 +6,13 @@ import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import net.bodz.bas.io.resource.builtin.URLResource;
 import net.bodz.bas.string.StringFeature;
 import net.bodz.bas.util.ClassResource;
 import net.bodz.bas.util.file.FilePath;
-
-import org.junit.Assert;
-import org.junit.Test;
 
 public class JarStuffTest
         extends Assert {

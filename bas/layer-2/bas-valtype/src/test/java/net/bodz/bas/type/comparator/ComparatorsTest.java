@@ -2,11 +2,11 @@ package net.bodz.bas.type.comparator;
 
 import java.util.Arrays;
 
-import net.bodz.bas.closure.alt.Proc1;
-import net.bodz.bas.combina.Permutation;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.closure.alt.Proc1;
+import net.bodz.bas.combina.Permutation;
 
 public class ComparatorsTest
         extends Assert {

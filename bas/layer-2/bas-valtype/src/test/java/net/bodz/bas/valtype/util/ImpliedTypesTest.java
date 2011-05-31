@@ -3,8 +3,6 @@ package net.bodz.bas.valtype.util;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.bodz.bas.valtype.util.ImpliedTypes;
-
 import org.junit.Assert;
 import org.junit.Test;
 

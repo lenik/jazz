@@ -4,10 +4,9 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Collection;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.junit.Assert;
 import org.junit.Test;
-
-import org.apache.commons.lang.ArrayUtils;
 
 import net.bodz.bas.flow.units.SISOUnit;
 import net.bodz.bas.flow.util.WhatIf;

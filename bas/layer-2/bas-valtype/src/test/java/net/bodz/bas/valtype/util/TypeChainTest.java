@@ -1,9 +1,9 @@
 package net.bodz.bas.valtype.util;
 
-import net.bodz.bas.sio.BCharOut;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.sio.BCharOut;
 
 public class TypeChainTest
         extends Assert {

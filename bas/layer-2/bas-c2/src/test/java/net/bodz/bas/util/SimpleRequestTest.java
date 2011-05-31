@@ -1,9 +1,9 @@
 package net.bodz.bas.util;
 
-import net.bodz.bas.collection.tree.TreePath;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.collection.tree.TreePath;
 
 public class SimpleRequestTest
         extends Assert {
