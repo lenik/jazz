@@ -2,10 +2,10 @@ package net.bodz.bas.text.model;
 
 import java.lang.reflect.Array;
 
-import net.bodz.bas.chars.CharFeature;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.chars.CharFeature;
 
 public class CharFeatureTest
         extends Assert {

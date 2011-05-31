@@ -1,9 +1,9 @@
 package net.bodz.bas.text.charsets;
 
-import net.bodz.bas.text.codec.builtin.Base64Codec;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.text.codec.builtin.Base64Codec;
 
 public class Base64CodecTest
         extends Assert {

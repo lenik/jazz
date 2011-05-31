@@ -20,12 +20,12 @@ import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import net.bodz.bas.sio.WriterPrintOut;
 import net.bodz.bas.text.diff.gnudiff.DiffPrint;
 import net.bodz.bas.text.diff.gnudiff.GNUDiff;
-
-import org.junit.Assert;
-import org.junit.Test;
 
 /**
  * Test Diff behavior.

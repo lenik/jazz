@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import org.apache.commons.vfs.FileObject;
+import org.apache.commons.vfs.FileSystemException;
+import org.apache.commons.vfs.VFS;
+
 import net.bodz.bas.io.resource.AbstractStreamResource;
 import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.IByteOut;
@@ -13,10 +17,6 @@ import net.bodz.bas.sio.InputStreamByteIn;
 import net.bodz.bas.sio.OutputStreamByteOut;
 import net.bodz.bas.sio.ReaderCharIn;
 import net.bodz.bas.sio.WriterPrintOut;
-
-import org.apache.commons.vfs.FileObject;
-import org.apache.commons.vfs.FileSystemException;
-import org.apache.commons.vfs.VFS;
 
 public class VFileResource
         extends AbstractStreamResource {

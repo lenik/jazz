@@ -2,11 +2,11 @@ package net.bodz.bas.reflect.proxy;
 
 import java.lang.reflect.Proxy;
 
-import net.bodz.bas.test.timing.ITimingTarget;
-import net.bodz.bas.test.timing.MultipassTimer;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.test.timing.ITimingTarget;
+import net.bodz.bas.test.timing.MultipassTimer;
 
 public class NullInvocationHandlerTest
         extends Assert {

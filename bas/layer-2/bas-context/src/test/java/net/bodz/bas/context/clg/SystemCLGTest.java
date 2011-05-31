@@ -5,10 +5,9 @@ import java.nio.charset.Charset;
 import java.util.Locale;
 
 import org.junit.Assert;
-import net.bodz.bas.context.StaticContext;
-import net.bodz.bas.context.clg.SystemCLG;
-
 import org.junit.Test;
+
+import net.bodz.bas.context.StaticContext;
 
 public class SystemCLGTest
         extends Assert {

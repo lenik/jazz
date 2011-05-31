@@ -1,5 +1,8 @@
 package net.bodz.bas.util.example;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import net.bodz.bas.lang.negotiation.FinalNegotiation;
 import net.bodz.bas.lang.negotiation.MandatoryException;
 import net.bodz.bas.lang.negotiation.NegotiationParameter;
@@ -9,9 +12,6 @@ import net.bodz.bas.traits.IParser;
 import net.bodz.bas.traits.Traits;
 import net.bodz.bas.util.example.AddressTraits.CountryAliasUtil;
 import net.bodz.bas.util.example.AddressTraits.PostCodeUtil;
-
-import org.junit.Assert;
-import org.junit.Test;
 
 public class AddressTraitsTest
         extends Assert {

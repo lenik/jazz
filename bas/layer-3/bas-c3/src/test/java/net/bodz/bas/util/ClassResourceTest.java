@@ -1,9 +1,9 @@
 package net.bodz.bas.util;
 
-import net.bodz.bas.io.resource.builtin.URLResource;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.io.resource.builtin.URLResource;
 
 public class ClassResourceTest
         extends Assert {

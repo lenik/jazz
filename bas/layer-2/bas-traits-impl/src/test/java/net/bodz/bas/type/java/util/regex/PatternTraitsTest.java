@@ -2,12 +2,12 @@ package net.bodz.bas.type.java.util.regex;
 
 import java.util.regex.Pattern;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import net.bodz.bas.lang.negotiation.FinalNegotiation;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.NegotiationParameter;
-
-import org.junit.Assert;
-import org.junit.Test;
 
 public class PatternTraitsTest
         extends PatternTraits {

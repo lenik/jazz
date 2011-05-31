@@ -3,15 +3,15 @@ package net.bodz.bas.traits;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
 import net.bodz.bas.traits.provider.builtin.AnnotationTraitsProvider;
 import net.bodz.bas.traits.provider.builtin.BasFriendTraitsProvider;
 import net.bodz.bas.traits.provider.builtin.FriendTraitsProvider;
 import net.bodz.bas.traits.provider.builtin.QueryMethodTraitsProvider;
 import net.bodz.bas.traits.provider.builtin.QuerySelfTraitsProvider;
-
-import org.junit.Assert;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
 public class TraitsProviderTest
         extends Assert {

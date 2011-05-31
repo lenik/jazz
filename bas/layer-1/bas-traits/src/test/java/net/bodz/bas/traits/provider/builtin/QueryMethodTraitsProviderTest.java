@@ -2,11 +2,11 @@ package net.bodz.bas.traits.provider.builtin;
 
 import java.io.InputStream;
 
-import net.bodz.bas.traits.AbstractCommonTraits;
-import net.bodz.bas.traits.IFormatter;
-
 import org.junit.Assert;
 import org.junit.Test;
+
+import net.bodz.bas.traits.AbstractCommonTraits;
+import net.bodz.bas.traits.IFormatter;
 
 public class QueryMethodTraitsProviderTest
         extends Assert {

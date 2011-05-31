@@ -7,7 +7,7 @@ import java.util.NavigableSet;
 import java.util.NoSuchElementException;
 import java.util.SortedSet;
 
-import net.bodz.bas.collection.comparator.IntegerComparator;
+import net.bodz.bas.util.order.IntegerComparator;
 
 public class IntRange
         extends AbstractSet<Integer>
@@ -106,7 +106,7 @@ public class IntRange
 
     @Override
     public Comparator<? super Integer> comparator() {
-        return IntegerComparator.getInstance();
+        return IntegerComparator.INSTANCE;
     }
 
     @Override

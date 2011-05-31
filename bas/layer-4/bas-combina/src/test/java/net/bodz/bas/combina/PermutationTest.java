@@ -7,12 +7,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 import net.bodz.bas.closure.alt.Proc1;
 import net.bodz.bas.collection.primitive.IntegerCollection;
 import net.bodz.bas.primitive.IntMath;
-
-import org.junit.Assert;
-import org.junit.Test;
 
 public class PermutationTest
         extends Assert {
