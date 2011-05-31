@@ -1,8 +1,8 @@
 package net.bodz.bas.potato.traits.util;
 
-import net.bodz.bas.collection.comparator.AbstractNonNullComparator;
 import net.bodz.bas.potato.traits.ConstructorKey;
 import net.bodz.bas.type.comparator.TypeVectorComparator;
+import net.bodz.bas.util.order.AbstractNonNullComparator;
 
 public class ConstructorKeyComparator
         extends AbstractNonNullComparator<ConstructorKey> {

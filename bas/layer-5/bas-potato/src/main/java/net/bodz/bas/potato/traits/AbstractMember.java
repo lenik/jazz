@@ -4,11 +4,11 @@ import java.beans.FeatureDescriptor;
 import java.lang.annotation.Annotation;
 import java.util.Locale;
 
+import org.apache.commons.lang.ArrayUtils;
+
 import net.bodz.bas.meta.info.DisplayName;
 import net.bodz.bas.meta.info.Doc;
 import net.bodz.bas.meta.info.Tags;
-
-import org.apache.commons.lang.ArrayUtils;
 
 public abstract class AbstractMember
         implements IMember {

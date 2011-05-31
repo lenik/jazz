@@ -1,4 +1,4 @@
-package net.bodz.bas.collection.comparator;
+package net.bodz.bas.util.order;
 
 public class BooleanComparator
         extends AbstractNonNullComparator<Boolean> {
@@ -11,10 +11,6 @@ public class BooleanComparator
             return b ? -1 : 0;
     }
 
-    private static final BooleanComparator instance = new BooleanComparator();
-
-    public static BooleanComparator getInstance() {
-        return instance;
-    }
+    public static final BooleanComparator INSTANCE = new BooleanComparator();
 
 }

@@ -2,7 +2,7 @@ package net.bodz.bas.potato.traits;
 
 import java.util.TreeMap;
 
-import net.bodz.bas.collection.comparator.ComparableComparator;
+import net.bodz.bas.util.order.ComparableComparator;
 
 public class AbstractEventMap
         extends TreeMap<String, IEvent>

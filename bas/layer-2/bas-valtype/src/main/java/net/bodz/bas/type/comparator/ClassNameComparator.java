@@ -1,6 +1,6 @@
 package net.bodz.bas.type.comparator;
 
-import net.bodz.bas.collection.comparator.OrderComparator;
+import net.bodz.bas.util.order.OrderComparator;
 
 public class ClassNameComparator
         extends OrderComparator<Class<?>, String> {

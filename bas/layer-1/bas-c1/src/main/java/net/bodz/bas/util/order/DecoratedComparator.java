@@ -1,5 +1,6 @@
-package net.bodz.bas.collection.comparator;
+package net.bodz.bas.util.order;
 
+// TODO
 public class DecoratedComparator<T>
         extends AbstractNonNullComparator<T> {
 

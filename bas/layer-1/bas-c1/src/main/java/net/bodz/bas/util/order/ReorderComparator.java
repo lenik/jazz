@@ -1,4 +1,4 @@
-package net.bodz.bas.collection.comparator;
+package net.bodz.bas.util.order;
 
 import java.util.Comparator;
 
