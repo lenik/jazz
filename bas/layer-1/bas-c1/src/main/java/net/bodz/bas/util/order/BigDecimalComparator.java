@@ -1,4 +1,4 @@
-package net.bodz.bas.collection.comparator;
+package net.bodz.bas.util.order;
 
 import java.math.BigDecimal;
 
@@ -10,10 +10,6 @@ public class BigDecimalComparator
         return a.compareTo(b);
     }
 
-    private static final BigDecimalComparator instance = new BigDecimalComparator();
-
-    public static BigDecimalComparator getInstance() {
-        return instance;
-    }
+    public static final BigDecimalComparator INSTANCE = new BigDecimalComparator();
 
 }

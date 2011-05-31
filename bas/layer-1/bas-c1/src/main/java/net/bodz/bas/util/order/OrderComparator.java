@@ -1,4 +1,4 @@
-package net.bodz.bas.collection.comparator;
+package net.bodz.bas.util.order;
 
 public abstract class OrderComparator<TargetType, OrderType extends Comparable<OrderType>>
         extends AbstractNonNullComparator<TargetType> {

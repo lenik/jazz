@@ -2,7 +2,7 @@ package net.bodz.bas.type.comparator;
 
 import java.util.Arrays;
 
-import net.bodz.bas.collection.comparator.AbstractNonNullComparator;
+import net.bodz.bas.util.order.AbstractNonNullComparator;
 
 /**
  * @test {@link InterfaceComparatorTest}

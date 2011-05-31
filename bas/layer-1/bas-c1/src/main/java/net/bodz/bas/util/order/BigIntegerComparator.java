@@ -1,4 +1,4 @@
-package net.bodz.bas.collection.comparator;
+package net.bodz.bas.util.order;
 
 import java.math.BigInteger;
 
@@ -10,10 +10,6 @@ public class BigIntegerComparator
         return a.compareTo(b);
     }
 
-    private static final BigIntegerComparator instance = new BigIntegerComparator();
-
-    public static BigIntegerComparator getInstance() {
-        return instance;
-    }
+    public static final BigIntegerComparator INSTANCE = new BigIntegerComparator();
 
 }
