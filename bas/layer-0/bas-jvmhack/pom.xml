@@ -3,10 +3,10 @@
     <parent>
         <groupId>net.bodz.bas</groupId>
         <artifactId>layer-0</artifactId>
-        <version>0.0.2-SNAPSHOT</version>
+        <version>0.10.1-SNAPSHOT</version>
     </parent>
     <artifactId>bas-jvmhack</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.10.1-SNAPSHOT</version>
     <dependencies>
         <dependency>
             <groupId>asm</groupId>
@@ -15,7 +15,7 @@
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-proxy-java-security</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
+            <version>0.10.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
     <properties>

@@ -3,10 +3,10 @@
     <parent>
         <groupId>net.bodz.bas</groupId>
         <artifactId>bas-compat</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.10.1-SNAPSHOT</version>
     </parent>
     <artifactId>bas-jdk6compat</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.10.1-SNAPSHOT</version>
     <dependencies/>
     <name>BAS :: Layer 0 :: Compat :: Jdk6compat</name>
 </project>

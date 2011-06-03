@@ -3,10 +3,10 @@
     <parent>
         <groupId>net.bodz.bas</groupId>
         <artifactId>layer-7</artifactId>
-        <version>0.0.2-SNAPSHOT</version>
+        <version>0.10.1-SNAPSHOT</version>
     </parent>
     <artifactId>bas-ant</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.10.1-SNAPSHOT</version>
     <dependencies>
         <dependency>
             <groupId>org.apache.ant</groupId>
@@ -16,41 +16,41 @@
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-meta</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
+            <version>0.10.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-program</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.10.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-snmjava</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.10.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-jvmhack</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.10.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-loader</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.10.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-context</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.10.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>

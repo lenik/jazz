@@ -3,15 +3,15 @@
     <parent>
         <groupId>net.bodz.bas</groupId>
         <artifactId>bas-incubator</artifactId>
-        <version>0.0.2-SNAPSHOT</version>
+        <version>0.10.1-SNAPSHOT</version>
     </parent>
     <artifactId>bas-incubator-posutil</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.10.1-SNAPSHOT</version>
     <dependencies>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-meta</artifactId>
-            <version>0.0.2-SNAPSHOT</version>
+            <version>0.10.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
     <name>BAS :: Incubator :: Incubator Posutil</name>

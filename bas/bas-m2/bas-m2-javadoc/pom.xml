@@ -3,10 +3,10 @@
     <parent>
         <groupId>net.bodz.bas</groupId>
         <artifactId>bas-m2</artifactId>
-        <version>0.0.2-SNAPSHOT</version>
+        <version>0.10.1-SNAPSHOT</version>
     </parent>
     <artifactId>bas-m2-javadoc</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.10.1-SNAPSHOT</version>
     <dependencies/>
     <name>BAS :: M2 :: M2 Javadoc</name>
 </project>

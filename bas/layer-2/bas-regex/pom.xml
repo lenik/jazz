@@ -3,48 +3,48 @@
     <parent>
         <groupId>net.bodz.bas</groupId>
         <artifactId>layer-2</artifactId>
-        <version>0.0.2-SNAPSHOT</version>
+        <version>0.10.1-SNAPSHOT</version>
     </parent>
     <artifactId>bas-regex</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.10.1-SNAPSHOT</version>
     <dependencies>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-primitive</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.10.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-c1</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.10.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-chars</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.10.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-sio</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.10.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-collection</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.10.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-string</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.10.1-SNAPSHOT</version>
             <type>jar</type>
         </dependency>
     </dependencies>

@@ -6,10 +6,10 @@
     <parent>
         <groupId>net.bodz.bas</groupId>
         <artifactId>bas</artifactId>
-        <version>0.0.2-SNAPSHOT</version>
+        <version>0.10.1-SNAPSHOT</version>
     </parent>
     <artifactId>build</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.10.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
         <module>bas-all</module>
@@ -21,6 +21,7 @@
         <module>bas-all-5</module>
         <module>bas-all-6</module>
         <module>bas-all-7</module>
+        <module>fj5</module>
     </modules>
     <name>BAS :: Build</name>
 </project>
