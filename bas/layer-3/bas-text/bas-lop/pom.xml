@@ -3,41 +3,41 @@
     <parent>
         <groupId>net.bodz.bas</groupId>
         <artifactId>bas-text</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.10.1-SNAPSHOT</version>
     </parent>
     <artifactId>bas-lop</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.10.1-SNAPSHOT</version>
     <dependencies>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-reflect</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.10.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-string</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.10.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-io</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.10.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-regex</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.10.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-c3</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.10.1-SNAPSHOT</version>
             <type>jar</type>
             <scope>compile</scope>
         </dependency>

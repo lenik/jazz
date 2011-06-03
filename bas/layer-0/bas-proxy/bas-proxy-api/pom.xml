@@ -3,9 +3,9 @@
     <parent>
         <groupId>net.bodz.bas</groupId>
         <artifactId>bas-proxy</artifactId>
-        <version>0.0.2-SNAPSHOT</version>
+        <version>0.10.1-SNAPSHOT</version>
     </parent>
     <artifactId>bas-proxy-api</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.10.1-SNAPSHOT</version>
     <name>BAS :: Layer 0 :: Proxy :: Proxy Api</name>
 </project>

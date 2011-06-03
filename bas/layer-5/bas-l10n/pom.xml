@@ -3,16 +3,16 @@
     <parent>
         <groupId>net.bodz.bas</groupId>
         <artifactId>layer-5</artifactId>
-        <version>0.0.2-SNAPSHOT</version>
+        <version>0.10.1-SNAPSHOT</version>
     </parent>
     <artifactId>bas-l10n</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.10.1-SNAPSHOT</version>
     <dependencies>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-i18n</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>0.10.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
     <modules>
