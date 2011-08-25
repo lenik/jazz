@@ -370,7 +370,7 @@ public interface Logger
      * @param message
      *            The logging message.
      */
-    void fatal(Object message);
+    boolean fatal(Object message);
 
     /**
      * Add a fatal logging with an exception.
@@ -380,7 +380,7 @@ public interface Logger
      * @param message
      *            The logging message.
      */
-    void fatal(Throwable e, Object message);
+    boolean fatal(Throwable e, Object message);
 
     /**
      * Add a fatal logging with a delta verbose.
@@ -388,7 +388,7 @@ public interface Logger
      * @param message
      *            The logging message.
      */
-    void fatal(int delta, Object message);
+    boolean fatal(int delta, Object message);
 
     /**
      * Add a fatal logging with a delta verbose with an exception.
@@ -398,7 +398,7 @@ public interface Logger
      * @param message
      *            The logging message.
      */
-    void fatal(int delta, Throwable e, Object message);
+    boolean fatal(int delta, Throwable e, Object message);
 
     /**
      * Add a fatal logging.
@@ -406,7 +406,7 @@ public interface Logger
      * @param messageArray
      *            The logging message in pieces, will be concated.
      */
-    void fatal(Object... messageArray);
+    boolean fatal(Object... messageArray);
 
     /**
      * Add a fatal logging with an exception.
@@ -416,7 +416,7 @@ public interface Logger
      * @param messageArray
      *            The logging message in pieces, will be concated.
      */
-    void fatal(Throwable e, Object... messageArray);
+    boolean fatal(Throwable e, Object... messageArray);
 
     /**
      * Add a fatal logging with a delta verbose.
@@ -426,7 +426,7 @@ public interface Logger
      * @param messageArray
      *            The logging message in pieces, will be concated.
      */
-    void fatal(int delta, Object... messageArray);
+    boolean fatal(int delta, Object... messageArray);
 
     /**
      * Add a fatal logging with a delta verbose with an exception.
@@ -438,7 +438,7 @@ public interface Logger
      * @param messageArray
      *            The logging message in pieces, will be concated.
      */
-    void fatal(int delta, Throwable e, Object... messageArray);
+    boolean fatal(int delta, Throwable e, Object... messageArray);
 
     /**
      * Add formatted a fatal logging.
@@ -448,7 +448,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void fatalFormat(String format, Object... args);
+    boolean fatalFormat(String format, Object... args);
 
     /**
      * Add formatted a fatal logging with an exception.
@@ -460,7 +460,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void fatalFormat(Throwable e, String format, Object... args);
+    boolean fatalFormat(Throwable e, String format, Object... args);
 
     /**
      * Add formatted a fatal logging with a delta verbose.
@@ -472,7 +472,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void fatalFormat(int delta, String format, Object... args);
+    boolean fatalFormat(int delta, String format, Object... args);
 
     /**
      * Add formatted a fatal logging with a delta verbose with an exception.
@@ -486,7 +486,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void fatalFormat(int delta, Throwable e, String format, Object... args);
+    boolean fatalFormat(int delta, Throwable e, String format, Object... args);
 
     /**
      * Check if error logging is enabled.
@@ -530,7 +530,7 @@ public interface Logger
      * @param message
      *            The logging message.
      */
-    void error(Object message);
+    boolean error(Object message);
 
     /**
      * Add a error logging with an exception.
@@ -540,7 +540,7 @@ public interface Logger
      * @param message
      *            The logging message.
      */
-    void error(Throwable e, Object message);
+    boolean error(Throwable e, Object message);
 
     /**
      * Add a error logging with a delta verbose.
@@ -548,7 +548,7 @@ public interface Logger
      * @param message
      *            The logging message.
      */
-    void error(int delta, Object message);
+    boolean error(int delta, Object message);
 
     /**
      * Add a error logging with a delta verbose with an exception.
@@ -558,7 +558,7 @@ public interface Logger
      * @param message
      *            The logging message.
      */
-    void error(int delta, Throwable e, Object message);
+    boolean error(int delta, Throwable e, Object message);
 
     /**
      * Add a error logging.
@@ -566,7 +566,7 @@ public interface Logger
      * @param messageArray
      *            The logging message in pieces, will be concated.
      */
-    void error(Object... messageArray);
+    boolean error(Object... messageArray);
 
     /**
      * Add a error logging with an exception.
@@ -576,7 +576,7 @@ public interface Logger
      * @param messageArray
      *            The logging message in pieces, will be concated.
      */
-    void error(Throwable e, Object... messageArray);
+    boolean error(Throwable e, Object... messageArray);
 
     /**
      * Add a error logging with a delta verbose.
@@ -586,7 +586,7 @@ public interface Logger
      * @param messageArray
      *            The logging message in pieces, will be concated.
      */
-    void error(int delta, Object... messageArray);
+    boolean error(int delta, Object... messageArray);
 
     /**
      * Add a error logging with a delta verbose with an exception.
@@ -598,7 +598,7 @@ public interface Logger
      * @param messageArray
      *            The logging message in pieces, will be concated.
      */
-    void error(int delta, Throwable e, Object... messageArray);
+    boolean error(int delta, Throwable e, Object... messageArray);
 
     /**
      * Add formatted a error logging.
@@ -608,7 +608,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void errorFormat(String format, Object... args);
+    boolean errorFormat(String format, Object... args);
 
     /**
      * Add formatted a error logging with an exception.
@@ -620,7 +620,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void errorFormat(Throwable e, String format, Object... args);
+    boolean errorFormat(Throwable e, String format, Object... args);
 
     /**
      * Add formatted a error logging with a delta verbose.
@@ -632,7 +632,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void errorFormat(int delta, String format, Object... args);
+    boolean errorFormat(int delta, String format, Object... args);
 
     /**
      * Add formatted a error logging with a delta verbose with an exception.
@@ -646,7 +646,7 @@ public interface Logger
      * @param args
      *            The arguments to the format.
      */
-    void errorFormat(int delta, Throwable e, String format, Object... args);
+    boolean errorFormat(int delta, Throwable e, String format, Object... args);
 
     /**
      * Check if warn logging is enabled.

@@ -188,63 +188,75 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void fatal(Object message) {
+    public boolean fatal(Object message) {
         getFatalSink().p(message);
+        return false;
     }
 
     @Override
-    public void fatal(Throwable e, Object message) {
+    public boolean fatal(Throwable e, Object message) {
         getFatalSink().p(e, message);
+        return false;
     }
 
     @Override
-    public void fatal(int delta, Object message) {
+    public boolean fatal(int delta, Object message) {
         getFatalSink(delta).p(message);
+        return false;
     }
 
     @Override
-    public void fatal(int delta, Throwable e, Object message) {
+    public boolean fatal(int delta, Throwable e, Object message) {
         getFatalSink(delta).p(e, message);
+        return false;
     }
 
     @Override
-    public void fatal(Object... messageArray) {
+    public boolean fatal(Object... messageArray) {
         getFatalSink().p(messageArray);
+        return false;
     }
 
     @Override
-    public void fatal(Throwable e, Object... messageArray) {
+    public boolean fatal(Throwable e, Object... messageArray) {
         getFatalSink().p(e, messageArray);
+        return false;
     }
 
     @Override
-    public void fatal(int delta, Object... messageArray) {
+    public boolean fatal(int delta, Object... messageArray) {
         getFatalSink(delta).p(messageArray);
+        return false;
     }
 
     @Override
-    public void fatal(int delta, Throwable e, Object... messageArray) {
+    public boolean fatal(int delta, Throwable e, Object... messageArray) {
         getFatalSink(delta).p(e, messageArray);
+        return false;
     }
 
     @Override
-    public void fatalFormat(String format, Object... args) {
+    public boolean fatalFormat(String format, Object... args) {
         getFatalSink().f(format, args);
+        return false;
     }
 
     @Override
-    public void fatalFormat(Throwable e, String format, Object... args) {
+    public boolean fatalFormat(Throwable e, String format, Object... args) {
         getFatalSink().f(e, format, args);
+        return false;
     }
 
     @Override
-    public void fatalFormat(int delta, String format, Object... args) {
+    public boolean fatalFormat(int delta, String format, Object... args) {
         getFatalSink(delta).f(format, args);
+        return false;
     }
 
     @Override
-    public void fatalFormat(int delta, Throwable e, String format, Object... args) {
+    public boolean fatalFormat(int delta, Throwable e, String format, Object... args) {
         getFatalSink(delta).f(e, format, args);
+        return false;
     }
 
     @Override
@@ -268,63 +280,75 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void error(Object message) {
+    public boolean error(Object message) {
         getErrorSink().p(message);
+        return false;
     }
 
     @Override
-    public void error(Throwable e, Object message) {
+    public boolean error(Throwable e, Object message) {
         getErrorSink().p(e, message);
+        return false;
     }
 
     @Override
-    public void error(int delta, Object message) {
+    public boolean error(int delta, Object message) {
         getErrorSink(delta).p(message);
+        return false;
     }
 
     @Override
-    public void error(int delta, Throwable e, Object message) {
+    public boolean error(int delta, Throwable e, Object message) {
         getErrorSink(delta).p(e, message);
+        return false;
     }
 
     @Override
-    public void error(Object... messageArray) {
+    public boolean error(Object... messageArray) {
         getErrorSink().p(messageArray);
+        return false;
     }
 
     @Override
-    public void error(Throwable e, Object... messageArray) {
+    public boolean error(Throwable e, Object... messageArray) {
         getErrorSink().p(e, messageArray);
+        return false;
     }
 
     @Override
-    public void error(int delta, Object... messageArray) {
+    public boolean error(int delta, Object... messageArray) {
         getErrorSink(delta).p(messageArray);
+        return false;
     }
 
     @Override
-    public void error(int delta, Throwable e, Object... messageArray) {
+    public boolean error(int delta, Throwable e, Object... messageArray) {
         getErrorSink(delta).p(e, messageArray);
+        return false;
     }
 
     @Override
-    public void errorFormat(String format, Object... args) {
+    public boolean errorFormat(String format, Object... args) {
         getErrorSink().f(format, args);
+        return false;
     }
 
     @Override
-    public void errorFormat(Throwable e, String format, Object... args) {
+    public boolean errorFormat(Throwable e, String format, Object... args) {
         getErrorSink().f(e, format, args);
+        return false;
     }
 
     @Override
-    public void errorFormat(int delta, String format, Object... args) {
+    public boolean errorFormat(int delta, String format, Object... args) {
         getErrorSink(delta).f(format, args);
+        return false;
     }
 
     @Override
-    public void errorFormat(int delta, Throwable e, String format, Object... args) {
+    public boolean errorFormat(int delta, Throwable e, String format, Object... args) {
         getErrorSink(delta).f(e, format, args);
+        return false;
     }
 
     @Override
