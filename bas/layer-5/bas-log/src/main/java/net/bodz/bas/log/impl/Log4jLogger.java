@@ -64,23 +64,27 @@ public class Log4jLogger
     }
 
     @Override
-    public void fatal(Object message) {
+    public boolean fatal(Object message) {
         log4j.fatal(message);
+        return false;
     }
 
     @Override
-    public void fatal(Object message, Throwable t) {
+    public boolean fatal(Object message, Throwable t) {
         log4j.fatal(message, t);
+        return false;
     }
 
     @Override
-    public void error(Object message) {
+    public boolean error(Object message) {
         log4j.error(message);
+        return false;
     }
 
     @Override
-    public void error(Object message, Throwable t) {
+    public boolean error(Object message, Throwable t) {
         log4j.error(message, t);
+        return false;
     }
 
     @Override

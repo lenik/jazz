@@ -10,23 +10,27 @@ public class AbstractLoggerCompat
     // Log4j style shortcuts
 
     @Override
-    public void fatal(Object message) {
+    public boolean fatal(Object message) {
         get(LogLevel.FATAL).p(message);
+        return false;
     }
 
     @Override
-    public void fatal(Object message, Throwable t) {
+    public boolean fatal(Object message, Throwable t) {
         get(LogLevel.FATAL).p(t, message);
+        return false;
     }
 
     @Override
-    public void error(Object message) {
+    public boolean error(Object message) {
         get(LogLevel.ERROR).p(message);
+        return false;
     }
 
     @Override
-    public void error(Object message, Throwable t) {
+    public boolean error(Object message, Throwable t) {
         get(LogLevel.ERROR).p(t, message);
+        return false;
     }
 
     @Override

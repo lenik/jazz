@@ -12,22 +12,22 @@ public interface LoggerCompat
     /**
      * @see Category#error(Object)
      */
-    void fatal(Object message);
+    boolean fatal(Object message);
 
     /**
      * @see Category#error(Object)
      */
-    void fatal(Object message, Throwable t);
+    boolean fatal(Object message, Throwable t);
 
     /**
      * @see Category#error(Object)
      */
-    void error(Object message);
+    boolean error(Object message);
 
     /**
      * @see Category#error(Object)
      */
-    void error(Object message, Throwable t);
+    boolean error(Object message, Throwable t);
 
     /**
      * @see Category#warn(Object)

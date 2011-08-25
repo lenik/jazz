@@ -66,23 +66,27 @@ public class JdkLogger
     }
 
     @Override
-    public void fatal(Object message) {
+    public boolean fatal(Object message) {
         jdkLogger.severe(String.valueOf(message));
+        return false;
     }
 
     @Override
-    public void fatal(Object message, Throwable t) {
+    public boolean fatal(Object message, Throwable t) {
         jdkLogger.log(Level.SEVERE, String.valueOf(message), t);
+        return false;
     }
 
     @Override
-    public void error(Object message) {
+    public boolean error(Object message) {
         jdkLogger.severe(String.valueOf(message));
+        return false;
     }
 
     @Override
-    public void error(Object message, Throwable t) {
+    public boolean error(Object message, Throwable t) {
         jdkLogger.log(Level.SEVERE, String.valueOf(message), t);
+        return false;
     }
 
     @Override
