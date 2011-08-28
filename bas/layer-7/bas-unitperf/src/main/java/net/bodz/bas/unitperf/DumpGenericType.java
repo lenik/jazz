@@ -5,8 +5,7 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 import java.lang.reflect.WildcardType;
-
-import javax.swing.tree.TreeNode;
+import java.util.ArrayList;
 
 public class DumpGenericType {
 
@@ -58,7 +57,7 @@ public class DumpGenericType {
     }
 
     public static void main(String[] args) {
-        dumpGenericDeclaration("", TreeNode.class);
+        dumpGenericDeclaration("", ArrayList.class);
     }
 
 }

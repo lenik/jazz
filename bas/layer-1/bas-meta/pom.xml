@@ -12,14 +12,11 @@
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-annotation</artifactId>
             <version>0.10.1-SNAPSHOT</version>
-            <type>jar</type>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-c1</artifactId>
             <version>0.10.1-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
     <name>BAS :: Layer 1 :: Meta</name>

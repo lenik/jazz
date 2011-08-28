@@ -20,12 +20,22 @@ public interface IStreamInputSource
     @Override
     IStreamInputSource clone();
 
+    /**
+     * Set the charset of the file.
+     * 
+     * @param charset
+     *            Non-<code>null</code> {@link Charset} to be used.
+     */
     @Override
     void setCharset(Charset charset);
 
     /**
+     * Set the charset of the file.
+     * 
+     * @param charset
+     *            Non-<code>null</code> charset name to be used.
      * @throws IllegalCharsetNameException
-     *             If <code>charsetName</code> isn't existed.
+     *             If the charset name is illegal.
      */
     void setCharset(String charsetName);
 
