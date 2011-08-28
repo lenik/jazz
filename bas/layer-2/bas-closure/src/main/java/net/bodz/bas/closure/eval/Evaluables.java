@@ -19,8 +19,12 @@ public class Evaluables {
             throws EvalException {
         EvalContext context = EvalContext.getInstance();
         context.enter(args);
-        T val = f.eval();
-        context.leave();
+        T val;
+        try {
+            val = f.eval();
+        } finally {
+            context.leave();
+        }
         return val;
     }
 
