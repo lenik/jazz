@@ -15,5 +15,5 @@
             <version>3.0.9</version>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 0 :: Natives :: Natives Win32</name>
+    <name>BAS :: Layer 0 :: Natives Win32</name>
 </project>
