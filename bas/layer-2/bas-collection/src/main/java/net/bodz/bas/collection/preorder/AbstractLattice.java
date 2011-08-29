@@ -1,6 +1,6 @@
 package net.bodz.bas.collection.preorder;
 
-import net.bodz.bas.util.exception.IllegalUsageException;
+import net.bodz.bas.err.IllegalUsageException;
 
 public abstract class AbstractLattice<T>
         extends AbstractPreorder<T>

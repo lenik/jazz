@@ -6,9 +6,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 
-import org.junit.Test;
-
 import net.bodz.bas.sio.BCharOut;
+
+import org.junit.Test;
 
 public class ManagedProcessTest {
 

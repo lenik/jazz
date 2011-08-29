@@ -1,9 +1,9 @@
 package net.bodz.bas.ant;
 
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.jdk6compat.jdk7emul.ClassNotFoundException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.traits.ParserUtil;
-import net.bodz.bas.util.exception.ParseException;
 
 /**
  * Utility class to help implement a custom tag in ant-xml.

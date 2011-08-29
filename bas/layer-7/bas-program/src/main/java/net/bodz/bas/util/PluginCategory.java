@@ -3,8 +3,8 @@ package net.bodz.bas.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.bodz.bas.err.OutOfDomainException;
 import net.bodz.bas.meta.build.ClassInfo;
-import net.bodz.bas.util.exception.OutOfDomainException;
 
 /**
  * Plugin Category

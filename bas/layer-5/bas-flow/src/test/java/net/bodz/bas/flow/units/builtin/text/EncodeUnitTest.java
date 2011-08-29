@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Collection;
 
-import org.junit.Assert;
-import org.junit.Test;
-
 import net.bodz.bas.flow.units.SISOUnit;
 import net.bodz.bas.flow.util.WhatIf;
-import net.bodz.bas.string.StringArray;
+import net.bodz.bas.util.string.StringArray;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 public class EncodeUnitTest
         extends Assert {

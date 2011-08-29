@@ -1,7 +1,7 @@
 package net.bodz.bas.traits;
 
-import net.bodz.bas.lang.IQueryProxy;
-import net.bodz.bas.lang.QueryException;
+import net.bodz.bas.lang.mi.IQueryProxy;
+import net.bodz.bas.lang.mi.QueryException;
 
 /**
  * Provide to resolve specific traits for a given class or object.

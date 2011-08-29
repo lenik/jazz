@@ -15,7 +15,12 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-c2</artifactId>
+            <artifactId>bas-lang</artifactId>
+            <version>0.10.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-helper-mix</artifactId>
             <version>0.10.1-SNAPSHOT</version>
         </dependency>
         <dependency>
@@ -35,11 +40,6 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-c1</artifactId>
-            <version>0.10.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
             <artifactId>bas-snmjava</artifactId>
             <version>0.10.1-SNAPSHOT</version>
         </dependency>
@@ -55,7 +55,7 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-text-diff</artifactId>
+            <artifactId>bas-text</artifactId>
             <version>0.10.1-SNAPSHOT</version>
         </dependency>
         <dependency>

@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 
-import net.bodz.bas.util.exception.TypeConvertException;
+import net.bodz.bas.err.TypeConvertException;
 import net.bodz.bas.valtype.conv.TypeMatrix_BigDecimal;
 import net.bodz.bas.valtype.conv.TypeMatrix_BigInteger;
 import net.bodz.bas.valtype.conv.TypeMatrix_Date;

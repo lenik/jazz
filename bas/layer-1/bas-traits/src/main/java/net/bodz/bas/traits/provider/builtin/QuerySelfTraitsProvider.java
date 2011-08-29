@@ -1,7 +1,7 @@
 package net.bodz.bas.traits.provider.builtin;
 
-import net.bodz.bas.lang.IQueryable;
-import net.bodz.bas.lang.QueryException;
+import net.bodz.bas.lang.mi.IQueryable;
+import net.bodz.bas.lang.mi.QueryException;
 import net.bodz.bas.traits.AbstractTraitsProvider;
 
 /**

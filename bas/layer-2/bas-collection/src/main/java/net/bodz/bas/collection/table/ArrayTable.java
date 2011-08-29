@@ -3,7 +3,7 @@ package net.bodz.bas.collection.table;
 import java.util.Arrays;
 import java.util.List;
 
-import net.bodz.bas.util.exception.ReadOnlyException;
+import net.bodz.bas.err.ReadOnlyException;
 
 public class ArrayTable<T> implements Table<T> {
 

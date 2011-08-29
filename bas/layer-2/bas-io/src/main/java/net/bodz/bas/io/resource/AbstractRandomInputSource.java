@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.jar.JarFile;
 import java.util.zip.ZipFile;
 
-import net.bodz.bas.util.exception.BadFormatException;
+import net.bodz.bas.err.BadFormatException;
 
 public abstract class AbstractRandomInputSource
         implements IRandomInputSource {

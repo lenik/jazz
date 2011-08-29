@@ -1,12 +1,12 @@
 package net.bodz.bas.vfs;
 
-import org.apache.commons.vfs.Capability;
-import org.apache.commons.vfs.FileSystem;
-
 import net.bodz.bas.traits.IAttributes;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.PathFormat;
+
+import org.apache.commons.vfs.Capability;
+import org.apache.commons.vfs.FileSystem;
 
 /**
  * @see org.apache.commons.vfs.FileSystem

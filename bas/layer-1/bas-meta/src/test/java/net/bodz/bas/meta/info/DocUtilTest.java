@@ -1,9 +1,9 @@
 package net.bodz.bas.meta.info;
 
+import net.bodz.bas.err.ParseException;
+
 import org.junit.Assert;
 import org.junit.Test;
-
-import net.bodz.bas.util.exception.ParseException;
 
 public class DocUtilTest
         extends Assert {

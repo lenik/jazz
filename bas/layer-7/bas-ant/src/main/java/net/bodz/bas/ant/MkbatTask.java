@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.bodz.bas.cli.util.Mkbat;
-import net.bodz.bas.util.file.FileURL;
+import net.bodz.bas.util.io.FileURL;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.types.Path;

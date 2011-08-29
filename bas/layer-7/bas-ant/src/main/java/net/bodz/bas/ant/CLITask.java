@@ -7,10 +7,10 @@ import javax.script.ScriptException;
 
 import net.bodz.bas.cli.BasicCLI;
 import net.bodz.bas.cli.CLIException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.log.api.Logger;
 import net.bodz.bas.potato.traits.IType;
-import net.bodz.bas.util.exception.ParseException;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.tools.ant.BuildException;

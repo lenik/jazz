@@ -5,11 +5,11 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Locale;
 
+import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.NoSuchMethodException;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.potato.traits.AbstractProperty;
-import net.bodz.bas.util.exception.UnexpectedException;
 
 public class BeanProperty
         extends AbstractProperty {

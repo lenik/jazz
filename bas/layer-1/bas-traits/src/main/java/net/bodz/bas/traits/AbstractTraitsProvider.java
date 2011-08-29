@@ -1,7 +1,7 @@
 package net.bodz.bas.traits;
 
-import net.bodz.bas.lang.AbstractQueryProxy;
-import net.bodz.bas.lang.QueryException;
+import net.bodz.bas.lang.mi.AbstractQueryProxy;
+import net.bodz.bas.lang.mi.QueryException;
 
 public abstract class AbstractTraitsProvider
         extends AbstractQueryProxy

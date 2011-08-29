@@ -2,12 +2,12 @@ package net.bodz.bas.traits.provider.array;
 
 import java.nio.charset.Charset;
 
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.lang.negotiation.NegotiationParameter;
 import net.bodz.bas.meta.util.ValueType;
 import net.bodz.bas.traits.IParser;
-import net.bodz.bas.util.exception.ParseException;
 
 public class ByteArrayTraits
         extends AbstractArrayTraits<byte[]> {

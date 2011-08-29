@@ -3,8 +3,8 @@ package net.bodz.bas.context;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.util.exception.IllegalUsageError;
-import net.bodz.bas.util.exception.IllegalUsageException;
+import net.bodz.bas.err.IllegalUsageError;
+import net.bodz.bas.err.IllegalUsageException;
 
 /**
  * The context local class provides an inheritable variable management. If the variable is allocated

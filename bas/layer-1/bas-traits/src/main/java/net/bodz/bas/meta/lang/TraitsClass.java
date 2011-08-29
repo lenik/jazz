@@ -6,7 +6,7 @@ import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import net.bodz.bas.lang.IQueryable;
+import net.bodz.bas.lang.mi.IQueryable;
 
 /**
  * TraitsClass can be defined on:

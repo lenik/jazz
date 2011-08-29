@@ -2,7 +2,7 @@ package net.bodz.bas.meta.build;
 
 import java.text.ParseException;
 
-import net.bodz.bas.annotation.util.AnnotationParseUtil;
+import net.bodz.bas.util.annotation.AnnotationParseUtil;
 
 /**
  * @test RcsKeywordsUtilTest

@@ -8,7 +8,7 @@ import java.util.ServiceLoader;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.bodz.bas.lang.QueryException;
+import net.bodz.bas.lang.mi.QueryException;
 
 public class Traits {
 

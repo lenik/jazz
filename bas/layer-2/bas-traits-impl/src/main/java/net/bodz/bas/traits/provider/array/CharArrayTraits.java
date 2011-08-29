@@ -1,13 +1,13 @@
 package net.bodz.bas.traits.provider.array;
 
+import net.bodz.bas.err.CreateException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.lang.negotiation.NegotiationParameter;
 import net.bodz.bas.meta.util.ValueType;
 import net.bodz.bas.traits.IParser;
 import net.bodz.bas.traits.ISampleGenerator;
 import net.bodz.bas.type.java.lang.CharacterTraits;
-import net.bodz.bas.util.exception.CreateException;
-import net.bodz.bas.util.exception.ParseException;
 
 public class CharArrayTraits
         extends AbstractArrayTraits<char[]> {

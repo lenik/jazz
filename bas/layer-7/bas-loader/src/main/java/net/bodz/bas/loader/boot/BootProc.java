@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import net.bodz.bas.err.CreateException;
 import net.bodz.bas.jdk6compat.jdk7emul.InstantiationException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.NoSuchMethodException;
@@ -17,8 +18,7 @@ import net.bodz.bas.loader.LoadException;
 import net.bodz.bas.loader.LoadUtil;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.IPrintOut;
-import net.bodz.bas.string.StringArray;
-import net.bodz.bas.util.exception.CreateException;
+import net.bodz.bas.util.string.StringArray;
 
 public class BootProc {
 

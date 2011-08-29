@@ -1,10 +1,10 @@
 package net.bodz.bas.type.java.lang;
 
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.jdk6compat.jdk7emul.ClassNotFoundException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.traits.AbstractCommonTraits;
 import net.bodz.bas.traits.IParser;
-import net.bodz.bas.util.exception.ParseException;
 
 @SuppressWarnings("rawtypes")
 public class ClassTraits

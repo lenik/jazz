@@ -1,5 +1,6 @@
 package net.bodz.bas.util.example;
 
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.MandatoryException;
 import net.bodz.bas.lang.negotiation.NegotiationException;
@@ -7,7 +8,6 @@ import net.bodz.bas.lang.negotiation.NegotiationParameter;
 import net.bodz.bas.traits.AbstractCommonTraits;
 import net.bodz.bas.traits.IFormatter;
 import net.bodz.bas.traits.IParser;
-import net.bodz.bas.util.exception.ParseException;
 
 public class AddressTraits
         extends AbstractCommonTraits<Address> {

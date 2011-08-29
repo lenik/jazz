@@ -16,7 +16,9 @@
         <module>bas-jdk6compat</module>
         <module>bas-jvmhack</module>
         <module>bas-natives-win32</module>
-        <module>bas-proxy</module>
+        <module>bas-proxy-api</module>
+        <module>bas-proxy-java</module>
+        <module>bas-proxy-java-security</module>
         <module>bas-sysinfo</module>
     </modules>
     <name>BAS :: Layer 0</name>

@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.bodz.bas.collection.list.LinkedStack;
+
 import org.junit.Assert;
 import org.junit.Test;
-
-import net.bodz.bas.collection.list.LinkedStack;
 
 /**
  * @see TreePosition

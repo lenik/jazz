@@ -2,10 +2,10 @@ package net.bodz.bas.traits.provider.extra;
 
 import java.lang.reflect.Field;
 
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.NoSuchFieldException;
 import net.bodz.bas.traits.AbstractParser;
-import net.bodz.bas.util.exception.ParseException;
 
 public class GetFromRegistryParser
         extends AbstractParser<Object> {

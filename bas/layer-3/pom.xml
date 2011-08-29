@@ -15,8 +15,11 @@
         <module>bas-c3</module>
         <module>bas-fsm</module>
         <module>bas-javadoc</module>
+        <module>bas-jdk7util</module>
         <module>bas-reflect</module>
+        <module>bas-srt</module>
         <module>bas-text</module>
+        <module>bas-text-lr</module>
     </modules>
     <name>BAS :: Layer 3</name>
 </project>

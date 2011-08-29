@@ -2,13 +2,13 @@ package net.bodz.bas.traits.provider.array;
 
 import java.util.Map;
 
+import net.bodz.bas.err.CreateException;
 import net.bodz.bas.lang.negotiation.AbstractNegotiable;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.lang.negotiation.NegotiationParameter;
 import net.bodz.bas.meta.util.ValueType;
 import net.bodz.bas.traits.AbstractCommonTraits;
-import net.bodz.bas.util.exception.CreateException;
 
 public abstract class AbstractArrayTraits<T>
         extends AbstractCommonTraits<T> {

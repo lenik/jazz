@@ -2,7 +2,7 @@ package net.bodz.bas.meta.i18n;
 
 import java.lang.reflect.AnnotatedElement;
 
-import net.bodz.bas.annotation.util.TagStyleAnnotationUtil;
+import net.bodz.bas.util.annotation.TagStyleAnnotationUtil;
 
 /**
  * @test LanguageUtilTest

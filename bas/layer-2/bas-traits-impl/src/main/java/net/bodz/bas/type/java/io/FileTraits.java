@@ -3,13 +3,13 @@ package net.bodz.bas.type.java.io;
 import java.io.File;
 
 import net.bodz.bas.context.clg.SystemCLG;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.lang.negotiation.NegotiationParameter;
 import net.bodz.bas.meta.util.ValueType;
 import net.bodz.bas.traits.AbstractCommonTraits;
 import net.bodz.bas.traits.IParser;
-import net.bodz.bas.util.exception.ParseException;
 
 public class FileTraits
         extends AbstractCommonTraits<File> {

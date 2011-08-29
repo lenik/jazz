@@ -6,8 +6,8 @@ import java.io.ObjectOutput;
 import java.io.OutputStream;
 import java.util.Collection;
 
+import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
-import net.bodz.bas.util.exception.UnexpectedException;
 
 public class FormatDumpPreparation
         implements IFormatDumpPreparation {

@@ -4,7 +4,7 @@ import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.util.exception.OutOfDomainException;
+import net.bodz.bas.err.OutOfDomainException;
 
 /**
  * One or many list.

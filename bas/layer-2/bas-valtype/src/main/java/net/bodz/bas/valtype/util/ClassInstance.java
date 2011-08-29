@@ -2,9 +2,9 @@ package net.bodz.bas.valtype.util;
 
 import java.lang.reflect.Method;
 
+import net.bodz.bas.err.OutOfDomainException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
-import net.bodz.bas.util.exception.OutOfDomainException;
 
 public class ClassInstance {
 

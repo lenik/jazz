@@ -2,7 +2,7 @@ package net.bodz.bas.collection.buffer;
 
 import java.nio.ByteBuffer;
 
-import net.bodz.bas.util.exception.OutOfDomainException;
+import net.bodz.bas.err.OutOfDomainException;
 
 public class MemPage {
 

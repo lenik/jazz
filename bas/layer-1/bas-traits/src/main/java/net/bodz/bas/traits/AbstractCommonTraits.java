@@ -11,17 +11,17 @@ import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
 
+import net.bodz.bas.err.CreateException;
+import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.jdk6compat.jdk7emul.IllegalAccessException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
-import net.bodz.bas.lang.AbstractQueryable;
-import net.bodz.bas.lang.QueryException;
+import net.bodz.bas.lang.mi.AbstractQueryable;
+import net.bodz.bas.lang.mi.QueryException;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.meta.codereview.ThreadUnsafe;
-import net.bodz.bas.util.exception.CreateException;
-import net.bodz.bas.util.exception.NotImplementedException;
-import net.bodz.bas.util.exception.ParseException;
 
 @ThreadUnsafe
 public abstract class AbstractCommonTraits<T>

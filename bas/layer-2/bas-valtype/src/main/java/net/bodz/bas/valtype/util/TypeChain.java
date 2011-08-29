@@ -3,10 +3,10 @@ package net.bodz.bas.valtype.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.ArrayUtils;
-
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.indent.IIndention;
+
+import org.apache.commons.lang.ArrayUtils;
 
 public class TypeChain {
 

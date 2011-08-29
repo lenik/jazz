@@ -3,7 +3,7 @@ package net.bodz.bas.traits.provider.builtin;
 import net.bodz.bas.jdk6compat.jdk7emul.IllegalAccessException;
 import net.bodz.bas.jdk6compat.jdk7emul.InstantiationException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
-import net.bodz.bas.lang.IQueryable;
+import net.bodz.bas.lang.mi.IQueryable;
 import net.bodz.bas.meta.lang.TraitsClass;
 import net.bodz.bas.traits.AbstractTraitsProvider;
 

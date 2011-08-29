@@ -7,10 +7,10 @@ import net.bodz.bas.cli.CLIException;
 import net.bodz.bas.cli.ClassCLI;
 import net.bodz.bas.cli.ClassOptions;
 import net.bodz.bas.cli._Option;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.sio.IPrintOut;
-import net.bodz.bas.string.Strings;
 import net.bodz.bas.util._Plugin;
-import net.bodz.bas.util.exception.ParseException;
+import net.bodz.bas.util.string.Strings;
 
 public class _CLIPlugin
         extends _Plugin

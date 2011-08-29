@@ -5,9 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import org.junit.Assert;
-import org.junit.Test;
-
 import net.bodz.bas.collection.preorder.testtype.C;
 import net.bodz.bas.collection.preorder.testtype.CI;
 import net.bodz.bas.collection.preorder.testtype.CJ;
@@ -23,6 +20,9 @@ import net.bodz.bas.collection.preorder.testtype.DxKI;
 import net.bodz.bas.collection.preorder.testtype.DxKIx;
 import net.bodz.bas.collection.preorder.testtype.I;
 import net.bodz.bas.collection.util.IterableToList;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 public class TypesHierMapTest
         extends Assert {

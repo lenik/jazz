@@ -7,10 +7,10 @@ import java.util.TreeMap;
 
 import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
-import net.bodz.bas.util.exception.ParseException;
 
 public class INIRecords
         extends MapResRecords<String, String> {

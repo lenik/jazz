@@ -3,10 +3,10 @@ package net.bodz.bas.traits;
 import java.util.Map;
 import java.util.Random;
 
+import net.bodz.bas.err.CreateException;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.meta.util.ValueType;
-import net.bodz.bas.util.exception.CreateException;
 
 public interface ISampleGenerator<T> {
 

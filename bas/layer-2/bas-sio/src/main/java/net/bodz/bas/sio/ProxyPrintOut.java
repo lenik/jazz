@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.CharBuffer;
 import java.util.Locale;
 
-import net.bodz.bas.proxy.AbstractProxy;
+import net.bodz.bas.api.proxy.AbstractProxy;
 
 public class ProxyPrintOut
         extends AbstractProxy<IPrintOut>

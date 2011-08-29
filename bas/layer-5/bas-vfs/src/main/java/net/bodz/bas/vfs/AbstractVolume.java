@@ -1,9 +1,9 @@
 package net.bodz.bas.vfs;
 
-import org.apache.commons.vfs.Capability;
-
 import net.bodz.bas.traits.EmptyAttributes;
 import net.bodz.bas.traits.IAttributes;
+
+import org.apache.commons.vfs.Capability;
 
 public abstract class AbstractVolume
         implements IVolume {

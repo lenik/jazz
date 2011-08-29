@@ -1,9 +1,9 @@
 package net.bodz.bas.util;
 
-import net.bodz.bas.lang.events.RecoverableExceptionListener;
-import net.bodz.bas.lang.events.RecoverableExceptionSource;
 import net.bodz.bas.log.api.Logger;
 import net.bodz.bas.ui.UserInterface;
+import net.bodz.bas.util.exception.RecoverableExceptionListener;
+import net.bodz.bas.util.exception.RecoverableExceptionSource;
 
 public interface Job
         // It should be ExceptionSourceRunnable.

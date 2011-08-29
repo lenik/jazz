@@ -1,7 +1,7 @@
 package net.bodz.bas.util;
 
-import net.bodz.bas.util.exception.IllegalUsageException;
-import net.bodz.bas.util.exception.OutOfDomainException;
+import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.err.OutOfDomainException;
 
 public abstract class _History implements History {
 

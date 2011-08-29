@@ -3,12 +3,12 @@ package net.bodz.bas.flow;
 import java.io.IOException;
 
 import net.bodz.bas.collection.util.ClassLocal;
+import net.bodz.bas.err.IllegalUsageError;
+import net.bodz.bas.err.OutOfDomainException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.meta.tags.MetaClass;
 import net.bodz.bas.util.Nullables;
-import net.bodz.bas.util.exception.IllegalUsageError;
-import net.bodz.bas.util.exception.OutOfDomainException;
 
 public abstract class AbstractInPort
         extends AbstractPort

@@ -9,7 +9,7 @@ import java.util.Map;
 
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
 import net.bodz.bas.io.resource.builtin.URLResource;
-import net.bodz.bas.util.TempFile;
+import net.bodz.bas.util.io.TempFile;
 
 public class LibInstaller {
 

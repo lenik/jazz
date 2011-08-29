@@ -7,12 +7,12 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.snm.EclipseProject;
 import net.bodz.bas.snm.SJLibLoader;
-import net.bodz.bas.util.exception.ParseException;
-import net.bodz.bas.util.file.FilePath;
+import net.bodz.bas.util.io.FilePath;
 
 public class LoadUtil {
 

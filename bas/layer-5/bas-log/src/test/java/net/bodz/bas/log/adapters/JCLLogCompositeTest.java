@@ -1,11 +1,11 @@
 package net.bodz.bas.log.adapters;
 
-import org.junit.Assert;
-import org.junit.Test;
-
 import net.bodz.bas.log.impl.JCLLogger;
 import net.bodz.bas.log.testapp.ChildJob;
 import net.bodz.bas.log.testapp.ParentJob;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 public class JCLLogCompositeTest
         extends Assert {

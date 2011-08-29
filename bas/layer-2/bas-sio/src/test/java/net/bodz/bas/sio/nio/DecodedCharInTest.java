@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.nio.BufferUnderflowException;
 import java.nio.charset.Charset;
 
-import org.junit.Assert;
-import org.junit.Test;
-
 import net.bodz.bas.sio.BByteIn;
 import net.bodz.bas.sio.BCharOut;
+
+import org.junit.Assert;
+import org.junit.Test;
 
 public class DecodedCharInTest
         extends Assert {

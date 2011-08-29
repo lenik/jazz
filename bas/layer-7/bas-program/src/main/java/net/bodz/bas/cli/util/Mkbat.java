@@ -1,6 +1,6 @@
 package net.bodz.bas.cli.util;
 
-import static net.bodz.bas.string.StringQuote.qq;
+import static net.bodz.bas.util.string.StringQuote.qq;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +17,7 @@ import java.util.Set;
 import net.bodz.bas.cli.BatchEditCLI;
 import net.bodz.bas.cli.EditResult;
 import net.bodz.bas.collection.set.ArraySet;
+import net.bodz.bas.err.IdentifiedException;
 import net.bodz.bas.io.resource.builtin.ByteArrayResource;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
 import net.bodz.bas.io.resource.builtin.URLResource;
@@ -36,15 +37,14 @@ import net.bodz.bas.meta.program.ProgramName;
 import net.bodz.bas.meta.program.ProgramNameUtil;
 import net.bodz.bas.meta.program.StartMode;
 import net.bodz.bas.meta.program.StartModeUtil;
-import net.bodz.bas.regex.UnixStyleVarProcessor;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.snm.SJLibLoader;
-import net.bodz.bas.string.StringArray;
-import net.bodz.bas.util.ClassResource;
-import net.bodz.bas.util.exception.IdentifiedException;
-import net.bodz.bas.util.file.FileDiff;
-import net.bodz.bas.util.file.FilePath;
+import net.bodz.bas.util.io.FileDiff;
+import net.bodz.bas.util.io.FilePath;
+import net.bodz.bas.util.loader.ClassResource;
+import net.bodz.bas.util.regex.UnixStyleVarProcessor;
+import net.bodz.bas.util.string.StringArray;
 
 @Doc("Generate program launcher for java applications")
 @ProgramName("mkbat")

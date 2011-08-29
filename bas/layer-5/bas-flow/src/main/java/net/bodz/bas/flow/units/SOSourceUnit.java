@@ -2,9 +2,9 @@ package net.bodz.bas.flow.units;
 
 import java.io.IOException;
 
+import net.bodz.bas.err.IllegalUsageError;
+import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.flow.IInPort;
-import net.bodz.bas.util.exception.IllegalUsageError;
-import net.bodz.bas.util.exception.UnexpectedException;
 
 public abstract class SOSourceUnit
         extends SOUnit

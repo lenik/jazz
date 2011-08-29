@@ -4,12 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
+import net.bodz.bas.err.IllegalUsageError;
+import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.snm.JarLocations;
-import net.bodz.bas.util.ClassResource;
-import net.bodz.bas.util.exception.IllegalUsageError;
-import net.bodz.bas.util.exception.IllegalUsageException;
-import net.bodz.bas.util.file.FileURL;
+import net.bodz.bas.util.io.FileURL;
+import net.bodz.bas.util.loader.ClassResource;
 
 import org.apache.tools.ant.BuildLogger;
 import org.apache.tools.ant.DefaultLogger;

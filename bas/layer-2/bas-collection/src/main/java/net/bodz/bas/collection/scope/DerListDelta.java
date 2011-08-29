@@ -1,6 +1,6 @@
 package net.bodz.bas.collection.scope;
 
-import net.bodz.bas.util.exception.NotImplementedException;
+import net.bodz.bas.err.NotImplementedException;
 
 public class DerListDelta {
 

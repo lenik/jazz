@@ -11,17 +11,17 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import net.bodz.bas.closure.alt.Filt1;
-import net.bodz.bas.collection.comparator.StringLengthComparator;
+import net.bodz.bas.closure.Filt1;
 import net.bodz.bas.collection.util.ClassLocal;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.meta.program.Option;
 import net.bodz.bas.meta.program.ProgramNameUtil;
 import net.bodz.bas.reflect.query.ReflectQuery;
-import net.bodz.bas.string.Strings;
 import net.bodz.bas.util.Nullables;
-import net.bodz.bas.util.exception.ParseException;
+import net.bodz.bas.util.order.StringLengthComparator;
+import net.bodz.bas.util.string.Strings;
 
 public class ClassCLI {
 
