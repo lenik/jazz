@@ -12,7 +12,7 @@
     <version>0.10.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>bas-compat</module>
+        <module>bas-jdk6compat</module>
         <module>bas-desktop</module>
         <module>bas-jvmhack</module>
         <module>bas-natives-win32</module>

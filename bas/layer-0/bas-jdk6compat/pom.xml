@@ -5,11 +5,8 @@
         <artifactId>layer-0</artifactId>
         <version>0.10.1-SNAPSHOT</version>
     </parent>
-    <artifactId>bas-compat</artifactId>
+    <artifactId>bas-jdk6compat</artifactId>
     <version>0.10.1-SNAPSHOT</version>
-    <packaging>pom</packaging>
-    <modules>
-        <module>bas-jdk6compat</module>
-    </modules>
-    <name>BAS :: Layer 0 :: Compat</name>
+    <dependencies/>
+    <name>BAS :: Layer 0 :: Compat :: Jdk6compat</name>
 </project>
