@@ -1,9 +1,9 @@
-package net.bodz.bas.util;
+package net.bodz.bas.arch;
 
 import net.bodz.bas.err.CreateException;
 
 public abstract class AbstractFactory<T>
-        implements Factory<T> {
+        implements IFactory<T> {
 
     @Override
     public abstract T _create(Class<?>[] argTypes, Object... args)

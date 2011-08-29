@@ -4,12 +4,12 @@ import java.io.File;
 import java.net.URL;
 import java.net.URLClassLoader;
 
+import net.bodz.bas.arch.IFactory;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.loader.UCL;
 import net.bodz.bas.util.Factories;
-import net.bodz.bas.util.Factory;
 import net.bodz.bas.util.io.FileURL;
 
 import org.apache.tools.ant.types.Path;
@@ -17,7 +17,7 @@ import org.apache.tools.ant.types.Path;
 public class ValueConstruct
         extends WithParameters {
 
-    private Factory<Object> factory;
+    private IFactory<Object> factory;
     private URLClassLoader loader;
 
     public ValueConstruct() {
@@ -25,14 +25,14 @@ public class ValueConstruct
         loader = new URLClassLoader(new URL[0], parent);
     }
 
-    void setFactory(Factory<Object> factory) {
+    void setFactory(IFactory<Object> factory) {
         if (this.factory != null)
             throw new IllegalUsageException("Factory is already specified: " + this.factory);
         this.factory = factory;
     }
 
     public void setObject(Object obj) {
-        setFactory(new Factory.Static<Object>(obj));
+        setFactory(new IFactory.Static<Object>(obj));
     }
 
     /**

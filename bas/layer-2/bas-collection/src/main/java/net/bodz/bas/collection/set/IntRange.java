@@ -7,7 +7,7 @@ import java.util.NavigableSet;
 import java.util.NoSuchElementException;
 import java.util.SortedSet;
 
-import net.bodz.bas.util.order.IntegerComparator;
+import net.bodz.bas.util.primitive.IntegerComparator;
 
 public class IntRange
         extends AbstractSet<Integer>
@@ -44,7 +44,7 @@ public class IntRange
             if (last == start)
                 start++; // now last<start.
             else
-                throw new UnsupportedOperationException("hole after remove"); 
+                throw new UnsupportedOperationException("hole after remove");
         }
 
     }
@@ -74,7 +74,7 @@ public class IntRange
         else if (e == end)
             end++;
         else
-            throw new UnsupportedOperationException("hole after add"); 
+            throw new UnsupportedOperationException("hole after add");
         return true;
     }
 
@@ -88,7 +88,7 @@ public class IntRange
         else if (i == start)
             start++;
         else
-            throw new UnsupportedOperationException("hole after remove"); 
+            throw new UnsupportedOperationException("hole after remove");
         return true;
     }
 
@@ -99,7 +99,7 @@ public class IntRange
 
     @Override
     public String toString() {
-        return "IntRange[" + start + "," + end + ")";   
+        return "IntRange[" + start + "," + end + ")";
     }
 
     // SortedSet
@@ -148,7 +148,7 @@ public class IntRange
             if (last == end - 1)
                 end--; // now last>=end.
             else
-                throw new UnsupportedOperationException("hole after remove"); 
+                throw new UnsupportedOperationException("hole after remove");
         }
     }
 

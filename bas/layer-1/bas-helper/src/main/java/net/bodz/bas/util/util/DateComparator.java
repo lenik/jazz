@@ -1,6 +1,8 @@
-package net.bodz.bas.util.order;
+package net.bodz.bas.util.util;
 
 import java.math.BigInteger;
+
+import net.bodz.bas.util.order.AbstractNonNullComparator;
 
 public class DateComparator
         extends AbstractNonNullComparator<BigInteger> {

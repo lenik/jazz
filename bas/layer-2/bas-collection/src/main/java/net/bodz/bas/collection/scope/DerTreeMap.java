@@ -2,7 +2,8 @@ package net.bodz.bas.collection.scope;
 
 import java.util.TreeMap;
 
-public class DerTreeMap<K, V> extends DerSortedMap<K, V> {
+public class DerTreeMap<K, V>
+        extends DerSortedMap<K, V> {
 
     private static final long serialVersionUID = 437251376108591491L;
 

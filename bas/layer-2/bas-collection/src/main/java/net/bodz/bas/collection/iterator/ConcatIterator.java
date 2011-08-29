@@ -19,7 +19,7 @@ public class ConcatIterator<T>
     /**
      * <i> Type safety : A generic array of Iterator<El> is created for a varargs </i>
      */
-    @SuppressWarnings ( "unchecked")
+    @SuppressWarnings("unchecked")
     public ConcatIterator(Iterator<T> it1, Iterator<T> it2) {
         this((Iterator<T>[]) new Iterator<?>[] { it1, it2 });
     }

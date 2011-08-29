@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EmptyStackException;
 
-
-
 /**
  * Top-last list stack.
  */
-public class ArrayStack<T> extends ArrayList<T> implements Stack<T> {
+public class ArrayStack<T>
+        extends ArrayList<T>
+        implements Stack<T> {
 
     private static final long serialVersionUID = 9005024230227614006L;
 

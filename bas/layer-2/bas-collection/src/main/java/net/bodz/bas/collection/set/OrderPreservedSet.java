@@ -6,7 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-public abstract class OrderPreservedSet<E> implements Set<E>, Serializable {
+public abstract class OrderPreservedSet<E>
+        implements Set<E>, Serializable {
 
     private static final long serialVersionUID = 111818316100018739L;
 
@@ -14,7 +15,7 @@ public abstract class OrderPreservedSet<E> implements Set<E>, Serializable {
 
     protected OrderPreservedSet(List<E> list) {
         if (list == null)
-            throw new NullPointerException("list"); 
+            throw new NullPointerException("list");
         this.list = list;
     }
 

@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 import net.bodz.bas.err.OutOfDomainException;
-import net.bodz.bas.primitive.IntMath;
+import net.bodz.bas.util.primitive.IntMath;
 
 public class RandomAccessFileMemory extends AbstractMemory {
 

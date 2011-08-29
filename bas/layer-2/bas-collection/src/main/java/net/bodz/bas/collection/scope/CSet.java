@@ -4,9 +4,12 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-public class CSet<E> extends CCollection<E> implements Set<E> {
+public class CSet<E>
+        extends CCollection<E>
+        implements Set<E> {
 
-    public CSet() throws InstantiationException {
+    public CSet()
+            throws InstantiationException {
         super();
     }
 
@@ -27,7 +30,9 @@ public class CSet<E> extends CCollection<E> implements Set<E> {
         return new Link<E>((Set<E>) _this, (Set<E>) next);
     }
 
-    static class Link<E> extends CCollection.Link<E> implements Set<E> {
+    static class Link<E>
+            extends CCollection.Link<E>
+            implements Set<E> {
 
         public Link(Set<E> _this, Set<E> next) {
             super(_this, next);

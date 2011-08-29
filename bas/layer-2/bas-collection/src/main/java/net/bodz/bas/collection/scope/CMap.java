@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class CMap<K, V> extends _ChainedScope<Map<K, V>> implements Map<K, V> {
+public class CMap<K, V>
+        extends _ChainedScope<Map<K, V>>
+        implements Map<K, V> {
 
     public CMap() {
         super();
@@ -26,7 +28,9 @@ public class CMap<K, V> extends _ChainedScope<Map<K, V>> implements Map<K, V> {
         return new Link<K, V>(_this, next);
     }
 
-    static class Link<Kl, Vl> extends SLink<Map<Kl, Vl>> implements Map<Kl, Vl> {
+    static class Link<Kl, Vl>
+            extends SLink<Map<Kl, Vl>>
+            implements Map<Kl, Vl> {
 
         public Link(Map<Kl, Vl> _this, Map<Kl, Vl> next) {
             super(_this, next);

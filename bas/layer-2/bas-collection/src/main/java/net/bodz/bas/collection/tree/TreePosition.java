@@ -50,7 +50,7 @@ public class TreePosition<N extends TreeNode<? extends N>>
 
         @Override
         public String toString() {
-            return node + "[" + index + "]";  
+            return node + "[" + index + "]";
         }
 
     }
@@ -69,7 +69,7 @@ public class TreePosition<N extends TreeNode<? extends N>>
             list.add(dim);
             List<? extends N> children = parent.getChildren();
             if (children == null)
-                throw new IllegalArgumentException("Null children, can't go deeper"); 
+                throw new IllegalArgumentException("Null children, can't go deeper");
             parent = children.get(childIndex);
         }
         return list;
@@ -111,7 +111,7 @@ public class TreePosition<N extends TreeNode<? extends N>>
 
         public Iter(List<Dim<N>> dims, TreeNodePredicator<? super N> pred, List<TreePosition<N>> posBuf) {
             if (dims == null)
-                throw new NullPointerException("dims"); 
+                throw new NullPointerException("dims");
             this.stack = new ArrayStack<Dim<N>>();
             for (Dim<N> dim : dims)
                 stack.push(dim); // top -> dims[last]
@@ -126,7 +126,7 @@ public class TreePosition<N extends TreeNode<? extends N>>
                 N topNode = top.node;
                 int topIndex = top.index;
                 List<? extends N> children = topNode.getChildren();
-                assert children != null : "term-node should not be iterated"; 
+                assert children != null : "term-node should not be iterated";
                 int size = children.size();
                 if (topIndex < size) { // there is current or more siblings
                     N current = children.get(topIndex);

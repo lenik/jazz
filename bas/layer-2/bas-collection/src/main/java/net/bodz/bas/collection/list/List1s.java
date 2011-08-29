@@ -23,16 +23,15 @@ public class List1s<E>
 
     private void checkIndex(int index) {
         if (index < 0)
-            throw new IndexOutOfBoundsException(OutOfDomainException.format("index", index, 0)); 
+            throw new IndexOutOfBoundsException(OutOfDomainException.format("index", index, 0));
         if (first == null)
-            throw new IndexOutOfBoundsException(OutOfDomainException.format("index", index, 0)); 
+            throw new IndexOutOfBoundsException(OutOfDomainException.format("index", index, 0));
         if (index == 0)
             return;
         if (more == null)
-            throw new IndexOutOfBoundsException(OutOfDomainException.format("index", index, 1)); 
+            throw new IndexOutOfBoundsException(OutOfDomainException.format("index", index, 1));
         else if (index >= more.size() + 1)
-            throw new IndexOutOfBoundsException(OutOfDomainException.format("index", index, more 
-                    .size() + 1));
+            throw new IndexOutOfBoundsException(OutOfDomainException.format("index", index, more.size() + 1));
     }
 
     @Override

@@ -20,7 +20,7 @@ public class EmptyIterator<T>
 
     private static final EmptyIterator<?> EMPTY = new EmptyIterator<Object>();
 
-    @SuppressWarnings ( "unchecked")
+    @SuppressWarnings("unchecked")
     public static <T> Iterator<T> getInstance() {
         return (Iterator<T>) EMPTY;
     }

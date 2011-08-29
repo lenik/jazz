@@ -5,7 +5,8 @@ import java.util.Arrays;
 
 import net.bodz.bas.err.ReadOnlyException;
 
-public class ArrayAccessList<T> extends AbstractList<T> {
+public class ArrayAccessList<T>
+        extends AbstractList<T> {
 
     private final T[] array;
     private final int off;
@@ -30,7 +31,7 @@ public class ArrayAccessList<T> extends AbstractList<T> {
 
     private void checkIndex(int index) {
         if (index < 0 || index >= len)
-            throw new IndexOutOfBoundsException("" + index); 
+            throw new IndexOutOfBoundsException("" + index);
     }
 
     @Override
@@ -73,7 +74,8 @@ public class ArrayAccessList<T> extends AbstractList<T> {
     }
 
     @Override
-    public T set(int index, T value) throws ReadOnlyException {
+    public T set(int index, T value)
+            throws ReadOnlyException {
         checkIndex(index);
         index += off;
         T old = array[index];
@@ -82,7 +84,8 @@ public class ArrayAccessList<T> extends AbstractList<T> {
     }
 
     @Override
-    public void add(int index, T value) throws ReadOnlyException {
+    public void add(int index, T value)
+            throws ReadOnlyException {
         checkIndex(index);
         // if (off + len < array.length)
         // array[len++] = value;
@@ -90,7 +93,8 @@ public class ArrayAccessList<T> extends AbstractList<T> {
     }
 
     @Override
-    public T remove(int index) throws ReadOnlyException {
+    public T remove(int index)
+            throws ReadOnlyException {
         checkIndex(index);
         throw new ReadOnlyException();
     }

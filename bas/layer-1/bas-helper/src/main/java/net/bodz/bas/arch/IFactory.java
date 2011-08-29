@@ -1,8 +1,8 @@
-package net.bodz.bas.util;
+package net.bodz.bas.arch;
 
 import net.bodz.bas.err.CreateException;
 
-public interface Factory<T> {
+public interface IFactory<T> {
 
     Class<? extends T> getType();
 

@@ -2,7 +2,8 @@ package net.bodz.bas.collection.buffer;
 
 import java.nio.ByteBuffer;
 
-public class PagedBuffer extends _PagedBuffer {
+public class PagedBuffer
+        extends _PagedBuffer {
 
     int preferredPageSize;
     MemPage head;

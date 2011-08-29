@@ -4,7 +4,7 @@ import net.bodz.bas.mem.AbstractType;
 import net.bodz.bas.mem.AccessException;
 import net.bodz.bas.mem.Memory;
 import net.bodz.bas.meta.codereview.ThreadUnsafe;
-import net.bodz.bas.primitive.IntMath;
+import net.bodz.bas.util.primitive.IntMath;
 
 public class Int32BE extends AbstractType {
 

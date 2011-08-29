@@ -1,10 +1,7 @@
 package net.bodz.bas.collection.scope;
 
-import net.bodz.bas.meta.util.ChainUsage;
-import net.bodz.bas.meta.util.OverrideOption;
-
-
-public abstract class _ChainedScope<T> implements ChainedScope<T> {
+public abstract class _ChainedScope<T>
+        implements ChainedScope<T> {
 
     protected T head;
 
@@ -16,7 +13,6 @@ public abstract class _ChainedScope<T> implements ChainedScope<T> {
         this.head = create();
     }
 
-    @OverrideOption(chain = ChainUsage.FORBIDDEN)
     protected abstract T create();
 
     protected abstract T link(T _this, T next);
@@ -39,7 +35,7 @@ public abstract class _ChainedScope<T> implements ChainedScope<T> {
     @Override
     public void leave() {
         if (!(head instanceof SLink<?>))
-            throw new IllegalStateException("end of link"); 
+            throw new IllegalStateException("end of link");
         @SuppressWarnings("unchecked")
         SLink<T> link = (SLink<T>) head;
         head = link.getNext();

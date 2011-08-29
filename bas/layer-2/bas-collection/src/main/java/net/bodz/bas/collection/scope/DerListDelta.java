@@ -8,7 +8,8 @@ public class DerListDelta {
         int map(int v);
     }
 
-    static class Ident implements IMap {
+    static class Ident
+            implements IMap {
 
         @Override
         public int map(int v) {
@@ -17,14 +18,15 @@ public class DerListDelta {
 
         @Override
         public String toString() {
-            return "ident"; 
+            return "ident";
         }
 
     }
 
     static final Ident IDENT = new Ident();
 
-    static class Add implements IMap {
+    static class Add
+            implements IMap {
 
         private final IMap prev;
         private final int vBefore;
@@ -54,12 +56,13 @@ public class DerListDelta {
 
         @Override
         public String toString() {
-            return String.format("list-add(%d): %d(+%d)", qNext, vBefore, n); 
+            return String.format("list-add(%d): %d(+%d)", qNext, vBefore, n);
         }
 
     }
 
-    static class Remove implements IMap {
+    static class Remove
+            implements IMap {
 
         private final IMap prev;
         private final int vStart;
@@ -84,7 +87,7 @@ public class DerListDelta {
 
         @Override
         public String toString() {
-            return String.format("list-remove: %d(+%d)", vStart, n); 
+            return String.format("list-remove: %d(+%d)", vStart, n);
         }
 
     }

@@ -3,8 +3,8 @@ package net.bodz.bas.ui.a;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+import net.bodz.bas.arch.IFactory;
 import net.bodz.bas.ui.util.VoidFactory_String;
-import net.bodz.bas.util.Factory;
 
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Label {
@@ -17,6 +17,6 @@ public @interface Label {
     /**
      * create(usage) -> label text
      */
-    Class<? extends Factory<String>> factory() default VoidFactory_String.class;
+    Class<? extends IFactory<String>> factory() default VoidFactory_String.class;
 
 }
