@@ -9,16 +9,16 @@
     <packaging>jar</packaging>
     <version>0.10.1-SNAPSHOT</version>
     <dependencies>
-    	<dependency>
-    		<groupId>net.bodz.bas</groupId>
-    		<artifactId>bas-c1</artifactId>
-    		<version>0.10.1-SNAPSHOT</version>
-    	</dependency>
-    	<dependency>
-    		<groupId>net.bodz.bas</groupId>
-    		<artifactId>bas-sio</artifactId>
-    		<version>0.10.1-SNAPSHOT</version>
-    	</dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-c1</artifactId>
+            <version>0.10.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-sio</artifactId>
+            <version>0.10.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
-    <name>BAS :: Layer 5 :: L10n :: L10n En</name>
+    <name>BAS :: Layer 5 :: L10n</name>
 </project>

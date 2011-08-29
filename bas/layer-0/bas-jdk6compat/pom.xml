@@ -8,5 +8,5 @@
     <artifactId>bas-jdk6compat</artifactId>
     <version>0.10.1-SNAPSHOT</version>
     <dependencies/>
-    <name>BAS :: Layer 0 :: Compat :: Jdk6compat</name>
+    <name>BAS :: Layer 0 :: Jdk6compat</name>
 </project>
