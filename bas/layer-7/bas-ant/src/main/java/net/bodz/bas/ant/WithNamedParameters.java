@@ -3,7 +3,7 @@ package net.bodz.bas.ant;
 import java.util.Map;
 import java.util.TreeMap;
 
-import net.bodz.bas.util.exception.ParseException;
+import net.bodz.bas.err.ParseException;
 
 public class WithNamedParameters {
 

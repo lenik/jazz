@@ -12,12 +12,12 @@
     <version>0.10.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>bas-annotation</module>
-        <module>bas-c1</module>
-        <module>bas-chars</module>
+        <module>bas-api</module>
+        <module>bas-cdata</module>
+        <module>bas-helper</module>
         <module>bas-lang</module>
         <module>bas-meta</module>
-        <module>bas-primitive</module>
+        <module>bas-sugar</module>
         <module>bas-test</module>
         <module>bas-traits</module>
     </modules>

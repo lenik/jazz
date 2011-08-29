@@ -1,9 +1,9 @@
 package net.bodz.bas.sio.indent;
 
+import net.bodz.bas.sio.BCharOut;
+
 import org.junit.Assert;
 import org.junit.Test;
-
-import net.bodz.bas.sio.BCharOut;
 
 public class IndentedOutImplTest
         extends Assert {

@@ -5,14 +5,14 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.ICharIn;
 import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.sio.ISimpleCharIn;
 import net.bodz.bas.sio.ISimpleCharOut;
 import net.bodz.bas.sio.StringCharIn;
-import net.bodz.bas.util.exception.NotImplementedException;
-import net.bodz.bas.util.exception.UnexpectedException;
 
 /**
  * @see <a href="http://www.unicode.org/charts/PDF/UFF00.pdf">Halfwidth and Fullwidth Forms</a>

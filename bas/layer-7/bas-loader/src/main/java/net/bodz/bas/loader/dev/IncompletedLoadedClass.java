@@ -1,8 +1,8 @@
 package net.bodz.bas.loader.dev;
 
+import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.jdk6compat.jdk7emul.ClassNotFoundException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
-import net.bodz.bas.util.exception.UnexpectedException;
 
 public class IncompletedLoadedClass {
 

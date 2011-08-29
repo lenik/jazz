@@ -8,11 +8,11 @@ import java.security.Security;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bodz.bas.err.CreateException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.traits.AbstractCommonTraits;
 import net.bodz.bas.traits.IParser;
 import net.bodz.bas.traits.ISampleGenerator;
-import net.bodz.bas.util.exception.CreateException;
-import net.bodz.bas.util.exception.ParseException;
 
 public class MessageDigestTraits
         extends AbstractCommonTraits<MessageDigest> {

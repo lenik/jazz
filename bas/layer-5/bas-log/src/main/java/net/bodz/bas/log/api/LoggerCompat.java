@@ -1,8 +1,8 @@
 package net.bodz.bas.log.api;
 
-import org.apache.log4j.Category;
-
 import net.bodz.bas.log.ILogComposite;
+
+import org.apache.log4j.Category;
 
 public interface LoggerCompat
         extends ILogComposite {

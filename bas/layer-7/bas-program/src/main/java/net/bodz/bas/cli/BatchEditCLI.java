@@ -12,6 +12,9 @@ import java.nio.charset.Charset;
 import java.util.List;
 
 import net.bodz.bas.cli.util.ProtectedShell;
+import net.bodz.bas.err.IllegalUsageError;
+import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.builtin.InputStreamSource;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
@@ -21,17 +24,14 @@ import net.bodz.bas.meta.util.OverrideOption;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.sio.WriterPrintOut;
-import net.bodz.bas.string.StringArray;
 import net.bodz.bas.text.diff.DiffComparator;
 import net.bodz.bas.text.diff.DiffFormat;
 import net.bodz.bas.text.diff.DiffFormats;
 import net.bodz.bas.text.diff.DiffInfo;
-import net.bodz.bas.util.TempFile;
-import net.bodz.bas.util.exception.IllegalUsageError;
-import net.bodz.bas.util.exception.NotImplementedException;
-import net.bodz.bas.util.exception.UnexpectedException;
-import net.bodz.bas.util.file.FileDiff;
-import net.bodz.bas.util.file.FilePath;
+import net.bodz.bas.util.io.FileDiff;
+import net.bodz.bas.util.io.FilePath;
+import net.bodz.bas.util.io.TempFile;
+import net.bodz.bas.util.string.StringArray;
 
 @OptionGroup(value = "batch process", rank = -3)
 public class BatchEditCLI

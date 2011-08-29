@@ -6,7 +6,7 @@ import java.lang.reflect.Modifier;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.NoSuchMethodException;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
-import net.bodz.bas.lang.QueryException;
+import net.bodz.bas.lang.mi.QueryException;
 import net.bodz.bas.traits.AbstractTraitsProvider;
 
 /**

@@ -3,6 +3,8 @@ package net.bodz.bas.type.java.util;
 import java.lang.ref.WeakReference;
 import java.util.Locale;
 
+import net.bodz.bas.err.CreateException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.lang.negotiation.NegotiationParameter;
@@ -10,8 +12,6 @@ import net.bodz.bas.meta.util.ValueType;
 import net.bodz.bas.traits.AbstractCommonTraits;
 import net.bodz.bas.traits.IParser;
 import net.bodz.bas.traits.ISampleGenerator;
-import net.bodz.bas.util.exception.CreateException;
-import net.bodz.bas.util.exception.ParseException;
 
 public class LocaleTraits
         extends AbstractCommonTraits<Locale> {

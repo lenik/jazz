@@ -8,8 +8,8 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import net.bodz.bas.sio.IPrintOut;
-import net.bodz.bas.string.Strings;
 import net.bodz.bas.type.comparator.TypeComparator;
+import net.bodz.bas.util.string.Strings;
 
 public class ProcessResultStat {
 

@@ -3,7 +3,7 @@ package net.bodz.bas.valtype.conv;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
-import net.bodz.bas.util.exception.TypeConvertException;
+import net.bodz.bas.err.TypeConvertException;
 
 public class TypeMatrix_float {
 

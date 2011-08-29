@@ -1,9 +1,9 @@
 package net.bodz.bas.vfs.impl.apachevfs;
 
-import org.apache.commons.vfs.FileName;
-
 import net.bodz.bas.vfs.IVolume;
 import net.bodz.bas.vfs.path.AbstractPath;
+
+import org.apache.commons.vfs.FileName;
 
 public class ApacheVFSPath
         extends AbstractPath {

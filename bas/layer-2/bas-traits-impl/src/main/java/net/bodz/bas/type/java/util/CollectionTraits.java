@@ -2,7 +2,7 @@ package net.bodz.bas.type.java.util;
 
 import java.util.Collection;
 
-import net.bodz.bas.lang.QueryException;
+import net.bodz.bas.lang.mi.QueryException;
 import net.bodz.bas.traits.AbstractCommonTraits;
 import net.bodz.bas.traits.IParser;
 import net.bodz.bas.traits.ISampleGenerator;

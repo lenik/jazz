@@ -12,10 +12,7 @@
     <version>0.10.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>bas-combina</module>
-        <module>bas-crypto</module>
-        <module>bas-memoryio</module>
-        <module>bas-srt</module>
+        <module>bas-memory</module>
     </modules>
     <name>BAS :: Layer 4</name>
 </project>

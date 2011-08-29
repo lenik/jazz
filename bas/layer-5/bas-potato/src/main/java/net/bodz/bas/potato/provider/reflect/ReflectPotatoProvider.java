@@ -1,6 +1,6 @@
 package net.bodz.bas.potato.provider.reflect;
 
-import net.bodz.bas.lang.QueryException;
+import net.bodz.bas.lang.mi.QueryException;
 import net.bodz.bas.potato.AbstractPotatoProvider;
 import net.bodz.bas.potato.traits.IConstructorMap;
 import net.bodz.bas.potato.traits.IEventMap;

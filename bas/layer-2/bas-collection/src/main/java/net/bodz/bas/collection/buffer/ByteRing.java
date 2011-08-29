@@ -4,8 +4,8 @@ import java.nio.BufferOverflowException;
 import java.nio.BufferUnderflowException;
 import java.nio.charset.Charset;
 
-import net.bodz.bas.collection.array.IArrayWrapper;
-import net.bodz.bas.util.exception.OutOfDomainException;
+import net.bodz.bas.err.OutOfDomainException;
+import net.bodz.bas.util.array.IArrayWrapper;
 
 /**
  * @see {@link IArrayWrapper}

@@ -2,7 +2,7 @@ package net.bodz.bas.collection.table;
 
 import java.util.List;
 
-import net.bodz.bas.util.exception.ReadOnlyException;
+import net.bodz.bas.err.ReadOnlyException;
 
 public interface Table<T> {
 

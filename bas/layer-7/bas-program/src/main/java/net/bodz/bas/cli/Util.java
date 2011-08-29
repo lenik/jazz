@@ -15,13 +15,13 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import net.bodz.bas.err.IllegalUsageError;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.jdk6compat.jdk7emul.IllegalAccessException;
 import net.bodz.bas.jdk6compat.jdk7emul.InstantiationException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.traits.IParser;
 import net.bodz.bas.traits.Traits;
-import net.bodz.bas.util.exception.IllegalUsageError;
-import net.bodz.bas.util.exception.ParseException;
 
 class Util {
 

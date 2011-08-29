@@ -3,11 +3,11 @@ package net.bodz.bas.io.typemeta;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.OutputStreamByteOut;
 import net.bodz.bas.traits.AbstractCommonTraits;
 import net.bodz.bas.traits.IParser;
-import net.bodz.bas.util.exception.ParseException;
 
 public class ByteOutTraits
         extends AbstractCommonTraits<IByteOut> {

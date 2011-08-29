@@ -4,8 +4,6 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.net.URLStreamHandlerFactory;
 
-import org.apache.commons.lang.ArrayUtils;
-
 public class TempClassLoader
         extends URLClassLoader {
 

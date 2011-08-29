@@ -1,6 +1,6 @@
 package net.bodz.bas.context;
 
-import net.bodz.bas.closure.alt.Func0;
+import net.bodz.bas.closure.Func0;
 
 /**
  * This class isn't a {@link IContext} at all. It only servs to get the default context, which is

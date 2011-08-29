@@ -1,6 +1,6 @@
 package net.bodz.bas.traits.provider.builtin;
 
-import net.bodz.bas.lang.IQueryable;
+import net.bodz.bas.lang.mi.IQueryable;
 
 public class BasFriendTraitsProvider
         extends FriendTraitsProvider {

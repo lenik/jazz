@@ -2,11 +2,11 @@ package net.bodz.bas.xml;
 
 import java.io.IOException;
 
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.NegotiationException;
-import net.bodz.bas.util.exception.ParseException;
 
 public interface IXMLForm<T> {
 

@@ -2,11 +2,11 @@ package net.bodz.bas.traits.provider.extra;
 
 import java.lang.reflect.Constructor;
 
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.NoSuchMethodException;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.traits.AbstractParser;
-import net.bodz.bas.util.exception.ParseException;
 
 public class StringCtorParser
         extends AbstractParser<Object> {

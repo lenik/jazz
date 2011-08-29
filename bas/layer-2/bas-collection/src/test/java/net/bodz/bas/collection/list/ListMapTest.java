@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.bodz.bas.collection.map.ListMap;
+
 import org.junit.Assert;
 import org.junit.Test;
-
-import net.bodz.bas.collection.map.ListMap;
 
 public class ListMapTest
         extends Assert {

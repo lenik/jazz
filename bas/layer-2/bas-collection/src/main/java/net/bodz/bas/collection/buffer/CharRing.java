@@ -3,7 +3,7 @@ package net.bodz.bas.collection.buffer;
 import java.nio.BufferOverflowException;
 import java.nio.BufferUnderflowException;
 
-import net.bodz.bas.collection.array.IArrayWrapper;
+import net.bodz.bas.util.array.IArrayWrapper;
 
 /**
  * See {@link IArrayWrapper}

@@ -1,5 +1,7 @@
 package net.bodz.bas.collection.list;
 
+import net.bodz.bas.util.ints.IntSList;
+
 import org.junit.Assert;
 import org.junit.Test;
 

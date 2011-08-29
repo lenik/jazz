@@ -8,8 +8,8 @@ import java.util.List;
 import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.reflect.query.PublicFields;
 import net.bodz.bas.reflect.query.ReflectQuery;
-import net.bodz.bas.string.Strings;
-import net.bodz.bas.util.ClassResource;
+import net.bodz.bas.util.loader.ClassResource;
+import net.bodz.bas.util.string.Strings;
 
 public class LoggerCG {
 

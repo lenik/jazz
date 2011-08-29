@@ -5,7 +5,7 @@ import java.util.Map;
 
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
-import net.bodz.bas.lang.IQueryable;
+import net.bodz.bas.lang.mi.IQueryable;
 
 public class TraitsImplUtil {
 

@@ -1,6 +1,6 @@
 package net.bodz.bas.meta.program;
 
-import net.bodz.bas.annotation.util.AnnotationParseUtil;
+import net.bodz.bas.util.annotation.AnnotationParseUtil;
 
 public class ProgramNameUtil
         extends AnnotationParseUtil {

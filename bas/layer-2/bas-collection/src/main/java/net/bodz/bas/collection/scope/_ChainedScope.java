@@ -3,6 +3,7 @@ package net.bodz.bas.collection.scope;
 import net.bodz.bas.meta.util.ChainUsage;
 import net.bodz.bas.meta.util.OverrideOption;
 
+
 public abstract class _ChainedScope<T> implements ChainedScope<T> {
 
     protected T head;

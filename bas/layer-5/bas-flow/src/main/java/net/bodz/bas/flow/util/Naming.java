@@ -2,7 +2,7 @@ package net.bodz.bas.flow.util;
 
 import net.bodz.bas.flow.IPort;
 import net.bodz.bas.flow.IUnit;
-import net.bodz.bas.string.Strings;
+import net.bodz.bas.util.string.Strings;
 
 public class Naming {
 

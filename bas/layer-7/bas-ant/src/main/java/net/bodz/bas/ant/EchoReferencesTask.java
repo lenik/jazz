@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 
-import net.bodz.bas.collection.comparator.ComparableComparator;
+import net.bodz.bas.util.order.ComparableComparator;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;

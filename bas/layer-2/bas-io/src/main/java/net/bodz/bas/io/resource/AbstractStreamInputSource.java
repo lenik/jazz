@@ -10,6 +10,7 @@ import java.io.ObjectInputStream;
 import java.io.Reader;
 import java.nio.charset.Charset;
 
+import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.lookahead.LAReader;
 import net.bodz.bas.io.resource.preparation.IParseLoadPreparation;
@@ -20,7 +21,6 @@ import net.bodz.bas.sio.ByteInInputStream;
 import net.bodz.bas.sio.CharInReader;
 import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.ICharIn;
-import net.bodz.bas.util.exception.UnexpectedException;
 
 public abstract class AbstractStreamInputSource
         implements IStreamInputSource {

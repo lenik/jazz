@@ -1,13 +1,13 @@
 package net.bodz.bas.cli.ext;
 
 import net.bodz.bas.cli.CLIException;
+import net.bodz.bas.err.OutOfDomainException;
 import net.bodz.bas.l10n.en.English;
 import net.bodz.bas.sio.IPrintOut;
-import net.bodz.bas.string.Strings;
 import net.bodz.bas.util.Plugin;
 import net.bodz.bas.util.PluginCategory;
 import net.bodz.bas.util.Plugins;
-import net.bodz.bas.util.exception.OutOfDomainException;
+import net.bodz.bas.util.string.Strings;
 
 public class CLIPlugins
         extends Plugins {

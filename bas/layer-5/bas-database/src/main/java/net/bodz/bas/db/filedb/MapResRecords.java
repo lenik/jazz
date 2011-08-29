@@ -3,10 +3,10 @@ package net.bodz.bas.db.filedb;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.traits.IParser;
 import net.bodz.bas.traits.Traits;
-import net.bodz.bas.util.exception.ParseException;
 
 public abstract class MapResRecords<K, V>
         extends _ResRecords<Map<K, V>> {

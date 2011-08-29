@@ -4,8 +4,8 @@ import java.io.File;
 import java.util.Map;
 
 import net.bodz.bas.context.clg.SystemCLG;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.snm.EclipseProject;
-import net.bodz.bas.util.exception.ParseException;
 
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.FileSet;

@@ -7,7 +7,7 @@ import java.util.Collections;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.NoSuchMethodException;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
-import net.bodz.bas.string.Strings;
+import net.bodz.bas.util.string.Strings;
 
 public abstract class AbstractEvent
         extends AbstractMember

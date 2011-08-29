@@ -9,13 +9,13 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.LineReader;
-import net.bodz.bas.string.StringSearch;
-import net.bodz.bas.string.Strings;
 import net.bodz.bas.traits.ParserUtil;
-import net.bodz.bas.util.exception.IllegalUsageException;
-import net.bodz.bas.util.exception.NotImplementedException;
-import net.bodz.bas.util.exception.ParseException;
+import net.bodz.bas.util.string.StringSearch;
+import net.bodz.bas.util.string.Strings;
 
 /**
  * @test {@link ConsoleInteractionTest}

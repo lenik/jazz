@@ -1,7 +1,7 @@
 package net.bodz.bas.ui;
 
 import net.bodz.bas.closure.IExecutableX;
-import net.bodz.bas.util.exception.ExpectedException;
+import net.bodz.bas.err.ExpectedException;
 
 import org.junit.Test;
 

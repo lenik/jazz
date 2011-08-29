@@ -6,10 +6,10 @@ import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 
+import net.bodz.bas.err.NoSuchKeyException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
-import net.bodz.bas.lang.Ref;
-import net.bodz.bas.util.exception.NoSuchKeyException;
+import net.bodz.bas.util.Ref;
 
 public class PropertyRef<PropertyType>
         implements Ref<PropertyType> {

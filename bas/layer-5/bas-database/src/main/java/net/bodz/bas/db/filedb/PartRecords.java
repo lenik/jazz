@@ -7,8 +7,8 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import net.bodz.bas.collection.iterator.ImmediateIteratorX;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.resource.IStreamInputSource;
-import net.bodz.bas.util.exception.ParseException;
 
 /**
  * Preferred file name: *.maps

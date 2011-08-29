@@ -3,8 +3,7 @@ package net.bodz.bas.traits.provider.builtin;
 import static net.bodz.bas.traits.ITraitsProvider.PRIORITY_HIGH;
 import static net.bodz.bas.traits.ITraitsProvider.PRIORITY_LOW;
 import static net.bodz.bas.traits.ITraitsProvider.PRIORITY_NORMAL;
-
-import net.bodz.bas.lang.IQueryable;
+import net.bodz.bas.lang.mi.IQueryable;
 
 enum BuiltinProviderOrder {
 

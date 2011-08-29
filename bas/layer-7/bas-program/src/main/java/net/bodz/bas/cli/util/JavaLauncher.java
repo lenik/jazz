@@ -8,11 +8,12 @@ import java.lang.reflect.Method;
 import java.net.URL;
 import java.nio.charset.Charset;
 
+import net.bodz.bas.err.OutOfDomainException;
 import net.bodz.bas.jvm.exit.CatchExit;
 import net.bodz.bas.jvm.exit.ExitableProgram;
 import net.bodz.bas.jvm.stack.Caller;
-import net.bodz.bas.lang.Control;
-import net.bodz.bas.lang.ControlExit;
+import net.bodz.bas.lang.control.Control;
+import net.bodz.bas.lang.control.ControlExit;
 import net.bodz.bas.loader.Classpath;
 import net.bodz.bas.loader.DefaultBooter;
 import net.bodz.bas.loader.LoadUtil;
@@ -21,7 +22,6 @@ import net.bodz.bas.loader.boot.BootInfo;
 import net.bodz.bas.loader.boot.BootProc;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.text.charsets.BasCharsetProvider;
-import net.bodz.bas.util.exception.OutOfDomainException;
 
 import org.apache.commons.lang.ArrayUtils;
 

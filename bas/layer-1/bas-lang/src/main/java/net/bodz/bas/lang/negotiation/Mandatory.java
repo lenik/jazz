@@ -1,6 +1,5 @@
 package net.bodz.bas.lang.negotiation;
 
-
 public class Mandatory
         extends NegotiationParameter {
 

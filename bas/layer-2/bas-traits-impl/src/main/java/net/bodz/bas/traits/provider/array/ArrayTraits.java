@@ -1,8 +1,8 @@
 package net.bodz.bas.traits.provider.array;
 
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.traits.IParser;
 import net.bodz.bas.util.ArrayType;
-import net.bodz.bas.util.exception.ParseException;
 
 /**
  * The traits for generic Object array.

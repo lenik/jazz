@@ -3,11 +3,11 @@ package net.bodz.bas.traits.provider.extra;
 import java.lang.reflect.Array;
 import java.util.regex.Pattern;
 
+import net.bodz.bas.err.CreateException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.traits.AbstractParser;
 import net.bodz.bas.traits.IParser;
 import net.bodz.bas.traits.Traits;
-import net.bodz.bas.util.exception.CreateException;
-import net.bodz.bas.util.exception.ParseException;
 
 public class ArrayParser
         extends AbstractParser<Object> {

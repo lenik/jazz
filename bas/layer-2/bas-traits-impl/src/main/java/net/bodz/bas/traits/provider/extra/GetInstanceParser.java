@@ -1,9 +1,9 @@
 package net.bodz.bas.traits.provider.extra;
 
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.traits.AbstractParser;
-import net.bodz.bas.util.exception.ParseException;
 import net.bodz.bas.valtype.util.ClassInstance;
 
 public class GetInstanceParser

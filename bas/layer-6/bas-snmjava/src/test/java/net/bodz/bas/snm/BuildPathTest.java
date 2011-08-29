@@ -4,11 +4,11 @@ import java.io.File;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
-
 import net.bodz.bas.snm.BuildPath.ClassContainer;
 import net.bodz.bas.snm.BuildPath.SourceResource;
+
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 public class BuildPathTest {
 
