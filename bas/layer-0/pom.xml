@@ -15,7 +15,7 @@
         <module>bas-compat</module>
         <module>bas-desktop</module>
         <module>bas-jvmhack</module>
-        <module>bas-natives</module>
+        <module>bas-natives-win32</module>
         <module>bas-proxy</module>
         <module>bas-sysinfo</module>
     </modules>

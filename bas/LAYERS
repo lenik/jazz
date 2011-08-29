@@ -2,7 +2,7 @@ layer-0/ 系统兼容层，系统周边环境准备
     bas-compat
     bas-desktop (iocapture -> bas-io)
     bas-jvmhack
-    bas-natives
+    bas-natives-win32
     bas-proxy
     bas-sysinfo (SystemInfo)
     

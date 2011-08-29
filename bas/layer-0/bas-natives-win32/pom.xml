@@ -2,11 +2,18 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>net.bodz.bas</groupId>
-        <artifactId>bas-natives</artifactId>
+        <artifactId>layer-0</artifactId>
         <version>0.10.1-SNAPSHOT</version>
     </parent>
     <artifactId>bas-natives-win32</artifactId>
     <packaging>jar</packaging>
     <version>0.10.1-SNAPSHOT</version>
+    <dependencies>
+        <dependency>
+            <groupId>com.sun.jna</groupId>
+            <artifactId>jna</artifactId>
+            <version>3.0.9</version>
+        </dependency>
+    </dependencies>
     <name>BAS :: Layer 0 :: Natives :: Natives Win32</name>
 </project>
