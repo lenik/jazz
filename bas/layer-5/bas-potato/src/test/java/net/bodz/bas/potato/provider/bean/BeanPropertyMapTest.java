@@ -1,14 +1,14 @@
 package net.bodz.bas.potato.provider.bean;
 
-import org.junit.Assert;
-import org.junit.Test;
-
-import user.bean.AddressBean;
-
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.potato.traits.IProperty;
 import net.bodz.bas.potato.traits.IPropertyMap;
 import net.bodz.bas.traits.Traits;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+import user.bean.AddressBean;
 
 public class BeanPropertyMapTest
         extends Assert {

@@ -2,7 +2,7 @@ package net.bodz.bas.reflect;
 
 import java.lang.reflect.Field;
 
-import net.bodz.bas.closure.alt.Pred1;
+import net.bodz.bas.closure.Pred1;
 import net.bodz.bas.jdk6compat.jdk7emul.IllegalAccessException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 

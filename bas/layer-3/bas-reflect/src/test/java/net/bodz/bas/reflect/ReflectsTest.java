@@ -1,9 +1,9 @@
 package net.bodz.bas.reflect;
 
+import net.bodz.bas.jdk6compat.jdk7emul.IllegalAccessException;
+
 import org.junit.Assert;
 import org.junit.Test;
-
-import net.bodz.bas.jdk6compat.jdk7emul.IllegalAccessException;
 
 public class ReflectsTest
         extends Assert {

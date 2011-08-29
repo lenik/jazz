@@ -2,8 +2,9 @@ package net.bodz.bas.util.regex;
 
 import java.nio.CharBuffer;
 
+import javax.annotation.Generated;
+
 import net.bodz.bas.cdata.chars.CharFeature;
-import net.bodz.bas.meta.codereview.GeneratedByCopyPaste;
 
 public class BufParsers {
 
@@ -64,7 +65,7 @@ public class BufParsers {
     /**
      * @see #getInt(CharBuffer, int, int)
      */
-    @GeneratedByCopyPaste
+    @Generated("getInt")
     public static long getLong(CharBuffer buf, int radix, long max) {
         int limit = buf.limit();
         long val = 0;

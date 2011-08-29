@@ -20,7 +20,7 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-proxy-java-util</artifactId>
+            <artifactId>bas-proxy-java</artifactId>
             <version>0.10.1-SNAPSHOT</version>
         </dependency>
         <dependency>
@@ -32,21 +32,16 @@
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-jdk6compat</artifactId>
             <version>0.10.1-SNAPSHOT</version>
-            <type>jar</type>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-sio</artifactId>
             <version>0.10.1-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-variant</artifactId>
             <version>0.10.1-SNAPSHOT</version>
-            <type>jar</type>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
     <name>BAS :: Layer 2 :: C2</name>

@@ -3,7 +3,8 @@ package net.bodz.bas.collection.iterator;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public abstract class PrefetchedIterator<T> implements Iterator<T> {
+public abstract class PrefetchedIterator<T>
+        implements Iterator<T> {
 
     private static final int UNKNOWN = 0;
     private static final int HASNEXT = 1;
@@ -78,15 +79,15 @@ public abstract class PrefetchedIterator<T> implements Iterator<T> {
     public String toString() {
         switch (_state) {
         case UNKNOWN:
-            return "UNKNOWN"; 
+            return "UNKNOWN";
         case HASNEXT:
-            return "HASNEXT"; 
+            return "HASNEXT";
         case CACHED:
-            return "CACHED(" + cache + ")";  
+            return "CACHED(" + cache + ")";
         case END:
-            return "END"; 
+            return "END";
         }
-        return "Bad state(" + _state + ")";  
+        return "Bad state(" + _state + ")";
     }
 
 }

@@ -1,4 +1,6 @@
-package net.bodz.bas.util.order;
+package net.bodz.bas.util.lang;
+
+import net.bodz.bas.util.order.OrderComparator;
 
 public class ToStringComparator
         extends OrderComparator<Object, String> {

@@ -4,11 +4,12 @@ import java.util.Collection;
 import java.util.EmptyStackException;
 import java.util.LinkedList;
 
-
 /**
  * Top-first list stack.
  */
-public class LinkedStack<T> extends LinkedList<T> implements Stack<T> {
+public class LinkedStack<T>
+        extends LinkedList<T>
+        implements Stack<T> {
 
     static final long serialVersionUID = 9193050893163832214L;
 

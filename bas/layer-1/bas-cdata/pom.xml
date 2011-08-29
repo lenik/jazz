@@ -8,11 +8,6 @@
     <artifactId>bas-cdata</artifactId>
     <version>0.10.1-SNAPSHOT</version>
     <dependencies>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-primitive</artifactId>
-            <version>0.10.1-SNAPSHOT</version>
-        </dependency>
     </dependencies>
     <name>BAS :: Layer 1 :: Cdata</name>
 </project>

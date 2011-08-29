@@ -25,6 +25,11 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-collection</artifactId>
+            <version>0.10.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
             <artifactId>bas-traits</artifactId>
             <version>0.10.1-SNAPSHOT</version>
         </dependency>
@@ -37,11 +42,6 @@
             <artifactId>bas-sysinfo</artifactId>
             <version>0.10.1-SNAPSHOT</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-collection</artifactId>
-            <version>0.10.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
     <name>BAS :: Layer 2 :: Io</name>

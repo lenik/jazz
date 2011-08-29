@@ -1,6 +1,8 @@
-package net.bodz.bas.util.order;
+package net.bodz.bas.util.primitive;
 
 import java.math.BigDecimal;
+
+import net.bodz.bas.util.order.AbstractNonNullComparator;
 
 public class BigDecimalComparator
         extends AbstractNonNullComparator<BigDecimal> {

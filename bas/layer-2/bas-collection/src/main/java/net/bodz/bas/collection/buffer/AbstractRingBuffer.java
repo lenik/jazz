@@ -7,7 +7,8 @@ import java.nio.BufferUnderflowException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.OutOfDomainException;
 
-public abstract class AbstractRingBuffer<A, T> implements IRingBuffer<A, T> {
+public abstract class AbstractRingBuffer<A, T>
+        implements IRingBuffer<A, T> {
 
     protected final A array;
     protected int capacity;
@@ -189,7 +190,8 @@ public abstract class AbstractRingBuffer<A, T> implements IRingBuffer<A, T> {
     }
 
     @Override
-    public T read() throws BufferUnderflowException {
+    public T read()
+            throws BufferUnderflowException {
         if (isEmpty())
             throw new BufferUnderflowException();
         T x = _get(begin++);
@@ -199,7 +201,8 @@ public abstract class AbstractRingBuffer<A, T> implements IRingBuffer<A, T> {
     }
 
     @Override
-    public void write(T value) throws BufferOverflowException {
+    public void write(T value)
+            throws BufferOverflowException {
         if (isFull())
             throw new BufferOverflowException();
         _set(end++, value);

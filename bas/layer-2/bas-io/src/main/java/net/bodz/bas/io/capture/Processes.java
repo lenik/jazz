@@ -9,6 +9,8 @@ import java.nio.charset.Charset;
 
 import net.bodz.bas.util.string.StringArray;
 
+import org.apache.commons.lang.ArrayUtils;
+
 /**
  * @test {@link ProcessesTest}
  */

@@ -1,4 +1,6 @@
 package net.bodz.bas.collection.preorder.testtype;
 
-public class CJ extends C implements J {
+public class CJ
+        extends C
+        implements J {
 }

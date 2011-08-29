@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 
+import net.bodz.bas.arch.AbstractFactory;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.DecodeException;
 import net.bodz.bas.err.NotImplementedException;

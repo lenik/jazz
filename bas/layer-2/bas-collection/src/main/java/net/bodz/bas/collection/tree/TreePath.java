@@ -15,7 +15,8 @@ import net.bodz.bas.err.OutOfDomainException;
  * 
  * @test {@link TreePathTest}
  */
-public class TreePath implements Comparable<TreePath>, Serializable {
+public class TreePath
+        implements Comparable<TreePath>, Serializable {
 
     private static final long serialVersionUID = -7257088263065852283L;
 

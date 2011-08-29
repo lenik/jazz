@@ -20,7 +20,7 @@ import net.bodz.bas.meta.program.Option;
 import net.bodz.bas.meta.program.ProgramNameUtil;
 import net.bodz.bas.reflect.query.ReflectQuery;
 import net.bodz.bas.util.Nullables;
-import net.bodz.bas.util.order.StringLengthComparator;
+import net.bodz.bas.util.lang.StringLengthComparator;
 import net.bodz.bas.util.string.Strings;
 
 public class ClassCLI {

@@ -1,7 +1,5 @@
 package net.bodz.bas.cdata.chars;
 
-import net.bodz.bas.primitive.RealMath;
-
 public class CharFeature {
 
     public static final byte[] c2n = new byte[] {//
@@ -28,6 +26,30 @@ public class CharFeature {
     public static final char[] n2cu = alphabet.toCharArray();
     public static final char[] n2cl = alphabet.toLowerCase().toCharArray();
 
+    public static int getDigits(int radix, int num) {
+        if (radix < 2)
+            throw new IllegalArgumentException("radix must be >= 2");
+        int digits = 0;
+        num = Math.abs(num);
+        while (num != 0) {
+            digits++;
+            num /= radix;
+        }
+        return digits;
+    }
+
+    public static int getDigits(int radix, long num) {
+        if (radix < 2)
+            throw new IllegalArgumentException("radix must be >= 2");
+        int digits = 0;
+        num = Math.abs(num);
+        while (num != 0) {
+            digits++;
+            num /= radix;
+        }
+        return digits;
+    }
+
     public static final int maxRadix = 32;
     public static final int intDigits[];
     public static final int longDigits[];
@@ -38,26 +60,33 @@ public class CharFeature {
                 15, 14, 14, 14, 14, 13, 13, 13, 13, 13, 13, 13, 12, 12 };
     }
 
-    private static int r2dig(double r) {
-        int safe = RealMath.roundFloor(r);
-        int max = RealMath.roundCeil(r);
-        if (max == safe)
-            return -safe;
-        return safe;
-    }
-
-    public static int getDigits(int radix, int maxValue) {
-        if (maxValue == Integer.MAX_VALUE)
+    public static int _getDigits(int radix, int num) {
+        if (num == Integer.MAX_VALUE)
             return intDigits[radix];
-        double r = Math.log(maxValue) / Math.log(radix);
-        return r2dig(r);
+        num = Math.abs(num);
+        if (num <= 1)
+            return 1;
+        double r = Math.log(num) / Math.log(radix);
+        return 1 + (int) r;
     }
 
-    public static int getDigits(int radix, long maxValue) {
+    public static int _getDigits(int radix, long maxValue) {
         if (maxValue == Long.MAX_VALUE)
             return longDigits[radix];
         double r = Math.log(maxValue) / Math.log(radix);
-        return r2dig(r);
+        return (int) r;
+    }
+
+    public static void main(String[] args) {
+        for (int radix = 2; radix < 20; radix++) {
+            for (int i = 0; i < 10000; i++) {
+                int n1 = getDigits(radix, i);
+                int n2 = _getDigits(radix, i);
+                if (n1 != n2) {
+                    System.out.printf("r=%d %d = %d, %d\n", radix, i, n1, n2);
+                }
+            }
+        }
     }
 
 }

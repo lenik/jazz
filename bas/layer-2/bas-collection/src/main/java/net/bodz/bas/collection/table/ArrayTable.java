@@ -5,7 +5,8 @@ import java.util.List;
 
 import net.bodz.bas.err.ReadOnlyException;
 
-public class ArrayTable<T> implements Table<T> {
+public class ArrayTable<T>
+        implements Table<T> {
 
     private T[][] array;
     private int rows;
@@ -35,40 +36,49 @@ public class ArrayTable<T> implements Table<T> {
         throw new UnsupportedOperationException();
     }
 
-    public void set(int row, int column, T value) throws ReadOnlyException {
+    public void set(int row, int column, T value)
+            throws ReadOnlyException {
         array[row][column] = value;
     }
 
-    public void set(int row, List<T> vector) throws ReadOnlyException {
+    public void set(int row, List<T> vector)
+            throws ReadOnlyException {
         // array[row] = vector.toArray();
         throw new UnsupportedOperationException();
     }
 
-    public void setColumn(int column, List<T> vector) throws ReadOnlyException {
+    public void setColumn(int column, List<T> vector)
+            throws ReadOnlyException {
         throw new UnsupportedOperationException();
     }
 
-    public void add(List<T> vector) throws ReadOnlyException {
+    public void add(List<T> vector)
+            throws ReadOnlyException {
         throw new ReadOnlyException();
     }
 
-    public void add(int row, List<T> vector) throws ReadOnlyException {
+    public void add(int row, List<T> vector)
+            throws ReadOnlyException {
         throw new ReadOnlyException();
     }
 
-    public void addColumn(List<T> vector) throws ReadOnlyException {
+    public void addColumn(List<T> vector)
+            throws ReadOnlyException {
         throw new ReadOnlyException();
     }
 
-    public void addColumn(int column, List<T> vector) throws ReadOnlyException {
+    public void addColumn(int column, List<T> vector)
+            throws ReadOnlyException {
         throw new ReadOnlyException();
     }
 
-    public void remove(int row) throws ReadOnlyException {
+    public void remove(int row)
+            throws ReadOnlyException {
         throw new ReadOnlyException();
     }
 
-    public void removeColumn(int column) throws ReadOnlyException {
+    public void removeColumn(int column)
+            throws ReadOnlyException {
         throw new ReadOnlyException();
     }
 

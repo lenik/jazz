@@ -49,14 +49,16 @@ public interface IRingBuffer<A, T> {
 
     void insert(int offsetToBegin, A buf, int off, int len);
 
-    T read() throws BufferUnderflowException;
+    T read()
+            throws BufferUnderflowException;
 
     /**
      * @return 0 if buffer empty
      */
     int read(A buf, int off, int len);
 
-    void write(T value) throws BufferOverflowException;
+    void write(T value)
+            throws BufferOverflowException;
 
     /**
      * @return 0 if no more space to write

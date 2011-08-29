@@ -1,4 +1,6 @@
-package net.bodz.bas.util.order;
+package net.bodz.bas.util.primitive;
+
+import net.bodz.bas.util.order.AbstractNonNullComparator;
 
 public class IntegerComparator
         extends AbstractNonNullComparator<Integer> {

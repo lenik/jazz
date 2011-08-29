@@ -1,5 +1,6 @@
 package net.bodz.bas.util;
 
+import net.bodz.bas.arch.IFactory;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.meta.build.ClassInfo;
 
@@ -9,11 +10,11 @@ import net.bodz.bas.meta.build.ClassInfo;
 public class PluginTypeEx {
 
     private final Class<? extends Plugin> clazz;
-    private final Factory<Plugin> factory;
+    private final IFactory<Plugin> factory;
     private final ClassInfo info;
 
     @SuppressWarnings("unchecked")
-    public PluginTypeEx(Factory<Plugin> factory) {
+    public PluginTypeEx(IFactory<Plugin> factory) {
         assert factory != null;
         this.factory = factory;
         Class<?> type = factory.getType();
@@ -32,7 +33,7 @@ public class PluginTypeEx {
     }
 
     public PluginTypeEx(Plugin staticInstance) {
-        this(new Factory.Static<Plugin>(staticInstance));
+        this(new IFactory.Static<Plugin>(staticInstance));
     }
 
     public Class<? extends Plugin> getType() {

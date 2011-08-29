@@ -9,7 +9,8 @@ import net.bodz.bas.collection.list.Stack;
 /**
  * @see NestedIterator
  */
-public class StackedIterator<T> implements Iterator<T> {
+public class StackedIterator<T>
+        implements Iterator<T> {
 
     private Stack<Iterator<T>> stack;
     private Iterator<T> currentIterator;
@@ -95,15 +96,14 @@ public class StackedIterator<T> implements Iterator<T> {
     @Override
     public String toString() {
         if (currentIterator == null)
-            return "empty stack"; 
+            return "empty stack";
         StringBuilder buf = new StringBuilder((1 + stack.size()) * 100);
-        buf.append("Iterators in stack: \n"); 
-        buf.append("  * " + currentIterator.getClass().getSimpleName() + ": "  
-                + currentIterator + "\n"); 
+        buf.append("Iterators in stack: \n");
+        buf.append("  * " + currentIterator.getClass().getSimpleName() + ": " + currentIterator + "\n");
         for (Iterator<T> iter : stack) {
-            buf.append("    "); 
+            buf.append("    ");
             buf.append(iter.getClass().getSimpleName());
-            buf.append(": "); 
+            buf.append(": ");
             buf.append(iter);
             buf.append('\n');
         }

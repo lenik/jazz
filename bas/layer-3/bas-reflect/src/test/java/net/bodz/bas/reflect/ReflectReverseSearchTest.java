@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.bodz.bas.closure.Pred1;
+
 import org.junit.Assert;
 import org.junit.Test;
-
-import net.bodz.bas.closure.alt.Pred1;
 
 public class ReflectReverseSearchTest
         extends Assert {
