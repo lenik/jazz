@@ -2,7 +2,7 @@ package net.bodz.bas.collection.util;
 
 import java.util.List;
 
-import net.bodz.bas.collection.iterator.ImmediateIterableX;
+import net.bodz.bas.collection.iterator.IterableMX;
 
 public class IterableToList {
 
@@ -22,22 +22,22 @@ public class IterableToList {
         return IteratorToList.toListLimited(iterable.iterator(), limit, appxSize);
     }
 
-    public static <T, X extends Exception> List<? extends T> toList(ImmediateIterableX<T, X> iterable)
+    public static <T, X extends Exception> List<? extends T> toList(IterableMX<T, X> iterable)
             throws X {
         return IteratorToList.toList(iterable.iterator(false));
     }
 
-    public static <T, X extends Exception> List<? extends T> toList(ImmediateIterableX<T, X> iterable, int appxSize)
+    public static <T, X extends Exception> List<? extends T> toList(IterableMX<T, X> iterable, int appxSize)
             throws X {
         return IteratorToList.toList(iterable.iterator(false), appxSize);
     }
 
-    public static <T, X extends Exception> List<? extends T> toListLimited(ImmediateIterableX<T, X> iterable, int limit)
+    public static <T, X extends Exception> List<? extends T> toListLimited(IterableMX<T, X> iterable, int limit)
             throws X {
         return IteratorToList.toListLimited(iterable.iterator(false), limit);
     }
 
-    public static <T, X extends Exception> List<? extends T> toListLimited(ImmediateIterableX<T, X> iterable,
+    public static <T, X extends Exception> List<? extends T> toListLimited(IterableMX<T, X> iterable,
             int limit, int appxSize)
             throws X {
         return IteratorToList.toListLimited(iterable.iterator(false), limit, appxSize);

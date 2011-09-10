@@ -2,15 +2,15 @@ package net.bodz.bas.collection.iterator;
 
 import java.util.Iterator;
 
-import net.bodz.bas.collection.transform.ElTransformer;
+import org.apache.commons.collections15.Transformer;
 
 public class TransformedIterator<S, T>
         implements Iterator<T> {
 
     private final Iterator<S> iterator;
-    private final ElTransformer<S, T> transformer;
+    private final Transformer<S, T> transformer;
 
-    public TransformedIterator(Iterator<S> iterator, ElTransformer<S, T> transformer) {
+    public TransformedIterator(Iterator<S> iterator, Transformer<S, T> transformer) {
         if (iterator == null)
             throw new NullPointerException("iterator");
         if (transformer == null)

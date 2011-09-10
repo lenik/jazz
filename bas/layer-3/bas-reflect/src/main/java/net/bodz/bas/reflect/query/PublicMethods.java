@@ -2,8 +2,8 @@ package net.bodz.bas.reflect.query;
 
 import java.lang.reflect.Method;
 
-import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
-import net.bodz.bas.collection.iterator.ImmediateIteratorX;
+import net.bodz.bas.collection.iterator.AbstractIteratorMX;
+import net.bodz.bas.collection.iterator.IteratorMX;
 
 /**
  * @test {@link PublicMethodsTest}
@@ -20,13 +20,13 @@ public class PublicMethods
     }
 
     class Iter
-            extends AbstractImmediateIteratorX<Method, RuntimeException> {
+            extends AbstractIteratorMX<Method, RuntimeException> {
 
         Method[] methods = clazz.getMethods();
         int currentIndex = -1;
 
         @Override
-        public Method next()
+        public Method _next()
                 throws RuntimeException {
             while (++currentIndex < methods.length) {
                 Method m = methods[currentIndex];
@@ -43,7 +43,7 @@ public class PublicMethods
     }
 
     @Override
-    public ImmediateIteratorX<? extends Method, ? extends RuntimeException> iterator(boolean allowOverlap)
+    public IteratorMX<? extends Method, ? extends RuntimeException> iterator(boolean allowOverlap)
             throws RuntimeException {
         return new Iter();
     }

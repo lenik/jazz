@@ -2,8 +2,8 @@ package net.bodz.bas.reflect.query;
 
 import java.lang.reflect.Field;
 
-import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
-import net.bodz.bas.collection.iterator.ImmediateIteratorX;
+import net.bodz.bas.collection.iterator.AbstractIteratorMX;
+import net.bodz.bas.collection.iterator.IteratorMX;
 
 /**
  * @test {@link DeclaredFieldsTest}
@@ -35,7 +35,7 @@ public class DeclaredFields
     }
 
     class Iter
-            extends AbstractImmediateIteratorX<Field, RuntimeException> {
+            extends AbstractIteratorMX<Field, RuntimeException> {
 
         Class<?> currentClass;
         Field[] declaredFieldsOfCurrentClass;
@@ -50,7 +50,7 @@ public class DeclaredFields
         }
 
         @Override
-        public Field next()
+        public Field _next()
                 throws RuntimeException {
             while (currentClass != null) {
                 while (++currentIndex < declaredFieldsOfCurrentClass.length) {
@@ -76,7 +76,7 @@ public class DeclaredFields
     }
 
     @Override
-    public ImmediateIteratorX<? extends Field, ? extends RuntimeException> iterator(boolean allowOverlap)
+    public IteratorMX<? extends Field, ? extends RuntimeException> iterator(boolean allowOverlap)
             throws RuntimeException {
         return new Iter();
     }

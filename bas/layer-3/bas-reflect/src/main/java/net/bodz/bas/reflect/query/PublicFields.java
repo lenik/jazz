@@ -2,8 +2,8 @@ package net.bodz.bas.reflect.query;
 
 import java.lang.reflect.Field;
 
-import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
-import net.bodz.bas.collection.iterator.ImmediateIteratorX;
+import net.bodz.bas.collection.iterator.AbstractIteratorMX;
+import net.bodz.bas.collection.iterator.IteratorMX;
 
 public class PublicFields
         extends FieldSelection {
@@ -17,13 +17,13 @@ public class PublicFields
     }
 
     class Iter
-            extends AbstractImmediateIteratorX<Field, RuntimeException> {
+            extends AbstractIteratorMX<Field, RuntimeException> {
 
         Field[] methods = clazz.getFields();
         int currentIndex = -1;
 
         @Override
-        public Field next()
+        public Field _next()
                 throws RuntimeException {
             while (++currentIndex < methods.length) {
                 Field field = methods[currentIndex];
@@ -40,7 +40,7 @@ public class PublicFields
     }
 
     @Override
-    public ImmediateIteratorX<? extends Field, ? extends RuntimeException> iterator(boolean allowOverlap)
+    public IteratorMX<? extends Field, ? extends RuntimeException> iterator(boolean allowOverlap)
             throws RuntimeException {
         return new Iter();
     }

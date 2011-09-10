@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
-import net.bodz.bas.collection.iterator.ImmediateIteratorX;
+import net.bodz.bas.collection.iterator.IteratorMX;
 import net.bodz.bas.collection.iterator.IterableX;
 import net.bodz.bas.collection.iterator.IteratorTargetException;
 
@@ -67,7 +67,7 @@ public interface IStreamReadPreparation
      *             If file doesn't exist.
      * @throws IOException
      */
-    ImmediateIteratorX<byte[], ? extends IOException> byteBlocks(boolean allowOverlap)
+    IteratorMX<byte[], ? extends IOException> byteBlocks(boolean allowOverlap)
             throws IOException;
 
     /**
@@ -89,7 +89,7 @@ public interface IStreamReadPreparation
      *             If file doesn't exist.
      * @throws IOException
      */
-    ImmediateIteratorX<char[], ? extends IOException> charBlocks(boolean allowOverlap)
+    IteratorMX<char[], ? extends IOException> charBlocks(boolean allowOverlap)
             throws IOException;
 
     /**
@@ -113,7 +113,7 @@ public interface IStreamReadPreparation
      *             If file doesn't exist.
      * @throws IOException
      */
-    ImmediateIteratorX<String, ? extends IOException> lines(boolean allowOverlap, boolean chopped)
+    IteratorMX<String, ? extends IOException> lines(boolean allowOverlap, boolean chopped)
             throws IOException;
 
     /**

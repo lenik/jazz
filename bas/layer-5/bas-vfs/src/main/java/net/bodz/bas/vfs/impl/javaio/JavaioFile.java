@@ -4,8 +4,8 @@ import java.io.File;
 import java.io.FilenameFilter;
 
 import net.bodz.bas.closure.IFilter;
-import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
-import net.bodz.bas.collection.iterator.ImmediateIteratorX;
+import net.bodz.bas.collection.iterator.AbstractIteratorMX;
+import net.bodz.bas.collection.iterator.IteratorMX;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
@@ -165,7 +165,7 @@ public class JavaioFile
      * 
      */
     @Override
-    public ImmediateIteratorX<? extends JavaioFile, VFSException> childIterator(final IFilter<String> entryNameFilter) {
+    public IteratorMX<? extends JavaioFile, VFSException> childIterator(final IFilter<String> entryNameFilter) {
         final String[] list;
         if (entryNameFilter == null)
             list = jdkFile.list();
@@ -177,12 +177,12 @@ public class JavaioFile
                 }
             });
 
-        return new AbstractImmediateIteratorX<JavaioFile, VFSException>() {
+        return new AbstractIteratorMX<JavaioFile, VFSException>() {
 
             int index = 0;
 
             @Override
-            public JavaioFile next()
+            public JavaioFile _next()
                     throws VFSException {
                 if (index >= list.length)
                     return end();

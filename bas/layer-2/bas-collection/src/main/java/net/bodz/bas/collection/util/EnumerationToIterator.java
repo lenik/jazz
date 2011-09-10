@@ -3,10 +3,10 @@ package net.bodz.bas.collection.util;
 import java.util.Enumeration;
 import java.util.Iterator;
 
-import net.bodz.bas.collection.iterator.AbstractImmediateIterator;
-import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
-import net.bodz.bas.collection.iterator.ImmediateIterator;
-import net.bodz.bas.collection.iterator.ImmediateIteratorX;
+import net.bodz.bas.collection.iterator.AbstractIteratorM;
+import net.bodz.bas.collection.iterator.AbstractIteratorMX;
+import net.bodz.bas.collection.iterator.IteratorM;
+import net.bodz.bas.collection.iterator.IteratorMX;
 import net.bodz.bas.collection.iterator.IteratorTargetException;
 import net.bodz.bas.collection.iterator.IteratorX;
 
@@ -43,7 +43,7 @@ public class EnumerationToIterator {
 
     }
 
-    public static class Enum2IterX<T, X extends Exception>
+    public static class Enum2IterX<T, X extends Throwable>
             implements IteratorX<T, X> {
 
         private final Enumeration<T> enumration;
@@ -73,7 +73,7 @@ public class EnumerationToIterator {
     }
 
     public static class Enum2ImmIter<T>
-            extends AbstractImmediateIterator<T> {
+            extends AbstractIteratorM<T> {
 
         private final Enumeration<T> enumration;
         private final boolean isOverlapped;
@@ -91,7 +91,7 @@ public class EnumerationToIterator {
         }
 
         @Override
-        public T next() {
+        public T _next() {
             if (enumration.hasMoreElements())
                 return enumration.nextElement();
             else
@@ -100,8 +100,8 @@ public class EnumerationToIterator {
 
     }
 
-    public static class Enum2ImmIterX<T, X extends Exception>
-            extends AbstractImmediateIteratorX<T, X> {
+    public static class Enum2ImmIterX<T, X extends Throwable>
+            extends AbstractIteratorMX<T, X> {
 
         private final Enumeration<T> enumration;
         private final boolean isOverlapped;
@@ -123,7 +123,7 @@ public class EnumerationToIterator {
         }
 
         @Override
-        public T next()
+        public T _next()
                 throws X {
             try {
                 if (enumration.hasMoreElements())
@@ -145,12 +145,12 @@ public class EnumerationToIterator {
         return new Enum2IterX<T, X>(e);
     }
 
-    public static <T> ImmediateIterator<T> toImmediateIterator(Enumeration<T> e, boolean isOverlapped) {
+    public static <T> IteratorM<T> toIteratorM(Enumeration<T> e, boolean isOverlapped) {
         return new Enum2ImmIter<T>(e, isOverlapped);
     }
 
-    public static <T, X extends Exception> ImmediateIteratorX<T, X> toImmediateIterator(Enumeration<T> e,
-            boolean isOverlapped, Class<X> exceptionType) {
+    public static <T, X extends Throwable> IteratorMX<T, X> toIteratorMX(Enumeration<T> e, boolean isOverlapped,
+            Class<X> exceptionType) {
         return new Enum2ImmIterX<T, X>(e, isOverlapped, exceptionType);
     }
 

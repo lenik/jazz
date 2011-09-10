@@ -3,7 +3,7 @@ package net.bodz.bas.io.resource.preparation;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
-import net.bodz.bas.collection.iterator.ImmediateIteratorX;
+import net.bodz.bas.collection.iterator.IteratorMX;
 import net.bodz.bas.io.resource.builtin.InputStreamSource;
 
 import org.junit.Assert;
@@ -19,15 +19,15 @@ public class StreamReadPreparationTest
         ByteArrayInputStream in = new ByteArrayInputStream(src);
         IStreamReadPreparation read = new InputStreamSource(in).forRead();
 
-        ImmediateIteratorX<char[], ? extends IOException> blocks = read.charBlocks(true);
-        assertEquals("01234", new String(blocks.next()));
-        assertEquals("56789", new String(blocks.next()));
-        assertEquals("abcde", new String(blocks.next()));
-        assertEquals("fghij", new String(blocks.next()));
-        assertEquals("klmno", new String(blocks.next()));
-        assertEquals("pqrst", new String(blocks.next()));
-        assertEquals("uvwxy", new String(blocks.next()));
-        assertEquals("z", new String(blocks.next()));
+        IteratorMX<char[], ? extends IOException> blocks = read.charBlocks(true);
+        assertEquals("01234", new String(blocks._next()));
+        assertEquals("56789", new String(blocks._next()));
+        assertEquals("abcde", new String(blocks._next()));
+        assertEquals("fghij", new String(blocks._next()));
+        assertEquals("klmno", new String(blocks._next()));
+        assertEquals("pqrst", new String(blocks._next()));
+        assertEquals("uvwxy", new String(blocks._next()));
+        assertEquals("z", new String(blocks._next()));
     }
 
 }

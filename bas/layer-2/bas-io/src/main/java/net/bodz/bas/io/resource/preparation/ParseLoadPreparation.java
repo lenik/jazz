@@ -7,8 +7,8 @@ import java.io.Reader;
 import java.util.List;
 import java.util.Properties;
 
-import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
-import net.bodz.bas.collection.iterator.ImmediateIteratorX;
+import net.bodz.bas.collection.iterator.AbstractIteratorMX;
+import net.bodz.bas.collection.iterator.IteratorMX;
 import net.bodz.bas.collection.util.IteratorToList;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.resource.IStreamInputSource;
@@ -52,15 +52,15 @@ public class ParseLoadPreparation
         return IteratorToList.toListLimited(objectIterator(), maxItems);
     }
 
-    public ImmediateIteratorX<Object, IOException> objectIterator()
+    public IteratorMX<Object, IOException> objectIterator()
             throws IOException {
 
-        return new AbstractImmediateIteratorX<Object, IOException>() {
+        return new AbstractIteratorMX<Object, IOException>() {
 
             ObjectInput in = source.newObjectInput();
 
             @Override
-            public Object next()
+            public Object _next()
                     throws IOException {
                 if (isEnded())
                     return null;

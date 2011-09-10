@@ -2,8 +2,8 @@ package net.bodz.bas.reflect.query;
 
 import java.lang.reflect.Constructor;
 
-import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
-import net.bodz.bas.collection.iterator.ImmediateIteratorX;
+import net.bodz.bas.collection.iterator.AbstractIteratorMX;
+import net.bodz.bas.collection.iterator.IteratorMX;
 
 public class DeclaredConstructors
         extends ConstructorSelection {
@@ -17,13 +17,13 @@ public class DeclaredConstructors
     }
 
     class Iter
-            extends AbstractImmediateIteratorX<Constructor<?>, RuntimeException> {
+            extends AbstractIteratorMX<Constructor<?>, RuntimeException> {
 
         Constructor<?>[] ctors = clazz.getDeclaredConstructors();
         int currentIndex = -1;
 
         @Override
-        public Constructor<?> next()
+        public Constructor<?> _next()
                 throws RuntimeException {
             while (++currentIndex < ctors.length) {
                 Constructor<?> ctor = ctors[currentIndex];
@@ -38,7 +38,7 @@ public class DeclaredConstructors
     }
 
     @Override
-    public ImmediateIteratorX<? extends Constructor<?>, ? extends RuntimeException> iterator(boolean allowOverlap)
+    public IteratorMX<? extends Constructor<?>, ? extends RuntimeException> iterator(boolean allowOverlap)
             throws RuntimeException {
         return new Iter();
     }

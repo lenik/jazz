@@ -2,9 +2,9 @@ package net.bodz.bas.db.filedb;
 
 import java.io.IOException;
 
-import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
-import net.bodz.bas.collection.iterator.ImmIterIterator;
-import net.bodz.bas.collection.iterator.ImmediateIteratorX;
+import net.bodz.bas.collection.iterator.AbstractIteratorMX;
+import net.bodz.bas.collection.iterator.IteratorM2X;
+import net.bodz.bas.collection.iterator.IteratorMX;
 import net.bodz.bas.collection.iterator.IteratorX;
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.resource.IStreamInputSource;
@@ -35,12 +35,12 @@ public class CSVRecords
     }
 
     class Iter
-            extends AbstractImmediateIteratorX<String[], IOException> {
+            extends AbstractIteratorMX<String[], IOException> {
 
         private LineReader lineReader;
 
         @Override
-        public String[] next()
+        public String[] _next()
                 throws IOException {
             if (lineReader == null)
                 lineReader = source.newLineReader();
@@ -61,14 +61,14 @@ public class CSVRecords
     }
 
     @Override
-    public ImmediateIteratorX<String[], IOException> iterator(boolean allowOverlap) {
+    public IteratorMX<String[], IOException> iterator(boolean allowOverlap) {
         return new Iter();
     }
 
     @Override
-    public IteratorX<String[], IOException> iterator() {
-        ImmediateIteratorX<String[], IOException> immIter = iterator(false);
-        return new ImmIterIterator<String[], IOException>(immIter);
+    public IteratorX<String[], IOException> iteratorX() {
+        IteratorMX<String[], IOException> immIter = iterator(false);
+        return new IteratorM2X<String[], IOException>(immIter);
     }
 
 }

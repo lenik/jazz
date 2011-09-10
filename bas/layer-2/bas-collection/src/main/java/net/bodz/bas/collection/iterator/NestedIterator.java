@@ -14,6 +14,7 @@ public class NestedIterator<T>
     private Iterator<T> currentIterator;
     private Iterator<T> lastIterator;
 
+    @SafeVarargs
     public NestedIterator(Iterator<T>... iterators) {
         this(Arrays.asList((Iterator<T>[]) iterators));
     }

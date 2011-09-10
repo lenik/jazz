@@ -6,7 +6,7 @@ import java.io.OutputStream;
 import java.util.List;
 
 import net.bodz.bas.closure.IFilter;
-import net.bodz.bas.collection.iterator.ImmediateIteratorX;
+import net.bodz.bas.collection.iterator.IteratorMX;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
 import net.bodz.bas.io.resource.JavaioStreamInputSource;
@@ -198,7 +198,7 @@ public class ApacheVFSFile
     }
 
     @Override
-    public ImmediateIteratorX<? extends IFile, VFSException> childIterator(IFilter<String> nameFilter)
+    public IteratorMX<? extends IFile, VFSException> childIterator(IFilter<String> nameFilter)
             throws VFSException {
         return super.childIterator(nameFilter);
     }

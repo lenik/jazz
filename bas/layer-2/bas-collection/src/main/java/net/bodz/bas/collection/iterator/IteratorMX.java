@@ -3,9 +3,9 @@ package net.bodz.bas.collection.iterator;
 import java.util.Iterator;
 
 /**
- * 
+ * Immediate Iterator.
  */
-public interface ImmediateIteratorX<T, X extends Exception> {
+public interface IteratorMX<T, X extends Throwable> {
 
     /**
      * An overlapped iterator will return overlapped iterated values (the iterated value may refer
@@ -20,28 +20,28 @@ public interface ImmediateIteratorX<T, X extends Exception> {
     T deoverlap(T o);
 
     /**
-     * Iterate the next item.
+     * Get the next item immediately.
      * 
      * @return The last iterated value, at the same time <code>null</code> is returned if the
      *         iteration reaches the end. For <code>null</code> value iterated, the caller must
      *         distinguish by call to {@link #isEnded()}.
      */
-    T next()
+    T _next()
             throws X;
 
     /**
-     * If last {@link #next()} call returns <code>null</code>, it can be the <code>null</code> item
+     * If last {@link #_next()} call returns <code>null</code>, it can be the <code>null</code> item
      * iterated, or the end of iteration.
      * 
      * <p>
-     * If last {@link #next()} call returns non-<code>null</code> value, the iteration MUST NOT be
-     * ended, so the test of {@link #isEnded()} is only needed if the last call to {@link #next()}
+     * If last {@link #_next()} call returns non-<code>null</code> value, the iteration MUST NOT be
+     * ended, so the test of {@link #isEnded()} is only needed if the last call to {@link #_next()}
      * returns <code>null</code>.
      * 
      * @return <code>true</code> if the iteration reaches the end and last <code>null</code> value
-     *         returned by {@link #next()} is meaningless.
+     *         returned by {@link #_next()} is meaningless.
      * @throws IllegalStateException
-     *             the end state may be unknown until the first call to the {@link #next()}.
+     *             the end state may be unknown until the first call to the {@link #_next()}.
      */
     boolean isEnded();
 
@@ -73,7 +73,7 @@ public interface ImmediateIteratorX<T, X extends Exception> {
      * 
      * @return The duplicated iterator with the same iteration state like current position pointer.
      */
-    ImmediateIteratorX<T, X> mark();
+    IteratorMX<T, X> mark();
 
     /**
      * Convert immediate iterator to {@link Iterator}, if the immediate iterator is overlapped, then

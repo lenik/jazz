@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
 
-import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
-import net.bodz.bas.collection.iterator.ImmediateIteratorX;
+import net.bodz.bas.collection.iterator.AbstractIteratorMX;
+import net.bodz.bas.collection.iterator.IteratorMX;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.resource.IStreamInputSource;
@@ -56,13 +56,13 @@ public class INIRecords
     }
 
     class Iter
-            extends AbstractImmediateIteratorX<Map<String, String>, IOException> {
+            extends AbstractIteratorMX<Map<String, String>, IOException> {
 
         private LineReader lineReader;
         private String sectionName = null;
 
         @Override
-        public Map<String, String> next()
+        public Map<String, String> _next()
                 throws IOException {
             if (lineReader == null)
                 lineReader = source.newLineReader();
@@ -109,7 +109,7 @@ public class INIRecords
     }
 
     @Override
-    public ImmediateIteratorX<? extends Map<String, String>, ? extends IOException> iterator(boolean allowOverlap)
+    public IteratorMX<? extends Map<String, String>, ? extends IOException> iterator(boolean allowOverlap)
             throws IOException {
         return new Iter();
     }

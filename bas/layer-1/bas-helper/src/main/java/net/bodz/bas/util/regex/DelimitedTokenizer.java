@@ -8,7 +8,7 @@ import java.util.List;
 import net.bodz.bas.err.NotImplementedException;
 
 public class DelimitedTokenizer
-        extends AbstractImmediateIterableX<String, IOException> {
+        extends AbstractIterableMX<String, IOException> {
 
     private List<Delimiter> delimiters;
 
@@ -47,10 +47,10 @@ public class DelimitedTokenizer
     }
 
     class Iter
-            extends AbstractImmediateIteratorX<String, IOException> {
+            extends AbstractIteratorMX<String, IOException> {
 
         @Override
-        public String next()
+        public String _next()
                 throws IOException {
             throw new NotImplementedException();
             // return end();
@@ -59,12 +59,12 @@ public class DelimitedTokenizer
     }
 
     @Override
-    public IteratorX<String, IOException> iterator() {
-        return new ImmIterIterator<String, IOException>(new Iter());
+    public IteratorX<String, IOException> iteratorX() {
+        return new IteratorM2X<String, IOException>(new Iter());
     }
 
     @Override
-    public ImmediateIteratorX<String, ? extends IOException> iterator(boolean allowOverlap) {
+    public IteratorMX<String, ? extends IOException> iterator(boolean allowOverlap) {
         return new Iter();
     }
 

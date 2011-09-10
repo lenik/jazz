@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import net.bodz.bas.collection.iterator.ImmediateIteratorX;
+import net.bodz.bas.collection.iterator.IteratorMX;
 import net.bodz.bas.db.filedb.PartRecords.PartMap;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.util.loader.ClassResource;
@@ -43,27 +43,27 @@ public class PartRecordsTest
             throws IOException {
         IStreamInputSource source = ClassResource.classData(getClass(), "1");
         PartRecords maps = new PartRecords(source);
-        ImmediateIteratorX<? extends PartMap, ? extends IOException> it = maps.iterator(false);
+        IteratorMX<? extends PartMap, ? extends IOException> it = maps.iterator(false);
         PartMap part;
 
-        part = it.next();
+        part = it._next();
         assertEquals("part A", ".=hello\nworld\n, age=10, name=a", map2str(part));
 
-        part = it.next();
+        part = it._next();
         assertEquals("part B", ".=BBB\n, age=20, location=home\n, name=b", map2str(part));
 
-        part = it.next();
+        part = it._next();
         assertEquals("part C", ".=CCC\n", map2str(part));
 
-        part = it.next();
+        part = it._next();
         assertEquals("part D", ".=DDD\n, name=d", map2str(part));
 
-        part = it.next();
+        part = it._next();
         assertEquals("part E", ".=EEE\nFFF\n", map2str(part));
 
         assertTrue(it.isEnded());
 
-        assertNull(it.next());
+        assertNull(it._next());
     }
 
 }

@@ -4,13 +4,13 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.List;
 
-import net.bodz.bas.collection.iterator.ImmIterIterator;
-import net.bodz.bas.collection.iterator.ImmediateIterableX;
+import net.bodz.bas.collection.iterator.IterableMX;
+import net.bodz.bas.collection.iterator.IteratorM2X;
 import net.bodz.bas.collection.iterator.IteratorX;
 import net.bodz.bas.collection.util.IterableToList;
 
 public abstract class FieldSelection
-        implements ImmediateIterableX<Field, RuntimeException> {
+        implements IterableMX<Field, RuntimeException> {
 
     protected int modifierMask;
     protected int modifierTest;
@@ -90,8 +90,8 @@ public abstract class FieldSelection
     }
 
     @Override
-    public IteratorX<Field, RuntimeException> iterator() {
-        return new ImmIterIterator<Field, RuntimeException>(this, true);
+    public IteratorX<Field, RuntimeException> iteratorX() {
+        return new IteratorM2X<Field, RuntimeException>(this, true);
     }
 
     public Field[] toArray() {
@@ -103,7 +103,7 @@ public abstract class FieldSelection
     }
 
     public boolean exists() {
-        return iterator(true).next() != null;
+        return iterator(true)._next() != null;
     }
 
 }

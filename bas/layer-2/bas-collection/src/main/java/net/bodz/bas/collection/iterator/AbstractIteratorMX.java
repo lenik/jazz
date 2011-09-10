@@ -1,7 +1,7 @@
 package net.bodz.bas.collection.iterator;
 
-public abstract class AbstractImmediateIteratorX<T, X extends Exception>
-        implements ImmediateIteratorX<T, X> {
+public abstract class AbstractIteratorMX<T, X extends Throwable>
+        implements IteratorMX<T, X> {
 
     private boolean ended;
 
@@ -30,7 +30,7 @@ public abstract class AbstractImmediateIteratorX<T, X extends Exception>
             throws X {
         int actualSkipped = 0;
         for (int i = 0; i < n; i++) {
-            if (next() == null && isEnded())
+            if (_next() == null && isEnded())
                 break;
             actualSkipped++;
         }
@@ -38,13 +38,13 @@ public abstract class AbstractImmediateIteratorX<T, X extends Exception>
     }
 
     @Override
-    public ImmediateIteratorX<T, X> mark() {
+    public IteratorMX<T, X> mark() {
         throw new UnsupportedOperationException();
     }
 
     @Override
     public IteratorX<T, X> toIterator() {
-        return new ImmIterIterator<T, X>(this);
+        return new IteratorM2X<T, X>(this);
     }
 
 }

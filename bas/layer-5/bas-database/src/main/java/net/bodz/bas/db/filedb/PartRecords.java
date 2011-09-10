@@ -6,7 +6,7 @@ import java.net.URL;
 import java.util.Map;
 import java.util.TreeMap;
 
-import net.bodz.bas.collection.iterator.ImmediateIteratorX;
+import net.bodz.bas.collection.iterator.IteratorMX;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.resource.IStreamInputSource;
 
@@ -78,9 +78,9 @@ public class PartRecords
     }
 
     @Override
-    public ImmediateIteratorX<? extends PartMap, ? extends IOException> iterator(boolean allowOverlap)
+    public IteratorMX<? extends PartMap, ? extends IOException> iterator(boolean allowOverlap)
             throws IOException {
-        return (ImmediateIteratorX<? extends PartMap, ? extends IOException>) super.iterator(allowOverlap);
+        return (IteratorMX<? extends PartMap, ? extends IOException>) super.iterator(allowOverlap);
     }
 
     @Override

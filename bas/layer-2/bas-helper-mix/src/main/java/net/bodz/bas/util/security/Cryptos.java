@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import net.bodz.bas.collection.iterator.ImmediateIteratorX;
+import net.bodz.bas.collection.iterator.IteratorMX;
 import net.bodz.bas.err.RuntimizedException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.resource.IStreamInputSource;
@@ -30,10 +30,10 @@ public class Cryptos {
 
     static byte[] calc(IStreamInputSource in, MessageDigest digest)
             throws IOException {
-        ImmediateIteratorX<byte[], ? extends IOException> blocks = in.forRead().byteBlocks(true);
+        IteratorMX<byte[], ? extends IOException> blocks = in.forRead().byteBlocks(true);
         byte[] block;
         try {
-            while ((block = blocks.next()) != null || !blocks.isEnded())
+            while ((block = blocks._next()) != null || !blocks.isEnded())
                 digest.update(block);
         } catch (RuntimizedException e) {
             e.rethrow(IOException.class);

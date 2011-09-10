@@ -3,7 +3,7 @@ package net.bodz.bas.collection.iterator;
 import net.bodz.bas.closure.ICreatorX;
 
 public class CreateOnDemandImmIter<T, X extends Exception>
-        extends AbstractImmediateIteratorX<T, X> {
+        extends AbstractIteratorMX<T, X> {
 
     private final ICreatorX<? extends T, ? extends X> creator;
     private final Object[] createParameters;
@@ -34,7 +34,7 @@ public class CreateOnDemandImmIter<T, X extends Exception>
     }
 
     @Override
-    public T next()
+    public T _next()
             throws X {
         if (createdCount < count) {
             T instance;

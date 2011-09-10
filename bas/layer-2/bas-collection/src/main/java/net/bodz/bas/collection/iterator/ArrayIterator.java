@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 public class ArrayIterator<T>
         implements Iterator<T> {
 
-    private T[] array;
+    private final T[] array;
     private int next;
 
     public ArrayIterator(T[] array) {
@@ -30,8 +30,6 @@ public class ArrayIterator<T>
         if (next >= array.length)
             throw new NoSuchElementException();
         T item = array[next++];
-        if (next == array.length)
-            array = null; // free as early as possible.
         return item;
     }
 
