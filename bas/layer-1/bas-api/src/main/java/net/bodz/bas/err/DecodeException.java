@@ -1,9 +1,7 @@
 package net.bodz.bas.err;
 
-import java.io.IOException;
-
 public class DecodeException
-        extends IOException {
+        extends CodecException {
 
     private static final long serialVersionUID = 1L;
 
