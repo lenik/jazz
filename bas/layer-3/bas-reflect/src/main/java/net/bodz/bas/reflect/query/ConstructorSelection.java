@@ -4,14 +4,14 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.util.List;
 
-import net.bodz.bas.collection.iterator.ImmIterIterator;
-import net.bodz.bas.collection.iterator.ImmediateIterableX;
+import net.bodz.bas.collection.iterator.IterableMX;
+import net.bodz.bas.collection.iterator.IteratorM2X;
 import net.bodz.bas.collection.iterator.IteratorX;
 import net.bodz.bas.collection.util.IterableToList;
 import net.bodz.bas.reflect.MethodSignature;
 
 public abstract class ConstructorSelection
-        implements ImmediateIterableX<Constructor<?>, RuntimeException> {
+        implements IterableMX<Constructor<?>, RuntimeException> {
 
     protected int modifierMask;
     protected int modifierTest;
@@ -115,8 +115,8 @@ public abstract class ConstructorSelection
     }
 
     @Override
-    public IteratorX<Constructor<?>, RuntimeException> iterator() {
-        return new ImmIterIterator<Constructor<?>, RuntimeException>(this, true);
+    public IteratorX<Constructor<?>, RuntimeException> iteratorX() {
+        return new IteratorM2X<Constructor<?>, RuntimeException>(this, true);
     }
 
     public Constructor<?>[] toArray() {
@@ -128,7 +128,7 @@ public abstract class ConstructorSelection
     }
 
     public boolean exists() {
-        return iterator(true).next() != null;
+        return iterator(true)._next() != null;
     }
 
 }

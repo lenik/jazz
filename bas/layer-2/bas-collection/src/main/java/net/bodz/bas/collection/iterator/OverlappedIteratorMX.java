@@ -1,7 +1,7 @@
 package net.bodz.bas.collection.iterator;
 
-public abstract class OverlappedImmediateIteratorX<T, X extends Exception>
-        extends AbstractImmediateIteratorX<T, X> {
+public abstract class OverlappedIteratorMX<T, X extends Exception>
+        extends AbstractIteratorMX<T, X> {
 
     @Override
     public boolean isOverlapped() {

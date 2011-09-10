@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 
-import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
-import net.bodz.bas.collection.iterator.ImmediateIteratorX;
+import net.bodz.bas.collection.iterator.AbstractIteratorMX;
+import net.bodz.bas.collection.iterator.IteratorMX;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.resource.IStreamInputSource;
@@ -116,7 +116,7 @@ public abstract class _PartRecords<K, V>
     }
 
     class Iter
-            extends AbstractImmediateIteratorX<Map<K, V>, IOException> {
+            extends AbstractIteratorMX<Map<K, V>, IOException> {
 
         private static final int PREHEADER = 0;
         private static final int HEADER = 1;
@@ -128,7 +128,7 @@ public abstract class _PartRecords<K, V>
         private Map<K, V> nextMap;
 
         @Override
-        public Map<K, V> next()
+        public Map<K, V> _next()
                 throws IOException {
             if (lineReader == null)
                 lineReader = source.newLineReader();
@@ -228,7 +228,7 @@ public abstract class _PartRecords<K, V>
     }
 
     @Override
-    public ImmediateIteratorX<? extends Map<K, V>, ? extends IOException> iterator(boolean allowOverlap)
+    public IteratorMX<? extends Map<K, V>, ? extends IOException> iterator(boolean allowOverlap)
             throws IOException {
         return new Iter();
     }

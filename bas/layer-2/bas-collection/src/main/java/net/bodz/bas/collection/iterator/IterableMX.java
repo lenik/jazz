@@ -1,13 +1,13 @@
 package net.bodz.bas.collection.iterator;
 
-public interface ImmediateIterableX<T, X extends Exception>
+public interface IterableMX<T, X extends Throwable>
         extends IterableX<T, X> {
 
     /**
      * <table border="1">
      * <tr>
      * <th>allowOverlap</th>
-     * <th>Returned {@link ImmediateIteratorX#isOverlapped() overlap-mode}</th>
+     * <th>Returned {@link IteratorMX#isOverlapped() overlap-mode}</th>
      * <th>Overlapping</th>
      * </tr>
      * <tr>
@@ -35,17 +35,14 @@ public interface ImmediateIterableX<T, X extends Exception>
      * @throws UnsupportedOperationException
      *             If specified overlap-mode isn't allowed.
      */
-    ImmediateIteratorX<? extends T, ? extends X> iterator(boolean allowOverlap)
-            throws X;
+    IteratorMX<? extends T, ? extends X> iterator(boolean allowOverlap);
 
     /**
      * Default overlap is allowed..
      * 
      * @see #iterator(boolean)
-     * @throws IteratorTargetException
      */
     @Override
-    IteratorX<T, X> iterator()
-            throws IteratorTargetException;
+    IteratorX<T, X> iteratorX();
 
 }

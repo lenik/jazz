@@ -3,7 +3,7 @@ package net.bodz.bas.vfs;
 import java.util.List;
 
 import net.bodz.bas.closure.IFilter;
-import net.bodz.bas.collection.iterator.ImmediateIteratorX;
+import net.bodz.bas.collection.iterator.IteratorMX;
 import net.bodz.bas.vfs.preparation.IProbePreparation;
 
 public interface IFile
@@ -21,7 +21,7 @@ public interface IFile
             throws VFSException;
 
     @Override
-    ImmediateIteratorX<? extends IFile, VFSException> childIterator(IFilter<String> nameFilter)
+    IteratorMX<? extends IFile, VFSException> childIterator(IFilter<String> nameFilter)
             throws VFSException;
 
     /**

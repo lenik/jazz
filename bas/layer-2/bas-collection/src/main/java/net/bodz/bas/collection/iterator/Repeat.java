@@ -4,13 +4,13 @@ import java.util.Iterator;
 
 import net.bodz.bas.util.Nullables;
 
-public class RepeatIterable<T>
+public class Repeat<T>
         implements Iterable<T> {
 
     private final T object;
     private final int count;
 
-    public RepeatIterable(T object, int count) {
+    public Repeat(T object, int count) {
         this.object = object;
         this.count = count;
     }
@@ -22,9 +22,9 @@ public class RepeatIterable<T>
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof RepeatIterable<?>))
+        if (!(obj instanceof Repeat<?>))
             return false;
-        RepeatIterable<?> o = (RepeatIterable<?>) obj;
+        Repeat<?> o = (Repeat<?>) obj;
         if (count != o.count)
             return false;
         if (!Nullables.equals(object, o.object))

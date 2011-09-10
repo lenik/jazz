@@ -3,7 +3,7 @@ package net.bodz.bas.flow.units.builtin.sources;
 import java.io.IOException;
 import java.io.Reader;
 
-import net.bodz.bas.collection.iterator.ImmediateIteratorX;
+import net.bodz.bas.collection.iterator.IteratorMX;
 import net.bodz.bas.flow.units.SOSourceUnit;
 import net.bodz.bas.flow.units.builtin.DefaultConfig;
 import net.bodz.bas.io.resource.builtin.ReaderSource;
@@ -16,7 +16,7 @@ public class ReaderSourceUnit
     private final IStreamReadPreparation readPreparation;
     private final boolean allowOverlap;
 
-    private ImmediateIteratorX<char[], ? extends IOException> blocks;
+    private IteratorMX<char[], ? extends IOException> blocks;
 
     public ReaderSourceUnit(Reader in, boolean allowOverlap, int blockSize)
             throws IOException {
@@ -49,7 +49,7 @@ public class ReaderSourceUnit
     @Override
     public boolean pump(int timeout)
             throws IOException, InterruptedException {
-        char[] block = blocks.next(); // XXX - timeout??
+        char[] block = blocks._next(); // XXX - timeout??
         if (block == null && blocks.isEnded())
             return false;
         send(block);

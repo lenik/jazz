@@ -7,13 +7,14 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
-import net.bodz.bas.collection.iterator.ImmIterIterator;
-import net.bodz.bas.collection.iterator.ImmediateIteratorX;
+import net.bodz.bas.collection.iterator.AbstractIterableX;
+import net.bodz.bas.collection.iterator.AbstractIteratorMX;
 import net.bodz.bas.collection.iterator.IterableX;
+import net.bodz.bas.collection.iterator.IteratorM2X;
+import net.bodz.bas.collection.iterator.IteratorMX;
 import net.bodz.bas.collection.iterator.IteratorTargetException;
 import net.bodz.bas.collection.iterator.IteratorX;
-import net.bodz.bas.collection.iterator.OverlappedImmediateIteratorX;
+import net.bodz.bas.collection.iterator.OverlappedIteratorMX;
 import net.bodz.bas.collection.util.IteratorToList;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.LineReader;
@@ -169,18 +170,18 @@ public class StreamReadPreparation
         return buffer.toString();
     }
 
-    public ImmediateIteratorX<byte[], IOException> byteBlocks(final boolean allowOverlap)
+    public IteratorMX<byte[], IOException> byteBlocks(final boolean allowOverlap)
             throws IOException {
         final byte[] block = new byte[blockSize];
         final IByteIn in = source.newByteIn();
-        return new OverlappedImmediateIteratorX<byte[], IOException>() {
+        return new OverlappedIteratorMX<byte[], IOException>() {
 
             @Override
             public byte[] deoverlap(byte[] o) {
                 return Arrays.copyOf(o, o.length);
             }
 
-            public byte[] next()
+            public byte[] _next()
                     throws IOException {
                 int off = 0;
                 int blockRemain = blockSize;
@@ -217,17 +218,17 @@ public class StreamReadPreparation
     @Override
     public IterableX<byte[], IOException> byteBlocks()
             throws IOException {
-        return new IterableX<byte[], IOException>() {
+        return new AbstractIterableX<byte[], IOException>() {
 
             @Override
-            public IteratorX<byte[], IOException> iterator() {
-                ImmediateIteratorX<byte[], IOException> immIter;
+            public IteratorX<byte[], IOException> iteratorX() {
+                IteratorMX<byte[], IOException> immIter;
                 try {
                     immIter = byteBlocks(true);
                 } catch (IOException e) {
                     throw new IteratorTargetException(e);
                 }
-                return new ImmIterIterator<byte[], IOException>(immIter);
+                return new IteratorM2X<byte[], IOException>(immIter);
             }
 
         };
@@ -242,18 +243,18 @@ public class StreamReadPreparation
      * @seecopy {@link #byteBlocks(boolean)}
      */
     @GeneratedByCopyPaste
-    public ImmediateIteratorX<char[], IOException> charBlocks(final boolean allowOverlap)
+    public IteratorMX<char[], IOException> charBlocks(final boolean allowOverlap)
             throws IOException {
         final char[] block = new char[blockSize];
         final ICharIn in = source.newCharIn();
-        return new OverlappedImmediateIteratorX<char[], IOException>() {
+        return new OverlappedIteratorMX<char[], IOException>() {
 
             @Override
             public char[] deoverlap(char[] o) {
                 return Arrays.copyOf(o, o.length);
             }
 
-            public char[] next()
+            public char[] _next()
                     throws IOException {
                 int off = 0;
                 int blockRemain = blockSize;
@@ -294,17 +295,17 @@ public class StreamReadPreparation
     @Override
     public IterableX<char[], IOException> charBlocks()
             throws IOException {
-        return new IterableX<char[], IOException>() {
+        return new AbstractIterableX<char[], IOException>() {
 
             @Override
-            public IteratorX<char[], IOException> iterator() {
-                ImmediateIteratorX<char[], IOException> immIter;
+            public IteratorX<char[], IOException> iteratorX() {
+                IteratorMX<char[], IOException> immIter;
                 try {
                     immIter = charBlocks(true);
                 } catch (IOException e) {
                     throw new IteratorTargetException(e);
                 }
-                return new ImmIterIterator<char[], IOException>(immIter);
+                return new IteratorM2X<char[], IOException>(immIter);
             }
 
         };
@@ -320,13 +321,13 @@ public class StreamReadPreparation
     }
 
     @Override
-    public ImmediateIteratorX<String, ? extends IOException> lines(boolean allowOverlap, boolean chopped)
+    public IteratorMX<String, ? extends IOException> lines(boolean allowOverlap, boolean chopped)
             throws IOException {
         if (chopped) {
             final BufferedReader bufferedReader = source.newBufferedReader();
-            return new AbstractImmediateIteratorX<String, IOException>() {
+            return new AbstractIteratorMX<String, IOException>() {
 
-                public String next()
+                public String _next()
                         throws IOException {
                     String line = bufferedReader.readLine();
                     if (line == null)
@@ -337,9 +338,9 @@ public class StreamReadPreparation
             };
         } else {
             final LineReader lineReader = source.newLineReader();
-            return new AbstractImmediateIteratorX<String, IOException>() {
+            return new AbstractIteratorMX<String, IOException>() {
 
-                public String next()
+                public String _next()
                         throws IOException {
                     String line = lineReader.readLine();
                     if (line == null)
@@ -354,17 +355,17 @@ public class StreamReadPreparation
     @Override
     public IterableX<String, IOException> lines(final boolean chopped)
             throws IOException {
-        return new IterableX<String, IOException>() {
+        return new AbstractIterableX<String, IOException>() {
 
             @Override
-            public IteratorX<String, IOException> iterator() {
-                ImmediateIteratorX<String, ? extends IOException> immIter;
+            public IteratorX<String, IOException> iteratorX() {
+                IteratorMX<String, ? extends IOException> immIter;
                 try {
                     immIter = lines(true, chopped);
                 } catch (IOException e) {
                     throw new IteratorTargetException(e);
                 }
-                return new ImmIterIterator<String, IOException>(immIter);
+                return new IteratorM2X<String, IOException>(immIter);
             }
 
         };

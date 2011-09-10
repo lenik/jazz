@@ -1,8 +1,13 @@
 package net.bodz.bas.collection.iterator;
 
-public interface IterableX<T, X extends Exception>
+import java.util.Iterator;
+
+public interface IterableX<T, X extends Throwable>
         extends Iterable<T> {
 
-    IteratorX<T, X> iterator();
+    @Override
+    Iterator<T> iterator();
+
+    IteratorX<T, X> iteratorX();
 
 }

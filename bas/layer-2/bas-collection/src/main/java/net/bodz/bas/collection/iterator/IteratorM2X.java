@@ -2,10 +2,12 @@ package net.bodz.bas.collection.iterator;
 
 import java.util.NoSuchElementException;
 
-public class ImmIterIterator<T, X extends Exception>
+import net.bodz.bas.util.exception.Err;
+
+public class IteratorM2X<T, X extends Throwable>
         implements IteratorX<T, X> {
 
-    private final ImmediateIteratorX<? extends T, ? extends X> immIter;
+    private final IteratorMX<? extends T, ? extends X> mx;
 
     private static final int UNKNOWN = 0;
     private static final int ITERATED = 1;
@@ -14,35 +16,31 @@ public class ImmIterIterator<T, X extends Exception>
 
     private T lastIteratedValue;
 
-    public ImmIterIterator(ImmediateIterableX<T, X> iterable, boolean allowOverlap)
-            throws IteratorTargetException {
-        if (iterable == null)
-            throw new NullPointerException("iterable");
-        try {
-            this.immIter = iterable.iterator(allowOverlap);
-        } catch (Exception e) {
-            throw new IteratorTargetException(e.getMessage(), e);
-        }
+    public IteratorM2X(IterableMX<T, X> mx, boolean allowOverlap) {
+        if (mx == null)
+            throw new NullPointerException("mx");
+        this.mx = mx.iterator(allowOverlap);
     }
 
-    public ImmIterIterator(ImmediateIteratorX<? extends T, ? extends X> immIter) {
-        if (immIter == null)
-            throw new NullPointerException("immIter");
-        this.immIter = immIter;
+    public IteratorM2X(IteratorMX<? extends T, ? extends X> mx) {
+        if (mx == null)
+            throw new NullPointerException("mx");
+        this.mx = mx;
     }
 
     @Override
-    public boolean hasNext() {
+    public boolean hasNext()
+            throws X {
         switch (state) {
         case UNKNOWN:
         default:
             try {
-                lastIteratedValue = immIter.next();
-            } catch (Exception e) {
-                throw new IteratorTargetException(e.getMessage(), e);
+                lastIteratedValue = mx._next();
+            } catch (Throwable e) {
+                throw Err.throwOrWrap(IteratorTargetException.class, e);
             }
             if (lastIteratedValue == null)
-                if (immIter.isEnded()) {
+                if (mx.isEnded()) {
                     state = ENDED;
                     return false;
                 }
@@ -55,17 +53,14 @@ public class ImmIterIterator<T, X extends Exception>
     }
 
     @Override
-    public T next() {
+    public T next()
+            throws X {
         switch (state) {
         case UNKNOWN:
         default:
-            try {
-                lastIteratedValue = immIter.next();
-            } catch (Exception e) {
-                throw new IteratorTargetException(e.getMessage(), e);
-            }
+            lastIteratedValue = mx._next();
             if (lastIteratedValue == null)
-                if (immIter.isEnded()) {
+                if (mx.isEnded()) {
                     state = ENDED;
                     throw new NoSuchElementException();
                 }

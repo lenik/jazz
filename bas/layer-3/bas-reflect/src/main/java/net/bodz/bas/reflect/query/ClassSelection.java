@@ -6,10 +6,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import net.bodz.bas.collection.iterator.AbstractImmediateIterableX;
-import net.bodz.bas.collection.iterator.AbstractImmediateIteratorX;
-import net.bodz.bas.collection.iterator.ImmIterIterator;
-import net.bodz.bas.collection.iterator.ImmediateIteratorX;
+import net.bodz.bas.collection.iterator.AbstractIterableMX;
+import net.bodz.bas.collection.iterator.AbstractIteratorMX;
+import net.bodz.bas.collection.iterator.IteratorM2X;
+import net.bodz.bas.collection.iterator.IteratorMX;
 import net.bodz.bas.collection.iterator.IteratorX;
 import net.bodz.bas.collection.util.IterableToList;
 
@@ -17,7 +17,7 @@ import net.bodz.bas.collection.util.IterableToList;
  * @test {@link ClassSelectionTest}
  */
 public class ClassSelection
-        extends AbstractImmediateIterableX<Class<?>, RuntimeException> {
+        extends AbstractIterableMX<Class<?>, RuntimeException> {
 
     private final Class<?> clazz;
 
@@ -86,8 +86,8 @@ public class ClassSelection
     }
 
     @Override
-    public IteratorX<Class<?>, RuntimeException> iterator() {
-        return new ImmIterIterator<Class<?>, RuntimeException>(this, true);
+    public IteratorX<Class<?>, RuntimeException> iteratorX() {
+        return new IteratorM2X<Class<?>, RuntimeException>(this, true);
     }
 
     public Class<?>[] toArray() {
@@ -99,7 +99,7 @@ public class ClassSelection
     }
 
     public boolean exists() {
-        return iterator(true).next() != null;
+        return iterator(true)._next() != null;
     }
 
     protected Class<?> stopClass;
@@ -127,7 +127,7 @@ public class ClassSelection
     }
 
     class Iter
-            extends AbstractImmediateIteratorX<Class<?>, RuntimeException> {
+            extends AbstractIteratorMX<Class<?>, RuntimeException> {
 
         Class<?> currentClass;
         boolean currentClassIterated;
@@ -144,7 +144,7 @@ public class ClassSelection
         }
 
         @Override
-        public Class<?> next()
+        public Class<?> _next()
                 throws RuntimeException {
             if (currentClass == null)
                 return end();
@@ -162,7 +162,7 @@ public class ClassSelection
                     }
                 currentClass = currentClass.getSuperclass();
                 currentClassIterated = false;
-                return next();
+                return _next();
             } else {
                 currentClassIterated = true;
                 if (stopClass != null && currentClass.isAssignableFrom(stopClass))
@@ -170,7 +170,7 @@ public class ClassSelection
                 if (withInterfaces)
                     for (Class<?> iface : currentClass.getInterfaces())
                         interfaceQueue.add(iface);
-                return test(currentClass) ? currentClass : next();
+                return test(currentClass) ? currentClass : _next();
             }
         }
 
@@ -185,7 +185,7 @@ public class ClassSelection
     }
 
     @Override
-    public ImmediateIteratorX<? extends Class<?>, ? extends RuntimeException> iterator(boolean allowOverlap)
+    public IteratorMX<? extends Class<?>, ? extends RuntimeException> iterator(boolean allowOverlap)
             throws RuntimeException {
         return new Iter();
     }

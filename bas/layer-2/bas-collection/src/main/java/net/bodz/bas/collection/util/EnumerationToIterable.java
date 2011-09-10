@@ -3,8 +3,8 @@ package net.bodz.bas.collection.util;
 import java.util.Enumeration;
 import java.util.Iterator;
 
-import net.bodz.bas.collection.iterator.ImmediateIterableX;
-import net.bodz.bas.collection.iterator.ImmediateIteratorX;
+import net.bodz.bas.collection.iterator.IterableMX;
+import net.bodz.bas.collection.iterator.IteratorMX;
 import net.bodz.bas.collection.iterator.IteratorTargetException;
 import net.bodz.bas.collection.iterator.IteratorX;
 
@@ -32,18 +32,18 @@ public class EnumerationToIterable<T>
         return new EnumerationToIterable<T>(enumeration);
     }
 
-    public static <T, X extends Exception> ImmediateIterableX<T, X> toImmediateIterable(
+    public static <T, X extends Exception> IterableMX<T, X> toImmediateIterable(
             final Enumeration<T> enumeration, final boolean isOverlapped, final Class<X> exceptionType) {
-        return new ImmediateIterableX<T, X>() {
+        return new IterableMX<T, X>() {
             @Override
-            public ImmediateIteratorX<? extends T, ? extends X> iterator(boolean allowOverlap)
+            public IteratorMX<? extends T, ? extends X> iterator(boolean allowOverlap)
                     throws X {
                 final boolean resultOverlap = isOverlapped;
                 if (isOverlapped) {
                     if (!allowOverlap)
                         throw new UnsupportedOperationException();
                 }
-                return EnumerationToIterator.toImmediateIterator(enumeration, resultOverlap, exceptionType);
+                return EnumerationToIterator.toIteratorMX(enumeration, resultOverlap, exceptionType);
             }
 
             @Override

@@ -25,8 +25,8 @@ import java.nio.charset.Charset;
 import java.util.List;
 
 import net.bodz.bas.closure.IFilter;
-import net.bodz.bas.collection.iterator.EmptyImmediateIteratorX;
-import net.bodz.bas.collection.iterator.ImmediateIteratorX;
+import net.bodz.bas.collection.iterator.EmptyIteratorMX;
+import net.bodz.bas.collection.iterator.IteratorMX;
 import net.bodz.bas.collection.util.IteratorToList;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.io.resource.IStreamInputSource;
@@ -279,9 +279,9 @@ public abstract class AbstractFile
      * @def Return an empty iterator.
      */
     @Override
-    public ImmediateIteratorX<? extends IFile, VFSException> childIterator(IFilter<String> nameFilter)
+    public IteratorMX<? extends IFile, VFSException> childIterator(IFilter<String> nameFilter)
             throws VFSException {
-        return EmptyImmediateIteratorX.getInstance();
+        return EmptyIteratorMX.getInstance();
     }
 
     /**
