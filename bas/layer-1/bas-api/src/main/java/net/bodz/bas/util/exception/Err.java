@@ -1,8 +1,10 @@
 package net.bodz.bas.util.exception;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 
 import net.bodz.bas.err.RuntimizedException;
+import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.NoSuchFieldException;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
@@ -70,6 +72,20 @@ public class Err {
             Jdk7Reflect.set(detailMessageField, t, mesg);
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
+        }
+    }
+
+    public static <E extends RuntimeException> E throwOrWrap(Class<E> wrapperClass, Throwable e) {
+        if (e instanceof Error)
+            throw (Error) e;
+        if (e instanceof RuntimeException)
+            throw (RuntimeException) e;
+        try {
+            Constructor<E> wrapperCtor = Jdk7Reflect.getConstructor(wrapperClass, String.class, Throwable.class);
+            E wrapped = Jdk7Reflect.newInstance(wrapperCtor, e.getMessage(), e);
+            return wrapped;
+        } catch (ReflectiveOperationException _roe) {
+            throw new UnexpectedException(_roe.getMessage(), _roe);
         }
     }
 
