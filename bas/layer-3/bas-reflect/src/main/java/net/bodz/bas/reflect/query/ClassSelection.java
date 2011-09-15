@@ -6,18 +6,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import net.bodz.bas.collection.iterator.AbstractIterableMX;
-import net.bodz.bas.collection.iterator.AbstractIteratorMX;
-import net.bodz.bas.collection.iterator.IteratorM2X;
-import net.bodz.bas.collection.iterator.IteratorMX;
-import net.bodz.bas.collection.iterator.IteratorX;
-import net.bodz.bas.collection.util.IterableToList;
+import net.bodz.bas.util.iter.AbstractMitablex;
+import net.bodz.bas.util.iter.AbstractMitorx;
+import net.bodz.bas.util.iter.Iterables;
+import net.bodz.bas.util.iter.Mitorx;
 
 /**
  * @test {@link ClassSelectionTest}
  */
 public class ClassSelection
-        extends AbstractIterableMX<Class<?>, RuntimeException> {
+        extends AbstractMitablex<Class<?>, RuntimeException> {
 
     private final Class<?> clazz;
 
@@ -85,17 +83,12 @@ public class ClassSelection
         return this;
     }
 
-    @Override
-    public IteratorX<Class<?>, RuntimeException> iteratorX() {
-        return new IteratorM2X<Class<?>, RuntimeException>(this, true);
-    }
-
     public Class<?>[] toArray() {
         return toList().toArray(new Class<?>[0]);
     }
 
     public List<? extends Class<?>> toList() {
-        return IterableToList.toList(this);
+        return Iterables.toList(this);
     }
 
     public boolean exists() {
@@ -127,7 +120,7 @@ public class ClassSelection
     }
 
     class Iter
-            extends AbstractIteratorMX<Class<?>, RuntimeException> {
+            extends AbstractMitorx<Class<?>, RuntimeException> {
 
         Class<?> currentClass;
         boolean currentClassIterated;
@@ -185,7 +178,7 @@ public class ClassSelection
     }
 
     @Override
-    public IteratorMX<? extends Class<?>, ? extends RuntimeException> iterator(boolean allowOverlap)
+    public Mitorx<? extends Class<?>, ? extends RuntimeException> iterator(boolean allowOverlap)
             throws RuntimeException {
         return new Iter();
     }

@@ -6,7 +6,7 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import net.bodz.bas.collection.iterator.WeaveIterator;
+import net.bodz.bas.util.iter.WeaveIterator;
 
 public abstract class DerSortedMap<K, V>
         extends DerMap<K, V>

@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.bodz.bas.closure.IExecutableX;
 import net.bodz.bas.collection.map.IndexMap;
+import net.bodz.bas.util.arch.IExecutableX;
 
 public abstract class AbstractUserInterface
         implements UserInterface {
@@ -87,9 +87,10 @@ public abstract class AbstractUserInterface
         return index == null ? -1 : index;
     }
 
+    @SafeVarargs
     @Override
-    public <K> Set<K> choices(String title, Map<K, ?> candidates, K... initial) {
-        return choices(title, title, candidates, initial);
+    public final <K> Set<K> choices(String title, Map<K, ?> candidates, K... initial) {
+        return choices(title, null, candidates, initial);
     }
 
     @Override

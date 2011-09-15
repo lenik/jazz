@@ -1,6 +1,6 @@
 package net.bodz.bas.context;
 
-import net.bodz.bas.closure.IExecutableX;
+import net.bodz.bas.util.arch.IExecutableX;
 
 /**
  * XXX - not implemented well!

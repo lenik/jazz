@@ -3,12 +3,12 @@ package net.bodz.bas.flow.units.builtin.sources;
 import java.io.IOException;
 import java.io.Reader;
 
-import net.bodz.bas.collection.iterator.IteratorMX;
 import net.bodz.bas.flow.units.SOSourceUnit;
 import net.bodz.bas.flow.units.builtin.DefaultConfig;
 import net.bodz.bas.io.resource.builtin.ReaderSource;
 import net.bodz.bas.io.resource.preparation.IStreamReadPreparation;
 import net.bodz.bas.meta.codereview.GeneratedByCopyPaste;
+import net.bodz.bas.util.iter.Mitorx;
 
 public class ReaderSourceUnit
         extends SOSourceUnit {
@@ -16,7 +16,7 @@ public class ReaderSourceUnit
     private final IStreamReadPreparation readPreparation;
     private final boolean allowOverlap;
 
-    private IteratorMX<char[], ? extends IOException> blocks;
+    private Mitorx<char[], ? extends IOException> blocks;
 
     public ReaderSourceUnit(Reader in, boolean allowOverlap, int blockSize)
             throws IOException {

@@ -16,7 +16,6 @@ import javax.script.ScriptException;
 
 import net.bodz.bas.cli.ext.CLIPlugin;
 import net.bodz.bas.cli.ext.CLIPlugins;
-import net.bodz.bas.closure.IExecutableVarArgsX;
 import net.bodz.bas.context.clg.SystemCLG;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.NotImplementedException;
@@ -46,6 +45,7 @@ import net.bodz.bas.ui.ConsoleUI;
 import net.bodz.bas.ui.UserInterface;
 import net.bodz.bas.util.PluginException;
 import net.bodz.bas.util.PluginTypeEx;
+import net.bodz.bas.util.arch.IExecutableVarArgsX;
 import net.bodz.bas.util.loader.ClassResource;
 import net.bodz.bas.util.string.StringArray;
 

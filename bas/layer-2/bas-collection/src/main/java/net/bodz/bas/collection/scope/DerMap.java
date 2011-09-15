@@ -8,8 +8,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import net.bodz.bas.collection.iterator.ConcatIterator;
-import net.bodz.bas.collection.iterator.PrefetchedIterator;
+import net.bodz.bas.util.iter.Iterators;
+import net.bodz.bas.util.iter.PrefetchedIterator;
 
 /**
  * @test DerMapTest
@@ -199,7 +199,7 @@ public abstract class DerMap<K, V>
 
         @Override
         public Iterator<Entry<K, V>> iterator() {
-            Iterator<Entry<K, V>> pqItr = new ConcatIterator<Entry<K, V>>(//
+            Iterator<Entry<K, V>> pqItr = Iterators.concat(//
                     new PIterator(), //
                     qMap.entrySet().iterator());
             return pqItr;

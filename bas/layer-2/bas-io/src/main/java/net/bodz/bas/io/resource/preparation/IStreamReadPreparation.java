@@ -4,9 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
-import net.bodz.bas.collection.iterator.IteratorMX;
-import net.bodz.bas.collection.iterator.IterableX;
-import net.bodz.bas.collection.iterator.IteratorTargetException;
+import net.bodz.bas.util.iter.IteratorTargetException;
+import net.bodz.bas.util.iter.Mitorx;
 
 public interface IStreamReadPreparation
         extends Cloneable {
@@ -67,13 +66,13 @@ public interface IStreamReadPreparation
      *             If file doesn't exist.
      * @throws IOException
      */
-    IteratorMX<byte[], ? extends IOException> byteBlocks(boolean allowOverlap)
+    Mitorx<byte[], ? extends IOException> byteBlocks(boolean allowOverlap)
             throws IOException;
 
     /**
      * @return Overlap-allowed{@link Iterable} which may throw {@link IteratorTargetException}.
      */
-    IterableX<byte[], IOException> byteBlocks()
+    Iterable<byte[]> byteBlocks()
             throws IOException;
 
     /**
@@ -89,14 +88,13 @@ public interface IStreamReadPreparation
      *             If file doesn't exist.
      * @throws IOException
      */
-    IteratorMX<char[], ? extends IOException> charBlocks(boolean allowOverlap)
+    Mitorx<char[], ? extends IOException> charBlocks(boolean allowOverlap)
             throws IOException;
 
     /**
      * @return Overlap-allowed{@link Iterable} which may throw {@link IteratorTargetException}.
      */
-    IterableX<char[], IOException> charBlocks()
-            throws IOException;
+    Iterable<char[]> charBlocks();
 
     /**
      * @throws FileNotFoundException
@@ -113,14 +111,13 @@ public interface IStreamReadPreparation
      *             If file doesn't exist.
      * @throws IOException
      */
-    IteratorMX<String, ? extends IOException> lines(boolean allowOverlap, boolean chopped)
+    Mitorx<String, ? extends IOException> lines(boolean allowOverlap, boolean chopped)
             throws IOException;
 
     /**
      * @return Overlap-allowed {@link Iterable} which may throw {@link IteratorTargetException}.
      */
-    IterableX<String, IOException> lines(boolean chopped)
-            throws IOException;
+    Iterable<String> lines(boolean chopped);
 
     /**
      * @throws FileNotFoundException

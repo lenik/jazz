@@ -10,9 +10,9 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-import net.bodz.bas.collection.iterator.ArrayIterator;
-import net.bodz.bas.collection.iterator.PrefetchedIterator;
-import net.bodz.bas.collection.iterator.StackedIterator;
+import net.bodz.bas.util.iter.Iterators;
+import net.bodz.bas.util.iter.PrefetchedIterator;
+import net.bodz.bas.util.iter.StackedIterator;
 
 public class FileFinder
         implements Iterable<File> {
@@ -113,7 +113,7 @@ public class FileFinder
 
     public void setOrder(int order) {
         if (0 != (order & DIR_POST))
-            throw new UnsupportedOperationException("DIR_POST"); 
+            throw new UnsupportedOperationException("DIR_POST");
         this.order = order;
     }
 
@@ -131,7 +131,7 @@ public class FileFinder
         StackedIterator<File> stack;
 
         public RecIter() {
-            Iterator<File> startIter = ArrayIterator.getInstance(startFiles);
+            Iterator<File> startIter = Iterators.iterate(startFiles);
             stack = new StackedIterator<File>(startIter);
         }
 
@@ -149,7 +149,7 @@ public class FileFinder
                 if (children.length > 0) {
                     if (comparator != null)
                         Arrays.sort(children, comparator);
-                    Iterator<File> citer = ArrayIterator.getInstance(children);
+                    Iterator<File> citer = Iterators.iterate(children);
                     stack.push(citer);
                 }
             }

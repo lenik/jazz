@@ -2,8 +2,8 @@ package net.bodz.bas.db.filedb;
 
 import java.io.IOException;
 
-import net.bodz.bas.collection.iterator.IteratorMX;
 import net.bodz.bas.io.resource.builtin.URLResource;
+import net.bodz.bas.util.iter.Mitorx;
 import net.bodz.bas.util.loader.ClassResource;
 
 import org.junit.Assert;
@@ -17,7 +17,7 @@ public class CSVRecordsTest
             throws IOException {
         URLResource classData = ClassResource.classData(getClass(), "1");
         CSVRecords csv = new CSVRecords(classData);
-        IteratorMX<? extends String[], IOException> it = csv.iterator(true);
+        Mitorx<? extends String[], IOException> it = csv.iterator(true);
         String[] head = it._next();
         assertEquals(3, head.length);
         assertEquals("name", head[0]);

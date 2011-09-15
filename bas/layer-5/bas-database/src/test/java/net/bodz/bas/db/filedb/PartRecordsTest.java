@@ -6,9 +6,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import net.bodz.bas.collection.iterator.IteratorMX;
 import net.bodz.bas.db.filedb.PartRecords.PartMap;
 import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.util.iter.Mitorx;
 import net.bodz.bas.util.loader.ClassResource;
 
 import org.junit.Assert;
@@ -43,7 +43,7 @@ public class PartRecordsTest
             throws IOException {
         IStreamInputSource source = ClassResource.classData(getClass(), "1");
         PartRecords maps = new PartRecords(source);
-        IteratorMX<? extends PartMap, ? extends IOException> it = maps.iterator(false);
+        Mitorx<? extends PartMap, ? extends IOException> it = maps.iterator(false);
         PartMap part;
 
         part = it._next();

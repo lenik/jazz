@@ -37,8 +37,9 @@ public abstract class AbstractPreorder<T>
         return precompare(o1, o2) == LESS_THAN;
     }
 
+    @SafeVarargs
     @Override
-    public T meet(T... array) {
+    public final T meet(T... array) {
         if (array == null)
             throw new NullPointerException("array");
         if (array.length == 0)

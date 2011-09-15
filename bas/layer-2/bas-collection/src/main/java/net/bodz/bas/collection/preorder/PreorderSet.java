@@ -3,7 +3,7 @@ package net.bodz.bas.collection.preorder;
 import java.util.Iterator;
 import java.util.TreeSet;
 
-import net.bodz.bas.collection.iterator.PrefetchedIterator;
+import net.bodz.bas.util.iter.PrefetchedIterator;
 
 public abstract class PreorderSet<E>
         extends TreeSet<E> {

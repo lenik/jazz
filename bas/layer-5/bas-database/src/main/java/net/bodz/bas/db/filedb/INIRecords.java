@@ -5,12 +5,12 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.TreeMap;
 
-import net.bodz.bas.collection.iterator.AbstractIteratorMX;
-import net.bodz.bas.collection.iterator.IteratorMX;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
+import net.bodz.bas.util.iter.AbstractMitorx;
+import net.bodz.bas.util.iter.Mitorx;
 
 public class INIRecords
         extends MapResRecords<String, String> {
@@ -56,7 +56,7 @@ public class INIRecords
     }
 
     class Iter
-            extends AbstractIteratorMX<Map<String, String>, IOException> {
+            extends AbstractMitorx<Map<String, String>, IOException> {
 
         private LineReader lineReader;
         private String sectionName = null;
@@ -109,8 +109,7 @@ public class INIRecords
     }
 
     @Override
-    public IteratorMX<? extends Map<String, String>, ? extends IOException> iterator(boolean allowOverlap)
-            throws IOException {
+    public Mitorx<? extends Map<String, String>, ? extends IOException> iterator(boolean allowOverlap) {
         return new Iter();
     }
 

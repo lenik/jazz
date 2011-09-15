@@ -4,7 +4,7 @@ import java.util.AbstractCollection;
 import java.util.Collection;
 import java.util.Iterator;
 
-import net.bodz.bas.collection.iterator.ConcatIterator;
+import net.bodz.bas.util.iter.Iterators;
 
 public class DerCollection<E>
         extends AbstractCollection<E> {
@@ -58,7 +58,7 @@ public class DerCollection<E>
             return local.iterator();
         if (local == null)
             return parent.iterator();
-        Iterator<E> concat = new ConcatIterator<E>(parent.iterator(), local.iterator());
+        Iterator<E> concat = Iterators.concat(parent.iterator(), local.iterator());
         return concat;
     }
 

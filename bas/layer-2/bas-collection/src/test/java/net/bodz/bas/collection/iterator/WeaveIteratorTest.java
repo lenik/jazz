@@ -2,6 +2,7 @@ package net.bodz.bas.collection.iterator;
 
 import java.util.Iterator;
 
+import net.bodz.bas.util.iter.WeaveIterator;
 import net.bodz.bas.util.primitive.IntegerComparator;
 
 import org.junit.Test;

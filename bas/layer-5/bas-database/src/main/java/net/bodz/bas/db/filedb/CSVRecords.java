@@ -2,12 +2,10 @@ package net.bodz.bas.db.filedb;
 
 import java.io.IOException;
 
-import net.bodz.bas.collection.iterator.AbstractIteratorMX;
-import net.bodz.bas.collection.iterator.IteratorM2X;
-import net.bodz.bas.collection.iterator.IteratorMX;
-import net.bodz.bas.collection.iterator.IteratorX;
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.util.iter.AbstractMitorx;
+import net.bodz.bas.util.iter.Mitorx;
 
 public class CSVRecords
         extends _ResRecords<String[]> {
@@ -35,7 +33,7 @@ public class CSVRecords
     }
 
     class Iter
-            extends AbstractIteratorMX<String[], IOException> {
+            extends AbstractMitorx<String[], IOException> {
 
         private LineReader lineReader;
 
@@ -61,14 +59,8 @@ public class CSVRecords
     }
 
     @Override
-    public IteratorMX<String[], IOException> iterator(boolean allowOverlap) {
+    public Mitorx<String[], IOException> iterator(boolean allowOverlap) {
         return new Iter();
-    }
-
-    @Override
-    public IteratorX<String[], IOException> iteratorX() {
-        IteratorMX<String[], IOException> immIter = iterator(false);
-        return new IteratorM2X<String[], IOException>(immIter);
     }
 
 }

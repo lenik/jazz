@@ -3,6 +3,8 @@ package net.bodz.bas.collection.iterator;
 import java.util.Arrays;
 import java.util.Iterator;
 
+import net.bodz.bas.util.iter.NestedIterator;
+
 import org.junit.Assert;
 import org.junit.Test;
 

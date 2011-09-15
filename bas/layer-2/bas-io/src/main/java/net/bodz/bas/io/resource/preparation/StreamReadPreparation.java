@@ -5,23 +5,20 @@ import java.io.ByteArrayOutputStream;
 import java.io.CharArrayWriter;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
-import net.bodz.bas.collection.iterator.AbstractIterableX;
-import net.bodz.bas.collection.iterator.AbstractIteratorMX;
-import net.bodz.bas.collection.iterator.IterableX;
-import net.bodz.bas.collection.iterator.IteratorM2X;
-import net.bodz.bas.collection.iterator.IteratorMX;
-import net.bodz.bas.collection.iterator.IteratorTargetException;
-import net.bodz.bas.collection.iterator.IteratorX;
-import net.bodz.bas.collection.iterator.OverlappedIteratorMX;
-import net.bodz.bas.collection.util.IteratorToList;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.meta.codereview.GeneratedByCopyPaste;
 import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.ICharIn;
+import net.bodz.bas.util.iter.AbstractMitorx;
+import net.bodz.bas.util.iter.IteratorTargetException;
+import net.bodz.bas.util.iter.Iterators;
+import net.bodz.bas.util.iter.Mitorx;
+import net.bodz.bas.util.iter.OverlappedMitor;
 
 public class StreamReadPreparation
         implements IStreamReadPreparation {
@@ -170,11 +167,11 @@ public class StreamReadPreparation
         return buffer.toString();
     }
 
-    public IteratorMX<byte[], IOException> byteBlocks(final boolean allowOverlap)
+    public Mitorx<byte[], IOException> byteBlocks(final boolean allowOverlap)
             throws IOException {
         final byte[] block = new byte[blockSize];
         final IByteIn in = source.newByteIn();
-        return new OverlappedIteratorMX<byte[], IOException>() {
+        return new OverlappedMitor<byte[], IOException>() {
 
             @Override
             public byte[] deoverlap(byte[] o) {
@@ -216,19 +213,19 @@ public class StreamReadPreparation
     }
 
     @Override
-    public IterableX<byte[], IOException> byteBlocks()
+    public Iterable<byte[]> byteBlocks()
             throws IOException {
-        return new AbstractIterableX<byte[], IOException>() {
+        return new Iterable<byte[]>() {
 
             @Override
-            public IteratorX<byte[], IOException> iteratorX() {
-                IteratorMX<byte[], IOException> immIter;
+            public Iterator<byte[]> iterator() {
+                Mitorx<byte[], IOException> mitor;
                 try {
-                    immIter = byteBlocks(true);
+                    mitor = byteBlocks(true);
                 } catch (IOException e) {
                     throw new IteratorTargetException(e);
                 }
-                return new IteratorM2X<byte[], IOException>(immIter);
+                return Iterators.convert(mitor);
             }
 
         };
@@ -236,18 +233,18 @@ public class StreamReadPreparation
 
     public List<byte[]> listByteBlocks(int maxBlocks)
             throws IOException {
-        return IteratorToList.toListLimited(byteBlocks(false), maxBlocks);
+        return Iterators.toListLimited(byteBlocks(false), maxBlocks);
     }
 
     /**
      * @seecopy {@link #byteBlocks(boolean)}
      */
     @GeneratedByCopyPaste
-    public IteratorMX<char[], IOException> charBlocks(final boolean allowOverlap)
+    public Mitorx<char[], IOException> charBlocks(final boolean allowOverlap)
             throws IOException {
         final char[] block = new char[blockSize];
         final ICharIn in = source.newCharIn();
-        return new OverlappedIteratorMX<char[], IOException>() {
+        return new OverlappedMitor<char[], IOException>() {
 
             @Override
             public char[] deoverlap(char[] o) {
@@ -293,19 +290,18 @@ public class StreamReadPreparation
      */
     @GeneratedByCopyPaste
     @Override
-    public IterableX<char[], IOException> charBlocks()
-            throws IOException {
-        return new AbstractIterableX<char[], IOException>() {
+    public Iterable<char[]> charBlocks() {
+        return new Iterable<char[]>() {
 
             @Override
-            public IteratorX<char[], IOException> iteratorX() {
-                IteratorMX<char[], IOException> immIter;
+            public Iterator<char[]> iterator() {
+                Mitorx<char[], IOException> immIter;
                 try {
                     immIter = charBlocks(true);
                 } catch (IOException e) {
                     throw new IteratorTargetException(e);
                 }
-                return new IteratorM2X<char[], IOException>(immIter);
+                return Iterators.convert(immIter);
             }
 
         };
@@ -317,15 +313,15 @@ public class StreamReadPreparation
     @GeneratedByCopyPaste
     public List<char[]> listCharBlocks(int maxBlocks)
             throws IOException {
-        return IteratorToList.toListLimited(charBlocks(false), maxBlocks);
+        return Iterators.toListLimited(charBlocks(false), maxBlocks);
     }
 
     @Override
-    public IteratorMX<String, ? extends IOException> lines(boolean allowOverlap, boolean chopped)
+    public Mitorx<String, ? extends IOException> lines(boolean allowOverlap, boolean chopped)
             throws IOException {
         if (chopped) {
             final BufferedReader bufferedReader = source.newBufferedReader();
-            return new AbstractIteratorMX<String, IOException>() {
+            return new AbstractMitorx<String, IOException>() {
 
                 public String _next()
                         throws IOException {
@@ -338,7 +334,7 @@ public class StreamReadPreparation
             };
         } else {
             final LineReader lineReader = source.newLineReader();
-            return new AbstractIteratorMX<String, IOException>() {
+            return new AbstractMitorx<String, IOException>() {
 
                 public String _next()
                         throws IOException {
@@ -353,19 +349,18 @@ public class StreamReadPreparation
     }
 
     @Override
-    public IterableX<String, IOException> lines(final boolean chopped)
-            throws IOException {
-        return new AbstractIterableX<String, IOException>() {
+    public Iterable<String> lines(final boolean chopped) {
+        return new Iterable<String>() {
 
             @Override
-            public IteratorX<String, IOException> iteratorX() {
-                IteratorMX<String, ? extends IOException> immIter;
+            public Iterator<String> iterator() {
+                Mitorx<String, ? extends IOException> mitor;
                 try {
-                    immIter = lines(true, chopped);
+                    mitor = lines(true, chopped);
                 } catch (IOException e) {
                     throw new IteratorTargetException(e);
                 }
-                return new IteratorM2X<String, IOException>(immIter);
+                return Iterators.convert(mitor);
             }
 
         };
@@ -374,13 +369,13 @@ public class StreamReadPreparation
     @Override
     public List<String> listLines()
             throws IOException {
-        return IteratorToList.toList(lines(false, false));
+        return Iterators.toList(lines(false, false));
     }
 
     @Override
     public List<String> listLines(boolean chopped, int maxLines)
             throws IOException {
-        return IteratorToList.toListLimited(lines(false, chopped), maxLines);
+        return Iterators.toListLimited(lines(false, chopped), maxLines);
     }
 
 }
