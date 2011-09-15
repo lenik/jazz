@@ -6,11 +6,27 @@ import java.util.NoSuchElementException;
 
 import net.bodz.bas.collection.list.DyingList;
 import net.bodz.bas.collection.list.SortedList;
+import net.bodz.bas.util.order.ComparableComparator;
 
-/**
- * Merge of sorted-iterator
- */
-public class WeaveIterator<T>
+public class Iterators2
+        extends Iterators {
+
+    /**
+     * Merge of sorted-iterator
+     */
+    @SafeVarargs
+    public static <T> Iterator<T> weave(Comparator<? super T> cmp, Iterator<T>... iterators) {
+        return new WeaveIterator<T>(cmp, iterators);
+    }
+
+    @SafeVarargs
+    public static <T> Iterator<T> weave(Iterator<T>... iterators) {
+        return weave(ComparableComparator.getRawInstance(), iterators);
+    }
+
+}
+
+class WeaveIterator<T>
         implements Iterator<T> {
 
     private static class ItrNxt<T> {
@@ -57,13 +73,7 @@ public class WeaveIterator<T>
 
     private Iterator<T> lastIterator;
 
-    @SuppressWarnings("unchecked")
-    public WeaveIterator(Comparator<? super T> cmp, Iterator<T> itr1, Iterator<T> itr2) {
-        this(cmp, (Iterator<T>[]) (new Iterator<?>[] { itr1, itr2 }));
-    }
-
-    @SafeVarargs
-    public WeaveIterator(Comparator<? super T> cmp, Iterator<T>... iterators) {
+    public WeaveIterator(Comparator<? super T> cmp, Iterator<T>[] iterators) {
         if (cmp == null)
             throw new NullPointerException("cmp");
         if (iterators == null)

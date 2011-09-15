@@ -9,7 +9,6 @@ public abstract class Filt_<T, V>
         return filter(args);
     }
 
-    @SuppressWarnings("unchecked")
-    public abstract T filter(V... args);
+    public abstract T filter(@SuppressWarnings("unchecked") V... args);
 
 }

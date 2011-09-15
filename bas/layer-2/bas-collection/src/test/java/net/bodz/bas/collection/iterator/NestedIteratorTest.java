@@ -19,7 +19,6 @@ public class NestedIteratorTest
         return Arrays.asList(array).iterator();
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     public void test1()
             throws Exception {

@@ -6,7 +6,8 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import net.bodz.bas.util.iter.WeaveIterator;
+import net.bodz.bas.util.iter.Iterators2;
+import net.bodz.bas.util.order.EntryKeyComparator;
 
 public abstract class DerSortedMap<K, V>
         extends DerMap<K, V>
@@ -76,28 +77,12 @@ public abstract class DerSortedMap<K, V>
         return new TreeMap<K, V>(this).tailMap(fromKey);
     }
 
-    class EntryCmp
-            implements Comparator<Entry<K, V>> {
-
-        Comparator<? super K> cmp = comparator();
-
-        @Override
-        public int compare(Entry<K, V> a, Entry<K, V> b) {
-            assert a != null;
-            assert b != null;
-            K ak = a.getKey();
-            K bk = b.getKey();
-            return cmp.compare(ak, bk);
-        }
-
-    }
-
     class SortedEntrySet
             extends EntrySet {
 
         @Override
         public Iterator<Entry<K, V>> iterator() {
-            return new WeaveIterator<Entry<K, V>>(new EntryCmp(), //
+            return Iterators2.weave(new EntryKeyComparator<K, V>(comparator()), //
                     new PIterator(), //
                     qsm.entrySet().iterator());
         }

@@ -21,6 +21,7 @@ import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.control.ControlBreak;
+import net.bodz.bas.lang.control.ControlExit;
 import net.bodz.bas.loader.boot.BootInfo;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.api.Logger;
@@ -466,7 +467,7 @@ public class BasicCLI
      */
     protected void _exit()
             throws Exception {
-        throw new ControlBreak("exit");
+        throw new ControlExit();
     }
 
     /**

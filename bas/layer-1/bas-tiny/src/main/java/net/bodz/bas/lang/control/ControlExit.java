@@ -1,7 +1,7 @@
 package net.bodz.bas.lang.control;
 
 public class ControlExit
-        extends Control {
+        extends ControlBreak {
 
     private static final long serialVersionUID = 1L;
 

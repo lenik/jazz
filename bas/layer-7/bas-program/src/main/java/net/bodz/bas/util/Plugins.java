@@ -2,7 +2,7 @@ package net.bodz.bas.util;
 
 import java.util.Map.Entry;
 
-import net.bodz.bas.collection.preorder.TypeHierMap;
+import net.bodz.bas.collection.preorder.SriTypeMap;
 import net.bodz.bas.err.CreateException;
 
 public class Plugins {
@@ -10,10 +10,10 @@ public class Plugins {
     /**
      * base-type -> category
      */
-    protected TypeHierMap<PluginCategory> categories;
+    protected SriTypeMap<PluginCategory> categories;
 
     public Plugins() {
-        categories = new TypeHierMap<PluginCategory>();
+        categories = new SriTypeMap<PluginCategory>();
     }
 
     public boolean registerCategory(PluginCategory category) {

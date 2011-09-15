@@ -9,11 +9,10 @@ layer-0/ 系统兼容层，系统周边环境准备
     
 layer-1/ 核心语言增强与语言工具
     bas-cdata
-    bas-api
+    bas-tiny
     bas-sugar
     bas-meta
     bas-helper
-    bas-lang
     bas-test
     bas-traits
     

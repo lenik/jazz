@@ -2,8 +2,7 @@ package net.bodz.bas.util.arch;
 
 public interface IExecutableVarArgsX<T, X extends Throwable> {
 
-    @SuppressWarnings("unchecked")
-    void execute(T... args)
+    void execute(@SuppressWarnings("unchecked") T... args)
             throws X;
 
 }

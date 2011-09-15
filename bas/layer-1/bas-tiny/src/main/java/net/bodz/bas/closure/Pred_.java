@@ -9,7 +9,6 @@ public abstract class Pred_<V>
         return test(args);
     }
 
-    @SuppressWarnings("unchecked")
-    public abstract boolean test(V... args);
+    public abstract boolean test(@SuppressWarnings("unchecked") V... args);
 
 }
