@@ -3,12 +3,12 @@ package net.bodz.bas.vfs.impl.javaio;
 import java.io.File;
 import java.io.FilenameFilter;
 
-import net.bodz.bas.closure.IFilter;
-import net.bodz.bas.collection.iterator.AbstractIteratorMX;
-import net.bodz.bas.collection.iterator.IteratorMX;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
+import net.bodz.bas.util.arch.IFilter;
+import net.bodz.bas.util.iter.AbstractMitorx;
+import net.bodz.bas.util.iter.Mitorx;
 import net.bodz.bas.vfs.AbstractFile;
 import net.bodz.bas.vfs.IFsTree;
 import net.bodz.bas.vfs.VFSException;
@@ -165,7 +165,7 @@ public class JavaioFile
      * 
      */
     @Override
-    public IteratorMX<? extends JavaioFile, VFSException> childIterator(final IFilter<String> entryNameFilter) {
+    public Mitorx<? extends JavaioFile, VFSException> childIterator(final IFilter<String> entryNameFilter) {
         final String[] list;
         if (entryNameFilter == null)
             list = jdkFile.list();
@@ -177,7 +177,7 @@ public class JavaioFile
                 }
             });
 
-        return new AbstractIteratorMX<JavaioFile, VFSException>() {
+        return new AbstractMitorx<JavaioFile, VFSException>() {
 
             int index = 0;
 

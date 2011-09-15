@@ -1,9 +1,9 @@
 package net.bodz.bas.unitperf.oats;
 
-import net.bodz.bas.collection.iterator.ImmediateIteratorX;
+import net.bodz.bas.util.iter.Mitorx;
 
 public interface ArrayTestingStrategy {
 
-    ImmediateIteratorX<int[], RuntimeException> getVectors(int... componentLevels);
+    Mitorx<int[], RuntimeException> getVectors(int... componentLevels);
 
 }

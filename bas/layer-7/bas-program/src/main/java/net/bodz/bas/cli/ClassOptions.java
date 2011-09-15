@@ -17,12 +17,12 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import net.bodz.bas.collection.preorder.PrefixMap;
-import net.bodz.bas.collection.util.IterableToList;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.meta.program.Option;
 import net.bodz.bas.meta.program.OptionGroup;
 import net.bodz.bas.util.Pair;
+import net.bodz.bas.util.iter.Iterables;
 import net.bodz.bas.valtype.util.TypeChain;
 
 public class ClassOptions<CT> {
@@ -163,7 +163,7 @@ public class ClassOptions<CT> {
             name = name.substring(3);
         if (all.containsKey(name))
             return (_Option<Object>) all.get(name);
-        List<String> fullnames = IterableToList.toList(all.ceilingKeys(name));
+        List<String> fullnames = Iterables.toList(all.ceilingKeys(name));
         if (fullnames.isEmpty())
             throw new CLIException("no such option: " + name);
         if (fullnames.size() > 1) {

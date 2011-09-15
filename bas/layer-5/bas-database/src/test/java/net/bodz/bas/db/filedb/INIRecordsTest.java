@@ -5,8 +5,8 @@ import static net.bodz.bas.db.filedb.PartRecordsTest.map2str;
 import java.io.IOException;
 import java.util.Map;
 
-import net.bodz.bas.collection.iterator.IteratorMX;
 import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.util.iter.Mitorx;
 import net.bodz.bas.util.loader.ClassResource;
 
 import org.junit.Assert;
@@ -27,7 +27,7 @@ public class INIRecordsTest
     public void testByGroup()
             throws IOException {
         INIRecords records = new INIRecords(source, false);
-        IteratorMX<? extends Map<String, String>, ? extends IOException> iter = records.iterator(true);
+        Mitorx<? extends Map<String, String>, ? extends IOException> iter = records.iterator(true);
 
         Map<String, String> p1 = iter._next();
         assertEquals("a=1, b=2, c=hello, world!", map2str(p1));

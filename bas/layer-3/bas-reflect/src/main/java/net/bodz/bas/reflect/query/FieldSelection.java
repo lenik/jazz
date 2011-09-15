@@ -4,13 +4,11 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.List;
 
-import net.bodz.bas.collection.iterator.IterableMX;
-import net.bodz.bas.collection.iterator.IteratorM2X;
-import net.bodz.bas.collection.iterator.IteratorX;
-import net.bodz.bas.collection.util.IterableToList;
+import net.bodz.bas.util.iter.AbstractMitablex;
+import net.bodz.bas.util.iter.Iterables;
 
 public abstract class FieldSelection
-        implements IterableMX<Field, RuntimeException> {
+        extends AbstractMitablex<Field, RuntimeException> {
 
     protected int modifierMask;
     protected int modifierTest;
@@ -89,17 +87,12 @@ public abstract class FieldSelection
         return this;
     }
 
-    @Override
-    public IteratorX<Field, RuntimeException> iteratorX() {
-        return new IteratorM2X<Field, RuntimeException>(this, true);
-    }
-
     public Field[] toArray() {
         return toList().toArray(new Field[0]);
     }
 
     public List<? extends Field> toList() {
-        return IterableToList.toList(this);
+        return Iterables.toList(this);
     }
 
     public boolean exists() {

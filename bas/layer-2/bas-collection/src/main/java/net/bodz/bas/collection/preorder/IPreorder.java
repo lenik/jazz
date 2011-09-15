@@ -91,6 +91,7 @@ public interface IPreorder<T>
      * @throws IllegalArgumentException
      *             If array is empty.
      */
+    @SuppressWarnings("unchecked")
     T meet(T... array);
 
     /**

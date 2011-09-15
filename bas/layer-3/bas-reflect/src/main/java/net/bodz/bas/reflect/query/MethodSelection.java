@@ -4,11 +4,9 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.List;
 
-import net.bodz.bas.collection.iterator.AbstractIterableMX;
-import net.bodz.bas.collection.iterator.IteratorM2X;
-import net.bodz.bas.collection.iterator.IteratorX;
-import net.bodz.bas.collection.util.IterableToList;
 import net.bodz.bas.reflect.MethodSignature;
+import net.bodz.bas.util.iter.AbstractMitablex;
+import net.bodz.bas.util.iter.Iterables;
 
 /**
  * @see ReflectQuery#selectMethods(Class)
@@ -16,7 +14,7 @@ import net.bodz.bas.reflect.MethodSignature;
  * @test {@link MethodSelectionTest}
  */
 public abstract class MethodSelection
-        extends AbstractIterableMX<Method, RuntimeException> {
+        extends AbstractMitablex<Method, RuntimeException> {
 
     protected int modifierMask;
     protected int modifierTest;
@@ -174,17 +172,12 @@ public abstract class MethodSelection
         return this;
     }
 
-    @Override
-    public IteratorX<Method, RuntimeException> iteratorX() {
-        return new IteratorM2X<Method, RuntimeException>(this, true);
-    }
-
     public Method[] toArray() {
         return toList().toArray(new Method[0]);
     }
 
     public List<? extends Method> toList() {
-        return IterableToList.toList(this);
+        return Iterables.toList(this);
     }
 
     public boolean exists() {

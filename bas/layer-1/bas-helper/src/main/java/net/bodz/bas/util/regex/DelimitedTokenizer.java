@@ -6,9 +6,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.util.iter.AbstractMitablex;
+import net.bodz.bas.util.iter.AbstractMitorx;
+import net.bodz.bas.util.iter.Mitorx;
 
 public class DelimitedTokenizer
-        extends AbstractIterableMX<String, IOException> {
+        extends AbstractMitablex<String, IOException> {
 
     private List<Delimiter> delimiters;
 
@@ -47,7 +50,7 @@ public class DelimitedTokenizer
     }
 
     class Iter
-            extends AbstractIteratorMX<String, IOException> {
+            extends AbstractMitorx<String, IOException> {
 
         @Override
         public String _next()
@@ -59,12 +62,7 @@ public class DelimitedTokenizer
     }
 
     @Override
-    public IteratorX<String, IOException> iteratorX() {
-        return new IteratorM2X<String, IOException>(new Iter());
-    }
-
-    @Override
-    public IteratorMX<String, ? extends IOException> iterator(boolean allowOverlap) {
+    public Mitorx<String, ? extends IOException> iterator(boolean allowOverlap) {
         return new Iter();
     }
 

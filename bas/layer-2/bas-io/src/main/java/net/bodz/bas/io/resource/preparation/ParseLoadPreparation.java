@@ -7,13 +7,13 @@ import java.io.Reader;
 import java.util.List;
 import java.util.Properties;
 
-import net.bodz.bas.collection.iterator.AbstractIteratorMX;
-import net.bodz.bas.collection.iterator.IteratorMX;
-import net.bodz.bas.collection.util.IteratorToList;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.jdk6compat.jdk7emul.ClassNotFoundException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
+import net.bodz.bas.util.iter.AbstractMitorx;
+import net.bodz.bas.util.iter.Iterators;
+import net.bodz.bas.util.iter.Mitorx;
 
 public class ParseLoadPreparation
         implements IParseLoadPreparation {
@@ -49,13 +49,13 @@ public class ParseLoadPreparation
 
     public List<Object> listObjects(int maxItems)
             throws IOException {
-        return IteratorToList.toListLimited(objectIterator(), maxItems);
+        return Iterators.toListLimited(objectIterator(), maxItems);
     }
 
-    public IteratorMX<Object, IOException> objectIterator()
+    public Mitorx<Object, IOException> objectIterator()
             throws IOException {
 
-        return new AbstractIteratorMX<Object, IOException>() {
+        return new AbstractMitorx<Object, IOException>() {
 
             ObjectInput in = source.newObjectInput();
 

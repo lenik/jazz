@@ -2,8 +2,8 @@ package net.bodz.bas.reflect.query;
 
 import java.lang.reflect.Method;
 
-import net.bodz.bas.collection.iterator.AbstractIteratorMX;
-import net.bodz.bas.collection.iterator.IteratorMX;
+import net.bodz.bas.util.iter.AbstractMitorx;
+import net.bodz.bas.util.iter.Mitorx;
 
 /**
  * @test {@link PublicMethodsTest}
@@ -20,7 +20,7 @@ public class PublicMethods
     }
 
     class Iter
-            extends AbstractIteratorMX<Method, RuntimeException> {
+            extends AbstractMitorx<Method, RuntimeException> {
 
         Method[] methods = clazz.getMethods();
         int currentIndex = -1;
@@ -43,7 +43,7 @@ public class PublicMethods
     }
 
     @Override
-    public IteratorMX<? extends Method, ? extends RuntimeException> iterator(boolean allowOverlap)
+    public Mitorx<? extends Method, ? extends RuntimeException> iterator(boolean allowOverlap)
             throws RuntimeException {
         return new Iter();
     }

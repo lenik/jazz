@@ -6,9 +6,9 @@ import java.net.URL;
 import java.util.Map;
 import java.util.TreeMap;
 
-import net.bodz.bas.collection.iterator.IteratorMX;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.util.iter.Mitorx;
 
 /**
  * Preferred file name: *.maps
@@ -78,9 +78,8 @@ public class PartRecords
     }
 
     @Override
-    public IteratorMX<? extends PartMap, ? extends IOException> iterator(boolean allowOverlap)
-            throws IOException {
-        return (IteratorMX<? extends PartMap, ? extends IOException>) super.iterator(allowOverlap);
+    public Mitorx<? extends PartMap, ? extends IOException> iterator(boolean allowOverlap) {
+        return (Mitorx<? extends PartMap, ? extends IOException>) super.iterator(allowOverlap);
     }
 
     @Override

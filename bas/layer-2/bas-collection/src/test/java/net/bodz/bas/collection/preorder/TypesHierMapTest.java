@@ -19,7 +19,7 @@ import net.bodz.bas.collection.preorder.testtype.Dx;
 import net.bodz.bas.collection.preorder.testtype.DxKI;
 import net.bodz.bas.collection.preorder.testtype.DxKIx;
 import net.bodz.bas.collection.preorder.testtype.I;
-import net.bodz.bas.collection.util.IterableToList;
+import net.bodz.bas.util.iter.Iterables;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -80,12 +80,12 @@ public class TypesHierMapTest
 
         assertEquals("CI, DxKI", map.floor(r(CI.class, DxKIx.class)));
 
-        children = IterableToList.toList(map.ceilings(r(CI.class, D.class)));
+        children = Iterables.toList(map.ceilings(r(CI.class, D.class)));
         assertEquals(2, children.size());
         assertEquals("CI, Dx", children.get(0));
         assertEquals("CI, DxKI", children.get(1));
 
-        children = IterableToList.toList(map.ceilings(r(CJ.class, I.class)));
+        children = Iterables.toList(map.ceilings(r(CJ.class, I.class)));
         assertEquals(3, children.size());
         // DIJy extends DIJ, but CJz order take precedence.
         assertEquals("CJz, DIJy", children.get(0)); // DIJy

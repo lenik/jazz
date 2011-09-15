@@ -2,8 +2,8 @@ package net.bodz.bas.reflect.query;
 
 import java.lang.reflect.Field;
 
-import net.bodz.bas.collection.iterator.AbstractIteratorMX;
-import net.bodz.bas.collection.iterator.IteratorMX;
+import net.bodz.bas.util.iter.AbstractMitorx;
+import net.bodz.bas.util.iter.Mitorx;
 
 /**
  * @test {@link DeclaredFieldsTest}
@@ -35,7 +35,7 @@ public class DeclaredFields
     }
 
     class Iter
-            extends AbstractIteratorMX<Field, RuntimeException> {
+            extends AbstractMitorx<Field, RuntimeException> {
 
         Class<?> currentClass;
         Field[] declaredFieldsOfCurrentClass;
@@ -76,7 +76,7 @@ public class DeclaredFields
     }
 
     @Override
-    public IteratorMX<? extends Field, ? extends RuntimeException> iterator(boolean allowOverlap)
+    public Mitorx<? extends Field, ? extends RuntimeException> iterator(boolean allowOverlap)
             throws RuntimeException {
         return new Iter();
     }

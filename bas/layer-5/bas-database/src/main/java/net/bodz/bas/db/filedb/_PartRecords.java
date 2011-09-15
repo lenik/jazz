@@ -5,13 +5,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 
-import net.bodz.bas.collection.iterator.AbstractIteratorMX;
-import net.bodz.bas.collection.iterator.IteratorMX;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
 import net.bodz.bas.io.resource.builtin.URLResource;
+import net.bodz.bas.util.iter.AbstractMitorx;
+import net.bodz.bas.util.iter.Mitorx;
 import net.bodz.bas.util.string.StringPart;
 
 /**
@@ -116,7 +116,7 @@ public abstract class _PartRecords<K, V>
     }
 
     class Iter
-            extends AbstractIteratorMX<Map<K, V>, IOException> {
+            extends AbstractMitorx<Map<K, V>, IOException> {
 
         private static final int PREHEADER = 0;
         private static final int HEADER = 1;
@@ -228,8 +228,7 @@ public abstract class _PartRecords<K, V>
     }
 
     @Override
-    public IteratorMX<? extends Map<K, V>, ? extends IOException> iterator(boolean allowOverlap)
-            throws IOException {
+    public Mitorx<? extends Map<K, V>, ? extends IOException> iterator(boolean allowOverlap) {
         return new Iter();
     }
 

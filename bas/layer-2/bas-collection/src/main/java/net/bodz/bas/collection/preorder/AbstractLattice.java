@@ -6,8 +6,9 @@ public abstract class AbstractLattice<T>
         extends AbstractPreorder<T>
         implements ILattice<T> {
 
+    @SafeVarargs
     @Override
-    public T join(T... array) {
+    public final T join(T... array) {
         if (array == null)
             throw new NullPointerException("array");
         if (array.length == 0)

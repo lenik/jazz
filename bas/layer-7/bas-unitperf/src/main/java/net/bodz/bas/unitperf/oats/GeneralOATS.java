@@ -1,6 +1,6 @@
 package net.bodz.bas.unitperf.oats;
 
-import net.bodz.bas.collection.iterator.ImmediateIteratorX;
+import net.bodz.bas.util.iter.Mitorx;
 
 public class GeneralOATS
         implements ArrayTestingStrategy {
@@ -14,7 +14,7 @@ public class GeneralOATS
     }
 
     @Override
-    public ImmediateIteratorX<int[], RuntimeException> getVectors(int... columnLevels) {
+    public Mitorx<int[], RuntimeException> getVectors(int... columnLevels) {
         if (columnLevels == null)
             throw new NullPointerException("componentLevels");
         int cc = columnLevels.length;

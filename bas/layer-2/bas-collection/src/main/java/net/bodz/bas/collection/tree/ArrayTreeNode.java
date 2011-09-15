@@ -27,8 +27,7 @@ public class ArrayTreeNode
     public List<? extends ArrayTreeNode> getChildren() {
         if (children == null) {
             if (array == null) {
-                @SuppressWarnings("unchecked")
-                List<ArrayTreeNode> empty = Collections.EMPTY_LIST;
+                List<ArrayTreeNode> empty = Collections.emptyList();
                 children = empty;
             } else {
                 children = new ArrayList<ArrayTreeNode>(array.length);

@@ -24,10 +24,6 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.List;
 
-import net.bodz.bas.closure.IFilter;
-import net.bodz.bas.collection.iterator.EmptyIteratorMX;
-import net.bodz.bas.collection.iterator.IteratorMX;
-import net.bodz.bas.collection.util.IteratorToList;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
@@ -38,6 +34,10 @@ import net.bodz.bas.io.resource.preparation.ParseLoadPreparation;
 import net.bodz.bas.io.resource.preparation.StreamReadPreparation;
 import net.bodz.bas.io.resource.preparation.StreamWritePreparation;
 import net.bodz.bas.meta.codereview.GeneratedByCopyPaste;
+import net.bodz.bas.util.arch.IFilter;
+import net.bodz.bas.util.iter.Iterators;
+import net.bodz.bas.util.iter.Mitors;
+import net.bodz.bas.util.iter.Mitorx;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.preparation.HeuristicProbePreparation;
@@ -279,9 +279,9 @@ public abstract class AbstractFile
      * @def Return an empty iterator.
      */
     @Override
-    public IteratorMX<? extends IFile, VFSException> childIterator(IFilter<String> nameFilter)
+    public Mitorx<? extends IFile, VFSException> childIterator(IFilter<String> nameFilter)
             throws VFSException {
-        return EmptyIteratorMX.getInstance();
+        return Mitors.empty();
     }
 
     /**
@@ -290,7 +290,7 @@ public abstract class AbstractFile
     @Override
     public List<? extends IFile> listChildren()
             throws VFSException {
-        return IteratorToList.toList(childIterator((IFilter<String>) null));
+        return Iterators.toList(childIterator((IFilter<String>) null));
     }
 
     /**
@@ -299,7 +299,7 @@ public abstract class AbstractFile
     @Override
     public List<? extends IFile> listChildren(IFilter<String> entryNameFilter)
             throws VFSException {
-        return IteratorToList.toList(childIterator(entryNameFilter));
+        return Iterators.toList(childIterator(entryNameFilter));
     }
 
     @Override

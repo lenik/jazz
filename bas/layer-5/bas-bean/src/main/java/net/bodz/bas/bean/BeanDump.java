@@ -7,11 +7,11 @@ import java.beans.PropertyDescriptor;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import net.bodz.bas.collection.util.EnumerationToIterable;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.Stdio;
+import net.bodz.bas.util.iter.Iterables;
 
 public class BeanDump {
 
@@ -43,7 +43,7 @@ public class BeanDump {
             }
             out.println(name + ": " + value);
             // out.println("    attributes: ");
-            for (String attr : EnumerationToIterable.toIterable(property.attributeNames())) {
+            for (String attr : Iterables.otp(property.attributeNames())) {
                 Object attrValue = property.getValue(attr);
                 out.println("    ATTR " + attr + ": " + attrValue);
             }
