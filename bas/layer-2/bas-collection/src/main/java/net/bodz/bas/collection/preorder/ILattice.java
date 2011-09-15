@@ -13,8 +13,7 @@ public interface ILattice<T>
     /**
      * @return The least upper bound of <code>array</code> in domain <code>T</code>.
      */
-    @SuppressWarnings("unchecked")
-    T join(T... array);
+    T join(@SuppressWarnings("unchecked") T... array);
 
     /**
      * @return The least upper bound of <code>{o1, o2}</code> in domain <code>T</code>.

@@ -1,6 +1,6 @@
 package net.bodz.bas.collection.preorder;
 
-public class ClassInheritancePreorder
+public class SriTypePreorder
         extends AbstractPreorder<Class<?>> {
 
     @Override
@@ -30,9 +30,9 @@ public class ClassInheritancePreorder
         return UNKNOWN;
     }
 
-    static final ClassInheritancePreorder instance = new ClassInheritancePreorder();
+    static final SriTypePreorder instance = new SriTypePreorder();
 
-    public static ClassInheritancePreorder getInstance() {
+    public static SriTypePreorder getInstance() {
         return instance;
     }
 

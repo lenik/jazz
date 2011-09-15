@@ -54,5 +54,5 @@ public interface Javadoc {
      * 
      * @return The author name.
      */
-    List getAuthors();
+    List<?> getAuthors();
 }

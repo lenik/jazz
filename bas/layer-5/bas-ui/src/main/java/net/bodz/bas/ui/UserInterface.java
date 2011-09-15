@@ -102,13 +102,11 @@ public interface UserInterface {
     /**
      * @return <code>null</code> if canceled
      */
-    @SuppressWarnings("unchecked")
     <K> Set<K> choices(String title, Map<K, ?> candidates, K... initial);
 
     /**
      * @return <code>null</code> if canceled
      */
-    @SuppressWarnings("unchecked")
     <K> Set<K> choices(String title, Object detail, Map<K, ?> candidates, K... initial);
 
     /**

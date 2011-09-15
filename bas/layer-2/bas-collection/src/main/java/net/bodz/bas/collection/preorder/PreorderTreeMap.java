@@ -20,11 +20,29 @@ public class PreorderTreeMap<K, V>
         this.preorder = preorder;
     }
 
+    @Override
+    public K floorKey(K key) {
+        while (!containsKey(key)) {
+            key = preorder.getPreceding(key);
+            if (key == null)
+                return null;
+        }
+        return key;
+    }
+
+    @Override
+    public Entry<K, V> floorEntry(K key) {
+        K floorKey = floorKey(key);
+        if (floorKey == null)
+            return null;
+        Entry<K, V> floorEntry = super.floorEntry(floorKey);
+        return floorEntry;
+    }
+
     /**
      * Using Preorder-Preceding to get the lessor key.
      */
-    @Override
-    public K floorKey(K key) {
+    public K _floorKey_fast(K key) {
         K floor = super.floorKey(key);
         while (floor != null) {
             if (preorder.isLessOrEquals(floor, key))
@@ -40,8 +58,7 @@ public class PreorderTreeMap<K, V>
     /**
      * Using Preorder-Preceding to get the lessor key.
      */
-    @Override
-    public Entry<K, V> floorEntry(K key) {
+    public Entry<K, V> _floorEntry_fast(K key) {
         Entry<K, V> floo = super.floorEntry(key);
         while (floo != null) {
             if (preorder.isLessOrEquals(floo.getKey(), key))
@@ -57,7 +74,7 @@ public class PreorderTreeMap<K, V>
     /**
      * Using Preorder-Preceding to get the lessor key.
      */
-    public V floor(K key) {
+    public final V floor(K key) {
         Entry<K, V> floo = floorEntry(key);
         if (floo == null)
             return null;

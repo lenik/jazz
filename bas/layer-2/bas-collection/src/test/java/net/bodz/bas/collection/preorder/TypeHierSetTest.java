@@ -24,7 +24,7 @@ public class TypeHierSetTest
 
     @Test
     public void test1() {
-        TypeHierSet set = new TypeHierSet();
+        SriTypeSet set = new SriTypeSet();
         set.add(Number.class);
         set.add(Object.class);
         set.add(String.class);

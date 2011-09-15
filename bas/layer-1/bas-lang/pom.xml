@@ -5,12 +5,12 @@
         <artifactId>layer-1</artifactId>
         <version>0.10.1-SNAPSHOT</version>
     </parent>
-    <artifactId>bas-lang</artifactId>
+    <artifactId>bas-tiny</artifactId>
     <version>0.10.1-SNAPSHOT</version>
     <dependencies>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-api</artifactId>
+            <artifactId>bas-tiny</artifactId>
             <version>0.10.1-SNAPSHOT</version>
         </dependency>
     </dependencies>

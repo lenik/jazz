@@ -67,7 +67,7 @@ public class TypesHierMapTest
 
     @Test
     public void test1() {
-        TypesHierMap<Object> map = new TypesHierMap<Object>();
+        TypeVectorPrMap<Object> map = new TypeVectorPrMap<Object>();
         map.putAll(orig);
 
         // dump entry order

@@ -21,6 +21,8 @@ public class StartswithPreorder
 
     @Override
     public int precompare(String o1, String o2) {
+        if (o1 == o2)
+            return EQUALS;
         int ncmp = o1.length() - o2.length();
         if (ncmp < 0)
             return o2.startsWith(o1) ? LESS_THAN : UNKNOWN;

@@ -1,6 +1,6 @@
 package net.bodz.bas.collection.preorder;
 
-public class TypeVectorInheritancePreorder
+public class TypeVectorPreorder
         extends AbstractPreorder<Class<?>[]> {
 
     public int compare(Class<?>[] o1, Class<?>[] o2) {
@@ -77,9 +77,9 @@ public class TypeVectorInheritancePreorder
         }
     }
 
-    static final TypeVectorInheritancePreorder instance = new TypeVectorInheritancePreorder();
+    static final TypeVectorPreorder instance = new TypeVectorPreorder();
 
-    public static TypeVectorInheritancePreorder getInstance() {
+    public static TypeVectorPreorder getInstance() {
         return instance;
     }
 

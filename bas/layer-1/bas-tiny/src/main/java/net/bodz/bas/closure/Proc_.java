@@ -10,7 +10,6 @@ public abstract class Proc_<V>
         return null;
     }
 
-    @SuppressWarnings("unchecked")
-    public abstract void exec(V... args);
+    public abstract void exec(@SuppressWarnings("unchecked") V... args);
 
 }

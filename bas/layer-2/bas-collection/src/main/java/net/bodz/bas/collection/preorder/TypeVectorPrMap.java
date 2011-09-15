@@ -1,12 +1,12 @@
 package net.bodz.bas.collection.preorder;
 
-public class TypesHierMap<V>
+public class TypeVectorPrMap<V>
         extends PreorderTreeMap<Class<?>[], V> {
 
     private static final long serialVersionUID = 1L;
 
-    public TypesHierMap() {
-        super(TypeVectorInheritancePreorder.getInstance());
+    public TypeVectorPrMap() {
+        super(TypeVectorPreorder.getInstance());
     }
 
 }

@@ -5,7 +5,7 @@
         <artifactId>layer-1</artifactId>
         <version>0.10.1-SNAPSHOT</version>
     </parent>
-    <artifactId>bas-api</artifactId>
+    <artifactId>bas-tiny</artifactId>
     <version>0.10.1-SNAPSHOT</version>
     <dependencies>
         <dependency>

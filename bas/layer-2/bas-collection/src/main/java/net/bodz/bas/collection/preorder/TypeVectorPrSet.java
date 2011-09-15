@@ -1,12 +1,12 @@
 package net.bodz.bas.collection.preorder;
 
-public class TypesHierSet
+public class TypeVectorPrSet
         extends PreorderSet<Class<?>[]> {
 
     private static final long serialVersionUID = 1L;
 
-    public TypesHierSet() {
-        super(TypeVectorInheritancePreorder.getInstance());
+    public TypeVectorPrSet() {
+        super(TypeVectorPreorder.getInstance());
     }
 
 }
