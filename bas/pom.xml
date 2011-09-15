@@ -139,8 +139,8 @@
         <module>build</module>
     </modules>
     <properties>
-        <java.version>1.6</java.version>
-        <javaProfile>JavaSE-6</javaProfile>
+        <java.version>1.7</java.version>
+        <javaProfile>JavaSE-7</javaProfile>
     </properties>
     <name>BAS Framework</name>
     <url>http://bas.bodz.net/</url>
