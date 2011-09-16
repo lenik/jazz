@@ -12,8 +12,6 @@
     <version>0.10.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>bas-snmjava</module>
-        <module>bas-vfsutils</module>
     </modules>
     <name>BAS :: Layer 6</name>
 </project>

@@ -2,11 +2,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>net.bodz.bas</groupId>
-        <artifactId>layer-1</artifactId>
+        <artifactId>build</artifactId>
         <version>0.10.1-SNAPSHOT</version>
     </parent>
-    <artifactId>bas-cdata</artifactId>
+    <artifactId>bas-uber</artifactId>
     <version>0.10.1-SNAPSHOT</version>
     <dependencies/>
-    <name>BAS :: Layer 1 :: Cdata</name>
+    <name>BAS :: Build :: Uber</name>
 </project>
