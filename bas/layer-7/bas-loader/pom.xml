@@ -10,7 +10,7 @@
     <dependencies>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-tiny</artifactId>
+            <artifactId>bas-api</artifactId>
             <version>0.10.1-SNAPSHOT</version>
         </dependency>
         <dependency>
