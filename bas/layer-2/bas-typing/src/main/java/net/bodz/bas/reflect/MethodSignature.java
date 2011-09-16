@@ -1,0 +1,198 @@
+package net.bodz.bas.reflect;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+
+import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
+import net.bodz.bas.jdk6compat.jdk7emul.NoSuchMethodException;
+import net.bodz.bas.util.Nullables;
+import net.bodz.bas.util.type.TypeDistance;
+import net.bodz.bas.util.type.TypeName;
+
+public class MethodSignature {
+
+    private final String name;
+    private final Class<?>[] parameterTypes;
+    private final Class<?> returnType;
+
+    private Boolean hasNullParameterType;
+
+    // public static final String CONSTRUCTOR = "~ctor";
+    // public static final String DESTRUCTOR = "~dtor";
+
+    /**
+     * @param name
+     *            If the constructor is referred, the method name is the same to the class name.
+     */
+    public MethodSignature(String name, Class<?>[] parameterTypes, Class<?> returnType) {
+        if (name == null)
+            throw new NullPointerException("name");
+        if (parameterTypes == null)
+            throw new NullPointerException("parameterTypes");
+        this.name = name;
+        this.parameterTypes = parameterTypes;
+        this.returnType = returnType;
+    }
+
+    public MethodSignature(String name, Class<?>... parameterTypes) {
+        this(name, parameterTypes, null);
+    }
+
+    public MethodSignature(Method method) {
+        this(method.getName(), method.getParameterTypes(), method.getReturnType());
+    }
+
+    /**
+     * The method name is set to the full qualified name of the declaring class of the constructor.
+     */
+    public MethodSignature(Constructor<?> ctor) {
+        this(ctor.getName(), ctor.getParameterTypes());
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Class<?>[] getParameterTypes() {
+        return parameterTypes;
+    }
+
+    public boolean hasNullParameterType() {
+        if (hasNullParameterType == null) {
+            boolean hasNull = false;
+            for (Class<?> t : parameterTypes)
+                if (t == null) {
+                    hasNull = true;
+                    break;
+                }
+            hasNullParameterType = hasNull;
+        }
+        return hasNullParameterType();
+    }
+
+    private transient boolean hashInited;
+    private transient int hash;
+
+    @Override
+    public int hashCode() {
+        if (!hashInited) {
+            int hash = 0xbae56896;
+            hash += name.hashCode();
+            hash += Arrays.hashCode(parameterTypes);
+            if (returnType != null)
+                hash += returnType.hashCode();
+            this.hash = hash;
+            hashInited = true;
+        }
+        return hash;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder buf = new StringBuilder();
+        buf.append("(" + TypeName.join(parameterTypes) + ")");
+        if (returnType != null) {
+            buf.append(" -> ");
+            buf.append(returnType.getSimpleName());
+        }
+        return buf.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof MethodSignature))
+            return false;
+        return equals((MethodSignature) o);
+    }
+
+    public boolean equals(MethodSignature o) {
+        if (o == this)
+            return true;
+        if (!Nullables.equals(name, o.name))
+            return false;
+        return Arrays.equals(parameterTypes, o.parameterTypes);
+    }
+
+    public boolean matches(Method method) {
+        if (!Nullables.equals(name, method.getName()))
+            return false;
+        MethodSignature o = new MethodSignature(method);
+        return equals(o);
+    }
+
+    public boolean matches(Constructor<?> ctor) {
+        Class<?> declaringClass = ctor.getDeclaringClass();
+        if (!name.equals(declaringClass.getName()))
+            throw new IllegalArgumentException("Not a constructor method for " + declaringClass);
+        MethodSignature o = new MethodSignature(ctor);
+        return equals(o);
+    }
+
+    public Method matchMethod(Class<?> clazz) {
+        try {
+            return Jdk7Reflect.getMethod(clazz, name, parameterTypes);
+        } catch (NoSuchMethodException e) {
+            return null;
+        }
+    }
+
+    public Method matchDeclaredMethod(Class<?> clazz) {
+        try {
+            return Jdk7Reflect.getDeclaredMethod(clazz, name, parameterTypes);
+        } catch (NoSuchMethodException e) {
+            return null;
+        }
+    }
+
+    public Constructor<?> matchConstructor(Class<?> clazz) {
+        try {
+            return Jdk7Reflect.getConstructor(clazz, parameterTypes);
+        } catch (NoSuchMethodException e) {
+            return null;
+        }
+    }
+
+    public Constructor<?> matchedDeclaredConstructor(Class<?> clazz) {
+        try {
+            return Jdk7Reflect.getDeclaredConstructor(clazz, parameterTypes);
+        } catch (NoSuchMethodException e) {
+            return null;
+        }
+    }
+
+    public Method matchFinestMethod(Iterable<Method> methods) {
+        int mindist = -1;
+        Method finest = null;
+        for (Method m : methods) {
+            Class<?>[] o = m.getParameterTypes();
+            int dist = TypeDistance.dist(parameterTypes, o);
+            if (dist != -1) {
+                if (mindist == -1 || dist < mindist) {
+                    mindist = dist;
+                    finest = m;
+                }
+            }
+        }
+        return finest;
+    }
+
+    public Constructor<?> matchFinestConstructor(Iterable<Constructor<?>> constructors) {
+        int mindist = -1;
+        Constructor<?> finest = null;
+        for (Constructor<?> ctor : constructors) {
+            Class<?>[] o = ctor.getParameterTypes();
+            int dist = TypeDistance.dist(parameterTypes, o);
+            if (dist != -1) {
+                if (mindist == -1 || dist < mindist) {
+                    mindist = dist;
+                    finest = ctor;
+                }
+            }
+        }
+        return finest;
+    }
+
+}

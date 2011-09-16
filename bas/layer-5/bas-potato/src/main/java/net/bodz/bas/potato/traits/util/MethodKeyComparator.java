@@ -1,8 +1,8 @@
 package net.bodz.bas.potato.traits.util;
 
 import net.bodz.bas.potato.traits.MethodKey;
-import net.bodz.bas.type.comparator.TypeVectorComparator;
 import net.bodz.bas.util.order.AbstractNonNullComparator;
+import net.bodz.bas.util.type.order.TypeVectorComparator;
 
 public class MethodKeyComparator
         extends AbstractNonNullComparator<MethodKey> {

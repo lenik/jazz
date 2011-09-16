@@ -16,7 +16,6 @@
         <module>bas-cdata</module>
         <module>bas-helper</module>
         <module>bas-meta</module>
-        <module>bas-sugar</module>
         <module>bas-test</module>
         <module>bas-traits</module>
     </modules>
