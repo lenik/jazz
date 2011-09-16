@@ -12,7 +12,7 @@
     <version>0.10.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>bas-tiny</module>
+        <module>bas-api</module>
         <module>bas-cdata</module>
         <module>bas-helper</module>
         <module>bas-meta</module>

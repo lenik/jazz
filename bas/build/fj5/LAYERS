@@ -9,7 +9,7 @@
     bas-annotation
     bas-c1
     bas-chars
-    bas-tiny
+    bas-api
     bas-meta
     bas-primitive
     bas-test
