@@ -43,7 +43,7 @@ public class BufParsersTest
         class D {
             void o(String input, String expected) {
                 CharBuffer buf = CharBuffer.wrap(input);
-                long val = BufParsers.getLong(buf, 10, 111222333444L);
+                long val = BufParsers.getLong(buf, 10, 111_222_333_444L);
                 String actual = val + "|" + buf;
                 assertEquals(expected, actual);
             }

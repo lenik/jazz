@@ -16,7 +16,7 @@ public class BufParsers {
         int val = 0; // T
         int start = buf.position();
         int end = start;
-        int safeDigits = CharFeature.getDigits(radix, max);
+        int safeDigits = CharFeature.getDigits(radix, max + 1) - 1; // TODO optim here.
         if (safeDigits < 0)
             safeDigits = -safeDigits;
         int digits = 0;
@@ -55,7 +55,7 @@ public class BufParsers {
     }
 
     public static int getInt(CharBuffer buf, int radix) {
-        return getInt(buf, radix, Integer.MAX_VALUE);
+        return getInt(buf, radix, Integer.MAX_VALUE - 1);// TODO optim here.
     }
 
     public static int getInt(CharBuffer buf) {
@@ -71,7 +71,7 @@ public class BufParsers {
         long val = 0;
         int start = buf.position();
         int end = start;
-        int safeDigits = CharFeature.getDigits(radix, max);
+        int safeDigits = CharFeature.getDigits(radix, max + 1) - 1; // TODO optim here.
         if (safeDigits < 0)
             safeDigits = -safeDigits;
         int digits = 0;
@@ -110,7 +110,7 @@ public class BufParsers {
     }
 
     public static long getLong(CharBuffer buf, int radix) {
-        return getLong(buf, radix, Long.MAX_VALUE);
+        return getLong(buf, radix, Long.MAX_VALUE - 1);// TODO optim here.
     }
 
     public static long getLong(CharBuffer buf) {
