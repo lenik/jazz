@@ -1,4 +1,4 @@
-package net.bodz.bas.test.timing;
+package net.bodz.bas.util.test;
 
 public class TimingTargetException
         extends Exception {
