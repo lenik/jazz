@@ -13,7 +13,7 @@ import net.bodz.bas.meta.program.ArgsParseBy;
 import net.bodz.bas.meta.program.OptionGroup;
 import net.bodz.bas.traits.IParser;
 import net.bodz.bas.traits.Traits;
-import net.bodz.bas.valtype.util.ClassInstance;
+import net.bodz.bas.util.type.SingletonUtil;
 
 public class MethodOption
         extends _Option<CallInfo>
@@ -42,10 +42,10 @@ public class MethodOption
             for (int i = 0; i < wants.length; i++) {
                 IParser<?> parserInst;
                 if (i < wantParams.length)
-                    parserInst = ClassInstance.getClassInstance(wants[i], //
+                    parserInst = SingletonUtil.getClassInstance(wants[i], //
                             wantParams[i]);
                 else
-                    parserInst = ClassInstance.getClassInstance(wants[i]);
+                    parserInst = SingletonUtil.getClassInstance(wants[i]);
                 parsers[i] = Util.guessParser(parserInst, types[i]);
             }
             for (int i = wants.length; i < argc; i++) {

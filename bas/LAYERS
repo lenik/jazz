@@ -10,7 +10,6 @@ layer-0/ 系统兼容层，系统周边环境准备
 layer-1/ 核心语言增强与语言工具
     bas-cdata
     bas-tiny
-    bas-sugar
     bas-meta
     bas-helper
     bas-test
@@ -22,12 +21,12 @@ layer-2/ 基础数据类型扩展
     bas-io
     bas-helper-mix
     bas-traits-impl
-    bas-valtype
+    bas-typing
     
 layer-3/ 工具
     bas-fsm
     bas-javadoc
-    bas-reflect
+    bas-typing
     bas-text
     bas-text-lr
     bas-memory
@@ -49,7 +48,6 @@ layer-5/ 框架基础
 
 layer-6/ 框架工具
     bas-snmjava
-    bas-vfsutils
     
 layer-7/ 应用框架
     bas-ant

@@ -2,6 +2,7 @@ package net.bodz.bas.io.resource.preparation;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.security.MessageDigest;
 import java.util.List;
 
 import net.bodz.bas.util.iter.IteratorTargetException;
@@ -133,6 +134,15 @@ public interface IStreamReadPreparation
      * @throws IOException
      */
     List<String> listLines(boolean chopped, int maxLines)
+            throws IOException;
+
+    public byte[] digest(MessageDigest digest)
+            throws IOException;
+
+    public byte[] md5()
+            throws IOException;
+
+    public byte[] sha1()
             throws IOException;
 
 }

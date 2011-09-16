@@ -4,10 +4,12 @@ import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.CharArrayWriter;
 import java.io.IOException;
+import java.security.MessageDigest;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import net.bodz.bas.err.RuntimizedException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.resource.IStreamInputSource;
@@ -19,6 +21,7 @@ import net.bodz.bas.util.iter.IteratorTargetException;
 import net.bodz.bas.util.iter.Iterators;
 import net.bodz.bas.util.iter.Mitorx;
 import net.bodz.bas.util.iter.OverlappedMitor;
+import net.bodz.bas.util.security.Cryptos;
 
 public class StreamReadPreparation
         implements IStreamReadPreparation {
@@ -376,6 +379,31 @@ public class StreamReadPreparation
     public List<String> listLines(boolean chopped, int maxLines)
             throws IOException {
         return Iterators.toListLimited(lines(false, chopped), maxLines);
+    }
+
+    public byte[] digest(MessageDigest digest)
+            throws IOException {
+        Mitorx<byte[], ? extends IOException> blocks = byteBlocks(true);
+        byte[] block;
+        try {
+            while ((block = blocks._next()) != null || !blocks.isEnded())
+                digest.update(block);
+        } catch (RuntimizedException e) {
+            e.rethrow(IOException.class);
+        }
+        return digest.digest();
+    }
+
+    public byte[] md5()
+            throws IOException {
+        MessageDigest md5 = Cryptos.getMD5();
+        return digest(md5);
+    }
+
+    public byte[] sha1()
+            throws IOException {
+        MessageDigest sha1 = Cryptos.getSHA1();
+        return digest(sha1);
     }
 
 }

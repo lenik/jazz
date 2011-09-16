@@ -18,8 +18,7 @@
         <module>bas-io</module>
         <module>bas-sio</module>
         <module>bas-traits-impl</module>
-        <module>bas-valtype</module>
-        <module>bas-variant</module>
+        <module>bas-typing</module>
     </modules>
     <name>BAS :: Layer 2</name>
 </project>

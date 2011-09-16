@@ -30,8 +30,6 @@ public class ReflectBean {
         Dog dog = new Dog();
         dog.setColor("red");
         BeanDump.dumpProperties(dog);
-        
-        
     }
 
 }
