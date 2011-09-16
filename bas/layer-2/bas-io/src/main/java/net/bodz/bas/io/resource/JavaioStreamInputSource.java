@@ -8,7 +8,7 @@ import java.io.Reader;
 import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.ICharIn;
 import net.bodz.bas.sio.InputStreamByteIn;
-import net.bodz.bas.sio.nio.DecodedCharIn;
+import net.bodz.bas.sio.util.DecodedCharIn;
 
 public abstract class JavaioStreamInputSource
         extends AbstractStreamInputSource {

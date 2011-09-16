@@ -3,8 +3,8 @@ package net.bodz.bas.i18n.nls;
 import java.util.Locale;
 import java.util.Set;
 
-import net.bodz.bas.collection.map.ILookupMap;
-import net.bodz.bas.collection.map.IVariantLookupMap;
+import net.bodz.bas.variant.map.ILookupMap;
+import net.bodz.bas.variant.map.IVariantLookupMap;
 
 public interface NLS
         extends IVariantLookupMap<String> {

@@ -12,10 +12,6 @@ public class NullInvocationHandler
         return null;
     }
 
-    static NullInvocationHandler instance = new NullInvocationHandler();
-
-    public static NullInvocationHandler getInstance() {
-        return instance;
-    }
+    public static final NullInvocationHandler INSTANCE = new NullInvocationHandler();
 
 }

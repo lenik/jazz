@@ -10,8 +10,8 @@ import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.ICharIn;
 import net.bodz.bas.sio.ICharOut;
-import net.bodz.bas.sio.nio.DecodedByteOut;
-import net.bodz.bas.sio.nio.EncodedByteIn;
+import net.bodz.bas.sio.util.DecodedByteOut;
+import net.bodz.bas.sio.util.EncodedByteIn;
 
 public class CharArrayResource
         extends AbstractStreamResource {

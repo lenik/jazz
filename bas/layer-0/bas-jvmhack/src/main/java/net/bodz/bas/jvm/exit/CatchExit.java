@@ -1,9 +1,9 @@
 package net.bodz.bas.jvm.exit;
 
-import net.bodz.bas.proxy.java.security.ProxySecurityManager;
+import net.bodz.bas.proxy.java.security.SecurityManagerDecorator;
 
 public class CatchExit
-        extends ProxySecurityManager {
+        extends SecurityManagerDecorator {
 
     public CatchExit() {
         this(System.getSecurityManager());

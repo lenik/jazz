@@ -4,7 +4,7 @@ import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import net.bodz.bas.sio.position.IXYTellable;
+import net.bodz.bas.sio.util.IXYTellable;
 
 public class XYInputStream
         extends FilterInputStream

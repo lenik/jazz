@@ -4,10 +4,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.bodz.bas.meta.util.OverrideOption;
-import net.bodz.bas.proxy.java.lang.ProxyStringBuilder;
+import net.bodz.bas.proxy.java.lang.StringBuilderDecorator;
 
 public class PatternProcessor
-        extends ProxyStringBuilder {
+        extends StringBuilderDecorator {
 
     protected Pattern pattern;
     protected String source;
@@ -57,7 +57,7 @@ public class PatternProcessor
         matchIndex = 0;
         lastPosition = 0;
         count = 0;
-        proxy = new StringBuilder();
+        impl = new StringBuilder();
         while (matcher.find()) {
             int start = matcher.start();
             int end = matcher.end();

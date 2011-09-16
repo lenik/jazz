@@ -4,7 +4,7 @@ import java.lang.reflect.Constructor;
 
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
-import net.bodz.bas.util.arch.ICreatorX;
+import net.bodz.bas.lang.arch.ICreatorX;
 
 import org.apache.commons.lang.ArrayUtils;
 

@@ -17,12 +17,10 @@ layer-1/ 核心语言增强与语言工具
     bas-traits
     
 layer-2/ 基础数据类型扩展
-    bas-c2
     bas-collection
     bas-context
     bas-io
     bas-helper-mix
-    bas-sio
     bas-traits-impl
     bas-valtype
     

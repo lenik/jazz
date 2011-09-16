@@ -14,7 +14,7 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-proxy-java-security</artifactId>
+            <artifactId>bas-proxy-java</artifactId>
             <version>0.10.1-SNAPSHOT</version>
         </dependency>
     </dependencies>

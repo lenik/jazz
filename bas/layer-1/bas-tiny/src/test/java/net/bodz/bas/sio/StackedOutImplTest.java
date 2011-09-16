@@ -1,0 +1,31 @@
+package net.bodz.bas.sio;
+
+import net.bodz.bas.sio.BCharOut;
+import net.bodz.bas.sio.IStackedOut;
+import net.bodz.bas.sio.StackedOutImpl;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+public class StackedOutImplTest
+        extends Assert {
+
+    @Test
+    public void testIndentPrint()
+            throws Exception {
+        BCharOut buffer = new BCharOut();
+        IStackedOut out = new StackedOutImpl(buffer);
+        out.getTextIndention().setIndentSize(2);
+        out.println("a");
+        out.enter();
+        out.println("b");
+        out.enter();
+        out.println("c");
+        out.leave();
+        out.println("d");
+        out.leave();
+        out.println("e");
+        assertEquals("a\n  b\n    c\n  d\ne\n", buffer.toString());
+    }
+
+}

@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.CharBuffer;
 
-import net.bodz.bas.sio.position.ITellable;
+import net.bodz.bas.sio.util.ITellable;
 
 public class TellableReader extends FilterReader implements ITellable {
 

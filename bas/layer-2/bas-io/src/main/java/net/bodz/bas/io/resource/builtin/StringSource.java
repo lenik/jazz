@@ -7,7 +7,7 @@ import net.bodz.bas.io.resource.AbstractStreamInputSource;
 import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.ICharIn;
 import net.bodz.bas.sio.StringCharIn;
-import net.bodz.bas.sio.nio.EncodedByteIn;
+import net.bodz.bas.sio.util.EncodedByteIn;
 
 public class StringSource
         extends AbstractStreamInputSource {

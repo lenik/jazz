@@ -2,7 +2,7 @@ package net.bodz.bas.vfs;
 
 import java.util.List;
 
-import net.bodz.bas.util.arch.IFilter;
+import net.bodz.bas.lang.arch.IFilter;
 import net.bodz.bas.util.iter.Mitorx;
 
 public interface IFsTree

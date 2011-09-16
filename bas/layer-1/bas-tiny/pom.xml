@@ -13,6 +13,10 @@
             <artifactId>bas-jdk6compat</artifactId>
             <version>0.10.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+        </dependency>
     </dependencies>
     <name>BAS :: Layer 1 :: Api</name>
 </project>

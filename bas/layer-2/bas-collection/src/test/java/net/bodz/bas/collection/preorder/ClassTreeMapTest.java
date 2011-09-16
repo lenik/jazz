@@ -19,7 +19,7 @@ public class ClassTreeMapTest
 
     @Test
     public void testFloor() {
-        SriTypeMap<Object> map = new SriTypeMap<Object>();
+        TypePrMap<Object> map = new TypePrMap<Object>();
         map.putAll(orig);
         assertEquals("Number", map.floor(Float.class));
         assertEquals("Integer", map.floor(Integer.class));

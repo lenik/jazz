@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.CharBuffer;
 
-import net.bodz.bas.sio.position.IXYTellable;
+import net.bodz.bas.sio.util.IXYTellable;
 
 public class XYReader
         extends FilterReader

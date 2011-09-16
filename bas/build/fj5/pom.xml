@@ -23,17 +23,6 @@
             <artifactId>bas-jvmhack</artifactId>
             <version>0.10.1-SNAPSHOT</version>
         </dependency>
-        <!--         <dependency> --><!--             <groupId>net.bodz.bas</groupId> --><!--             <artifactId>bas-natives-win32</artifactId> --><!--             <version>0.10.1-SNAPSHOT</version> --><!--         </dependency> -->
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-proxy-api</artifactId>
-            <version>0.10.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-proxy-java-security</artifactId>
-            <version>0.10.1-SNAPSHOT</version>
-        </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-proxy-java-util</artifactId>
@@ -42,21 +31,6 @@
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-sysinfo</artifactId>
-            <version>0.10.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-annotation</artifactId>
-            <version>0.10.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-c1</artifactId>
-            <version>0.10.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-chars</artifactId>
             <version>0.10.1-SNAPSHOT</version>
         </dependency>
         <dependency>
@@ -71,32 +45,12 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-primitive</artifactId>
-            <version>0.10.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
             <artifactId>bas-test</artifactId>
             <version>0.10.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-traits</artifactId>
-            <version>0.10.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-bits</artifactId>
-            <version>0.10.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-c2</artifactId>
-            <version>0.10.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-closure</artifactId>
             <version>0.10.1-SNAPSHOT</version>
         </dependency>
         <dependency>
@@ -117,21 +71,6 @@
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-nio</artifactId>
-            <version>0.10.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-regex</artifactId>
-            <version>0.10.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-sio</artifactId>
-            <version>0.10.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-string</artifactId>
             <version>0.10.1-SNAPSHOT</version>
         </dependency>
         <dependency>
@@ -166,32 +105,12 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-lop</artifactId>
-            <version>0.10.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-text-codec</artifactId>
-            <version>0.10.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-text-diff</artifactId>
-            <version>0.10.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-combina</artifactId>
+            <artifactId>bas-text-lr</artifactId>
             <version>0.10.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-crypto</artifactId>
-            <version>0.10.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-memoryio</artifactId>
             <version>0.10.1-SNAPSHOT</version>
         </dependency>
         <dependency>
@@ -221,12 +140,7 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-l10n-en</artifactId>
-            <version>0.10.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-l10n-zh</artifactId>
+            <artifactId>bas-l10n</artifactId>
             <version>0.10.1-SNAPSHOT</version>
         </dependency>
         <dependency>

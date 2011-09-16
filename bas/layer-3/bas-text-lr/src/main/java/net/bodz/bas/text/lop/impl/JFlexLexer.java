@@ -7,7 +7,7 @@ import java.lang.reflect.Method;
 import net.bodz.bas.reflect.bind.ReflectBind;
 import net.bodz.bas.reflect.bind.ReflectField;
 import net.bodz.bas.reflect.bind.ReflectMethod;
-import net.bodz.bas.sio.position.IXYTellable;
+import net.bodz.bas.sio.util.IXYTellable;
 import net.bodz.bas.text.lop.AbstractLexer;
 
 /**

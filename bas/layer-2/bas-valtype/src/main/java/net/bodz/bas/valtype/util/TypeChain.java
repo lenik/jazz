@@ -3,8 +3,7 @@ package net.bodz.bas.valtype.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.sio.IPrintOut;
-import net.bodz.bas.sio.indent.IIndention;
+import net.bodz.bas.sio.IStackedOut;
 
 import org.apache.commons.lang.ArrayUtils;
 
@@ -25,18 +24,17 @@ public class TypeChain {
         return list;
     }
 
-    public static <T extends IPrintOut & IIndention> void dumpTypeTree(Class<?> type, T out) {
+    public static <T extends IStackedOut> void dumpTypeTree(Class<?> type, T out) {
         dumpTypeTree(type, out, false);
     }
 
-    public static <T extends IPrintOut & IIndention> void dumpTypeTree(Class<?> type, T out,
-            boolean removeDupInterfaces) {
+    public static <T extends IStackedOut> void dumpTypeTree(Class<?> type, T out, boolean removeDupInterfaces) {
         if (type == null)
             throw new NullPointerException("type");
         if (out == null)
             throw new NullPointerException("out");
         out.println(TypeName.pretty(type));
-        out.increaseIndentLevel();
+        out.enter(); // getTextIndention().increaseIndentLevel();
 
         Class<?> superclass = type.getSuperclass();
         if (superclass != null)
@@ -49,7 +47,7 @@ public class TypeChain {
             dumpTypeTree(iface, out, removeDupInterfaces);
         }
 
-        out.decreaseIndentLevel();
+        out.leave(); // decreaseIndentLevel();
     }
 
 }

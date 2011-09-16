@@ -9,7 +9,7 @@ import java.lang.reflect.Method;
 import net.bodz.bas.err.NoSuchKeyException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
-import net.bodz.bas.util.Ref;
+import net.bodz.bas.lang.ref.Ref;
 
 public class PropertyRef<PropertyType>
         implements Ref<PropertyType> {
