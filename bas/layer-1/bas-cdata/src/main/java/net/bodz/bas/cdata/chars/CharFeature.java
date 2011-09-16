@@ -27,6 +27,10 @@ public class CharFeature {
     public static final char[] n2cl = alphabet.toLowerCase().toCharArray();
 
     public static int getDigits(int radix, int num) {
+        return getDigits(radix, num, false);
+    }
+
+    public static int getDigits(int radix, int num, boolean fullUsedOnly) {
         if (radix < 2)
             throw new IllegalArgumentException("radix must be >= 2");
         int digits = 0;
