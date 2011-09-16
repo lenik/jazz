@@ -190,11 +190,12 @@ public class PreorderTreeMap<K, V>
     public Iterable<V> ceilings(final K key) {
         final Entry<K, V> start = ceilingEntry(key);
 
-        class Iter
+        class HigherIter
                 extends PrefetchedIterator<V> {
+
             private Entry<K, V> next;
 
-            public Iter(Entry<K, V> next) {
+            public HigherIter(Entry<K, V> next) {
                 this.next = next;
             }
 
@@ -208,12 +209,13 @@ public class PreorderTreeMap<K, V>
                     next = null;
                 return ret;
             }
+
         }
 
         return new Iterable<V>() {
             @Override
             public Iterator<V> iterator() {
-                return new Iter(start);
+                return new HigherIter(start);
             }
         };
     }
