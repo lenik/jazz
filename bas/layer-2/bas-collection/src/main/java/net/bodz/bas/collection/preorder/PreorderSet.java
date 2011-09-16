@@ -22,7 +22,7 @@ public abstract class PreorderSet<E>
     public E floor(E e) {
         E floor = super.floor(e);
         while (floor != null) {
-            if (preorder.isLessThan(floor, e))
+            if (preorder.isLessOrEquals(floor, e))
                 return floor;
             e = preorder.getPreceding(e);
             if (e == null)
@@ -42,16 +42,13 @@ public abstract class PreorderSet<E>
         return null;
     }
 
-    public Iterable<E> ceilings(final E e) {
-        final E start = ceiling(e);
+    public Iterable<E> ceilings(E start) {
+        final E start_ = ceiling(start);
 
-        class Iter
+        class HigherIter
                 extends PrefetchedIterator<E> {
-            private E next;
 
-            public Iter(E next) {
-                this.next = next;
-            }
+            private E next = start_;
 
             @Override
             protected E fetch() {
@@ -59,8 +56,11 @@ public abstract class PreorderSet<E>
                     return end();
                 E ret = next;
                 next = higher(next);
-                if (next != null && !preorder.isLessThan(e, next))
+
+                // Continue only if start_ < next, otherwise it should break.
+                if (next != null && !preorder.isLessThan(start_, next))
                     next = null;
+
                 return ret;
             }
         }
@@ -68,7 +68,7 @@ public abstract class PreorderSet<E>
         return new Iterable<E>() {
             @Override
             public Iterator<E> iterator() {
-                return new Iter(start);
+                return new HigherIter();
             }
         };
     }
