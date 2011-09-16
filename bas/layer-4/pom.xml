@@ -12,7 +12,6 @@
     <version>0.10.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>bas-memory</module>
     </modules>
     <name>BAS :: Layer 4</name>
 </project>

@@ -14,5 +14,5 @@
             <version>0.10.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 2 :: Valtype</name>
+    <name>BAS :: Layer 2 :: Typing</name>
 </project>

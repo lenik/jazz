@@ -19,20 +19,20 @@ layer-2/ 基础数据类型扩展
     bas-collection
     bas-context
     bas-io
-    bas-helper-mix
     bas-traits-impl
     bas-typing
     
-layer-3/ 工具
+layer-3/ 工具和杂项
     bas-fsm
     bas-javadoc
-    bas-typing
     bas-text
     bas-text-lr
     bas-memory
     bas-srt
     bas-jdk7util
-        
+    bas-snmjava
+    bas-helper-mix
+
 layer-5/ 框架基础
     bas-bean
     bas-database
@@ -45,9 +45,6 @@ layer-5/ 框架基础
     bas-ui
     bas-vfs
     bas-xml
-
-layer-6/ 框架工具
-    bas-snmjava
     
 layer-7/ 应用框架
     bas-ant
@@ -59,14 +56,6 @@ layer-7/ 应用框架
     bas-vcs
 
 build/
-    bas-all
-    bas-all-0
-    bas-all-1
-    bas-all-2
-    bas-all-3
-    bas-all-4
-    bas-all-5
-    bas-all-6
-    bas-all-7
+    bas-uber
     fj5
 
