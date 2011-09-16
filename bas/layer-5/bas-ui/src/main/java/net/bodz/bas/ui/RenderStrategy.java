@@ -1,9 +1,9 @@
 package net.bodz.bas.ui;
 
-import net.bodz.bas.collection.preorder.SriTypeMap;
+import net.bodz.bas.collection.preorder.TypePrMap;
 import net.bodz.bas.util.primitive.Boxing;
 
-public abstract class RenderStrategy extends SriTypeMap<Renderer> {
+public abstract class RenderStrategy extends TypePrMap<Renderer> {
 
     private static final long serialVersionUID = 383209437177989123L;
 

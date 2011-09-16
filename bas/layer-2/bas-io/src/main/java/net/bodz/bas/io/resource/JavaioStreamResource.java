@@ -18,7 +18,7 @@ import net.bodz.bas.sio.InputStreamByteIn;
 import net.bodz.bas.sio.OutputStreamByteOut;
 import net.bodz.bas.sio.PrintStreamPrintOut;
 import net.bodz.bas.sio.WriterCharOut;
-import net.bodz.bas.sio.nio.DecodedCharIn;
+import net.bodz.bas.sio.util.DecodedCharIn;
 
 public abstract class JavaioStreamResource
         extends AbstractStreamResource {

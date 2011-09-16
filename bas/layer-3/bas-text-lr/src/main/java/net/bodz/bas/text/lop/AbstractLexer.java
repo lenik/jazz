@@ -6,8 +6,8 @@ import java.util.Stack;
 import net.bodz.bas.collection.map.IndexMap;
 import net.bodz.bas.reflect.ReflectReverseSearch;
 import net.bodz.bas.sio.BCharOut;
-import net.bodz.bas.sio.position.IXYTellable;
-import net.bodz.bas.sio.position.XYPosition;
+import net.bodz.bas.sio.util.IXYTellable;
+import net.bodz.bas.sio.util.XYPosition;
 import net.bodz.bas.util.string.StringEscape;
 
 public abstract class AbstractLexer

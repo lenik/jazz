@@ -12,8 +12,8 @@ import net.bodz.bas.sio.ICharIn;
 import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.PrintOutImpl;
-import net.bodz.bas.sio.nio.DecodedCharIn;
-import net.bodz.bas.sio.nio.EncodedCharOut;
+import net.bodz.bas.sio.util.DecodedCharIn;
+import net.bodz.bas.sio.util.EncodedCharOut;
 
 public class ByteArrayResource
         extends AbstractStreamResource {

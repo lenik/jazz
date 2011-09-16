@@ -7,7 +7,7 @@ import net.bodz.bas.io.resource.AbstractStreamOutputTarget;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.ICharOut;
-import net.bodz.bas.sio.nio.DecodedByteOut;
+import net.bodz.bas.sio.util.DecodedByteOut;
 
 public class StringBufferTarget
         extends AbstractStreamOutputTarget {

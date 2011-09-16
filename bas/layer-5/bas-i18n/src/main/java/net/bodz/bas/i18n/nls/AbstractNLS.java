@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.Locale;
 import java.util.Set;
 
-import net.bodz.bas.collection.map.AbstractVariantLookupMap;
+import net.bodz.bas.variant.map.AbstractVariantLookupMap;
 
 public abstract class AbstractNLS
         extends AbstractVariantLookupMap<String>

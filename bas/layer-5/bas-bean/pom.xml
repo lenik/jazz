@@ -19,11 +19,6 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-sio</artifactId>
-            <version>0.10.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>net.bodz.bas</groupId>
             <artifactId>bas-jdk6compat</artifactId>
             <version>0.10.1-SNAPSHOT</version>
         </dependency>

@@ -2,7 +2,7 @@ package net.bodz.bas.flow;
 
 import java.util.Collection;
 
-import net.bodz.bas.collection.preorder.SriTypeSet;
+import net.bodz.bas.collection.preorder.TypePrSet;
 
 /**
  * Multi-Type Port
@@ -10,22 +10,22 @@ import net.bodz.bas.collection.preorder.SriTypeSet;
 public class MTPortMeta
         extends AbstractPortMeta {
 
-    private final SriTypeSet baseTypes;
+    private final TypePrSet baseTypes;
 
     public MTPortMeta(String name, Class<?>... baseTypes) {
         super(name);
-        this.baseTypes = new SriTypeSet();
+        this.baseTypes = new TypePrSet();
         for (Class<?> baseType : baseTypes)
             this.baseTypes.add(baseType);
     }
 
     public MTPortMeta(String name, Collection<Class<?>> baseTypes) {
         super(name);
-        this.baseTypes = new SriTypeSet();
+        this.baseTypes = new TypePrSet();
         this.baseTypes.addAll(baseTypes);
     }
 
-    public MTPortMeta(String name, SriTypeSet baseTypes) {
+    public MTPortMeta(String name, TypePrSet baseTypes) {
         super(name);
         this.baseTypes = baseTypes;
     }

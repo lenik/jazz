@@ -3,7 +3,7 @@ package net.bodz.bas.log;
 import net.bodz.bas.log.message.ArrayJoinMessage;
 import net.bodz.bas.log.message.StringFormatMessage;
 import net.bodz.bas.sio.IPrintOut;
-import net.bodz.bas.sio.indent.IIndentedOut;
+import net.bodz.bas.sio.IStackedOut;
 
 /**
  * Features:
@@ -14,7 +14,7 @@ import net.bodz.bas.sio.indent.IIndentedOut;
  * </ul>
  */
 public interface ILogSink
-        extends IIndentedOut {
+        extends IStackedOut {
 
     /**
      * Device log function, discard any verbose level.

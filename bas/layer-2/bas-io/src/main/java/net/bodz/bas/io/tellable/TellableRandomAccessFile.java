@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-import net.bodz.bas.sio.position.ITellable;
+import net.bodz.bas.sio.util.ITellable;
 
 public class TellableRandomAccessFile
         extends RandomAccessFile

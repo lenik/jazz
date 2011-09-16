@@ -2,7 +2,7 @@ package net.bodz.bas.text.lop.impl;
 
 import java.io.StringReader;
 
-import net.bodz.bas.sio.position.IXYTellable;
+import net.bodz.bas.sio.util.IXYTellable;
 import net.bodz.bas.text.lop.Token;
 import net.bodz.bas.util.loader.ClassResource;
 

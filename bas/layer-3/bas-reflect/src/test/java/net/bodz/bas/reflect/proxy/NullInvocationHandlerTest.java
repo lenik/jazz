@@ -26,7 +26,7 @@ public class NullInvocationHandlerTest
             }
         };
         final IDog indirectRun = (IDog) Proxy.newProxyInstance(getClass().getClassLoader(), //
-                new Class<?>[] { IDog.class }, NullInvocationHandler.getInstance());
+                new Class<?>[] { IDog.class }, NullInvocationHandler.INSTANCE);
 
         MultipassTimer timer = new MultipassTimer();
 

@@ -9,7 +9,7 @@ import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
 import net.bodz.bas.io.resource.JavaioStreamInputSource;
 import net.bodz.bas.io.resource.JavaioStreamOutputTarget;
-import net.bodz.bas.util.arch.IFilter;
+import net.bodz.bas.lang.arch.IFilter;
 import net.bodz.bas.util.iter.Mitorx;
 import net.bodz.bas.vfs.AbstractFile;
 import net.bodz.bas.vfs.IFile;

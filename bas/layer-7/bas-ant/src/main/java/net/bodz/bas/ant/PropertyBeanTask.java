@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.bodz.bas.collection.preorder.PrefixSet;
-import net.bodz.bas.collection.preorder.SriTypeSet;
+import net.bodz.bas.collection.preorder.TypePrSet;
 import net.bodz.bas.collection.set.IdentityHashSet;
 import net.bodz.bas.context.clg.SystemCLG;
 import net.bodz.bas.err.CreateException;
@@ -62,10 +62,10 @@ public class PropertyBeanTask
     private boolean unique = true;
     private String duplicatedMessage;
 
-    private SriTypeSet refTypes;
-    static SriTypeSet defaultRefTypes;
+    private TypePrSet refTypes;
+    static TypePrSet defaultRefTypes;
     static {
-        defaultRefTypes = new SriTypeSet();
+        defaultRefTypes = new TypePrSet();
         // defaultRefTypes.add(ResourceCollection.class); // interface
         Class<?>[] types = { DataType.class, };
         for (Class<?> type : types)
@@ -79,7 +79,7 @@ public class PropertyBeanTask
 
     public PropertyBeanTask() {
         vCtor = new ValueConstruct();
-        refTypes = new SriTypeSet();
+        refTypes = new TypePrSet();
         refTypes.addAll(defaultRefTypes);
         duplicatedMessage = "(duplicated node, terminated)";
     }
