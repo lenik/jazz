@@ -35,7 +35,7 @@ public class CLIScriptClassTest extends BasicCLI {
         assertEquals("set myName", "Linda", myName);  
         assertEquals("set yourAge", 17, yourAge); 
 
-        addArguments("--serial", "--no-serial", "--no-serial");   
+        sendArguments("--serial", "--no-serial", "--no-serial");   
         assertEquals("serials", 3, serial.length); 
         assertTrue(serial[0]);
         assertFalse(serial[1]);

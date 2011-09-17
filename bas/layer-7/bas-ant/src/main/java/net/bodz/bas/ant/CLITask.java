@@ -141,7 +141,7 @@ public class CLITask
         try {
             if (moreargs != null && !moreargs.isEmpty()) {
                 String[] moreargv = moreargs.toArray(ArrayUtils.EMPTY_STRING_ARRAY);
-                app.addArguments(moreargv);
+                app.sendArguments(moreargv);
             }
             // adapting attributes
             if (logLevel != 0) {
