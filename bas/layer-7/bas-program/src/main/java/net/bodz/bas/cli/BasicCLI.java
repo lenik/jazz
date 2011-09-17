@@ -368,11 +368,11 @@ public class BasicCLI
         prepared = true;
     }
 
-    public void addArguments(String... args)
+    public void sendArguments(String... args)
             throws CLIException, ParseException {
         _prepare();
-        String[] rest = opts.load(this, args);
-        for (String arg : rest)
+        String[] rejected = opts.load(this, args);
+        for (String arg : rejected)
             restArgs.add(arg);
     }
 
@@ -405,7 +405,7 @@ public class BasicCLI
         int preRestSize = restArgs.size(); // make climain() reentrant.
 
         try {
-            addArguments(args);
+            sendArguments(args);
 
             dbg.p("cli boot");
             _postInit();
