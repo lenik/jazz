@@ -320,7 +320,7 @@ public class StreamReadPreparation
     }
 
     @Override
-    public Mitorx<String, ? extends IOException> lines(boolean allowOverlap, boolean chopped)
+    public Mitorx<String, ? extends IOException> _lines(boolean chopped)
             throws IOException {
         if (chopped) {
             final BufferedReader bufferedReader = source.newBufferedReader();
@@ -352,6 +352,11 @@ public class StreamReadPreparation
     }
 
     @Override
+    public Iterable<String> lines() {
+        return lines(false);
+    }
+
+    @Override
     public Iterable<String> lines(final boolean chopped) {
         return new Iterable<String>() {
 
@@ -359,7 +364,7 @@ public class StreamReadPreparation
             public Iterator<String> iterator() {
                 Mitorx<String, ? extends IOException> mitor;
                 try {
-                    mitor = lines(true, chopped);
+                    mitor = _lines(chopped);
                 } catch (IOException e) {
                     throw new IteratorTargetException(e);
                 }
@@ -372,13 +377,13 @@ public class StreamReadPreparation
     @Override
     public List<String> listLines()
             throws IOException {
-        return Iterators.toList(lines(false, false));
+        return Iterators.toList(_lines(false));
     }
 
     @Override
     public List<String> listLines(boolean chopped, int maxLines)
             throws IOException {
-        return Iterators.toListLimited(lines(false, chopped), maxLines);
+        return Iterators.toListLimited(_lines(chopped), maxLines);
     }
 
     public byte[] digest(MessageDigest digest)

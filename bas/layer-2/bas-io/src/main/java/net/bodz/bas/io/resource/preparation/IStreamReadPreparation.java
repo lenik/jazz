@@ -106,14 +106,21 @@ public interface IStreamReadPreparation
             throws IOException;
 
     /**
-     * @param allowOverlap
-     *            Unused.
      * @throws FileNotFoundException
      *             If file doesn't exist.
+     * @param allowOverlap
+     *            Unused.
      * @throws IOException
      */
-    Mitorx<String, ? extends IOException> lines(boolean allowOverlap, boolean chopped)
+    Mitorx<String, ? extends IOException> _lines(boolean chopped)
             throws IOException;
+
+    /**
+     * Iterate each line without chopping.
+     * 
+     * @see #lines(boolean)
+     */
+    Iterable<String> lines();
 
     /**
      * @return Overlap-allowed {@link Iterable} which may throw {@link IteratorTargetException}.
