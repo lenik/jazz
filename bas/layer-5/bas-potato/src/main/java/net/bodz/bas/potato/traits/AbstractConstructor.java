@@ -1,7 +1,7 @@
 package net.bodz.bas.potato.traits;
 
 public abstract class AbstractConstructor
-        extends AbstractMember
+        extends AbstractElement
         implements IConstructor {
 
     public AbstractConstructor(Class<?> declaringType) {

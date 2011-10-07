@@ -1,7 +1,7 @@
 package net.bodz.bas.potato.traits;
 
 public interface IParameter
-        extends IMember {
+        extends IElement {
 
     /**
      * @return non-<code>null</code>

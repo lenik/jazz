@@ -3,7 +3,7 @@ package net.bodz.bas.potato.traits;
 import java.util.Collection;
 
 public abstract class AbstractType
-        extends AbstractMember
+        extends AbstractElement
         implements IType {
 
     public AbstractType(String name) {

@@ -2,7 +2,6 @@ package net.bodz.bas.potato.traits;
 
 import java.beans.FeatureDescriptor;
 import java.lang.annotation.Annotation;
-import java.util.Locale;
 
 import net.bodz.bas.meta.info.DisplayName;
 import net.bodz.bas.meta.info.Doc;
@@ -10,8 +9,8 @@ import net.bodz.bas.meta.info.Tags;
 
 import org.apache.commons.lang.ArrayUtils;
 
-public abstract class AbstractMember
-        implements IMember {
+public abstract class AbstractElement
+        implements IElement {
 
     private final Class<?> declaringType;
     private final String name;
@@ -26,7 +25,7 @@ public abstract class AbstractMember
      * @param name
      *            May be <code>null</code>.
      */
-    public AbstractMember(Class<?> declaringType, String name) {
+    public AbstractElement(Class<?> declaringType, String name) {
         this.declaringType = declaringType;
         this.name = name;
     }
@@ -42,7 +41,7 @@ public abstract class AbstractMember
     }
 
     @Override
-    public String getDisplayName(Locale locale) {
+    public String getDisplayName() {
         if (displayName == null) {
             synchronized (this) {
                 if (displayName == null) {
@@ -59,7 +58,7 @@ public abstract class AbstractMember
     }
 
     @Override
-    public String getDescription(Locale locale) {
+    public String getDescription() {
         if (description == null) {
             synchronized (this) {
                 if (description == null) {

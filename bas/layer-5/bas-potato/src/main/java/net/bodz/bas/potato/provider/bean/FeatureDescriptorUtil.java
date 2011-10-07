@@ -2,7 +2,7 @@ package net.bodz.bas.potato.provider.bean;
 
 import java.beans.FeatureDescriptor;
 
-import net.bodz.bas.potato.traits.IMember;
+import net.bodz.bas.potato.traits.IElement;
 
 public class FeatureDescriptorUtil {
 
@@ -35,11 +35,11 @@ public class FeatureDescriptorUtil {
     }
 
     public static void initFeatureDescriptorFromPotatoElement(FeatureDescriptor featureDescriptor,
-            IMember potatoElement) {
+            IElement potatoElement) {
 
         featureDescriptor.setName(potatoElement.getName());
-        featureDescriptor.setDisplayName(potatoElement.getDisplayName(null));
-        featureDescriptor.setShortDescription(potatoElement.getDescription(null));
+        featureDescriptor.setDisplayName(potatoElement.getDisplayName());
+        featureDescriptor.setShortDescription(potatoElement.getDescription());
 
         int pref = potatoElement.getPreferenceLevel();
         applyPreferenceLevelToFeature(featureDescriptor, pref);

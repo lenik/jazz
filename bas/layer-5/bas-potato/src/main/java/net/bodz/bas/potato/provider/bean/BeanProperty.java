@@ -3,7 +3,6 @@ package net.bodz.bas.potato.provider.bean;
 import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.Locale;
 
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
@@ -42,12 +41,12 @@ public class BeanProperty
     }
 
     @Override
-    public String getDisplayName(Locale locale) {
+    public String getDisplayName() {
         return propertyDescriptor.getDisplayName();
     }
 
     @Override
-    public String getDescription(Locale locale) {
+    public String getDescription() {
         return propertyDescriptor.getShortDescription();
     }
 
