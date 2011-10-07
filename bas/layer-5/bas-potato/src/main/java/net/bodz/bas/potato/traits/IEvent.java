@@ -5,7 +5,7 @@ import java.util.Collection;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 
 public interface IEvent
-        extends IMember {
+        extends IElement {
 
     Class<?> getEventClass();
 

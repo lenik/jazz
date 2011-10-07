@@ -1,7 +1,6 @@
 package net.bodz.bas.potato.provider.bean;
 
 import java.beans.MethodDescriptor;
-import java.util.Locale;
 
 import net.bodz.bas.potato.provider.reflect.ReflectMethod;
 
@@ -21,12 +20,12 @@ public class BeanMethod
     }
 
     @Override
-    public String getDisplayName(Locale locale) {
+    public String getDisplayName() {
         return methodDescriptor.getDisplayName();
     }
 
     @Override
-    public String getDescription(Locale locale) {
+    public String getDescription() {
         return methodDescriptor.getShortDescription();
     }
 

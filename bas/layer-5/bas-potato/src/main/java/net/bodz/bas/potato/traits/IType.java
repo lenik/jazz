@@ -6,7 +6,7 @@ import java.util.Collection;
  * This is also usable as member/inner type.
  */
 public interface IType
-        extends IMember {
+        extends IElement {
 
     /**
      * Get the property map.

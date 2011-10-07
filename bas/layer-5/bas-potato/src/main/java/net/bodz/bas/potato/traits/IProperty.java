@@ -7,7 +7,7 @@ import java.beans.VetoableChangeListener;
 import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 
 public interface IProperty
-        extends IMember {
+        extends IElement {
 
     /**
      * The property type.

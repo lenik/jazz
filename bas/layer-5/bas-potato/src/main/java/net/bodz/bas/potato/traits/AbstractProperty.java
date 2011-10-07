@@ -1,7 +1,7 @@
 package net.bodz.bas.potato.traits;
 
 public abstract class AbstractProperty
-        extends AbstractMember
+        extends AbstractElement
         implements IProperty {
 
     private boolean bound;

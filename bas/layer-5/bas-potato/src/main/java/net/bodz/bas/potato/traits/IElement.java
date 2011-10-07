@@ -3,13 +3,12 @@ package net.bodz.bas.potato.traits;
 import java.beans.FeatureDescriptor;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.AnnotatedElement;
-import java.util.Locale;
 
-public interface IMember
+public interface IElement
         extends AnnotatedElement {
 
     /**
-     * The type where this member is declared.
+     * The type where this element is declared.
      * 
      * @return The declaring type.
      */
@@ -25,18 +24,14 @@ public interface IMember
     /**
      * The human readable display name.
      * 
-     * @param locale
-     *            Preferred locale, may be <code>null</code>.
      * @return non-<code>null</code> string of display name.
      */
-    String getDisplayName(Locale locale);
+    String getDisplayName();
 
     /**
-     * @param locale
-     *            Preferred locale, may be <code>null</code>.
      * @return <code>null</code> If no description available.
      */
-    String getDescription(Locale locale);
+    String getDescription();
 
     /**
      * The preference level controls whether this element is displayed. When user specifies a

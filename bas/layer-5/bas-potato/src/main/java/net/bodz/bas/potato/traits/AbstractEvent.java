@@ -10,7 +10,7 @@ import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.util.string.Strings;
 
 public abstract class AbstractEvent
-        extends AbstractMember
+        extends AbstractElement
         implements IEvent {
 
     private final String ucfirstName;
