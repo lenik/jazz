@@ -1,4 +1,4 @@
-package net.bodz.bas.cli;
+package net.bodz.bas.cli.nt;
 
 public interface IOption {
 

@@ -290,6 +290,7 @@ public abstract class AbstractCommonTraits<T>
         return String.valueOf(object);
     }
 
+    @Override
     public void validate(T object)
             throws ValidateException {
     }
