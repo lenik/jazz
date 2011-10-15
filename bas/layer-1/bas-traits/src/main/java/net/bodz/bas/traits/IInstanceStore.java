@@ -7,7 +7,7 @@ import java.util.Set;
  */
 public interface IInstanceStore<T> {
 
-    int traitsIndex = 1154332547; // IInstanceStore
+    int traitIndex = 1154332547; // IInstanceStore
 
     /**
      * 

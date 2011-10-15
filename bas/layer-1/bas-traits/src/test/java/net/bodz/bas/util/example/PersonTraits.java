@@ -10,7 +10,7 @@ public class PersonTraits
     }
 
     @Override
-    protected Object query(int traitsIndex) {
+    protected Object query(int traitIndex) {
         return null;
     }
 

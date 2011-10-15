@@ -10,7 +10,7 @@ import net.bodz.bas.meta.util.ValueType;
 
 public interface ISampleGenerator<T> {
 
-    int traitsIndex = -1354170176; // ISampleGenerator
+    int traitIndex = -1354170176; // ISampleGenerator
 
     /**
      * @return non-<code>null</code> sample instance.

@@ -20,7 +20,7 @@ public class CalcPreferredId {
         // Id-hash
         for (Class<?> iface : interfaceClasses) {
             String name = iface.getSimpleName();
-            System.out.println("int traitsIndex = " + name.hashCode() + "; // " + name);
+            System.out.println("int traitIndex = " + name.hashCode() + "; // " + name);
         }
         System.out.println();
 
@@ -30,7 +30,7 @@ public class CalcPreferredId {
         System.out.println("    commonTraitsIndex = new HashMap<Class<?>, Integer>();");
         for (Class<?> iface : interfaceClasses) {
             String name = iface.getSimpleName();
-            System.out.println("    commonTraitsIndex.put(" + name + ".class, " + name + ".traitsIndex);");
+            System.out.println("    commonTraitsIndex.put(" + name + ".class, " + name + ".traitIndex);");
         }
         System.out.println("}");
         System.out.println();
@@ -38,7 +38,7 @@ public class CalcPreferredId {
         // Switch table
         for (Class<?> iface : interfaceClasses) {
             String name = iface.getSimpleName();
-            System.out.println("    case " + name + ".traitsIndex: ");
+            System.out.println("    case " + name + ".traitIndex: ");
         }
     }
 

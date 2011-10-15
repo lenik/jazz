@@ -28,10 +28,10 @@ public class LocaleTraits
     }
 
     @Override
-    protected Object query(int traitsIndex) {
-        switch (traitsIndex) {
-        case IParser.traitsIndex:
-        case ISampleGenerator.traitsIndex:
+    protected Object query(int traitIndex) {
+        switch (traitIndex) {
+        case IParser.traitIndex:
+        case ISampleGenerator.traitIndex:
             return this;
         }
         return null;

@@ -51,9 +51,9 @@ public class QueryMethodTraitsProviderTest
         }
 
         @Override
-        protected Object query(int traitsIndex) {
-            switch (traitsIndex) {
-            case IFormatter.traitsIndex:
+        protected Object query(int traitIndex) {
+            switch (traitIndex) {
+            case IFormatter.traitIndex:
                 return this;
             }
             return null;

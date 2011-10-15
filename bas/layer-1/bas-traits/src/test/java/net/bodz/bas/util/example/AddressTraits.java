@@ -24,10 +24,10 @@ public class AddressTraits
     }
 
     @Override
-    protected Object query(int traitsIndex) {
-        switch (traitsIndex) {
-        case IParser.traitsIndex:
-        case IFormatter.traitsIndex:
+    protected Object query(int traitIndex) {
+        switch (traitIndex) {
+        case IParser.traitIndex:
+        case IFormatter.traitIndex:
             return this;
         }
         return null;
