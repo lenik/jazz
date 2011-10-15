@@ -46,49 +46,52 @@ public abstract class AbstractCommonTraits<T>
     static final Map<Class<?>, Integer> commonTraitsIndex;
     static {
         commonTraitsIndex = new HashMap<Class<?>, Integer>();
-        commonTraitsIndex.put(IAttributes.class, IAttributes.traitsIndex);
-        commonTraitsIndex.put(IClassifier.class, IClassifier.traitsIndex);
-        commonTraitsIndex.put(ICommonTraits.class, ICommonTraits.traitsIndex);
-        commonTraitsIndex.put(IFormatter.class, IFormatter.traitsIndex);
-        commonTraitsIndex.put(IInstanceStore.class, IInstanceStore.traitsIndex);
-        commonTraitsIndex.put(IParser.class, IParser.traitsIndex);
-        commonTraitsIndex.put(ISampleGenerator.class, ISampleGenerator.traitsIndex);
-        commonTraitsIndex.put(ISearcher.class, ISearcher.traitsIndex);
-        commonTraitsIndex.put(ITextForm.class, ITextForm.traitsIndex);
-        commonTraitsIndex.put(IValidator.class, IValidator.traitsIndex);
+        commonTraitsIndex.put(IAttributes.class, IAttributes.traitIndex);
+        commonTraitsIndex.put(IClassifier.class, IClassifier.traitIndex);
+        commonTraitsIndex.put(ICommonTraits.class, ICommonTraits.traitIndex);
+        commonTraitsIndex.put(IFormatter.class, IFormatter.traitIndex);
+        commonTraitsIndex.put(IInstanceStore.class, IInstanceStore.traitIndex);
+        commonTraitsIndex.put(IParser.class, IParser.traitIndex);
+        commonTraitsIndex.put(ISampleGenerator.class, ISampleGenerator.traitIndex);
+        commonTraitsIndex.put(ISearcher.class, ISearcher.traitIndex);
+        commonTraitsIndex.put(ITextForm.class, ITextForm.traitIndex);
+        commonTraitsIndex.put(IValidator.class, IValidator.traitIndex);
     }
 
     @Override
     public <X> X query(Class<X> specificationType) {
-        Integer traitsIndex = commonTraitsIndex.get(specificationType);
-        if (traitsIndex == null)
+        Integer traitIndex = commonTraitsIndex.get(specificationType);
+        if (traitIndex == null)
             return super.query(specificationType);
-        Object traits = queryRemix(traitsIndex);
+        Object traits = queryIndexed(traitIndex);
         return specificationType.cast(traits);
     }
 
-    protected Object queryRemix(int traitsIndex) {
-        Object traits = query(traitsIndex);
+    /**
+     * The indexed query is faster.
+     */
+    protected Object queryIndexed(int traitIndex) {
+        Object traits = query(traitIndex);
         if (traits != null)
             return traits;
 
-        switch (traitsIndex) {
-        case ICommonTraits.traitsIndex:
+        switch (traitIndex) {
+        case ICommonTraits.traitIndex:
             return this;
 
-        case IAttributes.traitsIndex:
+        case IAttributes.traitIndex:
             if (attributes != null)
                 return this;
             break;
 
-        case ITextForm.traitsIndex:
-            Object parser = query(IParser.traitsIndex);
-            Object formatter = query(IFormatter.traitsIndex);
+        case ITextForm.traitIndex:
+            Object parser = query(IParser.traitIndex);
+            Object formatter = query(IFormatter.traitIndex);
             if (parser == formatter && parser != null)
                 return parser;
             break;
 
-        case IInstanceStore.traitsIndex:
+        case IInstanceStore.traitIndex:
             if (storeInstances != null)
                 return this;
             break;
@@ -96,7 +99,7 @@ public abstract class AbstractCommonTraits<T>
         return null;
     }
 
-    protected abstract Object query(int traitsIndex);
+    protected abstract Object query(int traitIndex);
 
     @Override
     public IAttributes getAttributes() {

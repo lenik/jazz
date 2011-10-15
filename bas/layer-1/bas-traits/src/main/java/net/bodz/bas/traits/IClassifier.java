@@ -7,7 +7,7 @@ import net.bodz.bas.lang.negotiation.NegotiationException;
 
 public interface IClassifier<T> {
 
-    int traitsIndex = -616435894; // IClassifier
+    int traitIndex = -616435894; // IClassifier
 
     Map<String, Object> classify(T object)
             throws ClassifyException;

@@ -10,7 +10,7 @@ import net.bodz.bas.lang.negotiation.NegotiationException;
 
 public interface IParser<T> {
 
-    int traitsIndex = -1548284472; // IParser
+    int traitIndex = -1548284472; // IParser
 
     /**
      * @return ? extends <code>T</code>

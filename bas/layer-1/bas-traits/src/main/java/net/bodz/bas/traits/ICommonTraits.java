@@ -5,7 +5,7 @@ import net.bodz.bas.lang.mi.IQueryable;
 public interface ICommonTraits<T>
         extends IQueryable {
 
-    int traitsIndex = 365443289; // ICommonTraits
+    int traitIndex = 365443289; // ICommonTraits
 
     /**
      * Get the type attributes.

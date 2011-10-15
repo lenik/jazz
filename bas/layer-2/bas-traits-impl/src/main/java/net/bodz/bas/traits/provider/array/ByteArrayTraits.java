@@ -26,8 +26,8 @@ public class ByteArrayTraits
     }
 
     @Override
-    protected Object query(int traitsIndex) {
-        if (traitsIndex == IParser.traitsIndex)
+    protected Object query(int traitIndex) {
+        if (traitIndex == IParser.traitIndex)
             return this;
         return null;
     }

@@ -26,9 +26,9 @@ public class FileTraits
     }
 
     @Override
-    protected Object query(int traitsIndex) {
-        switch (traitsIndex) {
-        case IParser.traitsIndex:
+    protected Object query(int traitIndex) {
+        switch (traitIndex) {
+        case IParser.traitIndex:
             return this;
         }
         return null;
