@@ -100,7 +100,7 @@ public class ClassCLI {
             boolean usingRestSyntax = false;
             if (usingRestSyntax) {
                 // getRestSyntax();
-                Method restf = ReflectQuery.selectDeclaredMethods(clazz).withName("getRestSyntax").iterator(true)
+                Method restf = ReflectQuery.selectDeclaredMethods(clazz).nameEquals("getRestSyntax").iterator(true)
                         .next();
                 if (restf == null)
                     buffer.append("...");
@@ -154,7 +154,7 @@ public class ClassCLI {
                 StringBuilder line = new StringBuilder(80);
                 for (_Option<?> opt : opts) {
                     String[] aliases = copt.getAliases(opt);
-                    Arrays.sort(aliases, StringLengthComparator.getInstance());
+                    Arrays.sort(aliases, StringLengthComparator.INSTANCE);
 
                     line.setLength(0);
                     line.append(tab);
