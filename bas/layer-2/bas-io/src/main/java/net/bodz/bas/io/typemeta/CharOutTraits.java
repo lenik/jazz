@@ -20,7 +20,7 @@ public class CharOutTraits
 
     @Override
     protected Object query(int traitsIndex) {
-        if (traitsIndex == IParser.traitsIndex)
+        if (traitsIndex == IParser.traitIndex)
             return this;
         return null;
     }

@@ -13,12 +13,13 @@ public class ByteOutTraits
         extends AbstractCommonTraits<IByteOut> {
 
     public ByteOutTraits() {
+        
         super(IByteOut.class);
     }
 
     @Override
     protected Object query(int traitsIndex) {
-        if (traitsIndex == IParser.traitsIndex)
+        if (traitsIndex == IParser.traitIndex)
             return this;
         return null;
     }
