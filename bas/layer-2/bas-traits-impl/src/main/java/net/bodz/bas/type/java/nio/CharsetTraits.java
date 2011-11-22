@@ -42,11 +42,15 @@ public class CharsetTraits
     private static List<String> availableCharsetNames;
 
     @Override
-    public synchronized Charset newSample()
+    public Charset newSample()
             throws CreateException {
         if (availableCharsetNames == null) {
-            Map<String, Charset> availableCharsets = Charset.availableCharsets();
-            availableCharsetNames = new ArrayList<String>(availableCharsets.keySet());
+            synchronized (CharsetTraits.class) {
+                if (availableCharsetNames == null) {
+                    Map<String, Charset> availableCharsets = Charset.availableCharsets();
+                    availableCharsetNames = new ArrayList<String>(availableCharsets.keySet());
+                }
+            }
         }
         int randomIndex = random.nextInt(availableCharsetNames.size());
         String randomCharsetName = availableCharsetNames.get(randomIndex);
