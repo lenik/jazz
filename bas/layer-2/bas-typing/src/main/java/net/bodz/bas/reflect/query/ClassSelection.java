@@ -6,6 +6,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import net.bodz.bas.reflect.query.predicate.IStringPredicate;
+import net.bodz.bas.reflect.query.predicate.StringEndsWith;
+import net.bodz.bas.reflect.query.predicate.StringStartsWith;
+import net.bodz.bas.reflect.query.predicate.StringEquals;
 import net.bodz.bas.util.iter.AbstractMitablex;
 import net.bodz.bas.util.iter.AbstractMitorx;
 import net.bodz.bas.util.iter.Iterables;
@@ -22,7 +26,7 @@ public class ClassSelection
     protected int modifierMask;
     protected int modifierTest;
 
-    protected INamePredicate namePredicate;
+    protected IStringPredicate namePredicate;
 
     public ClassSelection(Class<?> clazz) {
         if (clazz == null)
@@ -61,7 +65,7 @@ public class ClassSelection
      *             If <code>namePrefix</code> is <code>null</code>.
      */
     public ClassSelection withName(String name) {
-        namePredicate = new EqualsName(name, namePredicate);
+        namePredicate = new StringEquals(name, namePredicate);
         return this;
     }
 
@@ -70,7 +74,7 @@ public class ClassSelection
      *             If <code>namePrefix</code> is <code>null</code>.
      */
     public ClassSelection startsWithName(String namePrefix) {
-        namePredicate = new StartsWithName(namePrefix, namePredicate);
+        namePredicate = new StringStartsWith(namePrefix, namePredicate);
         return this;
     }
 
@@ -79,7 +83,7 @@ public class ClassSelection
      *             If <code>nameSuffix</code> is <code>null</code>.
      */
     public ClassSelection endsWithName(String nameSuffix) {
-        namePredicate = new EndsWithName(nameSuffix, namePredicate);
+        namePredicate = new StringEndsWith(nameSuffix, namePredicate);
         return this;
     }
 
@@ -172,7 +176,7 @@ public class ClassSelection
     boolean test(Class<?> clazz) {
         if (modifierTest != (modifierMask & clazz.getModifiers()))
             return false;
-        if (namePredicate != null && !namePredicate.test(clazz.getName()))
+        if (namePredicate != null && !namePredicate.evaluate(clazz.getName()))
             return false;
         return true;
     }

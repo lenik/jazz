@@ -29,7 +29,7 @@ public class PublicConstructors
                 Constructor<?> ctor = ctors[currentIndex];
                 if (modifierTest != (modifierMask & ctor.getModifiers()))
                     continue;
-                if (parametersPredicate != null && !parametersPredicate.test(ctor.getParameterTypes()))
+                if (parametersPredicate != null && !parametersPredicate.evaluate(ctor.getParameterTypes()))
                     continue;
                 return ctor;
             }

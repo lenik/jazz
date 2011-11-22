@@ -26,20 +26,20 @@ public class DeclaredMethodsTest
     @Test
     public void testNamePrefix()
             throws Exception {
-        Method[] array = new DeclaredMethods(A2.class).startsWithName("f_").toArray();
+        Method[] array = new DeclaredMethods(A2.class).nameStartsWith("f_").toArray();
         assertEquals(8, array.length);
 
-        array = new DeclaredMethods(A2.class).startsWithName("xxx_").toArray();
+        array = new DeclaredMethods(A2.class).nameStartsWith("xxx_").toArray();
         assertEquals(0, array.length);
     }
 
     @Test
     public void testNameSuffix()
             throws Exception {
-        Method[] array = new DeclaredMethods(A2.class).endsWithName("_public").toArray();
+        Method[] array = new DeclaredMethods(A2.class).nameEndsWith("_public").toArray();
         assertEquals(2, array.length);
 
-        array = new DeclaredMethods(A2.class).endsWithName("_xxx").toArray();
+        array = new DeclaredMethods(A2.class).nameEndsWith("_xxx").toArray();
         assertEquals(0, array.length);
     }
 
