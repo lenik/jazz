@@ -32,9 +32,9 @@ public class PublicMethods
                 Method m = methods[currentIndex];
                 if (modifierTest != (modifierMask & m.getModifiers()))
                     continue;
-                if (namePredicate != null && !namePredicate.test(m.getName()))
+                if (namePredicate != null && !namePredicate.evaluate(m.getName()))
                     continue;
-                if (parametersPredicate != null && !parametersPredicate.test(m.getParameterTypes()))
+                if (parametersPredicate != null && !parametersPredicate.evaluate(m.getParameterTypes()))
                     continue;
                 return m;
             }

@@ -4,6 +4,13 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.List;
 
+import net.bodz.bas.reflect.query.predicate.IStringPredicate;
+import net.bodz.bas.reflect.query.predicate.ITypePredicate;
+import net.bodz.bas.reflect.query.predicate.TypeAncestorOf;
+import net.bodz.bas.reflect.query.predicate.TypeDerivedFrom;
+import net.bodz.bas.reflect.query.predicate.StringEndsWith;
+import net.bodz.bas.reflect.query.predicate.StringStartsWith;
+import net.bodz.bas.reflect.query.predicate.StringEquals;
 import net.bodz.bas.util.iter.AbstractMitablex;
 import net.bodz.bas.util.iter.Iterables;
 
@@ -13,7 +20,7 @@ public abstract class FieldSelection
     protected int modifierMask;
     protected int modifierTest;
 
-    protected INamePredicate namePredicate;
+    protected IStringPredicate namePredicate;
     protected ITypePredicate typePredicate;
 
     static final int accessModifierMask = Modifier.PUBLIC | Modifier.PROTECTED | Modifier.PRIVATE;
@@ -46,8 +53,8 @@ public abstract class FieldSelection
      * @throws NullPointerException
      *             If <code>namePrefix</code> is <code>null</code>.
      */
-    public FieldSelection withName(String name) {
-        namePredicate = new EqualsName(name, namePredicate);
+    public FieldSelection nameEquals(String name) {
+        namePredicate = new StringEquals(name, namePredicate);
         return this;
     }
 
@@ -55,8 +62,8 @@ public abstract class FieldSelection
      * @throws NullPointerException
      *             If <code>namePrefix</code> is <code>null</code>.
      */
-    public FieldSelection startsWithName(String namePrefix) {
-        namePredicate = new StartsWithName(namePrefix, namePredicate);
+    public FieldSelection nameStartsWith(String namePrefix) {
+        namePredicate = new StringStartsWith(namePrefix, namePredicate);
         return this;
     }
 
@@ -64,8 +71,8 @@ public abstract class FieldSelection
      * @throws NullPointerException
      *             If <code>nameSuffix</code> is <code>null</code>.
      */
-    public FieldSelection endsWithName(String nameSuffix) {
-        namePredicate = new EndsWithName(nameSuffix, namePredicate);
+    public FieldSelection nameEndsWith(String nameSuffix) {
+        namePredicate = new StringEndsWith(nameSuffix, namePredicate);
         return this;
     }
 
@@ -73,8 +80,8 @@ public abstract class FieldSelection
      * @throws NullPointerException
      *             If <code>type</code> is <code>null</code>.
      */
-    public FieldSelection of(Class<?> type) {
-        typePredicate = new MinType(type, typePredicate);
+    public FieldSelection derivedFrom(Class<?> type) {
+        typePredicate = new TypeDerivedFrom(type, typePredicate);
         return this;
     }
 
@@ -82,8 +89,8 @@ public abstract class FieldSelection
      * @throws NullPointerException
      *             If <code>type</code> is <code>null</code>.
      */
-    public FieldSelection superOf(Class<?> type) {
-        typePredicate = new MaxType(type, typePredicate);
+    public FieldSelection ancestorOf(Class<?> type) {
+        typePredicate = new TypeAncestorOf(type, typePredicate);
         return this;
     }
 

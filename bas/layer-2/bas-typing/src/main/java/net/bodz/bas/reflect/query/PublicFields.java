@@ -29,9 +29,9 @@ public class PublicFields
                 Field field = methods[currentIndex];
                 if (modifierTest != (modifierMask & field.getModifiers()))
                     continue;
-                if (namePredicate != null && !namePredicate.test(field.getName()))
+                if (namePredicate != null && !namePredicate.evaluate(field.getName()))
                     continue;
-                if (typePredicate != null && !typePredicate.test(field.getType()))
+                if (typePredicate != null && !typePredicate.evaluate(field.getType()))
                     continue;
                 return field;
             }
