@@ -4,13 +4,25 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 
+import net.bodz.bas.err.CreateException;
+import net.bodz.bas.lang.arch.ICreator;
+import net.bodz.bas.lang.arch.NewInstanceCreator;
+
 public class Iterables {
+
+    public static <T> Iterable<T> create(ICreator<? extends Iterator<T>> iteratorCreator) {
+        return new CreateIterable<T>(iteratorCreator);
+    }
+
+    public static <T> Iterable<T> create(Class<? extends Iterator<T>> iteratorClass) {
+        return new CreateIterable<T>(iteratorClass);
+    }
 
     /**
      * Get an OTP iterator wrapper.
      */
     public static <T> Iterable<T> otp(Iterator<T> iterator) {
-        return new OtpIteratorWrapper<T>(iterator);
+        return new OtpIteratorIterable<T>(iterator);
     }
 
     public static <T> Iterable<T> otp(Enumeration<T> enumeration) {
@@ -79,12 +91,36 @@ public class Iterables {
 
 }
 
-class OtpIteratorWrapper<T>
+class CreateIterable<T>
+        implements Iterable<T> {
+
+    final ICreator<? extends Iterator<T>> iteratorCreator;
+
+    public CreateIterable(Class<? extends Iterator<T>> iteratorClass) {
+        this(new NewInstanceCreator<Iterator<T>>(iteratorClass));
+    }
+
+    public CreateIterable(ICreator<? extends Iterator<T>> iteratorCreator) {
+        this.iteratorCreator = iteratorCreator;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        try {
+            return iteratorCreator.create();
+        } catch (CreateException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+    }
+
+}
+
+class OtpIteratorIterable<T>
         implements Iterable<T> {
 
     private final Iterator<T> iterator;
 
-    OtpIteratorWrapper(Iterator<T> iterator) {
+    OtpIteratorIterable(Iterator<T> iterator) {
         if (iterator == null)
             throw new NullPointerException("iterator");
         this.iterator = iterator;
