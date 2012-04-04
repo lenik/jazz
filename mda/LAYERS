@@ -1,0 +1,17 @@
+base/
+    mda-api
+
+embed/
+    mda-apt
+    mda-mim
+    mda-xjdoc
+
+compiler/
+    mda-rtl
+
+model/
+    mda-model-rdb
+
+contrib/
+    maven-xjdoc-plugin
+
