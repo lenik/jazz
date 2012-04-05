@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+import net.bodz.mda.xjdoc.test.ExampleClass;
+
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.DocletTag;
 import com.thoughtworks.qdox.model.JavaClass;
@@ -34,13 +36,13 @@ public class JavadocParser {
 
     public static void main(String[] args)
             throws FileNotFoundException {
-        File sourceFile = getSourceFile(Example.class);
+        File sourceFile = getSourceFile(ExampleClass.class);
         JavaDocBuilder builder = new JavaDocBuilder();
 
         // ClassLibrary lib = builder.getClassLibrary();
 
         builder.addSourceTree(sourceFile.getParentFile());
-        JavaClass jclass = builder.getClassByName(Example.class.getName());
+        JavaClass jclass = builder.getClassByName(ExampleClass.class.getName());
         DocletTag[] tags = jclass.getTags();
         for (JavaField field : jclass.getFields()) {
             DocletTag[] fieldTags = field.getTags();
