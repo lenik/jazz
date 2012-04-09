@@ -15,8 +15,4 @@ public class XjLanguage {
         tagTypes.put(tagName, tagType);
     }
 
-    public static void addCommonTags() {
-        setKeyword("param", new ParameterizedDocTagType());
-        setKeyword("throws", new ParameterizedDocTagType());
-    }
 }
