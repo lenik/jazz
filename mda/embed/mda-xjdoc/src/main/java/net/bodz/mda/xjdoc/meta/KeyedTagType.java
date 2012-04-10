@@ -1,42 +1,47 @@
 package net.bodz.mda.xjdoc.meta;
 
-import javax.free.Pair;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public abstract class KeyedTagType
         extends AbstractTagType {
 
     @Override
-    public Object parse(String text) {
-        int spc = -1;
-        text = text.trim();
-        for (int i = 0; i < text.length(); i++) {
-            char ch = text.charAt(i);
-            if (Character.isWhitespace(ch)) {
-                spc = i;
-                break;
-            }
-        }
+    public Object parse(Object cont, String string) {
+        @SuppressWarnings("unchecked")
+        Map<Object, Object> map = (Map<Object, Object>) cont;
+        if (map == null)
+            map = new LinkedHashMap<Object, Object>();
 
-        String keyText;
-        String valueText;
-        if (spc == -1) {
-            keyText = text;
-            valueText = "";
-        } else {
-            keyText = text.substring(0, spc);
-            valueText = text.substring(spc + 1).trim();
-        }
+        String keyText = WordTokenizer.firstWord(string);
+        String valueText = string.substring(keyText.length());
+        keyText = keyText.trim();
+        valueText = valueText.trim();
 
         Object key = parseKey(keyText);
-        Object value = parseValue(valueText);
-        return new Pair<Object, Object>(key, value);
+        Object valueCont = map.get(key);
+        Object value = parseValue(valueCont, valueText);
+        // return new Pair<Object, Object>(key, value);
+        if (valueCont == null)
+            map.put(key, value);
+        return map;
     }
 
     @Override
-    public String format(Object key, Object value) {
-        String keyText = formatKey(key);
-        String valueText = formatValue(value);
-        return keyText + " " + valueText;
+    public String[] format(Object value) {
+        Map<?, ?> map = (Map<?, ?>) value;
+        String[] array = new String[map.size()];
+
+        int index = 0;
+        for (Entry<?, ?> entry : map.entrySet()) {
+            Object k = entry.getKey();
+            Object v = entry.getValue();
+            String keyText = formatKey(k);
+            String valueText = formatValue(v);
+            array[index++] = keyText + " " + valueText;
+        }
+        return array;
     }
 
     protected Object parseKey(String keyText) {
@@ -50,7 +55,7 @@ public abstract class KeyedTagType
             return key.toString();
     }
 
-    protected abstract Object parseValue(String valueText);
+    protected abstract Object parseValue(Object cont, String valueString);
 
     protected abstract String formatValue(Object value);
 

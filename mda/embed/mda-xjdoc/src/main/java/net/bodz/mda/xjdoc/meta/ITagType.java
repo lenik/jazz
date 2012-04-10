@@ -1,24 +1,25 @@
 package net.bodz.mda.xjdoc.meta;
 
-import java.util.Map.Entry;
-
 public interface ITagType {
 
     /**
-     * Parse the doc text.
+     * Parse javadoc string into value object.
      * 
-     * @return Instance of {@link Entry} will result in parameterized attributes.
+     * @param cont
+     *            (Continuation) A previous parsed object for tags occurred many times.
+     * @param text
+     *            Original javadoc tag string.
+     * @return If <code>cont</code> is not <code>null</code>, this method should return
+     *         <code>cont</code>, otherwise a new value is created and returned.
      */
-    Object parse(String text);
+    Object parse(Object cont, String string);
 
     /**
      * Format the value object.
      * 
      * @param value
-     *            Maybe instance of {@link Entry} to include the attribute sub-keys.
+     * @return String array each for a javadoc annotation.
      */
-    String format(Object value);
-
-    String format(Object key, Object value);
+    String[] format(Object value);
 
 }

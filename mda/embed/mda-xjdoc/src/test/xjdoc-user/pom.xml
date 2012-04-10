@@ -7,17 +7,28 @@
         <artifactId>bas-parent</artifactId>
         <version>0.4</version>
     </parent>
-    <groupId>net.bodz.mda</groupId>
+    <groupId>test</groupId>
     <artifactId>xjdoc-user</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <dependencies>
+        <dependency>
+            <groupId>net.bodz.mda</groupId>
+            <artifactId>mda-xjdoc</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.8</version>
         </dependency>
+        <dependency>
+            <groupId>com.bee32.plover</groupId>
+            <artifactId>plover-model</artifactId>
+            <version>0.3.2-SNAPSHOT</version>
+        </dependency>
     </dependencies>
     <name>XJDoc user project</name>
+    <!-- 
     <build>
         <plugins>
             <plugin>
@@ -34,4 +45,5 @@
             </plugin>
         </plugins>
     </build>
+    -->
 </project>

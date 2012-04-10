@@ -70,6 +70,17 @@ public class DomainString
         paraLangPattern = Pattern.compile("<p\\s+lang=([\'\"])(.*?)\\1.*?>");
     }
 
+    /**
+     * A para-lang formatted domain-string is as:
+     * 
+     * <pre>
+     * ...
+     * &lt;p lang="LANG1"&gt;...
+     * &lt;p lang="LANG2"&gt;...
+     * </pre>
+     * 
+     * Leading/trailing space of each language is stripped.
+     */
     public static DomainString parseParaLang(String plText) {
         Matcher matcher = paraLangPattern.matcher(plText);
         if (!matcher.find())
@@ -92,6 +103,7 @@ public class DomainString
                 end = true;
             }
 
+            part = part.trim();
             main.resolve(nextLang, part);
             // System.out.println(nextLang + " -> [" + part + "]");
             if (end)
