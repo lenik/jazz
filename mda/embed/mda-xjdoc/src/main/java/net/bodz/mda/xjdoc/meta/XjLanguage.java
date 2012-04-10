@@ -3,15 +3,16 @@ package net.bodz.mda.xjdoc.meta;
 import java.util.HashMap;
 import java.util.Map;
 
-public class XjLanguage {
+public class XjLanguage
+        implements IXjLanguage {
 
-    static Map<String, ITagType> tagTypes = new HashMap<String, ITagType>();
+    Map<String, ITagType> tagTypes = new HashMap<String, ITagType>();
 
-    public static ITagType getTagType(String tagName) {
+    public ITagType getTagType(String tagName) {
         return tagTypes.get(tagName);
     }
 
-    public static void setKeyword(String tagName, ITagType tagType) {
+    public void setTagType(String tagName, ITagType tagType) {
         tagTypes.put(tagName, tagType);
     }
 

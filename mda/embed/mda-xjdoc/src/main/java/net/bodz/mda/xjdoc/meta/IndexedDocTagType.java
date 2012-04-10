@@ -2,28 +2,26 @@ package net.bodz.mda.xjdoc.meta;
 
 import net.bodz.bas.i18n.dstr.DomainString;
 
-public class DocTagType
-        extends AbstractTagType {
+public class IndexedDocTagType
+        extends IndexedTagType {
 
     /**
-     * @param cont
+     * @param valueCont
      *            is skipped, if multiple dstr-tag occurred, only the last one is used.
      * @return {@link DomainString}.
      */
     @Override
-    public Object parse(Object cont, String string) {
-        DomainString dstr = DomainString.parseParaLang(string);
+    protected Object parseValue(Object cont, String valueString) {
+        DomainString dstr = DomainString.parseParaLang(valueString);
         return dstr;
     }
 
     @Override
-    public String[] format(Object value) {
+    protected String formatValue(Object value) {
         if (value == null)
             return null;
         DomainString dstr = (DomainString) value;
-        return new String[] { dstr.toString() };
+        return dstr.toString();
     }
-
-    public static final DocTagType INSTANCE = new DocTagType();
 
 }

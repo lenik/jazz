@@ -38,8 +38,8 @@ public class TypeNameContextTest {
         String alias = context.importType(a.getClass());
         assertEquals("Foo10[][]", alias);
 
-        for (Class<?> importClass : context.importTypeMap.values()) {
-            System.out.println("%import " + importClass.getCanonicalName());
+        for (String fqcn : context.importTypeMap.values()) {
+            System.out.println("%import " + fqcn);
         }
     }
 

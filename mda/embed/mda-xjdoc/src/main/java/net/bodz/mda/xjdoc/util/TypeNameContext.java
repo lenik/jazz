@@ -3,19 +3,21 @@ package net.bodz.mda.xjdoc.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.thoughtworks.qdox.model.Type;
+
 public class TypeNameContext {
 
-    static final Package javaLangPackage = Package.getPackage("java.lang");
+    final String contextPackageName;
 
-    final Package contextPackage;
-    final Map<String, Class<?>> importTypeMap = new HashMap<String, Class<?>>();
+    /** simple-name --> full-qualified name */
+    final Map<String, String> importTypeMap = new HashMap<String, String>();
 
     public TypeNameContext(Class<?> contextType) {
-        this(contextType.getPackage());
+        this(contextType.getPackage().getName());
     }
 
-    public TypeNameContext(Package contextPackage) {
-        this.contextPackage = contextPackage;
+    public TypeNameContext(String contextPackageName) {
+        this.contextPackageName = contextPackageName;
     }
 
     /**
@@ -30,29 +32,55 @@ public class TypeNameContext {
             Class<?> componentType = type.getComponentType();
             String component = importType(componentType);
             return component + "[]";
+        } else {
+            return importType(type.getCanonicalName());
+        }
+    }
+
+    public String importType(Type type) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(importType(type.getFullyQualifiedName()));
+        int dims = type.getDimensions();
+        for (int i = 0; i < dims; i++)
+            sb.append("[]");
+        return sb.toString();
+    }
+
+    public String importType(String fqcn) {
+        String simpleName;
+        String packageName;
+        int lastDot = fqcn.lastIndexOf('.');
+        if (lastDot == -1) {
+            simpleName = fqcn;
+            packageName = "";
+        } else {
+            simpleName = fqcn.substring(lastDot + 1);
+            packageName = fqcn.substring(0, lastDot);
         }
 
-        String simpleName = type.getSimpleName();
-        if (type.getPackage().equals(javaLangPackage))
+        if ("java.lang".equals(packageName))
             return simpleName;
 
-        if (contextPackage != null && contextPackage.equals(type.getPackage()))
+        // With-in the same package? Never import friend class.
+        if (contextPackageName != null && contextPackageName.equals(packageName))
             try {
                 // OPT: Cache. But JRE may have cached it already.
                 Class.forName("java.lang." + simpleName);
+                return fqcn;
             } catch (ClassNotFoundException e) {
                 return simpleName;
             }
 
-        Class<?> imported = importTypeMap.get(simpleName);
-        if (imported == null) { // new class to import.
-            importTypeMap.put(simpleName, type);
+        String importedFqcn = importTypeMap.get(simpleName);
+        if (importedFqcn == null) { // new class to import.
+            importTypeMap.put(simpleName, fqcn);
             return simpleName;
         }
-        if (imported.equals(type)) // already imported
+
+        if (importedFqcn.equals(fqcn)) // already imported
             return simpleName;
         else
-            return type.getCanonicalName();
+            return fqcn;
     }
 
 }

@@ -15,7 +15,6 @@
         <module>mda-apt</module>
         <module>mda-mim</module>
         <module>mda-xjdoc</module>
-        <module>xjdoc</module>
     </modules>
     <name>MDA :: Embed</name>
 </project>
