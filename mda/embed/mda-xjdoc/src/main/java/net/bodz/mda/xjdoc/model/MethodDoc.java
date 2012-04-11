@@ -7,6 +7,7 @@ import java.util.Map;
 
 import net.bodz.bas.i18n.dstr.DomainString;
 import net.bodz.bas.text.flatf.IFlatfLoader;
+import net.bodz.mda.xjdoc.model.conv.ClassDocLoader;
 import net.bodz.mda.xjdoc.util.TypeNameContext;
 
 public class MethodDoc
