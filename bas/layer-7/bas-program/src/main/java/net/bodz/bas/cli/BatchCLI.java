@@ -199,10 +199,10 @@ public class BatchCLI
         fileFilter = new FileFilter() {
             @Override
             public boolean accept(File file) {
-                if (inclusiveMask != null && inclusiveMask.set())
+                if (inclusiveMask != null)
                     if (!inclusiveMask.test(file))
                         return false;
-                if (exclusiveMask != null && exclusiveMask.set())
+                if (exclusiveMask != null)
                     if (exclusiveMask.test(file))
                         return false;
                 if (fileInclusivePattern != null)

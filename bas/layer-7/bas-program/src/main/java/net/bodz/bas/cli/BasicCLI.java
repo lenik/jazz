@@ -463,7 +463,7 @@ public class BasicCLI
     }
 
     /**
-     * @throws ControlBreak
+     * @throws ControlExit
      */
     protected void _exit()
             throws Exception {

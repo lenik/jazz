@@ -20,7 +20,7 @@ public interface IProperty
      * Get the property value from a particular instance.
      * 
      * @throws NullPointerException
-     *             If <code>instance</code> is <code>null</code>.
+     *             If <code>instance</code> is <code>null</code> and the property is not static.
      * @throws ClassCastException
      *             If <code>instance</code> isn't of the declaring potato type
      */
@@ -31,7 +31,7 @@ public interface IProperty
      * Set the property value to a particular instance.
      * 
      * @throws NullPointerException
-     *             If <code>instance</code> is <code>null</code>.
+     *             If <code>instance</code> is <code>null</code> and the property is not static.
      * @throws ClassCastException
      *             If <code>instance</code> isn't of the declaring potato type
      * @throws IllegalArgumentException

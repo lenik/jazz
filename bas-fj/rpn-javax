@@ -1,4 +1,8 @@
 #!/bin/bash
 
+rm -fr javax/*
 m2rpn -wbas=freejava -pnet.bodz.bas=javax.free -f "$@" ../bas javax
+
+echo "Deploy to other then m2.bodz.net: "
+echo "mvn deploy -fn -DaltDeploymentRepository=z-m2::default::http://m2.local"
 
