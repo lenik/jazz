@@ -87,8 +87,9 @@ public class ClassDoc
                 FieldDoc fieldDoc = new FieldDoc();
                 fieldDoc.readObject(in);
                 fieldDocs.put(fieldName, fieldDoc);
-            } else if (sectionName.contains("(") && sectionName.contains(")")) {
-                String methodId = sectionName;
+            } else if (sectionName.startsWith("method:")) {
+                assert sectionName.contains("(") && sectionName.contains(")");
+                String methodId = sectionName.substring(7);
                 MethodDoc methodDoc = new MethodDoc();
                 methodDoc.readObject(in);
                 methodDocs.put(methodId, methodDoc);
@@ -114,7 +115,7 @@ public class ClassDoc
         for (Entry<String, MethodDoc> method : methodDocs.entrySet()) {
             String methodId = method.getKey();
             MethodDoc methodDoc = method.getValue();
-            out.sectionBegin(methodId);
+            out.sectionBegin("method:" + methodId);
             methodDoc.writeObject(out);
             out.sectionEnd();
         }

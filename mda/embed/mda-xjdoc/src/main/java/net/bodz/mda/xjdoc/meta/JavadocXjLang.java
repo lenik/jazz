@@ -4,12 +4,14 @@ public class JavadocXjLang
         extends XjLanguage {
 
     public JavadocXjLang() {
-        setTagType("return", new DocTagType());
+        setTagType("author", StringArrayTagType.INSTANCE);
+        setTagType("exception", new KeyedDocTagType()); // checked
         setTagType("param", new KeyedDocTagType());
-        setTagType("exception", new KeyedDocTagType());
+        setTagType("return", new DocTagType());
+        setTagType("throws", new KeyedDocTagType()); // unchecked
     }
 
-    static JavadocXjLang instance;
+    private static JavadocXjLang instance;
 
     public static synchronized JavadocXjLang getInstance() {
         if (instance == null)

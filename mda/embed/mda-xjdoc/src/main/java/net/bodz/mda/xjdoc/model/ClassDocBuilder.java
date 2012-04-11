@@ -2,11 +2,11 @@ package net.bodz.mda.xjdoc.model;
 
 import java.util.Map;
 
+import javax.free.IllegalUsageException;
+
 import net.bodz.bas.i18n.dstr.DomainString;
 import net.bodz.mda.xjdoc.meta.ITagType;
 import net.bodz.mda.xjdoc.meta.IXjLanguage;
-import net.bodz.mda.xjdoc.meta.JavadocXjLang;
-import net.bodz.mda.xjdoc.meta.StringTagType;
 import net.bodz.mda.xjdoc.util.IMethodIdStrategy;
 import net.bodz.mda.xjdoc.util.SimpleMethodIdStrategy;
 import net.bodz.mda.xjdoc.util.TypeNameContext;
@@ -24,7 +24,13 @@ public class ClassDocBuilder {
 
     TypeNameContext typeNameContext;
     IMethodIdStrategy methodIdStrategy;
-    IXjLanguage lang = new JavadocXjLang();
+    IXjLanguage lang;
+
+    public ClassDocBuilder(IXjLanguage lang) {
+        if (lang == null)
+            throw new NullPointerException("lang");
+        this.lang = lang;
+    }
 
     public ClassDoc buildClass(JavaClass javaClass) {
         ClassDoc classDoc = new ClassDoc(javaClass.getFullyQualifiedName());
@@ -32,7 +38,8 @@ public class ClassDocBuilder {
 
         for (JavaField javaField : javaClass.getFields()) {
             String fieldName = javaField.getName();
-            FieldDoc fieldDoc = buildField(javaField);
+            FieldDoc fieldDoc = new FieldDoc(fieldName);
+            populate(fieldDoc, javaField);
             classDoc.setFieldDoc(fieldName, fieldDoc);
         }
 
@@ -42,23 +49,12 @@ public class ClassDocBuilder {
 
         for (JavaMethod javaMethod : javaClass.getMethods()) {
             String methodId = methodIdStrategy.getMethodId(javaMethod);
-            MethodDoc methodDoc = buildMethod(javaMethod);
+            MethodDoc methodDoc = new MethodDoc(methodId);
+            populate(methodDoc, javaMethod);
             classDoc.setMethodDoc(methodId, methodDoc);
         }
 
         return classDoc;
-    }
-
-    public FieldDoc buildField(JavaField javaField) {
-        FieldDoc fieldDoc = new FieldDoc();
-        populate(fieldDoc, javaField);
-        return fieldDoc;
-    }
-
-    public MethodDoc buildMethod(JavaMethod javaMethod) {
-        MethodDoc methodDoc = new MethodDoc();
-        populate(methodDoc, javaMethod);
-        return methodDoc;
     }
 
     void populate(ElementDoc elementDoc, AbstractJavaEntity javaEntity) {
@@ -74,9 +70,9 @@ public class ClassDocBuilder {
             // DomainString value = DomainString.parseParaLang(tagValueString);
             ITagType tagType = lang.getTagType(tagName);
             if (tagType == null)
-                tagType = StringTagType.INSTANCE;
+                throw new IllegalUsageException("Undefined Tag: " + tagName);
             Object cont = tagMap.get(tagName);
-            Object tagValue = tagType.parse(cont, tagValueString);
+            Object tagValue = tagType.parseJavadoc(cont, tagValueString);
             if (cont == null)
                 tagMap.put(tagName, tagValue);
         }

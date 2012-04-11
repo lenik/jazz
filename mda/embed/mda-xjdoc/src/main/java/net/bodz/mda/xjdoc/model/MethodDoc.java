@@ -1,9 +1,13 @@
 package net.bodz.mda.xjdoc.model;
 
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import net.bodz.bas.i18n.dstr.DomainString;
+import net.bodz.bas.text.flatf.IFlatfLoader;
+import net.bodz.mda.xjdoc.util.TypeNameContext;
 
 public class MethodDoc
         extends ElementDoc {
@@ -95,6 +99,15 @@ public class MethodDoc
         if (exceptionDoc == null)
             throw new NullPointerException("exceptionDoc");
         getExceptionDocs().put(exceptionType, exceptionDoc);
+    }
+
+    @Override
+    public void loadObject(IFlatfLoader loader)
+            throws IOException, ParseException {
+        ClassDocLoader classDocLoader = (ClassDocLoader) loader;
+        TypeNameContext typeNameContext = classDocLoader.getTypeNameContext();
+
+        super.loadObject(loader);
     }
 
 }

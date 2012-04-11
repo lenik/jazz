@@ -5,8 +5,8 @@ import java.io.IOException;
 import net.bodz.bas.i18n.dstr.DomainString;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 
-public class KeyedDocTagType
-        extends KeyedTagType {
+public class RepeatDocTagType
+        extends RepeatTagType {
 
     /**
      * @param valueCont
@@ -14,7 +14,7 @@ public class KeyedDocTagType
      * @return {@link DomainString}.
      */
     @Override
-    protected Object parseJavadocValue(Object valueCont, String valueString) {
+    protected Object parseJavadocValue(String valueString) {
         DomainString dstr = DomainString.parseParaLang(valueString);
         return dstr;
     }
@@ -28,7 +28,7 @@ public class KeyedDocTagType
     }
 
     @Override
-    protected Object parseAttributeValue(Object cont, String valueString) {
+    protected Object parseAttributeValue(String valueString) {
         DomainString dstr = DomainString.parseMultiLangString(valueString);
         return dstr;
     }

@@ -1,35 +1,38 @@
 package net.bodz.mda.xjdoc.meta;
 
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import net.bodz.bas.text.flatf.IFlatfOutput;
+import net.bodz.mda.xjdoc.util.WordTokenizer;
 
 public abstract class KeyedTagType
         extends AbstractTagType {
 
     @Override
-    public Object parse(Object cont, String string) {
-        @SuppressWarnings("unchecked")
-        Map<Object, Object> map = (Map<Object, Object>) cont;
-        if (map == null)
-            map = new LinkedHashMap<Object, Object>();
-
+    public Object parseJavadoc(Object cont, String string) {
         String keyText = WordTokenizer.firstWord(string);
         String valueText = string.substring(keyText.length());
         keyText = keyText.trim();
         valueText = valueText.trim();
 
+        @SuppressWarnings("unchecked")
+        Map<Object, Object> map = (Map<Object, Object>) cont;
+        if (map == null)
+            map = new LinkedHashMap<Object, Object>();
+
         Object key = parseKey(keyText);
         Object valueCont = map.get(key);
-        Object value = parseValue(valueCont, valueText);
-        // return new Pair<Object, Object>(key, value);
-        if (valueCont == null)
+        Object value = parseJavadocValue(valueCont, valueText);
+        if (valueCont != value)
             map.put(key, value);
         return map;
     }
 
     @Override
-    public String[] format(Object value) {
+    public String[] formatJavadoc(Object value) {
         Map<?, ?> map = (Map<?, ?>) value;
         String[] array = new String[map.size()];
 
@@ -38,10 +41,40 @@ public abstract class KeyedTagType
             Object k = entry.getKey();
             Object v = entry.getValue();
             String keyText = formatKey(k);
-            String valueText = formatValue(v);
+            String valueText = formatJavadocValue(v);
             array[index++] = keyText + " " + valueText;
         }
         return array;
+    }
+
+    @Override
+    public Object parseAttribute(Object cont, String suffix, String string) {
+        @SuppressWarnings("unchecked")
+        Map<Object, Object> map = (Map<Object, Object>) cont;
+        if (map == null)
+            map = new LinkedHashMap<Object, Object>();
+
+        Object key = parseKey(suffix);
+        Object valueCont = map.get(key);
+        Object value = parseAttributeValue(valueCont, string);
+        // return new Pair<Object, Object>(key, value);
+        if (valueCont == null)
+            map.put(key, value);
+        return map;
+    }
+
+    @Override
+    public void writeAttributes(IFlatfOutput out, String prefix, Object value)
+            throws IOException {
+        Map<?, ?> map = (Map<?, ?>) value;
+        for (Entry<?, ?> entry : map.entrySet()) {
+            Object k = entry.getKey();
+            Object v = entry.getValue();
+            if (v != null) {
+                String keyText = formatKey(k);
+                writeValueAttributes(out, prefix + "." + keyText, v);
+            }
+        }
     }
 
     protected Object parseKey(String keyText) {
@@ -55,8 +88,13 @@ public abstract class KeyedTagType
             return key.toString();
     }
 
-    protected abstract Object parseValue(Object cont, String valueString);
+    protected abstract Object parseJavadocValue(Object cont, String valueString);
 
-    protected abstract String formatValue(Object value);
+    protected abstract String formatJavadocValue(Object value);
+
+    protected abstract Object parseAttributeValue(Object cont, String valueString);
+
+    protected abstract void writeValueAttributes(IFlatfOutput out, String prefix, Object value)
+            throws IOException;
 
 }

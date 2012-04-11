@@ -72,12 +72,12 @@ public class Animal {
      *            离别语。
      *            <p lang="ja">
      *            バイバイ言葉。
-     * @throws IOException
-     *             If any I/O exception occurred.
-     *             <p lang="zh-cn">
-     *             当发生输入输出异常时。
-     *             <p lang="ja">
-     *             ハードウェアエラー。
+     * @exception IOException
+     *                If any I/O exception occurred.
+     *                <p lang="zh-cn">
+     *                当发生输入输出异常时。
+     *                <p lang="ja">
+     *                ハードウェアエラー。
      */
     public void greet(String message, String bye)
             throws IOException {

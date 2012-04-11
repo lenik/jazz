@@ -87,7 +87,7 @@ public class DomainString
             return new DomainString(null, plText);
 
         String mainText = plText.substring(0, matcher.start());
-        DomainString main = new DomainString(null, mainText);
+        DomainString main = new DomainString(null, mainText.trim());
         String nextLang;
         int nextStart;
         while (true) {

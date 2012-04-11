@@ -1,9 +1,12 @@
 package net.bodz.mda.xjdoc.meta;
 
+import java.io.IOException;
+
 import net.bodz.bas.i18n.dstr.DomainString;
+import net.bodz.bas.text.flatf.IFlatfOutput;
 
 public class DocTagType
-        extends AbstractTagType {
+        extends ScalarTagType {
 
     /**
      * @param cont
@@ -11,17 +14,30 @@ public class DocTagType
      * @return {@link DomainString}.
      */
     @Override
-    public Object parse(Object cont, String string) {
-        DomainString dstr = DomainString.parseParaLang(string);
-        return dstr;
+    public Object parseJavadoc(Object cont, String string) {
+        DomainString text = DomainString.parseParaLang(string);
+        return text;
     }
 
     @Override
-    public String[] format(Object value) {
+    public String[] formatJavadoc(Object value) {
         if (value == null)
             return null;
-        DomainString dstr = (DomainString) value;
-        return new String[] { dstr.toString() };
+        DomainString text = (DomainString) value;
+        return new String[] { text.toParaLangString() };
+    }
+
+    @Override
+    public Object parseAttribute(Object cont, String suffix, String string) {
+        DomainString text = DomainString.parseMultiLangString(string);
+        return text;
+    }
+
+    @Override
+    public void writeAttributes(IFlatfOutput out, String prefix, Object value)
+            throws IOException {
+        DomainString text = (DomainString) value;
+        out.attribute(prefix, text);
     }
 
     public static final DocTagType INSTANCE = new DocTagType();

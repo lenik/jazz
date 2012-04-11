@@ -13,6 +13,11 @@ import java.io.IOException;
  * 
  * <p lang="et">
  * Hundo.
+ * 
+ * @color Red
+ *        <p lang="zh-cn">
+ *        红
+ * @weight 80kg
  */
 public class Dog
         extends Animal {
