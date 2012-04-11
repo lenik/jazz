@@ -79,7 +79,7 @@ public abstract class AbstractJob
         _run();
         if (children != null)
             for (AbstractJob child : children) {
-                child.execute();
+                child.run();
             }
     }
 
@@ -153,7 +153,7 @@ public abstract class AbstractJob
         ChildObserver childObserver = new ChildObserver(progressIncrement);
         childObserver.bind(child);
         try {
-            child.execute();
+            child.run();
         } finally {
             childObserver.unbind(child);
         }
