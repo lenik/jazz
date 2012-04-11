@@ -1,4 +1,4 @@
-package net.bodz.mda.xjdoc.model;
+package net.bodz.mda.xjdoc.model.conv;
 
 import java.util.Map;
 
@@ -7,6 +7,10 @@ import javax.free.IllegalUsageException;
 import net.bodz.bas.i18n.dstr.DomainString;
 import net.bodz.mda.xjdoc.meta.ITagType;
 import net.bodz.mda.xjdoc.meta.IXjLanguage;
+import net.bodz.mda.xjdoc.model.ClassDoc;
+import net.bodz.mda.xjdoc.model.ElementDoc;
+import net.bodz.mda.xjdoc.model.FieldDoc;
+import net.bodz.mda.xjdoc.model.MethodDoc;
 import net.bodz.mda.xjdoc.util.IMethodIdStrategy;
 import net.bodz.mda.xjdoc.util.SimpleMethodIdStrategy;
 import net.bodz.mda.xjdoc.util.TypeNameContext;

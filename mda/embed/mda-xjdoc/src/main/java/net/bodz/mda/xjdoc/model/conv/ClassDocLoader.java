@@ -1,4 +1,4 @@
-package net.bodz.mda.xjdoc.model;
+package net.bodz.mda.xjdoc.model.conv;
 
 import net.bodz.bas.text.flatf.FlatfLoader;
 import net.bodz.mda.xjdoc.util.TypeNameContext;

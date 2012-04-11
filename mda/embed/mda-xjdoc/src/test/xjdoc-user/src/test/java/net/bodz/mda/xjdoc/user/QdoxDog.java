@@ -6,7 +6,7 @@ import java.io.StringWriter;
 import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.mda.xjdoc.meta.IXjLanguage;
 import net.bodz.mda.xjdoc.model.ClassDoc;
-import net.bodz.mda.xjdoc.model.ClassDocBuilder;
+import net.bodz.mda.xjdoc.model.conv.ClassDocBuilder;
 import net.bodz.mda.xjdoc.user.xjl.AnimalXjLang;
 
 import com.bee32.plover.xutil.m2.MavenPath;
