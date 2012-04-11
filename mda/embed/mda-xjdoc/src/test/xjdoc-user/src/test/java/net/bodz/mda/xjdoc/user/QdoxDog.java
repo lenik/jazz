@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.StringWriter;
 
 import net.bodz.bas.text.flatf.FlatfOutput;
+import net.bodz.mda.xjdoc.meta.IXjLanguage;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.ClassDocBuilder;
+import net.bodz.mda.xjdoc.user.xjl.AnimalXjLang;
 
 import com.bee32.plover.xutil.m2.MavenPath;
 import com.thoughtworks.qdox.JavaDocBuilder;
@@ -27,7 +29,9 @@ public class QdoxDog {
         javaDocBuilder.addSource(dogSource);
 
         for (JavaClass jclass : javaDocBuilder.getClasses()) {
-            ClassDocBuilder builder = new ClassDocBuilder();
+            IXjLanguage lang; // = JavadocXjLang.getInstance();
+            lang = new AnimalXjLang();
+            ClassDocBuilder builder = new ClassDocBuilder(lang);
             ClassDoc classdoc = builder.buildClass(jclass);
 
             StringWriter buf = new StringWriter();

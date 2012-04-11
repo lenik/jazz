@@ -5,10 +5,10 @@ import java.text.ParseException;
 
 public interface IFlatfSerializable {
 
-    void readObject(IFlatfInput in)
-            throws IOException, ParseException;
-
     void writeObject(IFlatfOutput out)
             throws IOException;
+
+    void loadObject(IFlatfLoader loader)
+            throws IOException, ParseException;
 
 }

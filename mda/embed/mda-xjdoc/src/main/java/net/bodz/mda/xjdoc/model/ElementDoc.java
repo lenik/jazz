@@ -7,8 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.free.IllegalUsageException;
+
 import net.bodz.bas.i18n.dstr.DomainString;
-import net.bodz.bas.text.flatf.IFlatfInput;
+import net.bodz.bas.text.flatf.IFlatfLoader;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 import net.bodz.bas.text.flatf.IFlatfSerializable;
 
@@ -116,42 +118,54 @@ public class ElementDoc
         return tagMap;
     }
 
-    public void accept(IDocVisitor visitor) {
-        visitor.visit(this);
-    }
-
-    @Override
-    public void readObject(IFlatfInput in)
-            throws IOException, ParseException {
-        while (in.nextSection()) {
-            String sectionName = in.getSectionName();
-            while (in.nextAttribute()) {
-                String name = in.getAttributeName();
-                String text = in.getAttributeText();
-            }
-        }
-    }
-
     @Override
     public void writeObject(IFlatfOutput out)
             throws IOException {
         if (text != null)
-            out.attribute(".", text.toMultiLangString());
+            writeAttribute(out, ".", text);
+
         for (Entry<String, Object> entry : tagMap.entrySet()) {
-            String name = entry.getKey();
-            Object value = entry.getValue();
-            String text = null;
-            if (value instanceof String)
-                text = (String) value;
-            else if (value instanceof DomainString)
-                text = ((DomainString) value).toMultiLangString();
-            else if (value instanceof Map<?, ?>) {
-
-            } else if (value instanceof List<?>) {
-
-            }
-            out.attribute(name, text);
+            String tagName = entry.getKey();
+            Object tagValue = entry.getValue();
+            writeAttribute(out, tagName, tagValue);
         }
+    }
+
+    void writeAttribute(IFlatfOutput out, String name, Object value)
+            throws IOException {
+        if (value == null)
+            return;
+
+        else if (value instanceof String) {
+            out.attribute(name, (String) value);
+        }
+
+        else if (value instanceof DomainString) {
+            out.attribute(name, (DomainString) value);
+        }
+
+        else if (value instanceof List<?>) {
+            List<?> list = (List<?>) value;
+            for (int index = 0; index < list.size(); index++)
+                writeAttribute(out, name + "." + index, list.get(index));
+        }
+
+        else if (value instanceof Map<?, ?>) {
+            Map<?, ?> map = (Map<?, ?>) value;
+            for (Entry<?, ?> entry : map.entrySet()) {
+                Object itemKey = entry.getKey();
+                Object itemValue = entry.getValue();
+                writeAttribute(out, name + "." + itemKey, itemValue);
+            }
+        }
+
+        else
+            throw new IllegalUsageException("Unsupported tag value type: " + value.getClass());
+    }
+
+    @Override
+    public void loadObject(IFlatfLoader loader)
+            throws IOException, ParseException {
     }
 
 }

@@ -7,54 +7,15 @@ import java.text.ParseException;
 public class FlatfInput
         implements IFlatfInput {
 
-    static final int SECTION_BEGIN = 1;
-    static final int ATTRIBUTE = 2;
-    static final int EOF = -1;
-
     BufferedReader reader;
 
+    String piText;
     String sectionName;
     String attributeName;
     StringBuilder attributeText = new StringBuilder();
 
     @Override
-    public boolean nextSection()
-            throws ParseException, IOException {
-        return next(SECTION_BEGIN);
-    }
-
-    @Override
-    public boolean nextAttribute()
-            throws ParseException, IOException {
-        return next(ATTRIBUTE);
-    }
-
-    @Override
-    public String getSectionName() {
-        return sectionName;
-    }
-
-    @Override
-    public String getAttributeName() {
-        return attributeName;
-    }
-
-    @Override
-    public String getAttributeText() {
-        return attributeText.toString();
-    }
-
-    boolean next(int token)
-            throws IOException {
-        int tok;
-        while ((tok = next()) != EOF) {
-            if (tok == token)
-                return true;
-        }
-        return false;
-    }
-
-    int next()
+    public int next()
             throws IOException {
         String line;
         int eq;
@@ -76,10 +37,17 @@ public class FlatfInput
                 continue;
             if (line.startsWith("#"))
                 continue;
+
+            if (line.startsWith("%")) {
+                piText = line.substring(1).trim();
+                return PI;
+            }
+
             if (line.startsWith("[") && line.endsWith("]")) {
                 sectionName = line.substring(1, line.length() - 1);
                 return SECTION_BEGIN;
             }
+
             eq = line.indexOf('=');
             if (eq != -1) {
                 attributeName = line.substring(0, eq).trim();
@@ -96,6 +64,48 @@ public class FlatfInput
             }
         }
         return EOF;
+    }
+
+    boolean next(int token)
+            throws IOException {
+        int tok;
+        while ((tok = next()) != EOF) {
+            if (tok == token)
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean nextSection()
+            throws ParseException, IOException {
+        return next(SECTION_BEGIN);
+    }
+
+    @Override
+    public boolean nextAttribute()
+            throws ParseException, IOException {
+        return next(ATTRIBUTE);
+    }
+
+    @Override
+    public String getPiText() {
+        return piText;
+    }
+
+    @Override
+    public String getSectionName() {
+        return sectionName;
+    }
+
+    @Override
+    public String getAttributeName() {
+        return attributeName;
+    }
+
+    @Override
+    public String getAttributeText() {
+        return attributeText.toString();
     }
 
     @SuppressWarnings("unused")
