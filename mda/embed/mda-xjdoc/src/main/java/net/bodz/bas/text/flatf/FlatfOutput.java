@@ -51,9 +51,10 @@ public class FlatfOutput
     @Override
     public void attribute(String name, String string)
             throws IOException {
+        String linecont = string.replace("\n", "\\\n");
         for (int d = 0; d < depth; d++)
             writer.write(indent);
-        writer.write(name + " = " + string + "\n");
+        writer.write(name + " = " + linecont + "\n");
     }
 
     @Override
