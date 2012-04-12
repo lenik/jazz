@@ -16,20 +16,11 @@ public class FlatfLoader
     Map<String, ISectionHandler> sectionHandlers = new HashMap<String, ISectionHandler>();
 
     @Override
-    public void addSectionHandler(String sectionName, ISectionHandler sectionHandler) {
-        if (sectionName == null)
-            throw new NullPointerException("sectionName");
-        if (sectionHandler == null)
-            throw new NullPointerException("sectionHandler");
-        sectionHandlers.put(sectionName, sectionHandler);
-    }
-
-    @Override
     public void load(IFlatfInput in)
             throws ParseException, IOException {
         int token;
         String currentSection = in.getSectionName();
-        ISectionHandler sectionHandler = sectionHandlers.get(currentSection);
+        ISectionHandler sectionHandler = getSectionHandler(currentSection);
 
         while ((token = in.next()) != IFlatfInput.EOF) {
             switch (token) {
@@ -39,7 +30,10 @@ public class FlatfLoader
                 String piParam = piText.substring(piCommand.length());
                 piCommand = piCommand.trim();
                 piParam = piParam.trim();
-                processInstruction(piCommand, piParam);
+
+                if (!processInstruction(piCommand, piParam)) {
+                    throw new IllegalUsageException("Can't process instruction: " + piText);
+                }
                 break;
 
             case IFlatfInput.SECTION_BEGIN:
@@ -47,7 +41,7 @@ public class FlatfLoader
                     sectionHandler.sectionEnd(currentSection);
 
                 currentSection = in.getSectionName();
-                sectionHandler = sectionHandlers.get(currentSection);
+                sectionHandler = getSectionHandler(currentSection);
 
                 if (sectionHandler == null) {
                     throw new ParseException("Unhandled section: " + currentSection, -1);
@@ -68,8 +62,21 @@ public class FlatfLoader
         }
     }
 
-    protected void processInstruction(String piCommand, String piText) {
-        throw new IllegalUsageException("Undefined preprocess-instruction command: " + piCommand);
+    @Override
+    public ISectionHandler getSectionHandler(String sectionName) {
+        return sectionHandlers.get(sectionName);
+    }
+
+    public void addSectionHandler(String sectionName, ISectionHandler sectionHandler) {
+        if (sectionName == null)
+            throw new NullPointerException("sectionName");
+        if (sectionHandler == null)
+            throw new NullPointerException("sectionHandler");
+        sectionHandlers.put(sectionName, sectionHandler);
+    }
+
+    protected boolean processInstruction(String command, String data) {
+        return false;
     }
 
 }

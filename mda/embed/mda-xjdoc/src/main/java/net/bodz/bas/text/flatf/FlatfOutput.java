@@ -35,6 +35,12 @@ public class FlatfOutput
     }
 
     @Override
+    public void pi(String command, String data)
+            throws IOException {
+        writer.append("%" + command + " " + data + "\n");
+    }
+
+    @Override
     public void sectionBegin(String sectionName)
             throws IOException {
         writer.append("\n[" + sectionName + "]\n");

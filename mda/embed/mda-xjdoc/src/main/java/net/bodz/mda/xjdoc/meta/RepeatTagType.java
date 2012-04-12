@@ -15,7 +15,7 @@ public abstract class RepeatTagType
         List<Object> list = (List<Object>) cont;
         if (list == null)
             list = new ArrayList<Object>();
-        Object value = parseJavadocValue(string);
+        Object value = parseValueJavadoc(string);
         list.add(value);
         return list;
     }
@@ -26,7 +26,7 @@ public abstract class RepeatTagType
         String[] array = new String[list.size()];
         for (int index = 0; index < array.length; index++) {
             Object item = list.get(index);
-            String valueText = formatJavadocValue(item);
+            String valueText = formatValueJavadoc(item);
             array[index] = valueText;
         }
         return array;
@@ -44,7 +44,7 @@ public abstract class RepeatTagType
             list.add(null);
 
         // Object valueCont = list.get(index);
-        Object value = parseAttributeValue(string);
+        Object value = parseValueAttribute(string);
         list.set(index, value);
         return list;
     }
@@ -61,11 +61,11 @@ public abstract class RepeatTagType
         }
     }
 
-    protected abstract Object parseJavadocValue(String valueString);
+    protected abstract Object parseValueJavadoc(String valueString);
 
-    protected abstract String formatJavadocValue(Object value);
+    protected abstract String formatValueJavadoc(Object value);
 
-    protected abstract Object parseAttributeValue(String valueString);
+    protected abstract Object parseValueAttribute(String string);
 
     protected abstract void writeValueAttributes(IFlatfOutput out, String prefix, Object value)
             throws IOException;

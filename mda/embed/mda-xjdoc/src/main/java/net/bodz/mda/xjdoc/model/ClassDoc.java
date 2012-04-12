@@ -1,23 +1,19 @@
 package net.bodz.mda.xjdoc.model;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
-import net.bodz.bas.text.flatf.IFlatfLoader;
 import net.bodz.bas.text.flatf.IFlatfOutput;
-import net.bodz.bas.text.flatf.ISectionHandler;
+import net.bodz.mda.xjdoc.util.MethodSignature;
 import net.bodz.mda.xjdoc.util.TypeNameContext;
 
 public class ClassDoc
         extends ElementDoc {
 
     TypeNameContext typeNameContext;
-
-    Map<String, FieldDoc> fieldDocs = new LinkedHashMap<String, FieldDoc>();
-    Map<String, MethodDoc> methodDocs = new LinkedHashMap<String, MethodDoc>();
+    Map<String, FieldDoc> fieldDocs;
+    Map<MethodSignature, MethodDoc> methodDocs;
 
     public ClassDoc(String fqcn) {
         super(fqcn);
@@ -30,11 +26,13 @@ public class ClassDoc
             packageName = fqcn.substring(0, lastDot);
 
         typeNameContext = new TypeNameContext(packageName);
+        fieldDocs = new LinkedHashMap<String, FieldDoc>();
+        methodDocs = new LinkedHashMap<MethodSignature, MethodDoc>();
     }
 
-    public TypeNameContext getTypeNameContext() {
-        return typeNameContext;
-    }
+// public TypeNameContext getTypeNameContext() {
+// return typeNameContext;
+// }
 
     public Map<String, FieldDoc> getFieldDocs() {
         return fieldDocs;
@@ -56,7 +54,7 @@ public class ClassDoc
         return fieldDocs.remove(fieldName);
     }
 
-    public Map<String, MethodDoc> getMethodDocs() {
+    public Map<MethodSignature, MethodDoc> getMethodDocs() {
         return methodDocs;
     }
 
@@ -64,12 +62,12 @@ public class ClassDoc
         return methodDocs.get(methodId);
     }
 
-    public void setMethodDoc(String methodId, MethodDoc methodDoc) {
-        if (methodId == null)
-            throw new NullPointerException("methodId");
+    public void setMethodDoc(MethodSignature signature, MethodDoc methodDoc) {
+        if (signature == null)
+            throw new NullPointerException("signature");
         if (methodDoc == null)
             throw new NullPointerException("methodDoc");
-        methodDocs.put(methodId, methodDoc);
+        methodDocs.put(signature, methodDoc);
     }
 
     public MethodDoc removeMethodDoc(String methodId) {
@@ -114,63 +112,18 @@ public class ClassDoc
     @Override
     public void writeObject(IFlatfOutput out)
             throws IOException {
+        // out.sectionBegin("class");
+        for (String fqcn : typeNameContext.getImportMap().values())
+            out.pi("import", fqcn);
+
         super.writeObject(out);
 
-        for (Entry<String, FieldDoc> field : fieldDocs.entrySet()) {
-            String fieldName = field.getKey();
-            FieldDoc fieldDoc = field.getValue();
-            out.sectionBegin("field:" + fieldName);
+        for (FieldDoc fieldDoc : fieldDocs.values())
             fieldDoc.writeObject(out);
-            out.sectionEnd();
-        }
 
-        for (Entry<String, MethodDoc> method : methodDocs.entrySet()) {
-            String methodId = method.getKey();
-            MethodDoc methodDoc = method.getValue();
-            out.sectionBegin("method:" + methodId);
+        for (MethodDoc methodDoc : methodDocs.values())
             methodDoc.writeObject(out);
-            out.sectionEnd();
-        }
-    }
-
-    class SectionHandler
-            implements ISectionHandler {
-
-        @Override
-        public void sectionBegin(String name) {
-        }
-
-        @Override
-        public void sectionEnd(String name) {
-        }
-
-        @Override
-        public void attribute(String name, String string) {
-        }
-
-    }
-
-    @Override
-    public void loadObject(IFlatfLoader loader)
-            throws IOException, ParseException {
-
-        while (in.nextSection()) {
-            String sectionName = in.getSectionName();
-            if (sectionName.startsWith("field:")) {
-                String fieldName = sectionName.substring(6);
-                FieldDoc fieldDoc = new FieldDoc();
-                fieldDoc.readObject(in);
-                fieldDocs.put(fieldName, fieldDoc);
-            } else if (sectionName.startsWith("method:")) {
-                assert sectionName.contains("(") && sectionName.contains(")");
-                String methodId = sectionName.substring(7);
-                MethodDoc methodDoc = new MethodDoc();
-                methodDoc.readObject(in);
-                methodDocs.put(methodId, methodDoc);
-            } else {
-                throw new ParseException("Bad section name: " + sectionName, 0);
-            }
-        }
+        // out.sectionEnd();
     }
 
 }

@@ -8,6 +8,9 @@ public interface IFlatfOutput {
 
     String getIndent();
 
+    void pi(String command, String data)
+            throws IOException;
+
     void sectionBegin(String sectionName)
             throws IOException;
 

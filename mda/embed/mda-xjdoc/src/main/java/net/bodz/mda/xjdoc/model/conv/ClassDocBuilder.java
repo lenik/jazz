@@ -11,8 +11,7 @@ import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.ElementDoc;
 import net.bodz.mda.xjdoc.model.FieldDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
-import net.bodz.mda.xjdoc.util.IMethodIdStrategy;
-import net.bodz.mda.xjdoc.util.SimpleMethodIdStrategy;
+import net.bodz.mda.xjdoc.util.MethodSignature;
 import net.bodz.mda.xjdoc.util.TypeNameContext;
 
 import com.thoughtworks.qdox.model.AbstractJavaEntity;
@@ -20,6 +19,7 @@ import com.thoughtworks.qdox.model.DocletTag;
 import com.thoughtworks.qdox.model.JavaClass;
 import com.thoughtworks.qdox.model.JavaField;
 import com.thoughtworks.qdox.model.JavaMethod;
+import com.thoughtworks.qdox.model.Type;
 
 /**
  * Build class documents from the qdox parsed java sources.
@@ -27,7 +27,6 @@ import com.thoughtworks.qdox.model.JavaMethod;
 public class ClassDocBuilder {
 
     TypeNameContext typeNameContext;
-    IMethodIdStrategy methodIdStrategy;
     IXjLanguage lang;
 
     public ClassDocBuilder(IXjLanguage lang) {
@@ -42,20 +41,20 @@ public class ClassDocBuilder {
 
         for (JavaField javaField : javaClass.getFields()) {
             String fieldName = javaField.getName();
-            FieldDoc fieldDoc = new FieldDoc(fieldName);
+            FieldDoc fieldDoc = new FieldDoc(classDoc, fieldName);
             populate(fieldDoc, javaField);
             classDoc.setFieldDoc(fieldName, fieldDoc);
         }
 
-        IMethodIdStrategy methodIdStrategy = this.methodIdStrategy;
-        if (methodIdStrategy == null)
-            methodIdStrategy = new SimpleMethodIdStrategy(classDoc.getTypeNameContext());
-
         for (JavaMethod javaMethod : javaClass.getMethods()) {
-            String methodId = methodIdStrategy.getMethodId(javaMethod);
-            MethodDoc methodDoc = new MethodDoc(methodId);
+            Type[] types = javaMethod.getParameterTypes();
+            MethodSignature signature = new MethodSignature(javaMethod.getName(), types.length);
+            for (int i = 0; i < types.length; i++)
+                signature.setParameterType(i, types[i].getFullyQualifiedName(), types[i].getDimensions());
+
+            MethodDoc methodDoc = new MethodDoc(classDoc, signature);
             populate(methodDoc, javaMethod);
-            classDoc.setMethodDoc(methodId, methodDoc);
+            classDoc.setMethodDoc(signature, methodDoc);
         }
 
         return classDoc;
