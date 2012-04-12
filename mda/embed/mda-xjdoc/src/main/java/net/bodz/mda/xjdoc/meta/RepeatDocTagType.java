@@ -14,13 +14,13 @@ public class RepeatDocTagType
      * @return {@link DomainString}.
      */
     @Override
-    protected Object parseJavadocValue(String valueString) {
+    protected Object parseValueJavadoc(String valueString) {
         DomainString dstr = DomainString.parseParaLang(valueString);
         return dstr;
     }
 
     @Override
-    protected String formatJavadocValue(Object value) {
+    protected String formatValueJavadoc(Object value) {
         if (value == null)
             return null;
         DomainString dstr = (DomainString) value;
@@ -28,8 +28,8 @@ public class RepeatDocTagType
     }
 
     @Override
-    protected Object parseAttributeValue(String valueString) {
-        DomainString dstr = DomainString.parseMultiLangString(valueString);
+    protected Object parseValueAttribute(String string) {
+        DomainString dstr = DomainString.parseMultiLangString(string);
         return dstr;
     }
 

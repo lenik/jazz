@@ -1,24 +1,32 @@
 package net.bodz.mda.xjdoc.model;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import net.bodz.bas.i18n.dstr.DomainString;
-import net.bodz.bas.text.flatf.IFlatfLoader;
-import net.bodz.mda.xjdoc.model.conv.ClassDocLoader;
-import net.bodz.mda.xjdoc.util.TypeNameContext;
+import net.bodz.bas.text.flatf.IFlatfOutput;
+import net.bodz.mda.xjdoc.util.MethodSignature;
 
 public class MethodDoc
         extends ElementDoc {
 
-    public MethodDoc() {
-        super();
+    final ClassDoc classDoc;
+    final MethodSignature signature;
+
+    public MethodDoc(ClassDoc classDoc, MethodSignature signature) {
+        // super(signature.getMethodId(null));
+        super(signature.getMethodName());
+        this.classDoc = classDoc;
+        this.signature = signature;
     }
 
-    public MethodDoc(String name) {
-        super(name);
+    public ClassDoc getClassDoc() {
+        return classDoc;
+    }
+
+    public MethodSignature getSignature() {
+        return signature;
     }
 
     /**
@@ -103,12 +111,15 @@ public class MethodDoc
     }
 
     @Override
-    public void loadObject(IFlatfLoader loader)
-            throws IOException, ParseException {
-        ClassDocLoader classDocLoader = (ClassDocLoader) loader;
-        TypeNameContext typeNameContext = classDocLoader.getTypeNameContext();
+    public void writeObject(IFlatfOutput out)
+            throws IOException {
 
-        super.loadObject(loader);
+        // TypeNameContext typeNameContext = classDoc.getTypeNameContext();
+
+        String methodId = getMethodId();
+        out.sectionBegin("method:" + methodId);
+        super.writeObject(out);
+        out.sectionEnd();
     }
 
 }

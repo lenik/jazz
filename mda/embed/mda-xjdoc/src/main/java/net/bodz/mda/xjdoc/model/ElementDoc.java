@@ -3,16 +3,17 @@ package net.bodz.mda.xjdoc.model;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import javax.free.IllegalUsageException;
 
 import net.bodz.bas.i18n.dstr.DomainString;
 import net.bodz.bas.text.flatf.IFlatfLoader;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 import net.bodz.bas.text.flatf.IFlatfSerializable;
+import net.bodz.bas.text.flatf.ISectionHandler;
+import net.bodz.mda.xjdoc.meta.ITagType;
+import net.bodz.mda.xjdoc.meta.IXjLanguage;
+import net.bodz.mda.xjdoc.model.conv.ClassDocLoader;
 
 public class ElementDoc
         implements IFlatfSerializable {
@@ -118,54 +119,47 @@ public class ElementDoc
         return tagMap;
     }
 
+    IXjLanguage lang;
+
     @Override
     public void writeObject(IFlatfOutput out)
             throws IOException {
         if (text != null)
-            writeAttribute(out, ".", text);
-
+            out.attribute(".", text);
         for (Entry<String, Object> entry : tagMap.entrySet()) {
             String tagName = entry.getKey();
             Object tagValue = entry.getValue();
-            writeAttribute(out, tagName, tagValue);
+            ITagType tagType = lang.getTagType(tagName);
+            tagType.writeAttributes(out, name, tagValue);
         }
     }
 
-    void writeAttribute(IFlatfOutput out, String name, Object value)
-            throws IOException {
-        if (value == null)
-            return;
+    protected class SectionHandler
+            implements ISectionHandler {
 
-        else if (value instanceof String) {
-            out.attribute(name, (String) value);
+        @Override
+        public boolean pi(String command, String data) {
+            return false;
         }
 
-        else if (value instanceof DomainString) {
-            out.attribute(name, (DomainString) value);
+        @Override
+        public void sectionBegin(String name) {
         }
 
-        else if (value instanceof List<?>) {
-            List<?> list = (List<?>) value;
-            for (int index = 0; index < list.size(); index++)
-                writeAttribute(out, name + "." + index, list.get(index));
+        @Override
+        public void sectionEnd(String name) {
         }
 
-        else if (value instanceof Map<?, ?>) {
-            Map<?, ?> map = (Map<?, ?>) value;
-            for (Entry<?, ?> entry : map.entrySet()) {
-                Object itemKey = entry.getKey();
-                Object itemValue = entry.getValue();
-                writeAttribute(out, name + "." + itemKey, itemValue);
-            }
+        @Override
+        public void attribute(String name, String string) {
         }
 
-        else
-            throw new IllegalUsageException("Unsupported tag value type: " + value.getClass());
     }
 
     @Override
     public void loadObject(IFlatfLoader loader)
             throws IOException, ParseException {
+        ClassDocLoader cdl = (ClassDocLoader) loader;
     }
 
 }

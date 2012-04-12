@@ -10,7 +10,7 @@ public class TypeNameContext {
     final String contextPackageName;
 
     /** simple-name --> full-qualified name */
-    final Map<String, String> importTypeMap = new HashMap<String, String>();
+    final Map<String, String> typeMap = new HashMap<String, String>();
 
     public TypeNameContext(Class<?> contextType) {
         this(contextType.getPackage().getName());
@@ -20,9 +20,10 @@ public class TypeNameContext {
         this.contextPackageName = contextPackageName;
     }
 
-    /**
-     * Add type to imported-list, and returns the simple name (type alias).
-     */
+    public Map<String, String> getImportMap() {
+        return typeMap;
+    }
+
     public String importType(Class<?> type) {
         if (type == null)
             throw new NullPointerException("type");
@@ -33,20 +34,23 @@ public class TypeNameContext {
             String component = importType(componentType);
             return component + "[]";
         } else {
-            return importType(type.getCanonicalName());
+            return importTypeName(type.getCanonicalName());
         }
     }
 
     public String importType(Type type) {
         StringBuilder sb = new StringBuilder();
-        sb.append(importType(type.getFullyQualifiedName()));
+        sb.append(importTypeName(type.getFullyQualifiedName()));
         int dims = type.getDimensions();
         for (int i = 0; i < dims; i++)
             sb.append("[]");
         return sb.toString();
     }
 
-    public String importType(String fqcn) {
+    /**
+     * Add type to imported-list, and returns the simple name (type alias).
+     */
+    public String importTypeName(String fqcn) {
         String simpleName;
         String packageName;
         int lastDot = fqcn.lastIndexOf('.');
@@ -71,9 +75,9 @@ public class TypeNameContext {
                 return simpleName;
             }
 
-        String importedFqcn = importTypeMap.get(simpleName);
+        String importedFqcn = typeMap.get(simpleName);
         if (importedFqcn == null) { // new class to import.
-            importTypeMap.put(simpleName, fqcn);
+            typeMap.put(simpleName, fqcn);
             return simpleName;
         }
 
@@ -81,6 +85,22 @@ public class TypeNameContext {
             return simpleName;
         else
             return fqcn;
+    }
+
+    public String expand(String name) {
+        String fqcn = typeMap.get(name);
+        if (fqcn != null)
+            return fqcn;
+
+        // String contextFqcn = contextPackageName + "." + name;
+
+        String javaLangFqcn = "java.lang." + name;
+        try {
+            Class.forName(javaLangFqcn);
+            return javaLangFqcn;
+        } catch (ClassNotFoundException e) {
+            return name;
+        }
     }
 
 }

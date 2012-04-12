@@ -25,7 +25,7 @@ public abstract class KeyedTagType
 
         Object key = parseKey(keyText);
         Object valueCont = map.get(key);
-        Object value = parseJavadocValue(valueCont, valueText);
+        Object value = parseValueJavadoc(valueCont, valueText);
         if (valueCont != value)
             map.put(key, value);
         return map;
@@ -41,7 +41,7 @@ public abstract class KeyedTagType
             Object k = entry.getKey();
             Object v = entry.getValue();
             String keyText = formatKey(k);
-            String valueText = formatJavadocValue(v);
+            String valueText = formatValueJavadoc(v);
             array[index++] = keyText + " " + valueText;
         }
         return array;
@@ -56,7 +56,7 @@ public abstract class KeyedTagType
 
         Object key = parseKey(suffix);
         Object valueCont = map.get(key);
-        Object value = parseAttributeValue(valueCont, string);
+        Object value = parseValueAttribute(valueCont, string);
         // return new Pair<Object, Object>(key, value);
         if (valueCont == null)
             map.put(key, value);
@@ -88,11 +88,11 @@ public abstract class KeyedTagType
             return key.toString();
     }
 
-    protected abstract Object parseJavadocValue(Object cont, String valueString);
+    protected abstract Object parseValueJavadoc(Object cont, String valueString);
 
-    protected abstract String formatJavadocValue(Object value);
+    protected abstract String formatValueJavadoc(Object value);
 
-    protected abstract Object parseAttributeValue(Object cont, String valueString);
+    protected abstract Object parseValueAttribute(Object cont, String string);
 
     protected abstract void writeValueAttributes(IFlatfOutput out, String prefix, Object value)
             throws IOException;

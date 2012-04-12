@@ -1,14 +1,29 @@
 package net.bodz.mda.xjdoc.model;
 
+import java.io.IOException;
+
+import net.bodz.bas.text.flatf.IFlatfOutput;
+
 public class FieldDoc
         extends ElementDoc {
 
-    public FieldDoc() {
-        super();
+    final ClassDoc classDoc;
+
+    public FieldDoc(ClassDoc classDoc, String name) {
+        super(name);
+        this.classDoc = classDoc;
     }
 
-    public FieldDoc(String name) {
-        super(name);
+    public ClassDoc getClassDoc() {
+        return classDoc;
+    }
+
+    @Override
+    public void writeObject(IFlatfOutput out)
+            throws IOException {
+        out.sectionBegin("field:" + getName());
+        super.writeObject(out);
+        out.sectionEnd();
     }
 
 }

@@ -14,13 +14,13 @@ public class KeyedDocTagType
      * @return {@link DomainString}.
      */
     @Override
-    protected Object parseJavadocValue(Object valueCont, String valueString) {
+    protected Object parseValueJavadoc(Object valueCont, String valueString) {
         DomainString dstr = DomainString.parseParaLang(valueString);
         return dstr;
     }
 
     @Override
-    protected String formatJavadocValue(Object value) {
+    protected String formatValueJavadoc(Object value) {
         if (value == null)
             return null;
         DomainString dstr = (DomainString) value;
@@ -28,13 +28,13 @@ public class KeyedDocTagType
     }
 
     @Override
-    protected Object parseAttributeValue(Object cont, String valueString) {
-        DomainString dstr = DomainString.parseMultiLangString(valueString);
+    protected Object parseValueAttribute(Object cont, String string) {
+        DomainString dstr = DomainString.parseMultiLangString(string);
         return dstr;
     }
 
     @Override
-    protected void writeValueAttributes(IFlatfOutput out, String prefix, Object value)
+    protected void writeValueAttributes(IFlatfOutput out, String prefix1, Object value)
             throws IOException {
         DomainString dstr = (DomainString) value;
 
@@ -44,7 +44,7 @@ public class KeyedDocTagType
         String mlstr = dstr.toMultiLangString(domainSep, lineSep);
 
         // out.attribute(prefix, dstr);
-        out.attribute(prefix, mlstr);
+        out.attribute(prefix1, mlstr);
     }
 
 }

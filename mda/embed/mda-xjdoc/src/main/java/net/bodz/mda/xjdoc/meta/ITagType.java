@@ -7,11 +7,11 @@ import net.bodz.bas.text.flatf.IFlatfOutput;
 public interface ITagType {
 
     /**
-     * Parse javadoc string into value object.
+     * Parse a javadoc tag into value object.
      * 
      * @param cont
      *            (Continuation) A previous parsed object for tags occurred many times.
-     * @param text
+     * @param string
      *            Original javadoc tag string.
      * @return If <code>cont</code> is not <code>null</code>, this method should return
      *         <code>cont</code>, otherwise a new value is created and returned.
@@ -22,7 +22,7 @@ public interface ITagType {
      * Format the value object.
      * 
      * @param value
-     * @return String array each for a javadoc annotation.
+     * @return Javadoc tags of the same name. (name is invisible here)
      */
     String[] formatJavadoc(Object value);
 
