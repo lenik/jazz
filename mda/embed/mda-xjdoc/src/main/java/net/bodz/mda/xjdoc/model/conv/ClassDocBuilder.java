@@ -46,12 +46,18 @@ public class ClassDocBuilder {
             classDoc.setFieldDoc(fieldName, fieldDoc);
         }
 
+        TypeNameContext typeNameContext = this.typeNameContext;
+        if (typeNameContext == null)
+            typeNameContext = classDoc.getTypeNameContext();
+
         for (JavaMethod javaMethod : javaClass.getMethods()) {
             Type[] types = javaMethod.getParameterTypes();
             MethodSignature signature = new MethodSignature(javaMethod.getName(), types.length);
-            for (int i = 0; i < types.length; i++)
-                signature.setParameterType(i, types[i].getFullyQualifiedName(), types[i].getDimensions());
-
+            for (int i = 0; i < types.length; i++) {
+                Type type = types[i];
+                signature.setParameterType(i, type.getFullyQualifiedName(), type.getDimensions());
+                typeNameContext.importType(type);
+            }
             MethodDoc methodDoc = new MethodDoc(classDoc, signature);
             populate(methodDoc, javaMethod);
             classDoc.setMethodDoc(signature, methodDoc);

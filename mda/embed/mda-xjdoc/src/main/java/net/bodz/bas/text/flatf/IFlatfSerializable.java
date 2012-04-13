@@ -1,14 +1,19 @@
 package net.bodz.bas.text.flatf;
 
 import java.io.IOException;
-import java.text.ParseException;
+
+import javax.free.INegotiation;
+import javax.free.NegotiationException;
 
 public interface IFlatfSerializable {
 
-    void writeObject(IFlatfOutput out)
-            throws IOException;
+    void writeObject(IFlatfOutput out, INegotiation negotiation)
+            throws IOException, NegotiationException;
 
-    void loadObject(IFlatfLoader loader)
-            throws IOException, ParseException;
+    // void readObject(IFlatfInput in, INegotiation negotiation)
+    // throws IOException, NegotiationException, ParseException;
+
+    ISectionHandler getSectionHandler(String sectionName, INegotiation negotiation)
+            throws NegotiationException;
 
 }
