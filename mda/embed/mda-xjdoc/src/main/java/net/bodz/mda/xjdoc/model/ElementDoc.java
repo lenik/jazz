@@ -1,19 +1,21 @@
 package net.bodz.mda.xjdoc.model;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.free.INegotiation;
+import javax.free.NegotiationException;
+import javax.free.NegotiationParameter;
+
 import net.bodz.bas.i18n.dstr.DomainString;
-import net.bodz.bas.text.flatf.IFlatfLoader;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 import net.bodz.bas.text.flatf.IFlatfSerializable;
 import net.bodz.bas.text.flatf.ISectionHandler;
 import net.bodz.mda.xjdoc.meta.ITagType;
 import net.bodz.mda.xjdoc.meta.IXjLanguage;
-import net.bodz.mda.xjdoc.model.conv.ClassDocLoader;
+import net.bodz.mda.xjdoc.meta.JavadocXjLang;
 
 public class ElementDoc
         implements IFlatfSerializable {
@@ -73,6 +75,10 @@ public class ElementDoc
         this.text = text;
     }
 
+    public Object getTag(String tagName) {
+        return tagMap.get(tagName);
+    }
+
     /**
      * Get the value of the named tag.
      * 
@@ -80,8 +86,8 @@ public class ElementDoc
      * 
      * @return <code>null</code> if the tag isn't defined.
      */
-    public <T> T getTag(String name, Class<T> tagValueType) {
-        Object _value = tagMap.get(name);
+    public <T> T getTag(String tagName, Class<T> tagValueType) {
+        Object _value = tagMap.get(tagName);
         if (_value == null)
             return null;
         T value = tagValueType.cast(_value);
@@ -91,13 +97,13 @@ public class ElementDoc
     /**
      * Set the tag value.
      * 
-     * @param name
+     * @param tagName
      *            Non-<code>null</code> tag name.
-     * @param tag
+     * @param tagValue
      *            Tag value, maybe <code>null</code>.
      */
-    public void setTag(String name, Object tag) {
-        tagMap.put(name, tag);
+    public void setTag(String tagName, Object tagValue) {
+        tagMap.put(tagName, tagValue);
     }
 
     /**
@@ -106,8 +112,8 @@ public class ElementDoc
      * @return Value of the removed tag. <code>null</code> if the tag was not existed, or its value
      *         is <code>null</code>.
      */
-    public Object removeTag(String name) {
-        return tagMap.remove(name);
+    public Object removeTag(String tagName) {
+        return tagMap.remove(tagName);
     }
 
     /**
@@ -119,27 +125,54 @@ public class ElementDoc
         return tagMap;
     }
 
-    IXjLanguage lang;
-
     @Override
-    public void writeObject(IFlatfOutput out)
-            throws IOException {
+    public void writeObject(IFlatfOutput out, INegotiation negotiation)
+            throws IOException, NegotiationException {
+        IXjLanguage lang = JavadocXjLang.getInstance();
+        for (NegotiationParameter np : negotiation) {
+            if (np.accept(IXjLanguage.class, true))
+                lang = (IXjLanguage) np.getValue();
+            else
+                np.bypass();
+        }
+
         if (text != null)
             out.attribute(".", text);
         for (Entry<String, Object> entry : tagMap.entrySet()) {
             String tagName = entry.getKey();
             Object tagValue = entry.getValue();
             ITagType tagType = lang.getTagType(tagName);
-            tagType.writeAttributes(out, name, tagValue);
+            tagType.writeAttributes(out, tagName, tagValue);
         }
     }
 
-    protected class SectionHandler
+    @Override
+    public ISectionHandler getSectionHandler(String sectionName, INegotiation negotiation)
+            throws NegotiationException {
+        IXjLanguage lang = JavadocXjLang.getInstance();
+        for (NegotiationParameter np : negotiation) {
+            if (np.accept(IXjLanguage.class, true))
+                lang = (IXjLanguage) np.getValue();
+            else
+                np.bypass();
+        }
+        return new Handler(lang);
+    }
+
+    protected class Handler
             implements ISectionHandler {
+
+        IXjLanguage lang;
+
+        public Handler(IXjLanguage lang) {
+            if (lang == null)
+                throw new NullPointerException("lang");
+            this.lang = lang;
+        }
 
         @Override
         public boolean pi(String command, String data) {
-            return false;
+            return processInstruction(command, data);
         }
 
         @Override
@@ -152,14 +185,25 @@ public class ElementDoc
 
         @Override
         public void attribute(String name, String string) {
+            String tagName, suffix;
+            int dot = name.indexOf('.');
+            if (dot == -1) {
+                tagName = name;
+                suffix = null;
+            } else {
+                tagName = name.substring(0, dot);
+                suffix = name.substring(dot + 1);
+            }
+            ITagType tagType = lang.getTagType(tagName);
+            Object cont = getTag(tagName);
+            Object tagValue = tagType.parseAttribute(cont, suffix, string);
+            setTag(tagName, tagValue);
         }
 
     }
 
-    @Override
-    public void loadObject(IFlatfLoader loader)
-            throws IOException, ParseException {
-        ClassDocLoader cdl = (ClassDocLoader) loader;
+    protected boolean processInstruction(String command, String data) {
+        return false;
     }
 
 }

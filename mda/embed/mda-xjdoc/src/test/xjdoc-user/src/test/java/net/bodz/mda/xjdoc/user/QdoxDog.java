@@ -3,6 +3,10 @@ package net.bodz.mda.xjdoc.user;
 import java.io.File;
 import java.io.StringWriter;
 
+import javax.free.FinalNegotiation;
+import javax.free.INegotiation;
+import javax.free.NegotiationParameter;
+
 import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.mda.xjdoc.meta.IXjLanguage;
 import net.bodz.mda.xjdoc.model.ClassDoc;
@@ -31,16 +35,21 @@ public class QdoxDog {
         for (JavaClass jclass : javaDocBuilder.getClasses()) {
             IXjLanguage lang; // = JavadocXjLang.getInstance();
             lang = new AnimalXjLang();
+
+            INegotiation negotiation = new FinalNegotiation(//
+                    new NegotiationParameter(//
+                            IXjLanguage.class, lang // JavadocXjLang.getInstance()
+                    ));
+
             ClassDocBuilder builder = new ClassDocBuilder(lang);
             ClassDoc classdoc = builder.buildClass(jclass);
 
             StringWriter buf = new StringWriter();
             FlatfOutput ffout = new FlatfOutput(buf);
-            classdoc.writeObject(ffout);
+            classdoc.writeObject(ffout, negotiation);
             String ff = buf.toString();
             System.out.println("CLASS: " + jclass.getFullyQualifiedName());
             System.out.println(ff + " +++");
         }
     }
-
 }

@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.free.INegotiation;
+import javax.free.NegotiationException;
+
 import net.bodz.bas.text.flatf.IFlatfOutput;
 import net.bodz.mda.xjdoc.util.MethodSignature;
 import net.bodz.mda.xjdoc.util.TypeNameContext;
@@ -30,9 +33,9 @@ public class ClassDoc
         methodDocs = new LinkedHashMap<MethodSignature, MethodDoc>();
     }
 
-// public TypeNameContext getTypeNameContext() {
-// return typeNameContext;
-// }
+    public TypeNameContext getTypeNameContext() {
+        return typeNameContext;
+    }
 
     public Map<String, FieldDoc> getFieldDocs() {
         return fieldDocs;
@@ -110,20 +113,30 @@ public class ClassDoc
      * </ul>
      */
     @Override
-    public void writeObject(IFlatfOutput out)
-            throws IOException {
+    public void writeObject(IFlatfOutput out, INegotiation negotiation)
+            throws IOException, NegotiationException {
         // out.sectionBegin("class");
         for (String fqcn : typeNameContext.getImportMap().values())
             out.pi("import", fqcn);
 
-        super.writeObject(out);
+        super.writeObject(out, negotiation);
 
         for (FieldDoc fieldDoc : fieldDocs.values())
-            fieldDoc.writeObject(out);
+            fieldDoc.writeObject(out, negotiation);
 
         for (MethodDoc methodDoc : methodDocs.values())
-            methodDoc.writeObject(out);
+            methodDoc.writeObject(out, negotiation);
         // out.sectionEnd();
+    }
+
+    @Override
+    protected boolean processInstruction(String command, String data) {
+        if ("import".equals(command)) {
+            String fqcn = data;
+            typeNameContext.importTypeName(fqcn);
+            return true;
+        } else
+            return super.processInstruction(command, data);
     }
 
 }

@@ -4,9 +4,13 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.free.INegotiation;
+import javax.free.NegotiationException;
+
 import net.bodz.bas.i18n.dstr.DomainString;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 import net.bodz.mda.xjdoc.util.MethodSignature;
+import net.bodz.mda.xjdoc.util.TypeNameContext;
 
 public class MethodDoc
         extends ElementDoc {
@@ -111,14 +115,12 @@ public class MethodDoc
     }
 
     @Override
-    public void writeObject(IFlatfOutput out)
-            throws IOException {
-
-        // TypeNameContext typeNameContext = classDoc.getTypeNameContext();
-
-        String methodId = getMethodId();
+    public void writeObject(IFlatfOutput out, INegotiation negotiation)
+            throws IOException, NegotiationException {
+        TypeNameContext typeNameContext = classDoc.getTypeNameContext();
+        String methodId = signature.getMethodId(typeNameContext);
         out.sectionBegin("method:" + methodId);
-        super.writeObject(out);
+        super.writeObject(out, negotiation);
         out.sectionEnd();
     }
 
