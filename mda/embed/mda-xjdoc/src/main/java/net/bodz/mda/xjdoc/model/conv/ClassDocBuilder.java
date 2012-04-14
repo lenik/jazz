@@ -19,6 +19,7 @@ import com.thoughtworks.qdox.model.DocletTag;
 import com.thoughtworks.qdox.model.JavaClass;
 import com.thoughtworks.qdox.model.JavaField;
 import com.thoughtworks.qdox.model.JavaMethod;
+import com.thoughtworks.qdox.model.JavaParameter;
 import com.thoughtworks.qdox.model.Type;
 
 /**
@@ -26,18 +27,31 @@ import com.thoughtworks.qdox.model.Type;
  */
 public class ClassDocBuilder {
 
-    TypeNameContext typeNameContext;
     IXjLanguage lang;
+    TypeNameContext sharedContext;
 
-    public ClassDocBuilder(IXjLanguage lang) {
+    public ClassDocBuilder(IXjLanguage lang, TypeNameContext sharedContext) {
         if (lang == null)
             throw new NullPointerException("lang");
         this.lang = lang;
+        this.sharedContext = sharedContext;
     }
 
     public ClassDoc buildClass(JavaClass javaClass) {
-        ClassDoc classDoc = new ClassDoc(javaClass.getFullyQualifiedName());
+        String fqcn = javaClass.getFullyQualifiedName();
+
+        String packageName;
+        int lastDot = fqcn.lastIndexOf('.');
+        if (lastDot == -1)
+            packageName = "";
+        else
+            packageName = fqcn.substring(0, lastDot);
+        TypeNameContext typeNameContext = new TypeNameContext(packageName, sharedContext);
+
+        ClassDoc classDoc = new ClassDoc(fqcn);
         populate(classDoc, javaClass);
+
+        classDoc.setTypeNameContext(typeNameContext);
 
         for (JavaField javaField : javaClass.getFields()) {
             String fieldName = javaField.getName();
@@ -45,10 +59,6 @@ public class ClassDocBuilder {
             populate(fieldDoc, javaField);
             classDoc.setFieldDoc(fieldName, fieldDoc);
         }
-
-        TypeNameContext typeNameContext = this.typeNameContext;
-        if (typeNameContext == null)
-            typeNameContext = classDoc.getTypeNameContext();
 
         for (JavaMethod javaMethod : javaClass.getMethods()) {
             Type[] types = javaMethod.getParameterTypes(true);
@@ -59,13 +69,28 @@ public class ClassDocBuilder {
                 typeNameContext.importType(type);
             }
 
-            // This throws clause is defined in method prototype, but not in javadoc.
-            for (Type exceptionType : javaMethod.getExceptions())
-                typeNameContext.importType(exceptionType);
-
             MethodDoc methodDoc = new MethodDoc(classDoc, signature);
-            populate(methodDoc, javaMethod);
             classDoc.setMethodDoc(signature, methodDoc);
+
+            populate(methodDoc, javaMethod);
+
+            for (JavaParameter jparam : javaMethod.getParameters()) {
+                // javadoc may not include all the parameters.
+                String paramName = jparam.getName();
+                DomainString paramDoc = methodDoc.getParamDoc(paramName);
+                if (paramDoc == null)
+                    methodDoc.setParamDoc(paramName, null/* "" */);
+            }
+
+            // This throws clause is defined in method prototype, but not in javadoc.
+            for (Type exceptionType : javaMethod.getExceptions()) {
+                // javadoc may not include all the exceptions.
+                String exceptionFqcn = exceptionType.getFullyQualifiedName();
+                // String simple = typeNameContext.importTypeName(exceptionFqcn);
+                DomainString exceptionDoc = methodDoc.getExceptionDoc(exceptionFqcn);
+                if (exceptionDoc == null)
+                    methodDoc.setExceptionDoc(exceptionFqcn, null/* "" */);
+            }
         }
         return classDoc;
     }

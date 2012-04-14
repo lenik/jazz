@@ -3,22 +3,40 @@ package net.bodz.mda.xjdoc.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.free.INegotiation;
+import javax.free.NegotiationException;
+import javax.free.NegotiationParameter;
+
 import com.thoughtworks.qdox.model.Type;
 
 public class TypeNameContext {
 
-    final String contextPackageName;
+    final String localPackageName;
+    TypeNameContext sharedContext;
 
     /** simple-name --> full-qualified name */
     final Map<String, String> typeMap = new HashMap<String, String>();
 
     public TypeNameContext(Class<?> contextType) {
-        this(contextType.getPackage().getName());
+        this(contextType.getPackage().getName(), null);
     }
 
-    public TypeNameContext(String contextPackageName) {
-        this.contextPackageName = contextPackageName;
+    public TypeNameContext(String localPackageName) {
+        this(localPackageName, null);
     }
+
+    public TypeNameContext(String localPackageName, TypeNameContext sharedContext) {
+        this.localPackageName = localPackageName;
+        this.sharedContext = sharedContext;
+    }
+
+    // public TypeNameContext getSharedContext() {
+    // return sharedContext;
+    // }
+    //
+    // public void setSharedContext(TypeNameContext sharedContext) {
+    // this.sharedContext = sharedContext;
+    // }
 
     public Map<String, String> getImportMap() {
         return typeMap;
@@ -66,7 +84,7 @@ public class TypeNameContext {
             return simpleName;
 
         // With-in the same package? Never import friend class.
-        if (contextPackageName != null && contextPackageName.equals(packageName))
+        if (localPackageName != null && localPackageName.equals(packageName))
             try {
                 // OPT: Cache. But JRE may have cached it already.
                 Class.forName("java.lang." + simpleName);
@@ -88,19 +106,42 @@ public class TypeNameContext {
     }
 
     public String expand(String name) {
+        if (name == null)
+            throw new NullPointerException("name");
+
         String fqcn = typeMap.get(name);
         if (fqcn != null)
             return fqcn;
 
-        // String contextFqcn = contextPackageName + "." + name;
+        // String localFqcn = localPackageName + "." + name;
 
-        String javaLangFqcn = "java.lang." + name;
+        fqcn = sharedContext.expand(name);
+        if (!fqcn.equals(name)) {
+            // copy-on-expand for shared imports.
+            importTypeName(fqcn);
+            return fqcn;
+        }
+
+        fqcn = expandJavaLang(name);
+        return fqcn;
+    }
+
+    static String expandJavaLang(String name) {
+        String fqcn = "java.lang." + name;
         try {
-            Class.forName(javaLangFqcn);
-            return javaLangFqcn;
+            Class.forName(fqcn);
+            return fqcn;
         } catch (ClassNotFoundException e) {
             return name;
         }
+    }
+
+    public static TypeNameContext negotiate(INegotiation negotiation)
+            throws NegotiationException {
+        for (NegotiationParameter np : negotiation)
+            if (np.accept(TypeNameContext.class, true))
+                return (TypeNameContext) np.getValue();
+        return null;
     }
 
 }
