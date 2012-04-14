@@ -28,8 +28,6 @@ public class StringTagType
     @Override
     public void writeAttributes(IFlatfOutput out, String prefix, Object value)
             throws IOException {
-        if (!(value instanceof String))
-            throw new IllegalArgumentException();
         String string = (String) value;
         out.attribute(prefix, string);
     }

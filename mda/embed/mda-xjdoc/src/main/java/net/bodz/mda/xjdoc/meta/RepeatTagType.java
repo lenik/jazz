@@ -6,8 +6,16 @@ import java.util.List;
 
 import net.bodz.bas.text.flatf.IFlatfOutput;
 
-public abstract class RepeatTagType
+class RepeatTagType
         extends AbstractTagType {
+
+    final ITagType valueTagType;
+
+    public RepeatTagType(ITagType valueTagType) {
+        if (valueTagType == null)
+            throw new NullPointerException("valueTagType");
+        this.valueTagType = valueTagType;
+    }
 
     @Override
     public Object parseJavadoc(Object cont, String string) {
@@ -15,7 +23,7 @@ public abstract class RepeatTagType
         List<Object> list = (List<Object>) cont;
         if (list == null)
             list = new ArrayList<Object>();
-        Object value = parseValueJavadoc(string);
+        Object value = valueTagType.parseJavadoc(null, string);
         list.add(value);
         return list;
     }
@@ -26,8 +34,8 @@ public abstract class RepeatTagType
         String[] array = new String[list.size()];
         for (int index = 0; index < array.length; index++) {
             Object item = list.get(index);
-            String valueText = formatValueJavadoc(item);
-            array[index] = valueText;
+            for (String itemJavadoc : valueTagType.formatJavadoc(item))
+                array[index] = itemJavadoc;
         }
         return array;
     }
@@ -39,12 +47,13 @@ public abstract class RepeatTagType
         if (list == null)
             list = new ArrayList<Object>();
 
+        // suffix -> (suffix-1.suffix-rest)
         int index = Integer.parseInt(suffix);
         while (list.size() <= index)
             list.add(null);
 
         // Object valueCont = list.get(index);
-        Object value = parseValueAttribute(string);
+        Object value = valueTagType.parseAttribute(null, null, string);
         list.set(index, value);
         return list;
     }
@@ -56,18 +65,9 @@ public abstract class RepeatTagType
         for (int index = 0; index < list.size(); index++) {
             Object item = list.get(index);
             if (item != null) {
-                writeValueAttributes(out, prefix + "." + index, item);
+                valueTagType.writeAttributes(out, prefix + "." + index, item);
             }
         }
     }
-
-    protected abstract Object parseValueJavadoc(String valueString);
-
-    protected abstract String formatValueJavadoc(Object value);
-
-    protected abstract Object parseValueAttribute(String string);
-
-    protected abstract void writeValueAttributes(IFlatfOutput out, String prefix, Object value)
-            throws IOException;
 
 }
