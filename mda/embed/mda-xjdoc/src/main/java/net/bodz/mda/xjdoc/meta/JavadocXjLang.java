@@ -1,22 +1,16 @@
 package net.bodz.mda.xjdoc.meta;
 
+import net.bodz.mda.xjdoc.util.TypeNameContext;
+
 public class JavadocXjLang
         extends XjLanguage {
 
-    public JavadocXjLang() {
-        setTagType("author", StringArrayTagType.INSTANCE);
-        setTagType("exception", new KeyedDocTagType()); // checked
-        setTagType("param", new KeyedDocTagType());
-        setTagType("return", new DocTagType());
-        setTagType("throws", new KeyedDocTagType()); // unchecked
-    }
-
-    private static JavadocXjLang instance;
-
-    public static synchronized JavadocXjLang getInstance() {
-        if (instance == null)
-            instance = new JavadocXjLang();
-        return instance;
+    public JavadocXjLang(TypeNameContext typeNameContext) {
+        setTagType("author", StringTagType.INSTANCE.repeat());
+        setTagType("exception", DocTagType.INSTANCE.typed(typeNameContext)); // checked
+        setTagType("param", DocTagType.INSTANCE.typed(typeNameContext));
+        setTagType("return", DocTagType.INSTANCE);
+        setTagType("throws", DocTagType.INSTANCE.keyed()); // unchecked
     }
 
 }

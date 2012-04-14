@@ -36,8 +36,15 @@ public class DocTagType
     @Override
     public void writeAttributes(IFlatfOutput out, String prefix, Object value)
             throws IOException {
-        DomainString text = (DomainString) value;
-        out.attribute(prefix, text);
+        DomainString dstr = (DomainString) value;
+
+        String indent = out.getIndent();
+        String domainSep = "\n" + indent + "    ";
+        String lineSep = "\n" + indent + "        ";
+        String mlstr = dstr.toMultiLangString(domainSep, lineSep);
+
+        // out.attribute(prefix, dstr);
+        out.attribute(prefix, mlstr);
     }
 
     public static final DocTagType INSTANCE = new DocTagType();

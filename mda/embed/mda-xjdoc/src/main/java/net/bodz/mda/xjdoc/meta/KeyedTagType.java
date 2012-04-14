@@ -8,24 +8,32 @@ import java.util.Map.Entry;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 import net.bodz.mda.xjdoc.util.WordTokenizer;
 
-public abstract class KeyedTagType
+class KeyedTagType
         extends AbstractTagType {
+
+    final ITagType valueTagType;
+
+    public KeyedTagType(ITagType valueTagType) {
+        if (valueTagType == null)
+            throw new NullPointerException("valueTagType");
+        this.valueTagType = valueTagType;
+    }
 
     @Override
     public Object parseJavadoc(Object cont, String string) {
-        String keyText = WordTokenizer.firstWord(string);
-        String valueText = string.substring(keyText.length());
-        keyText = keyText.trim();
-        valueText = valueText.trim();
+        String keyStr = WordTokenizer.firstWord(string);
+        String valueStr = string.substring(keyStr.length());
+        keyStr = keyStr.trim();
+        valueStr = valueStr.trim();
 
         @SuppressWarnings("unchecked")
         Map<Object, Object> map = (Map<Object, Object>) cont;
         if (map == null)
             map = new LinkedHashMap<Object, Object>();
 
-        Object key = parseKey(keyText);
+        Object key = parseKey(keyStr);
         Object valueCont = map.get(key);
-        Object value = parseValueJavadoc(valueCont, valueText);
+        Object value = valueTagType.parseJavadoc(valueCont, valueStr);
         if (valueCont != value)
             map.put(key, value);
         return map;
@@ -40,9 +48,10 @@ public abstract class KeyedTagType
         for (Entry<?, ?> entry : map.entrySet()) {
             Object k = entry.getKey();
             Object v = entry.getValue();
-            String keyText = formatKey(k);
-            String valueText = formatValueJavadoc(v);
-            array[index++] = keyText + " " + valueText;
+            String keyStr = formatKey(k);
+            for (String valueStr : valueTagType.formatJavadoc(v))
+                array[index] = keyStr + " " + valueStr;
+            index++;
         }
         return array;
     }
@@ -54,9 +63,10 @@ public abstract class KeyedTagType
         if (map == null)
             map = new LinkedHashMap<Object, Object>();
 
+        // suffix -> suffix-1.suffix-rest
         Object key = parseKey(suffix);
         Object valueCont = map.get(key);
-        Object value = parseValueAttribute(valueCont, string);
+        Object value = valueTagType.parseAttribute(valueCont, null, string);
         // return new Pair<Object, Object>(key, value);
         if (valueCont == null)
             map.put(key, value);
@@ -71,8 +81,8 @@ public abstract class KeyedTagType
             Object k = entry.getKey();
             Object v = entry.getValue();
             if (v != null) {
-                String keyText = formatKey(k);
-                writeValueAttributes(out, prefix + "." + keyText, v);
+                String keyStr = formatKey(k);
+                valueTagType.writeAttributes(out, prefix + "." + keyStr, v);
             }
         }
     }
@@ -87,14 +97,5 @@ public abstract class KeyedTagType
         else
             return key.toString();
     }
-
-    protected abstract Object parseValueJavadoc(Object cont, String valueString);
-
-    protected abstract String formatValueJavadoc(Object value);
-
-    protected abstract Object parseValueAttribute(Object cont, String string);
-
-    protected abstract void writeValueAttributes(IFlatfOutput out, String prefix, Object value)
-            throws IOException;
 
 }
