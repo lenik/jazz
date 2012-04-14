@@ -6,11 +6,13 @@ import java.io.StringWriter;
 import javax.free.FinalNegotiation;
 import javax.free.INegotiation;
 import javax.free.NegotiationParameter;
+import javax.free.StringSource;
 
 import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.mda.xjdoc.meta.IXjLanguage;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.conv.ClassDocBuilder;
+import net.bodz.mda.xjdoc.model.conv.ClassDocLoader;
 import net.bodz.mda.xjdoc.user.xjl.AnimalXjLang;
 
 import com.bee32.plover.xutil.m2.MavenPath;
@@ -49,7 +51,19 @@ public class QdoxDog {
             classdoc.writeObject(ffout, negotiation);
             String ff = buf.toString();
             System.out.println("CLASS: " + jclass.getFullyQualifiedName());
-            System.out.println(ff + " +++");
+            System.out.println(ff + " ---");
+
+            StringSource ffSource = new StringSource(ff);
+            ClassDocLoader docLoader = new ClassDocLoader(lang);
+            ClassDoc doc2 = docLoader.load(jclass.getFullyQualifiedName(), ffSource);
+
+            StringWriter buf2 = new StringWriter();
+            FlatfOutput ffout2 = new FlatfOutput(buf2);
+            doc2.writeObject(ffout2, negotiation);
+            String ff2 = buf.toString();
+            System.out.println("CLASS2: " + jclass.getFullyQualifiedName());
+            System.out.println(ff2 + " ===");
         }
     }
+
 }

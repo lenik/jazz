@@ -51,18 +51,22 @@ public class ClassDocBuilder {
             typeNameContext = classDoc.getTypeNameContext();
 
         for (JavaMethod javaMethod : javaClass.getMethods()) {
-            Type[] types = javaMethod.getParameterTypes();
+            Type[] types = javaMethod.getParameterTypes(true);
             MethodSignature signature = new MethodSignature(javaMethod.getName(), types.length);
             for (int i = 0; i < types.length; i++) {
                 Type type = types[i];
                 signature.setParameterType(i, type.getFullyQualifiedName(), type.getDimensions());
                 typeNameContext.importType(type);
             }
+
+            // This throws clause is defined in method prototype, but not in javadoc.
+            for (Type exceptionType : javaMethod.getExceptions())
+                typeNameContext.importType(exceptionType);
+
             MethodDoc methodDoc = new MethodDoc(classDoc, signature);
             populate(methodDoc, javaMethod);
             classDoc.setMethodDoc(signature, methodDoc);
         }
-
         return classDoc;
     }
 

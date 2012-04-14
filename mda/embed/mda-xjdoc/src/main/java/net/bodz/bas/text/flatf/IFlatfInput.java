@@ -1,9 +1,11 @@
 package net.bodz.bas.text.flatf;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.text.ParseException;
 
-public interface IFlatfInput {
+public interface IFlatfInput
+        extends Closeable {
 
     /** Preprocessing Instruction */
     int PI = 1;
