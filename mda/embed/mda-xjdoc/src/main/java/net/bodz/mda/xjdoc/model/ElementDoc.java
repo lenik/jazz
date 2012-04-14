@@ -16,6 +16,7 @@ import net.bodz.bas.text.flatf.ISectionHandler;
 import net.bodz.mda.xjdoc.meta.ITagType;
 import net.bodz.mda.xjdoc.meta.IXjLanguage;
 import net.bodz.mda.xjdoc.meta.JavadocXjLang;
+import net.bodz.mda.xjdoc.meta.XjLanguage;
 
 public class ElementDoc
         implements IFlatfSerializable {
@@ -128,7 +129,7 @@ public class ElementDoc
     @Override
     public void writeObject(IFlatfOutput out, INegotiation negotiation)
             throws IOException, NegotiationException {
-        IXjLanguage lang = JavadocXjLang.getInstance();
+        IXjLanguage lang = null;
         if (negotiation != null)
             for (NegotiationParameter np : negotiation) {
                 if (np.accept(IXjLanguage.class, true))
@@ -136,6 +137,8 @@ public class ElementDoc
                 else
                     np.bypass();
             }
+        if (lang == null)
+            lang = new JavadocXjLang(null); // XXX
 
         if (text != null)
             out.attribute(".", text);
@@ -150,14 +153,7 @@ public class ElementDoc
     @Override
     public ISectionHandler getSectionHandler(String sectionName, INegotiation negotiation)
             throws NegotiationException {
-        IXjLanguage lang = JavadocXjLang.getInstance();
-        if (negotiation != null)
-            for (NegotiationParameter np : negotiation) {
-                if (np.accept(IXjLanguage.class, true))
-                    lang = (IXjLanguage) np.getValue();
-                else
-                    np.bypass();
-            }
+        IXjLanguage lang = XjLanguage.negotiate(negotiation);
         return new Handler(lang);
     }
 

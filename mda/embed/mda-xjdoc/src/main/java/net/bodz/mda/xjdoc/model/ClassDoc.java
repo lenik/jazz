@@ -14,28 +14,20 @@ import net.bodz.mda.xjdoc.util.TypeNameContext;
 public class ClassDoc
         extends ElementDoc {
 
-    TypeNameContext typeNameContext;
     Map<String, FieldDoc> fieldDocs;
     Map<MethodSignature, MethodDoc> methodDocs;
 
+    TypeNameContext typeNameContext;
+
     public ClassDoc(String fqcn) {
         super(fqcn);
-
-        String packageName;
-        int lastDot = fqcn.lastIndexOf('.');
-        if (lastDot == -1)
-            packageName = "";
-        else
-            packageName = fqcn.substring(0, lastDot);
-
-        typeNameContext = new TypeNameContext(packageName);
         fieldDocs = new LinkedHashMap<String, FieldDoc>();
         methodDocs = new LinkedHashMap<MethodSignature, MethodDoc>();
     }
 
-    public TypeNameContext getTypeNameContext() {
-        return typeNameContext;
-    }
+//    public TypeNameContext getTypeNameContext() {
+//        return typeNameContext;
+//    }
 
     public Map<String, FieldDoc> getFieldDocs() {
         return fieldDocs;
