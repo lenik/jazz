@@ -129,12 +129,13 @@ public class ElementDoc
     public void writeObject(IFlatfOutput out, INegotiation negotiation)
             throws IOException, NegotiationException {
         IXjLanguage lang = JavadocXjLang.getInstance();
-        for (NegotiationParameter np : negotiation) {
-            if (np.accept(IXjLanguage.class, true))
-                lang = (IXjLanguage) np.getValue();
-            else
-                np.bypass();
-        }
+        if (negotiation != null)
+            for (NegotiationParameter np : negotiation) {
+                if (np.accept(IXjLanguage.class, true))
+                    lang = (IXjLanguage) np.getValue();
+                else
+                    np.bypass();
+            }
 
         if (text != null)
             out.attribute(".", text);
@@ -150,12 +151,13 @@ public class ElementDoc
     public ISectionHandler getSectionHandler(String sectionName, INegotiation negotiation)
             throws NegotiationException {
         IXjLanguage lang = JavadocXjLang.getInstance();
-        for (NegotiationParameter np : negotiation) {
-            if (np.accept(IXjLanguage.class, true))
-                lang = (IXjLanguage) np.getValue();
-            else
-                np.bypass();
-        }
+        if (negotiation != null)
+            for (NegotiationParameter np : negotiation) {
+                if (np.accept(IXjLanguage.class, true))
+                    lang = (IXjLanguage) np.getValue();
+                else
+                    np.bypass();
+            }
         return new Handler(lang);
     }
 

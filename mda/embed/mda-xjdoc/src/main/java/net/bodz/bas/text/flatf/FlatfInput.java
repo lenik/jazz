@@ -2,6 +2,7 @@ package net.bodz.bas.text.flatf;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.Reader;
 import java.text.ParseException;
 
 public class FlatfInput
@@ -13,6 +14,21 @@ public class FlatfInput
     String sectionName;
     String attributeName;
     StringBuilder attributeText = new StringBuilder();
+
+    public FlatfInput(Reader reader) {
+        if (reader == null)
+            throw new NullPointerException("reader");
+        if (reader instanceof BufferedReader)
+            this.reader = (BufferedReader) reader;
+        else
+            this.reader = new BufferedReader(reader);
+    }
+
+    @Override
+    public void close()
+            throws IOException {
+        reader.close();
+    }
 
     @Override
     public int next()

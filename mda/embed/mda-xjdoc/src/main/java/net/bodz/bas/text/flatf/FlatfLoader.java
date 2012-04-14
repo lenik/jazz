@@ -1,37 +1,52 @@
 package net.bodz.bas.text.flatf;
 
 import java.io.IOException;
+import java.io.Reader;
 import java.text.ParseException;
-import java.util.HashMap;
-import java.util.Map;
 
+import javax.free.INegotiation;
+import javax.free.IStreamInputSource;
 import javax.free.IllegalUsageException;
+import javax.free.NegotiationException;
 import javax.free.UnexpectedException;
 
 import net.bodz.mda.xjdoc.util.WordTokenizer;
 
-public class FlatfLoader
-        implements IFlatfLoader {
+public class FlatfLoader {
 
-    Map<String, ISectionHandler> sectionHandlers = new HashMap<String, ISectionHandler>();
+    INegotiation negotiation;
 
-    @Override
-    public void load(IFlatfInput in)
-            throws ParseException, IOException {
+    public FlatfLoader(INegotiation negotiation) {
+        this.negotiation = negotiation;
+    }
+
+    public void load(IStreamInputSource inputSource, IFlatfSerializable target)
+            throws IOException, ParseException, NegotiationException {
+        Reader reader = inputSource.newReader();
+        try {
+            FlatfInput in = new FlatfInput(reader);
+            load(in, target);
+        } finally {
+            reader.close();
+        }
+    }
+
+    public void load(IFlatfInput in, IFlatfSerializable target)
+            throws ParseException, IOException, NegotiationException {
         int token;
         String currentSection = in.getSectionName();
-        ISectionHandler sectionHandler = getSectionHandler(currentSection);
+        ISectionHandler sectionHandler = target.getSectionHandler(currentSection, negotiation);
 
         while ((token = in.next()) != IFlatfInput.EOF) {
             switch (token) {
             case IFlatfInput.PI:
                 String piText = in.getPiText();
                 String piCommand = WordTokenizer.firstWord(piText);
-                String piParam = piText.substring(piCommand.length());
+                String piData = piText.substring(piCommand.length());
                 piCommand = piCommand.trim();
-                piParam = piParam.trim();
+                piData = piData.trim();
 
-                if (!processInstruction(piCommand, piParam)) {
+                if (!sectionHandler.pi(piCommand, piData)) {
                     throw new IllegalUsageException("Can't process instruction: " + piText);
                 }
                 break;
@@ -41,7 +56,7 @@ public class FlatfLoader
                     sectionHandler.sectionEnd(currentSection);
 
                 currentSection = in.getSectionName();
-                sectionHandler = getSectionHandler(currentSection);
+                sectionHandler = target.getSectionHandler(currentSection, negotiation);
 
                 if (sectionHandler == null) {
                     throw new ParseException("Unhandled section: " + currentSection, -1);
@@ -60,23 +75,6 @@ public class FlatfLoader
                 throw new UnexpectedException();
             }
         }
-    }
-
-    @Override
-    public ISectionHandler getSectionHandler(String sectionName) {
-        return sectionHandlers.get(sectionName);
-    }
-
-    public void addSectionHandler(String sectionName, ISectionHandler sectionHandler) {
-        if (sectionName == null)
-            throw new NullPointerException("sectionName");
-        if (sectionHandler == null)
-            throw new NullPointerException("sectionHandler");
-        sectionHandlers.put(sectionName, sectionHandler);
-    }
-
-    protected boolean processInstruction(String command, String data) {
-        return false;
     }
 
 }
