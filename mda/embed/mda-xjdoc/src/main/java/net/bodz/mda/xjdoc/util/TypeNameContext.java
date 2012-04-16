@@ -3,40 +3,28 @@ package net.bodz.mda.xjdoc.util;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.free.INegotiation;
-import javax.free.NegotiationException;
-import javax.free.NegotiationParameter;
-
 import com.thoughtworks.qdox.model.Type;
 
 public class TypeNameContext {
 
     final String localPackageName;
-    TypeNameContext sharedContext;
+    TypeNameContext parent;
 
     /** simple-name --> full-qualified name */
     final Map<String, String> typeMap = new HashMap<String, String>();
 
     public TypeNameContext(Class<?> contextType) {
-        this(contextType.getPackage().getName(), null);
+        this(null, contextType.getPackage().getName());
     }
 
     public TypeNameContext(String localPackageName) {
-        this(localPackageName, null);
+        this(null, localPackageName);
     }
 
-    public TypeNameContext(String localPackageName, TypeNameContext sharedContext) {
+    public TypeNameContext(TypeNameContext parent, String localPackageName) {
+        this.parent = parent;
         this.localPackageName = localPackageName;
-        this.sharedContext = sharedContext;
     }
-
-    // public TypeNameContext getSharedContext() {
-    // return sharedContext;
-    // }
-    //
-    // public void setSharedContext(TypeNameContext sharedContext) {
-    // this.sharedContext = sharedContext;
-    // }
 
     public Map<String, String> getImportMap() {
         return typeMap;
@@ -69,16 +57,12 @@ public class TypeNameContext {
      * Add type to imported-list, and returns the simple name (type alias).
      */
     public String importTypeName(String fqcn) {
-        String simpleName;
-        String packageName;
         int lastDot = fqcn.lastIndexOf('.');
-        if (lastDot == -1) {
-            simpleName = fqcn;
-            packageName = "";
-        } else {
-            simpleName = fqcn.substring(lastDot + 1);
-            packageName = fqcn.substring(0, lastDot);
-        }
+        if (lastDot == -1)
+            return fqcn;
+
+        String simpleName = fqcn.substring(lastDot + 1);
+        String packageName = fqcn.substring(0, lastDot);
 
         if ("java.lang".equals(packageName))
             return simpleName;
@@ -115,11 +99,13 @@ public class TypeNameContext {
 
         // String localFqcn = localPackageName + "." + name;
 
-        fqcn = sharedContext.expand(name);
-        if (!fqcn.equals(name)) {
-            // copy-on-expand for shared imports.
-            importTypeName(fqcn);
-            return fqcn;
+        if (parent != null) {
+            fqcn = parent.expand(name);
+            if (!fqcn.equals(name)) {
+                // copy-on-expand for shared imports.
+                importTypeName(fqcn);
+                return fqcn;
+            }
         }
 
         fqcn = expandJavaLang(name);
@@ -136,12 +122,12 @@ public class TypeNameContext {
         }
     }
 
-    public static TypeNameContext negotiate(INegotiation negotiation)
-            throws NegotiationException {
-        for (NegotiationParameter np : negotiation)
-            if (np.accept(TypeNameContext.class, true))
-                return (TypeNameContext) np.getValue();
-        return null;
-    }
+// public static TypeNameContext negotiate(INegotiation negotiation)
+// throws NegotiationException {
+// for (NegotiationParameter np : negotiation)
+// if (np.accept(TypeNameContext.class, true))
+// return (TypeNameContext) np.getValue();
+// return null;
+// }
 
 }

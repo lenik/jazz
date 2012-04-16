@@ -28,30 +28,49 @@ import com.thoughtworks.qdox.model.Type;
 public class ClassDocBuilder {
 
     IXjLanguage lang;
-    TypeNameContext sharedContext;
+    TypeNameContext sourceFileImports;
 
-    public ClassDocBuilder(IXjLanguage lang, TypeNameContext sharedContext) {
+    boolean createClassImports;
+    DomainString missingDoc = DEFAULT_MISSING_DOC;
+
+    static final DomainString DEFAULT_MISSING_DOC;
+    static {
+        DEFAULT_MISSING_DOC = DomainString.parseMultiLangString(//
+                "\"(No document)\"" + //
+                        "zh-cn \"(无文档)\"");
+    }
+
+    public ClassDocBuilder(IXjLanguage lang, TypeNameContext sourceFileImports) {
         if (lang == null)
             throw new NullPointerException("lang");
+        if (sourceFileImports == null)
+            throw new NullPointerException("sourceFileImports");
         this.lang = lang;
-        this.sharedContext = sharedContext;
+        this.sourceFileImports = sourceFileImports;
+    }
+
+    public boolean isCreateClassImports() {
+        return createClassImports;
+    }
+
+    public void setCreateClassImports(boolean createClassImports) {
+        this.createClassImports = createClassImports;
+    }
+
+    public DomainString getMissingDoc() {
+        return missingDoc;
+    }
+
+    public void setMissingDoc(DomainString missingDoc) {
+        this.missingDoc = missingDoc;
     }
 
     public ClassDoc buildClass(JavaClass javaClass) {
         String fqcn = javaClass.getFullyQualifiedName();
-
-        String packageName;
-        int lastDot = fqcn.lastIndexOf('.');
-        if (lastDot == -1)
-            packageName = "";
-        else
-            packageName = fqcn.substring(0, lastDot);
-        TypeNameContext typeNameContext = new TypeNameContext(packageName, sharedContext);
-
         ClassDoc classDoc = new ClassDoc(fqcn);
-        populate(classDoc, javaClass);
+        TypeNameContext classImports = createClassImports ? classDoc.getOrCreateImports() : null;
 
-        classDoc.setTypeNameContext(typeNameContext);
+        populate(classDoc, javaClass);
 
         for (JavaField javaField : javaClass.getFields()) {
             String fieldName = javaField.getName();
@@ -64,22 +83,23 @@ public class ClassDocBuilder {
             Type[] types = javaMethod.getParameterTypes(true);
             MethodSignature signature = new MethodSignature(javaMethod.getName(), types.length);
             for (int i = 0; i < types.length; i++) {
-                Type type = types[i];
-                signature.setParameterType(i, type.getFullyQualifiedName(), type.getDimensions());
-                typeNameContext.importType(type);
+                Type paramType = types[i];
+                String paramFqcn = paramType.getFullyQualifiedName();
+                int paramDims = paramType.getDimensions();
+                signature.setParameterType(i, paramFqcn, paramDims);
+                if (createClassImports)
+                    classImports.importTypeName(paramFqcn);
             }
 
             MethodDoc methodDoc = new MethodDoc(classDoc, signature);
-            classDoc.setMethodDoc(signature, methodDoc);
-
             populate(methodDoc, javaMethod);
 
             for (JavaParameter jparam : javaMethod.getParameters()) {
                 // javadoc may not include all the parameters.
                 String paramName = jparam.getName();
                 DomainString paramDoc = methodDoc.getParamDoc(paramName);
-                if (paramDoc == null)
-                    methodDoc.setParamDoc(paramName, null/* "" */);
+                if (paramDoc == null && missingDoc != null)
+                    methodDoc.setParamDoc(paramName, missingDoc);
             }
 
             // This throws clause is defined in method prototype, but not in javadoc.
@@ -88,9 +108,13 @@ public class ClassDocBuilder {
                 String exceptionFqcn = exceptionType.getFullyQualifiedName();
                 // String simple = typeNameContext.importTypeName(exceptionFqcn);
                 DomainString exceptionDoc = methodDoc.getExceptionDoc(exceptionFqcn);
-                if (exceptionDoc == null)
-                    methodDoc.setExceptionDoc(exceptionFqcn, null/* "" */);
+                if (exceptionDoc == null && missingDoc != null)
+                    methodDoc.setExceptionDoc(exceptionFqcn, missingDoc);
+                if (createClassImports)
+                    classImports.importTypeName(exceptionFqcn);
             }
+
+            classDoc.setMethodDoc(signature, methodDoc);
         }
         return classDoc;
     }

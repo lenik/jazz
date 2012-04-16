@@ -8,9 +8,9 @@ import net.bodz.bas.i18n.dstr.DomainString;
 public class FlatfOutput
         implements IFlatfOutput {
 
-    int depth;
     Writer writer;
     String indent;
+    int depth;
     String langSeparator;
     String lineSeparator;
 
@@ -19,6 +19,11 @@ public class FlatfOutput
             throw new NullPointerException("writer");
         this.writer = writer;
         setIndent("    ");
+    }
+
+    @Override
+    public Writer getWriter() {
+        return writer;
     }
 
     @Override

@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.free.INegotiation;
+import javax.free.IllegalUsageException;
 import javax.free.NegotiationException;
 import javax.free.NegotiationParameter;
 
@@ -15,7 +16,6 @@ import net.bodz.bas.text.flatf.IFlatfSerializable;
 import net.bodz.bas.text.flatf.ISectionHandler;
 import net.bodz.mda.xjdoc.meta.ITagType;
 import net.bodz.mda.xjdoc.meta.IXjLanguage;
-import net.bodz.mda.xjdoc.meta.JavadocXjLang;
 import net.bodz.mda.xjdoc.meta.XjLanguage;
 
 public class ElementDoc
@@ -138,7 +138,7 @@ public class ElementDoc
                     np.bypass();
             }
         if (lang == null)
-            lang = new JavadocXjLang(null); // XXX
+            throw new IllegalUsageException("lang isn't specified.");
 
         if (text != null)
             out.attribute(".", text);
