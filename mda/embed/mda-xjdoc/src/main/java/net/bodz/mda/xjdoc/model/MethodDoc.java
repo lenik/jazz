@@ -117,9 +117,8 @@ public class MethodDoc
     @Override
     public void writeObject(IFlatfOutput out, INegotiation negotiation)
             throws IOException, NegotiationException {
-        // TypeNameContext typeNameContext = classDoc.getTypeNameContext();
-        TypeNameContext typeNameContext = TypeNameContext.negotiate(negotiation);
-        String methodId = signature.getMethodId(typeNameContext);
+        TypeNameContext imports = getClassDoc().getOrCreateImports();
+        String methodId = signature.getMethodId(imports);
         out.sectionBegin("method:" + methodId);
         super.writeObject(out, negotiation);
         out.sectionEnd();

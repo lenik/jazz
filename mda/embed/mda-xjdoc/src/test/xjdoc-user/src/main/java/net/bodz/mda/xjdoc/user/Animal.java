@@ -14,7 +14,7 @@ import java.io.IOException;
 public class Animal {
 
     /**
-     * Get the general color of the skin.
+     * Get the general color of the \ skin.
      * <p lang="zh-cn">
      * 获取动物皮肤的一般颜色。
      * <p lang="ja">
@@ -34,8 +34,7 @@ public class Animal {
      *             <p lang="et">
      *             Se la koloro estas nekonata.
      */
-    public String getColor()
-            throws UnsupportedOperationException {
+    public String getColor() {
         return null;
     }
 
@@ -72,7 +71,8 @@ public class Animal {
      *            离别语。
      *            <p lang="ja">
      *            バイバイ言葉。
-     * @exception IOException
+     * @throws ReflectiveOperationException
+     * @exception IOException1
      *                If any I/O exception occurred.
      *                <p lang="zh-cn">
      *                当发生输入输出异常时。

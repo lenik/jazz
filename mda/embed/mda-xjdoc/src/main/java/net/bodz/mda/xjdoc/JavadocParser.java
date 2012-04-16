@@ -8,9 +8,6 @@ import java.net.URL;
 import net.bodz.mda.xjdoc.test.ExampleClass;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
-import com.thoughtworks.qdox.model.DocletTag;
-import com.thoughtworks.qdox.model.JavaClass;
-import com.thoughtworks.qdox.model.JavaField;
 
 public class JavadocParser {
 
@@ -42,13 +39,6 @@ public class JavadocParser {
         // ClassLibrary lib = builder.getClassLibrary();
 
         builder.addSourceTree(sourceFile.getParentFile());
-        JavaClass jclass = builder.getClassByName(ExampleClass.class.getName());
-        DocletTag[] tags = jclass.getTags();
-        for (JavaField field : jclass.getFields()) {
-            DocletTag[] fieldTags = field.getTags();
-            System.out.println(fieldTags);
-        }
-        System.out.println("Done");
     }
 
 }
