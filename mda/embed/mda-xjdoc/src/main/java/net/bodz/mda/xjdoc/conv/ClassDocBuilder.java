@@ -1,4 +1,4 @@
-package net.bodz.mda.xjdoc.model.conv;
+package net.bodz.mda.xjdoc.conv;
 
 import java.util.Map;
 

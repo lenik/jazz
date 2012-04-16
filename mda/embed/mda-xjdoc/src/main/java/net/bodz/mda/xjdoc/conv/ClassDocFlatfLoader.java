@@ -1,4 +1,4 @@
-package net.bodz.mda.xjdoc.model.conv;
+package net.bodz.mda.xjdoc.conv;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -13,10 +13,10 @@ import net.bodz.bas.text.flatf.IFlatfInput;
 import net.bodz.mda.xjdoc.meta.IXjLanguage;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 
-public class ClassDocLoader
+public class ClassDocFlatfLoader
         extends FlatfLoader {
 
-    public ClassDocLoader(IXjLanguage lang) {
+    public ClassDocFlatfLoader(IXjLanguage lang) {
         super(new FinalNegotiation(//
                 new NegotiationParameter(IXjLanguage.class, lang)));
     }
