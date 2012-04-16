@@ -9,10 +9,10 @@ import javax.free.NegotiationParameter;
 import javax.free.StringSource;
 
 import net.bodz.bas.text.flatf.FlatfOutput;
+import net.bodz.mda.xjdoc.conv.ClassDocBuilder;
+import net.bodz.mda.xjdoc.conv.ClassDocFlatfLoader;
 import net.bodz.mda.xjdoc.meta.IXjLanguage;
 import net.bodz.mda.xjdoc.model.ClassDoc;
-import net.bodz.mda.xjdoc.model.conv.ClassDocBuilder;
-import net.bodz.mda.xjdoc.model.conv.ClassDocLoader;
 import net.bodz.mda.xjdoc.user.xjl.AnimalXjLang;
 import net.bodz.mda.xjdoc.util.TypeNameContext;
 
@@ -74,8 +74,8 @@ public class QdoxDog
                 classDoc.setImports(classImports);
                 IXjLanguage lang2 = new AnimalXjLang(classImports);
 
-                ClassDocLoader docLoader = new ClassDocLoader(lang2);
-                ClassDoc doc2 = docLoader.load(fqcn, ffSource);
+                ClassDocFlatfLoader ffLoader = new ClassDocFlatfLoader(lang2);
+                ClassDoc doc2 = ffLoader.load(fqcn, ffSource);
                 doc2.setImports(classImports);
 
                 StringWriter buf2 = new StringWriter();

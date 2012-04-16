@@ -1,11 +1,10 @@
-package net.bodz.mda.xjdoc;
+package net.bodz.mda.xjdoc.test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import net.bodz.mda.xjdoc.test.ExampleClass;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
 
