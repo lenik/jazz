@@ -8,6 +8,10 @@
     </parent>
     <artifactId>maven-xjdoc-plugin</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>maven-plugin</packaging>
+    <prerequisites>
+        <maven>2.0.6</maven>
+    </prerequisites>
     <dependencies>
         <dependency>
             <groupId>net.bodz.mda</groupId>

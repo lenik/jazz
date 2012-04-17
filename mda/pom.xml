@@ -27,7 +27,7 @@
         </dependency>
     </dependencies>
     <modules>
-        <module>mda-api</module>
+        <module>base</module>
         <module>embed</module>
         <module>compiler</module>
         <module>model</module>
