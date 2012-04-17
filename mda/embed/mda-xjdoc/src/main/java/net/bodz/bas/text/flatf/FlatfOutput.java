@@ -1,29 +1,28 @@
 package net.bodz.bas.text.flatf;
 
 import java.io.IOException;
-import java.io.Writer;
+
+import javax.free.ICharOut;
 
 import net.bodz.bas.i18n.dstr.DomainString;
 
 public class FlatfOutput
         implements IFlatfOutput {
 
-    Writer writer;
+    ICharOut out;
     String indent;
     int depth;
     String langSeparator;
     String lineSeparator;
 
-    public FlatfOutput(Writer writer) {
-        if (writer == null)
-            throw new NullPointerException("writer");
-        this.writer = writer;
+    public FlatfOutput(ICharOut out) {
+        this.out = out;
         setIndent("    ");
     }
 
     @Override
-    public Writer getWriter() {
-        return writer;
+    public ICharOut getCharOut() {
+        return out;
     }
 
     @Override
@@ -42,13 +41,13 @@ public class FlatfOutput
     @Override
     public void pi(String command, String data)
             throws IOException {
-        writer.append("%" + command + " " + data + "\n");
+        out.write("%" + command + " " + data + "\n");
     }
 
     @Override
     public void sectionBegin(String sectionName)
             throws IOException {
-        writer.append("\n[" + sectionName + "]\n");
+        out.write("\n[" + sectionName + "]\n");
         depth++;
     }
 
@@ -64,8 +63,8 @@ public class FlatfOutput
             throws IOException {
         String linecont = string.replace("\n", "\\\n");
         for (int d = 0; d < depth; d++)
-            writer.write(indent);
-        writer.write(name + " = " + linecont + "\n");
+            out.write(indent);
+        out.write(name + " = " + linecont + "\n");
     }
 
     @Override
@@ -77,7 +76,7 @@ public class FlatfOutput
 
     @Override
     public String toString() {
-        return "Writer=" + writer;
+        return "Writer=" + out;
     }
 
 }

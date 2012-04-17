@@ -1,8 +1,8 @@
 package net.bodz.mda.xjdoc.user;
 
 import java.io.File;
-import java.io.StringWriter;
 
+import javax.free.BCharOut;
 import javax.free.FinalNegotiation;
 import javax.free.INegotiation;
 import javax.free.NegotiationParameter;
@@ -61,7 +61,7 @@ public class QdoxDog
                                 IXjLanguage.class, lang // JavadocXjLang.getInstance()
                         ));
 
-                StringWriter buf = new StringWriter();
+                BCharOut buf = new BCharOut();
                 FlatfOutput ffout = new FlatfOutput(buf);
                 classDoc.writeObject(ffout, negotiation);
                 String ff = buf.toString();
@@ -78,7 +78,7 @@ public class QdoxDog
                 ClassDoc doc2 = ffLoader.load(fqcn, ffSource);
                 doc2.setImports(classImports);
 
-                StringWriter buf2 = new StringWriter();
+                BCharOut buf2 = new BCharOut();
                 FlatfOutput ffout2 = new FlatfOutput(buf2);
                 doc2.writeObject(ffout2, negotiation);
                 String ff2 = buf.toString();

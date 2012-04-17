@@ -120,9 +120,11 @@ public class ClassDocBuilder {
     }
 
     void populate(ElementDoc elementDoc, AbstractJavaEntity javaEntity) {
-        String comment = javaEntity.getComment();
-        DomainString text = DomainString.parseParaLang(comment);
-        elementDoc.setText(text);
+        String comment = javaEntity.getComment(); // maybe null if no javadoc.
+        if (comment != null) {
+            DomainString text = DomainString.parseParaLang(comment);
+            elementDoc.setText(text);
+        }
 
         Map<String, Object> tagMap = elementDoc.getTagMap();
         for (DocletTag docletTag : javaEntity.getTags()) {
