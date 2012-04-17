@@ -16,11 +16,19 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>lenik.lab</groupId>
-                <artifactId>xjdoc</artifactId>
+                <groupId>net.bodz.mda</groupId>
+                <artifactId>maven-xjdoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>build-classdocs</id>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
-                    <sourceDirectory>${basedir}/src/test/resources/unit/dump1/src/main/java</sourceDirectory>
-                    <outputDirectory>${basedir}/target/test/unit/dump1/target/generated-resources/project</outputDirectory>
+                    <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
+                    <outputDirectory></outputDirectory>
                 </configuration>
             </plugin>
         </plugins>
