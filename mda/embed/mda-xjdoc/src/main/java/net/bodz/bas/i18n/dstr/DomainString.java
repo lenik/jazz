@@ -80,8 +80,14 @@ public class DomainString
      * </pre>
      * 
      * Leading/trailing space of each language is stripped.
+     * 
+     * @param plText
+     *            para-lang string to be parsed.
+     * @return <code>null</code> iif <code>plText</code> is <code>null</code>.
      */
     public static DomainString parseParaLang(String plText) {
+        if (plText == null)
+            return null;
         Matcher matcher = paraLangPattern.matcher(plText);
         if (!matcher.find())
             return new DomainString(null, plText);
@@ -112,9 +118,26 @@ public class DomainString
         return main;
     }
 
-    public static DomainString parseMultiLangString(String multiLangString) {
+    /**
+     * A multi-lang string is formatted as:
+     * 
+     * <pre>
+     * "default-locale"
+     * LOCALE1 "string for locale1"
+     *         "more..."
+     * LOCALE2 "string for locale2"
+     *         "more..."
+     * </pre>
+     * 
+     * @param mlstr
+     *            multi-lang string to be parsed.
+     * @return <code>null</code> iif <code>mlstr</code> is <code>null</code>.
+     */
+    public static DomainString parseMultiLangString(String mlstr) {
+        if (mlstr == null)
+            return null;
         MultiLangStringParser parser = new MultiLangStringParser();
-        return parser.parse(multiLangString);
+        return parser.parse(mlstr);
     }
 
 }
