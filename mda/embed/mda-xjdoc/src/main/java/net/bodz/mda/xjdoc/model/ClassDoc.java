@@ -1,10 +1,10 @@
 package net.bodz.mda.xjdoc.model;
 
 import java.io.IOException;
-import java.io.StringWriter;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import javax.free.BCharOut;
 import javax.free.INegotiation;
 import javax.free.NegotiationException;
 
@@ -129,7 +129,7 @@ public class ClassDoc
             throws IOException, NegotiationException {
         // out.sectionBegin("class");
 
-        StringWriter bodyBuffer = new StringWriter();
+        BCharOut bodyBuffer = new BCharOut();
         FlatfOutput bodyOut = new FlatfOutput(bodyBuffer);
         {
             super.writeObject(bodyOut, negotiation);
@@ -144,7 +144,7 @@ public class ClassDoc
         for (String fqcn : imports.getImportMap().values())
             out.pi("import", fqcn);
 
-        out.getWriter().write(bodyBuffer.toString());
+        out.getCharOut().write(bodyBuffer.toString());
 
         // out.sectionEnd();
     }

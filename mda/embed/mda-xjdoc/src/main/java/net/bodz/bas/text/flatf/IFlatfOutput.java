@@ -1,7 +1,8 @@
 package net.bodz.bas.text.flatf;
 
 import java.io.IOException;
-import java.io.Writer;
+
+import javax.free.ICharOut;
 
 import net.bodz.bas.i18n.dstr.DomainString;
 
@@ -16,7 +17,7 @@ public interface IFlatfOutput {
      * @throws UnsupportedOperationException
      *             If there is no writer.
      */
-    Writer getWriter();
+    ICharOut getCharOut();
 
     void pi(String command, String data)
             throws IOException;
