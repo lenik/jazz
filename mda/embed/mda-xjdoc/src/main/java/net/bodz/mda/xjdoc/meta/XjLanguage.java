@@ -3,14 +3,22 @@ package net.bodz.mda.xjdoc.meta;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.free.AbstractNegotiable;
 import javax.free.INegotiation;
 import javax.free.NegotiationException;
 import javax.free.NegotiationParameter;
 
 public class XjLanguage
+        extends AbstractNegotiable
         implements IXjLanguage {
 
     Map<String, ITagType> tagTypes = new HashMap<String, ITagType>();
+
+    @Override
+    public boolean negotiate(NegotiationParameter negotiationparameter)
+            throws NegotiationException {
+        return false;
+    }
 
     public ITagType getTagType(String tagName) {
         ITagType tagType = tagTypes.get(tagName);
@@ -27,7 +35,7 @@ public class XjLanguage
         return StringTagType.INSTANCE;
     }
 
-    public static IXjLanguage negotiate(INegotiation negotiation)
+    public static IXjLanguage getInstance(INegotiation negotiation)
             throws NegotiationException {
         IXjLanguage lang = null;
         if (negotiation != null)
@@ -38,7 +46,7 @@ public class XjLanguage
                     np.bypass();
             }
         if (lang == null)
-            lang = new JavadocXjLang(null); // XXX
+            lang = new JavadocXjLang();
         return lang;
     }
 

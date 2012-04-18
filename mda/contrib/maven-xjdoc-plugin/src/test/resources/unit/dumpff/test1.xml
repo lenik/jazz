@@ -29,6 +29,11 @@
                 <configuration>
                     <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
                     <outputDirectory></outputDirectory>
+                    <missingDocML>
+                        "Empty"
+                        zh-cn "没有文档"
+                    </missingDocML>
+                    <langClass>java.lang.String</langClass>
                 </configuration>
             </plugin>
         </plugins>

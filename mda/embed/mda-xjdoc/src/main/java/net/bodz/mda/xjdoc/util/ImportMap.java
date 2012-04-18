@@ -5,48 +5,48 @@ import java.util.Map;
 
 import com.thoughtworks.qdox.model.Type;
 
-public class TypeNameContext {
+public class ImportMap {
 
     final String localPackageName;
-    TypeNameContext parent;
+    ImportMap parent;
 
     /** simple-name --> full-qualified name */
-    final Map<String, String> typeMap = new HashMap<String, String>();
+    final Map<String, String> map = new HashMap<String, String>();
 
-    public TypeNameContext(Class<?> contextType) {
+    public ImportMap(Class<?> contextType) {
         this(null, contextType.getPackage().getName());
     }
 
-    public TypeNameContext(String localPackageName) {
+    public ImportMap(String localPackageName) {
         this(null, localPackageName);
     }
 
-    public TypeNameContext(TypeNameContext parent, String localPackageName) {
+    public ImportMap(ImportMap parent, String localPackageName) {
         this.parent = parent;
         this.localPackageName = localPackageName;
     }
 
-    public Map<String, String> getImportMap() {
-        return typeMap;
+    public Map<String, String> getMap() {
+        return map;
     }
 
-    public String importType(Class<?> type) {
+    public String add(Class<?> type) {
         if (type == null)
             throw new NullPointerException("type");
         if (type.isPrimitive())
             return type.getName();
         if (type.isArray()) {
             Class<?> componentType = type.getComponentType();
-            String component = importType(componentType);
+            String component = add(componentType);
             return component + "[]";
         } else {
-            return importTypeName(type.getCanonicalName());
+            return add(type.getCanonicalName());
         }
     }
 
-    public String importType(Type type) {
+    public String add(Type type) {
         StringBuilder sb = new StringBuilder();
-        sb.append(importTypeName(type.getFullyQualifiedName()));
+        sb.append(add(type.getFullyQualifiedName()));
         int dims = type.getDimensions();
         for (int i = 0; i < dims; i++)
             sb.append("[]");
@@ -56,7 +56,7 @@ public class TypeNameContext {
     /**
      * Add type to imported-list, and returns the simple name (type alias).
      */
-    public String importTypeName(String fqcn) {
+    public String add(String fqcn) {
         int lastDot = fqcn.lastIndexOf('.');
         if (lastDot == -1)
             return fqcn;
@@ -77,9 +77,9 @@ public class TypeNameContext {
                 return simpleName;
             }
 
-        String importedFqcn = typeMap.get(simpleName);
+        String importedFqcn = map.get(simpleName);
         if (importedFqcn == null) { // new class to import.
-            typeMap.put(simpleName, fqcn);
+            map.put(simpleName, fqcn);
             return simpleName;
         }
 
@@ -89,21 +89,21 @@ public class TypeNameContext {
             return fqcn;
     }
 
-    public String expand(String name) {
+    public String normalize(String name) {
         if (name == null)
             throw new NullPointerException("name");
 
-        String fqcn = typeMap.get(name);
+        String fqcn = map.get(name);
         if (fqcn != null)
             return fqcn;
 
         // String localFqcn = localPackageName + "." + name;
 
         if (parent != null) {
-            fqcn = parent.expand(name);
+            fqcn = parent.normalize(name);
             if (!fqcn.equals(name)) {
                 // copy-on-expand for shared imports.
-                importTypeName(fqcn);
+                add(fqcn);
                 return fqcn;
             }
         }
