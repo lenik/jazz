@@ -2,10 +2,10 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>net.bodz.bas</groupId>
-        <artifactId>bas-m2</artifactId>
+        <artifactId>contrib</artifactId>
         <version>0.10.1-SNAPSHOT</version>
     </parent>
-    <artifactId>bas-m2-activator</artifactId>
+    <artifactId>maven-bas-plugin</artifactId>
     <version>0.10.1-SNAPSHOT</version>
     <dependencies>
         <dependency>

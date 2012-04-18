@@ -134,8 +134,8 @@
         <module>layer-5</module>
         <module>layer-6</module>
         <module>layer-7</module>
-        <module>bas-incubator</module>
-        <module>bas-m2</module>
+        <module>incubator</module>
+        <module>contrib</module>
         <module>build</module>
     </modules>
     <properties>
