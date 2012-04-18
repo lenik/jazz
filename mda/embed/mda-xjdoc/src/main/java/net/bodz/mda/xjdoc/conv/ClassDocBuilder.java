@@ -2,8 +2,7 @@ package net.bodz.mda.xjdoc.conv;
 
 import java.util.Map;
 
-import javax.free.IllegalUsageException;
-
+import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.i18n.dstr.DomainString;
 import net.bodz.mda.xjdoc.meta.ITagType;
 import net.bodz.mda.xjdoc.meta.IXjLanguage;
@@ -11,8 +10,8 @@ import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.ElementDoc;
 import net.bodz.mda.xjdoc.model.FieldDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
-import net.bodz.mda.xjdoc.util.MethodSignature;
 import net.bodz.mda.xjdoc.util.ImportMap;
+import net.bodz.mda.xjdoc.util.MethodSignature;
 
 import com.thoughtworks.qdox.model.AbstractJavaEntity;
 import com.thoughtworks.qdox.model.DocletTag;

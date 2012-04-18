@@ -1,6 +1,6 @@
 package net.bodz.mda.xjdoc.meta;
 
-import javax.free.INegotiable;
+import net.bodz.bas.lang.negotiation.INegotiable;
 
 public interface IXjLanguage
         extends INegotiable {

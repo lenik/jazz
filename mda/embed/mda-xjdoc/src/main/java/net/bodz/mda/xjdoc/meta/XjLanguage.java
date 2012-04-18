@@ -3,10 +3,10 @@ package net.bodz.mda.xjdoc.meta;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.free.AbstractNegotiable;
-import javax.free.INegotiation;
-import javax.free.NegotiationException;
-import javax.free.NegotiationParameter;
+import net.bodz.bas.lang.negotiation.AbstractNegotiable;
+import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.lang.negotiation.NegotiationException;
+import net.bodz.bas.lang.negotiation.NegotiationParameter;
 
 public class XjLanguage
         extends AbstractNegotiable

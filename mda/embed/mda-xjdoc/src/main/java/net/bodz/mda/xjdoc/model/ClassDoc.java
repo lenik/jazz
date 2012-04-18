@@ -4,10 +4,9 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import javax.free.BCharOut;
-import javax.free.INegotiation;
-import javax.free.NegotiationException;
-
+import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.lang.negotiation.NegotiationException;
+import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 import net.bodz.mda.xjdoc.util.ImportMap;

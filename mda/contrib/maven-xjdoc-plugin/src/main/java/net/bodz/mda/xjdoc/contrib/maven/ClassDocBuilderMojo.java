@@ -3,18 +3,17 @@ package net.bodz.mda.xjdoc.contrib.maven;
 import java.io.File;
 import java.io.IOException;
 
-import javax.free.FinalNegotiation;
-import javax.free.ICharOut;
-import javax.free.INegotiation;
-import javax.free.IStreamOutputTarget;
-import javax.free.JavaioFile;
-import javax.free.NegotiationException;
-import javax.free.NegotiationParameter;
-import javax.free.OutputStreamTarget;
-import javax.free.UnexpectedException;
-
+import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.i18n.dstr.DomainString;
+import net.bodz.bas.io.resource.IStreamOutputTarget;
+import net.bodz.bas.io.resource.builtin.OutputStreamTarget;
+import net.bodz.bas.lang.negotiation.FinalNegotiation;
+import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.lang.negotiation.NegotiationException;
+import net.bodz.bas.lang.negotiation.NegotiationParameter;
+import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.text.flatf.FlatfOutput;
+import net.bodz.bas.vfs.impl.javaio.JavaioFile;
 import net.bodz.mda.xjdoc.conv.ClassDocBuilder;
 import net.bodz.mda.xjdoc.meta.IXjLanguage;
 import net.bodz.mda.xjdoc.model.ClassDoc;
