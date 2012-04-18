@@ -8,12 +8,11 @@
         <artifactId>bas</artifactId>
         <version>0.10.1-SNAPSHOT</version>
     </parent>
-    <artifactId>bas-m2</artifactId>
+    <artifactId>contrib</artifactId>
     <version>0.10.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>bas-m2-activator</module>
-        <module>bas-m2-javadoc</module>
+        <module>maven-bas-plugin</module>
     </modules>
     <name>BAS :: M2</name>
 </project>
