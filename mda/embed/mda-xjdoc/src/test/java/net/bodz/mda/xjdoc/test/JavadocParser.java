@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-
 import com.thoughtworks.qdox.JavaDocBuilder;
 
 public class JavadocParser {

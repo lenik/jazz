@@ -2,9 +2,8 @@ package net.bodz.bas.text.flatf;
 
 import java.io.IOException;
 
-import javax.free.ICharOut;
-
 import net.bodz.bas.i18n.dstr.DomainString;
+import net.bodz.bas.sio.ICharOut;
 
 public interface IFlatfOutput {
 

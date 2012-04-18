@@ -4,13 +4,12 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import javax.free.INegotiation;
-import javax.free.NegotiationException;
-
 import net.bodz.bas.i18n.dstr.DomainString;
+import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.text.flatf.IFlatfOutput;
-import net.bodz.mda.xjdoc.util.MethodSignature;
 import net.bodz.mda.xjdoc.util.ImportMap;
+import net.bodz.mda.xjdoc.util.MethodSignature;
 
 public class MethodDoc
         extends ElementDoc {

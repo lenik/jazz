@@ -4,12 +4,11 @@ import java.io.IOException;
 import java.io.Reader;
 import java.text.ParseException;
 
-import javax.free.INegotiation;
-import javax.free.IStreamInputSource;
-import javax.free.IllegalUsageException;
-import javax.free.NegotiationException;
-import javax.free.UnexpectedException;
-
+import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.mda.xjdoc.util.WordTokenizer;
 
 public class FlatfLoader {

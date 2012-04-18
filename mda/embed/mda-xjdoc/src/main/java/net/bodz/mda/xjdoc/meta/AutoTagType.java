@@ -5,8 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import javax.free.IllegalUsageException;
-
+import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.i18n.dstr.DomainString;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 

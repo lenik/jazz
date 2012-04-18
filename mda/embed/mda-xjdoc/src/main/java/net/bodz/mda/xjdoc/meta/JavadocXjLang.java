@@ -1,8 +1,7 @@
 package net.bodz.mda.xjdoc.meta;
 
-import javax.free.NegotiationException;
-import javax.free.NegotiationParameter;
-
+import net.bodz.bas.lang.negotiation.NegotiationException;
+import net.bodz.bas.lang.negotiation.NegotiationParameter;
 import net.bodz.mda.xjdoc.util.IImportMapProvider;
 import net.bodz.mda.xjdoc.util.ImportMap;
 
@@ -18,8 +17,8 @@ public class JavadocXjLang
      * <ul>
      * <li>For javadoc -> model, the context should be sourceFileImports. (
      * {@link ImportMap#normalize(String) expand} is used)
-     * <li>For model -> ff, the context should be classImports. (
-     * {@link ImportMap#add(String) import} is used)
+     * <li>For model -> ff, the context should be classImports. ( {@link ImportMap#add(String)
+     * import} is used)
      * <li>For ff -> model, the context should be classImports. (
      * {@link ImportMap#normalize(String) expand} is used)
      * </ul>

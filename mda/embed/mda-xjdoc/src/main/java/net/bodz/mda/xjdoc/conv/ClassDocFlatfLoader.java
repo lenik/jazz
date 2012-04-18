@@ -3,11 +3,10 @@ package net.bodz.mda.xjdoc.conv;
 import java.io.IOException;
 import java.text.ParseException;
 
-import javax.free.FinalNegotiation;
-import javax.free.IStreamInputSource;
-import javax.free.NegotiationException;
-import javax.free.NegotiationParameter;
-
+import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.lang.negotiation.FinalNegotiation;
+import net.bodz.bas.lang.negotiation.NegotiationException;
+import net.bodz.bas.lang.negotiation.NegotiationParameter;
 import net.bodz.bas.text.flatf.FlatfLoader;
 import net.bodz.bas.text.flatf.IFlatfInput;
 import net.bodz.mda.xjdoc.meta.IXjLanguage;
