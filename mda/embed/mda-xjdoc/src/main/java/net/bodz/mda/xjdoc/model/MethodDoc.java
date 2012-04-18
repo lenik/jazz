@@ -10,7 +10,7 @@ import javax.free.NegotiationException;
 import net.bodz.bas.i18n.dstr.DomainString;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 import net.bodz.mda.xjdoc.util.MethodSignature;
-import net.bodz.mda.xjdoc.util.TypeNameContext;
+import net.bodz.mda.xjdoc.util.ImportMap;
 
 public class MethodDoc
         extends ElementDoc {
@@ -117,7 +117,7 @@ public class MethodDoc
     @Override
     public void writeObject(IFlatfOutput out, INegotiation negotiation)
             throws IOException, NegotiationException {
-        TypeNameContext imports = getClassDoc().getOrCreateImports();
+        ImportMap imports = getClassDoc().getOrCreateImports();
         String methodId = signature.getMethodId(imports);
         out.sectionBegin("method:" + methodId);
         super.writeObject(out, negotiation);

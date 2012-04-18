@@ -153,7 +153,7 @@ public class ElementDoc
     @Override
     public ISectionHandler getSectionHandler(String sectionName, INegotiation negotiation)
             throws NegotiationException {
-        IXjLanguage lang = XjLanguage.negotiate(negotiation);
+        IXjLanguage lang = XjLanguage.getInstance(negotiation);
         return new Handler(lang);
     }
 

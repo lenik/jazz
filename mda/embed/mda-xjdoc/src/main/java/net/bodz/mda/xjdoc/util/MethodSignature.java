@@ -41,7 +41,7 @@ public final class MethodSignature
         return dimss[index];
     }
 
-    public String getMethodId(TypeNameContext typeNameContext) {
+    public String getMethodId(ImportMap importMap) {
         StringBuilder sb = new StringBuilder(100);
         sb.append(methodName);
         sb.append('(');
@@ -52,8 +52,8 @@ public final class MethodSignature
             String fqcn = types[index];
             int dims = dimss[index];
 
-            if (typeNameContext != null) {
-                String simpleName = typeNameContext.importTypeName(fqcn);
+            if (importMap != null) {
+                String simpleName = importMap.add(fqcn);
                 sb.append(simpleName);
             } else {
                 sb.append(fqcn);

@@ -12,7 +12,7 @@ import net.bodz.mda.xjdoc.model.ElementDoc;
 import net.bodz.mda.xjdoc.model.FieldDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
 import net.bodz.mda.xjdoc.util.MethodSignature;
-import net.bodz.mda.xjdoc.util.TypeNameContext;
+import net.bodz.mda.xjdoc.util.ImportMap;
 
 import com.thoughtworks.qdox.model.AbstractJavaEntity;
 import com.thoughtworks.qdox.model.DocletTag;
@@ -28,7 +28,7 @@ import com.thoughtworks.qdox.model.Type;
 public class ClassDocBuilder {
 
     IXjLanguage lang;
-    TypeNameContext sourceFileImports;
+    ImportMap sourceFileImports;
 
     boolean createClassImports;
     DomainString missingDoc = DEFAULT_MISSING_DOC;
@@ -40,7 +40,7 @@ public class ClassDocBuilder {
                         "zh-cn \"(无文档)\"");
     }
 
-    public ClassDocBuilder(IXjLanguage lang, TypeNameContext sourceFileImports) {
+    public ClassDocBuilder(IXjLanguage lang, ImportMap sourceFileImports) {
         if (lang == null)
             throw new NullPointerException("lang");
         if (sourceFileImports == null)
@@ -68,7 +68,7 @@ public class ClassDocBuilder {
     public ClassDoc buildClass(JavaClass javaClass) {
         String fqcn = javaClass.getFullyQualifiedName();
         ClassDoc classDoc = new ClassDoc(fqcn);
-        TypeNameContext classImports = createClassImports ? classDoc.getOrCreateImports() : null;
+        ImportMap classImports = createClassImports ? classDoc.getOrCreateImports() : null;
 
         populate(classDoc, javaClass);
 
@@ -88,7 +88,7 @@ public class ClassDocBuilder {
                 int paramDims = paramType.getDimensions();
                 signature.setParameterType(i, paramFqcn, paramDims);
                 if (createClassImports)
-                    classImports.importTypeName(paramFqcn);
+                    classImports.add(paramFqcn);
             }
 
             MethodDoc methodDoc = new MethodDoc(classDoc, signature);
@@ -111,7 +111,7 @@ public class ClassDocBuilder {
                 if (exceptionDoc == null && missingDoc != null)
                     methodDoc.setExceptionDoc(exceptionFqcn, missingDoc);
                 if (createClassImports)
-                    classImports.importTypeName(exceptionFqcn);
+                    classImports.add(exceptionFqcn);
             }
 
             classDoc.setMethodDoc(signature, methodDoc);

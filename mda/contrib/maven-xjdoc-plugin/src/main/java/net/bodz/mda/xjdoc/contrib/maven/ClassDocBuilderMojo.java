@@ -10,16 +10,15 @@ import javax.free.IStreamOutputTarget;
 import javax.free.JavaioFile;
 import javax.free.NegotiationException;
 import javax.free.NegotiationParameter;
-import javax.free.NotImplementedException;
 import javax.free.OutputStreamTarget;
 import javax.free.UnexpectedException;
 
+import net.bodz.bas.i18n.dstr.DomainString;
 import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.mda.xjdoc.conv.ClassDocBuilder;
 import net.bodz.mda.xjdoc.meta.IXjLanguage;
-import net.bodz.mda.xjdoc.meta.JavadocXjLang;
 import net.bodz.mda.xjdoc.model.ClassDoc;
-import net.bodz.mda.xjdoc.util.TypeNameContext;
+import net.bodz.mda.xjdoc.util.ImportMap;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
@@ -38,33 +37,71 @@ import com.thoughtworks.qdox.model.JavaSource;
 public class ClassDocBuilderMojo
         extends AbstractResourceGeneratorMojo {
 
+    String extension = "classdoc";
+
+    /**
+     * @parameter
+     */
+    Class<?> langClass;
+
+    DomainString missingDoc;
+
     /**
      * The extension name used to generate classdoc resource files.
      * 
      * @parameter expression="${classdoc.extension}"
      */
-    String extension = "classdoc";
+    public String getExtension() {
+        return extension;
+    }
 
-    /**
-     * Xjdoc language name.
-     * 
-     * @parameter expression="${classdoc.lang}"
-     */
-    String langName = "javadoc";
-
-    /**
-     * Include the test resources.
-     * 
-     * @parameter
-     */
-    boolean testResources;
+    public void setExtension(String extension) {
+        this.extension = extension;
+    }
 
     /**
      * Add template attributes for missing elements.
      * 
      * @parameter expression="${classdoc.missingDoc}"
      */
-    String missingDoc;
+    public String getMissingDoc() {
+        if (missingDoc == null)
+            return null;
+        else
+            return missingDoc.toMultiLangString();
+    }
+
+    public void setMissingDoc(String missingDoc) {
+        this.missingDoc = DomainString.parseMultiLangString(missingDoc);
+    }
+
+    /**
+     * Xjdoc language name.
+     * 
+     * This can be the FQCN of the {@link IXjLanguage} implementation, or predefined language name
+     * includes:
+     * <ul>
+     * <li>javadoc
+     * </ul>
+     * 
+     * @parameter expression="${classdoc.lang}" default-value="javadoc"
+     */
+    public String getLanguage() {
+        if (langClass == null)
+            return null;
+        else
+            return langClass.getName();
+    }
+
+    public void setLanguage(String langName) {
+        if (langName == null)
+            throw new NullPointerException("langName");
+        try {
+            langClass = Class.forName(langName);
+        } catch (ClassNotFoundException e) {
+            throw new IllegalArgumentException("Language isn't defined: " + langName);
+        }
+    }
 
     @Override
     public void execute()
@@ -83,11 +120,11 @@ public class ClassDocBuilderMojo
             String packageName = jsource.getPackageName();
             File outDir = outRoot == null ? null : new File(outRoot, packageName.replace('.', '/'));
 
-            TypeNameContext sourceFileImports = new TypeNameContext(packageName);
+            ImportMap sourceFileImports = new ImportMap(packageName);
             for (String importFqcn : jsource.getImports())
-                sourceFileImports.importTypeName(importFqcn);
+                sourceFileImports.add(importFqcn);
 
-            IXjLanguage sourceLang = getLang(langName, sourceFileImports);
+            IXjLanguage sourceLang = createLang(sourceFileImports);
 
             for (JavaClass jclass : jsource.getClasses()) {
                 ClassDocBuilder builder = new ClassDocBuilder(sourceLang, sourceFileImports);
@@ -102,8 +139,9 @@ public class ClassDocBuilderMojo
                 baseName = baseName.replace('.', '$') + "." + extension;
                 File classDocFile = outDir == null ? null : new File(outDir, baseName);
 
-                TypeNameContext classImports = classDoc.getOrCreateImports();
-                IXjLanguage classLang = getLang(langName, classImports);
+                ImportMap classImports = classDoc.getOrCreateImports();
+                IXjLanguage classLang = createLang(classImports);
+
                 INegotiation negotiation = new FinalNegotiation(//
                         new NegotiationParameter(//
                                 IXjLanguage.class, classLang // JavadocXjLang.getInstance()
@@ -131,13 +169,17 @@ public class ClassDocBuilderMojo
         }
     }
 
-    // static Map<String, IXjLanguage> langMap;
-
-    public IXjLanguage getLang(String langName, TypeNameContext typeNameContext) {
-        if (langName.equals("javadoc"))
-            return new JavadocXjLang(typeNameContext);
-        else
-            throw new NotImplementedException("lang: " + langName);
+    IXjLanguage createLang(ImportMap importMap)
+            throws MojoExecutionException {
+        try {
+            IXjLanguage lang = (IXjLanguage) langClass.newInstance();
+            lang.negotiate(new NegotiationParameter(ImportMap.class, importMap));
+            return lang;
+        } catch (ReflectiveOperationException e) {
+            throw new MojoExecutionException(e.getMessage(), e);
+        } catch (NegotiationException e) {
+            throw new MojoExecutionException(e.getMessage(), e);
+        }
     }
 
 }

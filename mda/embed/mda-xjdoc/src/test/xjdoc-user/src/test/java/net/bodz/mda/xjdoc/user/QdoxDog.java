@@ -14,7 +14,7 @@ import net.bodz.mda.xjdoc.conv.ClassDocFlatfLoader;
 import net.bodz.mda.xjdoc.meta.IXjLanguage;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.user.xjl.AnimalXjLang;
-import net.bodz.mda.xjdoc.util.TypeNameContext;
+import net.bodz.mda.xjdoc.util.ImportMap;
 
 import org.junit.Assert;
 
@@ -42,20 +42,24 @@ public class QdoxDog
 
         for (JavaSource jsource : javaDocBuilder.getSources()) {
             String packageName = jsource.getPackageName();
-            TypeNameContext sourceFileImports = new TypeNameContext(packageName);
+            ImportMap sourceFileImports = new ImportMap(packageName);
             for (String importFqcn : jsource.getImports())
-                sourceFileImports.importTypeName(importFqcn);
+                sourceFileImports.add(importFqcn);
 
             for (JavaClass jclass : jsource.getClasses()) {
-                IXjLanguage lang = new AnimalXjLang(sourceFileImports);
+                IXjLanguage lang = new AnimalXjLang();
+                lang.negotiate(new NegotiationParameter(ImportMap.class, sourceFileImports));
+
                 ClassDocBuilder builder = new ClassDocBuilder(lang, sourceFileImports);
                 // builder.setCreateClassImports(true);
                 ClassDoc classDoc = builder.buildClass(jclass);
 
                 String fqcn = jclass.getFullyQualifiedName();
 
-                TypeNameContext classImports = classDoc.getOrCreateImports();
-                lang = new AnimalXjLang(classImports);
+                ImportMap classImports = classDoc.getOrCreateImports();
+                lang = new AnimalXjLang();
+                lang.negotiate(new NegotiationParameter(ImportMap.class, classImports));
+
                 INegotiation negotiation = new FinalNegotiation(//
                         new NegotiationParameter(//
                                 IXjLanguage.class, lang // JavadocXjLang.getInstance()
@@ -70,9 +74,10 @@ public class QdoxDog
 
                 StringSource ffSource = new StringSource(ff);
 
-                classImports = new TypeNameContext(sourceFileImports, packageName);
+                classImports = new ImportMap(sourceFileImports, packageName);
                 classDoc.setImports(classImports);
-                IXjLanguage lang2 = new AnimalXjLang(classImports);
+                IXjLanguage lang2 = new AnimalXjLang();
+                lang2.negotiate(new NegotiationParameter(ImportMap.class, classImports));
 
                 ClassDocFlatfLoader ffLoader = new ClassDocFlatfLoader(lang2);
                 ClassDoc doc2 = ffLoader.load(fqcn, ffSource);

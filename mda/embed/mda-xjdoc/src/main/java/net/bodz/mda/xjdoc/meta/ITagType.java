@@ -6,9 +6,6 @@ import net.bodz.bas.text.flatf.IFlatfOutput;
 
 public interface ITagType {
 
-    // ITagType negotiate(INegotiation negotiation)
-    // throws NegotiationException;
-
     /**
      * Parse a javadoc tag into value object.
      * 

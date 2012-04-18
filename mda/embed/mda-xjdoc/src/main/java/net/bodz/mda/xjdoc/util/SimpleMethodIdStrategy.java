@@ -8,12 +8,12 @@ import com.thoughtworks.qdox.model.Type;
 public class SimpleMethodIdStrategy
         implements IMethodIdStrategy {
 
-    TypeNameContext typeNameContext;
+    ImportMap importMap;
 
-    public SimpleMethodIdStrategy(TypeNameContext typeNameContext) {
-        if (typeNameContext == null)
-            throw new NullPointerException("typeNameContext");
-        this.typeNameContext = typeNameContext;
+    public SimpleMethodIdStrategy(ImportMap importMap) {
+        if (importMap == null)
+            throw new NullPointerException("importMap");
+        this.importMap = importMap;
     }
 
     @Override
@@ -26,8 +26,8 @@ public class SimpleMethodIdStrategy
             if (index++ != 0)
                 sb.append(",");
             String typeName;
-            if (typeNameContext != null)
-                typeName = typeNameContext.importType(type);
+            if (importMap != null)
+                typeName = importMap.add(type);
             else
                 typeName = type.getCanonicalName();
             sb.append(typeName);
@@ -46,8 +46,8 @@ public class SimpleMethodIdStrategy
             if (index++ != 0)
                 sb.append(",");
             String typeName;
-            if (typeNameContext != null)
-                typeName = typeNameContext.importType(type);
+            if (importMap != null)
+                typeName = importMap.add(type);
             else
                 typeName = type.getFullyQualifiedName();
             sb.append(typeName);

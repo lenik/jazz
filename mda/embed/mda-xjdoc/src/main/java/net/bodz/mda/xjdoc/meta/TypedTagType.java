@@ -1,29 +1,32 @@
 package net.bodz.mda.xjdoc.meta;
 
-import net.bodz.mda.xjdoc.util.TypeNameContext;
+import net.bodz.mda.xjdoc.util.IImportMapProvider;
+import net.bodz.mda.xjdoc.util.ImportMap;
 
-class TypedTagType
+public class TypedTagType
         extends KeyedTagType {
 
-    final TypeNameContext typeNameContext;
+    final IImportMapProvider importMapProvider;
 
-    public TypedTagType(ITagType valueTagType, TypeNameContext typeNameContext) {
+    public TypedTagType(ITagType valueTagType, IImportMapProvider importMapProvider) {
         super(valueTagType);
-        if (typeNameContext == null)
-            throw new NullPointerException("typeNameContext");
-        this.typeNameContext = typeNameContext;
+        if (importMapProvider == null)
+            throw new NullPointerException("importMapProvider");
+        this.importMapProvider = importMapProvider;
     }
 
     @Override
     protected Object parseKey(String keyText) {
-        String fqcn = typeNameContext.expand(keyText);
+        ImportMap importMap = importMapProvider.getImportMap();
+        String fqcn = importMap.normalize(keyText);
         return fqcn;
     }
 
     @Override
     protected String formatKey(Object key) {
+        ImportMap importMap = importMapProvider.getImportMap();
         String fqcn = (String) key;
-        String simpleName = typeNameContext.importTypeName(fqcn);
+        String simpleName = importMap.add(fqcn);
         return simpleName;
     }
 

@@ -1,6 +1,9 @@
 package net.bodz.mda.xjdoc.meta;
 
-public interface IXjLanguage {
+import javax.free.INegotiable;
+
+public interface IXjLanguage
+        extends INegotiable {
 
     ITagType getTagType(String tagName);
 

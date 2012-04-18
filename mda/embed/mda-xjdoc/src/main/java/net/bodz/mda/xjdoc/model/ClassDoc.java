@@ -10,8 +10,8 @@ import javax.free.NegotiationException;
 
 import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.bas.text.flatf.IFlatfOutput;
+import net.bodz.mda.xjdoc.util.ImportMap;
 import net.bodz.mda.xjdoc.util.MethodSignature;
-import net.bodz.mda.xjdoc.util.TypeNameContext;
 
 public class ClassDoc
         extends ElementDoc {
@@ -19,7 +19,7 @@ public class ClassDoc
     Map<String, FieldDoc> fieldDocs;
     Map<MethodSignature, MethodDoc> methodDocs;
 
-    TypeNameContext imports;
+    ImportMap imports;
 
     public ClassDoc(String fqcn) {
         super(fqcn);
@@ -27,11 +27,11 @@ public class ClassDoc
         methodDocs = new LinkedHashMap<MethodSignature, MethodDoc>();
     }
 
-    public TypeNameContext getImports() {
+    public ImportMap getImports() {
         return imports;
     }
 
-    public synchronized TypeNameContext getOrCreateImports() {
+    public synchronized ImportMap getOrCreateImports() {
         if (imports == null) {
             String fqcn = getName();
             String packageName;
@@ -40,12 +40,12 @@ public class ClassDoc
                 packageName = "";
             else
                 packageName = fqcn.substring(0, lastDot);
-            imports = new TypeNameContext(packageName);
+            imports = new ImportMap(packageName);
         }
         return imports;
     }
 
-    public void setImports(TypeNameContext imports) {
+    public void setImports(ImportMap imports) {
         this.imports = imports;
     }
 
@@ -141,7 +141,7 @@ public class ClassDoc
                 methodDoc.writeObject(bodyOut, negotiation);
         }
 
-        for (String fqcn : imports.getImportMap().values())
+        for (String fqcn : imports.getMap().values())
             out.pi("import", fqcn);
 
         out.getCharOut().write(bodyBuffer.toString());
@@ -153,7 +153,7 @@ public class ClassDoc
     protected boolean processInstruction(String command, String data) {
         if ("import".equals(command)) {
             String fqcn = data;
-            getOrCreateImports().importTypeName(fqcn);
+            getOrCreateImports().add(fqcn);
             return true;
         } else
             return super.processInstruction(command, data);
