@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.bodz.bas.c.string.Strings;
+import net.bodz.bas.c.type.TypePrSet;
 import net.bodz.bas.collection.preorder.PrefixSet;
 import net.bodz.bas.collection.set.IdentityHashSet;
 import net.bodz.bas.context.clg.SystemCLG;
@@ -22,7 +23,6 @@ import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.log.api.Logger;
-import net.bodz.bas.util.type.TypePrSet;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;

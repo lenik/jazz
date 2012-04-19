@@ -7,10 +7,10 @@ public interface IValidator<T> {
 
     int traitIndex = -566399735; // IValidator
 
-    void validate(T o)
+    void validate(T object)
             throws ValidateException;
 
-    void validate(T o, INegotiation negotiation)
+    void validate(T object, INegotiation negotiation)
             throws ValidateException, NegotiationException;
 
 }

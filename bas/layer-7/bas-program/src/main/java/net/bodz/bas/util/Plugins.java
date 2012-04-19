@@ -2,8 +2,8 @@ package net.bodz.bas.util;
 
 import java.util.Map.Entry;
 
+import net.bodz.bas.c.type.TypePrMap;
 import net.bodz.bas.err.CreateException;
-import net.bodz.bas.util.type.TypePrMap;
 
 public class Plugins {
 

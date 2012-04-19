@@ -16,13 +16,13 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 
+import net.bodz.bas.c.type.TypeChain;
 import net.bodz.bas.collection.preorder.PrefixMap;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.program.Option;
 import net.bodz.bas.meta.program.OptionGroup;
 import net.bodz.bas.util.Pair;
 import net.bodz.bas.util.iter.Iterables;
-import net.bodz.bas.util.type.TypeChain;
 
 public class ClassOptions<CT> {
 

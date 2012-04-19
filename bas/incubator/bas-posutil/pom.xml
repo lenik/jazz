@@ -14,5 +14,5 @@
             <version>0.10.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
-    <name>BAS :: Incubator :: Incubator Posutil</name>
+    <name>BAS :: Incubator :: Posutil</name>
 </project>

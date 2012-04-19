@@ -1,8 +1,8 @@
 package net.bodz.bas.traits.provider.extra;
 
+import net.bodz.bas.c.type.SingletonUtil;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.traits.AbstractParser;
-import net.bodz.bas.util.type.SingletonUtil;
 
 public class GetInstanceParser
         extends AbstractParser<Object> {

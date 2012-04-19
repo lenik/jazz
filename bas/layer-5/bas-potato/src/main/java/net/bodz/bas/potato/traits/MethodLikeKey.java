@@ -3,7 +3,7 @@ package net.bodz.bas.potato.traits;
 import java.io.Serializable;
 import java.util.Arrays;
 
-import net.bodz.bas.util.type.TypeDistance;
+import net.bodz.bas.c.type.TypeDistance;
 
 abstract class MethodLikeKey
         implements Serializable {

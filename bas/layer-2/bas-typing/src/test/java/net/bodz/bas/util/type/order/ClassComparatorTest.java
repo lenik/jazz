@@ -2,6 +2,7 @@ package net.bodz.bas.util.type.order;
 
 import java.util.Arrays;
 
+import net.bodz.bas.c.type.order.ClassComparator;
 import net.bodz.bas.closure.Proc1;
 import net.bodz.bas.util.array.Permutation;
 
