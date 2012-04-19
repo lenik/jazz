@@ -13,8 +13,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>bas-api</module>
-        <module>bas-cdata</module>
         <module>bas-c1</module>
+        <module>bas-cdata</module>
         <module>bas-lang</module>
         <module>bas-meta</module>
         <module>bas-sugar</module>

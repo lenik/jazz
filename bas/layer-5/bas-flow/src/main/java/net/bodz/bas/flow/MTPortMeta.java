@@ -2,7 +2,7 @@ package net.bodz.bas.flow;
 
 import java.util.Collection;
 
-import net.bodz.bas.util.type.TypePrSet;
+import net.bodz.bas.c.type.TypePrSet;
 
 /**
  * Multi-Type Port

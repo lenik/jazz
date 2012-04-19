@@ -5,13 +5,13 @@ import java.util.Arrays;
 
 import javax.script.ScriptException;
 
+import net.bodz.bas.c.type.SingletonUtil;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.program.ArgsParseBy;
 import net.bodz.bas.meta.program.OptionGroup;
 import net.bodz.bas.traits.IParser;
 import net.bodz.bas.traits.Traits;
-import net.bodz.bas.util.type.SingletonUtil;
 
 public class MethodOption
         extends _Option<CallInfo>

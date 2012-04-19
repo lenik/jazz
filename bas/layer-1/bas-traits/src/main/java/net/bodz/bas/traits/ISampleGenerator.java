@@ -42,7 +42,6 @@ public interface ISampleGenerator<T> {
      * @return <code>null</code> if the sample space restricted by <code>classification</code> is
      *         empty.
      */
-
     T newSample(Map<String, Object> classification, INegotiation negotiation)
             throws CreateException, NegotiationException;
 

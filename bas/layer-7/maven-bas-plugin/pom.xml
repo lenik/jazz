@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>net.bodz.bas</groupId>
-        <artifactId>contrib</artifactId>
+        <artifactId>layer-7</artifactId>
         <version>0.10.1-SNAPSHOT</version>
     </parent>
     <artifactId>maven-bas-plugin</artifactId>
@@ -32,6 +32,6 @@
             </plugin>
         </plugins>
     </build>
-    <name>BAS :: M2 :: M2 Activator</name>
+    <name>BAS :: Layer 7 :: Maven Bas Plugin</name>
     <description>Custom Profile Activators</description>
 </project>

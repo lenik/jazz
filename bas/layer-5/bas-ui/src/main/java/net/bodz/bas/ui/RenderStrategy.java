@@ -1,7 +1,7 @@
 package net.bodz.bas.ui;
 
+import net.bodz.bas.c.type.TypePrMap;
 import net.bodz.bas.util.primitive.Boxing;
-import net.bodz.bas.util.type.TypePrMap;
 
 public abstract class RenderStrategy extends TypePrMap<Renderer> {
 

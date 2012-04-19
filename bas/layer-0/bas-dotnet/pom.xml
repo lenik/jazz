@@ -7,7 +7,6 @@
     </parent>
     <artifactId>bas-dotnet</artifactId>
     <version>0.10.1-SNAPSHOT</version>
-    <dependencies>
-    </dependencies>
-    <name>BAS :: Layer 7 :: Dotnet Synthetics</name>
+    <dependencies/>
+    <name>BAS :: Layer 0 :: Dotnet</name>
 </project>

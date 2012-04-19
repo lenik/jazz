@@ -4,9 +4,9 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
+import net.bodz.bas.c.type.TypeDistance;
+import net.bodz.bas.c.type.TypeName;
 import net.bodz.bas.util.Nullables;
-import net.bodz.bas.util.type.TypeDistance;
-import net.bodz.bas.util.type.TypeName;
 
 public class MethodSignature {
 
