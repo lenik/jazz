@@ -1,7 +1,5 @@
 package net.bodz.bas.util.type;
 
-import net.bodz.bas.util.type.TypeName;
-
 import org.junit.Assert;
 import org.junit.Test;
 

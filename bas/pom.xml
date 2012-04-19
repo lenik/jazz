@@ -125,7 +125,6 @@
         </dependency>
     </dependencies>
     <modules>
-        <module>bas-config</module>
         <module>layer-0</module>
         <module>layer-1</module>
         <module>layer-2</module>
@@ -135,7 +134,6 @@
         <module>layer-6</module>
         <module>layer-7</module>
         <module>incubator</module>
-        <module>contrib</module>
         <module>build</module>
     </modules>
     <properties>

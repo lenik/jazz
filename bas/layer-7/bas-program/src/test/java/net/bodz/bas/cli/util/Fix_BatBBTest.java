@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
-import net.bodz.bas.util.string.StringArray;
+import net.bodz.bas.c.string.StringArray;
 
 import org.junit.Test;
 

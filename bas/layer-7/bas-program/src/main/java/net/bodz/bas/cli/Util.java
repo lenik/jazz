@@ -17,9 +17,6 @@ import java.util.TreeSet;
 
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.jdk6compat.jdk7emul.IllegalAccessException;
-import net.bodz.bas.jdk6compat.jdk7emul.InstantiationException;
-import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.traits.IParser;
 import net.bodz.bas.traits.Traits;
 
@@ -65,7 +62,7 @@ class Util {
                     throw new IllegalUsageError("don\'t know how to create new instance of abstract class/interface "
                             + type);
             }
-            fieldobj = (T) Jdk7Reflect.newInstance(type);
+            fieldobj = (T) type.newInstance();
         }
         if (fieldobj instanceof Collection) {
             ((Collection<Object>) fieldobj).add(val);

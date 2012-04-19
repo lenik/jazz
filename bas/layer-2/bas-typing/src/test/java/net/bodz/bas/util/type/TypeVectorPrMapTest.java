@@ -20,7 +20,6 @@ import net.bodz.bas.collection.preorder.testtype.DxKI;
 import net.bodz.bas.collection.preorder.testtype.DxKIx;
 import net.bodz.bas.collection.preorder.testtype.I;
 import net.bodz.bas.util.iter.Iterables;
-import net.bodz.bas.util.type.TypeVectorPrMap;
 
 import org.junit.Assert;
 import org.junit.Test;

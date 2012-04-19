@@ -1,7 +1,5 @@
 package net.bodz.bas.sio.bits;
 
-import net.bodz.bas.sio.bits.NibbleUtil;
-
 import org.junit.Assert;
 import org.junit.Test;
 

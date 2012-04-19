@@ -9,8 +9,6 @@ import java.util.Properties;
 
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.resource.IStreamInputSource;
-import net.bodz.bas.jdk6compat.jdk7emul.ClassNotFoundException;
-import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.util.iter.AbstractMitorx;
 import net.bodz.bas.util.iter.Iterators;
 import net.bodz.bas.util.iter.Mitorx;
@@ -65,7 +63,7 @@ public class ParseLoadPreparation
                 if (isEnded())
                     return null;
                 try {
-                    Object object = Jdk7Reflect.readObject(in);
+                    Object object = in.readObject();
                     return object;
                 } catch (ClassNotFoundException e) {
                     throw new IOException(e.getMessage(), e);

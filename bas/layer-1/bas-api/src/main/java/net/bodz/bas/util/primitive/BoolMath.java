@@ -2,8 +2,6 @@ package net.bodz.bas.util.primitive;
 
 import java.lang.reflect.Method;
 
-import net.bodz.bas.util.primitive.IntMath;
-
 public class BoolMath {
 
     public static boolean test(byte exp) {

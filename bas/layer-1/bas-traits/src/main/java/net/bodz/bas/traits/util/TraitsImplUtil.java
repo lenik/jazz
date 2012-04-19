@@ -3,8 +3,6 @@ package net.bodz.bas.traits.util;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
-import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.lang.mi.IQueryable;
 
 public class TraitsImplUtil {
@@ -18,7 +16,7 @@ public class TraitsImplUtil {
             throws ReflectiveOperationException {
         Object traitsImplInstance = traitsImplCache.get(traitsImplType);
         if (traitsImplInstance == null) {
-            traitsImplInstance = Jdk7Reflect.newInstance(traitsImplType);
+            traitsImplInstance = traitsImplType.newInstance();
             traitsImplCache.put(traitsImplType, traitsImplInstance);
         }
 

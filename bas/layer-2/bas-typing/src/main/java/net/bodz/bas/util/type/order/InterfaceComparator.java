@@ -3,7 +3,6 @@ package net.bodz.bas.util.type.order;
 import java.util.Arrays;
 
 import net.bodz.bas.util.order.AbstractNonNullComparator;
-import net.bodz.bas.util.type.order.InterfaceComparatorTest;
 
 /**
  * @test {@link InterfaceComparatorTest}

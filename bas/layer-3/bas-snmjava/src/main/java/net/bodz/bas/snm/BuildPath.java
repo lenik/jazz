@@ -14,10 +14,10 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
+import net.bodz.bas.c.java.io.FilePath;
+import net.bodz.bas.c.java.io.FileURL;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.util.io.FilePath;
-import net.bodz.bas.util.io.FileURL;
 import net.bodz.bas.xml.XMLs;
 
 import org.xml.sax.Attributes;

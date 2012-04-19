@@ -11,17 +11,15 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import net.bodz.bas.c.string.StringLengthComparator;
+import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.closure.Filt1;
 import net.bodz.bas.collection.util.ClassLocal;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
-import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.meta.program.Option;
 import net.bodz.bas.meta.program.ProgramNameUtil;
 import net.bodz.bas.reflect.query.ReflectQuery;
 import net.bodz.bas.util.Nullables;
-import net.bodz.bas.util.lang.StringLengthComparator;
-import net.bodz.bas.util.string.Strings;
 
 public class ClassCLI {
 
@@ -106,7 +104,7 @@ public class ClassCLI {
                     buffer.append("...");
                 else {
                     try {
-                        restSyntax = (String) Jdk7Reflect.invoke(restf, null);
+                        restSyntax = (String) restf.invoke(null);
                     } catch (ReflectiveOperationException e) {
                         throw new CLIException(e.getMessage(), e);
                     }

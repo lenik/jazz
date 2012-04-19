@@ -4,10 +4,7 @@ import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.Collections;
 
-import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
-import net.bodz.bas.jdk6compat.jdk7emul.NoSuchMethodException;
-import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
-import net.bodz.bas.util.string.Strings;
+import net.bodz.bas.c.string.Strings;
 
 public abstract class AbstractEvent
         extends AbstractElement
@@ -53,7 +50,7 @@ public abstract class AbstractEvent
         // Class<?> returnType = getListenersMethod.getReturnType();
         // if (! Collection.class.isAssignableFrom(returnType))
         // return null;
-        Object returnValue = Jdk7Reflect.invoke(getListenersMethod, instance);
+        Object returnValue = getListenersMethod.invoke(instance);
         return (Collection<?>) returnValue;
     }
 
@@ -63,7 +60,7 @@ public abstract class AbstractEvent
         Method addListenerMethod = getAddListenerMethod();
         if (addListenerMethod == null)
             return false;
-        Jdk7Reflect.invoke(addListenerMethod, instance, listener);
+        addListenerMethod.invoke(instance, listener);
         return true;
     }
 
@@ -73,7 +70,7 @@ public abstract class AbstractEvent
         Method removeListenerMethod = getRemoveListenerMethod();
         if (removeListenerMethod == null)
             return false;
-        Jdk7Reflect.invoke(removeListenerMethod, instance, listener);
+        removeListenerMethod.invoke(instance, listener);
         return true;
     }
 
@@ -81,7 +78,7 @@ public abstract class AbstractEvent
             throws ReflectiveOperationException {
         String methodName = "add" + ucfirstName + "Listener";
         try {
-            return Jdk7Reflect.getMethod(getDeclaringType(), methodName, getListenerClass());
+            return getDeclaringType().getMethod(methodName, getListenerClass());
         } catch (NoSuchMethodException e) {
             return null;
         }
@@ -91,7 +88,7 @@ public abstract class AbstractEvent
             throws ReflectiveOperationException {
         String methodName = "remove" + ucfirstName + "Listener";
         try {
-            return Jdk7Reflect.getMethod(getDeclaringType(), methodName, getListenerClass());
+            return getDeclaringType().getMethod(methodName, getListenerClass());
         } catch (NoSuchMethodException e) {
             return null;
         }
@@ -101,7 +98,7 @@ public abstract class AbstractEvent
             throws ReflectiveOperationException {
         String methodName = "get" + ucfirstName + "Listeners";
         try {
-            return Jdk7Reflect.getMethod(getDeclaringType(), methodName, getListenerClass());
+            return getDeclaringType().getMethod(methodName, getListenerClass());
         } catch (NoSuchMethodException e) {
             return null;
         }

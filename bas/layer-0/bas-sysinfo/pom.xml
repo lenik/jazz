@@ -10,7 +10,7 @@
     <dependencies>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-helper</artifactId>
+            <artifactId>bas-c1</artifactId>
             <version>0.10.1-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>

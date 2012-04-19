@@ -4,6 +4,7 @@ import java.lang.reflect.AnnotatedElement;
 import java.util.Collection;
 import java.util.Map;
 
+import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.program.Option;
@@ -14,7 +15,6 @@ import net.bodz.bas.traits.IParser;
 import net.bodz.bas.traits.IValidator;
 import net.bodz.bas.traits.Traits;
 import net.bodz.bas.traits.ValidateException;
-import net.bodz.bas.util.string.Strings;
 
 public abstract class _Option<T>
         extends AbstractProperty {

@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import net.bodz.bas.util.string.StringEscape;
-import net.bodz.bas.util.string.Strings;
+import net.bodz.bas.c.string.StringEscape;
+import net.bodz.bas.c.string.Strings;
 
 import org.junit.Assert;
 import org.junit.Test;

@@ -4,16 +4,14 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.collection.util.ClassLocal;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.flow.util.Naming;
-import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
-import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.meta.tags.MetaClass;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.util.Nullables;
-import net.bodz.bas.util.string.Strings;
 
 public abstract class AbstractUnit
         implements IUnit {
@@ -39,7 +37,7 @@ public abstract class AbstractUnit
             Class<?> metaClass = Nullables.getAnnotation(clazz, MetaClass.class).value();
             if (metaClass != null)
                 try {
-                    meta = (IUnitMeta) Jdk7Reflect.newInstance(metaClass);
+                    meta = (IUnitMeta) metaClass.newInstance();
                 } catch (ReflectiveOperationException e) {
                     throw new IllegalUsageError("Can't create instance for MetaClass: " + metaClass, e);
                 }

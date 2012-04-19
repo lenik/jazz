@@ -3,8 +3,6 @@ package net.bodz.bas.potato.provider.reflect;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
-import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
-import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.potato.traits.AbstractMethod;
 
 public class ReflectMethod
@@ -34,7 +32,7 @@ public class ReflectMethod
     @Override
     public Object invoke(Object instance, Object... parameters)
             throws ReflectiveOperationException {
-        return Jdk7Reflect.invoke(method, instance, parameters);
+        return method.invoke(instance, parameters);
     }
 
     @Override

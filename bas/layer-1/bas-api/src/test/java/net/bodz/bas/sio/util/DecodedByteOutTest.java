@@ -5,8 +5,6 @@ import java.nio.BufferUnderflowException;
 import java.nio.charset.Charset;
 
 import net.bodz.bas.sio.BCharOut;
-import net.bodz.bas.sio.util.DecodedByteOut;
-import net.bodz.bas.sio.util.TranscodeConfig;
 
 import org.junit.Assert;
 import org.junit.Test;

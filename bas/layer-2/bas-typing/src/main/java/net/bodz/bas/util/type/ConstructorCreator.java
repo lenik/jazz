@@ -3,8 +3,6 @@ package net.bodz.bas.util.type;
 import java.lang.reflect.Constructor;
 
 import net.bodz.bas.err.CreateException;
-import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
-import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.lang.arch.AbstractCreator;
 
 import org.apache.commons.lang.ArrayUtils;
@@ -36,9 +34,9 @@ public final class ConstructorCreator<T>
         if (clazz == null)
             throw new NullPointerException("clazz");
         if (parameterTypes == null)
-            this.constructor = (Constructor<T>) Jdk7Reflect.getConstructor(clazz);
+            this.constructor = (Constructor<T>) clazz.getConstructor();
         else
-            this.constructor = (Constructor<T>) Jdk7Reflect.getConstructor(clazz, parameterTypes);
+            this.constructor = (Constructor<T>) clazz.getConstructor(parameterTypes);
         this.parameters = parameters;
     }
 
@@ -55,7 +53,7 @@ public final class ConstructorCreator<T>
     public T _create(Object... moreParameters)
             throws ReflectiveOperationException {
         Object[] all = ArrayUtils.addAll(parameters, moreParameters);
-        return Jdk7Reflect.newInstance(constructor, all);
+        return constructor.newInstance(all);
     }
 
 }

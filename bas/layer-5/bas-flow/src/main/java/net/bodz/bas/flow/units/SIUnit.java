@@ -11,7 +11,6 @@ import net.bodz.bas.flow.IReceiverEx;
 import net.bodz.bas.flow.IUnit;
 import net.bodz.bas.flow.STPortMeta;
 import net.bodz.bas.flow.util.RecvUtil;
-import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 
 public abstract class SIUnit
         extends AbstractUnit

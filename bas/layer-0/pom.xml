@@ -13,7 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>bas-desktop</module>
-        <module>bas-jdk6compat</module>
+        <module>bas-dotnet</module>
         <module>bas-jvmhack</module>
         <module>bas-natives-win32</module>
         <module>bas-proxy-java</module>

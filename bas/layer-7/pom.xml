@@ -13,8 +13,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>bas-ant</module>
-        <module>bas-dotnet-synthetics</module>
-        <module>bas-loader</module>
         <module>bas-netserv</module>
         <module>bas-program</module>
         <module>bas-unitperf</module>

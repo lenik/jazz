@@ -8,8 +8,8 @@ import java.util.Set;
 
 import net.bodz.bas.reflect.query.predicate.IStringPredicate;
 import net.bodz.bas.reflect.query.predicate.StringEndsWith;
-import net.bodz.bas.reflect.query.predicate.StringStartsWith;
 import net.bodz.bas.reflect.query.predicate.StringEquals;
+import net.bodz.bas.reflect.query.predicate.StringStartsWith;
 import net.bodz.bas.util.iter.AbstractMitablex;
 import net.bodz.bas.util.iter.AbstractMitorx;
 import net.bodz.bas.util.iter.Iterables;

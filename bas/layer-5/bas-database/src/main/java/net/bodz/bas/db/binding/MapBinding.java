@@ -5,7 +5,6 @@ import java.util.Map.Entry;
 
 import javax.script.ScriptException;
 
-import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.potato.traits.IProperty;
 import net.bodz.bas.potato.traits.IPropertyMap;
 import net.bodz.bas.traits.Traits;

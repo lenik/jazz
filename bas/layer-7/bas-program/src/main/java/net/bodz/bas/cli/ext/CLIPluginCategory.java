@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.cli.CLIException;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.util.PluginCategory;
 import net.bodz.bas.util.PluginTypeEx;
-import net.bodz.bas.util.string.Strings;
 
 public class CLIPluginCategory
         extends PluginCategory {

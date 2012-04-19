@@ -1,6 +1,6 @@
 layer-0/ 系统兼容层，系统周边环境准备
-    bas-jdk6compat
     bas-desktop (iocapture -> bas-io)
+    bas-dotnet
     bas-jvmhack
     bas-natives-win32
     bas-proxy-java
@@ -11,7 +11,7 @@ layer-1/ 核心语言增强与语言工具
     bas-cdata
     bas-api
     bas-meta
-    bas-helper
+    bas-c1
     bas-test
     bas-traits
     
@@ -24,14 +24,12 @@ layer-2/ 基础数据类型扩展
     
 layer-3/ 工具和杂项
     bas-fsm
-    bas-javadoc
     bas-text
     bas-text-lr
     bas-memory
     bas-srt
-    bas-jdk7util
     bas-snmjava
-    bas-helper-mix
+    bas-c3
 
 layer-5/ 框架基础
     bas-bean
@@ -39,6 +37,7 @@ layer-5/ 框架基础
     bas-flow
     bas-i18n
     bas-l10n
+    bas-loader
     bas-log
     bas-module
     bas-potato
@@ -48,8 +47,6 @@ layer-5/ 框架基础
     
 layer-7/ 应用框架
     bas-ant
-    bas-dotnet-synthetics   （For dotnet)
-    bas-loader
     bas-netserv
     bas-program
     bas-unitperf

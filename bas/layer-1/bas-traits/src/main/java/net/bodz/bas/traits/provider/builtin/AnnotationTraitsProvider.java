@@ -1,8 +1,5 @@
 package net.bodz.bas.traits.provider.builtin;
 
-import net.bodz.bas.jdk6compat.jdk7emul.IllegalAccessException;
-import net.bodz.bas.jdk6compat.jdk7emul.InstantiationException;
-import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.lang.mi.IQueryable;
 import net.bodz.bas.meta.lang.TraitsClass;
 import net.bodz.bas.traits.AbstractTraitsProvider;
@@ -30,7 +27,7 @@ public class AnnotationTraitsProvider
         assert traitsClass != null;
 
         try {
-            IQueryable queryable = Jdk7Reflect.newInstance(traitsClass);
+            IQueryable queryable = traitsClass.newInstance();
             return queryable.query(traitsType);
         } catch (InstantiationException e) {
             throw new RuntimeException(e.getMessage(), e);

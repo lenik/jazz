@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 
 import net.bodz.bas.sio.BByteOut;
-import net.bodz.bas.sio.util.EncodedCharOut;
-import net.bodz.bas.sio.util.TranscodeConfig;
 
 import org.junit.Assert;
 import org.junit.Test;

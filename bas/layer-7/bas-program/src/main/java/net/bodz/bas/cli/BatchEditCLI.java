@@ -11,6 +11,10 @@ import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 import java.util.List;
 
+import net.bodz.bas.c.java.io.FileDiff;
+import net.bodz.bas.c.java.io.FilePath;
+import net.bodz.bas.c.java.io.TempFile;
+import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.cli.util.ProtectedShell;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.NotImplementedException;
@@ -28,10 +32,6 @@ import net.bodz.bas.text.diff.DiffComparator;
 import net.bodz.bas.text.diff.DiffFormat;
 import net.bodz.bas.text.diff.DiffFormats;
 import net.bodz.bas.text.diff.DiffInfo;
-import net.bodz.bas.util.io.FileDiff;
-import net.bodz.bas.util.io.FilePath;
-import net.bodz.bas.util.io.TempFile;
-import net.bodz.bas.util.string.StringArray;
 
 @OptionGroup(value = "batch process", rank = -3)
 public class BatchEditCLI

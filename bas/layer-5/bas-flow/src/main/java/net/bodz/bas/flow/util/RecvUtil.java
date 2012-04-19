@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import net.bodz.bas.collection.util.ClassLocal;
 import net.bodz.bas.flow.IReceiverEx;
-import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.potato.traits.IMethod;
 import net.bodz.bas.traits.Traits;
 

@@ -2,9 +2,6 @@ package net.bodz.bas.sio.bits;
 
 import java.io.IOException;
 
-import net.bodz.bas.sio.bits.BNibbleIn;
-import net.bodz.bas.sio.bits.INibbleIn;
-
 import org.junit.Assert;
 import org.junit.Test;
 

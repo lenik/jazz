@@ -17,6 +17,7 @@
         <module>bas-flow</module>
         <module>bas-i18n</module>
         <module>bas-l10n</module>
+        <module>bas-loader</module>
         <module>bas-log</module>
         <module>bas-module</module>
         <module>bas-potato</module>

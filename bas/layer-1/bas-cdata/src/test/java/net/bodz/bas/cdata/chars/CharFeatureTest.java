@@ -5,8 +5,6 @@ import java.lang.reflect.Array;
 import org.junit.Assert;
 import org.junit.Test;
 
-import net.bodz.bas.cdata.chars.CharFeature;
-
 public class CharFeatureTest
         extends Assert {
 

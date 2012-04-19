@@ -14,9 +14,6 @@ import java.util.TreeMap;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.jdk6compat.jdk7emul.IllegalAccessException;
-import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
-import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.lang.mi.AbstractQueryable;
 import net.bodz.bas.lang.mi.QueryException;
 import net.bodz.bas.lang.negotiation.INegotiation;
@@ -268,7 +265,7 @@ public abstract class AbstractCommonTraits<T>
             if (Modifier.isStatic(modifiers)) {
                 try {
                     String name = field.getName();
-                    Object object = Jdk7Reflect.get(field, null);
+                    Object object = field.get(null);
                     if (type.isInstance(object)) {
                         T instance = type.cast(object);
                         addStoreInstance(name, instance);
@@ -302,7 +299,7 @@ public abstract class AbstractCommonTraits<T>
     public T newSample()
             throws CreateException {
         try {
-            return Jdk7Reflect.newInstance(type);
+            return type.newInstance();
         } catch (ReflectiveOperationException e) {
             throw new CreateException(e.getMessage(), e);
         }

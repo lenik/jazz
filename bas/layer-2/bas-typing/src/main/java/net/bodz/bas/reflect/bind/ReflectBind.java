@@ -9,11 +9,6 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
-import net.bodz.bas.jdk6compat.jdk7emul.NoSuchFieldException;
-import net.bodz.bas.jdk6compat.jdk7emul.NoSuchMethodException;
-import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
-
 public class ReflectBind {
 
     static Class<?> ifvoid(Class<?> c, Class<?> t) {
@@ -55,7 +50,7 @@ public class ReflectBind {
                     name = declareField.getName();
                 if (f.secure()) {
                     try {
-                        def = Jdk7Reflect.getField(_class, name);
+                        def = _class.getField(name);
                     } catch (SecurityException e) {
                         throw new Error(e.getMessage(), e);
                     } catch (NoSuchFieldException e) {
@@ -63,7 +58,7 @@ public class ReflectBind {
                 } else {
                     do {
                         try {
-                            Field defField = Jdk7Reflect.getDeclaredField(_class, name);
+                            Field defField = _class.getDeclaredField(name);
                             defField.setAccessible(true);
                             def = defField;
                             break;
@@ -89,7 +84,7 @@ public class ReflectBind {
                 Class<?>[] parameters = m.parameters();
                 if (m.secure()) {
                     try {
-                        def = Jdk7Reflect.getMethod(_class, name, parameters);
+                        def = _class.getMethod(name, parameters);
                     } catch (SecurityException e) {
                         throw new Error(e.getMessage(), e);
                     } catch (NoSuchMethodException e) {
@@ -97,7 +92,7 @@ public class ReflectBind {
                 } else {
                     do {
                         try {
-                            Method defMethod = Jdk7Reflect.getDeclaredMethod(_class, name, parameters);
+                            Method defMethod = _class.getDeclaredMethod(name, parameters);
                             defMethod.setAccessible(true);
                             def = defMethod;
                             break;
@@ -153,7 +148,7 @@ public class ReflectBind {
      */
     public static Object invoke(Object instance, Method method, Object... args) {
         try {
-            return Jdk7Reflect.invoke(method, instance, args);
+            return method.invoke(instance, args);
         } catch (ReflectiveOperationException e) {
             throw new ReflectBindTargetException(e.getMessage(), e);
         }
@@ -165,7 +160,7 @@ public class ReflectBind {
     public static Object get(Object obj, Field field)
             throws ReflectBindTargetException {
         try {
-            return Jdk7Reflect.get(field, obj);
+            return field.get(obj);
         } catch (ReflectiveOperationException e) {
             throw new ReflectBindTargetException(e.getMessage(), e);
         }
@@ -177,7 +172,7 @@ public class ReflectBind {
     public static void set(Object obj, Field field, Object value)
             throws ReflectBindTargetException {
         try {
-            Jdk7Reflect.set(field, obj, value);
+            field.set(obj, value);
         } catch (ReflectiveOperationException e) {
             throw new ReflectBindTargetException(e.getMessage(), e);
         }
@@ -189,7 +184,7 @@ public class ReflectBind {
     public static int getInt(Object obj, Field field)
             throws ReflectBindTargetException {
         try {
-            return Jdk7Reflect.getInt(field, obj);
+            return field.getInt(obj);
         } catch (ReflectiveOperationException e) {
             throw new ReflectBindTargetException(e.getMessage(), e);
         }
@@ -201,7 +196,7 @@ public class ReflectBind {
     public static void setInt(Object obj, Field field, int value)
             throws ReflectBindTargetException {
         try {
-            Jdk7Reflect.setInt(field, obj, value);
+            field.setInt(obj, value);
         } catch (ReflectiveOperationException e) {
             throw new ReflectBindTargetException(e.getMessage(), e);
         }
@@ -213,7 +208,7 @@ public class ReflectBind {
     public static boolean getBoolean(Object obj, Field field)
             throws ReflectBindTargetException {
         try {
-            return Jdk7Reflect.getBoolean(field, obj);
+            return field.getBoolean(obj);
         } catch (ReflectiveOperationException e) {
             throw new ReflectBindTargetException(e.getMessage(), e);
         }
@@ -225,7 +220,7 @@ public class ReflectBind {
     public static void setBoolean(Object obj, Field field, boolean value)
             throws ReflectBindTargetException {
         try {
-            Jdk7Reflect.setBoolean(field, obj, value);
+            field.setBoolean(obj, value);
         } catch (ReflectiveOperationException e) {
             throw new ReflectBindTargetException(e.getMessage(), e);
         }

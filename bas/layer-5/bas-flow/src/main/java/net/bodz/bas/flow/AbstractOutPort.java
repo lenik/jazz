@@ -2,8 +2,6 @@ package net.bodz.bas.flow;
 
 import net.bodz.bas.collection.util.ClassLocal;
 import net.bodz.bas.err.IllegalUsageError;
-import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
-import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.meta.tags.MetaClass;
 import net.bodz.bas.util.Nullables;
 
@@ -31,7 +29,7 @@ public abstract class AbstractOutPort
             Class<?> metaClass = Nullables.getAnnotation(clazz, MetaClass.class).value();
             if (metaClass != null)
                 try {
-                    meta = (IPortMeta) Jdk7Reflect.newInstance(metaClass);
+                    meta = (IPortMeta) metaClass.newInstance();
                 } catch (ReflectiveOperationException e) {
                     throw new IllegalUsageError("Can't create instance for MetaClass: " + metaClass, e);
                 }

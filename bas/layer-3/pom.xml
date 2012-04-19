@@ -13,9 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>bas-fsm</module>
-        <module>bas-helper-mix</module>
-        <module>bas-javadoc</module>
-        <module>bas-jdk7util</module>
+        <module>bas-c3</module>
         <module>bas-memory</module>
         <module>bas-snmjava</module>
         <module>bas-srt</module>

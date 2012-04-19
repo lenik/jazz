@@ -1,6 +1,6 @@
 package net.bodz.bas.cli.util;
 
-import static net.bodz.bas.util.string.StringQuote.qq;
+import static net.bodz.bas.c.string.StringQuote.qq;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +14,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import net.bodz.bas.c.java.io.FileDiff;
+import net.bodz.bas.c.java.io.FilePath;
+import net.bodz.bas.c.java.util.regex.UnixStyleVarProcessor;
+import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.cli.BatchEditCLI;
 import net.bodz.bas.cli.EditResult;
 import net.bodz.bas.collection.set.ArraySet;
@@ -40,11 +44,7 @@ import net.bodz.bas.meta.program.StartModeUtil;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.snm.SJLibLoader;
-import net.bodz.bas.util.io.FileDiff;
-import net.bodz.bas.util.io.FilePath;
 import net.bodz.bas.util.loader.ClassResource;
-import net.bodz.bas.util.regex.UnixStyleVarProcessor;
-import net.bodz.bas.util.string.StringArray;
 
 @Doc("Generate program launcher for java applications")
 @ProgramName("mkbat")

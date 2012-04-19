@@ -21,10 +21,10 @@ import java.net.URL;
 import javax.xml.bind.DataBindingException;
 import javax.xml.bind.JAXB;
 
+import net.bodz.bas.c.java.beans.Jdk7XMLEncoder;
 import net.bodz.bas.err.DecodeException;
 import net.bodz.bas.err.EncodeException;
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.jdk6compat.jdk7emul.Jdk7XMLEncoder;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.util.exception.ExceptionBuffer;
 

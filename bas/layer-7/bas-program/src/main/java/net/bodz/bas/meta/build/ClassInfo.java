@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.collection.util.ClassLocal;
 import net.bodz.bas.meta.info.Author;
 import net.bodz.bas.meta.info.DisplayNameUtil;
@@ -12,7 +13,6 @@ import net.bodz.bas.meta.info.DocUtil;
 import net.bodz.bas.meta.info.SiteLink;
 import net.bodz.bas.ui.a.Icon;
 import net.bodz.bas.util.Nullables;
-import net.bodz.bas.util.string.StringArray;
 
 public class ClassInfo {
 
