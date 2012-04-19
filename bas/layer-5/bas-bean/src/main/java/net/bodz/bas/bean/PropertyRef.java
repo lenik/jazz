@@ -7,8 +7,6 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 
 import net.bodz.bas.err.NoSuchKeyException;
-import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
-import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.lang.ref.Ref;
 
 public class PropertyRef<PropertyType>
@@ -48,9 +46,9 @@ public class PropertyRef<PropertyType>
         Object propertyValue;
         try {
             if (parameters == null)
-                propertyValue = Jdk7Reflect.invoke(readMethod, bean);
+                propertyValue = readMethod.invoke(bean);
             else
-                propertyValue = Jdk7Reflect.invoke(readMethod, bean, parameters);
+                propertyValue = readMethod.invoke(bean, parameters);
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
@@ -62,7 +60,7 @@ public class PropertyRef<PropertyType>
         if (writeMethod == null)
             throw new UnsupportedOperationException("Can't write to property. ");
         try {
-            Jdk7Reflect.invoke(writeMethod, bean, value);
+            writeMethod.invoke(bean, value);
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException(e.getMessage(), e);
         }

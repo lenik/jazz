@@ -1,10 +1,10 @@
 package net.bodz.bas.text.lop;
 
+import net.bodz.bas.c.string.StringEscape;
+import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.util.IXYTellable;
 import net.bodz.bas.sio.util.XYPosition;
-import net.bodz.bas.util.string.StringEscape;
-import net.bodz.bas.util.string.Strings;
 
 public abstract class AbstractToken
         implements Token {

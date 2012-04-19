@@ -4,9 +4,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import net.bodz.bas.jdk6compat.jdk7emul.ClassNotFoundException;
-import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
-
 public class JavaSerializedType
         extends AbstractType {
 
@@ -16,7 +13,7 @@ public class JavaSerializedType
         MemoryInputStream min = new MemoryInputStream(memory, offset, -1);
         try {
             ObjectInputStream in = new ObjectInputStream(min);
-            return Jdk7Reflect.readObject(in);
+            return in.readObject();
         } catch (IOException e) {
             throw new AccessException(e);
         } catch (ClassNotFoundException e) {

@@ -3,15 +3,13 @@ package net.bodz.bas.reflect;
 import java.lang.reflect.Field;
 
 import net.bodz.bas.closure.Pred1;
-import net.bodz.bas.jdk6compat.jdk7emul.IllegalAccessException;
-import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 
 public class ReflectReverseSearch {
 
     public static void findField(Class<?> clazz, Object object, Object fieldValue, Pred1<Field> pred) {
         for (Field field : clazz.getFields()) {
             try {
-                Object value = Jdk7Reflect.get(field, object);
+                Object value = field.get(object);
                 if (value != fieldValue) {
                     if (fieldValue == null || !fieldValue.equals(value))
                         continue;

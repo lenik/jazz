@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
 
-import net.bodz.bas.util.io.TempFile;
+import net.bodz.bas.c.java.io.TempFile;
 
 public abstract class AbstractTestTree
         implements ITestTree {

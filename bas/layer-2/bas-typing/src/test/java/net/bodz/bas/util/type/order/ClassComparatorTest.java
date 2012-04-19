@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 import net.bodz.bas.closure.Proc1;
 import net.bodz.bas.util.array.Permutation;
-import net.bodz.bas.util.type.order.ClassComparator;
 
 import org.junit.Assert;
 import org.junit.Test;

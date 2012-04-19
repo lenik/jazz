@@ -1,10 +1,7 @@
 package net.bodz.bas.lang.control;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-
-import net.bodz.bas.jdk6compat.jdk7emul.IllegalAccessException;
-import net.bodz.bas.jdk6compat.jdk7emul.InvocationTargetException;
-import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 
 public class Control
         extends Error {
@@ -30,7 +27,7 @@ public class Control
     public static Object invoke(Method method, Object obj, Object... parameters)
             throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, Control {
         try {
-            return Jdk7Reflect.invoke(method, obj, parameters);
+            return method.invoke(obj, parameters);
         } catch (InvocationTargetException e) {
             Throwable cause = e.getCause();
             if (cause instanceof Control)

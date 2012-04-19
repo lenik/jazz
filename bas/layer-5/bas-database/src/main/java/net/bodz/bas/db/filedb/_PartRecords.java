@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
 
+import net.bodz.bas.c.string.StringPart;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.resource.IStreamInputSource;
@@ -12,7 +13,6 @@ import net.bodz.bas.io.resource.builtin.LocalFileResource;
 import net.bodz.bas.io.resource.builtin.URLResource;
 import net.bodz.bas.util.iter.AbstractMitorx;
 import net.bodz.bas.util.iter.Mitorx;
-import net.bodz.bas.util.string.StringPart;
 
 /**
  * @see PartRecords

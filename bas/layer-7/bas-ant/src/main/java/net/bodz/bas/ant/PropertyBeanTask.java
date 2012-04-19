@@ -13,6 +13,7 @@ import java.util.Enumeration;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.collection.preorder.PrefixSet;
 import net.bodz.bas.collection.set.IdentityHashSet;
 import net.bodz.bas.context.clg.SystemCLG;
@@ -20,10 +21,7 @@ import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.jdk6compat.jdk7emul.ClassNotFoundException;
-import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.log.api.Logger;
-import net.bodz.bas.util.string.Strings;
 import net.bodz.bas.util.type.TypePrSet;
 
 import org.apache.tools.ant.BuildException;
@@ -149,7 +147,7 @@ public class PropertyBeanTask
     public void addConfiguredRefType(TextElement refTypeText)
             throws ClassNotFoundException {
         String typeName = refTypeText.getText();
-        Class<?> type = Jdk7Reflect.forName(typeName);
+        Class<?> type = Class.forName(typeName);
         refTypes.add(type);
     }
 

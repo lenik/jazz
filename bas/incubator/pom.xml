@@ -8,11 +8,11 @@
         <artifactId>bas</artifactId>
         <version>0.10.1-SNAPSHOT</version>
     </parent>
-    <artifactId>bas-incubator</artifactId>
+    <artifactId>incubator</artifactId>
     <version>0.10.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>bas-incubator-posutil</module>
+        <module>bas-posutil</module>
     </modules>
     <name>BAS :: Incubator</name>
 </project>

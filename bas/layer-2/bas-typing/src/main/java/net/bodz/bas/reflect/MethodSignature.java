@@ -4,8 +4,6 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
-import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
-import net.bodz.bas.jdk6compat.jdk7emul.NoSuchMethodException;
 import net.bodz.bas.util.Nullables;
 import net.bodz.bas.util.type.TypeDistance;
 import net.bodz.bas.util.type.TypeName;
@@ -133,7 +131,7 @@ public class MethodSignature {
 
     public Method matchMethod(Class<?> clazz) {
         try {
-            return Jdk7Reflect.getMethod(clazz, name, parameterTypes);
+            return clazz.getMethod(name, parameterTypes);
         } catch (NoSuchMethodException e) {
             return null;
         }
@@ -141,7 +139,7 @@ public class MethodSignature {
 
     public Method matchDeclaredMethod(Class<?> clazz) {
         try {
-            return Jdk7Reflect.getDeclaredMethod(clazz, name, parameterTypes);
+            return clazz.getDeclaredMethod(name, parameterTypes);
         } catch (NoSuchMethodException e) {
             return null;
         }
@@ -149,7 +147,7 @@ public class MethodSignature {
 
     public Constructor<?> matchConstructor(Class<?> clazz) {
         try {
-            return Jdk7Reflect.getConstructor(clazz, parameterTypes);
+            return clazz.getConstructor(parameterTypes);
         } catch (NoSuchMethodException e) {
             return null;
         }
@@ -157,7 +155,7 @@ public class MethodSignature {
 
     public Constructor<?> matchedDeclaredConstructor(Class<?> clazz) {
         try {
-            return Jdk7Reflect.getDeclaredConstructor(clazz, parameterTypes);
+            return clazz.getDeclaredConstructor(parameterTypes);
         } catch (NoSuchMethodException e) {
             return null;
         }

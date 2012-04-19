@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import net.bodz.bas.c.java.io.FilePath;
+import net.bodz.bas.c.java.io.FileURL;
+import net.bodz.bas.c.java.util.regex.Patterns;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
 import net.bodz.bas.snm.abc.ModulesRoot;
-import net.bodz.bas.util.io.FilePath;
-import net.bodz.bas.util.io.FileURL;
-import net.bodz.bas.util.regex.Patterns;
 
 public class SJEclipse {
 

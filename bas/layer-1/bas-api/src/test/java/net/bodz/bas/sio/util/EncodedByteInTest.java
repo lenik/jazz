@@ -5,8 +5,6 @@ import java.nio.charset.Charset;
 
 import net.bodz.bas.sio.BByteOut;
 import net.bodz.bas.sio.StringCharIn;
-import net.bodz.bas.sio.util.EncodedByteIn;
-import net.bodz.bas.sio.util.TranscodeConfig;
 
 import org.junit.Assert;
 import org.junit.Test;

@@ -1,9 +1,5 @@
 package net.bodz.bas.sio;
 
-import net.bodz.bas.sio.BCharOut;
-import net.bodz.bas.sio.IStackedOut;
-import net.bodz.bas.sio.StackedOutImpl;
-
 import org.junit.Assert;
 import org.junit.Test;
 

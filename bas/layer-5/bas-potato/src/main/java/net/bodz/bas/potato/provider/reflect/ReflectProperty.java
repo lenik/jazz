@@ -3,8 +3,6 @@ package net.bodz.bas.potato.provider.reflect;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 
-import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
-import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.potato.traits.AbstractProperty;
 
 public class ReflectProperty
@@ -29,13 +27,13 @@ public class ReflectProperty
     @Override
     public Object get(Object instance)
             throws ReflectiveOperationException {
-        return Jdk7Reflect.get(field, instance);
+        return field.get(instance);
     }
 
     @Override
     public void set(Object instance, Object value)
             throws ReflectiveOperationException {
-        Jdk7Reflect.set(field, instance, value);
+        field.set(instance, value);
     }
 
     @Override

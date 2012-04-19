@@ -1,7 +1,5 @@
 package net.bodz.bas.util.primitive;
 
-import net.bodz.bas.util.primitive.ErrorToleranceDouble;
-
 import org.junit.Assert;
 import org.junit.Test;
 

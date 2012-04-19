@@ -9,9 +9,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 
+import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
 import net.bodz.bas.sysinfo.SystemInfo;
-import net.bodz.bas.util.io.FilePath;
 
 public class SJLibLoader {
 

@@ -2,8 +2,6 @@ package net.bodz.bas.potato.traits;
 
 import java.util.Collection;
 
-import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
-
 public interface IEvent
         extends IElement {
 

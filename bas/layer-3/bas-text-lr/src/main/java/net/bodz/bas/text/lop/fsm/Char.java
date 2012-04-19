@@ -3,7 +3,9 @@ package net.bodz.bas.text.lop.fsm;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.util.string.StringEscape;
+import net.bodz.bas.c.string.StringEscape;
+
+
  
 public class Char
         extends AbstractCharSet {

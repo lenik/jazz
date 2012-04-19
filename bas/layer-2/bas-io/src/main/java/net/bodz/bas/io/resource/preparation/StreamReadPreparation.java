@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import net.bodz.bas.c.java.security.Cryptos;
 import net.bodz.bas.err.RuntimizedException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.LineReader;
@@ -21,7 +22,6 @@ import net.bodz.bas.util.iter.IteratorTargetException;
 import net.bodz.bas.util.iter.Iterators;
 import net.bodz.bas.util.iter.Mitorx;
 import net.bodz.bas.util.iter.OverlappedMitor;
-import net.bodz.bas.util.security.Cryptos;
 
 public class StreamReadPreparation
         implements IStreamReadPreparation {

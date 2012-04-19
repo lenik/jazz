@@ -4,11 +4,10 @@ import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Comparator;
 
-import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
-import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.util.iter.Iterables;
@@ -34,10 +33,11 @@ public class BeanDump {
             }
         });
         for (PropertyDescriptor property : properties) {
+            Method readf = property.getReadMethod();
             String name = property.getName();
             Object value;
             try {
-                value = Jdk7Reflect.invoke(property.getReadMethod(), bean);
+                value = readf.invoke(bean);
             } catch (ReflectiveOperationException e) {
                 value = e.toString();
             }

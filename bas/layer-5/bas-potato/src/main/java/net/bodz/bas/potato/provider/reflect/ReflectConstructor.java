@@ -3,8 +3,6 @@ package net.bodz.bas.potato.provider.reflect;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 
-import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
-import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.potato.traits.AbstractConstructor;
 
 public class ReflectConstructor
@@ -29,7 +27,7 @@ public class ReflectConstructor
     @Override
     public Object newInstance(Object... parameters)
             throws ReflectiveOperationException {
-        return Jdk7Reflect.newInstance(ctor, parameters);
+        return ctor.newInstance(ctor, parameters);
     }
 
     @Override

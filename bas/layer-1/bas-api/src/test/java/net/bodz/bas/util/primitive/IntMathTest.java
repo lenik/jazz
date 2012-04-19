@@ -2,8 +2,6 @@ package net.bodz.bas.util.primitive;
 
 import java.math.BigInteger;
 
-import net.bodz.bas.util.primitive.IntMath;
-
 import org.junit.Assert;
 import org.junit.Test;
 

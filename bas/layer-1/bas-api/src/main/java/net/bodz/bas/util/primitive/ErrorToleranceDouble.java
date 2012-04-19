@@ -2,8 +2,6 @@ package net.bodz.bas.util.primitive;
 
 import javax.annotation.Generated;
 
-import net.bodz.bas.util.primitive.ErrorToleranceDouble;
-
 public class ErrorToleranceDouble
         extends Number {
 

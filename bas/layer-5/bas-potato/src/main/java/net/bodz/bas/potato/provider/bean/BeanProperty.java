@@ -5,9 +5,6 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
-import net.bodz.bas.jdk6compat.jdk7emul.NoSuchMethodException;
-import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.potato.traits.AbstractProperty;
 
 public class BeanProperty
@@ -66,7 +63,7 @@ public class BeanProperty
         Method readMethod = propertyDescriptor.getReadMethod();
         if (readMethod == null)
             throw new NoSuchMethodException("No read method");
-        return Jdk7Reflect.invoke(readMethod, instance);
+        return readMethod.invoke(instance);
     }
 
     @Override
@@ -75,7 +72,7 @@ public class BeanProperty
         Method writeMethod = propertyDescriptor.getWriteMethod();
         if (writeMethod == null)
             throw new NoSuchMethodException("No write method");
-        Jdk7Reflect.invoke(writeMethod, instance, value);
+        writeMethod.invoke(instance, value);
     }
 
     @Override

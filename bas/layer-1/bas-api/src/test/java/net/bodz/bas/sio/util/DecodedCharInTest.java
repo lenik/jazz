@@ -6,8 +6,6 @@ import java.nio.charset.Charset;
 
 import net.bodz.bas.sio.BByteIn;
 import net.bodz.bas.sio.BCharOut;
-import net.bodz.bas.sio.util.DecodedCharIn;
-import net.bodz.bas.sio.util.TranscodeConfig;
 
 import org.junit.Assert;
 import org.junit.Test;

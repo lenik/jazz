@@ -4,8 +4,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.util.type.TypePrMap;
-
 import org.junit.Assert;
 import org.junit.Test;
 

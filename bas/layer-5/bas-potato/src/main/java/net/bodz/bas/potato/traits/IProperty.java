@@ -4,8 +4,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.VetoableChangeListener;
 
-import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
-
 public interface IProperty
         extends IElement {
 

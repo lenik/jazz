@@ -2,12 +2,7 @@ package net.bodz.bas.util;
 
 import java.io.Serializable;
 import java.lang.reflect.Constructor;
-
-import net.bodz.bas.jdk6compat.jdk7emul.IllegalAccessException;
-import net.bodz.bas.jdk6compat.jdk7emul.InstantiationException;
-import net.bodz.bas.jdk6compat.jdk7emul.InvocationTargetException;
-import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
-import net.bodz.bas.jdk6compat.jdk7emul.NoSuchMethodException;
+import java.lang.reflect.InvocationTargetException;
 
 public class Objects {
 
@@ -69,17 +64,17 @@ public class Objects {
             throws CloneNotSupportedException {
         if (object == null)
             return null;
-        Class<?> cls = object.getClass();
-        Constructor<?> cstr;
+        Class<?> clazz = object.getClass();
+        Constructor<?> ctor;
         Object cloned;
         try {
-            cstr = Jdk7Reflect.getConstructor(cls, copyClass);
-            cloned = Jdk7Reflect.newInstance(cstr, object);
+            ctor = clazz.getConstructor(copyClass);
+            cloned = ctor.newInstance(object);
             return cloned;
         } catch (NoSuchMethodException e) {
-            throw new CloneNotSupportedException("No copy constructor defined in class " + cls.getName());
+            throw new CloneNotSupportedException("No copy constructor defined in class " + clazz.getName());
         } catch (IllegalAccessException e) {
-            throw new CloneNotSupportedException("Cannot access copy constructor in class: " + cls.getName());
+            throw new CloneNotSupportedException("Cannot access copy constructor in class: " + clazz.getName());
         } catch (InvocationTargetException e) {
             throw new CloneNotSupportedException("Invocation target exception when cloning: " + e.getMessage());
         } catch (InstantiationException e) {

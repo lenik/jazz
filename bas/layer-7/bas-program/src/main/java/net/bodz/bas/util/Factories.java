@@ -10,8 +10,6 @@ import net.bodz.bas.arch.AbstractFactory;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.DecodeException;
 import net.bodz.bas.err.NotImplementedException;
-import net.bodz.bas.jdk6compat.jdk7emul.ClassNotFoundException;
-import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
 import net.bodz.bas.xml.XMLs;
 
 public interface Factories {
@@ -81,11 +79,11 @@ public interface Factories {
         public Object _create(Class<?>[] argTypes, Object... args)
                 throws CreateException {
             try {
-                Class<?> clazz = Jdk7Reflect.forName(name, true, loader);
+                Class<?> clazz = Class.forName(name, true, loader);
                 if (argTypes == null)
                     return clazz.newInstance();
                 else {
-                    Constructor<?> ctor = Jdk7Reflect.getConstructor(clazz, argTypes);
+                    Constructor<?> ctor = clazz.getConstructor(argTypes);
                     return ctor.newInstance(args);
                 }
             } catch (ClassNotFoundException e) {

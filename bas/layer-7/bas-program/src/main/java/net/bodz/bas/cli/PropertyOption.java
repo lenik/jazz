@@ -3,8 +3,6 @@ package net.bodz.bas.cli;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 
-import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
-import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.meta.program.OptionGroup;
 
 public class PropertyOption<T>
@@ -27,7 +25,7 @@ public class PropertyOption<T>
     @Override
     public T get(Object classobj)
             throws ReflectiveOperationException {
-        return (T) Jdk7Reflect.invoke(readf, classobj);
+        return (T) readf.invoke(classobj);
     }
 
     @Override
@@ -35,14 +33,14 @@ public class PropertyOption<T>
             throws ReflectiveOperationException {
         Object propval;
         if (multi) {
-            propval = Jdk7Reflect.invoke(readf, classobj);
+            propval = readf.invoke(classobj);
             Object newprop = Util.addmulti(property.getPropertyType(), propval, optval);
             if (newprop == propval)
                 return;
             propval = newprop;
         } else
             propval = optval;
-        Jdk7Reflect.invoke(writef, classobj, propval);
+        writef.invoke(classobj, propval);
     }
 
 }

@@ -3,7 +3,7 @@ package net.bodz.bas.snm;
 import java.io.File;
 import java.net.URL;
 
-import net.bodz.bas.util.io.FileURL;
+import net.bodz.bas.c.java.io.FileURL;
 import net.bodz.bas.util.loader.ClassResource;
 
 /**

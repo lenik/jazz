@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.Collection;
 
+import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.flow.units.SISOUnit;
 import net.bodz.bas.flow.util.WhatIf;
 import net.bodz.bas.text.codec.builtin.HexCodec;
-import net.bodz.bas.util.string.StringArray;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.junit.Assert;

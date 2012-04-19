@@ -3,7 +3,6 @@ package net.bodz.bas.potato.provider.bean;
 import java.beans.EventSetDescriptor;
 import java.lang.reflect.Method;
 
-import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.potato.traits.AbstractEvent;
 
 public class BeanEvent

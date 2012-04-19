@@ -1,7 +1,5 @@
 package net.bodz.bas.sio.util;
 
-import net.bodz.bas.sio.util.TextIndention;
-
 import org.junit.Assert;
 import org.junit.Test;
 

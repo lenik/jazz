@@ -6,11 +6,11 @@ import java.util.List;
 
 import net.bodz.bas.reflect.query.predicate.IStringPredicate;
 import net.bodz.bas.reflect.query.predicate.ITypePredicate;
+import net.bodz.bas.reflect.query.predicate.StringEndsWith;
+import net.bodz.bas.reflect.query.predicate.StringEquals;
+import net.bodz.bas.reflect.query.predicate.StringStartsWith;
 import net.bodz.bas.reflect.query.predicate.TypeAncestorOf;
 import net.bodz.bas.reflect.query.predicate.TypeDerivedFrom;
-import net.bodz.bas.reflect.query.predicate.StringEndsWith;
-import net.bodz.bas.reflect.query.predicate.StringStartsWith;
-import net.bodz.bas.reflect.query.predicate.StringEquals;
 import net.bodz.bas.util.iter.AbstractMitablex;
 import net.bodz.bas.util.iter.Iterables;
 

@@ -1,8 +1,5 @@
 package net.bodz.bas.traits.provider.builtin;
 
-import net.bodz.bas.jdk6compat.jdk7emul.ClassNotFoundException;
-import net.bodz.bas.jdk6compat.jdk7emul.Jdk7Reflect;
-import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.lang.mi.QueryException;
 import net.bodz.bas.traits.AbstractTraitsProvider;
 import net.bodz.bas.traits.util.TraitsImplUtil;
@@ -65,7 +62,7 @@ public class FriendTraitsProvider
             throws QueryException {
         Class<?> friendTraitsType;
         try {
-            friendTraitsType = Jdk7Reflect.forName(friendTraitsTypeName);
+            friendTraitsType = Class.forName(friendTraitsTypeName);
         } catch (ClassNotFoundException e) {
             return null;
         }

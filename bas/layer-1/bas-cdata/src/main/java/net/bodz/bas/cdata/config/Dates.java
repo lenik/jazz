@@ -3,8 +3,6 @@ package net.bodz.bas.cdata.config;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-import net.bodz.bas.cdata.config.DatesTest;
-
 /**
  * @test {@link DatesTest}
  */

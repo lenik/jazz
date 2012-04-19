@@ -18,7 +18,6 @@ import java.util.TreeMap;
 
 import net.bodz.bas.collection.preorder.PrefixMap;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.jdk6compat.jdk7emul.ReflectiveOperationException;
 import net.bodz.bas.meta.program.Option;
 import net.bodz.bas.meta.program.OptionGroup;
 import net.bodz.bas.util.Pair;

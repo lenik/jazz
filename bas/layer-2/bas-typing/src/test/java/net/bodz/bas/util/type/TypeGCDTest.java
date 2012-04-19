@@ -7,8 +7,6 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import net.bodz.bas.util.type.TypeGCD;
-
 import org.junit.Assert;
 import org.junit.Test;
 

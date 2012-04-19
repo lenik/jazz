@@ -1,0 +1,33 @@
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>net.bodz.bas</groupId>
+        <artifactId>layer-5</artifactId>
+        <version>0.10.1-SNAPSHOT</version>
+    </parent>
+    <artifactId>bas-loader</artifactId>
+    <version>0.10.1-SNAPSHOT</version>
+    <dependencies>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-api</artifactId>
+            <version>0.10.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-jvmhack</artifactId>
+            <version>0.10.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-snmjava</artifactId>
+            <version>0.10.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-log</artifactId>
+            <version>0.10.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+    <name>BAS :: Layer 7 :: Loader</name>
+</project>

@@ -20,7 +20,7 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-helper-mix</artifactId>
+            <artifactId>bas-c3</artifactId>
             <version>0.10.1-SNAPSHOT</version>
         </dependency>
         <dependency>
