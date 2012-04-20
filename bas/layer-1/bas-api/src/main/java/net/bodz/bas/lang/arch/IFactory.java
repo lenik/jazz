@@ -1,4 +1,4 @@
-package net.bodz.bas.arch;
+package net.bodz.bas.lang.arch;
 
 import net.bodz.bas.err.CreateException;
 
