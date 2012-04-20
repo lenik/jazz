@@ -1,17 +1,17 @@
-package net.bodz.bas.type.srt.impl;
+package net.bodz.bas.srt.impl;
 
 import java.io.IOException;
 import java.io.Reader;
 
-/** b?; */
-public class ByteSerializer
+/** f?; */
+public class FloatSerializer
         extends AbstractSimpleSerializer {
 
     @Override
-    public Byte unserialize(Reader s)
+    public Float unserialize(Reader s)
             throws IOException {
         String text = readTill(s, ';');
-        return Byte.parseByte(text);
+        return Float.parseFloat(text);
     }
 
 }

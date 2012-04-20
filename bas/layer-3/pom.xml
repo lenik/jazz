@@ -16,7 +16,6 @@
         <module>bas-fsm</module>
         <module>bas-memory</module>
         <module>bas-snmjava</module>
-        <module>bas-srt</module>
         <module>bas-text</module>
         <module>bas-text-lr</module>
     </modules>

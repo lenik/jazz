@@ -1,10 +1,10 @@
-package net.bodz.bas.type.srt.impl;
+package net.bodz.bas.srt.impl;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 
-import net.bodz.bas.type.srt.SerializeException;
+import net.bodz.bas.srt.SerializeException;
 
 /** s?; (; -> \;) */
 public class StringSerializer

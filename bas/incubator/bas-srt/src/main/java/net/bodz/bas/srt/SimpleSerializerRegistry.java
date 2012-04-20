@@ -1,4 +1,4 @@
-package net.bodz.bas.type.srt;
+package net.bodz.bas.srt;
 
 import java.io.Reader;
 import java.io.Writer;

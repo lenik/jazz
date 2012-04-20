@@ -1,15 +1,18 @@
-package net.bodz.bas.type.srt;
+package net.bodz.bas.srt;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 
-public interface ISimpleSerializable {
+/**
+ * External SRT
+ */
+public interface ISimpleSerializer {
 
-    void serialize(Writer s)
+    void serialize(Writer s, Object o)
             throws IOException, SerializeException;
 
-    void unserialize(Reader s)
+    Object unserialize(Reader s)
             throws IOException, SerializeException;
 
 }
