@@ -1,5 +1,0 @@
-net.bodz.bas.traits.provider.builtin.AnnotationTraitsProvider
-net.bodz.bas.traits.provider.builtin.BasFriendTraitsProvider
-net.bodz.bas.traits.provider.builtin.FriendTraitsProvider
-net.bodz.bas.traits.provider.builtin.QueryMethodTraitsProvider
-net.bodz.bas.traits.provider.builtin.QuerySelfTraitsProvider

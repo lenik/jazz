@@ -9,7 +9,7 @@ import net.bodz.bas.potato.traits.IEventMap;
 import net.bodz.bas.potato.traits.IMethodMap;
 import net.bodz.bas.potato.traits.IPropertyMap;
 import net.bodz.bas.potato.traits.IType;
-import net.bodz.bas.traits.AbstractTraitsProvider;
+import net.bodz.bas.trait.spi.AbstractTraitsProvider;
 
 public abstract class AbstractPotatoProvider
         extends AbstractTraitsProvider
@@ -32,7 +32,7 @@ public abstract class AbstractPotatoProvider
     }
 
     @Override
-    public <T> T getTraits(Class<?> objType, Class<T> traitsType)
+    public <T> T getTrait(Class<?> objType, Class<T> traitsType)
             throws QueryException {
         Integer traitsIndex = traitsFastIndexMap.get(traitsType.getName());
         if (traitsIndex != null) {

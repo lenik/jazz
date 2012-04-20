@@ -40,10 +40,10 @@ import net.bodz.bas.meta.util.OverrideOption;
 import net.bodz.bas.potato.traits.IType;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.Stdio;
+import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.AbstractParser;
 import net.bodz.bas.traits.IParser;
 import net.bodz.bas.traits.ParserUtil;
-import net.bodz.bas.traits.Traits;
 import net.bodz.bas.ui.ConsoleUI;
 import net.bodz.bas.ui.UserInterface;
 import net.bodz.bas.util.PluginException;
@@ -211,7 +211,7 @@ public class BasicCLI
             if (valtype == String.class)
                 return (CLIPlugin) typeEx.newInstance((Object) args);
 
-            IParser<?> parser = Traits.getTraits(valtype, IParser.class);
+            IParser<?> parser = Traits.getTrait(valtype, IParser.class);
             Object valarray = Array.newInstance(valtype, args.length);
             for (int i = 0; i < args.length; i++) {
                 Object val = parser.parse(args[i]);
@@ -332,7 +332,7 @@ public class BasicCLI
 
     public IType getScriptClass()
             throws ScriptException {
-        return Traits.getTraits(getClass(), IType.class);
+        return Traits.getTrait(getClass(), IType.class);
     }
 
     @SuppressWarnings("unchecked")

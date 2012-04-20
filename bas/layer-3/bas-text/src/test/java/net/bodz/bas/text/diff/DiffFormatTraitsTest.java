@@ -1,7 +1,7 @@
 package net.bodz.bas.text.diff;
 
+import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.IInstanceStore;
-import net.bodz.bas.traits.Traits;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -15,7 +15,7 @@ public class DiffFormatTraitsTest
     @Test
     public void testDefaultStoreInstance()
             throws Exception {
-        IInstanceStore<? super DiffFormat> diffStore = Traits.getTraits(DiffFormat.class, IInstanceStore.class);
+        IInstanceStore<? super DiffFormat> diffStore = Traits.getTrait(DiffFormat.class, IInstanceStore.class);
 
         Object Simdiff = diffStore.getInstance("Simdiff");
         assertEquals(DiffFormats.Simdiff, Simdiff);

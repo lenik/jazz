@@ -17,8 +17,8 @@ import java.util.TreeSet;
 
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.IParser;
-import net.bodz.bas.traits.Traits;
 
 class Util {
 
@@ -77,7 +77,7 @@ class Util {
     public static IParser<?> guessParser(IParser<?> parser, Class<?> clazz)
             throws ParseException {
         if (parser == null)
-            parser = Traits.getTraits(clazz, IParser.class);
+            parser = Traits.getTrait(clazz, IParser.class);
         return parser;
     }
 

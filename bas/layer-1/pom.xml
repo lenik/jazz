@@ -19,7 +19,7 @@
         <module>bas-meta</module>
         <module>bas-sugar</module>
         <module>bas-test</module>
-        <module>bas-traits</module>
+        <module>bas-trait</module>
     </modules>
     <name>BAS :: Layer 1</name>
 </project>

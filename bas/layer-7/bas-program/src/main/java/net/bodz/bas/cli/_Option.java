@@ -11,9 +11,9 @@ import net.bodz.bas.meta.program.Option;
 import net.bodz.bas.meta.program.OptionGroup;
 import net.bodz.bas.meta.util.ValueType;
 import net.bodz.bas.potato.traits.AbstractProperty;
+import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.IParser;
 import net.bodz.bas.traits.IValidator;
-import net.bodz.bas.traits.Traits;
 import net.bodz.bas.traits.ValidateException;
 
 public abstract class _Option<T>
@@ -73,13 +73,13 @@ public abstract class _Option<T>
             check = null;
         } else {
             try {
-                parser = Traits.getTraits(elm, IParser.class);
+                parser = Traits.getTrait(elm, IParser.class);
                 if (parser instanceof ItemTypeParser)
                     valparser = (ItemTypeParser) parser;
                 else
                     valparser = null;
 
-                check = Traits.getTraits(elm, IValidator.class);
+                check = Traits.getTrait(elm, IValidator.class);
             } catch (CreateException e) {
                 throw new CLIError("can't init option " + reflectName, e);
             } catch (CLIError e) {

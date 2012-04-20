@@ -2,7 +2,7 @@ package net.bodz.bas.potato.provider.bean;
 
 import net.bodz.bas.potato.traits.IProperty;
 import net.bodz.bas.potato.traits.IPropertyMap;
-import net.bodz.bas.traits.Traits;
+import net.bodz.bas.trait.Traits;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,7 +14,7 @@ public class BeanPropertyMapTest
 
     @Test
     public void testGetPropertyMap() {
-        IPropertyMap propertyMap = Traits.getTraits(AddressBean.class, IPropertyMap.class);
+        IPropertyMap propertyMap = Traits.getTrait(AddressBean.class, IPropertyMap.class);
         assertEquals(4, propertyMap.size());
     }
 
@@ -23,7 +23,7 @@ public class BeanPropertyMapTest
             throws Exception {
         AddressBean addr = new AddressBean();
 
-        IPropertyMap propertyMap = Traits.getTraits(AddressBean.class, IPropertyMap.class);
+        IPropertyMap propertyMap = Traits.getTrait(AddressBean.class, IPropertyMap.class);
 
         IProperty cityProp = propertyMap.get("city");
         assertEquals("city", cityProp.getName());
