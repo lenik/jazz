@@ -19,7 +19,7 @@
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>net.bodz.mda</groupId>
+            <groupId>net.bodz.bas</groupId>
             <artifactId>bas-m2</artifactId>
             <version>0.10.1-SNAPSHOT</version>
         </dependency>

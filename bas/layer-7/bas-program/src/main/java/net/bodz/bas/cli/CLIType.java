@@ -60,41 +60,21 @@ public class CLIType<T extends BasicCLI>
         putMethod(name, opt);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see net.bodz.bas.potato.traits.IType#getPropertyMap()
-     */
     @Override
     public IPropertyMap getPropertyMap() {
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see net.bodz.bas.potato.traits.IType#getMethodMap()
-     */
     @Override
     public IMethodMap getMethodMap() {
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see net.bodz.bas.potato.traits.IType#getConstructorMap()
-     */
     @Override
     public IConstructorMap getConstructorMap() {
         return null;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see net.bodz.bas.potato.traits.IType#getEventMap()
-     */
     @Override
     public IEventMap getEventMap() {
         return null;
