@@ -1,12 +1,12 @@
-package net.bodz.bas.type.srt.impl;
+package net.bodz.bas.srt.impl;
 
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.lang.reflect.Array;
 
-import net.bodz.bas.type.srt.SerializeException;
-import net.bodz.bas.type.srt.SimpleSerializerRegistry;
+import net.bodz.bas.srt.SerializeException;
+import net.bodz.bas.srt.SimpleSerializerRegistry;
 
 /** [X???; X=prefix */
 public class ArraySerializer

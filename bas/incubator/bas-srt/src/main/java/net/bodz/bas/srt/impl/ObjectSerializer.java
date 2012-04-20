@@ -1,4 +1,4 @@
-package net.bodz.bas.type.srt.impl;
+package net.bodz.bas.srt.impl;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -8,7 +8,7 @@ import java.io.ObjectOutputStream;
 import java.io.Reader;
 import java.io.Writer;
 
-import net.bodz.bas.type.srt.SerializeException;
+import net.bodz.bas.srt.SerializeException;
 
 /** o?; */
 public class ObjectSerializer

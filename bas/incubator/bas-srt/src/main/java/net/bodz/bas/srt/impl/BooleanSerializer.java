@@ -1,4 +1,4 @@
-package net.bodz.bas.type.srt.impl;
+package net.bodz.bas.srt.impl;
 
 import java.io.IOException;
 import java.io.Reader;

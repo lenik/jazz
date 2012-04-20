@@ -1,17 +1,17 @@
-package net.bodz.bas.type.srt.impl;
+package net.bodz.bas.srt.impl;
 
 import java.io.IOException;
 import java.io.Reader;
 
-/** bb?; */
-public class ShortSerializer
+/** i?; */
+public class IntegerSerializer
         extends AbstractSimpleSerializer {
 
     @Override
-    public Short unserialize(Reader s)
+    public Integer unserialize(Reader s)
             throws IOException {
         String text = readTill(s, ';');
-        return Short.parseShort(text);
+        return Integer.parseInt(text);
     }
 
 }

@@ -1,4 +1,4 @@
-package net.bodz.bas.type.srt.impl;
+package net.bodz.bas.srt.impl;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -6,8 +6,8 @@ import java.io.Writer;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.bodz.bas.type.srt.SerializeException;
-import net.bodz.bas.type.srt.SimpleSerializerRegistry;
+import net.bodz.bas.srt.SerializeException;
+import net.bodz.bas.srt.SimpleSerializerRegistry;
 
 /** [X????;] X=Map.class */
 public class MapSerializer

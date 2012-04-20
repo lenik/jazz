@@ -1,9 +1,9 @@
-package net.bodz.bas.type.srt.impl;
+package net.bodz.bas.srt.impl;
 
 import java.io.IOException;
 import java.io.Reader;
 
-import net.bodz.bas.type.srt.SerializeException;
+import net.bodz.bas.srt.SerializeException;
 
 /** ic?; (; -> \;) */
 public class CharacterSerializer

@@ -1,17 +1,17 @@
-package net.bodz.bas.type.srt.impl;
+package net.bodz.bas.srt.impl;
 
 import java.io.IOException;
 import java.io.Reader;
 
-/** ii?; */
-public class LongSerializer
+/** ff?; */
+public class DoubleSerializer
         extends AbstractSimpleSerializer {
 
     @Override
-    public Long unserialize(Reader s)
+    public Double unserialize(Reader s)
             throws IOException {
         String text = readTill(s, ';');
-        return Long.parseLong(text);
+        return Double.parseDouble(text);
     }
 
 }
