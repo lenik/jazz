@@ -1,4 +1,4 @@
-package net.bodz.bas.potato.provider.reflect;
+package net.bodz.bas.potato.spi.reflect;
 
 import net.bodz.bas.potato.traits.AbstractType;
 import net.bodz.bas.potato.traits.IConstructorMap;

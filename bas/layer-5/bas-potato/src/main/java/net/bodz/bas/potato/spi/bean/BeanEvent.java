@@ -1,4 +1,4 @@
-package net.bodz.bas.potato.provider.bean;
+package net.bodz.bas.potato.spi.bean;
 
 import java.beans.EventSetDescriptor;
 import java.lang.reflect.Method;

@@ -1,9 +1,9 @@
-package net.bodz.bas.potato.provider.reflect;
+package net.bodz.bas.potato.spi.reflect;
 
 import java.lang.reflect.Constructor;
 
+import net.bodz.bas.c.reflect.MethodSignature;
 import net.bodz.bas.potato.traits.AbstractConstructorMap;
-import net.bodz.bas.potato.traits.ConstructorKey;
 
 public class ReflectConstructorMap
         extends AbstractConstructorMap {
@@ -16,9 +16,9 @@ public class ReflectConstructorMap
 
     public ReflectConstructorMap(Constructor<?>... ctors) {
         for (Constructor<?> ctor : ctors) {
-            ConstructorKey ctorKey = new ConstructorKey(ctor.getParameterTypes());
+            MethodSignature signature = new MethodSignature(null, ctor.getParameterTypes());
             ReflectConstructor reflectCtor = new ReflectConstructor(ctor);
-            put(ctorKey, reflectCtor);
+            put(signature, reflectCtor);
         }
     }
 

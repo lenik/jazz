@@ -3,8 +3,8 @@ package net.bodz.bas.potato.provider;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.bodz.bas.potato.provider.bean.BeanPotatoProvider;
-import net.bodz.bas.potato.provider.reflect.ReflectPotatoProvider;
+import net.bodz.bas.potato.spi.bean.BeanPotatoProvider;
+import net.bodz.bas.potato.spi.reflect.ReflectPotatoProvider;
 import net.bodz.bas.trait.Traits;
 import net.bodz.bas.trait.spi.ITraitsProvider;
 

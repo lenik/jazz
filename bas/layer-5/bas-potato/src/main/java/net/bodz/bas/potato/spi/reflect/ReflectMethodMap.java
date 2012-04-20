@@ -1,9 +1,9 @@
-package net.bodz.bas.potato.provider.reflect;
+package net.bodz.bas.potato.spi.reflect;
 
 import java.lang.reflect.Method;
 
+import net.bodz.bas.c.reflect.MethodSignature;
 import net.bodz.bas.potato.traits.AbstractMethodMap;
-import net.bodz.bas.potato.traits.MethodKey;
 
 public class ReflectMethodMap
         extends AbstractMethodMap {
@@ -18,9 +18,9 @@ public class ReflectMethodMap
         for (Method method : methods) {
             String name = method.getName();
             Class<?>[] parameterTypes = method.getParameterTypes();
-            MethodKey methodKey = new MethodKey(name, parameterTypes);
+            MethodSignature signature = new MethodSignature(name, parameterTypes);
             ReflectMethod reflectMethod = new ReflectMethod(method);
-            put(methodKey, reflectMethod);
+            put(signature, reflectMethod);
         }
     }
 
