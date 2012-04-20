@@ -16,7 +16,7 @@
         <module>bas-context</module>
         <module>bas-io</module>
         <module>bas-trait-impl</module>
-        <module>bas-typing</module>
+        <module>bas-script</module>
     </modules>
     <name>BAS :: Layer 2</name>
 </project>
