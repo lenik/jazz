@@ -8,6 +8,12 @@ import java.lang.reflect.Proxy;
 
 public class Nullables {
 
+    public static Class<?> getClass(Object o) {
+        if (o == null)
+            return null;
+        return o.getClass();
+    }
+
     /**
      * @return <code>true</code> if both a and b are <code>null</code>, or <code>a.equals(b)</code>
      */
@@ -27,16 +33,6 @@ public class Nullables {
     }
 
     /**
-     * @return <code>null</code> if <code>o</code> is <code>null</code>, or the return value of
-     *         {@link Object#toString()}
-     */
-    public static String toString(Object o) {
-        if (o == null)
-            return null;
-        return o.toString();
-    }
-
-    /**
      * @return 0 if <code>o</code> is <code>null</code>, or the return value of
      *         {@link Object#hashCode()}.
      */
@@ -46,10 +42,25 @@ public class Nullables {
         return o.hashCode();
     }
 
-    public static Class<?> getClass(Object o) {
+    /**
+     * @return <code>null</code> if <code>o</code> is <code>null</code>, or the return value of
+     *         {@link Object#toString()}
+     */
+    public static String toString(Object o) {
         if (o == null)
             return null;
-        return o.getClass();
+        return o.toString();
+    }
+
+    public static <T extends Comparable<? super T>> int compare(T c1, T c2) {
+        if (c1 == c2)
+            return 0;
+        if (c1 == null)
+            return -1;
+        if (c2 == null)
+            return 1;
+        int cmp = c1.compareTo(c2);
+        return cmp;
     }
 
     public static Object clone(Cloneable o) {
