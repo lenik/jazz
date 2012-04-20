@@ -2,6 +2,8 @@ package net.bodz.bas.potato.traits;
 
 import java.util.Collection;
 
+import net.bodz.bas.c.reflect.MethodSignature;
+
 public abstract class AbstractType
         extends AbstractElement
         implements IType {
@@ -45,7 +47,7 @@ public abstract class AbstractType
     public IMethod getMethod(String methodName, Class<?>... parameterTypes) {
         IMethodMap methodMap = getMethodMap();
         // if (methodMap == null) return null;
-        MethodKey methodKey = new MethodKey(methodName, parameterTypes);
+        MethodSignature methodKey = new MethodSignature(methodName, parameterTypes);
         return methodMap.getMethod(methodKey);
     }
 
@@ -53,7 +55,7 @@ public abstract class AbstractType
     public IConstructor getConstructor(Class<?>... parameterTypes) {
         IConstructorMap constructorMap = getConstructorMap();
         // if (constructorMap == null) return null;
-        ConstructorKey constructorKey = new ConstructorKey(parameterTypes);
+        MethodSignature constructorKey = new MethodSignature(null, parameterTypes);
         return constructorMap.getConstructor(constructorKey);
     }
 
