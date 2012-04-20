@@ -24,19 +24,19 @@ public abstract class AbstractProjectProcessorMojo
      */
     private String jdkVersion;
 
-    protected MavenProject getProject() {
+    public MavenProject getProject() {
         return project;
     }
 
-    protected void setProject(MavenProject project) {
+    public void setProject(MavenProject project) {
         this.project = project;
     }
 
-    protected String getJdkVersion() {
+    public String getJdkVersion() {
         return jdkVersion;
     }
 
-    protected void setJdkVersion(String jdkVersion) {
+    public void setJdkVersion(String jdkVersion) {
         this.jdkVersion = jdkVersion;
     }
 
