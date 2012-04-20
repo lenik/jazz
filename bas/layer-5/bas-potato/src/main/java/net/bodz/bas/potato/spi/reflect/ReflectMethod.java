@@ -1,4 +1,4 @@
-package net.bodz.bas.potato.provider.reflect;
+package net.bodz.bas.potato.spi.reflect;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;

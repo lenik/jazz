@@ -1,4 +1,4 @@
-package net.bodz.bas.potato;
+package net.bodz.bas.potato.spi;
 
 import java.util.HashMap;
 import java.util.Map;

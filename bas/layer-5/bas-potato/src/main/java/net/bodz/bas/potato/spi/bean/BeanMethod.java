@@ -1,8 +1,8 @@
-package net.bodz.bas.potato.provider.bean;
+package net.bodz.bas.potato.spi.bean;
 
 import java.beans.MethodDescriptor;
 
-import net.bodz.bas.potato.provider.reflect.ReflectMethod;
+import net.bodz.bas.potato.spi.reflect.ReflectMethod;
 
 public class BeanMethod
         extends ReflectMethod {

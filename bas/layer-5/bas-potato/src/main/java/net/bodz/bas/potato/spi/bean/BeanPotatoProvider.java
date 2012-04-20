@@ -1,11 +1,11 @@
-package net.bodz.bas.potato.provider.bean;
+package net.bodz.bas.potato.spi.bean;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 
 import net.bodz.bas.lang.mi.QueryException;
-import net.bodz.bas.potato.AbstractPotatoProvider;
+import net.bodz.bas.potato.spi.AbstractPotatoProvider;
 import net.bodz.bas.potato.traits.IConstructorMap;
 import net.bodz.bas.potato.traits.IEventMap;
 import net.bodz.bas.potato.traits.IMethodMap;

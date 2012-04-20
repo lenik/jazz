@@ -1,4 +1,4 @@
-package net.bodz.bas.potato;
+package net.bodz.bas.potato.spi;
 
 import net.bodz.bas.lang.mi.QueryException;
 import net.bodz.bas.potato.traits.IConstructorMap;
