@@ -7,7 +7,7 @@ import javax.script.ScriptException;
 
 import net.bodz.bas.potato.traits.IProperty;
 import net.bodz.bas.potato.traits.IPropertyMap;
-import net.bodz.bas.traits.Traits;
+import net.bodz.bas.trait.Traits;
 
 public class MapBinding {
 
@@ -17,7 +17,7 @@ public class MapBinding {
     public MapBinding(Class<?> clazz, Object instance, boolean forceAccess)
             throws ScriptException {
         assert clazz != null;
-        this.propertyMap = Traits.getTraits(clazz, IPropertyMap.class);
+        this.propertyMap = Traits.getTrait(clazz, IPropertyMap.class);
         this.instance = instance;
     }
 

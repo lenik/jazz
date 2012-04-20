@@ -1,7 +1,7 @@
 package net.bodz.bas.vfs.traverse;
 
-import static net.bodz.bas.type.java.util.regex.PatternTraits.globTextformMode;
-import static net.bodz.bas.type.java.util.regex.PatternTraits.textformMode;
+import static net.bodz.bas.c.java.util.regex.PatternTraits.globTextformMode;
+import static net.bodz.bas.c.java.util.regex.PatternTraits.textformMode;
 
 import java.util.regex.Pattern;
 
@@ -11,8 +11,8 @@ import net.bodz.bas.lang.negotiation.FinalNegotiation;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.lang.negotiation.NegotiationParameter;
+import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.IParser;
-import net.bodz.bas.traits.Traits;
 
 public class GlobFilenameFilter
         extends RegexFilenameFilter {
@@ -28,7 +28,7 @@ public class GlobFilenameFilter
     static IParser<Pattern> patternParser;
     static INegotiation globNegotiation;
     static {
-        patternParser = Traits.getTraits(Pattern.class, IParser.class);
+        patternParser = Traits.getTrait(Pattern.class, IParser.class);
         globNegotiation = new FinalNegotiation(//
                 new NegotiationParameter(textformMode, globTextformMode));
     }

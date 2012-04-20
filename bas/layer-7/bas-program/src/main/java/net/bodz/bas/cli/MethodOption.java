@@ -10,8 +10,8 @@ import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.program.ArgsParseBy;
 import net.bodz.bas.meta.program.OptionGroup;
+import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.IParser;
-import net.bodz.bas.traits.Traits;
 
 public class MethodOption
         extends _Option<CallInfo>
@@ -47,7 +47,7 @@ public class MethodOption
                 parsers[i] = Util.guessParser(parserInst, types[i]);
             }
             for (int i = wants.length; i < argc; i++) {
-                parsers[i] = Traits.getTraits(types[i], IParser.class);
+                parsers[i] = Traits.getTrait(types[i], IParser.class);
             }
         } catch (CreateException e) {
             throw new CLIError(e);

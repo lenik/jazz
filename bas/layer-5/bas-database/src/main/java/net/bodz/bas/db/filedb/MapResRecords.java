@@ -5,8 +5,8 @@ import java.util.Map;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.IParser;
-import net.bodz.bas.traits.Traits;
 
 public abstract class MapResRecords<K, V>
         extends _ResRecords<Map<K, V>> {
@@ -29,7 +29,7 @@ public abstract class MapResRecords<K, V>
     protected K parseKey(String key)
             throws ParseException {
         if (keyParser == null)
-            keyParser = Traits.getTraits(getKeyClass(), IParser.class);
+            keyParser = Traits.getTrait(getKeyClass(), IParser.class);
         Object k = keyParser.parse(key);
         return keyClass.cast(k);
     }
@@ -37,7 +37,7 @@ public abstract class MapResRecords<K, V>
     protected V parseValue(String value)
             throws ParseException {
         if (valueParser == null)
-            valueParser = Traits.getTraits(getValueClass(), IParser.class);
+            valueParser = Traits.getTrait(getValueClass(), IParser.class);
         Object v = valueParser.parse(value);
         return valueClass.cast(v);
     }

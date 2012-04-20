@@ -2,8 +2,8 @@ package net.bodz.bas.unitperf;
 
 import java.lang.reflect.Method;
 
+import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.IInstanceStore;
-import net.bodz.bas.traits.Traits;
 
 public class Player {
 
@@ -14,7 +14,7 @@ public class Player {
 
         for (int i = 0; i < parameterTypes.length; i++) {
             Class<?> parameterType = parameterTypes[i];
-            IInstanceStore<?> instanceStore = Traits.getTraits(parameterType, IInstanceStore.class);
+            IInstanceStore<?> instanceStore = Traits.getTrait(parameterType, IInstanceStore.class);
             parameterStores[i] = instanceStore;
         }
 

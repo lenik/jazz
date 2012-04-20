@@ -5,7 +5,7 @@ import java.io.IOException;
 import net.bodz.bas.collection.util.ClassLocal;
 import net.bodz.bas.flow.IReceiverEx;
 import net.bodz.bas.potato.traits.IMethod;
-import net.bodz.bas.traits.Traits;
+import net.bodz.bas.trait.Traits;
 
 public class RecvUtil {
 
@@ -20,7 +20,7 @@ public class RecvUtil {
         IMethod recv = recvLocal.get(clazz);
         if (recv == null) {
             // new MethodKey()
-            recv = Traits.getTraits(clazz, IMethod.class);
+            recv = Traits.getTrait(clazz, IMethod.class);
             recvLocal.put(clazz, recv);
         }
         // TODO - unwrap IOException

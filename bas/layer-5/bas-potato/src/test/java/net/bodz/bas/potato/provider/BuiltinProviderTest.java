@@ -5,8 +5,8 @@ import java.util.Set;
 
 import net.bodz.bas.potato.provider.bean.BeanPotatoProvider;
 import net.bodz.bas.potato.provider.reflect.ReflectPotatoProvider;
-import net.bodz.bas.traits.ITraitsProvider;
-import net.bodz.bas.traits.Traits;
+import net.bodz.bas.trait.Traits;
+import net.bodz.bas.trait.spi.ITraitsProvider;
 
 import org.junit.Assert;
 import org.junit.Test;

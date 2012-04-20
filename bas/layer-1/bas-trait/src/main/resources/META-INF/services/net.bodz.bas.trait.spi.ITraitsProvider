@@ -1,0 +1,5 @@
+net.bodz.bas.trait.spi.AnnotationTraitsProvider
+net.bodz.bas.trait.spi.BasFriendTraitsProvider
+net.bodz.bas.trait.spi.FriendTraitsProvider
+net.bodz.bas.trait.spi.QueryMethodTraitsProvider
+net.bodz.bas.trait.spi.QuerySelfTraitsProvider
