@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.c.java.io.FilePath;
-import net.bodz.bas.sysinfo.SystemInfo;
+import net.bodz.bas.c.system.SystemInfo;
 
 public class ModulesRoot {
 

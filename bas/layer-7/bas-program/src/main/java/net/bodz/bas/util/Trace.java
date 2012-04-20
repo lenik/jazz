@@ -14,8 +14,8 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import net.bodz.bas.c.string.StringArray;
+import net.bodz.bas.c.system.SystemProperties;
 import net.bodz.bas.collection.set.IdentityHashSet;
-import net.bodz.bas.sysinfo.SystemProperties;
 
 /**
  * @test {@link TraceTest}

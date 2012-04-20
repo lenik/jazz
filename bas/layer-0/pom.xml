@@ -12,12 +12,10 @@
     <version>2.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>bas-desktop</module>
         <module>bas-dotnet</module>
         <module>bas-jvmhack</module>
         <module>bas-natives-win32</module>
         <module>bas-proxy-java</module>
-        <module>bas-sysinfo</module>
     </modules>
     <name>BAS :: Layer 0</name>
 </project>
