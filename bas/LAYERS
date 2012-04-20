@@ -1,11 +1,8 @@
 layer-0/ 系统兼容层，系统周边环境准备
-    bas-desktop (iocapture -> bas-io)
     bas-dotnet
     bas-jvmhack
     bas-natives-win32
     bas-proxy-java
-    bas-proxy-java-security
-    bas-sysinfo (SystemInfo)
     
 layer-1/ 核心语言增强与语言工具
     bas-cdata

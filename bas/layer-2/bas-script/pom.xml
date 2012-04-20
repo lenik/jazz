@@ -14,5 +14,5 @@
             <version>2.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
-    <name>BAS :: Layer 2 :: Typing</name>
+    <name>BAS :: Layer 2 :: Script</name>
 </project>
