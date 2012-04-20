@@ -14,8 +14,6 @@
     <modules>
         <module>bas-c3</module>
         <module>bas-fsm</module>
-        <module>bas-javadoc</module>
-        <module>bas-jdk7util</module>
         <module>bas-memory</module>
         <module>bas-snmjava</module>
         <module>bas-text</module>
