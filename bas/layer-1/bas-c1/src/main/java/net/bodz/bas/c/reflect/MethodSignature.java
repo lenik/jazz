@@ -1,44 +1,55 @@
 package net.bodz.bas.c.reflect;
 
+import java.beans.MethodDescriptor;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
 import net.bodz.bas.c.type.TypeDistance;
-import net.bodz.bas.c.type.TypeName;
 import net.bodz.bas.util.Nullables;
 
 public class MethodSignature {
 
-    private final String name;
-    private final Class<?>[] parameterTypes;
-    private final Class<?> returnType;
+    protected final String name;
+    protected final Class<?>[] parameterTypes;
+    protected final Class<?> returnType;
 
-    private Boolean hasNullParameterType;
+    protected final boolean wild;
 
     // public static final String CONSTRUCTOR = "~ctor";
     // public static final String DESTRUCTOR = "~dtor";
 
     /**
+     * @param returnType
+     *            Return type of the method, <code>null</code> if we don't care about it. Otherwise,
+     *            it can be void type for constructor and void methods.
      * @param name
-     *            If the constructor is referred, the method name is the same to the class name.
+     *            If it is a constructor, name could be 1. the simple class name, 2. null.
+     * @param parameterTypes
+     *            Non-<code>null</code> type array of the parameters.
      */
-    public MethodSignature(String name, Class<?>[] parameterTypes, Class<?> returnType) {
-        if (name == null)
-            throw new NullPointerException("name");
+    public MethodSignature(Class<?> returnType, String name, Class<?>... parameterTypes) {
         if (parameterTypes == null)
             throw new NullPointerException("parameterTypes");
         this.name = name;
         this.parameterTypes = parameterTypes;
         this.returnType = returnType;
+
+        boolean wild = false;
+        for (Class<?> type : parameterTypes)
+            if (type == null) {
+                wild = true;
+                break;
+            }
+        this.wild = wild;
     }
 
     public MethodSignature(String name, Class<?>... parameterTypes) {
-        this(name, parameterTypes, null);
+        this(null, name, parameterTypes);
     }
 
     public MethodSignature(Method method) {
-        this(method.getName(), method.getParameterTypes(), method.getReturnType());
+        this(method.getReturnType(), method.getName(), method.getParameterTypes());
     }
 
     /**
@@ -56,45 +67,22 @@ public class MethodSignature {
         return parameterTypes;
     }
 
-    public boolean hasNullParameterType() {
-        if (hasNullParameterType == null) {
-            boolean hasNull = false;
-            for (Class<?> t : parameterTypes)
-                if (t == null) {
-                    hasNull = true;
-                    break;
-                }
-            hasNullParameterType = hasNull;
-        }
-        return hasNullParameterType();
-    }
-
-    private transient boolean hashInited;
-    private transient int hash;
+    private transient Integer hash;
 
     @Override
     public int hashCode() {
-        if (!hashInited) {
-            int hash = 0xbae56896;
-            hash += name.hashCode();
-            hash += Arrays.hashCode(parameterTypes);
-            if (returnType != null)
-                hash += returnType.hashCode();
-            this.hash = hash;
-            hashInited = true;
+        if (hash == null) {
+            synchronized (this) {
+                if (hash == null) {
+                    hash = 0xbae56896;
+                    hash += name.hashCode();
+                    hash += Arrays.hashCode(parameterTypes);
+                    if (returnType != null)
+                        hash += returnType.hashCode();
+                }
+            }
         }
         return hash;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder buf = new StringBuilder();
-        buf.append("(" + TypeName.join(parameterTypes) + ")");
-        if (returnType != null) {
-            buf.append(" -> ");
-            buf.append(returnType.getSimpleName());
-        }
-        return buf.toString();
     }
 
     @Override
@@ -109,27 +97,39 @@ public class MethodSignature {
     public boolean equals(MethodSignature o) {
         if (o == this)
             return true;
+        if (o == null)
+            return false;
         if (!Nullables.equals(name, o.name))
             return false;
-        return Arrays.equals(parameterTypes, o.parameterTypes);
+        if (!Nullables.equals(returnType, o.returnType))
+            return false;
+        if (!Arrays.equals(parameterTypes, o.parameterTypes))
+            return false;
+        return true;
+    }
+
+    public boolean matches(MethodDescriptor methodDescriptor) {
+        Method method = methodDescriptor.getMethod();
+        return matches(method);
     }
 
     public boolean matches(Method method) {
         if (!Nullables.equals(name, method.getName()))
             return false;
-        MethodSignature o = new MethodSignature(method);
-        return equals(o);
+
+        MethodSignature other = new MethodSignature(method);
+        return equals(other);
     }
 
     public boolean matches(Constructor<?> ctor) {
         Class<?> declaringClass = ctor.getDeclaringClass();
-        if (!name.equals(declaringClass.getName()))
+        if (name != null && !name.equals(declaringClass.getSimpleName()))
             throw new IllegalArgumentException("Not a constructor method for " + declaringClass);
         MethodSignature o = new MethodSignature(ctor);
         return equals(o);
     }
 
-    public Method matchMethod(Class<?> clazz) {
+    public Method getMethod(Class<?> clazz) {
         try {
             return clazz.getMethod(name, parameterTypes);
         } catch (NoSuchMethodException e) {
@@ -137,7 +137,7 @@ public class MethodSignature {
         }
     }
 
-    public Method matchDeclaredMethod(Class<?> clazz) {
+    public Method getDeclaredMethod(Class<?> clazz) {
         try {
             return clazz.getDeclaredMethod(name, parameterTypes);
         } catch (NoSuchMethodException e) {
@@ -145,7 +145,7 @@ public class MethodSignature {
         }
     }
 
-    public Constructor<?> matchConstructor(Class<?> clazz) {
+    public Constructor<?> findConstructor(Class<?> clazz) {
         try {
             return clazz.getConstructor(parameterTypes);
         } catch (NoSuchMethodException e) {
@@ -153,7 +153,7 @@ public class MethodSignature {
         }
     }
 
-    public Constructor<?> matchedDeclaredConstructor(Class<?> clazz) {
+    public Constructor<?> findDeclaredConstructor(Class<?> clazz) {
         try {
             return clazz.getDeclaredConstructor(parameterTypes);
         } catch (NoSuchMethodException e) {
@@ -161,7 +161,7 @@ public class MethodSignature {
         }
     }
 
-    public Method matchFinestMethod(Iterable<Method> methods) {
+    public Method findNearestMethod(Iterable<Method> methods) {
         int mindist = -1;
         Method finest = null;
         for (Method m : methods) {
@@ -177,7 +177,7 @@ public class MethodSignature {
         return finest;
     }
 
-    public Constructor<?> matchFinestConstructor(Iterable<Constructor<?>> constructors) {
+    public Constructor<?> findNearestConstructor(Iterable<Constructor<?>> constructors) {
         int mindist = -1;
         Constructor<?> finest = null;
         for (Constructor<?> ctor : constructors) {
@@ -191,6 +191,37 @@ public class MethodSignature {
             }
         }
         return finest;
+    }
+
+    protected String formatTypeName(Class<?> type) {
+        return type.getCanonicalName();
+    }
+
+    protected String format(String wildChar) {
+        StringBuilder buf = new StringBuilder(parameterTypes.length * 40);
+        if (name != null)
+            buf.append(name);
+        buf.append('(');
+        for (int i = 0; i < parameterTypes.length; i++) {
+            if (i != 0)
+                buf.append(", ");
+            Class<?> parameterType = parameterTypes[i];
+            if (parameterType == null)
+                buf.append(wildChar);
+            else
+                buf.append(formatTypeName(parameterType));
+        }
+        buf.append(')');
+        if (returnType != null) {
+            buf.append(" -> ");
+            buf.append(formatTypeName(returnType));
+        }
+        return buf.toString();
+    }
+
+    @Override
+    public String toString() {
+        return format("?");
     }
 
 }

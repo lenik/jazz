@@ -2,21 +2,22 @@ package net.bodz.bas.potato.traits;
 
 import java.util.TreeMap;
 
-import net.bodz.bas.potato.traits.util.MethodKeyComparator;
+import net.bodz.bas.c.reflect.MethodSignature;
+import net.bodz.bas.c.reflect.MethodSignatureComparator;
 
 public abstract class AbstractMethodMap
-        extends TreeMap<MethodKey, IMethod>
+        extends TreeMap<MethodSignature, IMethod>
         implements IMethodMap {
 
     private static final long serialVersionUID = 1L;
 
     public AbstractMethodMap() {
-        super(MethodKeyComparator.getInstance());
+        super(MethodSignatureComparator.getInstance());
     }
 
     @Override
-    public IMethod getMethod(MethodKey methodKey) {
-        return get((Object) methodKey);
+    public IMethod getMethod(MethodSignature signature) {
+        return get((Object) signature);
     }
 
 }
