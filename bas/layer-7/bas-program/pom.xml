@@ -3,10 +3,10 @@
     <parent>
         <groupId>net.bodz.bas</groupId>
         <artifactId>layer-7</artifactId>
-        <version>0.10.1-SNAPSHOT</version>
+        <version>2.0.0-SNAPSHOT</version>
     </parent>
     <artifactId>bas-program</artifactId>
-    <version>0.10.1-SNAPSHOT</version>
+    <version>2.0.0-SNAPSHOT</version>
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -16,62 +16,62 @@
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-api</artifactId>
-            <version>0.10.1-SNAPSHOT</version>
+            <version>2.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-c3</artifactId>
-            <version>0.10.1-SNAPSHOT</version>
+            <version>2.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-database</artifactId>
-            <version>0.10.1-SNAPSHOT</version>
+            <version>2.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-flow</artifactId>
-            <version>0.10.1-SNAPSHOT</version>
+            <version>2.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-vfs</artifactId>
-            <version>0.10.1-SNAPSHOT</version>
+            <version>2.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-snmjava</artifactId>
-            <version>0.10.1-SNAPSHOT</version>
+            <version>2.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-loader</artifactId>
-            <version>0.10.1-SNAPSHOT</version>
+            <version>2.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-l10n</artifactId>
-            <version>0.10.1-SNAPSHOT</version>
+            <version>2.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-text</artifactId>
-            <version>0.10.1-SNAPSHOT</version>
+            <version>2.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-typing</artifactId>
-            <version>0.10.1-SNAPSHOT</version>
+            <version>2.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-typing</artifactId>
-            <version>0.10.1-SNAPSHOT</version>
+            <version>2.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
             <artifactId>bas-ui</artifactId>
-            <version>0.10.1-SNAPSHOT</version>
+            <version>2.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
     <build>

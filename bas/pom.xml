@@ -6,7 +6,7 @@
         <version>0.4</version>
     </parent>
     <artifactId>bas</artifactId>
-    <version>0.10.1-SNAPSHOT</version>
+    <version>2.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <dependencyManagement>
         <dependencies>
