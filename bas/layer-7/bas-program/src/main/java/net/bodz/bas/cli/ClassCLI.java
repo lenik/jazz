@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import net.bodz.bas.c.reflect.query.ReflectQuery;
 import net.bodz.bas.c.string.StringLengthComparator;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.closure.Filt1;
@@ -18,7 +19,6 @@ import net.bodz.bas.collection.util.ClassLocal;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.program.Option;
 import net.bodz.bas.meta.program.ProgramNameUtil;
-import net.bodz.bas.reflect.query.ReflectQuery;
 import net.bodz.bas.util.Nullables;
 
 public class ClassCLI {

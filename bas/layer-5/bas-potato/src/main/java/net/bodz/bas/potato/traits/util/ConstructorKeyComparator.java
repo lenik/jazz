@@ -1,6 +1,6 @@
 package net.bodz.bas.potato.traits.util;
 
-import net.bodz.bas.c.type.order.TypeVectorComparator;
+import net.bodz.bas.c.type.TypeVectorComparator;
 import net.bodz.bas.potato.traits.ConstructorKey;
 import net.bodz.bas.util.order.AbstractNonNullComparator;
 

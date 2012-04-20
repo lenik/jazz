@@ -24,12 +24,12 @@
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-typing</artifactId>
+            <artifactId>bas-trait</artifactId>
             <version>2.0.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>net.bodz.bas</groupId>
-            <artifactId>bas-trait</artifactId>
+            <artifactId>bas-script</artifactId>
             <version>2.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
