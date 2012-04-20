@@ -20,7 +20,7 @@ layer-2/ 基础数据类型扩展
     bas-context
     bas-io
     bas-trait-impl
-    bas-typing
+    bas-script
     
 layer-3/ 工具和杂项
     bas-fsm

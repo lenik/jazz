@@ -25,11 +25,11 @@
     bas-sio
     bas-string
     bas-trait-impl
-    bas-typing
+    bas-script
     bas-c3
     bas-fsm
     bas-javadoc
-    bas-typing
+    bas-script
     bas-lop
     bas-text-codec
     bas-text-diff
