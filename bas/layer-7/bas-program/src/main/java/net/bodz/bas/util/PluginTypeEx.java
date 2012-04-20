@@ -1,7 +1,7 @@
 package net.bodz.bas.util;
 
-import net.bodz.bas.arch.IFactory;
 import net.bodz.bas.err.CreateException;
+import net.bodz.bas.lang.arch.IFactory;
 import net.bodz.bas.meta.build.ClassInfo;
 
 /**
