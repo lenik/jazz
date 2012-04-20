@@ -18,6 +18,7 @@
         <module>bas-meta</module>
         <module>bas-test</module>
         <module>bas-trait</module>
+        <module>bas-usnap</module>
     </modules>
     <name>BAS :: Layer 1</name>
 </project>

@@ -1,8 +1,8 @@
-package net.bodz.bas.incubator.posutil;
+package net.bodz.bas.usnap.pos.util;
 
 import java.util.Calendar;
 
-public class Ids {
+public class PosId {
 
     public static long getTime10() {
         Calendar calendar = Calendar.getInstance();
