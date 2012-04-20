@@ -39,35 +39,35 @@ public abstract class AbstractResourceGeneratorMojo
      */
     private String[] excludes;
 
-    protected File getSourceDirectory() {
+    public File getSourceDirectory() {
         return sourceDirectory;
     }
 
-    protected void setSourceDirectory(File sourceDirectory) {
+    public void setSourceDirectory(File sourceDirectory) {
         this.sourceDirectory = sourceDirectory;
     }
 
-    protected File getOutputDirectory() {
+    public File getOutputDirectory() {
         return outputDirectory;
     }
 
-    protected void setOutputDirectory(File outputDirectory) {
+    public void setOutputDirectory(File outputDirectory) {
         this.outputDirectory = outputDirectory;
     }
 
-    protected String[] getIncludes() {
+    public String[] getIncludes() {
         return includes;
     }
 
-    protected void setIncludes(String[] includes) {
+    public void setIncludes(String[] includes) {
         this.includes = includes;
     }
 
-    protected String[] getExcludes() {
+    public String[] getExcludes() {
         return excludes;
     }
 
-    protected void setExcludes(String[] excludes) {
+    public void setExcludes(String[] excludes) {
         this.excludes = excludes;
     }
 

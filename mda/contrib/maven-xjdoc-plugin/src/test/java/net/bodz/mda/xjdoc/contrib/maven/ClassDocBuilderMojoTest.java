@@ -73,9 +73,9 @@ public class ClassDocBuilderMojoTest
         PlexusContainer container = getContainer();
         DefaultComponentRepository repo = getField(container, "componentRepository");
 
-//        System.out.println("Component Descriptor Maps:");
-//        dumpTextMap2((Map<?, ?>) getField(repo, "componentDescriptorMaps"));
-//        System.out.println();
+// System.out.println("Component Descriptor Maps:");
+// dumpTextMap2((Map<?, ?>) getField(repo, "componentDescriptorMaps"));
+// System.out.println();
 
         ClassDocBuilderMojo mojo = (ClassDocBuilderMojo) lookupMojo("build", testPom);
         MavenProject project = mojo.getProject();

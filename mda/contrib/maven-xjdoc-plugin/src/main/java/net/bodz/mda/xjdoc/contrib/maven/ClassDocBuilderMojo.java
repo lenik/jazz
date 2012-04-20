@@ -11,6 +11,7 @@ import net.bodz.bas.lang.negotiation.FinalNegotiation;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.lang.negotiation.NegotiationParameter;
+import net.bodz.bas.m2.mojo.AbstractResourceGeneratorMojo;
 import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.bas.vfs.impl.javaio.JavaioFile;
