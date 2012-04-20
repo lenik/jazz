@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 
-import net.bodz.bas.sysinfo.SystemEnviron;
-import net.bodz.bas.sysinfo.SystemProperties;
+import net.bodz.bas.c.system.SystemEnviron;
+import net.bodz.bas.c.system.SystemProperties;
 
 import org.junit.Test;
 

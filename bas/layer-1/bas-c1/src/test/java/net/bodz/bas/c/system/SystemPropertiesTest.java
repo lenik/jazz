@@ -1,4 +1,4 @@
-package net.bodz.bas.sysinfo;
+package net.bodz.bas.c.system;
 
 import java.util.ArrayList;
 import java.util.Collections;

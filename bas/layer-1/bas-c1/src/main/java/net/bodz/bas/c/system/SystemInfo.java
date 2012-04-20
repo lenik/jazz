@@ -1,4 +1,4 @@
-package net.bodz.bas.sysinfo;
+package net.bodz.bas.c.system;
 
 public class SystemInfo {
 

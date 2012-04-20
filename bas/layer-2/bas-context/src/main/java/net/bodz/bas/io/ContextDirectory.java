@@ -2,11 +2,11 @@ package net.bodz.bas.io;
 
 import java.io.File;
 
+import net.bodz.bas.c.system.SystemInfo;
 import net.bodz.bas.context.ClassContext;
 import net.bodz.bas.context.ContextLocal;
 import net.bodz.bas.context.DefaultContext;
 import net.bodz.bas.context.IContext;
-import net.bodz.bas.sysinfo.SystemInfo;
 
 public class ContextDirectory
         extends ContextLocal<File> {

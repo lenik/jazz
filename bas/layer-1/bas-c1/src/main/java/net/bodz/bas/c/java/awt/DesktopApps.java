@@ -1,4 +1,4 @@
-package net.bodz.bas.sysutil;
+package net.bodz.bas.c.java.awt;
 
 import java.awt.Desktop;
 import java.io.IOException;
