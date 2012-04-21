@@ -9,19 +9,25 @@ import net.bodz.bas.cli.BatchEditCLI;
 import net.bodz.bas.cli.EditResult;
 import net.bodz.bas.meta.build.RcsKeywords;
 import net.bodz.bas.meta.build.Version;
-import net.bodz.bas.meta.info.Doc;
-import net.bodz.bas.meta.program.Option;
 
-@Doc("Fix: .bat goto labels must not cross 1k block boundary.")
+/**
+ * Fix: .bat goto labels must not cross 1k block boundary.
+ */
 @Version({ 0, 0 })
 @RcsKeywords(id = "$Id$")
 public class Fix_BatBB
         extends BatchEditCLI {
 
-    @Option(alias = "b", vnam = "SIZE", doc = "block size, default 1024")
+    /**
+     * block size, default 1024
+     * 
+     * @option -b =SIZE
+     */
     int blockSize = 1024;
 
-    @Option
+    /**
+     * @option
+     */
     char fillChar = ':';
 
     @Override

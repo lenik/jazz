@@ -16,10 +16,11 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 
+import javax.swing.text.html.Option;
+
 import net.bodz.bas.c.type.TypeChain;
 import net.bodz.bas.collection.preorder.PrefixMap;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.meta.program.Option;
 import net.bodz.bas.meta.program.OptionGroup;
 import net.bodz.bas.util.Pair;
 import net.bodz.bas.util.iter.Iterables;
@@ -58,8 +59,8 @@ public class ClassOptions<CT> {
 
     protected void importFields(OptionGroup optgrp, Field... fields) {
         for (final Field field : fields) {
-            if (!field.isAnnotationPresent(Option.class))
-                continue;
+//            XXX if (!field.isAnnotationPresent(Option.class))
+//                continue;
             FieldOption<Object> fieldopt = new FieldOption<Object>(//
                     field.getName(), field, optgrp);
             addOption(fieldopt);
@@ -74,8 +75,8 @@ public class ClassOptions<CT> {
             Method readf = property.getReadMethod();
             if (readf == null)
                 continue;
-            if (!readf.isAnnotationPresent(Option.class))
-                continue;
+//            XXX if (!readf.isAnnotationPresent(Option.class))
+//                continue;
             OptionGroup optgrp = readf.getDeclaringClass().getAnnotation(OptionGroup.class);
             PropertyOption<Object> propopt = new PropertyOption<Object>( //
                     property.getName(), property, optgrp);
@@ -84,9 +85,9 @@ public class ClassOptions<CT> {
     }
 
     protected void importMethod(OptionGroup optgrp, final Method method) {
-        if (!method.isAnnotationPresent(Option.class))
-            return;
-        _Option<CallInfo> copt = new MethodOption(//
+//        XXX if (!method.isAnnotationPresent(Option.class))
+//            return;
+        _Option<MethodCall> copt = new MethodOption(//
                 method.getName(), method, optgrp);
         addOption(copt);
     }
@@ -107,7 +108,7 @@ public class ClassOptions<CT> {
         if (existing != null && !existing.isWeak())
             throw new IllegalArgumentException("option name " + optnam + " is already existed");
         all.put(optnam, newopt);
-        for (String newalias : newopt.o.alias()) {
+        for (String newalias : newopt.aliases) {
             boolean newweak = newalias.startsWith(".");
             if (newweak)
                 newalias = newalias.substring(1);
@@ -122,12 +123,12 @@ public class ClassOptions<CT> {
             else
                 weaks.remove(newalias);
         }
-        if (newopt.o.required()) {
+        if (newopt.required) {
             if (required == null)
                 required = new HashSet<_Option<?>>();
             required.add(newopt);
         }
-        int index = newopt.o.fileIndex();
+        int index = newopt.fileIndex;
         if (index != -1) {
             if (specfiles == null)
                 specfiles = new TreeMap<Integer, _Option<?>>();
@@ -246,7 +247,7 @@ public class ClassOptions<CT> {
                 } else if (optnam.startsWith("-")) {
                     String chr = optnam.substring(1, 2);
                     opt = findOption(chr);
-                    if (opt.getParameterCount() == 0 || !opt.o.optional().isEmpty()) {
+                    if (opt.getParameterCount() == 0 || !opt.defaultVal.isEmpty()) {
                         // boolean option, or option has a default value,
                         if (optnam.length() > 2)
                             // remove the shortopt from --abcdefg => -bcdefg
@@ -276,7 +277,7 @@ public class ClassOptions<CT> {
                 continue;
             }
 
-            if (missing != null && opt.o.required())
+            if (missing != null && opt.required)
                 missing.remove(opt);
 
             int usedArgs = 0;
@@ -323,7 +324,7 @@ public class ClassOptions<CT> {
             if (opt == null)
                 continue;
             // argmap.remove(optnam)
-            if (missing != null && opt.o.required())
+            if (missing != null && opt.required)
                 missing.remove(opt);
 
             Object optval = entry.getValue();
@@ -354,7 +355,7 @@ public class ClassOptions<CT> {
         Object optval = null;
 
         if (optarg == null) {
-            optarg = opt.o.optional();
+            optarg = opt.defaultVal;
             if (optarg.isEmpty())
                 throw new ParseException("Option value expected: " + opt.getCLIName());
         }

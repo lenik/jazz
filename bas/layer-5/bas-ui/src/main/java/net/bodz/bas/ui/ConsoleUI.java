@@ -207,7 +207,8 @@ public class ConsoleUI
     }
 
     @Override
-    public <K> Set<K> choices(String title, Object detail, Map<K, ?> candidates, K... initial) {
+    public <K> Set<K> choices(String title, Object detail, Map<K, ?> candidates,
+            @SuppressWarnings("unchecked") K... initial) {
         throw new NotImplementedException("multiple choice");
     }
 

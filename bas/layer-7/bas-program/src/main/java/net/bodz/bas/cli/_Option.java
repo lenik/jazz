@@ -5,23 +5,28 @@ import java.util.Collection;
 import java.util.Map;
 
 import net.bodz.bas.c.string.Strings;
-import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.meta.program.Option;
 import net.bodz.bas.meta.program.OptionGroup;
 import net.bodz.bas.meta.util.ValueType;
-import net.bodz.bas.potato.traits.AbstractProperty;
+import net.bodz.bas.potato.traits.AbstractElement;
 import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.IParser;
 import net.bodz.bas.traits.IValidator;
 import net.bodz.bas.traits.ValidateException;
 
 public abstract class _Option<T>
-        extends AbstractProperty {
+        extends AbstractElement {
 
     protected String name; // listDetai l
     protected final String hname; // list-detail
-    public final Option o;
+
+    protected String vnam;
+    protected String doc;
+    protected boolean hidden;
+    protected boolean required;
+    protected String[] aliases;
+    protected int fileIndex;
+    protected String defaultVal;
 
     protected final boolean weak;
     protected final Class<?> type;
@@ -37,23 +42,22 @@ public abstract class _Option<T>
     @SuppressWarnings("unchecked")
     public _Option(String reflectName, AnnotatedElement elm, Class<?> type, OptionGroup optgrp) {
         super(type, reflectName);
-        Option option = elm.getAnnotation(Option.class);
-        String optionName = option.name();
+        String optionName = "XXX"; // option.name();
         if (!optionName.isEmpty()) {
             this.weak = optionName.startsWith(".");
             if (weak)
                 optionName = optionName.substring(1);
-            this.hname = option.name();
+            this.hname = "XXX"; // option.name();
             this.name = Strings.dehyphenatize(hname);
         } else {
             this.name = reflectName;
             this.hname = Strings.hyphenatize(reflectName);
             this.weak = false; // default strict.
         }
-        this.o = option;
         this.type = type;
         this.optgrp = optgrp == null ? null : optgrp.value();
 
+        Class<?> parserClass = null; // XXX
         if (type.isArray() && parserClass == null)
             valtype = (Class<T>) type.getComponentType();
 
@@ -67,7 +71,7 @@ public abstract class _Option<T>
         } else
             valtype = (Class<T>) type;
 
-        if (type == CallInfo.class) {
+        if (type == MethodCall.class) {
             parser = null;
             valparser = null;
             check = null;
@@ -80,11 +84,7 @@ public abstract class _Option<T>
                     valparser = null;
 
                 check = Traits.getTrait(elm, IValidator.class);
-            } catch (CreateException e) {
-                throw new CLIError("can't init option " + reflectName, e);
             } catch (CLIError e) {
-                throw new CLIError("can't init option " + reflectName, e);
-            } catch (ParseException e) {
                 throw new CLIError("can't init option " + reflectName, e);
             }
         }
@@ -99,7 +99,7 @@ public abstract class _Option<T>
         return weak;
     }
 
-    @Override
+//    @Override
     public Class<T> getType() {
         return valtype;
     }

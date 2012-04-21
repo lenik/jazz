@@ -14,12 +14,10 @@ import java.util.TreeSet;
 import net.bodz.bas.c.reflect.query.ReflectQuery;
 import net.bodz.bas.c.string.StringLengthComparator;
 import net.bodz.bas.c.string.Strings;
-import net.bodz.bas.closure.Filt1;
 import net.bodz.bas.collection.util.ClassLocal;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.meta.program.Option;
 import net.bodz.bas.meta.program.ProgramNameUtil;
-import net.bodz.bas.util.Nullables;
+import net.bodz.bas.mode._fn.Filt1;
 
 public class ClassCLI {
 
@@ -99,7 +97,7 @@ public class ClassCLI {
             if (usingRestSyntax) {
                 // getRestSyntax();
                 Method restf = ReflectQuery.selectDeclaredMethods(clazz).nameEquals("getRestSyntax").iterator(true)
-                        .next();
+                        ._next();
                 if (restf == null)
                     buffer.append("...");
                 else {
@@ -111,8 +109,8 @@ public class ClassCLI {
                     buffer.append(restSyntax);
                 }
             } else {
-                Option appopt = Nullables.getAnnotation(clazz, Option.class);
-                restSyntax = appopt.vnam();
+                // Option appopt = Nullables.getAnnotation(clazz, Option.class);
+                restSyntax = "XXX"; // appopt.vnam();
                 buffer.append(restSyntax);
             }
         }
@@ -130,7 +128,7 @@ public class ClassCLI {
         };
         for (Map.Entry<String, _Option<?>> entry : options.entrySet()) {
             _Option<?> opt = entry.getValue();
-            if (opt.o.hidden())
+            if (opt.hidden)
                 continue;
             String optnam = opt.getCLIName();
             if (!optnam.equals(entry.getKey()))
@@ -176,14 +174,14 @@ public class ClassCLI {
                     }
                     if (!hasshort)
                         line.insert(tabsize, tab);
-                    String vnam = opt.o.vnam();
+                    String vnam = opt.vnam;
                     if (!vnam.isEmpty()) {
                         if (aliases[aliases.length - 1].length() > 1)
                             line.append('=');
                         line.append(vnam);
                     }
 
-                    String doc = opt.o.doc();
+                    String doc = opt.doc;
 
                     col = line.length();
                     if (col >= docColumn && !doc.isEmpty()) {
