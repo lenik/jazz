@@ -3,7 +3,7 @@ package net.bodz.bas.text.codec.builtin;
 import java.io.IOException;
 import java.nio.charset.Charset;
 
-import net.bodz.bas.cdata.chars.CharFeature;
+import net.bodz.bas.c.string.CharFeature;
 import net.bodz.bas.err.EncodeException;
 import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.IByteOut;

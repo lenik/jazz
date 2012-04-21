@@ -4,7 +4,7 @@ import java.nio.CharBuffer;
 
 import javax.annotation.Generated;
 
-import net.bodz.bas.cdata.chars.CharFeature;
+import net.bodz.bas.c.string.CharFeature;
 
 public class BufParsers {
 
