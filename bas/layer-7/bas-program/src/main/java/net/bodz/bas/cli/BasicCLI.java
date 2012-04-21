@@ -1,7 +1,6 @@
 package net.bodz.bas.cli;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
@@ -13,6 +12,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import javax.script.ScriptException;
+import javax.swing.text.html.Option;
 
 import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.c.string.StringArray;
@@ -46,6 +46,7 @@ import net.bodz.bas.ui.ConsoleUI;
 import net.bodz.bas.ui.UserInterface;
 import net.bodz.bas.util.PluginException;
 import net.bodz.bas.util.PluginTypeEx;
+import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.SystemColos;
 
 import org.apache.commons.lang.ArrayUtils;
@@ -78,40 +79,59 @@ import org.apache.commons.lang.ArrayUtils;
  * @see ClassOptions
  * @see Option
  */
-@BootInfo(syslibs = "bodz_bas")
 @OptionGroup(value = "standard", rank = -1)
 @RcsKeywords(id = "$Id$")
 public class BasicCLI
         implements Runnable, IExecutableVarArgsX<String, Exception> {
 
-    @Option(name = ".stdout", hidden = true)
+    /**
+     * @option --stdout hidden weak
+     */
     protected IPrintOut _stdout = Stdio.cout;
 
-    @Option(name = "logger", hidden = true)
+    /**
+     * @option --logger hidden
+     */
     protected Logger logger = LoggerFactory.getLogger(BasicCLI.class);
     // LogTerms.resolveFile(1);
 
     protected UserInterface UI = ConsoleUI.stdout;
 
-    @Option(hidden = true)
+    /**
+     * @option hidden
+     */
     boolean _logWithPrefix = true;
 
-    @Option(hidden = true)
+    /**
+     * @option hidden
+     */
     boolean _logWithDate = false;
 
-    @Option(alias = "v", doc = "repeat to get more info")
+    /**
+     * Repeat to get more info.
+     * 
+     * @option -v
+     */
     void _verbose() {
         logger.verbose(1);
     }
 
-    @Option(alias = "q", doc = "repeat to get less info")
+    /**
+     * Repeat to get less info.
+     * 
+     * @option -q
+     */
     void _quiet() {
         logger.verbose(-1);
     }
 
     protected Map<String, Object> _vars;
 
-    @Option(name = "define", alias = ".D", vnam = "NAM=VAL", doc = "define variables")
+    /**
+     * Define variable.
+     * 
+     * @option -D --define =NAM=VAL
+     */
     void _define(String exp)
             throws ParseException {
         int eq = exp.indexOf('=');
@@ -279,7 +299,11 @@ public class BasicCLI
         return _classInfo;
     }
 
-    @Option(doc = "show version info")
+    /**
+     * Show version information
+     * 
+     * @option
+     */
     protected final void _version() {
         _version(Stdio.cerr);
         throw new ControlBreak();
@@ -294,7 +318,11 @@ public class BasicCLI
                 info.getDateString());
     }
 
-    @Option(alias = ".h", doc = "show help info")
+    /**
+     * Show this help text.
+     * 
+     * @option -h weak
+     */
     protected final void _help()
             throws CLIException {
         _help(Stdio.cerr);
@@ -425,7 +453,7 @@ public class BasicCLI
                     if (!optnam.equals(entry.getKey()))
                         continue;
                     Object optval = opt.resolveFile(this);
-                    if (optval instanceof CallInfo)
+                    if (optval instanceof MethodCall)
                         continue;
                     dbg.p(optnam, " = ", Util.dispval(optval));
                 }
@@ -540,10 +568,10 @@ public class BasicCLI
      *            canonical file
      */
     @OverrideOption(group = "basicMain")
-    protected void doFileArgument(File file)
+    protected void doFileArgument(IFile file)
             throws Exception {
         assert file != null;
-        FileInputStream in = new FileInputStream(file);
+        InputStream in = file.getInputSource().newInputStream();
         try {
             doFileArgument(file, in);
         } finally {
@@ -560,7 +588,7 @@ public class BasicCLI
      *            canonical file or null
      */
     @OverrideOption(group = "basicMain")
-    protected void doFileArgument(File file, InputStream in)
+    protected void doFileArgument(IFile file, InputStream in)
             throws Exception {
         throw new NotImplementedException();
     }

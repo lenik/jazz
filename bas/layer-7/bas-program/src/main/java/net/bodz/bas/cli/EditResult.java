@@ -1,5 +1,7 @@
 package net.bodz.bas.cli;
 
+import net.bodz.bas.vfs.IFile;
+
 public class EditResult {
 
     public static final int NONE = 0;
@@ -18,7 +20,7 @@ public class EditResult {
     public int operation;
 
     /** dest pathname for RENAME, MOVE, COPY */
-    public Object dest;
+    public IFile dest;
 
     /** saved, deleted, renamed, moved, copied */
     public boolean done;
@@ -62,17 +64,17 @@ public class EditResult {
         this.operation = DELETE;
     }
 
-    public void renameTo(Object dest) {
+    public void renameTo(IFile dest) {
         this.operation = RENAME;
         this.dest = dest;
     }
 
-    public void moveTo(Object dest) {
+    public void moveTo(IFile dest) {
         this.operation = MOVE;
         this.dest = dest;
     }
 
-    public void copyTo(Object dest) {
+    public void copyTo(IFile dest) {
         this.operation = COPY;
         this.dest = dest;
     }
@@ -115,19 +117,19 @@ public class EditResult {
         return result;
     }
 
-    public static EditResult ren(Object dest, String... tags) {
+    public static EditResult ren(IFile dest, String... tags) {
         EditResult result = new EditResult(tags);
         result.renameTo(dest);
         return result;
     }
 
-    public static EditResult mv(Object dest, String... tags) {
+    public static EditResult mv(IFile dest, String... tags) {
         EditResult result = new EditResult(tags);
         result.moveTo(dest);
         return result;
     }
 
-    public static EditResult cp(Object dest, String... tags) {
+    public static EditResult cp(IFile dest, String... tags) {
         EditResult result = new EditResult(tags);
         result.copyTo(dest);
         return result;

@@ -9,59 +9,119 @@ import java.nio.charset.Charset;
 import java.util.Comparator;
 import java.util.regex.Pattern;
 
+import net.bodz.bas.c.java.io.FileFinder;
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.java.util.regex.GlobPattern;
 import net.bodz.bas.err.NotImplementedException;
-import net.bodz.bas.lang.control.ControlBreak;
-import net.bodz.bas.meta.program.Option;
+import net.bodz.bas.lang.ControlBreak;
 import net.bodz.bas.meta.program.OptionGroup;
 import net.bodz.bas.meta.util.OverrideOption;
 import net.bodz.bas.vfs.FileMaskedModifiers;
-import net.bodz.bas.vfs.traverse.FileFinder;
+import net.bodz.bas.vfs.IFile;
 
 @OptionGroup(value = "batch", rank = -2)
 public class BatchCLI
         extends BasicCLI {
 
-    @Option(alias = ".e", vnam = "ENCODING", doc = "default encoding of input files")
+    /**
+     * Ddefault encoding of input files
+     * 
+     * @option -e =ENCODING weak
+     */
     Charset inputEncoding = Charset.defaultCharset();
 
-    @Option(alias = "i", doc = "prefer to do case-insensitive comparation")
+    /**
+     * Prefer to do case-insensitive comparation.
+     * 
+     * @option -i
+     */
     boolean ignoreCase;
 
-    @Option(doc = "always continue when error occurred")
+    /**
+     * Always continue when error occurred.
+     * 
+     * @option
+     */
     boolean errorContinue;
 
-    @Option(alias = "r", vnam = "[DEPTH]", optional = "65536", doc = "max depth of directories recurse into")
+    /**
+     * Max depth of directories recurse into.
+     * 
+     * @option -r =DEPTH default=65536
+     */
     int recursive;
-    @Option(alias = "rl", doc = "process children files before the parent directory")
+
+    /**
+     * Process children files before the parent directory.
+     * 
+     * @option -rl
+     */
     boolean rootLast;
 
-    @Option(alias = "Im", vnam = "FILEMASK", doc = "include specified type of files, default non-hidden files")
+    /**
+     * Include specified type of files, default non-hidden files
+     * 
+     * @option -lm =FILEMASK
+     */
     FileMaskedModifiers inclusiveMask = new FileMaskedModifiers("f/fH");
-    @Option(alias = "IM", vnam = "FILEMASK", doc = "exclude specified type of files")
+
+    /**
+     * Exclude specified type of files.
+     * 
+     * @option -IM =FILEMASK
+     */
     FileMaskedModifiers exclusiveMask;
 
-    @Option(alias = "If", vnam = "WILDCARDS", doc = "include these filenames")
+    /**
+     * Include these filenames.
+     * 
+     * @option -If =WILDCARDS
+     */
     GlobPattern fileInclusivePattern;
-    @Option(alias = "IF", vnam = "WILDCARDS", doc = "exclude these filenames")
+
+    /**
+     * exclude these filenames
+     * 
+     * @option -IF =WILDCARDS
+     */
     GlobPattern fileExclusivePattern;
 
-    @Option(alias = "Ip", vnam = "REGEXP", doc = "include these pathnames")
+    /**
+     * Include these pathnames.
+     * 
+     * @option -Ip =REGEXP
+     */
     Pattern pathInclusivePattern;
-    @Option(alias = "IP", vnam = "REGEXP", doc = "exclude these pathnames")
+
+    /**
+     * Exclude these pathnames
+     * 
+     * @option -IP =REGEXP
+     */
     Pattern pathExclusivePattern;
 
-    @Option(alias = "rp", doc = "don't recurse into excluded directories")
+    /**
+     * Don't recurse into excluded directories.
+     * 
+     * @option -rp
+     */
     boolean prune;
 
-    @Option(alias = "Ic", vnam = "CLASS(FileFilter)", doc = "using custom file filter, this will override other --I* options")
-// @ParseBy(GetInstanceParser.class)
+    /**
+     * Using custom file filter, this will override other --I* options.
+     * 
+     * @option -Ic =CLASS(FileFilter)
+     */
+    // @ParseBy(GetInstanceParser.class)
     FileFilter fileFilter;
 
-    @Option(vnam = "CLASS(Comparator)", doc = "sort files in each directory")
-// @ParseBy(GetInstanceParser.class)
-    Comparator<File> sortComparator;
+    /**
+     * Sort files in each directory
+     * 
+     * @option =CLASS(Comparator)
+     */
+    // @ParseBy(GetInstanceParser.class)
+    Comparator<IFile> sortComparator;
 
     public class Parameters {
 
@@ -169,11 +229,11 @@ public class BatchCLI
             BatchCLI.this.fileFilter = fileFilter;
         }
 
-        public Comparator<File> getSortComparator() {
+        public Comparator<IFile> getSortComparator() {
             return sortComparator;
         }
 
-        public void setSortComparator(Comparator<File> sortComparator) {
+        public void setSortComparator(Comparator<IFile> sortComparator) {
             BatchCLI.this.sortComparator = sortComparator;
         }
 
@@ -223,10 +283,10 @@ public class BatchCLI
     }
 
     /** canonical file */
-    protected File currentStartFile;
+    protected IFile currentStartFile;
 
-    protected String getRelativeName(File in) {
-        return FilePath.getRelativeName(in, currentStartFile);
+    protected String getRelativeName(IFile in) {
+        return FilePath.getRelativeName(in.getPath().toString(), currentStartFile);
     }
 
     /**
@@ -234,7 +294,7 @@ public class BatchCLI
      */
     @Override
     @OverrideOption(group = "batch")
-    protected void doFileArgument(final File file)
+    protected void doFileArgument(final IFile file)
             throws Exception {
         currentStartFile = file;
         FileFinder finder = new FileFinder(fileFilter, prune, recursive, file);
@@ -242,7 +302,7 @@ public class BatchCLI
             finder.setOrder(FileFinder.FILE | FileFinder.DIR_POST);
         if (sortComparator != null)
             finder.setComparator(sortComparator);
-        for (File f : finder)
+        for (IFile f : finder)
             _processFile(FilePath.canoniOf(f));
     }
 
@@ -251,11 +311,11 @@ public class BatchCLI
      * 
      * This method will only be called if no argument is given.
      * 
-     * @see #_processFile(File)
+     * @see #_processFile(IFile)
      */
     @Override
     @Deprecated
-    protected void doFileArgument(File file, InputStream in)
+    protected void doFileArgument(IFile file, InputStream in)
             throws Exception {
         doFile(file, in);
     }
@@ -267,7 +327,7 @@ public class BatchCLI
      *            canonical file
      * @throws FileNotFoundException
      */
-    protected void _processFile(File file) {
+    protected void _processFile(IFile file) {
         assert file != null;
         try {
             doFile(file);
@@ -279,7 +339,7 @@ public class BatchCLI
         }
     }
 
-    protected void doFile(File file)
+    protected void doFile(IFile file)
             throws Exception {
         FileInputStream in = new FileInputStream(file);
         try {
@@ -293,24 +353,24 @@ public class BatchCLI
      * if no argument and {@link #_getDefaultIn()} returns a non-null value, a null-file and the
      * default-in will be passed in.
      */
-    protected void doFile(File file, InputStream in)
+    protected void doFile(IFile file, InputStream in)
             throws Exception {
         throw new NotImplementedException();
     }
 
     public class Methods {
 
-        public void doFileArgument(File file)
+        public void doFileArgument(IFile file)
                 throws Exception {
             BatchCLI.this.doFileArgument(file);
         }
 
-        public void doFile(File file)
+        public void doFile(IFile file)
                 throws Exception {
             BatchCLI.this.doFile(file);
         }
 
-        public void doFile(File file, InputStream in)
+        public void doFile(IFile file, InputStream in)
                 throws Exception {
             BatchCLI.this.doFile(file, in);
         }

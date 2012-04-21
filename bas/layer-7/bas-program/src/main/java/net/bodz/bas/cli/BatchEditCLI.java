@@ -2,8 +2,6 @@ package net.bodz.bas.cli;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -21,8 +19,6 @@ import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.builtin.InputStreamSource;
-import net.bodz.bas.io.resource.builtin.LocalFileResource;
-import net.bodz.bas.meta.program.Option;
 import net.bodz.bas.meta.program.OptionGroup;
 import net.bodz.bas.meta.util.OverrideOption;
 import net.bodz.bas.sio.IPrintOut;
@@ -32,39 +28,80 @@ import net.bodz.bas.text.diff.DiffComparator;
 import net.bodz.bas.text.diff.DiffFormat;
 import net.bodz.bas.text.diff.DiffFormats;
 import net.bodz.bas.text.diff.DiffInfo;
+import net.bodz.bas.vfs.IFile;
 
 @OptionGroup(value = "batch process", rank = -3)
 public class BatchEditCLI
         extends BatchCLI {
 
-    @Option(alias = ".E", vnam = "ENCODING", doc = "default encoding of output files")
+    /**
+     * Default encoding of output files
+     * 
+     * @option -E weak =ENCODING
+     */
     Charset outputEncoding = Charset.defaultCharset();
 
-    @Option(alias = "O", vnam = "DIR", doc = "put output files under this directory")
-    File outputDirectory;
+    /**
+     * put output files under this directory
+     * 
+     * @option -O =DIR
+     */
+    IFile outputDirectory;
 
-    @Option(vnam = ".EXT", optional = ".bak", doc = "backup modified files with given extension")
+    /**
+     * backup modified files with given extension
+     * 
+     * @option =.EXT default=.bak
+     */
     String backupExtension;
 
-    @Option(alias = "P", doc = "protected mode, don't modify any files")
+    /**
+     * protected mode, don't modify any files
+     * 
+     * @option -P
+     */
     boolean dryRun;
 
-    @Option(alias = "f", doc = "force overwrite existing files, this includes --error-continue")
+    /**
+     * force overwrite existing files, this includes --error-continue
+     * 
+     * @option -f
+     */
     boolean force;
 
-    @Option(alias = ".X", vnam = "DIFF-ALG", optional = "gnudiff", doc = "show diff between original and modified files, default using gnudiff")
+    /**
+     * show diff between original and modified files, default using gnudiff.
+     * 
+     * @option -X weak =DIFF-ALG default=gnudiff
+     */
     DiffComparator diffAlgorithm;
 
-    @Option(alias = "Xf", vnam = "FORMAT", doc = "Simdiff, ED, Context, Unified, Normal")
+    /**
+     * Simdiff, ED, Context, Unified, Normal.
+     * 
+     * @option -Xf =FORMAT
+     */
     DiffFormat diffFormat = DiffFormats.Simdiff;
 
-    @Option(alias = "Xo", vnam = "FILE", doc = "write diff output to specified file")
+    /**
+     * Write diff output to specified file.
+     * 
+     * @option -Xo =FILE
+     */
     IPrintOut diffOutput = Stdio.cout;
 
-    @Option(alias = "X3", doc = "diff between src/dst/out, when output to different file")
+    /**
+     * Diff between src/dst/out, when output to different file.
+     * 
+     * @option -X3
+     */
     boolean diff3 = false;
 
-    @Option(alias = "X2", doc = "diff between src/out rather then src/dst, only used when output directory is different")
+    /**
+     * Diff between src/out rather then src/dst, only used when output directory is different.
+     * 
+     * @option -X2
+     */
     boolean diffWithDest = false;
 
     public class Parameters
@@ -78,11 +115,11 @@ public class BatchEditCLI
             BatchEditCLI.this.outputEncoding = outputEncoding;
         }
 
-        public File getOutputDirectory() {
+        public IFile getOutputDirectory() {
             return outputDirectory;
         }
 
-        public void setOutputDirectory(File outputDirectory) {
+        public void setOutputDirectory(IFile outputDirectory) {
             BatchEditCLI.this.outputDirectory = outputDirectory;
         }
 
@@ -179,13 +216,13 @@ public class BatchEditCLI
     /**
      * @return canonical file
      */
-    protected File _getEditTmp(File file)
+    protected IFile _getEditTmp(IFile file)
             throws IOException {
-        String dotExt = FilePath.getExtension(file, true);
+        String dotExt = FilePath.getExtension(file.getName(), true);
         return File.createTempFile(tmpPrefix, dotExt, tmpDir);
     }
 
-    private boolean diff(File a, File b)
+    private boolean diff(IFile a, IFile b)
             throws IOException {
         assert a != null;
         assert b != null;
@@ -198,13 +235,13 @@ public class BatchEditCLI
             return true;
         }
         if (diffAlgorithm == null) {
-            if (FileDiff.equals(a, b))
+            if (FileDiff.equals(a.getInputSource(), b.getInputSource()))
                 return false;
             logger.info("[edit] ", a);
             return true;
         }
-        List<String> al = new LocalFileResource(a, inputEncoding).forRead().listLines();
-        List<String> bl = new LocalFileResource(b, outputEncoding).forRead().listLines();
+        List<String> al = a.getInputSource(inputEncoding).forRead().listLines();
+        List<String> bl = b.getInputSource(outputEncoding).forRead().listLines();
         List<DiffInfo> diffs = diffAlgorithm.diffCompare(al, bl);
         if (diffs.size() == 0)
             return false;
@@ -213,29 +250,29 @@ public class BatchEditCLI
         return true;
     }
 
-    private File tmpDir = TempFile.getTmpDir();
+    private IFile tmpDir = TempFile.getTmpDir();
     private String tmpPrefix = getClass().getSimpleName();
 
-    private File _getOutputFile(String relative, File in) {
+    private IFile _getOutputFile(String relative, IFile in) {
         if (outputDirectory == null)
             return in;
-        File out = FilePath.canoniOf(outputDirectory, relative);
-        File outd = out.getParentFile();
-        if (outd.isFile())
-            throw new Error("Invalid output directory: " + outd);
+        IFile out = outputDirectory.getChild(relative);
+        IFile outdir = out.getParentFile();
+        if (!outdir.isTree())
+            throw new Error("Invalid output directory: " + outdir);
         return out;
     }
 
-    protected File getOutputFile(String relative, File defaultStart) {
-        File in = FilePath.canoniOf(defaultStart, relative);
+    protected IFile getOutputFile(String relative, IFile defaultStart) {
+        IFile in = defaultStart.getChild(relative);
         return _getOutputFile(relative, in);
     }
 
-    protected File getOutputFile(String relative) {
+    protected IFile getOutputFile(String relative) {
         return getOutputFile(relative, currentStartFile);
     }
 
-    protected File getOutputFile(File in) {
+    protected IFile getOutputFile(IFile in) {
         String relative = getRelativeName(in);
         return _getOutputFile(relative, in);
     }
@@ -247,7 +284,7 @@ public class BatchEditCLI
      *            canonical file
      */
     @Override
-    protected void _processFile(File file) {
+    protected void _processFile(IFile file) {
         Throwable err = null;
         try {
             logger.info("[proc] ", file);
@@ -282,9 +319,9 @@ public class BatchEditCLI
      *            canonical file
      */
     @OverrideOption(group = "batchEdit")
-    protected EditResult doEdit(File file)
+    protected EditResult doEdit(IFile file)
             throws Exception {
-        File editTmp = _getEditTmp(file);
+        IFile editTmp = _getEditTmp(file);
         try {
             EditResult result = doEditWithTemp(file, editTmp);
             addResult(file, getOutputFile(file), editTmp, result);
@@ -300,7 +337,7 @@ public class BatchEditCLI
      */
     @Override
     @Deprecated
-    protected void doFile(File file, InputStream in)
+    protected void doFile(IFile file, InputStream in)
             throws Exception {
         throw new NotImplementedException();
     }
@@ -312,15 +349,15 @@ public class BatchEditCLI
      *            canonical file
      */
     @OverrideOption(group = "batchEdit")
-    protected EditResult doEditWithTemp(File file, File editTmp)
+    protected EditResult doEditWithTemp(IFile file, IFile editTmp)
             throws Exception {
         EditResult result = doEdit(file, editTmp);
         if (result == null) // ignored
             return null;
-        File dst = getOutputFile(file);
+        IFile dst = getOutputFile(file);
         if (result.dest instanceof String) {
             String relpath = (String) result.dest;
-            result.dest = new File(dst, relpath);
+            result.dest = dst.getChild(relpath);
         }
         if (result.dest != null)
             dst = FilePath.canoniOf(result.dest);
@@ -336,22 +373,22 @@ public class BatchEditCLI
      *         PROCESS_EDIT: have the result written to the out file
      */
     @OverrideOption(group = "batchEdit")
-    protected EditResult doEdit(File in, File out)
+    protected EditResult doEdit(IFile inFile, IFile outFile)
             throws Exception {
-        InputStream ins = null;
-        OutputStream outs = null;
+        InputStream in = null;
+        OutputStream out = null;
         try {
-            ins = new FileInputStream(in);
-            if (out != null)
-                outs = new FileOutputStream(out);
+            in = inFile.getInputSource(inputEncoding).newInputStream();
+            if (outFile != null)
+                out = outFile.getOutputTarget(outputEncoding).newOutputStream();
             else
-                outs = System.out;
-            return doEditByIO(ins, outs);
+                out = System.out;
+            return doEditByIO(in, out);
         } finally {
-            if (ins != null)
-                ins.close();
-            if (outs != null)
-                outs.close();
+            if (in != null)
+                in.close();
+            if (out != null)
+                out.close();
         }
     }
 
@@ -406,17 +443,17 @@ public class BatchEditCLI
         addResult(null, null, null, result);
     }
 
-    protected void addResult(File src, EditResult result)
+    protected void addResult(IFile src, EditResult result)
             throws IOException, CLIException {
         addResult(src, getOutputFile(src), result);
     }
 
-    protected void addResult(File src, File dst, EditResult result)
+    protected void addResult(IFile src, IFile dst, EditResult result)
             throws IOException {
         addResult(src, dst, null, result);
     }
 
-    protected void addResult(File src, File dst, File edit, EditResult result)
+    protected void addResult(IFile src, IFile dst, IFile edit, EditResult result)
             throws IOException {
         if (result == null)
             logger.info(1, "[skip] ", src);
@@ -440,7 +477,7 @@ public class BatchEditCLI
         }
     }
 
-    private void applyResult(File src, File dst, File edit, EditResult result)
+    private void applyResult(IFile src, IFile dst, IFile edit, EditResult result)
             throws IOException {
         assert result != null;
 
@@ -495,7 +532,7 @@ public class BatchEditCLI
                 // user interaction...
                 throw new IllegalStateException(String.format("File %s is already existed. ", dst));
 
-            File dstdir = dst.getParentFile();
+            IFile dstdir = dst.getParentFile();
             if (dstdir != null)
                 psh.mkdirs(dstdir);
             if (!diffPrinted)
@@ -530,7 +567,7 @@ public class BatchEditCLI
 
     @Override
     @OverrideOption(group = "batchEdit")
-    protected void doFileArgument(final File file)
+    protected void doFileArgument(final IFile file)
             throws Exception {
         logger.status("[start] ", file);
         super.doFileArgument(file);
@@ -539,12 +576,12 @@ public class BatchEditCLI
     public class Methods
             extends net.bodz.bas.cli.BatchCLI.Methods {
 
-        public EditResult doEdit(File file)
+        public EditResult doEdit(IFile file)
                 throws Exception {
             return BatchEditCLI.this.doEdit(file);
         }
 
-        public EditResult doEdit(File in, File out)
+        public EditResult doEdit(IFile in, IFile out)
                 throws Exception {
             return BatchEditCLI.this.doEdit(in, out);
         }

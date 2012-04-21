@@ -37,7 +37,6 @@ import net.bodz.bas.meta.build.ClassInfo;
 import net.bodz.bas.meta.build.RcsKeywords;
 import net.bodz.bas.meta.build.Version;
 import net.bodz.bas.meta.info.Doc;
-import net.bodz.bas.meta.program.Option;
 import net.bodz.bas.meta.program.ProgramName;
 import net.bodz.bas.meta.program.ProgramNameUtil;
 import net.bodz.bas.meta.program.StartMode;
@@ -76,7 +75,11 @@ public class Mkbat
         varmap.put("GENERATOR", generator);
     }
 
-    @Option(alias = "cp", vnam = "LIBSPEC", doc = "add user lib for locating the class")
+    /**
+     * Add user lib for locating the class
+     * 
+     * @option -cp =LIBSPEC
+     */
     public void addClasspath(String entry) {
         for (URL url : LoadUtil.find(entry, true))
             addClasspath(url);

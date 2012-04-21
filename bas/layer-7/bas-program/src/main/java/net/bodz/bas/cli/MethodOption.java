@@ -3,26 +3,25 @@ package net.bodz.bas.cli;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
-import javax.script.ScriptException;
-
 import net.bodz.bas.c.type.SingletonUtil;
-import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.program.ArgsParseBy;
 import net.bodz.bas.meta.program.OptionGroup;
+import net.bodz.bas.potato.traits.IMethod;
 import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.IParser;
 
 public class MethodOption
-        extends _Option<CallInfo>
-        implements ScriptMethod<Object> {
+        extends _Option<MethodCall>
+        implements IMethod {
 
     private final Method method;
     private final int argc;
     private final IParser<?>[] parsers;
 
-    public MethodOption(String name, Method method, OptionGroup optgrp) {
-        super(name, method, CallInfo.class, optgrp);
+    public MethodOption(String name, Method method, OptionGroup optgrp)
+            throws ReflectiveOperationException {
+        super(name, method, MethodCall.class, optgrp);
         this.method = method;
         method.setAccessible(true); // ...
 
@@ -49,8 +48,6 @@ public class MethodOption
             for (int i = wants.length; i < argc; i++) {
                 parsers[i] = Traits.getTrait(types[i], IParser.class);
             }
-        } catch (CreateException e) {
-            throw new CLIError(e);
         } catch (ParseException e) {
             throw new CLIError(e);
         }
@@ -80,7 +77,7 @@ public class MethodOption
         Object val = parsers[paramIndex].parse(param);
         return val;
     }
- 
+
     public Object call(Object object, String[] argv)
             throws ParseException, ReflectiveOperationException {
         Object[] parameters = new Object[argc];
@@ -93,19 +90,17 @@ public class MethodOption
 
     // interface ScriptField
 
-    private static final CallInfo NULL = new CallInfo(0);
+    private static final MethodCall NULL = new MethodCall(0);
 
-    @Override
-    public CallInfo get(Object object)
+    public MethodCall get(Object object)
             throws ReflectiveOperationException {
         return NULL;
     }
 
-    @Override
     @Deprecated
-    public void set(Object object, CallInfo info)
+    public void set(Object object, MethodCall call)
             throws ReflectiveOperationException {
-        info.returnValue = invoke(object, info.parameters);
+        call.returnValue = invoke(object, call.parameters);
     }
 
     // interface ScriptMethod
@@ -135,8 +130,14 @@ public class MethodOption
         try {
             return call(object, argv);
         } catch (ParseException e) {
-            throw new ScriptException(e.getMessage(), e);
+            throw new IllegalArgumentException(e.getMessage(), e);
         }
+    }
+
+    @Override
+    public Object invokeStatic(Object... parameters)
+            throws ReflectiveOperationException {
+        throw new NoSuchMethodException();
     }
 
 }
