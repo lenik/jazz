@@ -7,9 +7,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.bodz.bas.c.java.io.FilePath;
+import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.c.string.StringFeature;
 import net.bodz.bas.io.resource.builtin.URLResource;
-import net.bodz.bas.util.loader.ClassResource;
 
 import org.junit.Assert;
 import org.junit.Test;

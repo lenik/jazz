@@ -5,11 +5,11 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.c.reflect.query.PublicFields;
 import net.bodz.bas.c.reflect.query.ReflectQuery;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.log.LogLevel;
-import net.bodz.bas.util.loader.ClassResource;
 
 public class LoggerCG {
 

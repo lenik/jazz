@@ -6,10 +6,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.db.filedb.PartRecords.PartMap;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.util.iter.Mitorx;
-import net.bodz.bas.util.loader.ClassResource;
 
 import org.junit.Assert;
 import org.junit.Ignore;

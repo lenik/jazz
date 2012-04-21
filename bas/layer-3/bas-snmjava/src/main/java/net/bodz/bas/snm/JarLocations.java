@@ -4,7 +4,7 @@ import java.io.File;
 import java.net.URL;
 
 import net.bodz.bas.c.java.io.FileURL;
-import net.bodz.bas.util.loader.ClassResource;
+import net.bodz.bas.c.loader.ClassResource;
 
 /**
  * Here "Jar" may be referred to a jar file or classes directory.
