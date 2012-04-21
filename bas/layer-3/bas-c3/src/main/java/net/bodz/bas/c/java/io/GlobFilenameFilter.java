@@ -1,4 +1,4 @@
-package net.bodz.bas.vfs.traverse;
+package net.bodz.bas.c.java.io;
 
 import static net.bodz.bas.c.java.util.regex.PatternTraits.globTextformMode;
 import static net.bodz.bas.c.java.util.regex.PatternTraits.textformMode;

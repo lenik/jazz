@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.io.resource.IStreamInputSourceWrapper;
 import net.bodz.bas.io.resource.IStreamResource;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
 import net.bodz.bas.text.diff.DiffComparator;
@@ -74,14 +75,19 @@ public class FileDiff {
         return -1;
     }
 
-    public static boolean equals(File src, File dst)
-            throws IOException {
-        return equals(new LocalFileResource(src), new LocalFileResource(dst));
-    }
-
     public static boolean equals(IStreamInputSource src, IStreamInputSource dst)
             throws IOException {
         return findFirstDifferentByte(src, dst) == -1;
+    }
+
+    public static boolean equals(IStreamInputSourceWrapper src, IStreamInputSourceWrapper dst)
+            throws IOException {
+        return equals(src.getInputSource(), dst.getInputSource());
+    }
+
+    public static boolean equals(File src, File dst)
+            throws IOException {
+        return equals(new LocalFileResource(src), new LocalFileResource(dst));
     }
 
     /**
