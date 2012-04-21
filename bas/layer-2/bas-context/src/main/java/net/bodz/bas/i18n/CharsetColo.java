@@ -7,17 +7,18 @@ import java.nio.charset.UnsupportedCharsetException;
 import net.bodz.bas.context.ContextLocal;
 import net.bodz.bas.context.IContext;
 
-public class ContextCharset
+public class CharsetColo
         extends ContextLocal<Charset> {
 
     @Override
-    protected Charset getDefault() {
+    public Charset getRoot() {
         return Charset.defaultCharset();
     }
 
     /**
      * @throws NullPointerException
      *             If <code>context</code> is <code>null</code>.
+     * @see #get(IContext)
      */
     public String getCharsetName(IContext context) {
         Charset charset = get(context);
@@ -34,6 +35,7 @@ public class ContextCharset
      * @throws UnsupportedCharsetException
      *             - If no support for the named charset is available in this instance of the Java
      *             virtual machine
+     * @see #set(IContext, Charset)
      */
     public void setCharsetName(IContext context, String charsetName) {
         if (context == null)
@@ -44,9 +46,9 @@ public class ContextCharset
         set(context, charset);
     }
 
-    static final ContextCharset instance = new ContextCharset();
+    static final CharsetColo instance = new CharsetColo();
 
-    public static ContextCharset getInstance() {
+    public static CharsetColo getInstance() {
         return instance;
     }
 

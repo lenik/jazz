@@ -1,19 +1,19 @@
-package net.bodz.bas.io;
+package net.bodz.bas.vfs;
 
 import java.io.File;
 
 import net.bodz.bas.c.system.SystemInfo;
+import net.bodz.bas.c.system.SystemProperties;
 import net.bodz.bas.context.ClassContext;
 import net.bodz.bas.context.ContextLocal;
-import net.bodz.bas.context.DefaultContext;
 import net.bodz.bas.context.IContext;
 
-public class ContextDirectory
+public class CurrentDirectoryColo
         extends ContextLocal<File> {
 
     @Override
-    protected File getDefault() {
-        String userDir = System.getProperty("user.dir");
+    public File getRoot() {
+        String userDir = SystemProperties.getUserDir();
         File defaultCwd = userDir == null ? new File(".") : new File(userDir);
         return defaultCwd;
     }
@@ -44,8 +44,6 @@ public class ContextDirectory
     }
 
     public File join(IContext context, String name) {
-        if (context == null)
-            throw new NullPointerException("context");
         if (name == null)
             throw new NullPointerException("name");
         File cwd = get(context);
@@ -53,14 +51,10 @@ public class ContextDirectory
     }
 
     /**
-     * @throws NullPointerException
-     *             If <code>context</code> or <code>dir</code> is <code>null</code>.
      * @throws IllegalArgumentException
      *             If <code>dir</code> isn't a {@link File#isDirectory() directory}.
      */
     public void chdir(IContext context, File dir) {
-        if (context == null)
-            throw new NullPointerException("context");
         if (dir == null)
             throw new NullPointerException("dir");
         if (!dir.isDirectory())
@@ -71,14 +65,10 @@ public class ContextDirectory
     /**
      * @param path
      *            Followed from current cwd, if <code>path</code> is relative.
-     * @throws NullPointerException
-     *             If <code>context</code> or <code>path</code> is <code>null</code>.
      * @throws IllegalArgumentException
      *             If target <code>path</code> isn't a {@link File#isDirectory() directory}.
      */
     public void chdir(IContext context, String path) {
-        if (context == null)
-            throw new NullPointerException("context");
         if (path == null)
             throw new NullPointerException("path");
         File cwd = get(context);
@@ -92,15 +82,15 @@ public class ContextDirectory
     // Shortcuts for DefaultContext
 
     public File join(String name) {
-        return join(DefaultContext.getInstance(), name);
+        return join(getDefaultContext(), name);
     }
 
     public void chdir(File dir) {
-        chdir(DefaultContext.getInstance(), dir);
+        chdir(getDefaultContext(), dir);
     }
 
     public void chdir(String path) {
-        chdir(DefaultContext.getInstance(), path);
+        chdir(getDefaultContext(), path);
     }
 
     // Shortcuts for ClassContext
@@ -117,9 +107,9 @@ public class ContextDirectory
         chdir(ClassContext.getInstance(classContext), path);
     }
 
-    private static final ContextDirectory instance = new ContextDirectory();
+    private static final CurrentDirectoryColo instance = new CurrentDirectoryColo();
 
-    public static ContextDirectory getInstance() {
+    public static CurrentDirectoryColo getInstance() {
         return instance;
     }
 

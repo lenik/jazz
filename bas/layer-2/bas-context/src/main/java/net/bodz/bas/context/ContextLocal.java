@@ -3,9 +3,6 @@ package net.bodz.bas.context;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.err.IllegalUsageError;
-import net.bodz.bas.err.IllegalUsageException;
-
 /**
  * The context local class provides an inheritable variable management. If the variable is allocated
  * in one context, it will be also the default variable storage for all its children contexts unless
@@ -22,23 +19,27 @@ import net.bodz.bas.err.IllegalUsageException;
  */
 public class ContextLocal<T> {
 
-    private T defaultValue;
+    private T root;
     private Map<IContext, T> map;
 
     public ContextLocal() {
         this.map = new HashMap<IContext, T>();
     }
 
-    public ContextLocal(T defaultValue) {
+    public ContextLocal(T root) {
         this();
-        this.defaultValue = defaultValue;
+        this.root = root;
     }
 
     // protected abstract T create(T valueInParentContext)
     // throws CreateException;
 
-    protected T getDefault() {
-        return defaultValue;
+    public T getRoot() {
+        return root;
+    }
+
+    public void setRoot(T root) {
+        this.root = root;
     }
 
     /**
@@ -59,24 +60,20 @@ public class ContextLocal<T> {
      * @param context
      *            Non-<code>null</code> context.
      * @return {@link #getDefault() default} value if the value isn't defined in the context chain.
-     * @throws NullPointerException
-     *             If <code>context</code> is <code>null</code>.
      */
     public T get(IContext context) {
-        if (context == null)
-            throw new NullPointerException("context");
         IContext ancestor = context;
         int depth = 0;
-        while (depth++ < maxDepth) {
+        while (ancestor != null) {
             T value = map.get(ancestor);
             if (value != null || map.containsKey(ancestor))
                 return value;
+            if (++depth > maxDepth)
+                throw new ContextOverflowException("Context too deep");
             ancestor = ancestor.getParentContext();
-            if (ancestor == null)
-                // getOrCreate()?
-                return getDefault();
         }
-        throw new IllegalUsageError("Context too deep");
+        // getOrCreate()?
+        return getRoot();
     }
 
     /**
@@ -85,21 +82,17 @@ public class ContextLocal<T> {
      * @param context
      *            The context to be affected, all transient contexts in the context chain are
      *            skipped.
-     * @throws NullPointerException
-     *             If <code>context</code> is <code>null</code>.
      */
     public void set(IContext context, T value) {
-        if (context == null)
-            throw new NullPointerException("context");
-
         IContext concreteContext = context;
         int depth = 0;
         while (concreteContext.isTransient()) {
             concreteContext = concreteContext.getParentContext();
             if (concreteContext == null)
-                throw new IllegalUsageException("No concrete context, transient to death.");
+                // throw new IllegalUsageException("No concrete context, transient to death.");
+                break;
             if (++depth > maxTransientDepth)
-                throw new IllegalUsageError("Transient too deep");
+                throw new ContextOverflowException("Transient too deep");
         }
 
         map.put(concreteContext, value);
@@ -110,20 +103,22 @@ public class ContextLocal<T> {
      * 
      * @return Context thread local value.
      * @def get(DefaultContext.getInstance())
-     * @see DefaultContext
+     * @see ContextResolverConfig
      */
     public T get() {
-        return get(DefaultContext.getInstance());
+        IContext context = ContextResolverConfig.defaultContextResolver.resolve();
+        return get(context);
     }
 
     /**
      * A shortcut to set the value in the default context.
      * 
      * @def set(DefaultContext.getInstance(), value)
-     * @see DefaultContext
+     * @see ContextResolverConfig
      */
     public void set(T value) {
-        set(DefaultContext.getInstance(), value);
+        IContext context = getDefaultContext();
+        set(context, value);
     }
 
     /**
@@ -147,6 +142,11 @@ public class ContextLocal<T> {
      */
     public void set(Class<?> clazz, T value) {
         set(ClassContext.getInstance(clazz), value);
+    }
+
+    protected IContext getDefaultContext() {
+        IContext defaultContext = ContextResolverConfig.defaultContextResolver.resolve();
+        return defaultContext;
     }
 
 }

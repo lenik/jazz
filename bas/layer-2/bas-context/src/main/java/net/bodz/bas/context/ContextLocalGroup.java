@@ -5,6 +5,6 @@ package net.bodz.bas.context;
  * <p>
  * Additional static helper methods maybe added in future.
  */
-public class ContextLocalGroup {
+public interface ContextLocalGroup {
 
 }
