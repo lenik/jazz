@@ -1,4 +1,4 @@
-package net.bodz.bas.cdata.chars;
+package net.bodz.bas.c.string;
 
 public class CharFeature {
 

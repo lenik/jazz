@@ -1,6 +1,6 @@
 package net.bodz.bas.vfs.preparation;
 
-import net.bodz.bas.cdata.chars.CharFeature;
+import net.bodz.bas.c.string.CharFeature;
 import net.bodz.bas.util.bits.IBits;
 import net.bodz.bas.util.bits.Int_leBits;
 import net.bodz.bas.util.primitive.IntMath;

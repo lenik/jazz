@@ -7,7 +7,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 import java.nio.charset.CoderResult;
 
-import net.bodz.bas.cdata.chars.CharFeature;
+import net.bodz.bas.c.string.CharFeature;
 
 public class HexCharsetDecoder
         extends CharsetDecoder {

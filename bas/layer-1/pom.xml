@@ -14,7 +14,6 @@
     <modules>
         <module>bas-api</module>
         <module>bas-c1</module>
-        <module>bas-cdata</module>
         <module>bas-meta</module>
         <module>bas-test</module>
         <module>bas-trait</module>
