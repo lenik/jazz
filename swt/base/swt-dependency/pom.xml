@@ -1,0 +1,46 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>net.bodz.swt</groupId>
+        <artifactId>base</artifactId>
+        <version>1.2.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>swt-dependency</artifactId>
+    <version>3.6.2</version>
+    <name>SWT :: Base :: Dependency</name>
+    <profiles>
+        <!-- os-family: dos mac netware os/2 tandem unix windows win9x z/os os/400 -->
+        <profile>
+            <id>swt-win32-x86</id>
+            <activation>
+                <os>
+                    <family>windows</family>
+                    <arch>i386</arch>
+                </os>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.eclipse.swt</groupId>
+                    <artifactId>org.eclipse.swt.win32.win32.x86</artifactId>
+                    <version>3.6.2</version>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>swt-linux-x86</id>
+            <activation>
+                <os>
+                    <family>unix</family>
+                    <arch>i386</arch>
+                </os>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.eclipse.swt</groupId>
+                    <artifactId>org.eclipse.swt.gtk.linux.x86</artifactId>
+                    <version>3.6.2</version>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+</project>
