@@ -1,10 +1,12 @@
 package net.bodz.bas.vfs.impl.fake;
 
-import net.bodz.bas.debug.ObjectInfo;
+import java.nio.charset.Charset;
+
 import net.bodz.bas.err.ReadOnlyException;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
 import net.bodz.bas.io.resource.builtin.ByteArrayResource;
+import net.bodz.bas.util.ObjectInfo;
 
 public class InputBytesFile
         extends FakeFile {

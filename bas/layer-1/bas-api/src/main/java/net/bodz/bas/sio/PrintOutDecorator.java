@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.nio.CharBuffer;
 import java.util.Locale;
 
-import net.bodz.bas.api.proxy.Decorator;
+import net.bodz.bas.mode.AbstractDecorator;
 
 public class PrintOutDecorator
-        extends Decorator<IPrintOut>
+        extends AbstractDecorator<IPrintOut>
         implements IPrintOut {
 
     public PrintOutDecorator(IPrintOut impl) {

@@ -1,6 +1,6 @@
 package net.bodz.bas.context;
 
-import net.bodz.bas.lang.arch.IExecutableX;
+import net.bodz.bas.mode.fn.IExecutableX;
 
 /**
  * XXX - not implemented well!

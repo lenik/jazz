@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import net.bodz.bas.closure.Pred1;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.loader.boot.BootInfo;
 import net.bodz.bas.loader.boot.BootProc;
+import net.bodz.bas.mode._fn.Pred1;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.Stdio;
 

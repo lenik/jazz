@@ -2,11 +2,12 @@ package net.bodz.bas.vfs.impl.javaio;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.nio.charset.Charset;
 
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
-import net.bodz.bas.lang.arch.IFilter;
+import net.bodz.bas.mode.fn.IFilter;
 import net.bodz.bas.util.iter.AbstractMitorx;
 import net.bodz.bas.util.iter.Mitorx;
 import net.bodz.bas.vfs.AbstractFile;
