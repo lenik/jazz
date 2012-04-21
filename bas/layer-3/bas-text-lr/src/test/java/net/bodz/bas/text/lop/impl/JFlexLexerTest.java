@@ -2,9 +2,9 @@ package net.bodz.bas.text.lop.impl;
 
 import java.io.StringReader;
 
+import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.sio.util.IXYTellable;
 import net.bodz.bas.text.lop.Token;
-import net.bodz.bas.util.loader.ClassResource;
 
 import org.junit.Assert;
 import org.junit.Test;

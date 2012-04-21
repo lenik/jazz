@@ -1,4 +1,4 @@
-package net.bodz.bas.util.loader;
+package net.bodz.bas.c.loader;
 
 import java.io.IOException;
 import java.io.InputStream;

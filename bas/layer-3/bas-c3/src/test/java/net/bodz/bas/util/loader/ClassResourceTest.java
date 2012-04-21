@@ -1,5 +1,6 @@
 package net.bodz.bas.util.loader;
 
+import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.io.resource.builtin.URLResource;
 
 import org.junit.Assert;
