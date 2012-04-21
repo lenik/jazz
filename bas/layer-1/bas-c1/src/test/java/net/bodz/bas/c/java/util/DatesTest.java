@@ -1,7 +1,9 @@
-package net.bodz.bas.cdata.config;
+package net.bodz.bas.c.java.util;
 
 import java.text.ParseException;
 import java.util.Date;
+
+import net.bodz.bas.c.java.util.Dates;
 
 import org.junit.Assert;
 import org.junit.Test;
