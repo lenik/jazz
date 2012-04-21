@@ -57,13 +57,4 @@ public class ThreadContext
         return new ThreadContext(thread);
     }
 
-    public static ThreadContext getCurrentThreadContext(IContext fallbackContext) {
-        Thread currentThread = Thread.currentThread();
-        return getInstance(fallbackContext, currentThread);
-    }
-
-    public static ThreadContext getCurrentThreadContext() {
-        return getCurrentThreadContext(StaticContext.getInstance());
-    }
-
 }

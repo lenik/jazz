@@ -3,9 +3,9 @@ package net.bodz.bas.ant;
 import java.io.File;
 import java.util.Map;
 
-import net.bodz.bas.context.clg.SystemCLG;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.snm.EclipseProject;
+import net.bodz.bas.vfs.SystemColos;
 
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.FileSet;
@@ -30,7 +30,7 @@ public class ProjectInfo {
 
     public ProjectInfo(Project antProject)
             throws ParseException {
-        this(antProject, SystemCLG.cwd.get());
+        this(antProject, SystemColos.cwd.get());
     }
 
     public ProjectInfo(Project antProject, File searchStart)

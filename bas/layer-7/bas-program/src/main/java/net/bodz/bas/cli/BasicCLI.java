@@ -14,10 +14,10 @@ import java.util.Map.Entry;
 
 import javax.script.ScriptException;
 
+import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.cli.ext.CLIPlugin;
 import net.bodz.bas.cli.ext.CLIPlugins;
-import net.bodz.bas.context.clg.SystemCLG;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
@@ -48,7 +48,7 @@ import net.bodz.bas.ui.ConsoleUI;
 import net.bodz.bas.ui.UserInterface;
 import net.bodz.bas.util.PluginException;
 import net.bodz.bas.util.PluginTypeEx;
-import net.bodz.bas.util.loader.ClassResource;
+import net.bodz.bas.vfs.SystemColos;
 
 import org.apache.commons.lang.ArrayUtils;
 
@@ -511,7 +511,7 @@ public class BasicCLI
     protected void doMainManaged(String[] args)
             throws Exception {
         for (String arg : args) {
-            File file = SystemCLG.cwd.join(getClass(), arg);
+            File file = SystemColos.cwd.join(getClass(), arg);
             expandFileArgument(file);
         }
     }

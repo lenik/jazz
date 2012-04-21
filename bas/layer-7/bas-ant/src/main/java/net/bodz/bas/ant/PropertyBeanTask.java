@@ -17,12 +17,12 @@ import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.c.type.TypePrSet;
 import net.bodz.bas.collection.preorder.PrefixSet;
 import net.bodz.bas.collection.set.IdentityHashSet;
-import net.bodz.bas.context.clg.SystemCLG;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.log.api.Logger;
+import net.bodz.bas.vfs.SystemColos;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
@@ -202,7 +202,7 @@ public class PropertyBeanTask
         final Project project = getProject();
         File baseDir = project.getBaseDir();
         if (baseDir != null)
-            SystemCLG.cwd.chdir(baseDir);
+            SystemColos.cwd.chdir(baseDir);
 
         try {
             Class<?>[] tryProjectTypes = { Project.class };

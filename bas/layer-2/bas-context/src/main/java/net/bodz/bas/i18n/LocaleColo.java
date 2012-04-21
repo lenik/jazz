@@ -4,17 +4,17 @@ import java.util.Locale;
 
 import net.bodz.bas.context.ContextLocal;
 
-public class ContextLocale
+public class LocaleColo
         extends ContextLocal<Locale> {
 
     @Override
-    protected Locale getDefault() {
+    public Locale getRoot() {
         return Locale.getDefault();
     }
 
-    static final ContextLocale instance = new ContextLocale();
+    static final LocaleColo instance = new LocaleColo();
 
-    public static ContextLocale getInstance() {
+    public static LocaleColo getInstance() {
         return instance;
     }
 

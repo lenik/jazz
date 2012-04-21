@@ -2,7 +2,6 @@ package net.bodz.bas.c.java.io;
 
 import java.io.File;
 
-import net.bodz.bas.context.clg.SystemCLG;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.NegotiationException;
@@ -10,6 +9,7 @@ import net.bodz.bas.lang.negotiation.NegotiationParameter;
 import net.bodz.bas.meta.util.ValueType;
 import net.bodz.bas.traits.AbstractCommonTraits;
 import net.bodz.bas.traits.IParser;
+import net.bodz.bas.vfs.SystemColos;
 
 public class FileTraits
         extends AbstractCommonTraits<File> {
@@ -19,7 +19,7 @@ public class FileTraits
      */
     @ValueType(File.class)
     public static final String textformContextDirectory = "textform.contextDirectory";
-    public static final File defaultTextformContextDirectory = SystemCLG.cwd.get();
+    public static final File defaultTextformContextDirectory = SystemColos.cwd.get();
 
     public FileTraits() {
         super(File.class);

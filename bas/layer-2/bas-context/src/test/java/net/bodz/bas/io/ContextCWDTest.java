@@ -3,6 +3,7 @@ package net.bodz.bas.io;
 import java.io.File;
 
 import net.bodz.bas.context.ClassContext;
+import net.bodz.bas.vfs.CurrentDirectoryColo;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,12 +18,12 @@ public class ContextCWDTest
         class Inner {
             File getcwd() {
                 ClassContext innerContext = ClassContext.getCallerClassContext();
-                return ContextDirectory.getInstance().get(innerContext);
+                return CurrentDirectoryColo.getInstance().get(innerContext);
             }
 
             void chdir(File dir) {
                 ClassContext innerContext = ClassContext.getCallerClassContext();
-                ContextDirectory.getInstance().chdir(innerContext, dir);
+                CurrentDirectoryColo.getInstance().chdir(innerContext, dir);
             }
         }
 
@@ -32,11 +33,11 @@ public class ContextCWDTest
         assertEquals(userDir, innercwd);
 
         ClassContext outerContext = ClassContext.getCallerClassContext();
-        File outercwd = ContextDirectory.getInstance().get(outerContext);
+        File outercwd = CurrentDirectoryColo.getInstance().get(outerContext);
         assertEquals(userDir, innercwd);
 
         inner.chdir(new File("/"));
-        outercwd = ContextDirectory.getInstance().get(outerContext);
+        outercwd = CurrentDirectoryColo.getInstance().get(outerContext);
         assertEquals(userDir, outercwd);
     }
 
