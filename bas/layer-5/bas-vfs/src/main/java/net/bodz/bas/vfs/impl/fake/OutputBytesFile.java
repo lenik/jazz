@@ -1,6 +1,7 @@
 package net.bodz.bas.vfs.impl.fake;
 
 import java.io.ByteArrayOutputStream;
+import java.nio.charset.Charset;
 
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
@@ -69,15 +70,18 @@ public class OutputBytesFile
      * Use the written buffer as the input source.
      */
     @Override
-    public IStreamInputSource toSource() {
+    public IStreamInputSource getInputSource(Charset charset) {
         byte[] byteArray = buffer.toByteArray();
         ByteArrayResource resource = new ByteArrayResource(byteArray);
+        resource.setCharset(charset);
         return resource;
     }
 
     @Override
-    public IStreamOutputTarget toTarget() {
-        return new OutputStreamTarget(buffer);
+    public IStreamOutputTarget getOutputTarget(Charset charset) {
+        OutputStreamTarget target = new OutputStreamTarget(buffer);
+        target.setCharset(charset);
+        return target;
     }
 
 }

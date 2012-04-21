@@ -3,6 +3,7 @@ package net.bodz.bas.vfs.impl.apachevfs;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.Charset;
 import java.util.List;
 
 import net.bodz.bas.io.resource.IStreamInputSource;
@@ -15,6 +16,7 @@ import net.bodz.bas.vfs.AbstractFile;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.VFSException;
 
+import org.apache.commons.vfs.FileContent;
 import org.apache.commons.vfs.FileName;
 import org.apache.commons.vfs.FileObject;
 import org.apache.commons.vfs.FileSystemException;
@@ -152,30 +154,34 @@ public class ApacheVFSFile
     }
 
     @Override
-    public IStreamInputSource toSource() {
-        return new JavaioStreamInputSource() {
-
+    public IStreamInputSource getInputSource(Charset charset) {
+        JavaioStreamInputSource inputSource = new JavaioStreamInputSource() {
+            // XXX - Non-reentrantable.
             @Override
             public InputStream newInputStream()
                     throws IOException {
-                // XXX - Non-reentrantable.
-                return fileObject.getContent().getInputStream();
+                FileContent content = fileObject.getContent();
+                InputStream in = content.getInputStream();
+                return in;
             }
-
         };
+        inputSource.setCharset(charset);
+        return inputSource;
     }
 
     @Override
-    public IStreamOutputTarget toTarget() {
-        return new JavaioStreamOutputTarget() {
-
+    public IStreamOutputTarget getOutputTarget(Charset charset) {
+        JavaioStreamOutputTarget outputTarget = new JavaioStreamOutputTarget() {
             @Override
             public OutputStream newOutputStream()
                     throws IOException {
-                return fileObject.getContent().getOutputStream(isAppendMode());
+                FileContent content = fileObject.getContent();
+                OutputStream out = content.getOutputStream(isAppendMode());
+                return out;
             }
-
         };
+        outputTarget.setCharset(charset);
+        return outputTarget;
     }
 
     @Override
