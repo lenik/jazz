@@ -152,7 +152,7 @@ public class ClassDocBuilderMojo
                     outTarget = new OutputStreamTarget(System.out);
                     System.out.println("FILE: " + baseName);
                 } else {
-                    outTarget = new JavaioFile(classDocFile).toTarget();
+                    outTarget = new JavaioFile(classDocFile).getOutputTarget();
                 }
                 // outTarget.setCharset("utf-8");
                 try {

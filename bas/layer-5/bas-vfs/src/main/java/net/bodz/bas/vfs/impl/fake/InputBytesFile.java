@@ -46,12 +46,14 @@ public class InputBytesFile
     }
 
     @Override
-    public IStreamInputSource toSource() {
-        return new ByteArrayResource(bytes);
+    public IStreamInputSource getInputSource(Charset charset) {
+        ByteArrayResource resource = new ByteArrayResource(bytes);
+        resource.setCharset(charset);
+        return resource;
     }
 
     @Override
-    public IStreamOutputTarget toTarget() {
+    public IStreamOutputTarget getOutputTarget(Charset charset) {
         // return new ByteArrayResource(bytes);
         throw new ReadOnlyException();
     }

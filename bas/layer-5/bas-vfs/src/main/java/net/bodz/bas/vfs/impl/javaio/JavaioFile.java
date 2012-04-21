@@ -144,13 +144,17 @@ public class JavaioFile
     }
 
     @Override
-    public IStreamInputSource toSource() {
-        return new LocalFileResource(jdkFile);
+    public IStreamInputSource getInputSource(Charset charset) {
+        LocalFileResource resource = new LocalFileResource(jdkFile);
+        resource.setCharset(charset);
+        return resource;
     }
 
     @Override
-    public IStreamOutputTarget toTarget() {
-        return new LocalFileResource(jdkFile);
+    public IStreamOutputTarget getOutputTarget(Charset charset) {
+        LocalFileResource resource = new LocalFileResource(jdkFile);
+        resource.setCharset(charset);
+        return resource;
     }
 
     // IFsTree

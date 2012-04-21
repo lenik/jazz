@@ -25,6 +25,7 @@ import java.nio.charset.Charset;
 import java.util.List;
 
 import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.i18n.LocaleColos;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
 import net.bodz.bas.io.resource.preparation.FormatDumpPreparation;
@@ -212,14 +213,42 @@ public abstract class AbstractFile
     }
 
     @Override
-    public IStreamInputSource toSource() {
+    public final IStreamInputSource getInputSource() {
+        Charset charset = getPreferredCharset();
+        if (charset == null)
+            charset = LocaleColos.charset.get();
+        return getInputSource(charset);
+    }
+
+    @Override
+    public final IStreamInputSource getInputSource(String charsetName) {
+        Charset charset = Charset.forName(charsetName);
+        return getInputSource(charset);
+    }
+
+    @Override
+    public IStreamInputSource getInputSource(Charset charset) {
         if (isBlob())
             throw new NotImplementedException();
         return null;
     }
 
     @Override
-    public IStreamOutputTarget toTarget() {
+    public final IStreamOutputTarget getOutputTarget() {
+        Charset charset = getPreferredCharset();
+        if (charset == null)
+            charset = LocaleColos.charset.get();
+        return getOutputTarget(charset);
+    }
+
+    @Override
+    public final IStreamOutputTarget getOutputTarget(String charsetName) {
+        Charset charset = Charset.forName(charsetName);
+        return getOutputTarget(charset);
+    }
+
+    @Override
+    public IStreamOutputTarget getOutputTarget(Charset charset) {
         if (isBlob())
             throw new NotImplementedException();
         return null;
@@ -227,7 +256,7 @@ public abstract class AbstractFile
 
     @Override
     public IStreamReadPreparation forRead() {
-        IStreamInputSource source = toSource();
+        IStreamInputSource source = getInputSource();
         if (source == null)
             return null;
         return new StreamReadPreparation(source);
@@ -235,7 +264,7 @@ public abstract class AbstractFile
 
     @Override
     public IStreamWritePreparation forWrite() {
-        IStreamOutputTarget target = toTarget();
+        IStreamOutputTarget target = getOutputTarget();
         if (target == null)
             return null;
         return new StreamWritePreparation(target);
@@ -243,7 +272,7 @@ public abstract class AbstractFile
 
     @Override
     public ParseLoadPreparation forLoad() {
-        IStreamInputSource source = toSource();
+        IStreamInputSource source = getInputSource();
         if (source == null)
             return null;
         return new ParseLoadPreparation(source);
@@ -251,7 +280,7 @@ public abstract class AbstractFile
 
     @Override
     public FormatDumpPreparation forDump() {
-        IStreamOutputTarget target = toTarget();
+        IStreamOutputTarget target = getOutputTarget();
         if (target == null)
             return null;
         return new FormatDumpPreparation(target);

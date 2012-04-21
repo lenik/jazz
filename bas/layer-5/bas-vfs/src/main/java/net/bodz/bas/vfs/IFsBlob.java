@@ -2,15 +2,14 @@ package net.bodz.bas.vfs;
 
 import java.nio.charset.Charset;
 
-import net.bodz.bas.io.resource.IStreamInputSource;
-import net.bodz.bas.io.resource.IStreamOutputTarget;
+import net.bodz.bas.io.resource.IStreamResourceWrapper;
 import net.bodz.bas.io.resource.preparation.IFormatDumpPreparation;
 import net.bodz.bas.io.resource.preparation.IParseLoadPreparation;
 import net.bodz.bas.io.resource.preparation.IStreamReadPreparation;
 import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
 
 public interface IFsBlob
-        extends IFsEntry {
+        extends IFsEntry, IStreamResourceWrapper {
 
     /**
      * Clone the status, but no blob data.
@@ -71,16 +70,6 @@ public interface IFsBlob
      * @return <code>true</code> If this file is ramdom seekable.
      */
     boolean isSeekable();
-
-    /**
-     * @return <code>null</code> If this isn't a file blob.
-     */
-    IStreamInputSource toSource();
-
-    /**
-     * @return <code>null</code> If this isn't a file blob.
-     */
-    IStreamOutputTarget toTarget();
 
     /**
      * @return <code>null</code> If this isn't a file blob.
