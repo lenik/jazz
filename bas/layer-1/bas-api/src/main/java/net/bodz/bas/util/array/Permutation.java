@@ -1,8 +1,8 @@
 package net.bodz.bas.util.array;
 
-import net.bodz.bas.closure.Proc1;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.OutOfDomainException;
+import net.bodz.bas.mode._fn.Proc1;
 import net.bodz.bas.util.ints.IntSList;
 
 public class Permutation {

@@ -32,7 +32,7 @@ public class SortedList<E>
      */
     @SuppressWarnings("unchecked")
     public SortedList(List<E> sortedList) {
-        this(sortedList, (Comparator<? super E>) new NaturalComparator());
+        this(sortedList, (Comparator<? super E>) new NaturalComparator<>());
     }
 
     @Override

@@ -2,7 +2,7 @@ package net.bodz.bas.c.reflect;
 
 import java.lang.reflect.Field;
 
-import net.bodz.bas.closure.Pred1;
+import net.bodz.bas.mode._fn.Pred1;
 
 public class ReflectReverseSearch {
 

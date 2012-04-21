@@ -4,10 +4,10 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import net.bodz.bas.api.proxy.Decorator;
+import net.bodz.bas.mode.AbstractDecorator;
 
 public class MapDecorator<K, V>
-        extends Decorator<Map<K, V>>
+        extends AbstractDecorator<Map<K, V>>
         implements Map<K, V> {
 
     public MapDecorator(Map<K, V> impl) {

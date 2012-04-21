@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.bodz.bas.lang.arch.IExecutableX;
+import net.bodz.bas.mode.fn.IExecutableX;
 
 /**
  * may throw exceptions in future:
@@ -102,12 +102,12 @@ public interface UserInterface {
     /**
      * @return <code>null</code> if canceled
      */
-    <K> Set<K> choices(String title, Map<K, ?> candidates, K... initial);
+    <K> Set<K> choices(String title, Map<K, ?> candidates, @SuppressWarnings("unchecked") K... initial);
 
     /**
      * @return <code>null</code> if canceled
      */
-    <K> Set<K> choices(String title, Object detail, Map<K, ?> candidates, K... initial);
+    <K> Set<K> choices(String title, Object detail, Map<K, ?> candidates, @SuppressWarnings("unchecked") K... initial);
 
     /**
      * @return <code>null</code> if canceled
