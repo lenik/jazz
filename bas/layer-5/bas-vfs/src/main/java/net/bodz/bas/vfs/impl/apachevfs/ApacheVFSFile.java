@@ -170,7 +170,7 @@ public class ApacheVFSFile
     }
 
     @Override
-    public IStreamOutputTarget getOutputTarget(Charset charset) {
+    public IStreamOutputTarget getOutputTarget(boolean appendMode, Charset charset) {
         JavaioStreamOutputTarget outputTarget = new JavaioStreamOutputTarget() {
             @Override
             public OutputStream newOutputStream()
@@ -180,6 +180,7 @@ public class ApacheVFSFile
                 return out;
             }
         };
+        outputTarget.setAppendMode(appendMode);
         outputTarget.setCharset(charset);
         return outputTarget;
     }

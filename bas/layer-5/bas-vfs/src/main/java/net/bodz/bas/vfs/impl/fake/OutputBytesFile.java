@@ -78,8 +78,9 @@ public class OutputBytesFile
     }
 
     @Override
-    public IStreamOutputTarget getOutputTarget(Charset charset) {
+    public IStreamOutputTarget getOutputTarget(boolean appendMode, Charset charset) {
         OutputStreamTarget target = new OutputStreamTarget(buffer);
+        target.setAppendMode(appendMode);
         target.setCharset(charset);
         return target;
     }

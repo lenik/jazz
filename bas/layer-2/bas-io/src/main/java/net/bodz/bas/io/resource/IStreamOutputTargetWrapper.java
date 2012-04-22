@@ -10,4 +10,10 @@ public interface IStreamOutputTargetWrapper {
 
     IStreamOutputTarget getOutputTarget(Charset charset);
 
+    IStreamOutputTarget getOutputTarget(boolean appendMode);
+
+    IStreamOutputTarget getOutputTarget(boolean appendMode, String charsetName);
+
+    IStreamOutputTarget getOutputTarget(boolean appendMode, Charset charset);
+
 }
