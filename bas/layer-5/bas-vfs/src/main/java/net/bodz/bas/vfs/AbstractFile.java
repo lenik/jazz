@@ -235,20 +235,37 @@ public abstract class AbstractFile
 
     @Override
     public final IStreamOutputTarget getOutputTarget() {
-        Charset charset = getPreferredCharset();
-        if (charset == null)
-            charset = LocaleColos.charset.get();
-        return getOutputTarget(charset);
+        // There no preferred-append-mode.
+        return getOutputTarget(false);
     }
 
     @Override
     public final IStreamOutputTarget getOutputTarget(String charsetName) {
-        Charset charset = Charset.forName(charsetName);
-        return getOutputTarget(charset);
+        return getOutputTarget(false, charsetName);
     }
 
     @Override
-    public IStreamOutputTarget getOutputTarget(Charset charset) {
+    public final IStreamOutputTarget getOutputTarget(Charset charset) {
+        return getOutputTarget(false, charset);
+    }
+
+    @Override
+    public final IStreamOutputTarget getOutputTarget(boolean appendMode) {
+        Charset charset = getPreferredCharset();
+        if (charset == null)
+            charset = LocaleColos.charset.get();
+        // There no preferred-append-mode.
+        return getOutputTarget(appendMode, charset);
+    }
+
+    @Override
+    public final IStreamOutputTarget getOutputTarget(boolean appendMode, String charsetName) {
+        Charset charset = Charset.forName(charsetName);
+        return getOutputTarget(appendMode, charset);
+    }
+
+    @Override
+    public IStreamOutputTarget getOutputTarget(boolean appendMode, Charset charset) {
         if (isBlob())
             throw new NotImplementedException();
         return null;

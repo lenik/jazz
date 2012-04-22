@@ -151,8 +151,9 @@ public class JavaioFile
     }
 
     @Override
-    public IStreamOutputTarget getOutputTarget(Charset charset) {
+    public IStreamOutputTarget getOutputTarget(boolean appendMode, Charset charset) {
         LocalFileResource resource = new LocalFileResource(jdkFile);
+        resource.setAppendMode(appendMode);
         resource.setCharset(charset);
         return resource;
     }
