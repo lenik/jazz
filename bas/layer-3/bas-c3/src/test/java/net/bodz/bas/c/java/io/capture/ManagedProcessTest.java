@@ -1,4 +1,4 @@
-package net.bodz.bas.io.capture;
+package net.bodz.bas.c.java.io.capture;
 
 import static org.junit.Assert.assertEquals;
 
@@ -6,6 +6,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import net.bodz.bas.c.java.io.capture.ManagedProcess;
+import net.bodz.bas.c.java.io.capture.Processes;
+import net.bodz.bas.c.java.io.capture._IOCallback;
 import net.bodz.bas.sio.BCharOut;
 
 import org.junit.Test;

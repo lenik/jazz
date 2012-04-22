@@ -1,4 +1,4 @@
-package net.bodz.bas.io.capture;
+package net.bodz.bas.c.java.io.capture;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.Charset;
 
+import net.bodz.bas.c.java.io.capture.ProcessesTest;
 import net.bodz.bas.c.string.StringArray;
 
 import org.apache.commons.lang.ArrayUtils;
