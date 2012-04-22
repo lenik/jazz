@@ -8,7 +8,7 @@ public class DummyState extends StateImpl {
         super(null);
     }
 
-    public DummyState(StateGraph graph) {
+    public DummyState(IStateGraph graph) {
         super(graph);
     }
 

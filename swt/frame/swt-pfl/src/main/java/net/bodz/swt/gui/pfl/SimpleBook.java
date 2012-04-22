@@ -15,9 +15,9 @@ import net.bodz.bas.sio.BCharOut;
 import net.bodz.swt.reflect.nls.GUINLS;
 
 public class SimpleBook
-        extends _Book {
+        extends AbstractBook {
 
-    private Map<TreePath, Page> map;
+    private Map<TreePath, IPage> map;
     private TreePath first;
     private List<PageMethod> methods;
     private NLS dict;
@@ -30,13 +30,13 @@ public class SimpleBook
         this(title, null);
     }
 
-    public SimpleBook(Book next) {
+    public SimpleBook(IBook next) {
         this(null, next);
     }
 
-    public SimpleBook(String title, Book next) {
+    public SimpleBook(String title, IBook next) {
         super(title, next);
-        map = new HashMap<TreePath, Page>();
+        map = new HashMap<TreePath, IPage>();
         methods = new ArrayList<PageMethod>(4);
         dict = new ResourceBundleNLS("GUI Dict", GUINLS.bundle);
     }
@@ -64,7 +64,7 @@ public class SimpleBook
     }
 
     @Override
-    protected Page _getPage(TreePath path) {
+    protected IPage _getPage(TreePath path) {
         return map.get(path);
     }
 
@@ -72,15 +72,15 @@ public class SimpleBook
         return map.keySet();
     }
 
-    public void add(String path, Page page) {
+    public void add(String path, IPage page) {
         add(new TreePath(path), page);
     }
 
-    public void add(Class<?> clazz, Page page) {
+    public void add(Class<?> clazz, IPage page) {
         add(new TreePath(clazz.getName()), page);
     }
 
-    public void add(TreePath path, Page page) {
+    public void add(TreePath path, IPage page) {
         map.put(path, page);
     }
 
@@ -123,7 +123,7 @@ public class SimpleBook
         BCharOut out = new BCharOut(map.size() * 30);
         out.println(getTitle() + ": ");
         out.println("    Pages: ");
-        for (Entry<TreePath, Page> e : map.entrySet()) {
+        for (Entry<TreePath, IPage> e : map.entrySet()) {
             TreePath path = e.getKey();
             out.println("        " + path + " -> " + e.getValue());
         }

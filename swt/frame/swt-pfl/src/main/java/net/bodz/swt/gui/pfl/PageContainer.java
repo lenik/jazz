@@ -16,14 +16,14 @@ import org.eclipse.swt.widgets.Control;
 public class PageContainer
         extends StackComposite {
 
-    private Book book;
+    private IBook book;
     private Composite nonpage;
     private Map<TreePath, Control> pageMap;
 
     private TreePath activePath;
-    private Page activePage;
+    private IPage activePage;
 
-    public PageContainer(Book book, Composite parent, int style) {
+    public PageContainer(IBook book, Composite parent, int style) {
         super(parent, style);
         if (book == null)
             throw new NullPointerException("book");
@@ -58,7 +58,7 @@ public class PageContainer
         if (Nullables.equals(activePath, path))
             return;
 
-        Page page = null;
+        IPage page = null;
         if (path == null) {
             bringFront(nonpage);
         } else {
@@ -92,7 +92,7 @@ public class PageContainer
         return activePath;
     }
 
-    public Page getActivePage() {
+    public IPage getActivePage() {
         return activePage;
     }
 

@@ -57,12 +57,11 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.ToolBar;
 
 /**
- * @test {@link BasicGUITest}
+ * @website http://www.bodz.net/products/BasicGUI
  */
 @BootInfo(userlibs = { "bodz_swt", "bodz_icons" }, configs = SWTConfig.class)
 @StartMode(StartMode.GUI)
 @Language({ "en", "zh_CN" })
-@WebSite("http://www.bodz.net/products/BasicGUI")
 public class BasicGUI
         extends BasicCLI {
 

@@ -4,12 +4,12 @@ import java.beans.PropertyChangeListener;
 import java.util.Collection;
 
 import net.bodz.bas.collection.tree.TreePath;
-import net.bodz.bas.traits.ValidateException;
+import net.bodz.swt.err.ValidateException;
 
 import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Control;
 
-public interface Page {
+public interface IPage {
 
     String getPageTitle();
 

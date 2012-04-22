@@ -19,7 +19,7 @@ public class DesignerToolbox2f {
 
     StateGraph graph;
 
-    Map<String, SWTState> commands;
+    Map<String, ISWTState> commands;
 
     public DesignerToolbox2f(StateGraph graph) {
         assert graph != null;

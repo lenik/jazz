@@ -5,17 +5,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
 
-public class StateGraphImpl implements StateGraph {
+public class StateGraphImpl implements IStateGraph {
 
     private static final long serialVersionUID = 3618890808666598908L;
 
     protected Object context;
-    protected State current;
+    protected IState current;
 
-    private Stack<State> stack;
+    private Stack<IState> stack;
 
     // <name, state>
-    private Map<Object, State> registry;
+    private Map<Object, IState> registry;
 
     public StateGraphImpl() {
         this(new DummyState(), null);
@@ -25,32 +25,32 @@ public class StateGraphImpl implements StateGraph {
         this(new DummyState(), context);
     }
 
-    public StateGraphImpl(State start) {
+    public StateGraphImpl(IState start) {
         this(start, null);
     }
 
-    public StateGraphImpl(State start, Object context) {
+    public StateGraphImpl(IState start, Object context) {
         assert start != null;
         current = start;
         current.setGraph(this);
 
         this.context = context;
-        this.registry = new HashMap<Object, State>();
+        this.registry = new HashMap<Object, IState>();
     }
 
-    public StateGraphImpl(Map<Object, State> registry, Object startKey) {
+    public StateGraphImpl(Map<Object, IState> registry, Object startKey) {
         this(registry, startKey, null);
     }
 
-    public StateGraphImpl(Map<Object, State> registry, Object startKey, Object context) {
+    public StateGraphImpl(Map<Object, IState> registry, Object startKey, Object context) {
         assert registry != null;
         assert startKey != null;
 
-        current = (State) registry.get(startKey);
+        current = (IState) registry.get(startKey);
         assert current != null;
 
         for (Object regKey : registry.keySet()) {
-            State state = (State) registry.get(regKey);
+            IState state = (IState) registry.get(regKey);
             state.setGraph(this);
         }
 
@@ -62,19 +62,19 @@ public class StateGraphImpl implements StateGraph {
         return context;
     }
 
-    public State current() {
+    public IState current() {
         return current;
     }
 
     public boolean isAccepted() {
-        return current.getType() == State.ACCEPT;
+        return current.getType() == IState.ACCEPT;
     }
 
     public boolean isErrored() {
-        return current.getType() == State.ERROR;
+        return current.getType() == IState.ERROR;
     }
 
-    public State recv(Object message) {
+    public IState recv(Object message) {
         return current = current.recv(message);
     }
 
@@ -85,17 +85,17 @@ public class StateGraphImpl implements StateGraph {
      *            the state to be checked.
      * @return true if the state is valid.
      */
-    protected boolean checkState(State state) {
+    protected boolean checkState(IState state) {
         return true;
     }
 
-    public void jump(State target) {
+    public void jump(IState target) {
         assert target != null;
 
         if (!checkState(target))
             throw new InvalidStateException();
 
-        State source = current;
+        IState source = current;
 
         leave(source);
         source.leave(target);
@@ -106,16 +106,16 @@ public class StateGraphImpl implements StateGraph {
         enter(target);
     }
 
-    public void push(State state) {
+    public void push(IState state) {
         stack.push(current);
         jump(state);
     }
 
-    public State pop() {
+    public IState pop() {
         if (stack.isEmpty())
             throw new EmptyStackException();
 
-        State top = stack.pop();
+        IState top = stack.pop();
         jump(top);
 
         return current;
@@ -127,7 +127,7 @@ public class StateGraphImpl implements StateGraph {
      * @param current
      *            The entered state
      */
-    protected void enter(State current) {
+    protected void enter(IState current) {
     }
 
     /**
@@ -136,10 +136,10 @@ public class StateGraphImpl implements StateGraph {
      * @param current
      *            The left state
      */
-    protected void leave(State current) {
+    protected void leave(IState current) {
     }
 
-    public void add(Object key, State state) {
+    public void add(Object key, IState state) {
         assert key != null;
         assert state != null;
         if (registry.containsKey(key))
@@ -156,15 +156,15 @@ public class StateGraphImpl implements StateGraph {
         registry.remove(key);
     }
 
-    public State get(Object key) {
+    public IState get(Object key) {
         assert key != null;
-        return (State) registry.get(key);
+        return (IState) registry.get(key);
     }
 
-    public Object find(State state) {
+    public Object find(IState state) {
         assert state != null;
         for (Object key : registry.keySet()) {
-            State st = (State) registry.get(key);
+            IState st = (IState) registry.get(key);
             if (st == state)
                 return key;
         }

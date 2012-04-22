@@ -7,13 +7,13 @@ import java.util.List;
 import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.bas.i18n.nls.NLS;
 
-public abstract class _Book
-        implements Book {
+public abstract class AbstractBook
+        implements IBook {
 
     private final String title;
-    protected final Book next;
+    protected final IBook next;
 
-    public _Book(String title, Book next) {
+    public AbstractBook(String title, IBook next) {
         if (title == null)
             title = getClass().getName();
         this.title = title;
@@ -35,8 +35,8 @@ public abstract class _Book
     }
 
     @Override
-    public Page getPage(TreePath path) {
-        Page page = _getPage(path);
+    public IPage getPage(TreePath path) {
+        IPage page = _getPage(path);
         if (page != null)
             return page;
         if (next != null)
@@ -88,10 +88,10 @@ public abstract class _Book
         return all;
     }
 
-    protected abstract Page _getPage(TreePath path);
+    protected abstract IPage _getPage(TreePath path);
 
     protected boolean _contains(TreePath path) {
-        Page page = _getPage(path);
+        IPage page = _getPage(path);
         return page != null;
     }
 

@@ -10,16 +10,16 @@ import net.bodz.bas.meta.info.DisplayNameUtil;
  * Implemented Features: - Composition
  */
 public abstract class StateImpl
-        implements State {
+        implements IState {
 
     private static final long serialVersionUID = 1L;
 
-    private static final Map<Object, State> DummyMap = new HashMap<Object, State>();
+    private static final Map<Object, IState> DummyMap = new HashMap<Object, IState>();
 
-    protected StateGraph graph;
-    protected Map<Object, State> staticMap = DummyMap;
+    protected IStateGraph graph;
+    protected Map<Object, IState> staticMap = DummyMap;
 
-    public StateImpl(StateGraph graph) {
+    public StateImpl(IStateGraph graph) {
         this.graph = graph;
     }
 
@@ -31,15 +31,15 @@ public abstract class StateImpl
         return NORMAL;
     }
 
-    public StateGraph getGraph() {
+    public IStateGraph getGraph() {
         return graph;
     }
 
-    public void setGraph(StateGraph graph) {
+    public void setGraph(IStateGraph graph) {
         this.graph = graph;
     }
 
-    public State recv(Object message) {
+    public IState recv(Object message) {
         return staticMap.get(message);
     }
 
@@ -49,7 +49,7 @@ public abstract class StateImpl
      * @param prev
      *            The previous state
      */
-    public void enter(State prev) {
+    public void enter(IState prev) {
     }
 
     /**
@@ -58,10 +58,10 @@ public abstract class StateImpl
      * @param next
      *            The next state
      */
-    public void leave(State next) {
+    public void leave(IState next) {
     }
 
-    public Map<Object, State> getStaticMap() {
+    public Map<Object, IState> getStaticMap() {
         return staticMap;
     }
 

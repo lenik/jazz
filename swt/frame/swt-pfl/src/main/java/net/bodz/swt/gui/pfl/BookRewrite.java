@@ -9,17 +9,17 @@ import net.bodz.bas.i18n.nls.NLS;
 import net.bodz.bas.sio.BCharOut;
 
 public class BookRewrite
-        implements Book {
+        implements IBook {
 
     private final String title;
     private final List<RewriteRule> rules;
-    private final Book next;
+    private final IBook next;
 
-    public BookRewrite(Book next) {
+    public BookRewrite(IBook next) {
         this(null, next);
     }
 
-    public BookRewrite(String title, Book next) {
+    public BookRewrite(String title, IBook next) {
         if (title == null)
             title = getClass().getName();
         this.title = title;
@@ -46,7 +46,7 @@ public class BookRewrite
     }
 
     @Override
-    public Page getPage(TreePath path) {
+    public IPage getPage(TreePath path) {
         path = resolve(path);
         return next.getPage(path);
     }

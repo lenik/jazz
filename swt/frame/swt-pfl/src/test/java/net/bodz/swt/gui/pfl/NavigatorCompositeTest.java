@@ -17,7 +17,7 @@ public class NavigatorCompositeTest {
         final ControlTestApp test = new ControlTestApp();
         final NavigatorComposite navigator = new NavigatorComposite(book, test.holder, SWT.BORDER);
 
-        navigator.getPageFlow().addBadPathListener(new BadPathListener() {
+        navigator.getPageFlow().addBadPathListener(new IBadPathListener() {
             @Override
             public void badPath(BadPathEvent e) {
                 test.shell.dispose();
