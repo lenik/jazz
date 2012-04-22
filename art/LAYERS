@@ -1,0 +1,17 @@
+base/           基础组件
+    art-api
+    
+os/             操作系统访问支持
+    art-win32
+    art-linux
+
+prepare/        预处理
+    art-obfuz           混淆结构支持
+    
+packager/       打包
+    art-pack            包结构
+    art-installer       安装程序
+    
+support/        支持工具
+    art-site            产品支持站点，如自动更新
+    art-admin           维护工具如算号器等
