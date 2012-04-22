@@ -1,4 +1,4 @@
-package net.bodz.bas.io.capture;
+package net.bodz.bas.c.java.io.capture;
 
 import java.io.IOException;
 import java.io.OutputStream;

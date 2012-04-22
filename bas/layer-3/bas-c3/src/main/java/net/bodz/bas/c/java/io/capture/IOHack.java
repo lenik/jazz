@@ -1,4 +1,4 @@
-package net.bodz.bas.io.capture;
+package net.bodz.bas.c.java.io.capture;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
