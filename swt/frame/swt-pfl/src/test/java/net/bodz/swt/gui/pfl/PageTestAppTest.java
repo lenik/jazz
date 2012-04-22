@@ -8,7 +8,7 @@ import org.eclipse.swt.widgets.Label;
 public class PageTestAppTest {
 
     public static void main(String[] args) {
-        PageTestApp app = new PageTestApp(new _Page() {
+        PageTestApp app = new PageTestApp(new AbstractPage() {
 
             @Override
             public String getPageTitle() {

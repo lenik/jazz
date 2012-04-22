@@ -27,6 +27,7 @@ import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.ReadOnlyException;
 import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.log.api.Logger;
 import net.bodz.swt.err.GUIAccessException;
 import net.bodz.swt.reflect.GUIVars.GUIFieldMeta;
 import net.bodz.swt.reflect.GUIVars.GUIFieldVar;
@@ -36,7 +37,7 @@ import net.bodz.swt.reflect.nls.GUINLS;
 
 public class GUIStructs {
 
-    static LogTerm logger = LogTerms.get(1);
+    static Logger logger = LogTerms.get(1);
 
     public static class ClassMeta {
 

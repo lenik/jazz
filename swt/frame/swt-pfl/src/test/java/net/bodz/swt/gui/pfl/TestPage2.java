@@ -7,7 +7,7 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 
 public class TestPage2
-        extends _Page {
+        extends AbstractPage {
 
     TestComposite inner;
 

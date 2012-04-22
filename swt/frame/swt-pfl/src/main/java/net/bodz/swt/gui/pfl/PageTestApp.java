@@ -28,19 +28,19 @@ public class PageTestApp
         book.addMethod(new PageMethod(DEBUG.getPath(), "Debug"));
     }
 
-    public PageTestApp(Page pageToTest) {
+    public PageTestApp(IPage pageToTest) {
         this();
         setTestPage(pageToTest);
     }
 
-    public void setTestPage(Page pageToTest) {
+    public void setTestPage(IPage pageToTest) {
         book.add(START, pageToTest);
     }
 
     @Override
     public void run() {
         navigator = new NavigatorComposite(book, holder, SWT.NONE);
-        navigator.getPageFlow().addBadPathListener(new BadPathListener() {
+        navigator.getPageFlow().addBadPathListener(new IBadPathListener() {
             @Override
             public void badPath(BadPathEvent e) {
                 System.out.println("Exit from: " + e.path);
@@ -51,7 +51,7 @@ public class PageTestApp
     }
 
     static class DebugPage
-            extends _Page {
+            extends AbstractPage {
 
         Label prevLabel;
         Label infoLabel;
@@ -78,7 +78,7 @@ public class PageTestApp
         @Override
         public TreePath service(ServiceContext context)
                 throws PageException {
-            Book book = context.getPageContext().getBook();
+            IBook book = context.getPageContext().getBook();
             TreePath referrer = context.getReferrerPath();
             prevLabel.setText(GUINLS.format("PageTestApp.youFromA_s", referrer)); //$NON-NLS-1$
 
@@ -86,7 +86,7 @@ public class PageTestApp
             if (referrer == null)
                 throw new NullPointerException("referrer");
 
-            Page referrerPage = book.getPage(referrer);
+            IPage referrerPage = book.getPage(referrer);
             if (referrerPage == null)
                 throw new IllegalUsageException(GUINLS.getString("PageTestApp.badAddress") //$NON-NLS-1$
                         + referrer);

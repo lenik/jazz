@@ -1,14 +1,13 @@
 package net.bodz.geom.util.gd;
 
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Image;
-import java.awt.event.PaintEvent;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
+import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
 
 public class DesignerCanvas2f

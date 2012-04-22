@@ -19,15 +19,15 @@ public class GDStateGraph
         super(context);
     }
 
-    public GDStateGraph(SWTState start, GDContext context) {
+    public GDStateGraph(ISWTState start, GDContext context) {
         super(start, context);
     }
 
-    public GDStateGraph(Map<Object, State> registry, Object startKey) {
+    public GDStateGraph(Map<Object, IState> registry, Object startKey) {
         super(registry, startKey);
     }
 
-    public GDStateGraph(Map<Object, State> registry, Object startKey, GDContext context) {
+    public GDStateGraph(Map<Object, IState> registry, Object startKey, GDContext context) {
         super(registry, startKey, context);
     }
 

@@ -15,14 +15,14 @@ import org.eclipse.swt.widgets.Text;
 
 public abstract class PageFlow {
 
-    private final PageContext pageContext;
-    private final Book book;
+    private final IPageContext pageContext;
+    private final IBook book;
     private final History history;
 
     private List<LocationChangeListener> locationChangeListeners;
-    private List<BadPathListener> badPathListeners;
+    private List<IBadPathListener> badPathListeners;
 
-    public PageFlow(PageContext pageContext) {
+    public PageFlow(IPageContext pageContext) {
         if (pageContext == null)
             throw new NullPointerException("pageContext");
         this.pageContext = pageContext;
@@ -73,7 +73,7 @@ public abstract class PageFlow {
             throw new NullPointerException("request.path");
         try {
             if (prev != null) {
-                Page page = book.getPage(prev);
+                IPage page = book.getPage(prev);
                 try {
                     page.validate();
                 } catch (ValidateException e) {
@@ -97,7 +97,7 @@ public abstract class PageFlow {
                 showTurn(prev, next);
 
                 ServiceContext context = createServiceContext(request, referrer);
-                Page nextPage = book.getPage(next);
+                IPage nextPage = book.getPage(next);
                 TreePath redirect = nextPage.service(context);
                 if (redirect == null)
                     break;
@@ -117,7 +117,7 @@ public abstract class PageFlow {
         return new ServiceContext() {
 
             @Override
-            public PageContext getPageContext() {
+            public IPageContext getPageContext() {
                 return pageContext;
             }
 
@@ -138,7 +138,7 @@ public abstract class PageFlow {
             throws PageException {
         assert prev != null;
         assert book.contains(prev);
-        Page prevPage = book.getPage(prev);
+        IPage prevPage = book.getPage(prev);
         if (prevPage.isSticked())
             throw new PageException("Page is sticked: " + getPageInfo(prev, prevPage));
         prevPage.leave(next);
@@ -148,7 +148,7 @@ public abstract class PageFlow {
             throws PageException {
         assert next != null;
         assert book.contains(next);
-        Page nextPage = book.getPage(next);
+        IPage nextPage = book.getPage(next);
         nextPage.enter(prev);
         if (!Nullables.equals(prev, next))
             fireLocationChange(prev, next);
@@ -183,7 +183,7 @@ public abstract class PageFlow {
         }
     }
 
-    static String getPageInfo(TreePath path, Page page) {
+    static String getPageInfo(TreePath path, IPage page) {
         String pageTitle = page.getPageTitle();
         return path + " => " + pageTitle;
     }
@@ -210,13 +210,13 @@ public abstract class PageFlow {
         }
     }
 
-    public void addBadPathListener(BadPathListener l) {
+    public void addBadPathListener(IBadPathListener l) {
         if (badPathListeners == null)
-            badPathListeners = new ArrayList<BadPathListener>(1);
+            badPathListeners = new ArrayList<IBadPathListener>(1);
         badPathListeners.add(l);
     }
 
-    public void removeBadPathListener(BadPathListener l) {
+    public void removeBadPathListener(IBadPathListener l) {
         if (badPathListeners != null)
             badPathListeners.remove(l);
     }
@@ -224,7 +224,7 @@ public abstract class PageFlow {
     protected void fireBadPath(TreePath path) {
         if (badPathListeners != null) {
             BadPathEvent e = new BadPathEvent(pageContext, path);
-            for (BadPathListener l : badPathListeners) {
+            for (IBadPathListener l : badPathListeners) {
                 l.badPath(e);
             }
         }

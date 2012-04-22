@@ -2,11 +2,11 @@ package net.bodz.swt.gui.pfl;
 
 import org.eclipse.swt.widgets.Shell;
 
-public interface PageContext {
+public interface IPageContext {
 
     Shell getShell();
 
-    Book getBook();
+    IBook getBook();
 
     History getHistory();
 

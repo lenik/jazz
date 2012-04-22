@@ -5,7 +5,7 @@ import net.bodz.bas.util.exception.RecoverableExceptionListener;
 public abstract class JobObserver
         implements RecoverableExceptionListener, StatusChangeListener, ProgressChangeListener, DurationChangeListener {
 
-    public void bind(Job job) {
+    public void bind(IJob job) {
         if (job == null)
             throw new NullPointerException("job");
         Trace.link(this, "observer", job);
@@ -15,7 +15,7 @@ public abstract class JobObserver
         job.addDurationChangeListener(this);
     }
 
-    public void unbind(Job job) {
+    public void unbind(IJob job) {
         if (job == null)
             throw new NullPointerException("job");
         Trace.unlink(this, "observer", job);

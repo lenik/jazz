@@ -2,6 +2,8 @@ package net.bodz.swt.state;
 
 import java.util.Map;
 
+import net.bodz.bas.fsm.base.IState;
+import net.bodz.bas.fsm.base.StateGraphImpl;
 import net.bodz.swt.ex.HistoryMouseListener;
 
 import org.eclipse.swt.events.KeyEvent;
@@ -12,7 +14,7 @@ import org.eclipse.swt.events.MouseMoveListener;
 
 public class SWTStateGraphImpl
         extends StateGraphImpl
-        implements SWTStateGraph, MouseListener, MouseMoveListener, KeyListener {
+        implements ISWTStateGraph, MouseListener, MouseMoveListener, KeyListener {
 
     private static final long serialVersionUID = 2084698255485360902L;
 
@@ -20,7 +22,7 @@ public class SWTStateGraphImpl
         this(new SWTDummyState(), null);
     }
 
-    public SWTStateGraphImpl(SWTState start) {
+    public SWTStateGraphImpl(ISWTState start) {
         this(start, null);
     }
 
@@ -28,16 +30,16 @@ public class SWTStateGraphImpl
         this(new SWTDummyState(), context);
     }
 
-    public SWTStateGraphImpl(SWTState start, SWTContext context) {
+    public SWTStateGraphImpl(ISWTState start, SWTContext context) {
         super(start, context);
         assert start != null;
     }
 
-    public SWTStateGraphImpl(Map<Object, State> registry, Object startKey) {
+    public SWTStateGraphImpl(Map<Object, IState> registry, Object startKey) {
         super(registry, startKey);
     }
 
-    public SWTStateGraphImpl(Map<Object, State> registry, Object startKey, SWTContext context) {
+    public SWTStateGraphImpl(Map<Object, IState> registry, Object startKey, SWTContext context) {
         super(registry, startKey, context);
     }
 
@@ -49,23 +51,23 @@ public class SWTStateGraphImpl
     }
 
     @Override
-    public SWTState current() {
-        return (SWTState) super.current();
+    public ISWTState current() {
+        return (ISWTState) super.current();
     }
 
     @Override
-    public SWTState get(Object key) {
-        return (SWTState) super.get(key);
+    public ISWTState get(Object key) {
+        return (ISWTState) super.get(key);
     }
 
     @Override
-    public SWTState pop() {
-        return (SWTState) super.pop();
+    public ISWTState pop() {
+        return (ISWTState) super.pop();
     }
 
     @Override
-    public SWTState recv(Object message) {
-        return (SWTState) super.recv(message);
+    public ISWTState recv(Object message) {
+        return (ISWTState) super.recv(message);
     }
 
     // -o MouseListener
@@ -102,22 +104,22 @@ public class SWTStateGraphImpl
     }
 
     protected void mouseDown2(MouseEvent e) {
-        SWTState state = (SWTState) current;
-        SWTState target = state.onMouseDown(e);
+        ISWTState state = (ISWTState) current;
+        ISWTState target = state.onMouseDown(e);
         if (state != target)
             jump(target);
     }
 
     protected void mouseUp2(MouseEvent e, MouseEvent d) {
-        SWTState state = (SWTState) current;
-        SWTState target = state.onMouseUp(e, d);
+        ISWTState state = (ISWTState) current;
+        ISWTState target = state.onMouseUp(e, d);
         if (state != target)
             jump(target);
     }
 
     protected void mouseDoubleClick2(MouseEvent e) {
-        SWTState state = (SWTState) current;
-        SWTState target = state.onMouseDoubleClick(e);
+        ISWTState state = (ISWTState) current;
+        ISWTState target = state.onMouseDoubleClick(e);
         if (state != target)
             jump(target);
     }
@@ -128,8 +130,8 @@ public class SWTStateGraphImpl
         // d may be null.
         MouseEvent d = hm.getPrevious(e.button);
 
-        SWTState state = (SWTState) current;
-        SWTState target = state.onMouseMove(e, d);
+        ISWTState state = (ISWTState) current;
+        ISWTState target = state.onMouseMove(e, d);
         if (state != target)
             jump(target);
     }
@@ -137,15 +139,15 @@ public class SWTStateGraphImpl
     // -o KeyListener
 
     public void keyPressed(KeyEvent e) {
-        SWTState state = (SWTState) current;
-        SWTState target = state.onKeyPressed(e);
+        ISWTState state = (ISWTState) current;
+        ISWTState target = state.onKeyPressed(e);
         if (state != target)
             jump(target);
     }
 
     public void keyReleased(KeyEvent e) {
-        SWTState state = (SWTState) current;
-        SWTState target = state.onKeyReleased(e);
+        ISWTState state = (ISWTState) current;
+        ISWTState target = state.onKeyReleased(e);
         if (state != target)
             jump(target);
     }

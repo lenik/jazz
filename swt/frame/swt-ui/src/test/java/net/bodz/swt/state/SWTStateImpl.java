@@ -1,44 +1,46 @@
 package net.bodz.swt.state;
 
+import net.bodz.bas.fsm.base.StateImpl;
+
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.MouseEvent;
 
 public class SWTStateImpl
         extends StateImpl
-        implements SWTState {
+        implements ISWTState {
 
     private static final long serialVersionUID = -5164514899871558948L;
 
-    public SWTStateImpl(SWTStateGraph graph) {
+    public SWTStateImpl(ISWTStateGraph graph) {
         super(graph);
     }
 
     @Override
-    public SWTStateGraph getGraph() {
-        return (SWTStateGraph) graph;
+    public ISWTStateGraph getGraph() {
+        return (ISWTStateGraph) graph;
     }
 
-    public SWTState onKeyPressed(KeyEvent e) {
+    public ISWTState onKeyPressed(KeyEvent e) {
         return this;
     }
 
-    public SWTState onKeyReleased(KeyEvent e) {
+    public ISWTState onKeyReleased(KeyEvent e) {
         return this;
     }
 
-    public SWTState onMouseDoubleClick(MouseEvent e) {
+    public ISWTState onMouseDoubleClick(MouseEvent e) {
         return this;
     }
 
-    public SWTState onMouseDown(MouseEvent e) {
+    public ISWTState onMouseDown(MouseEvent e) {
         return this;
     }
 
-    public SWTState onMouseMove(MouseEvent e, MouseEvent d) {
+    public ISWTState onMouseMove(MouseEvent e, MouseEvent d) {
         return this;
     }
 
-    public SWTState onMouseUp(MouseEvent e, MouseEvent d) {
+    public ISWTState onMouseUp(MouseEvent e, MouseEvent d) {
         return this;
     }
 

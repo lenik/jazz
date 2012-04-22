@@ -5,33 +5,33 @@ import java.io.Serializable;
 /**
  * State Context
  */
-public interface StateGraph extends Serializable {
+public interface IStateGraph extends Serializable {
 
     Object context();
 
-    State current();
+    IState current();
 
     boolean isAccepted();
 
     boolean isErrored();
 
-    State recv(Object message);
+    IState recv(Object message);
 
-    void jump(State state);
+    void jump(IState state);
 
-    void push(State state);
+    void push(IState state);
 
-    State pop();
+    IState pop();
 
     // registry of named states
     // a group of states could find each other thru the registry.
     // key is compared by "equals".
 
-    State get(Object key);
+    IState get(Object key);
 
-    Object find(State state);
+    Object find(IState state);
 
-    void add(Object key, State state);
+    void add(Object key, IState state);
 
     void remove(Object key);
 

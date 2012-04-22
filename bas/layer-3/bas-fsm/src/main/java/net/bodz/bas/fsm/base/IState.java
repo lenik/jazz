@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * State Object
  */
-public interface State extends Serializable {
+public interface IState extends Serializable {
 
     /**
      * Ordinary state
@@ -44,7 +44,7 @@ public interface State extends Serializable {
      * 
      * @return The owner graph
      */
-    StateGraph getGraph();
+    IStateGraph getGraph();
 
     /**
      * Set the owner graph
@@ -54,7 +54,7 @@ public interface State extends Serializable {
      * @param graph
      *            The new owner graph to set.
      */
-    void setGraph(StateGraph graph);
+    void setGraph(IStateGraph graph);
 
     /**
      * Receive message and do transition
@@ -63,7 +63,7 @@ public interface State extends Serializable {
      *            The received message
      * @return null If message isn't recognized
      */
-    State recv(Object message);
+    IState recv(Object message);
 
     /**
      * Enter into this state
@@ -71,7 +71,7 @@ public interface State extends Serializable {
      * @param prev
      *            The previous state enter from
      */
-    void enter(State prev);
+    void enter(IState prev);
 
     /**
      * Leave from this atate
@@ -79,7 +79,7 @@ public interface State extends Serializable {
      * @param next
      *            The next state leave into
      */
-    void leave(State next);
+    void leave(IState next);
 
     /**
      * Static message/target state transition map.
@@ -89,6 +89,6 @@ public interface State extends Serializable {
      * 
      * @return the map
      */
-    Map<Object, State> getStaticMap();
+    Map<Object, IState> getStaticMap();
 
 }

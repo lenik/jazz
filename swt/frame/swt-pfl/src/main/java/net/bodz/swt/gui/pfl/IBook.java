@@ -5,7 +5,7 @@ import java.util.Collection;
 import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.bas.i18n.nls.NLS;
 
-public interface Book {
+public interface IBook {
 
     String getTitle();
 
@@ -16,7 +16,7 @@ public interface Book {
     /**
      * @return <code>null</code> if specified page isn't existed.
      */
-    Page getPage(TreePath path);
+    IPage getPage(TreePath path);
 
     Collection<PageMethod> getMethods();
 

@@ -31,7 +31,7 @@ import org.eclipse.swt.widgets.Label;
  */
 public class NavigatorComposite
         extends Composite
-        implements PageContext {
+        implements IPageContext {
 
     private static final int MAX_HISTORY = 300;
 
@@ -51,14 +51,14 @@ public class NavigatorComposite
         protected void showTurn(TreePath prev, TreePath path)
                 throws PageException {
             if (prev != null) {
-                Page prevPage = book.getPage(prev);
+                IPage prevPage = book.getPage(prev);
                 assert prevPage != null;
                 assert prevPage == pageContainer.getActivePage();
                 prevPage.removePropertyChangeListener(refresh);
             }
             showPage(path);
             if (path != null) {
-                Page activePage = book.getPage(path);
+                IPage activePage = book.getPage(path);
                 assert activePage != null;
                 assert activePage == pageContainer.getActivePage();
                 activePage.addPropertyChangeListener(refresh);
@@ -72,7 +72,7 @@ public class NavigatorComposite
 
     }
 
-    private Book book;
+    private IBook book;
     private NLS dict;
     private History history;
     private PageFlow pageFlow;
@@ -102,11 +102,11 @@ public class NavigatorComposite
 
     private final String labelFormat_sc;
 
-    public NavigatorComposite(Book book, Composite parent, int style) {
+    public NavigatorComposite(IBook book, Composite parent, int style) {
         this(book, new History(MAX_HISTORY), parent, style);
     }
 
-    public NavigatorComposite(Book book, History history, Composite parent, int style) {
+    public NavigatorComposite(IBook book, History history, Composite parent, int style) {
         super(parent, style);
         if (book == null)
             throw new NullPointerException("book");
@@ -124,7 +124,7 @@ public class NavigatorComposite
     }
 
     @Override
-    public Book getBook() {
+    public IBook getBook() {
         return book;
     }
 
@@ -278,20 +278,20 @@ public class NavigatorComposite
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             String name = evt.getPropertyName();
-            if (Page.PROP_PAGEICON.equals(name))
+            if (IPage.PROP_PAGEICON.equals(name))
                 refreshIcon();
-            else if (Page.PROP_PAGETITLE.equals(name))
+            else if (IPage.PROP_PAGETITLE.equals(name))
                 refreshTitle();
-            else if (Page.PROP_METHODS.equals(name))
+            else if (IPage.PROP_METHODS.equals(name))
                 refreshMethods();
-            else if (Page.PROP_STICKED.equals(name)) {
+            else if (IPage.PROP_STICKED.equals(name)) {
                 refreshNav();
                 refreshMethods();
             }
         }
 
         void refreshIcon() {
-            Page page = pageContainer.getActivePage();
+            IPage page = pageContainer.getActivePage();
             Image pageIcon = null;
             if (page != null)
                 pageIcon = SWTResources.getImage(page.getPageIcon());
@@ -301,7 +301,7 @@ public class NavigatorComposite
         }
 
         void refreshTitle() {
-            Page page = pageContainer.getActivePage();
+            IPage page = pageContainer.getActivePage();
             String title = ""; //$NON-NLS-1$
             if (page != null)
                 title = page.getPageTitle();
@@ -309,7 +309,7 @@ public class NavigatorComposite
         }
 
         void refreshNav() {
-            Page page = pageContainer.getActivePage();
+            IPage page = pageContainer.getActivePage();
             boolean locked = false;
             if (page != null)
                 locked = page.isSticked();
@@ -325,7 +325,7 @@ public class NavigatorComposite
 
         void refreshMethods() {
             TreePath path = pageContainer.getActivePath();
-            Page page = pageContainer.getActivePage();
+            IPage page = pageContainer.getActivePage();
             boolean locked = false;
             if (page != null)
                 locked = page.isSticked();

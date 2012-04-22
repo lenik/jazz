@@ -9,9 +9,6 @@ import java.util.ListIterator;
 import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.bas.err.OutOfDomainException;
 
-/**
- * @test {@link HistoryTest}
- */
 public class History {
 
     private LinkedList<TreePath> list;

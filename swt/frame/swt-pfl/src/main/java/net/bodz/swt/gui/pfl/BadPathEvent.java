@@ -11,13 +11,13 @@ public class BadPathEvent
 
     public TreePath path;
 
-    public BadPathEvent(PageContext pageContext, TreePath path) {
+    public BadPathEvent(IPageContext pageContext, TreePath path) {
         super(pageContext);
         this.path = path;
     }
 
-    public PageContext getPageContext() {
-        return (PageContext) super.getSource();
+    public IPageContext getPageContext() {
+        return (IPageContext) super.getSource();
     }
 
     @Override

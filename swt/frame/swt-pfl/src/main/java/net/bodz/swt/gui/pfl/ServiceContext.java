@@ -5,7 +5,7 @@ import net.bodz.bas.variant.map.SimpleRequest;
 
 public interface ServiceContext {
 
-    PageContext getPageContext();
+    IPageContext getPageContext();
 
     SimpleRequest getRequest();
 

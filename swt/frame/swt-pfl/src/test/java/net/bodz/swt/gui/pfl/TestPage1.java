@@ -2,8 +2,8 @@ package net.bodz.swt.gui.pfl;
 
 import net.bodz.bas.err.OutOfDomainException;
 import net.bodz.bas.meta.info.Doc;
-import net.bodz.bas.traits.ValidateException;
 import net.bodz.bas.ui.a.Icon;
+import net.bodz.swt.err.ValidateException;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.GridData;
@@ -15,7 +15,7 @@ import org.eclipse.swt.widgets.Text;
 @Doc("Test page 1")
 @Icon("icons/full/obj16/ant.gif")
 public class TestPage1
-        extends _Page {
+        extends AbstractPage {
 
     private Text ageText;
     private Text nameText;

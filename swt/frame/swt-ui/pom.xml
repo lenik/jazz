@@ -9,6 +9,11 @@
     <version>1.2.0-SNAPSHOT</version>
     <dependencies>
         <dependency>
+            <groupId>net.bodz.bas</groupId>
+            <artifactId>bas-fsm</artifactId>
+            <version>2.0.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
             <groupId>net.bodz.swt</groupId>
             <artifactId>swt-api</artifactId>
             <version>1.2.0-SNAPSHOT</version>

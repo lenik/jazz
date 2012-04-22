@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 import net.bodz.bas.collection.tree.TreePath;
-import net.bodz.bas.traits.ValidateException;
+import net.bodz.swt.err.ValidateException;
 import net.bodz.swt.reflect.a.A_gui;
 
 import org.eclipse.swt.SWT;
@@ -17,8 +17,8 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 
-public abstract class _Page
-        implements Page {
+public abstract class AbstractPage
+        implements IPage {
 
     protected PageContainer pageContainer;
     protected Composite pageHolder;
@@ -27,7 +27,7 @@ public abstract class _Page
     private List<PageMethod> methods;
     protected PropertyChangeSupport propertyChangeSupport;
 
-    public _Page() {
+    public AbstractPage() {
         propertyChangeSupport = new PropertyChangeSupport(this);
     }
 
@@ -87,7 +87,7 @@ public abstract class _Page
         if (this.sticked != sticked) {
             boolean old = this.sticked;
             this.sticked = sticked;
-            propertyChangeSupport.firePropertyChange(Page.PROP_STICKED, old, sticked);
+            propertyChangeSupport.firePropertyChange(IPage.PROP_STICKED, old, sticked);
         }
     }
 
