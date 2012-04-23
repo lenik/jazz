@@ -3,6 +3,7 @@ package net.bodz.bas.vfs.preparation;
 import java.io.IOException;
 
 import net.bodz.bas.vfs.IFile;
+import net.bodz.bas.vfs.util.MIMETypes;
 
 public class LazyProbePreparation
         implements IProbePreparation {

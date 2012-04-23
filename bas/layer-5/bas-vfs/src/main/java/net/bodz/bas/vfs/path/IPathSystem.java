@@ -1,5 +1,7 @@
 package net.bodz.bas.vfs.path;
 
+import net.bodz.bas.vfs.CurrentDirectoryColo;
+
 public interface IPathSystem {
 
     int HIGH_PRIORITY = -100;
@@ -7,67 +9,80 @@ public interface IPathSystem {
     int LOW_PRIORITY = 100;
 
     /**
-     * Set path resolver for a named protocol, if that protocol is already exists, then it's
-     * overwrited.
+     * Set the path resolver of specific protocol, if the protocol is in use, return false.
      * 
+     * @return <code>false</code> If the protocol name is in use.
      * @throws NullPointerException
      *             If any parameter is <code>null</code>.
      */
-    void addPathResolver(String protocol, IPathResolver resolver);
+    boolean addPathResolver(String protocol, IPathResolver resolver);
 
     /**
+     * Remove a path resolver by protocol.
+     * 
      * @throws NullPointerException
      *             If <code>protocol</code> is <code>null</code>.
      */
     void removePathResolver(String protocol);
 
     /**
+     * Add a generic path resolver when no protocol is matched.
+     * 
+     * @param resolver
+     *            A generic path resolver to be added.
+     * @param priority
+     *            The priority of this generic path resolver, smaller integer will be evaluated
+     *            first.
+     * @throws NullPointerException
+     *             If <code>resolver</code> is <code>null</code>.
+     * @see #LOW_PRIORITY
+     * @see #NORMAL_PRIORITY
+     * @see #HIGH_PRIORITY
+     */
+    void addGenericPathResolver(IGenericPathResolver resolver, int priority);
+
+    /**
+     * Remove a generic path resolver.
+     * 
+     * @param resolver
+     *            A generic path resolver to be removed.
      * @throws NullPointerException
      *             If <code>resolver</code> is <code>null</code>.
      */
-    void addGenericPathResolver(IPathResolver resolver, int priority);
+    void removeGenericPathResolver(IGenericPathResolver resolver);
 
     /**
-     * @throws NullPointerException
-     *             If <code>resolver</code> is <code>null</code>.
-     */
-    void addGenericPathResolver(IPathResolver resolver);
-
-    /**
-     * @throws NullPointerException
-     *             If <code>resolver</code> is <code>null</code>.
-     */
-    void removeGenericPathResolver(IPathResolver resolver);
-
-    /**
-     * Get the context path.
+     * Get the context path (or "current directory").
      * <p>
      * The context path is used to expand a relative path to absolute path.
      * <p>
-     * You should avoid to use context path whenever possible, because it may be changed.
+     * USING WITH CAUTION: Context path should not be cached.
      * 
      * @return non-<code>null</code> context path, whose alignment should be absolute.
+     * @see CurrentDirectoryColo
      */
     IPath getContextPath();
 
     /**
-     * Change the context path.
+     * Change the context path (or "current directory").
      * <p>
      * The context path is used to expand a relative path to absolute path.
      * 
      * Change context path won't affect those already joined relative paths,
      * <p>
-     * <i>Warning: You should know what you are doing, before change the context path. </i>
+     * USING WITH CAUTION: Context path should not be cached.
      * 
-     * @throws NullPointerException
-     *             If <code>path</code> is <code>null</code>.
+     * @param Non
+     *            -<code>null</code> context path to be set.
      */
     void setContextPath(IPath path);
 
     /**
-     * @return non-<code>null</code> path.
-     * @throws NullPointerException
-     *             If <code>path</code> is <code>null</code>.
+     * Resolve unaligned (i.e., relative) path string within this path system.
+     * 
+     * @param path
+     *            The path string to be resolved.
+     * @return Non-<code>null</code> resolved path object.
      */
     IPath resolve(String path)
             throws BadPathException;
