@@ -44,9 +44,8 @@ public class Mitors {
 class EmptyMitor<T>
         extends AbstractMitor<T> {
 
-    @Override
-    public boolean isEnded() {
-        return true;
+    public EmptyMitor() {
+        end();
     }
 
     @Override

@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public abstract class AbstractMitablex<T, X extends Throwable>
-        implements Mitablex<T, X> {
+        implements IMitablex<T, X> {
 
     @Override
     public Iterator<T> iterator() {
