@@ -3,7 +3,7 @@ package net.bodz.bas.sio;
 import net.bodz.bas.sio.util.ITextIndention;
 import net.bodz.bas.sio.util.TextIndention;
 
-public class NullIndentedCharOut
+public class NullStackedOut
         extends NullPrintCharOut
         implements IStackedOut {
 

@@ -9,14 +9,14 @@ import net.bodz.bas.sio.util.TextIndention;
 /**
  * @see StackedOutImpl
  */
-public abstract class AbstractIndentedOut
+public abstract class AbstractStackedOut
         extends AbstractPrintOut
         implements IStackedOut {
 
     private final ITextIndention textIndention;
     private boolean linePrefixPrinted;
 
-    public AbstractIndentedOut() {
+    public AbstractStackedOut() {
         this(new TextIndention());
     }
 
@@ -24,7 +24,7 @@ public abstract class AbstractIndentedOut
      * @throws NullPointerException
      *             If <code>textIndention</code> is <code>null</code>.
      */
-    public AbstractIndentedOut(ITextIndention textIndention) {
+    public AbstractStackedOut(ITextIndention textIndention) {
         if (textIndention == null)
             throw new NullPointerException("textIndention");
         this.textIndention = textIndention;

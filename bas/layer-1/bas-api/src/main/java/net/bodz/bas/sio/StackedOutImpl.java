@@ -7,24 +7,29 @@ import net.bodz.bas.sio.util.ITextIndention;
 import net.bodz.bas.sio.util.TextIndention;
 
 public class StackedOutImpl
-        extends PrintOutImpl
-        implements IStackedOut { 
+        extends AbstractPrintOut
+        implements IStackedOut {
 
+    private IPrintOut printOut;
     private final ITextIndention textIndention;
     private boolean linePrefixPrinted;
 
-    public StackedOutImpl(IPrintOut charOut) {
-        this(charOut, new TextIndention());
+    public StackedOutImpl(IPrintOut printOut) {
+        this(printOut, new TextIndention());
     }
 
     /**
+     * Print out.
+     * 
      * @throws NullPointerException
      *             If any argument is <code>null</code>.
      */
-    public StackedOutImpl(IPrintOut charOut, ITextIndention textIndention) {
-        super(charOut);
+    public StackedOutImpl(IPrintOut printOut, ITextIndention textIndention) {
+        if (printOut == null)
+            throw new NullPointerException("printOut");
         if (textIndention == null)
             throw new NullPointerException("textIndention");
+        this.printOut = printOut;
         this.textIndention = textIndention;
     }
 
