@@ -316,7 +316,7 @@ class MitorIterator<T>
 
     private T lastIteratedValue;
 
-    public MitorIterator(Mitablex<T, ?> mitable, boolean allowOverlap) {
+    public MitorIterator(IMitablex<T, ?> mitable, boolean allowOverlap) {
         if (mitable == null)
             throw new NullPointerException("mitable");
         this.mitor = mitable.iterator(allowOverlap);

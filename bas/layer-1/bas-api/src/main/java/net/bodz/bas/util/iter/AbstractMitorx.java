@@ -15,13 +15,13 @@ public abstract class AbstractMitorx<T, X extends Throwable>
         return o;
     }
 
-    protected T end() {
+    protected final T end() {
         this.ended = true;
         return null;
     }
 
     @Override
-    public boolean isEnded() {
+    public final boolean isEnded() {
         return ended;
     }
 

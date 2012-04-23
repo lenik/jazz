@@ -29,7 +29,7 @@ public class Iterables {
         return new OtpEnumWrapper<T>(enumeration);
     }
 
-    public static <T, X extends Throwable> Mitablex<T, X> otpMx(final Enumeration<T> enumeration,
+    public static <T, X extends Throwable> IMitablex<T, X> otpMx(final Enumeration<T> enumeration,
             final boolean isOverlapped, final Class<X> exceptionType) {
         return new AbstractMitablex<T, X>() {
 
@@ -60,12 +60,12 @@ public class Iterables {
         return Iterators.toList(iterable.iterator(), appxSize);
     }
 
-    public static <T, X extends Exception> List<? extends T> toList(Mitablex<T, X> iterable)
+    public static <T, X extends Exception> List<? extends T> toList(IMitablex<T, X> iterable)
             throws X {
         return Iterators.toList(iterable.iterator(false));
     }
 
-    public static <T, X extends Exception> List<? extends T> toList(Mitablex<T, X> iterable, int appxSize)
+    public static <T, X extends Exception> List<? extends T> toList(IMitablex<T, X> iterable, int appxSize)
             throws X {
         return Iterators.toList(iterable.iterator(false), appxSize);
     }
@@ -78,12 +78,12 @@ public class Iterables {
         return Iterators.toListLimited(iterable.iterator(), limit, appxSize);
     }
 
-    public static <T, X extends Exception> List<? extends T> toListLimited(Mitablex<T, X> iterable, int limit)
+    public static <T, X extends Exception> List<? extends T> toListLimited(IMitablex<T, X> iterable, int limit)
             throws X {
         return Iterators.toListLimited(iterable.iterator(false), limit);
     }
 
-    public static <T, X extends Exception> List<? extends T> toListLimited(Mitablex<T, X> iterable, int limit,
+    public static <T, X extends Exception> List<? extends T> toListLimited(IMitablex<T, X> iterable, int limit,
             int appxSize)
             throws X {
         return Iterators.toListLimited(iterable.iterator(false), limit, appxSize);
@@ -160,18 +160,18 @@ class OtpEnumWrapper<T>
 class MitableIterable<T, X extends Throwable>
         implements Iterable<T> {
 
-    private final Mitablex<T, X> mitable;
+    private final IMitablex<T, X> mitable;
     private final boolean allowOverlap;
 
     /**
-     * Same as {@link #ImmIterIterable(Mitablex, boolean)} with <code>allowOverlap</code> set to
+     * Same as {@link #ImmIterIterable(IMitablex, boolean)} with <code>allowOverlap</code> set to
      * <code>false</code>.
      */
-    public MitableIterable(Mitablex<T, X> mx) {
+    public MitableIterable(IMitablex<T, X> mx) {
         this(mx, false);
     }
 
-    public MitableIterable(Mitablex<T, X> mx, boolean allowOverlap) {
+    public MitableIterable(IMitablex<T, X> mx, boolean allowOverlap) {
         if (mx == null)
             throw new NullPointerException("mx");
         this.mitable = mx;

@@ -2,7 +2,7 @@ package net.bodz.bas.util.iter;
 
 import java.util.Iterator;
 
-public interface Mitablex<T, X extends Throwable>
+public interface IMitablex<T, X extends Throwable>
         extends Iterable<T> {
 
     /**
