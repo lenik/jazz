@@ -4,44 +4,35 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
 
+import net.bodz.bas.util.order.IPriority;
+import net.bodz.bas.util.order.PriorityComparator;
+
 public class PathSystem
         implements IPathSystem {
 
-    static class PathResolverKey
-            implements Comparable<PathResolverKey> {
-
-        public final int priority;
-        public final IPathResolver resolver;
-
-        public PathResolverKey(int priority, IPathResolver resolver) {
-            this.priority = priority;
-            this.resolver = resolver;
-        }
-
-        @Override
-        public int compareTo(PathResolverKey o) {
-            return priority - o.priority;
-        }
-
-    }
-
     private final Map<String, IPathResolver> protocols;
-    private final TreeSet<PathResolverKey> generics;
+    private final TreeSet<PathResolverKey> fallbacks;
 
     private IPath contextPath;
 
     public PathSystem() {
         protocols = new HashMap<String, IPathResolver>();
-        generics = new TreeSet<PathResolverKey>();
+        fallbacks = new TreeSet<PathResolverKey>(PriorityComparator.INSTANCE);
     }
 
     @Override
-    public void addPathResolver(String protocol, IPathResolver resolver) {
+    public boolean addPathResolver(String protocol, IPathResolver resolver) {
         if (protocol == null)
             throw new NullPointerException("protocol");
         if (resolver == null)
             throw new NullPointerException("resolver");
-        protocols.put(protocol, resolver);
+        IPathResolver inuse = protocols.get(protocol);
+        if (inuse != null) {
+            return false;
+        } else {
+            protocols.put(protocol, resolver);
+            return true;
+        }
     }
 
     @Override
@@ -52,19 +43,14 @@ public class PathSystem
     }
 
     @Override
-    public void addGenericPathResolver(IPathResolver resolver, int priority) {
+    public void addGenericPathResolver(IGenericPathResolver resolver, int priority) {
         PathResolverKey key = new PathResolverKey(priority, resolver);
-        generics.add(key);
+        fallbacks.add(key);
     }
 
     @Override
-    public void addGenericPathResolver(IPathResolver resolver) {
-        addGenericPathResolver(resolver, IPathSystem.NORMAL_PRIORITY);
-    }
-
-    @Override
-    public void removeGenericPathResolver(IPathResolver resolver) {
-        generics.remove(resolver);
+    public void removeGenericPathResolver(IGenericPathResolver resolver) {
+        fallbacks.remove(resolver);
     }
 
     @Override
@@ -82,11 +68,11 @@ public class PathSystem
             return explicitResolver.resolve(path);
         }
 
-        for (PathResolverKey key : generics) {
-            IPathResolver genericResolver = key.resolver;
-            if (!genericResolver.accepts(protocol))
+        for (PathResolverKey key : fallbacks) {
+            IGenericPathResolver resolver = key.resolver;
+            if (!resolver.accepts(protocol))
                 continue;
-            IPath resolvedPath = genericResolver.resolve(path);
+            IPath resolvedPath = resolver.resolve(path);
             return resolvedPath;
         }
 
@@ -106,6 +92,24 @@ public class PathSystem
         if (contextPath == null)
             throw new NullPointerException("defaultContext");
         this.contextPath = contextPath;
+    }
+
+}
+
+class PathResolverKey
+        implements IPriority {
+
+    public final int priority;
+    public final IGenericPathResolver resolver;
+
+    public PathResolverKey(int priority, IGenericPathResolver resolver) {
+        this.priority = priority;
+        this.resolver = resolver;
+    }
+
+    @Override
+    public int getPriority() {
+        return priority;
     }
 
 }
