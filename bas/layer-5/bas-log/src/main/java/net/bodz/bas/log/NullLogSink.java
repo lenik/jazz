@@ -1,9 +1,9 @@
 package net.bodz.bas.log;
 
-import net.bodz.bas.sio.NullIndentedCharOut;
+import net.bodz.bas.sio.NullStackedOut;
 
 public class NullLogSink
-        extends NullIndentedCharOut
+        extends NullStackedOut
         implements ILogSink {
 
     @Override
