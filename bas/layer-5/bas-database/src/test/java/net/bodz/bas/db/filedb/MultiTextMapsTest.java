@@ -7,15 +7,14 @@ import java.util.List;
 import java.util.Map;
 
 import net.bodz.bas.c.loader.ClassResource;
-import net.bodz.bas.db.filedb.PartRecords.PartMap;
+import net.bodz.bas.db.filedb.MultiTextMaps.PartMap;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.util.iter.Mitorx;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
-public class PartRecordsTest
+public class MultiTextMapsTest
         extends Assert {
 
     static String map2str(Map<String, String> map) {
@@ -37,12 +36,15 @@ public class PartRecordsTest
         return buf.toString().replace("\r", "");
     }
 
-    @Ignore
     @Test
     public void test1()
             throws IOException {
         IStreamInputSource source = ClassResource.classData(getClass(), "1");
-        PartRecords maps = new PartRecords(source);
+        MultiTextMaps maps = new MultiTextMaps(source);
+
+        for (Map<String, String> pm : maps) {
+            System.out.println("M=" + pm);
+        }
         Mitorx<? extends PartMap, ? extends IOException> it = maps.iterator(false);
         PartMap part;
 
@@ -61,9 +63,8 @@ public class PartRecordsTest
         part = it._next();
         assertEquals("part E", ".=EEE\nFFF\n", map2str(part));
 
-        assertTrue(it.isEnded());
-
         assertNull(it._next());
+        assertTrue(it.isEnded());
     }
 
 }

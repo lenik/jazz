@@ -13,7 +13,7 @@ import net.bodz.bas.util.iter.AbstractMitorx;
 import net.bodz.bas.util.iter.Mitorx;
 
 public class INIRecords
-        extends MapResRecords<String, String> {
+        extends AbstractSeqMaps<String, String> {
 
     private boolean flatten;
     private String delim = ".";
@@ -101,9 +101,14 @@ public class INIRecords
                 String value = line.substring(eq + 1).trim();
                 map.put(key, value);
             } // lines
-            if (!flatten && sectionName != null)
+            if (!flatten && sectionName != null) {
                 map.put("_section", sectionName);
-            return end();
+                sectionName = null;
+            }
+            if (!map.isEmpty())
+                return map;
+            else
+                return end();
         }
 
     }

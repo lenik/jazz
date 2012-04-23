@@ -11,47 +11,53 @@ import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.util.iter.Mitorx;
 
 /**
- * Preferred file name: *.maps
+ * Preferred file extension: *.text.mmf
  */
-public class PartRecords
-        extends _PartRecords<String, String> {
+public class MultiTextMaps
+        extends AbstractMultiMapsFormat<String, String> {
 
-    public class PartMap
+    public static class PartMap
             extends TreeMap<String, String> {
 
         private static final long serialVersionUID = 7647573703380582923L;
 
+        final String textKey;
+
+        public PartMap(String textKey) {
+            this.textKey = textKey;
+        }
+
         public String getText() {
-            return get(getTextKey());
+            return get(textKey);
         }
 
         public void setText(String text) {
-            put(getTextKey(), text);
+            put(textKey, text);
         }
 
     }
 
-    public PartRecords(IStreamInputSource source, int flags) {
+    public MultiTextMaps(IStreamInputSource source, int flags) {
         super(source, flags);
     }
 
-    public PartRecords(IStreamInputSource source) {
+    public MultiTextMaps(IStreamInputSource source) {
         super(source);
     }
 
-    public PartRecords(File file, String encoding) {
+    public MultiTextMaps(File file, String encoding) {
         super(file, encoding);
     }
 
-    public PartRecords(File file, String encoding, int flags) {
+    public MultiTextMaps(File file, String encoding, int flags) {
         super(file, encoding, flags);
     }
 
-    public PartRecords(URL url, String encoding) {
+    public MultiTextMaps(URL url, String encoding) {
         super(url, encoding);
     }
 
-    public PartRecords(URL url, String encoding, int flags) {
+    public MultiTextMaps(URL url, String encoding, int flags) {
         super(url, encoding, flags);
     }
 
@@ -84,7 +90,7 @@ public class PartRecords
 
     @Override
     protected Map<String, String> newMap() {
-        return new PartMap();
+        return new PartMap(getTextKey());
     }
 
 }
