@@ -8,7 +8,7 @@ import net.bodz.bas.util.iter.AbstractMitorx;
 import net.bodz.bas.util.iter.Mitorx;
 
 public class CSVRecords
-        extends _ResRecords<String[]> {
+        extends AbstractSeqRecords<String[]> {
 
     private String delim;
     private int limit;

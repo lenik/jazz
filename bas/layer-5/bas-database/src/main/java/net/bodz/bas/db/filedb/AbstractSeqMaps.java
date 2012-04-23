@@ -8,15 +8,16 @@ import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.IParser;
 
-public abstract class MapResRecords<K, V>
-        extends _ResRecords<Map<K, V>> {
+public abstract class AbstractSeqMaps<K, V>
+        extends AbstractSeqRecords<Map<K, V>>
+        implements ISeqMaps<K, V> {
 
     protected Class<? extends K> keyClass;
     protected Class<? extends V> valueClass;
     protected IParser<K> keyParser;
     protected IParser<V> valueParser;
 
-    public MapResRecords(IStreamInputSource source) {
+    public AbstractSeqMaps(IStreamInputSource source) {
         super(source);
         keyClass = getKeyClass();
         valueClass = getValueClass();

@@ -1,6 +1,6 @@
 package net.bodz.bas.db.filedb;
 
-import static net.bodz.bas.db.filedb.PartRecordsTest.map2str;
+import static net.bodz.bas.db.filedb.MultiTextMapsTest.map2str;
 
 import java.io.IOException;
 import java.util.Map;
@@ -22,7 +22,6 @@ public class INIRecordsTest
         source = ClassResource.classData(getClass(), "1");
     }
 
-    @Ignore
     @Test
     public void testByGroup()
             throws IOException {
