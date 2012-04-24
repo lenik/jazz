@@ -3,9 +3,9 @@ package net.bodz.bas.sio;
 import net.bodz.bas.sio.util.ITextIndention;
 import net.bodz.bas.sio.util.TextIndention;
 
-public class NullStackedOut
+public class NullTreeOut
         extends NullPrintCharOut
-        implements IStackedOut {
+        implements ITreeOut {
 
     private ITextIndention dummy = new TextIndention();
 

@@ -15,11 +15,11 @@ import net.bodz.bas.io.resource.preparation.FormatDumpPreparation;
 import net.bodz.bas.io.resource.preparation.IFormatDumpPreparation;
 import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
 import net.bodz.bas.io.resource.preparation.StreamWritePreparation;
-import net.bodz.bas.sio.ByteOutNativeImpl;
+import net.bodz.bas.sio.ByteOutExImpl;
 import net.bodz.bas.sio.ByteOutOutputStream;
 import net.bodz.bas.sio.CharOutWriter;
 import net.bodz.bas.sio.IByteOut;
-import net.bodz.bas.sio.IByteOutNative;
+import net.bodz.bas.sio.IByteOutEx;
 import net.bodz.bas.sio.ICharOut;
 
 public abstract class AbstractStreamOutputTarget
@@ -112,14 +112,10 @@ public abstract class AbstractStreamOutputTarget
     }
 
     @Override
-    public IByteOutNative newByteOutNative()
+    public IByteOutEx newByteOutNative()
             throws IOException {
         IByteOut byteOut = newByteOut();
-        if (byteOut == null)
-            throw new NullPointerException("byteOut");
-        if (byteOut instanceof IByteOutNative)
-            return (IByteOutNative) byteOut;
-        return new ByteOutNativeImpl(byteOut);
+        return ByteOutExImpl.from(byteOut);
     }
 
     @Override

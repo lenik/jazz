@@ -2,7 +2,7 @@ package net.bodz.bas.sio;
 
 import net.bodz.bas.sio.util.ITextIndention;
 
-public interface IStackedOut
+public interface ITreeOut
         extends IPrintOut {
 
     /**

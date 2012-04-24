@@ -10,8 +10,6 @@ import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.ICharIn;
 import net.bodz.bas.sio.ICharOut;
-import net.bodz.bas.sio.IPrintOut;
-import net.bodz.bas.sio.PrintOutImpl;
 import net.bodz.bas.sio.util.DecodedCharIn;
 import net.bodz.bas.sio.util.EncodedCharOut;
 
@@ -75,10 +73,10 @@ public class ByteArrayResource
     }
 
     @Override
-    public IPrintOut newCharOut()
+    public ICharOut newCharOut()
             throws IOException {
         ICharOut cout = new EncodedCharOut(newByteOut(), getCharset().newEncoder());
-        return new PrintOutImpl(cout);
+        return cout;
     }
 
     @Override

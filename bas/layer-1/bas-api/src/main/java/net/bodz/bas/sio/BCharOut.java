@@ -3,10 +3,11 @@ package net.bodz.bas.sio;
 import java.io.IOException;
 
 public class BCharOut
-        extends AbstractPrintOut {
+        extends AbstractPrintOut
+        implements CharSequence, Appendable {
 
     /**
-     * @TODO set final in futuer.
+     * @TODO set final in future.
      */
     protected StringBuffer buffer;
 
@@ -54,17 +55,45 @@ public class BCharOut
         buffer.append(chars, off, off + len);
     }
 
-    public char charAt(int index) {
-        return buffer.charAt(index);
+    @Override
+    public String toString() {
+        return buffer.toString();
     }
 
+    // --o CharSequence
+    @Override
     public int length() {
         return buffer.length();
     }
 
     @Override
-    public String toString() {
-        return buffer.toString();
+    public char charAt(int index) {
+        return buffer.charAt(index);
+    }
+
+    @Override
+    public CharSequence subSequence(int start, int end) {
+        return buffer.subSequence(start, end);
+    }
+
+    // --o Appendable
+
+    @Override
+    public Appendable append(CharSequence csq)
+            throws IOException {
+        return buffer.append(csq);
+    }
+
+    @Override
+    public Appendable append(CharSequence csq, int start, int end)
+            throws IOException {
+        return buffer.append(csq, start, end);
+    }
+
+    @Override
+    public Appendable append(char c)
+            throws IOException {
+        return buffer.append(c);
     }
 
     public String flip() {

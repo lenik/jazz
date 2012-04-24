@@ -8,11 +8,11 @@ import net.bodz.bas.log.message.ArrayJoinMessage;
 import net.bodz.bas.log.message.IMessage;
 import net.bodz.bas.log.message.StringFormatMessage;
 import net.bodz.bas.meta.codereview.ThreadUnsafe;
-import net.bodz.bas.sio.AbstractStackedOut;
+import net.bodz.bas.sio.AbstractTreeOut;
 
 @ThreadUnsafe
 public abstract class AbstractLogSink
-        extends AbstractStackedOut
+        extends AbstractTreeOut
         implements ILogSink {
 
     // private Object source;

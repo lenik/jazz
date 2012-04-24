@@ -1,17 +1,9 @@
 package net.bodz.bas.sio;
 
-import java.io.IOException;
 import java.util.Locale;
 
 public interface IPrintOut
         extends ICharOut {
-
-    /**
-     * @param reset
-     *            <code>true</code> the error state will be cleared.
-     */
-    void checkError(boolean reset)
-            throws IOException;
 
     void print(String s);
 

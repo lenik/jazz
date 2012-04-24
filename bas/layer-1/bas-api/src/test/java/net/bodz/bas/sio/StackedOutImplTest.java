@@ -10,7 +10,7 @@ public class StackedOutImplTest
     public void testIndentPrint()
             throws Exception {
         BCharOut buffer = new BCharOut();
-        IStackedOut out = new StackedOutImpl(buffer);
+        ITreeOut out = new TreeOutImpl(buffer);
         out.getTextIndention().setIndentSize(2);
         out.println("a");
         out.enter();

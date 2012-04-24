@@ -7,7 +7,7 @@ import java.io.OutputStream;
  * @see OutputStreamByteOut
  */
 public abstract class DynamicOutputStreamByteOut
-        extends AbstractByteOut {
+        extends AbstractByteOutEx {
 
     /**
      * @return non-<code>null</code> {@link OutputStream} instance.

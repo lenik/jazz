@@ -1,6 +1,7 @@
 package user.apachevfs;
 
 import net.bodz.bas.bean.BeanDump;
+import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.PrintOutImpl;
 import net.bodz.bas.sio.Stdio;
 
@@ -10,7 +11,7 @@ import org.apache.commons.vfs.operations.FileOperation;
 
 public class ListFileOperations {
 
-    static PrintOutImpl out = new PrintOutImpl(Stdio.cout);
+    static IPrintOut out = PrintOutImpl.from(Stdio.cout);
 
     public static void main(String[] args)
             throws Exception {

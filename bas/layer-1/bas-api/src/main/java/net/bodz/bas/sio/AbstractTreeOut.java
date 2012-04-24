@@ -6,30 +6,24 @@ import java.util.Locale;
 import net.bodz.bas.sio.util.ITextIndention;
 import net.bodz.bas.sio.util.TextIndention;
 
-public class StackedOutImpl
+public abstract class AbstractTreeOut
         extends AbstractPrintOut
-        implements IStackedOut {
+        implements ITreeOut {
 
-    private IPrintOut printOut;
     private final ITextIndention textIndention;
     private boolean linePrefixPrinted;
 
-    public StackedOutImpl(IPrintOut printOut) {
-        this(printOut, new TextIndention());
+    public AbstractTreeOut() {
+        this(new TextIndention());
     }
 
     /**
-     * Print out.
-     * 
      * @throws NullPointerException
-     *             If any argument is <code>null</code>.
+     *             If <code>textIndention</code> is <code>null</code>.
      */
-    public StackedOutImpl(IPrintOut printOut, ITextIndention textIndention) {
-        if (printOut == null)
-            throw new NullPointerException("printOut");
+    public AbstractTreeOut(ITextIndention textIndention) {
         if (textIndention == null)
             throw new NullPointerException("textIndention");
-        this.printOut = printOut;
         this.textIndention = textIndention;
     }
 
@@ -40,7 +34,7 @@ public class StackedOutImpl
             write(textIndention.getCurrentLinePrefix());
             linePrefixPrinted = true;
         } catch (IOException e) {
-            setLastException(e);
+            throw new PrintException(e);
         }
     }
 

@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 
 public class NullByteOut
-        extends AbstractByteOut {
+        extends AbstractByteOutEx {
 
     @Override
     public void write(int b) {

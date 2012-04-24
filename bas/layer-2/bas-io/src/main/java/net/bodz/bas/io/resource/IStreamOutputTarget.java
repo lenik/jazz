@@ -11,7 +11,7 @@ import java.nio.charset.IllegalCharsetNameException;
 
 import net.bodz.bas.io.resource.preparation.IFormatDumpPreparation;
 import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
-import net.bodz.bas.sio.IByteOutNative;
+import net.bodz.bas.sio.IByteOutEx;
 import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.sio.IPrintOut;
 
@@ -52,7 +52,7 @@ public interface IStreamOutputTarget
     /**
      * @return non-<code>null</code> value.
      */
-    IByteOutNative newByteOutNative()
+    IByteOutEx newByteOutNative()
             throws IOException;
 
     /**

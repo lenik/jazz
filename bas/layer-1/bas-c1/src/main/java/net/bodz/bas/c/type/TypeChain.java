@@ -3,7 +3,7 @@ package net.bodz.bas.c.type;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.bodz.bas.sio.IStackedOut;
+import net.bodz.bas.sio.ITreeOut;
 
 import org.apache.commons.lang.ArrayUtils;
 
@@ -24,11 +24,11 @@ public class TypeChain {
         return list;
     }
 
-    public static <T extends IStackedOut> void dumpTypeTree(Class<?> type, T out) {
+    public static <T extends ITreeOut> void dumpTypeTree(Class<?> type, T out) {
         dumpTypeTree(type, out, false);
     }
 
-    public static <T extends IStackedOut> void dumpTypeTree(Class<?> type, T out, boolean removeDupInterfaces) {
+    public static <T extends ITreeOut> void dumpTypeTree(Class<?> type, T out, boolean removeDupInterfaces) {
         if (type == null)
             throw new NullPointerException("type");
         if (out == null)
