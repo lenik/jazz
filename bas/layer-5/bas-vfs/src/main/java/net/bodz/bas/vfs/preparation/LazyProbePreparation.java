@@ -3,7 +3,7 @@ package net.bodz.bas.vfs.preparation;
 import java.io.IOException;
 
 import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.util.MIMETypes;
+import net.bodz.bas.vfs.util.MIMEType;
 
 public class LazyProbePreparation
         implements IProbePreparation {
@@ -17,16 +17,17 @@ public class LazyProbePreparation
     }
 
     @Override
-    public String getMIMEType()
+    public String getContentType()
             throws IOException {
         String extension = file.getExtension(false, 1);
-        return MIMETypes.guessByExtension(extension);
+        MIMEType mimeType = MIMEType.getInstanceByExtension(extension);
+        return mimeType.getContentType();
     }
 
     @Override
     public boolean isText()
             throws IOException {
-        return getMIMEType().startsWith("text/");
+        return getContentType().startsWith("text/");
     }
 
     @Override
