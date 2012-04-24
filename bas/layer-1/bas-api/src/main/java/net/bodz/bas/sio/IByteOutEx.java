@@ -1,6 +1,6 @@
 package net.bodz.bas.sio;
 
-public interface IByteOutNative
+public interface IByteOutEx
         extends IByteOutLE, IByteOutBE {
 
 }

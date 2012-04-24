@@ -1,9 +1,9 @@
 package net.bodz.bas.log;
 
-import net.bodz.bas.sio.NullStackedOut;
+import net.bodz.bas.sio.NullTreeOut;
 
 public class NullLogSink
-        extends NullStackedOut
+        extends NullTreeOut
         implements ILogSink {
 
     @Override

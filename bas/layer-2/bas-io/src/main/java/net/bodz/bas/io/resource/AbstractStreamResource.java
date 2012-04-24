@@ -11,7 +11,7 @@ import java.nio.charset.Charset;
 import net.bodz.bas.io.resource.preparation.IFormatDumpPreparation;
 import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
 import net.bodz.bas.sio.IByteOut;
-import net.bodz.bas.sio.IByteOutNative;
+import net.bodz.bas.sio.IByteOutEx;
 import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.sio.IPrintOut;
 
@@ -109,7 +109,7 @@ public abstract class AbstractStreamResource
     }
 
     @Override
-    public IByteOutNative newByteOutNative()
+    public IByteOutEx newByteOutNative()
             throws IOException {
         return asotImpl.newByteOutNative();
     }

@@ -7,7 +7,7 @@ import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 
-import net.bodz.bas.sio.AbstractByteOut;
+import net.bodz.bas.sio.AbstractByteOutEx;
 import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.ICharOut;
 
@@ -15,7 +15,7 @@ import net.bodz.bas.sio.ICharOut;
  * The bytes written to this {@link IByteOut}, is decoded into a {@link ICharOut}.
  */
 public class DecodedByteOut
-        extends AbstractByteOut {
+        extends AbstractByteOutEx {
 
     private final ICharOut charOut;
     private final CharsetDecoder decoder;

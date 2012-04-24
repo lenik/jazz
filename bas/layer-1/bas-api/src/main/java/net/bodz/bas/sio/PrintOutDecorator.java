@@ -14,12 +14,6 @@ public class PrintOutDecorator
         super(impl);
     }
 
-    @Override
-    public void checkError(boolean reset)
-            throws IOException {
-        impl.checkError(reset);
-    }
-
     public void flush() {
         impl.flush();
     }

@@ -10,27 +10,6 @@ public abstract class AbstractPrintOut
     private final static char[] NULL = "(null)".toCharArray();
     private final static char NEWLINE = '\n';
 
-    private IOException lastException;
-
-    @Override
-    public void checkError(boolean reset)
-            throws IOException {
-        if (lastException != null) {
-            IOException e = lastException;
-            if (reset)
-                lastException = null;
-            throw e;
-        }
-    }
-
-    protected void clearLastException(IOException exception) {
-        lastException = null;
-    }
-
-    protected void setLastException(IOException exception) {
-        lastException = exception;
-    }
-
     @Override
     public void print(String s) {
         try {
@@ -41,7 +20,7 @@ public abstract class AbstractPrintOut
             else
                 write(s);
         } catch (IOException e) {
-            lastException = e;
+            throw new PrintException(e);
         }
     }
 
@@ -55,7 +34,7 @@ public abstract class AbstractPrintOut
         try {
             write(c);
         } catch (IOException e) {
-            lastException = e;
+            throw new PrintException(e);
         }
     }
 
@@ -66,7 +45,7 @@ public abstract class AbstractPrintOut
         try {
             write(s, 0, s.length);
         } catch (IOException e) {
-            lastException = e;
+            throw new PrintException(e);
         }
     }
 
@@ -106,7 +85,7 @@ public abstract class AbstractPrintOut
         try {
             write(NEWLINE);
         } catch (IOException e) {
-            lastException = e;
+            throw new PrintException(e);
         }
     }
 
@@ -191,7 +170,7 @@ public abstract class AbstractPrintOut
         try {
             _flush(strict);
         } catch (IOException e) {
-            lastException = e;
+            throw new PrintException(e);
         }
     }
 
@@ -200,7 +179,7 @@ public abstract class AbstractPrintOut
         try {
             _flush();
         } catch (IOException e) {
-            lastException = e;
+            throw new PrintException(e);
         }
     }
 
@@ -209,7 +188,7 @@ public abstract class AbstractPrintOut
         try {
             _close();
         } catch (IOException e) {
-            lastException = e;
+            throw new PrintException(e);
         }
     }
 

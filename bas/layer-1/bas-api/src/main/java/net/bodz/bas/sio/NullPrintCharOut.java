@@ -1,16 +1,10 @@
 package net.bodz.bas.sio;
 
-import java.io.IOException;
 import java.util.Locale;
 
 public class NullPrintCharOut
         extends NullCharOut
         implements IPrintOut {
-
-    @Override
-    public void checkError(boolean reset)
-            throws IOException {
-    }
 
     @Override
     public void print(String s) {
