@@ -7,7 +7,7 @@ public interface IProbePreparation {
     /**
      * @return <code>null</code> if MIME-Type is unknown.
      */
-    String getMIMEType()
+    String getContentType()
             throws IOException;
 
     boolean isText()
