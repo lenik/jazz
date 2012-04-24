@@ -1,4 +1,4 @@
-package net.bodz.bas.text.charsets;
+package net.bodz.bas.text.charset;
 
 import java.nio.BufferOverflowException;
 import java.nio.ByteBuffer;

@@ -21,7 +21,7 @@ import net.bodz.bas.loader.UCL;
 import net.bodz.bas.loader.boot.BootInfo;
 import net.bodz.bas.loader.boot.BootProc;
 import net.bodz.bas.sio.Stdio;
-import net.bodz.bas.text.charsets.BasCharsetProvider;
+import net.bodz.bas.text.charset.BasCharsetProvider;
 
 import org.apache.commons.lang.ArrayUtils;
 

@@ -1,4 +1,4 @@
-package net.bodz.bas.text.charsets;
+package net.bodz.bas.text.charset;
 
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
