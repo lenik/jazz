@@ -1,4 +1,4 @@
-package net.bodz.bas.text.charsets;
+package net.bodz.bas.text.charset;
 
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
@@ -19,25 +19,25 @@ import net.bodz.bas.err.IllegalArgumentTypeException;
 public class BasCharsetProvider
         extends CharsetProvider {
 
-    private Map<String, Charset> charsetsImpl = new TreeMap<String, Charset>();
+    private Map<String, Charset> charsetImpls = new TreeMap<String, Charset>();
 
     public BasCharsetProvider() {
-        implCharset(new HexCharset());
+        addCharsetImpl(new HexCharset());
     }
 
-    void implCharset(Charset charset) {
-        charsetsImpl.put(charset.name(), charset);
+    void addCharsetImpl(Charset charset) {
+        charsetImpls.put(charset.name(), charset);
     }
 
     @Override
     public Iterator<Charset> charsets() {
-        return charsetsImpl.values().iterator();
+        return charsetImpls.values().iterator();
     }
 
     @Override
     public Charset charsetForName(String charsetName) {
-        for (String name : charsetsImpl.keySet()) {
-            Charset cs = charsetsImpl.get(name);
+        for (String name : charsetImpls.keySet()) {
+            Charset cs = charsetImpls.get(name);
             if (name.equals(charsetName))
                 return cs;
             if (cs.aliases().contains(charsetName))

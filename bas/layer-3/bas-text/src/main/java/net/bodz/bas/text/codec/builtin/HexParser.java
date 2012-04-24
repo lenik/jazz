@@ -1,10 +1,9 @@
-package net.bodz.bas.text.typeparsers;
+package net.bodz.bas.text.codec.builtin;
 
 import java.nio.charset.Charset;
 
 import net.bodz.bas.err.DecodeException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.text.codec.builtin.HexCodec;
 import net.bodz.bas.traits.AbstractParser;
 
 public class HexParser
