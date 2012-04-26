@@ -2,7 +2,7 @@ package net.bodz.bas.c.type;
 
 import java.util.Arrays;
 
-import net.bodz.bas.mode._fn.Proc1;
+import net.bodz.bas.lang.fn.Proc1;
 import net.bodz.bas.util.array.Permutation;
 
 import org.junit.Assert;

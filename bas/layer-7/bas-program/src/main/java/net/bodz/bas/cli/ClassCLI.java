@@ -16,8 +16,8 @@ import net.bodz.bas.c.string.StringLengthComparator;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.collection.util.ClassLocal;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.lang.fn.Filt1;
 import net.bodz.bas.meta.program.ProgramNameUtil;
-import net.bodz.bas.mode._fn.Filt1;
 
 public class ClassCLI {
 

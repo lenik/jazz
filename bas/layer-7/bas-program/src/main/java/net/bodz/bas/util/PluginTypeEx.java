@@ -2,7 +2,7 @@ package net.bodz.bas.util;
 
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.meta.build.ClassInfo;
-import net.bodz.bas.mode.fn.IFactory;
+import net.bodz.bas.model.IFactory;
 
 /**
  * Plugin Implementation

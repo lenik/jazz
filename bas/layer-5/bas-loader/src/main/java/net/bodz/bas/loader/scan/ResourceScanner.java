@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import net.bodz.bas.mode._fn.Pred1;
+import net.bodz.bas.lang.fn.Pred1;
 
 public class ResourceScanner {
 

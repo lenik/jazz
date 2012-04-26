@@ -5,8 +5,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.bodz.bas.err.CreateException;
-import net.bodz.bas.mode.fn.ICreator;
-import net.bodz.bas.mode.fn.NewInstanceCreator;
+import net.bodz.bas.model.ICreator;
+import net.bodz.bas.model.NewInstanceCreator;
 
 public class Iterables {
 

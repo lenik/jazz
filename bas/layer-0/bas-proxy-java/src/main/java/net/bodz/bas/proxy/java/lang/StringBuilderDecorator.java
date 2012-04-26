@@ -1,6 +1,6 @@
 package net.bodz.bas.proxy.java.lang;
 
-import net.bodz.bas.mode.AbstractDecorator;
+import net.bodz.bas.model.AbstractDecorator;
 
 public class StringBuilderDecorator
         extends AbstractDecorator<StringBuilder>

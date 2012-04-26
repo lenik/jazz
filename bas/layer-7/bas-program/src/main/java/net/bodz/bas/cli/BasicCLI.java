@@ -34,7 +34,7 @@ import net.bodz.bas.meta.info.DisplayNameUtil;
 import net.bodz.bas.meta.program.OptionGroup;
 import net.bodz.bas.meta.util.ChainUsage;
 import net.bodz.bas.meta.util.OverrideOption;
-import net.bodz.bas.mode.fn.IExecutableVarArgsX;
+import net.bodz.bas.model.IExecutableVarArgsX;
 import net.bodz.bas.potato.traits.IType;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.Stdio;

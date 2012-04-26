@@ -10,7 +10,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import net.bodz.bas.collection.set.IdentityHashSet;
-import net.bodz.bas.mode._fn.Pred1;
+import net.bodz.bas.lang.fn.Pred1;
 
 public class ClassScanner
         extends ResourceScanner {

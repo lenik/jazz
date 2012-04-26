@@ -3,7 +3,7 @@ package net.bodz.bas.c.type;
 import java.lang.reflect.Constructor;
 
 import net.bodz.bas.err.CreateException;
-import net.bodz.bas.mode.fn.AbstractCreator;
+import net.bodz.bas.model.AbstractCreator;
 
 import org.apache.commons.lang.ArrayUtils;
 

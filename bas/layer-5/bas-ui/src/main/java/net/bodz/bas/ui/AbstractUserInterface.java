@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import net.bodz.bas.collection.map.IndexMap;
-import net.bodz.bas.mode.fn.IExecutableX;
+import net.bodz.bas.model.IExecutableX;
 
 public abstract class AbstractUserInterface
         implements UserInterface {

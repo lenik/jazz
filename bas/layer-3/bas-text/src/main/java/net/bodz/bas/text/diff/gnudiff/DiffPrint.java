@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import net.bodz.bas.c.java.util.Dates;
-import net.bodz.bas.mode._fn.Pred1;
+import net.bodz.bas.lang.fn.Pred1;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.text.diff.DiffInfo;
