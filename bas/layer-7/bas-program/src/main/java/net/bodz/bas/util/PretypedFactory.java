@@ -1,6 +1,6 @@
 package net.bodz.bas.util;
 
-import net.bodz.bas.mode.fn.AbstractFactory;
+import net.bodz.bas.model.AbstractFactory;
 
 public abstract class PretypedFactory<T> extends AbstractFactory<T> {
 

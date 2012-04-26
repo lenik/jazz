@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.CharBuffer;
 import java.util.Locale;
 
-import net.bodz.bas.mode.AbstractDecorator;
+import net.bodz.bas.model.AbstractDecorator;
 
 public class PrintOutDecorator
         extends AbstractDecorator<IPrintOut>

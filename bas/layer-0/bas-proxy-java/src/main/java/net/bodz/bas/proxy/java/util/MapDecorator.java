@@ -4,7 +4,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import net.bodz.bas.mode.AbstractDecorator;
+import net.bodz.bas.model.AbstractDecorator;
 
 public class MapDecorator<K, V>
         extends AbstractDecorator<Map<K, V>>

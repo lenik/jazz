@@ -2,7 +2,7 @@ package net.bodz.bas.vfs;
 
 import java.util.List;
 
-import net.bodz.bas.mode.fn.IFilter;
+import net.bodz.bas.model.IFilter;
 import net.bodz.bas.util.iter.Mitorx;
 import net.bodz.bas.vfs.preparation.IProbePreparation;
 

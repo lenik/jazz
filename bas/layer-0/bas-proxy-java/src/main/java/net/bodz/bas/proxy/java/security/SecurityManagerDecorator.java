@@ -4,7 +4,7 @@ import java.io.FileDescriptor;
 import java.net.InetAddress;
 import java.security.Permission;
 
-import net.bodz.bas.mode.IDecorator;
+import net.bodz.bas.model.IDecorator;
 
 public class SecurityManagerDecorator
         extends SecurityManager

@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import net.bodz.bas.mode._fn.Proc1;
+import net.bodz.bas.lang.fn.Proc1;
 import net.bodz.bas.util.primitive.IntMath;
 import net.bodz.bas.util.primitive.IntegerCollection;
 

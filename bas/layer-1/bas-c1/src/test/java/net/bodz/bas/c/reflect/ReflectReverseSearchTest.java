@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.bodz.bas.mode._fn.Pred1;
+import net.bodz.bas.lang.fn.Pred1;
 
 import org.junit.Assert;
 import org.junit.Test;

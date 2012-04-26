@@ -2,7 +2,7 @@ package net.bodz.bas.util.iter;
 
 import java.util.Enumeration;
 
-import net.bodz.bas.mode.fn.ICreatorX;
+import net.bodz.bas.model.ICreatorX;
 
 public class Mitors {
 

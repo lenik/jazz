@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.bodz.bas.mode.fn.IExecutableX;
+import net.bodz.bas.model.IExecutableX;
 
 /**
  * may throw exceptions in future:
