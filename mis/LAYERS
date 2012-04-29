@@ -1,0 +1,14 @@
+core/
+    mis-core
+    mis-util
+
+tools/
+    mis-tools
+
+server/
+    mis-server
+
+app/
+    mis-book
+    lilyfond-food
+
