@@ -35,8 +35,8 @@ layer-5/ 框架基础
     bas-l10n
     bas-loader
     bas-log
-    bas-module
     bas-potato
+    bas-repr
     bas-ui
     bas-vfs
     bas-xml
