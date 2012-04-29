@@ -13,18 +13,18 @@ import java.util.Stack;
 import net.bodz.bas.sio.BTreeOut;
 import net.bodz.bas.sio.ITreeOut;
 
-public abstract class AbstractDumpTreeProcess<T>
-        implements IDumpTreeContext {
+public abstract class AbstractTreeDumping<T>
+        implements ITreeDumpContext {
 
     protected ITreeOut out;
     protected Set<Object> occurred;
-    protected Stack<DumpTreeFormat> stack = new Stack<DumpTreeFormat>();
+    protected Stack<TreeDumpFormat> stack = new Stack<TreeDumpFormat>();
 
-    public AbstractDumpTreeProcess() {
+    public AbstractTreeDumping() {
         this(new BTreeOut(), new HashSet<Object>());
     }
 
-    public AbstractDumpTreeProcess(ITreeOut out, Set<Object> occurred) {
+    public AbstractTreeDumping(ITreeOut out, Set<Object> occurred) {
         if (out == null)
             throw new NullPointerException("out");
         this.out = out;
@@ -32,7 +32,7 @@ public abstract class AbstractDumpTreeProcess<T>
     }
 
     @Override
-    public DumpTreeFormat getFormat() {
+    public TreeDumpFormat getFormat() {
         return stack.firstElement();
     }
 
@@ -46,7 +46,7 @@ public abstract class AbstractDumpTreeProcess<T>
         return stack.size();
     }
 
-    public synchronized void format(T obj, DumpTreeFormat format, int depth) {
+    public synchronized void format(T obj, TreeDumpFormat format, int depth) {
         if (format == null)
             return;
 
@@ -74,7 +74,7 @@ public abstract class AbstractDumpTreeProcess<T>
         }
     }
 
-    protected abstract void printId(DumpTreeFormat format, T val);
+    protected abstract void printId(TreeDumpFormat format, T val);
 
     static final Set<Class<?>> stopClasses = new HashSet<Class<?>>();
     static {
@@ -89,7 +89,7 @@ public abstract class AbstractDumpTreeProcess<T>
         stopClasses.add(stopClass);
     }
 
-    void formatFields(Object val, Class<?> clazz, DumpTreeFormat format, int depth) {
+    void formatFields(Object val, Class<?> clazz, TreeDumpFormat format, int depth) {
         if (stopClasses.contains(clazz))
             return;
 
@@ -140,7 +140,7 @@ public abstract class AbstractDumpTreeProcess<T>
 
     } // walk()
 
-    void formatValue(Object val, DumpTreeFormat format, int depth) {
+    void formatValue(Object val, TreeDumpFormat format, int depth) {
         if (!occurred.add(val)) {
             // duplicated occurence, avoid if acyclic.
             int dupId = System.identityHashCode(val);
@@ -149,11 +149,11 @@ public abstract class AbstractDumpTreeProcess<T>
             return;
         }
 
-        DumpTreeFormat childFormat = format.getNestedFormat();
+        TreeDumpFormat childFormat = format.getNestedFormat();
         int childDepth = getDepth();
 
-        if (val instanceof ITreeDumpable)
-            ((ITreeDumpable) val).dump(out, this);
+        if (val instanceof ITreeDump)
+            ((ITreeDump) val).dump(out, this);
 
         else if (val.getClass().isArray())
             formatArray(val, childFormat, childDepth);
@@ -168,7 +168,7 @@ public abstract class AbstractDumpTreeProcess<T>
             out.print(val);
     }
 
-    protected void formatArray(Object val, DumpTreeFormat format, int depth) {
+    protected void formatArray(Object val, TreeDumpFormat format, int depth) {
         int n = Array.getLength(val);
         if (n == 0) {
             out.print("[]");
@@ -202,7 +202,7 @@ public abstract class AbstractDumpTreeProcess<T>
         out.print("]");
     }
 
-    protected void formatCollection(Collection<?> val, DumpTreeFormat format, int depth) {
+    protected void formatCollection(Collection<?> val, TreeDumpFormat format, int depth) {
         Collection<?> collection = (Collection<?>) val;
         if (collection.isEmpty()) {
             out.print("()");
@@ -236,7 +236,7 @@ public abstract class AbstractDumpTreeProcess<T>
         out.print(")");
     }
 
-    protected void formatMap(Map<?, ?> val, DumpTreeFormat format, int depth) {
+    protected void formatMap(Map<?, ?> val, TreeDumpFormat format, int depth) {
         Map<?, ?> map = (Map<?, ?>) val;
         if (map.isEmpty()) {
             out.print("{}");

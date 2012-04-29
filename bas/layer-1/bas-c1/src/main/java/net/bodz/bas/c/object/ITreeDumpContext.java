@@ -2,9 +2,9 @@ package net.bodz.bas.c.object;
 
 import java.util.Set;
 
-public interface IDumpTreeContext {
+public interface ITreeDumpContext {
 
-    DumpTreeFormat getFormat();
+    TreeDumpFormat getFormat();
 
     Set<Object> getOccurred();
 
