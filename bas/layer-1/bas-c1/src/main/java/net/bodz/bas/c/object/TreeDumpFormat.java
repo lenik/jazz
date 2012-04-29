@@ -2,7 +2,7 @@ package net.bodz.bas.c.object;
 
 import java.io.Serializable;
 
-public class DumpTreeFormat
+public class TreeDumpFormat
         implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -12,9 +12,9 @@ public class DumpTreeFormat
     private boolean showValues;
     private boolean lineBreak;
     private int maxDepth;
-    private DumpTreeFormat nestedFormat;
+    private TreeDumpFormat nestedFormat;
 
-    public DumpTreeFormat() {
+    public TreeDumpFormat() {
         nestedFormat = this;
     }
 
@@ -62,16 +62,18 @@ public class DumpTreeFormat
         this.maxDepth = maxDepth;
     }
 
-    public DumpTreeFormat getNestedFormat() {
+    public TreeDumpFormat getNestedFormat() {
         return nestedFormat;
     }
 
-    public static final DumpTreeFormat SIMPLE = new DumpTreeFormat();
-    public static final DumpTreeFormat SHORT = new DumpTreeFormat();
-    public static final DumpTreeFormat NORMAL = new DumpTreeFormat();
-    public static final DumpTreeFormat VERBOSE = new DumpTreeFormat();
-    public static final DumpTreeFormat LOG_ENTRY = new DumpTreeFormat();
-    public static final DumpTreeFormat FULL = new DumpTreeFormat();
+    public static final TreeDumpFormat SIMPLE = new TreeDumpFormat();
+    public static final TreeDumpFormat SHORT = new TreeDumpFormat();
+    public static final TreeDumpFormat NORMAL = new TreeDumpFormat();
+    public static final TreeDumpFormat VERBOSE = new TreeDumpFormat();
+    public static final TreeDumpFormat LOG_ENTRY = new TreeDumpFormat();
+    public static final TreeDumpFormat FULL = new TreeDumpFormat();
+
+    public static TreeDumpFormat DEFAULT = NORMAL; // TODO
 
     static {
         SIMPLE.setShowIdentity(true);

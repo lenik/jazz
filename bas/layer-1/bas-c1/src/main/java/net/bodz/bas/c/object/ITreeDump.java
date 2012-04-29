@@ -3,9 +3,9 @@ package net.bodz.bas.c.object;
 import net.bodz.bas.sio.ITreeOut;
 import net.bodz.bas.sio.PrintException;
 
-public interface ITreeDumpable {
+public interface ITreeDump {
 
-    void dump(ITreeOut out, IDumpTreeContext context)
+    void dump(ITreeOut out, ITreeDumpContext context)
             throws PrintException;
 
 }

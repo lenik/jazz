@@ -4,19 +4,19 @@ import java.util.Set;
 
 import net.bodz.bas.sio.ITreeOut;
 
-public class DefaultDumpTreeProcess
-        extends AbstractDumpTreeProcess<Object> {
+public class DefaultTreeDumping
+        extends AbstractTreeDumping<Object> {
 
-    public DefaultDumpTreeProcess() {
+    public DefaultTreeDumping() {
         super();
     }
 
-    public DefaultDumpTreeProcess(ITreeOut out, Set<Object> occurred) {
+    public DefaultTreeDumping(ITreeOut out, Set<Object> occurred) {
         super(out, occurred);
     }
 
     @Override
-    protected void printId(DumpTreeFormat format, Object val) {
+    protected void printId(TreeDumpFormat format, Object val) {
         if (!format.isShowIdentity())
             return;
         String typeName = getClass().getSimpleName();
