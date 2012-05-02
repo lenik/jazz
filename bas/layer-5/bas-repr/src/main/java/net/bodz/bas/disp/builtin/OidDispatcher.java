@@ -1,11 +1,13 @@
 package net.bodz.bas.disp.builtin;
 
+import net.bodz.bas.c.string.StringPred;
 import net.bodz.bas.disp.AbstractDispatcher;
 import net.bodz.bas.disp.DispatchConfig;
 import net.bodz.bas.disp.DispatchException;
 import net.bodz.bas.disp.IPathArrival;
 import net.bodz.bas.disp.ITokenQueue;
 import net.bodz.bas.disp.PathArrival;
+import net.bodz.bas.disp.util.OidTree;
 
 public class OidDispatcher
         extends AbstractDispatcher {
@@ -31,7 +33,7 @@ public class OidDispatcher
 
         while (index < tokens.available()) {
             String token = tokens.peek(index);
-            if (!OidUtil.isNumber(token))
+            if (!StringPred.isNumber(token))
                 break;
 
             int ord = Integer.parseInt(token);
