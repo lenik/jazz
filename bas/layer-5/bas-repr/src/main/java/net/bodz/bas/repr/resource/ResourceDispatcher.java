@@ -9,8 +9,6 @@ import net.bodz.bas.disp.DispatchException;
 import net.bodz.bas.disp.IPathArrival;
 import net.bodz.bas.disp.ITokenQueue;
 import net.bodz.bas.disp.PathArrival;
-import net.bodz.bas.repr.DispatchFilter;
-import net.bodz.bas.repr.ModuleIndex;
 
 public class ResourceDispatcher
         extends AbstractDispatcher {
