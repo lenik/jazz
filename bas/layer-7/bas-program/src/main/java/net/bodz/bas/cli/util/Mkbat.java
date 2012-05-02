@@ -36,7 +36,6 @@ import net.bodz.bas.loader.boot.BootProc;
 import net.bodz.bas.meta.build.ClassInfo;
 import net.bodz.bas.meta.build.RcsKeywords;
 import net.bodz.bas.meta.build.Version;
-import net.bodz.bas.meta.info.Doc;
 import net.bodz.bas.meta.program.ProgramName;
 import net.bodz.bas.meta.program.ProgramNameUtil;
 import net.bodz.bas.meta.program.StartMode;
@@ -45,7 +44,11 @@ import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.snm.SJLibLoader;
 
-@Doc("Generate program launcher for java applications")
+/**
+ * Generate program launcher for java applications
+ * 
+ * @version 0.3
+ */
 @ProgramName("mkbat")
 @RcsKeywords(id = "$Id$")
 @Version({ 0, 3 })
@@ -139,7 +142,7 @@ public class Mkbat
         Class<?> class0 = null;
         // can found by bootSysLoader?
         try {
-            logger.info(2, "try " + className);
+            L.info(2, "try " + className);
             class0 = bootSysLoader.loadClass(className);
             // class0 = Jdk7Reflect.forName(className, false, bootSysLoader);
         } catch (ClassNotFoundException e) {
@@ -176,7 +179,7 @@ public class Mkbat
         // has main()? [2, configLoader]
         try {
             class1.getMethod("main", String[].class);
-            logger.info("    main-class: " + class1);
+            L.info("    main-class: " + class1);
         } catch (NoSuchMethodException e) {
             return EditResult.pass("notapp");
             // return ProcessResult.err(e, "notapp");
@@ -257,7 +260,7 @@ public class Mkbat
                     fname = lib;
                 else
                     fname = lib + ".jar";
-                logger.warn("lib ", lib, " => ", fname);
+                L.warn("lib ", lib, " => ", fname);
             } else
                 fname = f.getName();
             String loadlib = "call :load " + qq(lib) + " " + qq(fname);
@@ -279,12 +282,12 @@ public class Mkbat
         LocalFileResource batFileRes = new LocalFileResource(batFile);
 
         if (!Arrays.equals(batData, batFixed))
-            logger.info("bat label boundary fixed: ", batFile);
+            L.info("bat label boundary fixed: ", batFile);
         if (force) {
-            logger.info("write ", batFile);
+            L.info("write ", batFile);
             batFileRes.forWrite().writeBytes(batFixed);
         } else if (FileDiff.copyDiff(batFixedRes, batFileRes))
-            logger.info("save ", batFile);
+            L.info("save ", batFile);
     }
 
     static URLResource batTempl;
