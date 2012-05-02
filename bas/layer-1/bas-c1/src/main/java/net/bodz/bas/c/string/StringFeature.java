@@ -1,6 +1,5 @@
 package net.bodz.bas.c.string;
 
-
 public class StringFeature {
 
     public static int count(String s, char literalPattern) {
