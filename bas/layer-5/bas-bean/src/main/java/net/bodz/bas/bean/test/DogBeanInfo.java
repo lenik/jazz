@@ -1,4 +1,4 @@
-package net.bodz.bas.bean;
+package net.bodz.bas.bean.test;
 
 import java.beans.BeanInfo;
 import java.beans.PropertyDescriptor;
