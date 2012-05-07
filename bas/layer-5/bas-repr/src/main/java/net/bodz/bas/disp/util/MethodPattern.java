@@ -73,15 +73,4 @@ public class MethodPattern {
         }
     }
 
-    static boolean isAssignable(Class<?>[] lv, Class<?>[] rv) {
-        if (lv.length != rv.length)
-            return false;
-
-        for (int i = 0; i < lv.length; i++)
-            if (!lv[i].isAssignableFrom(rv[i]))
-                return false;
-
-        return true;
-    }
-
 }
