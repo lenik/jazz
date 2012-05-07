@@ -159,7 +159,7 @@ public class ClassInfo {
         int[] ver = getVersion();
         if (!includeRevNumber)
             ver = Arrays.copyOf(ver, ver.length - 1);
-        return StringArray.joinDot(ver);
+        return StringArray.joinByDot(ver);
     }
 
     public void setVersionString(String version) {

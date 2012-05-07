@@ -314,7 +314,7 @@ public class BasicCLI
         out.printf("[%s] %s\n", info.getName(), info.getDoc());
         out.printf("Written by %s,  Version %s,  Last updated at %s\n", //
                 info.getAuthor(), //
-                StringArray.joinDot(info.getVersion()), //
+                StringArray.joinByDot(info.getVersion()), //
                 info.getDateString());
     }
 
