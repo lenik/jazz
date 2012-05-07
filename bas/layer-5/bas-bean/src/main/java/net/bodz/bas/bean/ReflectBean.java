@@ -5,6 +5,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bodz.bas.bean.test.Dog;
+
 public class ReflectBean {
 
     public static void f(String x) {

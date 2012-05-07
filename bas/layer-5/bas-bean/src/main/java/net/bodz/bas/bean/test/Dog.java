@@ -1,4 +1,4 @@
-package net.bodz.bas.bean;
+package net.bodz.bas.bean.test;
 
 public class Dog {
 
