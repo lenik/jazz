@@ -1,6 +1,8 @@
 package net.bodz.bas.c.string;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -9,16 +11,32 @@ public class StringArrayTest
         extends Assert {
 
     @Test
+    public void testJoinReversed() {
+        class D {
+            void o(String expected, Object... args) {
+                List<?> list = Arrays.asList(args);
+                String s = StringArray.joinReversed(",", list);
+                System.out.println(s);
+            }
+        }
+        D d = new D();
+        d.o("", Arrays.asList());
+        d.o("1", Arrays.asList(1));
+        d.o("3,2", Arrays.asList(1, 2, 3));
+    }
+
+    @Test
     public void testSplit_Comma()
             throws IOException {
         class D {
-            void o(String expected, String input)
+            void o(String input, String expected)
                     throws IOException {
                 String[] args = input.split("\\|", 3);
                 char[] delim = args[0].toCharArray();
                 int limit = Integer.parseInt(args[1]);
                 input = args[2];
-                String[] result = StringArray.split(input, delim, limit, StringArray.TRIM | StringArray.QUOTE);
+                String[] result = StringArray.split(input, delim, limit, //
+                        StringArray.TRIM | StringArray.QUOTE | StringArray.DEQUOTE);
                 String actual = StringArray.join("|", result);
                 assertEquals(expected, actual);
             }
@@ -43,12 +61,13 @@ public class StringArrayTest
     public void testSplitQuoted()
             throws IOException {
         class D {
-            void o(String expected, String input)
+            void o(String input, String expected)
                     throws IOException {
                 String[] args = input.split("\\|", 2);
                 int limit = Integer.parseInt(args[0]);
                 input = args[1];
-                String[] result = StringArray.split(input, null, limit, StringArray.QUOTE);
+                String[] result = StringArray.split(input, null, limit, //
+                        StringArray.QUOTE | StringArray.DEQUOTE);
                 String actual = StringArray.join("|", result);
                 assertEquals(expected, actual);
             }

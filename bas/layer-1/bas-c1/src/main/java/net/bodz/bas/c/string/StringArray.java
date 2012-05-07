@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.UnexpectedException;
@@ -60,11 +61,56 @@ public class StringArray {
 
     }
 
-    public static Pair<String, String> join(String separatorKey, String separatorValue, Map<?, ?> map) {
+    public static String joinReversed(String separator, List<?> list) {
+        if (list == null)
+            throw new NullPointerException("list");
+        StringBuilder buf = new StringBuilder();
+        int max = list.size() - 1;
+        for (int index = max; index >= 0; index--) {
+            if (index != max)
+                buf.append(separator);
+            Object val = list.get(index);
+            buf.append(val);
+        }
+        return buf.toString();
+    }
+
+    public static String join(Map<?, ?> map) {
+        return join(" = ", "\n", map);
+    }
+
+    /**
+     * @param delimitor
+     *            String between the key and the value.
+     * @param separator
+     *            String between each entry.
+     * @param map
+     *            Non-<code>null</code> {@link Map map}.
+     * @return String contains all the entries in the map.
+     */
+    public static String join(String delimitor, String separator, Map<?, ?> map) {
+        if (map == null)
+            throw new NullPointerException("map");
+        StringBuilder buf = null;
+        for (Entry<?, ?> entry : map.entrySet()) {
+            if (buf == null)
+                buf = new StringBuilder(map.size() * 40);
+            else
+                buf.append(separator);
+            buf.append(entry.getKey());
+            buf.append(delimitor);
+            buf.append(entry.getValue());
+        }
+        if (buf == null)
+            return "";
+        else
+            return buf.toString();
+    }
+
+    public static Pair<String, String> join2(String separatorKey, String separatorValue, Map<?, ?> map) {
         StringBuilder bufferKey = null;
         StringBuilder bufferValue = null;
-        for (Object o : map.entrySet()) {
-            Map.Entry<?, ?> entry = (Map.Entry<?, ?>) o;
+        for (Entry<?, ?> entry : map.entrySet()) {
             if (bufferKey == null) {
                 bufferKey = new StringBuilder();
                 bufferValue = new StringBuilder();
@@ -81,20 +127,36 @@ public class StringArray {
             return new Pair<String, String>(bufferKey.toString(), bufferValue.toString());
     }
 
-    public static Pair<String, String> join(String separator, Map<?, ?> map) {
-        return join(separator, separator, map);
+    public static Pair<String, String> join2(String separator, Map<?, ?> map) {
+        return join2(separator, separator, map);
     }
 
-    public static String joinDot(int... values) {
+    public static String joinByDot(int... values) {
         if (values == null)
             return null;
         StringBuilder buf = null;
-        for (int rev : values) {
+        for (int val : values) {
             if (buf == null)
                 buf = new StringBuilder(values.length * 4);
             else
                 buf.append('.');
-            buf.append(rev);
+            buf.append(val);
+        }
+        if (buf == null)
+            return "";
+        return buf.toString();
+    }
+
+    public static String joinByDot(long... values) {
+        if (values == null)
+            return null;
+        StringBuilder buf = null;
+        for (long val : values) {
+            if (buf == null)
+                buf = new StringBuilder(values.length * 4);
+            else
+                buf.append('.');
+            buf.append(val);
         }
         if (buf == null)
             return "";
