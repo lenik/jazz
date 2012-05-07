@@ -4,9 +4,9 @@ public class CurrentThreadContextResolver
         extends AbstractContextResolver {
 
     @Override
-    public IContext resolve(IContext fallback) {
+    public IContextId resolve(IContextId fallback) {
         Thread currentThread = Thread.currentThread();
-        return ThreadContext.getInstance(fallback, currentThread);
+        return ThreadContextId.getInstance(fallback, currentThread);
     }
 
     static final CurrentThreadContextResolver instance = new CurrentThreadContextResolver();

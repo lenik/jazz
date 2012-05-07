@@ -5,7 +5,7 @@ import java.nio.charset.IllegalCharsetNameException;
 import java.nio.charset.UnsupportedCharsetException;
 
 import net.bodz.bas.context.ContextLocal;
-import net.bodz.bas.context.IContext;
+import net.bodz.bas.context.IContextId;
 
 public class CharsetColo
         extends ContextLocal<Charset> {
@@ -18,9 +18,9 @@ public class CharsetColo
     /**
      * @throws NullPointerException
      *             If <code>context</code> is <code>null</code>.
-     * @see #get(IContext)
+     * @see #get(IContextId)
      */
-    public String getCharsetName(IContext context) {
+    public String getCharsetName(IContextId context) {
         Charset charset = get(context);
         if (charset == null)
             throw new NullPointerException("charset");
@@ -35,9 +35,9 @@ public class CharsetColo
      * @throws UnsupportedCharsetException
      *             - If no support for the named charset is available in this instance of the Java
      *             virtual machine
-     * @see #set(IContext, Charset)
+     * @see #set(IContextId, Charset)
      */
-    public void setCharsetName(IContext context, String charsetName) {
+    public void setCharsetName(IContextId context, String charsetName) {
         if (context == null)
             throw new NullPointerException("context");
         if (charsetName == null)

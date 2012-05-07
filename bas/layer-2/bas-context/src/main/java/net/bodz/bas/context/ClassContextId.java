@@ -3,28 +3,28 @@ package net.bodz.bas.context;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.util.Nullables;
 
-public class ClassContext
-        extends AbstractContext {
+public class ClassContextId
+        extends AbstractContextId {
 
-    private final IContext fallbackContext;
+    private final IContextId fallbackContext;
     private final Class<?> clazz;
 
     /**
      * @throws NullPointerException
      *             If <code>clazz</code> is <code>null</code>.
      */
-    public ClassContext(IContext fallbackContext, Class<?> clazz) {
+    public ClassContextId(IContextId fallbackContext, Class<?> clazz) {
         super(clazz.getName());
         this.fallbackContext = fallbackContext;
         this.clazz = clazz;
     }
 
-    public ClassContext(Class<?> clazz) {
-        this(StaticContext.getInstance(), clazz);
+    public ClassContextId(Class<?> clazz) {
+        this(StaticContextId.getInstance(), clazz);
     }
 
     @Override
-    public IContext getParentContext() {
+    public IContextId getParentContextId() {
         Class<?> superclass = clazz.getSuperclass();
         if (superclass != null)
             return getInstance(fallbackContext, superclass);
@@ -33,9 +33,9 @@ public class ClassContext
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof ClassContext))
+        if (!(obj instanceof ClassContextId))
             return false;
-        ClassContext o = (ClassContext) obj;
+        ClassContextId o = (ClassContextId) obj;
         if (!clazz.equals(o.clazz))
             return false;
         if (!Nullables.equals(fallbackContext, o.fallbackContext))
@@ -57,26 +57,26 @@ public class ClassContext
      * @throws NullPointerException
      *             If <code>clazz</code> is <code>null</code>.
      */
-    public static ClassContext getInstance(IContext fallbackContext, Class<?> clazz) {
-        return new ClassContext(fallbackContext, clazz);
+    public static ClassContextId getInstance(IContextId fallbackContext, Class<?> clazz) {
+        return new ClassContextId(fallbackContext, clazz);
     }
 
     /**
      * @throws NullPointerException
      *             If <code>clazz</code> is <code>null</code>.
      */
-    public static ClassContext getInstance(Class<?> clazz) {
-        return new ClassContext(clazz);
+    public static ClassContextId getInstance(Class<?> clazz) {
+        return new ClassContextId(clazz);
     }
 
-    public static ClassContext getCallerClassContext(IContext fallbackContext) {
+    public static ClassContextId getCallerClassContext(IContextId fallbackContext) {
         Class<?> callerClass = Caller.getCallerClass(2);
         return getInstance(fallbackContext, callerClass);
     }
 
-    public static ClassContext getCallerClassContext() {
+    public static ClassContextId getCallerClassContext() {
         Class<?> callerClass = Caller.getCallerClass(2);
-        return getInstance(StaticContext.getInstance(), callerClass);
+        return getInstance(StaticContextId.getInstance(), callerClass);
     }
 
 }

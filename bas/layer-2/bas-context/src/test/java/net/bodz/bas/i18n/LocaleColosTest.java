@@ -3,7 +3,7 @@ package net.bodz.bas.i18n;
 import java.nio.charset.Charset;
 import java.util.Locale;
 
-import net.bodz.bas.context.StaticContext;
+import net.bodz.bas.context.StaticContextId;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,10 +13,10 @@ public class LocaleColosTest
 
     @Test
     public void testCharset() {
-        Charset staticCharset = LocaleColos.charset.get(StaticContext.getInstance());
+        Charset staticCharset = LocaleColos.charset.get(StaticContextId.getInstance());
         assertEquals(Charset.defaultCharset(), staticCharset);
 
-        Locale staticLocale = LocaleColos.locale.get(StaticContext.getInstance());
+        Locale staticLocale = LocaleColos.locale.get(StaticContextId.getInstance());
         assertEquals(Locale.getDefault(), staticLocale);
     }
 

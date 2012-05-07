@@ -3,10 +3,10 @@ package net.bodz.bas.context;
 import net.bodz.bas.collection.preorder.IPreorder;
 import net.bodz.bas.util.Nullables;
 
-public class PreorderContext<T>
-        extends AbstractContext {
+public class PreorderContextId<T>
+        extends AbstractContextId {
 
-    private final IContext fallbackContext;
+    private final IContextId fallbackContext;
     private final IPreorder<T> preorder;
     private final T node;
 
@@ -14,7 +14,7 @@ public class PreorderContext<T>
      * @throws NullPointerException
      *             If <code>preorder</code> is <code>null</code>.
      */
-    public PreorderContext(IContext fallbackContext, IPreorder<T> preorder, T node) {
+    public PreorderContextId(IContextId fallbackContext, IPreorder<T> preorder, T node) {
         super(String.valueOf(node));
         if (preorder == null)
             throw new NullPointerException("preorder");
@@ -24,11 +24,11 @@ public class PreorderContext<T>
     }
 
     @Override
-    public IContext getParentContext() {
+    public IContextId getParentContextId() {
         T preceding = preorder.getPreceding(node);
         if (preceding == null)
             return fallbackContext;
-        return new PreorderContext<T>(fallbackContext, preorder, preceding);
+        return new PreorderContextId<T>(fallbackContext, preorder, preceding);
     }
 
     @Override
@@ -43,9 +43,9 @@ public class PreorderContext<T>
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof PreorderContext<?>))
+        if (!(obj instanceof PreorderContextId<?>))
             return false;
-        PreorderContext<?> o = (PreorderContext<?>) obj;
+        PreorderContextId<?> o = (PreorderContextId<?>) obj;
         if (!preorder.equals(o.preorder))
             return false;
         if (!Nullables.equals(node, o.node))

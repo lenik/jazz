@@ -9,7 +9,7 @@ public class PackageContextTest
     static class ContextAddress
             extends ContextLocal<String> {
 
-        public void addMoreAddr(IContext context, String moreAddr) {
+        public void addMoreAddr(IContextId context, String moreAddr) {
             String s = get(context);
             if (s == null)
                 s = moreAddr;
@@ -28,12 +28,12 @@ public class PackageContextTest
     class Inner {
 
         public String getAddress() {
-            PackageContext innerContext = PackageContext.getCallerPackageContext();
+            PackageContextId innerContext = PackageContextId.getCallerPackageContext();
             return contextAddress.get(innerContext);
         }
 
         public void setMoreAddr(String s) {
-            PackageContext innerContext = PackageContext.getCallerPackageContext();
+            PackageContextId innerContext = PackageContextId.getCallerPackageContext();
             contextAddress.addMoreAddr(innerContext, s);
         }
 
@@ -42,7 +42,7 @@ public class PackageContextTest
     @Test
     public void testSetInnerKeepOuter()
             throws Exception {
-        PackageContext outerContext = PackageContext.getCallerPackageContext();
+        PackageContextId outerContext = PackageContextId.getCallerPackageContext();
         String outerAddr = contextAddress.get(outerContext);
         assertNull(outerAddr);
 
@@ -61,7 +61,7 @@ public class PackageContextTest
     @Test
     public void testSetOuterChangeInner()
             throws Exception {
-        PackageContext outer = PackageContext.getCallerPackageContext();
+        PackageContextId outer = PackageContextId.getCallerPackageContext();
         String outerAddr = contextAddress.get(outer);
         assertNull(outerAddr);
 

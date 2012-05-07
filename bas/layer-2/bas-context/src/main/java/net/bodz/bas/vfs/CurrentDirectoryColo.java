@@ -4,9 +4,9 @@ import java.io.File;
 
 import net.bodz.bas.c.system.SystemInfo;
 import net.bodz.bas.c.system.SystemProperties;
-import net.bodz.bas.context.ClassContext;
+import net.bodz.bas.context.ClassContextId;
 import net.bodz.bas.context.ContextLocal;
-import net.bodz.bas.context.IContext;
+import net.bodz.bas.context.IContextId;
 
 public class CurrentDirectoryColo
         extends ContextLocal<File> {
@@ -43,7 +43,7 @@ public class CurrentDirectoryColo
         return new File(cwd, name);
     }
 
-    public File join(IContext context, String name) {
+    public File join(IContextId context, String name) {
         if (name == null)
             throw new NullPointerException("name");
         File cwd = get(context);
@@ -54,7 +54,7 @@ public class CurrentDirectoryColo
      * @throws IllegalArgumentException
      *             If <code>dir</code> isn't a {@link File#isDirectory() directory}.
      */
-    public void chdir(IContext context, File dir) {
+    public void chdir(IContextId context, File dir) {
         if (dir == null)
             throw new NullPointerException("dir");
         if (!dir.isDirectory())
@@ -68,7 +68,7 @@ public class CurrentDirectoryColo
      * @throws IllegalArgumentException
      *             If target <code>path</code> isn't a {@link File#isDirectory() directory}.
      */
-    public void chdir(IContext context, String path) {
+    public void chdir(IContextId context, String path) {
         if (path == null)
             throw new NullPointerException("path");
         File cwd = get(context);
@@ -96,15 +96,15 @@ public class CurrentDirectoryColo
     // Shortcuts for ClassContext
 
     public File join(Class<?> classContext, String name) {
-        return join(ClassContext.getInstance(classContext), name);
+        return join(ClassContextId.getInstance(classContext), name);
     }
 
     public void chdir(Class<?> classContext, File dir) {
-        chdir(ClassContext.getInstance(classContext), dir);
+        chdir(ClassContextId.getInstance(classContext), dir);
     }
 
     public void chdir(Class<?> classContext, String path) {
-        chdir(ClassContext.getInstance(classContext), path);
+        chdir(ClassContextId.getInstance(classContext), path);
     }
 
     private static final CurrentDirectoryColo instance = new CurrentDirectoryColo();

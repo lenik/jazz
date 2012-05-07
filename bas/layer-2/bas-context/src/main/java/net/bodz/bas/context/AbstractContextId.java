@@ -2,12 +2,12 @@ package net.bodz.bas.context;
 
 import net.bodz.bas.util.Nullables;
 
-public abstract class AbstractContext
-        implements IContext {
+public abstract class AbstractContextId
+        implements IContextId {
 
     private final String contextName;
 
-    public AbstractContext(String contextName) {
+    public AbstractContextId(String contextName) {
         if (contextName == null)
             throw new NullPointerException("contextName");
         this.contextName = contextName;
@@ -23,14 +23,14 @@ public abstract class AbstractContext
     }
 
     public boolean equals(Object obj) {
-        if (obj instanceof AbstractContext)
-            return equals((AbstractContext) obj);
+        if (obj instanceof AbstractContextId)
+            return equals((AbstractContextId) obj);
         return false;
     }
 
-    protected boolean equals(AbstractContext obj) {
-        IContext parent = getParentContext();
-        IContext oParent = obj.getParentContext();
+    protected boolean equals(AbstractContextId obj) {
+        IContextId parent = getParentContextId();
+        IContextId oParent = obj.getParentContextId();
         return Nullables.equals(parent, oParent);
     }
 

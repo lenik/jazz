@@ -2,35 +2,35 @@ package net.bodz.bas.context;
 
 import net.bodz.bas.util.Nullables;
 
-public class ThreadGroupContext
-        extends AbstractContext {
+public class ThreadGroupContextId
+        extends AbstractContextId {
 
     static final String topThreadGroupName = "TopThreadGroup";
 
-    private final IContext fallbackContext;
+    private final IContextId fallbackContext;
     private final ThreadGroup threadGroup;
 
     /**
      * @param threadGroup
      *            Specify <code>null</code> to refer to top-level {@link ThreadGroup}.
      */
-    public ThreadGroupContext(IContext fallbackContext, ThreadGroup threadGroup) {
+    public ThreadGroupContextId(IContextId fallbackContext, ThreadGroup threadGroup) {
         super(threadGroup == null ? topThreadGroupName : threadGroup.getName());
         this.fallbackContext = fallbackContext;
         this.threadGroup = threadGroup;
     }
 
-    public ThreadGroupContext(ThreadGroup threadGroup) {
-        this(StaticContext.getInstance(), threadGroup);
+    public ThreadGroupContextId(ThreadGroup threadGroup) {
+        this(StaticContextId.getInstance(), threadGroup);
     }
 
     @Override
-    public IContext getParentContext() {
+    public IContextId getParentContextId() {
         if (threadGroup == null)
             return null;
         ThreadGroup parent = threadGroup.getParent();
         if (parent != null)
-            return new ThreadGroupContext(fallbackContext, parent);
+            return new ThreadGroupContextId(fallbackContext, parent);
         return fallbackContext;
     }
 
@@ -46,9 +46,9 @@ public class ThreadGroupContext
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof ThreadGroupContext))
+        if (!(obj instanceof ThreadGroupContextId))
             return false;
-        ThreadGroupContext o = (ThreadGroupContext) obj;
+        ThreadGroupContextId o = (ThreadGroupContextId) obj;
         if (!Nullables.equals(threadGroup, o.threadGroup))
             return false;
         if (!Nullables.equals(fallbackContext, o.fallbackContext))
@@ -56,12 +56,12 @@ public class ThreadGroupContext
         return true;
     }
 
-    public static ThreadGroupContext getInstance(IContext fallbackContext, ThreadGroup threadGroup) {
-        return new ThreadGroupContext(fallbackContext, threadGroup);
+    public static ThreadGroupContextId getInstance(IContextId fallbackContext, ThreadGroup threadGroup) {
+        return new ThreadGroupContextId(fallbackContext, threadGroup);
     }
 
-    public static ThreadGroupContext getInstance(ThreadGroup threadGroup) {
-        return new ThreadGroupContext(threadGroup);
+    public static ThreadGroupContextId getInstance(ThreadGroup threadGroup) {
+        return new ThreadGroupContextId(threadGroup);
     }
 
 }
