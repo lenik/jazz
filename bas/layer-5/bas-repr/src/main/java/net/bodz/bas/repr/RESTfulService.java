@@ -2,11 +2,7 @@ package net.bodz.bas.repr;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
@@ -22,10 +18,9 @@ import net.bodz.bas.disp.ITokenQueue;
 import net.bodz.bas.disp.PathArrival;
 import net.bodz.bas.disp.naming.ReverseLookupRegistry;
 import net.bodz.bas.disp.util.ArrivalBacktraceCallback;
-import net.bodz.bas.disp.util.ClassMethod;
 import net.bodz.bas.disp.util.MethodLazyInjector;
-import net.bodz.bas.disp.util.MethodPattern;
 import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.log.api.Logger;
 import net.bodz.bas.log.api.LoggerFactory;
 import net.bodz.bas.repr.request.RESTfulRequestBuilder;
 import net.bodz.bas.repr.rest.IRESTfulRequest;
@@ -40,15 +35,6 @@ public class RESTfulService {
     static Logger logger = LoggerFactory.getLogger(RESTfulService.class);
 
     private transient Object root;
-
-    @Inject
-    ApplicationContext applicationContext;
-
-    @Inject
-    ModuleIndex moduleManager;
-
-    @Inject
-    RESTfulViewManager viewManager;
 
     public void setRoot(Object root) {
         if (root == null)
@@ -292,57 +278,6 @@ public class RESTfulService {
         }
 
         return false;
-    }
-
-    static MethodPattern controllerPattern;
-    static Map<Class<?>, Map<String, ClassMethod>> classControllerMethods;
-    static {
-        controllerPattern = new MethodPattern(ServletRequest.class, ServletResponse.class);
-        classControllerMethods = new HashMap<Class<?>, Map<String, ClassMethod>>();
-    }
-
-    static Map<String, ClassMethod> getControllerMethods(Class<?> resourceClass) {
-        if (resourceClass == null)
-            throw new NullPointerException("resourceClass");
-
-        Map<String, ClassMethod> methods = classControllerMethods.get(resourceClass);
-        if (methods == null) {
-            methods = controllerPattern.searchOverlayMethods(resourceClass, "controller");
-            classControllerMethods.put(resourceClass, methods);
-        }
-        return methods;
-    }
-
-    static ClassMethod getControllerMethod(Class<?> resourceClass, String method) {
-        Map<String, ClassMethod> map = getControllerMethods(resourceClass);
-        return map.get(method);
-    }
-
-    static Map<Class<?>, Map<String, Method>> classSingleMethods = new HashMap<Class<?>, Map<String, Method>>();
-
-    static Method getSingleMethod(Class<?> clazz, String name) {
-        Map<String, Method> singleMethods = classSingleMethods.get(clazz);
-        if (singleMethods == null) {
-            synchronized (classSingleMethods) {
-                singleMethods = classSingleMethods.get(clazz);
-                if (singleMethods == null) {
-                    singleMethods = new HashMap<String, Method>();
-
-                    Set<String> nameset = new HashSet<String>();
-                    for (Method method : clazz.getMethods()) {
-                        String _name = method.getName();
-                        if (nameset.add(_name))
-                            singleMethods.put(_name, method);
-                        else
-                            singleMethods.remove(method);
-                    }
-
-                    classSingleMethods.put(clazz, singleMethods);
-                }
-            }
-        }
-
-        return singleMethods.get(name);
     }
 
 }

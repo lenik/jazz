@@ -8,6 +8,7 @@ import net.bodz.bas.c.object.TreeDump;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.disp.util.ArrivalBacktraceCallback;
 import net.bodz.bas.disp.util.ReversedPathTokens;
+import net.bodz.bas.util.Nullables;
 
 public class PathArrival
         implements IPathArrival {
@@ -143,34 +144,17 @@ public class PathArrival
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (obj == null)
+        if (!(obj instanceof PathArrival))
             return false;
-        if (getClass() != obj.getClass())
-            return false;
-
         PathArrival other = (PathArrival) obj;
-
         if (!Arrays.equals(consumedTokens, other.consumedTokens))
             return false;
-
-        if (expires == null) {
-            if (other.expires != null)
-                return false;
-        } else if (!expires.equals(other.expires))
+        if (!Nullables.equals(expires, other.expires))
             return false;
-
-        if (parent == null) {
-            if (other.parent != null)
-                return false;
-        } else if (!parent.equals(other.parent))
+        if (!Nullables.equals(parent, other.parent))
             return false;
-
-        if (target == null) {
-            if (other.target != null)
-                return false;
-        } else if (!target.equals(other.target))
+        if (!Nullables.equals(target, other.target))
             return false;
-
         return true;
     }
 
