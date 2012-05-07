@@ -98,25 +98,4 @@ public class TreeMapNode<T>
         return buf.toString();
     }
 
-    static class DeleteOperation
-            extends AbstractOperation {
-
-        @Override
-        public Object execute(Object instance, IOperationContext parameters)
-                throws Exception {
-            TreeMapNode<?> node = (TreeMapNode<?>) instance;
-            Object key = parameters.get(0);
-            Object value = node.map.remove(key);
-            if (value != null)
-                node.reverseMap.remove(value);
-            return null;
-        }
-
-    }
-
-    static DeleteOperation deleteOperation = new DeleteOperation();
-
-    public static void main(String[] args) {
-        System.out.println(deleteOperation.getName());
-    }
 }

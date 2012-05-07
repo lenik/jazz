@@ -3,7 +3,6 @@ package net.bodz.bas.disp.util;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import net.bodz.bas.err.IllegalUsageException;
 
@@ -15,39 +14,6 @@ public class MethodPattern {
         if (pattern == null)
             throw new NullPointerException("pattern");
         this.pattern = pattern;
-    }
-
-    public Map<String, ClassMethod> searchOverlayMethods(Class<?> clazz, String extension) {
-        if (clazz == null)
-            throw new NullPointerException("clazz");
-        if (extension == null)
-            throw new NullPointerException("extension");
-
-        Map<String, ClassMethod> all = new HashMap<String, ClassMethod>();
-        Map<String, ClassMethod> each = new HashMap<String, ClassMethod>();
-
-        while (clazz != null) {
-            Class<?> overlay = OverlayUtil.getOverlay(clazz, extension);
-
-            if (overlay != null) {
-                searchMethods(each, false, overlay);
-
-                for (Entry<String, ClassMethod> entry : each.entrySet()) {
-                    String methodName = entry.getKey();
-
-                    // Don't overwrite the methods defined in subclass
-                    if (all.containsKey(methodName))
-                        continue;
-
-                    all.put(methodName, entry.getValue());
-                }
-                each.clear();
-            }
-
-            clazz = clazz.getSuperclass();
-        }
-
-        return all;
     }
 
     public Map<String, ClassMethod> searchMethods(Class<?> clazz) {

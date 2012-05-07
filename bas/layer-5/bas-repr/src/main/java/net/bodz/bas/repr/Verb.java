@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.disp.IPathArrival;
+import net.bodz.bas.util.Nullables;
 
 public class Verb
         implements Serializable {
@@ -46,17 +48,12 @@ public class Verb
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
+        if (!(obj instanceof Verb))
             return false;
         Verb other = (Verb) obj;
         if (level != other.level)
             return false;
-        if (name == null) {
-            if (other.name != null)
-                return false;
-        } else if (!name.equals(other.name))
+        if (!Nullables.equals(name, other.name))
             return false;
         return true;
     }
@@ -120,7 +117,7 @@ public class Verb
             IOperation operation = fusion.getOperation(target, name);
 
             if (operation != null) {
-                String path = toReversedPath(pathRevList);
+                String path = StringArray.joinReversed("/", pathRevList);
                 context.setPath(path);
 
                 Object retval = operation.execute(target, context);
@@ -139,19 +136,6 @@ public class Verb
             pathRevList.add(consumedTokens[i]);
 
         return operate(parent, context, pathRevList);
-    }
-
-    static String toReversedPath(List<String> stack) {
-        int size = stack.size();
-        StringBuilder buf = new StringBuilder(size * 30);
-
-        for (int index = size - 1; index >= 0; index--) {
-            if (index != 0)
-                buf.append('/');
-            buf.append(stack.get(index));
-        }
-
-        return buf.toString();
     }
 
 }
