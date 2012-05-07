@@ -3,18 +3,18 @@ package net.bodz.bas.context;
 public class StaticContextResolver
         extends AbstractContextResolver {
 
-    IContext staticContext;
+    IContextId staticContext;
 
-    public StaticContextResolver(IContext staticContext) {
+    public StaticContextResolver(IContextId staticContext) {
         this.staticContext = staticContext;
     }
 
     @Override
-    public IContext resolve(IContext fallback) {
+    public IContextId resolve(IContextId fallback) {
         return staticContext;
     }
 
-    static StaticContextResolver instance = new StaticContextResolver(StaticContext.getInstance());
+    static StaticContextResolver instance = new StaticContextResolver(StaticContextId.getInstance());
 
     public static StaticContextResolver getInstance() {
         return instance;

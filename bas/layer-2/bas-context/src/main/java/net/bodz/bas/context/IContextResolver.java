@@ -3,10 +3,10 @@ package net.bodz.bas.context;
 public interface IContextResolver {
 
     /**
-     * The same as {@link #resolve(IContext)} with fallback set to <code>null</code>.
+     * The same as {@link #resolve(IContextId)} with fallback set to <code>null</code>.
      */
-    IContext resolve();
+    IContextId resolve();
 
-    IContext resolve(IContext fallback);
+    IContextId resolve(IContextId fallback);
 
 }

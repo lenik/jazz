@@ -4,8 +4,8 @@ public abstract class AbstractContextResolver
         implements IContextResolver {
 
     @Override
-    public IContext resolve() {
-        return resolve(StaticContext.getInstance());
+    public IContextId resolve() {
+        return resolve(StaticContextId.getInstance());
     }
 
 }

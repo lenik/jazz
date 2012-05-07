@@ -8,7 +8,7 @@ package net.bodz.bas.context;
  * A context identity is used to distinguish one context from another, and describes the context
  * hierachy by inheritance and transient.
  */
-public interface IContext {
+public interface IContextId {
 
     /**
      * A descriptive context name.
@@ -27,7 +27,7 @@ public interface IContext {
      * 
      * @return Parent context, <code>null</code> if this is a root context.
      */
-    IContext getParentContext();
+    IContextId getParentContextId();
 
     /**
      * Transient context is kind of "read-only". By affecting a transient context, indeed, the

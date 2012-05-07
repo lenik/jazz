@@ -3,23 +3,23 @@ package net.bodz.bas.context;
 import net.bodz.bas.collection.preorder.PackageNamePreorder;
 import net.bodz.bas.jvm.stack.Caller;
 
-public class PackageContext
-        extends PreorderContext<String> {
+public class PackageContextId
+        extends PreorderContextId<String> {
 
-    public PackageContext(IContext fallbackContext, String packageName) {
+    public PackageContextId(IContextId fallbackContext, String packageName) {
         super(fallbackContext, PackageNamePreorder.getInstance(), packageName);
     }
 
-    public PackageContext(String packageName) {
-        this(StaticContext.getInstance(), packageName);
+    public PackageContextId(String packageName) {
+        this(StaticContextId.getInstance(), packageName);
     }
 
-    public static PackageContext getInstance(IContext fallbackContext, String packageName) {
-        return new PackageContext(fallbackContext, packageName);
+    public static PackageContextId getInstance(IContextId fallbackContext, String packageName) {
+        return new PackageContextId(fallbackContext, packageName);
     }
 
-    public static PackageContext getInstance(String packageName) {
-        return new PackageContext(StaticContext.getInstance(), packageName);
+    public static PackageContextId getInstance(String packageName) {
+        return new PackageContextId(StaticContextId.getInstance(), packageName);
     }
 
     static String getPackageName(Class<?> clazz) {
@@ -37,24 +37,24 @@ public class PackageContext
         return parentPackageName;
     }
 
-    public static PackageContext getCallerPackageContext(IContext fallbackContext) {
+    public static PackageContextId getCallerPackageContext(IContextId fallbackContext) {
         Class<?> callerClass = Caller.getCallerClass(2);
         return getInstance(fallbackContext, getPackageName(callerClass));
     }
 
-    public static PackageContext getCallerPackageContext() {
+    public static PackageContextId getCallerPackageContext() {
         Class<?> callerClass = Caller.getCallerClass(2);
-        return getInstance(StaticContext.getInstance(), getPackageName(callerClass));
+        return getInstance(StaticContextId.getInstance(), getPackageName(callerClass));
     }
 
-    public static PackageContext getCallerParentPackageContext(IContext fallbackContext) {
+    public static PackageContextId getCallerParentPackageContext(IContextId fallbackContext) {
         Class<?> callerClass = Caller.getCallerClass(2);
         return getInstance(fallbackContext, getParentPackageName(callerClass));
     }
 
-    public static PackageContext getCallerParentPackageContext() {
+    public static PackageContextId getCallerParentPackageContext() {
         Class<?> callerClass = Caller.getCallerClass(2);
-        return getInstance(StaticContext.getInstance(), getParentPackageName(callerClass));
+        return getInstance(StaticContextId.getInstance(), getParentPackageName(callerClass));
     }
 
 }

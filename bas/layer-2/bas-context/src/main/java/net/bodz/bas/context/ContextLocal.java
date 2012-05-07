@@ -14,16 +14,16 @@ import java.util.Map;
  * thread any different. If the variable is allocated in the parent thread, it won't be accessible
  * in the child thread.
  * 
- * (See {@link ThreadContext} and {@link ThreadGroupContext} to get the idea how to make a
+ * (See {@link ThreadContextId} and {@link ThreadGroupContextId} to get the idea how to make a
  * ThreadGroup be <i>"parent"</i> of a Thread.)
  */
 public class ContextLocal<T> {
 
     private T root;
-    private Map<IContext, T> map;
+    private Map<IContextId, T> map;
 
     public ContextLocal() {
-        this.map = new HashMap<IContext, T>();
+        this.map = new HashMap<IContextId, T>();
     }
 
     public ContextLocal(T root) {
@@ -61,8 +61,8 @@ public class ContextLocal<T> {
      *            Non-<code>null</code> context.
      * @return {@link #getDefault() default} value if the value isn't defined in the context chain.
      */
-    public T get(IContext context) {
-        IContext ancestor = context;
+    public T get(IContextId context) {
+        IContextId ancestor = context;
         int depth = 0;
         while (ancestor != null) {
             T value = map.get(ancestor);
@@ -70,7 +70,7 @@ public class ContextLocal<T> {
                 return value;
             if (++depth > maxDepth)
                 throw new ContextOverflowException("Context too deep");
-            ancestor = ancestor.getParentContext();
+            ancestor = ancestor.getParentContextId();
         }
         // getOrCreate()?
         return getRoot();
@@ -83,11 +83,11 @@ public class ContextLocal<T> {
      *            The context to be affected, all transient contexts in the context chain are
      *            skipped.
      */
-    public void set(IContext context, T value) {
-        IContext concreteContext = context;
+    public void set(IContextId context, T value) {
+        IContextId concreteContext = context;
         int depth = 0;
         while (concreteContext.isTransient()) {
-            concreteContext = concreteContext.getParentContext();
+            concreteContext = concreteContext.getParentContextId();
             if (concreteContext == null)
                 // throw new IllegalUsageException("No concrete context, transient to death.");
                 break;
@@ -106,7 +106,7 @@ public class ContextLocal<T> {
      * @see ContextResolverConfig
      */
     public T get() {
-        IContext context = ContextResolverConfig.defaultContextResolver.resolve();
+        IContextId context = ContextResolverConfig.defaultContextResolver.resolve();
         return get(context);
     }
 
@@ -117,7 +117,7 @@ public class ContextLocal<T> {
      * @see ContextResolverConfig
      */
     public void set(T value) {
-        IContext context = getDefaultContext();
+        IContextId context = getDefaultContext();
         set(context, value);
     }
 
@@ -130,7 +130,7 @@ public class ContextLocal<T> {
      * @def get(ClassContext.getInstance(clazz))
      */
     public T get(Class<?> clazz) {
-        return get(ClassContext.getInstance(clazz));
+        return get(ClassContextId.getInstance(clazz));
     }
 
     /**
@@ -141,11 +141,11 @@ public class ContextLocal<T> {
      * @def set(ClassContext.getInstance(clazz), value)
      */
     public void set(Class<?> clazz, T value) {
-        set(ClassContext.getInstance(clazz), value);
+        set(ClassContextId.getInstance(clazz), value);
     }
 
-    protected IContext getDefaultContext() {
-        IContext defaultContext = ContextResolverConfig.defaultContextResolver.resolve();
+    protected IContextId getDefaultContext() {
+        IContextId defaultContext = ContextResolverConfig.defaultContextResolver.resolve();
         return defaultContext;
     }
 

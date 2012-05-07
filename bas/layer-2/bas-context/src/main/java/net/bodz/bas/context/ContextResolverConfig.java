@@ -1,7 +1,7 @@
 package net.bodz.bas.context;
 
 /**
- * This class isn't a {@link IContext} at all. It only servs to get the default context, which is
+ * This class isn't a {@link IContextId} at all. It only servs to get the default context, which is
  * configurable using the default context rule.
  */
 public class ContextResolverConfig {
