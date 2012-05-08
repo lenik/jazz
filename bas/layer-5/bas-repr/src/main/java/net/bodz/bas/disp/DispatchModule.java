@@ -26,15 +26,15 @@ public abstract class DispatchModule
     }
 
     @Override
-    public IPathArrival dispatch(IPathArrival context, ITokenQueue tokens)
+    public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens)
             throws DispatchException {
-        return loadDispatcher().dispatch(context, tokens);
+        return loadDispatcher().dispatch(previous, tokens);
     }
 
     @Override
-    public IPathArrival dispatch(IPathArrival context, String path)
+    public IPathArrival dispatch(IPathArrival previous, String path)
             throws DispatchException {
-        return loadDispatcher().dispatch(context, path);
+        return loadDispatcher().dispatch(previous, path);
     }
 
 }

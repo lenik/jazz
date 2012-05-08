@@ -14,7 +14,6 @@ import net.bodz.bas.disp.IPathArrival;
 import net.bodz.bas.disp.ITokenQueue;
 import net.bodz.bas.disp.PathArrival;
 
-
 public class PropertyDispatcher
         extends AbstractDispatcher {
 
@@ -82,7 +81,7 @@ public class PropertyDispatcher
             throw new DispatchException(e);
         }
 
-        return new PathArrival(context, result, propertyName);
+        return new PathArrival(context, result, propertyName, tokens.getRemainingPath());
     }
 
 }

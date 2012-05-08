@@ -24,14 +24,14 @@ public class DynamicDispatcher
     }
 
     @Override
-    public IPathArrival dispatch(IPathArrival context, ITokenQueue tokens)
+    public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens)
             throws DispatchException {
-        Object obj = context.getTarget();
+        Object obj = previous.getTarget();
         if (!(obj instanceof IPathDispatchable))
             return null;
 
         IPathDispatchable dispatchable = (IPathDispatchable) obj;
-        return dispatchable.dispatch(context, tokens);
+        return dispatchable.dispatch(previous, tokens);
     }
 
 }

@@ -75,7 +75,7 @@ public class RESTfulRequest
     public void setArrival(IPathArrival arrival) {
         this.arrival = arrival;
         this.setAttribute("target", getTarget());
-        this.setAttribute("restPath", getRestPath());
+        this.setAttribute("restPath", getRemainingPath());
     }
 
     @Override
@@ -86,10 +86,10 @@ public class RESTfulRequest
     }
 
     @Override
-    public String getRestPath() {
+    public String getRemainingPath() {
         if (arrival == null)
             return null;
-        return arrival.getRestPath();
+        return arrival.getRemainingPath();
     }
 
     public String getRestfulPath() {

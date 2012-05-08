@@ -27,9 +27,9 @@ public class NamedNodeDispatcher
     }
 
     @Override
-    public IPathArrival dispatch(IPathArrival context, ITokenQueue tokens)
+    public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens)
             throws DispatchException {
-        Object obj = context.getTarget();
+        Object obj = previous.getTarget();
 
         if (!(obj instanceof TreeNode<?>))
             return null;
@@ -47,7 +47,7 @@ public class NamedNodeDispatcher
             return null;
 
         tokens.shift();
-        return new PathArrival(context, result, key);
+        return new PathArrival(previous, result, key, tokens.getRemainingPath());
     }
 
 }

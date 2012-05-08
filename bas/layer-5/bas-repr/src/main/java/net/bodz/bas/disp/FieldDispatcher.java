@@ -6,7 +6,6 @@ import java.util.Map;
 
 import net.bodz.bas.disp.builtin.ClassMap;
 
-
 public class FieldDispatcher
         extends AbstractDispatcher {
 
@@ -29,9 +28,9 @@ public class FieldDispatcher
     }
 
     @Override
-    public IPathArrival dispatch(IPathArrival context, ITokenQueue tokens)
+    public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens)
             throws DispatchException {
-        Object obj = context.getTarget();
+        Object obj = previous.getTarget();
         if (obj == null)
             return null;
 
@@ -39,17 +38,17 @@ public class FieldDispatcher
         if (fieldName == null)
             return null;
 
-        Class<? extends Object> contextClass = obj.getClass();
+        Class<? extends Object> objClass = obj.getClass();
 
-        Map<String, Field> fieldMap = classMap.get(contextClass);
+        Map<String, Field> fieldMap = classMap.get(objClass);
         if (fieldMap == null) {
             fieldMap = new HashMap<String, Field>();
 
-            Field[] fields = contextClass.getFields();
+            Field[] fields = objClass.getFields();
             for (Field f : fields)
                 fieldMap.put(f.getName(), f);
 
-            classMap.put(contextClass, fieldMap);
+            classMap.put(objClass, fieldMap);
         }
 
         Field field = fieldMap.get(fieldName);
@@ -65,7 +64,7 @@ public class FieldDispatcher
             throw new DispatchException(e);
         }
 
-        return new PathArrival(context, result, fieldName);
+        return new PathArrival(previous, result, fieldName, tokens.getRemainingPath());
     }
 
 }

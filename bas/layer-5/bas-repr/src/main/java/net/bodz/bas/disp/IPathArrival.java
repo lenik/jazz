@@ -2,16 +2,14 @@ package net.bodz.bas.disp;
 
 import java.util.Date;
 
-import net.bodz.bas.disp.util.ArrivalBacktraceCallback;
-
 public interface IPathArrival {
 
     /**
      * Get the previous arrival node.
      * 
-     * @return Parent dispatch context, <code>null</code> if none.
+     * @return Previous arrival node, <code>null</code> if none.
      */
-    IPathArrival getParent();
+    IPathArrival getPrevious();
 
     /**
      * The partial path tokens consumed by this context.
@@ -28,24 +26,13 @@ public interface IPathArrival {
     String getConsumedPath();
 
     /**
-     * Get the rest path.
+     * Get the remaining path.
      * 
      * @return <code>null</code> if this is the final arrival.
      */
-    String getRestPath();
+    String getRemainingPath();
 
-    void setRestPath(String parameterPath);
-
-    /**
-     * Back trace the dispatch arrivals.
-     * 
-     * @param callback
-     *            Non-<code>null</code> callback on each arrival.
-     * @return Whether any of arrival is handled by the callback, <code>false</code> if not handled
-     *         at all.
-     */
-    <E extends Exception> boolean backtrace(ArrivalBacktraceCallback<E> callback)
-            throws E;
+    void setRemainingPath(String remainingPath);
 
     /**
      * Get the target object.

@@ -46,7 +46,7 @@ public class ObjectDumpView
         out.println("Context-Path: " + req.getContextPath());
         out.println("Dispatch-Path: " + req.getDispatchPath());
         out.println("Arrival: " + req.getArrival());
-        out.println("Rest-Path: " + req.getRestPath());
+        out.println("Rest-Path: " + req.getRemainingPath());
         out.println("Method: " + req.getMethod());
         out.println(req);
 
