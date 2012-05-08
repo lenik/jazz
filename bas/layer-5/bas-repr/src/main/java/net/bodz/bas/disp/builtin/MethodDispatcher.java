@@ -15,7 +15,6 @@ import net.bodz.bas.disp.IPathArrival;
 import net.bodz.bas.disp.ITokenQueue;
 import net.bodz.bas.disp.PathArrival;
 
-
 public class MethodDispatcher
         extends AbstractDispatcher {
 
@@ -38,9 +37,9 @@ public class MethodDispatcher
     }
 
     @Override
-    public IPathArrival dispatch(IPathArrival context, ITokenQueue tokens)
+    public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens)
             throws DispatchException {
-        Object obj = context.getTarget();
+        Object obj = previous.getTarget();
         if (obj == null)
             return null;
 
@@ -119,14 +118,14 @@ public class MethodDispatcher
             parsedPV[i] = parameter;
         }
 
-        Class<? extends Object> contextClass = obj.getClass();
+        Class<? extends Object> objClass = obj.getClass();
         MethodKey wantKey = new MethodKey(methodName, wantPV);
 
-        Map<MethodKey, Method> methodMap = classMap.get(contextClass);
+        Map<MethodKey, Method> methodMap = classMap.get(objClass);
         if (methodMap == null) {
             methodMap = new HashMap<MethodKey, Method>();
 
-            Method[] methods = contextClass.getMethods();
+            Method[] methods = objClass.getMethods();
             for (Method m : methods) {
                 String mName = m.getName();
                 Class<?>[] mPV = m.getParameterTypes();
@@ -143,7 +142,7 @@ public class MethodDispatcher
                 // }
             }
 
-            classMap.put(contextClass, methodMap);
+            classMap.put(objClass, methodMap);
         }
 
         Method method = methodMap.get(wantKey);
@@ -160,7 +159,7 @@ public class MethodDispatcher
             throw new DispatchException(e);
         }
 
-        return new PathArrival(context, result, consumedTokens);
+        return new PathArrival(previous, result, consumedTokens, tokens.getRemainingPath());
     }
 }
 

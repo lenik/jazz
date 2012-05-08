@@ -26,9 +26,9 @@ public class ListDispatcher
     }
 
     @Override
-    public IPathArrival dispatch(IPathArrival context, ITokenQueue tokens)
+    public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens)
             throws DispatchException {
-        Object obj = context.getTarget();
+        Object obj = previous.getTarget();
 
         if (!(obj instanceof List<?>))
             return null;
@@ -44,7 +44,7 @@ public class ListDispatcher
             throw new DispatchException("Index out of range: " + index);
 
         Object result = list.get(index);
-        return new PathArrival(context, result, mayConsume);
+        return new PathArrival(previous, result, mayConsume, tokens.getRemainingPath());
     }
 
 }

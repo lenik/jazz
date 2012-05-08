@@ -18,9 +18,9 @@ public class OidDispatcher
     }
 
     @Override
-    public IPathArrival dispatch(IPathArrival context, ITokenQueue tokens)
+    public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens)
             throws DispatchException {
-        Object obj = context.getTarget();
+        Object obj = previous.getTarget();
 
         if (!(obj instanceof OidTree<?>))
             return null;
@@ -54,7 +54,7 @@ public class OidDispatcher
             return null;
 
         String[] consumedTokens = tokens.shift(lastNodeIndex);
-        return new PathArrival(context, lastNode, consumedTokens);
+        return new PathArrival(previous, lastNode, consumedTokens, tokens.getRemainingPath());
     }
 
 }

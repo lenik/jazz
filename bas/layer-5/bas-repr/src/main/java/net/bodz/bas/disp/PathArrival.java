@@ -6,8 +6,6 @@ import java.util.Date;
 import net.bodz.bas.c.object.ITreeDump;
 import net.bodz.bas.c.object.TreeDump;
 import net.bodz.bas.c.string.StringArray;
-import net.bodz.bas.disp.util.ArrivalBacktraceCallback;
-import net.bodz.bas.disp.util.ReversedPathTokens;
 import net.bodz.bas.util.Nullables;
 
 public class PathArrival
@@ -16,24 +14,33 @@ public class PathArrival
     private final IPathArrival parent;
     private String[] consumedTokens = new String[0];
     private Object target;
-    private String restPath;
+    private String remainingPath;
     private Date expires;
 
-    public PathArrival(Object startTarget) {
+    public PathArrival(Object startTarget, String remainingPath) {
         this.parent = null;
         this.target = startTarget;
+        this.remainingPath = remainingPath;
     }
 
-    public PathArrival(IPathArrival parent, Object target, String... consumedTokens) {
+    public PathArrival(IPathArrival parent, Object target, String[] consumedTokens, String remainingPath) {
         if (consumedTokens == null)
             throw new NullPointerException("consumedTokens");
+        if (remainingPath == null)
+            throw new NullPointerException("remainingPath");
         this.parent = parent;
         this.target = target;
         this.consumedTokens = consumedTokens;
+        this.remainingPath = remainingPath;
+
+    }
+
+    public PathArrival(IPathArrival parent, Object target, String consumedToken, String remainingPath) {
+        this(parent, target, new String[] { consumedToken }, remainingPath);
     }
 
     @Override
-    public IPathArrival getParent() {
+    public IPathArrival getPrevious() {
         return parent;
     }
 
@@ -51,46 +58,16 @@ public class PathArrival
         return StringArray.join("/", consumedTokens);
     }
 
-    @Override
-    public String getRestPath() {
-        return restPath;
-    }
-
-    public void setRestPath(String parameterPath) {
-        this.restPath = parameterPath;
-    }
-
     /**
-     * For example:
-     * 
-     * <pre>
-     * foo/book/123 => foo/bookStore/book
-     * -> book: ""
-     * -> bookStore: "123"
-     * -> foo: "book/123"
-     * </pre>
+     * Lazy-initialized: unset until its child node call {@link #fallback()}.
      */
     @Override
-    public <E extends Exception> boolean backtrace(ArrivalBacktraceCallback<E> callback)
-            throws E {
-        ReversedPathTokens consumedRpt = new ReversedPathTokens();
+    public String getRemainingPath() {
+        return remainingPath;
+    }
 
-        IPathArrival node = this;
-        while (node != null) {
-
-            if (callback.arriveBack(node))
-                return true;
-
-            String[] tokens = node.getConsumedTokens();
-            for (int i = tokens.length - 1; i >= 0; i--)
-                consumedRpt.add(tokens[i]);
-
-            node = node.getParent();
-            if (node != null)
-                node.setRestPath(consumedRpt.toString());
-        }
-
-        return false;
+    public void setRemainingPath(String remainingPath) {
+        this.remainingPath = remainingPath;
     }
 
     @Override

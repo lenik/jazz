@@ -49,12 +49,16 @@ public interface IRESTfulRequest
 
     /**
      * The same as arrival.target.
+     * 
+     * @see IPathArrival#getTarget()
      */
     <T> T getTarget();
 
     /**
-     * The same as arrival.restPath.
+     * The same as arrival.remainingPath.
+     * 
+     * @see IPathArrival#getRemainingPath()
      */
-    String getRestPath();
+    String getRemainingPath();
 
 }

@@ -1,6 +1,5 @@
 package net.bodz.bas.disp;
 
-
 public abstract class AbstractDispatcher
         implements IDispatcher {
 
@@ -24,12 +23,12 @@ public abstract class AbstractDispatcher
     }
 
     @Override
-    public IPathArrival dispatch(IPathArrival context, String path)
+    public IPathArrival dispatch(IPathArrival previous, String path)
             throws DispatchException {
-        TokenQueue tq = new TokenQueue(path);
-        IPathArrival target = dispatch(context, tq);
-        if (!tq.isEmpty())
-            throw new DispatchException("Dispatch isn't completed: " + tq);
+        TokenQueue tokens = new TokenQueue(path);
+        IPathArrival target = dispatch(previous, tokens);
+        if (!tokens.isEmpty())
+            throw new DispatchException("Dispatch failed: " + tokens);
         return target;
     }
 

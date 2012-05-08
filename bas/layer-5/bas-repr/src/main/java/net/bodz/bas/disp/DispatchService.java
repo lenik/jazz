@@ -13,16 +13,16 @@ import net.bodz.bas.log.api.LoggerFactory;
  * This facade is commonly used by HttpServlet or Filter, which accepts the initial URL prefix, and
  * pass down the rest of the tokens.
  */
-public class Dispatcher
+public class DispatchService
         extends AbstractDispatcher {
 
-    static Logger logger = LoggerFactory.getLogger(Dispatcher.class);
+    static Logger logger = LoggerFactory.getLogger(DispatchService.class);
 
     TreeSet<IDispatcher> dispatchers;
 
     // private DispatchTree tree;
 
-    public Dispatcher() {
+    public DispatchService() {
         reloadProviders();
     }
 
@@ -44,10 +44,11 @@ public class Dispatcher
     private static int maxDispatches = 100;
 
     @Override
-    public IPathArrival dispatch(IPathArrival arrival, ITokenQueue tokens)
+    public IPathArrival dispatch(IPathArrival previous, ITokenQueue tokens)
             throws DispatchException {
-        if (arrival == null)
-            throw new NullPointerException("context");
+        if (previous == null)
+            throw new NullPointerException("previous");
+        IPathArrival node = previous;
 
         if (dispatchers.isEmpty())
             logger.warn("No dispatch configured");
@@ -55,14 +56,13 @@ public class Dispatcher
         int count = 0;
 
         logger.debug("Dispatch " + tokens);
-
         while (!tokens.isEmpty()) {
             boolean processed = false;
 
             for (IDispatcher dispatcher : dispatchers) {
-                IPathArrival next = dispatcher.dispatch(arrival, tokens);
+                IPathArrival next = dispatcher.dispatch(node, tokens);
                 if (next != null) {
-                    arrival = next;
+                    node = next;
                     processed = true;
                     break;
                 }
@@ -71,18 +71,18 @@ public class Dispatcher
             if (!processed)
                 break;
 
-            logger.debug("    " + arrival);
+            logger.debug("    " + node);
 
             if (++count > maxDispatches)
                 throw new DispatchException(String.format("Dispatch-deadloop (%d) detected.", maxDispatches));
         }
 
-        return arrival;
+        return node;
     }
 
-    private static final Dispatcher instance = new Dispatcher();
+    private static final DispatchService instance = new DispatchService();
 
-    public static Dispatcher getInstance() {
+    public static DispatchService getInstance() {
         return instance;
     }
 

@@ -127,7 +127,7 @@ public class Verb
             }
         }
 
-        IPathArrival parent = arrival.getParent();
+        IPathArrival parent = arrival.getPrevious();
         if (parent == null)
             throw new UnsupportedVerbException(name);
 

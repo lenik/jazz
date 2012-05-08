@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.bodz.bas.disp.DispatchException;
-import net.bodz.bas.disp.Dispatcher;
+import net.bodz.bas.disp.DispatchService;
 import net.bodz.bas.disp.IPathArrival;
 import net.bodz.bas.disp.ITokenQueue;
 import net.bodz.bas.disp.PathArrival;
@@ -163,7 +163,7 @@ public class RESTfulService {
             // throw new IllegalStateException("Root object isn't set");
             rootObject = ModuleIndex.getStaticInstance();
 
-        Dispatcher dispatcher = Dispatcher.getInstance();
+        DispatchService dispatcher = DispatchService.getInstance();
         IPathArrival arrival;
         try {
             arrival = dispatcher.dispatch(new PathArrival(rootObject), tq);
