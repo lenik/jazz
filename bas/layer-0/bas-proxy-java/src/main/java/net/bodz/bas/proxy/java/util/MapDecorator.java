@@ -10,6 +10,8 @@ public class MapDecorator<K, V>
         extends AbstractDecorator<Map<K, V>>
         implements Map<K, V> {
 
+    private static final long serialVersionUID = 1L;
+
     public MapDecorator(Map<K, V> impl) {
         super(impl);
     }

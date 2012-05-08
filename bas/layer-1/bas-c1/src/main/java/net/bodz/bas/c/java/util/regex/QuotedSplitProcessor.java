@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 
 public class QuotedSplitProcessor
         extends QuotedStringProcessor {
+
     private final boolean dequote;
     private final Pattern delimitorPattern;
     private final int limit;

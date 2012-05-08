@@ -1,13 +1,12 @@
 package net.bodz.bas.proxy.java.lang;
 
-import net.bodz.bas.model.AbstractDecorator;
-
 public class StringBuilderDecorator
-        extends AbstractDecorator<StringBuilder>
         implements Appendable {
 
+    protected StringBuilder impl;
+
     public StringBuilderDecorator(StringBuilder impl) {
-        super(impl);
+        this.impl = impl;
     }
 
     public int length() {

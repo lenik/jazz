@@ -10,6 +10,8 @@ public class PrintOutDecorator
         extends AbstractDecorator<IPrintOut>
         implements IPrintOut {
 
+    private static final long serialVersionUID = 1L;
+
     public PrintOutDecorator(IPrintOut impl) {
         super(impl);
     }
