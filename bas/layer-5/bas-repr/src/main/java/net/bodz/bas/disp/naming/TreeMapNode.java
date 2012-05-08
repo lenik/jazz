@@ -40,7 +40,7 @@ public class TreeMapNode<T>
     }
 
     @Override
-    public boolean hasChild(Object obj) {
+    public boolean containsChild(Object obj) {
         return reverseMap.containsKey(obj);
     }
 
@@ -50,7 +50,7 @@ public class TreeMapNode<T>
     }
 
     @Override
-    public String getChildName(Object obj) {
+    public String findChild(Object obj) {
         return reverseMap.get(obj);
     }
 
@@ -65,19 +65,15 @@ public class TreeMapNode<T>
     }
 
     @Override
-    public Collection<String> getChildNames() {
+    public Collection<String> getChildrenNames() {
         return map.keySet();
     }
 
     @Override
-    public Iterable<?> getChildren() {
+    public Collection<?> getChildren() {
         return map.values();
     }
 
-/*
- * @Override protected void buildOperation(OperationBuilder builder) { builder.add(deleteOperation);
- * }
- */
     @Override
     public String toString() {
         StringBuilder buf = new StringBuilder();

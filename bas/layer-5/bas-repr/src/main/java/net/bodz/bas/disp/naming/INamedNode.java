@@ -35,6 +35,15 @@ public interface INamedNode
     Class<?> getChildType();
 
     /**
+     * Check if the child object is managed by this node.
+     * 
+     * @param obj
+     *            child object to be checked
+     * @return <code>true</code> if the child object is owned by this node.
+     */
+    boolean containsChild(Object obj);
+
+    /**
      * Get managed node with specific name.
      * 
      * @param childName
@@ -45,37 +54,28 @@ public interface INamedNode
     Object getChild(String childName);
 
     /**
-     * Check if the child object is managed by this node.
-     * 
-     * @param obj
-     *            child object to be checked
-     * @return <code>true</code> if the child object is owned by this node.
-     */
-    boolean hasChild(Object obj);
-
-    /**
      * Get the URI location component for the object.
      * 
-     * @param obj
+     * @param childObj
      *            Non-<code>null</code> object.
      * @return Location string. Returns <code>null</code> if specified <code>obj</code> is not owned
      *         by this locator, and other locators for the same type should be checked.
      * @see ReverseLookupRegistry#getLocatorForObject(Object)
      */
-    String getChildName(Object obj);
-
-    /**
-     * Get all children's path names.
-     * 
-     * @return Non-<code>null</code> string collection of child names.
-     */
-    Collection<String> getChildNames();
+    String findChild(Object childObj);
 
     /**
      * Get all children.
      * 
      * @return Non-<code>null</code> children iterable.
      */
-    Iterable<?> getChildren();
+    Collection<?> getChildren();
+
+    /**
+     * Get all children's path names.
+     * 
+     * @return Non-<code>null</code> string collection of child names.
+     */
+    Collection<String> getChildrenNames();
 
 }

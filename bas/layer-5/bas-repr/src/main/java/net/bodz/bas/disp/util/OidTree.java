@@ -156,7 +156,7 @@ public class OidTree<T>
     }
 
     @Override
-    public String getChildName(Object obj) {
+    public String findChild(Object obj) {
         Map<T, String> reverseMap = getReverseMap();
         return reverseMap.get(obj);
     }
@@ -194,7 +194,7 @@ public class OidTree<T>
     }
 
     @Override
-    public Collection<String> getChildNames() {
+    public Collection<String> getChildrenNames() {
         if (children == null || children.isEmpty())
             return Collections.emptyList();
 
@@ -227,7 +227,7 @@ public class OidTree<T>
     }
 
     @Override
-    public Iterable<?> getChildren() {
+    public Collection<?> getChildren() {
         if (children == null || children.isEmpty())
             return Collections.emptyList();
 
@@ -317,7 +317,7 @@ public class OidTree<T>
         StringBuilder sb = new StringBuilder();
         sb.append(name + " => { ");
 
-        for (String name : getChildNames()) {
+        for (String name : getChildrenNames()) {
             Object node = getChild(name);
             sb.append(name + " -> { " + node + " }\n");
         }

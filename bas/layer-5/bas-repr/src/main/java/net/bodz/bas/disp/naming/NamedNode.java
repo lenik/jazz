@@ -72,8 +72,8 @@ public abstract class NamedNode
     }
 
     @Override
-    public boolean hasChild(Object obj) {
-        return getChildName(obj) != null;
+    public boolean containsChild(Object obj) {
+        return findChild(obj) != null;
     }
 /*
  * private transient Map<String, IOperation> operationMap;

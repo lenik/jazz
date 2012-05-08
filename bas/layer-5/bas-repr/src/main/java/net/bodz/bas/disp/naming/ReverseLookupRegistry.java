@@ -87,7 +87,7 @@ public class ReverseLookupRegistry {
 
             if (nodeSet != null) {
                 for (INamedNode _node : nodeSet) {
-                    String location = _node.getChildName(object);
+                    String location = _node.findChild(object);
                     if (location != null)
                         return _node;
                 }
@@ -109,7 +109,7 @@ public class ReverseLookupRegistry {
             else
                 return new LookupChain(null, obj, inner);
 
-        String location = node.getChildName(obj);
+        String location = node.findChild(obj);
         if (location == null)
             throw new IllegalUsageException("Location isn't set for " + obj + " in " + node);
 
