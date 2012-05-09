@@ -2,6 +2,18 @@ package net.bodz.bas.repr.request;
 
 import net.bodz.bas.util.iter.PrefetchedIterator;
 
+/**
+ * Example: The suffixes in <code>filename.foo*bar~cat-dog.spec+1.xml:ex</code> are: (The order is
+ * important)
+ * <ol>
+ * <li>.foo
+ * <li>*bar
+ * <li>~cat-dog
+ * <li>.spec+1
+ * <li>.xml
+ * <li>:ex
+ * </ol>
+ */
 public class SuffixTokenizer
         extends PrefetchedIterator<String> {
 
@@ -34,8 +46,8 @@ public class SuffixTokenizer
             switch (c) {
             case '*':
             case '~':
-            case '.':
             case ':':
+            case '.':
                 break L;
             }
             end++;
