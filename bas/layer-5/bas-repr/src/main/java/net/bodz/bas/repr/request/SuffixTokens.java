@@ -2,17 +2,19 @@ package net.bodz.bas.repr.request;
 
 import java.util.Iterator;
 
-public class Suffixes
+import net.bodz.bas.util.Nullables;
+
+public class SuffixTokens
         implements Iterable<String> {
 
     private final CharSequence string;
     private final boolean includeStartWord;
 
-    public Suffixes(CharSequence string) {
+    public SuffixTokens(CharSequence string) {
         this(string, false);
     }
 
-    public Suffixes(CharSequence string, boolean includeStartWord) {
+    public SuffixTokens(CharSequence string, boolean includeStartWord) {
         if (string == null)
             throw new NullPointerException("string");
         this.string = string;
@@ -25,28 +27,23 @@ public class Suffixes
     }
 
     @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((string == null) ? 0 : string.hashCode());
-        return result;
-    }
-
-    @Override
     public boolean equals(Object obj) {
         if (this == obj)
             return true;
-        if (obj == null)
+        if (obj == null || getClass() != obj.getClass())
             return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Suffixes other = (Suffixes) obj;
-        if (string == null) {
-            if (other.string != null)
-                return false;
-        } else if (!string.equals(other.string))
+        SuffixTokens o = (SuffixTokens) obj;
+        if (!Nullables.equals(string, o.string))
             return false;
         return true;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + (string == null ? 0 : string.hashCode());
+        return result;
     }
 
     @Override
