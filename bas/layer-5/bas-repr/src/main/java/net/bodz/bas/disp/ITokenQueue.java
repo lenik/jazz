@@ -48,6 +48,11 @@ public interface ITokenQueue {
     String[] shift(int n);
 
     /**
+     * Same as shift(available).
+     */
+    String[] shiftAll();
+
+    /**
      * Shift out the head token.
      * 
      * A trailing slash (<code>'/'</code>) should be translated into {@link #INDEX}.

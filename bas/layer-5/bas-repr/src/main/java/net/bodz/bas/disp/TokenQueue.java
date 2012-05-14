@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import net.bodz.bas.meta.codereview.ThreadUnsafe;
+
+@ThreadUnsafe
 public class TokenQueue
         implements ITokenQueue {
 
@@ -88,6 +91,11 @@ public class TokenQueue
         String[] copy = Arrays.copyOfRange(tokens, index, index + n);
         index += n;
         return copy;
+    }
+
+    @Override
+    public String[] shiftAll() {
+        return shift(available());
     }
 
     @Override
