@@ -2,25 +2,25 @@ package net.bodz.bas.vfs.util;
 
 import java.io.Serializable;
 
-public class MIMEType
+public class ContentType
         implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private final String contentType;
+    private final String name;
     private final String preferredExtension;
 
-    public MIMEType(String contentType, String preferredExtension) {
-        if (contentType == null)
-            throw new NullPointerException("contentType");
+    public ContentType(String name, String preferredExtension) {
+        if (name == null)
+            throw new NullPointerException("name");
         if (preferredExtension == null)
             throw new NullPointerException("preferredExtension");
-        this.contentType = contentType;
+        this.name = name;
         this.preferredExtension = preferredExtension;
     }
 
-    public String getContentType() {
-        return contentType;
+    public String getName() {
+        return name;
     }
 
     /**
@@ -36,7 +36,7 @@ public class MIMEType
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((contentType == null) ? 0 : contentType.hashCode());
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
         result = prime * result + ((preferredExtension == null) ? 0 : preferredExtension.hashCode());
         return result;
     }
@@ -50,12 +50,12 @@ public class MIMEType
         if (getClass() != obj.getClass())
             return false;
 
-        MIMEType other = (MIMEType) obj;
+        ContentType other = (ContentType) obj;
 
-        if (contentType == null) {
-            if (other.contentType != null)
+        if (name == null) {
+            if (other.name != null)
                 return false;
-        } else if (!contentType.equals(other.contentType))
+        } else if (!name.equals(other.name))
             return false;
 
         if (preferredExtension == null) {
@@ -69,18 +69,18 @@ public class MIMEType
 
     @Override
     public String toString() {
-        return contentType;
+        return name;
     }
 
-    public static MIMEType getInstance(String contentType) {
-        return MIMETypes.contentTypeMap.get(contentType);
+    public static ContentType getInstance(String name) {
+        return ContentTypes.nameMap.get(name);
     }
 
-    public static MIMEType getInstanceByExtension(String extension) {
+    public static ContentType getInstanceByExtension(String extension) {
         if (extension == null)
             return null;
         extension = extension.toLowerCase();
-        return MIMETypes.extensionMap.get(extension);
+        return ContentTypes.extensionMap.get(extension);
     }
 
 }
