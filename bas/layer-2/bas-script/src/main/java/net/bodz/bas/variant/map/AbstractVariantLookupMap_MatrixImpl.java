@@ -18,20 +18,20 @@ import net.bodz.bas.variant.conv.TypeMatrix_long;
 import net.bodz.bas.variant.conv.TypeMatrix_short;
 
 /**
- * see {@link cg.VariantLookupMapGenerator}
+ * @see cg.VariantLookupMapGenerator
  */
 public abstract class AbstractVariantLookupMap_MatrixImpl<K>
         implements IVariantLookupMap<K> {
 
     @Override
     public byte getByte(K key) {
-        Object value = get(key);
+        Object value = getScalar(key);
         return TypeMatrix_byte.fromObject(value);
     }
 
     @Override
     public byte getByte(K key, byte defaultValue) {
-        Object value = get(key);
+        Object value = getScalar(key);
         if (value == null && !containsKey(key))
             return defaultValue;
         try {
@@ -43,13 +43,13 @@ public abstract class AbstractVariantLookupMap_MatrixImpl<K>
 
     @Override
     public short getShort(K key) {
-        Object value = get(key);
+        Object value = getScalar(key);
         return TypeMatrix_short.fromObject(value);
     }
 
     @Override
     public short getShort(K key, short defaultValue) {
-        Object value = get(key);
+        Object value = getScalar(key);
         if (value == null && !containsKey(key))
             return defaultValue;
         try {
@@ -61,13 +61,13 @@ public abstract class AbstractVariantLookupMap_MatrixImpl<K>
 
     @Override
     public int getInt(K key) {
-        Object value = get(key);
+        Object value = getScalar(key);
         return TypeMatrix_int.fromObject(value);
     }
 
     @Override
     public int getInt(K key, int defaultValue) {
-        Object value = get(key);
+        Object value = getScalar(key);
         if (value == null && !containsKey(key))
             return defaultValue;
         try {
@@ -79,13 +79,13 @@ public abstract class AbstractVariantLookupMap_MatrixImpl<K>
 
     @Override
     public long getLong(K key) {
-        Object value = get(key);
+        Object value = getScalar(key);
         return TypeMatrix_long.fromObject(value);
     }
 
     @Override
     public long getLong(K key, long defaultValue) {
-        Object value = get(key);
+        Object value = getScalar(key);
         if (value == null && !containsKey(key))
             return defaultValue;
         try {
@@ -97,13 +97,13 @@ public abstract class AbstractVariantLookupMap_MatrixImpl<K>
 
     @Override
     public float getFloat(K key) {
-        Object value = get(key);
+        Object value = getScalar(key);
         return TypeMatrix_float.fromObject(value);
     }
 
     @Override
     public float getFloat(K key, float defaultValue) {
-        Object value = get(key);
+        Object value = getScalar(key);
         if (value == null && !containsKey(key))
             return defaultValue;
         try {
@@ -115,13 +115,13 @@ public abstract class AbstractVariantLookupMap_MatrixImpl<K>
 
     @Override
     public double getDouble(K key) {
-        Object value = get(key);
+        Object value = getScalar(key);
         return TypeMatrix_double.fromObject(value);
     }
 
     @Override
     public double getDouble(K key, double defaultValue) {
-        Object value = get(key);
+        Object value = getScalar(key);
         if (value == null && !containsKey(key))
             return defaultValue;
         try {
@@ -133,13 +133,13 @@ public abstract class AbstractVariantLookupMap_MatrixImpl<K>
 
     @Override
     public boolean getBoolean(K key) {
-        Object value = get(key);
+        Object value = getScalar(key);
         return TypeMatrix_boolean.fromObject(value);
     }
 
     @Override
     public boolean getBoolean(K key, boolean defaultValue) {
-        Object value = get(key);
+        Object value = getScalar(key);
         if (value == null && !containsKey(key))
             return defaultValue;
         try {
@@ -151,13 +151,13 @@ public abstract class AbstractVariantLookupMap_MatrixImpl<K>
 
     @Override
     public char getChar(K key) {
-        Object value = get(key);
+        Object value = getScalar(key);
         return TypeMatrix_char.fromObject(value);
     }
 
     @Override
     public char getChar(K key, char defaultValue) {
-        Object value = get(key);
+        Object value = getScalar(key);
         if (value == null && !containsKey(key))
             return defaultValue;
         try {
@@ -169,13 +169,13 @@ public abstract class AbstractVariantLookupMap_MatrixImpl<K>
 
     @Override
     public BigInteger getBigInteger(K key) {
-        Object value = get(key);
+        Object value = getScalar(key);
         return TypeMatrix_BigInteger.fromObject(value);
     }
 
     @Override
     public BigInteger getBigInteger(K key, BigInteger defaultValue) {
-        Object value = get(key);
+        Object value = getScalar(key);
         if (value == null && !containsKey(key))
             return defaultValue;
         try {
@@ -187,13 +187,13 @@ public abstract class AbstractVariantLookupMap_MatrixImpl<K>
 
     @Override
     public BigDecimal getBigDecimal(K key) {
-        Object value = get(key);
+        Object value = getScalar(key);
         return TypeMatrix_BigDecimal.fromObject(value);
     }
 
     @Override
     public BigDecimal getBigDecimal(K key, BigDecimal defaultValue) {
-        Object value = get(key);
+        Object value = getScalar(key);
         if (value == null && !containsKey(key))
             return defaultValue;
         try {
@@ -205,13 +205,13 @@ public abstract class AbstractVariantLookupMap_MatrixImpl<K>
 
     @Override
     public Date getDate(K key) {
-        Object value = get(key);
+        Object value = getScalar(key);
         return TypeMatrix_Date.fromObject(value);
     }
 
     @Override
     public Date getDate(K key, Date defaultValue) {
-        Object value = get(key);
+        Object value = getScalar(key);
         if (value == null && !containsKey(key))
             return defaultValue;
         try {
