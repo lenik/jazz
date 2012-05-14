@@ -1,5 +1,9 @@
 package net.bodz.bas.c.type;
 
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
+
 public class TypeArray {
 
     /**
@@ -43,6 +47,29 @@ public class TypeArray {
                 return false;
 
         return true;
+    }
+
+    public static Map<String, Method> getAssignableMethodMap(Class<?> clazz, Class<?>[] parameterTypes) {
+        Map<String, Method> map = new HashMap<String, Method>();
+
+        for (Method method : clazz.getMethods()) {
+            if (!isAssignableFrom(parameterTypes, method.getParameterTypes()))
+                continue;
+
+            Method existing = map.get(method.getName());
+            if (existing != null) {
+                int prev = TypeDistance.dist(parameterTypes, existing.getParameterTypes());
+                int dist = TypeDistance.dist(parameterTypes, method.getParameterTypes());
+                // if (dist==prev) throw new ambiguous;
+                if (dist < prev)
+                    map.put(method.getName(), method);
+                else
+                    continue; // skip more unlike ones.
+            }
+            map.put(method.getName(), method);
+        }
+
+        return map;
     }
 
 }
