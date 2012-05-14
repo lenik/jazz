@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Date;
 
 import net.bodz.bas.c.object.ITreeDump;
-import net.bodz.bas.c.object.TreeDump;
+import net.bodz.bas.c.object.TreeDumps;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.util.Nullables;
 
@@ -32,7 +32,6 @@ public class PathArrival
         this.target = target;
         this.consumedTokens = consumedTokens;
         this.remainingPath = remainingPath;
-
     }
 
     public PathArrival(IPathArrival parent, Object target, String consumedToken, String remainingPath) {
@@ -144,7 +143,7 @@ public class PathArrival
 
         if (target instanceof ITreeDump) {
             ITreeDump dumpable = (ITreeDump) target;
-            sb.append(TreeDump.dump(dumpable));
+            sb.append(TreeDumps.dump(dumpable));
         } else {
             sb.append(target);
         }
