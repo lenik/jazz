@@ -2,7 +2,7 @@ package net.bodz.bas.c.object;
 
 import net.bodz.bas.sio.BTreeOut;
 
-public class TreeDump {
+public class TreeDumps {
 
     public static String dump(ITreeDump dumpable) {
         return dump(dumpable, TreeDumpFormat.DEFAULT);
