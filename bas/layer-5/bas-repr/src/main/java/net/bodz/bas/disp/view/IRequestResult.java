@@ -1,8 +1,10 @@
 package net.bodz.bas.disp.view;
 
-public interface IResponseInfo {
+import net.bodz.bas.disp.req.IRequestMethod;
 
-    String ATTRIBUTE_KEY = IResponseInfo.class.getCanonicalName();
+public interface IRequestResult {
+
+    String ATTRIBUTE_KEY = IRequestResult.class.getCanonicalName();
 
     /**
      * If target is <code>null</code>, the return value of the controller method is used.
@@ -40,10 +42,18 @@ public interface IResponseInfo {
     void setException(Throwable exception);
 
     /**
-     * Repeat another method.
+     * Call next method immediately.
+     * 
+     * @return <code>null</code> if this is the final method.
      */
-    String getMethod();
+    IRequestMethod getNextMethod();
 
-    void setMethod(String method);
+    /**
+     * Set the next method to call immediately.
+     * 
+     * @param nextMethod
+     *            The next method to call, <code>null</code> if there's none.
+     */
+    void setNextMethod(IRequestMethod nextMethod);
 
 }

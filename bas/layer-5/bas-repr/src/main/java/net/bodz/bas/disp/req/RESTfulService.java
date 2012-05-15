@@ -17,11 +17,10 @@ import net.bodz.bas.disp.IPathArrival;
 import net.bodz.bas.disp.ITokenQueue;
 import net.bodz.bas.disp.PathArrival;
 import net.bodz.bas.disp.naming.ReverseLookupRegistry;
-import net.bodz.bas.disp.util.ArrivalBacktraceCallback;
 import net.bodz.bas.disp.util.MethodLazyInjector;
-import net.bodz.bas.disp.view.IResponseInfo;
-import net.bodz.bas.disp.view.IViewRenderer;
-import net.bodz.bas.disp.view.DefaultResponseInfo;
+import net.bodz.bas.disp.view.DefaultRequestResult;
+import net.bodz.bas.disp.view.IHttpRenderer;
+import net.bodz.bas.disp.view.IRequestResult;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.log.api.Logger;
 import net.bodz.bas.log.api.LoggerFactory;
@@ -44,17 +43,17 @@ public class RESTfulService {
      */
     // By using OSIV pattern, transactional here is unnecessary.
     // @Transactional
-    public boolean processOrNot(final HttpServletRequest request, final HttpServletResponse response)
-            throws IOException, ServletException, RESTfulException {
+    public boolean processOrNot(final HttpServletRequest req, final HttpServletResponse resp)
+            throws IOException, ServletException {
 
-        final DefaultRequestDispatch req = RESTfulRequestBuilder.build(request);
-        if (req == null)
+        final DefaultRequestDispatch disp = RESTfulRequestBuilder.build(req);
+        if (disp == null)
             return false;
 
-        final DefaultResponseInfo resp = new DefaultResponseInfo(response);
+        final DefaultRequestResult qResult = new DefaultRequestResult();
 
         // 2, Path-dispatch
-        ITokenQueue tq = req.getTokenQueue();
+        ITokenQueue tq = disp.getTokenQueue();
         IPathArrival arrival = dispatch(tq);
         if (arrival == null)
             return false;
@@ -64,7 +63,7 @@ public class RESTfulService {
         // 3, origin is a servlet delegate?
         if (origin instanceof Servlet) {
             Servlet resultServlet = (Servlet) origin;
-            resultServlet.service(request, response);
+            resultServlet.service(req, resp);
             return true;
         }
 
@@ -73,12 +72,12 @@ public class RESTfulService {
         // Object renderObject = origin;
         // Date expires = arrival.getExpires();
 
-        String method = req.getMethod();
+        String method = disp.getMethod();
         if (method == null)
             throw new NullPointerException("method");
 
         // No controller method, is it a special view?
-        req.setArrival(arrival);
+        disp.setArrival(arrival);
 
         if (MethodNames.READ.equals(method)) {
             // READ may also use the rest-path?
@@ -86,37 +85,28 @@ public class RESTfulService {
                 return false;
         }
 
-        class Callback
-                implements ArrivalBacktraceCallback<ServletException> {
-
-            @Override
-            public boolean arriveBack(IPathArrival arrival)
-                    throws ServletException {
-
-                Object obj = arrival.getTarget();
-                Class<?> objClass = obj.getClass();
-
-                req.setArrival(arrival);
-
-                if (doRender(obj, req, resp, false))
-                    return true;
-
-                if (doControllerMethod(objClass, req, resp))
-                    return true;
-
-                if (doInplaceMethod(objClass, req, resp))
-                    return true;
-
-                return false;
-            }
-        }
-
-        Callback callback = new Callback();
-
         // controller method chaining isn't supported, yet.
         // while (true) {}
 
-        if (arrival.backtrace(callback)) {
+        while (arrival != null) {
+            Object obj = arrival.getTarget();
+            Class<?> objClass = obj.getClass();
+
+            disp.setArrival(arrival);
+
+            if (doRender(obj, disp, resp, false))
+                break;
+
+            if (doControllerMethod(objClass, disp, resp))
+                break;
+
+            if (doInplaceMethod(objClass, disp, resp))
+                break;
+
+            arrival = arrival.getPrevious();
+        }
+
+        if (arrival == null) {
             // NOTICE: user should not write to response, if any target is returned.
             Object target = resp.getTarget();
 
@@ -134,7 +124,7 @@ public class RESTfulService {
 
             String location = ReverseLookupRegistry.getInstance().getLocation(target);
             if (location != null) {
-                location = ILocationConstants.WEB_APP.join(location).resolveAbsolute(request);
+                location = ILocationConstants.WEB_APP.join(location).resolveAbsolute(req);
 
                 String additionMethod = resp.getMethod();
                 if (additionMethod != null) {
@@ -149,7 +139,7 @@ public class RESTfulService {
             }
         }
 
-        doRender(origin, req, resp, true);
+        doRender(origin, disp, resp, true);
         return true;
     } // processOrNot
 
@@ -174,7 +164,7 @@ public class RESTfulService {
     /**
      * @return <code>true</code> if any controller method exists and the method is handled.
      */
-    private boolean doControllerMethod(Class<?> originClass, DefaultRequestDispatch req, DefaultResponseInfo resp)
+    private boolean doControllerMethod(Class<?> originClass, DefaultRequestDispatch req, DefaultRequestResult resp)
             throws ServletException {
 
         ClassMethod cmethod = getControllerMethod(originClass, req.getMethod());
@@ -211,7 +201,7 @@ public class RESTfulService {
     /**
      * @return <code>true</code> if any inplace method exists and the method is handled.
      */
-    private boolean doInplaceMethod(Object origin, final DefaultRequestDispatch req, final DefaultResponseInfo resp)
+    private boolean doInplaceMethod(Object origin, final DefaultRequestDispatch req, final DefaultRequestResult resp)
             throws ServletException {
         Class<?> originClass = origin.getClass();
         final Method singleMethod = getSingleMethod(originClass, req.getMethod());
@@ -248,7 +238,7 @@ public class RESTfulService {
      * @throws IOException
      * @throws RESTfulException
      */
-    private boolean doRender(Object object, IRequestDispatch req, IResponseInfo resp, Boolean fallback)
+    private boolean doRender(Object object, IRequestDispatch req, IRequestResult resp, Boolean fallback)
             throws ServletException {
 
         if (logger.isDebugEnabled()) {
@@ -260,14 +250,14 @@ public class RESTfulService {
         Class<?> clazz = object.getClass();
 
         // Set<IRestfulView> views = RestfulViewFactory.getViews();
-        Set<IViewRenderer> views = viewManager.getViews();
+        Set<IHttpRenderer> views = viewManager.getViews();
 
-        for (IViewRenderer view : views) {
+        for (IHttpRenderer view : views) {
             if (fallback != null && fallback != view.isFallback())
                 continue;
 
             try {
-                if (view.renderTx(clazz, object, req, resp))
+                if (view.render(clazz, object, req, resp))
                     return true;
             } catch (IOException e) {
                 throw new ServletException(e.getMessage(), e);

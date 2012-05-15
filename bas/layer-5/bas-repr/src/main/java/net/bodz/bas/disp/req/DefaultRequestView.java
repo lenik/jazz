@@ -72,6 +72,15 @@ public class DefaultRequestView
         if (viewName == null && contentTypeAuto)
             request.getParameter("");
 
+        // TODO Multiple content-types?
+        // Content-type by browser.
+        String acceptContentType = request.getHeader("Accept-Content-Type");
+        if (acceptContentType != null) {
+            ContentType contentType = ContentType.getInstance(acceptContentType);
+            if (contentType != null)
+                setContentType(contentType);
+        }
+
         request.setAttribute(ATTRIBUTE_KEY, this);
     }
 

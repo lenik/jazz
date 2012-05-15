@@ -2,10 +2,13 @@ package net.bodz.bas.disp.view;
 
 import java.io.IOException;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import net.bodz.bas.disp.req.IRequestDispatch;
 import net.bodz.bas.util.order.IPriority;
 
-public interface IViewRenderer
+public interface IHttpRenderer
         extends IPriority {
 
     boolean isFallback();
@@ -24,7 +27,7 @@ public interface IViewRenderer
      * @return <code>true</code> if the corresponding view is defined and processed. Otherwise,
      *         <code>false</code> is returned.
      */
-    boolean render(Class<?> clazz, Object obj, IRequestDispatch req, IResponseInfo resp)
+    boolean render(Class<?> clazz, Object obj, HttpServletRequest req, HttpServletResponse resp)
             throws IOException;
 
     /**
@@ -40,13 +43,7 @@ public interface IViewRenderer
      * @return <code>true</code> if the corresponding view is defined and processed. Otherwise,
      *         <code>false</code> is returned.
      */
-    boolean render(Object obj, IRequestDispatch req, IResponseInfo resp)
-            throws IOException;
-
-    boolean renderTx(Class<?> clazz, Object obj, IRequestDispatch req, IResponseInfo resp)
-            throws IOException;
-
-    boolean renderTx(Object obj, IRequestDispatch req, IResponseInfo resp)
+    boolean render(Object obj, HttpServletRequest req, HttpServletResponse resp)
             throws IOException;
 
 }

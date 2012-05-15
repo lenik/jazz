@@ -1,12 +1,13 @@
 package net.bodz.bas.disp.view;
 
+import net.bodz.bas.disp.req.IRequestMethod;
 
-public class DefaultResponseInfo
-        implements IResponseInfo {
+public class DefaultRequestResult
+        implements IRequestResult {
 
     private Object target;
     private Throwable exception;
-    private String method;
+    private IRequestMethod nextMethod;
 
     @Override
     public Object getTarget() {
@@ -29,13 +30,13 @@ public class DefaultResponseInfo
     }
 
     @Override
-    public String getMethod() {
-        return method;
+    public IRequestMethod getNextMethod() {
+        return nextMethod;
     }
 
     @Override
-    public void setMethod(String method) {
-        this.method = method;
+    public void setNextMethod(IRequestMethod nextMethod) {
+        this.nextMethod = nextMethod;
     }
 
 }
