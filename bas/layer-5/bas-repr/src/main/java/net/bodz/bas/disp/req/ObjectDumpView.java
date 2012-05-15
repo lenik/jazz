@@ -3,12 +3,14 @@ package net.bodz.bas.disp.req;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import net.bodz.bas.disp.view.IResponseInfo;
-import net.bodz.bas.disp.view.AbstractViewRenderer;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.bodz.bas.disp.view.AbstractHttpRenderer;
 import net.bodz.bas.util.ObjectInfo;
 
 public class ObjectDumpView
-        extends AbstractViewRenderer {
+        extends AbstractHttpRenderer {
 
     /**
      * Returns the lowest priority.
@@ -24,8 +26,11 @@ public class ObjectDumpView
     }
 
     @Override
-    public boolean render(Class<?> clazz, Object obj, IRequestDispatch req, IResponseInfo resp)
+    public boolean render(Class<?> clazz, Object obj, HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
+        IRequestDispatch qdisp = RequestUtils.getRequestDispatch(req);
+        IRequestMethod qmethod = RequestUtils.getRequestMethod(req);
+
         PrintWriter out = resp.getWriter();
 
         out.println("<html><head><title>Object Dump</title></head>");
@@ -43,11 +48,11 @@ public class ObjectDumpView
         out.println("<pre>");
 
         out.println("Context-Path: " + req.getContextPath());
-        out.println("Dispatch-Path: " + req.getDispatchPath());
-        out.println("Arrival: " + req.getArrival());
-        out.println("Rest-Path: " + req.getRemainingPath());
-        out.println("Method: " + req.getMethod());
-        out.println(req);
+        out.println("Dispatch-Path: " + qdisp.getDispatchPath());
+        out.println("Arrival: " + qdisp.getArrival());
+        out.println("Remaining-Path: " + qdisp.getRemainingPath());
+        out.println("Method: " + qmethod.getMethodName());
+        out.println(qdisp);
 
         out.println("</pre>");
         return true;

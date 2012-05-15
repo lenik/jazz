@@ -7,15 +7,15 @@ import java.util.TreeSet;
 
 public class ViewRendererFactory {
 
-    static Set<IViewRenderer> views;
+    static Set<IHttpRenderer> views;
     static {
-        views = new TreeSet<IViewRenderer>(ViewRendererComparator.INSTANCE);
+        views = new TreeSet<IHttpRenderer>(ViewRendererComparator.INSTANCE);
 
-        for (IViewRenderer view : ServiceLoader.load(IViewRenderer.class))
+        for (IHttpRenderer view : ServiceLoader.load(IHttpRenderer.class))
             views.add(view);
     }
 
-    public static Set<IViewRenderer> getViews() {
+    public static Set<IHttpRenderer> getViews() {
         return Collections.unmodifiableSet(views);
     }
 

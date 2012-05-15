@@ -3,10 +3,10 @@ package net.bodz.bas.disp.view;
 import net.bodz.bas.util.order.AbstractNonNullComparator;
 
 public class ViewRendererComparator
-        extends AbstractNonNullComparator<IViewRenderer> {
+        extends AbstractNonNullComparator<IHttpRenderer> {
 
     @Override
-    public int compareNonNull(IViewRenderer o1, IViewRenderer o2) {
+    public int compareNonNull(IHttpRenderer o1, IHttpRenderer o2) {
         int priority1 = o1.getPriority();
         int priority2 = o2.getPriority();
 
