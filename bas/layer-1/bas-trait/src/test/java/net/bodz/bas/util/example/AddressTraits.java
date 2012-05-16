@@ -2,13 +2,12 @@ package net.bodz.bas.util.example;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.lang.negotiation.INegotiation.Parameter;
 import net.bodz.bas.lang.negotiation.MandatoryException;
 import net.bodz.bas.lang.negotiation.NegotiationException;
-import net.bodz.bas.lang.negotiation.NegotiationParameter;
 import net.bodz.bas.traits.AbstractCommonTraits;
 import net.bodz.bas.traits.IFormatter;
 import net.bodz.bas.traits.IParser;
-import net.bodz.bas.util.example.Address;
 
 public class AddressTraits
         extends AbstractCommonTraits<Address> {
@@ -57,14 +56,14 @@ public class AddressTraits
         int postCode = 0;
 
         if (negotiation != null) {
-            for (NegotiationParameter param : negotiation) {
-                if (param.accept(CountryAliasUtil.class))
+            for (Parameter param : negotiation) {
+                if (param.is(CountryAliasUtil.class))
                     country = param.<CountryAliasUtil> value().unalias(country);
-                else if (param.accept(PostCodeUtil.class, resolvePostCode)) {
+                else if (param.is(PostCodeUtil.class, resolvePostCode)) {
                     postCode = Integer.parseInt(city);
                     city = param.<PostCodeUtil> value().getCityFromCode(postCode);
                 } else
-                    param.bypass();
+                    param.ignore();
             }
         }
 

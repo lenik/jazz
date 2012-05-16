@@ -162,7 +162,7 @@ public abstract class AbstractCommonTraits<T>
     public String format(T object, INegotiation negotiation)
             throws NegotiationException {
         if (negotiation != null)
-            negotiation.bypass();
+            negotiation.ignore();
         return format(object);
     }
 
@@ -170,7 +170,7 @@ public abstract class AbstractCommonTraits<T>
     public T parse(String text, INegotiation negotiation)
             throws ParseException, NegotiationException {
         if (negotiation != null)
-            negotiation.bypass();
+            negotiation.ignore();
         return parse(text);
     }
 
@@ -178,7 +178,7 @@ public abstract class AbstractCommonTraits<T>
     public void validate(T object, INegotiation negotiation)
             throws ValidateException, NegotiationException {
         if (negotiation != null)
-            negotiation.bypass();
+            negotiation.ignore();
         validate(object);
     }
 
@@ -186,7 +186,7 @@ public abstract class AbstractCommonTraits<T>
     public Map<String, Object> classify(T object, INegotiation negotiation)
             throws ClassifyException, NegotiationException {
         if (negotiation != null)
-            negotiation.bypass();
+            negotiation.ignore();
         return classify(object);
     }
 
@@ -208,7 +208,7 @@ public abstract class AbstractCommonTraits<T>
     public Iterator<?> search(T object, String query, INegotiation negotiation)
             throws NegotiationException {
         if (negotiation != null)
-            negotiation.bypass();
+            negotiation.ignore();
         return search(object, query);
     }
 
@@ -219,7 +219,7 @@ public abstract class AbstractCommonTraits<T>
             if (!classification.isEmpty())
                 return null;
         if (negotiation != null)
-            negotiation.bypass();
+            negotiation.ignore();
         return newSample();
     }
 

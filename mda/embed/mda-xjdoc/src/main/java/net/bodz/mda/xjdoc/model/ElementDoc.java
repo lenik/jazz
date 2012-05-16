@@ -8,8 +8,8 @@ import java.util.Map.Entry;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.i18n.dstr.DomainString;
 import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.lang.negotiation.INegotiation.Parameter;
 import net.bodz.bas.lang.negotiation.NegotiationException;
-import net.bodz.bas.lang.negotiation.NegotiationParameter;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 import net.bodz.bas.text.flatf.IFlatfSerializable;
 import net.bodz.bas.text.flatf.ISectionHandler;
@@ -130,11 +130,11 @@ public class ElementDoc
             throws IOException, NegotiationException {
         IXjLanguage lang = null;
         if (negotiation != null)
-            for (NegotiationParameter np : negotiation) {
-                if (np.accept(IXjLanguage.class, true))
-                    lang = (IXjLanguage) np.getValue();
+            for (Parameter param : negotiation) {
+                if (param.is(IXjLanguage.class, true))
+                    lang = (IXjLanguage) param.getValue();
                 else
-                    np.bypass();
+                    param.ignore();
             }
         if (lang == null)
             throw new IllegalUsageException("lang isn't specified.");

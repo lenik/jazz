@@ -5,8 +5,8 @@ import java.util.Map;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.lang.negotiation.AbstractNegotiable;
 import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.lang.negotiation.INegotiation.Parameter;
 import net.bodz.bas.lang.negotiation.NegotiationException;
-import net.bodz.bas.lang.negotiation.NegotiationParameter;
 import net.bodz.bas.meta.util.ValueType;
 import net.bodz.bas.traits.AbstractCommonTraits;
 
@@ -63,14 +63,14 @@ public abstract class AbstractArrayTraits<T>
         }
 
         @Override
-        public boolean negotiate(NegotiationParameter param)
+        public boolean negotiate(Parameter param)
                 throws NegotiationException {
             Object paramValue = param.getValue();
             if (paramValue == null)
                 return false;
-            if (param.accept(sampleMinLength))
+            if (param.is(sampleMinLength))
                 this.minLength = (Integer) paramValue;
-            else if (param.accept(sampleMaxLength))
+            else if (param.is(sampleMaxLength))
                 this.maxLength = (Integer) paramValue;
             else
                 return false;

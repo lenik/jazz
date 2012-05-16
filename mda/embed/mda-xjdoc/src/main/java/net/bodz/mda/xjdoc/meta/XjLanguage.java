@@ -5,8 +5,8 @@ import java.util.Map;
 
 import net.bodz.bas.lang.negotiation.AbstractNegotiable;
 import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.lang.negotiation.INegotiation.Parameter;
 import net.bodz.bas.lang.negotiation.NegotiationException;
-import net.bodz.bas.lang.negotiation.NegotiationParameter;
 
 public class XjLanguage
         extends AbstractNegotiable
@@ -15,7 +15,7 @@ public class XjLanguage
     Map<String, ITagType> tagTypes = new HashMap<String, ITagType>();
 
     @Override
-    public boolean negotiate(NegotiationParameter negotiationparameter)
+    public boolean negotiate(Parameter parameter)
             throws NegotiationException {
         return false;
     }
@@ -39,11 +39,11 @@ public class XjLanguage
             throws NegotiationException {
         IXjLanguage lang = null;
         if (negotiation != null)
-            for (NegotiationParameter np : negotiation) {
-                if (np.accept(IXjLanguage.class, true))
-                    lang = (IXjLanguage) np.getValue();
+            for (Parameter param : negotiation) {
+                if (param.is(IXjLanguage.class))
+                    lang = (IXjLanguage) param.getValue();
                 else
-                    np.bypass();
+                    param.ignore();
             }
         if (lang == null)
             lang = new JavadocXjLang();

@@ -10,7 +10,7 @@ public abstract class AbstractValidator<T>
     public void validate(T o, INegotiation negotiation)
             throws ValidateException, NegotiationException {
         if (negotiation != null)
-            negotiation.bypass();
+            negotiation.ignore();
         validate(o);
     }
 

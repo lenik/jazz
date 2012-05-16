@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.text.ParseException;
 
 import net.bodz.bas.io.resource.IStreamInputSource;
-import net.bodz.bas.lang.negotiation.FinalNegotiation;
+import net.bodz.bas.lang.negotiation.IndexedNegotiation;
 import net.bodz.bas.lang.negotiation.NegotiationException;
-import net.bodz.bas.lang.negotiation.NegotiationParameter;
+import net.bodz.bas.lang.negotiation.Option;
 import net.bodz.bas.text.flatf.FlatfLoader;
 import net.bodz.bas.text.flatf.IFlatfInput;
 import net.bodz.mda.xjdoc.meta.IXjLanguage;
@@ -16,8 +16,8 @@ public class ClassDocFlatfLoader
         extends FlatfLoader {
 
     public ClassDocFlatfLoader(IXjLanguage lang) {
-        super(new FinalNegotiation(//
-                new NegotiationParameter(IXjLanguage.class, lang)));
+        super(new IndexedNegotiation(//
+                new Option(IXjLanguage.class, lang)));
     }
 
     public ClassDoc load(String fqcn, IStreamInputSource inputSource)
