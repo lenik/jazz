@@ -11,7 +11,7 @@ public abstract class AbstractParser<T>
     public T parse(String text, INegotiation negotiation)
             throws ParseException, MandatoryException {
         if (negotiation != null)
-            negotiation.bypass();
+            negotiation.ignore();
         return parse(text);
     }
 

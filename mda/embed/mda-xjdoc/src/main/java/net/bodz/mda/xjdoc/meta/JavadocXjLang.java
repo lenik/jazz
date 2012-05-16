@@ -1,7 +1,7 @@
 package net.bodz.mda.xjdoc.meta;
 
+import net.bodz.bas.lang.negotiation.INegotiation.Parameter;
 import net.bodz.bas.lang.negotiation.NegotiationException;
-import net.bodz.bas.lang.negotiation.NegotiationParameter;
 import net.bodz.mda.xjdoc.util.IImportMapProvider;
 import net.bodz.mda.xjdoc.util.ImportMap;
 
@@ -32,10 +32,10 @@ public class JavadocXjLang
     }
 
     @Override
-    public boolean negotiate(NegotiationParameter np)
+    public boolean negotiate(Parameter param)
             throws NegotiationException {
-        if (np.accept(ImportMap.class, true)) {
-            importMap = (ImportMap) np.getValue();
+        if (param.is(ImportMap.class)) {
+            importMap = (ImportMap) param.getValue();
             return true;
         } else
             return false;
