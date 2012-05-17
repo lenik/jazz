@@ -1,4 +1,4 @@
-package net.bodz.bas.meta.tags;
+package net.bodz.bas.meta.stereo;
 
 /** Tag annotation for meta type */
 public @interface MetaClass {
