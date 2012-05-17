@@ -12,23 +12,15 @@ import net.bodz.bas.util.ObjectInfo;
 public class ObjectDumpView
         extends AbstractHttpRenderer {
 
-    /**
-     * Returns the lowest priority.
-     */
     @Override
-    public int getPriority() {
-        return Integer.MAX_VALUE;
+    public Class<?> getType() {
+        return Object.class;
     }
 
     @Override
-    public boolean isFallback() {
-        return true;
-    }
-
-    @Override
-    public boolean render(Class<?> clazz, Object obj, HttpServletRequest req, HttpServletResponse resp)
+    public boolean render(Object obj, HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
-        IRequestDispatch qdisp = RequestUtils.getRequestDispatch(req);
+        IRequestDispatch disp = RequestUtils.getRequestDispatch(req);
         IRequestMethod qmethod = RequestUtils.getRequestMethod(req);
 
         PrintWriter out = resp.getWriter();
@@ -48,11 +40,11 @@ public class ObjectDumpView
         out.println("<pre>");
 
         out.println("Context-Path: " + req.getContextPath());
-        out.println("Dispatch-Path: " + qdisp.getDispatchPath());
-        out.println("Arrival: " + qdisp.getArrival());
-        out.println("Remaining-Path: " + qdisp.getRemainingPath());
+        out.println("Dispatch-Path: " + disp.getDispatchPath());
+        out.println("Arrival: " + disp.getArrival());
+        out.println("Remaining-Path: " + disp.getRemainingPath());
         out.println("Method: " + qmethod.getMethodName());
-        out.println(qdisp);
+        out.println(disp);
 
         out.println("</pre>");
         return true;
