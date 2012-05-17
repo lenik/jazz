@@ -5,28 +5,33 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.lang.negotiation.INegotiation.IParameter;
+import net.bodz.bas.lang.negotiation.NegotiationException;
+import net.bodz.bas.vfs.util.ContentTypes;
+
 public abstract class AbstractHttpRenderer
         implements IHttpRenderer {
 
     @Override
-    public int getPriority() {
-        return 0;
+    public String getContentType() {
+        return ContentTypes.text_html.getName();
     }
 
     @Override
-    public boolean isFallback() {
-        return false;
-    }
-
-    @Override
-    public boolean render(Object obj, HttpServletRequest req, HttpServletResponse resp)
-            throws IOException {
-        if (obj == null)
-            throw new NullPointerException("obj");
-
-        Class<?> clazz = obj.getClass();
-
-        return render(clazz, obj, req, resp);
+    public boolean render(Object object, INegotiation negotiation)
+            throws NegotiationException, IOException {
+        HttpServletRequest req = null;
+        HttpServletResponse resp = null;
+        for (IParameter p : negotiation) {
+            if (p.is(HttpServletRequest.class))
+                req = p.cast(HttpServletRequest.class);
+            else if (p.is(HttpServletResponse.class))
+                resp = p.cast(HttpServletResponse.class);
+            else
+                p.ignore();
+        }
+        return render(object, req, resp);
     }
 
 }

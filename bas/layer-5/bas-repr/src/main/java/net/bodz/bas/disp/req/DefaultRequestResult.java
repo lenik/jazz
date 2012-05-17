@@ -1,6 +1,5 @@
-package net.bodz.bas.disp.view;
+package net.bodz.bas.disp.req;
 
-import net.bodz.bas.disp.req.IRequestMethod;
 
 public class DefaultRequestResult
         implements IRequestResult {
