@@ -1,6 +1,6 @@
 package net.bodz.bas.lang.negotiation;
 
-import net.bodz.bas.lang.negotiation.INegotiation.Parameter;
+import net.bodz.bas.lang.negotiation.INegotiation.IParameter;
 
 public abstract class AbstractNegotiable
         implements INegotiable {
@@ -9,7 +9,7 @@ public abstract class AbstractNegotiable
     public void negotiate(INegotiation negotiation)
             throws NegotiationException {
         // Set<Parameter> usedSet = new HashSet<Parameter>();
-        for (Parameter param : negotiation) {
+        for (IParameter param : negotiation) {
             /* boolean used = */negotiate(param);
             // usedSet.add(used);
         }
@@ -17,7 +17,7 @@ public abstract class AbstractNegotiable
     }
 
     @Override
-    public abstract boolean negotiate(Parameter parameter)
+    public abstract boolean negotiate(IParameter parameter)
             throws NegotiationException;
 
 }

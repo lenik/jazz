@@ -4,7 +4,7 @@ import java.nio.charset.Charset;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.lang.negotiation.INegotiation.Parameter;
+import net.bodz.bas.lang.negotiation.INegotiation.IParameter;
 import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.meta.util.ValueType;
 import net.bodz.bas.traits.IParser;
@@ -42,7 +42,7 @@ public class ByteArrayTraits
     public byte[] parse(String text, INegotiation negotiation)
             throws ParseException, NegotiationException {
         Charset charset = defaultTextformCharset;
-        for (Parameter param : negotiation) {
+        for (IParameter param : negotiation) {
             String paramId = param.getId();
             Object paramValue = param.getValue();
             if (textformCharset.equals(paramId)) {

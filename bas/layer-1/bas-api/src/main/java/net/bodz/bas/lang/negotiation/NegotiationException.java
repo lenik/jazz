@@ -1,43 +1,43 @@
 package net.bodz.bas.lang.negotiation;
 
-import net.bodz.bas.lang.negotiation.INegotiation.Parameter;
+import net.bodz.bas.lang.negotiation.INegotiation.IParameter;
 
 public class NegotiationException
         extends Exception {
 
     private static final long serialVersionUID = 1L;
 
-    private final Parameter parameter;
+    private final IParameter parameter;
 
-    public NegotiationException(Parameter parameter) {
+    public NegotiationException(IParameter parameter) {
         super();
         if (parameter == null)
             throw new NullPointerException("parameter");
         this.parameter = parameter;
     }
 
-    public NegotiationException(Parameter parameter, String message, Throwable cause) {
+    public NegotiationException(IParameter parameter, String message, Throwable cause) {
         super(message, cause);
         if (parameter == null)
             throw new NullPointerException("parameter");
         this.parameter = parameter;
     }
 
-    public NegotiationException(Parameter parameter, String message) {
+    public NegotiationException(IParameter parameter, String message) {
         super(message);
         if (parameter == null)
             throw new NullPointerException("parameter");
         this.parameter = parameter;
     }
 
-    public NegotiationException(Parameter parameter, Throwable cause) {
+    public NegotiationException(IParameter parameter, Throwable cause) {
         super(cause);
         if (parameter == null)
             throw new NullPointerException("parameter");
         this.parameter = parameter;
     }
 
-    public Parameter getNegotiationParameter() {
+    public IParameter getNegotiationParameter() {
         return parameter;
     }
 

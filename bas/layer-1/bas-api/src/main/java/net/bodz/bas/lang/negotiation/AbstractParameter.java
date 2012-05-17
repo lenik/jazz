@@ -2,10 +2,10 @@ package net.bodz.bas.lang.negotiation;
 
 import java.io.Serializable;
 
-import net.bodz.bas.lang.negotiation.INegotiation.Parameter;
+import net.bodz.bas.lang.negotiation.INegotiation.IParameter;
 
 public abstract class AbstractParameter
-        implements Parameter, Serializable {
+        implements IParameter, Serializable {
 
     private static final long serialVersionUID = 1L;
 

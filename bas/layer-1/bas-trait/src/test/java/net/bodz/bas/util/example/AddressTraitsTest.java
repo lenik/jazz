@@ -2,7 +2,7 @@ package net.bodz.bas.util.example;
 
 import net.bodz.bas.lang.negotiation.IndexedNegotiation;
 import net.bodz.bas.lang.negotiation.MandatoryException;
-import net.bodz.bas.lang.negotiation.MandatoryOption;
+import net.bodz.bas.lang.negotiation.Parameter;
 import net.bodz.bas.lang.negotiation.Option;
 import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.ICommonTraits;
@@ -52,7 +52,7 @@ public class AddressTraitsTest
             throws Exception {
         IndexedNegotiation negotiation = new IndexedNegotiation(//
                 new Option(new CountryAliasUtil()), //
-                new MandatoryOption(new PostCodeUtil()));
+                new Parameter(new PostCodeUtil()));
 
         String input = "cn:310000:somewhere";
         addressParser.parse(input, negotiation);
@@ -62,7 +62,7 @@ public class AddressTraitsTest
             throws Exception {
         IndexedNegotiation negotiation = new IndexedNegotiation(//
                 new Option(new CountryAliasUtil()), //
-                new MandatoryOption(new PostCodeUtil()));
+                new Parameter(new PostCodeUtil()));
 
         String input = "cn:310000:somewhere";
         String expected = "China:Zhejiang:somewhere";

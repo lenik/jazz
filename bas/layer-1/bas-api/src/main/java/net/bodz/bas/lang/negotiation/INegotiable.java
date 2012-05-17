@@ -1,6 +1,6 @@
 package net.bodz.bas.lang.negotiation;
 
-import net.bodz.bas.lang.negotiation.INegotiation.Parameter;
+import net.bodz.bas.lang.negotiation.INegotiation.IParameter;
 
 public interface INegotiable {
 
@@ -23,7 +23,7 @@ public interface INegotiable {
      * @return <code>true</code> If the <code>parameter</code> is taken into account,
      *         <code>false</code> if the <code>parameter</code> is ignored.
      */
-    boolean negotiate(Parameter parameter)
+    boolean negotiate(IParameter parameter)
             throws NegotiationException;
 
 }
