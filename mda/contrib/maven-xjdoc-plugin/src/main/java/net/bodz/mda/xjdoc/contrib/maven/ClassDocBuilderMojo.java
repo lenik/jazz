@@ -8,7 +8,7 @@ import net.bodz.bas.i18n.dstr.DomainString;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
 import net.bodz.bas.io.resource.builtin.OutputStreamTarget;
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.lang.negotiation.IndexedNegotiation;
+import net.bodz.bas.lang.negotiation.ListNegotiation;
 import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.lang.negotiation.Option;
 import net.bodz.bas.m2.mojo.AbstractResourceGeneratorMojo;
@@ -142,7 +142,7 @@ public class ClassDocBuilderMojo
                 ImportMap classImports = classDoc.getOrCreateImports();
                 IXjLanguage classLang = createLang(classImports);
 
-                INegotiation negotiation = new IndexedNegotiation(//
+                INegotiation negotiation = new ListNegotiation(//
                         new Option(//
                                 IXjLanguage.class, classLang // JavadocXjLang.getInstance()
                         ));

@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.text.ParseException;
 
 import net.bodz.bas.io.resource.IStreamInputSource;
-import net.bodz.bas.lang.negotiation.IndexedNegotiation;
+import net.bodz.bas.lang.negotiation.ListNegotiation;
 import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.lang.negotiation.Option;
 import net.bodz.bas.text.flatf.FlatfLoader;
@@ -16,7 +16,7 @@ public class ClassDocFlatfLoader
         extends FlatfLoader {
 
     public ClassDocFlatfLoader(IXjLanguage lang) {
-        super(new IndexedNegotiation(//
+        super(new ListNegotiation(//
                 new Option(IXjLanguage.class, lang)));
     }
 

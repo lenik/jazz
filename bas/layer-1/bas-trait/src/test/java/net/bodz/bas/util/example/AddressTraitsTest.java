@@ -1,6 +1,6 @@
 package net.bodz.bas.util.example;
 
-import net.bodz.bas.lang.negotiation.IndexedNegotiation;
+import net.bodz.bas.lang.negotiation.ListNegotiation;
 import net.bodz.bas.lang.negotiation.MandatoryException;
 import net.bodz.bas.lang.negotiation.Parameter;
 import net.bodz.bas.lang.negotiation.Option;
@@ -36,7 +36,7 @@ public class AddressTraitsTest
     @Test
     public void testDefaultCountryPost()
             throws Exception {
-        IndexedNegotiation negotiation = new IndexedNegotiation(//
+        ListNegotiation negotiation = new ListNegotiation(//
                 new Option(new CountryAliasUtil()), //
                 new Option(new PostCodeUtil()));
 
@@ -50,7 +50,7 @@ public class AddressTraitsTest
     @Test(expected = MandatoryException.class)
     public void testMandatoryFail()
             throws Exception {
-        IndexedNegotiation negotiation = new IndexedNegotiation(//
+        ListNegotiation negotiation = new ListNegotiation(//
                 new Option(new CountryAliasUtil()), //
                 new Parameter(new PostCodeUtil()));
 
@@ -60,7 +60,7 @@ public class AddressTraitsTest
 
     public void testMandatoryOK()
             throws Exception {
-        IndexedNegotiation negotiation = new IndexedNegotiation(//
+        ListNegotiation negotiation = new ListNegotiation(//
                 new Option(new CountryAliasUtil()), //
                 new Parameter(new PostCodeUtil()));
 

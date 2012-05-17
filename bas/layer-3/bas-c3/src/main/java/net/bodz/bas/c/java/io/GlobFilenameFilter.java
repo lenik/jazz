@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.lang.negotiation.IndexedNegotiation;
+import net.bodz.bas.lang.negotiation.ListNegotiation;
 import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.lang.negotiation.Option;
 import net.bodz.bas.trait.Traits;
@@ -29,7 +29,7 @@ public class GlobFilenameFilter
     static INegotiation globNegotiation;
     static {
         patternParser = Traits.getTrait(Pattern.class, IParser.class);
-        globNegotiation = new IndexedNegotiation(//
+        globNegotiation = new ListNegotiation(//
                 new Option(textformMode, globTextformMode));
     }
 
