@@ -5,7 +5,7 @@ public class Parameter
 
     private static final long serialVersionUID = 1L;
 
-    public Parameter(Class<?> type, Object value) {
+    public <T> Parameter(Class<T> type, T value) {
         super(type, value);
     }
 
