@@ -2,7 +2,7 @@ package net.bodz.bas.flow;
 
 import net.bodz.bas.collection.util.ClassLocal;
 import net.bodz.bas.err.IllegalUsageError;
-import net.bodz.bas.meta.tags.MetaClass;
+import net.bodz.bas.meta.stereo.MetaClass;
 import net.bodz.bas.util.Nullables;
 
 public abstract class AbstractOutPort

@@ -1,4 +1,4 @@
-package net.bodz.bas.meta.tags;
+package net.bodz.bas.meta.stereo;
 
 /**
  * Tag interface for Class meta data.

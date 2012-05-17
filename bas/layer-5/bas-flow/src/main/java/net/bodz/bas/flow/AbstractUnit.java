@@ -8,7 +8,7 @@ import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.collection.util.ClassLocal;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.flow.util.Naming;
-import net.bodz.bas.meta.tags.MetaClass;
+import net.bodz.bas.meta.stereo.MetaClass;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.util.Nullables;
