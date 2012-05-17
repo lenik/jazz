@@ -1,6 +1,5 @@
 package net.bodz.bas.lang.negotiation;
 
-
 public abstract class AbstractNegotiation
         implements INegotiation {
 
@@ -11,7 +10,7 @@ public abstract class AbstractNegotiation
     }
 
     @Override
-    public Parameter getParameter(Class<?> type) {
+    public IParameter getParameter(Class<?> type) {
         String id = type.getCanonicalName();
         return getParameter(id);
     }
@@ -23,16 +22,8 @@ public abstract class AbstractNegotiation
     }
 
     @Override
-    public Parameter getParameter(String id) {
-        for (Parameter p : this)
-            if (p.is(id))
-                return p;
-        return null;
-    }
-
-    @Override
     public <T> T get(String id) {
-        Parameter parameter = getParameter(id);
+        IParameter parameter = getParameter(id);
         if (parameter == null)
             return null;
         else
@@ -42,14 +33,14 @@ public abstract class AbstractNegotiation
     @Override
     public void ignore()
             throws MandatoryException {
-        for (Parameter p : this)
+        for (IParameter p : this)
             p.ignore();
     }
 
     @Override
     public String toString() {
         StringBuilder buf = null;
-        for (Parameter param : this) {
+        for (IParameter param : this) {
             if (buf == null)
                 buf = new StringBuilder(this.size() * 100);
             else

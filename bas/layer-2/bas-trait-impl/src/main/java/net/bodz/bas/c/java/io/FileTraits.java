@@ -4,7 +4,7 @@ import java.io.File;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.lang.negotiation.INegotiation.Parameter;
+import net.bodz.bas.lang.negotiation.INegotiation.IParameter;
 import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.meta.util.ValueType;
 import net.bodz.bas.traits.AbstractCommonTraits;
@@ -46,7 +46,7 @@ public class FileTraits
             throws ParseException, NegotiationException {
         File contextDirectory = defaultTextformContextDirectory;
 
-        for (Parameter param : negotiation) {
+        for (IParameter param : negotiation) {
             String paramId = param.getId();
             Object paramValue = param.getValue();
             if (paramValue == null)

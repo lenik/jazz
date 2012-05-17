@@ -1,7 +1,7 @@
 package net.bodz.bas.lang.negotiation;
 
 public interface INegotiation
-        extends Iterable<INegotiation.Parameter> {
+        extends Iterable<INegotiation.IParameter> {
 
     /**
      * Refine this negotiation with the called respond.
@@ -16,12 +16,12 @@ public interface INegotiation
     /**
      * @return <code>null</code> if the parameter is undefined.
      */
-    Parameter getParameter(String id);
+    IParameter getParameter(String id);
 
     /**
      * @return <code>null</code> if the parameter is undefined.
      */
-    Parameter getParameter(Class<?> type);
+    IParameter getParameter(Class<?> type);
 
     /**
      * @return <code>null</code> if the parameter is undefined, or its value is <code>null</code>.
@@ -42,7 +42,7 @@ public interface INegotiation
     void ignore()
             throws MandatoryException;
 
-    public interface Parameter {
+    public interface IParameter {
 
         String getId();
 

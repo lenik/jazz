@@ -2,7 +2,7 @@ package net.bodz.bas.util.example;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.lang.negotiation.INegotiation.Parameter;
+import net.bodz.bas.lang.negotiation.INegotiation.IParameter;
 import net.bodz.bas.lang.negotiation.MandatoryException;
 import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.traits.AbstractCommonTraits;
@@ -56,7 +56,7 @@ public class AddressTraits
         int postCode = 0;
 
         if (negotiation != null) {
-            for (Parameter param : negotiation) {
+            for (IParameter param : negotiation) {
                 if (param.is(CountryAliasUtil.class))
                     country = param.<CountryAliasUtil> value().unalias(country);
                 else if (param.is(PostCodeUtil.class, resolvePostCode)) {

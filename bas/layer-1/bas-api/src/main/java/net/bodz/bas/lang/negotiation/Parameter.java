@@ -1,19 +1,19 @@
 package net.bodz.bas.lang.negotiation;
 
-public class MandatoryOption
+public class Parameter
         extends AbstractParameter {
 
     private static final long serialVersionUID = 1L;
 
-    public MandatoryOption(Class<?> type, Object value) {
+    public Parameter(Class<?> type, Object value) {
         super(type, value);
     }
 
-    public MandatoryOption(Object typedValue) {
+    public Parameter(Object typedValue) {
         super(typedValue);
     }
 
-    public MandatoryOption(String id, Object value) {
+    public Parameter(String id, Object value) {
         super(id, value);
     }
 

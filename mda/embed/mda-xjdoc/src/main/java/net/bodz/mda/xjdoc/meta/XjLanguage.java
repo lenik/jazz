@@ -5,7 +5,7 @@ import java.util.Map;
 
 import net.bodz.bas.lang.negotiation.AbstractNegotiable;
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.lang.negotiation.INegotiation.Parameter;
+import net.bodz.bas.lang.negotiation.INegotiation.IParameter;
 import net.bodz.bas.lang.negotiation.NegotiationException;
 
 public class XjLanguage
@@ -15,7 +15,7 @@ public class XjLanguage
     Map<String, ITagType> tagTypes = new HashMap<String, ITagType>();
 
     @Override
-    public boolean negotiate(Parameter parameter)
+    public boolean negotiate(IParameter parameter)
             throws NegotiationException {
         return false;
     }
@@ -39,7 +39,7 @@ public class XjLanguage
             throws NegotiationException {
         IXjLanguage lang = null;
         if (negotiation != null)
-            for (Parameter param : negotiation) {
+            for (IParameter param : negotiation) {
                 if (param.is(IXjLanguage.class))
                     lang = (IXjLanguage) param.getValue();
                 else
