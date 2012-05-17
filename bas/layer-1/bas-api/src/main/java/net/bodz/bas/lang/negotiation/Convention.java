@@ -10,12 +10,12 @@ public class Convention
 
     boolean important;
 
-    public Convention(Class<?> type, Object value, boolean important) {
+    public <T> Convention(Class<T> type, T value, boolean important) {
         super(type, value);
         this.important = important;
     }
 
-    public Convention(Class<?> type, Object value) {
+    public <T> Convention(Class<T> type, T value) {
         super(type, value);
     }
 

@@ -5,7 +5,7 @@ public class Option
 
     private static final long serialVersionUID = 1L;
 
-    public Option(Class<?> type, Object value) {
+    public <T> Option(Class<T> type, T value) {
         super(type, value);
     }
 
