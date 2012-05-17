@@ -1,6 +1,6 @@
 package net.bodz.bas.disp.view;
 
-public interface StandardViews {
+public interface ICommonViewNames {
 
     /**
      * The index listing for the specific object type.
