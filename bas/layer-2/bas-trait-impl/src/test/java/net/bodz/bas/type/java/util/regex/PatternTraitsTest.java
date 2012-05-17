@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 
 import net.bodz.bas.c.java.util.regex.PatternTraits;
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.lang.negotiation.IndexedNegotiation;
+import net.bodz.bas.lang.negotiation.ListNegotiation;
 import net.bodz.bas.lang.negotiation.Option;
 
 import org.junit.Assert;
@@ -20,7 +20,7 @@ public class PatternTraitsTest
     @Test
     public void testParseGlob()
             throws Exception {
-        INegotiation n = new IndexedNegotiation(//
+        INegotiation n = new ListNegotiation(//
                 new Option(textformMode, globTextformMode));
 
         Pattern expected = Pattern.compile("\\Q\\E.*\\Q.xml\\E");

@@ -5,12 +5,12 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-public class IndexedNegotiation
+public class ListNegotiation
         extends AbstractNegotiation {
 
     private List<IParameter> parameters;
 
-    public IndexedNegotiation(final Object... typedParameters) {
+    public ListNegotiation(final Object... typedParameters) {
         if (typedParameters == null)
             throw new NullPointerException("typedParameters");
 
@@ -30,11 +30,11 @@ public class IndexedNegotiation
         };
     }
 
-    public IndexedNegotiation(IParameter... parameters) {
+    public ListNegotiation(IParameter... parameters) {
         this.parameters = Arrays.asList(parameters);
     }
 
-    public IndexedNegotiation(List<IParameter> parameters) {
+    public ListNegotiation(List<IParameter> parameters) {
         this.parameters = parameters;
     }
 
