@@ -95,7 +95,8 @@ public class LexAnnotations {
             acceptor.leave(lastState);
     }
 
-    public static class Alignment extends LexMatchAcceptor {
+    public static class Alignment
+            extends LexMatchAcceptor {
 
         private int symSize;
         private Map<String, Integer> ruleSizeInState;
