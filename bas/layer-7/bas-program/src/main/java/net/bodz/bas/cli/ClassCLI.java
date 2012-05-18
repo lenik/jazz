@@ -14,7 +14,8 @@ import java.util.TreeSet;
 import net.bodz.bas.c.reflect.query.ReflectQuery;
 import net.bodz.bas.c.string.StringLengthComparator;
 import net.bodz.bas.c.string.Strings;
-import net.bodz.bas.collection.util.ClassLocal;
+import net.bodz.bas.c.type.ClassLocal;
+import net.bodz.bas.c.type.ClassLocals;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.fn.Filt1;
 import net.bodz.bas.meta.program.ProgramNameUtil;
@@ -24,16 +25,12 @@ public class ClassCLI {
     private static boolean cache = false;
     private static ClassLocal<ClassOptions<?>> clOptions;
     static {
-        clOptions = new ClassLocal<ClassOptions<?>>();
+        clOptions = ClassLocals.createMap(//
+                ClassOptions.class);
     }
 
     public static <T> ClassOptions<T> getClassOptions(Class<T> clazz) {
         ClassOptions<T> copt = (ClassOptions<T>) clOptions.get(clazz);
-        if (copt == null) {
-            copt = new ClassOptions<T>(clazz);
-            if (cache)
-                clOptions.put(clazz, copt);
-        }
         return copt;
     }
 

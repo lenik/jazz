@@ -5,7 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.bodz.bas.c.string.Strings;
-import net.bodz.bas.collection.util.ClassLocal;
+import net.bodz.bas.c.type.ClassLocal;
+import net.bodz.bas.c.type.ClassLocals;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.flow.util.Naming;
 import net.bodz.bas.meta.stereo.MetaClass;
@@ -24,10 +25,8 @@ public abstract class AbstractUnit
         outPort.send(data);
     }
 
-    private static ClassLocal<IUnitMeta> metas;
-    static {
-        metas = new ClassLocal<IUnitMeta>();
-    }
+    private static ClassLocal<IUnitMeta> metas = ClassLocals.createMap(//
+            IUnitMeta.class.getCanonicalName(), entryLoader);
 
     @Override
     public IUnitMeta getUnitMeta() {
@@ -66,7 +65,7 @@ public abstract class AbstractUnit
         int outPorts = getOutPorts();
         for (int i = 0; i < outPorts; i++) {
             IOutPort outPort = getOutPort(i);
-            out.print(prefix + "  " + outPort.getOutPortMeta().getName() //   
+            out.print(prefix + "  " + outPort.getOutPortMeta().getName() //
                     + "[" + i + "]");
             IReceiver dst = outPort.getDst();
             if (dst != null)
