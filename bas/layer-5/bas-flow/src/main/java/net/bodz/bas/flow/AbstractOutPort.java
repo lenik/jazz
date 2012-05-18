@@ -1,6 +1,7 @@
 package net.bodz.bas.flow;
 
-import net.bodz.bas.collection.util.ClassLocal;
+import net.bodz.bas.c.type.ClassLocal;
+import net.bodz.bas.c.type.ClassLocals;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.meta.stereo.MetaClass;
 import net.bodz.bas.util.Nullables;
@@ -16,10 +17,8 @@ public abstract class AbstractOutPort
         this.index = index;
     }
 
-    private static ClassLocal<IPortMeta> metas;
-    static {
-        metas = new ClassLocal<IPortMeta>();
-    }
+    private static ClassLocal<IPortMeta> metas = ClassLocals.createMap(//
+            IPortMeta.class.getCanonicalName() /* "out-port" */, entryLoader);
 
     @Override
     public IPortMeta getOutPortMeta() {

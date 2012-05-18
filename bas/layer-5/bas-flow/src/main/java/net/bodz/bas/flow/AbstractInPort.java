@@ -2,7 +2,8 @@ package net.bodz.bas.flow;
 
 import java.io.IOException;
 
-import net.bodz.bas.collection.util.ClassLocal;
+import net.bodz.bas.c.type.ClassLocal;
+import net.bodz.bas.c.type.ClassLocals;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.OutOfDomainException;
 import net.bodz.bas.meta.stereo.MetaClass;
@@ -19,10 +20,8 @@ public abstract class AbstractInPort
         this.index = index;
     }
 
-    private static ClassLocal<IPortMeta> metas;
-    static {
-        metas = new ClassLocal<IPortMeta>();
-    }
+    private static ClassLocal<IPortMeta> metas = ClassLocals.createMap(//
+            IPortMeta.class.getCanonicalName(), entryLoader);
 
     @Override
     public IPortMeta getInPortMeta() {

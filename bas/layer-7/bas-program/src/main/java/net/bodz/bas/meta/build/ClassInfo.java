@@ -6,7 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.c.string.StringArray;
-import net.bodz.bas.collection.util.ClassLocal;
+import net.bodz.bas.c.type.ClassLocal;
+import net.bodz.bas.c.type.ClassLocals;
 import net.bodz.bas.meta.info.Author;
 import net.bodz.bas.meta.info.DisplayNameUtil;
 import net.bodz.bas.meta.info.DocUtil;
@@ -177,17 +178,10 @@ public class ClassInfo {
         this.dateString = dateString;
     }
 
-    private static final ClassLocal<ClassInfo> infos;
-    static {
-        // Weak ClassLocal
-        infos = new ClassLocal<ClassInfo>();
-    }
+    static final ClassLocal<ClassInfo> infos = ClassLocals.createMap(ClassInfo.class);
 
     public static ClassInfo get(Class<?> clazz) {
-        ClassInfo info = infos.get(clazz);
-        if (info == null)
-            infos.put(clazz, info = new ClassInfo(clazz));
-        return info;
+        return infos.get(clazz);
     }
 
 }
