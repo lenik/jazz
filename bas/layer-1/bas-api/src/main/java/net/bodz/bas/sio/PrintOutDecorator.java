@@ -12,148 +12,180 @@ public class PrintOutDecorator
 
     private static final long serialVersionUID = 1L;
 
-    public PrintOutDecorator(IPrintOut impl) {
-        super(impl);
+    public PrintOutDecorator(IPrintOut _orig) {
+        super(_orig);
     }
 
+    @Override
     public void flush() {
-        impl.flush();
+        _orig.flush();
     }
 
+    @Override
     public void flush(boolean strict) {
-        impl.flush(strict);
+        _orig.flush(strict);
     }
 
     @Override
     public void close() {
-        impl.close();
+        _orig.close();
     }
 
+    @Override
     public void print(boolean b) {
-        impl.print(b);
+        _orig.print(b);
     }
 
+    @Override
     public void print(char c) {
-        impl.print(c);
+        _orig.print(c);
     }
 
+    @Override
     public void print(char[] s) {
-        impl.print(s);
+        _orig.print(s);
     }
 
+    @Override
     public void print(double d) {
-        impl.print(d);
+        _orig.print(d);
     }
 
+    @Override
     public void print(float f) {
-        impl.print(f);
+        _orig.print(f);
     }
 
+    @Override
     public void print(int i) {
-        impl.print(i);
+        _orig.print(i);
     }
 
+    @Override
     public void print(long l) {
-        impl.print(l);
+        _orig.print(l);
     }
 
+    @Override
     public void print(Object... args) {
-        impl.print(args);
+        _orig.print(args);
     }
 
+    @Override
     public void print(Object obj) {
-        impl.print(obj);
+        _orig.print(obj);
     }
 
+    @Override
     public void print(String s) {
-        impl.print(s);
+        _orig.print(s);
     }
 
+    @Override
     public void printf(Locale l, String format, Object... args) {
-        impl.printf(l, format, args);
+        _orig.printf(l, format, args);
     }
 
+    @Override
     public void printf(String format, Object... args) {
-        impl.printf(format, args);
+        _orig.printf(format, args);
     }
 
+    @Override
     public void println() {
-        impl.println();
+        _orig.println();
     }
 
+    @Override
     public void println(boolean x) {
-        impl.println(x);
+        _orig.println(x);
     }
 
+    @Override
     public void println(char x) {
-        impl.println(x);
+        _orig.println(x);
     }
 
+    @Override
     public void println(char[] x) {
-        impl.println(x);
+        _orig.println(x);
     }
 
+    @Override
     public void println(double x) {
-        impl.println(x);
+        _orig.println(x);
     }
 
+    @Override
     public void println(float x) {
-        impl.println(x);
+        _orig.println(x);
     }
 
+    @Override
     public void println(int x) {
-        impl.println(x);
+        _orig.println(x);
     }
 
+    @Override
     public void println(long x) {
-        impl.println(x);
+        _orig.println(x);
     }
 
+    @Override
     public void println(Object... args) {
-        impl.println(args);
+        _orig.println(args);
     }
 
+    @Override
     public void println(Object x) {
-        impl.println(x);
+        _orig.println(x);
     }
 
+    @Override
     public void println(String x) {
-        impl.println(x);
+        _orig.println(x);
     }
 
+    @Override
     public void write(char[] chars, int off, int len)
             throws IOException {
-        impl.write(chars, off, len);
+        _orig.write(chars, off, len);
     }
 
+    @Override
     public void write(char[] chars)
             throws IOException {
-        impl.write(chars);
+        _orig.write(chars);
     }
 
+    @Override
     public void write(CharBuffer charBuffer)
             throws IOException {
-        impl.write(charBuffer);
+        _orig.write(charBuffer);
     }
 
+    @Override
     public void write(CharSequence chars, int off, int len)
             throws IOException {
-        impl.write(chars, off, len);
+        _orig.write(chars, off, len);
     }
 
+    @Override
     public void write(int ch)
             throws IOException {
-        impl.write(ch);
+        _orig.write(ch);
     }
 
+    @Override
     public void write(String s, int off, int len)
             throws IOException {
-        impl.write(s, off, len);
+        _orig.write(s, off, len);
     }
 
+    @Override
     public void write(String s)
             throws IOException {
-        impl.write(s);
+        _orig.write(s);
     }
 
 }

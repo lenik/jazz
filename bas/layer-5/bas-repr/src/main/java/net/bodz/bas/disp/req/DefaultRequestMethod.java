@@ -89,7 +89,7 @@ public class DefaultRequestMethod
         }
 
         this.methodName = methodName;
-        this.parameters.setImplementation(mparams);
+        this.parameters.setWrapped(mparams);
 
         request.setAttribute(ATTRIBUTE_KEY, this);
     }

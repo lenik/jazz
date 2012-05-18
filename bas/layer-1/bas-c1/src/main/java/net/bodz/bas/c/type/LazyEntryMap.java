@@ -11,8 +11,8 @@ public class LazyEntryMap<K, V>
 
     IMapEntryBuilder<K, V> entryBuilder;
 
-    public LazyEntryMap(Map<K, V> impl, IMapEntryBuilder<K, V> entryBuilder) {
-        super(impl);
+    public LazyEntryMap(Map<K, V> wrapped, IMapEntryBuilder<K, V> entryBuilder) {
+        super(wrapped);
         this.entryBuilder = entryBuilder;
     }
 
