@@ -1,0 +1,283 @@
+package net.bodz.bas.proxy.java.sql;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.SQLWarning;
+import java.sql.Statement;
+
+public class StatementDecorator
+        extends AbstractJavasqlWrapper<Statement>
+        implements Statement {
+
+    private static final long serialVersionUID = 1L;
+
+    public StatementDecorator(Statement _orig) {
+        super(_orig);
+    }
+
+    @Override
+    protected <_T> _T _unwrap(Class<_T> iface)
+            throws SQLException {
+        return getWrapped().unwrap(iface);
+    }
+
+    @Override
+    protected boolean _isWrapperFor(Class<?> iface)
+            throws SQLException {
+        return getWrapped().isWrapperFor(iface);
+    }
+
+    @Override
+    public ResultSet executeQuery(String sql)
+            throws SQLException {
+        return getWrapped().executeQuery(sql);
+    }
+
+    @Override
+    public int executeUpdate(String sql)
+            throws SQLException {
+        return getWrapped().executeUpdate(sql);
+    }
+
+    @Override
+    public void close()
+            throws SQLException {
+        getWrapped().close();
+    }
+
+    @Override
+    public int getMaxFieldSize()
+            throws SQLException {
+        return getWrapped().getMaxFieldSize();
+    }
+
+    @Override
+    public void setMaxFieldSize(int max)
+            throws SQLException {
+        getWrapped().setMaxFieldSize(max);
+    }
+
+    @Override
+    public int getMaxRows()
+            throws SQLException {
+        return getWrapped().getMaxRows();
+    }
+
+    @Override
+    public void setMaxRows(int max)
+            throws SQLException {
+        getWrapped().setMaxRows(max);
+    }
+
+    @Override
+    public void setEscapeProcessing(boolean enable)
+            throws SQLException {
+        getWrapped().setEscapeProcessing(enable);
+    }
+
+    @Override
+    public int getQueryTimeout()
+            throws SQLException {
+        return getWrapped().getQueryTimeout();
+    }
+
+    @Override
+    public void setQueryTimeout(int seconds)
+            throws SQLException {
+        getWrapped().setQueryTimeout(seconds);
+    }
+
+    @Override
+    public void cancel()
+            throws SQLException {
+        getWrapped().cancel();
+    }
+
+    @Override
+    public SQLWarning getWarnings()
+            throws SQLException {
+        return getWrapped().getWarnings();
+    }
+
+    @Override
+    public void clearWarnings()
+            throws SQLException {
+        getWrapped().clearWarnings();
+    }
+
+    @Override
+    public void setCursorName(String name)
+            throws SQLException {
+        getWrapped().setCursorName(name);
+    }
+
+    @Override
+    public boolean execute(String sql)
+            throws SQLException {
+        return getWrapped().execute(sql);
+    }
+
+    @Override
+    public ResultSet getResultSet()
+            throws SQLException {
+        return getWrapped().getResultSet();
+    }
+
+    @Override
+    public int getUpdateCount()
+            throws SQLException {
+        return getWrapped().getUpdateCount();
+    }
+
+    @Override
+    public boolean getMoreResults()
+            throws SQLException {
+        return getWrapped().getMoreResults();
+    }
+
+    @Override
+    public void setFetchDirection(int direction)
+            throws SQLException {
+        getWrapped().setFetchDirection(direction);
+    }
+
+    @Override
+    public int getFetchDirection()
+            throws SQLException {
+        return getWrapped().getFetchDirection();
+    }
+
+    @Override
+    public void setFetchSize(int rows)
+            throws SQLException {
+        getWrapped().setFetchSize(rows);
+    }
+
+    @Override
+    public int getFetchSize()
+            throws SQLException {
+        return getWrapped().getFetchSize();
+    }
+
+    @Override
+    public int getResultSetConcurrency()
+            throws SQLException {
+        return getWrapped().getResultSetConcurrency();
+    }
+
+    @Override
+    public int getResultSetType()
+            throws SQLException {
+        return getWrapped().getResultSetType();
+    }
+
+    @Override
+    public void addBatch(String sql)
+            throws SQLException {
+        getWrapped().addBatch(sql);
+    }
+
+    @Override
+    public void clearBatch()
+            throws SQLException {
+        getWrapped().clearBatch();
+    }
+
+    @Override
+    public int[] executeBatch()
+            throws SQLException {
+        return getWrapped().executeBatch();
+    }
+
+    @Override
+    public Connection getConnection()
+            throws SQLException {
+        return getWrapped().getConnection();
+    }
+
+    @Override
+    public boolean getMoreResults(int current)
+            throws SQLException {
+        return getWrapped().getMoreResults(current);
+    }
+
+    @Override
+    public ResultSet getGeneratedKeys()
+            throws SQLException {
+        return getWrapped().getGeneratedKeys();
+    }
+
+    @Override
+    public int executeUpdate(String sql, int autoGeneratedKeys)
+            throws SQLException {
+        return getWrapped().executeUpdate(sql, autoGeneratedKeys);
+    }
+
+    @Override
+    public int executeUpdate(String sql, int[] columnIndexes)
+            throws SQLException {
+        return getWrapped().executeUpdate(sql, columnIndexes);
+    }
+
+    @Override
+    public int executeUpdate(String sql, String[] columnNames)
+            throws SQLException {
+        return getWrapped().executeUpdate(sql, columnNames);
+    }
+
+    @Override
+    public boolean execute(String sql, int autoGeneratedKeys)
+            throws SQLException {
+        return getWrapped().execute(sql, autoGeneratedKeys);
+    }
+
+    @Override
+    public boolean execute(String sql, int[] columnIndexes)
+            throws SQLException {
+        return getWrapped().execute(sql, columnIndexes);
+    }
+
+    @Override
+    public boolean execute(String sql, String[] columnNames)
+            throws SQLException {
+        return getWrapped().execute(sql, columnNames);
+    }
+
+    @Override
+    public int getResultSetHoldability()
+            throws SQLException {
+        return getWrapped().getResultSetHoldability();
+    }
+
+    @Override
+    public boolean isClosed()
+            throws SQLException {
+        return getWrapped().isClosed();
+    }
+
+    @Override
+    public void setPoolable(boolean poolable)
+            throws SQLException {
+        getWrapped().setPoolable(poolable);
+    }
+
+    @Override
+    public boolean isPoolable()
+            throws SQLException {
+        return getWrapped().isPoolable();
+    }
+
+    @Override
+    public void closeOnCompletion()
+            throws SQLException {
+        getWrapped().closeOnCompletion();
+    }
+
+    @Override
+    public boolean isCloseOnCompletion()
+            throws SQLException {
+        return getWrapped().isCloseOnCompletion();
+    }
+
+}
