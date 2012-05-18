@@ -3,19 +3,21 @@ package net.bodz.bas.model;
 import java.io.Serializable;
 
 public abstract class AbstractDecorator<T>
-        implements IDecorator<T>, Serializable {
+        implements IWrapper<T>, Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    protected T impl;
+    protected T _orig;
 
-    public AbstractDecorator(T implementation) {
-        this.impl = implementation;
+    public AbstractDecorator(T _orig) {
+        if (_orig == null)
+            throw new NullPointerException("_orig");
+        this._orig = _orig;
     }
 
     @Override
-    public T getImplementation() {
-        return impl;
+    public T getWrapped() {
+        return _orig;
     }
 
 }

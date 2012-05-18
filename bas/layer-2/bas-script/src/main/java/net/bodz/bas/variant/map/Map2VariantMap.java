@@ -4,99 +4,101 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import net.bodz.bas.model.IDecorator;
+import net.bodz.bas.model.IWrapper;
 
 public class Map2VariantMap<K>
         extends AbstractVariantMap<K>
-        implements IDecorator<Map<K, Object>> {
+        implements IWrapper<Map<K, Object>> {
 
-    private Map<K, Object> impl;
+    private Map<K, Object> _orig;
 
-    public Map2VariantMap(Map<K, Object> impl) {
-        if (impl == null)
-            throw new NullPointerException("impl");
-        this.impl = impl;
+    public Map2VariantMap(Map<K, Object> orig) {
+        if (orig == null)
+            throw new NullPointerException("orig");
+        this._orig = orig;
     }
 
     @Override
-    public Map<K, Object> getImplementation() {
-        return impl;
+    public Map<K, Object> getWrapped() {
+        return _orig;
     }
 
-    public void setImplementation(Map<K, Object> impl) {
-        this.impl = impl;
+    public void setWrapped(Map<K, Object> _orig) {
+        if (_orig == null)
+            throw new NullPointerException("_orig");
+        this._orig = _orig;
     }
 
     @Override
     public boolean containsKey(Object key) {
-        return impl.containsKey(key);
+        return _orig.containsKey(key);
     }
 
     @Override
     public Object get(Object key) {
-        return impl.get(key);
+        return _orig.get(key);
     }
 
     @Override
     public Set<K> keySet() {
-        return impl.keySet();
+        return _orig.keySet();
     }
 
     // Map implementation.
 
     @Override
     public int size() {
-        return impl.size();
+        return _orig.size();
     }
 
     @Override
     public boolean isEmpty() {
-        return impl.isEmpty();
+        return _orig.isEmpty();
     }
 
     @Override
     public boolean containsValue(Object value) {
-        return impl.containsValue(value);
+        return _orig.containsValue(value);
     }
 
     @Override
     public Object put(K key, Object value) {
-        return impl.put(key, value);
+        return _orig.put(key, value);
     }
 
     @Override
     public Object remove(Object key) {
-        return impl.remove(key);
+        return _orig.remove(key);
     }
 
     @Override
     public void putAll(Map<? extends K, ? extends Object> m) {
-        impl.putAll(m);
+        _orig.putAll(m);
     }
 
     @Override
     public void clear() {
-        impl.clear();
+        _orig.clear();
     }
 
     @Override
     public Collection<Object> values() {
-        return impl.values();
+        return _orig.values();
     }
 
     @Override
     public Set<java.util.Map.Entry<K, Object>> entrySet() {
-        return impl.entrySet();
+        return _orig.entrySet();
     }
 
     @Override
     public boolean equals(Object o) {
-        return impl.equals(o);
+        return _orig.equals(o);
     }
 
     @Override
     public int hashCode() {
-        return impl.hashCode();
+        return _orig.hashCode();
     }
 
 }

@@ -57,7 +57,7 @@ public class PatternProcessor
         matchIndex = 0;
         lastPosition = 0;
         count = 0;
-        impl = new StringBuilder();
+        setWrapped(new StringBuilder());
         while (matcher.find()) {
             int start = matcher.start();
             int end = matcher.end();

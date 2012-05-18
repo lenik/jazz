@@ -12,68 +12,68 @@ public class MapDecorator<K, V>
 
     private static final long serialVersionUID = 1L;
 
-    public MapDecorator(Map<K, V> impl) {
-        super(impl);
+    public MapDecorator(Map<K, V> _orig) {
+        super(_orig);
     }
 
     @Override
     public void clear() {
-        impl.clear();
+        _orig.clear();
     }
 
     @Override
     public boolean containsKey(Object key) {
-        return impl.containsKey(key);
+        return _orig.containsKey(key);
     }
 
     @Override
     public boolean containsValue(Object value) {
-        return impl.containsValue(value);
+        return _orig.containsValue(value);
     }
 
     @Override
     public Set<Entry<K, V>> entrySet() {
-        return impl.entrySet();
+        return _orig.entrySet();
     }
 
     @Override
     public V get(Object key) {
-        return impl.get(key);
+        return _orig.get(key);
     }
 
     @Override
     public boolean isEmpty() {
-        return impl.isEmpty();
+        return _orig.isEmpty();
     }
 
     @Override
     public Set<K> keySet() {
-        return impl.keySet();
+        return _orig.keySet();
     }
 
     @Override
     public V put(K key, V value) {
-        return impl.put(key, value);
+        return _orig.put(key, value);
     }
 
     @Override
     public void putAll(Map<? extends K, ? extends V> m) {
-        impl.putAll(m);
+        _orig.putAll(m);
     }
 
     @Override
     public V remove(Object key) {
-        return impl.remove(key);
+        return _orig.remove(key);
     }
 
     @Override
     public int size() {
-        return impl.size();
+        return _orig.size();
     }
 
     @Override
     public Collection<V> values() {
-        return impl.values();
+        return _orig.values();
     }
 
 }
