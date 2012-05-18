@@ -1,5 +1,6 @@
 package net.bodz.bas.util.order;
 
+
 /**
  * For comparators who always expect non-<code>null</code> values to compare.
  */
@@ -28,6 +29,7 @@ public abstract class AbstractNonNullComparator<T>
     public abstract int compareNonNull(T o1, T o2);
 
     protected static final int compareIdentity(Object o1, Object o2) {
+        assert o1 != o2;
         int id1 = System.identityHashCode(o1);
         int id2 = System.identityHashCode(o2);
         return id1 - id2;

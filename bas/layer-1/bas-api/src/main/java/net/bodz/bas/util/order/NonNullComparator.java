@@ -17,12 +17,12 @@ public interface NonNullComparator<T>
     int getNullOrder();
 
     /**
-     * Compare two non-<code>null</code> values.
+     * Compare two non-<code>null</code> and non-same objects.
      * 
      * @param o1
-     *            Non-<code>null</code> value to compare.
+     *            The first non-<code>null</code> object to compare.
      * @param o2
-     *            Non-<code>null</code> value to compare.
+     *            The second non-<code>null</code> object to compare.
      * @return negative number if <code>o1</code> is less then <code>o2</code>, or positive number
      *         if <code>o1</code> is greater then <code>o2</code>, or 0 if both parameters are the
      *         same.
