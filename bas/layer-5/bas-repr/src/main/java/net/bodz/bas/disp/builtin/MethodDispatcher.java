@@ -18,17 +18,9 @@ import net.bodz.bas.disp.PathArrival;
 public class MethodDispatcher
         extends AbstractDispatcher {
 
-    public MethodDispatcher() {
-        super();
-    }
-
-    public MethodDispatcher(String name) {
-        super(name);
-    }
-
     @Override
-    public int getOrder() {
-        return DispatchConfig.ORDER_METHOD;
+    public int getPriority() {
+        return DispatchConfig.PRIORITY_METHOD;
     }
 
     private transient ClassMap<MethodKey, Method> classMap;

@@ -13,17 +13,9 @@ import net.bodz.bas.disp.PathArrival;
 public class NamedNodeDispatcher
         extends AbstractDispatcher {
 
-    public NamedNodeDispatcher() {
-        super();
-    }
-
-    public NamedNodeDispatcher(String name) {
-        super(name);
-    }
-
     @Override
-    public int getOrder() {
-        return DispatchConfig.ORDER_NAMED_NODE;
+    public int getPriority() {
+        return DispatchConfig.PRIORITY_NAMED_NODE;
     }
 
     @Override

@@ -6,6 +6,7 @@ import java.util.TreeSet;
 
 import net.bodz.bas.log.api.Logger;
 import net.bodz.bas.log.api.LoggerFactory;
+import net.bodz.bas.util.order.PriorityComparator;
 
 /**
  * The dispatcher facade. This is also a {@link IDispatcher}, though it needn't be.
@@ -27,7 +28,7 @@ public class DispatchService
     }
 
     synchronized void reloadProviders() {
-        dispatchers = new TreeSet<IDispatcher>(DispatcherComparator.getInstance());
+        dispatchers = new TreeSet<IDispatcher>(PriorityComparator.INSTANCE);
 
         ServiceLoader<IDispatcher> dispatcherLoader;
         dispatcherLoader = ServiceLoader.load(IDispatcher.class);

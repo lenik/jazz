@@ -12,17 +12,9 @@ import net.bodz.bas.disp.PathArrival;
 public class MapDispatcher
         extends AbstractDispatcher {
 
-    public MapDispatcher() {
-        super();
-    }
-
-    public MapDispatcher(String name) {
-        super(name);
-    }
-
     @Override
-    public int getOrder() {
-        return DispatchConfig.ORDER_COLLECTION;
+    public int getPriority() {
+        return DispatchConfig.PRIORITY_COLLECTION;
     }
 
     @Override

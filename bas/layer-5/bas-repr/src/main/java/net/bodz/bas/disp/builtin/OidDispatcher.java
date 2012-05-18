@@ -13,8 +13,8 @@ public class OidDispatcher
         extends AbstractDispatcher {
 
     @Override
-    public int getOrder() {
-        return DispatchConfig.ORDER_OID;
+    public int getPriority() {
+        return DispatchConfig.PRIORITY_OID;
     }
 
     @Override
