@@ -12,17 +12,9 @@ import net.bodz.bas.disp.PathArrival;
 public class ListDispatcher
         extends AbstractDispatcher {
 
-    public ListDispatcher() {
-        super();
-    }
-
-    public ListDispatcher(String name) {
-        super(name);
-    }
-
     @Override
-    public int getOrder() {
-        return DispatchConfig.ORDER_COLLECTION;
+    public int getPriority() {
+        return DispatchConfig.PRIORITY_COLLECTION;
     }
 
     @Override

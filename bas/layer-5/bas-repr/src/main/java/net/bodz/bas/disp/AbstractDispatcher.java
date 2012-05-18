@@ -3,22 +3,8 @@ package net.bodz.bas.disp;
 public abstract class AbstractDispatcher
         implements IDispatcher {
 
-    String name;
-
-    public AbstractDispatcher() {
-    }
-
-    public AbstractDispatcher(String name) {
-        this.name = name;
-    }
-
     @Override
-    public String getName() {
-        return name;
-    }
-
-    @Override
-    public int getOrder() {
+    public int getPriority() {
         return 0;
     }
 

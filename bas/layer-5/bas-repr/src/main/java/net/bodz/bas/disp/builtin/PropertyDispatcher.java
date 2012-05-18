@@ -17,17 +17,9 @@ import net.bodz.bas.disp.PathArrival;
 public class PropertyDispatcher
         extends AbstractDispatcher {
 
-    public PropertyDispatcher() {
-        super();
-    }
-
-    public PropertyDispatcher(String name) {
-        super(name);
-    }
-
     @Override
-    public int getOrder() {
-        return DispatchConfig.ORDER_FIELD;
+    public int getPriority() {
+        return DispatchConfig.PRIORITY_FIELD;
     }
 
     private transient ClassMap<String, PropertyDescriptor> classMap;

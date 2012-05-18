@@ -10,16 +10,8 @@ import net.bodz.bas.disp.ITokenQueue;
 public class DynamicDispatcher
         extends AbstractDispatcher {
 
-    public DynamicDispatcher() {
-        super();
-    }
-
-    public DynamicDispatcher(String name) {
-        super(name);
-    }
-
     @Override
-    public int getOrder() {
+    public int getPriority() {
         return DispatchConfig.DYNAMIC_ORDER;
     }
 
