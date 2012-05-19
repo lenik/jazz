@@ -95,4 +95,41 @@ public interface IType
 
     IEvent getEvent(String eventName);
 
+    // Helpers
+
+    /**
+     * @see IProperty#get(Object)
+     */
+    <T> T get(Object instance, String propertyName)
+            throws ReflectiveOperationException;
+
+    /**
+     * @see IProperty#set(Object, Object)
+     */
+    void set(Object instance, String propertyName, Object value)
+            throws ReflectiveOperationException;
+
+    /**
+     * @see IMethod#invoke(Object, Object...)
+     */
+    Object invoke(Object instance, String methodName, Class<?>[] parameterTypes, Object... parameters)
+            throws ReflectiveOperationException;
+
+    // /**
+    // * @see IMethod#invoke(Object, Object...)
+    // */
+    // Object invoke(Object instance, String methodName, Object... parameters);
+
+    /**
+     * @see IMethod#invokeStatic(Object...)
+     */
+    Object invokeStatic(String methodName, Class<?>[] parameterTypes, Object... parameters)
+            throws ReflectiveOperationException;
+
+    /**
+     * @see IConstructor#newInstance(Object...)
+     */
+    Object newInstance(Class<?>[] parameterTypes, Object... parameters)
+            throws ReflectiveOperationException;
+
 }

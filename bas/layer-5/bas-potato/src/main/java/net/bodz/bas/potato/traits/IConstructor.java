@@ -1,6 +1,5 @@
 package net.bodz.bas.potato.traits;
 
-
 public interface IConstructor
         extends IElement {
 
