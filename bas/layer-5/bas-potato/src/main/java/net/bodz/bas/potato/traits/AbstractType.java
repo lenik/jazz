@@ -3,6 +3,7 @@ package net.bodz.bas.potato.traits;
 import java.util.Collection;
 
 import net.bodz.bas.c.reflect.MethodSignature;
+import net.bodz.bas.c.reflect.NoSuchPropertyException;
 
 public abstract class AbstractType
         extends AbstractElement
@@ -64,6 +65,63 @@ public abstract class AbstractType
         IEventMap eventMap = getEventMap();
         // if (eventMap == null) return null;
         return eventMap.get(eventName);
+    }
+
+    @Override
+    public <T> T get(Object instance, String propertyName)
+            throws ReflectiveOperationException {
+        IProperty property = getProperty(propertyName);
+        if (property == null) {
+            throw new NoSuchPropertyException(propertyName);
+        }
+        T value = (T) property.get(instance);
+        return value;
+    }
+
+    @Override
+    public void set(Object instance, String propertyName, Object value)
+            throws ReflectiveOperationException {
+        IProperty property = getProperty(propertyName);
+        if (property == null) {
+            throw new NoSuchPropertyException(propertyName);
+        }
+        property.set(instance, value);
+    }
+
+    @Override
+    public Object invoke(Object instance, String methodName, Class<?>[] parameterTypes, Object... parameters)
+            throws ReflectiveOperationException {
+        IMethod method = getMethod(methodName, parameterTypes);
+        if (method == null) {
+            MethodSignature signature = new MethodSignature(methodName, parameterTypes);
+            throw new NoSuchMethodException(signature.toString());
+        }
+        Object returnValue = method.invoke(instance, parameters);
+        return returnValue;
+    }
+
+    @Override
+    public Object invokeStatic(String methodName, Class<?>[] parameterTypes, Object... parameters)
+            throws ReflectiveOperationException {
+        IMethod method = getMethod(methodName, parameterTypes);
+        if (method == null) {
+            MethodSignature signature = new MethodSignature(methodName, parameterTypes);
+            throw new NoSuchMethodException(signature.toString());
+        }
+        Object returnValue = method.invokeStatic(parameters);
+        return returnValue;
+    }
+
+    @Override
+    public Object newInstance(Class<?>[] parameterTypes, Object... parameters)
+            throws ReflectiveOperationException {
+        IConstructor ctor = getConstructor(parameterTypes);
+        if (ctor == null) {
+            MethodSignature signature = new MethodSignature("~ctor", parameterTypes);
+            throw new NoSuchMethodException(signature.toString());
+        }
+        Object instance = ctor.newInstance(parameters);
+        return instance;
     }
 
 }
