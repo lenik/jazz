@@ -9,7 +9,6 @@ public class WireInPort
         extends AbstractInPort {
 
     private String name;
-    private IPortMeta meta;
     protected IReceiver dst;
 
     public WireInPort(String name, IUnit unit, int index, IReceiver dst) {
@@ -21,18 +20,6 @@ public class WireInPort
     @Override
     protected String getName() {
         return name;
-    }
-
-    @Override
-    public IPortMeta getInPortMeta() {
-        if (meta == null)
-            meta = createPortMeta();
-        return meta;
-    }
-
-    @Override
-    protected IPortMeta createPortMeta() {
-        return new STPortMeta(name, Object.class);
     }
 
     public boolean isConnected() {

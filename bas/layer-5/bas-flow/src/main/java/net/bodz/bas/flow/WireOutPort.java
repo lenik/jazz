@@ -9,7 +9,6 @@ public class WireOutPort
         extends AbstractOutPort {
 
     private String name;
-    private IPortMeta meta;
     protected IReceiver dst;
 
     public WireOutPort(String name, IUnit unit, int index) {
@@ -20,18 +19,6 @@ public class WireOutPort
     @Override
     protected String getName() {
         return name;
-    }
-
-    @Override
-    public IPortMeta getOutPortMeta() {
-        if (meta == null)
-            meta = createPortMeta();
-        return meta;
-    }
-
-    @Override
-    protected IPortMeta createPortMeta() {
-        return new STPortMeta(name, Object.class);
     }
 
     @Override
