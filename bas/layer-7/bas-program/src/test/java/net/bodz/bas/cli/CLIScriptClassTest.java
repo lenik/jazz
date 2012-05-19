@@ -3,6 +3,8 @@ package net.bodz.bas.cli;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import net.bodz.bas.potato.Potatoes;
+import net.bodz.bas.potato.traits.IType;
 
 import org.junit.Test;
 
@@ -26,13 +28,15 @@ public class CLIScriptClassTest
     @Test
     public void test1()
             throws Exception {
-        ScriptClass<Object> sclass = Scripts.getScriptClass(this);
+        IType type = Potatoes.getType(getClass());
+        // ScriptClass<Object> sclass = Scripts.getScriptClass(this);
+        type.getProperty("myName").get(this);
 
-        assertEquals("get myName", "Lucy", sclass.get(this, "myName"));
-        assertEquals("get yourAge", 13, sclass.get(this, "yourAge"));
+        assertEquals("get myName", "Lucy", type.get(this, "myName"));
+        assertEquals("get yourAge", 13, type.get(this, "yourAge"));
 
-        sclass.set(this, "myName", "Linda");
-        sclass.set(this, "yourAge", 17);
+        type.set(this, "myName", "Linda");
+        type.set(this, "yourAge", 17);
         assertEquals("set myName", "Linda", myName);
         assertEquals("set yourAge", 17, yourAge);
 
@@ -42,7 +46,7 @@ public class CLIScriptClassTest
         assertFalse(serial[1]);
         assertFalse(serial[2]);
 
-        Object ret = sclass.invoke(this, "hello", "Kate");
+        Object ret = type.invoke(this, "hello", "Kate");
         assertEquals("hello()", "hello Kate", ret);
     }
 

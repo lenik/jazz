@@ -59,8 +59,8 @@ public class ClassOptions<CT> {
 
     protected void importFields(OptionGroup optgrp, Field... fields) {
         for (final Field field : fields) {
-//            XXX if (!field.isAnnotationPresent(Option.class))
-//                continue;
+// XXX if (!field.isAnnotationPresent(Option.class))
+// continue;
             FieldOption<Object> fieldopt = new FieldOption<Object>(//
                     field.getName(), field, optgrp);
             addOption(fieldopt);
@@ -75,8 +75,8 @@ public class ClassOptions<CT> {
             Method readf = property.getReadMethod();
             if (readf == null)
                 continue;
-//            XXX if (!readf.isAnnotationPresent(Option.class))
-//                continue;
+// XXX if (!readf.isAnnotationPresent(Option.class))
+// continue;
             OptionGroup optgrp = readf.getDeclaringClass().getAnnotation(OptionGroup.class);
             PropertyOption<Object> propopt = new PropertyOption<Object>( //
                     property.getName(), property, optgrp);
@@ -85,10 +85,15 @@ public class ClassOptions<CT> {
     }
 
     protected void importMethod(OptionGroup optgrp, final Method method) {
-//        XXX if (!method.isAnnotationPresent(Option.class))
-//            return;
-        _Option<MethodCall> copt = new MethodOption(//
-                method.getName(), method, optgrp);
+        // XXX if (!method.isAnnotationPresent(Option.class))
+        // return;
+        _Option<MethodCall> copt;
+        try {
+            copt = new MethodOption(//
+                    method.getName(), method, optgrp);
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
         addOption(copt);
     }
 
