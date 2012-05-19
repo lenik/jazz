@@ -7,12 +7,9 @@ import java.util.Set;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.c.type.ClassLocal;
 import net.bodz.bas.c.type.ClassLocals;
-import net.bodz.bas.err.IllegalUsageError;
-import net.bodz.bas.flow.util.Naming;
-import net.bodz.bas.meta.stereo.MetaClass;
+import net.bodz.bas.c.type.TypeName;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.IPrintOut;
-import net.bodz.bas.util.Nullables;
 
 public abstract class AbstractUnit
         implements IUnit {
@@ -26,24 +23,12 @@ public abstract class AbstractUnit
     }
 
     private static ClassLocal<IUnitMeta> metas = ClassLocals.createMap(//
-            IUnitMeta.class.getCanonicalName(), entryLoader);
+            IUnitMeta.class.getCanonicalName(), UnitMetaEntryLoader.INSTANCE);
 
     @Override
     public IUnitMeta getUnitMeta() {
         Class<? extends AbstractUnit> clazz = getClass();
         IUnitMeta meta = metas.get(clazz);
-        if (meta == null) {
-            Class<?> metaClass = Nullables.getAnnotation(clazz, MetaClass.class).value();
-            if (metaClass != null)
-                try {
-                    meta = (IUnitMeta) metaClass.newInstance();
-                } catch (ReflectiveOperationException e) {
-                    throw new IllegalUsageError("Can't create instance for MetaClass: " + metaClass, e);
-                }
-            else
-                meta = createUnitMeta();
-            metas.put(clazz, meta);
-        }
         return meta;
     }
 
@@ -51,11 +36,7 @@ public abstract class AbstractUnit
      * default name is class name with identity hash.
      */
     protected String getName() {
-        return Naming.getDefaultName(this) + "@" + System.identityHashCode(this);
-    }
-
-    protected IUnitMeta createUnitMeta() {
-        return new AbstractUnitMeta(getName());
+        return TypeName.friendly_name(getClass()) + "@" + System.identityHashCode(this);
     }
 
     public void dumpGraph(IPrintOut out, int indent, Set<IUnit> loops) {

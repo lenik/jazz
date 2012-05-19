@@ -1,6 +1,6 @@
 package net.bodz.bas.flow;
 
-import net.bodz.bas.flow.util.Naming;
+import net.bodz.bas.c.type.TypeName;
 
 public abstract class AbstractPort
         implements IPort {
@@ -12,7 +12,7 @@ public abstract class AbstractPort
     }
 
     protected String getName() {
-        return Naming.getDefaultName(this);
+        return TypeName.friendly_name(getClass());
     }
 
     @Override
