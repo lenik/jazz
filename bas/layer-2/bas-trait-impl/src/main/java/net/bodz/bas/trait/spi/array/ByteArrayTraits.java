@@ -6,7 +6,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.INegotiation.IParameter;
 import net.bodz.bas.lang.negotiation.NegotiationException;
-import net.bodz.bas.meta.util.ValueType;
+import net.bodz.bas.meta.util.ReferredType;
 import net.bodz.bas.traits.IParser;
 
 public class ByteArrayTraits
@@ -17,7 +17,7 @@ public class ByteArrayTraits
      * <p>
      * Set to <code>null</code> to use the default charset.
      */
-    @ValueType(Charset.class)
+    @ReferredType(Charset.class)
     public static final String textformCharset = "textform.charset";
     public static final Charset defaultTextformCharset = Charset.defaultCharset();
 
