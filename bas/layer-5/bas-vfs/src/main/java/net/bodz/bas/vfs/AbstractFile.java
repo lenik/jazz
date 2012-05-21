@@ -34,7 +34,7 @@ import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
 import net.bodz.bas.io.resource.preparation.ParseLoadPreparation;
 import net.bodz.bas.io.resource.preparation.StreamReadPreparation;
 import net.bodz.bas.io.resource.preparation.StreamWritePreparation;
-import net.bodz.bas.meta.codereview.GeneratedByCopyPaste;
+import net.bodz.bas.meta.codehint.GeneratedByCopyPaste;
 import net.bodz.bas.model.IFilter;
 import net.bodz.bas.util.iter.Iterators;
 import net.bodz.bas.util.iter.Mitors;

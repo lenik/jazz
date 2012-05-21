@@ -3,7 +3,7 @@ package net.bodz.bas.c.java.util.regex;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import net.bodz.bas.meta.util.OverrideOption;
+import net.bodz.bas.meta.codehint.OverrideOption;
 import net.bodz.bas.proxy.java.lang.StringBuilderDecorator;
 
 public class PatternProcessor

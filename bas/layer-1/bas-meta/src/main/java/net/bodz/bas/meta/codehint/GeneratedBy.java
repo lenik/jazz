@@ -1,4 +1,4 @@
-package net.bodz.bas.meta.codereview;
+package net.bodz.bas.meta.codehint;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;

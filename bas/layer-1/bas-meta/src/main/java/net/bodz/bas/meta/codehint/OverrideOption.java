@@ -1,4 +1,4 @@
-package net.bodz.bas.meta.util;
+package net.bodz.bas.meta.codehint;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

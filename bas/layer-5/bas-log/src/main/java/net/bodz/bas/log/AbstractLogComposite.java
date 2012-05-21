@@ -1,9 +1,9 @@
 package net.bodz.bas.log;
 
 import net.bodz.bas.log.impl.PrintStreamLogSink;
-import net.bodz.bas.meta.util.ChainOrder;
-import net.bodz.bas.meta.util.ChainUsage;
-import net.bodz.bas.meta.util.OverrideOption;
+import net.bodz.bas.meta.codehint.ChainOrder;
+import net.bodz.bas.meta.codehint.ChainUsage;
+import net.bodz.bas.meta.codehint.OverrideOption;
 
 public abstract class AbstractLogComposite
         implements ILogComposite {

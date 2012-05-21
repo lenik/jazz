@@ -7,7 +7,7 @@ import java.net.URL;
 
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.meta.codereview.PoorImpl;
+import net.bodz.bas.meta.codehint.PoorImpl;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.IVolume;
