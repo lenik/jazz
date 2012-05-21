@@ -6,8 +6,8 @@ import java.util.TreeMap;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.cli.CLIException;
 import net.bodz.bas.cli.ClassCLI;
-import net.bodz.bas.cli.ClassOptions;
-import net.bodz.bas.cli._Option;
+import net.bodz.bas.cli.opt.AbstractOption;
+import net.bodz.bas.cli.opt.ClassOptions;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.util._Plugin;
@@ -48,24 +48,24 @@ public class _CLIPlugin
     @Override
     public void help(IPrintOut out, String prefix) {
         ClassOptions<_CLIPlugin> opts = getOptions();
-        TreeMap<String, _Option<?>> map = opts.getOptions();
+        TreeMap<String, AbstractOption> map = opts.getOptions();
         int maxlen = 0;
         for (String name : map.keySet())
             if (name.length() > maxlen)
                 maxlen = name.length();
-        for (Map.Entry<String, _Option<?>> e : map.entrySet()) {
+        for (Map.Entry<String, AbstractOption> e : map.entrySet()) {
             String name = e.getKey();
-            _Option<?> opt = e.getValue();
+            AbstractOption opt = e.getValue();
             // String vnam = opt.o.vnam();
-            String doc = opt.o.doc();
+            String description = opt.getDescription();
 
             out.print(prefix);
             out.print(name);
-            if (!doc.isEmpty()) {
+            if (!description.isEmpty()) {
                 out.print(": ");
                 if (name.length() < maxlen)
                     out.print(Strings.repeat(maxlen - name.length(), ' '));
-                out.print(doc);
+                out.print(description);
             }
             out.println();
         }

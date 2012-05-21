@@ -1,4 +1,4 @@
-package net.bodz.bas.cli;
+package net.bodz.bas.cli.opt;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
@@ -16,24 +16,27 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 
-import javax.swing.text.html.Option;
+import javax.rmi.CORBA.Util;
 
 import net.bodz.bas.c.type.TypeChain;
+import net.bodz.bas.cli.CLIError;
+import net.bodz.bas.cli.CLIException;
 import net.bodz.bas.collection.preorder.PrefixMap;
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.lang.negotiation.Option;
 import net.bodz.bas.meta.program.OptionGroup;
 import net.bodz.bas.util.Pair;
 import net.bodz.bas.util.iter.Iterables;
 
 public class ClassOptions<CT> {
 
-    private PrefixMap<_Option<?>> all;
+    private PrefixMap<AbstractOption> all;
     private Set<String> weaks;
-    public TreeMap<Integer, _Option<?>> specfiles;
-    private HashSet<_Option<?>> required;
+    public TreeMap<Integer, AbstractOption> specfiles;
+    private HashSet<AbstractOption> required;
 
     public ClassOptions(Class<CT> clazz) {
-        all = new PrefixMap<_Option<?>>();
+        all = new PrefixMap<AbstractOption>();
         weaks = new HashSet<String>();
 
         BeanInfo beanInfo;
@@ -61,8 +64,7 @@ public class ClassOptions<CT> {
         for (final Field field : fields) {
 // XXX if (!field.isAnnotationPresent(Option.class))
 // continue;
-            FieldOption<Object> fieldopt = new FieldOption<Object>(//
-                    field.getName(), field, optgrp);
+            FieldOption fieldopt = new FieldOption(field);
             addOption(fieldopt);
         }
     }
@@ -78,8 +80,7 @@ public class ClassOptions<CT> {
 // XXX if (!readf.isAnnotationPresent(Option.class))
 // continue;
             OptionGroup optgrp = readf.getDeclaringClass().getAnnotation(OptionGroup.class);
-            PropertyOption<Object> propopt = new PropertyOption<Object>( //
-                    property.getName(), property, optgrp);
+            PropertyOption propopt = new PropertyOption(property);
             addOption(propopt);
         }
     }
@@ -87,13 +88,7 @@ public class ClassOptions<CT> {
     protected void importMethod(OptionGroup optgrp, final Method method) {
         // XXX if (!method.isAnnotationPresent(Option.class))
         // return;
-        _Option<MethodCall> copt;
-        try {
-            copt = new MethodOption(//
-                    method.getName(), method, optgrp);
-        } catch (ReflectiveOperationException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
+        AbstractOption copt = new MethodOption(method);
         addOption(copt);
     }
 
@@ -107,9 +102,9 @@ public class ClassOptions<CT> {
             importMethod(optgrp, _method.getMethod());
     }
 
-    protected void addOption(_Option<?> newopt) {
-        String optnam = newopt.getCLIName();
-        _Option<?> existing = all.get(optnam);
+    protected void addOption(AbstractOption newopt) {
+        String optnam = newopt.getFriendlyName();
+        AbstractOption existing = all.get(optnam);
         if (existing != null && !existing.isWeak())
             throw new IllegalArgumentException("option name " + optnam + " is already existed");
         all.put(optnam, newopt);
@@ -130,18 +125,18 @@ public class ClassOptions<CT> {
         }
         if (newopt.required) {
             if (required == null)
-                required = new HashSet<_Option<?>>();
+                required = new HashSet<AbstractOption>();
             required.add(newopt);
         }
         int index = newopt.fileIndex;
         if (index != -1) {
             if (specfiles == null)
-                specfiles = new TreeMap<Integer, _Option<?>>();
+                specfiles = new TreeMap<Integer, AbstractOption>();
             specfiles.put(index, newopt);
         }
     }
 
-    public TreeMap<String, _Option<?>> getOptions() {
+    public TreeMap<String, AbstractOption> getOptions() {
         return all;
     }
 
@@ -150,7 +145,7 @@ public class ClassOptions<CT> {
      *            explicit option name
      * @return null if option does not exist
      */
-    public _Option<?> getOption(String name) {
+    public AbstractOption getOption(String name) {
         return all.get(name);
     }
 
@@ -160,14 +155,14 @@ public class ClassOptions<CT> {
      * @exception CLIException
      *                if option does not exist
      */
-    public _Option<Object> findOption(String name)
+    public AbstractOption findOption(String name)
             throws CLIException {
         if (name.isEmpty())
             throw new CLIException("option name is empty");
         if (name.startsWith("no-"))
             name = name.substring(3);
         if (all.containsKey(name))
-            return (_Option<Object>) all.get(name);
+            return (AbstractOption) all.get(name);
         List<String> fullnames = Iterables.toList(all.ceilingKeys(name));
         if (fullnames.isEmpty())
             throw new CLIException("no such option: " + name);
@@ -183,14 +178,14 @@ public class ClassOptions<CT> {
             throw new CLIException("ambiguous option " + name + ": \n" + cands.toString());
         }
         String fullname = fullnames.get(0);
-        return (_Option<Object>) all.get(fullname);
+        return (AbstractOption) all.get(fullname);
     }
 
     private static final String[] String_0 = {};
 
-    public String[] getAliases(_Option<?> opt) {
+    public String[] getAliases(AbstractOption opt) {
         List<String> aliases = new ArrayList<String>();
-        for (Entry<String, _Option<?>> e : all.entrySet()) {
+        for (Entry<String, AbstractOption> e : all.entrySet()) {
             if (e.getValue() != opt)
                 continue;
             String alias = e.getKey();
@@ -232,7 +227,7 @@ public class ClassOptions<CT> {
         int fileIndex = 0;
         for (int i = 0; i < args.size();) {
             String optnam = args.get(i);
-            _Option<?> opt = null;
+            AbstractOption opt = null;
             if (!optionsEnd) {
                 if ("--".equals(optnam)) {
                     optionsEnd = true;
@@ -306,7 +301,7 @@ public class ClassOptions<CT> {
             if (optval != null)
                 try {
                     @SuppressWarnings("unchecked")
-                    _Option<Object> _opt = (_Option<Object>) opt;
+                    AbstractOption _opt = (AbstractOption) opt;
                     _opt.set(classobj, optval);
                 } catch (ReflectiveOperationException e) {
                     throw new CLIException(e.getMessage(), e);
@@ -325,7 +320,7 @@ public class ClassOptions<CT> {
 
         for (Map.Entry<String, ?> entry : argmap.entrySet()) {
             String optnam = entry.getKey();
-            _Option<?> opt = getOption(optnam);
+            AbstractOption opt = getOption(optnam);
             if (opt == null)
                 continue;
             // argmap.remove(optnam)
@@ -345,7 +340,7 @@ public class ClassOptions<CT> {
 
             if (optval != null)
                 try {
-                    _Option<Object> _opt = (_Option<Object>) opt;
+                    AbstractOption _opt = (AbstractOption) opt;
                     _opt.set(classobj, optval);
                 } catch (ReflectiveOperationException e) {
                     throw new CLIException(e.getMessage(), e);
@@ -354,7 +349,7 @@ public class ClassOptions<CT> {
         _checkMissings(missing);
     }
 
-    private Object _parseOptVal(_Option<?> opt, String optarg)
+    private Object _parseOptVal(AbstractOption opt, String optarg)
             throws ParseException {
         Class<?> valtype = opt.getType();
         Object optval = null;
@@ -362,7 +357,7 @@ public class ClassOptions<CT> {
         if (optarg == null) {
             optarg = opt.defaultVal;
             if (optarg.isEmpty())
-                throw new ParseException("Option value expected: " + opt.getCLIName());
+                throw new ParseException("Option value expected: " + opt.getFriendlyName());
         }
 
         String key = null;
@@ -384,7 +379,7 @@ public class ClassOptions<CT> {
                 optval = opt.parse(optarg, key);
             } catch (ParseException e) {
                 throw new ParseException(String.format("Can\'t parse option %s of %s with argument %s",
-                        opt.getCLIName(), valtype, optarg), e);
+                        opt.getFriendlyName(), valtype, optarg), e);
             }
         if (key != null)
             optval = new Pair<String, Object>(key, optval);
@@ -396,8 +391,8 @@ public class ClassOptions<CT> {
         if (missing != null && !missing.isEmpty()) {
             StringBuilder buf = new StringBuilder(missing.size() * 20);
             for (Object m : missing) {
-                _Option<?> mopt = (_Option<?>) m;
-                buf.append("    " + mopt.getCLIName() + "\n");
+                AbstractOption mopt = (AbstractOption) m;
+                buf.append("    " + mopt.getFriendlyName() + "\n");
             }
             throw new CLIException("missing required option(s): \n" + buf);
         }
@@ -408,7 +403,7 @@ public class ClassOptions<CT> {
         int argc = optcall.getParameterCount();
         int rest = args.size() - off;
         if (argc > rest)
-            throw new CLIException("not enough parameters for function-option " + optcall.getCLIName());
+            throw new CLIException("not enough parameters for function-option " + optcall.getFriendlyName());
         String[] argv = args.subList(off, off + argc).toArray(new String[0]);
         try {
             optcall.call(object, argv);
