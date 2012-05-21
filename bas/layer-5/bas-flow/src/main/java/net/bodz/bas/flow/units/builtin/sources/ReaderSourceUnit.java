@@ -7,7 +7,7 @@ import net.bodz.bas.flow.units.SOSourceUnit;
 import net.bodz.bas.flow.units.builtin.DefaultConfig;
 import net.bodz.bas.io.resource.builtin.ReaderSource;
 import net.bodz.bas.io.resource.preparation.IStreamReadPreparation;
-import net.bodz.bas.meta.codereview.GeneratedByCopyPaste;
+import net.bodz.bas.meta.codehint.GeneratedByCopyPaste;
 import net.bodz.bas.util.iter.Mitorx;
 
 public class ReaderSourceUnit

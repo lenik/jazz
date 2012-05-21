@@ -5,7 +5,7 @@ import java.io.IOException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
-import net.bodz.bas.meta.codereview.GeneratedByCopyPaste;
+import net.bodz.bas.meta.codehint.GeneratedByCopyPaste;
 import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.ICharIn;
