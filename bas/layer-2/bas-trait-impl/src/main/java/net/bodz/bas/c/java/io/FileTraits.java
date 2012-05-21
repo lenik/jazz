@@ -6,7 +6,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.INegotiation.IParameter;
 import net.bodz.bas.lang.negotiation.NegotiationException;
-import net.bodz.bas.meta.util.ValueType;
+import net.bodz.bas.meta.util.ReferredType;
 import net.bodz.bas.traits.AbstractCommonTraits;
 import net.bodz.bas.traits.IParser;
 import net.bodz.bas.vfs.SystemColos;
@@ -17,7 +17,7 @@ public class FileTraits
     /**
      * The context cwd.
      */
-    @ValueType(File.class)
+    @ReferredType(File.class)
     public static final String textformContextDirectory = "textform.contextDirectory";
     public static final File defaultTextformContextDirectory = SystemColos.cwd.get();
 

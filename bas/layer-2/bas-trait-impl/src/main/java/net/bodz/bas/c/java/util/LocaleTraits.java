@@ -8,7 +8,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.INegotiation.IParameter;
 import net.bodz.bas.lang.negotiation.NegotiationException;
-import net.bodz.bas.meta.util.ValueType;
+import net.bodz.bas.meta.util.ReferredType;
 import net.bodz.bas.traits.AbstractCommonTraits;
 import net.bodz.bas.traits.IParser;
 import net.bodz.bas.traits.ISampleGenerator;
@@ -19,7 +19,7 @@ public class LocaleTraits
     /**
      * The separator used to join locale components.
      */
-    @ValueType(String.class)
+    @ReferredType(String.class)
     public static final String textformSeparator = "separator";
     public static final String defaultTextformSeparator = "_";
 
