@@ -18,6 +18,9 @@ import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.cli.ext.CLIPlugin;
 import net.bodz.bas.cli.ext.CLIPlugins;
+import net.bodz.bas.cli.opt.AbstractOption;
+import net.bodz.bas.cli.opt.ClassOptions;
+import net.bodz.bas.cli.opt.MethodCall;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
@@ -447,9 +450,9 @@ public class BasicCLI
             // }
 
             if (L.isDebugEnabled()) {
-                for (Entry<String, _Option<?>> entry : opts.getOptions().entrySet()) {
-                    _Option<?> opt = entry.getValue();
-                    String optnam = opt.getCLIName();
+                for (Entry<String, AbstractOption> entry : opts.getOptions().entrySet()) {
+                    AbstractOption opt = entry.getValue();
+                    String optnam = opt.getFriendlyName();
                     if (!optnam.equals(entry.getKey()))
                         continue;
                     Object optval = opt.resolveFile(this);

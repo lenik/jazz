@@ -16,6 +16,9 @@ import net.bodz.bas.c.string.StringLengthComparator;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.c.type.ClassLocal;
 import net.bodz.bas.c.type.ClassLocals;
+import net.bodz.bas.cli.opt.AbstractOption;
+import net.bodz.bas.cli.opt.ClassOptions;
+import net.bodz.bas.cli.opt.IOptionGroup;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.fn.Filt1;
 import net.bodz.bas.meta.program.ProgramNameUtil;
@@ -56,10 +59,10 @@ public class ClassCLI {
     }
 
     protected static abstract class OptionFormat
-            extends Filt1<String, Set<_Option<?>>> {
+            extends Filt1<String, Set<AbstractOption>> {
 
         @Override
-        public abstract String filter(Set<_Option<?>> a);
+        public abstract String filter(Set<AbstractOption> a);
 
     }
 
@@ -67,7 +70,7 @@ public class ClassCLI {
     public static String helpOptions(Class<?> clazz, String restSyntax, final int tabsize, final int docColumn)
             throws CLIException {
         final ClassOptions<Object> copt = (ClassOptions<Object>) getClassOptions(clazz);
-        TreeMap<String, _Option<?>> options = copt.getOptions();
+        TreeMap<String, AbstractOption> options = copt.getOptions();
         StringBuilder buffer = new StringBuilder(options.size() * 80);
         final char[] tab = new char[tabsize];
         Arrays.fill(tab, ' ');
@@ -79,10 +82,10 @@ public class ClassCLI {
         if (copt.specfiles != null) {
             int ifile = 0;
             while (true) {
-                _Option<?> fopt = copt.specfiles.get(ifile++);
+                AbstractOption fopt = copt.specfiles.get(ifile++);
                 if (fopt == null)
                     break;
-                String fnam = fopt.getCLIName();
+                String fnam = fopt.getFriendlyName();
                 buffer.append(' ');
                 buffer.append(fnam);
             }
@@ -116,36 +119,36 @@ public class ClassCLI {
 
         buffer.append("\n");
 
-        Map<String, Set<_Option<?>>> groups = new HashMap<String, Set<_Option<?>>>();
-        Comparator<_Option<?>> optnamsort = new Comparator<_Option<?>>() {
+        Map<String, Set<AbstractOption>> groups = new HashMap<String, Set<AbstractOption>>();
+        Comparator<AbstractOption> optnamsort = new Comparator<AbstractOption>() {
             @Override
-            public int compare(_Option<?> a, _Option<?> b) {
-                return a.getCLIName().compareTo(b.getCLIName());
+            public int compare(AbstractOption a, AbstractOption b) {
+                return a.getFriendlyName().compareTo(b.getFriendlyName());
             }
         };
-        for (Map.Entry<String, _Option<?>> entry : options.entrySet()) {
-            _Option<?> opt = entry.getValue();
-            if (opt.hidden)
+        for (Map.Entry<String, AbstractOption> entry : options.entrySet()) {
+            AbstractOption opt = entry.getValue();
+            if (opt.isHidden())
                 continue;
-            String optnam = opt.getCLIName();
+            String optnam = opt.getFriendlyName();
             if (!optnam.equals(entry.getKey()))
                 continue;
-            String groupName = opt.getGroup();
-            if (groupName == null)
-                groupName = program;
-            Set<_Option<?>> group = groups.get(groupName);
+            IOptionGroup group = opt.getGroup();
             if (group == null)
-                groups.put(groupName, //
-                        group = new TreeSet<_Option<?>>(optnamsort));
-            group.add(opt);
+                group = program;
+            Set<AbstractOption> groupOpts = groups.get(group);
+            if (groupOpts == null)
+                groups.put(group, //
+                        groupOpts = new TreeSet<AbstractOption>(optnamsort));
+            groupOpts.add(opt);
         }
 
         OptionFormat groupfmt = new OptionFormat() {
             @Override
-            public String filter(Set<_Option<?>> opts) {
+            public String filter(Set<AbstractOption> opts) {
                 StringBuilder buffer = new StringBuilder(opts.size() * 80);
                 StringBuilder line = new StringBuilder(80);
-                for (_Option<?> opt : opts) {
+                for (AbstractOption opt : opts) {
                     String[] aliases = copt.getAliases(opt);
                     Arrays.sort(aliases, StringLengthComparator.INSTANCE);
 
@@ -171,14 +174,14 @@ public class ClassCLI {
                     }
                     if (!hasshort)
                         line.insert(tabsize, tab);
-                    String vnam = opt.vnam;
+                    String vnam = opt.getValueHint();
                     if (!vnam.isEmpty()) {
                         if (aliases[aliases.length - 1].length() > 1)
                             line.append('=');
                         line.append(vnam);
                     }
 
-                    String doc = opt.doc;
+                    String doc = opt.getDescription();
 
                     col = line.length();
                     if (col >= docColumn && !doc.isEmpty()) {
@@ -200,13 +203,13 @@ public class ClassCLI {
         };
 
         boolean first = true;
-        for (Map.Entry<String, Set<_Option<?>>> group : groups.entrySet()) {
+        for (Map.Entry<String, Set<AbstractOption>> group : groups.entrySet()) {
             if (first)
                 first = false;
             else
                 buffer.append("\n");
             String name = group.getKey();
-            Set<_Option<?>> grpopts = group.getValue();
+            Set<AbstractOption> grpopts = group.getValue();
             buffer.append(Strings.ucfirst(name) + " options: \n");
             buffer.append(groupfmt.filter(grpopts));
         }
