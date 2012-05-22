@@ -19,7 +19,8 @@ import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.cli.ext.CLIPlugin;
 import net.bodz.bas.cli.ext.CLIPlugins;
 import net.bodz.bas.cli.opt.AbstractOption;
-import net.bodz.bas.cli.opt.OptionGroup;
+import net.bodz.bas.cli.opt.IOption;
+import net.bodz.bas.cli.opt.IOptionGroup;
 import net.bodz.bas.cli.opt.MethodCall;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.NotImplementedException;
@@ -352,7 +353,7 @@ public class BasicCLI
 
     private boolean prepared;
     // private BootProc bootProc;
-    private OptionGroup<BasicCLI> opts;
+    private IOptionGroup opts;
     private List<String> restArgs;
 
     public BasicCLI() {
@@ -365,10 +366,10 @@ public class BasicCLI
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends BasicCLI> OptionGroup<T> getOptions()
+    public <T extends BasicCLI> IOptionGroup getOptions()
             throws CLIException {
         Class<T> clazz = (Class<T>) this.getClass();
-        OptionGroup<T> opts = ClassCLI.getClassOptions(clazz);
+        IOptionGroup opts = ClassCLI.getClassOptions(clazz);
         return opts;
     }
 
@@ -450,8 +451,8 @@ public class BasicCLI
             // }
 
             if (L.isDebugEnabled()) {
-                for (Entry<String, AbstractOption> entry : opts.getOptions().entrySet()) {
-                    AbstractOption opt = entry.getValue();
+                for (Entry<String, IOption> entry : opts.getOptions().entrySet()) {
+                    IOption opt = entry.getValue();
                     String optnam = opt.getFriendlyName();
                     if (!optnam.equals(entry.getKey()))
                         continue;

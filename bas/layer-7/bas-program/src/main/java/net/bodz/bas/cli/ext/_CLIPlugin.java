@@ -7,7 +7,8 @@ import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.cli.CLIException;
 import net.bodz.bas.cli.ClassCLI;
 import net.bodz.bas.cli.opt.AbstractOption;
-import net.bodz.bas.cli.opt.OptionGroup;
+import net.bodz.bas.cli.opt.IOption;
+import net.bodz.bas.cli.opt.DefaultOptionGroup;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.util._Plugin;
@@ -16,8 +17,8 @@ public class _CLIPlugin
         extends _Plugin
         implements CLIPlugin {
 
-    protected OptionGroup<_CLIPlugin> getOptions() {
-        return (OptionGroup<_CLIPlugin>) ClassCLI.getClassOptions(getClass());
+    protected DefaultOptionGroup getOptions() {
+        return (DefaultOptionGroup) ClassCLI.getClassOptions(getClass());
     }
 
     @Override
@@ -25,7 +26,7 @@ public class _CLIPlugin
             throws CLIException, ParseException {
         if (parameters.isEmpty())
             return;
-        OptionGroup<_CLIPlugin> opts = getOptions();
+        DefaultOptionGroup opts = getOptions();
         opts.load(this, parameters);
     }
 
@@ -34,7 +35,7 @@ public class _CLIPlugin
     @Override
     public void initialize() {
         super.initialize();
-        OptionGroup<_CLIPlugin> opts = getOptions();
+        DefaultOptionGroup opts = getOptions();
         Map<?, ?> properties = System.getProperties();
         try {
             opts.load(this, (Map<String, ?>) properties);
@@ -47,15 +48,15 @@ public class _CLIPlugin
 
     @Override
     public void help(IPrintOut out, String prefix) {
-        OptionGroup<_CLIPlugin> opts = getOptions();
-        TreeMap<String, AbstractOption> map = opts.getOptions();
+        DefaultOptionGroup opts = getOptions();
+        TreeMap<String, IOption> map = opts.getOptions();
         int maxlen = 0;
         for (String name : map.keySet())
             if (name.length() > maxlen)
                 maxlen = name.length();
-        for (Map.Entry<String, AbstractOption> e : map.entrySet()) {
+        for (Map.Entry<String, IOption> e : map.entrySet()) {
             String name = e.getKey();
-            AbstractOption opt = e.getValue();
+            IOption opt = e.getValue();
             // String vnam = opt.o.vnam();
             String description = opt.getDescription();
 

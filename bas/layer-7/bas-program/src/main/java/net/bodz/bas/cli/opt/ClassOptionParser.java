@@ -31,7 +31,7 @@ public class ClassOptionParser {
         for (Class<?> c : TypeChain.listSuperFirst(clazz)) {
             if (c == Object.class) // opt for speed
                 continue;
-            OptionGroup group = c.getAnnotation(OptionGroup.class);
+            DefaultOptionGroup group = c.getAnnotation(DefaultOptionGroup.class);
             importFields(group, c.getDeclaredFields());
             importMethods(group, c.getDeclaredMethods());
         }
@@ -42,7 +42,7 @@ public class ClassOptionParser {
         // importMethods(group, beanInfo.getMethodDescriptors());
     }
 
-    protected void importFields(OptionGroup group, Field... fields) {
+    protected void importFields(DefaultOptionGroup group, Field... fields) {
         for (final Field field : fields) {
             // XXX if (!field.isAnnotationPresent(Option.class))
             // continue;
@@ -61,25 +61,25 @@ public class ClassOptionParser {
                 continue;
             // XXX if (!readf.isAnnotationPresent(Option.class))
             // continue;
-            OptionGroup group = readf.getDeclaringClass().getAnnotation(OptionGroup.class);
+            DefaultOptionGroup group = readf.getDeclaringClass().getAnnotation(DefaultOptionGroup.class);
             PropertyOption propopt = new PropertyOption(property);
             addOption(propopt);
         }
     }
 
-    protected void importMethod(OptionGroup group, final Method method) {
+    protected void importMethod(DefaultOptionGroup group, final Method method) {
         // XXX if (!method.isAnnotationPresent(Option.class))
         // return;
         AbstractOption copt = new MethodOption(method);
         addOption(copt);
     }
 
-    protected void importMethods(OptionGroup group, Method... methods) {
+    protected void importMethods(DefaultOptionGroup group, Method... methods) {
         for (Method method : methods)
             importMethod(group, method);
     }
 
-    protected void importMethods(OptionGroup group, MethodDescriptor... methods) {
+    protected void importMethods(DefaultOptionGroup group, MethodDescriptor... methods) {
         for (MethodDescriptor _method : methods)
             importMethod(group, _method.getMethod());
     }
