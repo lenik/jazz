@@ -31,7 +31,7 @@ public class PrefixSetTest
     public void testGetChildren() {
         class D {
             void o(String input, String expected) {
-                Iterable<String> ceilings = set.ceilings(input);
+                Iterable<String> ceilings = set.join(input);
                 String actual = join(",", ceilings);
                 assertEquals(expected, actual);
             }

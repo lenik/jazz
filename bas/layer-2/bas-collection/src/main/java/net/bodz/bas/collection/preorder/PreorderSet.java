@@ -6,7 +6,8 @@ import java.util.TreeSet;
 import net.bodz.bas.util.iter.PrefetchedIterator;
 
 public abstract class PreorderSet<E>
-        extends TreeSet<E> {
+        extends TreeSet<E>
+        implements IPreorderSet<E> {
 
     private static final long serialVersionUID = 1L;
 
@@ -19,7 +20,7 @@ public abstract class PreorderSet<E>
     }
 
     @Override
-    public E floor(E e) {
+    public E meet(E e) {
         E floor = super.floor(e);
         while (floor != null) {
             if (preorder.isLessOrEquals(floor, e))
@@ -32,8 +33,8 @@ public abstract class PreorderSet<E>
         return null;
     }
 
-    @Override
-    public E ceiling(E e) {
+    // @Override
+    public E join_fast(E e) {
         E ceil = super.ceiling(e);
         if (ceil != null) {
             if (preorder.isGreaterOrEquals(ceil, e))
@@ -42,7 +43,8 @@ public abstract class PreorderSet<E>
         return null;
     }
 
-    public Iterable<E> ceilings(E start) {
+    @Override
+    public Iterable<E> join(E start) {
         final E start_ = ceiling(start);
 
         class HigherIter
