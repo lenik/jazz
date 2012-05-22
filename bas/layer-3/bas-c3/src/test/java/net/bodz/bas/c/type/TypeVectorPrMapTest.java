@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.bodz.bas.c.type.TypeVectorPrMap;
 import net.bodz.bas.collection.preorder.testtype.C;
 import net.bodz.bas.collection.preorder.testtype.CI;
 import net.bodz.bas.collection.preorder.testtype.CJ;
@@ -79,21 +78,21 @@ public class TypeVectorPrMapTest
 
         List<Object> children;
 
-        assertEquals("CI, DxKI", map.floor(r(CI.class, DxKIx.class)));
+        assertEquals("CI, DxKI", map.meet(r(CI.class, DxKIx.class)));
 
-        children = Iterables.toList(map.ceilings(r(CI.class, D.class)));
+        children = Iterables.toList(map.join(r(CI.class, D.class)));
         assertEquals(2, children.size());
         assertEquals("CI, Dx", children.get(0));
         assertEquals("CI, DxKI", children.get(1));
 
-        children = Iterables.toList(map.ceilings(r(CJ.class, I.class)));
+        children = Iterables.toList(map.join(r(CJ.class, I.class)));
         assertEquals(3, children.size());
         // DIJy extends DIJ, but CJz order take precedence.
         assertEquals("CJz, DIJy", children.get(0)); // DIJy
         assertEquals("CJz, DxKI", children.get(1));
         assertEquals("CJzKI, DIJ", children.get(2)); // DIJ
 
-        assertEquals(null, map.floor(r(CJzKI.class, Dx.class)));
+        assertEquals(null, map.meet(r(CJzKI.class, Dx.class)));
     }
 
 }

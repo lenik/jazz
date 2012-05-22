@@ -6,6 +6,7 @@ import java.util.List;
 
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.model.ICreator;
+import net.bodz.bas.model.IFilter;
 import net.bodz.bas.model.NewInstanceCreator;
 
 public class Iterables {
@@ -87,6 +88,10 @@ public class Iterables {
             int appxSize)
             throws X {
         return Iterators.toListLimited(iterable.iterator(false), limit, appxSize);
+    }
+
+    public static <T> Iterable<T> filter(Iterable<T> iterable, IFilter<T> filter) {
+        return new FilterIterable<>(iterable, filter);
     }
 
 }
@@ -187,6 +192,25 @@ class MitableIterable<T, X extends Throwable>
             throw new IteratorTargetException(e.getMessage(), e);
         }
         return Iterators.convert(mitor);
+    }
+
+}
+
+class FilterIterable<T>
+        implements Iterable<T> {
+
+    final Iterable<T> orig;
+    final IFilter<T> filter;
+
+    public FilterIterable(Iterable<T> orig, IFilter<T> filter) {
+        this.orig = orig;
+        this.filter = filter;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        Iterator<T> iterator = orig.iterator();
+        return new FilterIterator<T>(iterator, filter);
     }
 
 }
