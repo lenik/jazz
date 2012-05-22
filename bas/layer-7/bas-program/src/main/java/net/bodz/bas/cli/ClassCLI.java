@@ -17,7 +17,7 @@ import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.c.type.ClassLocal;
 import net.bodz.bas.c.type.ClassLocals;
 import net.bodz.bas.cli.opt.AbstractOption;
-import net.bodz.bas.cli.opt.ClassOptions;
+import net.bodz.bas.cli.opt.OptionGroup;
 import net.bodz.bas.cli.opt.IOptionGroup;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.fn.Filt1;
@@ -26,14 +26,14 @@ import net.bodz.bas.meta.program.ProgramNameUtil;
 public class ClassCLI {
 
     private static boolean cache = false;
-    private static ClassLocal<ClassOptions<?>> clOptions;
+    private static ClassLocal<OptionGroup<?>> clOptions;
     static {
         clOptions = ClassLocals.createMap(//
-                ClassOptions.class);
+                OptionGroup.class);
     }
 
-    public static <T> ClassOptions<T> getClassOptions(Class<T> clazz) {
-        ClassOptions<T> copt = (ClassOptions<T>) clOptions.get(clazz);
+    public static <T> OptionGroup<T> getClassOptions(Class<T> clazz) {
+        OptionGroup<T> copt = (OptionGroup<T>) clOptions.get(clazz);
         return copt;
     }
 
@@ -50,7 +50,7 @@ public class ClassCLI {
             throws CLIException {
         assert classobj != null;
         Class<Object> clazz = (Class<Object>) classobj.getClass();
-        ClassOptions<Object> copt = getClassOptions(clazz);
+        OptionGroup<Object> copt = getClassOptions(clazz);
         try {
             copt.load(classobj, args);
         } catch (ParseException e) {
@@ -69,7 +69,7 @@ public class ClassCLI {
     @SuppressWarnings("unchecked")
     public static String helpOptions(Class<?> clazz, String restSyntax, final int tabsize, final int docColumn)
             throws CLIException {
-        final ClassOptions<Object> copt = (ClassOptions<Object>) getClassOptions(clazz);
+        final OptionGroup<Object> copt = (OptionGroup<Object>) getClassOptions(clazz);
         TreeMap<String, AbstractOption> options = copt.getOptions();
         StringBuilder buffer = new StringBuilder(options.size() * 80);
         final char[] tab = new char[tabsize];
