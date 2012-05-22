@@ -34,7 +34,7 @@ public class Plugins {
         if (strict)
             pluginType = categories.get(type);
         else
-            pluginType = categories.floor(type);
+            pluginType = categories.meet(type);
         if (pluginType == null) {
             pluginType = new PluginCategory(type);
             categories.put(type, pluginType);
@@ -80,7 +80,7 @@ public class Plugins {
     PluginTypeEx find(Class<?> type, final String pluginId) throws PluginException {
         PluginTypeEx found = null;
         StringBuilder errmsg = null;
-        for (Entry<Class<?>, PluginCategory> e : categories.ceilingEntries(type)) {
+        for (Entry<Class<?>, PluginCategory> e : categories.joinEntries(type)) {
             PluginCategory category = e.getValue();
             PluginTypeEx typeEx = category.get(pluginId);
             if (typeEx != null) {

@@ -19,16 +19,23 @@ import net.bodz.bas.potato.traits.AbstractElement;
 import net.bodz.bas.util.Pair;
 import net.bodz.bas.util.iter.Iterables;
 
-public class OptionGroup
+public class DefaultOptionGroup
         extends AbstractElement
         implements IOptionGroup {
 
+    IOptionGroup parent;
     Map<String, IOption> nameMap = new TreeMap<String, IOption>();
     PrefixMap<IOption> prefixMap = new PrefixMap<IOption>();
     TreeMap<Integer, IOption> positionMap = new TreeMap<Integer, IOption>();
 
-    public OptionGroup(OptionGroup parent, Class<?> declaringClass) {
+    public DefaultOptionGroup(IOptionGroup parent, Class<?> declaringClass) {
         super(declaringClass, declaringClass.getSimpleName());
+        this.parent = parent;
+    }
+
+    @Override
+    public IOptionGroup getParent() {
+        return parent;
     }
 
     protected void addOption(IOption option) {
@@ -72,6 +79,11 @@ public class OptionGroup
     }
 
     @Override
+    public final IOption getOption(String key) {
+        return getOption(key, false);
+    }
+
+    @Override
     public IOption getOption(String key, boolean canonicalForm) {
         if (canonicalForm)
             return nameMap.get(key);
@@ -105,7 +117,7 @@ public class OptionGroup
             name = name.substring(3);
         if (prefixMap.containsKey(name))
             return (AbstractOption) prefixMap.get(name);
-        List<String> fullNames = Iterables.toList(prefixMap.ceilingKeys(name));
+        List<String> fullNames = Iterables.toList(prefixMap.joinKeys(name));
         if (fullNames.isEmpty())
             throw new CLIException("no such option: " + name);
         if (fullNames.size() > 1) {

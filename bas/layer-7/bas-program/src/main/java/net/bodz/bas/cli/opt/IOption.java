@@ -5,7 +5,7 @@ import java.util.Set;
 import net.bodz.bas.potato.traits.IElement;
 import net.bodz.bas.util.order.IPriority;
 
-interface IOption
+public interface IOption
         extends IElement, IPriority {
 
     /**

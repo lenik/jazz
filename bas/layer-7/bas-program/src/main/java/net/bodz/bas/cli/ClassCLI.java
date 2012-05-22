@@ -17,8 +17,9 @@ import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.c.type.ClassLocal;
 import net.bodz.bas.c.type.ClassLocals;
 import net.bodz.bas.cli.opt.AbstractOption;
-import net.bodz.bas.cli.opt.OptionGroup;
+import net.bodz.bas.cli.opt.IOption;
 import net.bodz.bas.cli.opt.IOptionGroup;
+import net.bodz.bas.cli.opt.DefaultOptionGroup;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.fn.Filt1;
 import net.bodz.bas.meta.program.ProgramNameUtil;
@@ -26,14 +27,14 @@ import net.bodz.bas.meta.program.ProgramNameUtil;
 public class ClassCLI {
 
     private static boolean cache = false;
-    private static ClassLocal<OptionGroup<?>> clOptions;
+    private static ClassLocal<IOptionGroup> clOptions;
     static {
         clOptions = ClassLocals.createMap(//
-                OptionGroup.class);
+                DefaultOptionGroup.class);
     }
 
-    public static <T> OptionGroup<T> getClassOptions(Class<T> clazz) {
-        OptionGroup<T> copt = (OptionGroup<T>) clOptions.get(clazz);
+    public static <T> DefaultOptionGroup getClassOptions(Class<T> clazz) {
+        DefaultOptionGroup copt = (DefaultOptionGroup) clOptions.get(clazz);
         return copt;
     }
 
@@ -50,7 +51,7 @@ public class ClassCLI {
             throws CLIException {
         assert classobj != null;
         Class<Object> clazz = (Class<Object>) classobj.getClass();
-        OptionGroup<Object> copt = getClassOptions(clazz);
+        IOptionGroup copt = getClassOptions(clazz);
         try {
             copt.load(classobj, args);
         } catch (ParseException e) {
@@ -69,8 +70,8 @@ public class ClassCLI {
     @SuppressWarnings("unchecked")
     public static String helpOptions(Class<?> clazz, String restSyntax, final int tabsize, final int docColumn)
             throws CLIException {
-        final OptionGroup<Object> copt = (OptionGroup<Object>) getClassOptions(clazz);
-        TreeMap<String, AbstractOption> options = copt.getOptions();
+        final DefaultOptionGroup copt = (DefaultOptionGroup) getClassOptions(clazz);
+        TreeMap<String, IOption> options = copt.getOptions();
         StringBuilder buffer = new StringBuilder(options.size() * 80);
         final char[] tab = new char[tabsize];
         Arrays.fill(tab, ' ');
@@ -126,8 +127,8 @@ public class ClassCLI {
                 return a.getFriendlyName().compareTo(b.getFriendlyName());
             }
         };
-        for (Map.Entry<String, AbstractOption> entry : options.entrySet()) {
-            AbstractOption opt = entry.getValue();
+        for (Map.Entry<String, IOption> entry : options.entrySet()) {
+            IOption opt = entry.getValue();
             if (opt.isHidden())
                 continue;
             String optnam = opt.getFriendlyName();
