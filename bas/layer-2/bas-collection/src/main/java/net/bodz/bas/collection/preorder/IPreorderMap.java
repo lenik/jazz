@@ -8,22 +8,16 @@ import java.util.Map;
 public interface IPreorderMap<K, V>
         extends Map<K, V> {
 
+    Entry<K, V> meetEntry(K key);
+
     K meetKey(K key);
 
     V meet(K key);
 
-    Entry<K, V> meetEntry(K key);
-
-    K reduceToMeetKey(K key);
-
-    V reduceToMeet(K key);
-
-    Entry<K, V> reduceToMeetEntry(K key);
+    Iterable<Entry<K, V>> joinEntries(K key);
 
     Iterable<K> joinKeys(K key);
 
     Iterable<V> join(K key);
-
-    Iterable<Entry<K, V>> joinEntries(K key);
 
 }
