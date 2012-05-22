@@ -17,6 +17,11 @@ interface IOption
     int getPriority();
 
     /**
+     * Divide options into separate groups.
+     */
+    IOptionGroup getGroup();
+
+    /**
      * CLI name (or "cn" for short). Like "foo-bar" for "fooBar".
      * 
      * @return Non-<code>null</code> CLI name.
@@ -28,12 +33,12 @@ interface IOption
      */
     Set<String> getAliases();
 
-    int getFileIndex();
-
     /**
-     * Divide options into separate groups.
+     * Get the preferred position in the arg list.
+     * 
+     * @return Positive integer if this option may be occurred in the arg list.
      */
-    IOptionGroup getGroup();
+    int getArgPosition();
 
     String getValueHint();
 

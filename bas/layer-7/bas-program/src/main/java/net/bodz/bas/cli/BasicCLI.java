@@ -19,7 +19,7 @@ import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.cli.ext.CLIPlugin;
 import net.bodz.bas.cli.ext.CLIPlugins;
 import net.bodz.bas.cli.opt.AbstractOption;
-import net.bodz.bas.cli.opt.ClassOptions;
+import net.bodz.bas.cli.opt.OptionGroup;
 import net.bodz.bas.cli.opt.MethodCall;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.NotImplementedException;
@@ -79,7 +79,7 @@ import org.apache.commons.lang.ArrayUtils;
  * }
  * </pre>
  * 
- * @see ClassOptions
+ * @see OptionGroup
  * @see Option
  */
 @OptionGroup(value = "standard", rank = -1)
@@ -352,7 +352,7 @@ public class BasicCLI
 
     private boolean prepared;
     // private BootProc bootProc;
-    private ClassOptions<BasicCLI> opts;
+    private OptionGroup<BasicCLI> opts;
     private List<String> restArgs;
 
     public BasicCLI() {
@@ -365,10 +365,10 @@ public class BasicCLI
     }
 
     @SuppressWarnings("unchecked")
-    public <T extends BasicCLI> ClassOptions<T> getOptions()
+    public <T extends BasicCLI> OptionGroup<T> getOptions()
             throws CLIException {
         Class<T> clazz = (Class<T>) this.getClass();
-        ClassOptions<T> opts = ClassCLI.getClassOptions(clazz);
+        OptionGroup<T> opts = ClassCLI.getClassOptions(clazz);
         return opts;
     }
 

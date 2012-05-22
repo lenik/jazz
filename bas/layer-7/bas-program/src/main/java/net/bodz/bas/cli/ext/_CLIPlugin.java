@@ -7,7 +7,7 @@ import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.cli.CLIException;
 import net.bodz.bas.cli.ClassCLI;
 import net.bodz.bas.cli.opt.AbstractOption;
-import net.bodz.bas.cli.opt.ClassOptions;
+import net.bodz.bas.cli.opt.OptionGroup;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.util._Plugin;
@@ -16,8 +16,8 @@ public class _CLIPlugin
         extends _Plugin
         implements CLIPlugin {
 
-    protected ClassOptions<_CLIPlugin> getOptions() {
-        return (ClassOptions<_CLIPlugin>) ClassCLI.getClassOptions(getClass());
+    protected OptionGroup<_CLIPlugin> getOptions() {
+        return (OptionGroup<_CLIPlugin>) ClassCLI.getClassOptions(getClass());
     }
 
     @Override
@@ -25,7 +25,7 @@ public class _CLIPlugin
             throws CLIException, ParseException {
         if (parameters.isEmpty())
             return;
-        ClassOptions<_CLIPlugin> opts = getOptions();
+        OptionGroup<_CLIPlugin> opts = getOptions();
         opts.load(this, parameters);
     }
 
@@ -34,7 +34,7 @@ public class _CLIPlugin
     @Override
     public void initialize() {
         super.initialize();
-        ClassOptions<_CLIPlugin> opts = getOptions();
+        OptionGroup<_CLIPlugin> opts = getOptions();
         Map<?, ?> properties = System.getProperties();
         try {
             opts.load(this, (Map<String, ?>) properties);
@@ -47,7 +47,7 @@ public class _CLIPlugin
 
     @Override
     public void help(IPrintOut out, String prefix) {
-        ClassOptions<_CLIPlugin> opts = getOptions();
+        OptionGroup<_CLIPlugin> opts = getOptions();
         TreeMap<String, AbstractOption> map = opts.getOptions();
         int maxlen = 0;
         for (String name : map.keySet())

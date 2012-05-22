@@ -18,11 +18,11 @@ public abstract class AbstractOption
     public static final int WEAK_PRIORITY = 10;
 
     int priority;
+    IOptionGroup group;
 
     String friendlyName;
     Set<String> aliases = new TreeSet<String>();
-    int fileIndex;
-    IOptionGroup group;
+    int argPosition;
 
     String valueHint;
     boolean hidden;
@@ -60,6 +60,15 @@ public abstract class AbstractOption
     }
 
     @Override
+    public IOptionGroup getGroup() {
+        return group;
+    }
+
+    public void setGroup(IOptionGroup group) {
+        this.group = group;
+    }
+
+    @Override
     public String getFriendlyName() {
         return friendlyName;
     }
@@ -74,21 +83,12 @@ public abstract class AbstractOption
     }
 
     @Override
-    public int getFileIndex() {
-        return fileIndex;
+    public int getArgPosition() {
+        return argPosition;
     }
 
-    public void setFileIndex(int fileIndex) {
-        this.fileIndex = fileIndex;
-    }
-
-    @Override
-    public IOptionGroup getGroup() {
-        return group;
-    }
-
-    public void setGroup(IOptionGroup group) {
-        this.group = group;
+    public void setArgPosition(int argPosition) {
+        this.argPosition = argPosition;
     }
 
     @Override
