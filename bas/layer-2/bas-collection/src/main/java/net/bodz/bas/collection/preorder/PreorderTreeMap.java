@@ -7,7 +7,8 @@ import java.util.TreeMap;
 import net.bodz.bas.util.iter.PrefetchedIterator;
 
 public class PreorderTreeMap<K, V>
-        extends TreeMap<K, V> {
+        extends TreeMap<K, V>
+        implements IPreorderMap<K, V> {
 
     private static final long serialVersionUID = 1L;
 
@@ -20,29 +21,11 @@ public class PreorderTreeMap<K, V>
         this.preorder = preorder;
     }
 
-    @Override
-    public K floorKey(K key) {
-        while (!containsKey(key)) {
-            key = preorder.getPreceding(key);
-            if (key == null)
-                return null;
-        }
-        return key;
-    }
-
-    @Override
-    public Entry<K, V> floorEntry(K key) {
-        K floorKey = floorKey(key);
-        if (floorKey == null)
-            return null;
-        Entry<K, V> floorEntry = super.floorEntry(floorKey);
-        return floorEntry;
-    }
-
     /**
      * Using Preorder-Preceding to get the lessor key.
      */
-    public K _floorKey_fast(K key) {
+    @Override
+    public K meetKey(K key) {
         K floor = super.floorKey(key);
         while (floor != null) {
             if (preorder.isLessOrEquals(floor, key))
@@ -55,10 +38,15 @@ public class PreorderTreeMap<K, V>
         return null;
     }
 
+    public V meet(K key) {
+
+    }
+
     /**
      * Using Preorder-Preceding to get the lessor key.
      */
-    public Entry<K, V> _floorEntry_fast(K key) {
+    @Override
+    public Entry<K, V> meetEntry(K key) {
         Entry<K, V> floo = super.floorEntry(key);
         while (floo != null) {
             if (preorder.isLessOrEquals(floo.getKey(), key))
@@ -71,22 +59,30 @@ public class PreorderTreeMap<K, V>
         return null;
     }
 
-    /**
-     * Using Preorder-Preceding to get the lessor key.
-     */
-    public final V floor(K key) {
-        Entry<K, V> floo = floorEntry(key);
-        if (floo == null)
+    @Override
+    public K reduceToMeet(K key) {
+        while (!containsKey(key)) {
+            key = preorder.getPreceding(key);
+            if (key == null)
+                return null;
+        }
+        return key;
+    }
+
+    @Override
+    public Entry<K, V> reduceToMeetEntry(K key) {
+        K meetKey = meetKey(key);
+        if (meetKey == null)
             return null;
-        return floo.getValue();
+        Entry<K, V> meetEntry = super.floorEntry(meetKey);
+        return meetEntry;
     }
 
     /**
      * Using Preorder-Preceding to get the greator key (only if available).
      */
-    @Override
-    public K ceilingKey(K key) {
-        K ceil = super.ceilingKey(key);
+    public K joinKey_1(K key) {
+        K ceil = ceilingKey(key);
         if (ceil == null)
             return null;
         if (preorder.isGreaterOrEquals(ceil, key))
@@ -97,9 +93,8 @@ public class PreorderTreeMap<K, V>
     /**
      * Using Preorder-Preceding to get the greator key (only if available).
      */
-    @Override
-    public Entry<K, V> ceilingEntry(K key) {
-        Entry<K, V> ceil = super.ceilingEntry(key);
+    public Entry<K, V> joinEntry_1(K key) {
+        Entry<K, V> ceil = ceilingEntry(key);
         if (ceil == null)
             return null;
         if (preorder.isGreaterOrEquals(ceil.getKey(), key))
@@ -110,19 +105,20 @@ public class PreorderTreeMap<K, V>
     /**
      * Using Preorder-Preceding to get the greator key (only if available).
      */
-    public V ceiling(K key) {
-        Entry<K, V> ceil = ceilingEntry(key);
-        if (ceil == null)
+    public V join_1(K key) {
+        Entry<K, V> join = joinEntry_1(key);
+        if (join == null)
             return null;
-        if (preorder.isGreaterOrEquals(ceil.getKey(), key))
-            return ceil.getValue();
+        if (preorder.isGreaterOrEquals(join.getKey(), key))
+            return join.getValue();
         return null;
     }
 
     /**
      * Using Preorder-Preceding to get the greator key (only if available).
      */
-    public Iterable<K> ceilingKeys(final K key) {
+    @Override
+    public Iterable<K> joinKeys(final K key) {
         final K start = ceilingKey(key);
 
         class Iter
@@ -153,7 +149,8 @@ public class PreorderTreeMap<K, V>
         };
     }
 
-    public Iterable<Entry<K, V>> ceilingEntries(final K key) {
+    @Override
+    public Iterable<Entry<K, V>> joinEntries(final K key) {
         final Entry<K, V> start = ceilingEntry(key);
 
         class Iter
@@ -187,7 +184,7 @@ public class PreorderTreeMap<K, V>
     /**
      * Using Preorder-Preceding to get the greator key (only if available).
      */
-    public Iterable<V> ceilings(final K key) {
+    public Iterable<V> join(final K key) {
         final Entry<K, V> start = ceilingEntry(key);
 
         class HigherIter
