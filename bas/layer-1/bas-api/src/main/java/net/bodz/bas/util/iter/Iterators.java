@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import net.bodz.bas.model.IFilter;
 import net.bodz.bas.util.exception.Err;
 
 public class Iterators {
@@ -137,6 +138,10 @@ public class Iterators {
         while (limit-- > 0 && ((o = iterator._next()) != null || !iterator.isEnded()))
             list.add(iterator.deoverlap(o));
         return list;
+    }
+
+    public static <T> Iterator<T> filter(Iterator<T> iterator, IFilter<T> filter) {
+        return new FilterIterator<T>(iterator, filter);
     }
 
 }
@@ -378,6 +383,33 @@ class MitorIterator<T>
     @Override
     public void remove() {
         throw new UnsupportedOperationException();
+    }
+
+}
+
+class FilterIterator<T>
+        extends PrefetchedIterator<T> {
+
+    final Iterator<T> orig;
+    IFilter<T> filter;
+
+    public FilterIterator(Iterator<T> orig, IFilter<T> filter) {
+        if (orig == null)
+            throw new NullPointerException("orig");
+        if (filter == null)
+            throw new NullPointerException("filter");
+        this.orig = orig;
+        this.filter = filter;
+    }
+
+    @Override
+    protected T fetch() {
+        while (orig.hasNext()) {
+            T obj = orig.next();
+            if (filter.accept(obj))
+                return obj;
+        }
+        return end();
     }
 
 }

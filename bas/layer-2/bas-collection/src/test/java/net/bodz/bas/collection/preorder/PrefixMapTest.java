@@ -31,7 +31,7 @@ public class PrefixMapTest
     public void test_getChildrenValues() {
         class D {
             void o(String input, String expected) {
-                Iterable<String> vals = map.ceilings(input);
+                Iterable<String> vals = map.join(input);
                 String actual = join(",", vals);
                 assertEquals(expected, actual);
             }

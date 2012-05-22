@@ -4,8 +4,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.c.type.TypePrMap;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -23,9 +21,9 @@ public class TypePrMapTest
     public void testFloor() {
         TypePrMap<Object> map = new TypePrMap<Object>();
         map.putAll(orig);
-        assertEquals("Number", map.floor(Float.class));
-        assertEquals("Integer", map.floor(Integer.class));
-        assertNull(map.floor(Date.class));
+        assertEquals("Number", map.meet(Float.class));
+        assertEquals("Integer", map.meet(Integer.class));
+        assertNull(map.meet(Date.class));
     }
 
 }
