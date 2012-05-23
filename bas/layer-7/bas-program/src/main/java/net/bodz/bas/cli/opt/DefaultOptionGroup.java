@@ -14,7 +14,6 @@ import net.bodz.bas.cli.CLIException;
 import net.bodz.bas.collection.preorder.PrefixMap;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.lang.negotiation.Option;
 import net.bodz.bas.potato.traits.AbstractElement;
 import net.bodz.bas.util.Pair;
 import net.bodz.bas.util.iter.Iterables;
@@ -36,41 +35,6 @@ public class DefaultOptionGroup
     @Override
     public IOptionGroup getParent() {
         return parent;
-    }
-
-    protected void addOption(IOption option) {
-        String name = option.getName();
-        IOption existing = nameMap.get(name);
-        if (existing != null)
-            throw new IllegalUsageException(String.format("Option name '%s' conflicts with %s: %s.", //
-                    name, existing.getDisplayName(), existing.getDescription()));
-
-        String friendlyName = option.getFriendlyName();
-        existing = prefixMap.get(friendlyName);
-        if (existing != null)
-            throw new IllegalUsageException(String.format("Option friendly name '%s' conflicts with %s: %s.",//
-                    friendlyName, existing.getDisplayName(), existing.getDescription()));
-
-        for (String alias : option.getAliases()) {
-            existing = prefixMap.get(friendlyName);
-            if (existing != null)
-                throw new IllegalUsageException(String.format("Option alias name '%s' conflicts with %s: %s.",//
-                        alias, existing.getDisplayName(), existing.getDescription()));
-        }
-
-        int position = option.getArgPosition();
-        if (position > 0) {
-            existing = positionMap.get(position);
-            if (existing != null)
-                throw new IllegalUsageException(String.format("Option friendly name '%s' conflicts with %s: %s.",//
-                        friendlyName, existing.getDisplayName(), existing.getDescription()));
-        }
-
-        nameMap.put(name, option);
-        prefixMap.put(friendlyName, option);
-        for (String alias : option.getAliases())
-            prefixMap.put(alias, option);
-        positionMap.put(position, option);
     }
 
     @Override
@@ -146,21 +110,6 @@ public class DefaultOptionGroup
         return names;
     }
 
-    /**
-     * @param name
-     *            (H-)name or alias.
-     * @return <code>true</code> if specified name or alias hasn't been used, or it's a weak name.
-     * @see Option#name()
-     * @see Option#alias()
-     */
-    public boolean isReusable(String name) {
-        if (!prefixMap.containsKey(name))
-            return true;
-        if (weaks.contains(name))
-            return true;
-        return false;
-    }
-
     private Object _parseOptVal(AbstractOption opt, String optarg)
             throws ParseException {
         Class<?> valtype = opt.getType();
@@ -211,6 +160,41 @@ public class DefaultOptionGroup
             throw new CLIException(e.getMessage(), e);
         }
         return argc;
+    }
+
+    protected void addOption(IOption option) {
+        String name = option.getName();
+        IOption existing = nameMap.get(name);
+        if (existing != null)
+            throw new IllegalUsageException(String.format("Option name '%s' conflicts with %s: %s.", //
+                    name, existing.getDisplayName(), existing.getDescription()));
+
+        String friendlyName = option.getFriendlyName();
+        existing = prefixMap.get(friendlyName);
+        if (existing != null)
+            throw new IllegalUsageException(String.format("Option friendly name '%s' conflicts with %s: %s.",//
+                    friendlyName, existing.getDisplayName(), existing.getDescription()));
+
+        for (String alias : option.getAliases()) {
+            existing = prefixMap.get(friendlyName);
+            if (existing != null)
+                throw new IllegalUsageException(String.format("Option alias name '%s' conflicts with %s: %s.",//
+                        alias, existing.getDisplayName(), existing.getDescription()));
+        }
+
+        int position = option.getArgPosition();
+        if (position > 0) {
+            existing = positionMap.get(position);
+            if (existing != null)
+                throw new IllegalUsageException(String.format("Option friendly name '%s' conflicts with %s: %s.",//
+                        friendlyName, existing.getDisplayName(), existing.getDescription()));
+        }
+
+        nameMap.put(name, option);
+        prefixMap.put(friendlyName, option);
+        for (String alias : option.getAliases())
+            prefixMap.put(alias, option);
+        positionMap.put(position, option);
     }
 
 }
