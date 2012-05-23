@@ -9,7 +9,7 @@ public abstract class MetaClassEntryLoader<T>
         implements IMapEntryLoader<Class<?>, T> {
 
     @Override
-    public T loadEntry(Class<?> clazz)
+    public T loadValue(Class<?> clazz)
             throws LazyLoadException {
         T meta;
         Class<?> metaClass = Nullables.getAnnotation(clazz, MetaClass.class).value();

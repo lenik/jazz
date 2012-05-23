@@ -14,7 +14,7 @@ public class TraitEntryLoader<T>
     }
 
     @Override
-    public T loadEntry(Class<?> key)
+    public T loadValue(Class<?> key)
             throws LazyLoadException {
         T trait = Traits.getTrait(key, traitClass);
         return trait;

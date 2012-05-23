@@ -28,7 +28,7 @@ public abstract class AbstractUnit
     @Override
     public IUnitMeta getUnitMeta() {
         Class<? extends AbstractUnit> clazz = getClass();
-        IUnitMeta meta = metas.get(clazz);
+        IUnitMeta meta = metas.load(clazz);
         return meta;
     }
 
