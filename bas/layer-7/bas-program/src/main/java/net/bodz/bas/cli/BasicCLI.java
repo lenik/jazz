@@ -338,7 +338,7 @@ public class BasicCLI
         _version(out);
         out.println();
 
-        String hlp_opts = ClassCLI.helpOptions(getClass(), _helpRestSyntax(), 4, 29);
+        String hlp_opts = ClassOptions.helpOptions(getClass(), _helpRestSyntax(), 4, 29);
         out.print(hlp_opts);
 
         if (plugins != null)
@@ -369,7 +369,7 @@ public class BasicCLI
     public <T extends BasicCLI> IOptionGroup getOptions()
             throws CLIException {
         Class<T> clazz = (Class<T>) this.getClass();
-        IOptionGroup opts = ClassCLI.getClassOptions(clazz);
+        IOptionGroup opts = ClassOptions.getClassOptions(clazz);
         return opts;
     }
 
