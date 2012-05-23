@@ -5,6 +5,8 @@ import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.Collection;
+import java.util.Map;
 
 public class Nullables {
 
@@ -165,6 +167,40 @@ public class Nullables {
             annotation = annotationClass.cast(proxyInstance);
         }
         return annotation;
+    }
+
+    public static boolean isEmpty(String string) {
+        if (string == null)
+            return true;
+        else
+            return string.isEmpty();
+    }
+
+    public static boolean isEmpty(Collection<?> collection) {
+        if (collection == null)
+            return true;
+        return collection.isEmpty();
+    }
+
+    public static boolean isEmpty(Map<?, ?> map) {
+        if (map == null)
+            return true;
+        else
+            return map.isEmpty();
+    }
+
+    public static int size(Collection<?> collection) {
+        if (collection == null)
+            return 0;
+        else
+            return collection.size();
+    }
+
+    public static int size(Map<?, ?> map) {
+        if (map == null)
+            return 0;
+        else
+            return map.size();
     }
 
 }
