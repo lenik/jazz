@@ -5,7 +5,7 @@ import java.util.TreeMap;
 
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.cli.CLIException;
-import net.bodz.bas.cli.ClassCLI;
+import net.bodz.bas.cli.ClassOptions;
 import net.bodz.bas.cli.opt.AbstractOption;
 import net.bodz.bas.cli.opt.IOption;
 import net.bodz.bas.cli.opt.DefaultOptionGroup;
@@ -18,7 +18,7 @@ public class _CLIPlugin
         implements CLIPlugin {
 
     protected DefaultOptionGroup getOptions() {
-        return (DefaultOptionGroup) ClassCLI.getClassOptions(getClass());
+        return (DefaultOptionGroup) ClassOptions.getClassOptions(getClass());
     }
 
     @Override
