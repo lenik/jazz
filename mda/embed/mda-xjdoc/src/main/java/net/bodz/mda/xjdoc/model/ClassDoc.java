@@ -10,20 +10,20 @@ import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 import net.bodz.mda.xjdoc.util.ImportMap;
-import net.bodz.mda.xjdoc.util.MethodSignature;
+import net.bodz.mda.xjdoc.util.MethodId;
 
 public class ClassDoc
         extends ElementDoc {
 
     Map<String, FieldDoc> fieldDocs;
-    Map<MethodSignature, MethodDoc> methodDocs;
+    Map<MethodId, MethodDoc> methodDocs;
 
     ImportMap imports;
 
     public ClassDoc(String fqcn) {
         super(fqcn);
         fieldDocs = new LinkedHashMap<String, FieldDoc>();
-        methodDocs = new LinkedHashMap<MethodSignature, MethodDoc>();
+        methodDocs = new LinkedHashMap<MethodId, MethodDoc>();
     }
 
     public ImportMap getImports() {
@@ -68,23 +68,23 @@ public class ClassDoc
         return fieldDocs.remove(fieldName);
     }
 
-    public Map<MethodSignature, MethodDoc> getMethodDocs() {
+    public Map<MethodId, MethodDoc> getMethodDocs() {
         return methodDocs;
     }
 
-    public MethodDoc getMethodDoc(String methodId) {
+    public MethodDoc getMethodDoc(MethodId methodId) {
         return methodDocs.get(methodId);
     }
 
-    public void setMethodDoc(MethodSignature signature, MethodDoc methodDoc) {
-        if (signature == null)
-            throw new NullPointerException("signature");
+    public void setMethodDoc(MethodId methodId, MethodDoc methodDoc) {
+        if (methodId == null)
+            throw new NullPointerException("methodId");
         if (methodDoc == null)
             throw new NullPointerException("methodDoc");
-        methodDocs.put(signature, methodDoc);
+        methodDocs.put(methodId, methodDoc);
     }
 
-    public MethodDoc removeMethodDoc(String methodId) {
+    public MethodDoc removeMethodDoc(MethodId methodId) {
         return methodDocs.remove(methodId);
     }
 

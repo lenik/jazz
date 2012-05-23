@@ -1,9 +1,10 @@
 package net.bodz.mda.xjdoc.util;
 
 import java.io.Serializable;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 
-public final class MethodSignature
+public final class MethodId
         implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -12,7 +13,17 @@ public final class MethodSignature
     final String[] types;
     final int[] dimss;
 
-    public MethodSignature(String methodName, int parameterCount) {
+    public MethodId(Method method) {
+        this(method.getName(), method.getParameterTypes());
+    }
+
+    public MethodId(String methodName, Class<?>... parameterTypes) {
+        this(methodName, parameterTypes.length);
+        for (int index = 0; index < parameterTypes.length; index++)
+            setParameterType(index, parameterTypes[index]);
+    }
+
+    public MethodId(String methodName, int parameterCount) {
         if (methodName == null)
             throw new NullPointerException("methodName");
         this.methodName = methodName;
@@ -20,9 +31,18 @@ public final class MethodSignature
         this.dimss = new int[parameterCount];
     }
 
-    public void setParameterType(int index, String fqcn, int dim) {
+    public void setParameterType(int index, Class<?> type) {
+        int dims = 0;
+        while (type.isArray()) {
+            type = type.getComponentType();
+            dims++;
+        }
+        setParameterType(index, type.getCanonicalName(), dims);
+    }
+
+    public void setParameterType(int index, String fqcn, int dims) {
         types[index] = fqcn;
-        dimss[index] = dim;
+        dimss[index] = dims;
     }
 
     public String getMethodName() {
@@ -41,7 +61,7 @@ public final class MethodSignature
         return dimss[index];
     }
 
-    public String getMethodId(ImportMap importMap) {
+    public String getImportedForm(ImportMap importMap) {
         StringBuilder sb = new StringBuilder(100);
         sb.append(methodName);
         sb.append('(');
@@ -76,9 +96,11 @@ public final class MethodSignature
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof MethodSignature))
+        if (this == obj)
+            return true;
+        if (!(obj instanceof MethodId))
             return false;
-        MethodSignature o = (MethodSignature) obj;
+        MethodId o = (MethodId) obj;
         if (!methodName.equals(o.methodName))
             return false;
         if (!Arrays.equals(types, o.types))
@@ -86,6 +108,11 @@ public final class MethodSignature
         if (!Arrays.equals(dimss, o.dimss))
             return false;
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return getImportedForm(null);
     }
 
 }

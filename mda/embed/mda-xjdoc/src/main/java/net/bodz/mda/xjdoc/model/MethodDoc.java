@@ -9,27 +9,27 @@ import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 import net.bodz.mda.xjdoc.util.ImportMap;
-import net.bodz.mda.xjdoc.util.MethodSignature;
+import net.bodz.mda.xjdoc.util.MethodId;
 
 public class MethodDoc
         extends ElementDoc {
 
     final ClassDoc classDoc;
-    final MethodSignature signature;
+    final MethodId methodId;
 
-    public MethodDoc(ClassDoc classDoc, MethodSignature signature) {
+    public MethodDoc(ClassDoc classDoc, MethodId methodId) {
         // super(signature.getMethodId(null));
-        super(signature.getMethodName());
+        super(methodId.getMethodName());
         this.classDoc = classDoc;
-        this.signature = signature;
+        this.methodId = methodId;
     }
 
     public ClassDoc getClassDoc() {
         return classDoc;
     }
 
-    public MethodSignature getSignature() {
-        return signature;
+    public MethodId getMethodId() {
+        return methodId;
     }
 
     /**
@@ -117,8 +117,8 @@ public class MethodDoc
     public void writeObject(IFlatfOutput out, INegotiation negotiation)
             throws IOException, NegotiationException {
         ImportMap imports = getClassDoc().getOrCreateImports();
-        String methodId = signature.getMethodId(imports);
-        out.sectionBegin("method:" + methodId);
+        String importedForm = methodId.getImportedForm(imports);
+        out.sectionBegin("method:" + importedForm);
         super.writeObject(out, negotiation);
         out.sectionEnd();
     }
