@@ -11,7 +11,7 @@ import net.bodz.mda.xjdoc.model.ElementDoc;
 import net.bodz.mda.xjdoc.model.FieldDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
 import net.bodz.mda.xjdoc.util.ImportMap;
-import net.bodz.mda.xjdoc.util.MethodSignature;
+import net.bodz.mda.xjdoc.util.MethodId;
 
 import com.thoughtworks.qdox.model.AbstractJavaEntity;
 import com.thoughtworks.qdox.model.DocletTag;
@@ -80,17 +80,17 @@ public class ClassDocBuilder {
 
         for (JavaMethod javaMethod : javaClass.getMethods()) {
             Type[] types = javaMethod.getParameterTypes(true);
-            MethodSignature signature = new MethodSignature(javaMethod.getName(), types.length);
+            MethodId methodId = new MethodId(javaMethod.getName(), types.length);
             for (int i = 0; i < types.length; i++) {
                 Type paramType = types[i];
                 String paramFqcn = paramType.getFullyQualifiedName();
                 int paramDims = paramType.getDimensions();
-                signature.setParameterType(i, paramFqcn, paramDims);
+                methodId.setParameterType(i, paramFqcn, paramDims);
                 if (createClassImports)
                     classImports.add(paramFqcn);
             }
 
-            MethodDoc methodDoc = new MethodDoc(classDoc, signature);
+            MethodDoc methodDoc = new MethodDoc(classDoc, methodId);
             populate(methodDoc, javaMethod);
 
             for (JavaParameter jparam : javaMethod.getParameters()) {
@@ -113,7 +113,7 @@ public class ClassDocBuilder {
                     classImports.add(exceptionFqcn);
             }
 
-            classDoc.setMethodDoc(signature, methodDoc);
+            classDoc.setMethodDoc(methodId, methodDoc);
         }
         return classDoc;
     }
