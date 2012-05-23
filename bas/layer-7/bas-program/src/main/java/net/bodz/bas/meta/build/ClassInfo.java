@@ -181,7 +181,7 @@ public class ClassInfo {
     static final ClassLocal<ClassInfo> infos = ClassLocals.createMap(ClassInfo.class);
 
     public static ClassInfo get(Class<?> clazz) {
-        return infos.get(clazz);
+        return infos.load(clazz);
     }
 
 }

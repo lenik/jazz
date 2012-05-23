@@ -63,7 +63,7 @@ public class ClassLocal<T>
         }
 
         @Override
-        public V loadEntry(Class<?> clazz)
+        public V loadValue(Class<?> clazz)
                 throws LazyLoadException {
             try {
                 return ctor.newInstance(clazz);
@@ -89,7 +89,7 @@ public class ClassLocal<T>
         }
 
         @Override
-        public V loadEntry(Class<?> clazz)
+        public V loadValue(Class<?> clazz)
                 throws LazyLoadException {
             try {
                 V result = (V) parserMethod.invoke(null, clazz);

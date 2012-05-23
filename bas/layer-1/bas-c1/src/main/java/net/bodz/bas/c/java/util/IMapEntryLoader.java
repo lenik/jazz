@@ -4,7 +4,7 @@ import net.bodz.bas.err.LazyLoadException;
 
 public interface IMapEntryLoader<K, V> {
 
-    V loadEntry(K key)
+    V loadValue(K key)
             throws LazyLoadException;
 
 }

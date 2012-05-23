@@ -22,8 +22,17 @@ public abstract class LazyMap<K, V>
         this.entryLoader = entryLoader;
     }
 
-    @Override
-    public V get(Object key) {
+    /**
+     * Get the value of the entry with specified key.
+     * 
+     * If the entry isn't existed, load it first thru {@link IMapEntryLoader entry loader}.
+     * 
+     * @param key
+     *            Which entry to get or load.
+     * @return Value of the entry in the map. <code>null</code> if not existed, or <code>null</code>
+     *         returned from the entry loader.
+     */
+    public V load(Object key) {
         V value = super.get(key);
         if (value == null) {
             synchronized (this) {
@@ -33,7 +42,7 @@ public abstract class LazyMap<K, V>
                 else {
                     @SuppressWarnings("unchecked")
                     K _key = (K) key;
-                    value = entryLoader.loadEntry(_key);
+                    value = entryLoader.loadValue(_key);
                     put(_key, value);
                 }
             }
