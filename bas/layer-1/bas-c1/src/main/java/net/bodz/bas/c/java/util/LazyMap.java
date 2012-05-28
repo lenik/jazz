@@ -32,7 +32,7 @@ public abstract class LazyMap<K, V>
      * @return Value of the entry in the map. <code>null</code> if not existed, or <code>null</code>
      *         returned from the entry loader.
      */
-    public V load(Object key) {
+    public V load(K key) {
         V value = super.get(key);
         if (value == null) {
             synchronized (this) {
@@ -40,10 +40,8 @@ public abstract class LazyMap<K, V>
                     // return value; -- thread-unsafe.
                     value = super.get(key);
                 else {
-                    @SuppressWarnings("unchecked")
-                    K _key = (K) key;
-                    value = entryLoader.loadValue(_key);
-                    put(_key, value);
+                    value = entryLoader.loadValue(key);
+                    put(key, value);
                 }
             }
         }

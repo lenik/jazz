@@ -44,6 +44,9 @@ public class ClassLocal<T>
         super(new ClassParserEntryLoader<T>(classParserMethod));
     }
 
+    /**
+     * Used by {@link ClassLocal#ClassLocal(Class)}.
+     */
     private static class MetadataClassEntryLoader<V>
             implements IMapEntryLoader<Class<?>, V> {
 
@@ -74,6 +77,9 @@ public class ClassLocal<T>
 
     }
 
+    /**
+     * Used by {@link ClassLocal#ClassLocal(Method)}.
+     */
     private static class ClassParserEntryLoader<V>
             implements IMapEntryLoader<Class<?>, V> {
 
