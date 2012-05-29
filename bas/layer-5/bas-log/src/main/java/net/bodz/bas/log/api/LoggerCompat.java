@@ -11,21 +11,25 @@ public interface LoggerCompat
 
     /**
      * @see Category#error(Object)
+     * @return Always return <code>false</code>.
      */
     boolean fatal(Object message);
 
     /**
      * @see Category#error(Object)
+     * @return Always return <code>false</code>.
      */
     boolean fatal(Object message, Throwable t);
 
     /**
      * @see Category#error(Object)
+     * @return Always return <code>false</code>.
      */
     boolean error(Object message);
 
     /**
      * @see Category#error(Object)
+     * @return Always return <code>false</code>.
      */
     boolean error(Object message, Throwable t);
 

@@ -1,8 +1,11 @@
 package net.bodz.bas.log.api;
 
+import javax.annotation.Generated;
+
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.LogLevel;
 
+@Generated("LoggerCG")
 public abstract class AbstractLogger
         extends AbstractLoggerCompat
         implements Logger {
@@ -38,12 +41,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void stderr(int delta, Object message) {
+    public void _stderr(int delta, Object message) {
         getStderrSink(delta).p(message);
     }
 
     @Override
-    public void stderr(int delta, Throwable e, Object message) {
+    public void _stderr(int delta, Throwable e, Object message) {
         getStderrSink(delta).p(e, message);
     }
 
@@ -58,12 +61,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void stderr(int delta, Object... messageArray) {
+    public void _stderr(int delta, Object... messageArray) {
         getStderrSink(delta).p(messageArray);
     }
 
     @Override
-    public void stderr(int delta, Throwable e, Object... messageArray) {
+    public void _stderr(int delta, Throwable e, Object... messageArray) {
         getStderrSink(delta).p(e, messageArray);
     }
 
@@ -78,12 +81,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void stderrFormat(int delta, String format, Object... args) {
+    public void _stderrFormat(int delta, String format, Object... args) {
         getStderrSink(delta).f(format, args);
     }
 
     @Override
-    public void stderrFormat(int delta, Throwable e, String format, Object... args) {
+    public void _stderrFormat(int delta, Throwable e, String format, Object... args) {
         getStderrSink(delta).f(e, format, args);
     }
 
@@ -118,12 +121,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void stdout(int delta, Object message) {
+    public void _stdout(int delta, Object message) {
         getStdoutSink(delta).p(message);
     }
 
     @Override
-    public void stdout(int delta, Throwable e, Object message) {
+    public void _stdout(int delta, Throwable e, Object message) {
         getStdoutSink(delta).p(e, message);
     }
 
@@ -138,12 +141,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void stdout(int delta, Object... messageArray) {
+    public void _stdout(int delta, Object... messageArray) {
         getStdoutSink(delta).p(messageArray);
     }
 
     @Override
-    public void stdout(int delta, Throwable e, Object... messageArray) {
+    public void _stdout(int delta, Throwable e, Object... messageArray) {
         getStdoutSink(delta).p(e, messageArray);
     }
 
@@ -158,12 +161,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void stdoutFormat(int delta, String format, Object... args) {
+    public void _stdoutFormat(int delta, String format, Object... args) {
         getStdoutSink(delta).f(format, args);
     }
 
     @Override
-    public void stdoutFormat(int delta, Throwable e, String format, Object... args) {
+    public void _stdoutFormat(int delta, Throwable e, String format, Object... args) {
         getStdoutSink(delta).f(e, format, args);
     }
 
@@ -200,13 +203,13 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public boolean fatal(int delta, Object message) {
+    public boolean _fatal(int delta, Object message) {
         getFatalSink(delta).p(message);
         return false;
     }
 
     @Override
-    public boolean fatal(int delta, Throwable e, Object message) {
+    public boolean _fatal(int delta, Throwable e, Object message) {
         getFatalSink(delta).p(e, message);
         return false;
     }
@@ -224,13 +227,13 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public boolean fatal(int delta, Object... messageArray) {
+    public boolean _fatal(int delta, Object... messageArray) {
         getFatalSink(delta).p(messageArray);
         return false;
     }
 
     @Override
-    public boolean fatal(int delta, Throwable e, Object... messageArray) {
+    public boolean _fatal(int delta, Throwable e, Object... messageArray) {
         getFatalSink(delta).p(e, messageArray);
         return false;
     }
@@ -248,13 +251,13 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public boolean fatalFormat(int delta, String format, Object... args) {
+    public boolean _fatalFormat(int delta, String format, Object... args) {
         getFatalSink(delta).f(format, args);
         return false;
     }
 
     @Override
-    public boolean fatalFormat(int delta, Throwable e, String format, Object... args) {
+    public boolean _fatalFormat(int delta, Throwable e, String format, Object... args) {
         getFatalSink(delta).f(e, format, args);
         return false;
     }
@@ -292,13 +295,13 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public boolean error(int delta, Object message) {
+    public boolean _error(int delta, Object message) {
         getErrorSink(delta).p(message);
         return false;
     }
 
     @Override
-    public boolean error(int delta, Throwable e, Object message) {
+    public boolean _error(int delta, Throwable e, Object message) {
         getErrorSink(delta).p(e, message);
         return false;
     }
@@ -316,13 +319,13 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public boolean error(int delta, Object... messageArray) {
+    public boolean _error(int delta, Object... messageArray) {
         getErrorSink(delta).p(messageArray);
         return false;
     }
 
     @Override
-    public boolean error(int delta, Throwable e, Object... messageArray) {
+    public boolean _error(int delta, Throwable e, Object... messageArray) {
         getErrorSink(delta).p(e, messageArray);
         return false;
     }
@@ -340,13 +343,13 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public boolean errorFormat(int delta, String format, Object... args) {
+    public boolean _errorFormat(int delta, String format, Object... args) {
         getErrorSink(delta).f(format, args);
         return false;
     }
 
     @Override
-    public boolean errorFormat(int delta, Throwable e, String format, Object... args) {
+    public boolean _errorFormat(int delta, Throwable e, String format, Object... args) {
         getErrorSink(delta).f(e, format, args);
         return false;
     }
@@ -382,12 +385,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void warn(int delta, Object message) {
+    public void _warn(int delta, Object message) {
         getWarnSink(delta).p(message);
     }
 
     @Override
-    public void warn(int delta, Throwable e, Object message) {
+    public void _warn(int delta, Throwable e, Object message) {
         getWarnSink(delta).p(e, message);
     }
 
@@ -402,12 +405,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void warn(int delta, Object... messageArray) {
+    public void _warn(int delta, Object... messageArray) {
         getWarnSink(delta).p(messageArray);
     }
 
     @Override
-    public void warn(int delta, Throwable e, Object... messageArray) {
+    public void _warn(int delta, Throwable e, Object... messageArray) {
         getWarnSink(delta).p(e, messageArray);
     }
 
@@ -422,12 +425,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void warnFormat(int delta, String format, Object... args) {
+    public void _warnFormat(int delta, String format, Object... args) {
         getWarnSink(delta).f(format, args);
     }
 
     @Override
-    public void warnFormat(int delta, Throwable e, String format, Object... args) {
+    public void _warnFormat(int delta, Throwable e, String format, Object... args) {
         getWarnSink(delta).f(e, format, args);
     }
 
@@ -462,12 +465,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void log(int delta, Object message) {
+    public void _log(int delta, Object message) {
         getLogSink(delta).p(message);
     }
 
     @Override
-    public void log(int delta, Throwable e, Object message) {
+    public void _log(int delta, Throwable e, Object message) {
         getLogSink(delta).p(e, message);
     }
 
@@ -482,12 +485,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void log(int delta, Object... messageArray) {
+    public void _log(int delta, Object... messageArray) {
         getLogSink(delta).p(messageArray);
     }
 
     @Override
-    public void log(int delta, Throwable e, Object... messageArray) {
+    public void _log(int delta, Throwable e, Object... messageArray) {
         getLogSink(delta).p(e, messageArray);
     }
 
@@ -502,12 +505,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void logFormat(int delta, String format, Object... args) {
+    public void _logFormat(int delta, String format, Object... args) {
         getLogSink(delta).f(format, args);
     }
 
     @Override
-    public void logFormat(int delta, Throwable e, String format, Object... args) {
+    public void _logFormat(int delta, Throwable e, String format, Object... args) {
         getLogSink(delta).f(e, format, args);
     }
 
@@ -542,12 +545,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void info(int delta, Object message) {
+    public void _info(int delta, Object message) {
         getInfoSink(delta).p(message);
     }
 
     @Override
-    public void info(int delta, Throwable e, Object message) {
+    public void _info(int delta, Throwable e, Object message) {
         getInfoSink(delta).p(e, message);
     }
 
@@ -562,12 +565,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void info(int delta, Object... messageArray) {
+    public void _info(int delta, Object... messageArray) {
         getInfoSink(delta).p(messageArray);
     }
 
     @Override
-    public void info(int delta, Throwable e, Object... messageArray) {
+    public void _info(int delta, Throwable e, Object... messageArray) {
         getInfoSink(delta).p(e, messageArray);
     }
 
@@ -582,12 +585,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void infoFormat(int delta, String format, Object... args) {
+    public void _infoFormat(int delta, String format, Object... args) {
         getInfoSink(delta).f(format, args);
     }
 
     @Override
-    public void infoFormat(int delta, Throwable e, String format, Object... args) {
+    public void _infoFormat(int delta, Throwable e, String format, Object... args) {
         getInfoSink(delta).f(e, format, args);
     }
 
@@ -622,12 +625,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void debug(int delta, Object message) {
+    public void _debug(int delta, Object message) {
         getDebugSink(delta).p(message);
     }
 
     @Override
-    public void debug(int delta, Throwable e, Object message) {
+    public void _debug(int delta, Throwable e, Object message) {
         getDebugSink(delta).p(e, message);
     }
 
@@ -642,12 +645,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void debug(int delta, Object... messageArray) {
+    public void _debug(int delta, Object... messageArray) {
         getDebugSink(delta).p(messageArray);
     }
 
     @Override
-    public void debug(int delta, Throwable e, Object... messageArray) {
+    public void _debug(int delta, Throwable e, Object... messageArray) {
         getDebugSink(delta).p(e, messageArray);
     }
 
@@ -662,12 +665,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void debugFormat(int delta, String format, Object... args) {
+    public void _debugFormat(int delta, String format, Object... args) {
         getDebugSink(delta).f(format, args);
     }
 
     @Override
-    public void debugFormat(int delta, Throwable e, String format, Object... args) {
+    public void _debugFormat(int delta, Throwable e, String format, Object... args) {
         getDebugSink(delta).f(e, format, args);
     }
 
@@ -702,12 +705,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void trace(int delta, Object message) {
+    public void _trace(int delta, Object message) {
         getTraceSink(delta).p(message);
     }
 
     @Override
-    public void trace(int delta, Throwable e, Object message) {
+    public void _trace(int delta, Throwable e, Object message) {
         getTraceSink(delta).p(e, message);
     }
 
@@ -722,12 +725,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void trace(int delta, Object... messageArray) {
+    public void _trace(int delta, Object... messageArray) {
         getTraceSink(delta).p(messageArray);
     }
 
     @Override
-    public void trace(int delta, Throwable e, Object... messageArray) {
+    public void _trace(int delta, Throwable e, Object... messageArray) {
         getTraceSink(delta).p(e, messageArray);
     }
 
@@ -742,12 +745,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void traceFormat(int delta, String format, Object... args) {
+    public void _traceFormat(int delta, String format, Object... args) {
         getTraceSink(delta).f(format, args);
     }
 
     @Override
-    public void traceFormat(int delta, Throwable e, String format, Object... args) {
+    public void _traceFormat(int delta, Throwable e, String format, Object... args) {
         getTraceSink(delta).f(e, format, args);
     }
 
@@ -782,12 +785,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void status(int delta, Object message) {
+    public void _status(int delta, Object message) {
         getStatusSink(delta).p(message);
     }
 
     @Override
-    public void status(int delta, Throwable e, Object message) {
+    public void _status(int delta, Throwable e, Object message) {
         getStatusSink(delta).p(e, message);
     }
 
@@ -802,12 +805,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void status(int delta, Object... messageArray) {
+    public void _status(int delta, Object... messageArray) {
         getStatusSink(delta).p(messageArray);
     }
 
     @Override
-    public void status(int delta, Throwable e, Object... messageArray) {
+    public void _status(int delta, Throwable e, Object... messageArray) {
         getStatusSink(delta).p(e, messageArray);
     }
 
@@ -822,12 +825,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void statusFormat(int delta, String format, Object... args) {
+    public void _statusFormat(int delta, String format, Object... args) {
         getStatusSink(delta).f(format, args);
     }
 
     @Override
-    public void statusFormat(int delta, Throwable e, String format, Object... args) {
+    public void _statusFormat(int delta, Throwable e, String format, Object... args) {
         getStatusSink(delta).f(e, format, args);
     }
 
@@ -862,12 +865,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void progress(int delta, Object message) {
+    public void _progress(int delta, Object message) {
         getProgressSink(delta).p(message);
     }
 
     @Override
-    public void progress(int delta, Throwable e, Object message) {
+    public void _progress(int delta, Throwable e, Object message) {
         getProgressSink(delta).p(e, message);
     }
 
@@ -882,12 +885,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void progress(int delta, Object... messageArray) {
+    public void _progress(int delta, Object... messageArray) {
         getProgressSink(delta).p(messageArray);
     }
 
     @Override
-    public void progress(int delta, Throwable e, Object... messageArray) {
+    public void _progress(int delta, Throwable e, Object... messageArray) {
         getProgressSink(delta).p(e, messageArray);
     }
 
@@ -902,12 +905,12 @@ public abstract class AbstractLogger
     }
 
     @Override
-    public void progressFormat(int delta, String format, Object... args) {
+    public void _progressFormat(int delta, String format, Object... args) {
         getProgressSink(delta).f(format, args);
     }
 
     @Override
-    public void progressFormat(int delta, Throwable e, String format, Object... args) {
+    public void _progressFormat(int delta, Throwable e, String format, Object... args) {
         getProgressSink(delta).f(e, format, args);
     }
 

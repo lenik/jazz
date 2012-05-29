@@ -53,7 +53,7 @@
      *
      * @param message The logging message.
      */
-    void @name@(int delta, Object message);
+    void _@name@(int delta, Object message);
 
     /**
      * Add a @name@ logging with a delta verbose with an exception.
@@ -61,7 +61,7 @@
      * @param e The exception object.
      * @param message The logging message.
      */
-    void @name@(int delta, Throwable e, Object message);
+    void _@name@(int delta, Throwable e, Object message);
 
     /**
      * Add a @name@ logging.
@@ -84,7 +84,7 @@
      * @param delta The verbose level delta.
      * @param messageArray The logging message in pieces, will be concated.
      */
-    void @name@(int delta, Object... messageArray);
+    void _@name@(int delta, Object... messageArray);
 
     /**
      * Add a @name@ logging with a delta verbose with an exception.
@@ -93,7 +93,7 @@
      * @param e The exception object.
      * @param messageArray The logging message in pieces, will be concated.
      */
-    void @name@(int delta, Throwable e, Object... messageArray);
+    void _@name@(int delta, Throwable e, Object... messageArray);
 
     /**
      * Add formatted a @name@ logging.
@@ -119,7 +119,7 @@
      * @param format The message format.
      * @param args The arguments to the format.
      */
-    void @name@Format(int delta, String format, Object... args);
+    void _@name@Format(int delta, String format, Object... args);
 
     /**
      * Add formatted a @name@ logging with a delta verbose with an exception.
@@ -129,4 +129,4 @@
      * @param format The message format.
      * @param args The arguments to the format.
      */
-    void @name@Format(int delta, Throwable e, String format, Object... args);
+    void _@name@Format(int delta, Throwable e, String format, Object... args);

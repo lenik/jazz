@@ -30,12 +30,12 @@
     }
 
     @Override
-    public void @name@(int delta, Object message) {
+    public void _@name@(int delta, Object message) {
         get@Name@Sink(delta).p(message);
     }
 
     @Override
-    public void @name@(int delta, Throwable e, Object message) {
+    public void _@name@(int delta, Throwable e, Object message) {
         get@Name@Sink(delta).p(e, message);
     }
 
@@ -50,12 +50,12 @@
     }
 
     @Override
-    public void @name@(int delta, Object... messageArray) {
+    public void _@name@(int delta, Object... messageArray) {
         get@Name@Sink(delta).p(messageArray);
     }
 
     @Override
-    public void @name@(int delta, Throwable e, Object... messageArray) {
+    public void _@name@(int delta, Throwable e, Object... messageArray) {
         get@Name@Sink(delta).p(e, messageArray);
     }
 
@@ -70,11 +70,11 @@
     }
 
     @Override
-    public void @name@Format(int delta, String format, Object... args) {
+    public void _@name@Format(int delta, String format, Object... args) {
         get@Name@Sink(delta).f(format, args);
     }
 
     @Override
-    public void @name@Format(int delta, Throwable e, String format, Object... args) {
+    public void _@name@Format(int delta, Throwable e, String format, Object... args) {
         get@Name@Sink(delta).f(e, format, args);
     }

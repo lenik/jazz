@@ -66,8 +66,8 @@ public class LoggerCG {
     public static void main(String[] args)
             throws Exception {
         LoggerCG cg = new LoggerCG();
-// cg.makeLogger();
-        cg.makeAbstractLogger();
+ cg.makeLogger();
+//        cg.makeAbstractLogger();
     }
 
 }
