@@ -200,20 +200,31 @@ public abstract class AbstractPath
 
     @Override
     public String getExtension() {
-        String name = getBaseName();
-        int dot = name.lastIndexOf('.');
-        if (dot == -1)
-            return null;
-        return name.substring(dot + 1);
+        return getExtension(false, 1);
     }
 
     @Override
-    public String getExtensionWithDot() {
-        String name = getBaseName();
-        int dot = name.lastIndexOf('.');
-        if (dot == -1)
+    public String getExtension(boolean withDot) {
+        return getExtension(withDot, 1);
+    }
+
+    @Override
+    public String getExtension(boolean withDot, int maxWords) {
+        String baseName = getBaseName();
+        if (baseName == null)
             return null;
-        return name.substring(dot);
+        int pos = baseName.length();
+        while (maxWords-- > 0) {
+            int dot = baseName.lastIndexOf('.', pos);
+            if (dot == -1)
+                break;
+            pos = dot;
+        }
+        if (!withDot)
+            pos++;
+        if (pos < baseName.length())
+            baseName.substring(pos);
+        return "";
     }
 
     @Override

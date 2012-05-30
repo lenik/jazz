@@ -89,24 +89,6 @@ public abstract class AbstractFsEntry
     }
 
     @Override
-    public String getExtension(boolean withDot, int maxWords) {
-        if (baseName == null)
-            return null;
-        int pos = baseName.length();
-        while (maxWords-- > 0) {
-            int dot = baseName.lastIndexOf('.', pos);
-            if (dot == -1)
-                break;
-            pos = dot;
-        }
-        if (!withDot)
-            pos++;
-        if (pos < baseName.length())
-            baseName.substring(pos);
-        return "";
-    }
-
-    @Override
     public Long getCreationTime() {
         return null;
     }

@@ -24,7 +24,6 @@ import net.bodz.bas.cli.EditResult;
 import net.bodz.bas.collection.set.ArraySet;
 import net.bodz.bas.err.IdentifiedException;
 import net.bodz.bas.io.resource.builtin.ByteArrayResource;
-import net.bodz.bas.io.resource.builtin.LocalFileResource;
 import net.bodz.bas.io.resource.builtin.URLResource;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.loader.DefaultBooter;
@@ -43,6 +42,7 @@ import net.bodz.bas.meta.program.StartModeUtil;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.snm.SJLibLoader;
+import net.bodz.bas.vfs.IFile;
 
 /**
  * Generate program launcher for java applications
@@ -119,17 +119,18 @@ public class Mkbat
     }
 
     @Override
-    protected EditResult doEdit(File file)
+    protected EditResult doEdit(IFile file)
             throws LoadException, IOException {
-        String ext = FilePath.getExtension(file, true);
+        String ext = file.getPath().getExtension(true, 1);
         if (!".java".equals(ext) && !".class".equals(ext))
             return EditResult.pass();
-        String name = FilePath.stripExtension(file);
+        String name = file.getPath().getStrippedName();
         if (name.contains("$")) // ignore inner classes
             return EditResult.pass("inner");
 
-        File bootFile = new File(file.getParentFile(), name + "Boot." + ext);
-        if (bootFile.exists())
+        // new File(file.getParentFile(), name + "Boot." + ext);
+        IFile bootFile = file.getParentFile().getChild(name + "Boot." + ext);
+        if (bootFile.isExisted())
             return EditResult.pass("boot");
 
         String className = getRelativeName(file);
@@ -142,7 +143,7 @@ public class Mkbat
         Class<?> class0 = null;
         // can found by bootSysLoader?
         try {
-            L.info(2, "try " + className);
+            L._info(2, "try " + className);
             class0 = bootSysLoader.loadClass(className);
             // class0 = Jdk7Reflect.forName(className, false, bootSysLoader);
         } catch (ClassNotFoundException e) {
@@ -196,8 +197,8 @@ public class Mkbat
             throws IOException {
         String batName = ProgramNameUtil.getProgramName(clazz, false);
 
-        File batFile = getOutputFile(batName + ".bat");
-        batFile.getParentFile().mkdirs();
+        IFile batFile = getOutputFile(batName + ".bat");
+        batFile.getParentFile().createTree();
 
         String name = clazz.getName();
 
@@ -279,14 +280,12 @@ public class Mkbat
 
         ByteArrayResource batFixedRes = new ByteArrayResource(batFixed);
 
-        LocalFileResource batFileRes = new LocalFileResource(batFile);
-
         if (!Arrays.equals(batData, batFixed))
             L.info("bat label boundary fixed: ", batFile);
         if (force) {
             L.info("write ", batFile);
-            batFileRes.forWrite().writeBytes(batFixed);
-        } else if (FileDiff.copyDiff(batFixedRes, batFileRes))
+            batFile.forWrite().writeBytes(batFixed);
+        } else if (FileDiff.copyDiff(batFixedRes, batFile.getResource()))
             L.info("save ", batFile);
     }
 

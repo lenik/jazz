@@ -6,10 +6,8 @@ import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.util.List;
 
-import net.bodz.bas.io.resource.IStreamInputSource;
-import net.bodz.bas.io.resource.IStreamOutputTarget;
-import net.bodz.bas.io.resource.JavaioStreamInputSource;
-import net.bodz.bas.io.resource.JavaioStreamOutputTarget;
+import net.bodz.bas.io.resource.IStreamResource;
+import net.bodz.bas.io.resource.JavaioStreamResource;
 import net.bodz.bas.model.IFilter;
 import net.bodz.bas.util.iter.Mitorx;
 import net.bodz.bas.vfs.AbstractFile;
@@ -153,36 +151,33 @@ public class ApacheVFSFile
         return false; // unknown...
     }
 
-    @Override
-    public IStreamInputSource getInputSource(Charset charset) {
-        JavaioStreamInputSource inputSource = new JavaioStreamInputSource() {
-            // XXX - Non-reentrantable.
-            @Override
-            public InputStream newInputStream()
-                    throws IOException {
-                FileContent content = fileObject.getContent();
-                InputStream in = content.getInputStream();
-                return in;
-            }
-        };
-        inputSource.setCharset(charset);
-        return inputSource;
+    class _Resource
+            extends JavaioStreamResource {
+
+        // XXX - Non-reentrantable.
+        @Override
+        public InputStream newInputStream()
+                throws IOException {
+            FileContent content = fileObject.getContent();
+            InputStream in = content.getInputStream();
+            return in;
+        }
+
+        @Override
+        public OutputStream newOutputStream()
+                throws IOException {
+            FileContent content = fileObject.getContent();
+            OutputStream out = content.getOutputStream(isAppendMode());
+            return out;
+        }
+
     }
 
     @Override
-    public IStreamOutputTarget getOutputTarget(boolean appendMode, Charset charset) {
-        JavaioStreamOutputTarget outputTarget = new JavaioStreamOutputTarget() {
-            @Override
-            public OutputStream newOutputStream()
-                    throws IOException {
-                FileContent content = fileObject.getContent();
-                OutputStream out = content.getOutputStream(isAppendMode());
-                return out;
-            }
-        };
-        outputTarget.setAppendMode(appendMode);
-        outputTarget.setCharset(charset);
-        return outputTarget;
+    public IStreamResource getResource(Charset charset) {
+        _Resource resource = new _Resource();
+        resource.setCharset(charset);
+        return resource;
     }
 
     @Override

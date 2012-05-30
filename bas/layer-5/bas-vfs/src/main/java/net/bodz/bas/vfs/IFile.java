@@ -18,7 +18,7 @@ public interface IFile
 
     @Override
     IFile getChild(String childName)
-            throws VFSException;
+            throws FileResolveException;
 
     @Override
     Mitorx<? extends IFile, VFSException> childIterator(IFilter<String> nameFilter)

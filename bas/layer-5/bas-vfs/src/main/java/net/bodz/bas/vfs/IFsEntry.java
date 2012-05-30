@@ -33,12 +33,6 @@ public interface IFsEntry
     String getName();
 
     /**
-     * @return <code>null</code> if file doesn't have a name, or empty string if file doesn't have
-     *         an extension.
-     */
-    String getExtension(boolean withDot, int maxWords);
-
-    /**
      * Get the creation time of an fs entry.
      * 
      * @return <code>null</code> if create-time is unknown.
