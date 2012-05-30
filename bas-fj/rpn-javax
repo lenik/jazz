@@ -1,5 +1,8 @@
 #!/bin/bash
 
+echo "You should re-brand version by: "
+echo "    $0 -I <new-version>"
+
 rm -fr javax/*
 m2rpn -wbas=freejava -pnet.bodz.bas=javax.free -f "$@" ../bas javax
 
