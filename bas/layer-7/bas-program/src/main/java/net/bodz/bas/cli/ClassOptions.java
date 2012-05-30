@@ -130,13 +130,13 @@ public class ClassOptions {
         }
 
         boolean first = true;
-        for (Map.Entry<String, Set<IOption>> group : groups.entrySet()) {
+        for (Map.Entry<String, Set<IOption>> entry : groups.entrySet()) {
             if (first)
                 first = false;
             else
                 buffer.append("\n");
-            String name = group.getKey();
-            Set<IOption> grpopts = group.getValue();
+            String name = entry.getKey();
+            Set<IOption> grpopts = entry.getValue();
             buffer.append(Strings.ucfirst(name) + " options: \n");
             buffer.append(formatter.filter(grpopts));
         }
