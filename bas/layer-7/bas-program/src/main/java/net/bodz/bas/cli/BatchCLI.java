@@ -2,7 +2,6 @@ package net.bodz.bas.cli;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
@@ -18,6 +17,7 @@ import net.bodz.bas.meta.codehint.OverrideOption;
 import net.bodz.bas.meta.program.OptionGroup;
 import net.bodz.bas.vfs.FileMaskedModifiers;
 import net.bodz.bas.vfs.IFile;
+import net.bodz.bas.vfs.path.IPath;
 
 @OptionGroup(value = "batch", rank = -2)
 public class BatchCLI
@@ -286,7 +286,9 @@ public class BatchCLI
     protected IFile currentStartFile;
 
     protected String getRelativeName(IFile in) {
-        return FilePath.getRelativeName(in.getPath().toString(), currentStartFile);
+        // FilePath.getRelativeName(in.getPath().toString(), currentStartFile);
+        IPath relativePath = in.getPath().getRelativePath(currentStartFile.getPath());
+        return relativePath.getLocalPath();
     }
 
     /**
@@ -341,7 +343,7 @@ public class BatchCLI
 
     protected void doFile(IFile file)
             throws Exception {
-        FileInputStream in = new FileInputStream(file);
+        InputStream in = file.getInputSource().newInputStream();
         try {
             doFile(file, in);
         } finally {

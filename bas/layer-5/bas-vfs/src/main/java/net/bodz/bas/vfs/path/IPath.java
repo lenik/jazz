@@ -167,12 +167,16 @@ public interface IPath
     String getExtension();
 
     /**
-     * Get the extension name, with dot(.).
-     * 
      * @return <code>null</code> if file doesn't have a name, or empty string if file doesn't have
      *         an extension.
      */
-    String getExtensionWithDot();
+    String getExtension(boolean withDot);
+
+    /**
+     * @return <code>null</code> if file doesn't have a name, or empty string if file doesn't have
+     *         an extension.
+     */
+    String getExtension(boolean withDot, int maxWords);
 
     /**
      * Get full path with all parent layers.

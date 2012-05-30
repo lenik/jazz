@@ -4,8 +4,7 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.nio.charset.Charset;
 
-import net.bodz.bas.io.resource.IStreamInputSource;
-import net.bodz.bas.io.resource.IStreamOutputTarget;
+import net.bodz.bas.io.resource.IStreamResource;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
 import net.bodz.bas.model.IFilter;
 import net.bodz.bas.util.iter.AbstractMitorx;
@@ -144,16 +143,8 @@ public class JavaioFile
     }
 
     @Override
-    public IStreamInputSource getInputSource(Charset charset) {
+    public IStreamResource getResource(Charset charset) {
         LocalFileResource resource = new LocalFileResource(jdkFile);
-        resource.setCharset(charset);
-        return resource;
-    }
-
-    @Override
-    public IStreamOutputTarget getOutputTarget(boolean appendMode, Charset charset) {
-        LocalFileResource resource = new LocalFileResource(jdkFile);
-        resource.setAppendMode(appendMode);
         resource.setCharset(charset);
         return resource;
     }
@@ -161,8 +152,7 @@ public class JavaioFile
     // IFsTree
 
     @Override
-    public JavaioFile getChild(String entryName)
-            throws VFSException {
+    public JavaioFile getChild(String entryName) {
         File file = new File(this.jdkFile, entryName);
         return new JavaioFile(file);
     }

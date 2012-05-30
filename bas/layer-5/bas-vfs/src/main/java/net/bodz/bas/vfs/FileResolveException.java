@@ -1,9 +1,7 @@
 package net.bodz.bas.vfs;
 
-import java.io.IOException;
-
 public class FileResolveException
-        extends IOException {
+        extends VFSException {
 
     private static final long serialVersionUID = 1L;
 

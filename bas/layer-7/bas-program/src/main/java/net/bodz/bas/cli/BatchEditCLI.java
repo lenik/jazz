@@ -28,7 +28,9 @@ import net.bodz.bas.text.diff.DiffComparator;
 import net.bodz.bas.text.diff.DiffFormat;
 import net.bodz.bas.text.diff.DiffFormats;
 import net.bodz.bas.text.diff.DiffInfo;
+import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
+import net.bodz.bas.vfs.impl.javaio.JavaioFile;
 
 @OptionGroup(value = "batch process", rank = -3)
 public class BatchEditCLI
@@ -200,17 +202,11 @@ public class BatchEditCLI
     }
 
     /**
-     * psh is invalid until {@link #_postInit()} (before {@link #_boot()}).
-     */
-    protected ProtectedShell psh = null;
-
-    /**
      * Set up {@link #fileFilter} and {@link #psh}.
      */
     @Override
     void _postInit() {
         super._postInit();
-        psh = _getShell();
     }
 
     /**
@@ -218,8 +214,9 @@ public class BatchEditCLI
      */
     protected IFile _getEditTmp(IFile file)
             throws IOException {
-        String dotExt = FilePath.getExtension(file.getName(), true);
-        return File.createTempFile(tmpPrefix, dotExt, tmpDir);
+        String dotExt = file.getPath().getExtension(true);
+        File tmpFile = File.createTempFile(tmpPrefix, dotExt, tmpDir);
+        return new JavaioFile(tmpFile);
     }
 
     private boolean diff(IFile a, IFile b)
@@ -250,10 +247,11 @@ public class BatchEditCLI
         return true;
     }
 
-    private IFile tmpDir = TempFile.getTmpDir();
+    private File tmpDir = TempFile.getTmpDir();
     private String tmpPrefix = getClass().getSimpleName();
 
-    private IFile _getOutputFile(String relative, IFile in) {
+    private IFile _getOutputFile(String relative, IFile in)
+            throws FileResolveException {
         if (outputDirectory == null)
             return in;
         IFile out = outputDirectory.getChild(relative);
@@ -263,16 +261,19 @@ public class BatchEditCLI
         return out;
     }
 
-    protected IFile getOutputFile(String relative, IFile defaultStart) {
+    protected IFile getOutputFile(String relative, IFile defaultStart)
+            throws FileResolveException {
         IFile in = defaultStart.getChild(relative);
         return _getOutputFile(relative, in);
     }
 
-    protected IFile getOutputFile(String relative) {
+    protected IFile getOutputFile(String relative)
+            throws FileResolveException {
         return getOutputFile(relative, currentStartFile);
     }
 
-    protected IFile getOutputFile(IFile in) {
+    protected IFile getOutputFile(IFile in)
+            throws FileResolveException {
         String relative = getRelativeName(in);
         return _getOutputFile(relative, in);
     }
@@ -355,13 +356,6 @@ public class BatchEditCLI
         if (result == null) // ignored
             return null;
         IFile dst = getOutputFile(file);
-        if (result.dest instanceof String) {
-            String relpath = (String) result.dest;
-            result.dest = dst.getChild(relpath);
-        }
-        if (result.dest != null)
-            dst = FilePath.canoniOf(result.dest);
-
         addResult(file, dst, editTmp, result);
         return null;
     }
@@ -427,15 +421,6 @@ public class BatchEditCLI
         throw new NotImplementedException();
     }
 
-    protected ProtectedShell _getShell() {
-        if (dryRun)
-            // in common case, dry mode is provided for verbose purpose
-            return new ProtectedShell(false, L.getInfoSink());
-        else
-            // when in real mode, the verbose info goes into debug out
-            return new ProtectedShell(true, L.getDebugSink());
-    }
-
     protected final ProcessResultStat stat = new ProcessResultStat();
 
     protected void addResult(EditResult result)
@@ -455,8 +440,11 @@ public class BatchEditCLI
 
     protected void addResult(IFile src, IFile dst, IFile edit, EditResult result)
             throws IOException {
+        IOException ee = null;
+        L._debugFormat(1, "FF", "x");
+        L._debug(3, "F", "X");
         if (result == null)
-            L.info(1, "[skip] ", src);
+            L._info(1, "[skip] ", src);
         else {
             if (src != null)
                 applyResult(src, dst, edit, result);
@@ -502,22 +490,22 @@ public class BatchEditCLI
             return;
 
         case EditResult.DELETE:
-            if (psh.delete(dst))
+            if (dst.delete())
                 result.setDone();
             return;
 
         case EditResult.RENAME:
-            if (psh.renameTo(src, dst))
+            if (src.renameTo(dst))
                 result.setDone();
             return;
 
         case EditResult.MOVE:
-            if (psh.move(src, dst, force))
+            if (src.move(dst, force))
                 result.setDone();
             return;
 
         case EditResult.COPY:
-            if (psh.copy(src, dst))
+            if (src.copyTo(dst))
                 result.setDone();
             return;
 
@@ -534,7 +522,7 @@ public class BatchEditCLI
 
             IFile dstdir = dst.getParentFile();
             if (dstdir != null)
-                psh.mkdirs(dstdir);
+                dstdir.createTree();
             if (!diffPrinted)
                 if (diff3) {
                     diff(src, edit);
@@ -543,7 +531,7 @@ public class BatchEditCLI
                     diff(dst, edit);
                 else
                     diff(src, edit);
-            psh.copy(edit, dst);
+            edit.copyTo(dst);
 
             result.setDone();
             return;

@@ -7,8 +7,8 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import net.bodz.bas.vfs.AbstractFile;
+import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IVolume;
-import net.bodz.bas.vfs.VFSException;
 import net.bodz.bas.vfs.path.IPath;
 
 public class URLFile
@@ -115,12 +115,12 @@ public class URLFile
 
     @Override
     public URLFile getChild(String entryName)
-            throws VFSException {
+            throws FileResolveException {
         URL url;
         try {
             url = new URL(this.url, entryName);
         } catch (MalformedURLException e) {
-            throw new RuntimeException(e.getMessage(), e); 
+            throw new FileResolveException(e.getMessage(), e);
         }
         return new URLFile(url);
     }

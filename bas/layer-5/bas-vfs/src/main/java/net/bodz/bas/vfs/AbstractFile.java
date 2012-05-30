@@ -28,6 +28,7 @@ import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.i18n.LocaleColos;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
+import net.bodz.bas.io.resource.IStreamResource;
 import net.bodz.bas.io.resource.preparation.FormatDumpPreparation;
 import net.bodz.bas.io.resource.preparation.IStreamReadPreparation;
 import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
@@ -213,6 +214,28 @@ public abstract class AbstractFile
     }
 
     @Override
+    public final IStreamResource getResource() {
+        Charset charset = getPreferredCharset();
+        if (charset == null)
+            charset = LocaleColos.charset.get();
+        return getResource(charset);
+    }
+
+    @Override
+    public final IStreamResource getResource(String charsetName) {
+        Charset charset = Charset.forName(charsetName);
+        return getResource(charset);
+    }
+
+    @Override
+    public IStreamResource getResource(Charset charset) {
+        if (isBlob())
+            throw new NotImplementedException();
+        else
+            return null;
+    }
+
+    @Override
     public final IStreamInputSource getInputSource() {
         Charset charset = getPreferredCharset();
         if (charset == null)
@@ -228,9 +251,9 @@ public abstract class AbstractFile
 
     @Override
     public IStreamInputSource getInputSource(Charset charset) {
-        if (isBlob())
-            throw new NotImplementedException();
-        return null;
+        IStreamResource resource = getResource();
+        resource.setCharset(charset);
+        return resource;
     }
 
     @Override
@@ -266,9 +289,10 @@ public abstract class AbstractFile
 
     @Override
     public IStreamOutputTarget getOutputTarget(boolean appendMode, Charset charset) {
-        if (isBlob())
-            throw new NotImplementedException();
-        return null;
+        IStreamResource resource = getResource();
+        resource.setAppendMode(appendMode);
+        resource.setCharset(charset);
+        return resource;
     }
 
     @Override
@@ -317,7 +341,7 @@ public abstract class AbstractFile
 
     @Override
     public IFile getChild(String childName)
-            throws VFSException {
+            throws FileResolveException {
         return null;
     }
 
