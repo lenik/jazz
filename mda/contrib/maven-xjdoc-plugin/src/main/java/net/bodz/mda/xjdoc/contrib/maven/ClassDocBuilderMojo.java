@@ -18,6 +18,7 @@ import net.bodz.bas.vfs.impl.javaio.JavaioFile;
 import net.bodz.mda.xjdoc.conv.ClassDocBuilder;
 import net.bodz.mda.xjdoc.meta.ITagBook;
 import net.bodz.mda.xjdoc.meta.JavadocTagBook;
+import net.bodz.mda.xjdoc.meta.MergedTagBook;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.util.ImportMap;
 
@@ -39,8 +40,13 @@ public class ClassDocBuilderMojo
         extends AbstractResourceGeneratorMojo {
 
     String extension = "classdoc";
-    ITagBook book = PredefinedBooks.getBook("javadoc");
+    MergedTagBook mergedBook;
     DomainString missingDoc;
+
+    public ClassDocBuilderMojo() {
+        mergedBook = new MergedTagBook();
+        setBooks("javadoc");
+    }
 
     /**
      * The extension name used to generate classdoc resource files.
@@ -71,14 +77,6 @@ public class ClassDocBuilderMojo
         this.missingDoc = DomainString.parseMultiLangString(missingDoc);
     }
 
-    public ITagBook getBook() {
-        return book;
-    }
-
-    public void setBook(ITagBook book) {
-        this.book = book;
-    }
-
     /**
      * Xjdoc language name.
      * 
@@ -90,27 +88,32 @@ public class ClassDocBuilderMojo
      * 
      * @parameter expression="${classdoc.book}" default-value="javadoc"
      */
-    public String getBookName() {
-        if (book == null)
-            return null;
-        else
-            return PredefinedBooks.indexOf(book);
+    public String getBooks() {
+        StringBuilder sb = null;
+        for (ITagBook book : mergedBook) {
+            if (sb == null)
+                sb = new StringBuilder();
+            else
+                sb.append(", ");
+            String bookName = PredefinedBooks.getName(book);
+            sb.append(bookName);
+        }
+        return sb.toString();
     }
 
-    public void setBookName(String bookName) {
-        if (bookName == null)
-            throw new NullPointerException("bookName");
-        ITagBook book = PredefinedBooks.getBook(bookName);
-        if (book == null)
-            try {
-                Class<? extends ITagBook> bookClass = (Class<? extends ITagBook>) Class.forName(bookName);
-                book = bookClass.newInstance();
-            } catch (ClassNotFoundException e) {
-                throw new IllegalArgumentException("Book isn't defined: " + bookName);
-            } catch (ReflectiveOperationException e) {
-                throw new RuntimeException("Failed to instantiate book: " + bookName, e);
-            }
-        this.book = book;
+    public synchronized void setBooks(String bookNames) {
+        if (bookNames == null)
+            throw new NullPointerException("bookNames");
+        mergedBook.clear();
+        for (String bookName : bookNames.split(",")) {
+            bookName = bookName.trim();
+            if (bookName.isEmpty())
+                continue;
+            ITagBook book = PredefinedBooks.resolve(bookName);
+            if (book == null)
+                throw new IllegalArgumentException("Bad book name: " + bookName);
+            mergedBook.add(book);
+        }
     }
 
     @Override
@@ -136,7 +139,7 @@ public class ClassDocBuilderMojo
             // sourceFileImports.add(importFqcn);
 
             for (JavaClass jclass : jsource.getClasses()) {
-                ClassDocBuilder builder = new ClassDocBuilder(book);
+                ClassDocBuilder builder = new ClassDocBuilder(mergedBook);
                 // builder.setCreateClassImports(true);
                 ClassDoc classDoc = builder.buildClass(jclass);
                 // builder.setMissingDoc(missingDoc);
@@ -151,7 +154,7 @@ public class ClassDocBuilderMojo
                 ImportMap classImports = classDoc.getOrCreateImports();
 
                 INegotiation negotiation = new ListNegotiation(//
-                        new Option(ITagBook.class, book), //
+                        new Option(ITagBook.class, mergedBook), //
                         new Option(ImportMap.class, classImports));
 
                 IStreamOutputTarget outTarget;

@@ -16,20 +16,32 @@ public class PredefinedBooks {
         map.put("javadoc", new JavadocTagBook());
     }
 
-    public static ITagBook getBook(String name) {
-        return map.get(name);
-    }
-
     public static void register(String name, ITagBook book) {
         map.put(name, book);
     }
 
-    public static String indexOf(ITagBook book) {
+    public static ITagBook resolve(String name) {
+        ITagBook book = map.get(name);
+        if (book == null)
+            try {
+                Class<? extends ITagBook> bookClass = (Class<? extends ITagBook>) Class.forName(name);
+                book = bookClass.newInstance();
+            } catch (ClassNotFoundException e) {
+                return null;
+            } catch (ReflectiveOperationException e) {
+                throw new RuntimeException("Failed to instantiate book: " + name, e);
+            }
+        return book;
+    }
+
+    public static String getName(ITagBook book) {
+        if (book == null)
+            throw new NullPointerException("book");
         for (Entry<String, ITagBook> entry : map.entrySet()) {
             if (entry.getValue() == book)
                 return entry.getKey();
         }
-        return null;
+        return book.getClass().getName();
     }
 
 }
