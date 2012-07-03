@@ -5,8 +5,8 @@ import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.mda.xjdoc.util.IImportMapProvider;
 import net.bodz.mda.xjdoc.util.ImportMap;
 
-public class JavadocXjLang
-        extends XjLanguage
+public class JavadocTagBook
+        extends TagBook
         implements IImportMapProvider {
 
     ImportMap importMap;
@@ -23,12 +23,12 @@ public class JavadocXjLang
      * {@link ImportMap#normalize(String) expand} is used)
      * </ul>
      */
-    public JavadocXjLang() {
-        setTagType("author", StringTagType.INSTANCE.repeat());
-        setTagType("exception", DocTagType.INSTANCE.typed(this)); // checked
+    public JavadocTagBook() {
+        setTagType("author", DocTagType.INSTANCE.repeat());
+        setTagType("exception", DocTagType.INSTANCE.typed());
         setTagType("param", DocTagType.INSTANCE.keyed());
         setTagType("return", DocTagType.INSTANCE);
-        setTagType("throws", DocTagType.INSTANCE.typed(this)); // unchecked
+        setTagType("throws", DocTagType.INSTANCE.typed());
     }
 
     @Override

@@ -1,9 +1,12 @@
-package net.bodz.mda.xjdoc.test;
+package lenik.lab.qdox;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 import java.net.URL;
+
+import user.ExampleClass;
+
 
 import com.thoughtworks.qdox.JavaDocBuilder;
 
@@ -35,7 +38,6 @@ public class JavadocParser {
         JavaDocBuilder builder = new JavaDocBuilder();
 
         // ClassLibrary lib = builder.getClassLibrary();
-
         builder.addSourceTree(sourceFile.getParentFile());
     }
 

@@ -4,8 +4,11 @@ import java.util.Map;
 
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.i18n.dstr.DomainString;
+import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.lang.negotiation.ListNegotiation;
+import net.bodz.bas.lang.negotiation.Option;
+import net.bodz.mda.xjdoc.meta.ITagBook;
 import net.bodz.mda.xjdoc.meta.ITagType;
-import net.bodz.mda.xjdoc.meta.IXjLanguage;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.ElementDoc;
 import net.bodz.mda.xjdoc.model.FieldDoc;
@@ -26,34 +29,22 @@ import com.thoughtworks.qdox.model.Type;
  */
 public class ClassDocBuilder {
 
-    IXjLanguage lang;
-    ImportMap sourceFileImports;
-
-    boolean createClassImports;
+    ITagBook book;
     DomainString missingDoc = DEFAULT_MISSING_DOC;
 
     static final DomainString DEFAULT_MISSING_DOC;
     static {
-        DEFAULT_MISSING_DOC = DomainString.parseMultiLangString(//
-                "\"(No document)\"" + //
-                        "zh-cn \"(无文档)\"");
+        DEFAULT_MISSING_DOC = DomainString.parseMultiLangString("\"(No document)\"" + //
+                "zh-cn \"(无文档)\"");
     }
 
-    public ClassDocBuilder(IXjLanguage lang, ImportMap sourceFileImports) {
-        if (lang == null)
-            throw new NullPointerException("lang");
-        if (sourceFileImports == null)
-            throw new NullPointerException("sourceFileImports");
-        this.lang = lang;
-        this.sourceFileImports = sourceFileImports;
-    }
-
-    public boolean isCreateClassImports() {
-        return createClassImports;
-    }
-
-    public void setCreateClassImports(boolean createClassImports) {
-        this.createClassImports = createClassImports;
+    public ClassDocBuilder(ITagBook book) {
+        if (book == null)
+            throw new NullPointerException("book");
+// if (sourceFileImports == null)
+// throw new NullPointerException("sourceFileImports");
+        this.book = book;
+// this.sourceFileImports = sourceFileImports;
     }
 
     public DomainString getMissingDoc() {
@@ -67,17 +58,28 @@ public class ClassDocBuilder {
     public ClassDoc buildClass(JavaClass javaClass) {
         String fqcn = javaClass.getFullyQualifiedName();
         ClassDoc classDoc = new ClassDoc(fqcn);
-        ImportMap classImports = createClassImports ? classDoc.getOrCreateImports() : null;
 
-        populate(classDoc, javaClass);
+        ImportMap classImports = classDoc.getOrCreateImports();
+        INegotiation negotiation = new ListNegotiation(//
+                new Option(ImportMap.class, classImports));
+
+        populate(classDoc, javaClass, negotiation);
 
         for (JavaField javaField : javaClass.getFields()) {
             String fieldName = javaField.getName();
             FieldDoc fieldDoc = new FieldDoc(classDoc, fieldName);
-            populate(fieldDoc, javaField);
+            populate(fieldDoc, javaField, negotiation);
             classDoc.setFieldDoc(fieldName, fieldDoc);
         }
 
+        /**
+         * <pre>
+         * 1. parameter types => import-map 
+         * 2. javaMethod => method-doc 
+         * 3. missing-doc => missing params in javadoc
+         * 4. missing-doc => missing throws in javadoc
+         * </pre>
+         */
         for (JavaMethod javaMethod : javaClass.getMethods()) {
             Type[] types = javaMethod.getParameterTypes(true);
             MethodId methodId = new MethodId(javaMethod.getName(), types.length);
@@ -86,12 +88,11 @@ public class ClassDocBuilder {
                 String paramFqcn = paramType.getFullyQualifiedName();
                 int paramDims = paramType.getDimensions();
                 methodId.setParameterType(i, paramFqcn, paramDims);
-                if (createClassImports)
-                    classImports.add(paramFqcn);
+                classImports.add(paramFqcn);
             }
 
             MethodDoc methodDoc = new MethodDoc(classDoc, methodId);
-            populate(methodDoc, javaMethod);
+            populate(methodDoc, javaMethod, negotiation);
 
             for (JavaParameter jparam : javaMethod.getParameters()) {
                 // javadoc may not include all the parameters.
@@ -109,8 +110,7 @@ public class ClassDocBuilder {
                 DomainString exceptionDoc = methodDoc.getExceptionDoc(exceptionFqcn);
                 if (exceptionDoc == null && missingDoc != null)
                     methodDoc.setExceptionDoc(exceptionFqcn, missingDoc);
-                if (createClassImports)
-                    classImports.add(exceptionFqcn);
+                classImports.add(exceptionFqcn);
             }
 
             classDoc.setMethodDoc(methodId, methodDoc);
@@ -118,7 +118,7 @@ public class ClassDocBuilder {
         return classDoc;
     }
 
-    void populate(ElementDoc elementDoc, AbstractJavaEntity javaEntity) {
+    void populate(ElementDoc elementDoc, AbstractJavaEntity javaEntity, INegotiation negotiation) {
         String comment = javaEntity.getComment(); // maybe null if no javadoc.
         if (comment != null) {
             DomainString text = DomainString.parseParaLang(comment);
@@ -131,11 +131,11 @@ public class ClassDocBuilder {
             String tagValueString = docletTag.getValue();
 
             // DomainString value = DomainString.parseParaLang(tagValueString);
-            ITagType tagType = lang.getTagType(tagName);
+            ITagType tagType = book.getTagType(tagName);
             if (tagType == null)
                 throw new IllegalUsageException("Undefined Tag: " + tagName);
             Object cont = tagMap.get(tagName);
-            Object tagValue = tagType.parseJavadoc(cont, tagValueString);
+            Object tagValue = tagType.parseJavadoc(cont, tagValueString, negotiation);
             if (cont == null)
                 tagMap.put(tagName, tagValue);
         }

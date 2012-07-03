@@ -9,15 +9,15 @@ import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.lang.negotiation.Option;
 import net.bodz.bas.text.flatf.FlatfLoader;
 import net.bodz.bas.text.flatf.IFlatfInput;
-import net.bodz.mda.xjdoc.meta.IXjLanguage;
+import net.bodz.mda.xjdoc.meta.ITagBook;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 
 public class ClassDocFlatfLoader
         extends FlatfLoader {
 
-    public ClassDocFlatfLoader(IXjLanguage lang) {
+    public ClassDocFlatfLoader(ITagBook lang) {
         super(new ListNegotiation(//
-                new Option(IXjLanguage.class, lang)));
+                new Option(ITagBook.class, lang)));
     }
 
     public ClassDoc load(String fqcn, IStreamInputSource inputSource)

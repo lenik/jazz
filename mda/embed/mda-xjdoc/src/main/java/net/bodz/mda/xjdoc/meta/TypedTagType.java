@@ -1,30 +1,25 @@
 package net.bodz.mda.xjdoc.meta;
 
-import net.bodz.mda.xjdoc.util.IImportMapProvider;
+import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.mda.xjdoc.util.ImportMap;
 
 public class TypedTagType
         extends KeyedTagType {
 
-    final IImportMapProvider importMapProvider;
-
-    public TypedTagType(ITagType valueTagType, IImportMapProvider importMapProvider) {
+    public TypedTagType(ITagType valueTagType) {
         super(valueTagType);
-        if (importMapProvider == null)
-            throw new NullPointerException("importMapProvider");
-        this.importMapProvider = importMapProvider;
     }
 
     @Override
-    protected Object parseKey(String keyText) {
-        ImportMap importMap = importMapProvider.getImportMap();
+    protected Object parseKey(String keyText, INegotiation negotiation) {
+        ImportMap importMap = ImportMap.getInstance(negotiation);
         String fqcn = importMap.normalize(keyText);
         return fqcn;
     }
 
     @Override
-    protected String formatKey(Object key) {
-        ImportMap importMap = importMapProvider.getImportMap();
+    protected String formatKey(Object key, INegotiation negotiation) {
+        ImportMap importMap = ImportMap.getInstance(negotiation);
         String fqcn = (String) key;
         String simpleName = importMap.add(fqcn);
         return simpleName;

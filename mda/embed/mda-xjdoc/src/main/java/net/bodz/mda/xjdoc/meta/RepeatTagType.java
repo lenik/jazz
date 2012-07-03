@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 
 class RepeatTagType
@@ -18,30 +19,30 @@ class RepeatTagType
     }
 
     @Override
-    public Object parseJavadoc(Object cont, String string) {
+    public Object parseJavadoc(Object cont, String string, INegotiation negotiation) {
         @SuppressWarnings("unchecked")
         List<Object> list = (List<Object>) cont;
         if (list == null)
             list = new ArrayList<Object>();
-        Object value = valueTagType.parseJavadoc(null, string);
+        Object value = valueTagType.parseJavadoc(null, string, negotiation);
         list.add(value);
         return list;
     }
 
     @Override
-    public String[] formatJavadoc(Object value) {
+    public String[] formatJavadoc(Object value, INegotiation negotiation) {
         List<?> list = (List<?>) value;
         String[] array = new String[list.size()];
         for (int index = 0; index < array.length; index++) {
             Object item = list.get(index);
-            for (String itemJavadoc : valueTagType.formatJavadoc(item))
+            for (String itemJavadoc : valueTagType.formatJavadoc(item, negotiation))
                 array[index] = itemJavadoc;
         }
         return array;
     }
 
     @Override
-    public Object parseAttribute(Object cont, String suffix, String string) {
+    public Object parseEntry(Object cont, String suffix, String string, INegotiation negotiation) {
         @SuppressWarnings("unchecked")
         List<Object> list = (List<Object>) cont;
         if (list == null)
@@ -53,19 +54,19 @@ class RepeatTagType
             list.add(null);
 
         // Object valueCont = list.get(index);
-        Object value = valueTagType.parseAttribute(null, null, string);
+        Object value = valueTagType.parseEntry(null, null, string, negotiation);
         list.set(index, value);
         return list;
     }
 
     @Override
-    public void writeAttributes(IFlatfOutput out, String prefix, Object value)
+    public void writeEntries(IFlatfOutput out, String prefix, Object value, INegotiation negotiation)
             throws IOException {
         List<?> list = (List<?>) value;
         for (int index = 0; index < list.size(); index++) {
             Object item = list.get(index);
             if (item != null) {
-                valueTagType.writeAttributes(out, prefix + "." + index, item);
+                valueTagType.writeEntries(out, prefix + "." + index, item, negotiation);
             }
         }
     }

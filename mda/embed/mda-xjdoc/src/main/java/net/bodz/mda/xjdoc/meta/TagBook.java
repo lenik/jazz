@@ -8,9 +8,9 @@ import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.INegotiation.IParameter;
 import net.bodz.bas.lang.negotiation.NegotiationException;
 
-public class XjLanguage
+public class TagBook
         extends AbstractNegotiable
-        implements IXjLanguage {
+        implements ITagBook {
 
     Map<String, ITagType> tagTypes = new HashMap<String, ITagType>();
 
@@ -35,19 +35,19 @@ public class XjLanguage
         return StringTagType.INSTANCE;
     }
 
-    public static IXjLanguage getInstance(INegotiation negotiation)
+    public static ITagBook getInstance(INegotiation negotiation)
             throws NegotiationException {
-        IXjLanguage lang = null;
+        ITagBook instance = null;
         if (negotiation != null)
             for (IParameter param : negotiation) {
-                if (param.is(IXjLanguage.class))
-                    lang = (IXjLanguage) param.getValue();
+                if (param.is(ITagBook.class))
+                    instance = (ITagBook) param.getValue();
                 else
                     param.ignore();
             }
-        if (lang == null)
-            lang = new JavadocXjLang();
-        return lang;
+        if (instance == null)
+            instance = new JavadocTagBook();
+        return instance;
     }
 
 }
