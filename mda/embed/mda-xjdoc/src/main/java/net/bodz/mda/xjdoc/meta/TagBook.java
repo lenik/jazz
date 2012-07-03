@@ -3,23 +3,17 @@ package net.bodz.mda.xjdoc.meta;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.lang.negotiation.AbstractNegotiable;
+import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.INegotiation.IParameter;
 import net.bodz.bas.lang.negotiation.NegotiationException;
 
 public class TagBook
-        extends AbstractNegotiable
         implements ITagBook {
 
     Map<String, ITagType> tagTypes = new HashMap<String, ITagType>();
 
     @Override
-    public boolean negotiate(IParameter parameter)
-            throws NegotiationException {
-        return false;
-    }
-
     public ITagType getTagType(String tagName) {
         ITagType tagType = tagTypes.get(tagName);
         if (tagType == null)
@@ -46,7 +40,7 @@ public class TagBook
                     param.ignore();
             }
         if (instance == null)
-            instance = new JavadocTagBook();
+            throw new IllegalUsageException("Book isn't provided in negotiation.");
         return instance;
     }
 

@@ -19,6 +19,7 @@ package user;
  * @author lenik <lenik@bodz.net>
  *         <p lang="zh-cn">
  *         谢继雷
+ * @author Ray J.Stomach
  */
 public class ExampleClass<T> {
 
@@ -29,7 +30,8 @@ public class ExampleClass<T> {
      * 一个域。
      * 
      * @msgid FIELD_1
-     * @unknown This is a undefined tag.
+     * @unknown This is an undefined tag (repeat-1).
+     * @unknown This is a undefined tag (repeat-2).
      */
     public String field1;
 

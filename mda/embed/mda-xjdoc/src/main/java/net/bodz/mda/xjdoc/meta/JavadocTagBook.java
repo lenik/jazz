@@ -1,13 +1,9 @@
 package net.bodz.mda.xjdoc.meta;
 
-import net.bodz.bas.lang.negotiation.INegotiation.IParameter;
-import net.bodz.bas.lang.negotiation.NegotiationException;
-import net.bodz.mda.xjdoc.util.IImportMapProvider;
 import net.bodz.mda.xjdoc.util.ImportMap;
 
 public class JavadocTagBook
-        extends TagBook
-        implements IImportMapProvider {
+        extends TagBook {
 
     ImportMap importMap;
 
@@ -29,25 +25,6 @@ public class JavadocTagBook
         setTagType("param", DocTagType.INSTANCE.keyed());
         setTagType("return", DocTagType.INSTANCE);
         setTagType("throws", DocTagType.INSTANCE.typed());
-    }
-
-    @Override
-    public boolean negotiate(IParameter param)
-            throws NegotiationException {
-        if (param.is(ImportMap.class)) {
-            importMap = (ImportMap) param.getValue();
-            return true;
-        } else
-            return false;
-    }
-
-    @Override
-    public ImportMap getImportMap() {
-        return importMap;
-    }
-
-    public void setImportMap(ImportMap importMap) {
-        this.importMap = importMap;
     }
 
 }
