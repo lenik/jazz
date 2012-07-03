@@ -107,9 +107,9 @@ public interface IFsEntry
     IFsTree getParentFile()
             throws FileResolveException;
 
-    boolean getCreateParentsMode();
+    boolean isAutoCreateParents();
 
-    void setCreateParentsMode(boolean createParents);
+    void setAutoCreateParents(boolean autoCreateTree);
 
     /**
      * Delete the fs entry, maybe file or directory.

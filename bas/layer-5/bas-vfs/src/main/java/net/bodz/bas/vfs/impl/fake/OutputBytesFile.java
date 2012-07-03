@@ -5,7 +5,7 @@ import java.nio.charset.Charset;
 
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
-import net.bodz.bas.io.resource.builtin.ByteArrayResource;
+import net.bodz.bas.io.resource.IStreamResource;
 import net.bodz.bas.io.resource.builtin.OutputStreamTarget;
 
 public class OutputBytesFile
@@ -66,15 +66,17 @@ public class OutputBytesFile
         return size;
     }
 
+    @Override
+    public IStreamResource getResource(Charset charset) {
+        throw new UnsupportedOperationException("Write-Only");
+    }
+
     /**
      * Use the written buffer as the input source.
      */
     @Override
     public IStreamInputSource getInputSource(Charset charset) {
-        byte[] byteArray = buffer.toByteArray();
-        ByteArrayResource resource = new ByteArrayResource(byteArray);
-        resource.setCharset(charset);
-        return resource;
+        throw new UnsupportedOperationException("Write-Only");
     }
 
     @Override

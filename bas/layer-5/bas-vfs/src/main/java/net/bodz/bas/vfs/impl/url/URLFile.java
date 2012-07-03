@@ -5,7 +5,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.Charset;
 
+import net.bodz.bas.io.resource.IStreamResource;
+import net.bodz.bas.io.resource.builtin.URLResource;
 import net.bodz.bas.vfs.AbstractFile;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IVolume;
@@ -123,6 +126,13 @@ public class URLFile
             throw new FileResolveException(e.getMessage(), e);
         }
         return new URLFile(url);
+    }
+
+    @Override
+    public IStreamResource getResource(Charset charset) {
+        URLResource resource = new URLResource(url);
+        resource.setCharset(charset);
+        return resource;
     }
 
 }

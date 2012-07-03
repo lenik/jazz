@@ -191,6 +191,11 @@ public class JavaioFile
     }
 
     @Override
+    public boolean createTree() {
+        return jdkFile.mkdirs();
+    }
+
+    @Override
     public int hashCode() {
         int hash = 0x4c691595;
         hash += jdkFile.hashCode();

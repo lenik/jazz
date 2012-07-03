@@ -5,6 +5,7 @@ import java.nio.charset.Charset;
 import net.bodz.bas.err.ReadOnlyException;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
+import net.bodz.bas.io.resource.IStreamResource;
 import net.bodz.bas.io.resource.builtin.ByteArrayResource;
 import net.bodz.bas.util.ObjectInfo;
 
@@ -43,6 +44,11 @@ public class InputBytesFile
     @Override
     public Long getLength() {
         return Long.valueOf(bytes.length);
+    }
+
+    @Override
+    public IStreamResource getResource(Charset charset) {
+        throw new UnsupportedOperationException("Read-only resource.");
     }
 
     @Override

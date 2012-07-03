@@ -1,9 +1,16 @@
 package net.bodz.bas.vfs.impl.fake;
 
+import java.nio.charset.Charset;
+
+import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.io.resource.IStreamOutputTarget;
+import net.bodz.bas.io.resource.IStreamResource;
+import net.bodz.bas.io.resource.builtin.StringBufferTarget;
+
 public class OutputStringFile
         extends FakeFile {
 
-    private StringBuilder buffer;
+    private StringBuffer buffer;
 
     public OutputStringFile() {
         this("(no name)");
@@ -11,7 +18,7 @@ public class OutputStringFile
 
     public OutputStringFile(String name) {
         super(name);
-        this.buffer = new StringBuilder();
+        this.buffer = new StringBuffer();
     }
 
     @Override
@@ -56,6 +63,24 @@ public class OutputStringFile
             return null;
         long len = buffer.length();
         return len;
+    }
+
+    @Override
+    public IStreamResource getResource(Charset charset) {
+        throw new UnsupportedOperationException("Write-Only");
+    }
+
+    @Override
+    public IStreamInputSource getInputSource(Charset charset) {
+        throw new UnsupportedOperationException("Write-Only");
+    }
+
+    @Override
+    public IStreamOutputTarget getOutputTarget(boolean appendMode, Charset charset) {
+        StringBufferTarget target = new StringBufferTarget(buffer);
+        target.setAppendMode(appendMode);
+        target.setCharset(charset);
+        return target;
     }
 
 }

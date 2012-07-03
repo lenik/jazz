@@ -2,10 +2,10 @@ package net.bodz.bas.vfs.impl.fake;
 
 import java.nio.charset.Charset;
 
+import net.bodz.bas.io.resource.IStreamInputSource;
+import net.bodz.bas.io.resource.IStreamOutputTarget;
+import net.bodz.bas.io.resource.IStreamResource;
 import net.bodz.bas.io.resource.builtin.StringSource;
-import net.bodz.bas.io.resource.preparation.IStreamReadPreparation;
-import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
-import net.bodz.bas.io.resource.preparation.StreamReadPreparation;
 import net.bodz.bas.util.ObjectInfo;
 
 public class InputStringFile
@@ -66,13 +66,17 @@ public class InputStringFile
     }
 
     @Override
-    public IStreamReadPreparation forRead() {
-        return new StreamReadPreparation(new StringSource(text));
+    public IStreamInputSource getInputSource(Charset charset) {
+        return new StringSource(text);
     }
 
     @Override
-    public IStreamWritePreparation forWrite() {
-        throw new UnsupportedOperationException();
+    public IStreamOutputTarget getOutputTarget(boolean appendMode, Charset charset) {
+        throw new UnsupportedOperationException("Read-Only");
     }
 
+    @Override
+    public IStreamResource getResource(Charset charset) {
+        throw new UnsupportedOperationException("Read-Only");
+    }
 }

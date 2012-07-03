@@ -13,7 +13,7 @@ public abstract class AbstractFsEntry
     private final IPath path;
     private final String baseName;
 
-    private boolean createParents;
+    private boolean autoCreateParents;
 
     public AbstractFsEntry(IVolume volume, IPath path) {
         if (volume == null)
@@ -63,7 +63,7 @@ public abstract class AbstractFsEntry
     protected AbstractFsEntry populate(Object obj) {
         if (obj instanceof AbstractFsEntry) {
             AbstractFsEntry o = (AbstractFsEntry) obj;
-            this.createParents = o.createParents;
+            this.autoCreateParents = o.autoCreateParents;
         }
         return this;
     }
@@ -159,13 +159,13 @@ public abstract class AbstractFsEntry
     }
 
     @Override
-    public boolean getCreateParentsMode() {
-        return createParents;
+    public boolean isAutoCreateParents() {
+        return autoCreateParents;
     }
 
     @Override
-    public void setCreateParentsMode(boolean createParents) {
-        this.createParents = createParents;
+    public void setAutoCreateParents(boolean autoCreateParents) {
+        this.autoCreateParents = autoCreateParents;
     }
 
     @Override
