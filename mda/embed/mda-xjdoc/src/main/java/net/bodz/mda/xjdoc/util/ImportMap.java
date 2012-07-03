@@ -3,6 +3,8 @@ package net.bodz.mda.xjdoc.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.bodz.bas.lang.negotiation.INegotiation;
+
 import com.thoughtworks.qdox.model.Type;
 
 public class ImportMap {
@@ -122,12 +124,11 @@ public class ImportMap {
         }
     }
 
-// public static TypeNameContext negotiate(INegotiation negotiation)
-// throws NegotiationException {
-// for (NegotiationParameter np : negotiation)
-// if (np.accept(TypeNameContext.class, true))
-// return (TypeNameContext) np.getValue();
-// return null;
-// }
+    public static ImportMap getInstance(INegotiation negotiation) {
+        ImportMap importMap = negotiation.get(ImportMap.class);
+        if (importMap == null)
+            throw new NullPointerException("ImportMap is not provided in the negotiation.");
+        return importMap;
+    }
 
 }

@@ -13,9 +13,9 @@ import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 import net.bodz.bas.text.flatf.IFlatfSerializable;
 import net.bodz.bas.text.flatf.ISectionHandler;
+import net.bodz.mda.xjdoc.meta.ITagBook;
 import net.bodz.mda.xjdoc.meta.ITagType;
-import net.bodz.mda.xjdoc.meta.IXjLanguage;
-import net.bodz.mda.xjdoc.meta.XjLanguage;
+import net.bodz.mda.xjdoc.meta.TagBook;
 
 public class ElementDoc
         implements IFlatfSerializable {
@@ -128,43 +128,45 @@ public class ElementDoc
     @Override
     public void writeObject(IFlatfOutput out, INegotiation negotiation)
             throws IOException, NegotiationException {
-        IXjLanguage lang = null;
+        ITagBook book = null;
         if (negotiation != null)
             for (IParameter param : negotiation) {
-                if (param.is(IXjLanguage.class, true))
-                    lang = (IXjLanguage) param.getValue();
+                if (param.is(ITagBook.class, true))
+                    book = (ITagBook) param.getValue();
                 else
                     param.ignore();
             }
-        if (lang == null)
-            throw new IllegalUsageException("lang isn't specified.");
+        if (book == null)
+            throw new IllegalUsageException("Book is not provided in the negotiation.");
 
         if (text != null)
             out.attribute(".", text);
         for (Entry<String, Object> entry : tagMap.entrySet()) {
             String tagName = entry.getKey();
             Object tagValue = entry.getValue();
-            ITagType tagType = lang.getTagType(tagName);
-            tagType.writeAttributes(out, tagName, tagValue);
+            ITagType tagType = book.getTagType(tagName);
+            tagType.writeEntries(out, tagName, tagValue, negotiation);
         }
     }
 
     @Override
     public ISectionHandler getSectionHandler(String sectionName, INegotiation negotiation)
             throws NegotiationException {
-        IXjLanguage lang = XjLanguage.getInstance(negotiation);
-        return new Handler(lang);
+        ITagBook book = TagBook.getInstance(negotiation);
+        return new FlatfHandler(book, negotiation);
     }
 
-    protected class Handler
+    protected class FlatfHandler
             implements ISectionHandler {
 
-        IXjLanguage lang;
+        final ITagBook book;
+        final INegotiation negotiation;
 
-        public Handler(IXjLanguage lang) {
-            if (lang == null)
-                throw new NullPointerException("lang");
-            this.lang = lang;
+        public FlatfHandler(ITagBook book, INegotiation negotiation) {
+            if (book == null)
+                throw new NullPointerException("book");
+            this.book = book;
+            this.negotiation = negotiation;
         }
 
         @Override
@@ -191,9 +193,9 @@ public class ElementDoc
                 tagName = name.substring(0, dot);
                 suffix = name.substring(dot + 1);
             }
-            ITagType tagType = lang.getTagType(tagName);
+            ITagType tagType = book.getTagType(tagName);
             Object cont = getTag(tagName);
-            Object tagValue = tagType.parseAttribute(cont, suffix, string);
+            Object tagValue = tagType.parseEntry(cont, suffix, string, negotiation);
             setTag(tagName, tagValue);
         }
 

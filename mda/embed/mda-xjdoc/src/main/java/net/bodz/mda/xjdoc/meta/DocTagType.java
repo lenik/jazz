@@ -3,6 +3,7 @@ package net.bodz.mda.xjdoc.meta;
 import java.io.IOException;
 
 import net.bodz.bas.i18n.dstr.DomainString;
+import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 
 public class DocTagType
@@ -10,17 +11,17 @@ public class DocTagType
 
     /**
      * @param cont
-     *            is skipped, if multiple dstr-tag occurred, only the last one is used.
+     *            is skipped: if there are duplicated tags (with the same tagname), take last one.
      * @return {@link DomainString}.
      */
     @Override
-    public Object parseJavadoc(Object cont, String string) {
+    public Object parseJavadoc(Object cont, String string, INegotiation negotiation) {
         DomainString text = DomainString.parseParaLang(string);
         return text;
     }
 
     @Override
-    public String[] formatJavadoc(Object value) {
+    public String[] formatJavadoc(Object value, INegotiation negotiation) {
         if (value == null)
             return null;
         DomainString text = (DomainString) value;
@@ -28,13 +29,13 @@ public class DocTagType
     }
 
     @Override
-    public Object parseAttribute(Object cont, String suffix, String string) {
+    public Object parseEntry(Object cont, String suffix, String string, INegotiation negotiation) {
         DomainString text = DomainString.parseMultiLangString(string);
         return text;
     }
 
     @Override
-    public void writeAttributes(IFlatfOutput out, String prefix, Object value)
+    public void writeEntries(IFlatfOutput out, String prefix, Object value, INegotiation negotiation)
             throws IOException {
         DomainString dstr = (DomainString) value;
 

@@ -1,7 +1,5 @@
 package net.bodz.mda.xjdoc.meta;
 
-import net.bodz.mda.xjdoc.util.IImportMapProvider;
-
 public abstract class AbstractTagType
         implements ITagType {
 
@@ -13,8 +11,8 @@ public abstract class AbstractTagType
         return new KeyedTagType(this);
     }
 
-    public TypedTagType typed(IImportMapProvider importMapProvider) {
-        return new TypedTagType(this, importMapProvider);
+    public TypedTagType typed() {
+        return new TypedTagType(this);
     }
 
 }

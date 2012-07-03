@@ -7,28 +7,29 @@ import java.util.Map.Entry;
 
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.i18n.dstr.DomainString;
+import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 
 public class AutoTagType
         extends AbstractTagType {
 
     @Override
-    public Object parseJavadoc(Object cont, String string) {
+    public Object parseJavadoc(Object cont, String string, INegotiation negotiation) {
         return null;
     }
 
     @Override
-    public String[] formatJavadoc(Object value) {
+    public String[] formatJavadoc(Object value, INegotiation negotiation) {
         return null;
     }
 
     @Override
-    public Object parseAttribute(Object cont, String suffix, String string) {
+    public Object parseEntry(Object cont, String suffix, String string, INegotiation negotiation) {
         return null;
     }
 
     @Override
-    public void writeAttributes(IFlatfOutput out, String prefix, Object value)
+    public void writeEntries(IFlatfOutput out, String prefix, Object value, INegotiation negotiation)
             throws IOException {
 
         if (value == null)
@@ -45,7 +46,7 @@ public class AutoTagType
         else if (value instanceof List<?>) {
             List<?> list = (List<?>) value;
             for (int index = 0; index < list.size(); index++)
-                writeAttributes(out, prefix + "." + index, list.get(index));
+                writeEntries(out, prefix + "." + index, list.get(index), negotiation);
         }
 
         else if (value instanceof Map<?, ?>) {
@@ -53,7 +54,7 @@ public class AutoTagType
             for (Entry<?, ?> entry : map.entrySet()) {
                 Object itemKey = entry.getKey();
                 Object itemValue = entry.getValue();
-                writeAttributes(out, prefix + "." + itemKey, itemValue);
+                writeEntries(out, prefix + "." + itemKey, itemValue, negotiation);
             }
         }
 
