@@ -1,4 +1,4 @@
-package net.bodz.mda.xjdoc.test;
+package user;
 
 /**
  * Here is the javadoc.
@@ -27,7 +27,10 @@ public class ExampleClass<T> {
      * 
      * <p lang="zh-cn">
      * 一个域。
+     * 
+     * @msgid FIELD_1
+     * @unknown This is a undefined tag.
      */
-    public String field;
+    public String field1;
 
 }

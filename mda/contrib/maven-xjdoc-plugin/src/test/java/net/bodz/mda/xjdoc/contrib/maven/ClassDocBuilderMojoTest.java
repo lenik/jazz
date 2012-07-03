@@ -9,9 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
-import org.apache.maven.project.MavenProject;
-import org.codehaus.plexus.PlexusContainer;
-import org.codehaus.plexus.component.repository.DefaultComponentRepository;
 import org.junit.Test;
 
 public class ClassDocBuilderMojoTest
@@ -65,26 +62,19 @@ public class ClassDocBuilderMojoTest
     }
 
     @Test
-    public void testVars()
+    public void testDumpff1()
             throws Exception {
         File testPom = new File(getBasedir(), "src/test/resources/unit/dumpff/test1.xml");
         assertTrue(testPom.exists());
 
-        PlexusContainer container = getContainer();
-        DefaultComponentRepository repo = getField(container, "componentRepository");
-
-// System.out.println("Component Descriptor Maps:");
-// dumpTextMap2((Map<?, ?>) getField(repo, "componentDescriptorMaps"));
-// System.out.println();
-
         ClassDocBuilderMojo mojo = (ClassDocBuilderMojo) lookupMojo("build", testPom);
-        MavenProject project = mojo.getProject();
 
         assertNotNull(mojo);
-        System.out.println("Src dir = " + mojo.getSourceDirectory());
-        System.out.println("Out dir = " + mojo.getOutputDirectory());
-        // mojo.execute();
-        System.out.println("lang-class = " + mojo.langClass);
+        // System.out.println("Src dir = " + mojo.getSourceDirectory());
+        // System.out.println("Out dir = " + mojo.getOutputDirectory());
+        // System.out.println("Book Class = " + mojo.getBook().getClass());
+        mojo.execute();
+        // System.out.println("Done!");
     }
 
 }

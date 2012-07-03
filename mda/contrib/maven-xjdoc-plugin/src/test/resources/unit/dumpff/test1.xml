@@ -18,6 +18,7 @@
             <plugin>
                 <groupId>net.bodz.mda</groupId>
                 <artifactId>maven-xjdoc-plugin</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
                 <executions>
                     <execution>
                         <id>build-classdocs</id>
@@ -27,13 +28,12 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
-                    <outputDirectory></outputDirectory>
-                    <missingDocML>
+                    <sourceDirectory>${basedir}/src/test/java</sourceDirectory>
+                    <outputDirectory>${basedir}/target/ff</outputDirectory>
+                    <missingDoc>
                         "Empty"
                         zh-cn "没有文档"
-                    </missingDocML>
-                    <langClass>java.lang.String</langClass>
+                    </missingDoc>
                 </configuration>
             </plugin>
         </plugins>
