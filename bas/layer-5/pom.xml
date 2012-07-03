@@ -15,7 +15,6 @@
         <module>bas-bean</module>
         <module>bas-database</module>
         <module>bas-flow</module>
-        <module>bas-form</module>
         <module>bas-i18n</module>
         <module>bas-l10n</module>
         <module>bas-loader</module>
