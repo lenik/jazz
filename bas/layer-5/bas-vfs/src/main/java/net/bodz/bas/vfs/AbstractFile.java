@@ -213,6 +213,9 @@ public abstract class AbstractFile
         return bits;
     }
 
+    /**
+     * @return <code>null</code> If no resource available for this fs-entry.
+     */
     @Override
     public final IStreamResource getResource() {
         Charset charset = getPreferredCharset();
@@ -221,19 +224,20 @@ public abstract class AbstractFile
         return getResource(charset);
     }
 
+    /**
+     * @return <code>null</code> If no resource available for this fs-entry.
+     */
     @Override
     public final IStreamResource getResource(String charsetName) {
         Charset charset = Charset.forName(charsetName);
         return getResource(charset);
     }
 
+    /**
+     * @return <code>null</code> If no resource available for this fs-entry.
+     */
     @Override
-    public IStreamResource getResource(Charset charset) {
-        if (isBlob())
-            throw new NotImplementedException();
-        else
-            return null;
-    }
+    public abstract IStreamResource getResource(Charset charset);
 
     @Override
     public final IStreamInputSource getInputSource() {
@@ -251,8 +255,7 @@ public abstract class AbstractFile
 
     @Override
     public IStreamInputSource getInputSource(Charset charset) {
-        IStreamResource resource = getResource();
-        resource.setCharset(charset);
+        IStreamResource resource = getResource(charset);
         return resource;
     }
 
@@ -289,9 +292,17 @@ public abstract class AbstractFile
 
     @Override
     public IStreamOutputTarget getOutputTarget(boolean appendMode, Charset charset) {
-        IStreamResource resource = getResource();
+        if (isAutoCreateParents()) {
+            try {
+                IFile parent = getParentFile();
+                if (parent != null)
+                    parent.createTree();
+            } catch (FileResolveException e) {
+                throw new RuntimeException(e.getMessage(), e);
+            }
+        }
+        IStreamResource resource = getResource(charset);
         resource.setAppendMode(appendMode);
-        resource.setCharset(charset);
         return resource;
     }
 
