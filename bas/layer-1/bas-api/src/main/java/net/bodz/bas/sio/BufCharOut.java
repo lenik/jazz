@@ -2,30 +2,30 @@ package net.bodz.bas.sio;
 
 import java.io.IOException;
 
-public class BCharOut
+public class BufCharOut
         extends AbstractPrintOut
         implements CharSequence, Appendable {
 
     /**
      * @TODO set final in future.
      */
-    protected StringBuilder buffer;
+    protected StringBuffer buffer;
 
-    public BCharOut(StringBuilder buffer) {
+    public BufCharOut(StringBuffer buffer) {
         if (buffer == null)
             throw new NullPointerException("buffer");
         this.buffer = buffer;
     }
 
-    public BCharOut() {
-        this(new StringBuilder());
+    public BufCharOut() {
+        this(new StringBuffer());
     }
 
-    public BCharOut(int capacity) {
-        this(new StringBuilder(capacity));
+    public BufCharOut(int capacity) {
+        this(new StringBuffer(capacity));
     }
 
-    public StringBuilder getBuffer() {
+    public StringBuffer getBuffer() {
         return buffer;
     }
 
@@ -33,7 +33,7 @@ public class BCharOut
      * Access the {@link #buffer} field instead.
      */
     @Deprecated
-    public void setBuffer(StringBuilder buffer) {
+    public void setBuffer(StringBuffer buffer) {
         this.buffer = buffer;
     }
 
