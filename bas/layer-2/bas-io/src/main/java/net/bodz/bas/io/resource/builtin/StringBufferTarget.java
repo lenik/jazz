@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.nio.charset.CharsetDecoder;
 
 import net.bodz.bas.io.resource.AbstractStreamOutputTarget;
-import net.bodz.bas.sio.BCharOut;
+import net.bodz.bas.sio.BufCharOut;
 import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.sio.util.DecodedByteOut;
@@ -29,9 +29,9 @@ public class StringBufferTarget
     }
 
     @Override
-    public BCharOut newPrintOut()
+    public BufCharOut newPrintOut()
             throws IOException {
-        return new BCharOut(buffer);
+        return new BufCharOut(buffer);
     }
 
     @Override
