@@ -16,7 +16,8 @@ import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.bas.vfs.impl.javaio.JavaioFile;
 import net.bodz.mda.xjdoc.conv.ClassDocBuilder;
-import net.bodz.mda.xjdoc.meta.IXjLanguage;
+import net.bodz.mda.xjdoc.meta.ITagBook;
+import net.bodz.mda.xjdoc.meta.JavadocTagBook;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.util.ImportMap;
 
@@ -38,12 +39,7 @@ public class ClassDocBuilderMojo
         extends AbstractResourceGeneratorMojo {
 
     String extension = "classdoc";
-
-    /**
-     * @parameter
-     */
-    Class<?> langClass;
-
+    ITagBook book = PredefinedBooks.getBook("javadoc");
     DomainString missingDoc;
 
     /**
@@ -75,32 +71,46 @@ public class ClassDocBuilderMojo
         this.missingDoc = DomainString.parseMultiLangString(missingDoc);
     }
 
+    public ITagBook getBook() {
+        return book;
+    }
+
+    public void setBook(ITagBook book) {
+        this.book = book;
+    }
+
     /**
      * Xjdoc language name.
      * 
-     * This can be the FQCN of the {@link IXjLanguage} implementation, or predefined language name
+     * This can be the FQCN of the {@link ITagBook} implementation, or predefined language name
      * includes:
      * <ul>
-     * <li>javadoc
+     * <li>javadoc: {@link JavadocTagBook}
      * </ul>
      * 
-     * @parameter expression="${classdoc.lang}" default-value="javadoc"
+     * @parameter expression="${classdoc.book}" default-value="javadoc"
      */
-    public String getLanguage() {
-        if (langClass == null)
+    public String getBookName() {
+        if (book == null)
             return null;
         else
-            return langClass.getName();
+            return PredefinedBooks.indexOf(book);
     }
 
-    public void setLanguage(String langName) {
-        if (langName == null)
-            throw new NullPointerException("langName");
-        try {
-            langClass = Class.forName(langName);
-        } catch (ClassNotFoundException e) {
-            throw new IllegalArgumentException("Language isn't defined: " + langName);
-        }
+    public void setBookName(String bookName) {
+        if (bookName == null)
+            throw new NullPointerException("bookName");
+        ITagBook book = PredefinedBooks.getBook(bookName);
+        if (book == null)
+            try {
+                Class<? extends ITagBook> bookClass = (Class<? extends ITagBook>) Class.forName(bookName);
+                book = bookClass.newInstance();
+            } catch (ClassNotFoundException e) {
+                throw new IllegalArgumentException("Book isn't defined: " + bookName);
+            } catch (ReflectiveOperationException e) {
+                throw new RuntimeException("Failed to instantiate book: " + bookName, e);
+            }
+        this.book = book;
     }
 
     @Override
@@ -120,14 +130,13 @@ public class ClassDocBuilderMojo
             String packageName = jsource.getPackageName();
             File outDir = outRoot == null ? null : new File(outRoot, packageName.replace('.', '/'));
 
-            ImportMap sourceFileImports = new ImportMap(packageName);
-            for (String importFqcn : jsource.getImports())
-                sourceFileImports.add(importFqcn);
-
-            IXjLanguage sourceLang = createLang(sourceFileImports);
+            // Not used: souce imports are resolvable in memeber members.
+            // ImportMap sourceFileImports = new ImportMap(packageName);
+            // for (String importFqcn : jsource.getImports())
+            // sourceFileImports.add(importFqcn);
 
             for (JavaClass jclass : jsource.getClasses()) {
-                ClassDocBuilder builder = new ClassDocBuilder(sourceLang, sourceFileImports);
+                ClassDocBuilder builder = new ClassDocBuilder(book);
                 // builder.setCreateClassImports(true);
                 ClassDoc classDoc = builder.buildClass(jclass);
                 // builder.setMissingDoc(missingDoc);
@@ -140,19 +149,19 @@ public class ClassDocBuilderMojo
                 File classDocFile = outDir == null ? null : new File(outDir, baseName);
 
                 ImportMap classImports = classDoc.getOrCreateImports();
-                IXjLanguage classLang = createLang(classImports);
 
                 INegotiation negotiation = new ListNegotiation(//
-                        new Option(//
-                                IXjLanguage.class, classLang // JavadocXjLang.getInstance()
-                        ));
+                        new Option(ITagBook.class, book), //
+                        new Option(ImportMap.class, classImports));
 
                 IStreamOutputTarget outTarget;
                 if (classDocFile == null) {
                     outTarget = new OutputStreamTarget(System.out);
                     System.out.println("FILE: " + baseName);
                 } else {
-                    outTarget = new JavaioFile(classDocFile).getOutputTarget();
+                    JavaioFile _file = new JavaioFile(classDocFile);
+                    _file.setAutoCreateParents(true);
+                    outTarget = _file.getOutputTarget();
                 }
                 // outTarget.setCharset("utf-8");
                 try {
@@ -166,19 +175,6 @@ public class ClassDocBuilderMojo
                     throw new MojoExecutionException(e.getMessage(), e);
                 }
             }
-        }
-    }
-
-    IXjLanguage createLang(ImportMap importMap)
-            throws MojoExecutionException {
-        try {
-            IXjLanguage lang = (IXjLanguage) langClass.newInstance();
-            lang.negotiate(new Option(ImportMap.class, importMap));
-            return lang;
-        } catch (ReflectiveOperationException e) {
-            throw new MojoExecutionException(e.getMessage(), e);
-        } catch (NegotiationException e) {
-            throw new MojoExecutionException(e.getMessage(), e);
         }
     }
 

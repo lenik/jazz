@@ -15,7 +15,7 @@ public class ProjectInfoMojoTest
     @Test
     public void testExecute()
             throws Exception {
-        File testPom = new File(getBasedir(), "src/test/resources/unit/dump1/test.xml");
+        File testPom = new File(getBasedir(), "src/test/resources/unit/dumpff/test1.xml");
         ProjectInfoMojo mojo = (ProjectInfoMojo) lookupMojo("dump", testPom);
         mojo.execute();
     }
