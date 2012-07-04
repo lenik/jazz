@@ -1,8 +1,6 @@
 package net.bodz.bas.mem;
 
-import static net.bodz.bas.mem.types.Types.INT16LE;
-import static net.bodz.bas.mem.types.Types.INT32LE;
-import static net.bodz.bas.mem.types.Types.INT64LE;
+import static net.bodz.bas.mem.types.Types.*;
 
 public abstract class AbstractMemory implements Memory {
 

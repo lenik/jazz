@@ -2,7 +2,6 @@ package net.bodz.bas.trait.spi;
 
 import java.io.InputStream;
 
-import net.bodz.bas.trait.spi.QueryMethodTraitsProvider;
 import net.bodz.bas.traits.AbstractCommonTraits;
 import net.bodz.bas.traits.IFormatter;
 

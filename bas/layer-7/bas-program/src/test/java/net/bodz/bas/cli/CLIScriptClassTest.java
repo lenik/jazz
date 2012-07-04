@@ -1,8 +1,6 @@
 package net.bodz.bas.cli;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import net.bodz.bas.potato.Potatoes;
 import net.bodz.bas.potato.traits.IType;
 

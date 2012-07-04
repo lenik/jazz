@@ -10,10 +10,8 @@ import java.nio.charset.Charset;
 import java.util.List;
 
 import net.bodz.bas.c.java.io.FileDiff;
-import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.java.io.TempFile;
 import net.bodz.bas.c.string.StringArray;
-import net.bodz.bas.cli.util.ProtectedShell;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.UnexpectedException;

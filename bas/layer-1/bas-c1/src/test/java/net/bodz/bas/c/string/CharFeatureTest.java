@@ -2,8 +2,6 @@ package net.bodz.bas.c.string;
 
 import java.lang.reflect.Array;
 
-import net.bodz.bas.c.string.CharFeature;
-
 import org.junit.Assert;
 import org.junit.Test;
 

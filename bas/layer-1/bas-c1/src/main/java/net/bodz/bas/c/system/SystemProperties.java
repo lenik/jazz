@@ -1,6 +1,5 @@
 package net.bodz.bas.c.system;
 
-import net.bodz.bas.c.system.SystemPropertiesTest;
 
 public class SystemProperties {
 

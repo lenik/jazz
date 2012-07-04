@@ -1,6 +1,6 @@
 package net.bodz.bas.lang.negotiation;
 
-public class Option
+class Option
         extends AbstractParameter {
 
     private static final long serialVersionUID = 1L;

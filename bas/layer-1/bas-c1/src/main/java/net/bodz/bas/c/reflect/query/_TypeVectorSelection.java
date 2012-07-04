@@ -3,17 +3,7 @@ package net.bodz.bas.c.reflect.query;
 import java.lang.reflect.Modifier;
 
 import net.bodz.bas.c.reflect.MethodSignature;
-import net.bodz.bas.c.reflect.query.predicate.IStringPredicate;
-import net.bodz.bas.c.reflect.query.predicate.ITypePredicate;
-import net.bodz.bas.c.reflect.query.predicate.ITypeVectorPredicate;
-import net.bodz.bas.c.reflect.query.predicate.StringEndsWith;
-import net.bodz.bas.c.reflect.query.predicate.StringEquals;
-import net.bodz.bas.c.reflect.query.predicate.StringStartsWith;
-import net.bodz.bas.c.reflect.query.predicate.TypeAncestorOf;
-import net.bodz.bas.c.reflect.query.predicate.TypeDerivedFrom;
-import net.bodz.bas.c.reflect.query.predicate.TypeVectorAncestorOf;
-import net.bodz.bas.c.reflect.query.predicate.TypeVectorDerivedFrom;
-import net.bodz.bas.c.reflect.query.predicate.TypeVectorEquals;
+import net.bodz.bas.c.reflect.query.predicate.*;
 import net.bodz.bas.util.iter.AbstractMitablex;
 
 public abstract class _TypeVectorSelection<T, $ extends _TypeVectorSelection<T, $>>

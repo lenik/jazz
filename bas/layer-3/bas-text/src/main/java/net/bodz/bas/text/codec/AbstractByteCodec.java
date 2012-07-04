@@ -11,17 +11,7 @@ import java.nio.CharBuffer;
 import net.bodz.bas.err.DecodeException;
 import net.bodz.bas.err.EncodeException;
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.sio.BByteOut;
-import net.bodz.bas.sio.BCharOut;
-import net.bodz.bas.sio.ByteBufferByteIn;
-import net.bodz.bas.sio.ByteBufferByteOut;
-import net.bodz.bas.sio.CharBufferCharIn;
-import net.bodz.bas.sio.CharBufferCharOut;
-import net.bodz.bas.sio.InputStreamByteIn;
-import net.bodz.bas.sio.OutputStreamByteOut;
-import net.bodz.bas.sio.ReaderCharIn;
-import net.bodz.bas.sio.StringCharIn;
-import net.bodz.bas.sio.WriterCharOut;
+import net.bodz.bas.sio.*;
 
 public abstract class AbstractByteCodec
         implements IByteCodec {

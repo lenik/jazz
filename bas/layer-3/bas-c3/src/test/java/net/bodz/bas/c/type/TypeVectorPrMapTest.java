@@ -5,20 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.bodz.bas.collection.preorder.testtype.C;
-import net.bodz.bas.collection.preorder.testtype.CI;
-import net.bodz.bas.collection.preorder.testtype.CJ;
-import net.bodz.bas.collection.preorder.testtype.CJz;
-import net.bodz.bas.collection.preorder.testtype.CJzKI;
-import net.bodz.bas.collection.preorder.testtype.Cat;
-import net.bodz.bas.collection.preorder.testtype.D;
-import net.bodz.bas.collection.preorder.testtype.DIJ;
-import net.bodz.bas.collection.preorder.testtype.DIJy;
-import net.bodz.bas.collection.preorder.testtype.Dog;
-import net.bodz.bas.collection.preorder.testtype.Dx;
-import net.bodz.bas.collection.preorder.testtype.DxKI;
-import net.bodz.bas.collection.preorder.testtype.DxKIx;
-import net.bodz.bas.collection.preorder.testtype.I;
+import net.bodz.bas.collection.preorder.testtype.*;
 import net.bodz.bas.util.iter.Iterables;
 
 import org.junit.Assert;

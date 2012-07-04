@@ -2,18 +2,8 @@ package net.bodz.bas.cli;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
-import java.util.SortedMap;
-import java.util.SortedSet;
-import java.util.TreeMap;
-import java.util.TreeSet;
 
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.err.ParseException;

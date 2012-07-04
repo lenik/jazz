@@ -1,24 +1,6 @@
 package net.bodz.bas.vfs;
 
-import static net.bodz.bas.vfs.FileModifier.BINARY;
-import static net.bodz.bas.vfs.FileModifier.CNTTYPE;
-import static net.bodz.bas.vfs.FileModifier.DIRECTORY;
-import static net.bodz.bas.vfs.FileModifier.EMPTY;
-import static net.bodz.bas.vfs.FileModifier.EXECUTABLE;
-import static net.bodz.bas.vfs.FileModifier.EXIST;
-import static net.bodz.bas.vfs.FileModifier.FILE;
-import static net.bodz.bas.vfs.FileModifier.HIDDEN;
-import static net.bodz.bas.vfs.FileModifier.MASK_ACCESSIBLE;
-import static net.bodz.bas.vfs.FileModifier.MASK_ATTRIB;
-import static net.bodz.bas.vfs.FileModifier.MASK_EXISTENCE;
-import static net.bodz.bas.vfs.FileModifier.MASK_LENGTHY;
-import static net.bodz.bas.vfs.FileModifier.MASK_OBJTYPE;
-import static net.bodz.bas.vfs.FileModifier.NEMPTY;
-import static net.bodz.bas.vfs.FileModifier.NEXIST;
-import static net.bodz.bas.vfs.FileModifier.READABLE;
-import static net.bodz.bas.vfs.FileModifier.SEEKABLE;
-import static net.bodz.bas.vfs.FileModifier.TEXT;
-import static net.bodz.bas.vfs.FileModifier.WRITABLE;
+import static net.bodz.bas.vfs.FileModifier.*;
 
 import java.io.IOException;
 import java.nio.charset.Charset;

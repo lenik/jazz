@@ -1,7 +1,6 @@
 package net.bodz.bas.text.codec.builtin;
 
 import static org.junit.Assert.assertEquals;
-import net.bodz.bas.text.codec.builtin.HexCodec;
 
 import org.junit.Test;
 

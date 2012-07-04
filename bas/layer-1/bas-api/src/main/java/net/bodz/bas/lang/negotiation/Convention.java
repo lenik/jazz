@@ -3,7 +3,7 @@ package net.bodz.bas.lang.negotiation;
 /**
  * An negotation parameter alias.
  */
-public class Convention
+class Convention
         extends AbstractParameter {
 
     private static final long serialVersionUID = 1L;
