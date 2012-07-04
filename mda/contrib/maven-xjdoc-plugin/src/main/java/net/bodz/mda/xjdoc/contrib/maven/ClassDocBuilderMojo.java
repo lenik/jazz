@@ -16,10 +16,11 @@ import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.bas.vfs.impl.javaio.JavaioFile;
 import net.bodz.mda.xjdoc.conv.ClassDocBuilder;
-import net.bodz.mda.xjdoc.meta.ITagBook;
-import net.bodz.mda.xjdoc.meta.JavadocTagBook;
-import net.bodz.mda.xjdoc.meta.MergedTagBook;
 import net.bodz.mda.xjdoc.model.ClassDoc;
+import net.bodz.mda.xjdoc.tags.ITagBook;
+import net.bodz.mda.xjdoc.tags.JavadocTagBook;
+import net.bodz.mda.xjdoc.tags.MergedTagBook;
+import net.bodz.mda.xjdoc.tags.TagBooks;
 import net.bodz.mda.xjdoc.util.ImportMap;
 
 import org.apache.maven.plugin.MojoExecutionException;
@@ -95,25 +96,14 @@ public class ClassDocBuilderMojo
                 sb = new StringBuilder();
             else
                 sb.append(", ");
-            String bookName = PredefinedBooks.getName(book);
+            String bookName = TagBooks.getName(book);
             sb.append(bookName);
         }
         return sb.toString();
     }
 
     public synchronized void setBooks(String bookNames) {
-        if (bookNames == null)
-            throw new NullPointerException("bookNames");
-        mergedBook.clear();
-        for (String bookName : bookNames.split(",")) {
-            bookName = bookName.trim();
-            if (bookName.isEmpty())
-                continue;
-            ITagBook book = PredefinedBooks.resolve(bookName);
-            if (book == null)
-                throw new IllegalArgumentException("Bad book name: " + bookName);
-            mergedBook.add(book);
-        }
+        mergedBook = TagBooks.parse(bookNames);
     }
 
     @Override

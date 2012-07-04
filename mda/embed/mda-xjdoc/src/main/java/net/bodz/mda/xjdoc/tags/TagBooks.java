@@ -1,13 +1,11 @@
-package net.bodz.mda.xjdoc.contrib.maven;
+package net.bodz.mda.xjdoc.tags;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.bodz.mda.xjdoc.meta.ITagBook;
-import net.bodz.mda.xjdoc.meta.JavadocTagBook;
 
-public class PredefinedBooks {
+public class TagBooks {
 
     static Map<String, ITagBook> map;
 
@@ -42,6 +40,22 @@ public class PredefinedBooks {
                 return entry.getKey();
         }
         return book.getClass().getName();
+    }
+
+    public static MergedTagBook parse(String bookNames) {
+        if (bookNames == null)
+            throw new NullPointerException("bookNames");
+        MergedTagBook mergedBook = new MergedTagBook();
+        for (String bookName : bookNames.split(",")) {
+            bookName = bookName.trim();
+            if (bookName.isEmpty())
+                continue;
+            ITagBook book = TagBooks.resolve(bookName);
+            if (book == null)
+                throw new IllegalArgumentException("Bad book name: " + bookName);
+            mergedBook.add(book);
+        }
+        return mergedBook;
     }
 
 }

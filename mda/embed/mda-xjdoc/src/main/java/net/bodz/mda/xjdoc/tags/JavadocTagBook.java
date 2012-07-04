@@ -1,4 +1,4 @@
-package net.bodz.mda.xjdoc.meta;
+package net.bodz.mda.xjdoc.tags;
 
 import net.bodz.mda.xjdoc.util.ImportMap;
 

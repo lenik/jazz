@@ -1,4 +1,4 @@
-package net.bodz.mda.xjdoc.meta;
+package net.bodz.mda.xjdoc.tags;
 
 import java.util.HashMap;
 import java.util.Map;
