@@ -1,24 +1,24 @@
 package net.bodz.mda.xjdoc.user;
 
+import static net.bodz.bas.lang.negotiation.Negotiation.*;
+
 import java.io.File;
 
-import javax.free.BCharOut;
-import javax.free.FinalNegotiation;
-import javax.free.INegotiation;
-import javax.free.NegotiationParameter;
-import javax.free.StringSource;
-
+import net.bodz.bas.io.resource.builtin.StringSource;
+import net.bodz.bas.lang.negotiation.INegotiation;
+import net.bodz.bas.m2.util.MavenPath;
+import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.mda.xjdoc.conv.ClassDocBuilder;
 import net.bodz.mda.xjdoc.conv.ClassDocFlatfLoader;
-import net.bodz.mda.xjdoc.meta.IXjLanguage;
 import net.bodz.mda.xjdoc.model.ClassDoc;
-import net.bodz.mda.xjdoc.user.xjl.AnimalXjLang;
+import net.bodz.mda.xjdoc.tags.ITagBook;
+import net.bodz.mda.xjdoc.tags.TagBooks;
+import net.bodz.mda.xjdoc.user.xjl.AnimalTagBook;
 import net.bodz.mda.xjdoc.util.ImportMap;
 
 import org.junit.Assert;
 
-import com.bee32.plover.xutil.m2.MavenPath;
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.ClassLibrary;
 import com.thoughtworks.qdox.model.JavaClass;
@@ -35,57 +35,46 @@ public class QdoxDog
         ClassLibrary syslib = new ClassLibrary(scl);
         JavaDocBuilder javaDocBuilder = new JavaDocBuilder(syslib);
 
+        TagBooks.register("animal", new AnimalTagBook());
+        ITagBook book = TagBooks.parse("javadoc, animal");
+
         File animalSource = MavenPath.getSourceFile(Animal.class);
         File dogSource = MavenPath.getSourceFile(Dog.class);
         javaDocBuilder.addSource(animalSource);
         javaDocBuilder.addSource(dogSource);
+        // javaDocBuilder.addSourceTree(file)
 
         for (JavaSource jsource : javaDocBuilder.getSources()) {
             String packageName = jsource.getPackageName();
-            ImportMap sourceFileImports = new ImportMap(packageName);
-            for (String importFqcn : jsource.getImports())
-                sourceFileImports.add(importFqcn);
 
             for (JavaClass jclass : jsource.getClasses()) {
-                IXjLanguage lang = new AnimalXjLang();
-                lang.negotiate(new NegotiationParameter(ImportMap.class, sourceFileImports));
-
-                ClassDocBuilder builder = new ClassDocBuilder(lang, sourceFileImports);
-                // builder.setCreateClassImports(true);
+                ClassDocBuilder builder = new ClassDocBuilder(book);
                 ClassDoc classDoc = builder.buildClass(jclass);
 
                 String fqcn = jclass.getFullyQualifiedName();
+                ImportMap builderMap = classDoc.getOrCreateImports();
 
-                ImportMap classImports = classDoc.getOrCreateImports();
-                lang = new AnimalXjLang();
-                lang.negotiate(new NegotiationParameter(ImportMap.class, classImports));
-
-                INegotiation negotiation = new FinalNegotiation(//
-                        new NegotiationParameter(//
-                                IXjLanguage.class, lang // JavadocXjLang.getInstance()
-                        ));
+                INegotiation n_ffout = list(//
+                        option(ITagBook.class, book), //
+                        option(ImportMap.class, builderMap));
 
                 BCharOut buf = new BCharOut();
                 FlatfOutput ffout = new FlatfOutput(buf);
-                classDoc.writeObject(ffout, negotiation);
+                classDoc.writeObject(ffout, n_ffout);
                 String ff = buf.toString();
                 System.out.println("CLASS: " + fqcn);
                 System.out.println(ff + " ---");
 
                 StringSource ffSource = new StringSource(ff);
 
-                classImports = new ImportMap(sourceFileImports, packageName);
-                classDoc.setImports(classImports);
-                IXjLanguage lang2 = new AnimalXjLang();
-                lang2.negotiate(new NegotiationParameter(ImportMap.class, classImports));
-
-                ClassDocFlatfLoader ffLoader = new ClassDocFlatfLoader(lang2);
+                ImportMap newmap = new ImportMap(packageName);
+                ClassDocFlatfLoader ffLoader = new ClassDocFlatfLoader(book, newmap);
                 ClassDoc doc2 = ffLoader.load(fqcn, ffSource);
-                doc2.setImports(classImports);
+                doc2.setImports(newmap);
 
                 BCharOut buf2 = new BCharOut();
                 FlatfOutput ffout2 = new FlatfOutput(buf2);
-                doc2.writeObject(ffout2, negotiation);
+                doc2.writeObject(ffout2, n_ffout);
                 String ff2 = buf.toString();
                 System.out.println("CLASS2: " + fqcn);
                 System.out.println(ff2 + " ===");
