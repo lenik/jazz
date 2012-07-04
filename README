@@ -1,0 +1,97 @@
+en:README
+---------
+
+    Jazz is a collection of libraries and frameworks written in Java. It's mainly written by me.
+
+    Some libraries I had created on SourceForge and Java.net, later I merged them into the Jazz project.
+
+    This project are mainly for desktop application development, rather then server-side.
+
+
+CONTENTS
+--------
+
+    art                 Artifact manager
+    bas                 BAS application skeleton/framework
+    bas-eclipse         BAS eclipse plugin
+    bas-fj              BAS fj port
+    build               For Jazz build
+    empty               An empty project used as template
+    game                Game framework
+    games-chess         Game/Chess framework
+    jna                 JNA utilized tools
+    lenik               Personal stuff
+    lilyfond            Clear-look MIS framework
+    mda                 Framework for model-driven architecture
+    mia                 Advanced math library
+    mis                 MIS framework
+    six                 Simxml parser in Java
+    soap                SOAP Utilities
+    swt                 SWT application framework
+    sysy                Data Synchronizer
+    xfo                 Extensible File Object
+    xml                 XML schemas
+    xml-forms           XML-form web presentation technology
+    zlw                 Zooly little webs
+
+
+LICENSE
+-------
+
+    Jazz is distributed under GPL 2.0 license.
+
+
+CONTACT
+-------
+    
+    Lenik (Xie Jilei)
+    xjl (at) 99jsj (dot) com
+
+
+
+zh:关于
+-------
+
+    本仓库主要是我的 Java 工具库。
+
+    其它一些零散的库和程序可能在 SourceForge 或 GoogleCode 或 Java.net 上。
+
+
+目录
+----
+
+    art                 制品管理
+    bas                 基础应用程序框架
+    bas-eclipse         BAS Eclipse 插件
+    bas-fj              BAS/fj 兼容性构建
+    build               用于 M2 构建
+    empty               用作模板的空项目
+    game                基本游戏框架
+    games-chess         棋盘类游戏框架
+    jna                 JNA 实例定义
+    lenik               一些个人的东西
+    lilyfond            企业应用模型
+    mda                 模型驱动架构支持
+    mia                 应用数学库
+    mis                 企业信息管理框架
+    six                 Simxml 解析器
+    soap                SOAP 工具
+    swt                 SWT 应用程序框架
+    sysy                一个数据同步的通用模型
+    xfo                 可扩展文件对象
+    xml                 XML 图谱
+    xml-forms           XML-form 呈现技术
+    zlw                 简单网站支持
+
+版权
+----
+
+    本仓库的所有库程序在 GPL 许可证下发布，可以免费使用，但未经许可不得用于商业用途。
+
+
+联系作者
+--------
+
+    谢继雷
+    xjl (at) 99jsj (dot) com
+
