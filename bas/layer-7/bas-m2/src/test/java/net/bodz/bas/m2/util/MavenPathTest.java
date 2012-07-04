@@ -2,8 +2,6 @@ package net.bodz.bas.m2.util;
 
 import java.io.File;
 
-import net.bodz.bas.m2.util.MavenPath;
-
 import org.junit.Assert;
 import org.junit.Test;
 

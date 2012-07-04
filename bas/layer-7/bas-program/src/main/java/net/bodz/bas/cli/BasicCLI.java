@@ -18,7 +18,6 @@ import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.cli.ext.CLIPlugin;
 import net.bodz.bas.cli.ext.CLIPlugins;
-import net.bodz.bas.cli.opt.AbstractOption;
 import net.bodz.bas.cli.opt.IOption;
 import net.bodz.bas.cli.opt.IOptionGroup;
 import net.bodz.bas.cli.opt.MethodCall;

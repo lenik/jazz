@@ -7,7 +7,6 @@ import java.net.URL;
 
 import user.ExampleClass;
 
-
 import com.thoughtworks.qdox.JavaDocBuilder;
 
 public class JavadocParser {

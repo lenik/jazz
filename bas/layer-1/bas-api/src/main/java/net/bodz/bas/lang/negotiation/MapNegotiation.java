@@ -37,22 +37,22 @@ public class MapNegotiation
         return map.put(param.getId(), param);
     }
 
-    public void putOption(String id, Object value) {
+    public void addOption(String id, Object value) {
         Option option = new Option(id, value);
         addParameter(option);
     }
 
-    public <T> void putOption(Class<T> type, T value) {
+    public <T> void addOption(Class<T> type, T value) {
         Option option = new Option(type, value);
         addParameter(option);
     }
 
-    public void putParameter(String id, Object value) {
+    public void addParameter(String id, Object value) {
         Option option = new Option(id, value);
         addParameter(option);
     }
 
-    public <T> void putParameter(Class<T> type, T value) {
+    public <T> void addParameter(Class<T> type, T value) {
         Parameter parameter = new Parameter(type, value);
         addParameter(parameter);
     }

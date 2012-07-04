@@ -1,8 +1,6 @@
 package net.bodz.bas.collection.tree;
 
-import static net.bodz.bas.collection.tree.TreeCallback.BREAK;
-import static net.bodz.bas.collection.tree.TreeCallback.CANCEL;
-import static net.bodz.bas.collection.tree.TreeCallback.OK;
+import static net.bodz.bas.collection.tree.TreeCallback.*;
 
 import java.util.List;
 

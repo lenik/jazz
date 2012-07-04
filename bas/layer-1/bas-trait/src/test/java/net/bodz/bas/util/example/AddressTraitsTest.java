@@ -1,8 +1,6 @@
 package net.bodz.bas.util.example;
 
-import static net.bodz.bas.lang.negotiation.Negotiation.list;
-import static net.bodz.bas.lang.negotiation.Negotiation.option;
-import static net.bodz.bas.lang.negotiation.Negotiation.parameter;
+import static net.bodz.bas.lang.negotiation.Negotiation.*;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.MandatoryException;
 import net.bodz.bas.trait.Traits;

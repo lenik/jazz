@@ -1,7 +1,5 @@
 package net.bodz.bas.text.codec.builtin;
 
-import net.bodz.bas.text.codec.builtin.Base64Codec;
-
 import org.junit.Assert;
 import org.junit.Test;
 

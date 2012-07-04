@@ -1,7 +1,5 @@
 package net.bodz.bas.text.charset;
 
-import net.bodz.bas.text.charset.HexCharsetDecoder;
-
 import org.junit.Assert;
 import org.junit.Test;
 

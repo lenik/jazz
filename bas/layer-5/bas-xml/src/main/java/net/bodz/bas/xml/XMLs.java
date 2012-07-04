@@ -6,16 +6,7 @@ import java.beans.Expression;
 import java.beans.PersistenceDelegate;
 import java.beans.XMLDecoder;
 import java.beans.XMLEncoder;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URL;
 
 import javax.xml.bind.DataBindingException;

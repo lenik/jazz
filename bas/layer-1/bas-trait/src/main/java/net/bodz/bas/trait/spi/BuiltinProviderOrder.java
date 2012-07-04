@@ -1,8 +1,6 @@
 package net.bodz.bas.trait.spi;
 
-import static net.bodz.bas.trait.spi.ITraitsProvider.PRIORITY_HIGH;
-import static net.bodz.bas.trait.spi.ITraitsProvider.PRIORITY_LOW;
-import static net.bodz.bas.trait.spi.ITraitsProvider.PRIORITY_NORMAL;
+import static net.bodz.bas.trait.spi.ITraitsProvider.*;
 import net.bodz.bas.lang.mi.IQueryable;
 
 enum BuiltinProviderOrder {

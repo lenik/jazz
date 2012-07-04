@@ -3,8 +3,6 @@ package net.bodz.bas.c.type;
 import java.util.List;
 import java.util.Set;
 
-import net.bodz.bas.c.type.TypePrSet;
-
 import org.junit.Assert;
 import org.junit.Test;
 

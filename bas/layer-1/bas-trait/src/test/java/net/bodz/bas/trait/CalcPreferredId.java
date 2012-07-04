@@ -1,15 +1,6 @@
 package net.bodz.bas.trait;
 
-import net.bodz.bas.traits.IAttributes;
-import net.bodz.bas.traits.IClassifier;
-import net.bodz.bas.traits.ICommonTraits;
-import net.bodz.bas.traits.IFormatter;
-import net.bodz.bas.traits.IInstanceStore;
-import net.bodz.bas.traits.IParser;
-import net.bodz.bas.traits.ISampleGenerator;
-import net.bodz.bas.traits.ISearcher;
-import net.bodz.bas.traits.ITextForm;
-import net.bodz.bas.traits.IValidator;
+import net.bodz.bas.traits.*;
 
 public class CalcPreferredId {
 

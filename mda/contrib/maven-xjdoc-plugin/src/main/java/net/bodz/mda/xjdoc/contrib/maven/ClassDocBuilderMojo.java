@@ -1,8 +1,7 @@
 package net.bodz.mda.xjdoc.contrib.maven;
 
 
-import static net.bodz.bas.lang.negotiation.Negotiation.list;
-import static net.bodz.bas.lang.negotiation.Negotiation.option;
+import static net.bodz.bas.lang.negotiation.Negotiation.*;
 
 import java.io.File;
 import java.io.IOException;

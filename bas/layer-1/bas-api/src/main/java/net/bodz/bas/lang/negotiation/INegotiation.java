@@ -16,12 +16,12 @@ public interface INegotiation
     /**
      * @return <code>null</code> if the parameter is undefined.
      */
-    IParameter getParameter(String id);
+//    IParameter getParameter(String id);
 
     /**
      * @return <code>null</code> if the parameter is undefined.
      */
-    IParameter getParameter(Class<?> type);
+//    IParameter getParameter(Class<?> type);
 
     /**
      * @return <code>null</code> if the parameter is undefined, or its value is <code>null</code>.
