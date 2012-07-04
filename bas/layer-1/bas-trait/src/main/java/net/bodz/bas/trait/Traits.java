@@ -1,12 +1,6 @@
 package net.bodz.bas.trait;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ServiceLoader;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 
 import net.bodz.bas.lang.mi.QueryException;
 import net.bodz.bas.trait.spi.ITraitsProvider;

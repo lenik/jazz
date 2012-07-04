@@ -1,12 +1,6 @@
 package net.bodz.bas.test.mock.fs;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.Writer;
+import java.io.*;
 
 import net.bodz.bas.c.java.io.TempFile;
 

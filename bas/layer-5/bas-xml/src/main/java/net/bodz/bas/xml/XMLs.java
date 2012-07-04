@@ -19,13 +19,7 @@ import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.util.exception.ExceptionBuffer;
 
-import org.xml.sax.ContentHandler;
-import org.xml.sax.DTDHandler;
-import org.xml.sax.EntityResolver;
-import org.xml.sax.ErrorHandler;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
+import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.helpers.XMLReaderFactory;
 

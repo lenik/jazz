@@ -1,13 +1,6 @@
 package net.bodz.bas.io.resource;
 
-import java.io.BufferedReader;
-import java.io.DataInput;
-import java.io.DataInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInput;
-import java.io.ObjectInputStream;
-import java.io.Reader;
+import java.io.*;
 import java.nio.charset.Charset;
 
 import net.bodz.bas.err.UnexpectedException;

@@ -5,14 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import net.bodz.bas.io.resource.AbstractStreamResource;
-import net.bodz.bas.sio.IByteIn;
-import net.bodz.bas.sio.IByteOut;
-import net.bodz.bas.sio.ICharIn;
-import net.bodz.bas.sio.IPrintOut;
-import net.bodz.bas.sio.InputStreamByteIn;
-import net.bodz.bas.sio.OutputStreamByteOut;
-import net.bodz.bas.sio.ReaderCharIn;
-import net.bodz.bas.sio.WriterPrintOut;
+import net.bodz.bas.sio.*;
 
 import org.apache.commons.vfs.FileObject;
 import org.apache.commons.vfs.FileSystemException;
