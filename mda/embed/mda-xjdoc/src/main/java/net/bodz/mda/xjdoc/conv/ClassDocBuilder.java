@@ -1,12 +1,13 @@
 package net.bodz.mda.xjdoc.conv;
 
+import static net.bodz.bas.lang.negotiation.Negotiation.list;
+import static net.bodz.bas.lang.negotiation.Negotiation.option;
+
 import java.util.Map;
 
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.i18n.dstr.DomainString;
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.lang.negotiation.ListNegotiation;
-import net.bodz.bas.lang.negotiation.Option;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.ElementDoc;
 import net.bodz.mda.xjdoc.model.FieldDoc;
@@ -60,8 +61,8 @@ public class ClassDocBuilder {
         ClassDoc classDoc = new ClassDoc(fqcn);
 
         ImportMap classImports = classDoc.getOrCreateImports();
-        INegotiation negotiation = new ListNegotiation(//
-                new Option(ImportMap.class, classImports));
+        INegotiation negotiation = list(//
+                option(ImportMap.class, classImports));
 
         populate(classDoc, javaClass, negotiation);
 

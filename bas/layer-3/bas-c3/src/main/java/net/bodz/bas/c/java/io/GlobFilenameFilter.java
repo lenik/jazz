@@ -2,15 +2,15 @@ package net.bodz.bas.c.java.io;
 
 import static net.bodz.bas.c.java.util.regex.PatternTraits.globTextformMode;
 import static net.bodz.bas.c.java.util.regex.PatternTraits.textformMode;
+import static net.bodz.bas.lang.negotiation.Negotiation.list;
+import static net.bodz.bas.lang.negotiation.Negotiation.option;
 
 import java.util.regex.Pattern;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.lang.negotiation.ListNegotiation;
 import net.bodz.bas.lang.negotiation.NegotiationException;
-import net.bodz.bas.lang.negotiation.Option;
 import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.IParser;
 
@@ -29,8 +29,7 @@ public class GlobFilenameFilter
     static INegotiation globNegotiation;
     static {
         patternParser = Traits.getTrait(Pattern.class, IParser.class);
-        globNegotiation = new ListNegotiation(//
-                new Option(textformMode, globTextformMode));
+        globNegotiation = list(option(textformMode, globTextformMode));
     }
 
     static Pattern parseGlob(String pattern) {

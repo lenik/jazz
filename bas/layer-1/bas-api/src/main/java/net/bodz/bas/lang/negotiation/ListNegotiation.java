@@ -1,7 +1,5 @@
 package net.bodz.bas.lang.negotiation;
 
-import java.util.AbstractList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -9,30 +7,6 @@ public class ListNegotiation
         extends AbstractNegotiation {
 
     private List<IParameter> parameters;
-
-    public ListNegotiation(final Object... typedParameters) {
-        if (typedParameters == null)
-            throw new NullPointerException("typedParameters");
-
-        parameters = new AbstractList<IParameter>() {
-
-            @Override
-            public IParameter get(int index) {
-                Object typedObj = typedParameters[index];
-                return new Option(typedObj);
-            }
-
-            @Override
-            public int size() {
-                return typedParameters.length;
-            }
-
-        };
-    }
-
-    public ListNegotiation(IParameter... parameters) {
-        this.parameters = Arrays.asList(parameters);
-    }
 
     public ListNegotiation(List<IParameter> parameters) {
         this.parameters = parameters;

@@ -1,12 +1,13 @@
 package net.bodz.mda.xjdoc.conv;
 
+import static net.bodz.bas.lang.negotiation.Negotiation.list;
+import static net.bodz.bas.lang.negotiation.Negotiation.option;
+
 import java.io.IOException;
 import java.text.ParseException;
 
 import net.bodz.bas.io.resource.IStreamInputSource;
-import net.bodz.bas.lang.negotiation.ListNegotiation;
 import net.bodz.bas.lang.negotiation.NegotiationException;
-import net.bodz.bas.lang.negotiation.Option;
 import net.bodz.bas.text.flatf.FlatfLoader;
 import net.bodz.bas.text.flatf.IFlatfInput;
 import net.bodz.mda.xjdoc.model.ClassDoc;
@@ -17,9 +18,9 @@ public class ClassDocFlatfLoader
         extends FlatfLoader {
 
     public ClassDocFlatfLoader(ITagBook book, ImportMap importMap) {
-        super(new ListNegotiation(//
-                new Option(ITagBook.class, book), //
-                new Option(ImportMap.class, importMap)));
+        super(list(//
+                option(ITagBook.class, book), //
+                option(ImportMap.class, importMap)));
     }
 
     public ClassDoc load(String fqcn, IStreamInputSource inputSource)
