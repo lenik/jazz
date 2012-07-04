@@ -24,9 +24,9 @@ public abstract class AbstractHttpRenderer
         HttpServletRequest req = null;
         HttpServletResponse resp = null;
         for (IParameter p : negotiation) {
-            if (p.is(HttpServletRequest.class))
+            if (p.idEquals(HttpServletRequest.class))
                 req = p.cast(HttpServletRequest.class);
-            else if (p.is(HttpServletResponse.class))
+            else if (p.idEquals(HttpServletResponse.class))
                 resp = p.cast(HttpServletResponse.class);
             else
                 p.ignore();

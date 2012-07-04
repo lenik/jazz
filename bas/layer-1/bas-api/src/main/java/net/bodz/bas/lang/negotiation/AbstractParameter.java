@@ -33,39 +33,9 @@ public abstract class AbstractParameter
     }
 
     @Override
-    public Object getValue() {
-        return value;
-    }
-
     @SuppressWarnings("unchecked")
-    public <T> T value() {
+    public <T> T getValue() {
         return (T) value;
-    }
-
-    @Override
-    public boolean is(String id) {
-        return this.id.equals(id);
-    }
-
-    @Override
-    public boolean is(Class<?> type) {
-        return is(type.getName());
-    }
-
-    @Override
-    public boolean is(Class<?> type, boolean use)
-            throws MandatoryException {
-        return is(type.getName(), use);
-    }
-
-    @Override
-    public boolean is(String id, boolean use)
-            throws MandatoryException {
-        if (!this.id.equals(id))
-            return false;
-        if (isImportant() && !use)
-            throw new MandatoryException(this);
-        return true;
     }
 
     @Override
@@ -75,18 +45,38 @@ public abstract class AbstractParameter
             throw new MandatoryException(this);
     }
 
-    @Override
-    public <T> T cast(Class<T> type) {
-        if (is(type.getName()))
+    public boolean idEquals(String id) {
+        return this.id.equals(id);
+    }
+
+    public boolean idEquals(Class<?> type) {
+        return idEquals(type.getName());
+    }
+
+    public boolean checkId(Class<?> type, boolean use)
+            throws MandatoryException {
+        return checkId(type.getName(), use);
+    }
+
+    public boolean checkId(String id, boolean use)
+            throws MandatoryException {
+        if (!this.id.equals(id))
+            return false;
+        if (isImportant() && !use)
+            throw new MandatoryException(this);
+        return true;
+    }
+
+    public <T> T typeFilter(Class<T> type) {
+        if (idEquals(type.getName()))
             return type.cast(value);
         else
             return null;
     }
 
-    @Override
-    public <T> T cast(Class<T> type, boolean use)
+    public <T> T typeFilter(Class<T> type, boolean use)
             throws MandatoryException {
-        if (is(type.getName(), use))
+        if (checkId(type.getName(), use))
             return type.cast(value);
         else
             return null;
