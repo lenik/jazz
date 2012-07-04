@@ -1,23 +1,8 @@
 package net.bodz.bas.io.resource;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintStream;
-import java.io.Reader;
-import java.io.Writer;
+import java.io.*;
 
-import net.bodz.bas.sio.IByteIn;
-import net.bodz.bas.sio.IByteOut;
-import net.bodz.bas.sio.ICharIn;
-import net.bodz.bas.sio.ICharOut;
-import net.bodz.bas.sio.IPrintOut;
-import net.bodz.bas.sio.InputStreamByteIn;
-import net.bodz.bas.sio.OutputStreamByteOut;
-import net.bodz.bas.sio.PrintStreamPrintOut;
-import net.bodz.bas.sio.WriterCharOut;
+import net.bodz.bas.sio.*;
 import net.bodz.bas.sio.util.DecodedCharIn;
 
 public abstract class JavaioStreamResource

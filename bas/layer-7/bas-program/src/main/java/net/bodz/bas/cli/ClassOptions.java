@@ -1,13 +1,7 @@
 package net.bodz.bas.cli;
 
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 import net.bodz.bas.c.reflect.query.ReflectQuery;
 import net.bodz.bas.c.string.Strings;

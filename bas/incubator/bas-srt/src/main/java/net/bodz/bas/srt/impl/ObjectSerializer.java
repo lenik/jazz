@@ -1,12 +1,6 @@
 package net.bodz.bas.srt.impl;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Reader;
-import java.io.Writer;
+import java.io.*;
 
 import net.bodz.bas.srt.SerializeException;
 

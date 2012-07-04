@@ -16,13 +16,7 @@ import net.bodz.mda.xjdoc.tags.ITagType;
 import net.bodz.mda.xjdoc.util.ImportMap;
 import net.bodz.mda.xjdoc.util.MethodId;
 
-import com.thoughtworks.qdox.model.AbstractJavaEntity;
-import com.thoughtworks.qdox.model.DocletTag;
-import com.thoughtworks.qdox.model.JavaClass;
-import com.thoughtworks.qdox.model.JavaField;
-import com.thoughtworks.qdox.model.JavaMethod;
-import com.thoughtworks.qdox.model.JavaParameter;
-import com.thoughtworks.qdox.model.Type;
+import com.thoughtworks.qdox.model.*;
 
 /**
  * Build class documents from the qdox parsed java sources.
