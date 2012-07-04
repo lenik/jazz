@@ -1,9 +1,10 @@
 package net.bodz.bas.util.example;
 
-import net.bodz.bas.lang.negotiation.ListNegotiation;
+import static net.bodz.bas.lang.negotiation.Negotiation.list;
+import static net.bodz.bas.lang.negotiation.Negotiation.option;
+import static net.bodz.bas.lang.negotiation.Negotiation.parameter;
+import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.MandatoryException;
-import net.bodz.bas.lang.negotiation.Parameter;
-import net.bodz.bas.lang.negotiation.Option;
 import net.bodz.bas.trait.Traits;
 import net.bodz.bas.traits.ICommonTraits;
 import net.bodz.bas.traits.IFormatter;
@@ -36,9 +37,9 @@ public class AddressTraitsTest
     @Test
     public void testDefaultCountryPost()
             throws Exception {
-        ListNegotiation negotiation = new ListNegotiation(//
-                new Option(new CountryAliasUtil()), //
-                new Option(new PostCodeUtil()));
+        INegotiation negotiation = list(//
+                option(new CountryAliasUtil()), //
+                option(new PostCodeUtil()));
 
         String input = "cn:310000:somewhere";
         String expected = "China:Zhejiang:somewhere";
@@ -50,9 +51,9 @@ public class AddressTraitsTest
     @Test(expected = MandatoryException.class)
     public void testMandatoryFail()
             throws Exception {
-        ListNegotiation negotiation = new ListNegotiation(//
-                new Option(new CountryAliasUtil()), //
-                new Parameter(new PostCodeUtil()));
+        INegotiation negotiation = list(//
+                option(new CountryAliasUtil()), //
+                parameter(new PostCodeUtil()));
 
         String input = "cn:310000:somewhere";
         addressParser.parse(input, negotiation);
@@ -60,9 +61,9 @@ public class AddressTraitsTest
 
     public void testMandatoryOK()
             throws Exception {
-        ListNegotiation negotiation = new ListNegotiation(//
-                new Option(new CountryAliasUtil()), //
-                new Parameter(new PostCodeUtil()));
+        INegotiation negotiation = list(//
+                option(new CountryAliasUtil()), //
+                parameter(new PostCodeUtil()));
 
         String input = "cn:310000:somewhere";
         String expected = "China:Zhejiang:somewhere";

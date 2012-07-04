@@ -1,5 +1,9 @@
 package net.bodz.mda.xjdoc.contrib.maven;
 
+
+import static net.bodz.bas.lang.negotiation.Negotiation.list;
+import static net.bodz.bas.lang.negotiation.Negotiation.option;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -8,9 +12,7 @@ import net.bodz.bas.i18n.dstr.DomainString;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
 import net.bodz.bas.io.resource.builtin.OutputStreamTarget;
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.lang.negotiation.ListNegotiation;
 import net.bodz.bas.lang.negotiation.NegotiationException;
-import net.bodz.bas.lang.negotiation.Option;
 import net.bodz.bas.m2.mojo.AbstractResourceGeneratorMojo;
 import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.text.flatf.FlatfOutput;
@@ -143,9 +145,9 @@ public class ClassDocBuilderMojo
 
                 ImportMap classImports = classDoc.getOrCreateImports();
 
-                INegotiation negotiation = new ListNegotiation(//
-                        new Option(ITagBook.class, mergedBook), //
-                        new Option(ImportMap.class, classImports));
+                INegotiation negotiation = list(//
+                        option(ITagBook.class, mergedBook), //
+                        option(ImportMap.class, classImports));
 
                 IStreamOutputTarget outTarget;
                 if (classDocFile == null) {
