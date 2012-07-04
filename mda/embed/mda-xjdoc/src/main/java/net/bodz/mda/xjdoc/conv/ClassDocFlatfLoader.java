@@ -9,15 +9,17 @@ import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.lang.negotiation.Option;
 import net.bodz.bas.text.flatf.FlatfLoader;
 import net.bodz.bas.text.flatf.IFlatfInput;
-import net.bodz.mda.xjdoc.meta.ITagBook;
 import net.bodz.mda.xjdoc.model.ClassDoc;
+import net.bodz.mda.xjdoc.tags.ITagBook;
+import net.bodz.mda.xjdoc.util.ImportMap;
 
 public class ClassDocFlatfLoader
         extends FlatfLoader {
 
-    public ClassDocFlatfLoader(ITagBook lang) {
+    public ClassDocFlatfLoader(ITagBook book, ImportMap importMap) {
         super(new ListNegotiation(//
-                new Option(ITagBook.class, lang)));
+                new Option(ITagBook.class, book), //
+                new Option(ImportMap.class, importMap)));
     }
 
     public ClassDoc load(String fqcn, IStreamInputSource inputSource)

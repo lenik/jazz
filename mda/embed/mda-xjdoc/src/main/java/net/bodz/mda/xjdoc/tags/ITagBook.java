@@ -1,4 +1,5 @@
-package net.bodz.mda.xjdoc.meta;
+package net.bodz.mda.xjdoc.tags;
+
 
 public interface ITagBook {
 

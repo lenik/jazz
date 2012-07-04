@@ -7,12 +7,12 @@ import net.bodz.bas.i18n.dstr.DomainString;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.ListNegotiation;
 import net.bodz.bas.lang.negotiation.Option;
-import net.bodz.mda.xjdoc.meta.ITagBook;
-import net.bodz.mda.xjdoc.meta.ITagType;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.ElementDoc;
 import net.bodz.mda.xjdoc.model.FieldDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
+import net.bodz.mda.xjdoc.tags.ITagBook;
+import net.bodz.mda.xjdoc.tags.ITagType;
 import net.bodz.mda.xjdoc.util.ImportMap;
 import net.bodz.mda.xjdoc.util.MethodId;
 

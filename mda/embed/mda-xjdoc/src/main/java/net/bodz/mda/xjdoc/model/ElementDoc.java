@@ -13,9 +13,9 @@ import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 import net.bodz.bas.text.flatf.IFlatfSerializable;
 import net.bodz.bas.text.flatf.ISectionHandler;
-import net.bodz.mda.xjdoc.meta.ITagBook;
-import net.bodz.mda.xjdoc.meta.ITagType;
-import net.bodz.mda.xjdoc.meta.TagBook;
+import net.bodz.mda.xjdoc.tags.ITagBook;
+import net.bodz.mda.xjdoc.tags.ITagType;
+import net.bodz.mda.xjdoc.tags.TagBook;
 
 public class ElementDoc
         implements IFlatfSerializable {
