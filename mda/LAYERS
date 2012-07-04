@@ -15,3 +15,6 @@ model/
 contrib/
     maven-xjdoc-plugin
 
+samples/
+    mda-xjdoc-samples
+
