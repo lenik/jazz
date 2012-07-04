@@ -68,9 +68,9 @@ public abstract class AbstractArrayTraits<T>
             Object paramValue = param.getValue();
             if (paramValue == null)
                 return false;
-            if (param.is(sampleMinLength))
+            if (param.idEquals(sampleMinLength))
                 this.minLength = (Integer) paramValue;
-            else if (param.is(sampleMaxLength))
+            else if (param.idEquals(sampleMaxLength))
                 this.maxLength = (Integer) paramValue;
             else
                 return false;

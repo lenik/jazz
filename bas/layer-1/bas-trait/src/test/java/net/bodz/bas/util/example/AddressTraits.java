@@ -57,7 +57,7 @@ public class AddressTraits
 
         if (negotiation != null) {
             for (IParameter param : negotiation) {
-                if (param.is(CountryAliasUtil.class))
+                if (param.idEquals(CountryAliasUtil.class))
                     country = param.<CountryAliasUtil> value().unalias(country);
                 else if (param.is(PostCodeUtil.class, resolvePostCode)) {
                     postCode = Integer.parseInt(city);

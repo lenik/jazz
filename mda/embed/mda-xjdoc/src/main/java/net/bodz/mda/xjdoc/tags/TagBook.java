@@ -34,7 +34,7 @@ public class TagBook
         ITagBook instance = null;
         if (negotiation != null)
             for (IParameter param : negotiation) {
-                if (param.is(ITagBook.class))
+                if (param.idEquals(ITagBook.class))
                     instance = (ITagBook) param.getValue();
                 else
                     param.ignore();

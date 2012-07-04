@@ -25,7 +25,7 @@ public class ListNegotiation
     @Override
     public IParameter getParameter(String id) {
         for (IParameter p : this)
-            if (p.is(id))
+            if (p.idEquals(id))
                 return p;
         return null;
     }

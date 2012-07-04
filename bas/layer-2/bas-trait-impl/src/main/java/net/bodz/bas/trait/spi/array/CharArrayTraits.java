@@ -61,7 +61,7 @@ public class CharArrayTraits
         @Override
         public boolean negotiate(IParameter param)
                 throws NegotiationException {
-            if (param.is(sampleCharSample))
+            if (param.idEquals(sampleCharSample))
                 charSample = param.value();
             else
                 return super.negotiate(param);
