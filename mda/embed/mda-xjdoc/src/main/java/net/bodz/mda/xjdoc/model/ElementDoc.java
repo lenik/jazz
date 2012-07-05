@@ -8,7 +8,6 @@ import java.util.Map.Entry;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.i18n.dstr.DomainString;
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.lang.negotiation.INegotiation.IParameter;
 import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 import net.bodz.bas.text.flatf.IFlatfSerializable;
@@ -130,12 +129,7 @@ public class ElementDoc
             throws IOException, NegotiationException {
         ITagBook book = null;
         if (negotiation != null)
-            for (IParameter param : negotiation) {
-                if (param.is(ITagBook.class, true))
-                    book = (ITagBook) param.getValue();
-                else
-                    param.ignore();
-            }
+            book = negotiation.get(ITagBook.class);
         if (book == null)
             throw new IllegalUsageException("Book is not provided in the negotiation.");
 

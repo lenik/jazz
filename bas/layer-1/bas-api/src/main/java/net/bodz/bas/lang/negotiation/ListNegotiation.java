@@ -24,8 +24,10 @@ public class ListNegotiation
 
     @Override
     public IParameter getParameter(String id) {
+        if (id == null)
+            throw new NullPointerException("id");
         for (IParameter p : this)
-            if (p.idEquals(id))
+            if (id.equals(p.getId()))
                 return p;
         return null;
     }

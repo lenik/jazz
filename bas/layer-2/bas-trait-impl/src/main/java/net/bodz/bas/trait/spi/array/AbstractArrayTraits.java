@@ -3,9 +3,8 @@ package net.bodz.bas.trait.spi.array;
 import java.util.Map;
 
 import net.bodz.bas.err.CreateException;
-import net.bodz.bas.lang.negotiation.AbstractNegotiable;
+import net.bodz.bas.lang.negotiation.INegotiable;
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.lang.negotiation.INegotiation.IParameter;
 import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.meta.util.ReferredType;
 import net.bodz.bas.traits.AbstractCommonTraits;
@@ -32,7 +31,7 @@ public abstract class AbstractArrayTraits<T>
     }
 
     public static class ArraySampleParameters
-            extends AbstractNegotiable {
+            implements INegotiable {
 
         private int minLength;
         private int maxLength;
@@ -63,18 +62,10 @@ public abstract class AbstractArrayTraits<T>
         }
 
         @Override
-        public boolean negotiate(IParameter param)
+        public void negotiate(INegotiation negotiation)
                 throws NegotiationException {
-            Object paramValue = param.getValue();
-            if (paramValue == null)
-                return false;
-            if (param.idEquals(sampleMinLength))
-                this.minLength = (Integer) paramValue;
-            else if (param.idEquals(sampleMaxLength))
-                this.maxLength = (Integer) paramValue;
-            else
-                return false;
-            return true;
+            minLength = negotiation.get(sampleMinLength, minLength);
+            maxLength = negotiation.get(sampleMaxLength, maxLength);
         }
 
     }
