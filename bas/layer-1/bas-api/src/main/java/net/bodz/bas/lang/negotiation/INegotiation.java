@@ -11,7 +11,7 @@ public interface INegotiation
     INegotiation refine(INegotiation respond)
             throws NegotiationException;
 
-    INegotiation clone();
+    // INegotiation clone();
 
     int size();
 
@@ -26,14 +26,76 @@ public interface INegotiation
     IParameter getParameter(Class<?> type);
 
     /**
+     * Get optional parameter.
+     * 
      * @return <code>null</code> if the parameter is undefined, or its value is <code>null</code>.
      */
     <T> T get(String id);
 
     /**
+     * Get optional parameter.
+     * 
+     * @return <code>defaultValue</code> if the parameter is undefined.
+     */
+    <T> T get(String id, T defaultValue);
+
+    /**
+     * Get optional parameter.
+     * 
      * @return <code>null</code> if the parameter is undefined, or its value is <code>null</code>.
      */
     <T> T get(Class<T> type);
+
+    /**
+     * Get optional parameter.
+     * 
+     * @return <code>defaultValue</code> if the parameter is undefined.
+     */
+    <T> T get(Class<T> type, T defaultValue);
+
+    /**
+     * Get mandatory parameter.
+     * 
+     * @param id
+     *            The id of parmeter to get.
+     * @return Non-<code>null</code> parameter value.
+     */
+    <T> T require(String id)
+            throws MandatoryException;
+
+    /**
+     * Get mandatory parameter.
+     * 
+     * @param id
+     *            The id of parmeter to get.
+     * @param description
+     *            Parameter description shown in exception message.
+     * @return Non-<code>null</code> parameter value.
+     */
+    <T> T require(String id, String description)
+            throws MandatoryException;
+
+    /**
+     * Get mandatory parameter.
+     * 
+     * @param type
+     *            The typeid of parameter to get.
+     * @return Non-<code>null</code> parameter value.
+     */
+    <T> T require(Class<T> type)
+            throws MandatoryException;
+
+    /**
+     * Get mandatory parameter.
+     * 
+     * @param type
+     *            The typeid of parameter to get.
+     * @param description
+     *            Parameter description shown in exception message.
+     * @return Non-<code>null</code> parameter value.
+     */
+    <T> T require(Class<T> type, String description)
+            throws MandatoryException;
 
     /**
      * Callee ignore the negotiation.

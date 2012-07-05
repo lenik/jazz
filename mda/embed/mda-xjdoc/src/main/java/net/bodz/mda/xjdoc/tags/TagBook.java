@@ -5,7 +5,6 @@ import java.util.Map;
 
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.lang.negotiation.INegotiation.IParameter;
 import net.bodz.bas.lang.negotiation.NegotiationException;
 
 public class TagBook
@@ -33,12 +32,7 @@ public class TagBook
             throws NegotiationException {
         ITagBook instance = null;
         if (negotiation != null)
-            for (IParameter param : negotiation) {
-                if (param.idEquals(ITagBook.class))
-                    instance = (ITagBook) param.getValue();
-                else
-                    param.ignore();
-            }
+            instance = negotiation.require(ITagBook.class);
         if (instance == null)
             throw new IllegalUsageException("Book isn't provided in negotiation.");
         return instance;

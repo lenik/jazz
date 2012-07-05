@@ -16,18 +16,58 @@ public abstract class AbstractNegotiation
     }
 
     @Override
-    public <T> T get(Class<T> type) {
+    public final <T> T get(Class<T> type) {
         String id = type.getCanonicalName();
-        return get(id);
+        return get(id, null);
     }
 
     @Override
-    public <T> T get(String id) {
+    public final <T> T get(Class<T> type, T defaultValue) {
+        String id = type.getCanonicalName();
+        return get(id, defaultValue);
+    }
+
+    @Override
+    public final <T> T get(String id) {
+        return get(id, null);
+    }
+
+    @Override
+    public <T> T get(String id, T defaultValue) {
+        IParameter parameter = getParameter(id);
+        if (parameter == null)
+            return defaultValue;
+        else
+            return parameter.getValue();
+    }
+
+    @Override
+    public final <T> T require(Class<T> type)
+            throws MandatoryException {
+        return require(type, type.getCanonicalName());
+    }
+
+    @Override
+    public final <T> T require(Class<T> type, String description)
+            throws MandatoryException {
+        String id = type.getCanonicalName();
+        return require(id, description);
+    }
+
+    @Override
+    public final <T> T require(String id)
+            throws MandatoryException {
+        return require(id, id);
+    }
+
+    @Override
+    public <T> T require(String id, String description)
+            throws MandatoryException {
         IParameter parameter = getParameter(id);
         if (parameter == null)
             return null;
         else
-            return parameter.value();
+            return parameter.getValue();
     }
 
     @Override

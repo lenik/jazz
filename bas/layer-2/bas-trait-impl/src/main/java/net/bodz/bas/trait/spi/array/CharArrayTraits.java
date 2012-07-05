@@ -3,7 +3,7 @@ package net.bodz.bas.trait.spi.array;
 import net.bodz.bas.c.java.lang.CharacterTraits;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.ParseException;
-import net.bodz.bas.lang.negotiation.INegotiation.IParameter;
+import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.meta.util.ReferredType;
 import net.bodz.bas.traits.IParser;
@@ -59,13 +59,10 @@ public class CharArrayTraits
         }
 
         @Override
-        public boolean negotiate(IParameter param)
+        public void negotiate(INegotiation negotiation)
                 throws NegotiationException {
-            if (param.idEquals(sampleCharSample))
-                charSample = param.value();
-            else
-                return super.negotiate(param);
-            return true;
+            super.negotiate(negotiation);
+            charSample = negotiation.get(sampleCharSample, charSample);
         }
 
     }
