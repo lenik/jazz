@@ -1,6 +1,5 @@
 package net.bodz.mda.xjdoc.contrib.maven;
 
-
 import static net.bodz.bas.lang.negotiation.Negotiation.*;
 
 import java.io.File;
@@ -33,10 +32,11 @@ import com.thoughtworks.qdox.model.JavaClass;
 import com.thoughtworks.qdox.model.JavaSource;
 
 /**
- * Builder .classdoc from Java source files.
+ * Generate .classdoc files from Java source files.
  * 
  * @goal build
  * @phase generate-resources
+ * @configurator include-project-dependencies
  */
 public class ClassDocBuilderMojo
         extends AbstractResourceGeneratorMojo {
