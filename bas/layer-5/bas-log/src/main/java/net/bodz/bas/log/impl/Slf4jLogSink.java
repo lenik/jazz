@@ -2,40 +2,25 @@ package net.bodz.bas.log.impl;
 
 import net.bodz.bas.log.AbstractLogSink;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
 
-public abstract class Log4jLogSink
+public abstract class Slf4jLogSink
         extends AbstractLogSink {
 
-    protected final Logger log4j;
+    protected final Logger slf4j;
 
-    public Log4jLogSink(Logger log4jLogger) {
+    public Slf4jLogSink(Logger log4jLogger) {
         if (log4jLogger == null)
-            throw new NullPointerException("log4jLogger");
-        this.log4j = log4jLogger;
+            throw new NullPointerException("slf4jLogger");
+        this.slf4j = log4jLogger;
     }
 
-    public static class FatalSink
-            extends Log4jLogSink {
-
-        public FatalSink(Logger log4jLogger) {
-            super(log4jLogger);
-        }
-
-        @Override
-        public void logMessage(Object obj) {
-            log4j.fatal(obj);
-        }
-
-        @Override
-        public void logException(Object obj, Throwable t) {
-            log4j.fatal(obj, t);
-        }
-
+    static String format(Object obj) {
+        return String.valueOf(obj);
     }
 
     public static class ErrorSink
-            extends Log4jLogSink {
+            extends Slf4jLogSink {
 
         public ErrorSink(Logger log4jLogger) {
             super(log4jLogger);
@@ -43,18 +28,20 @@ public abstract class Log4jLogSink
 
         @Override
         public void logMessage(Object obj) {
-            log4j.error(obj);
+            String msg = format(obj);
+            slf4j.error(msg);
         }
 
         @Override
         public void logException(Object obj, Throwable t) {
-            log4j.error(obj, t);
+            String msg = format(obj);
+            slf4j.error(msg, t);
         }
 
     }
 
     public static class WarnSink
-            extends Log4jLogSink {
+            extends Slf4jLogSink {
 
         public WarnSink(Logger log4jLogger) {
             super(log4jLogger);
@@ -62,18 +49,20 @@ public abstract class Log4jLogSink
 
         @Override
         public void logMessage(Object obj) {
-            log4j.warn(obj);
+            String msg = format(obj);
+            slf4j.warn(msg);
         }
 
         @Override
         public void logException(Object obj, Throwable t) {
-            log4j.warn(obj, t);
+            String msg = format(obj);
+            slf4j.warn(msg, t);
         }
 
     }
 
     public static class InfoSink
-            extends Log4jLogSink {
+            extends Slf4jLogSink {
 
         public InfoSink(Logger log4jLogger) {
             super(log4jLogger);
@@ -81,18 +70,20 @@ public abstract class Log4jLogSink
 
         @Override
         public void logMessage(Object obj) {
-            log4j.info(obj);
+            String msg = format(obj);
+            slf4j.info(msg);
         }
 
         @Override
         public void logException(Object obj, Throwable t) {
-            log4j.info(obj, t);
+            String msg = format(obj);
+            slf4j.info(msg, t);
         }
 
     }
 
     public static class DebugSink
-            extends Log4jLogSink {
+            extends Slf4jLogSink {
 
         public DebugSink(Logger log4jLogger) {
             super(log4jLogger);
@@ -100,18 +91,20 @@ public abstract class Log4jLogSink
 
         @Override
         public void logMessage(Object obj) {
-            log4j.debug(obj);
+            String msg = format(obj);
+            slf4j.debug(msg);
         }
 
         @Override
         public void logException(Object obj, Throwable t) {
-            log4j.debug(obj, t);
+            String msg = format(obj);
+            slf4j.debug(msg, t);
         }
 
     }
 
     public static class TraceSink
-            extends Log4jLogSink {
+            extends Slf4jLogSink {
 
         public TraceSink(Logger log4jLogger) {
             super(log4jLogger);
@@ -119,12 +112,14 @@ public abstract class Log4jLogSink
 
         @Override
         public void logMessage(Object obj) {
-            log4j.trace(obj);
+            String msg = format(obj);
+            slf4j.trace(msg);
         }
 
         @Override
         public void logException(Object obj, Throwable t) {
-            log4j.trace(obj, t);
+            String msg = format(obj);
+            slf4j.trace(msg, t);
         }
 
     }
