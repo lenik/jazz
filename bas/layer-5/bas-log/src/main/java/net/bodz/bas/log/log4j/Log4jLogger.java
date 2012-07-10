@@ -1,15 +1,15 @@
-package net.bodz.bas.log.impl;
+package net.bodz.bas.log.log4j;
 
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.log.NullLogSink;
 import net.bodz.bas.log.api.AbstractLogger;
-import net.bodz.bas.log.impl.Log4jLogSink.DebugSink;
-import net.bodz.bas.log.impl.Log4jLogSink.ErrorSink;
-import net.bodz.bas.log.impl.Log4jLogSink.FatalSink;
-import net.bodz.bas.log.impl.Log4jLogSink.InfoSink;
-import net.bodz.bas.log.impl.Log4jLogSink.TraceSink;
-import net.bodz.bas.log.impl.Log4jLogSink.WarnSink;
+import net.bodz.bas.log.log4j.Log4jLogSink.DebugSink;
+import net.bodz.bas.log.log4j.Log4jLogSink.ErrorSink;
+import net.bodz.bas.log.log4j.Log4jLogSink.FatalSink;
+import net.bodz.bas.log.log4j.Log4jLogSink.InfoSink;
+import net.bodz.bas.log.log4j.Log4jLogSink.TraceSink;
+import net.bodz.bas.log.log4j.Log4jLogSink.WarnSink;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -18,6 +18,8 @@ public class Log4jLogger
         extends AbstractLogger {
 
     private final Logger log4j;
+
+    static final String FQCN = Log4jLogger.class.getName();
 
     public Log4jLogger(Logger logger) {
         if (logger == null)
@@ -65,64 +67,64 @@ public class Log4jLogger
 
     @Override
     public boolean fatal(Object message) {
-        log4j.fatal(message);
+        log4j.log(FQCN, Level.FATAL, message, null);
         return false;
     }
 
     @Override
     public boolean fatal(Object message, Throwable t) {
-        log4j.fatal(message, t);
+        log4j.log(FQCN, Level.FATAL, message, t);
         return false;
     }
 
     @Override
     public boolean error(Object message) {
-        log4j.error(message);
+        log4j.log(FQCN, Level.ERROR, message, null);
         return false;
     }
 
     @Override
     public boolean error(Object message, Throwable t) {
-        log4j.error(message, t);
+        log4j.log(FQCN, Level.ERROR, message, t);
         return false;
     }
 
     @Override
     public void warn(Object message) {
-        log4j.warn(message);
+        log4j.log(FQCN, Level.WARN, message, null);
     }
 
     @Override
     public void warn(Object message, Throwable t) {
-        log4j.warn(message, t);
+        log4j.log(FQCN, Level.WARN, message, t);
     }
 
     @Override
     public void info(Object message) {
-        log4j.info(message);
+        log4j.log(FQCN, Level.INFO, message, null);
     }
 
     @Override
     public void info(Object message, Throwable t) {
-        log4j.info(message, t);
+        log4j.log(FQCN, Level.INFO, message, t);
     }
 
     @Override
     public void debug(Object message) {
-        log4j.debug(message);
+        log4j.log(FQCN, Level.DEBUG, message, null);
     }
 
     @Override
     public void debug(Object message, Throwable t) {
-        log4j.debug(message, t);
+        log4j.log(FQCN, Level.DEBUG, message, t);
     }
 
     public static Log4jLogger getInstance(Class<?> clazz) {
-        return new Log4jLogger(Logger.getLogger(clazz));
+        return new Log4jLogger(MergedLog4jFactory.getLogger(clazz));
     }
 
     public static Log4jLogger getInstance(String name) {
-        return new Log4jLogger(Logger.getLogger(name));
+        return new Log4jLogger(MergedLog4jFactory.getLogger(name));
     }
 
 }
