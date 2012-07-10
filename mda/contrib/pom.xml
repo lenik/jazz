@@ -12,7 +12,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <modules>
-        <module>maven-xjdoc-plugin</module>
+        <module>mda-xjdoc-maven-plugin</module>
     </modules>
     <name>MDA :: Contrib</name>
 </project>
