@@ -17,7 +17,7 @@
         <plugins>
             <plugin>
                 <groupId>net.bodz.mda</groupId>
-                <artifactId>maven-xjdoc-plugin</artifactId>
+                <artifactId>mda-xjdoc-maven-plugin</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
                 <executions>
                     <execution>

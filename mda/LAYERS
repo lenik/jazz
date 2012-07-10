@@ -13,7 +13,7 @@ model/
     mda-model-rdb
 
 contrib/
-    maven-xjdoc-plugin
+    mda-xjdoc-maven-plugin
 
 samples/
     mda-xjdoc-samples

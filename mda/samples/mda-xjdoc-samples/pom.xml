@@ -24,15 +24,23 @@
         <plugins>
             <plugin>
                 <groupId>net.bodz.mda</groupId>
-                <artifactId>mda-xjdoc-plugin</artifactId>
+                <artifactId>mda-xjdoc-maven-plugin</artifactId>
                 <version>0.0.1-SNAPSHOT</version>
                 <executions>
                     <execution>
                         <goals>
-                            <goal>dump</goal>
+                            <goal>build</goal>
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
+                    <outputDirectory>${basedir}/target/classes</outputDirectory>
+                    <missingDoc>
+                        "Empty"
+                        zh-cn "没有文档"
+                    </missingDoc>
+                </configuration>
             </plugin>
         </plugins>
     </build>
