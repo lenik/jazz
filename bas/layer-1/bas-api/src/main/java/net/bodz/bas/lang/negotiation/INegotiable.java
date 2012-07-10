@@ -1,7 +1,5 @@
 package net.bodz.bas.lang.negotiation;
 
-import net.bodz.bas.lang.negotiation.INegotiation.IParameter;
-
 public interface INegotiable {
 
     /**
@@ -12,18 +10,6 @@ public interface INegotiable {
      *             isn't supported by the callee.
      */
     void negotiate(INegotiation negotiation)
-            throws NegotiationException;
-
-    /**
-     * Process the negotiation parameters.
-     * <p>
-     * If an important parameter is ignored here, exception may be raised, or just return
-     * <code>false</code> value.
-     * 
-     * @return <code>true</code> If the <code>parameter</code> is taken into account,
-     *         <code>false</code> if the <code>parameter</code> is ignored.
-     */
-    boolean negotiate(IParameter parameter)
             throws NegotiationException;
 
 }
