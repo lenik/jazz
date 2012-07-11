@@ -66,29 +66,29 @@ public class Log4jLogger
     }
 
     @Override
-    public boolean fatal(Object message, Throwable t) {
+    public boolean _fatal(int delta, Throwable t, Object message) {
         log4j.log(FQCN, Level.FATAL, message, t);
         return false;
     }
 
     @Override
-    public boolean error(Object message, Throwable t) {
+    public boolean _error(int delta, Throwable t, Object message) {
         log4j.log(FQCN, Level.ERROR, message, t);
         return false;
     }
 
     @Override
-    public void warn(Object message, Throwable t) {
+    public void _warn(int delta, Throwable t, Object message) {
         log4j.log(FQCN, Level.WARN, message, t);
     }
 
     @Override
-    public void info(Object message, Throwable t) {
+    public void _info(int delta, Throwable t, Object message) {
         log4j.log(FQCN, Level.INFO, message, t);
     }
 
     @Override
-    public void debug(Object message, Throwable t) {
+    public void _debug(int delta, Throwable t, Object message) {
         log4j.log(FQCN, Level.DEBUG, message, t);
     }
 
