@@ -24,13 +24,7 @@ import com.thoughtworks.qdox.model.*;
 public class ClassDocBuilder {
 
     ITagBook book;
-    DomainString missingDoc = DEFAULT_MISSING_DOC;
-
-    static final DomainString DEFAULT_MISSING_DOC;
-    static {
-        DEFAULT_MISSING_DOC = DomainString.parseMultiLangString("\"(No document)\"" + //
-                "zh-cn \"(无文档)\"");
-    }
+    DomainString missingDoc;
 
     public ClassDocBuilder(ITagBook book) {
         if (book == null)
