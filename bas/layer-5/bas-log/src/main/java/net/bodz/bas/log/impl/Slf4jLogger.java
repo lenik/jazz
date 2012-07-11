@@ -67,20 +67,8 @@ public class Slf4jLogger
     }
 
     @Override
-    public boolean fatal(Object message) {
-        slf4j.error(format(message));
-        return false;
-    }
-
-    @Override
     public boolean fatal(Object message, Throwable t) {
         slf4j.error(format(message), t);
-        return false;
-    }
-
-    @Override
-    public boolean error(Object message) {
-        slf4j.error(format(message));
         return false;
     }
 
@@ -91,28 +79,13 @@ public class Slf4jLogger
     }
 
     @Override
-    public void warn(Object message) {
-        slf4j.warn(format(message));
-    }
-
-    @Override
     public void warn(Object message, Throwable t) {
         slf4j.warn(format(message), t);
     }
 
     @Override
-    public void info(Object message) {
-        slf4j.info(format(message));
-    }
-
-    @Override
     public void info(Object message, Throwable t) {
         slf4j.info(format(message), t);
-    }
-
-    @Override
-    public void debug(Object message) {
-        slf4j.debug(format(message));
     }
 
     @Override

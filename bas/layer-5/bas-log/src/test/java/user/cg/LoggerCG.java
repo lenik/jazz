@@ -54,20 +54,29 @@ public class LoggerCG {
             String LevelName = Strings.ucfirst(levelName);
             String LEVELNAME = levelName.toUpperCase();
 
-            String level = src_AbstractLogger;
-            level = level.replaceAll("@name@", levelName);
-            level = level.replaceAll("@Name@", LevelName);
-            level = level.replaceAll("@NAME@", LEVELNAME);
+            String text = src_AbstractLogger;
+            text = text.replaceAll("@name@", levelName);
+            text = text.replaceAll("@Name@", LevelName);
+            text = text.replaceAll("@NAME@", LEVELNAME);
 
-            System.out.println(level);
+            String rettype = "void";
+            String _return = "";
+            if (levelName.equals("fatal") || levelName.equals("error")) {
+                rettype = "boolean";
+                _return = "return ";
+            }
+            text = text.replaceAll("@rettype@", rettype);
+            text = text.replaceAll("@return@", _return);
+
+            System.out.println(text);
         }
     }
 
     public static void main(String[] args)
             throws Exception {
         LoggerCG cg = new LoggerCG();
- cg.makeLogger();
-//        cg.makeAbstractLogger();
+        // cg.makeLogger();
+        cg.makeAbstractLogger();
     }
 
 }

@@ -1,11 +1,14 @@
 package net.bodz.bas.log;
 
 import net.bodz.bas.log.impl.PrintStreamLogSink;
+import net.bodz.bas.log.message.ArrayJoinMessage;
+import net.bodz.bas.log.message.StringFormatMessage;
 import net.bodz.bas.meta.codehint.ChainOrder;
 import net.bodz.bas.meta.codehint.ChainUsage;
 import net.bodz.bas.meta.codehint.OverrideOption;
 
 public abstract class AbstractLogComposite
+        // extends SkippedCallerBase
         implements ILogComposite {
 
     private int maxPriority = 0;
@@ -51,6 +54,20 @@ public abstract class AbstractLogComposite
     @Override
     public final boolean isEnabled(LogLevel level) {
         return isEnabled(level, 0);
+    }
+
+    // utils
+
+    protected static String nameOf(Class<?> clazz) {
+        return clazz.getName();
+    }
+
+    protected static Object concat(Object... array) {
+        return new ArrayJoinMessage(array);
+    }
+
+    protected static Object format(String fmt, Object... args) {
+        return new StringFormatMessage(fmt, args);
     }
 
 }

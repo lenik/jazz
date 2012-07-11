@@ -20,61 +20,56 @@
     }
 
     @Override
-    public void @name@(Object message) {
-        get@Name@Sink().p(message);
+    public final @rettype@ @name@(Throwable e, Object message) {
+        @return@_@name@(0, e, message);
     }
 
     @Override
-    public void @name@(Throwable e, Object message) {
-        get@Name@Sink().p(e, message);
+    public final @rettype@ _@name@(int delta, Object message) {
+        @return@_@name@(delta, null, message);
     }
 
     @Override
-    public void _@name@(int delta, Object message) {
-        get@Name@Sink(delta).p(message);
-    }
-
-    @Override
-    public void _@name@(int delta, Throwable e, Object message) {
+    public @rettype@ _@name@(int delta, Throwable e, Object message) {
         get@Name@Sink(delta).p(e, message);
     }
 
     @Override
-    public void @name@(Object... messageArray) {
-        get@Name@Sink().p(messageArray);
+    public final @rettype@ @name@(Object... messageArray) {
+        @return@_@name@(0, null, concat(messageArray));
     }
 
     @Override
-    public void @name@(Throwable e, Object... messageArray) {
-        get@Name@Sink().p(e, messageArray);
+    public final @rettype@ @name@(Throwable e, Object... messageArray) {
+        @return@_@name@(0, e, concat(messageArray));
     }
 
     @Override
-    public void _@name@(int delta, Object... messageArray) {
-        get@Name@Sink(delta).p(messageArray);
+    public final @rettype@ _@name@(int delta, Object... messageArray) {
+        @return@_@name@(delta, null, concat(messageArray));
     }
 
     @Override
-    public void _@name@(int delta, Throwable e, Object... messageArray) {
-        get@Name@Sink(delta).p(e, messageArray);
+    public final @rettype@ _@name@(int delta, Throwable e, Object... messageArray) {
+        @return@_@name@(delta, e, concat(messageArray));
     }
 
     @Override
-    public void @name@Format(String format, Object... args) {
-        get@Name@Sink().f(format, args);
+    public final @rettype@ @name@Format(String fmt, Object... args) {
+        @return@_@name@(0, null, format(fmt, args));
     }
 
     @Override
-    public void @name@Format(Throwable e, String format, Object... args) {
-        get@Name@Sink().f(e, format, args);
+    public final @rettype@ @name@Format(Throwable e, String fmt, Object... args) {
+        @return@_@name@(0, e, format(fmt, args));
     }
 
     @Override
-    public void _@name@Format(int delta, String format, Object... args) {
-        get@Name@Sink(delta).f(format, args);
+    public final @rettype@ _@name@Format(int delta, String fmt, Object... args) {
+        @return@_@name@(delta, fmt, format(fmt, args));
     }
 
     @Override
-    public void _@name@Format(int delta, Throwable e, String format, Object... args) {
-        get@Name@Sink(delta).f(e, format, args);
+    public final @rettype@ _@name@Format(int delta, Throwable e, String fmt, Object... args) {
+        @return@_@name@(delta, e, format(fmt, args));
     }

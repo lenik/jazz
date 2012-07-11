@@ -19,12 +19,12 @@ public class Log4jLogger
 
     private final Logger log4j;
 
-    static final String FQCN = Log4jLogger.class.getName();
+    static final String FQCN = AbstractLogger.class.getName();
 
-    public Log4jLogger(Logger logger) {
-        if (logger == null)
-            throw new NullPointerException("logger");
-        this.log4j = logger;
+    public Log4jLogger(Logger log4j) {
+        if (log4j == null)
+            throw new NullPointerException("log4j");
+        this.log4j = log4j;
     }
 
     @Override
@@ -66,20 +66,8 @@ public class Log4jLogger
     }
 
     @Override
-    public boolean fatal(Object message) {
-        log4j.log(FQCN, Level.FATAL, message, null);
-        return false;
-    }
-
-    @Override
     public boolean fatal(Object message, Throwable t) {
         log4j.log(FQCN, Level.FATAL, message, t);
-        return false;
-    }
-
-    @Override
-    public boolean error(Object message) {
-        log4j.log(FQCN, Level.ERROR, message, null);
         return false;
     }
 
@@ -90,18 +78,8 @@ public class Log4jLogger
     }
 
     @Override
-    public void warn(Object message) {
-        log4j.log(FQCN, Level.WARN, message, null);
-    }
-
-    @Override
     public void warn(Object message, Throwable t) {
         log4j.log(FQCN, Level.WARN, message, t);
-    }
-
-    @Override
-    public void info(Object message) {
-        log4j.log(FQCN, Level.INFO, message, null);
     }
 
     @Override
@@ -110,21 +88,18 @@ public class Log4jLogger
     }
 
     @Override
-    public void debug(Object message) {
-        log4j.log(FQCN, Level.DEBUG, message, null);
-    }
-
-    @Override
     public void debug(Object message, Throwable t) {
         log4j.log(FQCN, Level.DEBUG, message, t);
     }
 
     public static Log4jLogger getInstance(Class<?> clazz) {
-        return new Log4jLogger(MergedLog4jFactory.getLogger(clazz));
+        String name = nameOf(clazz);
+        return getInstance(name);
     }
 
     public static Log4jLogger getInstance(String name) {
-        return new Log4jLogger(MergedLog4jFactory.getLogger(name));
+        Logger log4j = MergedLog4jFactory.getLogger(name);
+        return new Log4jLogger(log4j);
     }
 
 }

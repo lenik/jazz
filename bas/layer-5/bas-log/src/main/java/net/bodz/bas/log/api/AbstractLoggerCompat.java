@@ -10,9 +10,8 @@ public class AbstractLoggerCompat
     // Log4j style shortcuts
 
     @Override
-    public boolean fatal(Object message) {
-        get(LogLevel.FATAL).p(message);
-        return false;
+    public final boolean fatal(Object message) {
+        return fatal(message, null);
     }
 
     @Override
@@ -22,9 +21,8 @@ public class AbstractLoggerCompat
     }
 
     @Override
-    public boolean error(Object message) {
-        get(LogLevel.ERROR).p(message);
-        return false;
+    public final boolean error(Object message) {
+        return error(message, null);
     }
 
     @Override
@@ -34,8 +32,8 @@ public class AbstractLoggerCompat
     }
 
     @Override
-    public void warn(Object message) {
-        get(LogLevel.WARN).p(message);
+    public final void warn(Object message) {
+        warn(message, null);
     }
 
     @Override
@@ -44,8 +42,8 @@ public class AbstractLoggerCompat
     }
 
     @Override
-    public void info(Object message) {
-        get(LogLevel.INFO).p(message);
+    public final void info(Object message) {
+        info(message, null);
     }
 
     @Override
@@ -54,8 +52,8 @@ public class AbstractLoggerCompat
     }
 
     @Override
-    public void debug(Object message) {
-        get(LogLevel.DEBUG).p(message);
+    public final void debug(Object message) {
+        debug(message, null);
     }
 
     @Override
