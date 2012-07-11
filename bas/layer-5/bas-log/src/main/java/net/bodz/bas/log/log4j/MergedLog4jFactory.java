@@ -15,16 +15,8 @@ public class MergedLog4jFactory {
         }
     }
 
-    /**
-     * TODO normalize the name.
-     */
     public static Logger getLogger(String name) {
         Logger logger = LogManager.getLogger(name);
-        return logger;
-    }
-
-    public static Logger getLogger(Class<?> clazz) {
-        Logger logger = LogManager.getLogger(clazz);
         return logger;
     }
 
