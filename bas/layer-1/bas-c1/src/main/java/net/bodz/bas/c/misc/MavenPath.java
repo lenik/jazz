@@ -1,4 +1,4 @@
-package net.bodz.bas.m2.util;
+package net.bodz.bas.c.misc;
 
 import java.io.File;
 import java.net.URI;

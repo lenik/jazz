@@ -4,9 +4,9 @@ import static net.bodz.bas.lang.negotiation.Negotiation.*;
 
 import java.io.File;
 
+import net.bodz.bas.c.misc.MavenPath;
 import net.bodz.bas.io.resource.builtin.StringSource;
 import net.bodz.bas.lang.negotiation.INegotiation;
-import net.bodz.bas.m2.util.MavenPath;
 import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.mda.xjdoc.conv.ClassDocBuilder;
