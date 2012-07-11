@@ -66,24 +66,24 @@ public class JdkLogger
     }
 
     @Override
-    public boolean fatal(Object message, Throwable t) {
+    public boolean _fatal(int delta, Throwable t, Object message) {
         jdkLogger.log(Level.SEVERE, String.valueOf(message), t);
         return false;
     }
 
     @Override
-    public boolean error(Object message, Throwable t) {
+    public boolean _error(int delta, Throwable t, Object message) {
         jdkLogger.log(Level.SEVERE, String.valueOf(message), t);
         return false;
     }
 
     @Override
-    public void warn(Object message, Throwable t) {
+    public void _warn(int delta, Throwable t, Object message) {
         jdkLogger.log(Level.WARNING, String.valueOf(message), t);
     }
 
     @Override
-    public void info(Object message, Throwable t) {
+    public void _info(int delta, Throwable t, Object message) {
         jdkLogger.log(Level.INFO, String.valueOf(message), t);
     }
 
@@ -98,7 +98,7 @@ public class JdkLogger
     }
 
     @Override
-    public void debug(Object message, Throwable t) {
+    public void _debug(int delta, Throwable t, Object message) {
         jdkLogger.log(Level.FINER, String.valueOf(message), t);
     }
 

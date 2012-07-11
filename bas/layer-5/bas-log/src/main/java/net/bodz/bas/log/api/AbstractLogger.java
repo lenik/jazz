@@ -40,6 +40,31 @@ public abstract class AbstractLogger
         getProgressSink().p(message);
     }
 
+    @Override
+    public final boolean fatal(Object message, Throwable t) {
+        return _fatal(0, message, t);
+    }
+
+    @Override
+    public final boolean error(Object message, Throwable t) {
+        return _error(0, message, t);
+    }
+
+    @Override
+    public final void warn(Object message, Throwable t) {
+        _warn(0, message, t);
+    }
+
+    @Override
+    public final void info(Object message, Throwable t) {
+        _info(0, message, t);
+    }
+
+    @Override
+    public final void debug(Object message, Throwable t) {
+        _debug(0, message, t);
+    }
+
     // See LoggerCG.
 
     @Override

@@ -67,29 +67,29 @@ public class Slf4jLogger
     }
 
     @Override
-    public boolean fatal(Object message, Throwable t) {
+    public boolean _fatal(int delta, Throwable t, Object message) {
         slf4j.error(format(message), t);
         return false;
     }
 
     @Override
-    public boolean error(Object message, Throwable t) {
+    public boolean _error(int delta, Throwable t, Object message) {
         slf4j.error(format(message), t);
         return false;
     }
 
     @Override
-    public void warn(Object message, Throwable t) {
+    public void _warn(int delta, Throwable t, Object message) {
         slf4j.warn(format(message), t);
     }
 
     @Override
-    public void info(Object message, Throwable t) {
+    public void _info(int delta, Throwable t, Object message) {
         slf4j.info(format(message), t);
     }
 
     @Override
-    public void debug(Object message, Throwable t) {
+    public void _debug(int delta, Throwable t, Object message) {
         slf4j.debug(format(message), t);
     }
 
