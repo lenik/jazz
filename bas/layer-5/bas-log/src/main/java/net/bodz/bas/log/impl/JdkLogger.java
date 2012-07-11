@@ -66,20 +66,8 @@ public class JdkLogger
     }
 
     @Override
-    public boolean fatal(Object message) {
-        jdkLogger.severe(String.valueOf(message));
-        return false;
-    }
-
-    @Override
     public boolean fatal(Object message, Throwable t) {
         jdkLogger.log(Level.SEVERE, String.valueOf(message), t);
-        return false;
-    }
-
-    @Override
-    public boolean error(Object message) {
-        jdkLogger.severe(String.valueOf(message));
         return false;
     }
 
@@ -90,18 +78,8 @@ public class JdkLogger
     }
 
     @Override
-    public void warn(Object message) {
-        jdkLogger.warning(String.valueOf(message));
-    }
-
-    @Override
     public void warn(Object message, Throwable t) {
         jdkLogger.log(Level.WARNING, String.valueOf(message), t);
-    }
-
-    @Override
-    public void info(Object message) {
-        jdkLogger.info(String.valueOf(message));
     }
 
     @Override
@@ -117,11 +95,6 @@ public class JdkLogger
     /** Unmapped */
     public void config(Object message, Throwable t) {
         jdkLogger.log(Level.CONFIG, String.valueOf(message), t);
-    }
-
-    @Override
-    public void debug(Object message) {
-        jdkLogger.finer(String.valueOf(message));
     }
 
     @Override

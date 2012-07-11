@@ -65,20 +65,8 @@ public class JCLLogger
     }
 
     @Override
-    public boolean fatal(Object message) {
-        jclLog.fatal(message);
-        return false;
-    }
-
-    @Override
     public boolean fatal(Object message, Throwable t) {
         jclLog.fatal(message, t);
-        return false;
-    }
-
-    @Override
-    public boolean error(Object message) {
-        jclLog.error(message);
         return false;
     }
 
@@ -89,28 +77,13 @@ public class JCLLogger
     }
 
     @Override
-    public void warn(Object message) {
-        jclLog.warn(message);
-    }
-
-    @Override
     public void warn(Object message, Throwable t) {
         jclLog.warn(message, t);
     }
 
     @Override
-    public void info(Object message) {
-        jclLog.info(message);
-    }
-
-    @Override
     public void info(Object message, Throwable t) {
         jclLog.info(message, t);
-    }
-
-    @Override
-    public void debug(Object message) {
-        jclLog.debug(message);
     }
 
     @Override
