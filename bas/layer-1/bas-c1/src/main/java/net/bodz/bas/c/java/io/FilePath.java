@@ -7,8 +7,6 @@ import java.net.URL;
 
 import net.bodz.bas.c.string.StringPart;
 
-
-
 public class FilePath {
 
     private static char fileSeparator;

@@ -5,13 +5,13 @@ import static net.bodz.bas.lang.negotiation.Negotiation.*;
 import java.io.File;
 import java.io.IOException;
 
+import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.i18n.dstr.DomainString;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
 import net.bodz.bas.io.resource.builtin.OutputStreamTarget;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.NegotiationException;
-import net.bodz.bas.m2.mojo.AbstractResourceGeneratorMojo;
 import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.bas.vfs.impl.javaio.JavaioFile;
@@ -22,9 +22,11 @@ import net.bodz.mda.xjdoc.tags.JavadocTagBook;
 import net.bodz.mda.xjdoc.tags.MergedTagBook;
 import net.bodz.mda.xjdoc.tags.TagBooks;
 import net.bodz.mda.xjdoc.util.ImportMap;
+import net.bodz.shared.mojo.AbstractResourceGeneratorMojo;
 
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugin.logging.Log;
 
 import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.ClassLibrary;
@@ -110,6 +112,7 @@ public class ClassDocBuilderMojo
     @Override
     public void execute()
             throws MojoExecutionException, MojoFailureException {
+        Log log = getLog();
 
         ClassLoader classLoader = ClassLoader.getSystemClassLoader();
         ClassLibrary classLibrary = new ClassLibrary(classLoader);
@@ -118,9 +121,19 @@ public class ClassDocBuilderMojo
 
         File srcRoot = getSourceDirectory();
         File outRoot = getOutputDirectory();
+
+        if (srcRoot == null)
+            throw new IllegalUsageException("srcRoot");
+        if (outRoot == null)
+            throw new IllegalUsageException("outRoot");
+
+        log.info("Search javadocs in: " + srcRoot);
         javaDocBuilder.addSourceTree(srcRoot);
 
-        for (JavaSource jsource : javaDocBuilder.getSources()) {
+        JavaSource[] jsources = javaDocBuilder.getSources();
+        log.info("Generating class docs for " + jsources.length + " source files");
+
+        for (JavaSource jsource : jsources) {
             String packageName = jsource.getPackageName();
             File outDir = outRoot == null ? null : new File(outRoot, packageName.replace('.', '/'));
 
@@ -153,6 +166,7 @@ public class ClassDocBuilderMojo
                     outTarget = new OutputStreamTarget(System.out);
                     System.out.println("FILE: " + baseName);
                 } else {
+                    log.debug("Generate " + classDocFile);
                     JavaioFile _file = new JavaioFile(classDocFile);
                     _file.setAutoCreateParents(true);
                     outTarget = _file.getOutputTarget();
