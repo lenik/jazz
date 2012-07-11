@@ -1,4 +1,4 @@
-package net.bodz.bas.m2.mojo;
+package net.bodz.shared.mojo;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.project.MavenProject;
