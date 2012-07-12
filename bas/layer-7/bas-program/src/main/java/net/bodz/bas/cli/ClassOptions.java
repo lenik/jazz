@@ -7,9 +7,11 @@ import net.bodz.bas.c.reflect.query.ReflectQuery;
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.c.type.ClassLocal;
 import net.bodz.bas.c.type.ClassLocals;
-import net.bodz.bas.cli.opt.AbstractOption;
-import net.bodz.bas.cli.opt.IOption;
-import net.bodz.bas.cli.opt.IOptionGroup;
+import net.bodz.bas.cli.help.AlignedOptionFormatter;
+import net.bodz.bas.cli.model.AbstractOption;
+import net.bodz.bas.cli.model.IOption;
+import net.bodz.bas.cli.model.IOptionGroup;
+import net.bodz.bas.cli.skel.CLIException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.program.ProgramNameUtil;
 

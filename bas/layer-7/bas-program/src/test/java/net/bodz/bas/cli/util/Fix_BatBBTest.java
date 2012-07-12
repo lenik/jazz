@@ -6,6 +6,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 
 import net.bodz.bas.c.string.StringArray;
+import net.bodz.bas.cli.boot.win32.Fix_BatBB;
 
 import org.junit.Test;
 
