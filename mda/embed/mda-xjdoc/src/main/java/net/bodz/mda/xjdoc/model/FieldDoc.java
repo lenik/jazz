@@ -7,7 +7,8 @@ import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 
 public class FieldDoc
-        extends ElementDoc {
+        extends ElementDoc
+        implements IFieldDoc {
 
     final ClassDoc classDoc;
 
@@ -16,9 +17,12 @@ public class FieldDoc
         this.classDoc = classDoc;
     }
 
+    @Override
     public ClassDoc getClassDoc() {
         return classDoc;
     }
+
+    // --o IFlatfSerializable
 
     @Override
     public void writeObject(IFlatfOutput out, INegotiation negotiation)
