@@ -30,7 +30,7 @@ public class DocTagType
 
     @Override
     public Object parseEntry(Object cont, String suffix, String string, INegotiation negotiation) {
-        DomainString text = DomainString.parseMultiLangString(string);
+        DomainString text = DomainString.parseMultiLang(string);
         return text;
     }
 

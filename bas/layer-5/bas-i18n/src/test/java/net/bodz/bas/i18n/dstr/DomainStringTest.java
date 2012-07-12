@@ -25,4 +25,24 @@ public class DomainStringTest
         assertEquals("\"Default\"\net \"Esperanto\"\nzh-cn \"中文\"", dstr1.toMultiLangString());
     }
 
+    @Test
+    public void testParseNullString() {
+        DomainString nul = new DomainString(null);
+        assertNull(nul.toString());
+        assertEquals("", nul.toMultiLangString());
+        assertEquals("", nul.toParaLangString());
+    }
+
+    @Test
+    public void testParseNullMultiLang() {
+        DomainString dstr = DomainString.parseMultiLang("");
+        assertNull(dstr.value);
+    }
+
+    @Test
+    public void testParseNullParaLang() {
+        DomainString dstr = DomainString.parseParaLang("");
+        assertEquals("", dstr.value);
+    }
+
 }

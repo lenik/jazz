@@ -7,6 +7,10 @@ import java.util.regex.Pattern;
 public class DomainString
         extends DomainNode<DomainString, String> {
 
+    public DomainString() {
+        super(null, null);
+    }
+
     public DomainString(String value) {
         super(null, value);
     }
@@ -133,7 +137,7 @@ public class DomainString
      *            multi-lang string to be parsed.
      * @return <code>null</code> iif <code>mlstr</code> is <code>null</code>.
      */
-    public static DomainString parseMultiLangString(String mlstr) {
+    public static DomainString parseMultiLang(String mlstr) {
         if (mlstr == null)
             return null;
         MultiLangStringParser parser = new MultiLangStringParser();

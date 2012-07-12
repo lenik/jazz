@@ -1,7 +1,6 @@
 package net.bodz.mda.xjdoc.contrib.maven;
 
-import static net.bodz.bas.lang.negotiation.Negotiation.list;
-import static net.bodz.bas.lang.negotiation.Negotiation.option;
+import static net.bodz.bas.lang.negotiation.Negotiation.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -111,7 +110,7 @@ public class ClassDocBuilderMojo
 
     public void setMissingDoc(String missingDoc) {
         // getLog().info("Set-Missing-Doc: " + missingDoc);
-        this.missingDoc = DomainString.parseMultiLangString(missingDoc);
+        this.missingDoc = DomainString.parseMultiLang(missingDoc);
     }
 
     public String getBooks() {
