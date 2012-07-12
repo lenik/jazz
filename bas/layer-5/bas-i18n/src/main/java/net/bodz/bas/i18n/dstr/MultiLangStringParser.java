@@ -19,20 +19,12 @@ public class MultiLangStringParser
     @Override
     protected void reset() {
         super.reset();
-        domainString = null;
+        domainString = new DomainString();
     }
 
     @Override
     protected void commit(String tag, String string) {
-        if (tag == null) {
-            if (domainString != null)
-                throw new IllegalStateException("The default lang must be the first.");
-            domainString = new DomainString(string);
-        } else {
-            if (domainString == null)
-                domainString = new DomainString(null, null); // No default value.
-            domainString.resolve(tag, string);
-        }
+        domainString.resolve(tag, string);
     }
 
     @Override
