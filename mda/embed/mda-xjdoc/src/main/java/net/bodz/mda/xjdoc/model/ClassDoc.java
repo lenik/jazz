@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.sio.BCharOut;
@@ -163,7 +164,8 @@ public class ClassDoc
     }
 
     @Override
-    protected boolean processInstruction(String command, String data) {
+    protected boolean processInstruction(String command, String data)
+            throws ParseException {
         if ("import".equals(command)) {
             String fqcn = data;
             getOrCreateImports().add(fqcn);

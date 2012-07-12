@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.text.flatf.IFlatfOutput;
@@ -14,7 +15,8 @@ public class AutoTagType
         extends AbstractTagType {
 
     @Override
-    public Object parseJavadoc(Object cont, String string, INegotiation negotiation) {
+    public Object parseJavadoc(Object cont, String string, INegotiation negotiation)
+            throws ParseException {
         return null;
     }
 
@@ -24,7 +26,8 @@ public class AutoTagType
     }
 
     @Override
-    public Object parseEntry(Object cont, String suffix, String string, INegotiation negotiation) {
+    public Object parseEntry(Object cont, String suffix, String string, INegotiation negotiation)
+            throws ParseException {
         return null;
     }
 

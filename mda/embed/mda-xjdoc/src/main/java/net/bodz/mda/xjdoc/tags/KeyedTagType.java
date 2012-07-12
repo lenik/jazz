@@ -5,6 +5,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.bodz.bas.err.FormatException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 import net.bodz.mda.xjdoc.util.WordTokenizer;
@@ -24,7 +26,8 @@ public class KeyedTagType
     }
 
     @Override
-    public Object parseJavadoc(Object cont, String string, INegotiation negotiation) {
+    public Object parseJavadoc(Object cont, String string, INegotiation negotiation)
+            throws ParseException {
         String keyStr = WordTokenizer.firstWord(string);
         String valueStr = string.substring(keyStr.length());
         keyStr = keyStr.trim();
@@ -44,7 +47,8 @@ public class KeyedTagType
     }
 
     @Override
-    public String[] formatJavadoc(Object value, INegotiation negotiation) {
+    public String[] formatJavadoc(Object value, INegotiation negotiation)
+            throws FormatException {
         Map<?, ?> map = (Map<?, ?>) value;
         String[] array = new String[map.size()];
 
@@ -61,7 +65,8 @@ public class KeyedTagType
     }
 
     @Override
-    public Object parseEntry(Object cont, String suffix, String string, INegotiation negotiation) {
+    public Object parseEntry(Object cont, String suffix, String string, INegotiation negotiation)
+            throws ParseException {
         @SuppressWarnings("unchecked")
         Map<Object, Object> map = (Map<Object, Object>) cont;
         if (map == null)
@@ -79,7 +84,7 @@ public class KeyedTagType
 
     @Override
     public void writeEntries(IFlatfOutput out, String prefix, Object value, INegotiation negotiation)
-            throws IOException {
+            throws FormatException, IOException {
         Map<?, ?> map = (Map<?, ?>) value;
         for (Entry<?, ?> entry : map.entrySet()) {
             Object k = entry.getKey();
