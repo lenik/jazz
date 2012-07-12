@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.err.NotImplementedException;
-import net.bodz.bas.meta.info.DisplayNameUtil;
+import net.bodz.bas.util.ObjectInfo;
 
 /**
  * Implemented Features: - Composition
@@ -24,7 +24,7 @@ public abstract class StateImpl
     }
 
     public String getName() {
-        return DisplayNameUtil.getDisplayName(getClass());
+        return ObjectInfo.getObjectId(this);
     }
 
     public int getType() {

@@ -4,9 +4,9 @@ import java.beans.FeatureDescriptor;
 import java.lang.annotation.Annotation;
 
 import net.bodz.bas.i18n.dom.DomainString;
-import net.bodz.bas.meta.info.DisplayName;
-import net.bodz.bas.meta.info.Doc;
-import net.bodz.bas.meta.info.Tags;
+import net.bodz.bas.potato.book.DisplayName;
+import net.bodz.bas.potato.book.Doc;
+import net.bodz.bas.potato.book.Tags;
 
 import org.apache.commons.lang.ArrayUtils;
 

@@ -1,14 +1,14 @@
 package user.bean;
 
-import net.bodz.bas.meta.info.Doc;
-
 public class AddressBean {
 
     private String country;
     private String city;
     private String address;
 
-    @Doc("Country in the world")
+    /**
+     * Country in the world
+     */
     public String getCountry() {
         return country;
     }
@@ -17,7 +17,9 @@ public class AddressBean {
         this.country = country;
     }
 
-    @Doc("City in a country")
+    /**
+     * City in a country
+     */
     public String getCity() {
         return city;
     }
@@ -26,7 +28,9 @@ public class AddressBean {
         this.city = city;
     }
 
-    @Doc("Address in the city")
+    /**
+     * Address in the city
+     */
     public String getAddress() {
         return address;
     }
