@@ -5,6 +5,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 import net.bodz.bas.err.UnexpectedException;
+import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.potato.traits.AbstractProperty;
 
 public class BeanProperty
@@ -38,13 +39,15 @@ public class BeanProperty
     }
 
     @Override
-    public String getDisplayName() {
-        return propertyDescriptor.getDisplayName();
+    public DomainString getDisplayName() {
+        String displayName = propertyDescriptor.getDisplayName();
+        return DomainString.of(displayName);
     }
 
     @Override
-    public String getDescription() {
-        return propertyDescriptor.getShortDescription();
+    public DomainString getDescription() {
+        String shortDescription = propertyDescriptor.getShortDescription();
+        return DomainString.of(shortDescription);
     }
 
     @Override

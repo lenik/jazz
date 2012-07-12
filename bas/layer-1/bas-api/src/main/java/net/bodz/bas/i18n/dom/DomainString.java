@@ -144,4 +144,8 @@ public class DomainString
         return parser.parse(mlstr);
     }
 
+    public static DomainString of(String plainString) {
+        return new DomainString(plainString);
+    }
+
 }
