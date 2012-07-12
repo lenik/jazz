@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.i18n.dstr.DomainString;
+import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
 import net.bodz.bas.io.resource.builtin.OutputStreamTarget;
 import net.bodz.bas.lang.negotiation.INegotiation;

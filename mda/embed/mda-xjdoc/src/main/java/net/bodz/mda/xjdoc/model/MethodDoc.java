@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import net.bodz.bas.i18n.dstr.DomainString;
+import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.text.flatf.IFlatfOutput;

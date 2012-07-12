@@ -1,4 +1,4 @@
-package net.bodz.bas.i18n.dstr;
+package net.bodz.bas.i18n.dom;
 
 public abstract class MultiTagStringParser {
 

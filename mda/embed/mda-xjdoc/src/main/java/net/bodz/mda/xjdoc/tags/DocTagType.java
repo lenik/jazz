@@ -2,7 +2,7 @@ package net.bodz.mda.xjdoc.tags;
 
 import java.io.IOException;
 
-import net.bodz.bas.i18n.dstr.DomainString;
+import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 

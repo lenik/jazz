@@ -1,4 +1,4 @@
-package net.bodz.bas.i18n.dstr;
+package net.bodz.bas.i18n.dom;
 
 import java.util.Iterator;
 import java.util.Map.Entry;
