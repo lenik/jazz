@@ -13,7 +13,8 @@ import net.bodz.mda.xjdoc.util.ImportMap;
 import net.bodz.mda.xjdoc.util.MethodId;
 
 public class ClassDoc
-        extends ElementDoc {
+        extends ElementDoc
+        implements IClassDoc {
 
     Map<String, FieldDoc> fieldDocs;
     Map<MethodId, MethodDoc> methodDocs;
@@ -26,10 +27,12 @@ public class ClassDoc
         methodDocs = new LinkedHashMap<MethodId, MethodDoc>();
     }
 
+    @Override
     public ImportMap getImports() {
         return imports;
     }
 
+    @Override
     public synchronized ImportMap getOrCreateImports() {
         if (imports == null) {
             String fqcn = getName();
@@ -44,18 +47,22 @@ public class ClassDoc
         return imports;
     }
 
+    @Override
     public void setImports(ImportMap imports) {
         this.imports = imports;
     }
 
+    @Override
     public Map<String, FieldDoc> getFieldDocs() {
         return fieldDocs;
     }
 
+    @Override
     public FieldDoc getFieldDoc(String fieldName) {
         return fieldDocs.get(fieldName);
     }
 
+    @Override
     public void setFieldDoc(String fieldName, FieldDoc fieldDoc) {
         if (fieldName == null)
             throw new NullPointerException("fieldName");
@@ -64,18 +71,22 @@ public class ClassDoc
         fieldDocs.put(fieldName, fieldDoc);
     }
 
+    @Override
     public FieldDoc removeFieldDoc(String fieldName) {
         return fieldDocs.remove(fieldName);
     }
 
+    @Override
     public Map<MethodId, MethodDoc> getMethodDocs() {
         return methodDocs;
     }
 
+    @Override
     public MethodDoc getMethodDoc(MethodId methodId) {
         return methodDocs.get(methodId);
     }
 
+    @Override
     public void setMethodDoc(MethodId methodId, MethodDoc methodDoc) {
         if (methodId == null)
             throw new NullPointerException("methodId");
@@ -84,9 +95,12 @@ public class ClassDoc
         methodDocs.put(methodId, methodDoc);
     }
 
+    @Override
     public MethodDoc removeMethodDoc(MethodId methodId) {
         return methodDocs.remove(methodId);
     }
+
+    // --o IFlatfSerializable
 
     /**
      * classdoc file format.

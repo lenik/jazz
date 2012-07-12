@@ -17,7 +17,7 @@ import net.bodz.mda.xjdoc.tags.ITagType;
 import net.bodz.mda.xjdoc.tags.TagBook;
 
 public class ElementDoc
-        implements IFlatfSerializable {
+        implements IElementDoc, IFlatfSerializable {
 
     String name;
     DomainString text;
@@ -30,61 +30,34 @@ public class ElementDoc
         this.name = name;
     }
 
-    /**
-     * Get the (canonical/unique) element name.
-     * 
-     * @return Non-<code>null</code> element name.
-     */
+    @Override
     public String getName() {
         return name;
     }
 
-    /**
-     * Set the (canonical/unique) element name.
-     * 
-     * @param name
-     *            Non-<code>null</code> element name.
-     */
+    @Override
     public void setName(String name) {
         if (name == null)
             throw new NullPointerException("name");
         this.name = name;
     }
 
-    /**
-     * The main text of the element.
-     * 
-     * While tags are strict typed, the main text is always (domain-)string.
-     * 
-     * @return Possibly <code>null</code> or empty-string if main text isn't specified.
-     */
+    @Override
     public DomainString getText() {
         return text;
     }
 
-    /**
-     * Set the main text of the element.
-     * 
-     * While tags are strict typed, the main text is always (domain-)string.
-     * 
-     * @param text
-     *            <code>null</code> or empty-string if main text isn't specified.
-     */
+    @Override
     public void setText(DomainString text) {
         this.text = text;
     }
 
+    @Override
     public Object getTag(String tagName) {
         return tagMap.get(tagName);
     }
 
-    /**
-     * Get the value of the named tag.
-     * 
-     * The tag value type may be scalar, collection, map, or other user type.
-     * 
-     * @return <code>null</code> if the tag isn't defined.
-     */
+    @Override
     public <T> T getTag(String tagName, Class<T> tagValueType) {
         Object _value = tagMap.get(tagName);
         if (_value == null)
@@ -93,36 +66,22 @@ public class ElementDoc
         return value;
     }
 
-    /**
-     * Set the tag value.
-     * 
-     * @param tagName
-     *            Non-<code>null</code> tag name.
-     * @param tagValue
-     *            Tag value, maybe <code>null</code>.
-     */
+    @Override
     public void setTag(String tagName, Object tagValue) {
         tagMap.put(tagName, tagValue);
     }
 
-    /**
-     * Remove the named tag.
-     * 
-     * @return Value of the removed tag. <code>null</code> if the tag was not existed, or its value
-     *         is <code>null</code>.
-     */
+    @Override
     public Object removeTag(String tagName) {
         return tagMap.remove(tagName);
     }
 
-    /**
-     * Get the named tag map.
-     * 
-     * @return non-<code>null</code> {@link Map} contains all the tags.
-     */
+    @Override
     public Map<String, Object> getTagMap() {
         return tagMap;
     }
+
+    // --o IFlatfSerializable
 
     @Override
     public void writeObject(IFlatfOutput out, INegotiation negotiation)

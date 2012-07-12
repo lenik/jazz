@@ -7,7 +7,8 @@ import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 
 public class PackageDoc
-        extends ElementDoc {
+        extends ElementDoc
+        implements IPackageDoc {
 
     public PackageDoc() {
         super();
