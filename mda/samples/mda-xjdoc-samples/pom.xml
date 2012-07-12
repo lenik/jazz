@@ -24,21 +24,29 @@
                 <version>0.0.1-SNAPSHOT</version>
                 <executions>
                     <execution>
+                        <id>main-ff</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                        <configuration>
+                            <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
+                            <outputDirectory>${basedir}/target/classes</outputDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>test-ff</id>
                         <phase>generate-test-resources</phase>
                         <goals>
                             <goal>build</goal>
                         </goals>
+                        <configuration>
+                            <testClasses>true</testClasses>
+                            <sourceDirectory>${basedir}/src/test/java</sourceDirectory>
+                            <outputDirectory>${basedir}/target/test-classes</outputDirectory>
+                        </configuration>
                     </execution>
                 </executions>
-                <configuration>
-                    <testClasses>true</testClasses>
-                    <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
-                    <outputDirectory>${basedir}/target/classes</outputDirectory>
-                    <missingDoc>
-                        "Empty"
-                        zh-cn "没有文档"
-                    </missingDoc>
-                </configuration>
             </plugin>
         </plugins>
     </build>
