@@ -1,8 +1,8 @@
 package net.bodz.bas.cli;
 
 import static org.junit.Assert.assertEquals;
-import net.bodz.bas.cli.ext.CLIPlugins;
-import net.bodz.bas.cli.ext._CLIPlugin;
+import net.bodz.bas.cli.model.plugin.CLIPlugins;
+import net.bodz.bas.cli.model.plugin._CLIPlugin;
 
 import org.junit.Test;
 

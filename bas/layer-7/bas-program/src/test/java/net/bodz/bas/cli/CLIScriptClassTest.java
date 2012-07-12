@@ -1,6 +1,7 @@
 package net.bodz.bas.cli;
 
 import static org.junit.Assert.*;
+import net.bodz.bas.cli.skel.BasicCLI;
 import net.bodz.bas.potato.Potatoes;
 import net.bodz.bas.potato.traits.IType;
 
