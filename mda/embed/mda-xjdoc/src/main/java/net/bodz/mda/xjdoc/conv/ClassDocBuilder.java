@@ -5,7 +5,7 @@ import static net.bodz.bas.lang.negotiation.Negotiation.*;
 import java.util.Map;
 
 import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.bas.i18n.dstr.DomainString;
+import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.ElementDoc;

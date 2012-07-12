@@ -2,7 +2,7 @@ package net.bodz.bas.text.flatf;
 
 import java.io.IOException;
 
-import net.bodz.bas.i18n.dstr.DomainString;
+import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.sio.ICharOut;
 
 public class FlatfOutput
