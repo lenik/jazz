@@ -3,6 +3,7 @@ package net.bodz.bas.potato.traits;
 import java.beans.FeatureDescriptor;
 import java.lang.annotation.Annotation;
 
+import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.meta.info.DisplayName;
 import net.bodz.bas.meta.info.Doc;
 import net.bodz.bas.meta.info.Tags;
@@ -15,8 +16,8 @@ public abstract class AbstractElement
     private final Class<?> declaringType;
     private final String name;
 
-    protected String displayName;
-    protected String description;
+    protected DomainString displayName;
+    protected DomainString description;
     protected String[] tags;
 
     /**
@@ -41,15 +42,15 @@ public abstract class AbstractElement
     }
 
     @Override
-    public String getDisplayName() {
+    public DomainString getDisplayName() {
         if (displayName == null) {
             synchronized (this) {
                 if (displayName == null) {
                     DisplayName aDisplayName = getAnnotation(DisplayName.class);
                     if (aDisplayName != null) {
-                        displayName = aDisplayName.value();
+                        displayName = DomainString.of(aDisplayName.value());
                         if (displayName == null)
-                            displayName = getName();
+                            displayName = DomainString.of(getName());
                     }
                 }
             }
@@ -58,13 +59,13 @@ public abstract class AbstractElement
     }
 
     @Override
-    public String getDescription() {
+    public DomainString getDescription() {
         if (description == null) {
             synchronized (this) {
                 if (description == null) {
                     Doc aDoc = getAnnotation(Doc.class);
                     if (aDoc != null)
-                        description = aDoc.value();
+                        description = DomainString.of(aDoc.value());
                 }
             }
         }

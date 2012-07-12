@@ -4,6 +4,8 @@ import java.beans.FeatureDescriptor;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.AnnotatedElement;
 
+import net.bodz.bas.i18n.dom.DomainString;
+
 public interface IElement
         extends AnnotatedElement {
 
@@ -26,12 +28,12 @@ public interface IElement
      * 
      * @return non-<code>null</code> string of display name.
      */
-    String getDisplayName();
+    DomainString getDisplayName();
 
     /**
      * @return <code>null</code> If no description available.
      */
-    String getDescription();
+    DomainString getDescription();
 
     /**
      * The preference level controls whether this element is displayed. When user specifies a
