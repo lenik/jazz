@@ -6,12 +6,14 @@ import java.net.URL;
 import java.util.List;
 import java.util.Set;
 
+import net.bodz.bas.log.api.Logger;
+import net.bodz.bas.log.api.LoggerFactory;
+import net.bodz.bas.m2.util.MavenLogLogger;
 import net.bodz.bas.m2.util.ProjectUtils;
 
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.plugin.Mojo;
-import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.classworlds.realm.ClassRealm;
 import org.codehaus.plexus.component.configurator.BasicComponentConfigurator;
@@ -32,8 +34,8 @@ import org.codehaus.plexus.configuration.PlexusConfiguration;
 public class IncludeProjectDependenciesConfigurator
         extends BasicComponentConfigurator {
 
-    // static Logger logger = LoggerFactory.getLogger(IncludeProjectDependenciesConfigurator.class);
-    Log logger;
+    static Logger _logger = LoggerFactory.getLogger(IncludeProjectDependenciesConfigurator.class);
+    Logger logger = _logger;
 
     @Override
     public synchronized void configureComponent(Object component, PlexusConfiguration configuration,
@@ -41,7 +43,7 @@ public class IncludeProjectDependenciesConfigurator
             throws ComponentConfigurationException {
 
         Mojo mojo = (Mojo) component;
-        logger = mojo.getLog();
+        logger = new MavenLogLogger(mojo.getLog());
 
         MavenProject project = ProjectUtils.getProject(expressionEvaluator);
 
