@@ -6,12 +6,12 @@ import java.net.URL;
 import java.util.List;
 import java.util.Set;
 
-import net.bodz.bas.log.api.Logger;
-import net.bodz.bas.log.api.LoggerFactory;
 import net.bodz.bas.m2.util.ProjectUtils;
 
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.DependencyResolutionRequiredException;
+import org.apache.maven.plugin.Mojo;
+import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.classworlds.realm.ClassRealm;
 import org.codehaus.plexus.component.configurator.BasicComponentConfigurator;
@@ -32,12 +32,16 @@ import org.codehaus.plexus.configuration.PlexusConfiguration;
 public class IncludeProjectDependenciesConfigurator
         extends BasicComponentConfigurator {
 
-    private static final Logger logger = LoggerFactory.getLogger(IncludeProjectDependenciesConfigurator.class);
+    // static Logger logger = LoggerFactory.getLogger(IncludeProjectDependenciesConfigurator.class);
+    Log logger;
 
     @Override
-    public void configureComponent(Object component, PlexusConfiguration configuration,
+    public synchronized void configureComponent(Object component, PlexusConfiguration configuration,
             ExpressionEvaluator expressionEvaluator, ClassRealm containerRealm, ConfigurationListener listener)
             throws ComponentConfigurationException {
+
+        Mojo mojo = (Mojo) component;
+        logger = mojo.getLog();
 
         MavenProject project = ProjectUtils.getProject(expressionEvaluator);
 
@@ -67,7 +71,7 @@ public class IncludeProjectDependenciesConfigurator
             } catch (MalformedURLException e) {
                 throw new ComponentConfigurationException("Bad classpath: " + path, e);
             }
-            logger.info("Add-Classpath: ", url);
+            logger.debug("Add-Classpath: " + url);
             classRealm.addURL(url);
         }
     }
@@ -86,7 +90,7 @@ public class IncludeProjectDependenciesConfigurator
             } catch (MalformedURLException e) {
                 throw new ComponentConfigurationException("Bad classpath: " + file, e);
             }
-            logger.info("Add-Artifact: ", file);
+            logger.debug("Add-Artifact: " + file);
             classRealm.addURL(url);
         }
     }
