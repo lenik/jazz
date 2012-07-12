@@ -2,9 +2,9 @@ package net.bodz.bas.text.flatf;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.text.ParseException;
 
 import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.lang.negotiation.INegotiation;
@@ -58,7 +58,7 @@ public class FlatfLoader {
                 sectionHandler = target.getSectionHandler(currentSection, negotiation);
 
                 if (sectionHandler == null) {
-                    throw new ParseException("Unhandled section: " + currentSection, -1);
+                    throw new ParseException("Unhandled section: " + currentSection);
                 } else {
                     sectionHandler.sectionBegin(in.getSectionName());
                 }

@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.NegotiationException;
@@ -123,7 +124,8 @@ public class ElementDoc
         }
 
         @Override
-        public boolean pi(String command, String data) {
+        public boolean pi(String command, String data)
+                throws ParseException {
             return processInstruction(command, data);
         }
 
@@ -136,7 +138,8 @@ public class ElementDoc
         }
 
         @Override
-        public void attribute(String name, String string) {
+        public void attribute(String name, String string)
+                throws ParseException {
             String tagName, suffix;
             int dot = name.indexOf('.');
             if (dot == -1) {
@@ -154,7 +157,8 @@ public class ElementDoc
 
     }
 
-    protected boolean processInstruction(String command, String data) {
+    protected boolean processInstruction(String command, String data)
+            throws ParseException {
         return false;
     }
 

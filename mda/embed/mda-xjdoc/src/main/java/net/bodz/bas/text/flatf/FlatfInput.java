@@ -3,7 +3,8 @@ package net.bodz.bas.text.flatf;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.text.ParseException;
+
+import net.bodz.bas.err.ParseException;
 
 public class FlatfInput
         implements IFlatfInput {

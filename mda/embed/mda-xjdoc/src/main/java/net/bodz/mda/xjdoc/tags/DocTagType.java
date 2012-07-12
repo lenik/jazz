@@ -7,7 +7,7 @@ import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 
 public class DocTagType
-        extends ScalarTagType {
+        extends AbstractTagType {
 
     /**
      * @param cont
@@ -48,6 +48,10 @@ public class DocTagType
         out.attribute(prefix, mlstr);
     }
 
-    public static final DocTagType INSTANCE = new DocTagType();
+    static final DocTagType INSTANCE = new DocTagType();
+
+    public static DocTagType getInstance() {
+        return INSTANCE;
+    }
 
 }

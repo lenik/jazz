@@ -5,6 +5,7 @@ import static net.bodz.bas.lang.negotiation.Negotiation.*;
 import java.util.Map;
 
 import net.bodz.bas.err.IllegalUsageException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.mda.xjdoc.model.ClassDoc;
@@ -49,7 +50,7 @@ public class ClassDocBuilder {
 
         ImportMap classImports = classDoc.getOrCreateImports();
         INegotiation negotiation = list(//
-                option(ImportMap.class, classImports));
+        option(ImportMap.class, classImports));
 
         populate(classDoc, javaClass, negotiation);
 
@@ -123,7 +124,12 @@ public class ClassDocBuilder {
             if (tagType == null)
                 throw new IllegalUsageException("Undefined Tag: " + tagName);
             Object cont = tagMap.get(tagName);
-            Object tagValue = tagType.parseJavadoc(cont, tagValueString, negotiation);
+            Object tagValue;
+            try {
+                tagValue = tagType.parseJavadoc(cont, tagValueString, negotiation);
+            } catch (ParseException e) {
+                throw new RuntimeException(e.getMessage(), e);
+            }
             if (cont == null)
                 tagMap.put(tagName, tagValue);
         }

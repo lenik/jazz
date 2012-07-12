@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.bodz.bas.err.FormatException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 
@@ -19,7 +21,8 @@ class RepeatTagType
     }
 
     @Override
-    public Object parseJavadoc(Object cont, String string, INegotiation negotiation) {
+    public Object parseJavadoc(Object cont, String string, INegotiation negotiation)
+            throws ParseException {
         @SuppressWarnings("unchecked")
         List<Object> list = (List<Object>) cont;
         if (list == null)
@@ -30,7 +33,8 @@ class RepeatTagType
     }
 
     @Override
-    public String[] formatJavadoc(Object value, INegotiation negotiation) {
+    public String[] formatJavadoc(Object value, INegotiation negotiation)
+            throws FormatException {
         List<?> list = (List<?>) value;
         String[] array = new String[list.size()];
         for (int index = 0; index < array.length; index++) {
@@ -42,7 +46,8 @@ class RepeatTagType
     }
 
     @Override
-    public Object parseEntry(Object cont, String suffix, String string, INegotiation negotiation) {
+    public Object parseEntry(Object cont, String suffix, String string, INegotiation negotiation)
+            throws ParseException {
         @SuppressWarnings("unchecked")
         List<Object> list = (List<Object>) cont;
         if (list == null)
@@ -61,7 +66,7 @@ class RepeatTagType
 
     @Override
     public void writeEntries(IFlatfOutput out, String prefix, Object value, INegotiation negotiation)
-            throws IOException {
+            throws FormatException, IOException {
         List<?> list = (List<?>) value;
         for (int index = 0; index < list.size(); index++) {
             Object item = list.get(index);

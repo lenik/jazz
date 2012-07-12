@@ -3,8 +3,8 @@ package net.bodz.mda.xjdoc.conv;
 import static net.bodz.bas.lang.negotiation.Negotiation.*;
 
 import java.io.IOException;
-import java.text.ParseException;
 
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.text.flatf.FlatfLoader;
