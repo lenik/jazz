@@ -1,6 +1,7 @@
 package net.bodz.mda.xjdoc.contrib.maven;
 
-import static net.bodz.bas.lang.negotiation.Negotiation.*;
+import static net.bodz.bas.lang.negotiation.Negotiation.list;
+import static net.bodz.bas.lang.negotiation.Negotiation.option;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,50 +40,34 @@ import com.thoughtworks.qdox.model.JavaSource;
  * @goal build
  * @phase generate-resources
  * @configurator include-project-dependencies
+ * @requiresDependencyResolution test
  */
 public class ClassDocBuilderMojo
         extends AbstractResourceGeneratorMojo {
 
-    String extension = "classdoc";
-    MergedTagBook mergedBook;
-    DomainString missingDoc;
-
-    public ClassDocBuilderMojo() {
-        mergedBook = new MergedTagBook();
-        setBooks("javadoc");
-    }
+    /**
+     * Include test classes.
+     * 
+     * @parameter expression="${classdoc.tests}"
+     */
+    boolean testClasses;
 
     /**
      * The extension name used to generate classdoc resource files.
      * 
      * @parameter expression="${classdoc.extension}"
      */
-    public String getExtension() {
-        return extension;
-    }
-
-    public void setExtension(String extension) {
-        this.extension = extension;
-    }
+    String extension = "classdoc";
 
     /**
      * Add template attributes for missing elements.
      * 
      * @parameter expression="${classdoc.missingDoc}"
      */
-    public String getMissingDoc() {
-        if (missingDoc == null)
-            return null;
-        else
-            return missingDoc.toMultiLangString();
-    }
-
-    public void setMissingDoc(String missingDoc) {
-        this.missingDoc = DomainString.parseMultiLangString(missingDoc);
-    }
+    DomainString missingDoc;
 
     /**
-     * Xjdoc language name.
+     * Xjdoc book names.
      * 
      * This can be the FQCN of the {@link ITagBook} implementation, or predefined language name
      * includes:
@@ -92,9 +77,46 @@ public class ClassDocBuilderMojo
      * 
      * @parameter expression="${classdoc.book}" default-value="javadoc"
      */
+    MergedTagBook books;
+
+    public ClassDocBuilderMojo() {
+        books = new MergedTagBook();
+        setBooks("javadoc");
+    }
+
+    public boolean isTestClasses() {
+        return testClasses;
+    }
+
+    public void setTestClasses(boolean testClasses) {
+        // getLog().info("Set-Test-Classes: " + testClasses);
+        this.testClasses = testClasses;
+    }
+
+    public String getExtension() {
+        return extension;
+    }
+
+    public void setExtension(String extension) {
+        // getLog().info("Set-Extension: " + extension);
+        this.extension = extension;
+    }
+
+    public String getMissingDoc() {
+        if (missingDoc == null)
+            return null;
+        else
+            return missingDoc.toMultiLangString();
+    }
+
+    public void setMissingDoc(String missingDoc) {
+        // getLog().info("Set-Missing-Doc: " + missingDoc);
+        this.missingDoc = DomainString.parseMultiLangString(missingDoc);
+    }
+
     public String getBooks() {
         StringBuilder sb = null;
-        for (ITagBook book : mergedBook) {
+        for (ITagBook book : books) {
             if (sb == null)
                 sb = new StringBuilder();
             else
@@ -106,7 +128,8 @@ public class ClassDocBuilderMojo
     }
 
     public synchronized void setBooks(String bookNames) {
-        mergedBook = TagBooks.parse(bookNames);
+        // getLog().info("Set-Books: " + bookNames);
+        books = TagBooks.parse(bookNames);
     }
 
     @Override
@@ -143,7 +166,7 @@ public class ClassDocBuilderMojo
             // sourceFileImports.add(importFqcn);
 
             for (JavaClass jclass : jsource.getClasses()) {
-                ClassDocBuilder builder = new ClassDocBuilder(mergedBook);
+                ClassDocBuilder builder = new ClassDocBuilder(books);
                 // builder.setCreateClassImports(true);
                 ClassDoc classDoc = builder.buildClass(jclass);
                 // builder.setMissingDoc(missingDoc);
@@ -158,7 +181,7 @@ public class ClassDocBuilderMojo
                 ImportMap classImports = classDoc.getOrCreateImports();
 
                 INegotiation negotiation = list(//
-                        option(ITagBook.class, mergedBook), //
+                        option(ITagBook.class, books), //
                         option(ImportMap.class, classImports));
 
                 IStreamOutputTarget outTarget;
