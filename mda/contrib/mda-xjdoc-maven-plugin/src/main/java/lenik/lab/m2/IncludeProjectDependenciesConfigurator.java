@@ -41,14 +41,17 @@ public class IncludeProjectDependenciesConfigurator
 
         MavenProject project = ProjectUtils.getProject(expressionEvaluator);
 
+        PlexusConfiguration _test = configuration.getChild("testClasses");
+        boolean test = _test == null ? false : ("true".equals(_test.getValue()));
+
         // Add project dependencies to the container realm.
         try {
-            List<String> runtimeClasspathElements = project.getRuntimeClasspathElements();
-            // List<String> testClasspathElements = project.getTestClasspathElements();
-            Set<Artifact> artifacts = project.getArtifacts();
-
-            addClasspaths(containerRealm, runtimeClasspathElements);
-            addArtifacts(containerRealm, artifacts);
+            List<String> classpathElements;
+            if (test)
+                classpathElements = project.getTestClasspathElements();
+            else
+                classpathElements = project.getRuntimeClasspathElements();
+            addClasspaths(containerRealm, classpathElements);
         } catch (DependencyResolutionRequiredException e) {
             throw new ComponentConfigurationException(e);
         }

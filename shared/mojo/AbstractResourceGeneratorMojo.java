@@ -39,6 +39,7 @@ public abstract class AbstractResourceGeneratorMojo
     }
 
     public void setSourceDirectory(File sourceDirectory) {
+        // getLog().info("Set-Source-Directory: " + sourceDirectory);
         this.sourceDirectory = sourceDirectory;
     }
 
@@ -47,6 +48,7 @@ public abstract class AbstractResourceGeneratorMojo
     }
 
     public void setOutputDirectory(File outputDirectory) {
+        // getLog().info("Set-Output-Directory: " + outputDirectory);
         this.outputDirectory = outputDirectory;
     }
 
