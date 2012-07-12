@@ -107,6 +107,42 @@ public class TypeName {
         return Strings.hyphenatize(name);
     }
 
+    /**
+     * If class <code>ConcreteFoo</code> extends <code>AbstractFoo</code>, the stem name of
+     * <code>ConcreteFoo</code> will be <code>Concrete</code>.
+     */
+    public static String getStemName(Class<?> clazz) {
+        String simpleName = clazz.getSimpleName();
+
+        Class<?> origin = clazz.getSuperclass();
+        String originName = null;
+        while (origin != null) {
+            originName = origin.getSimpleName();
+
+            if (Modifier.isAbstract(origin.getModifiers())) {
+                if (originName.startsWith("Abstract"))
+                    originName = originName.substring("Abstract".length());
+
+                if (simpleName.endsWith(originName))
+                    break;
+            }
+
+            // for (Annotation annotation : origin.getDeclaredAnnotations())
+            // if (annotation instanceof PublicOrigin)
+            // break;
+
+            origin = origin.getSuperclass();
+        }
+
+        String stemName;
+        if (originName != null && simpleName.endsWith(originName))
+            stemName = simpleName.substring(0, simpleName.length() - originName.length());
+        else
+            stemName = simpleName;
+
+        return stemName;
+    }
+
     public static String join(String delim, boolean simpleNames, Collection<Class<?>> types) {
         StringBuilder b = null;
         for (Class<?> t : types) {
