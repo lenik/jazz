@@ -2,6 +2,12 @@ package net.bodz.bas.model;
 
 import java.io.Serializable;
 
+/**
+ * Decorator Pattern:
+ * 
+ * Decorator is also called "Smart Proxy." This is used when you want to add functionality to an
+ * object, but not by extending that object's type. This allows you to do so at runtime.
+ */
 public abstract class AbstractDecorator<T>
         implements IWrapper<T>, Serializable {
 
