@@ -56,7 +56,7 @@ public class ClassDocBuilderMojo
      * 
      * @parameter expression="${classdoc.extension}"
      */
-    String extension = "classdoc";
+    String extension = "ff";
 
     /**
      * Add template attributes for missing elements.
