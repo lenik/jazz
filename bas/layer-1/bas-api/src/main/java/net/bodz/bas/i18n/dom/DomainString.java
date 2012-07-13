@@ -24,8 +24,32 @@ public class DomainString
     }
 
     @Override
-    protected DomainString create(String domain, String value) {
+    protected DomainString createNode(String domain, String value) {
         return new DomainString(domain, value);
+    }
+
+    public DomainString concat(DomainString other) {
+        return concat(other, false);
+    }
+
+    public DomainString concat(DomainString other, boolean smooth) {
+        if (other != null) {
+            for (Entry<String, DomainString> entry : other) {
+                String _dom = entry.getKey();
+                String _str = entry.getValue().value;
+
+                String initial = null;
+                if (smooth)
+                    initial = getNearest(_dom);
+
+                DomainString me = create(_dom, initial);
+                if (me.value == null)
+                    me.value = _str;
+                else
+                    me.value += _str;
+            }
+        }
+        return this;
     }
 
     @Override
@@ -39,7 +63,7 @@ public class DomainString
 
     public String toParaLangString(String separator) {
         StringBuilder sb = new StringBuilder();
-        for (Entry<String, DomainString> trEntry : dump()) {
+        for (Entry<String, DomainString> trEntry : this) {
             String lang = trEntry.getKey();
             String text = trEntry.getValue().value;
             if (text == null)
@@ -114,7 +138,7 @@ public class DomainString
             }
 
             part = part.trim();
-            main.resolve(nextLang, part);
+            main.create(nextLang, part);
             // System.out.println(nextLang + " -> [" + part + "]");
             if (end)
                 break;
