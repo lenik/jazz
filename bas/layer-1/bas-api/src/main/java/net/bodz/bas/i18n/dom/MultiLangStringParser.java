@@ -24,7 +24,7 @@ public class MultiLangStringParser
 
     @Override
     protected void commit(String tag, String string) {
-        domainString.resolve(tag, string);
+        domainString.create(tag, string);
     }
 
     @Override

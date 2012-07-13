@@ -4,20 +4,29 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 
+import net.bodz.bas.util.Nullables;
+
 /**
+ * This is a cross-node design.
+ * 
+ * TERM:
+ * <ul>
+ * <li>Next-List: The list by chaining all <code>next</code> fields.
+ * <li>Follow-List: The list by chaining all <code>next</code> fields start from
+ * <code>follow1</code>.
+ * <li>Path-List: List of nodes render a specific path.
+ * </ul>
+ * 
  * Note: This class is not thread safe.
  */
-public abstract class DomainNode<node_t extends DomainNode<node_t, value_t>, value_t> {
+public abstract class DomainNode<node_t extends DomainNode<node_t, value_t>, value_t>
+        implements IDomainNode<node_t, value_t> {
 
     public static final char DOMAIN_SEPARATOR = '-';
 
-    static final int OPTIM_NONE = 0;
-    /** Optimization: bring the last-access token to the top. */
-    static final int OPTIM_MRU = 1;
-    static int optim = OPTIM_MRU;
-
     protected final String domain;
     protected value_t value;
+    // node_t parent;
     node_t follow1;
     node_t next;
 
@@ -38,38 +47,103 @@ public abstract class DomainNode<node_t extends DomainNode<node_t, value_t>, val
     public DomainNode(String domain, value_t value, node_t... follows) {
         this(domain, value);
         for (node_t follow : follows)
-            addFollow(follow);
+            insertFollow(follow);
     }
 
+    @Override
     public String getDomain() {
         return domain;
     }
 
+    @Override
     public value_t getValue() {
         return value;
     }
 
+    @Override
     public void setValue(value_t value) {
         this.value = value;
     }
 
-    public final value_t value() {
-        return getValue();
+    @Override
+    public final value_t get(String path) {
+        node_t node = _resolve(path, DomainResolveMode.nullForNone, null);
+        if (node == null)
+            return null;
+        else
+            return node.value;
     }
 
-    static final int MODE_NULL = 0;
-    static final int MODE_NEAREST = 1;
-    static final int MODE_CREATE = 2;
+    @Override
+    public final value_t getNearest(String path) {
+        node_t node = _resolve(path, DomainResolveMode.findNearest, null);
+        if (node == null)
+            return null;
+        else
+            return node.value;
+    }
 
+    @Override
+    public final value_t put(String path, value_t value) {
+        node_t node = create(path, null);
+        value_t oldValue = node.value;
+        node.value = value;
+        return oldValue;
+    }
+
+    @Override
+    public final node_t pullNode(String path) {
+        return _resolve(path, DomainResolveMode.findNearestAndPullToFront, null);
+    }
+
+    @Override
+    public final value_t pull(String path) {
+        node_t node = pullNode(path);
+        if (node == null)
+            return null;
+        else
+            return node.value;
+    }
+
+    @Override
     public final node_t resolve(String path) {
-        return _resolve(path, DomainResolveMode.nullForNone, null);
+        node_t node = _resolve(path, DomainResolveMode.nullForNone, null);
+        return node;
     }
 
-    public final node_t resolve(String path, value_t createValue) {
-        return _resolve(path, DomainResolveMode.createPath, createValue);
+    @Override
+    public final node_t create(String path, value_t initialValue) {
+        node_t node = _resolve(path, DomainResolveMode.createPath, initialValue);
+        return node;
     }
 
-    protected node_t _resolve(String path, DomainResolveMode mode, value_t createValue) {
+    @Override
+    public node_t remove(String path) {
+        if (path == null || path.isEmpty()) {
+            @SuppressWarnings("unchecked")
+            node_t _this = (node_t) this;
+            this.value = null;
+            return _this;
+        }
+
+        int pos = path.indexOf(DOMAIN_SEPARATOR);
+        if (pos == -1) {
+            node_t follow = getFollow(path, false);
+            if (follow != null)
+                removeFollow(follow);
+            return follow;
+        }
+
+        String token = path.substring(0, pos);
+        path = path.substring(pos + 1);
+        node_t follow = getFollow(token, false);
+        if (follow != null)
+            return follow.remove(path);
+        else
+            return null;
+    }
+
+    protected node_t _resolve(String path, DomainResolveMode mode, value_t initialValue) {
         @SuppressWarnings("unchecked")
         node_t _this = (node_t) this;
 
@@ -79,7 +153,7 @@ public abstract class DomainNode<node_t extends DomainNode<node_t, value_t>, val
                 case nullForNone:
                     return null;
                 case createPath:
-                    value = createValue;
+                    value = initialValue;
                 }
             return _this;
         }
@@ -94,7 +168,7 @@ public abstract class DomainNode<node_t extends DomainNode<node_t, value_t>, val
             path = path.substring(pos + 1);
         }
 
-        node_t next = follow(token);
+        node_t next = getFollow(token, mode.isPullToFront());
         if (next == null) {
             switch (mode) {
             case nullForNone:
@@ -103,31 +177,36 @@ public abstract class DomainNode<node_t extends DomainNode<node_t, value_t>, val
                 return _this;
             case createPath:
                 if (path == null)
-                    next = create(token, createValue);
+                    next = createNode(token, initialValue);
                 else
-                    next = create(token, null);
-                addFollow(next);
+                    next = createNode(token, null);
+                insertFollow(next);
                 break;
             }
         }
-        return next._resolve(path, mode, createValue);
+        return next._resolve(path, mode, initialValue);
     }
 
-    protected abstract node_t create(String domain, value_t value);
+    /**
+     * A factory method to create a concrete node.
+     */
+    protected abstract node_t createNode(String domain, value_t value);
 
     /**
+     * Find the token in the follow-list.
+     * 
      * @param token
      *            non-<code>null</code> token.
      * @return <code>null</code> if the token is not defined.
      */
-    protected synchronized node_t follow(String token) {
+    protected synchronized node_t getFollow(String token, boolean pullToFront) {
         if (token == null)
             throw new NullPointerException("token");
         node_t tmp = follow1;
         node_t tmpPrev = null;
         while (tmp != null) {
             if (token.equals(tmp.domain)) {
-                if (optim == OPTIM_MRU)
+                if (pullToFront)
                     if (tmp != follow1) { // bring to the top
                         if (tmpPrev != null)
                             tmpPrev.next = tmp.next;
@@ -142,13 +221,13 @@ public abstract class DomainNode<node_t extends DomainNode<node_t, value_t>, val
         return null; // no matched token.
     }
 
-    protected synchronized void addFollow(node_t node) {
+    protected synchronized void insertFollow(node_t node) {
         if (follow1 != null)
             node.next = follow1;
         follow1 = node;
     }
 
-    protected synchronized void addNext(node_t node) {
+    protected synchronized void insertNext(node_t node) {
         if (next != null)
             node.next = next;
         next = node;
@@ -175,73 +254,26 @@ public abstract class DomainNode<node_t extends DomainNode<node_t, value_t>, val
     protected synchronized boolean removeFollow(node_t node) {
         if (follow1 == null)
             return false;
+        if (follow1 == node) {
+            follow1 = node.next;
+            node.next = null;
+            return true;
+        }
         return follow1.removeNext(node);
     }
 
+    public int size() {
+        int size = value == null ? 0 : 1;
+        if (follow1 != null)
+            size += follow1.size();
+        if (next != null)
+            size += next.size();
+        return size;
+    }
+
     @Override
-    public String toString() {
-        return String.valueOf(value);
-    }
-
-    public Iterable<Entry<String, node_t>> dump() {
-        return new Iterable<Entry<String, node_t>>() {
-            @Override
-            public Iterator<Entry<String, node_t>> iterator() {
-                return new DepthFirstIterator();
-            }
-        };
-    }
-
-    public String dumpContent() {
-        StringBuilder sb = new StringBuilder();
-        for (Entry<String, node_t> trEntry : dump()) {
-            String domainPath = trEntry.getKey();
-            node_t node = trEntry.getValue();
-            value_t value = node.value;
-            if (value == null) {
-                // sb.append(domainPath + ": (intermediate)\n");
-                continue;
-            }
-            sb.append(domainPath + ": " + value);
-            sb.append("\n");
-        }
-        return sb.toString();
-    }
-
-    static class StackedNode {
-
-        StackedNode parent;
-        DomainNode<?, ?> prefetch;
-
-        public StackedNode(StackedNode parent, DomainNode<?, ?> first) {
-            this.parent = parent;
-            this.prefetch = first;
-        }
-
-        public void formatReversedPath(StringBuilder out) {
-            String token = prefetch.domain;
-            if (token != null) {
-                if (out.length() != 0)
-                    out.append(DOMAIN_SEPARATOR);
-                for (int i = token.length() - 1; i >= 0; i--)
-                    out.append(token.charAt(i));
-            }
-            if (parent != null)
-                parent.formatReversedPath(out);
-        }
-
-        public String getPath() {
-            if (parent == null) {
-                // to return null path for the top-level domain, also make it slightly faster.
-                return prefetch.domain;
-            } else {
-                StringBuilder buf = new StringBuilder();
-                formatReversedPath(buf);
-                buf.reverse();
-                return buf.toString();
-            }
-        }
-
+    public Iterator<Entry<String, node_t>> iterator() {
+        return new DepthFirstIterator();
     }
 
     class DepthFirstIterator
@@ -302,6 +334,53 @@ public abstract class DomainNode<node_t extends DomainNode<node_t, value_t>, val
             throw new UnsupportedOperationException();
         }
 
+    }
+
+    public String dumpContent() {
+        StringBuilder sb = new StringBuilder();
+        for (Entry<String, node_t> trEntry : this) {
+            String domainPath = trEntry.getKey();
+            node_t node = trEntry.getValue();
+            value_t value = node.value;
+            if (value == null) {
+                // sb.append(domainPath + ": (intermediate)\n");
+                continue;
+            }
+            sb.append(domainPath + ": " + value);
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        if (value != null)
+            hash += value.hashCode();
+        if (follow1 != null)
+            hash += follow1.hashCode() * 17;
+        if (next != null)
+            hash += next.hashCode();
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null)
+            return false;
+
+        @SuppressWarnings("unchecked")
+        node_t o = (node_t) obj;
+
+        if (!Nullables.equals(value, o.value))
+            return false;
+
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
     }
 
 }

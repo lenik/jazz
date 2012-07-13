@@ -14,8 +14,32 @@ public enum DomainResolveMode {
     findNearest,
 
     /**
+     * Return the longest matching domain.
+     */
+    findNearestAndPullToFront(true),
+
+    /**
      * Create the full path with the given init-value if it's not existed.
      */
     createPath,
+
+    ;
+
+    boolean pullToFront;
+
+    private DomainResolveMode() {
+    }
+
+    private DomainResolveMode(boolean pullToFront) {
+        this.pullToFront = pullToFront;
+    }
+
+    public boolean isPullToFront() {
+        return pullToFront;
+    }
+
+    public void setPullToFront(boolean pullToFront) {
+        this.pullToFront = pullToFront;
+    }
 
 }

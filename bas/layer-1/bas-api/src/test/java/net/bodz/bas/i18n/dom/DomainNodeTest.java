@@ -1,7 +1,5 @@
 package net.bodz.bas.i18n.dom;
 
-import net.bodz.bas.i18n.dom.DomainString;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,8 +30,8 @@ public class DomainNodeTest
 
     @Test
     public void testResolveSimple() {
-        DomainString dstr = hello.resolve("et");
-        assertEquals("Saluton", dstr.value());
+        String val = hello.get("et");
+        assertEquals("Saluton", val);
     }
 
     @Test
@@ -44,8 +42,8 @@ public class DomainNodeTest
 
     @Test
     public void testResolve2() {
-        DomainString dstr = hello.resolve("zh-cn");
-        assertEquals("你好", dstr.value());
+        String val = hello.pull("zh-cn");
+        assertEquals("你好", val);
     }
 
     @Test
@@ -56,8 +54,8 @@ public class DomainNodeTest
     }
 
     @Test
-    public void testOptim() {
-        hello.resolve("zh-cn");
+    public void testPullToFront() {
+        hello.pull("zh-cn");
         // System.out.print(hello.dumpContent());
         assertEquals("null: hello\nzh-cn: 你好\nzh-tw: 类好\net: Saluton\nja: こんにちは\nen: Hello\nen-us: Hey\n", //
                 hello.dumpContent());

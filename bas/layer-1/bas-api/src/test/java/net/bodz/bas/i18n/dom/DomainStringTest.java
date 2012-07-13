@@ -1,7 +1,5 @@
 package net.bodz.bas.i18n.dom;
 
-import net.bodz.bas.i18n.dom.DomainString;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -10,6 +8,13 @@ public class DomainStringTest
 
     String pl1 = "Default<p  \n lang=\"zh-cn\"  />中文<p lang='et'>Esperanto";
     DomainString dstr1 = DomainString.parseParaLang(pl1);
+
+    String _hello = "Hello<p  \n lang=\"zh-cn\"  />你好<p lang='et'>Saluton";
+    String _space = " <p  \n lang=\"zh\"  />　";
+    String _world = "World<p  \n lang=\"zh-cn\"  />世界<p lang='et'>La mondo";
+    DomainString hello = DomainString.parseParaLang(_hello);
+    DomainString space = DomainString.parseParaLang(_space);
+    DomainString world = DomainString.parseParaLang(_world);
 
     @Test
     public void testDumpContent() {
@@ -45,6 +50,31 @@ public class DomainStringTest
     public void testParseNullParaLang() {
         DomainString dstr = DomainString.parseParaLang("");
         assertEquals("", dstr.value);
+    }
+
+    @Test
+    public void testSize() {
+        assertEquals(3, dstr1.size());
+    }
+
+    @Test
+    public void testRemoveNotExisted() {
+        DomainString bad = dstr1.remove("bad");
+        assertNull(bad);
+    }
+
+    @Test
+    public void testRemoveExisted() {
+        DomainString et = dstr1.remove("et");
+        assertNotNull(et);
+        assertEquals("et", et.getDomain());
+        assertEquals(2, dstr1.size());
+    }
+
+    @Test
+    public void testConcat1() {
+        DomainString c = new DomainString().concat(hello);
+        assertEquals(hello, c);
     }
 
 }
