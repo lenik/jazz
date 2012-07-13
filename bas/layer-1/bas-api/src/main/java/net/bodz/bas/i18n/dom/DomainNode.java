@@ -150,10 +150,16 @@ public abstract class DomainNode<node_t extends DomainNode<node_t, value_t>, val
         if (path == null || path.isEmpty()) {
             if (value == null)
                 switch (mode) {
-                case nullForNone:
+                // case raw: return this;
+                case nullForNone: // treat as it is already compacted
+                default:
+                    return null;
+                case findNearest:
+                case findNearestAndPullToFront:
                     return null;
                 case createPath:
                     value = initialValue;
+                    break;
                 }
             return _this;
         }
@@ -172,8 +178,10 @@ public abstract class DomainNode<node_t extends DomainNode<node_t, value_t>, val
         if (next == null) {
             switch (mode) {
             case nullForNone:
+            default:
                 return null;
             case findNearest:
+            case findNearestAndPullToFront:
                 return _this;
             case createPath:
                 if (path == null)
@@ -366,14 +374,37 @@ public abstract class DomainNode<node_t extends DomainNode<node_t, value_t>, val
 
     @Override
     public boolean equals(Object obj) {
+        if (obj == this)
+            return true;
         if (obj == null)
             return false;
 
         @SuppressWarnings("unchecked")
         node_t o = (node_t) obj;
 
+        // if (!Nullables.equals(domain, o.domain))
+        // return false;
         if (!Nullables.equals(value, o.value))
             return false;
+
+        if (follow1 != o.follow1) {
+            if (follow1 == null || o.follow1 == null)
+                return false;
+            node_t a = follow1, b;
+            while (a != null) {
+                b = o.getFollow(a.getDomain(), false);
+                if (b == null || !a.equals(b))
+                    return false;
+                a = a.next;
+            }
+            b = o.follow1;
+            while (b != null) {
+                a = getFollow(b.getDomain(), false);
+                if (a == null)
+                    return false;
+                b = b.next;
+            }
+        }
 
         return true;
     }

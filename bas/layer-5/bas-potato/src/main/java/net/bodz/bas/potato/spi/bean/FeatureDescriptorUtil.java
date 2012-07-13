@@ -38,8 +38,8 @@ public class FeatureDescriptorUtil {
             IElement potatoElement) {
 
         featureDescriptor.setName(potatoElement.getName());
-        featureDescriptor.setDisplayName(potatoElement.getDisplayName());
-        featureDescriptor.setShortDescription(potatoElement.getDescription());
+        featureDescriptor.setDisplayName(potatoElement.getDisplayName().toString());
+        featureDescriptor.setShortDescription(potatoElement.getDescription().toString());
 
         int pref = potatoElement.getPreferenceLevel();
         applyPreferenceLevelToFeature(featureDescriptor, pref);

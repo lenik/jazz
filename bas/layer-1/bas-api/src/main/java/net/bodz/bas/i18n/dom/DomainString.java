@@ -52,6 +52,9 @@ public class DomainString
         return this;
     }
 
+    /**
+     * Get locale string.
+     */
     @Override
     public String toString() {
         return value;
