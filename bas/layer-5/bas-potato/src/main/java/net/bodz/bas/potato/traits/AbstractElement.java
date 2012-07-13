@@ -2,13 +2,10 @@ package net.bodz.bas.potato.traits;
 
 import java.beans.FeatureDescriptor;
 import java.lang.annotation.Annotation;
+import java.util.Set;
+import java.util.TreeSet;
 
 import net.bodz.bas.i18n.dom.DomainString;
-import net.bodz.bas.potato.book.DisplayName;
-import net.bodz.bas.potato.book.Doc;
-import net.bodz.bas.potato.book.Tags;
-
-import org.apache.commons.lang.ArrayUtils;
 
 public abstract class AbstractElement
         implements IElement {
@@ -18,7 +15,7 @@ public abstract class AbstractElement
 
     protected DomainString displayName;
     protected DomainString description;
-    protected String[] tags;
+    protected Set<String> tags;
 
     /**
      * @param declaringType
@@ -43,33 +40,20 @@ public abstract class AbstractElement
 
     @Override
     public DomainString getDisplayName() {
-        if (displayName == null) {
-            synchronized (this) {
-                if (displayName == null) {
-                    DisplayName aDisplayName = getAnnotation(DisplayName.class);
-                    if (aDisplayName != null) {
-                        displayName = DomainString.of(aDisplayName.value());
-                        if (displayName == null)
-                            displayName = DomainString.of(getName());
-                    }
-                }
-            }
-        }
         return displayName;
+    }
+
+    public void setDisplayName(DomainString displayName) {
+        this.displayName = displayName;
     }
 
     @Override
     public DomainString getDescription() {
-        if (description == null) {
-            synchronized (this) {
-                if (description == null) {
-                    Doc aDoc = getAnnotation(Doc.class);
-                    if (aDoc != null)
-                        description = DomainString.of(aDoc.value());
-                }
-            }
-        }
         return description;
+    }
+
+    public void setDescription(DomainString description) {
+        this.description = description;
     }
 
     /**
@@ -81,20 +65,19 @@ public abstract class AbstractElement
     }
 
     @Override
-    public String[] getTags() {
+    public Set<String> getTags() {
         if (tags == null) {
             synchronized (this) {
                 if (tags == null) {
-                    Tags aTags = getAnnotation(Tags.class);
-                    if (aTags != null) {
-                        tags = aTags.value();
-                        if (tags == null)
-                            tags = ArrayUtils.EMPTY_STRING_ARRAY;
-                    }
+                    tags = new TreeSet<String>();
                 }
             }
         }
         return tags;
+    }
+
+    public void setTags(Set<String> tags) {
+        this.tags = tags;
     }
 
     private static final Annotation[] EMPTY_ANNOTATION = new Annotation[0];

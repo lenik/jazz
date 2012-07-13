@@ -3,6 +3,7 @@ package net.bodz.bas.potato.traits;
 import java.beans.FeatureDescriptor;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.AnnotatedElement;
+import java.util.Set;
 
 import net.bodz.bas.i18n.dom.DomainString;
 
@@ -72,6 +73,6 @@ public interface IElement
      * 
      * @return Empty string array if no tag is specified.
      */
-    String[] getTags();
+    Set<String> getTags();
 
 }
