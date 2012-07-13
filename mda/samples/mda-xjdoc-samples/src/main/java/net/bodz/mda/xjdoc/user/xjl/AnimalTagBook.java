@@ -7,7 +7,7 @@ public class AnimalTagBook
         extends TagBook {
 
     public AnimalTagBook() {
-        setTagType("color", DocTagType.INSTANCE);
+        setTagType("color", DocTagType.getInstance());
     }
 
 }
