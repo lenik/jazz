@@ -5,7 +5,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DomainString
-        extends DomainNode<DomainString, String> {
+        extends DomainNode<DomainString, String>
+        implements Cloneable {
 
     public DomainString() {
         super(null, null);
@@ -23,31 +24,64 @@ public class DomainString
         super(domain, value, follows);
     }
 
+    protected DomainString(DomainString other) {
+        super(other);
+    }
+
+    @Override
+    public DomainString clone() {
+        return new DomainString(this);
+    }
+
     @Override
     protected DomainString createNode(String domain, String value) {
         return new DomainString(domain, value);
     }
 
     public DomainString concat(DomainString other) {
-        return concat(other, false);
+        return _join(other, false);
     }
 
-    public DomainString concat(DomainString other, boolean smooth) {
-        if (other != null) {
-            for (Entry<String, DomainString> entry : other) {
-                String _dom = entry.getKey();
-                String _str = entry.getValue().value;
+    public DomainString join(DomainString other) {
+        return _join(other, true);
+    }
 
-                String initial = null;
-                if (smooth)
-                    initial = getNearest(_dom);
+    /**
+     * TODO: side-effect when bestFits enabled: getNearest() may return new created node.
+     */
+    DomainString _join(DomainString other, boolean bestFits) {
+        if (other == null)
+            throw new NullPointerException("other");
 
-                DomainString me = create(_dom, initial);
+        if (bestFits)
+            for (Entry<String, DomainString> entry : this) {
+                String d1 = entry.getKey();
+                DomainString me = entry.getValue();
                 if (me.value == null)
-                    me.value = _str;
-                else
-                    me.value += _str;
+                    continue;
+                if (other.getNode(d1) != null)
+                    continue;
+
+                String initial2 = other.getNearest(d1);
+                if (initial2 != null)
+                    me.value += initial2;
             }
+
+        for (Entry<String, DomainString> entry : other) {
+            String d2 = entry.getKey();
+            String s2 = entry.getValue().value;
+            if (s2 == null)
+                continue;
+
+            String initial1 = null;
+            if (bestFits)
+                initial1 = getNearest(d2);
+
+            DomainString me = create(d2, initial1);
+            if (me.value == null)
+                me.value = s2;
+            else
+                me.value += s2;
         }
         return this;
     }
@@ -57,6 +91,7 @@ public class DomainString
      */
     @Override
     public String toString() {
+
         return value;
     }
 

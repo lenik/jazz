@@ -20,7 +20,7 @@ import net.bodz.bas.util.Nullables;
  * Note: This class is not thread safe.
  */
 public abstract class DomainNode<node_t extends DomainNode<node_t, value_t>, value_t>
-        implements IDomainNode<node_t, value_t> {
+        implements IDomainNode<node_t, value_t>, Cloneable {
 
     public static final char DOMAIN_SEPARATOR = '-';
 
@@ -50,6 +50,18 @@ public abstract class DomainNode<node_t extends DomainNode<node_t, value_t>, val
             insertFollow(follow);
     }
 
+    protected DomainNode(node_t other) {
+        domain = other.domain;
+        value = other.value;
+        if (other.follow1 != null)
+            follow1 = other.follow1.clone();
+        if (other.next != null)
+            next = other.next.clone();
+    }
+
+    @Override
+    protected abstract node_t clone();
+
     @Override
     public String getDomain() {
         return domain;
@@ -67,20 +79,25 @@ public abstract class DomainNode<node_t extends DomainNode<node_t, value_t>, val
 
     @Override
     public final value_t get(String path) {
+        node_t node = getNode(path);
+        return node == null ? null : node.value;
+    }
+
+    @Override
+    public final node_t getNode(String path) {
         node_t node = _resolve(path, DomainResolveMode.nullForNone, null);
-        if (node == null)
-            return null;
-        else
-            return node.value;
+        return node;
     }
 
     @Override
     public final value_t getNearest(String path) {
-        node_t node = _resolve(path, DomainResolveMode.findNearest, null);
-        if (node == null)
-            return null;
-        else
-            return node.value;
+        node_t node = getNearestNode(path);
+        return node == null ? null : node.value;
+    }
+
+    @Override
+    public final node_t getNearestNode(String path) {
+        return _resolve(path, DomainResolveMode.findNearest, null);
     }
 
     @Override
@@ -92,23 +109,14 @@ public abstract class DomainNode<node_t extends DomainNode<node_t, value_t>, val
     }
 
     @Override
-    public final node_t pullNode(String path) {
-        return _resolve(path, DomainResolveMode.findNearestAndPullToFront, null);
-    }
-
-    @Override
     public final value_t pull(String path) {
         node_t node = pullNode(path);
-        if (node == null)
-            return null;
-        else
-            return node.value;
+        return node == null ? null : node.value;
     }
 
     @Override
-    public final node_t resolve(String path) {
-        node_t node = _resolve(path, DomainResolveMode.nullForNone, null);
-        return node;
+    public final node_t pullNode(String path) {
+        return _resolve(path, DomainResolveMode.findNearestAndPullToFront, null);
     }
 
     @Override
@@ -148,7 +156,9 @@ public abstract class DomainNode<node_t extends DomainNode<node_t, value_t>, val
         node_t _this = (node_t) this;
 
         if (path == null || path.isEmpty()) {
-            if (value == null)
+            if (value != null)
+                return _this;
+            else
                 switch (mode) {
                 // case raw: return this;
                 case nullForNone: // treat as it is already compacted
@@ -159,9 +169,8 @@ public abstract class DomainNode<node_t extends DomainNode<node_t, value_t>, val
                     return null;
                 case createPath:
                     value = initialValue;
-                    break;
+                    return _this;
                 }
-            return _this;
         }
 
         String token;
@@ -174,25 +183,40 @@ public abstract class DomainNode<node_t extends DomainNode<node_t, value_t>, val
             path = path.substring(pos + 1);
         }
 
-        node_t next = getFollow(token, mode.isPullToFront());
-        if (next == null) {
-            switch (mode) {
-            case nullForNone:
-            default:
+        node_t child = getFollow(token, mode.isPullToFront());
+
+        switch (mode) {
+        case nullForNone:
+        default:
+            if (child == null)
                 return null;
-            case findNearest:
-            case findNearestAndPullToFront:
-                return _this;
-            case createPath:
-                if (path == null)
-                    next = createNode(token, initialValue);
-                else
-                    next = createNode(token, null);
-                insertFollow(next);
+            else
                 break;
+
+        case findNearest:
+        case findNearestAndPullToFront:
+            if (child != null) {
+                child = child._resolve(path, mode, initialValue);
+                if (child != null)
+                    return child;
             }
+            // child == null.
+            if (value == null)
+                return null;
+            else
+                return _this;
+
+        case createPath:
+            if (child == null) {
+                if (path == null)
+                    child = createNode(token, initialValue);
+                else
+                    child = createNode(token, null);
+                insertFollow(child);
+            }
+            break;
         }
-        return next._resolve(path, mode, initialValue);
+        return child._resolve(path, mode, initialValue);
     }
 
     /**
@@ -270,6 +294,7 @@ public abstract class DomainNode<node_t extends DomainNode<node_t, value_t>, val
         return follow1.removeNext(node);
     }
 
+    @Override
     public int size() {
         int size = value == null ? 0 : 1;
         if (follow1 != null)
