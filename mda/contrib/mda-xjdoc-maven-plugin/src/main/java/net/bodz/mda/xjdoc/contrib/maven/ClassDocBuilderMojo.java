@@ -9,12 +9,12 @@ import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
+import net.bodz.bas.io.resource.builtin.LocalFileResource;
 import net.bodz.bas.io.resource.builtin.OutputStreamTarget;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.text.flatf.FlatfOutput;
-import net.bodz.bas.vfs.impl.javaio.JavaioFile;
 import net.bodz.mda.xjdoc.conv.ClassDocBuilder;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.tags.ITagBook;
@@ -189,9 +189,8 @@ public class ClassDocBuilderMojo
                     System.out.println("FILE: " + baseName);
                 } else {
                     log.debug("Generate " + classDocFile);
-                    JavaioFile _file = new JavaioFile(classDocFile);
-                    _file.setAutoCreateParents(true);
-                    outTarget = _file.getOutputTarget();
+                    classDocFile.getParentFile().mkdirs();
+                    outTarget = new LocalFileResource(classDocFile);
                 }
                 // outTarget.setCharset("utf-8");
                 try {
