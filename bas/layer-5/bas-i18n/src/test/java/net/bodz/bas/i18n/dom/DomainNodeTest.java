@@ -24,7 +24,7 @@ public class DomainNodeTest
 
     @Test
     public void testResolveNull() {
-        DomainString dstr = hello.resolve(null);
+        DomainString dstr = hello.getNode(null);
         assertSame(hello, dstr);
     }
 
@@ -36,7 +36,7 @@ public class DomainNodeTest
 
     @Test
     public void testResolveUndefined() {
-        DomainString dstr = hello.resolve("bad");
+        DomainString dstr = hello.getNode("bad");
         assertNull(dstr);
     }
 

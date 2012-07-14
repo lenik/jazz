@@ -13,20 +13,22 @@ public interface IDomainNode<node_t extends IDomainNode<node_t, value_t>, value_
 
     value_t get(String path);
 
-    value_t getNearest(String path);
-
-    value_t put(String path, value_t value);
-
-    node_t pullNode(String path);
-
-    value_t pull(String path);
-
     /**
      * Resolve to the node for specific path.
      * 
      * @return The resolved node, <code>null</code> if not existed.
      */
-    node_t resolve(String path);
+    node_t getNode(String path);
+
+    value_t getNearest(String path);
+
+    node_t getNearestNode(String path);
+
+    value_t put(String path, value_t value);
+
+    value_t pull(String path);
+
+    node_t pullNode(String path);
 
     /**
      * Create nodes for specific path. If the node isn't existed, create it and initialize it with
