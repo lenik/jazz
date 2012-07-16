@@ -5,7 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DomainString
-        extends DomainNode<DomainString, String>
+        extends XDomainNode<DomainString, String>
         implements Cloneable {
 
     public DomainString() {
@@ -46,14 +46,18 @@ public class DomainString
         return _join(other, true);
     }
 
-    /**
-     * TODO: side-effect when bestFits enabled: getNearest() may return new created node.
-     */
     DomainString _join(DomainString other, boolean bestFits) {
         if (other == null)
             throw new NullPointerException("other");
 
-        if (bestFits)
+        /*
+         * Get the nearest fallback for best-fits from this copy, to avoid side-effects:
+         * getNearest() may alter some nodes which are involved in future getNearest()..
+         */
+        DomainString copy = null;
+
+        if (bestFits) {
+            copy = this.clone();
             for (Entry<String, DomainString> entry : this) {
                 String d1 = entry.getKey();
                 DomainString me = entry.getValue();
@@ -66,6 +70,7 @@ public class DomainString
                 if (initial2 != null)
                     me.value += initial2;
             }
+        }
 
         for (Entry<String, DomainString> entry : other) {
             String d2 = entry.getKey();
@@ -75,7 +80,7 @@ public class DomainString
 
             String initial1 = null;
             if (bestFits)
-                initial1 = getNearest(d2);
+                initial1 = copy.getNearest(d2);
 
             DomainString me = create(d2, initial1);
             if (me.value == null)
