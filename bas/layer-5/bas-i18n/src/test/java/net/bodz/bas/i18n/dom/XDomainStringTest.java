@@ -42,13 +42,13 @@ public class XDomainStringTest
 
     @Test
     public void testParseNullMultiLang() {
-        DomainString dstr = XDomainString.parseMultiLang("");
+        XDomainString dstr = XDomainString.parseMultiLang("");
         assertNull(dstr.getValue());
     }
 
     @Test
     public void testParseNullParaLang() {
-        DomainString dstr = XDomainString.parseParaLang("");
+        XDomainString dstr = XDomainString.parseParaLang("");
         assertEquals("", dstr.getValue());
     }
 

@@ -1,8 +1,6 @@
 package net.bodz.bas.i18n.dom;
 
 import java.util.Map.Entry;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class XDomainString
         extends XDomainNode<XDomainString, String>
@@ -114,19 +112,7 @@ public class XDomainString
 
     @Override
     public String toParaLangString(String separator) {
-        StringBuilder sb = new StringBuilder();
-        for (Entry<String, XDomainString> trEntry : this) {
-            String lang = trEntry.getKey();
-            String text = trEntry.getValue().value;
-            if (text == null)
-                continue;
-            if (sb.length() != 0)
-                sb.append(separator);
-            if (lang != null)
-                sb.append("<p lang=\"" + lang + "\">");
-            sb.append(text);
-        }
-        return sb.toString();
+        return ParaLangUtil.formatParaLangString(this, separator);
     }
 
     @Override
@@ -143,61 +129,12 @@ public class XDomainString
     }
 
     /**
-     * ParaLang is a lang-mixed text where translations are separated by
-     * <code>&lt;p lang='xxx'&gt;</code>.
-     */
-    static final Pattern paraLangPattern;
-    static final int LANG_GROUP = 2;
-    static {
-        paraLangPattern = Pattern.compile("<p\\s+lang=([\'\"])(.*?)\\1.*?>");
-    }
-
-    /**
-     * A para-lang formatted domain-string is as:
-     * 
-     * <pre>
-     * ...
-     * &lt;p lang="LANG1"&gt;...
-     * &lt;p lang="LANG2"&gt;...
-     * </pre>
-     * 
-     * Leading/trailing space of each language is stripped.
-     * 
-     * @param plText
-     *            para-lang string to be parsed.
-     * @return <code>null</code> iif <code>plText</code> is <code>null</code>.
+     * @see ParaLangUtil#parseParaLang(DomainString, String)
      */
     public static XDomainString parseParaLang(String plText) {
-        if (plText == null)
-            return null;
-        Matcher matcher = paraLangPattern.matcher(plText);
-        if (!matcher.find())
-            return new XDomainString(null, plText);
-
-        String mainText = plText.substring(0, matcher.start());
-        XDomainString main = new XDomainString(null, mainText.trim());
-        String nextLang;
-        int nextStart;
-        while (true) {
-            nextLang = matcher.group(LANG_GROUP);
-            nextStart = matcher.end();
-
-            String part;
-            boolean end = false;
-            if (matcher.find()) {
-                part = plText.substring(nextStart, matcher.start());
-            } else {
-                part = plText.substring(nextStart);
-                end = true;
-            }
-
-            part = part.trim();
-            main.create(nextLang, part);
-            // System.out.println(nextLang + " -> [" + part + "]");
-            if (end)
-                break;
-        }
-        return main;
+        XDomainString ds = new XDomainString();
+        ParaLangUtil.parseParaLang(ds, plText);
+        return ds;
     }
 
     /**
@@ -215,11 +152,11 @@ public class XDomainString
      *            multi-lang string to be parsed.
      * @return <code>null</code> iif <code>mlstr</code> is <code>null</code>.
      */
-    public static DomainString parseMultiLang(String mlstr) {
+    public static XDomainString parseMultiLang(String mlstr) {
         if (mlstr == null)
             return null;
         MultiLangStringParser parser = new MultiLangStringParser();
-        return parser.parse(mlstr);
+        return (XDomainString) parser.parse(mlstr);
     }
 
     public static XDomainString of(String plainString) {

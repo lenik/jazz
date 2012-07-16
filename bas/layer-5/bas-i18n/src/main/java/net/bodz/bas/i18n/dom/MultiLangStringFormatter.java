@@ -41,11 +41,11 @@ public class MultiLangStringFormatter {
         this.lineSeparator = lineSeparator;
     }
 
-    public String format(XDomainString dstr) {
+    public String format(DomainString dstr) {
         StringBuilder sb = new StringBuilder();
-        for (Entry<String, XDomainString> trEntry : dstr) {
+        for (Entry<String, String> trEntry : dstr.entrySet()) {
             String lang = trEntry.getKey();
-            String text = trEntry.getValue().getValue();
+            String text = trEntry.getValue();
             if (text == null)
                 continue;
             if (sb.length() != 0)
