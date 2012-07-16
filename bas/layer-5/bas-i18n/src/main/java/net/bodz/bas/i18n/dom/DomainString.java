@@ -19,6 +19,8 @@ public interface DomainString
 
     String toMultiLangString(String langSeparator, String lineSeparator);
 
+    DomainString append(DomainString other);
+
     DomainString concat(DomainString other);
 
     DomainString join(DomainString other);
