@@ -1,11 +1,11 @@
 package net.bodz.bas.i18n.dom;
 
+import java.util.AbstractSet;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.util.Nullables;
 
 /**
@@ -313,20 +313,10 @@ public abstract class XDomainNode<node_t extends XDomainNode<node_t, value_t>, v
 
     @Override
     public Iterator<Entry<String, node_t>> iterator() {
-        return new DepthFirstIterator();
+        return new NodeIterator();
     }
 
-    @Override
-    public Set<String> keySet() {
-        throw new NotImplementedException();
-    }
-
-    @Override
-    public Set<Entry<String, value_t>> entrySet() {
-        throw new NotImplementedException();
-    }
-
-    class DepthFirstIterator
+    class NodeIterator
             implements Iterator<Entry<String, node_t>>, Entry<String, node_t> {
 
         StackedNode stack = new StackedNode(null, XDomainNode.this);
@@ -382,6 +372,121 @@ public abstract class XDomainNode<node_t extends XDomainNode<node_t, value_t>, v
         @Override
         public node_t setValue(node_t value) {
             throw new UnsupportedOperationException();
+        }
+
+    }
+
+    @Override
+    public Set<Entry<String, value_t>> entrySet() {
+        return new EntrySet();
+    }
+
+    class EntrySet
+            extends AbstractSet<Entry<String, value_t>> {
+
+        @Override
+        public Iterator<Entry<String, value_t>> iterator() {
+            return new EntryIterator();
+        }
+
+        @Override
+        public int size() {
+            return XDomainNode.this.size();
+        }
+
+    }
+
+    class EntryIterator
+            implements Iterator<Entry<String, value_t>>, Entry<String, value_t> {
+
+        final NodeIterator nodeIterator;
+
+        public EntryIterator() {
+            this.nodeIterator = new NodeIterator();
+        }
+
+        @Override
+        public boolean hasNext() {
+            return nodeIterator.hasNext();
+        }
+
+        @Override
+        public Entry<String, value_t> next() {
+            nodeIterator.next();
+            return this;
+        }
+
+        @Override
+        public void remove() {
+            nodeIterator.remove();
+        }
+
+        @Override
+        public String getKey() {
+            return nodeIterator.getKey();
+        }
+
+        @Override
+        public value_t getValue() {
+            node_t node = nodeIterator.getValue();
+            return (node == null) ? null : node.value;
+        }
+
+        @Override
+        public value_t setValue(value_t value) {
+            node_t node = nodeIterator.getValue();
+            if (node == null)
+                throw new IllegalStateException("Node isn't set");
+            value_t oldValue = node.value;
+            node.value = value;
+            return oldValue;
+        }
+
+    }
+
+    @Override
+    public Set<String> keySet() {
+        return new KeySet();
+    }
+
+    class KeySet
+            extends AbstractSet<String> {
+
+        @Override
+        public Iterator<String> iterator() {
+            return new KeyIterator();
+        }
+
+        @Override
+        public int size() {
+            return XDomainNode.this.size();
+        }
+
+    }
+
+    class KeyIterator
+            implements Iterator<String> {
+
+        final NodeIterator nodeIterator;
+
+        public KeyIterator() {
+            this.nodeIterator = new NodeIterator();
+        }
+
+        @Override
+        public boolean hasNext() {
+            return nodeIterator.hasNext();
+        }
+
+        @Override
+        public String next() {
+            Entry<String, node_t> entry = nodeIterator.next();
+            return entry.getKey();
+        }
+
+        @Override
+        public void remove() {
+            nodeIterator.remove();
         }
 
     }
