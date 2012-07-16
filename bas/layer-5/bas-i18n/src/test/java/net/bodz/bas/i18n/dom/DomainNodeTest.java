@@ -11,15 +11,15 @@ public class DomainNodeTest
 
     @Before
     public void buildHello() {
-        hello = new DomainString(null, "hello", //
-                new DomainString("zh", null, //
-                        new DomainString("cn", "你好"), //
-                        new DomainString("tw", "类好") //
+        hello = new XDomainString(null, "hello", //
+                new XDomainString("zh", null, //
+                        new XDomainString("cn", "你好"), //
+                        new XDomainString("tw", "类好") //
                 ), //
-                new DomainString("en", "Hello", //
-                        new DomainString("us", "Hey")), //
-                new DomainString("ja", "こんにちは"), //
-                new DomainString("et", "Saluton"));
+                new XDomainString("en", "Hello", //
+                        new XDomainString("us", "Hey")), //
+                new XDomainString("ja", "こんにちは"), //
+                new XDomainString("et", "Saluton"));
     }
 
     @Test

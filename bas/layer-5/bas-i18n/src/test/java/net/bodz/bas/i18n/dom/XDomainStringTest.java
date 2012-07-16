@@ -3,18 +3,18 @@ package net.bodz.bas.i18n.dom;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class DomainStringTest
+public class XDomainStringTest
         extends Assert {
 
     String pl1 = "Default<p  \n lang=\"zh-cn\"  />中文<p lang='et'>Esperanto";
-    DomainString dstr1 = DomainString.parseParaLang(pl1);
+    DomainString dstr1 = XDomainString.parseParaLang(pl1);
 
     String _hello = "Hello<p  \n lang=\"zh-cn\"  />你好<p lang='et'>Saluton";
     String _space = " <p  \n lang=\"zh\"  />　";
     String _world = "World<p  \n lang=\"zh-cn\"  />世界<p lang='et'>La mondo";
-    DomainString hello = DomainString.parseParaLang(_hello);
-    DomainString space = DomainString.parseParaLang(_space);
-    DomainString world = DomainString.parseParaLang(_world);
+    DomainString hello = XDomainString.parseParaLang(_hello);
+    DomainString space = XDomainString.parseParaLang(_space);
+    DomainString world = XDomainString.parseParaLang(_world);
 
     @Test
     public void testDumpContent() {
@@ -34,7 +34,7 @@ public class DomainStringTest
 
     @Test
     public void testParseNullString() {
-        DomainString nul = new DomainString();
+        DomainString nul = new XDomainString();
         assertNull(nul.toString());
         assertEquals("", nul.toMultiLangString());
         assertEquals("", nul.toParaLangString());
@@ -42,14 +42,14 @@ public class DomainStringTest
 
     @Test
     public void testParseNullMultiLang() {
-        DomainString dstr = DomainString.parseMultiLang("");
-        assertNull(dstr.value);
+        DomainString dstr = XDomainString.parseMultiLang("");
+        assertNull(dstr.getValue());
     }
 
     @Test
     public void testParseNullParaLang() {
-        DomainString dstr = DomainString.parseParaLang("");
-        assertEquals("", dstr.value);
+        DomainString dstr = XDomainString.parseParaLang("");
+        assertEquals("", dstr.getValue());
     }
 
     @Test
@@ -87,12 +87,12 @@ public class DomainStringTest
 
     @Test
     public void testConcat0() {
-        DomainString c = new DomainString().concat(hello);
+        DomainString c = new XDomainString().concat(hello);
         assertEquals(hello, c);
     }
 
-    DomainString s1 = new DomainString("x1");
-    DomainString s2 = new DomainString("x2");
+    DomainString s1 = new XDomainString("x1");
+    DomainString s2 = new XDomainString("x2");
     {
         s1.put("zh-cn", "zc1");
         s1.put("et", "e1");
@@ -101,14 +101,14 @@ public class DomainStringTest
 
     @Test
     public void testConcats() {
-        DomainString s12 = new DomainString("x1x2");
+        DomainString s12 = new XDomainString("x1x2");
         s12.put("zh-cn", "zc1");
         s12.put("et", "e1");
         s12.put("zh", "z2");
         DomainString cat12 = s1.clone().concat(s2);
         assertEquals(s12, cat12);
 
-        DomainString s21 = new DomainString("x2x1");
+        DomainString s21 = new XDomainString("x2x1");
         s21.put("zh-cn", "zc1");
         s21.put("et", "e1");
         s21.put("zh", "z2");
@@ -118,7 +118,7 @@ public class DomainStringTest
 
     @Test
     public void testJoins() {
-        DomainString j12 = new DomainString("x1x2");
+        DomainString j12 = new XDomainString("x1x2");
         j12.put("zh-cn", "zc1z2");
         j12.put("et", "e1x2");
         j12.put("zh", "x1z2");

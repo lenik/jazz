@@ -6,6 +6,7 @@ import java.lang.reflect.Method;
 
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.i18n.dom.DomainString;
+import net.bodz.bas.i18n.dom.XDomainString;
 import net.bodz.bas.potato.traits.AbstractProperty;
 
 public class BeanProperty
@@ -41,13 +42,13 @@ public class BeanProperty
     @Override
     public DomainString getDisplayName() {
         String displayName = propertyDescriptor.getDisplayName();
-        return DomainString.of(displayName);
+        return XDomainString.of(displayName);
     }
 
     @Override
     public DomainString getDescription() {
         String shortDescription = propertyDescriptor.getShortDescription();
-        return DomainString.of(shortDescription);
+        return XDomainString.of(shortDescription);
     }
 
     @Override

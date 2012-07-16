@@ -1,5 +1,8 @@
 package net.bodz.bas.i18n.dom;
 
+import java.util.Map;
+import java.util.Set;
+
 public interface IDomainMap<value_t> {
 
     value_t get(String path);
@@ -19,5 +22,9 @@ public interface IDomainMap<value_t> {
     value_t remove(String path);
 
     int size();
+
+    Set<String> keySet();
+
+    Set<Map.Entry<String, value_t>> entrySet();
 
 }

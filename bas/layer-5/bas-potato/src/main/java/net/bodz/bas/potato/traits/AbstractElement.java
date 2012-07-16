@@ -1,6 +1,5 @@
 package net.bodz.bas.potato.traits;
 
-import java.beans.FeatureDescriptor;
 import java.lang.annotation.Annotation;
 import java.util.Set;
 import java.util.TreeSet;
@@ -56,9 +55,6 @@ public abstract class AbstractElement
         this.description = description;
     }
 
-    /**
-     * @see #getFeaturePreferenceLevel(FeatureDescriptor)
-     */
     @Override
     public int getPreferenceLevel() {
         return 0;
@@ -93,6 +89,8 @@ public abstract class AbstractElement
     }
 
     /**
+     * {@inheritDoc}
+     * 
      * @return The first occurance in {@link #getAnnotations()} which is instance of the specified
      *         <code>annotationClass</code>.
      */
@@ -105,6 +103,8 @@ public abstract class AbstractElement
     }
 
     /**
+     * {@inheritDoc}
+     * 
      * @return <code>true</code> If any annotation of in {@link #getAnnotations()} is instance of
      *         the specified <code>annotationClass</code> exists.
      */

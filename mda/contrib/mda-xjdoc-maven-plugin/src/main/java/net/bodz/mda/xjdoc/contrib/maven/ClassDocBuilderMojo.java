@@ -8,6 +8,7 @@ import java.io.IOException;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.i18n.dom.DomainString;
+import net.bodz.bas.i18n.dom.XDomainString;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
 import net.bodz.bas.io.resource.builtin.OutputStreamTarget;
@@ -110,7 +111,7 @@ public class ClassDocBuilderMojo
 
     public void setMissingDoc(String missingDoc) {
         // getLog().info("Set-Missing-Doc: " + missingDoc);
-        this.missingDoc = DomainString.parseMultiLang(missingDoc);
+        this.missingDoc = XDomainString.parseMultiLang(missingDoc);
     }
 
     public String getBooks() {

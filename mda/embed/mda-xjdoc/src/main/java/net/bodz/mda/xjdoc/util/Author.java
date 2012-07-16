@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import net.bodz.bas.i18n.dom.DomainString;
+import net.bodz.bas.i18n.dom.XDomainString;
 
 /**
  * @author Lenik <lenik@bodz.net>
@@ -47,17 +48,18 @@ public class Author
 
     public DomainString compile() {
         Set<String> domains = new TreeSet<String>();
-        for (Entry<String, DomainString> tr : name)
-            domains.add(tr.getKey());
-        for (Entry<String, DomainString> tr : email)
-            domains.add(tr.getKey());
-        for (Entry<String, DomainString> tr : description)
-            domains.add(tr.getKey());
+        for (String tr : name.keySet())
+            domains.add(tr);
+        for (String tr : email.keySet())
+            domains.add(tr);
+        for (String tr : description.keySet())
+            domains.add(tr);
 
-        DomainString composite = new DomainString();
+        DomainString composite = new XDomainString();
         for (String domain : domains) {
 
         }
+
         return composite;
     }
 
@@ -67,15 +69,13 @@ public class Author
     }
 
     public static Author parse(DomainString text) {
-        DomainString name = new DomainString();
-        DomainString email = new DomainString();
-        DomainString description = new DomainString();
+        DomainString name = new XDomainString();
+        DomainString email = new XDomainString();
+        DomainString description = new XDomainString();
 
-        for (Entry<String, DomainString> tr : text) {
+        for (Entry<String, String> tr : text.entrySet()) {
             String domain = tr.getKey();
-            DomainString a = tr.getValue();
-            String domain2 = a.getDomain();
-            String str = a.getValue();
+            String str = tr.getValue();
 
             String _name = str;
             String _email = null;
@@ -89,11 +89,11 @@ public class Author
                 _description = str.substring(_gt + 1);
             }
 
-            name.create(domain, _name);
+            name.put(domain, _name);
             if (email != null)
-                email.create(domain, _email);
+                email.put(domain, _email);
             if (description != null)
-                description.create(domain, _description);
+                description.put(domain, _description);
         } // for
         Author author = new Author();
         author.setName(name);

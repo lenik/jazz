@@ -3,6 +3,7 @@ package net.bodz.mda.xjdoc.tags;
 import java.io.IOException;
 
 import net.bodz.bas.i18n.dom.DomainString;
+import net.bodz.bas.i18n.dom.XDomainString;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 
@@ -16,7 +17,7 @@ public class DocTagType
      */
     @Override
     public Object parseJavadoc(Object cont, String string, INegotiation negotiation) {
-        DomainString text = DomainString.parseParaLang(string);
+        DomainString text = XDomainString.parseParaLang(string);
         return text;
     }
 
@@ -30,7 +31,7 @@ public class DocTagType
 
     @Override
     public Object parseEntry(Object cont, String suffix, String string, INegotiation negotiation) {
-        DomainString text = DomainString.parseMultiLang(string);
+        DomainString text = XDomainString.parseMultiLang(string);
         return text;
     }
 
