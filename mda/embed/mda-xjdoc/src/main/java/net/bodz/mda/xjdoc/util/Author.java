@@ -2,10 +2,9 @@ package net.bodz.mda.xjdoc.util;
 
 import java.io.Serializable;
 import java.util.Map.Entry;
-import java.util.Set;
-import java.util.TreeSet;
 
 import net.bodz.bas.i18n.dom.DomainString;
+import net.bodz.bas.i18n.dom.DomainStrings;
 import net.bodz.bas.i18n.dom.XDomainString;
 
 /**
@@ -47,25 +46,19 @@ public class Author
     }
 
     public DomainString compile() {
-        Set<String> domains = new TreeSet<String>();
-        for (String tr : name.keySet())
-            domains.add(tr);
-        for (String tr : email.keySet())
-            domains.add(tr);
-        for (String tr : description.keySet())
-            domains.add(tr);
-
-        DomainString composite = new XDomainString();
-        for (String domain : domains) {
-
-        }
-
-        return composite;
+        return DomainStrings.join(name, email, description);
     }
 
     @Override
     public String toString() {
-        return super.toString();
+        StringBuilder sb = new StringBuilder();
+        if (name != null)
+            sb.append(name);
+        if (description != null)
+            sb.append(description);
+        if (email != null)
+            sb.append(email);
+        return sb.toString();
     }
 
     public static Author parse(DomainString text) {

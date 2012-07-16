@@ -5,12 +5,6 @@ public interface DomainString
 
     DomainString clone();
 
-    String getDomain();
-
-    String getValue();
-
-    void setValue(String value);
-
     String toParaLangString();
 
     String toParaLangString(String separator);
