@@ -3,15 +3,13 @@ package net.bodz.bas.i18n.dom;
 import java.util.Map.Entry;
 
 public interface IDomainNode<node_t extends IDomainNode<node_t, value_t>, value_t>
-        extends Iterable<Entry<String, node_t>> {
+        extends Iterable<Entry<String, node_t>>, IDomainMap<value_t> {
 
     String getDomain();
 
     value_t getValue();
 
     void setValue(value_t value);
-
-    value_t get(String path);
 
     /**
      * Resolve to the node for specific path.
@@ -20,13 +18,7 @@ public interface IDomainNode<node_t extends IDomainNode<node_t, value_t>, value_
      */
     node_t getNode(String path);
 
-    value_t getNearest(String path);
-
     node_t getNearestNode(String path);
-
-    value_t put(String path, value_t value);
-
-    value_t pull(String path);
 
     node_t pullNode(String path);
 
@@ -41,8 +33,6 @@ public interface IDomainNode<node_t extends IDomainNode<node_t, value_t>, value_
      */
     node_t create(String path, value_t initialValue);
 
-    node_t remove(String path);
-
-    int size();
+    node_t removeNode(String path);
 
 }
