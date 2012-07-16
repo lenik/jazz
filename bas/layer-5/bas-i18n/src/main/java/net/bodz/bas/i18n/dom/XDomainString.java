@@ -39,38 +39,44 @@ public class XDomainString
     }
 
     @Override
+    public DomainString append(DomainString other) {
+        _join(other, false, this);
+        return this;
+    }
+
+    @Override
     public XDomainString concat(DomainString other) {
-        return _join(other, false);
+        XDomainString out = clone();
+        _join(other, false, out);
+        return out;
     }
 
     @Override
     public XDomainString join(DomainString other) {
-        return _join(other, true);
+        XDomainString out = clone();
+        _join(other, true, out);
+        return out;
     }
 
-    XDomainString _join(DomainString other, boolean bestFits) {
+    void _join(DomainString other, boolean bestFits, XDomainString output) {
         if (other == null)
             throw new NullPointerException("other");
 
-/*
- * Get the nearest fallback for best-fits from this copy, to avoid side-effects: getNearest() may
- * alter some nodes which are involved in future getNearest()..
- */
-        XDomainString copy = null;
-
         if (bestFits) { // find which domains are occurred in this only.
-            copy = this.clone();
             for (Entry<String, XDomainString> entry : this) {
                 String d1 = entry.getKey();
-                XDomainString me = entry.getValue();
-                if (me.value == null)
+                XDomainString node1 = entry.getValue();
+                if (node1.value == null)
                     continue;
-                if (other.get(d1) != null) //
+                if (other.get(d1) != null)
                     continue;
 
-                String initial2 = other.getNearest(d1);
-                if (initial2 != null)
-                    me.value += initial2;
+                String fallback2 = other.getNearest(d1);
+                if (fallback2 != null)
+                    if (output == this)
+                        node1.value += fallback2;
+                    else
+                        output.put(d1, node1.value + fallback2);
             }
         }
 
@@ -80,17 +86,16 @@ public class XDomainString
             if (s2 == null)
                 continue;
 
-            String initial1 = null;
+            String fallback1 = null;
             if (bestFits)
-                initial1 = copy.getNearest(d2);
+                fallback1 = getNearest(d2);
 
-            XDomainString me = create(d2, initial1);
-            if (me.value == null)
-                me.value = s2;
+            XDomainString outNode = output.create(d2, fallback1);
+            if (outNode.value == null)
+                outNode.value = s2;
             else
-                me.value += s2;
+                outNode.value += s2;
         }
-        return this;
     }
 
     /**
