@@ -23,21 +23,21 @@ public class DomainNodeTest
     }
 
     @Test
-    public void testResolveNull() {
-        DomainString dstr = hello.getNode(null);
-        assertSame(hello, dstr);
+    public void testGetNull() {
+        String dstr = hello.get(null);
+        assertSame("hello", dstr);
     }
 
     @Test
-    public void testResolveSimple() {
+    public void testGetSimple() {
         String val = hello.get("et");
         assertEquals("Saluton", val);
     }
 
     @Test
-    public void testResolveUndefined() {
-        DomainString dstr = hello.getNode("bad");
-        assertNull(dstr);
+    public void testGetUndefined() {
+        String val = hello.get("bad");
+        assertNull(val);
     }
 
     @Test

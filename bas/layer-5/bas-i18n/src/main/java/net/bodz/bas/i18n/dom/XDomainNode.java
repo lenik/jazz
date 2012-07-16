@@ -19,7 +19,7 @@ import net.bodz.bas.util.Nullables;
  * 
  * Note: This class is not thread safe.
  */
-public abstract class DomainNode<node_t extends DomainNode<node_t, value_t>, value_t>
+public abstract class XDomainNode<node_t extends XDomainNode<node_t, value_t>, value_t>
         implements IDomainNode<node_t, value_t>, Cloneable {
 
     public static final char DOMAIN_SEPARATOR = '-';
@@ -30,27 +30,27 @@ public abstract class DomainNode<node_t extends DomainNode<node_t, value_t>, val
     node_t follow1;
     node_t next;
 
-    public DomainNode(String domain) {
+    public XDomainNode(String domain) {
         this(domain, null);
     }
 
-    public DomainNode(value_t value) {
+    public XDomainNode(value_t value) {
         this(null, value);
     }
 
-    public DomainNode(String domain, value_t value) {
+    public XDomainNode(String domain, value_t value) {
         this.domain = domain;
         this.value = value;
     }
 
     @SafeVarargs
-    public DomainNode(String domain, value_t value, node_t... follows) {
+    public XDomainNode(String domain, value_t value, node_t... follows) {
         this(domain, value);
         for (node_t follow : follows)
             insertFollow(follow);
     }
 
-    protected DomainNode(node_t other) {
+    protected XDomainNode(node_t other) {
         domain = other.domain;
         value = other.value;
         if (other.follow1 != null)
@@ -126,7 +126,12 @@ public abstract class DomainNode<node_t extends DomainNode<node_t, value_t>, val
     }
 
     @Override
-    public node_t remove(String path) {
+    public value_t remove(String path) {
+        node_t node = removeNode(path);
+        return node == null ? null : node.value;
+    }
+
+    public node_t removeNode(String path) {
         if (path == null || path.isEmpty()) {
             @SuppressWarnings("unchecked")
             node_t _this = (node_t) this;
@@ -146,7 +151,7 @@ public abstract class DomainNode<node_t extends DomainNode<node_t, value_t>, val
         path = path.substring(pos + 1);
         node_t follow = getFollow(token, false);
         if (follow != null)
-            return follow.remove(path);
+            return follow.removeNode(path);
         else
             return null;
     }
@@ -312,7 +317,7 @@ public abstract class DomainNode<node_t extends DomainNode<node_t, value_t>, val
     class DepthFirstIterator
             implements Iterator<Entry<String, node_t>>, Entry<String, node_t> {
 
-        StackedNode stack = new StackedNode(null, DomainNode.this);
+        StackedNode stack = new StackedNode(null, XDomainNode.this);
         String currentPath;
         node_t currentNode;
 

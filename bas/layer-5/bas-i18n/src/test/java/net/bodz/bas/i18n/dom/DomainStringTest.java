@@ -59,15 +59,14 @@ public class DomainStringTest
 
     @Test
     public void testRemoveNotExisted() {
-        DomainString bad = dstr1.remove("bad");
+        String bad = dstr1.remove("bad");
         assertNull(bad);
     }
 
     @Test
     public void testRemoveExisted() {
-        DomainString et = dstr1.remove("et");
-        assertNotNull(et);
-        assertEquals("et", et.getDomain());
+        String et = dstr1.remove("et");
+        assertEquals("Esperanto", et);
         assertEquals(2, dstr1.size());
     }
 
@@ -124,8 +123,8 @@ public class DomainStringTest
         j12.put("et", "e1x2");
         j12.put("zh", "x1z2");
         DomainString jon12 = s1.clone().join(s2);
-        System.out.println("expect=" + j12.toMultiLangString());
-        System.out.println("actual=" + jon12.toMultiLangString());
+        // System.out.println("expect=" + j12.toMultiLangString());
+        // System.out.println("actual=" + jon12.toMultiLangString());
         assertEquals(j12, jon12);
     }
 

@@ -3,9 +3,9 @@ package net.bodz.bas.i18n.dom;
 class StackedNode {
 
     StackedNode parent;
-    DomainNode<?, ?> prefetch;
+    XDomainNode<?, ?> prefetch;
 
-    public StackedNode(StackedNode parent, DomainNode<?, ?> first) {
+    public StackedNode(StackedNode parent, XDomainNode<?, ?> first) {
         this.parent = parent;
         this.prefetch = first;
     }
@@ -14,7 +14,7 @@ class StackedNode {
         String token = prefetch.domain;
         if (token != null) {
             if (out.length() != 0)
-                out.append(DomainNode.DOMAIN_SEPARATOR);
+                out.append(XDomainNode.DOMAIN_SEPARATOR);
             for (int i = token.length() - 1; i >= 0; i--)
                 out.append(token.charAt(i));
         }
