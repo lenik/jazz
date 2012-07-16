@@ -1,7 +1,5 @@
 package net.bodz.bas.potato.traits;
 
-import java.beans.FeatureDescriptor;
-import java.beans.PropertyDescriptor;
 import java.lang.reflect.AnnotatedElement;
 import java.util.Set;
 
@@ -42,18 +40,18 @@ public interface IElement
      * preference is displayed. For negative preference levels, they are hidden by default and only
      * shown if show-hidden is enabled.
      * <p>
-     * Preference level compared to Java Beans' {@link PropertyDescriptor}:
+     * Preference level compared to Java Beans' {@link java.beans.PropertyDescriptor}:
      * <table>
      * <tr>
      * <th>Java Bean</th>
      * <th>Preference Level</th>
      * </tr>
      * <tr>
-     * <td> {@link FeatureDescriptor#isHidden()}</td>
+     * <td> {@link java.beans.FeatureDescriptor#isHidden()}</td>
      * <td>-1</td>
      * </tr>
      * <tr>
-     * <td> {@link FeatureDescriptor#isPreferred()}</td>
+     * <td> {@link java.beans.FeatureDescriptor#isPreferred()}</td>
      * <td>0</td>
      * </tr>
      * <tr>
@@ -61,7 +59,7 @@ public interface IElement
      * <td>1</td>
      * </tr>
      * <tr>
-     * <td> {@link FeatureDescriptor#isExpert()}</td>
+     * <td> {@link java.beans.FeatureDescriptor#isExpert()}</td>
      * <td>2</td>
      * </tr>
      * </table>

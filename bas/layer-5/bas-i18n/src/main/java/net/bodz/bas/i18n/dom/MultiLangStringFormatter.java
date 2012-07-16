@@ -41,9 +41,9 @@ public class MultiLangStringFormatter {
         this.lineSeparator = lineSeparator;
     }
 
-    public String format(DomainString dstr) {
+    public String format(XDomainString dstr) {
         StringBuilder sb = new StringBuilder();
-        for (Entry<String, DomainString> trEntry : dstr) {
+        for (Entry<String, XDomainString> trEntry : dstr) {
             String lang = trEntry.getKey();
             String text = trEntry.getValue().getValue();
             if (text == null)

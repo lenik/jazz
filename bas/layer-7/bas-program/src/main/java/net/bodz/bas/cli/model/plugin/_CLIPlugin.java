@@ -57,7 +57,7 @@ public class _CLIPlugin
             String name = e.getKey();
             IOption opt = e.getValue();
             // String vnam = opt.o.vnam();
-            String description = opt.getDescription();
+            String description = opt.getDescription().toString();
 
             out.print(prefix);
             out.print(name);

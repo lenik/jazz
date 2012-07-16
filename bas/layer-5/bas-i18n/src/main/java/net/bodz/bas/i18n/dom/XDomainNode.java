@@ -3,7 +3,9 @@ package net.bodz.bas.i18n.dom;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
+import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.util.Nullables;
 
 /**
@@ -312,6 +314,16 @@ public abstract class XDomainNode<node_t extends XDomainNode<node_t, value_t>, v
     @Override
     public Iterator<Entry<String, node_t>> iterator() {
         return new DepthFirstIterator();
+    }
+
+    @Override
+    public Set<String> keySet() {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public Set<Entry<String, value_t>> entrySet() {
+        throw new NotImplementedException();
     }
 
     class DepthFirstIterator

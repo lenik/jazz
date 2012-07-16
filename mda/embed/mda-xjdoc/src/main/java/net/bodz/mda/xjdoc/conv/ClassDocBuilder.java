@@ -7,6 +7,7 @@ import java.util.Map;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.DomainString;
+import net.bodz.bas.i18n.dom.XDomainString;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.mda.xjdoc.model.ClassDoc;
 import net.bodz.mda.xjdoc.model.ElementDoc;
@@ -110,7 +111,7 @@ public class ClassDocBuilder {
     void populate(ElementDoc elementDoc, AbstractJavaEntity javaEntity, INegotiation negotiation) {
         String comment = javaEntity.getComment(); // maybe null if no javadoc.
         if (comment != null) {
-            DomainString text = DomainString.parseParaLang(comment);
+            DomainString text = XDomainString.parseParaLang(comment);
             elementDoc.setText(text);
         }
 

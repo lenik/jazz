@@ -19,12 +19,12 @@ public class MultiLangStringParser
     @Override
     protected void reset() {
         super.reset();
-        domainString = new DomainString();
+        domainString = new XDomainString();
     }
 
     @Override
     protected void commit(String tag, String string) {
-        domainString.create(tag, string);
+        domainString.put(tag, string);
     }
 
     @Override

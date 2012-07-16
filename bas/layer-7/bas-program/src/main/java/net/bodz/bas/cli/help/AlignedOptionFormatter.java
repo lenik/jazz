@@ -68,7 +68,7 @@ public class AlignedOptionFormatter
                 line.append(valueHint);
             }
 
-            String doc = opt.getDescription();
+            String doc = opt.getDescription().toString();
 
             col = line.length();
             if (col >= docColumn && !doc.isEmpty()) {
