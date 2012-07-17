@@ -9,13 +9,26 @@ public interface Mitorx<T, X extends Throwable> {
      * An overlapped iterator will return overlapped iterated values (the iterated value may refer
      * to other important values in the running context), so you must deep-copy the iterated value
      * if you want to keep it for future re-use, rather than by reference only.
+     * <p>
+     * Notice: This method should be overrided at the same time when you modify
+     * {@link #deoverlap(Object)}.
+     * 
+     * @return <code>true</code> If this immediate-iterator is overlapped.
      */
     boolean isOverlapped();
 
     /**
      * Copy the overlapped object.
+     * <p>
+     * Notice: This method should be overrided at the same time when you modify
+     * {@link #isOverlapped()}.
+     * 
+     * @param obj
+     *            A pre-iterated value returned by this immediate-iterator.
+     * @return The same value if this iterator is not overlapped, otherwise returns a
+     *         detached/cloned/etc value, so future iteration will not modify it.
      */
-    T deoverlap(T o);
+    T deoverlap(T obj);
 
     /**
      * Get the next item immediately.
