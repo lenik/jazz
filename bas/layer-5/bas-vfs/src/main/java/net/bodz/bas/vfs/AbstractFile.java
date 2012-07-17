@@ -18,7 +18,6 @@ import net.bodz.bas.io.resource.preparation.ParseLoadPreparation;
 import net.bodz.bas.io.resource.preparation.StreamReadPreparation;
 import net.bodz.bas.io.resource.preparation.StreamWritePreparation;
 import net.bodz.bas.meta.codehint.GeneratedByCopyPaste;
-import net.bodz.bas.model.IFilter;
 import net.bodz.bas.util.iter.Iterators;
 import net.bodz.bas.util.iter.Mitors;
 import net.bodz.bas.util.iter.Mitorx;
@@ -27,6 +26,7 @@ import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.preparation.HeuristicProbePreparation;
 import net.bodz.bas.vfs.preparation.IProbePreparation;
 import net.bodz.bas.vfs.preparation.LazyProbePreparation;
+import net.bodz.bas.vfs.util.IFilenameFilter;
 
 public abstract class AbstractFile
         extends AbstractFsEntry
@@ -342,7 +342,7 @@ public abstract class AbstractFile
      * @def Return an empty iterator.
      */
     @Override
-    public Mitorx<? extends IFile, VFSException> childIterator(IFilter<String> nameFilter)
+    public Mitorx<? extends IFile, VFSException> childIterator(IFilenameFilter nameFilter)
             throws VFSException {
         return Mitors.empty();
     }
@@ -353,14 +353,14 @@ public abstract class AbstractFile
     @Override
     public List<? extends IFile> listChildren()
             throws VFSException {
-        return Iterators.toList(childIterator((IFilter<String>) null));
+        return Iterators.toList(childIterator((IFilenameFilter) null));
     }
 
     /**
      * @def Return as IteratorToList.toList(childIterator(entryNameFilter)).
      */
     @Override
-    public List<? extends IFile> listChildren(IFilter<String> entryNameFilter)
+    public List<? extends IFile> listChildren(IFilenameFilter entryNameFilter)
             throws VFSException {
         return Iterators.toList(childIterator(entryNameFilter));
     }

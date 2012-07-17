@@ -2,8 +2,8 @@ package net.bodz.bas.vfs;
 
 import java.util.List;
 
-import net.bodz.bas.model.IFilter;
 import net.bodz.bas.util.iter.Mitorx;
+import net.bodz.bas.vfs.util.IFilenameFilter;
 
 public interface IFsTree
         extends IFsEntry {
@@ -25,7 +25,7 @@ public interface IFsTree
      *             If not iterable.
      * @see #isIterable()
      */
-    Mitorx<? extends IFsEntry, VFSException> childIterator(IFilter<String> nameFilter)
+    Mitorx<? extends IFsEntry, VFSException> childIterator(IFilenameFilter nameFilter)
             throws VFSException;
 
     /**
@@ -41,7 +41,7 @@ public interface IFsTree
      *             If not iterable.
      * @see #isIterable()
      */
-    List<? extends IFsEntry> listChildren(IFilter<String> nameFilter)
+    List<? extends IFsEntry> listChildren(IFilenameFilter nameFilter)
             throws VFSException;
 
     /**

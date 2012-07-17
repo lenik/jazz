@@ -1,14 +1,11 @@
 package net.bodz.bas.cli.skel;
 
-import java.io.File;
-import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.Comparator;
 import java.util.regex.Pattern;
 
-import net.bodz.bas.c.java.io.FileFinder;
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.java.util.regex.GlobPattern;
 import net.bodz.bas.err.NotImplementedException;
@@ -18,6 +15,8 @@ import net.bodz.bas.meta.program.OptionGroup;
 import net.bodz.bas.vfs.FileMaskedModifiers;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.path.IPath;
+import net.bodz.bas.vfs.util.FileFinder;
+import net.bodz.bas.vfs.util.IFileFilter;
 
 @OptionGroup(value = "batch", rank = -2)
 public class BatchCLI
@@ -113,7 +112,7 @@ public class BatchCLI
      * @option -Ic =CLASS(FileFilter)
      */
     // @ParseBy(GetInstanceParser.class)
-    FileFilter fileFilter;
+    IFileFilter fileFilter;
 
     /**
      * Sort files in each directory
@@ -221,11 +220,11 @@ public class BatchCLI
             BatchCLI.this.prune = filterDirectories;
         }
 
-        public FileFilter getFileFilter() {
+        public IFileFilter getFileFilter() {
             return fileFilter;
         }
 
-        public void setFileFilter(FileFilter fileFilter) {
+        public void setFileFilter(IFileFilter fileFilter) {
             BatchCLI.this.fileFilter = fileFilter;
         }
 
@@ -256,9 +255,9 @@ public class BatchCLI
      */
     @Override
     void _postInit() {
-        fileFilter = new FileFilter() {
+        fileFilter = new IFileFilter() {
             @Override
-            public boolean accept(File file) {
+            public boolean accept(IFile file) {
                 if (inclusiveMask != null)
                     if (!inclusiveMask.test(file))
                         return false;
