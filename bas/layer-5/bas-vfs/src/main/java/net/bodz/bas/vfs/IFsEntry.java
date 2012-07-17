@@ -1,5 +1,7 @@
 package net.bodz.bas.vfs;
 
+import java.io.File;
+
 import net.bodz.bas.traits.IAttributes;
 import net.bodz.bas.vfs.path.IPath;
 
@@ -118,6 +120,7 @@ public interface IFsEntry
      * parent will be deleted.
      * 
      * @return <code>true</code> if and only if the entry is successfully deleted.
+     * @see File#delete()
      */
     boolean delete();
 
@@ -128,9 +131,22 @@ public interface IFsEntry
      * <i>Don't use delete on exit feature whenever possible. </i>
      * 
      * @return <code>false</code> If delete on exit isn't supported by underlying system.
-     * @see
+     * @see File#deleteOnExit()
      */
     @Deprecated
     boolean deleteOnExit();
+
+    /**
+     * Renames the file denoted by this abstract pathname.
+     * 
+     * Many aspects of the behavior of this method are inherently platform-dependent: The rename
+     * operation might not be able to move a file from one filesystem to another, it might not be
+     * atomic, and it might not succeed if a file with the destination abstract pathname already
+     * exists. The return value should always be checked to make sure that the rename operation was
+     * successful.
+     * 
+     * @see File#renameTo(File)
+     */
+    boolean renameTo(IPath newPath);
 
 }
