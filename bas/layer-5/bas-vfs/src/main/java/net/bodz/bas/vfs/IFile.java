@@ -5,6 +5,7 @@ import java.util.List;
 import net.bodz.bas.model.IFilter;
 import net.bodz.bas.util.iter.Mitorx;
 import net.bodz.bas.vfs.preparation.IProbePreparation;
+import net.bodz.bas.vfs.util.IFilenameFilter;
 
 public interface IFile
         extends IFsBlob, IFsTree {
@@ -21,7 +22,7 @@ public interface IFile
             throws FileResolveException;
 
     @Override
-    Mitorx<? extends IFile, VFSException> childIterator(IFilter<String> nameFilter)
+    Mitorx<? extends IFile, VFSException> childIterator(IFilenameFilter nameFilter)
             throws VFSException;
 
     /**
@@ -54,7 +55,7 @@ public interface IFile
      *             This maybe caused by no permission.
      */
     @Override
-    List<? extends IFile> listChildren(IFilter<String> nameFilter)
+    List<? extends IFile> listChildren(IFilenameFilter nameFilter)
             throws VFSException;
 
     /**

@@ -8,11 +8,11 @@ import java.util.List;
 
 import net.bodz.bas.io.resource.IStreamResource;
 import net.bodz.bas.io.resource.JavaioStreamResource;
-import net.bodz.bas.model.IFilter;
 import net.bodz.bas.util.iter.Mitorx;
 import net.bodz.bas.vfs.AbstractFile;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.VFSException;
+import net.bodz.bas.vfs.util.IFilenameFilter;
 
 import org.apache.commons.vfs.FileContent;
 import org.apache.commons.vfs.FileName;
@@ -200,7 +200,7 @@ public class ApacheVFSFile
     }
 
     @Override
-    public Mitorx<? extends IFile, VFSException> childIterator(IFilter<String> nameFilter)
+    public Mitorx<? extends IFile, VFSException> childIterator(IFilenameFilter nameFilter)
             throws VFSException {
         return super.childIterator(nameFilter);
     }
@@ -212,7 +212,7 @@ public class ApacheVFSFile
     }
 
     @Override
-    public List<? extends IFile> listChildren(IFilter<String> entryNameFilter)
+    public List<? extends IFile> listChildren(IFilenameFilter entryNameFilter)
             throws VFSException {
         return super.listChildren(entryNameFilter);
     }
