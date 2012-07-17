@@ -5,11 +5,11 @@ import java.lang.reflect.Modifier;
 import java.util.List;
 
 import net.bodz.bas.c.reflect.query.predicate.*;
-import net.bodz.bas.util.iter.AbstractMitablex;
+import net.bodz.bas.util.iter.AbstractMitable;
 import net.bodz.bas.util.iter.Iterables;
 
 public abstract class FieldSelection
-        extends AbstractMitablex<Field, RuntimeException> {
+        extends AbstractMitable<Field> {
 
     protected int modifierMask;
     protected int modifierTest;

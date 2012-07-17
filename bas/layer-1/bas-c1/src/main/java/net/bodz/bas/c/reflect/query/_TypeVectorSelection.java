@@ -4,10 +4,10 @@ import java.lang.reflect.Modifier;
 
 import net.bodz.bas.c.reflect.MethodSignature;
 import net.bodz.bas.c.reflect.query.predicate.*;
-import net.bodz.bas.util.iter.AbstractMitablex;
+import net.bodz.bas.util.iter.AbstractMitable;
 
 public abstract class _TypeVectorSelection<T, $ extends _TypeVectorSelection<T, $>>
-        extends AbstractMitablex<T, RuntimeException> {
+        extends AbstractMitable<T> {
 
     protected int modifierMask;
     protected int modifierTest;

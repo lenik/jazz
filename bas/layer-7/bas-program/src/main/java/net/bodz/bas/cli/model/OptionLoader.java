@@ -19,7 +19,7 @@ public class OptionLoader {
         int fileIndex = 0;
         for (int i = 0; i < args.size();) {
             String optnam = args.get(i);
-            AbstractOption opt = null;
+            IOption opt = null;
             if (!optionsEnd) {
                 if ("--".equals(optnam)) {
                     optionsEnd = true;
@@ -132,7 +132,7 @@ public class OptionLoader {
 
             if (optval != null)
                 try {
-                    AbstractOption _opt = (AbstractOption) opt;
+                    AbstractOption _opt = opt;
                     _opt.set(classobj, optval);
                 } catch (ReflectiveOperationException e) {
                     throw new CLIException(e.getMessage(), e);
