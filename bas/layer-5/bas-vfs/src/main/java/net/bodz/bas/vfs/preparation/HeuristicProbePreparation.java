@@ -2,7 +2,7 @@ package net.bodz.bas.vfs.preparation;
 
 import java.io.IOException;
 
-import net.bodz.bas.io.resource.preparation.IStreamReadPreparation;
+import net.bodz.bas.io.resource.tools.IStreamReading;
 import net.bodz.bas.vfs.IFile;
 
 public class HeuristicProbePreparation
@@ -20,7 +20,7 @@ public class HeuristicProbePreparation
 
         byte[] block;
         try {
-            IStreamReadPreparation readPrep = file.forRead();
+            IStreamReading readPrep = file.forRead();
             block = readPrep.readBytes(TextOrBinary.textLookSize);
         } catch (IOException e) {
             return super.isText();

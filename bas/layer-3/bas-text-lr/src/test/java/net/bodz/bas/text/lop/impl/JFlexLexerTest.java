@@ -3,6 +3,7 @@ package net.bodz.bas.text.lop.impl;
 import java.io.StringReader;
 
 import net.bodz.bas.c.loader.ClassResource;
+import net.bodz.bas.io.resource.tools.StreamReading;
 import net.bodz.bas.sio.util.IXYTellable;
 import net.bodz.bas.text.lop.Token;
 
@@ -56,7 +57,8 @@ public class JFlexLexerTest
     @Test
     public void test1()
             throws Exception {
-        String text = ClassResource.classData(getClass(), "1").forRead().readTextContents();
+        String text = ClassResource.classData(getClass(), "1")//
+                .tooling()._for(StreamReading.class).readTextContents();
         TD[] expected = {
                 //
                 new TD(SampleLexer.ID, "hello", "hello"), //

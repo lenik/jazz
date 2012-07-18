@@ -11,12 +11,12 @@ import net.bodz.bas.i18n.LocaleColos;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
 import net.bodz.bas.io.resource.IStreamResource;
-import net.bodz.bas.io.resource.preparation.FormatDumpPreparation;
-import net.bodz.bas.io.resource.preparation.IStreamReadPreparation;
-import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
-import net.bodz.bas.io.resource.preparation.ParseLoadPreparation;
-import net.bodz.bas.io.resource.preparation.StreamReadPreparation;
-import net.bodz.bas.io.resource.preparation.StreamWritePreparation;
+import net.bodz.bas.io.resource.tools.IStreamReading;
+import net.bodz.bas.io.resource.tools.IStreamWriting;
+import net.bodz.bas.io.resource.tools.StreamDumping;
+import net.bodz.bas.io.resource.tools.StreamLoading;
+import net.bodz.bas.io.resource.tools.StreamReading;
+import net.bodz.bas.io.resource.tools.StreamWriting;
 import net.bodz.bas.meta.codehint.GeneratedByCopyPaste;
 import net.bodz.bas.util.iter.Iterators;
 import net.bodz.bas.util.iter.Mitors;
@@ -289,35 +289,35 @@ public abstract class AbstractFile
     }
 
     @Override
-    public IStreamReadPreparation forRead() {
+    public IStreamReading forRead() {
         IStreamInputSource source = getInputSource();
         if (source == null)
             return null;
-        return new StreamReadPreparation(source);
+        return new StreamReading(source);
     }
 
     @Override
-    public IStreamWritePreparation forWrite() {
+    public IStreamWriting forWrite() {
         IStreamOutputTarget target = getOutputTarget();
         if (target == null)
             return null;
-        return new StreamWritePreparation(target);
+        return new StreamWriting(target);
     }
 
     @Override
-    public ParseLoadPreparation forLoad() {
+    public StreamLoading forLoad() {
         IStreamInputSource source = getInputSource();
         if (source == null)
             return null;
-        return new ParseLoadPreparation(source);
+        return new StreamLoading(source);
     }
 
     @Override
-    public FormatDumpPreparation forDump() {
+    public StreamDumping forDump() {
         IStreamOutputTarget target = getOutputTarget();
         if (target == null)
             return null;
-        return new FormatDumpPreparation(target);
+        return new StreamDumping(target);
     }
 
     // IFsTree

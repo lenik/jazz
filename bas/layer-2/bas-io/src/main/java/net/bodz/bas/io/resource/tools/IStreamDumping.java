@@ -1,12 +1,12 @@
-package net.bodz.bas.io.resource.preparation;
+package net.bodz.bas.io.resource.tools;
 
 import java.io.IOException;
 import java.util.Collection;
 
-public interface IFormatDumpPreparation
+public interface IStreamDumping
         extends Cloneable {
 
-    IFormatDumpPreparation clone();
+    IStreamDumping clone();
 
     void dumpObject(Object o)
             throws IOException;

@@ -1,4 +1,4 @@
-package net.bodz.bas.io.resource.preparation;
+package net.bodz.bas.io.resource.tools;
 
 import java.beans.XMLEncoder;
 import java.io.IOException;
@@ -9,21 +9,21 @@ import java.util.Collection;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
 
-public class FormatDumpPreparation
-        implements IFormatDumpPreparation {
+public class StreamDumping
+        implements IStreamDumping {
 
     private final IStreamOutputTarget target;
 
-    public FormatDumpPreparation(IStreamOutputTarget target) {
+    public StreamDumping(IStreamOutputTarget target) {
         if (target == null)
             throw new NullPointerException("target");
         this.target = target;
     }
 
     @Override
-    public IFormatDumpPreparation clone() {
+    public IStreamDumping clone() {
         try {
-            return (IFormatDumpPreparation) super.clone();
+            return (IStreamDumping) super.clone();
         } catch (CloneNotSupportedException e) {
             throw new UnexpectedException(e.getMessage(), e);
         }

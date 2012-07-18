@@ -6,14 +6,11 @@ import java.nio.charset.Charset;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.lookahead.LAReader;
-import net.bodz.bas.io.resource.preparation.IParseLoadPreparation;
-import net.bodz.bas.io.resource.preparation.IStreamReadPreparation;
-import net.bodz.bas.io.resource.preparation.ParseLoadPreparation;
-import net.bodz.bas.io.resource.preparation.StreamReadPreparation;
 import net.bodz.bas.sio.ByteInInputStream;
 import net.bodz.bas.sio.CharInReader;
 import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.ICharIn;
+import net.bodz.bas.util.Tooling;
 
 public abstract class AbstractStreamInputSource
         implements IStreamInputSource {
@@ -160,15 +157,8 @@ public abstract class AbstractStreamInputSource
     }
 
     @Override
-    public IStreamReadPreparation forRead()
-            throws IOException {
-        return new StreamReadPreparation(this);
-    }
-
-    @Override
-    public IParseLoadPreparation forLoad()
-            throws IOException {
-        return new ParseLoadPreparation(this);
+    public Tooling tooling() {
+        return new Tooling(this);
     }
 
 }

@@ -1,25 +1,25 @@
-package net.bodz.bas.io.resource.preparation;
+package net.bodz.bas.io.resource.tools;
 
 import java.io.IOException;
 
 import net.bodz.bas.io.resource.IStreamInputSource;
 
-public interface IStreamWritePreparation
+public interface IStreamWriting
         extends Cloneable {
 
-    IStreamWritePreparation clone();
+    IStreamWriting clone();
 
     boolean isAppendMode();
 
-    IStreamWritePreparation setAppendMode(boolean appendMode);
+    IStreamWriting setAppendMode(boolean appendMode);
 
     boolean isAutoFlush();
 
-    IStreamWritePreparation setAutoFlush(boolean autoFlush);
+    IStreamWriting setAutoFlush(boolean autoFlush);
 
     int getBlockSize();
 
-    IStreamWritePreparation setBlockSize(int blockSize);
+    IStreamWriting setBlockSize(int blockSize);
 
     void writeBytes(byte[] bytes, int off, int len)
             throws IOException;

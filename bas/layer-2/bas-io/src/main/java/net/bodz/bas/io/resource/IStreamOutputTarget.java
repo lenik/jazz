@@ -9,17 +9,16 @@ import java.io.Writer;
 import java.nio.charset.Charset;
 import java.nio.charset.IllegalCharsetNameException;
 
-import net.bodz.bas.io.resource.preparation.IFormatDumpPreparation;
-import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
 import net.bodz.bas.sio.IByteOutEx;
 import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.sio.IPrintOut;
+import net.bodz.bas.util.IToolable;
 
 /**
  * 提供更多的打开方式。
  */
 public interface IStreamOutputTarget
-        extends ISimpleStreamOutputTarget {
+        extends ISimpleStreamOutputTarget, IToolable {
 
     @Override
     IStreamOutputTarget clone();
@@ -83,12 +82,6 @@ public interface IStreamOutputTarget
      * @return non-<code>null</code> value.
      */
     Writer newWriter()
-            throws IOException;
-
-    IStreamWritePreparation forWrite()
-            throws IOException;
-
-    IFormatDumpPreparation forDump()
             throws IOException;
 
 }

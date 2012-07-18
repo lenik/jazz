@@ -10,6 +10,7 @@ import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.c.string.StringFeature;
 import net.bodz.bas.io.resource.builtin.URLResource;
+import net.bodz.bas.io.resource.tools.StreamReading;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -58,7 +59,8 @@ public class JarStuffTest
             throws IOException {
         URL src = BuildPath.getSrcURL(JarStuffTest.class);
         if (src != null) {
-            String code = new URLResource(src).forRead().readTextContents();
+            String code = new URLResource(src)//
+                    .tooling()._for(StreamReading.class).readTextContents();
             assertEquals(1, StringFeature.count(code, magic));
         }
     }

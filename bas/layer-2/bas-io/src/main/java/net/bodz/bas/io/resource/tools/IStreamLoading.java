@@ -1,4 +1,4 @@
-package net.bodz.bas.io.resource.preparation;
+package net.bodz.bas.io.resource.tools;
 
 import java.io.IOException;
 import java.util.List;
@@ -6,10 +6,10 @@ import java.util.Properties;
 
 import net.bodz.bas.util.iter.Mitorx;
 
-public interface IParseLoadPreparation
+public interface IStreamLoading
         extends Cloneable {
 
-    IParseLoadPreparation clone();
+    IStreamLoading clone();
 
     Properties loadProperties()
             throws IOException;

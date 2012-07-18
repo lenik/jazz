@@ -10,6 +10,8 @@ import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.IStreamInputSourceWrapper;
 import net.bodz.bas.io.resource.IStreamResource;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
+import net.bodz.bas.io.resource.tools.StreamReading;
+import net.bodz.bas.io.resource.tools.StreamWriting;
 import net.bodz.bas.text.diff.DiffComparator;
 import net.bodz.bas.text.diff.DiffInfo;
 
@@ -100,8 +102,8 @@ public class FileDiff {
             throws IOException {
         Object ret;
         if (diff != null) {
-            List<String> al = src.forRead().listLines();
-            List<String> bl = dst.forRead().listLines();
+            List<String> al = src.tooling()._for(StreamReading.class).listLines();
+            List<String> bl = dst.tooling()._for(StreamReading.class).listLines();
             List<DiffInfo> diffs = diff.diffCompare(al, bl);
             if (diffs.size() == 0)
                 return null;
@@ -112,7 +114,7 @@ public class FileDiff {
             ret = false;
         }
         // Writer out = dst.forWrite().newWriter();
-        dst.forWrite().writeChars(src);
+        dst.tooling()._for(StreamWriting.class).writeChars(src);
         return ret;
     }
 

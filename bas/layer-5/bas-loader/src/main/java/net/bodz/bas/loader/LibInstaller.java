@@ -10,6 +10,7 @@ import java.util.Map;
 import net.bodz.bas.c.java.io.TempFile;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
 import net.bodz.bas.io.resource.builtin.URLResource;
+import net.bodz.bas.io.resource.tools.StreamWriting;
 
 public class LibInstaller {
 
@@ -81,7 +82,8 @@ public class LibInstaller {
             URLResource libResource = new URLResource(libURL);
             installedLibFile = new File(installDir, libFilename);
             try {
-                new LocalFileResource(installedLibFile).forWrite().writeBytes(libResource);
+                new LocalFileResource(installedLibFile)//
+                        .tooling()._for(StreamWriting.class).writeBytes(libResource);
                 installedLibraries.put(libname, installedLibFile);
             } catch (IOException e) {
                 throw new Error(e.getMessage(), e);

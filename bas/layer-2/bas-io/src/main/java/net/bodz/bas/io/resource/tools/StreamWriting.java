@@ -1,4 +1,4 @@
-package net.bodz.bas.io.resource.preparation;
+package net.bodz.bas.io.resource.tools;
 
 import java.io.IOException;
 
@@ -11,8 +11,8 @@ import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.ICharIn;
 import net.bodz.bas.sio.ICharOut;
 
-public class StreamWritePreparation
-        implements IStreamWritePreparation {
+public class StreamWriting
+        implements IStreamWriting {
 
     private final IStreamOutputTarget target;
 
@@ -20,16 +20,16 @@ public class StreamWritePreparation
     private boolean autoFlush;
     private int blockSize = 4096;
 
-    public StreamWritePreparation(IStreamOutputTarget target) {
+    public StreamWriting(IStreamOutputTarget target) {
         if (target == null)
             throw new NullPointerException("target");
         this.target = target;
     }
 
     @Override
-    public IStreamWritePreparation clone() {
+    public IStreamWriting clone() {
         try {
-            IStreamWritePreparation clone = (IStreamWritePreparation) super.clone();
+            IStreamWriting clone = (IStreamWriting) super.clone();
             return clone;
         } catch (CloneNotSupportedException e) {
             throw new UnexpectedException(e.getMessage(), e);
@@ -42,7 +42,7 @@ public class StreamWritePreparation
     }
 
     @Override
-    public StreamWritePreparation setAppendMode(boolean appendMode) {
+    public StreamWriting setAppendMode(boolean appendMode) {
         this.appendMode = appendMode;
         return this;
     }
@@ -53,7 +53,7 @@ public class StreamWritePreparation
     }
 
     @Override
-    public StreamWritePreparation setAutoFlush(boolean autoFlush) {
+    public StreamWriting setAutoFlush(boolean autoFlush) {
         this.autoFlush = autoFlush;
         return this;
     }
@@ -63,7 +63,7 @@ public class StreamWritePreparation
         return blockSize;
     }
 
-    public StreamWritePreparation setBlockSize(int blockSize) {
+    public StreamWriting setBlockSize(int blockSize) {
         if (blockSize <= 0)
             throw new IllegalArgumentException("blockSize must be positive: " + blockSize);
         this.blockSize = blockSize;
