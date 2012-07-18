@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Properties;
 
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
+import net.bodz.bas.io.resource.tools.StreamLoading;
 
 public class EclipseWorkspace {
 
@@ -32,7 +33,8 @@ public class EclipseWorkspace {
 
     public void reload()
             throws IOException {
-        Properties prefs = new LocalFileResource(new File(base, PREFS)).forLoad().loadProperties();
+        Properties prefs = new LocalFileResource(new File(base, PREFS))//
+                .tooling()._for(StreamLoading.class).loadProperties();
         cpVars = new HashMap<String, String>();
         for (Object k : prefs.keySet()) {
             String name = (String) k;

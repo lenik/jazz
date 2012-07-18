@@ -4,16 +4,13 @@ import java.io.*;
 import java.nio.charset.Charset;
 
 import net.bodz.bas.err.UnexpectedException;
-import net.bodz.bas.io.resource.preparation.FormatDumpPreparation;
-import net.bodz.bas.io.resource.preparation.IFormatDumpPreparation;
-import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
-import net.bodz.bas.io.resource.preparation.StreamWritePreparation;
 import net.bodz.bas.sio.ByteOutExImpl;
 import net.bodz.bas.sio.ByteOutOutputStream;
 import net.bodz.bas.sio.CharOutWriter;
 import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.IByteOutEx;
 import net.bodz.bas.sio.ICharOut;
+import net.bodz.bas.util.Tooling;
 
 public abstract class AbstractStreamOutputTarget
         implements IStreamOutputTarget {
@@ -140,15 +137,8 @@ public abstract class AbstractStreamOutputTarget
     }
 
     @Override
-    public IFormatDumpPreparation forDump()
-            throws IOException {
-        return new FormatDumpPreparation(this);
-    }
-
-    @Override
-    public IStreamWritePreparation forWrite()
-            throws IOException {
-        return new StreamWritePreparation(this);
+    public Tooling tooling() {
+        return new Tooling(this);
     }
 
 }

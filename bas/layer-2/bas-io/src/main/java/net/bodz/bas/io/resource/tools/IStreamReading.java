@@ -1,24 +1,24 @@
-package net.bodz.bas.io.resource.preparation;
+package net.bodz.bas.io.resource.tools;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.MessageDigest;
 import java.util.List;
 
-import net.bodz.bas.util.iter.IteratorTargetException;
+import net.bodz.bas.err.RuntimeIOException;
 import net.bodz.bas.util.iter.Mitorx;
 
-public interface IStreamReadPreparation
+public interface IStreamReading
         extends Cloneable {
 
-    IStreamReadPreparation clone();
+    IStreamReading clone();
 
     int getBlockSize();
 
     /**
      * @return this self.
      */
-    IStreamReadPreparation setBlockSize(int blockSize);
+    IStreamReading setBlockSize(int blockSize);
 
     /**
      * Read the entire contents.
@@ -71,7 +71,7 @@ public interface IStreamReadPreparation
             throws IOException;
 
     /**
-     * @return Overlap-allowed{@link Iterable} which may throw {@link IteratorTargetException}.
+     * @return Overlap-allowed{@link Iterable} which may throw {@link RuntimeIOException}.
      */
     Iterable<byte[]> byteBlocks()
             throws IOException;
@@ -93,7 +93,7 @@ public interface IStreamReadPreparation
             throws IOException;
 
     /**
-     * @return Overlap-allowed{@link Iterable} which may throw {@link IteratorTargetException}.
+     * @return Overlap-allowed{@link Iterable} which may throw {@link RuntimeIOException}.
      */
     Iterable<char[]> charBlocks();
 
@@ -123,7 +123,7 @@ public interface IStreamReadPreparation
     Iterable<String> lines();
 
     /**
-     * @return Overlap-allowed {@link Iterable} which may throw {@link IteratorTargetException}.
+     * @return Overlap-allowed {@link Iterable} which may throw {@link RuntimeIOException}.
      */
     Iterable<String> lines(boolean chopped);
 

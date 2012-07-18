@@ -1,4 +1,4 @@
-package net.bodz.bas.io.resource.preparation;
+package net.bodz.bas.io.resource.tools;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.bodz.bas.c.java.security.Cryptos;
-import net.bodz.bas.err.RuntimizedException;
+import net.bodz.bas.err.RuntimeIOException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.resource.IStreamInputSource;
@@ -18,28 +18,27 @@ import net.bodz.bas.meta.codehint.GeneratedByCopyPaste;
 import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.ICharIn;
 import net.bodz.bas.util.iter.AbstractMitorx;
-import net.bodz.bas.util.iter.IteratorTargetException;
 import net.bodz.bas.util.iter.Iterators;
 import net.bodz.bas.util.iter.Mitorx;
 import net.bodz.bas.util.iter.OverlappedMitor;
 
-public class StreamReadPreparation
-        implements IStreamReadPreparation {
+public class StreamReading
+        implements IStreamReading {
 
     private final IStreamInputSource source;
     private int blockSize = 4096;
 
-    public StreamReadPreparation(IStreamInputSource source) {
+    public StreamReading(IStreamInputSource source) {
         if (source == null)
             throw new NullPointerException("source");
         this.source = source;
     }
 
     @Override
-    public IStreamReadPreparation clone() {
-        StreamReadPreparation clone;
+    public IStreamReading clone() {
+        StreamReading clone;
         try {
-            clone = (StreamReadPreparation) super.clone();
+            clone = (StreamReading) super.clone();
         } catch (CloneNotSupportedException e) {
             throw new UnexpectedException(e.getMessage(), e);
         }
@@ -50,7 +49,7 @@ public class StreamReadPreparation
         return blockSize;
     }
 
-    public StreamReadPreparation setBlockSize(int blockSize) {
+    public StreamReading setBlockSize(int blockSize) {
         if (blockSize <= 0)
             throw new IllegalArgumentException("blockSize must be positive: " + blockSize);
         this.blockSize = blockSize;
@@ -226,7 +225,7 @@ public class StreamReadPreparation
                 try {
                     mitor = byteBlocks(true);
                 } catch (IOException e) {
-                    throw new IteratorTargetException(e);
+                    throw new RuntimeIOException(e);
                 }
                 return Iterators.convert(mitor);
             }
@@ -302,7 +301,7 @@ public class StreamReadPreparation
                 try {
                     immIter = charBlocks(true);
                 } catch (IOException e) {
-                    throw new IteratorTargetException(e);
+                    throw new RuntimeIOException(e);
                 }
                 return Iterators.convert(immIter);
             }
@@ -366,7 +365,7 @@ public class StreamReadPreparation
                 try {
                     mitor = _lines(chopped);
                 } catch (IOException e) {
-                    throw new IteratorTargetException(e);
+                    throw new RuntimeIOException(e);
                 }
                 return Iterators.convert(mitor);
             }
@@ -393,7 +392,7 @@ public class StreamReadPreparation
         try {
             while ((block = blocks._next()) != null || !blocks.isEnded())
                 digest.update(block);
-        } catch (RuntimizedException e) {
+        } catch (RuntimeIOException e) {
             e.rethrow(IOException.class);
         }
         return digest.digest();

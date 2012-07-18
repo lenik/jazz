@@ -1,4 +1,4 @@
-package net.bodz.bas.io.resource.preparation;
+package net.bodz.bas.io.resource.tools;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -9,7 +9,7 @@ import net.bodz.bas.util.iter.Mitorx;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class StreamReadPreparationTest
+public class StreamReadingTest
         extends Assert {
 
     @Test
@@ -17,7 +17,7 @@ public class StreamReadPreparationTest
             throws Exception {
         byte[] src = "0123456789abcdefghijklmnopqrstuvwxyz".getBytes();
         ByteArrayInputStream in = new ByteArrayInputStream(src);
-        IStreamReadPreparation read = new InputStreamSource(in).forRead();
+        IStreamReading read = new InputStreamSource(in).tooling()._for(StreamReading.class);
 
         Mitorx<char[], ? extends IOException> blocks = read.charBlocks(true);
         assertEquals("01234", new String(blocks._next()));

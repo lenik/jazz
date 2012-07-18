@@ -1,4 +1,4 @@
-package net.bodz.bas.io.resource.preparation;
+package net.bodz.bas.io.resource.tools;
 
 import java.io.EOFException;
 import java.io.IOException;
@@ -13,21 +13,21 @@ import net.bodz.bas.util.iter.AbstractMitorx;
 import net.bodz.bas.util.iter.Iterators;
 import net.bodz.bas.util.iter.Mitorx;
 
-public class ParseLoadPreparation
-        implements IParseLoadPreparation {
+public class StreamLoading
+        implements IStreamLoading {
 
     private final IStreamInputSource source;
 
-    public ParseLoadPreparation(IStreamInputSource source) {
+    public StreamLoading(IStreamInputSource source) {
         if (source == null)
             throw new NullPointerException("source");
         this.source = source;
     }
 
     @Override
-    public IParseLoadPreparation clone() {
+    public IStreamLoading clone() {
         try {
-            return (IParseLoadPreparation) super.clone();
+            return (IStreamLoading) super.clone();
         } catch (CloneNotSupportedException e) {
             throw new UnexpectedException(e.getMessage(), e);
         }

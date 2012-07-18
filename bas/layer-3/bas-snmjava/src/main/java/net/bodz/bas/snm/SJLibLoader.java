@@ -12,6 +12,7 @@ import java.util.Properties;
 import net.bodz.bas.c.java.io.FilePath;
 import net.bodz.bas.c.system.SystemInfo;
 import net.bodz.bas.io.resource.builtin.LocalFileResource;
+import net.bodz.bas.io.resource.tools.StreamLoading;
 
 public class SJLibLoader {
 
@@ -114,7 +115,8 @@ public class SJLibLoader {
         if (iniFile.canRead()) {
             Properties libraries;
             try {
-                libraries = new LocalFileResource(iniFile).forLoad().loadProperties();
+                libraries = new LocalFileResource(iniFile)//
+                        .tooling()._for(StreamLoading.class).loadProperties();
             } catch (IOException e) {
                 throw new Error("failed to load " + iniFile + ": " + e.getMessage(), e);
             }

@@ -9,6 +9,7 @@ import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.c.reflect.query.PublicFields;
 import net.bodz.bas.c.reflect.query.ReflectQuery;
 import net.bodz.bas.c.string.Strings;
+import net.bodz.bas.io.resource.tools.StreamReading;
 import net.bodz.bas.log.LogLevel;
 
 public class LoggerCG {
@@ -31,8 +32,10 @@ public class LoggerCG {
             levelNames.add(levelName);
         }
 
-        src_Logger = ClassResource.classData(getClass(), "Logger").forRead().readTextContents();
-        src_AbstractLogger = ClassResource.classData(getClass(), "AbstractLogger").forRead().readTextContents();
+        src_Logger = ClassResource.classData(getClass(), "Logger")//
+                .tooling()._for(StreamReading.class).readTextContents();
+        src_AbstractLogger = ClassResource.classData(getClass(), "AbstractLogger")//
+                .tooling()._for(StreamReading.class).readTextContents();
     }
 
     public void makeLogger()

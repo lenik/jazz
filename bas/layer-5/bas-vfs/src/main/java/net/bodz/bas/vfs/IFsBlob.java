@@ -3,10 +3,10 @@ package net.bodz.bas.vfs;
 import java.nio.charset.Charset;
 
 import net.bodz.bas.io.resource.IStreamResourceWrapper;
-import net.bodz.bas.io.resource.preparation.IFormatDumpPreparation;
-import net.bodz.bas.io.resource.preparation.IParseLoadPreparation;
-import net.bodz.bas.io.resource.preparation.IStreamReadPreparation;
-import net.bodz.bas.io.resource.preparation.IStreamWritePreparation;
+import net.bodz.bas.io.resource.tools.IStreamDumping;
+import net.bodz.bas.io.resource.tools.IStreamLoading;
+import net.bodz.bas.io.resource.tools.IStreamReading;
+import net.bodz.bas.io.resource.tools.IStreamWriting;
 
 public interface IFsBlob
         extends IFsEntry, IStreamResourceWrapper {
@@ -74,21 +74,21 @@ public interface IFsBlob
     /**
      * @return <code>null</code> If this isn't a file blob.
      */
-    IStreamReadPreparation forRead();
+    IStreamReading forRead();
 
     /**
      * @return <code>null</code> If this isn't a file blob.
      */
-    IStreamWritePreparation forWrite();
+    IStreamWriting forWrite();
 
     /**
      * @return <code>null</code> If this isn't a file blob.
      */
-    IParseLoadPreparation forLoad();
+    IStreamLoading forLoad();
 
     /**
      * @return <code>null</code> If this isn't a file blob.
      */
-    IFormatDumpPreparation forDump();
+    IStreamDumping forDump();
 
 }
