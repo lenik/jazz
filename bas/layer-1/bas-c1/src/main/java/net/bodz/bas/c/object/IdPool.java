@@ -1,14 +1,14 @@
-package net.bodz.bas.util;
+package net.bodz.bas.c.object;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class InstanceId {
+public class IdPool {
 
     private final Class<?> clazz;
     int index;
 
-    public InstanceId(Class<?> clazz) {
+    public IdPool(Class<?> clazz) {
         this.clazz = clazz;
     }
 

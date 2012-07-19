@@ -6,8 +6,8 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.bodz.bas.c.object.ObjectInfo;
 import net.bodz.bas.disp.view.AbstractHttpRenderer;
-import net.bodz.bas.util.ObjectInfo;
 
 public class ObjectDumpView
         extends AbstractHttpRenderer {

@@ -3,8 +3,8 @@ package net.bodz.bas.fsm.base;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.bodz.bas.c.object.ObjectInfo;
 import net.bodz.bas.err.NotImplementedException;
-import net.bodz.bas.util.ObjectInfo;
 
 /**
  * Implemented Features: - Composition
