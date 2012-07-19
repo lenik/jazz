@@ -1,4 +1,4 @@
-package net.bodz.bas.util;
+package net.bodz.bas.sugar;
 
 public class ToolsInstantiationException
         extends RuntimeException {
