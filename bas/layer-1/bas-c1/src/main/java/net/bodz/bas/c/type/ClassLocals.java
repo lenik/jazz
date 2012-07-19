@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import net.bodz.bas.c.java.util.IMapEntryLoader;
+import net.bodz.bas.c.reflect.MethodSignature;
 import net.bodz.bas.err.IllegalUsageException;
 
 public class ClassLocals {
@@ -13,6 +14,13 @@ public class ClassLocals {
 
     public static ClassLocal<?> getMap(String id) {
         return all.get(id);
+    }
+
+    /**
+     * @see ClassLocal#ClassLocal(IMapEntryLoader)
+     */
+    public static <T> ClassLocal<T> createMap(IMapEntryLoader<Class<?>, T> entryLoader) {
+        return createMap(entryLoader.getClass().getCanonicalName(), entryLoader);
     }
 
     /**
@@ -63,17 +71,71 @@ public class ClassLocals {
      *             If the method don't accept a single {@link Class} parameter.
      * @see ClassLocal#ClassLocal(Method)
      */
+    public static <T> ClassLocal<T> createMap(Method parserMethod) {
+        String signature = new MethodSignature(parserMethod).toString();
+        String id = parserMethod.getDeclaringClass().getCanonicalName() + "." + signature;
+        return createMap(id, parserMethod);
+    }
+
+    /**
+     * Each entry holds value returned from the parser method.
+     * 
+     * @param classParserMethod
+     *            A public static method which receives a single {@link Class} parameter, and
+     *            returns the parsed entry value.
+     * @throws IllegalUsageException
+     *             If the method don't accept a single {@link Class} parameter.
+     * @see ClassLocal#ClassLocal(Method)
+     */
     public static <T> ClassLocal<T> createMap(String id, Method parserMethod) {
         ClassLocal<T> map = new ClassLocal<T>(parserMethod);
         register(id, map);
         return map;
     }
 
-    public static void register(String id, ClassLocal<?> map) {
+    /**
+     * Register a class-local map with given id.
+     * 
+     * @param id
+     *            Non-<code>null</code> class-local-id to be registered. The id must be unique.
+     * @param classLocal
+     *            Non-<code>null</code> class-local map to be registered.
+     * @throws IllegalUsageException
+     *             If the id is already in use.
+     */
+    public static void register(String id, ClassLocal<?> classLocal) {
+        if (id == null)
+            throw new NullPointerException("id");
+        if (classLocal == null)
+            throw new NullPointerException("classLocal");
+
         ClassLocal<?> exist = all.get(id);
         if (exist != null)
             throw new IllegalUsageException("Id is already used: " + id);
-        all.put(id, map);
+
+        all.put(id, classLocal);
+
+        classLocal.addRegisteredId(id);
+    }
+
+    /**
+     * Remove class-local map from global cache.
+     * 
+     * @param id
+     *            Non-<code>null</code> class-local-id to remove.
+     * @return Removed class-local. Return <code>null</code> if the class-local with given id isn't
+     *         existed.
+     */
+    public static ClassLocal<?> remove(String id) {
+        if (id == null)
+            throw new NullPointerException("id");
+
+        ClassLocal<?> classLocal = all.remove(id);
+
+        if (classLocal != null)
+            classLocal.removeRegisteredId(id);
+
+        return classLocal;
     }
 
 }

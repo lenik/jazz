@@ -3,6 +3,8 @@ package net.bodz.bas.c.type;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.Set;
+import java.util.TreeSet;
 
 import net.bodz.bas.c.java.util.IMapEntryLoader;
 import net.bodz.bas.c.java.util.LazyHashMap;
@@ -13,6 +15,8 @@ public class ClassLocal<T>
         extends LazyHashMap<Class<?>, T> {
 
     private static final long serialVersionUID = 1L;
+
+    Set<String> registeredIds;
 
     public ClassLocal(IMapEntryLoader<Class<?>, T> entryLoader) {
         super(entryLoader);
@@ -105,6 +109,43 @@ public class ClassLocal<T>
             }
         }
 
+    }
+
+    public Set<String> getRegisteredIds() {
+        if (registeredIds == null) {
+            synchronized (this) {
+                if (registeredIds == null) {
+                    registeredIds = new TreeSet<String>();
+                }
+            }
+        }
+        return registeredIds;
+    }
+
+    /**
+     * Get a registered id.
+     * 
+     * If there are multiple registered ids, one of them is returned. However, it's picked randomly.
+     * 
+     * @return One of the registered id. Return <code>null</code> if this class-local isn't
+     *         registered at all.
+     */
+    public synchronized String getRegisteredId() {
+        if (registeredIds == null)
+            return null;
+        if (registeredIds.isEmpty())
+            return null;
+        String first = registeredIds.iterator().next();
+        return first;
+    }
+
+    public synchronized boolean addRegisteredId(String registeredId) {
+        return getRegisteredIds().add(registeredId);
+    }
+
+    public synchronized void removeRegisteredId(String registeredId) {
+        if (registeredIds != null)
+            registeredIds.remove(registeredId);
     }
 
 }
