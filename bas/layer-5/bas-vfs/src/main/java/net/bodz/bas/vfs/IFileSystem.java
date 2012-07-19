@@ -11,7 +11,7 @@ import org.apache.commons.vfs.FileSystem;
 /**
  * @see org.apache.commons.vfs.FileSystem
  */
-public interface IVolume {
+public interface IFileSystem {
 
     /**
      * Return the underlying device on which this volume is implemented.
@@ -21,17 +21,18 @@ public interface IVolume {
     IFile getDeviceFile();
 
     /**
-     * @return non-<code>null</code> root path.
+     * For some file systems (like DOS) there are more then one root.
+     * 
+     * @return non-<code>null</code> root file array.
      */
-    IPath getRootPath();
+    IFile[] getRootFiles();
 
     /**
-     * @return non-<code>null</code> root file.
-     * @throws FileResolveException
-     *             If failed to resolve the root file.
+     * This returns the path attributes from the root files.
+     * 
+     * @return non-<code>null</code> root path array.
      */
-    IFile getRootFile()
-            throws FileResolveException;
+    IPath[] getRootPaths();
 
     /**
      * @param localPath
@@ -42,7 +43,7 @@ public interface IVolume {
      * @throws BadPathException
      *             If <code>localPath</code> is invalid.
      */
-    IPath resolve(String localPath)
+    IPath parse(String localPath)
             throws BadPathException;
 
     /**
@@ -54,7 +55,7 @@ public interface IVolume {
      * @throws VFSException
      *             If <code>localPath</code> is invalid.
      */
-    IFile resolveFile(String localPath)
+    IFile resolve(String localPath)
             throws FileResolveException;
 
     /**
@@ -62,40 +63,15 @@ public interface IVolume {
      */
     IAttributes getAttributes();
 
-// /**
-// * @see FileProvider#getCapabilities()
-// */
-// Collection<Capability> getCapabilities();
+    // /**
+    // * @see FileProvider#getCapabilities()
+    // */
+    // Collection<Capability> getCapabilities();
 
     /**
      * @see FileSystem#hasCapability(org.apache.commons.vfs.Capability)
      */
     boolean hasCapability(Capability capability);
-
-    /**
-     * @return non-<code>null</code> volume label. If a volume doesn't have a label, an empty string
-     *         should be returned.
-     */
-    String getLabel();
-
-    /**
-     * Get total space in bytes.
-     * 
-     * @return <code>null</code> if unknown.
-     */
-    Long getCapacity();
-
-    /**
-     * Get available space in bytes.
-     * 
-     * @return <code>null</code> unknown.
-     */
-    Long getFreeSpace();
-
-    /**
-     * @return Positive (generally 2^n) cluster size, <code>0</code> if the cluster size is unknown.
-     */
-    int getClusterSize();
 
     /**
      * Returns the accuracy of file time attributes, like created-time, last-mod-time, and

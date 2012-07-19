@@ -2,11 +2,12 @@ package net.bodz.bas.vfs;
 
 import net.bodz.bas.traits.EmptyAttributes;
 import net.bodz.bas.traits.IAttributes;
+import net.bodz.bas.vfs.path.IPath;
 
 import org.apache.commons.vfs.Capability;
 
-public abstract class AbstractVolume
-        implements IVolume {
+public abstract class AbstractFileSystem
+        implements IFileSystem {
 
     @Override
     public IAttributes getAttributes() {
@@ -24,43 +25,12 @@ public abstract class AbstractVolume
     }
 
     @Override
-    public IFile getRootFile()
-            throws FileResolveException {
-        return getRootPath().toFile();
-    }
-
-    /**
-     * Implementation:
-     * 
-     * Return empty string (<code>""</code>).
-     */
-    @Override
-    public String getLabel() {
-        return "";
-    }
-
-    /**
-     * Implementation: Return <code>null</code>.
-     */
-    @Override
-    public Long getCapacity() {
-        return null;
-    }
-
-    /**
-     * Implementation: Return <code>null</code>.
-     */
-    @Override
-    public Long getFreeSpace() {
-        return null;
-    }
-
-    /**
-     * @return <code>0</code>.
-     */
-    @Override
-    public int getClusterSize() {
-        return 0;
+    public final IPath[] getRootPaths() {
+        IFile[] rootFiles = getRootFiles();
+        IPath[] rootPaths = new IPath[rootFiles.length];
+        for (int i = 0; i < rootFiles.length; i++)
+            rootPaths[i] = rootFiles[i].getPath();
+        return rootPaths;
     }
 
     /**
