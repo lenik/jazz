@@ -1,16 +1,16 @@
-package net.bodz.bas.vfs.preparation;
+package net.bodz.bas.vfs.tools;
 
 import java.io.IOException;
 
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.util.ContentType;
 
-public class LazyProbePreparation
-        implements IProbePreparation {
+public class LazyProbing
+        implements IProbing {
 
     protected final IFile file;
 
-    public LazyProbePreparation(IFile file) {
+    public LazyProbing(IFile file) {
         if (file == null)
             throw new NullPointerException("file");
         this.file = file;
