@@ -23,14 +23,14 @@ public abstract class LazyMap<K, V>
     }
 
     /**
-     * Get the value of the entry with specified key.
+     * Get or load the value of the entry with specified key.
      * 
      * If the entry isn't existed, load it first thru {@link IMapEntryLoader entry loader}.
      * 
      * @param key
      *            Which entry to get or load.
-     * @return Value of the entry in the map. <code>null</code> if not existed, or <code>null</code>
-     *         returned from the entry loader.
+     * @return Value of the entry in the map. <code>null</code> if not existed. (however, the entry
+     *         loader may also return <code>null</code> )
      */
     public V load(K key) {
         V value = super.get(key);
