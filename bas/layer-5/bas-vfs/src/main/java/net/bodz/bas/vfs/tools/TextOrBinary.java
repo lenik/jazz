@@ -1,4 +1,4 @@
-package net.bodz.bas.vfs.preparation;
+package net.bodz.bas.vfs.tools;
 
 import net.bodz.bas.c.string.CharFeature;
 import net.bodz.bas.util.bits.IBits;

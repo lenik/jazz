@@ -1,14 +1,15 @@
-package net.bodz.bas.vfs.preparation;
+package net.bodz.bas.vfs.tools;
 
 import java.io.IOException;
 
 import net.bodz.bas.io.resource.tools.IStreamReading;
+import net.bodz.bas.io.resource.tools.StreamReading;
 import net.bodz.bas.vfs.IFile;
 
-public class HeuristicProbePreparation
-        extends LazyProbePreparation {
+public class HeuristicProbing
+        extends LazyProbing {
 
-    public HeuristicProbePreparation(IFile file) {
+    public HeuristicProbing(IFile file) {
         super(file);
     }
 
@@ -20,7 +21,7 @@ public class HeuristicProbePreparation
 
         byte[] block;
         try {
-            IStreamReading readPrep = file.forRead();
+            IStreamReading readPrep = file.tooling()._for(StreamReading.class);
             block = readPrep.readBytes(TextOrBinary.textLookSize);
         } catch (IOException e) {
             return super.isText();

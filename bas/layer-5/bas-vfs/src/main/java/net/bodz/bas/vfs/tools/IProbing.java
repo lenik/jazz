@@ -1,8 +1,8 @@
-package net.bodz.bas.vfs.preparation;
+package net.bodz.bas.vfs.tools;
 
 import java.io.IOException;
 
-public interface IProbePreparation {
+public interface IProbing {
 
     /**
      * @return <code>null</code> if MIME-Type is unknown.
