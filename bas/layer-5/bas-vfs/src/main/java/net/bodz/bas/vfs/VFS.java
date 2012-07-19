@@ -17,14 +17,14 @@ public class VFS {
         return pathSystem;
     }
 
-    public static IPath resolve(String path)
+    public static IPath parse(String path)
             throws BadPathException {
-        return pathSystem.resolve(path);
+        return pathSystem.parse(path);
     }
 
-    public static IFile resolveFile(String path)
+    public static IFile resolve(String path)
             throws FileResolveException {
-        IPath p = resolve(path);
+        IPath p = parse(path);
         return p.toFile();
     }
 

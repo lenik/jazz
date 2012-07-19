@@ -10,28 +10,37 @@ import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.meta.codehint.PoorImpl;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.IVolume;
+import net.bodz.bas.vfs.IFileSystem;
 import net.bodz.bas.vfs.path.align.IPathAlignment;
 
-public abstract class AbstractPath
+public class DefaultPath
         implements IPath {
 
     private static final long serialVersionUID = 1L;
 
+    protected final IFileSystem fileSystem;
     protected final String localPath;
     private final IPathAlignment alignment;
 
-    public AbstractPath(String localPath) {
-        this(localPath, IPathAlignment.ROOT);
+    public DefaultPath(IFileSystem fileSystem, String localPath) {
+        this(fileSystem, localPath, IPathAlignment.ROOT);
     }
 
-    public AbstractPath(String localPath, IPathAlignment alignment) {
+    public DefaultPath(IFileSystem fileSystem, String localPath, IPathAlignment alignment) {
+        if (fileSystem == null)
+            throw new NullPointerException("fileSystem");
         if (alignment == null)
             throw new NullPointerException("alignment");
         if (localPath == null)
             throw new NullPointerException("localPath");
+        this.fileSystem = fileSystem;
         this.localPath = localPath;
         this.alignment = alignment;
+    }
+
+    @Override
+    public IFileSystem getFileSystem() {
+        return fileSystem;
     }
 
     @Override
@@ -42,12 +51,12 @@ public abstract class AbstractPath
     @Override
     public IFile toFile()
             throws FileResolveException {
-        return getVolume().resolveFile(localPath);
+        return getFileSystem().resolve(localPath);
     }
 
     @Override
     public final IPath getParentLayer() {
-        IFile deviceFile = getVolume().getDeviceFile();
+        IFile deviceFile = getFileSystem().getDeviceFile();
         if (deviceFile != null)
             return deviceFile.getPath();
         return null;
@@ -73,8 +82,8 @@ public abstract class AbstractPath
      */
     protected final IPath resolveLocal(String localPath)
             throws BadPathException {
-        IVolume volume = getVolume();
-        return volume.resolve(localPath);
+        IFileSystem volume = getFileSystem();
+        return volume.parse(localPath);
     }
 
     @Override
@@ -256,7 +265,7 @@ public abstract class AbstractPath
 
     @Override
     public String format(PathFormat pathFormat) {
-        return getVolume().format(this, pathFormat);
+        return getFileSystem().format(this, pathFormat);
     }
 
     /**

@@ -1,6 +1,6 @@
 package net.bodz.bas.vfs.path;
 
-public interface IPathResolver {
+public interface IPathParser {
 
     // String getPreferredProtocolName();
 
@@ -11,7 +11,7 @@ public interface IPathResolver {
      * @throws NullPointerException
      *             If <code>path</code> is <code>null</code>.
      */
-    IPath resolve(String path)
+    IPath parse(String path)
             throws BadPathException;
 
 }

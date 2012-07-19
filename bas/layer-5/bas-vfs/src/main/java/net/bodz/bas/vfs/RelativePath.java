@@ -1,23 +1,23 @@
 package net.bodz.bas.vfs;
 
-import net.bodz.bas.vfs.impl.fake.FakeVolume;
-import net.bodz.bas.vfs.path.AbstractPath;
+import net.bodz.bas.vfs.impl.fake.FakeFileSystem;
 import net.bodz.bas.vfs.path.BadPathException;
+import net.bodz.bas.vfs.path.DefaultPath;
 import net.bodz.bas.vfs.path.align.IPathAlignment;
 import net.bodz.bas.vfs.path.align.ParentAlignment;
 
 public class RelativePath
-        extends AbstractPath {
+        extends DefaultPath {
 
     private static final long serialVersionUID = 1L;
 
     public RelativePath(String localPath, IPathAlignment alignment) {
-        super(localPath, alignment);
+        super(null, localPath, alignment);
     }
 
     @Override
-    public IVolume getVolume() {
-        return FakeVolume.getInstance();
+    public IFileSystem getFileSystem() {
+        return FakeFileSystem.getInstance();
     }
 
     @Override
@@ -25,7 +25,7 @@ public class RelativePath
             throws BadPathException {
         String path = getAlignment().decorate(localPath);
         // XXX - Is `FakeVolume` suitable to use here?
-        return FakeVolume.getInstance().resolveFile(path);
+        return FakeFileSystem.getInstance().resolve(path);
     }
 
     public static RelativePath parse(String decoratedPath) {

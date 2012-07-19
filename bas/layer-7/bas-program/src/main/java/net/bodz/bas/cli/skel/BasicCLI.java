@@ -457,7 +457,7 @@ public class BasicCLI
                     String optnam = opt.getFriendlyName();
                     if (!optnam.equals(entry.getKey()))
                         continue;
-                    Object optval = opt.resolveFile(this);
+                    Object optval = opt.parse(this);
                     if (optval instanceof MethodCall)
                         continue;
                     dbg.p(optnam, " = ", Util.dispval(optval));

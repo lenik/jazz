@@ -1,7 +1,7 @@
 package net.bodz.bas.vfs.impl.fake;
 
 import net.bodz.bas.vfs.AbstractFile;
-import net.bodz.bas.vfs.IVolume;
+import net.bodz.bas.vfs.IFileSystem;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 
@@ -17,8 +17,8 @@ public abstract class FakeFile
     }
 
     @Override
-    public IVolume getVolume() {
-        return FakeVolume.getInstance();
+    public IFileSystem getVolume() {
+        return FakeFileSystem.getInstance();
     }
 
     @Override

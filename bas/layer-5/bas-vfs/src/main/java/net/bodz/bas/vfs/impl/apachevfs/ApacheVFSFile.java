@@ -26,7 +26,7 @@ public class ApacheVFSFile
     private final FileSystemManager manager;
     private final FileObject fileObject;
 
-    public ApacheVFSFile(ApacheVFSVolume volume, ApacheVFSPath path)
+    public ApacheVFSFile(ApacheFileSystem volume, ApacheVFSPath path)
             throws FileSystemException {
         super(volume, path);
         this.manager = volume.getFileSystemManager();
@@ -34,15 +34,15 @@ public class ApacheVFSFile
         this.fileObject = manager.resolveFile(fileName.getURI());
     }
 
-    ApacheVFSFile(ApacheVFSVolume volume, ApacheVFSPath path, FileObject fileObject) {
+    ApacheVFSFile(ApacheFileSystem volume, ApacheVFSPath path, FileObject fileObject) {
         super(volume, path);
         this.manager = volume.getFileSystemManager();
         this.fileObject = fileObject;
     }
 
     @Override
-    public ApacheVFSVolume getVolume() {
-        return (ApacheVFSVolume) super.getVolume();
+    public ApacheFileSystem getVolume() {
+        return (ApacheFileSystem) super.getVolume();
     }
 
     @Override

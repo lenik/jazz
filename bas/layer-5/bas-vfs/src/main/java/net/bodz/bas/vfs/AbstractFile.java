@@ -11,21 +11,16 @@ import net.bodz.bas.i18n.LocaleColos;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.IStreamOutputTarget;
 import net.bodz.bas.io.resource.IStreamResource;
-import net.bodz.bas.io.resource.tools.IStreamReading;
-import net.bodz.bas.io.resource.tools.IStreamWriting;
-import net.bodz.bas.io.resource.tools.StreamDumping;
-import net.bodz.bas.io.resource.tools.StreamLoading;
-import net.bodz.bas.io.resource.tools.StreamReading;
-import net.bodz.bas.io.resource.tools.StreamWriting;
 import net.bodz.bas.meta.codehint.GeneratedByCopyPaste;
+import net.bodz.bas.sugar.Tooling;
 import net.bodz.bas.util.iter.Iterators;
 import net.bodz.bas.util.iter.Mitors;
 import net.bodz.bas.util.iter.Mitorx;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
-import net.bodz.bas.vfs.preparation.HeuristicProbePreparation;
-import net.bodz.bas.vfs.preparation.IProbePreparation;
-import net.bodz.bas.vfs.preparation.LazyProbePreparation;
+import net.bodz.bas.vfs.tools.HeuristicProbing;
+import net.bodz.bas.vfs.tools.IProbing;
+import net.bodz.bas.vfs.tools.LazyProbing;
 import net.bodz.bas.vfs.util.IFilenameFilter;
 
 public abstract class AbstractFile
@@ -40,7 +35,7 @@ public abstract class AbstractFile
      * @param path
      *            non-<code>null</code> path.
      */
-    public AbstractFile(IVolume volume, IPath path) {
+    public AbstractFile(IFileSystem volume, IPath path) {
         super(volume, path);
     }
 
@@ -174,15 +169,15 @@ public abstract class AbstractFile
                 bits |= FILE;
 
         if (0 != (mask & CNTTYPE) && (bits & EXIST) != 0) {
-            IProbePreparation probe;
+            IProbing probe;
             try {
-                probe = forProbe(true);
+                probe = tooling()._for(HeuristicProbing.class);
                 if (probe.isText())
                     bits |= TEXT;
                 else
                     bits |= BINARY;
             } catch (IOException e) {
-                probe = forProbe(false);
+                probe = tooling()._for(LazyProbing.class);
                 try {
                     if (probe.isText())
                         bits |= TEXT;
@@ -289,35 +284,8 @@ public abstract class AbstractFile
     }
 
     @Override
-    public IStreamReading forRead() {
-        IStreamInputSource source = getInputSource();
-        if (source == null)
-            return null;
-        return new StreamReading(source);
-    }
-
-    @Override
-    public IStreamWriting forWrite() {
-        IStreamOutputTarget target = getOutputTarget();
-        if (target == null)
-            return null;
-        return new StreamWriting(target);
-    }
-
-    @Override
-    public StreamLoading forLoad() {
-        IStreamInputSource source = getInputSource();
-        if (source == null)
-            return null;
-        return new StreamLoading(source);
-    }
-
-    @Override
-    public StreamDumping forDump() {
-        IStreamOutputTarget target = getOutputTarget();
-        if (target == null)
-            return null;
-        return new StreamDumping(target);
+    public Tooling tooling() {
+        return new Tooling(this);
     }
 
     // IFsTree
@@ -366,14 +334,6 @@ public abstract class AbstractFile
     }
 
     @Override
-    public IProbePreparation forProbe(boolean heuristic) {
-        if (heuristic)
-            return new HeuristicProbePreparation(this);
-        else
-            return new LazyProbePreparation(this);
-    }
-
-    @Override
     public int hashCode() {
         int hash = super.hashCode();
         assert preferredCharset != null;
@@ -394,7 +354,7 @@ public abstract class AbstractFile
     /**
      * Abstract implementation of {@link IFile}, with transient volume support.
      * <p>
-     * This is only useful if you don't want to allocate an {@link IVolume} instance before it's
+     * This is only useful if you don't want to allocate an {@link IFileSystem} instance before it's
      * used. And construct one on-demand, for optimization purpose.
      */
     @GeneratedByCopyPaste(AbstractFsEntry.TransientVolume.class)
@@ -413,7 +373,7 @@ public abstract class AbstractFile
         }
 
         @Override
-        public abstract IVolume getVolume();
+        public abstract IFileSystem getVolume();
 
     }
 
@@ -453,7 +413,7 @@ public abstract class AbstractFile
         }
 
         @Override
-        public abstract IVolume getVolume();
+        public abstract IFileSystem getVolume();
 
         /**
          * Constructs an {@link IPath} object on the fly.

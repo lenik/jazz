@@ -8,7 +8,7 @@ import java.net.URL;
 
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.IVolume;
+import net.bodz.bas.vfs.IFileSystem;
 import net.bodz.bas.vfs.VFSException;
 import net.bodz.bas.vfs.path.align.IPathAlignment;
 
@@ -29,15 +29,15 @@ public interface IPath
     IPathAlignment getAlignment();
 
     /**
-     * @return non-<code>null</code> file volume.
+     * @return non-<code>null</code> file system.
      */
-    IVolume getVolume();
+    IFileSystem getFileSystem();
 
     /**
      * The same as:
      * 
      * <pre>
-     * getVolume().resolveFile(this.getLocalPath)
+     * getFileSystem().resolve(this.getLocalPath)
      * </pre>
      * 
      * @return non-null {@link IFile} which this path refers to.
@@ -107,8 +107,8 @@ public interface IPath
     /**
      * Get the local path with-in this layer.
      * <p>
-     * You can get the same path object by calling {@link IVolume#resolve(String)} of
-     * {@link #getVolume() this file system} with the local path.
+     * You can get the same path object by calling {@link IFileSystem#parse(String)} of
+     * {@link #getFileSystem() this file system} with the local path.
      * 
      * @return non-<code>null</code> path string.
      */

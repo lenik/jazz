@@ -16,7 +16,7 @@ public class InputStringFile
     private Long sizeInBytes;
 
     public InputStringFile(String text) {
-        this(ObjectInfo.getObjectId(text), text);
+        this(ObjectInfo.getSimpleId(text), text);
     }
 
     public InputStringFile(String name, String text) {
