@@ -26,7 +26,7 @@ public class ObjectDumpView
         PrintWriter out = resp.getWriter();
 
         out.println("<html><head><title>Object Dump</title></head>");
-        out.println("<body><h1>Object Dump: " + ObjectInfo.getObjectId(obj) + "</h1>");
+        out.println("<body><h1>Object Dump: " + ObjectInfo.getSimpleId(obj) + "</h1>");
         out.println("<hr/>");
 
         String string = String.valueOf(obj);

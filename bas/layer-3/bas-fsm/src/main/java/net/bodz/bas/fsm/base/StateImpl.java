@@ -24,7 +24,7 @@ public abstract class StateImpl
     }
 
     public String getName() {
-        return ObjectInfo.getObjectId(this);
+        return ObjectInfo.getSimpleId(this);
     }
 
     public int getType() {
