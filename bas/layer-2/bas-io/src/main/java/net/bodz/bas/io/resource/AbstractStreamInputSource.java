@@ -10,7 +10,7 @@ import net.bodz.bas.sio.ByteInInputStream;
 import net.bodz.bas.sio.CharInReader;
 import net.bodz.bas.sio.IByteIn;
 import net.bodz.bas.sio.ICharIn;
-import net.bodz.bas.util.Tooling;
+import net.bodz.bas.sugar.Tooling;
 
 public abstract class AbstractStreamInputSource
         implements IStreamInputSource {

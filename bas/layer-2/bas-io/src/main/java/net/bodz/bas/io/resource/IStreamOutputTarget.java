@@ -12,7 +12,7 @@ import java.nio.charset.IllegalCharsetNameException;
 import net.bodz.bas.sio.IByteOutEx;
 import net.bodz.bas.sio.ICharOut;
 import net.bodz.bas.sio.IPrintOut;
-import net.bodz.bas.util.IToolable;
+import net.bodz.bas.sugar.IToolable;
 
 /**
  * 提供更多的打开方式。

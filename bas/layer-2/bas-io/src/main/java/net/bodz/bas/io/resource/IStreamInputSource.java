@@ -11,7 +11,7 @@ import java.nio.charset.IllegalCharsetNameException;
 
 import net.bodz.bas.io.LineReader;
 import net.bodz.bas.io.lookahead.LAReader;
-import net.bodz.bas.util.IToolable;
+import net.bodz.bas.sugar.IToolable;
 
 public interface IStreamInputSource
         extends ISimpleStreamInputSource, IToolable {

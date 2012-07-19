@@ -10,7 +10,7 @@ import net.bodz.bas.sio.CharOutWriter;
 import net.bodz.bas.sio.IByteOut;
 import net.bodz.bas.sio.IByteOutEx;
 import net.bodz.bas.sio.ICharOut;
-import net.bodz.bas.util.Tooling;
+import net.bodz.bas.sugar.Tooling;
 
 public abstract class AbstractStreamOutputTarget
         implements IStreamOutputTarget {
