@@ -15,22 +15,54 @@ public class ClassLocals {
         return all.get(id);
     }
 
+    /**
+     * @see ClassLocal#ClassLocal(IMapEntryLoader)
+     */
     public static <T> ClassLocal<T> createMap(String id, IMapEntryLoader<Class<?>, T> entryLoader) {
         ClassLocal<T> map = new ClassLocal<T>(entryLoader);
         register(id, map);
         return map;
     }
 
+    /**
+     * Each entry holds a metadata of <code>metadataClass</code>.
+     * 
+     * @param metadataClass
+     *            The metadata class. The class must have a public constructor with a single
+     *            Class-type parameter.
+     * @see ClassLocal#ClassLocal(Class)
+     */
     public static <T> ClassLocal<T> createMap(Class<?> metadataClass) {
         return createMap(metadataClass.getCanonicalName(), metadataClass);
     }
 
+    /**
+     * Each entry holds a metadata of <code>metadataClass</code>.
+     * 
+     * @param id
+     *            The class-local-id, by default, it's the canonical name of the
+     *            <code>metadataClass</code>.
+     * @param metadataClass
+     *            The metadata class. The class must have a public constructor with a single
+     *            Class-type parameter.
+     * @see ClassLocal#ClassLocal(Class)
+     */
     public static <T> ClassLocal<T> createMap(String id, Class<?> metadataClass) {
         ClassLocal<T> map = new ClassLocal<T>(metadataClass);
         register(id, map);
         return map;
     }
 
+    /**
+     * Each entry holds value returned from the parser method.
+     * 
+     * @param classParserMethod
+     *            A public static method which receives a single {@link Class} parameter, and
+     *            returns the parsed entry value.
+     * @throws IllegalUsageException
+     *             If the method don't accept a single {@link Class} parameter.
+     * @see ClassLocal#ClassLocal(Method)
+     */
     public static <T> ClassLocal<T> createMap(String id, Method parserMethod) {
         ClassLocal<T> map = new ClassLocal<T>(parserMethod);
         register(id, map);

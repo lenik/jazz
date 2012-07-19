@@ -83,8 +83,15 @@ public class TypeDistance {
     }
 
     /**
+     * Get the inheritance-distance from <code>declType</code> to <code>actualType</code>.
+     * <p>
+     * The distance is directed, i.e., <b>dist(a, b) != decl(b, a) with exception of a==b</b>.
+     * 
+     * @param declType
+     *            The "base" type
+     * @param actualType
+     *            The "child" type
      * @return -1 If declType isn't assignable from actualType.
-     * @throws
      */
     public static int dist(Class<?> declType, Class<?> actualType) {
         if (declType.isInterface())
