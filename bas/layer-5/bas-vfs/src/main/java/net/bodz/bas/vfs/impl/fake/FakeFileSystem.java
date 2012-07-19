@@ -1,27 +1,27 @@
 package net.bodz.bas.vfs.impl.fake;
 
-import net.bodz.bas.vfs.AbstractVolume;
+import net.bodz.bas.vfs.AbstractFileSystem;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.PathFormat;
 
-public class FakeVolume
-        extends AbstractVolume {
+public class FakeFileSystem
+        extends AbstractFileSystem {
 
     @Override
-    public IPath getRootPath() {
-        return null;
+    public IFile[] getRootFiles() {
+        return new IFile[0];
     }
 
     @Override
-    public IPath resolve(String localPath)
+    public IPath parse(String localPath)
             throws BadPathException {
         return null;
     }
 
     @Override
-    public IFile resolveFile(String localPath)
+    public IFile resolve(String localPath)
             throws BadPathException {
         return null;
     }
@@ -31,9 +31,9 @@ public class FakeVolume
         return path.getLocalPath();
     }
 
-    private static final FakeVolume instance = new FakeVolume();
+    private static final FakeFileSystem instance = new FakeFileSystem();
 
-    public static FakeVolume getInstance() {
+    public static FakeFileSystem getInstance() {
         return instance;
     }
 

@@ -1,27 +1,27 @@
 package net.bodz.bas.vfs.impl.url;
 
-import net.bodz.bas.vfs.AbstractVolume;
+import net.bodz.bas.vfs.AbstractFileSystem;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.path.PathFormat;
 
-public class URLVolume
-        extends AbstractVolume {
+public class URLFileSystem
+        extends AbstractFileSystem {
 
     @Override
-    public IPath getRootPath() {
-        return null;
+    public IFile[] getRootFiles() {
+        return new IFile[0];
     }
 
     @Override
-    public IPath resolve(String localPath)
+    public IPath parse(String localPath)
             throws BadPathException {
         return null;
     }
 
     @Override
-    public IFile resolveFile(String localPath)
+    public IFile resolve(String localPath)
             throws BadPathException {
         return null;
     }
@@ -31,14 +31,14 @@ public class URLVolume
         return null;
     }
 
-    private static URLVolume instance = new URLVolume();
+    private static URLFileSystem instance = new URLFileSystem();
 
-    public static URLVolume getInstance() {
+    public static URLFileSystem getInstance() {
         return instance;
     }
 
-    public static void setInstance(URLVolume instance) {
-        URLVolume.instance = instance;
+    public static void setInstance(URLFileSystem instance) {
+        URLFileSystem.instance = instance;
     }
 
 }

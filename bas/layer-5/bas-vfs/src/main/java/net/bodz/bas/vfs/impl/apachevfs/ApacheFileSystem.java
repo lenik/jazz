@@ -1,6 +1,7 @@
 package net.bodz.bas.vfs.impl.apachevfs;
 
-import net.bodz.bas.vfs.AbstractVolume;
+import net.bodz.bas.err.NotImplementedException;
+import net.bodz.bas.vfs.AbstractFileSystem;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.path.BadPathException;
@@ -12,19 +13,20 @@ import org.apache.commons.vfs.FileSystemException;
 import org.apache.commons.vfs.FileSystemManager;
 import org.apache.commons.vfs.VFS;
 
-public class ApacheVFSVolume
-        extends AbstractVolume {
+/**
+ * Apache-VFS File System.
+ */
+public class ApacheFileSystem
+        extends AbstractFileSystem {
 
     private final FileSystemManager fileSystemManager;
 
-    private ApacheVFSPath internalRootPath;
-
-    public ApacheVFSVolume()
+    public ApacheFileSystem()
             throws FileSystemException {
         this(VFS.getManager());
     }
 
-    public ApacheVFSVolume(FileSystemManager manager) {
+    public ApacheFileSystem(FileSystemManager manager) {
         if (manager == null)
             throw new NullPointerException("manager");
         this.fileSystemManager = manager;
@@ -43,15 +45,12 @@ public class ApacheVFSVolume
     }
 
     @Override
-    public ApacheVFSPath getRootPath() {
-        if (internalRootPath == null) {
-            internalRootPath = new ApacheVFSPath(this, "");
-        }
-        return internalRootPath;
+    public IFile[] getRootFiles() {
+        throw new NotImplementedException();
     }
 
     @Override
-    public ApacheVFSPath resolve(String uri)
+    public ApacheVFSPath parse(String uri)
             throws BadPathException {
         ApacheVFSPath path = new ApacheVFSPath(this, uri);
         return path;
@@ -65,9 +64,9 @@ public class ApacheVFSVolume
     }
 
     @Override
-    public ApacheVFSFile resolveFile(String localPath)
+    public ApacheVFSFile resolve(String localPath)
             throws FileResolveException {
-        ApacheVFSPath path = resolve(localPath);
+        ApacheVFSPath path = parse(localPath);
         try {
             return new ApacheVFSFile(this, path);
         } catch (FileSystemException e) {
