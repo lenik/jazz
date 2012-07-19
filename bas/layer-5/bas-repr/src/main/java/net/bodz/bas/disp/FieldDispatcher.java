@@ -4,7 +4,10 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.bodz.bas.disp.builtin.ClassMap;
+import net.bodz.bas.c.java.util.IMapEntryLoader;
+import net.bodz.bas.c.type.ClassLocal;
+import net.bodz.bas.c.type.ClassLocals;
+import net.bodz.bas.err.LazyLoadException;
 
 public class FieldDispatcher
         extends AbstractDispatcher {
@@ -12,11 +15,6 @@ public class FieldDispatcher
     @Override
     public int getPriority() {
         return DispatchConfig.PRIORITY_FIELD;
-    }
-
-    private transient ClassMap<String, Field> classMap;
-    {
-        classMap = new ClassMap<String, Field>();
     }
 
     @Override
@@ -30,18 +28,7 @@ public class FieldDispatcher
         if (fieldName == null)
             return null;
 
-        Class<? extends Object> objClass = obj.getClass();
-
-        Map<String, Field> fieldMap = classMap.get(objClass);
-        if (fieldMap == null) {
-            fieldMap = new HashMap<String, Field>();
-
-            Field[] fields = objClass.getFields();
-            for (Field f : fields)
-                fieldMap.put(f.getName(), f);
-
-            classMap.put(objClass, fieldMap);
-        }
+        Map<String, Field> fieldMap = classMap.load(obj.getClass());
 
         Field field = fieldMap.get(fieldName);
         if (field == null)
@@ -58,6 +45,30 @@ public class FieldDispatcher
 
         return new PathArrival(previous, result, fieldName, tokens.getRemainingPath());
     }
+
+    static final String CLASS_LOCAL_ID;
+    static final ClassLocal<Map<String, Field>> classMap;
+    static {
+        classMap = ClassLocals.createMap(new EntryLoader());
+        CLASS_LOCAL_ID = classMap.getRegisteredId();
+    }
+
+    static class EntryLoader
+            implements IMapEntryLoader<Class<?>, Map<String, Field>> {
+
+        @Override
+        public Map<String, Field> loadValue(Class<?> type)
+                throws LazyLoadException {
+            Map<String, Field> fieldMap = new HashMap<String, Field>();
+
+            Field[] fields = type.getFields();
+            for (Field f : fields)
+                fieldMap.put(f.getName(), f);
+
+            return fieldMap;
+        }
+
+    } // EntryLoader
 
 }
 
@@ -83,6 +94,7 @@ class FieldKey {
         return fieldName;
     }
 
+    @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
@@ -91,6 +103,7 @@ class FieldKey {
         return result;
     }
 
+    @Override
     public boolean equals(Object obj) {
         assert obj instanceof FieldKey;
         FieldKey other = (FieldKey) obj;

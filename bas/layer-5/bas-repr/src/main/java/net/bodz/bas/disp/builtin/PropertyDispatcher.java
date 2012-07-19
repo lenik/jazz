@@ -7,12 +7,16 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.bodz.bas.c.java.util.IMapEntryLoader;
+import net.bodz.bas.c.type.ClassLocal;
+import net.bodz.bas.c.type.ClassLocals;
 import net.bodz.bas.disp.AbstractDispatcher;
 import net.bodz.bas.disp.DispatchConfig;
 import net.bodz.bas.disp.DispatchException;
 import net.bodz.bas.disp.IPathArrival;
 import net.bodz.bas.disp.ITokenQueue;
 import net.bodz.bas.disp.PathArrival;
+import net.bodz.bas.err.LazyLoadException;
 
 public class PropertyDispatcher
         extends AbstractDispatcher {
@@ -20,11 +24,6 @@ public class PropertyDispatcher
     @Override
     public int getPriority() {
         return DispatchConfig.PRIORITY_FIELD;
-    }
-
-    private transient ClassMap<String, PropertyDescriptor> classMap;
-    {
-        classMap = new ClassMap<String, PropertyDescriptor>();
     }
 
     @Override
@@ -38,23 +37,7 @@ public class PropertyDispatcher
         if (propertyName == null)
             return null;
 
-        Class<? extends Object> contextClass = obj.getClass();
-
-        Map<String, PropertyDescriptor> propertyMap = classMap.get(contextClass);
-        if (propertyMap == null) {
-            propertyMap = new HashMap<String, PropertyDescriptor>();
-
-            PropertyDescriptor[] propertyDescriptors;
-            try {
-                propertyDescriptors = Introspector.getBeanInfo(contextClass).getPropertyDescriptors();
-            } catch (IntrospectionException e) {
-                throw new DispatchException(e.getMessage(), e);
-            }
-            for (PropertyDescriptor p : propertyDescriptors)
-                propertyMap.put(p.getName(), p);
-
-            classMap.put(contextClass, propertyMap);
-        }
+        Map<String, PropertyDescriptor> propertyMap = classMap.load(obj.getClass());
 
         PropertyDescriptor propertyDescriptor = propertyMap.get(propertyName);
         if (propertyDescriptor == null)
@@ -75,5 +58,35 @@ public class PropertyDispatcher
 
         return new PathArrival(context, result, propertyName, tokens.getRemainingPath());
     }
+
+    static final String CLASS_LOCAL_ID;
+    static final ClassLocal<Map<String, PropertyDescriptor>> classMap;
+    static {
+        classMap = ClassLocals.createMap(new EntryLoader());
+        CLASS_LOCAL_ID = classMap.getRegisteredId();
+    }
+
+    static class EntryLoader
+            implements IMapEntryLoader<Class<?>, Map<String, PropertyDescriptor>> {
+
+        @Override
+        public Map<String, PropertyDescriptor> loadValue(Class<?> type)
+                throws LazyLoadException {
+
+            Map<String, PropertyDescriptor> propertyMap = new HashMap<String, PropertyDescriptor>();
+
+            PropertyDescriptor[] propertyDescriptors;
+            try {
+                propertyDescriptors = Introspector.getBeanInfo(type).getPropertyDescriptors();
+            } catch (IntrospectionException e) {
+                throw new LazyLoadException(e.getMessage(), e);
+            }
+            for (PropertyDescriptor p : propertyDescriptors)
+                propertyMap.put(p.getName(), p);
+
+            return propertyMap;
+        }
+
+    } // EntryLoader
 
 }

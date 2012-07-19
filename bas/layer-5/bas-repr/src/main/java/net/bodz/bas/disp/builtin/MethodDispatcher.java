@@ -8,12 +8,16 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.bodz.bas.c.java.util.IMapEntryLoader;
+import net.bodz.bas.c.type.ClassLocal;
+import net.bodz.bas.c.type.ClassLocals;
 import net.bodz.bas.disp.AbstractDispatcher;
 import net.bodz.bas.disp.DispatchConfig;
 import net.bodz.bas.disp.DispatchException;
 import net.bodz.bas.disp.IPathArrival;
 import net.bodz.bas.disp.ITokenQueue;
 import net.bodz.bas.disp.PathArrival;
+import net.bodz.bas.err.LazyLoadException;
 
 public class MethodDispatcher
         extends AbstractDispatcher {
@@ -21,11 +25,6 @@ public class MethodDispatcher
     @Override
     public int getPriority() {
         return DispatchConfig.PRIORITY_METHOD;
-    }
-
-    private transient ClassMap<MethodKey, Method> classMap;
-    {
-        classMap = new ClassMap<MethodKey, Method>();
     }
 
     @Override
@@ -153,6 +152,44 @@ public class MethodDispatcher
 
         return new PathArrival(previous, result, consumedTokens, tokens.getRemainingPath());
     }
+
+    static final String CLASS_LOCAL_ID;
+    static final ClassLocal<Map<MethodKey, Method>> classMap;
+    static {
+        classMap = ClassLocals.createMap(new EntryLoader());
+        CLASS_LOCAL_ID = classMap.getRegisteredId();
+    }
+
+    static class EntryLoader
+            implements IMapEntryLoader<Class<?>, Map<MethodKey, Method>> {
+
+        @Override
+        public Map<MethodKey, Method> loadValue(Class<?> type)
+                throws LazyLoadException {
+            Map<MethodKey, Method> methodMap = new HashMap<MethodKey, Method>();
+
+            Method[] methods = type.getMethods();
+            for (Method m : methods) {
+                String mName = m.getName();
+                Class<?>[] mPV = m.getParameterTypes();
+
+                MethodKey mKey = new MethodKey(mName, mPV);
+                methodMap.put(mKey, m);
+
+                // // Add xxx() as alias for getXxx().
+                // if (mName.startsWith("get") && mName.length() > 3) {
+                // mName = Strings.lcfirst(mName.substring(3));
+                // mKey = new MethodKey(mName, mPT);
+                // if (!methodMap.containsKey(mKey))
+                // methodMap.put(mKey, m);
+                // }
+            }
+
+            return methodMap;
+        }
+
+    } // EntryLoader
+
 }
 
 class MethodKey
