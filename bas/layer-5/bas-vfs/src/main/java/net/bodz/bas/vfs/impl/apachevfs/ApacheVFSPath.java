@@ -1,37 +1,28 @@
 package net.bodz.bas.vfs.impl.apachevfs;
 
-import net.bodz.bas.vfs.IVolume;
-import net.bodz.bas.vfs.path.AbstractPath;
+import net.bodz.bas.vfs.path.DefaultPath;
 
 import org.apache.commons.vfs.FileName;
 
 public class ApacheVFSPath
-        extends AbstractPath {
+        extends DefaultPath {
 
     private static final long serialVersionUID = 1L;
 
-    private final ApacheVFSVolume volume;
     private final FileName fileName;
 
-    public ApacheVFSPath(ApacheVFSVolume volume, String uri) {
-        super(uri);
-        if (volume == null)
-            throw new NullPointerException("volume");
-        this.volume = volume;
+    public ApacheVFSPath(ApacheFileSystem fileSystem, String uri) {
+        super(fileSystem, uri);
+        if (fileSystem == null)
+            throw new NullPointerException("fileSystem");
         this.fileName = null;
     }
 
-    public ApacheVFSPath(ApacheVFSVolume volume, FileName fileName) {
-        super(fileName.getURI());
-        if (volume == null)
-            throw new NullPointerException("volume");
-        this.volume = volume;
+    public ApacheVFSPath(ApacheFileSystem fileSystem, FileName fileName) {
+        super(fileSystem, fileName.getURI());
+        if (fileSystem == null)
+            throw new NullPointerException("fileSystem");
         this.fileName = fileName;
-    }
-
-    @Override
-    public IVolume getVolume() {
-        return volume;
     }
 
     /**

@@ -15,7 +15,7 @@ public class InputBytesFile
     private final byte[] bytes;
 
     public InputBytesFile(byte[] bytes) {
-        this(ObjectInfo.getObjectId(bytes), bytes);
+        this(ObjectInfo.getSimpleId(bytes), bytes);
     }
 
     public InputBytesFile(String name, byte[] bytes) {

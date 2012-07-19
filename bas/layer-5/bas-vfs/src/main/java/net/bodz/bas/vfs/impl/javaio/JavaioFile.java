@@ -18,7 +18,7 @@ public class JavaioFile
         extends AbstractFile.TransientPath
         implements IFsTree {
 
-    private static final JavaioVolume volume = JavaioVolume.getInstance();
+    private static final JavaioFileSystem volume = JavaioFileSystem.getInstance();
 
     private final java.io.File jdkFile;
 
@@ -47,7 +47,7 @@ public class JavaioFile
     }
 
     @Override
-    public JavaioVolume getVolume() {
+    public JavaioFileSystem getVolume() {
         return volume;
     }
 

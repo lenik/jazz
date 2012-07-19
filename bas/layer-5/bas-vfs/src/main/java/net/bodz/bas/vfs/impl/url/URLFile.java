@@ -11,7 +11,7 @@ import net.bodz.bas.io.resource.IStreamResource;
 import net.bodz.bas.io.resource.builtin.URLResource;
 import net.bodz.bas.vfs.AbstractFile;
 import net.bodz.bas.vfs.FileResolveException;
-import net.bodz.bas.vfs.IVolume;
+import net.bodz.bas.vfs.IFileSystem;
 import net.bodz.bas.vfs.path.IPath;
 
 public class URLFile
@@ -25,8 +25,8 @@ public class URLFile
     }
 
     @Override
-    public IVolume getVolume() {
-        return URLVolume.getInstance();
+    public IFileSystem getVolume() {
+        return URLFileSystem.getInstance();
     }
 
     @Override

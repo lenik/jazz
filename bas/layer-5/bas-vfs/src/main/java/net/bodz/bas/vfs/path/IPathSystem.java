@@ -4,10 +4,6 @@ import net.bodz.bas.vfs.CurrentDirectoryColo;
 
 public interface IPathSystem {
 
-    int HIGH_PRIORITY = -100;
-    int NORMAL_PRIORITY = 0;
-    int LOW_PRIORITY = 100;
-
     /**
      * Set the path resolver of specific protocol, if the protocol is in use, return false.
      * 
@@ -15,7 +11,7 @@ public interface IPathSystem {
      * @throws NullPointerException
      *             If any parameter is <code>null</code>.
      */
-    boolean addPathResolver(String protocol, IPathResolver resolver);
+    boolean addPathResolver(String protocol, IPathParser resolver);
 
     /**
      * Remove a path resolver by protocol.
@@ -35,11 +31,11 @@ public interface IPathSystem {
      *            first.
      * @throws NullPointerException
      *             If <code>resolver</code> is <code>null</code>.
-     * @see #LOW_PRIORITY
-     * @see #NORMAL_PRIORITY
-     * @see #HIGH_PRIORITY
+     * @see IGenericPathParser#LOW_PRIORITY
+     * @see IGenericPathParser#NORMAL_PRIORITY
+     * @see IGenericPathParser#HIGH_PRIORITY
      */
-    void addGenericPathResolver(IGenericPathResolver resolver, int priority);
+    void addGenericPathResolver(IGenericPathParser resolver, int priority);
 
     /**
      * Remove a generic path resolver.
@@ -49,7 +45,7 @@ public interface IPathSystem {
      * @throws NullPointerException
      *             If <code>resolver</code> is <code>null</code>.
      */
-    void removeGenericPathResolver(IGenericPathResolver resolver);
+    void removeGenericPathResolver(IGenericPathParser resolver);
 
     /**
      * Get the context path (or "current directory").
@@ -78,13 +74,13 @@ public interface IPathSystem {
     void setContextPath(IPath path);
 
     /**
-     * Resolve unaligned (i.e., relative) path string within this path system.
+     * Parse unaligned (i.e., relative) path string within this path system.
      * 
      * @param path
      *            The path string to be resolved.
      * @return Non-<code>null</code> resolved path object.
      */
-    IPath resolve(String path)
+    IPath parse(String path)
             throws BadPathException;
 
 }

@@ -9,13 +9,13 @@ public abstract class AbstractFsEntry
         extends Attributes
         implements IFsEntry {
 
-    private final IVolume volume;
+    private final IFileSystem volume;
     private final IPath path;
     private final String baseName;
 
     private boolean autoCreateParents;
 
-    public AbstractFsEntry(IVolume volume, IPath path) {
+    public AbstractFsEntry(IFileSystem volume, IPath path) {
         if (volume == null)
             throw new NullPointerException("volume");
         if (path == null)
@@ -74,7 +74,7 @@ public abstract class AbstractFsEntry
     }
 
     @Override
-    public IVolume getVolume() {
+    public IFileSystem getVolume() {
         return volume;
     }
 
@@ -176,7 +176,7 @@ public abstract class AbstractFsEntry
     /**
      * Abstract implementation of {@link IFsEntry}, with transient volume support.
      * <p>
-     * This is only useful if you don't want to allocate an {@link IVolume} instance before it's
+     * This is only useful if you don't want to allocate an {@link IFileSystem} instance before it's
      * used. And construct one on-demand, for optimization purpose.
      */
     public abstract static class TransientVolume
@@ -194,7 +194,7 @@ public abstract class AbstractFsEntry
         }
 
         @Override
-        public abstract IVolume getVolume();
+        public abstract IFileSystem getVolume();
 
     }
 
@@ -233,7 +233,7 @@ public abstract class AbstractFsEntry
         }
 
         @Override
-        public abstract IVolume getVolume();
+        public abstract IFileSystem getVolume();
 
         /**
          * Constructs an {@link IPath} object on the fly.

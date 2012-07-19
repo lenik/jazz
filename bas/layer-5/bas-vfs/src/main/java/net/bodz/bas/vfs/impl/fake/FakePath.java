@@ -1,26 +1,20 @@
 package net.bodz.bas.vfs.impl.fake;
 
 import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.IVolume;
-import net.bodz.bas.vfs.path.AbstractPath;
+import net.bodz.bas.vfs.path.DefaultPath;
 
 public class FakePath
-        extends AbstractPath {
+        extends DefaultPath {
 
     private static final long serialVersionUID = 1L;
 
     private IFile file;
 
     public FakePath(String localPath, IFile file) {
-        super(localPath);
+        super(FakeFileSystem.getInstance(), localPath);
         if (file == null)
             throw new NullPointerException("file");
         this.file = file;
-    }
-
-    @Override
-    public IVolume getVolume() {
-        return FakeVolume.getInstance();
     }
 
     @Override

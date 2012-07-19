@@ -2,11 +2,11 @@ package net.bodz.bas.vfs.impl.loop;
 
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
-import net.bodz.bas.vfs.IVolume;
+import net.bodz.bas.vfs.IFileSystem;
 import net.bodz.bas.vfs.VFS;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
-import net.bodz.bas.vfs.path.IPathResolver;
+import net.bodz.bas.vfs.path.IPathParser;
 
 /**
  * Loop-Path is path in the format of:
@@ -16,10 +16,10 @@ import net.bodz.bas.vfs.path.IPathResolver;
  * </pre>
  */
 public abstract class LoopPathResolver
-        implements IPathResolver {
+        implements IPathParser {
 
     @Override
-    public IPath resolve(String path)
+    public IPath parse(String path)
             throws BadPathException {
         if (path == null)
             throw new NullPointerException("path");
@@ -40,14 +40,14 @@ public abstract class LoopPathResolver
         }
 
         try {
-            IFile parentLayer = VFS.resolveFile(parentLayerPath);
-            IVolume volume = newVolume(parentLayer);
-            return volume.resolve(localPath);
+            IFile parentLayer = VFS.resolve(parentLayerPath);
+            IFileSystem volume = newVolume(parentLayer);
+            return volume.parse(localPath);
         } catch (FileResolveException e) {
             throw new BadPathException("Failed to resolve the device file " + parentLayerPath, e);
         }
     }
 
-    public abstract IVolume newVolume(IFile parentLayer);
+    public abstract IFileSystem newVolume(IFile parentLayer);
 
 }

@@ -3,12 +3,12 @@ package net.bodz.bas.vfs;
 import java.util.List;
 
 import net.bodz.bas.model.IFilter;
+import net.bodz.bas.sugar.IToolable;
 import net.bodz.bas.util.iter.Mitorx;
-import net.bodz.bas.vfs.preparation.IProbePreparation;
 import net.bodz.bas.vfs.util.IFilenameFilter;
 
 public interface IFile
-        extends IFsBlob, IFsTree {
+        extends IFsBlob, IFsTree, IToolable {
 
     @Override
     IFile clone();
@@ -57,19 +57,5 @@ public interface IFile
     @Override
     List<? extends IFile> listChildren(IFilenameFilter nameFilter)
             throws VFSException;
-
-    /**
-     * There are two probe modes: mime-based probe and heuristic-based probe.
-     * 
-     * <ul>
-     * <li>The mime-based probe will look at the file meta info.
-     * <li>The heuristic-based probe will look into the file contents.
-     * </ul>
-     * 
-     * @param heuristic
-     *            <code>true</code> to work in heuristic mode.
-     * @return non-<code>null</code> {@link IProbePreparation} object.
-     */
-    IProbePreparation forProbe(boolean heuristic);
 
 }

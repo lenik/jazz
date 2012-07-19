@@ -4,22 +4,22 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.bodz.bas.vfs.path.AbstractGenericPathResolver;
+import net.bodz.bas.vfs.path.AbstractGenericPathParser;
 import net.bodz.bas.vfs.path.BadPathException;
 import net.bodz.bas.vfs.path.IPath;
 
 import org.apache.commons.vfs.FileSystemException;
 import org.apache.commons.vfs.VFS;
 
-public class ApacheVFSPathResolver
-        extends AbstractGenericPathResolver {
+public class ApacheVFSPathParser
+        extends AbstractGenericPathParser {
 
-    private final ApacheVFSVolume volume;
+    private final ApacheFileSystem fileSystem;
     private final Set<String> schemes;
 
-    public ApacheVFSPathResolver()
+    public ApacheVFSPathParser()
             throws FileSystemException {
-        volume = new ApacheVFSVolume();
+        fileSystem = new ApacheFileSystem();
         Set<String> tmpset = new HashSet<String>();
         for (String scheme : VFS.getManager().getSchemes())
             tmpset.add(scheme);
@@ -32,10 +32,10 @@ public class ApacheVFSPathResolver
     }
 
     @Override
-    public IPath resolve(String path)
+    public IPath parse(String path)
             throws BadPathException {
         String uri = path;
-        return volume.resolve(uri);
+        return fileSystem.parse(uri);
     }
 
 }
