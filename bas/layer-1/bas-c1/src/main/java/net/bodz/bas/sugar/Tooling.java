@@ -34,20 +34,24 @@ public final class Tooling {
         return tools;
     }
 
-    public <T> T _for(Class<T> toolsType) {
+    public <T> T getWrapper(Class<T> wrapperClass) {
         Class<?> hostClass = hostObject.getClass();
-        SimpleConstructorMap ctorMap = SimpleConstructorMap.getInstance(toolsType);
+        SimpleConstructorMap ctorMap = SimpleConstructorMap.getInstance(wrapperClass);
         Constructor<?> ctor = ctorMap.load(hostClass);
         if (ctor == null)
             throw new IllegalUsageException(String.format( //
-                    "No suitable constructor for %s found in the tool type %s.", //
-                    hostClass.getName(), toolsType.getName()));
+                    "No suitable constructor for %s found in the wrapper class %s.", //
+                    hostClass.getName(), wrapperClass.getName()));
         try {
             T instance = (T) ctor.newInstance(hostObject);
             return instance;
         } catch (ReflectiveOperationException e) {
             throw new RuntimeReflectiveOperationException(e.getMessage(), e);
         }
+    }
+
+    public <T> T _for(Class<T> toolsType) {
+        return getWrapper(toolsType);
     }
 
 }

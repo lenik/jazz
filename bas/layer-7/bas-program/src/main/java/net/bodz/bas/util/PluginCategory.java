@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.err.OutOfDomainException;
-import net.bodz.bas.meta.build.ClassInfo;
+import net.bodz.bas.meta.build.AppClassDoc;
 
 /**
  * Plugin Category
@@ -13,7 +13,7 @@ public class PluginCategory {
 
     private final String categoryName;
     private final Class<? extends Plugin> categoryBaseType;
-    private final ClassInfo categoryTypeInfo;
+    private final AppClassDoc categoryTypeInfo;
 
     protected Map<String, PluginTypeEx> registry;
 
@@ -21,7 +21,7 @@ public class PluginCategory {
         assert baseType != null;
         this.categoryName = name;
         this.categoryBaseType = baseType;
-        this.categoryTypeInfo = ClassInfo.get(baseType);
+        this.categoryTypeInfo = AppClassDoc.get(baseType);
         registry = new HashMap<String, PluginTypeEx>();
     }
 

@@ -1,13 +1,13 @@
 package net.bodz.bas.util;
 
-import net.bodz.bas.meta.build.ClassInfo;
+import net.bodz.bas.meta.build.AppClassDoc;
 
 public class _Plugin implements Plugin {
 
     private final String description;
 
     public _Plugin() {
-        ClassInfo info = ClassInfo.get(getClass());
+        AppClassDoc info = AppClassDoc.get(getClass());
         description = info.getDoc();
     }
 
