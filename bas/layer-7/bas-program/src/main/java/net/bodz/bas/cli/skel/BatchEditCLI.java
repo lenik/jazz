@@ -17,6 +17,7 @@ import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.UnexpectedException;
 import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.builtin.InputStreamSource;
+import net.bodz.bas.io.resource.tools.StreamReading;
 import net.bodz.bas.meta.codehint.OverrideOption;
 import net.bodz.bas.meta.program.OptionGroup;
 import net.bodz.bas.sio.IPrintOut;
@@ -235,8 +236,8 @@ public class BatchEditCLI
             L.info("[edit] ", a);
             return true;
         }
-        List<String> al = a.getInputSource(inputEncoding).forRead().listLines();
-        List<String> bl = b.getInputSource(outputEncoding).forRead().listLines();
+        List<String> al = a.getInputSource(inputEncoding).tooling()._for(StreamReading.class).listLines();
+        List<String> bl = b.getInputSource(outputEncoding).tooling()._for(StreamReading.class).listLines();
         List<DiffInfo> diffs = diffAlgorithm.diffCompare(al, bl);
         if (diffs.size() == 0)
             return false;
@@ -396,7 +397,7 @@ public class BatchEditCLI
         InputStreamSource source = new InputStreamSource(in);
         source.setCharset(inputEncoding);
 
-        Iterable<String> lines = source.forRead().lines(false);
+        Iterable<String> lines = source.tooling()._for(StreamReading.class).lines(false);
 
         IPrintOut cout = Stdio.cout;
         if (out != null) {

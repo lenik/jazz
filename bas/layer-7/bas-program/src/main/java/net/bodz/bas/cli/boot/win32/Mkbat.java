@@ -19,6 +19,8 @@ import net.bodz.bas.collection.set.ArraySet;
 import net.bodz.bas.err.IdentifiedException;
 import net.bodz.bas.io.resource.builtin.ByteArrayResource;
 import net.bodz.bas.io.resource.builtin.URLResource;
+import net.bodz.bas.io.resource.tools.StreamReading;
+import net.bodz.bas.io.resource.tools.StreamWriting;
 import net.bodz.bas.jvm.stack.Caller;
 import net.bodz.bas.loader.DefaultBooter;
 import net.bodz.bas.loader.LoadException;
@@ -27,8 +29,8 @@ import net.bodz.bas.loader.TempClassLoader;
 import net.bodz.bas.loader.UCL;
 import net.bodz.bas.loader.boot.BootProc;
 import net.bodz.bas.meta.build.ClassInfo;
+import net.bodz.bas.meta.build.MainVersion;
 import net.bodz.bas.meta.build.RcsKeywords;
-import net.bodz.bas.meta.build.Version;
 import net.bodz.bas.meta.program.ProgramName;
 import net.bodz.bas.meta.program.ProgramNameUtil;
 import net.bodz.bas.meta.program.StartMode;
@@ -45,7 +47,7 @@ import net.bodz.bas.vfs.IFile;
  */
 @ProgramName("mkbat")
 @RcsKeywords(id = "$Id$")
-@Version({ 0, 3 })
+@MainVersion({ 0, 3 })
 public class Mkbat
         extends BatchEditCLI {
 
@@ -278,7 +280,7 @@ public class Mkbat
             L.info("bat label boundary fixed: ", batFile);
         if (force) {
             L.info("write ", batFile);
-            batFile.forWrite().writeBytes(batFixed);
+            batFile.tooling()._for(StreamWriting.class).writeBytes(batFixed);
         } else if (FileDiff.copyDiff(batFixedRes, batFile.getResource()))
             L.info("save ", batFile);
     }
@@ -290,7 +292,7 @@ public class Mkbat
     static {
         try {
             batTempl = ClassResource.classData(Mkbat.class, "batTempl");
-            batTemplBody = batTempl.forRead().readTextContents();
+            batTemplBody = batTempl.tooling()._for(StreamReading.class).readTextContents();
         } catch (IOException e) {
             throw new IdentifiedException(e.getMessage(), e);
         }
