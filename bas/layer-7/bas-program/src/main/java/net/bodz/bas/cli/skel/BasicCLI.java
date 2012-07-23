@@ -4,20 +4,18 @@ import java.io.File;
 import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.rmi.CORBA.Util;
 import javax.script.ScriptException;
 import javax.swing.text.html.Option;
 
-import net.bodz.bas.c.loader.ClassResource;
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.cli.ClassOptions;
-import net.bodz.bas.cli.Util;
 import net.bodz.bas.cli.model.IOption;
 import net.bodz.bas.cli.model.IOptionGroup;
 import net.bodz.bas.cli.model.MethodCall;
@@ -33,13 +31,10 @@ import net.bodz.bas.log.api.Logger;
 import net.bodz.bas.log.api.LoggerFactory;
 import net.bodz.bas.meta.build.ClassInfo;
 import net.bodz.bas.meta.build.RcsKeywords;
-import net.bodz.bas.meta.build.RcsKeywordsUtil;
-import net.bodz.bas.meta.build.VersionInfo;
 import net.bodz.bas.meta.codehint.ChainUsage;
 import net.bodz.bas.meta.codehint.OverrideOption;
 import net.bodz.bas.meta.program.OptionGroup;
 import net.bodz.bas.model.IExecutableVarArgsX;
-import net.bodz.bas.potato.book.DisplayNameUtil;
 import net.bodz.bas.potato.traits.IType;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.Stdio;
@@ -242,66 +237,6 @@ public class BasicCLI
             }
             return (CLIPlugin) typeEx.newInstance(valarray);
         }
-    }
-
-    private ClassInfo _classInfo;
-
-    protected ClassInfo _loadClassInfo() {
-        if (_classInfo == null) {
-            Class<? extends BasicCLI> clazz = getClass();
-            ClassInfo info = ClassInfo.get(clazz);
-
-            String name = DisplayNameUtil.getDisplayName(clazz);
-            String doc = info.getDoc();
-            if (doc == null)
-                doc = clazz.getName();
-
-            int[] majorver = info.getVersion();
-            if (majorver == null)
-                majorver = new int[] { 0 };
-
-            RcsKeywords keywords = clazz.getAnnotation(RcsKeywords.class);
-            VersionInfo verinfo;
-            if (keywords != null) {
-                verinfo = RcsKeywordsUtil.getVersionInfo(keywords);
-            } else {
-                verinfo = new VersionInfo();
-                URL url = ClassResource.classDataURL(clazz);
-                try {
-                    File file = new File(url.toURI());
-                    verinfo.time = file.lastModified();
-                } catch (Exception e) {
-                    // (neither RCS.time nor File.time exists)
-                    // throw new UnexpectedException("Bad url: " + url, e);
-                    verinfo.time = System.currentTimeMillis();
-                }
-                verinfo.name = name;
-                verinfo.revision = new int[] { 0 };
-            }
-
-            int[] verjoin = new int[majorver.length + verinfo.revision.length];
-            System.arraycopy(majorver, 0, verjoin, 0, majorver.length);
-            System.arraycopy(verinfo.revision, 0, verjoin, majorver.length, verinfo.revision.length);
-
-            String author = info.getAuthor();
-            if (author != null)
-                verinfo.author = author;
-            else
-                author = verinfo.author;
-            if (author == null)
-                author = "Lenik";
-            if (verinfo.state == null)
-                verinfo.state = "UNKNOWN";
-
-            info.setName(name);
-            info.setDoc(doc);
-            info.setAuthor(author);
-            // if (info.getVersion() == null) // FIX
-            info.setVersion(verjoin);
-            info.setDateString(verinfo.getDate());
-            _classInfo = info;
-        }
-        return _classInfo;
     }
 
     /**

@@ -8,12 +8,12 @@ import java.nio.ByteBuffer;
 import net.bodz.bas.cli.skel.BatchEditCLI;
 import net.bodz.bas.cli.skel.EditResult;
 import net.bodz.bas.meta.build.RcsKeywords;
-import net.bodz.bas.meta.build.Version;
+import net.bodz.bas.meta.build.MainVersion;
 
 /**
  * Fix: .bat goto labels must not cross 1k block boundary.
  */
-@Version({ 0, 0 })
+@MainVersion({ 0, 0 })
 @RcsKeywords(id = "$Id$")
 public class Fix_BatBB
         extends BatchEditCLI {

@@ -45,12 +45,12 @@ public class PluginTypeEx {
     }
 
     public String getVersion() {
-        return info.getVersionString();
+        return info.getVersion();
     }
 
     public Plugin newInstance(Object... args)
             throws CreateException {
-        return (Plugin) factory.create(args);
+        return factory.create(args);
     }
 
     @Override

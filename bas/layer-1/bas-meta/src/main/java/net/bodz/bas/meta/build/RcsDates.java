@@ -5,7 +5,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class VersionDate {
+public class RcsDates {
 
     static final DateFormat dateFormat;
     static final DateFormat timeFormat;
