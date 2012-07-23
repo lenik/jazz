@@ -41,8 +41,8 @@ public class ApacheVFSFile
     }
 
     @Override
-    public ApacheFileSystem getVolume() {
-        return (ApacheFileSystem) super.getVolume();
+    public ApacheFileSystem getFileSystem() {
+        return (ApacheFileSystem) super.getFileSystem();
     }
 
     @Override
@@ -56,7 +56,7 @@ public class ApacheVFSFile
 
     @Override
     public IFile clone() {
-        return new ApacheVFSFile(getVolume(), getPath(), fileObject).populate(this);
+        return new ApacheVFSFile(getFileSystem(), getPath(), fileObject).populate(this);
     }
 
     @Override

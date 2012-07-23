@@ -12,13 +12,12 @@ import net.bodz.bas.util.iter.Mitorx;
 import net.bodz.bas.vfs.AbstractFile;
 import net.bodz.bas.vfs.IFsTree;
 import net.bodz.bas.vfs.VFSException;
-import net.bodz.bas.vfs.path.IPath;
 
 public class JavaioFile
         extends AbstractFile.TransientPath
         implements IFsTree {
 
-    private static final JavaioFileSystem volume = JavaioFileSystem.getInstance();
+    private static final JavaioFileSystem fileSystem = JavaioFileSystem.getInstance();
 
     private final java.io.File jdkFile;
 
@@ -47,13 +46,8 @@ public class JavaioFile
     }
 
     @Override
-    public JavaioFileSystem getVolume() {
-        return volume;
-    }
-
-    @Override
-    public IPath getPath() {
-        return new JavaioPath(jdkFile.getPath());
+    public JavaioFileSystem getFileSystem() {
+        return fileSystem;
     }
 
     @Override
