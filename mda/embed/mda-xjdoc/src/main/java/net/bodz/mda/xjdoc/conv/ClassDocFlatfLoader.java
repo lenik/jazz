@@ -50,7 +50,7 @@ public class ClassDocFlatfLoader
         return classDoc;
     }
 
-    protected ClassDoc createClassDoc(String fqcn) {
+    ClassDoc createClassDoc(String fqcn) {
         return new ClassDoc(fqcn);
     }
 

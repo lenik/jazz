@@ -29,8 +29,9 @@ import net.bodz.bas.lang.ControlExit;
 import net.bodz.bas.log.ILogSink;
 import net.bodz.bas.log.api.Logger;
 import net.bodz.bas.log.api.LoggerFactory;
-import net.bodz.bas.meta.build.ClassInfo;
+import net.bodz.bas.meta.build.AppClassDoc;
 import net.bodz.bas.meta.build.RcsKeywords;
+import net.bodz.bas.meta.build.ReleaseDescription;
 import net.bodz.bas.meta.codehint.ChainUsage;
 import net.bodz.bas.meta.codehint.OverrideOption;
 import net.bodz.bas.meta.program.OptionGroup;
@@ -48,6 +49,8 @@ import net.bodz.bas.util.PluginException;
 import net.bodz.bas.util.PluginTypeEx;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.SystemColos;
+import net.bodz.mda.xjdoc.conv.ClassDocLoadException;
+import net.bodz.mda.xjdoc.conv.ClassDocs;
 
 import org.apache.commons.lang.ArrayUtils;
 
@@ -250,12 +253,18 @@ public class BasicCLI
     }
 
     protected void _version(IPrintOut out) {
-        ClassInfo info = _loadClassInfo();
-        out.printf("[%s] %s\n", info.getName(), info.getDoc());
+        AppClassDoc classDoc;
+        try {
+            classDoc = ClassDocs.loadFromResource(getClass()).to(AppClassDoc.class);
+        } catch (ClassDocLoadException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
+        ReleaseDescription release = classDoc.getReleaseDescription();
+        out.printf("[%s] %s\n", classDoc.getLabel(), classDoc.getTextHeader());
         out.printf("Written by %s,  Version %s,  Last updated at %s\n", //
-                info.getAuthor(), //
-                StringArray.joinByDot(info.getVersion()), //
-                info.getDateString());
+                classDoc.getAuthor(), //
+                classDoc.getVersion(), //
+                release.getReleaseDateString());
     }
 
     /**

@@ -8,6 +8,7 @@ import net.bodz.bas.err.ParseException;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.NegotiationException;
 import net.bodz.bas.sio.BCharOut;
+import net.bodz.bas.sugar.Tooling;
 import net.bodz.bas.text.flatf.FlatfOutput;
 import net.bodz.bas.text.flatf.IFlatfOutput;
 import net.bodz.mda.xjdoc.util.ImportMap;
@@ -172,6 +173,10 @@ public class ClassDoc
             return true;
         } else
             return super.processInstruction(command, data);
+    }
+
+    public <T extends DecoratedClassDoc> T to(Class<T> decoratedType) {
+        return new Tooling(this).getWrapper(decoratedType);
     }
 
 }

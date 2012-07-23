@@ -28,7 +28,7 @@ import net.bodz.bas.loader.LoadUtil;
 import net.bodz.bas.loader.TempClassLoader;
 import net.bodz.bas.loader.UCL;
 import net.bodz.bas.loader.boot.BootProc;
-import net.bodz.bas.meta.build.ClassInfo;
+import net.bodz.bas.meta.build.AppClassDoc;
 import net.bodz.bas.meta.build.MainVersion;
 import net.bodz.bas.meta.build.RcsKeywords;
 import net.bodz.bas.meta.program.ProgramName;
@@ -66,7 +66,7 @@ public class Mkbat
     public Mkbat() {
         generated = new HashSet<String>();
         varmap = new HashMap<String, String>();
-        ClassInfo classInfo = _loadClassInfo();
+        AppClassDoc classInfo = _loadClassInfo();
         String generator = Mkbat.class.getSimpleName() //
                 + " " + classInfo.getVersionString(false) //
         // + ", " + classInfo.getDateString()

@@ -1,7 +1,7 @@
 package net.bodz.bas.util;
 
 import net.bodz.bas.err.CreateException;
-import net.bodz.bas.meta.build.ClassInfo;
+import net.bodz.bas.meta.build.AppClassDoc;
 import net.bodz.bas.model.IFactory;
 
 /**
@@ -11,7 +11,7 @@ public class PluginTypeEx {
 
     private final Class<? extends Plugin> clazz;
     private final IFactory<Plugin> factory;
-    private final ClassInfo info;
+    private final AppClassDoc info;
 
     @SuppressWarnings("unchecked")
     public PluginTypeEx(IFactory<Plugin> factory) {
@@ -21,7 +21,7 @@ public class PluginTypeEx {
         if (!Plugin.class.isAssignableFrom(type))
             throw new IllegalArgumentException("wrong factory which create " + type);
         this.clazz = (Class<? extends Plugin>) type;
-        this.info = ClassInfo.get(clazz);
+        this.info = AppClassDoc.get(clazz);
     }
 
     public PluginTypeEx(Class<? extends Plugin> clazz) {
