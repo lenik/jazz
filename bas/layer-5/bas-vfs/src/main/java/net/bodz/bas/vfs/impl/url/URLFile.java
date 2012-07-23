@@ -12,7 +12,6 @@ import net.bodz.bas.io.resource.builtin.URLResource;
 import net.bodz.bas.vfs.AbstractFile;
 import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFileSystem;
-import net.bodz.bas.vfs.path.IPath;
 
 public class URLFile
         extends AbstractFile.TransientPath {
@@ -25,13 +24,8 @@ public class URLFile
     }
 
     @Override
-    public IFileSystem getVolume() {
+    public IFileSystem getFileSystem() {
         return URLFileSystem.getInstance();
-    }
-
-    @Override
-    public IPath getPath() {
-        return new URLPath("");
     }
 
     @Override

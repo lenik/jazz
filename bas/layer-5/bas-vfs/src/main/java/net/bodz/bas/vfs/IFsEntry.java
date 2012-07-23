@@ -20,7 +20,7 @@ public interface IFsEntry
     /**
      * @return non-<code>null</code> file container where this file entry belongs to.
      */
-    IFileSystem getVolume();
+    IFileSystem getFileSystem();
 
     /**
      * @return non-<code>null</code> path which denotes this file entry.

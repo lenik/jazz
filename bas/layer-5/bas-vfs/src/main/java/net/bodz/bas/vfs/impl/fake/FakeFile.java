@@ -17,7 +17,7 @@ public abstract class FakeFile
     }
 
     @Override
-    public IFileSystem getVolume() {
+    public IFileSystem getFileSystem() {
         return FakeFileSystem.getInstance();
     }
 

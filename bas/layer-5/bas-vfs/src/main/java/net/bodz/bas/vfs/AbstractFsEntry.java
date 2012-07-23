@@ -74,7 +74,7 @@ public abstract class AbstractFsEntry
     }
 
     @Override
-    public IFileSystem getVolume() {
+    public IFileSystem getFileSystem() {
         return volume;
     }
 
@@ -194,7 +194,7 @@ public abstract class AbstractFsEntry
         }
 
         @Override
-        public abstract IFileSystem getVolume();
+        public abstract IFileSystem getFileSystem();
 
     }
 
@@ -233,7 +233,7 @@ public abstract class AbstractFsEntry
         }
 
         @Override
-        public abstract IFileSystem getVolume();
+        public abstract IFileSystem getFileSystem();
 
         /**
          * Constructs an {@link IPath} object on the fly.
