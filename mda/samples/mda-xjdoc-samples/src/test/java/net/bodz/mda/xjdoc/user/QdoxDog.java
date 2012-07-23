@@ -45,7 +45,7 @@ public class QdoxDog
         // javaDocBuilder.addSourceTree(file)
 
         for (JavaSource jsource : javaDocBuilder.getSources()) {
-            String packageName = jsource.getPackageName();
+            // String packageName = jsource.getPackageName();
 
             for (JavaClass jclass : jsource.getClasses()) {
                 ClassDocBuilder builder = new ClassDocBuilder(book);
@@ -67,10 +67,8 @@ public class QdoxDog
 
                 StringSource ffSource = new StringSource(ff);
 
-                ImportMap newmap = new ImportMap(packageName);
-                ClassDocFlatfLoader ffLoader = new ClassDocFlatfLoader(book, newmap);
+                ClassDocFlatfLoader ffLoader = new ClassDocFlatfLoader(book);
                 ClassDoc doc2 = ffLoader.load(fqcn, ffSource);
-                doc2.setImports(newmap);
 
                 BCharOut buf2 = new BCharOut();
                 FlatfOutput ffout2 = new FlatfOutput(buf2);
