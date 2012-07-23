@@ -9,14 +9,14 @@ public class RcsKeywordsUtilTest
     @Test
     public void testParseId() {
         String id = "$" + "Id: example.file 1.2.3 2010-01-20 12:43:33Z lenik " + "$";
-        VersionInfo ver = RcsKeywordsUtil.parseId(id);
-        assertEquals("example.file", ver.name);
-        assertEquals("lenik", ver.author);
+        ReleaseDescription release = RcsKeywordsUtil.parseId(id);
+        assertEquals("example.file", release.name);
+        assertEquals("lenik", release.author);
 
-        int[] expectedRevision = { 1, 2, 3 };
-        assertArrayEquals(expectedRevision, ver.revision);
+        String[] expectedRevision = { "1", "2", "3" };
+        assertArrayEquals(expectedRevision, release.getVersion().getVersionElements());
 
-        String versionText = ver.getVersion();
+        String versionText = release.getVersion().toString();
         assertEquals("1.2.3", versionText);
     }
 

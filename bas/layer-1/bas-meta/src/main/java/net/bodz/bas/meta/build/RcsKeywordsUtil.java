@@ -1,55 +1,63 @@
 package net.bodz.bas.meta.build;
 
 import java.text.ParseException;
+import java.util.Date;
 
 import net.bodz.bas.util.annotation.AnnotationParseUtil;
 
-/**
- * @test RcsKeywordsUtilTest
- */
 public class RcsKeywordsUtil
         extends AnnotationParseUtil {
 
-    public static VersionInfo parseId(String rcs_id) {
+    public static ReleaseDescription parseId(String rcs_id) {
         rcs_id = rcs_id.substring(0, rcs_id.length() - 1);
         String[] parts = rcs_id.split("\\s+");
-        VersionInfo info = new VersionInfo();
+
+        ReleaseDescription release = new ReleaseDescription();
+        long releaseTime = 0;
+
         switch (parts.length) {
         case 7: // state
-            info.state = parts[6];
+            // skip
+
         case 6: // lenik
-            info.author = parts[5];
+            release.author = parts[5];
+
         case 5: // 10:53:242
             long _time = 0;
             try {
-                _time = VersionDate.parseTime(parts[4]).getTime();
+                _time = RcsDates.parseTime(parts[4]).getTime();
+                releaseTime += _time;
             } catch (ParseException e) {
             }
-            info.time += _time;
+
         case 4: // 2008-01-15
             long _date = 0;
             try {
-                _date = VersionDate.parseDate(parts[3]).getTime();
+                _date = RcsDates.parseDate(parts[3]).getTime();
+                releaseTime += _date;
             } catch (ParseException e) {
             }
-            info.time += _date;
+
         case 3: // 784
-            String[] revs = parts[2].split("\\.");
-            info.revision = new int[revs.length];
-            for (int i = 0; i < revs.length; i++)
-                info.revision[i] = Integer.parseInt(revs[i]);
+            String[] revisions = parts[2].split("\\.");
+            VersionTuple versionTuple = new VersionTuple(revisions);
+            release.setVersion(versionTuple);
+
         case 2: // Rcs.java
-            info.name = parts[1];
+            release.name = parts[1];
+
         case 1: // $Id:
         }
-        return info;
+
+        release.setReleaseDate(new Date(releaseTime));
+        return release;
     }
 
-    public static VersionInfo getVersionInfo(RcsKeywords keywords) {
+    public static ReleaseDescription getVersionInfo(RcsKeywords keywords) {
         return parseId(keywords.id());
     }
 
-    public static VersionInfo getVersionInfo(Class<?> clazz) {
+    public static ReleaseDescription getVersionInfo(Class<?> clazz) {
         return getVersionInfo(clazz.getAnnotation(RcsKeywords.class));
     }
 
