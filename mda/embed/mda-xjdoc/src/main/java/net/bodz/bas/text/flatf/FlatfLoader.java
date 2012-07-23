@@ -13,24 +13,18 @@ import net.bodz.mda.xjdoc.util.WordTokenizer;
 
 public class FlatfLoader {
 
-    INegotiation negotiation;
-
-    public FlatfLoader(INegotiation negotiation) {
-        this.negotiation = negotiation;
-    }
-
-    public void load(IStreamInputSource inputSource, IFlatfSerializable target)
+    public void load(IStreamInputSource inputSource, IFlatfSerializable target, INegotiation negotiation)
             throws IOException, ParseException, NegotiationException {
         Reader reader = inputSource.newReader();
         try {
             FlatfInput in = new FlatfInput(reader);
-            load(in, target);
+            load(in, target, negotiation);
         } finally {
             reader.close();
         }
     }
 
-    public void load(IFlatfInput in, IFlatfSerializable target)
+    public void load(IFlatfInput in, IFlatfSerializable target, INegotiation negotiation)
             throws ParseException, IOException, NegotiationException {
         int token;
         String currentSection = in.getSectionName();
