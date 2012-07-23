@@ -140,12 +140,12 @@ public class FileFinder
             int depth = stack.size();
             if (!stack.hasNext())
                 return end();
-            IFile x = stack.next();
+            IFile file = stack.next();
             boolean included = true;
-            if (!prune && userFilter != null && x.isTree())
-                included = userFilter.accept(x);
-            if (x.isTree() && depth < maxDepth) {
-                IFile[] children = x.listChildren(filter);
+            if (!prune && userFilter != null && file.isTree())
+                included = userFilter.accept(file);
+            if (file.isTree() && depth < maxDepth) {
+                IFile[] children = file.listChildren(filter);
                 if (children.length > 0) {
                     if (comparator != null)
                         Arrays.sort(children, comparator);
@@ -154,7 +154,7 @@ public class FileFinder
                 }
             }
             if (included)
-                return x;
+                return file;
             return fetch();
         }
 
