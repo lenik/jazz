@@ -1,43 +1,42 @@
 package net.bodz.bas.cli.model;
 
 import java.lang.reflect.AnnotatedElement;
-import java.util.Collection;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.c.type.TypeKind;
+import net.bodz.bas.err.FormatException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.meta.util.ComponentType;
 import net.bodz.bas.potato.traits.AbstractElement;
+import net.bodz.bas.trait.Traits;
+import net.bodz.bas.traits.IFormatter;
+import net.bodz.bas.traits.IParser;
 
 public abstract class AbstractOption
         extends AbstractElement
         implements IOption {
 
-    public static final int WEAK_PRIORITY = 10;
-
     int priority;
     IOptionGroup group;
 
-    String friendlyName;
     Set<String> aliases = new TreeSet<String>();
     int argPosition;
 
     String valueHint;
     boolean hidden;
     boolean required;
-    Object defaultValue; // Not used
+    int parameterCount;
 
     Class<?> type;
+    Class<?> valueType;
+    IAddor addor;
 
-    boolean multiple;
-    Class<?> itemType;
-    Object defaultItemValue; // Not used
+    Object defaultValue;
 
     public AbstractOption(Class<?> declaringType, String name, AnnotatedElement member, Class<?> type) {
-        super(declaringType, name);
-        friendlyName = Strings.hyphenatize(name);
+        super(declaringType, Strings.hyphenatize(name));
 
         if (type == null)
             throw new NullPointerException("type");
@@ -45,9 +44,9 @@ public abstract class AbstractOption
 
         ComponentType _componentType = member.getAnnotation(ComponentType.class);
         if (_componentType != null)
-            itemType = (Class<?>) _componentType.value();
+            valueType = _componentType.value();
         else if (type.isArray())
-            itemType = (Class<?>) type.getComponentType();
+            valueType = type.getComponentType();
     }
 
     @Override
@@ -69,17 +68,16 @@ public abstract class AbstractOption
     }
 
     @Override
-    public String getFriendlyName() {
-        return friendlyName;
-    }
-
-    public void setFriendlyName(String friendlyName) {
-        this.friendlyName = friendlyName;
-    }
-
-    @Override
     public Set<String> getAliases() {
         return aliases;
+    }
+
+    public void addAlias(String alias) {
+        aliases.add(alias);
+    }
+
+    public void removeAlias(String alias) {
+        aliases.remove(alias);
     }
 
     @Override
@@ -119,21 +117,11 @@ public abstract class AbstractOption
     }
 
     @Override
-    public boolean isWeak() {
-        return priority >= WEAK_PRIORITY;
-    }
-
-    public void setWeak(boolean weak) {
-        priority = WEAK_PRIORITY;
-    }
-
-    @Override
-    public Object getDefaultValue() {
-        return defaultValue;
-    }
-
-    public void setDefaultValue(Object defaultValue) {
-        this.defaultValue = defaultValue;
+    public int getParameterCount() {
+        if (TypeKind.isBoolean(type))
+            return 0;
+        else
+            return 1;
     }
 
     @Override
@@ -148,53 +136,50 @@ public abstract class AbstractOption
     }
 
     @Override
-    public boolean isArray() {
-        return multiple && type.isArray();
+    public Class<?> getValueType() {
+        return valueType;
+    }
+
+    public void setValueType(Class<?> valueType) {
+        this.valueType = valueType;
     }
 
     @Override
-    public boolean isCollection() {
-        return multiple && Collection.class.isAssignableFrom(type);
+    public IAddor getAddor() {
+        return addor;
+    }
+
+    public void setAddor(IAddor addor) {
+        if (addor == null)
+            throw new NullPointerException("addor");
+        this.addor = addor;
     }
 
     @Override
-    public boolean isMap() {
-        return multiple && Map.class.isAssignableFrom(type);
+    public Object parseValue(String string)
+            throws ParseException {
+        Class<?> valueType = getValueType();
+        IParser<?> parser = Traits.getTrait(valueType, IParser.class);
+        Object value = parser.parse(string);
+        return value;
     }
 
     @Override
-    public boolean isMultiple() {
-        return multiple;
-    }
-
-    public void setMultiple(boolean multiple) {
-        this.multiple = multiple;
-    }
-
-    @Override
-    public Class<?> getItemType() {
-        return itemType;
-    }
-
-    public void setItemType(Class<?> itemType) {
-        this.itemType = itemType;
+    public String formatValue(Object value)
+            throws FormatException {
+        Class<?> valueType = getValueType();
+        IFormatter<Object> formatter = Traits.getTrait(valueType, IFormatter.class);
+        String string = formatter.format(value);
+        return string;
     }
 
     @Override
-    public Object getDefaultItemValue() {
-        return defaultItemValue;
+    public Object getDefaultValue() {
+        return defaultValue;
     }
 
-    public void setDefaultItemValue(Object defaultItemValue) {
-        this.defaultItemValue = defaultItemValue;
-    }
-
-    @Override
-    public int getParameterCount() {
-        if (TypeKind.isBoolean(type))
-            return 0;
-        else
-            return 1;
+    public void setDefaultValue(Object defaultValue) {
+        this.defaultValue = defaultValue;
     }
 
 }

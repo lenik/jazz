@@ -18,7 +18,10 @@ import net.bodz.bas.vfs.path.IPath;
 import net.bodz.bas.vfs.util.FileFinder;
 import net.bodz.bas.vfs.util.IFileFilter;
 
-@OptionGroup(value = "batch", rank = -2)
+/**
+ * Batch File Scanner
+ */
+@OptionGroup(value = BasicCLI.class, order = -2)
 public class BatchCLI
         extends BasicCLI {
 
