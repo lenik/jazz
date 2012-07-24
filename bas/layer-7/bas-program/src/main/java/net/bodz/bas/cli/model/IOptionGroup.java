@@ -1,6 +1,7 @@
 package net.bodz.bas.cli.model;
 
 import java.util.Map;
+import java.util.Set;
 
 import net.bodz.bas.potato.traits.IElement;
 
@@ -15,41 +16,55 @@ public interface IOptionGroup
     IOptionGroup getParent();
 
     /**
-     * Get option by canonical-name, friendly-name or alias-name.
+     * Get option by canonical-name
      * 
-     * The option may be bound to different kind of names:
-     * <ul>
-     * <li>Canonical name: help, outputDirectory
-     * <li>Friendly name: help, output-directory
-     * <li>Alias name: h, O
-     * </ul>
-     * 
-     * @param key
-     *            The name or alias of the option.
-     * @param canonicalForm
-     *            Specify what kind of key is used, <code>true</code> for canonical-name,
-     *            <code>false</code> for friendly-name or alias-name.
-     * @return Option for the key, <code>null</code> if the key isn't defined.
-     */
-    IOption getOption(String key, boolean canonicalForm);
-
-    /**
-     * The same as {@link #getOption(String, boolean)} with <code>canonicalForm</code> set to
-     * <code>false</code>.
-     * 
-     * @param key
+     * @param optionKey
      *            The friendly-name or alias-name of the option.
-     * @return Option for the key, <code>null</code> if the key isn't defined.
+     * @return The option with the given option key. <code>null</code> if nonexisted.
      */
-    IOption getOption(String key);
+    IOption getOption(String optionKey);
 
     /**
-     * Get all options. The canonical-name of the option is used as the map key.
+     * Get a unique option.
+     * 
+     * @return The unique option starts with the given option key. <code>null</code> if nonexisted.
+     */
+    IOption getUniqueOption(String optionKey)
+            throws AmbiguousOptionKeyException;
+
+    /**
+     * Get all options.
+     * <p>
+     * The canonical-name of the option is used as the map key.
      * 
      * @return Non-<code>null</code> option map.
      */
     Map<String, IOption> getOptions();
 
-    Map<String, IOption> findOptions(String prefix);
+    /**
+     * Get options starts with the given prefix.
+     * <p>
+     * The canonical-name of the option is used as the map key.
+     * 
+     * @return Non-<code>null</code> option map.
+     */
+    Map<String, IOption> findOptions(String optionKeyPrefix);
+
+    /**
+     * Get option keys
+     */
+    Set<String> getOptionKeys(IOption option);
+
+    /**
+     * Add an option.
+     */
+    void addOption(IOption option);
+
+    /**
+     * Remove an option.
+     * 
+     * @return Removed occurrences from internal map.
+     */
+    int removeOption(IOption option);
 
 }

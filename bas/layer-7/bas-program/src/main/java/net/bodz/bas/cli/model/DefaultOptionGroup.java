@@ -3,24 +3,18 @@ package net.bodz.bas.cli.model;
 import java.util.*;
 import java.util.Map.Entry;
 
-import javax.rmi.CORBA.Util;
-
-import net.bodz.bas.cli.skel.CLIException;
 import net.bodz.bas.collection.preorder.PrefixMap;
 import net.bodz.bas.err.IllegalUsageException;
-import net.bodz.bas.err.ParseException;
 import net.bodz.bas.potato.traits.AbstractElement;
-import net.bodz.bas.util.Pair;
 import net.bodz.bas.util.iter.Iterables;
 
 public class DefaultOptionGroup
         extends AbstractElement
         implements IOptionGroup {
 
-    IOptionGroup parent;
-    Map<String, IOption> nameMap = new TreeMap<String, IOption>();
-    PrefixMap<IOption> prefixMap = new PrefixMap<IOption>();
-    TreeMap<Integer, IOption> positionMap = new TreeMap<Integer, IOption>();
+    final IOptionGroup parent;
+    final Map<String, IOption> nameMap = new TreeMap<String, IOption>();
+    final PrefixMap<IOption> prefixMap = new PrefixMap<IOption>();
 
     public DefaultOptionGroup(IOptionGroup parent, Class<?> declaringClass) {
         super(declaringClass, declaringClass.getSimpleName());
@@ -38,158 +32,131 @@ public class DefaultOptionGroup
     }
 
     @Override
-    public final IOption getOption(String key) {
-        return getOption(key, false);
+    public IOption getOption(String optionKey) {
+        return prefixMap.get(optionKey);
     }
 
     @Override
-    public IOption getOption(String key, boolean canonicalForm) {
-        if (canonicalForm)
-            return nameMap.get(key);
-        else
-            return prefixMap.get(key);
+    public IOption getUniqueOption(String prefix)
+            throws AmbiguousOptionKeyException {
+        if (prefix == null)
+            throw new NullPointerException("optionKeyPrefix");
+        if (prefix.startsWith("no-"))
+            prefix = prefix.substring(3);
+        if (prefix.isEmpty())
+            throw new IllegalArgumentException("prefix is empty");
+
+        IOption option = prefixMap.get(prefix);
+        if (option != null)
+            return option;
+
+        List<String> optionKeys = Iterables.toList(prefixMap.joinKeys(prefix));
+        if (optionKeys.isEmpty())
+            return null;
+
+        if (optionKeys.size() > 1) {
+            StringBuilder suggestions = new StringBuilder();
+            for (String key : optionKeys) {
+                suggestions.append(key);
+                suggestions.append('\n');
+            }
+            throw new AmbiguousOptionKeyException(prefix, suggestions.toString());
+        }
+        String optionName = optionKeys.get(0);
+        return prefixMap.get(optionName);
     }
 
     @Override
     public Map<String, IOption> findOptions(String prefix) {
         Map<String, IOption> map = new LinkedHashMap<String, IOption>();
-        Entry<String, IOption> entry = prefixMap.floorEntry(prefix);
-        while (entry != null) {
-            // prefixMap.
-            prefixMap.higherEntry(e);
+        for (Entry<String, IOption> entry : prefixMap.joinEntries(prefix)) {
+            String key = entry.getKey();
+            IOption option = entry.getValue();
+            map.put(key, option);
         }
-
-        return null;
+        return map;
     }
 
-    /**
-     * @param possible
-     *            prefix of option name
-     * @exception CLIException
-     *                if option does not exist
-     */
-    public AbstractOption findOption(String name)
-            throws CLIException {
-        if (name.isEmpty())
-            throw new CLIException("option name is empty");
-        if (name.startsWith("no-"))
-            name = name.substring(3);
-        if (prefixMap.containsKey(name))
-            return (AbstractOption) prefixMap.get(name);
-        List<String> fullNames = Iterables.toList(prefixMap.joinKeys(name));
-        if (fullNames.isEmpty())
-            throw new CLIException("no such option: " + name);
-        if (fullNames.size() > 1) {
-            StringBuilder cands = new StringBuilder();
-            for (String nam : fullNames) {
-                cands.append(nam);
-                cands.append('\n');
-                nam = prefixMap.higherKey(nam);
-                if (nam == null || !nam.startsWith(name))
-                    break;
-            }
-            throw new CLIException("ambiguous option " + name + ": \n" + cands.toString());
-        }
-        String fullname = fullNames.get(0);
-        return (AbstractOption) prefixMap.get(fullname);
-    }
-
-    public Set<String> getNames(IOption option) {
-        Set<String> names = new LinkedHashSet<String>();
+    @Override
+    public Set<String> getOptionKeys(IOption option) {
+        Set<String> keys = new LinkedHashSet<String>();
         for (Entry<String, IOption> e : prefixMap.entrySet()) {
             if (e.getValue() != option)
                 continue;
-            String name = e.getKey();
-            names.add(name);
+            String key = e.getKey();
+            keys.add(key);
         }
-        return names;
+        return keys;
     }
 
-    private Object _parseOptVal(AbstractOption opt, String optarg)
-            throws ParseException {
-        Class<?> valtype = opt.getType();
-        Object optval = null;
+    @Override
+    public void addOption(IOption option) {
+        if (option == null)
+            throw new NullPointerException("option");
+        int priority = option.getPriority();
 
-        if (optarg == null) {
-            optarg = opt.defaultVal;
-            if (optarg.isEmpty())
-                throw new ParseException("Option value expected: " + opt.getFriendlyName());
+        // Check for conflicts
+        String optionName = option.getName();
+        IOption existing = nameMap.get(optionName);
+        if (existing != null) {
+            if (existing.getPriority() == priority)
+                throw new IllegalUsageException(String.format("Option name '%s' conflicts with %s: %s.", //
+                        optionName, existing.getDisplayName(), existing.getDescription()));
         }
-
-        String key = null;
-        if (opt.isMap()) {
-            int eq = optarg.indexOf('=');
-            if (eq == -1) {
-                key = optarg;
-                optarg = null;
-            } else {
-                key = optarg.substring(0, eq);
-                optarg = optarg.substring(eq + 1);
-            }
-        }
-
-        if (optarg == null)
-            optval = Util.getTrueValue(valtype);
-        if (optval == null)
-            try {
-                optval = opt.parse(optarg, key);
-            } catch (ParseException e) {
-                throw new ParseException(String.format("Can\'t parse option %s of %s with argument %s",
-                        opt.getFriendlyName(), valtype, optarg), e);
-            }
-        if (key != null)
-            optval = new Pair<String, Object>(key, optval);
-        return optval;
-    }
-
-    private int loadCall(CT object, MethodOption optcall, List<String> args, int off)
-            throws CLIException, ParseException {
-        int argc = optcall.getParameterCount();
-        int rest = args.size() - off;
-        if (argc > rest)
-            throw new CLIException("not enough parameters for function-option " + optcall.getFriendlyName());
-        String[] argv = args.subList(off, off + argc).toArray(new String[0]);
-        try {
-            optcall.call(object, argv);
-        } catch (ReflectiveOperationException e) {
-            throw new CLIException(e.getMessage(), e);
-        }
-        return argc;
-    }
-
-    protected void addOption(IOption option) {
-        String name = option.getName();
-        IOption existing = nameMap.get(name);
-        if (existing != null)
-            throw new IllegalUsageException(String.format("Option name '%s' conflicts with %s: %s.", //
-                    name, existing.getDisplayName(), existing.getDescription()));
-
-        String friendlyName = option.getFriendlyName();
-        existing = prefixMap.get(friendlyName);
-        if (existing != null)
-            throw new IllegalUsageException(String.format("Option friendly name '%s' conflicts with %s: %s.",//
-                    friendlyName, existing.getDisplayName(), existing.getDescription()));
 
         for (String alias : option.getAliases()) {
-            existing = prefixMap.get(friendlyName);
-            if (existing != null)
-                throw new IllegalUsageException(String.format("Option alias name '%s' conflicts with %s: %s.",//
-                        alias, existing.getDisplayName(), existing.getDescription()));
+            IOption other = prefixMap.get(alias);
+            if (other != null)
+                if (other.getPriority() == option.getPriority())
+                    throw new IllegalUsageException(String.format("Option alias name '%s' conflicts with %s: %s.",//
+                            alias, other.getDisplayName(), other.getDescription()));
         }
 
-        int position = option.getArgPosition();
-        if (position > 0) {
-            existing = positionMap.get(position);
-            if (existing != null)
-                throw new IllegalUsageException(String.format("Option friendly name '%s' conflicts with %s: %s.",//
-                        friendlyName, existing.getDisplayName(), existing.getDescription()));
+        // Real add
+        if (priority <= existing.getPriority()) {
+            nameMap.put(optionName, option);
+            prefixMap.put(optionName, option);
         }
 
-        nameMap.put(name, option);
-        prefixMap.put(friendlyName, option);
-        for (String alias : option.getAliases())
-            prefixMap.put(alias, option);
-        positionMap.put(position, option);
+        for (String alias : option.getAliases()) {
+            IOption aliased = prefixMap.get(alias);
+            if (priority <= aliased.getPriority())
+                prefixMap.put(alias, option);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * 
+     * (Not fully implemented)
+     * 
+     * @deprecated This method won't refresh/restore the old options whose option key is overrided
+     *             by the given option.
+     */
+    @Deprecated
+    @Override
+    public int removeOption(IOption option) {
+        int occurs = 0;
+        // Remove from the name map.
+        Iterator<Entry<String, IOption>> iterator = nameMap.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Entry<String, IOption> entry = iterator.next();
+            if (entry.getValue() == option) {
+                iterator.remove();
+                occurs++;
+            }
+        }
+
+        // Remove from prefix-map.
+        iterator = prefixMap.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Entry<String, IOption> entry = iterator.next();
+            if (entry.getValue() == option) {
+                iterator.remove();
+                occurs++;
+            }
+        }
+        return occurs;
     }
 
 }

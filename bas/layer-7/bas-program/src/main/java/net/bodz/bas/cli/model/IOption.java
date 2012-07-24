@@ -2,11 +2,21 @@ package net.bodz.bas.cli.model;
 
 import java.util.Set;
 
+import net.bodz.bas.err.FormatException;
+import net.bodz.bas.err.ParseException;
 import net.bodz.bas.potato.traits.IElement;
 import net.bodz.bas.util.order.IPriority;
 
 public interface IOption
         extends IElement, IPriority {
+
+    /**
+     * CLI name (or "cn" for short). Like "foo-bar" for "fooBar".
+     * 
+     * @return Non-<code>null</code> CLI name.
+     */
+    @Override
+    String getName();
 
     /**
      * Option with same name or shortcut are overwritten by options with higher priority.
@@ -20,13 +30,6 @@ public interface IOption
      * Divide options into separate groups.
      */
     IOptionGroup getGroup();
-
-    /**
-     * CLI name (or "cn" for short). Like "foo-bar" for "fooBar".
-     * 
-     * @return Non-<code>null</code> CLI name.
-     */
-    String getFriendlyName();
 
     /**
      * Shortcut names are prefixed with single dash, like "-h" for "--help".
@@ -63,11 +66,58 @@ public interface IOption
     boolean isRequired();
 
     /**
-     * Whether aliases of this option are overridable.
+     * <ul>
+     * <li>For boolean options, there is no parameter at all.
+     * <li>For string options, and most typed options, the parameter count is 1.
+     * <li>For method-call options, the parameter count is equal to the method parameter count.
+     * <li>Special option need more parameters should override this method to return a positive
+     * integer.
+     * </ul>
      * 
-     * Aliases of weak-option are overridable by sub-classes.
+     * @return Count of parameters to be consumed by this option.
      */
-    boolean isWeak();
+    int getParameterCount();
+
+    /**
+     * The option type.
+     */
+    Class<?> getType();
+
+    /**
+     * Addor to specify how multiple items are combined.
+     * 
+     * @return Non-<code>null</code> option item addor.
+     */
+    IAddor getAddor();
+
+    /**
+     * Type of a single option value.
+     * 
+     * For scalar options, the value type is the same as the option type.
+     * 
+     * @return Non-<code>null</code> option value type.
+     */
+    Class<?> getValueType();
+
+    /**
+     * Parse a single option value.
+     * 
+     * @param string
+     *            The value string to be parsed.
+     * @return Parsed result.
+     */
+    Object parseValue(String string)
+            throws ParseException;
+
+    /**
+     * Format a single option value.
+     * 
+     * @param value
+     *            to be formatted.
+     * @return Non-<code>null</code> formatted value string.
+     */
+    String formatValue(Object value)
+            throws FormatException;
 
     /**
      * Default value is pre-parsed of default-value string.
@@ -75,34 +125,12 @@ public interface IOption
      * If this option is not specified, the default-value is used. (However, the default-value
      * defined on the field will be overwritten.)
      * 
+     * For multiple-type (like collection, map), the default value is used to specify a single item
+     * value.
+     * 
      * @return <code>null</code> if no default-value is defined, and the default-value on the field
      *         is used.
      */
     Object getDefaultValue();
-
-    Class<?> getType();
-
-    boolean isArray();
-
-    boolean isCollection();
-
-    boolean isMap();
-
-    boolean isMultiple();
-
-    Class<?> getItemType();
-
-    Object getDefaultItemValue();
-
-    /**
-     * For boolean options, there is no parameter at all.
-     * 
-     * For string options, and most typed options, the parameter count is 1.
-     * 
-     * Special option need more parameters should override this method to return a positive integer.
-     * 
-     * @return Count of parameters to be consumed by this option.
-     */
-    int getParameterCount();
 
 }

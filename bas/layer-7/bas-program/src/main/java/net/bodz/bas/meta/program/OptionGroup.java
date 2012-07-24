@@ -10,14 +10,13 @@ import java.lang.annotation.Target;
 public @interface OptionGroup {
 
     /**
-     * The doc text of the group should be put somewhere else, to avoid the duplicated doc texts
-     * here.
+     * The option group class.
      */
-    String value();
+    Class<?> value();
 
     /**
      * The order of the groups, the smaller rank number will be shown in the first.
      */
-    int rank() default 0;
+    int order() default 0;
 
 }

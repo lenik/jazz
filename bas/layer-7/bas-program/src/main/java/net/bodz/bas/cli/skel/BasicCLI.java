@@ -12,7 +12,6 @@ import java.util.Map.Entry;
 
 import javax.rmi.CORBA.Util;
 import javax.script.ScriptException;
-import javax.swing.text.html.Option;
 
 import net.bodz.bas.c.string.StringArray;
 import net.bodz.bas.cli.ClassOptions;
@@ -55,34 +54,9 @@ import net.bodz.mda.xjdoc.conv.ClassDocs;
 import org.apache.commons.lang.ArrayUtils;
 
 /**
- * Recommend eclipse template `cli':
- * 
- * <pre>
- * ${:import(
- *     net.bodz.bas.a.Doc,
- *     net.bodz.bas.a.RcsKeywords,
- *     net.bodz.bas.a.Version
- * )}@Doc(&quot;${primary_type_name} ${description}&quot;)
- * &#064;RcsKeywords(id = &quot;$$Id${primary_type_name}.java 0 ${date} ${time} ${user} $$&quot;)
- * &#064;Version({ 0, 0 })
- * public class ${primary_type_name} extends ${CLI:newType(net.bodz.bas.cli.BasicCLI)} {
- * 
- *     &#064;Override
- *     protected void doFileArgument(File file, InputStream in) throws Throwable {
- *         ${cursor}
- *     }
- * 
- *     public static void main(String[] args) throws Throwable {
- *         new ${primary_type_name}().run(args);
- *     }
- * 
- * }
- * </pre>
- * 
- * @see OptionGroup
- * @see Option
+ * Basic CLI Framework
  */
-@OptionGroup(value = "standard", rank = -1)
+@OptionGroup(value = BasicCLI.class, order = -1)
 @RcsKeywords(id = "$Id$")
 public class BasicCLI
         implements Runnable, IExecutableVarArgsX<String, Exception> {

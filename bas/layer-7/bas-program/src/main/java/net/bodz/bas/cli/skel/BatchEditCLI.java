@@ -31,7 +31,12 @@ import net.bodz.bas.vfs.FileResolveException;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.impl.javaio.JavaioFile;
 
-@OptionGroup(value = "batch process", rank = -3)
+/**
+ * Batch File Processor
+ * <p>
+ * Provide framework for batch file processing.
+ */
+@OptionGroup(value = BatchEditCLI.class, order = -3)
 public class BatchEditCLI
         extends BatchCLI {
 
