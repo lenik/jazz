@@ -2,7 +2,6 @@ package net.bodz.bas.collection.preorder;
 
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import net.bodz.bas.util.iter.PrefetchedIterator;
@@ -22,9 +21,23 @@ public class PreorderTreeMap<K, V>
         this.preorder = preorder;
     }
 
+    /**
+     * Use {@link #meet(Object)} instead to get a nearest node in the preorder map.
+     * <p>
+     * {@inheritDoc}
+     * 
+     * @see #meet(Object)
+     * @see #meetKey(Object)
+     * @see #meetEntry(Object)
+     */
     @Override
-    public Entry<K, V> meetEntry(K key) {
-        Entry<K, V> floo = super.floorEntry(key);
+    public V get(Object key) {
+        return super.get(key);
+    }
+
+    @Override
+    public Map.Entry<K, V> meetEntry(K key) {
+        Map.Entry<K, V> floo = super.floorEntry(key);
         while (floo != null) {
             if (preorder.isLessOrEquals(floo.getKey(), key))
                 return floo;
@@ -38,7 +51,7 @@ public class PreorderTreeMap<K, V>
 
     @Override
     public K meetKey(K key) {
-        Entry<K, V> entry = reduceToMeetEntry(key);
+        Map.Entry<K, V> entry = reduceToMeetEntry(key);
         if (entry == null)
             return null;
         else
@@ -47,7 +60,7 @@ public class PreorderTreeMap<K, V>
 
     @Override
     public V meet(K key) {
-        Entry<K, V> entry = reduceToMeetEntry(key);
+        Map.Entry<K, V> entry = reduceToMeetEntry(key);
         if (entry == null)
             return null;
         else
@@ -55,7 +68,7 @@ public class PreorderTreeMap<K, V>
     }
 
     // @Override
-    public Entry<K, V> reduceToMeetEntry(K key) {
+    public Map.Entry<K, V> reduceToMeetEntry(K key) {
         K meetKey = meetKey(key);
         if (meetKey == null)
             return null;
@@ -74,7 +87,7 @@ public class PreorderTreeMap<K, V>
 
     // @Override
     public V reduceToMeet(K key) {
-        Entry<K, V> entry = meetEntry(key);
+        Map.Entry<K, V> entry = meetEntry(key);
         if (entry == null)
             return null;
         else
@@ -84,8 +97,8 @@ public class PreorderTreeMap<K, V>
     /**
      * Using Preorder-Preceding to get the greator key (only if available).
      */
-    public Entry<K, V> joinEntry_fast(K key) {
-        Entry<K, V> ceil = ceilingEntry(key);
+    public Map.Entry<K, V> joinEntry_fast(K key) {
+        Map.Entry<K, V> ceil = ceilingEntry(key);
         if (ceil == null)
             return null;
         if (preorder.isGreaterOrEquals(ceil.getKey(), key))
@@ -97,7 +110,7 @@ public class PreorderTreeMap<K, V>
      * Using Preorder-Preceding to get the greator key (only if available).
      */
     public K joinKey_fast(K key) {
-        Entry<K, V> entry = joinEntry_fast(key);
+        Map.Entry<K, V> entry = joinEntry_fast(key);
         if (entry == null)
             return null;
         else
@@ -108,7 +121,7 @@ public class PreorderTreeMap<K, V>
      * Using Preorder-Preceding to get the greator key (only if available).
      */
     public V join_fast(K key) {
-        Entry<K, V> entry = joinEntry_fast(key);
+        Map.Entry<K, V> entry = joinEntry_fast(key);
         if (entry == null)
             return null;
         else
@@ -116,22 +129,22 @@ public class PreorderTreeMap<K, V>
     }
 
     @Override
-    public Iterable<Entry<K, V>> joinEntries(final K key) {
-        final Entry<K, V> start = ceilingEntry(key);
+    public Iterable<Map.Entry<K, V>> joinEntries(final K key) {
+        final Map.Entry<K, V> start = ceilingEntry(key);
 
         class Iter
-                extends PrefetchedIterator<Entry<K, V>> {
-            private Entry<K, V> next;
+                extends PrefetchedIterator<Map.Entry<K, V>> {
+            private Map.Entry<K, V> next;
 
-            public Iter(Entry<K, V> next) {
+            public Iter(Map.Entry<K, V> next) {
                 this.next = next;
             }
 
             @Override
-            protected Entry<K, V> fetch() {
+            protected Map.Entry<K, V> fetch() {
                 if (next == null)
                     return end();
-                Entry<K, V> ret = next;
+                Map.Entry<K, V> ret = next;
                 next = higherEntry(next.getKey());
                 if (next != null && !preorder.isLessOrEquals(key, next.getKey()))
                     next = null;
@@ -139,9 +152,9 @@ public class PreorderTreeMap<K, V>
             }
         }
 
-        return new Iterable<Entry<K, V>>() {
+        return new Iterable<Map.Entry<K, V>>() {
             @Override
-            public Iterator<Entry<K, V>> iterator() {
+            public Iterator<Map.Entry<K, V>> iterator() {
                 return new Iter(start);
             }
         };
@@ -187,14 +200,14 @@ public class PreorderTreeMap<K, V>
      */
     @Override
     public Iterable<V> join(final K key) {
-        final Entry<K, V> start = ceilingEntry(key);
+        final Map.Entry<K, V> start = ceilingEntry(key);
 
         class HigherIter
                 extends PrefetchedIterator<V> {
 
-            private Entry<K, V> next;
+            private Map.Entry<K, V> next;
 
-            public HigherIter(Entry<K, V> next) {
+            public HigherIter(Map.Entry<K, V> next) {
                 this.next = next;
             }
 
