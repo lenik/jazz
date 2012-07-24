@@ -3,6 +3,7 @@ package net.bodz.bas.traits;
 import java.beans.ExceptionListener;
 import java.io.Writer;
 
+import net.bodz.bas.err.FormatException;
 import net.bodz.bas.lang.negotiation.INegotiation;
 import net.bodz.bas.lang.negotiation.NegotiationException;
 
@@ -14,8 +15,11 @@ public interface IFormatter<T> {
      * @param object
      *            (? extends <code>T</code>) non-<code>null</code> value to be formatted.
      * @return non-<code>null</code> formatted string.
+     * @throws FormatException
+     *             If failed to format.
      */
-    String format(T object);
+    String format(T object)
+            throws FormatException;
 
     /**
      * Negotiation:
@@ -30,8 +34,10 @@ public interface IFormatter<T> {
      * @param object
      *            (? extends <code>T</code>) non-<code>null</code> value to be formatted.
      * @return non-<code>null</code> formatted string.
+     * @throws FormatException
+     *             If failed to format.
      */
     String format(T object, INegotiation negotiation)
-            throws NegotiationException;
+            throws NegotiationException, FormatException;
 
 }
