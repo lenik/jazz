@@ -19,7 +19,6 @@ import net.bodz.bas.io.resource.IStreamInputSource;
 import net.bodz.bas.io.resource.builtin.InputStreamSource;
 import net.bodz.bas.io.resource.tools.StreamReading;
 import net.bodz.bas.meta.codehint.OverrideOption;
-import net.bodz.bas.meta.program.OptionGroup;
 import net.bodz.bas.sio.IPrintOut;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.sio.WriterPrintOut;
@@ -36,7 +35,6 @@ import net.bodz.bas.vfs.impl.javaio.JavaioFile;
  * <p>
  * Provide framework for batch file processing.
  */
-@OptionGroup(value = BatchEditCLI.class, order = -3)
 public class BatchEditCLI
         extends BatchCLI {
 

@@ -11,7 +11,6 @@ import net.bodz.bas.c.java.util.regex.GlobPattern;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.lang.ControlBreak;
 import net.bodz.bas.meta.codehint.OverrideOption;
-import net.bodz.bas.meta.program.OptionGroup;
 import net.bodz.bas.vfs.FileMaskedModifiers;
 import net.bodz.bas.vfs.IFile;
 import net.bodz.bas.vfs.path.IPath;
@@ -20,8 +19,9 @@ import net.bodz.bas.vfs.util.IFileFilter;
 
 /**
  * Batch File Scanner
+ * 
+ * @syntax $programName [OPTIONS] [--] FILES...
  */
-@OptionGroup(value = BasicCLI.class, order = -2)
 public class BatchCLI
         extends BasicCLI {
 

@@ -35,6 +35,11 @@ public interface IElement
     DomainString getDescription();
 
     /**
+     * @return <code>null</code> if no help doc available.
+     */
+    DomainString getHelpDoc();
+
+    /**
      * The preference level controls whether this element is displayed. When user specifies a
      * display preference, then only elements with preference level smaller then the the display
      * preference is displayed. For negative preference levels, they are hidden by default and only
