@@ -10,17 +10,21 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 import net.bodz.bas.err.ParseException;
+import net.bodz.bas.i18n.dom.DomainString;
 import net.bodz.mda.xjdoc.conv.ClassDocLoadException;
 import net.bodz.mda.xjdoc.conv.ClassDocs;
 import net.bodz.mda.xjdoc.model.ClassDoc;
+import net.bodz.mda.xjdoc.model.ElementDoc;
 import net.bodz.mda.xjdoc.model.FieldDoc;
 import net.bodz.mda.xjdoc.model.MethodDoc;
 
-public class ClassOptionParser {
+public class ClassDocOptionParser {
+
+    boolean annotatedOnly = true;
 
     boolean includeSuperclass = true;
     boolean includeInterfaces = false;
-    boolean reduceEmptyParents = true;
+    OptionGroupInheritance inheritance = OptionGroupInheritance.reflective;
 
     boolean includeFields = true;
     boolean includeMethods = true;
@@ -29,6 +33,27 @@ public class ClassOptionParser {
 
     boolean includeProperties = true;
 
+    /**
+     * Exclude members without &#64;option javadoc annotation.
+     */
+    public boolean isAnnotatedOnly() {
+        return annotatedOnly;
+    }
+
+    public void setAnnotatedOnly(boolean annotatedOnly) {
+        this.annotatedOnly = annotatedOnly;
+    }
+
+    /**
+     * Whether to scan superclass for options.
+     * 
+     * For Bean-Properties:
+     * <ul>
+     * <li>reflective-mode:
+     * <li>reduced-parent-mode:
+     * <li>flatten-mode:
+     * </ul>
+     */
     public boolean isIncludeSuperclass() {
         return includeSuperclass;
     }
@@ -37,6 +62,9 @@ public class ClassOptionParser {
         this.includeSuperclass = includeSuperclass;
     }
 
+    /**
+     * Whether to scan interfaces for options.
+     */
     public boolean isIncludeInterfaces() {
         return includeInterfaces;
     }
@@ -45,14 +73,24 @@ public class ClassOptionParser {
         this.includeInterfaces = includeInterfaces;
     }
 
-    public boolean isReduceEmptyParents() {
-        return reduceEmptyParents;
+    /**
+     * The option group inheritance mode.
+     * 
+     * @see OptionGroupInheritance#reflective
+     * @see OptionGroupInheritance#reduceEmptyParents
+     * @see OptionGroupInheritance#flatten
+     */
+    public OptionGroupInheritance getInheritance() {
+        return inheritance;
     }
 
-    public void setReduceEmptyParents(boolean reduceEmptyParents) {
-        this.reduceEmptyParents = reduceEmptyParents;
+    public void setInheritance(OptionGroupInheritance inheritance) {
+        this.inheritance = inheritance;
     }
 
+    /**
+     * Whether to include the member fields.
+     */
     public boolean isIncludeFields() {
         return includeFields;
     }
@@ -61,6 +99,9 @@ public class ClassOptionParser {
         this.includeFields = includeFields;
     }
 
+    /**
+     * Whether to include the member methods.
+     */
     public boolean isIncludeMethods() {
         return includeMethods;
     }
@@ -69,6 +110,9 @@ public class ClassOptionParser {
         this.includeMethods = includeMethods;
     }
 
+    /**
+     * Whether to include private/protected members.
+     */
     public boolean isIncludeNonPublic() {
         return includeNonPublic;
     }
@@ -77,6 +121,9 @@ public class ClassOptionParser {
         this.includeNonPublic = includeNonPublic;
     }
 
+    /**
+     * Whether to include static members.
+     */
     public boolean isIncludeStatic() {
         return includeStatic;
     }
@@ -85,6 +132,9 @@ public class ClassOptionParser {
         this.includeStatic = includeStatic;
     }
 
+    /**
+     * Whether to include bean properties.
+     */
     public boolean isIncludeProperties() {
         return includeProperties;
     }
@@ -93,10 +143,16 @@ public class ClassOptionParser {
         this.includeProperties = includeProperties;
     }
 
-    public IOptionGroup parse(Class<?> clazz)
+    public IOptionGroup parseTree(Class<?> clazz)
             throws ParseException {
+        return parseTree(clazz, null);
+    }
 
-        IOptionGroup parent = null;
+    /**
+     * Scan options from a class.
+     */
+    public IOptionGroup parseTree(Class<?> clazz, IOptionGroup parent)
+            throws ParseException {
 
         if (includeInterfaces) {
             for (Class<?> iface : clazz.getInterfaces()) {
@@ -121,7 +177,7 @@ public class ClassOptionParser {
      * parent = parent.parent...parent
      */
     IOptionGroup compact(IOptionGroup group) {
-        if (reduceEmptyParents)
+        if (inheritance == OptionGroupInheritance.reduceEmptyParents)
             // parent = parent.parent...parent
             while (group.getOptions().isEmpty()) {
                 group = group.getParent();
@@ -147,7 +203,24 @@ public class ClassOptionParser {
         if (clazz == null)
             throw new NullPointerException("clazz");
 
-        IOptionGroup group = new DefaultOptionGroup(parent, clazz);
+        IOptionGroup group = null;
+        if (inheritance == OptionGroupInheritance.flatten)
+            group = parent;
+
+        if (group == null) {
+            DefaultOptionGroup newGroup = new DefaultOptionGroup(parent, clazz);
+
+            DomainString _name = (DomainString) classDoc.getTag("name");
+            if (_name != null)
+                newGroup.setDisplayName(_name);
+
+            DomainString _header = classDoc.getTextHeader();
+            DomainString _body = classDoc.getTextBody();
+            newGroup.setDescription(_header);
+            newGroup.setHelpDoc(_body);
+
+            group = newGroup;
+        }
 
         if (includeFields) {
             Field[] fields = clazz.getDeclaredFields();
@@ -155,10 +228,14 @@ public class ClassOptionParser {
                 if (!isIncluded(field))
                     continue;
 
-                field.setAccessible(true);
+                if (includeNonPublic)
+                    field.setAccessible(true);
 
+                FieldOption option = new FieldOption(field);
                 FieldDoc fieldDoc = classDoc.getFieldDoc(field.getName());
-                // ...
+
+                if (parseOptionDoc(option, fieldDoc))
+                    group.addOption(option);
             }
         }
 
@@ -168,23 +245,37 @@ public class ClassOptionParser {
                 if (!isIncluded(method))
                     continue;
 
-                method.setAccessible(true);
+                if (includeNonPublic)
+                    method.setAccessible(true);
+
+                MethodOption option = new MethodOption(method);
                 MethodDoc methodDoc = classDoc.getMethodDoc(method);
-                // ...
+
+                if (parseOptionDoc(option, methodDoc))
+                    group.addOption(option);
             }
         }
 
         if (includeProperties) {
+            int flags = Introspector.USE_ALL_BEANINFO;
+            Class<?> stopClass = null;
+            if (inheritance != OptionGroupInheritance.flatten)
+                stopClass = clazz.getSuperclass();
+
             BeanInfo beanInfo;
             try {
-                beanInfo = Introspector.getBeanInfo(clazz);
+                beanInfo = Introspector.getBeanInfo(clazz, stopClass, flags);
             } catch (IntrospectionException e) {
                 throw new ParseException(e.getMessage(), e);
             }
             for (PropertyDescriptor property : beanInfo.getPropertyDescriptors()) {
                 Method getter = property.getReadMethod();
-                
+
+                PropertyOption option = new PropertyOption(property);
                 MethodDoc getterDoc = classDoc.getMethodDoc(getter);
+
+                if (parseOptionDoc(option, getterDoc))
+                    group.addOption(option);
             }
         }
         return group;
@@ -200,6 +291,29 @@ public class ClassOptionParser {
         if (!includeStatic)
             if (Modifier.isStatic(modifiers))
                 return false;
+
+        return true;
+    }
+
+    boolean parseOptionDoc(AbstractOption option, ElementDoc doc)
+            throws ParseException {
+        if (doc == null)
+            return annotatedOnly ? false : true;
+
+        String descriptor = (String) doc.getTag("option");
+        if (descriptor != null)
+            OptionDescriptors.parse(option, descriptor);
+        else if (annotatedOnly)
+            return false;
+
+        DomainString name = (DomainString) doc.getTag("name");
+        if (name != null)
+            option.setDisplayName(name);
+
+        DomainString header = doc.getTextHeader();
+        DomainString body = doc.getTextBody();
+        option.setDescription(header);
+        option.setHelpDoc(body);
 
         return true;
     }

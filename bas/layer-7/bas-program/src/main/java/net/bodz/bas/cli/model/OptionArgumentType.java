@@ -1,6 +1,5 @@
 package net.bodz.bas.cli.model;
 
-
 public enum OptionArgumentType {
 
     /**

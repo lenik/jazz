@@ -12,9 +12,10 @@ public abstract class AbstractElement
     private final Class<?> declaringType;
     private final String name;
 
-    protected DomainString displayName;
-    protected DomainString description;
-    protected Set<String> tags;
+    DomainString displayName;
+    DomainString description;
+    DomainString helpDoc;
+    Set<String> tags;
 
     /**
      * @param declaringType
@@ -53,6 +54,15 @@ public abstract class AbstractElement
 
     public void setDescription(DomainString description) {
         this.description = description;
+    }
+
+    @Override
+    public DomainString getHelpDoc() {
+        return helpDoc;
+    }
+
+    public void setHelpDoc(DomainString helpDoc) {
+        this.helpDoc = helpDoc;
     }
 
     @Override

@@ -1,6 +1,8 @@
 package net.bodz.bas.cli.model;
 
+import java.util.Collection;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import net.bodz.bas.potato.traits.IElement;
@@ -33,27 +35,40 @@ public interface IOptionGroup
             throws AmbiguousOptionKeyException;
 
     /**
-     * Get all options.
+     * Get local options.
      * <p>
      * The canonical-name of the option is used as the map key.
      * 
-     * @return Non-<code>null</code> option map.
+     * @return Non-<code>null</code> local option map.
      */
     Map<String, IOption> getOptions();
+
+    void fillSuggestKeys(String optionKeyPrefix, Collection<String> suggestions);
 
     /**
      * Get options starts with the given prefix.
      * <p>
      * The canonical-name of the option is used as the map key.
      * 
-     * @return Non-<code>null</code> option map.
+     * @param optionKeyPrefix
+     *            The prefix of option keys to find.
+     * @param results
+     *            Non-<code>null</code> option map to fill with matching results.
      */
-    Map<String, IOption> findOptions(String optionKeyPrefix);
+    void fillSuggestMap(String optionKeyPrefix, Map<String, IOption> results);
 
     /**
-     * Get option keys
+     * Get enabled option keys
      */
-    Set<String> getOptionKeys(IOption option);
+    void fillEnabledKeys(IOption option, Set<String> enabledKeys);
+
+    /**
+     * Find and return a conflicted option with the question key.
+     * 
+     * @return The first conflict. The entry contains the conflicted option key and the conflicted
+     *         option. Returns <code>null</code> if no conflict.
+     */
+    Entry<String, IOption> checkForConflict(IOption option);
 
     /**
      * Add an option.

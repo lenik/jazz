@@ -7,11 +7,11 @@ import net.bodz.bas.err.ParseException;
 /**
  * @option -D --define =NAM=VAL --stdout hidden weak
  */
-public class OptionDescriptor {
+public class OptionDescriptors {
 
-    public void parse(AbstractOption option, String script)
+    public static void parse(AbstractOption option, String descriptor)
             throws ParseException {
-        StringTokenizer tokens = new StringTokenizer(script, " ");
+        StringTokenizer tokens = new StringTokenizer(descriptor, " ");
 
         while (tokens.hasMoreTokens()) {
             String token = tokens.nextToken();

@@ -3,10 +3,11 @@ package net.bodz.bas.cli.model;
 import java.util.*;
 import java.util.Map.Entry;
 
+import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.collection.preorder.PrefixMap;
 import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.potato.traits.AbstractElement;
-import net.bodz.bas.util.iter.Iterables;
+import net.bodz.bas.util.Pair;
 
 public class DefaultOptionGroup
         extends AbstractElement
@@ -17,7 +18,7 @@ public class DefaultOptionGroup
     final PrefixMap<IOption> prefixMap = new PrefixMap<IOption>();
 
     public DefaultOptionGroup(IOptionGroup parent, Class<?> declaringClass) {
-        super(declaringClass, declaringClass.getSimpleName());
+        super(declaringClass, Strings.hyphenatize(declaringClass.getSimpleName()));
         this.parent = parent;
     }
 
@@ -33,7 +34,13 @@ public class DefaultOptionGroup
 
     @Override
     public IOption getOption(String optionKey) {
-        return prefixMap.get(optionKey);
+        IOption option = prefixMap.get(optionKey);
+        if (option != null)
+            return option;
+        else if (parent == null)
+            return null;
+        else
+            return parent.getOption(optionKey);
     }
 
     @Override
@@ -46,11 +53,11 @@ public class DefaultOptionGroup
         if (prefix.isEmpty())
             throw new IllegalArgumentException("prefix is empty");
 
-        IOption option = prefixMap.get(prefix);
+        IOption option = getOption(prefix);
         if (option != null)
             return option;
 
-        List<String> optionKeys = Iterables.toList(prefixMap.joinKeys(prefix));
+        List<String> optionKeys = getSuggestKeys(prefix);
         if (optionKeys.isEmpty())
             return null;
 
@@ -62,66 +69,108 @@ public class DefaultOptionGroup
             }
             throw new AmbiguousOptionKeyException(prefix, suggestions.toString());
         }
-        String optionName = optionKeys.get(0);
-        return prefixMap.get(optionName);
+        String optionKey = optionKeys.get(0);
+        return prefixMap.get(optionKey);
+    }
+
+    public List<String> getSuggestKeys(String optionKeyPrefix) {
+        List<String> suggestKeys = new ArrayList<String>();
+        fillSuggestKeys(optionKeyPrefix, suggestKeys);
+        return suggestKeys;
     }
 
     @Override
-    public Map<String, IOption> findOptions(String prefix) {
+    public void fillSuggestKeys(String prefix, Collection<String> suggestKeys) {
+        if (parent != null)
+            parent.fillSuggestKeys(prefix, suggestKeys);
+        for (String optionKey : prefixMap.joinKeys(prefix))
+            suggestKeys.add(optionKey);
+    }
+
+    public Map<String, IOption> getSuggestMap(String prefix) {
         Map<String, IOption> map = new LinkedHashMap<String, IOption>();
-        for (Entry<String, IOption> entry : prefixMap.joinEntries(prefix)) {
-            String key = entry.getKey();
-            IOption option = entry.getValue();
-            map.put(key, option);
-        }
+        fillSuggestMap(prefix, map);
         return map;
     }
 
     @Override
-    public Set<String> getOptionKeys(IOption option) {
-        Set<String> keys = new LinkedHashSet<String>();
-        for (Entry<String, IOption> e : prefixMap.entrySet()) {
-            if (e.getValue() != option)
-                continue;
-            String key = e.getKey();
-            keys.add(key);
+    public void fillSuggestMap(String prefix, Map<String, IOption> suggestMap) {
+        if (parent != null)
+            parent.fillSuggestMap(prefix, suggestMap);
+        for (Entry<String, IOption> entry : prefixMap.joinEntries(prefix)) {
+            String key = entry.getKey();
+            IOption option = entry.getValue();
+            suggestMap.put(key, option);
         }
-        return keys;
+    }
+
+    public Set<String> getEnabledKeys(IOption option) {
+        Set<String> enabledKeys = new LinkedHashSet<String>();
+        fillEnabledKeys(option, enabledKeys);
+        return enabledKeys;
+    }
+
+    @Override
+    public void fillEnabledKeys(IOption option, Set<String> enabledKeys) {
+        if (parent != null)
+            parent.fillEnabledKeys(option, enabledKeys);
+        for (Entry<String, IOption> e : prefixMap.entrySet())
+            if (e.getValue() == option) {
+                String key = e.getKey();
+                enabledKeys.add(key);
+            }
+    }
+
+    @Override
+    public Entry<String, IOption> checkForConflict(IOption option) {
+        int priority = option.getPriority();
+
+        // Check for conflicts
+        String optionName = option.getName();
+        IOption existing = nameMap.get(optionName);
+        if (existing != null)
+            if (existing.getPriority() == priority)
+                return Pair.of(optionName, existing);
+
+        for (String alias : option.getAliases()) {
+            IOption other = prefixMap.get(alias);
+            if (other != null)
+                if (other.getPriority() == option.getPriority())
+                    return Pair.of(alias, other);
+        }
+
+        if (parent != null)
+            return parent.checkForConflict(option);
+
+        return null;
     }
 
     @Override
     public void addOption(IOption option) {
         if (option == null)
             throw new NullPointerException("option");
-        int priority = option.getPriority();
 
-        // Check for conflicts
-        String optionName = option.getName();
-        IOption existing = nameMap.get(optionName);
-        if (existing != null) {
-            if (existing.getPriority() == priority)
-                throw new IllegalUsageException(String.format("Option name '%s' conflicts with %s: %s.", //
-                        optionName, existing.getDisplayName(), existing.getDescription()));
-        }
-
-        for (String alias : option.getAliases()) {
-            IOption other = prefixMap.get(alias);
-            if (other != null)
-                if (other.getPriority() == option.getPriority())
-                    throw new IllegalUsageException(String.format("Option alias name '%s' conflicts with %s: %s.",//
-                            alias, other.getDisplayName(), other.getDescription()));
-        }
+        Entry<String, IOption> conflictEntry = checkForConflict(option);
+        if (conflictEntry != null)
+            throw new IllegalUsageException(String.format("Option name '%s' conflicts with %s: %s.", //
+                    conflictEntry.getKey(), //
+                    conflictEntry.getValue().getDisplayName(), conflictEntry.getValue().getDescription()));
 
         // Real add
-        if (priority <= existing.getPriority()) {
+        String optionName = option.getName();
+        int priority = option.getPriority();
+
+        IOption existing = nameMap.get(optionName);
+        if (existing == null || priority < existing.getPriority()) {
             nameMap.put(optionName, option);
             prefixMap.put(optionName, option);
         }
 
         for (String alias : option.getAliases()) {
             IOption aliased = prefixMap.get(alias);
-            if (priority <= aliased.getPriority())
-                prefixMap.put(alias, option);
+            if (aliased != null && aliased.getPriority() < priority)
+                continue;
+            prefixMap.put(alias, option);
         }
     }
 
@@ -156,6 +205,10 @@ public class DefaultOptionGroup
                 occurs++;
             }
         }
+
+        if (parent != null)
+            occurs += parent.removeOption(option);
+
         return occurs;
     }
 

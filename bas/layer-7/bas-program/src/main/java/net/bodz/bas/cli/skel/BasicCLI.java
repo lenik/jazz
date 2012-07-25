@@ -33,7 +33,6 @@ import net.bodz.bas.meta.build.RcsKeywords;
 import net.bodz.bas.meta.build.ReleaseDescription;
 import net.bodz.bas.meta.codehint.ChainUsage;
 import net.bodz.bas.meta.codehint.OverrideOption;
-import net.bodz.bas.meta.program.OptionGroup;
 import net.bodz.bas.model.IExecutableVarArgsX;
 import net.bodz.bas.potato.traits.IType;
 import net.bodz.bas.sio.IPrintOut;
@@ -56,7 +55,6 @@ import org.apache.commons.lang.ArrayUtils;
 /**
  * Basic CLI Framework
  */
-@OptionGroup(value = BasicCLI.class, order = -1)
 @RcsKeywords(id = "$Id$")
 public class BasicCLI
         implements Runnable, IExecutableVarArgsX<String, Exception> {
