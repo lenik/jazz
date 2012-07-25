@@ -2,7 +2,7 @@ package net.bodz.bas.util.order;
 
 
 public class ToStringComparator
-        extends OrderComparator<Object, String> {
+        extends AbstractOrderComparator<Object, String> {
 
     @Override
     public String getOrder(Object object) {
