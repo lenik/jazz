@@ -1,6 +1,5 @@
 package net.bodz.bas.util.order;
 
-
 /**
  * For comparators who always expect non-<code>null</code> values to compare.
  */
@@ -27,6 +26,18 @@ public abstract class AbstractNonNullComparator<T>
 
     @Override
     public abstract int compareNonNull(T o1, T o2);
+
+    /**
+     * Fallback compare.
+     * 
+     * @param o1
+     *            Non-<code>null</code> object to compare.
+     * @param o2
+     *            Non-<code>null</code> object to compare.
+     */
+    protected int compareFallback(T o1, T o2) {
+        return compareIdentity(o1, o2);
+    }
 
     protected static final int compareIdentity(Object o1, Object o2) {
         assert o1 != o2;

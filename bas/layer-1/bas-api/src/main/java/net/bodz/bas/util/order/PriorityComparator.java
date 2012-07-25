@@ -14,7 +14,8 @@ public class PriorityComparator
         int cmp = o1.getPriority() - o2.getPriority();
         if (cmp != 0)
             return cmp;
-        return compare2(o1, o2);
+        else
+            return compareFallback(o1, o2);
     }
 
     /**
@@ -26,7 +27,8 @@ public class PriorityComparator
      *            The second non-<code>null</code> object to compare.
      * @return Compare result.
      */
-    protected int compare2(Object o1, Object o2) {
+    @Override
+    protected int compareFallback(IPriority o1, IPriority o2) {
         return compareIdentity(o1, o2);
     }
 
