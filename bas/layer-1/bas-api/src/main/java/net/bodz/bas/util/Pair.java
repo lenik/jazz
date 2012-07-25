@@ -81,7 +81,7 @@ public class Pair<K, V>
 
     public boolean containsKey(Object key) {
         if (key == null)
-            throw new NullPointerException("null key"); 
+            throw new NullPointerException("null key");
         return key.equals(first);
     }
 
@@ -102,7 +102,7 @@ public class Pair<K, V>
 
     public V get(Object key) {
         if (key == null)
-            throw new NullPointerException("null key"); 
+            throw new NullPointerException("null key");
         if (key.equals(first))
             return second;
         return null;
@@ -121,7 +121,7 @@ public class Pair<K, V>
 
     public V put(K key, V value) {
         if (key == null)
-            throw new NullPointerException("null key"); 
+            throw new NullPointerException("null key");
         first = key;
         second = value;
         return null;
@@ -138,7 +138,7 @@ public class Pair<K, V>
 
     public V remove(Object key) {
         if (key == null)
-            throw new NullPointerException("Null key"); 
+            throw new NullPointerException("Null key");
         if (key.equals(first)) {
             first = null;
             return second;
@@ -165,6 +165,12 @@ public class Pair<K, V>
         return first;
     }
 
+    public K setKey(K key) {
+        K old = first;
+        this.first = key;
+        return old;
+    }
+
     public V getValue() {
         return second;
     }
@@ -173,6 +179,10 @@ public class Pair<K, V>
         V old = second;
         second = value;
         return old;
+    }
+
+    public static <K, V> Pair<K, V> of(K key, V value) {
+        return new Pair<K, V>(key, value);
     }
 
 }
