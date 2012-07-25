@@ -2,11 +2,10 @@ package net.bodz.bas.util;
 
 import net.bodz.bas.meta.build.AppClassDoc;
 
-public class _Plugin implements Plugin {
+public class AbstractPlugin
+        implements IPlugin {
 
-    private final String description;
-
-    public _Plugin() {
+    public AbstractPlugin() {
         AppClassDoc info = AppClassDoc.get(getClass());
         description = info.getDoc();
     }

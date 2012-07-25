@@ -5,7 +5,7 @@ import net.bodz.bas.cli.skel.CLIException;
 import net.bodz.bas.err.OutOfDomainException;
 import net.bodz.bas.l10n.en.English;
 import net.bodz.bas.sio.IPrintOut;
-import net.bodz.bas.util.Plugin;
+import net.bodz.bas.util.IPlugin;
 import net.bodz.bas.util.PluginCategory;
 import net.bodz.bas.util.Plugins;
 
@@ -21,7 +21,7 @@ public class CLIPlugins
 
     @SuppressWarnings("unchecked")
     @Override
-    public boolean registerCategory(String name, Class<? extends Plugin> baseType) {
+    public boolean registerCategory(String name, Class<? extends IPlugin> baseType) {
         if (!CLIPlugin.class.isAssignableFrom(baseType))
             throw new OutOfDomainException("baseType", baseType, CLIPlugin.class);
         CLIPluginCategory category = new CLIPluginCategory(name, (Class<? extends CLIPlugin>) baseType);

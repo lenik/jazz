@@ -12,12 +12,12 @@ import net.bodz.bas.meta.build.AppClassDoc;
 public class PluginCategory {
 
     private final String categoryName;
-    private final Class<? extends Plugin> categoryBaseType;
+    private final Class<? extends IPlugin> categoryBaseType;
     private final AppClassDoc categoryTypeInfo;
 
     protected Map<String, PluginTypeEx> registry;
 
-    public PluginCategory(String name, Class<? extends Plugin> baseType) {
+    public PluginCategory(String name, Class<? extends IPlugin> baseType) {
         assert baseType != null;
         this.categoryName = name;
         this.categoryBaseType = baseType;
@@ -25,7 +25,7 @@ public class PluginCategory {
         registry = new HashMap<String, PluginTypeEx>();
     }
 
-    public PluginCategory(Class<? extends Plugin> baseType) {
+    public PluginCategory(Class<? extends IPlugin> baseType) {
         this(baseType.getSimpleName(), baseType);
     }
 
@@ -33,7 +33,7 @@ public class PluginCategory {
         return categoryName;
     }
 
-    public Class<? extends Plugin> getBaseType() {
+    public Class<? extends IPlugin> getBaseType() {
         return categoryBaseType;
     }
 
@@ -62,15 +62,15 @@ public class PluginCategory {
         registry.put(pluginId, typeEx);
     }
 
-    public void register(String pluginId, Class<? extends Plugin> type) {
+    public void register(String pluginId, Class<? extends IPlugin> type) {
         register(pluginId, new PluginTypeEx(type));
     }
 
-    public void register(String pluginId, Class<? extends Plugin> type, Object outer) {
+    public void register(String pluginId, Class<? extends IPlugin> type, Object outer) {
         register(pluginId, new PluginTypeEx(type, outer));
     }
 
-    public void register(String pluginId, Plugin pluginInstance) {
+    public void register(String pluginId, IPlugin pluginInstance) {
         register(pluginId, new PluginTypeEx(pluginInstance));
     }
 
