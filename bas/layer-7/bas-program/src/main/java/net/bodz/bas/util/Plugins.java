@@ -24,12 +24,12 @@ public class Plugins {
         return true;
     }
 
-    public boolean registerCategory(String name, Class<? extends Plugin> baseType) {
+    public boolean registerCategory(String name, Class<? extends IPlugin> baseType) {
         PluginCategory category = new PluginCategory(name, baseType);
         return registerCategory(category);
     }
 
-    public PluginCategory getOrCreateCategory(Class<? extends Plugin> type, boolean strict) {
+    public PluginCategory getOrCreateCategory(Class<? extends IPlugin> type, boolean strict) {
         PluginCategory pluginType;
         if (strict)
             pluginType = categories.get(type);
@@ -42,7 +42,7 @@ public class Plugins {
         return (PluginCategory) pluginType;
     }
 
-    public PluginCategory getOrCreateCategory(Class<? extends Plugin> pluginTypeClass) {
+    public PluginCategory getOrCreateCategory(Class<? extends IPlugin> pluginTypeClass) {
         return getOrCreateCategory(pluginTypeClass, false);
     }
 
@@ -56,23 +56,23 @@ public class Plugins {
     }
 
     public void register(String pluginId, PluginTypeEx typeEx) {
-        Class<? extends Plugin> type = typeEx.getType();
+        Class<? extends IPlugin> type = typeEx.getType();
         PluginCategory category = getOrCreateCategory(type);
         category.register(pluginId, typeEx);
     }
 
-    public void register(String pluginId, Class<? extends Plugin> type) {
+    public void register(String pluginId, Class<? extends IPlugin> type) {
         PluginCategory category = getOrCreateCategory(type);
         category.register(pluginId, type);
     }
 
-    public void register(String pluginId, Class<? extends Plugin> type, Object outer) {
+    public void register(String pluginId, Class<? extends IPlugin> type, Object outer) {
         PluginCategory category = getOrCreateCategory(type);
         category.register(pluginId, type, outer);
     }
 
-    public <T> void register(String pluginId, Plugin staticInstance) {
-        Class<? extends Plugin> type = staticInstance.getClass();
+    public <T> void register(String pluginId, IPlugin staticInstance) {
+        Class<? extends IPlugin> type = staticInstance.getClass();
         PluginCategory category = getOrCreateCategory(type);
         category.register(pluginId, staticInstance);
     }
@@ -108,7 +108,7 @@ public class Plugins {
         return find(type, pluginId);
     }
 
-    public Plugin load(Class<? extends Plugin> type, String pluginId, Object... args) throws PluginException {
+    public IPlugin load(Class<? extends IPlugin> type, String pluginId, Object... args) throws PluginException {
         PluginTypeEx typeEx = find(type, pluginId);
         if (typeEx == null)
             return null;

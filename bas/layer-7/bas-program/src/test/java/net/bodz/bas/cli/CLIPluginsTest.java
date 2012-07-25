@@ -2,13 +2,13 @@ package net.bodz.bas.cli;
 
 import static org.junit.Assert.assertEquals;
 import net.bodz.bas.cli.model.plugin.CLIPlugins;
-import net.bodz.bas.cli.model.plugin._CLIPlugin;
+import net.bodz.bas.cli.model.plugin.AbstractCLIPlugin;
 
 import org.junit.Test;
 
 public class CLIPluginsTest {
 
-    static class Ext extends _CLIPlugin {
+    static class Ext extends AbstractCLIPlugin {
         private String name;
 
         public Ext(String name) {

@@ -1,6 +1,6 @@
 package net.bodz.bas.util;
 
-public interface Plugin {
+public interface IPlugin {
 
     // static methods
 
