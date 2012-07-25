@@ -1,9 +1,9 @@
 package net.bodz.bas.c.type;
 
-import net.bodz.bas.util.order.OrderComparator;
+import net.bodz.bas.util.order.AbstractOrderComparator;
 
 public class ClassNameComparator
-        extends OrderComparator<Class<?>, String> {
+        extends AbstractOrderComparator<Class<?>, String> {
 
     @Override
     public String getOrder(Class<?> clazz) {

@@ -3,7 +3,7 @@ package net.bodz.bas.util.order;
 import java.util.Comparator;
 
 public abstract class RefinedOrderComparator<TargetType, OrderType extends Comparable<OrderType>>
-        extends OrderComparator<TargetType, OrderType> {
+        extends AbstractOrderComparator<TargetType, OrderType> {
 
     private final Comparator<TargetType> refineComparator;
 
