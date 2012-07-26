@@ -31,6 +31,7 @@ import net.bodz.bas.loader.boot.BootProc;
 import net.bodz.bas.meta.build.AppClassDoc;
 import net.bodz.bas.meta.build.MainVersion;
 import net.bodz.bas.meta.build.RcsKeywords;
+import net.bodz.bas.meta.build.ReleaseDescription;
 import net.bodz.bas.meta.program.ProgramName;
 import net.bodz.bas.meta.program.ProgramNameUtil;
 import net.bodz.bas.meta.program.StartMode;
@@ -39,6 +40,7 @@ import net.bodz.bas.sio.BCharOut;
 import net.bodz.bas.sio.Stdio;
 import net.bodz.bas.snm.SJLibLoader;
 import net.bodz.bas.vfs.IFile;
+import net.bodz.mda.xjdoc.conv.ClassDocs;
 
 /**
  * Generate program launcher for java applications
@@ -66,10 +68,13 @@ public class Mkbat
     public Mkbat() {
         generated = new HashSet<String>();
         varmap = new HashMap<String, String>();
-        AppClassDoc classInfo = _loadClassInfo();
-        String generator = Mkbat.class.getSimpleName() //
-                + " " + classInfo.getVersionString(false) //
-        // + ", " + classInfo.getDateString()
+
+        AppClassDoc classDoc;
+        classDoc = ClassDocs.loadFromResource(getClass()).decorate(AppClassDoc.class);
+        ReleaseDescription release = classDoc.getReleaseDescription();
+        String releaseId = release.getFriendlyId();
+
+        String generator = releaseId;// + ", " + classInfo.getDateString()
         ;
         varmap.put("GENERATOR", generator);
     }
