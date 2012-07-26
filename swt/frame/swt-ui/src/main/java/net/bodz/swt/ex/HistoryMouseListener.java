@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bodz.bas.collection.list.LinkedStack;
+import net.bodz.bas.collection.list.Stack;
 
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;

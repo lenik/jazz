@@ -1,6 +1,6 @@
 package net.bodz.geom.transform;
 
-import javax.vecmath.Vector2f;
+import net.bodz.bas.c.javax.vecmath.Vector2f;
 
 public interface ViewTransformer2f
         extends Transformer2f {

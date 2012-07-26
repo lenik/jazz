@@ -3,6 +3,8 @@ package net.bodz.geom.util.gd;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.bodz.swt.state.ISWTState;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.SelectionAdapter;

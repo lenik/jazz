@@ -2,8 +2,7 @@ package net.bodz.geom.shape;
 
 import java.util.Set;
 
-import javax.vecmath.Vector2f;
-
+import net.bodz.bas.c.javax.vecmath.Vector2f;
 import net.bodz.geom.base.Pick2f;
 import net.bodz.geom.drawtarget.DrawException;
 import net.bodz.geom.drawtarget.DrawTarget2f;

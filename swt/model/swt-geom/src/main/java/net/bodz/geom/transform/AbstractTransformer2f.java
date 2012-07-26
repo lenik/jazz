@@ -1,7 +1,6 @@
 package net.bodz.geom.transform;
 
-import javax.vecmath.Vector2f;
-
+import net.bodz.bas.c.javax.vecmath.Vector2f;
 import net.bodz.geom.shape.base.Point2f;
 
 public abstract class AbstractTransformer2f

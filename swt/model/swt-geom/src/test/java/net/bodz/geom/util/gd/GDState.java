@@ -1,5 +1,7 @@
 package net.bodz.geom.util.gd;
 
+import net.bodz.swt.state.SWTStateImpl;
+
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.MouseEvent;
 

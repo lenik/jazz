@@ -1,5 +1,6 @@
 package net.bodz.geom.drawtarget;
 
+import net.bodz.geom.shape.base.Line2f;
 import net.bodz.geom.shape.base.Point2f;
 import net.bodz.geom.shape.base.Polygon2f;
 import net.bodz.geom.shape.base.Rectangle2f;

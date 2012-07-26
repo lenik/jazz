@@ -1,5 +1,7 @@
 package net.bodz.geom.util.gd;
 
+import net.bodz.swt.state.SWTStateGraphImpl;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.events.PaintEvent;

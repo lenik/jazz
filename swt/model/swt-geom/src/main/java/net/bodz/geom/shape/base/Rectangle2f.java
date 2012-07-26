@@ -1,7 +1,6 @@
 package net.bodz.geom.shape.base;
 
-import javax.vecmath.Vector2f;
-
+import net.bodz.bas.c.javax.vecmath.Vector2f;
 import net.bodz.geom.shape.Shape2f;
 import net.bodz.geom.shape.ShapeAmount2f;
 
