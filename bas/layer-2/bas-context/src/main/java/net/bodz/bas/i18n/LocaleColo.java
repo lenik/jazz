@@ -12,6 +12,13 @@ public class LocaleColo
         return Locale.getDefault();
     }
 
+    public String getPath() {
+        Locale locale = get();
+        String tag = locale.toLanguageTag();
+        // tag = locale.toString();
+        return tag;
+    }
+
     static final LocaleColo instance = new LocaleColo();
 
     public static LocaleColo getInstance() {

@@ -4,6 +4,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
+import net.bodz.bas.c.string.StringHtml;
+import net.bodz.bas.i18n.LocaleColo;
+
 public class TreeMapDomainString
         extends TreeMap<String, String>
         implements DomainString {
@@ -37,6 +40,22 @@ public class TreeMapDomainString
     @Override
     public String remove(String path) {
         return super.remove(path);
+    }
+
+    /**
+     * Get locale string.
+     */
+    @Override
+    public String toString() {
+        String path = LocaleColo.getInstance().getPath();
+        String leaf = get(path);
+        return leaf;
+    }
+
+    @Override
+    public String toPlainText() {
+        String str = toString();
+        return StringHtml.toPlain(str);
     }
 
     @Override
