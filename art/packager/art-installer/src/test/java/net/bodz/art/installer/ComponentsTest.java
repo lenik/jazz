@@ -1,20 +1,20 @@
 package net.bodz.art.installer;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.Map;
 
 import net.bodz.art.installer.builtins.TestConfig;
 import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.xml.XMLs;
 
+import org.junit.Assert;
 import org.junit.Test;
 
-
-public class ComponentsTest {
+public class ComponentsTest
+        extends Assert {
 
     @Test
-    public void test1() throws Exception {
+    public void test1()
+            throws Exception {
         IProject project = new TestProject();
         Components components = Components.collect(project);
         System.out.println("Components Count: " + components.size()); //$NON-NLS-1$

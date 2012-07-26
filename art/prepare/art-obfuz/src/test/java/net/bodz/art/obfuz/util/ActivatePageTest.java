@@ -2,10 +2,6 @@ package net.bodz.art.obfuz.util;
 
 import net.bodz.art.obfuz.pm.BasicPM;
 import net.bodz.art.obfuz.pm.ProtectionModel;
-import net.bodz.art.obfuz.util.ABTSProvider;
-import net.bodz.art.obfuz.util.ActivatePage;
-import net.bodz.art.obfuz.util.Activation;
-import net.bodz.art.obfuz.util.ActivationByTargetString;
 import net.bodz.swt.gui.pfl.PageTestApp;
 
 import org.junit.Test;

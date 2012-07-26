@@ -4,8 +4,6 @@ import net.bodz.art.installer.nls.PackNLS;
 import net.bodz.bas.err.IllegalUsageError;
 import net.bodz.bas.log.LogLevel;
 import net.bodz.bas.meta.build.RcsKeywords;
-import net.bodz.bas.meta.build.Version;
-import net.bodz.bas.meta.info.DisplayName;
 import net.bodz.bas.ui.UIException;
 import net.bodz.bas.ui.a.PreferredSize;
 import net.bodz.swt.gui.pfl.BadPathEvent;

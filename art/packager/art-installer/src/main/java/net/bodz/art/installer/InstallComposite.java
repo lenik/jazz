@@ -3,8 +3,8 @@ package net.bodz.art.installer;
 import net.bodz.bas.collection.tree.TreePath;
 import net.bodz.bas.ui.UIException;
 import net.bodz.swt.gui.pfl.IBook;
-import net.bodz.swt.gui.pfl.NavigatorComposite;
 import net.bodz.swt.gui.pfl.IPage;
+import net.bodz.swt.gui.pfl.NavigatorComposite;
 import net.bodz.swt.gui.pfl.SimpleBook;
 
 import org.eclipse.swt.widgets.Composite;

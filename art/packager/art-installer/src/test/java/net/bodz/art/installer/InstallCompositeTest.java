@@ -8,11 +8,11 @@ import net.bodz.swt.widgets.test.ControlTestApp;
 import org.eclipse.swt.SWT;
 import org.junit.Test;
 
-
 public class InstallCompositeTest {
 
     @Test
-    public void test() throws Exception {
+    public void test()
+            throws Exception {
         final ControlTestApp app = new ControlTestApp();
 
         TestProject project = new TestProject();

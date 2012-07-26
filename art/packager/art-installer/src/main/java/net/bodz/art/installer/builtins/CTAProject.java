@@ -9,8 +9,8 @@ import net.bodz.art.installer.IComponent;
 import net.bodz.art.installer.nls.PackNLS;
 import net.bodz.bas.c.java.io.FileFinder;
 import net.bodz.bas.c.java.io.TempFile;
+import net.bodz.bas.meta.build.MainVersion;
 import net.bodz.bas.meta.build.RcsKeywords;
-import net.bodz.bas.meta.build.Version;
 
 /**
  * A test program for z.dist components.
@@ -18,7 +18,7 @@ import net.bodz.bas.meta.build.Version;
  * @label Component Test Application
  */
 @RcsKeywords(id = "$Id: ComponentTestApp.java 20 2009-04-22 12:33:53Z lenik $")
-@Version({ 1, 2, 3 })
+@MainVersion({ 1, 2, 3 })
 public class CTAProject
         extends SimpleProject {
 

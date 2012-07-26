@@ -6,8 +6,8 @@ import java.util.List;
 import net.bodz.art.obfuz.nls.ProtectNLS;
 import net.bodz.bas.err.ParseException;
 import net.bodz.swt.adapters.ControlAdapters;
-import net.bodz.swt.gui.pfl.PageMethod;
 import net.bodz.swt.gui.pfl.AbstractPage;
+import net.bodz.swt.gui.pfl.PageMethod;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;

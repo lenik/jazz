@@ -3,15 +3,16 @@ package net.bodz.art.installer.util;
 import java.util.Collection;
 
 import net.bodz.bas.err.OutOfDomainException;
+import net.bodz.bas.err.UnexpectedException;
 
 import org.eclipse.swt.widgets.TreeItem;
 
 public class TreeItems {
 
     public static final int UNKNOWN = -1;
-    public static final int NONE    = 0;
+    public static final int NONE = 0;
     public static final int PARTIAL = 1;
-    public static final int FULL    = 2;
+    public static final int FULL = 2;
 
     public static int stateAdd(int a, int b) {
         assert b != UNKNOWN : "b must be known"; //$NON-NLS-1$

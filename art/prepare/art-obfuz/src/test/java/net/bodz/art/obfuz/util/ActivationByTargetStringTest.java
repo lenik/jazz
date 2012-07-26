@@ -2,8 +2,6 @@ package net.bodz.art.obfuz.util;
 
 import static org.junit.Assert.assertEquals;
 import net.bodz.art.obfuz.pm.BasicPM;
-import net.bodz.art.obfuz.util.Activation;
-import net.bodz.art.obfuz.util.ActivationByTargetString;
 
 import org.junit.Test;
 
