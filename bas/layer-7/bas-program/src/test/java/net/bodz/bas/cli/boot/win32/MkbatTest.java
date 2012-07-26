@@ -1,4 +1,4 @@
-package net.bodz.bas.cli.util;
+package net.bodz.bas.cli.boot.win32;
 
 import java.io.File;
 import java.net.URL;
