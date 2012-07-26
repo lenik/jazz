@@ -2,6 +2,9 @@ package net.bodz.bas.i18n.dom;
 
 import java.util.Map.Entry;
 
+import net.bodz.bas.c.string.StringHtml;
+import net.bodz.bas.i18n.LocaleColo;
+
 public class XDomainString
         extends XDomainNode<XDomainString, String>
         implements DomainString, Cloneable {
@@ -101,8 +104,15 @@ public class XDomainString
      */
     @Override
     public String toString() {
+        String path = LocaleColo.getInstance().getPath();
+        String leaf = get(path);
+        return leaf;
+    }
 
-        return value;
+    @Override
+    public String toPlainText() {
+        String str = toString();
+        return StringHtml.toPlain(str);
     }
 
     @Override
@@ -156,7 +166,7 @@ public class XDomainString
         if (mlstr == null)
             return null;
         MultiLangStringParser parser = new MultiLangStringParser();
-        return (XDomainString) parser.parse(mlstr);
+        return parser.parse(mlstr);
     }
 
     public static XDomainString of(String plainString) {

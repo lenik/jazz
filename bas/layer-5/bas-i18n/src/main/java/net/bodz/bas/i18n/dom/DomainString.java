@@ -5,6 +5,13 @@ public interface DomainString
 
     DomainString clone();
 
+    String toString();
+
+    /**
+     * Remove html tags from toString.
+     */
+    String toPlainText();
+
     String toParaLangString();
 
     String toParaLangString(String separator);
