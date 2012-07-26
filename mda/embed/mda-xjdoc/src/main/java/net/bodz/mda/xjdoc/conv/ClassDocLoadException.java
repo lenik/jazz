@@ -1,7 +1,9 @@
 package net.bodz.mda.xjdoc.conv;
 
+import net.bodz.bas.err.IllegalEnvironConfigException;
+
 public class ClassDocLoadException
-        extends Exception {
+        extends IllegalEnvironConfigException {
 
     private static final long serialVersionUID = 1L;
 
