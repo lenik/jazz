@@ -115,10 +115,10 @@ public interface IType
     Object invoke(Object instance, String methodName, Class<?>[] parameterTypes, Object... parameters)
             throws ReflectiveOperationException;
 
-    // /**
-    // * @see IMethod#invoke(Object, Object...)
-    // */
-    // Object invoke(Object instance, String methodName, Object... parameters);
+    /**
+     * @see IMethod#invoke(Object, Object...)
+     */
+    Object invoke(Object instance, String methodName, Object... parameters);
 
     /**
      * @see IMethod#invokeStatic(Object...)

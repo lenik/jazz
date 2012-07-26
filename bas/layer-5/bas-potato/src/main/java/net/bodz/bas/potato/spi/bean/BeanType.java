@@ -2,27 +2,26 @@ package net.bodz.bas.potato.spi.bean;
 
 import java.beans.BeanInfo;
 
-import net.bodz.bas.potato.traits.AbstractType;
-import net.bodz.bas.potato.traits.IConstructorMap;
-import net.bodz.bas.potato.traits.IEventMap;
-import net.bodz.bas.potato.traits.IMethodMap;
-import net.bodz.bas.potato.traits.IPropertyMap;
-import net.bodz.bas.potato.traits.util.NullConstructorMap;
+import net.bodz.bas.potato.spi.builtin.DefaultEventMap;
+import net.bodz.bas.potato.spi.builtin.DefaultMethodMap;
+import net.bodz.bas.potato.spi.builtin.DefaultPropertyMap;
+import net.bodz.bas.potato.spi.builtin.NullConstructorMap;
+import net.bodz.bas.potato.traits.*;
 
 public class BeanType
         extends AbstractType {
 
-    private BeanPropertyMap propertyMap;
-    private BeanMethodMap methodMap;
-    private NullConstructorMap constructorMap;
-    private BeanEventMap eventMap;
+    private IPropertyMap propertyMap;
+    private IMethodMap methodMap;
+    private IConstructorMap constructorMap;
+    private IEventMap eventMap;
 
     public BeanType(BeanInfo beanInfo) {
         super(beanInfo.getBeanDescriptor().getName());
-        propertyMap = new BeanPropertyMap(beanInfo);
-        methodMap = new BeanMethodMap(beanInfo);
-        constructorMap = new NullConstructorMap();
-        eventMap = new BeanEventMap(beanInfo);
+        propertyMap = new DefaultPropertyMap().addBeanProperties(beanInfo);
+        methodMap = new DefaultMethodMap().addBeanMethods(beanInfo);
+        constructorMap = NullConstructorMap.getInstance();
+        eventMap = new DefaultEventMap().addBeanEvents(beanInfo);
     }
 
     @Override

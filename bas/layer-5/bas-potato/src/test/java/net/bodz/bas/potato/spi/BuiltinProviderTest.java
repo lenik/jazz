@@ -1,4 +1,4 @@
-package net.bodz.bas.potato.provider;
+package net.bodz.bas.potato.spi;
 
 import java.util.HashSet;
 import java.util.Set;

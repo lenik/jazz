@@ -1,11 +1,14 @@
 package net.bodz.bas.potato.traits;
 
-import java.util.Map;
+import java.util.Collection;
 
 import net.bodz.bas.c.reflect.MethodSignature;
 
-public interface IConstructorMap
-        extends Map<MethodSignature, IConstructor> {
+public interface IConstructorMap {
+
+    int size();
+
+    Collection<IConstructor> getConstructors();
 
     /**
      * Find the matching constructor.
