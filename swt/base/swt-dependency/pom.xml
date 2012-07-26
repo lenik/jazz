@@ -8,6 +8,9 @@
     <artifactId>swt-dependency</artifactId>
     <version>3.6.2</version>
     <name>SWT :: Base :: Dependency</name>
+    <properties>
+        <swt.version>3.8</swt.version>
+    </properties>
     <profiles>
         <!-- os-family: dos mac netware os/2 tandem unix windows win9x z/os os/400 -->
         <profile>
@@ -22,15 +25,16 @@
                 <dependency>
                     <groupId>org.eclipse.swt</groupId>
                     <artifactId>org.eclipse.swt.win32.win32.x86</artifactId>
-                    <version>3.6.2</version>
+                    <version>${swt.version}</version>
                 </dependency>
             </dependencies>
         </profile>
+        
         <profile>
             <id>swt-linux-x86</id>
             <activation>
                 <os>
-                    <family>unix</family>
+                    <name>Linux</name>
                     <arch>i386</arch>
                 </os>
             </activation>
@@ -38,7 +42,41 @@
                 <dependency>
                     <groupId>org.eclipse.swt</groupId>
                     <artifactId>org.eclipse.swt.gtk.linux.x86</artifactId>
-                    <version>3.6.2</version>
+                    <version>${swt.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+        
+        <profile>
+            <id>swt-linux-amd64</id>
+            <activation>
+                <os>
+                    <name>Linux</name>
+                    <arch>amd64</arch>
+                </os>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.eclipse.swt</groupId>
+                    <artifactId>org.eclipse.swt.gtk.linux.x86_64</artifactId>
+                    <version>${swt.version}</version>
+                </dependency>
+            </dependencies>
+        </profile>
+        
+        <profile>
+            <id>swt-linux-x86_64</id>
+            <activation>
+                <os>
+                    <name>Linux</name>
+                    <arch>x86_64</arch>
+                </os>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.eclipse.swt</groupId>
+                    <artifactId>org.eclipse.swt.gtk.linux.x86_64</artifactId>
+                    <version>${swt.version}</version>
                 </dependency>
             </dependencies>
         </profile>

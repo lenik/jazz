@@ -1,7 +1,6 @@
 package net.bodz.geom.drawtarget;
 
-import javax.vecmath.Vector2f;
-
+import net.bodz.bas.c.javax.vecmath.Vector2f;
 import net.bodz.geom.shape.base.Point2f;
 import net.bodz.geom.transform.MatViewTransformer2f;
 import net.bodz.geom.transform.Transformer2f;
@@ -49,7 +48,7 @@ public class TransformedDrawTarget2f
         matTransformmer.invert();
     }
 
-    public void transform(Vector2f vector) {
+    public void transform(javax.vecmath.Vector2f vector) {
         matTransformmer.transform(vector);
     }
 
@@ -57,7 +56,7 @@ public class TransformedDrawTarget2f
         matTransformmer.transform(point);
     }
 
-    public net.bodz.math.mat.Vector2f transformTo(Vector2f vector) {
+    public Vector2f transformTo(javax.vecmath.Vector2f vector) {
         return matTransformmer.transformTo(vector);
     }
 
@@ -65,7 +64,7 @@ public class TransformedDrawTarget2f
         return matTransformmer.transformTo(point);
     }
 
-    public void invert(Vector2f vector) {
+    public void invert(javax.vecmath.Vector2f vector) {
         matTransformmer.invert(vector);
     }
 
@@ -73,7 +72,7 @@ public class TransformedDrawTarget2f
         matTransformmer.invert(point);
     }
 
-    public net.bodz.math.mat.Vector2f invertTo(Vector2f vector) {
+    public Vector2f invertTo(javax.vecmath.Vector2f vector) {
         return matTransformmer.invertTo(vector);
     }
 
@@ -87,7 +86,7 @@ public class TransformedDrawTarget2f
         matTransformmer.rotate(angle);
     }
 
-    public void scale(Vector2f kv) {
+    public void scale(javax.vecmath.Vector2f kv) {
         matTransformmer.scale(kv);
     }
 
@@ -107,7 +106,7 @@ public class TransformedDrawTarget2f
         matTransformmer.translate(x, y);
     }
 
-    public void translate(Vector2f dv) {
+    public void translate(javax.vecmath.Vector2f dv) {
         matTransformmer.translate(dv);
     }
 

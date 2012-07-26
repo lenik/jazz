@@ -2,6 +2,10 @@ package net.bodz.geom.util.gd;
 
 import java.util.Map;
 
+import net.bodz.bas.fsm.base.IState;
+import net.bodz.swt.state.ISWTState;
+import net.bodz.swt.state.SWTStateGraphImpl;
+
 public class GDStateGraph
         extends SWTStateGraphImpl {
 

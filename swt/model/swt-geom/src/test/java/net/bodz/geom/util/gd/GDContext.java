@@ -7,6 +7,7 @@ import net.bodz.geom.shape.EditablePointSet2f;
 import net.bodz.geom.shape.Shape2f;
 import net.bodz.geom.shape.base.Point2f;
 import net.bodz.geom.transform.ViewTransformer2f;
+import net.bodz.swt.state.SWTContext;
 
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;

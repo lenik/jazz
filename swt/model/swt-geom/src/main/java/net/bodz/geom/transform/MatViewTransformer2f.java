@@ -1,7 +1,10 @@
 package net.bodz.geom.transform;
 
-import javax.vecmath.Matrix3f;
-import javax.vecmath.Vector2f;
+import net.bodz.bas.c.javax.vecmath.ColumnVectors;
+import net.bodz.bas.c.javax.vecmath.Matrices;
+import net.bodz.bas.c.javax.vecmath.Matrix2f;
+import net.bodz.bas.c.javax.vecmath.Matrix3f;
+import net.bodz.bas.c.javax.vecmath.Vector2f;
 
 public class MatViewTransformer2f
         extends AbstractTransformer2f
@@ -10,7 +13,7 @@ public class MatViewTransformer2f
     public Matrix3f matrix;
 
     public MatViewTransformer2f() {
-        matrix = Mats.ident3f.clone();
+        matrix = Matrices.ident3f.clone();
     }
 
     public MatViewTransformer2f(javax.vecmath.Matrix3f matrix3f) {
@@ -60,12 +63,12 @@ public class MatViewTransformer2f
     }
 
     @Override
-    public void transform(Vector2f vector) {
+    public void transform(javax.vecmath.Vector2f vector) {
         matrix.transform(vector);
     }
 
     @Override
-    public void invert(Vector2f vector) {
+    public void invert(javax.vecmath.Vector2f vector) {
         Matrix3f inv = matrix.clone();
         inv.invert();
         inv.transform(vector);
@@ -74,39 +77,39 @@ public class MatViewTransformer2f
     // -o ViewTransformer
 
     public void translateX(float x) {
-        matrix.mul(ColMats.translate3f(x, 0.0f));
+        matrix.mul(ColumnVectors.translate3f(x, 0.0f));
     }
 
     public void translateY(float y) {
-        matrix.mul(ColMats.translate3f(0.0f, y));
+        matrix.mul(ColumnVectors.translate3f(0.0f, y));
     }
 
     public void translate(float x, float y) {
-        matrix.mul(ColMats.translate3f(x, y));
+        matrix.mul(ColumnVectors.translate3f(x, y));
     }
 
     public void translate(Vector2f dv) {
-        matrix.mul(ColMats.translate3f(dv.x, dv.y));
+        matrix.mul(ColumnVectors.translate3f(dv.x, dv.y));
     }
 
     public void scale(Vector2f kv) {
-        matrix.mul(ColMats.scale3f(kv.x, kv.y));
+        matrix.mul(ColumnVectors.scale3f(kv.x, kv.y));
     }
 
     public void scale(float kx, float ky) {
-        matrix.mul(ColMats.scale3f(kx, ky));
+        matrix.mul(ColumnVectors.scale3f(kx, ky));
     }
 
     public void scaleX(float k) {
-        matrix.mul(ColMats.scale3f(k, 1.0f));
+        matrix.mul(ColumnVectors.scale3f(k, 1.0f));
     }
 
     public void scaleY(float k) {
-        matrix.mul(ColMats.scale3f(1.0f, k));
+        matrix.mul(ColumnVectors.scale3f(1.0f, k));
     }
 
     public void rotate(float angle) {
-        matrix.mul(ColMats.rotate3f(angle));
+        matrix.mul(ColumnVectors.rotate3f(angle));
     }
 
     @Override

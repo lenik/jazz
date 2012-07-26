@@ -9,8 +9,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import javax.vecmath.Vector2f;
-
 import net.bodz.geom.base.PickInfo2f;
 import net.bodz.geom.shape.base.AbstractPoint2f;
 import net.bodz.geom.shape.base.Circle2f;
@@ -243,7 +241,7 @@ public abstract class AbstractShape2f
         }
     }
 
-    public void translate(Vector2f dv) {
+    public void translate(javax.vecmath.Vector2f dv) {
         translate(dv.x, dv.y);
     }
 
@@ -267,15 +265,15 @@ public abstract class AbstractShape2f
         scale(k, k);
     }
 
-    public void scale(Vector2f kv, float baseX, float baseY) {
+    public void scale(javax.vecmath.Vector2f kv, float baseX, float baseY) {
         scale(kv.x, kv.y, baseX, baseY);
     }
 
-    public void scale(Vector2f kv, Point2f basePoint) {
+    public void scale(javax.vecmath.Vector2f kv, Point2f basePoint) {
         scale(kv.x, kv.y, basePoint.x(), basePoint.y());
     }
 
-    public void scale(Vector2f kv) {
+    public void scale(javax.vecmath.Vector2f kv) {
         scale(kv.x, kv.y);
     }
 
@@ -293,7 +291,7 @@ public abstract class AbstractShape2f
         return cropped;
     }
 
-    public abstract Shape2f crop(Point2f baseHalfPlane, Vector2f normal);
+    public abstract Shape2f crop(Point2f baseHalfPlane, javax.vecmath.Vector2f normal);
 
     public Shape2f crop(Line2f directed) {
         return crop(directed.p0(), directed.getNormal());
@@ -364,7 +362,8 @@ public abstract class AbstractShape2f
         if (n == 0)
             return new Rectangle2f.StaticLeft(0, 0, 0, 0);
 
-        Rectangle2f r = new Rectangle2f.StaticLeft(pointRef(0), new Vector2f(Float.MIN_VALUE, Float.MIN_VALUE));
+        Rectangle2f r = new Rectangle2f.StaticLeft(pointRef(0), new javax.vecmath.Vector2f(Float.MIN_VALUE,
+                Float.MIN_VALUE));
 
         for (int i = 1; i < n; i++)
             ; // r.addWithScale(points.point(i));
