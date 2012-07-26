@@ -5,7 +5,6 @@ import java.util.Map.Entry;
 
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.collection.preorder.PrefixMap;
-import net.bodz.bas.err.IllegalUsageException;
 import net.bodz.bas.potato.traits.AbstractElement;
 import net.bodz.bas.util.Pair;
 
@@ -16,6 +15,7 @@ public class DefaultOptionGroup
     final IOptionGroup parent;
     final Map<String, IOption> nameMap = new TreeMap<String, IOption>();
     final PrefixMap<IOption> prefixMap = new PrefixMap<IOption>();
+    final Map<String, SyntaxUsage> usageMap = new LinkedHashMap<String, SyntaxUsage>();
 
     public DefaultOptionGroup(IOptionGroup parent, Class<?> declaringClass) {
         super(declaringClass, Strings.hyphenatize(declaringClass.getSimpleName()));
@@ -28,7 +28,7 @@ public class DefaultOptionGroup
     }
 
     @Override
-    public Map<String, IOption> getOptions() {
+    public Map<String, IOption> getLocalOptionMap() {
         return nameMap;
     }
 
@@ -152,9 +152,8 @@ public class DefaultOptionGroup
 
         Entry<String, IOption> conflictEntry = checkForConflict(option);
         if (conflictEntry != null)
-            throw new IllegalUsageException(String.format("Option name '%s' conflicts with %s: %s.", //
-                    conflictEntry.getKey(), //
-                    conflictEntry.getValue().getDisplayName(), conflictEntry.getValue().getDescription()));
+            throw new ConflictedOptionKeyException(//
+                    conflictEntry.getKey(), conflictEntry.getValue());
 
         // Real add
         String optionName = option.getName();
@@ -210,6 +209,51 @@ public class DefaultOptionGroup
             occurs += parent.removeOption(option);
 
         return occurs;
+    }
+
+    @Override
+    public Map<String, SyntaxUsage> getLocalUsageMap() {
+        return usageMap;
+    }
+
+    public Set<String> getUsageIds() {
+        Set<String> usageIds = new LinkedHashSet<String>();
+        fillUsageIds(usageIds);
+        return usageIds;
+    }
+
+    @Override
+    public void fillUsageIds(Set<String> usageIds) {
+        usageIds.addAll(usageMap.keySet());
+        if (parent != null)
+            parent.fillUsageIds(usageIds);
+    }
+
+    @Override
+    public SyntaxUsage getUsage(String usageId) {
+        SyntaxUsage usage = usageMap.get(usageId);
+        if (usage != null)
+            return usage;
+        if (parent == null)
+            return null;
+        return parent.getUsage(usageId);
+    }
+
+    @Override
+    public void addUsage(SyntaxUsage usage) {
+        String usageId = usage.getId();
+        SyntaxUsage existing = getUsage(usageId);
+        if (existing != null)
+            throw new ConflictedUsageIdException(usageId, existing);
+        usageMap.put(usageId, usage);
+    }
+
+    @Override
+    public void removeUsage(SyntaxUsage usage) {
+        String usageId = usage.getId();
+        usageMap.remove(usageId);
+        if (parent != null)
+            parent.removeUsage(usage);
     }
 
 }
