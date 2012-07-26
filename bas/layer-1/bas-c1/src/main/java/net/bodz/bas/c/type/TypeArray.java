@@ -7,21 +7,25 @@ import java.util.Map;
 public class TypeArray {
 
     /**
-     * Get object class of each component in the arg array.
+     * Get class for each component in the object array.
      * 
-     * @throws NullPointerException
-     *             If <code>args</code> is <code>null</code>.
-     * @return Class array each is the class of the corresponding arg.
+     * @param nullClass
+     *            Which class to be assumed for <code>null</code>-value in the object array.
+     * @param objects
+     *            Non-<code>null</code> object array, however, its element maybe <code>null</code>.
+     * @return Non-<code>null</code> class array, each element is the class of the corresponding
+     *         object in the object array, or <code>nullClass</code> if the object is
+     *         <code>null</code>.
      */
-    public static Class<?>[] getClasses(Object... args) {
-        if (args == null)
-            throw new NullPointerException("args");
-        Class<?>[] classes = new Class[args.length];
-        for (int i = 0; i < args.length; i++) {
-            if (args[i] == null)
-                classes[i] = Object.class;
+    public static Class<?>[] getClasses(Class<?> nullClass, Object... objects) {
+        if (objects == null)
+            throw new NullPointerException("objects");
+        Class<?>[] classes = new Class[objects.length];
+        for (int i = 0; i < objects.length; i++) {
+            if (objects[i] == null)
+                classes[i] = nullClass;
             else
-                classes[i] = args[i].getClass();
+                classes[i] = objects[i].getClass();
         }
         return classes;
     }
