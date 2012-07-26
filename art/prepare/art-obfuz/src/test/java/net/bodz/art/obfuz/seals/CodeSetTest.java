@@ -2,8 +2,6 @@ package net.bodz.art.obfuz.seals;
 
 import static org.junit.Assert.assertEquals;
 
-import net.bodz.art.obfuz.seals.CodeSet;
-
 import org.junit.Test;
 
 public class CodeSetTest {

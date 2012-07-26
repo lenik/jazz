@@ -19,7 +19,6 @@ import net.bodz.bas.c.java.util.TextMap;
 import net.bodz.bas.c.java.util.TreeTextMap;
 import net.bodz.bas.collection.set.IdentityHashSet;
 import net.bodz.bas.collection.tree.TreeCallback;
-import net.bodz.bas.meta.build.ClassInfo;
 import net.bodz.swt.util.SWTResources;
 
 import org.eclipse.swt.graphics.ImageData;

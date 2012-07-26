@@ -3,8 +3,6 @@ package net.bodz.art.obfuz.sysid;
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
-import net.bodz.art.obfuz.sysid.ConstId;
-
 import org.junit.Test;
 
 public class _SysIdProviderTest {

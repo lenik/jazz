@@ -8,17 +8,20 @@ import net.bodz.art.installer.builtins.FileCopy;
 import net.bodz.art.installer.builtins.OptionalSection;
 import net.bodz.art.installer.builtins.Section;
 import net.bodz.bas.c.java.io.FileFinder;
-import net.bodz.bas.meta.info.DisplayName;
 
-@DisplayName("ABC Program")
-public class TestProject extends CTAProject {
+/**
+ * @name ABC Program
+ */
+public class TestProject
+        extends CTAProject {
 
-    public Section  testSection;
+    public Section testSection;
 
     public FileCopy copyTestClassesFiles;
     public FileCopy copyTestSrcFiles;
 
-    public TestProject() throws IOException {
+    public TestProject()
+            throws IOException {
         // XXX - TestProject.class annotations?
         File parent = (File) get(BASE_PROGRAMS).getDefaultValue();
         Variable var = new BaseDirVariable(//

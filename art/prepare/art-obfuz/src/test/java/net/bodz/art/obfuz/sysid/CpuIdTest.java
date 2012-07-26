@@ -1,7 +1,5 @@
 package net.bodz.art.obfuz.sysid;
 
-import net.bodz.art.obfuz.sysid.CpuId;
-
 import org.junit.Test;
 
 public class CpuIdTest {

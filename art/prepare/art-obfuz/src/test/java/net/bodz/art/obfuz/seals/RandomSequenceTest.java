@@ -5,8 +5,6 @@ import static org.junit.Assert.assertEquals;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
-import net.bodz.art.obfuz.seals.RandomSequence;
-
 import org.junit.Test;
 
 public class RandomSequenceTest {

@@ -5,8 +5,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.nio.ByteBuffer;
 
-import net.bodz.art.obfuz.seals.AccumEntropy;
-
 import org.junit.Test;
 
 public class AccumEntropyTest {

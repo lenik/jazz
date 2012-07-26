@@ -1,16 +1,18 @@
 package net.bodz.art.installer.util;
 
 import net.bodz.bas.c.string.Strings;
+import net.bodz.bas.lang.fn.Func0;
 import net.bodz.bas.log.AbstractLogSink;
 import net.bodz.bas.log.ILogSink;
-import net.bodz.bas.mode._fn.Func0;
 
-public class LevelLogTerm extends ArrayLogTerm {
+public class LevelLogTerm
+        extends ArrayLogTerm {
 
-    class Term extends AbstractLogSink {
+    class Term
+            extends AbstractLogSink {
 
         private final ILogSink target;
-        private String         tab = "    "; //$NON-NLS-1$
+        private String tab = "    "; //$NON-NLS-1$
 
         public Term(ILogSink target) {
             this.target = target;
