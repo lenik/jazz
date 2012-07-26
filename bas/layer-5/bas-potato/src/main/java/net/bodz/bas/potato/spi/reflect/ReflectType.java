@@ -1,26 +1,25 @@
 package net.bodz.bas.potato.spi.reflect;
 
-import net.bodz.bas.potato.traits.AbstractType;
-import net.bodz.bas.potato.traits.IConstructorMap;
-import net.bodz.bas.potato.traits.IEventMap;
-import net.bodz.bas.potato.traits.IMethodMap;
-import net.bodz.bas.potato.traits.IPropertyMap;
-import net.bodz.bas.potato.traits.util.NullEventMap;
+import net.bodz.bas.potato.spi.builtin.DefaultConstructorMap;
+import net.bodz.bas.potato.spi.builtin.DefaultMethodMap;
+import net.bodz.bas.potato.spi.builtin.DefaultPropertyMap;
+import net.bodz.bas.potato.spi.builtin.NullEventMap;
+import net.bodz.bas.potato.traits.*;
 
 public class ReflectType
         extends AbstractType {
 
-    ReflectPropertyMap propertyMap;
-    ReflectMethodMap methodMap;
-    ReflectConstructorMap constructorMap;
-    NullEventMap eventMap;
+    IPropertyMap propertyMap;
+    IMethodMap methodMap;
+    IConstructorMap constructorMap;
+    IEventMap eventMap;
 
     public ReflectType(Class<?> clazz) {
         super(clazz.getDeclaringClass(), clazz.getName());
-        this.propertyMap = new ReflectPropertyMap(clazz);
-        this.methodMap = new ReflectMethodMap(clazz);
-        this.constructorMap = new ReflectConstructorMap(clazz);
-        this.eventMap = new NullEventMap();
+        this.propertyMap = new DefaultPropertyMap().addClassFields(clazz);
+        this.methodMap = new DefaultMethodMap().addClassMethods(clazz);
+        this.constructorMap = new DefaultConstructorMap().addClassConstructors(clazz);
+        this.eventMap = NullEventMap.getInstance();
     }
 
     @Override

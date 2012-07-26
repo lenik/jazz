@@ -67,6 +67,14 @@ public class MethodSignature {
         return parameterTypes;
     }
 
+    public Class<?> getReturnType() {
+        return returnType;
+    }
+
+    public boolean isWild() {
+        return wild;
+    }
+
     private transient Integer hash;
 
     @Override

@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import net.bodz.bas.c.reflect.MethodSignature;
 import net.bodz.bas.c.reflect.NoSuchPropertyException;
+import net.bodz.bas.c.type.TypeArray;
 
 public abstract class AbstractType
         extends AbstractElement
@@ -19,29 +20,29 @@ public abstract class AbstractType
 
     @Override
     public Collection<IProperty> getProperties() {
-        return getPropertyMap().values();
+        return getPropertyMap().getProperties();
     }
 
     @Override
     public Collection<IMethod> getMethods() {
-        return getMethodMap().values();
+        return getMethodMap().getMethods();
     }
 
     @Override
     public Collection<IConstructor> getConstructors() {
-        return getConstructorMap().values();
+        return getConstructorMap().getConstructors();
     }
 
     @Override
     public Collection<IEvent> getEvents() {
-        return getEventMap().values();
+        return getEventMap().getEvents();
     }
 
     @Override
     public IProperty getProperty(String propertyName) {
         IPropertyMap propertyMap = getPropertyMap();
         // if (propertyMap == null) return null;
-        return propertyMap.get(propertyName);
+        return propertyMap.getProperty(propertyName);
     }
 
     @Override
@@ -64,7 +65,7 @@ public abstract class AbstractType
     public IEvent getEvent(String eventName) {
         IEventMap eventMap = getEventMap();
         // if (eventMap == null) return null;
-        return eventMap.get(eventName);
+        return eventMap.getEvent(eventName);
     }
 
     @Override
@@ -98,6 +99,15 @@ public abstract class AbstractType
         }
         Object returnValue = method.invoke(instance, parameters);
         return returnValue;
+    }
+
+    /**
+     * TODO
+     */
+    @Override
+    public Object invoke(Object instance, String methodName, Object... parameters) {
+        Class<?>[] parameterTypes = TypeArray.getClasses(null, parameters);
+        IMethod method = getMethod(methodName, parameterTypes);
     }
 
     @Override

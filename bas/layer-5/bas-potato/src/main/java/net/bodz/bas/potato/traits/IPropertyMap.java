@@ -1,9 +1,12 @@
 package net.bodz.bas.potato.traits;
 
-import java.util.Map;
+import java.util.Collection;
 
-public interface IPropertyMap
-        extends Map<String, IProperty> {
+public interface IPropertyMap {
+
+    int size();
+
+    Collection<IProperty> getProperties();
 
     /**
      * Find the matching property.
@@ -14,6 +17,6 @@ public interface IPropertyMap
      *            Non-<code>null</code> property key to match.
      * @return The matched property if any, or <code>null</code> if none matched.
      */
-    IProperty getProperty(PropertyKey propertyKey);
+    IProperty getProperty(String propertyName);
 
 }

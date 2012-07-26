@@ -1,19 +1,22 @@
 package net.bodz.bas.potato.traits;
 
-import java.util.Map;
+import java.util.Collection;
 
-public interface IEventMap
-        extends Map<String, IEvent> {
+public interface IEventMap {
+
+    int size();
+
+    Collection<IEvent> getEvents();
 
     /**
      * Find the matching event.
      * <p>
      * There should be only one matching event at most.
      * 
-     * @param eventKey
-     *            Non-<code>null</code> event key to match.
+     * @param eventName
+     *            Non-<code>null</code> event name to get.
      * @return The matched event if any, or <code>null</code> if none matched.
      */
-    IEvent getEvent(EventKey eventKey);
+    IEvent getEvent(String eventName);
 
 }

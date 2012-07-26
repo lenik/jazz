@@ -1,4 +1,4 @@
-package net.bodz.bas.potato.provider.bean;
+package net.bodz.bas.potato.spi.util;
 
 import net.bodz.bas.potato.traits.IProperty;
 import net.bodz.bas.potato.traits.IPropertyMap;
@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import user.bean.AddressBean;
 
-public class BeanPropertyMapTest
+public class DefaultPropertyMapTest
         extends Assert {
 
     @Test
@@ -25,7 +25,7 @@ public class BeanPropertyMapTest
 
         IPropertyMap propertyMap = Traits.getTrait(AddressBean.class, IPropertyMap.class);
 
-        IProperty cityProp = propertyMap.get("city");
+        IProperty cityProp = propertyMap.getProperty("city");
         assertEquals("city", cityProp.getName());
         assertSame(AddressBean.class, cityProp.getDeclaringType());
 

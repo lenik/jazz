@@ -6,11 +6,11 @@ import java.beans.Introspector;
 
 import net.bodz.bas.lang.mi.QueryException;
 import net.bodz.bas.potato.spi.AbstractPotatoProvider;
-import net.bodz.bas.potato.traits.IConstructorMap;
-import net.bodz.bas.potato.traits.IEventMap;
-import net.bodz.bas.potato.traits.IMethodMap;
-import net.bodz.bas.potato.traits.IPropertyMap;
-import net.bodz.bas.potato.traits.IType;
+import net.bodz.bas.potato.spi.builtin.DefaultConstructorMap;
+import net.bodz.bas.potato.spi.builtin.DefaultEventMap;
+import net.bodz.bas.potato.spi.builtin.DefaultMethodMap;
+import net.bodz.bas.potato.spi.builtin.DefaultPropertyMap;
+import net.bodz.bas.potato.traits.*;
 
 public class BeanPotatoProvider
         extends AbstractPotatoProvider {
@@ -34,24 +34,32 @@ public class BeanPotatoProvider
     public IPropertyMap getPropertyMap(Class<?> objType)
             throws QueryException {
         BeanInfo beanInfo = getBeanInfo(objType);
-        return new BeanPropertyMap(beanInfo);
+        DefaultPropertyMap propertyMap = new DefaultPropertyMap();
+        propertyMap.addBeanProperties(beanInfo);
+        return propertyMap;
     }
 
     @Override
     public IMethodMap getMethodMap(Class<?> objType) {
         BeanInfo beanInfo = getBeanInfo(objType);
-        return new BeanMethodMap(beanInfo);
+        DefaultMethodMap methodMap = new DefaultMethodMap();
+        methodMap.addBeanMethods(beanInfo);
+        return methodMap;
     }
 
     @Override
     public IConstructorMap getConstructorMap(Class<?> objType) {
-        return null;
+        DefaultConstructorMap constructorMap = new DefaultConstructorMap();
+        constructorMap.addClassConstructors(objType);
+        return constructorMap;
     }
 
     @Override
     public IEventMap getEventMap(Class<?> objType) {
         BeanInfo beanInfo = getBeanInfo(objType);
-        return new BeanEventMap(beanInfo);
+        DefaultEventMap eventMap = new DefaultEventMap();
+        eventMap.addBeanEvents(beanInfo);
+        return eventMap;
     }
 
 }

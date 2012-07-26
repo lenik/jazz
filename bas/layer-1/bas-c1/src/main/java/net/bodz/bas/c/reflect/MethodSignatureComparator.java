@@ -13,7 +13,6 @@ public class MethodSignatureComparator
         if (cmp != 0)
             return cmp;
 
-        // XXX - Check this later.
         TypeVectorComparator vcmp = TypeVectorComparator.getInstance();
         Class<?>[] o1v = o1.getParameterTypes();
         Class<?>[] o2v = o2.getParameterTypes();
