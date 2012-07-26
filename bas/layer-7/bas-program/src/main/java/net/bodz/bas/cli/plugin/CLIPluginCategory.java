@@ -1,4 +1,4 @@
-package net.bodz.bas.cli.model.plugin;
+package net.bodz.bas.cli.plugin;
 
 import java.util.ArrayList;
 import java.util.Collections;
