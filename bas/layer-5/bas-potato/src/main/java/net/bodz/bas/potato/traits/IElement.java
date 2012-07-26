@@ -29,15 +29,21 @@ public interface IElement
      */
     DomainString getDisplayName();
 
+    void setDisplayName(DomainString displayName);
+
     /**
      * @return <code>null</code> If no description available.
      */
     DomainString getDescription();
 
+    void setDescription(DomainString description);
+
     /**
      * @return <code>null</code> if no help doc available.
      */
     DomainString getHelpDoc();
+
+    void setHelpDoc(DomainString helpDoc);
 
     /**
      * The preference level controls whether this element is displayed. When user specifies a
