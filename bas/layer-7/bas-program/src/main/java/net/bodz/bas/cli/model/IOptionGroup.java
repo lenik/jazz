@@ -18,6 +18,15 @@ public interface IOptionGroup
     IOptionGroup getParent();
 
     /**
+     * Get local options.
+     * <p>
+     * The canonical-name of the option is used as the map key.
+     * 
+     * @return Non-<code>null</code> local option map.
+     */
+    Map<String, IOption> getLocalOptionMap();
+
+    /**
      * Get option by canonical-name
      * 
      * @param optionKey
@@ -33,15 +42,6 @@ public interface IOptionGroup
      */
     IOption getUniqueOption(String optionKey)
             throws AmbiguousOptionKeyException;
-
-    /**
-     * Get local options.
-     * <p>
-     * The canonical-name of the option is used as the map key.
-     * 
-     * @return Non-<code>null</code> local option map.
-     */
-    Map<String, IOption> getOptions();
 
     void fillSuggestKeys(String optionKeyPrefix, Collection<String> suggestions);
 
@@ -73,7 +73,8 @@ public interface IOptionGroup
     /**
      * Add an option.
      */
-    void addOption(IOption option);
+    void addOption(IOption option)
+            throws ConflictedOptionKeyException;
 
     /**
      * Remove an option.
@@ -81,5 +82,32 @@ public interface IOptionGroup
      * @return Removed occurrences from internal map.
      */
     int removeOption(IOption option);
+
+    /**
+     * Get syntax usage map.
+     * 
+     * @return Non-<code>null</code> usage map: id => {@link SyntaxUsage}.
+     */
+    Map<String, SyntaxUsage> getLocalUsageMap();
+
+    /**
+     * Get all syntax usage ids;
+     * 
+     * @param usageIds
+     *            Non-<code>null</code> string set to be filled with usage ids.
+     */
+    void fillUsageIds(Set<String> usageIds);
+
+    /**
+     * Get syntax usage by id.
+     * 
+     * @return The syntax usage with specified id.
+     */
+    SyntaxUsage getUsage(String usageId);
+
+    void addUsage(SyntaxUsage usage)
+            throws ConflictedUsageIdException;
+
+    void removeUsage(SyntaxUsage usage);
 
 }

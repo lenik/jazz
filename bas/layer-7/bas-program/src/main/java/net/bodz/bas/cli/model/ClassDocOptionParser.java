@@ -8,6 +8,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.Map;
 
 import net.bodz.bas.err.ParseException;
 import net.bodz.bas.i18n.dom.DomainString;
@@ -179,7 +180,7 @@ public class ClassDocOptionParser {
     IOptionGroup compact(IOptionGroup group) {
         if (inheritance == OptionGroupInheritance.reduceEmptyParents)
             // parent = parent.parent...parent
-            while (group.getOptions().isEmpty()) {
+            while (group.getLocalOptionMap().isEmpty()) {
                 group = group.getParent();
                 if (group == null)
                     break;
@@ -207,20 +208,22 @@ public class ClassDocOptionParser {
         if (inheritance == OptionGroupInheritance.flatten)
             group = parent;
 
-        if (group == null) {
-            DefaultOptionGroup newGroup = new DefaultOptionGroup(parent, clazz);
+        if (group == null)
+            group = new DefaultOptionGroup(parent, clazz);
 
-            DomainString _name = (DomainString) classDoc.getTag("name");
-            if (_name != null)
-                newGroup.setDisplayName(_name);
+        // In flatten-mode: override parent's name/description/docs.
+        DomainString _name = (DomainString) classDoc.getTag("name");
+        if (_name != null)
+            group.setDisplayName(_name);
+        DomainString _header = classDoc.getTextHeader();
+        DomainString _body = classDoc.getTextBody();
+        group.setDescription(_header);
+        group.setHelpDoc(_body);
 
-            DomainString _header = classDoc.getTextHeader();
-            DomainString _body = classDoc.getTextBody();
-            newGroup.setDescription(_header);
-            newGroup.setHelpDoc(_body);
-
-            group = newGroup;
-        }
+        // Import syntax usages into group.
+        Map<String, SyntaxUsage> usageMap = (Map<String, SyntaxUsage>) classDoc.getTag("usage");
+        for (SyntaxUsage usage : usageMap.values())
+            group.addUsage(usage);
 
         if (includeFields) {
             Field[] fields = clazz.getDeclaredFields();
