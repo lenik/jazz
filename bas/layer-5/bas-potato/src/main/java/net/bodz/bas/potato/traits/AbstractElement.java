@@ -43,6 +43,7 @@ public abstract class AbstractElement
         return displayName;
     }
 
+    @Override
     public void setDisplayName(DomainString displayName) {
         this.displayName = displayName;
     }
@@ -52,6 +53,7 @@ public abstract class AbstractElement
         return description;
     }
 
+    @Override
     public void setDescription(DomainString description) {
         this.description = description;
     }
@@ -61,6 +63,7 @@ public abstract class AbstractElement
         return helpDoc;
     }
 
+    @Override
     public void setHelpDoc(DomainString helpDoc) {
         this.helpDoc = helpDoc;
     }
