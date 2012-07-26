@@ -18,8 +18,8 @@ import net.bodz.bas.cli.ClassOptions;
 import net.bodz.bas.cli.model.IOption;
 import net.bodz.bas.cli.model.IOptionGroup;
 import net.bodz.bas.cli.model.MethodCall;
-import net.bodz.bas.cli.model.plugin.CLIPlugin;
-import net.bodz.bas.cli.model.plugin.CLIPlugins;
+import net.bodz.bas.cli.plugin.CLIPlugin;
+import net.bodz.bas.cli.plugin.CLIPlugins;
 import net.bodz.bas.err.CreateException;
 import net.bodz.bas.err.NotImplementedException;
 import net.bodz.bas.err.ParseException;
@@ -227,7 +227,7 @@ public class BasicCLI
     protected void _version(IPrintOut out) {
         AppClassDoc classDoc;
         try {
-            classDoc = ClassDocs.loadFromResource(getClass()).to(AppClassDoc.class);
+            classDoc = ClassDocs.loadFromResource(getClass()).decorate(AppClassDoc.class);
         } catch (ClassDocLoadException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
@@ -368,7 +368,7 @@ public class BasicCLI
             // }
 
             if (L.isDebugEnabled()) {
-                for (Entry<String, IOption> entry : opts.getOptions().entrySet()) {
+                for (Entry<String, IOption> entry : opts.getLocalOptionMap().entrySet()) {
                     IOption opt = entry.getValue();
                     String optnam = opt.getFriendlyName();
                     if (!optnam.equals(entry.getKey()))

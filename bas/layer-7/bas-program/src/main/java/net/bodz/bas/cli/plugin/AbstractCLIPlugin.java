@@ -1,4 +1,4 @@
-package net.bodz.bas.cli.model.plugin;
+package net.bodz.bas.cli.plugin;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -49,7 +49,7 @@ public class AbstractCLIPlugin
     @Override
     public void help(IPrintOut out, String prefix) {
         IOptionGroup opts = getOptions();
-        TreeMap<String, IOption> map = opts.getOptions();
+        TreeMap<String, IOption> map = opts.getLocalOptionMap();
         int maxlen = 0;
         for (String name : map.keySet())
             if (name.length() > maxlen)

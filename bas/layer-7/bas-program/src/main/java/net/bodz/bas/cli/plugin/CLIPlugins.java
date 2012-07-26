@@ -1,4 +1,4 @@
-package net.bodz.bas.cli.model.plugin;
+package net.bodz.bas.cli.plugin;
 
 import net.bodz.bas.c.string.Strings;
 import net.bodz.bas.cli.skel.CLIException;
