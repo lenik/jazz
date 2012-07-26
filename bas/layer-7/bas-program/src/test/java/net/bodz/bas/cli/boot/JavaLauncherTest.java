@@ -1,4 +1,4 @@
-package net.bodz.bas.cli.util;
+package net.bodz.bas.cli.boot;
 
 import static org.junit.Assert.assertEquals;
 
