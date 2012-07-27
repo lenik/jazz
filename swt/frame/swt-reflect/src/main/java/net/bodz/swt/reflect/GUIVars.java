@@ -34,8 +34,7 @@ public class GUIVars {
                 throws CheckException {
             Class<?> type = getType();
             if (value != null && !Types.box(type).isInstance(value))
-                throw new CheckException(GUINLS.getString("GUIVars.notInstOf") + type + ": " //$NON-NLS-1$ //$NON-NLS-2$
-                        + value);
+                throw new CheckException(GUINLS.getString("GUIVars.notInstOf") + type + ": " + value);
             if (checker != null)
                 checker.check(value);
         }
@@ -91,8 +90,7 @@ public class GUIVars {
                 throws CheckException {
             Class<?> type = getType();
             if (value != null && !Types.box(type).isInstance(value))
-                throw new CheckException(GUINLS.getString("GUIVars.notInstOf") + type + ": " //$NON-NLS-1$ //$NON-NLS-2$
-                        + value);
+                throw new CheckException(GUINLS.getString("GUIVars.notInstOf") + type + ": " + value);
             if (checker != null)
                 checker.check(value);
         }
@@ -161,8 +159,7 @@ public class GUIVars {
                 throws CheckException {
             Class<?> type = getType();
             if (value != null && !Types.box(type).isInstance(value))
-                throw new CheckException(GUINLS.getString("GUIVars.notInstOf") + type + ": " //$NON-NLS-1$ //$NON-NLS-2$
-                        + value);
+                throw new CheckException(GUINLS.getString("GUIVars.notInstOf") + type + ": " + value);
             if (checker != null)
                 checker.check(value);
         }

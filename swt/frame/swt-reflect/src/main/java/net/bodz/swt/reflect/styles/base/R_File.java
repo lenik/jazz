@@ -43,7 +43,7 @@ public class R_File
         fileText.setText(val.getPath());
         fileText.setLayoutData(BorderLayout.CENTER);
         final Button browseButton = new Button(comp, SWT.NONE);
-        browseButton.setText(GUINLS.getString("R_File.browse")); //$NON-NLS-1$
+        browseButton.setText(GUINLS.getString("R_File.browse"));
         browseButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {

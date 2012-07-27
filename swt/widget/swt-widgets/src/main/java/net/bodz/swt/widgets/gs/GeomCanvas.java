@@ -73,7 +73,7 @@ public class GeomCanvas
             @Override
             public void paintControl(PaintEvent e) {
                 if (painting)
-                    throw new IllegalStateException(ControlsNLS.getString("GeomCanvas.noReentrant")); //$NON-NLS-1$
+                    throw new IllegalStateException(ControlsNLS.getString("GeomCanvas.noReentrant"));
                 painting = true;
                 Rectangle viewRect = new Rectangle(e.x, e.y, e.width, e.height);
                 paintImpl(e.gc, viewRect, viewOffset);
@@ -204,7 +204,7 @@ public class GeomCanvas
      */
     public void addPaintGeomListener(PaintGeomListener listener) {
         if (listener == null)
-            throw new NullPointerException("listener"); //$NON-NLS-1$
+            throw new NullPointerException("listener");
         if (pgListeners == null)
             pgListeners = new ArrayList<PaintGeomListener>(1);
         pgListeners.add(listener);
@@ -276,12 +276,12 @@ public class GeomCanvas
                 if (buf == null)
                     buf = new BCharOut();
                 else
-                    buf.print(", "); //$NON-NLS-1$
+                    buf.print(", ");
                 buf.print(geom);
                 n++;
             }
             // System.out.println(e);
-            System.out.print("    Pant(" + n + "): "); //$NON-NLS-1$ //$NON-NLS-2$
+            System.out.print("    Pant(" + n + "): ");
             System.out.println(buf);
         }
         if (paintBg) {

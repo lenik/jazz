@@ -25,13 +25,12 @@ public abstract class SWTRenderer
     public Control render(Object context, Var<?> var)
             throws RenderException {
         if (var == null)
-            throw new NullPointerException("render var"); //$NON-NLS-1$
+            throw new NullPointerException("render var");
         try {
             if (context != null && !(context instanceof SWTRenderContext))
-                throw new OutOfDomainException("context", context, //$NON-NLS-1$
-                        SWTRenderContext.class);
+                throw new OutOfDomainException("context", context, SWTRenderContext.class);
             if (!(var instanceof GUIVar<?>))
-                throw new RenderException("not a GUIVar: " + var.getClass()); //$NON-NLS-1$
+                throw new RenderException("not a GUIVar: " + var.getClass());
             // XXX - or create a new swt-context to include the object-context?
             SWTRenderContext rc = null; // (SWTRenderContext) context;
             GUIVar<?> gvar = (GUIVar<?>) var;

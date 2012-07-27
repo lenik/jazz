@@ -21,7 +21,7 @@ public class NavigatorCompositeTest {
             @Override
             public void badPath(BadPathEvent e) {
                 test.shell.dispose();
-                System.out.println("Exit: " + e.path); //$NON-NLS-1$
+                System.out.println("Exit: " + e.path);
             }
         });
         test.run();

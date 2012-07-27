@@ -23,7 +23,7 @@ public class GeomCanvasTest {
             space.setPadding(10);
         }
         GeomCanvas canvas = new GeomCanvas(test.holder, SWT.BORDER, space);
-        System.out.println("Created: " + canvas); //$NON-NLS-1$
+        System.out.println("Created: " + canvas);
         test.run();
     }
 

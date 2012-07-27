@@ -14,19 +14,19 @@ public class TIFFImageType
 
     @Override
     public String getName() {
-        return ControlsNLS.getString("TIFFImageType.name"); //$NON-NLS-1$
+        return ControlsNLS.getString("TIFFImageType.name");
     }
 
     @Override
     public String getExtension() {
-        return "tif"; //$NON-NLS-1$
+        return "tif";
     }
 
     @Override
     public void save(ImageData imageData, OutputStream out, Object params)
             throws IOException {
         if (imageData == null)
-            throw new NullPointerException("imageData"); //$NON-NLS-1$
+            throw new NullPointerException("imageData");
         ImageLoader loader = new ImageLoader();
         loader.data = new ImageData[] { imageData };
         _save(loader, out, SWT.IMAGE_TIFF);

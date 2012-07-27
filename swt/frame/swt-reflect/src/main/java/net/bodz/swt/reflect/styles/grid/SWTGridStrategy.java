@@ -69,19 +69,17 @@ public class SWTGridStrategy
     private static MIcon parameterIcons;
     private static MIcon retvalIcons;
     static {
-        fieldIcons = new MIcon(//
-                "/icons/full/obj16/field_default_obj.gif", //$NON-NLS-1$
-                "/icons/full/obj16/field_public_obj.gif", //$NON-NLS-1$
-                "/icons/full/obj16/field_protected_obj.gif", //$NON-NLS-1$
-                "/icons/full/obj16/field_private_obj.gif"); //$NON-NLS-1$
-        methodIcons = new MIcon(//
-                "/icons/full/obj16/methdef_obj.gif", //$NON-NLS-1$
-                "/icons/full/obj16/methpub_obj.gif", //$NON-NLS-1$
-                "/icons/full/obj16/methpro_obj.gif", //$NON-NLS-1$
-                "/icons/full/obj16/methpri_obj.gif"); //$NON-NLS-1$
+        fieldIcons = new MIcon(
+                //
+                "/icons/full/obj16/field_default_obj.gif", "/icons/full/obj16/field_public_obj.gif",
+                "/icons/full/obj16/field_protected_obj.gif", "/icons/full/obj16/field_private_obj.gif");
+        methodIcons = new MIcon(
+                //
+                "/icons/full/obj16/methdef_obj.gif", "/icons/full/obj16/methpub_obj.gif",
+                "/icons/full/obj16/methpro_obj.gif", "/icons/full/obj16/methpri_obj.gif");
         propertyIcons = methodIcons;
-        parameterIcons = new MIcon("/icons/full/eview16/variable_view.gif"); //$NON-NLS-1$
-        retvalIcons = new MIcon("/icons/full/obj16/field_default_obj.gif"); //$NON-NLS-1$
+        parameterIcons = new MIcon("/icons/full/eview16/variable_view.gif");
+        retvalIcons = new MIcon("/icons/full/obj16/field_default_obj.gif");
     }
 
     public Composite renderStruct(final SWTRenderContext rc, GUIStruct struct, Composite parent, int style)
@@ -124,7 +122,7 @@ public class SWTGridStrategy
             }
             iconLabel.setImage(icon);
         } catch (CreateException e) {
-            throw new RenderException(GUINLS.getString("SWTGridStrategy.failedToRenderIcon"), e); //$NON-NLS-1$
+            throw new RenderException(GUINLS.getString("SWTGridStrategy.failedToRenderIcon"), e);
         }
 
         // Column #2

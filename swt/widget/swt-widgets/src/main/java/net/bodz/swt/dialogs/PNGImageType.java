@@ -14,12 +14,12 @@ public class PNGImageType
 
     @Override
     public String getName() {
-        return ControlsNLS.getString("PNGImageType.name"); //$NON-NLS-1$
+        return ControlsNLS.getString("PNGImageType.name");
     }
 
     @Override
     public String getExtension() {
-        return "png"; //$NON-NLS-1$
+        return "png";
     }
 
     static class Params {
@@ -29,7 +29,7 @@ public class PNGImageType
     public void save(ImageData imageData, OutputStream out, Object _params)
             throws IOException {
         if (imageData == null)
-            throw new NullPointerException("imageData"); //$NON-NLS-1$
+            throw new NullPointerException("imageData");
         // Params params = (Params) _params;
         ImageLoader loader = new ImageLoader();
         loader.data = new ImageData[] { imageData };

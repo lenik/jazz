@@ -36,7 +36,7 @@ public class CallContext
     public void setRetval(Object retval) {
         Object old = this.retval;
         this.retval = retval;
-        pcs.firePropertyChange("retval", old, retval); //$NON-NLS-1$
+        pcs.firePropertyChange("retval", old, retval);
     }
 
     public Object[] getParameters() {
@@ -47,13 +47,13 @@ public class CallContext
         if (parameters == null)
             throw new NullPointerException();
         if (parameters.length != parameterTypes.length) {
-            String fmt = GUINLS.getString("CallContext.errParamNum_dd"); //$NON-NLS-1$
+            String fmt = GUINLS.getString("CallContext.errParamNum_dd");
             throw new IllegalArgumentException(String.format(fmt, parameterTypes.length, parameters.length));
         }
 
         Object[] old = this.parameters;
         this.parameters = parameters;
-        pcs.firePropertyChange("params", old, parameters); //$NON-NLS-1$
+        pcs.firePropertyChange("params", old, parameters);
     }
 
     public int size() {
@@ -71,14 +71,13 @@ public class CallContext
         if (value != null) {
             Class<?> type = parameterTypes[parameterIndex];
             if (!Types.box(type).isInstance(value)) {
-                String fmt = GUINLS.getString("CallContext.errParamType_dss"); //$NON-NLS-1$
-                throw new ClassCastException(String.format(fmt, parameterIndex, //$NON-NLS-1$
-                        type, value.getClass()));
+                String fmt = GUINLS.getString("CallContext.errParamType_dss");
+                throw new ClassCastException(String.format(fmt, parameterIndex, type, value.getClass()));
             }
         }
         Object old = parameters[parameterIndex];
         parameters[parameterIndex] = value;
-        pcs.fireIndexedPropertyChange("param", parameterIndex, old, value); //$NON-NLS-1$
+        pcs.fireIndexedPropertyChange("param", parameterIndex, old, value);
     }
 
     @Override

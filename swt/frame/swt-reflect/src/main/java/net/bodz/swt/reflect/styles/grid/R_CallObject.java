@@ -33,7 +33,7 @@ public class R_CallObject
     public Control render(final SWTRenderContext rc, GUIVar<?> var, Composite parent, int style)
             throws RenderException, SWTException {
         if (!(var instanceof GUICallVar))
-            throw new IllegalArgumentException(GUINLS.getString("R_CallObject.notGUICallVar") + var); //$NON-NLS-1$
+            throw new IllegalArgumentException(GUINLS.getString("R_CallObject.notGUICallVar") + var);
         final GUICallVar callVar = (GUICallVar) var;
         GUICallMeta meta = callVar.getMeta();
         GUIHint hint = meta.getHint();
@@ -65,7 +65,7 @@ public class R_CallObject
                             opbar.layout();
                         }
                     } catch (ReflectException ex) {
-                        String mesg = GUINLS.getString("R_CallObject.failedToCall"); //$NON-NLS-1$
+                        String mesg = GUINLS.getString("R_CallObject.failedToCall");
                         rc.interact(button).alert(mesg, ex);
                     }
                 }

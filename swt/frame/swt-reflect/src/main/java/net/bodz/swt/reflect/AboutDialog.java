@@ -7,9 +7,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
-/**
- * @test {@link AboutDialogTest}
- */
 public class AboutDialog
         extends SimpleDialog {
 

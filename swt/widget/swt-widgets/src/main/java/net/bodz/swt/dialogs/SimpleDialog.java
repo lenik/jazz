@@ -69,7 +69,7 @@ public abstract class SimpleDialog
         setTitle(title);
         if (title != null)
             setText(title);
-        icon = SWTResources.getImageRes("/icons/full/obj16/read_obj.gif"); //$NON-NLS-1$
+        icon = SWTResources.getImageRes("/icons/full/obj16/read_obj.gif");
         image = icon;
         interact = new DialogUI(parent, SWT.APPLICATION_MODAL);
     }
@@ -106,7 +106,7 @@ public abstract class SimpleDialog
         }
         if (canceled)
             if (cancelException)
-                throw new CancelException(ControlsNLS.getString("SimpleDialog.userCanceled")); //$NON-NLS-1$
+                throw new CancelException(ControlsNLS.getString("SimpleDialog.userCanceled"));
             else
                 return null;
         return result;
@@ -155,7 +155,7 @@ public abstract class SimpleDialog
 
     public void setTitle(String title) {
         if (title == null)
-            title = ControlsNLS.getString("SimpleDialog.noTitle"); //$NON-NLS-1$
+            title = ControlsNLS.getString("SimpleDialog.noTitle");
         this.title = title;
         if (shell != null)
             shell.setText(title);
@@ -208,7 +208,7 @@ public abstract class SimpleDialog
         try {
             fireValidate();
         } catch (ValidateException ex) {
-            interact.alert(ControlsNLS.getString("SimpleDialog.checkFailure"), ex); //$NON-NLS-1$
+            interact.alert(ControlsNLS.getString("SimpleDialog.checkFailure"), ex);
             return;
         }
         if (value == EVALUATE) {
@@ -320,7 +320,7 @@ public abstract class SimpleDialog
     }
 
     void createException(Composite parent, Exception e) {
-        errorLabel.setText(ControlsNLS.getString("SimpleDialog.createError") + e.toString()); //$NON-NLS-1$
+        errorLabel.setText(ControlsNLS.getString("SimpleDialog.createError") + e.toString());
         errorBar.set(true);
     }
 
@@ -388,30 +388,26 @@ public abstract class SimpleDialog
 
     protected Button addOKButton(Composite parent)
             throws SWTException {
-        return addButton(parent, SWT.NONE, SWTResources.getImageRes("/icons/full/obj16/translate.gif"), //$NON-NLS-1$
-                ControlsNLS.getString("SimpleDialog.ok"), //$NON-NLS-1$
-                EVALUATE);
+        return addButton(parent, SWT.NONE, SWTResources.getImageRes("/icons/full/obj16/translate.gif"),
+                ControlsNLS.getString("SimpleDialog.ok"), EVALUATE);
     }
 
     protected Button addCancelButton(Composite parent)
             throws SWTException {
-        return addButton(parent, SWT.NONE, SWTResources.getImageRes("/icons/full/obj16/delete_obj.gif"), //$NON-NLS-1$
-                ControlsNLS.getString("SimpleDialog.cancel"), //$NON-NLS-1$
-                CANCEL);
+        return addButton(parent, SWT.NONE, SWTResources.getImageRes("/icons/full/obj16/delete_obj.gif"),
+                ControlsNLS.getString("SimpleDialog.cancel"), CANCEL);
     }
 
     protected Button addYesButton(Composite parent)
             throws SWTException {
-        return addButton(parent, SWT.NONE, SWTResources.getImageRes("/icons/full/obj16/lrun_obj.gif"), //$NON-NLS-1$
-                ControlsNLS.getString("SimpleDialog.yes"), //$NON-NLS-1$
-                true);
+        return addButton(parent, SWT.NONE, SWTResources.getImageRes("/icons/full/obj16/lrun_obj.gif"),
+                ControlsNLS.getString("SimpleDialog.yes"), true);
     }
 
     protected Button addNoButton(Composite parent)
             throws SWTException {
-        return addButton(parent, SWT.NONE, SWTResources.getImageRes("/icons/full/obj16/delete_obj.gif"), //$NON-NLS-1$
-                ControlsNLS.getString("SimpleDialog.no"), //$NON-NLS-1$
-                false);
+        return addButton(parent, SWT.NONE, SWTResources.getImageRes("/icons/full/obj16/delete_obj.gif"),
+                ControlsNLS.getString("SimpleDialog.no"), false);
     }
 
     protected void addEffects() {

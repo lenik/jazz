@@ -31,7 +31,7 @@ public class TestMain
         try {
             main.run();
         } catch (Throwable e) {
-            new DialogUI().alert("Error", e); //$NON-NLS-1$
+            new DialogUI().alert("Error", e);
         }
     }
 

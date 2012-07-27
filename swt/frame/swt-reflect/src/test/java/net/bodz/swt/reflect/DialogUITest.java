@@ -20,12 +20,11 @@ public class DialogUITest {
     DialogUI ia;
     Person person;
     {
-        person = new Person("Lily", 12, true); //$NON-NLS-1$
-        person.setLocation(new Address("12 River", "Z.J.", "CN", 12345, //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                "999-888-777")); //$NON-NLS-1$
+        person = new Person("Lily", 12, true);
+        person.setLocation(new Address("12 River", "Z.J.", "CN", 12345, "999-888-777"));
     }
 
-    String lily = "LiLY"; //$NON-NLS-1$
+    String lily = "LiLY";
     Person lily2 = person;
 
     public DialogUITest() {
@@ -34,40 +33,38 @@ public class DialogUITest {
 
     @Test
     public void testAlert() {
-        ia.alert("Hello", "World"); //$NON-NLS-1$ //$NON-NLS-2$
-        ia.alert("Hello", lily); //$NON-NLS-1$
-        IOException ex = new IOException("outer", new RuntimeException("inner")); //$NON-NLS-1$ //$NON-NLS-2$
-        ia.alert("Exception Sample", ex); //$NON-NLS-1$
+        ia.alert("Hello", "World");
+        ia.alert("Hello", lily);
+        IOException ex = new IOException("outer", new RuntimeException("inner"));
+        ia.alert("Exception Sample", ex);
     }
 
     @Test
     public void testConfirm() {
-        boolean b = ia.confirm("Continue?", //$NON-NLS-1$
-                "Do you want to continue the operation?"); //$NON-NLS-1$
+        boolean b = ia.confirm("Continue?", "Do you want to continue the operation?");
         if (b) {
-            b = ia.confirm("Kiss lily?", lily); //$NON-NLS-1$
+            b = ia.confirm("Kiss lily?", lily);
             if (b)
-                ia.alert("Kissed"); //$NON-NLS-1$
+                ia.alert("Kissed");
         }
     }
 
     @Test
     public void testAsk() {
-        int answer = ia.ask("Error happens", new ExpectedException(), // //$NON-NLS-1$
+        int answer = ia.ask("Error happens", new ExpectedException(), //
                 Proposals.retry, Proposals.ignore, Proposals.cancel);
-        System.out.println("Answer: " + answer); //$NON-NLS-1$
+        System.out.println("Answer: " + answer);
     }
 
     @Test
     public void testPrompt() {
-        String yourName = ia.prompt("What's your name?"); //$NON-NLS-1$
-        System.out.println("Your name = " + yourName); //$NON-NLS-1$
-        Float num = ia.prompt("Enter a number", "Enter a number in decimal", //$NON-NLS-1$ //$NON-NLS-2$
-                Float.class, 100f);
+        String yourName = ia.prompt("What's your name?");
+        System.out.println("Your name = " + yourName);
+        Float num = ia.prompt("Enter a number", "Enter a number in decimal", Float.class, 100f);
         if (num == null)
-            System.out.println("Canceled"); //$NON-NLS-1$
+            System.out.println("Canceled");
         else
-            System.out.printf("The number is %.3f", (float) num); //$NON-NLS-1$
+            System.out.printf("The number is %.3f", (float) num);
     }
 
     static class Animal {
@@ -82,7 +79,7 @@ public class DialogUITest {
 
         @Override
         public String toString() {
-            return "<A " + color + " " + name + ">"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+            return "<A " + color + " " + name + ">";
         }
     }
 
@@ -103,48 +100,48 @@ public class DialogUITest {
     static {
         animals = new Animal[] {
                 //
-                new Animal("Cat", "yellow"), // //$NON-NLS-1$ //$NON-NLS-2$
-                new Dog("Dog", "white", "Jerry"), // //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                new Dog("Dog", "blue", Person.Lucy), // //$NON-NLS-1$ //$NON-NLS-2$
-                new Animal("Chinese Tiger in Dongbei Province", "red"), // //$NON-NLS-1$ //$NON-NLS-2$
-                new Animal("Rabbit", "gray"), // //$NON-NLS-1$ //$NON-NLS-2$
+                new Animal("Cat", "yellow"), //
+                new Dog("Dog", "white", "Jerry"), //
+                new Dog("Dog", "blue", Person.Lucy), //
+                new Animal("Chinese Tiger in Dongbei Province", "red"), //
+                new Animal("Rabbit", "gray"), //
         };
         numbers = new HashMap<Integer, Object>();
-        numbers.put(10, "One"); //$NON-NLS-1$
-        numbers.put(20, "Two"); //$NON-NLS-1$
-        numbers.put(30, "Three"); //$NON-NLS-1$
-        numbers.put(40, "Four"); //$NON-NLS-1$
-        numbers.put(50, "Five apples grows on an big tall arabic tree."); //$NON-NLS-1$
+        numbers.put(10, "One");
+        numbers.put(20, "Two");
+        numbers.put(30, "Three");
+        numbers.put(40, "Four");
+        numbers.put(50, "Five apples grows on an big tall arabic tree.");
     }
 
     @Test
     public void testChoice() {
-        int choice = ia.choice("Choice an animal: ", Arrays.asList(animals)); //$NON-NLS-1$
+        int choice = ia.choice("Choice an animal: ", Arrays.asList(animals));
         if (choice == -1)
-            System.out.println("nothing choiced"); //$NON-NLS-1$
+            System.out.println("nothing choiced");
         else
-            System.out.println("Choiced: " + animals[choice]); //$NON-NLS-1$
+            System.out.println("Choiced: " + animals[choice]);
 
-        Integer k = ia.choice("Choice a number: ", numbers, 20); //$NON-NLS-1$
+        Integer k = ia.choice("Choice a number: ", numbers, 20);
         if (k == null)
-            System.out.println("nothing choiced"); //$NON-NLS-1$
+            System.out.println("nothing choiced");
         else
-            System.out.println("Choiced: " + k); //$NON-NLS-1$
+            System.out.println("Choiced: " + k);
     }
 
     @Test
     public void testChoices() {
-        int[] choices = ia.choices("Choice animals: ", Arrays.asList(animals)); //$NON-NLS-1$
+        int[] choices = ia.choices("Choice animals: ", Arrays.asList(animals));
         if (choices == null)
-            System.out.println("nothing choiced"); //$NON-NLS-1$
+            System.out.println("nothing choiced");
         else
-            System.out.println("Choiced: " + Strings.joinDot(choices)); //$NON-NLS-1$
+            System.out.println("Choiced: " + Strings.joinDot(choices));
 
-        Set<Integer> kv = ia.choices("Choice numbers: ", numbers, 2, 4); //$NON-NLS-1$
+        Set<Integer> kv = ia.choices("Choice numbers: ", numbers, 2, 4);
         if (kv == null)
-            System.out.println("nothing choiced"); //$NON-NLS-1$
+            System.out.println("nothing choiced");
         else
-            System.out.println("Choiced: " + Strings.join(", ", kv)); //$NON-NLS-1$ //$NON-NLS-2$
+            System.out.println("Choiced: " + Strings.join(", ", kv));
     }
 
 }

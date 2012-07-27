@@ -21,18 +21,18 @@ public class SafeButtonTest {
         Shell shell = new Shell();
         shell.setLayout(new FillLayout());
         SafeButton button = new SafeButton(shell, SWT.NONE);
-        button.getButton().setText("Test"); //$NON-NLS-1$
+        button.getButton().setText("Test");
         button.addAsyncSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
                 int id = ++seq; // rand.nextInt();
-                System.out.println("  " + id + " start"); //$NON-NLS-1$ //$NON-NLS-2$
+                System.out.println("  " + id + " start");
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException ex) {
                     throw new RuntimeException(ex);
                 }
-                System.out.println("  " + id + " end"); //$NON-NLS-1$ //$NON-NLS-2$
+                System.out.println("  " + id + " end");
             }
         });
 

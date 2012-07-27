@@ -70,7 +70,7 @@ public class R_Text
             try {
                 parser = TypeParsers.guess(type, true);
             } catch (ParseException e) {
-                throw new RenderException(GUINLS.getString("R_Text.cantGuessParserForNum") + type); //$NON-NLS-1$
+                throw new RenderException(GUINLS.getString("R_Text.cantGuessParserForNum") + type);
             }
             ControlAdapters.commit(text, new CommitAdapter(rc.interact(text)) {
                 @Override

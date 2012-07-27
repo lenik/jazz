@@ -27,7 +27,7 @@ public abstract class _R_Object
                 Object value = var.get();
                 if (value == null) {
                     Label label = new Label(parent, style);
-                    label.setText(GUINLS.getString("_R_Object.null")); //$NON-NLS-1$
+                    label.setText(GUINLS.getString("_R_Object.null"));
                     return control = label;
                 } else {
                     return control = renderObject(rc, var, parent, style);

@@ -38,7 +38,7 @@ public class ThreadsMonitor
     private UserInterface UI;
 
     public ThreadsMonitor(Shell parent, int style) {
-        super(parent, style, GUINLS.getString("ThreadsMonitor.threadsMonitor")); //$NON-NLS-1$
+        super(parent, style, GUINLS.getString("ThreadsMonitor.threadsMonitor"));
         threadMap = new HashMap<Long, Thread>();
         UI = new DialogUI(parent);
     }
@@ -62,7 +62,7 @@ public class ThreadsMonitor
         parent.setLayout(layout);
 
         final Button showDaemonCheck = new Button(parent, SWT.CHECK);
-        showDaemonCheck.setText(GUINLS.getString("ThreadsMonitor.showDaemons")); //$NON-NLS-1$
+        showDaemonCheck.setText(GUINLS.getString("ThreadsMonitor.showDaemons"));
         showDaemonCheck.setLayoutData(new GridData(//
                 GridData.BEGINNING, GridData.CENTER, true, false));
         showDaemonCheck.addSelectionListener(new SelectionAdapter() {
@@ -74,10 +74,10 @@ public class ThreadsMonitor
         });
 
         final Label intervalImage = new Label(parent, SWT.NONE);
-        intervalImage.setImage(SWTResources.getImageRes("/icons/full/obj16/refresh_tab.gif")); //$NON-NLS-1$
+        intervalImage.setImage(SWTResources.getImageRes("/icons/full/obj16/refresh_tab.gif"));
 
         final Label intervalLabel = new Label(parent, SWT.NONE);
-        intervalLabel.setText(GUINLS.getString("ThreadsMonitor.refreshInterval")); //$NON-NLS-1$
+        intervalLabel.setText(GUINLS.getString("ThreadsMonitor.refreshInterval"));
 
         final Spinner intervalSpinner = new Spinner(parent, SWT.NONE);
         intervalSpinner.setMinimum(0);
@@ -101,17 +101,17 @@ public class ThreadsMonitor
     protected void createButtons(Composite parent)
             throws CreateException {
         Button button = addOKButton(parent);
-        button.setText(GUINLS.getString("ThreadsMonitor.close")); //$NON-NLS-1$
-        button.setToolTipText(GUINLS.getString("ThreadsMonitor.closeDialog")); //$NON-NLS-1$
-        button.setImage(SWTResources.getImageRes("/icons/elcl16/nav_forward.gif")); //$NON-NLS-1$
+        button.setText(GUINLS.getString("ThreadsMonitor.close"));
+        button.setToolTipText(GUINLS.getString("ThreadsMonitor.closeDialog"));
+        button.setImage(SWTResources.getImageRes("/icons/elcl16/nav_forward.gif"));
     }
 
     @Override
     protected void createUserButtons(Composite parent)
             throws CreateException {
         Button killAllButton = new Button(parent, SWT.NONE);
-        killAllButton.setText(GUINLS.getString("ThreadsMonitor.killAll")); //$NON-NLS-1$
-        killAllButton.setImage(SWTResources.getImageRes("/icons/full/elcl16/terminate_all_co.gif")); //$NON-NLS-1$
+        killAllButton.setText(GUINLS.getString("ThreadsMonitor.killAll"));
+        killAllButton.setImage(SWTResources.getImageRes("/icons/full/elcl16/terminate_all_co.gif"));
         killAllButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -120,8 +120,8 @@ public class ThreadsMonitor
         });
 
         Button killButton = new Button(parent, SWT.NONE);
-        killButton.setText(GUINLS.getString("ThreadsMonitor.kill")); //$NON-NLS-1$
-        killButton.setImage(SWTResources.getImageRes("/icons/full/elcl16/terminate_co.gif")); //$NON-NLS-1$
+        killButton.setText(GUINLS.getString("ThreadsMonitor.kill"));
+        killButton.setImage(SWTResources.getImageRes("/icons/full/elcl16/terminate_co.gif"));
         killButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -130,8 +130,8 @@ public class ThreadsMonitor
         });
 
         Button traceButton = new Button(parent, SWT.NONE);
-        traceButton.setText(GUINLS.getString("ThreadsMonitor.stackTrace")); //$NON-NLS-1$
-        traceButton.setImage(SWTResources.getImageRes("/icons/full/obj16/stckframe_running_obj.gif")); //$NON-NLS-1$
+        traceButton.setText(GUINLS.getString("ThreadsMonitor.stackTrace"));
+        traceButton.setImage(SWTResources.getImageRes("/icons/full/obj16/stckframe_running_obj.gif"));
         traceButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -140,8 +140,8 @@ public class ThreadsMonitor
         });
 
         Button mailButton = new Button(parent, SWT.NONE);
-        mailButton.setText(GUINLS.getString("ThreadsMonitor.sendMail")); //$NON-NLS-1$
-        mailButton.setImage(SWTResources.getImageRes("/icons/full/obj16/text_edit.gif")); //$NON-NLS-1$
+        mailButton.setText(GUINLS.getString("ThreadsMonitor.sendMail"));
+        mailButton.setImage(SWTResources.getImageRes("/icons/full/obj16/text_edit.gif"));
         mailButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -161,7 +161,7 @@ public class ThreadsMonitor
                 continue;
             long id = t.getId();
             threadMap.put(id, t);
-            String description = id + ": " + t.toString(); //$NON-NLS-1$
+            String description = id + ": " + t.toString();
             threadList.add(description);
         }
     }
@@ -189,14 +189,14 @@ public class ThreadsMonitor
         Thread thread = getSelection();
         if (thread == null)
             return;
-        if (UI.confirm(GUINLS.getString("ThreadsMonitor.confirmKill") + thread + "?")) { //$NON-NLS-1$ //$NON-NLS-2$
+        if (UI.confirm(GUINLS.getString("ThreadsMonitor.confirmKill") + thread + "?")) {
             thread.interrupt();
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
             }
             if (thread.isAlive()) {
-                System.err.println(GUINLS.getString("ThreadsMonitor.forceToStop") + thread); //$NON-NLS-1$
+                System.err.println(GUINLS.getString("ThreadsMonitor.forceToStop") + thread);
                 thread.stop();
             }
             refresh();
@@ -207,7 +207,7 @@ public class ThreadsMonitor
         Thread thread = getSelection();
         StackTraceElement[] stackTrace = thread.getStackTrace();
         // StringBuffer buf = new StringBuffer(stackTrace.length * 50);
-        UI.alert(GUINLS.getString("ThreadsMonitor.stackTraceOf") + thread, stackTrace); //$NON-NLS-1$
+        UI.alert(GUINLS.getString("ThreadsMonitor.stackTraceOf") + thread, stackTrace);
     }
 
     void sendMail() {

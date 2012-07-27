@@ -18,33 +18,33 @@ public class LineLayoutTest
 
         final Button button = new Button(holder, SWT.NONE);
         button.setLayoutData(BorderLayout.NORTH);
-        button.setText("button"); //$NON-NLS-1$
+        button.setText("button");
 
         final Composite south = new Composite(holder, SWT.NONE);
         south.setLayout(new LineLayout());
         south.setLayoutData(BorderLayout.SOUTH);
 
         final Label pre = new Label(south, SWT.BORDER);
-        pre.setText("a\nb"); //$NON-NLS-1$
+        pre.setText("a\nb");
 
         final Text textA = new Text(south, SWT.BORDER);
-        textA.setText("1"); //$NON-NLS-1$
+        textA.setText("1");
         textA.setLayoutData(LineLayout.EXPAND);
         final Text textB = new Text(south, SWT.BORDER);
-        textB.setText("333"); //$NON-NLS-1$
+        textB.setText("333");
         textB.setLayoutData(LineLayout.EXPAND | LineLayout.FILL);
         final Button buttonC = new Button(south, SWT.NONE);
-        buttonC.setText("test"); //$NON-NLS-1$
+        buttonC.setText("test");
 
         final Composite east = new Composite(holder, SWT.BORDER);
         east.setLayout(new LineLayout());
         east.setLayoutData(BorderLayout.EAST);
 
         final Text text1 = new Text(east, SWT.NONE);
-        text1.setText("Very GOOD!"); //$NON-NLS-1$
+        text1.setText("Very GOOD!");
 
         final Button button1 = new Button(east, SWT.NONE);
-        button1.setText("B"); //$NON-NLS-1$
+        button1.setText("B");
     }
 
     public static void main(String[] args)

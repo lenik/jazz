@@ -48,7 +48,7 @@ public abstract class _ImageAccessor
 
     @Override
     public void getRGB(int[] rgbv) {
-        assert rgbv != null && rgbv.length >= 3 : "output rgb[]"; //$NON-NLS-1$
+        assert rgbv != null && rgbv.length >= 3 : "output rgb[]";
         RGB rgb = getRGB();
         rgbv[0] = rgb.red;
         rgbv[1] = rgb.green;
@@ -57,7 +57,7 @@ public abstract class _ImageAccessor
 
     @Override
     public void setRGB(int[] rgbv) {
-        assert rgbv != null && rgbv.length >= 3 : "rgb"; //$NON-NLS-1$
+        assert rgbv != null && rgbv.length >= 3 : "rgb";
         RGB rgb = new RGB(rgbv[0], rgbv[1], rgbv[2]);
         setRGB(rgb);
     }
@@ -84,7 +84,7 @@ public abstract class _ImageAccessor
 
     @Override
     public void setAlpha(int alpha) {
-        throw new UnsupportedOperationException("alpha"); //$NON-NLS-1$
+        throw new UnsupportedOperationException("alpha");
     }
 
     @Override

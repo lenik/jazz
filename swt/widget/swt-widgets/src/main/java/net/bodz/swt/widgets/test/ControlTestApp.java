@@ -23,7 +23,7 @@ import org.eclipse.swt.widgets.Shell;
 public class ControlTestApp {
 
     public final Display display = Display.getDefault();
-    public final String title = GUINLS.getString("ControlTestApp.title"); //$NON-NLS-1$
+    public final String title = GUINLS.getString("ControlTestApp.title");
     public final Shell shell;
     public final Composite holder;
     private Composite tools;
@@ -49,7 +49,7 @@ public class ControlTestApp {
         tools.setLayoutData(BorderLayout.NORTH);
 
         Button autoFit = new Button(tools, SWT.NONE);
-        autoFit.setText(GUINLS.getString("ControlTestApp.autoFit")); //$NON-NLS-1$
+        autoFit.setText(GUINLS.getString("ControlTestApp.autoFit"));
         autoFit.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -105,7 +105,7 @@ public class ControlTestApp {
         ControlTestApp test = new ControlTestApp();
         T control = test.add(controlType);
         if (initf == null) {
-            System.out.println(GUINLS.getString("ControlTestApp.echo") + control); //$NON-NLS-1$
+            System.out.println(GUINLS.getString("ControlTestApp.echo") + control);
         } else {
             initf.exec(control);
         }

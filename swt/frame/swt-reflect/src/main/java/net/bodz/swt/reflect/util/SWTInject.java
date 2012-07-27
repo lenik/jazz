@@ -67,10 +67,10 @@ public class SWTInject {
 
             } else if (item instanceof ToolItem) {
                 ToolItem toolItem = (ToolItem) item;
-                Image hot = data.getIcon("hot"); //$NON-NLS-1$
+                Image hot = data.getIcon("hot");
                 if (hot != null)
                     toolItem.setHotImage(hot);
-                Image disabled = data.getIcon("disabled"); //$NON-NLS-1$
+                Image disabled = data.getIcon("disabled");
                 if (disabled != null)
                     toolItem.setDisabledImage(disabled);
                 // toolItem.setToolTipText(doc);

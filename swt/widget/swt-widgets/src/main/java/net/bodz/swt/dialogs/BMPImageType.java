@@ -18,12 +18,12 @@ public class BMPImageType
 
     @Override
     public String getName() {
-        return ControlsNLS.getString("BMPImageType.name"); //$NON-NLS-1$
+        return ControlsNLS.getString("BMPImageType.name");
     }
 
     @Override
     public String getExtension() {
-        return "bmp"; //$NON-NLS-1$
+        return "bmp";
     }
 
     static class Params {
@@ -48,7 +48,7 @@ public class BMPImageType
             setLayout(gridLayout);
 
             rleCompressedButton = new Button(this, SWT.CHECK);
-            rleCompressedButton.setText(ControlsNLS.getString("BMPImageType.rleCompressed")); //$NON-NLS-1$
+            rleCompressedButton.setText(ControlsNLS.getString("BMPImageType.rleCompressed"));
             rleCompressedButton.setSelection(params.compressByRLE);
         }
 
@@ -65,7 +65,7 @@ public class BMPImageType
     public void save(ImageData imageData, OutputStream out, Object _params)
             throws IOException {
         if (imageData == null)
-            throw new NullPointerException("imageData"); //$NON-NLS-1$
+            throw new NullPointerException("imageData");
         Params params = (Params) _params;
         ImageLoader loader = new ImageLoader();
         loader.data = new ImageData[] { imageData };

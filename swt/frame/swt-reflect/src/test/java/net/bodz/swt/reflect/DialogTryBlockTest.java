@@ -12,23 +12,23 @@ public class DialogTryBlockTest {
             @Override
             protected void body()
                     throws Exception {
-                System.out.println("run"); //$NON-NLS-1$
-                throw new Exception("run exception"); //$NON-NLS-1$
+                System.out.println("run");
+                throw new Exception("run exception");
             }
 
             @Override
             protected void exit(int exitType) {
-                System.out.println("Exit: " + exitType); //$NON-NLS-1$
+                System.out.println("Exit: " + exitType);
             }
 
             @Override
             protected void init() {
-                System.out.println("Init"); //$NON-NLS-1$
+                System.out.println("Init");
             }
 
             @Override
             protected void retry() {
-                System.out.println("Retry"); //$NON-NLS-1$
+                System.out.println("Retry");
             }
 
         };

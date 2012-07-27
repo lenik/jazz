@@ -27,7 +27,7 @@ public abstract class CommitAdapter
         if (cause == null)
             cause = exception;
         TypedEvent evt = (TypedEvent) event;
-        UI.alert(ControlsNLS.getString("CommitAdapter.commitError"), cause); //$NON-NLS-1$
+        UI.alert(ControlsNLS.getString("CommitAdapter.commitError"), cause);
         Widget widget = (Widget) evt.widget;
         // System.out.println("  source=" + evt.getSource());
         // System.out.println("  widget=" + evt.widget);

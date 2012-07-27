@@ -56,8 +56,8 @@ public class WindowComposite
         gridLayout.verticalSpacing = 0;
         setLayout(gridLayout);
 
-        this.expandedImage = SWTResources.getImageRes("/icons/full/elcl16/thin_min_view.gif"); //$NON-NLS-1$
-        this.collaspedImage = SWTResources.getImageRes("/icons/full/elcl16/thin_max_view.gif"); //$NON-NLS-1$
+        this.expandedImage = SWTResources.getImageRes("/icons/full/elcl16/thin_min_view.gif");
+        this.collaspedImage = SWTResources.getImageRes("/icons/full/elcl16/thin_max_view.gif");
 
         titleBar = new Composite(this, SWT.NONE);
         final GridLayout titleLayout = new GridLayout();

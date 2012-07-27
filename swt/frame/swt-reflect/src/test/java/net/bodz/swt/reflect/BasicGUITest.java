@@ -28,10 +28,10 @@ public class BasicGUITest
         extends BasicGUI {
 
     @Visible(false)
-    String greeting = "Hello"; //$NON-NLS-1$
+    String greeting = "Hello";
 
     @Font(name = "Arial", height = 20)
-    String name = "Caynoh"; //$NON-NLS-1$
+    String name = "Caynoh";
 
     @Color("red")
     int age = 13;
@@ -69,7 +69,7 @@ public class BasicGUITest
         fd_greetingLabel.right = new FormAttachment(0, 95);
         fd_greetingLabel.top = new FormAttachment(0, 5);
         greetingLabel.setLayoutData(fd_greetingLabel);
-        greetingLabel.setText("Greeting: "); //$NON-NLS-1$
+        greetingLabel.setText("Greeting: ");
 
         greetingText = new Text(holder, SWT.BORDER);
         greetingText.addVerifyListener(new VerifyListener() {
@@ -92,7 +92,7 @@ public class BasicGUITest
         fd_nameLabel.top = new FormAttachment(greetingLabel, 5, SWT.BOTTOM);
         fd_nameLabel.left = new FormAttachment(greetingLabel, 0, SWT.LEFT);
         nameLabel.setLayoutData(fd_nameLabel);
-        nameLabel.setText("Name: "); //$NON-NLS-1$
+        nameLabel.setText("Name: ");
 
         final Label ageLabel = new Label(holder, SWT.NONE);
         final FormData fd_ageLabel = new FormData();
@@ -101,7 +101,7 @@ public class BasicGUITest
         fd_ageLabel.top = new FormAttachment(nameLabel, 5, SWT.BOTTOM);
         fd_ageLabel.left = new FormAttachment(nameLabel, 0, SWT.LEFT);
         ageLabel.setLayoutData(fd_ageLabel);
-        ageLabel.setText("Age: "); //$NON-NLS-1$
+        ageLabel.setText("Age: ");
 
         nameText = new Text(holder, SWT.BORDER);
         nameText.addVerifyListener(new VerifyListener() {
@@ -127,7 +127,7 @@ public class BasicGUITest
                 }
             }
         });
-        ageText.setText("" + age); //$NON-NLS-1$
+        ageText.setText("" + age);
         final FormData fd_ageText = new FormData();
         fd_ageText.bottom = new FormAttachment(ageLabel, 0, SWT.BOTTOM);
         fd_ageText.right = new FormAttachment(nameText, 0, SWT.RIGHT);
@@ -139,8 +139,7 @@ public class BasicGUITest
         sayButton.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent e) {
-                String s = greeting + " " + name + ", you are " + age //$NON-NLS-1$ //$NON-NLS-2$
-                        + " years old!"; //$NON-NLS-1$
+                String s = greeting + " " + name + ", you are " + age + " years old!";
                 helloLabel.setText(s);
             }
         });
@@ -150,17 +149,17 @@ public class BasicGUITest
         fd_sayButton.top = new FormAttachment(ageLabel, 5, SWT.BOTTOM);
         fd_sayButton.left = new FormAttachment(ageLabel, 0, SWT.LEFT);
         sayButton.setLayoutData(fd_sayButton);
-        sayButton.setText("&Say: "); //$NON-NLS-1$
+        sayButton.setText("&Say: ");
 
         helloLabel = new Label(holder, SWT.WRAP);
-        helloLabel.setFont(SWTResources.getFont("Tahoma", 12, SWT.NONE)); //$NON-NLS-1$
+        helloLabel.setFont(SWTResources.getFont("Tahoma", 12, SWT.NONE));
         final FormData fd_helloLabel = new FormData();
         fd_helloLabel.bottom = new FormAttachment(100, -5);
         fd_helloLabel.right = new FormAttachment(ageText, 0, SWT.RIGHT);
         fd_helloLabel.top = new FormAttachment(ageText, 5, SWT.BOTTOM);
         fd_helloLabel.left = new FormAttachment(sayButton, 5, SWT.RIGHT);
         helloLabel.setLayoutData(fd_helloLabel);
-        helloLabel.setText("hello!"); //$NON-NLS-1$
+        helloLabel.setText("hello!");
 
         // Scrollable scroll = new Scrollable(parent, SWT.BORDER);
         Point cs = holder.computeSize(SWT.DEFAULT, SWT.DEFAULT);
@@ -170,7 +169,7 @@ public class BasicGUITest
         Label greetingIcon;
         greetingIcon = new Label(holder, SWT.NONE);
         fd_greetingLabel.left = new FormAttachment(greetingIcon, 5, SWT.RIGHT);
-        greetingIcon.setImage(SWTResources.getImageRes("/icons/full/obj16/read_obj.gif")); //$NON-NLS-1$
+        greetingIcon.setImage(SWTResources.getImageRes("/icons/full/obj16/read_obj.gif"));
         final FormData fd_greetingIcon = new FormData();
         fd_greetingIcon.right = new FormAttachment(0, 25);
         fd_greetingIcon.bottom = new FormAttachment(greetingLabel, 0, SWT.BOTTOM);

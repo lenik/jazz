@@ -25,11 +25,11 @@ public class PropertiesComposite
 
         final Button button = new Button(this, SWT.TOGGLE);
         button.setImage(SWTResources.getImageRes(PropertiesComposite.class,
-                "/com/sun/java/swing/plaf/motif/icons/ScrollRightArrowActive.gif")); //$NON-NLS-1$
-        button.setText("Toggle Button"); //$NON-NLS-1$
+                "/com/sun/java/swing/plaf/motif/icons/ScrollRightArrowActive.gif"));
+        button.setText("Toggle Button");
 
         final Label label = new Label(this, SWT.NONE);
-        label.setText("Label"); //$NON-NLS-1$
+        label.setText("Label");
 
         final Composite composite = new Composite(this, SWT.NONE);
         composite.setLayout(new GridLayout());
@@ -37,7 +37,7 @@ public class PropertiesComposite
         final Composite composite_1 = new Composite(this, SWT.NONE);
 
         final Button button_1 = new Button(composite_1, SWT.NONE);
-        button_1.setText("button"); //$NON-NLS-1$
+        button_1.setText("button");
         new Label(this, SWT.NONE);
         new Label(this, SWT.NONE);
     }

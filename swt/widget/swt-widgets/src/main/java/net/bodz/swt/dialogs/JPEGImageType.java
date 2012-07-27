@@ -20,12 +20,12 @@ public class JPEGImageType
 
     @Override
     public String getName() {
-        return ControlsNLS.getString("JPEGImageType.name"); //$NON-NLS-1$
+        return ControlsNLS.getString("JPEGImageType.name");
     }
 
     @Override
     public String getExtension() {
-        return "jpg"; //$NON-NLS-1$
+        return "jpg";
     }
 
     static class Params {
@@ -49,7 +49,7 @@ public class JPEGImageType
             setLayout(gridLayout);
 
             final Label jpegQualityLabel = new Label(this, SWT.NONE);
-            jpegQualityLabel.setText(ControlsNLS.getString("JPEGImageType.jpegQuality")); //$NON-NLS-1$
+            jpegQualityLabel.setText(ControlsNLS.getString("JPEGImageType.jpegQuality"));
 
             qualityScale = new Scale(this, SWT.NONE);
             qualityScale.setMinimum(10);
@@ -72,7 +72,7 @@ public class JPEGImageType
     public void save(ImageData imageData, OutputStream out, Object _params)
             throws IOException {
         if (imageData == null)
-            throw new NullPointerException("imageData"); //$NON-NLS-1$
+            throw new NullPointerException("imageData");
         // Params params = (Params) _params;
         ImageLoader loader = new ImageLoader();
         loader.data = new ImageData[] { imageData };

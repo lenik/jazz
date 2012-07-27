@@ -47,7 +47,7 @@ public class StrictDeviceResources {
 
     public StrictDeviceResources(Device device, StrictDeviceResources reuse) {
         if (device == null)
-            throw new NullPointerException("device"); //$NON-NLS-1$
+            throw new NullPointerException("device");
         this.device = device;
         if (reuse == null) {
             if (weakCache) {
@@ -74,12 +74,12 @@ public class StrictDeviceResources {
     public ImageData getImageData(InputStream in)
             throws IOException {
         if (in == null)
-            throw new NullPointerException("in"); //$NON-NLS-1$
+            throw new NullPointerException("in");
         try {
             return new ImageData(in);
         } catch (SWTException e) {
             if (e.code == SWT.ERROR_IO)
-                throw new IOException(CommonNLS.getString("StrictDeviceResources.swtIOError"), e); //$NON-NLS-1$
+                throw new IOException(CommonNLS.getString("StrictDeviceResources.swtIOError"), e);
             throw e;
         }
     }
@@ -151,7 +151,7 @@ public class StrictDeviceResources {
         URL url = clazz.getResource(classResPath);
         if (url == null) {
             diagResPath(clazz, classResPath);
-            throw new IOException(CommonNLS.getString("StrictDeviceResources.badResource") + classResPath); //$NON-NLS-1$
+            throw new IOException(CommonNLS.getString("StrictDeviceResources.badResource") + classResPath);
         }
         return getImageData(url);
     }
@@ -171,7 +171,7 @@ public class StrictDeviceResources {
         URL url = loader.getResource(loaderResPath);
         if (url == null) {
             diagResPath(loader, loaderResPath);
-            throw new IOException(CommonNLS.getString("StrictDeviceResources.badResource") + loaderResPath); //$NON-NLS-1$
+            throw new IOException(CommonNLS.getString("StrictDeviceResources.badResource") + loaderResPath);
         }
         return getImageData(url);
     }
@@ -272,7 +272,7 @@ public class StrictDeviceResources {
         URL url = clazz.getResource(classResPath);
         if (url == null) {
             diagResPath(clazz, classResPath);
-            throw new IOException(CommonNLS.getString("StrictDeviceResources.badResource") + classResPath); //$NON-NLS-1$
+            throw new IOException(CommonNLS.getString("StrictDeviceResources.badResource") + classResPath);
         }
         return getImage(url);
     }
@@ -285,7 +285,7 @@ public class StrictDeviceResources {
         URL url = loader.getResource(loaderResPath);
         if (url == null) {
             diagResPath(loader, loaderResPath);
-            throw new IOException(CommonNLS.getString("StrictDeviceResources.badResource") + loaderResPath); //$NON-NLS-1$
+            throw new IOException(CommonNLS.getString("StrictDeviceResources.badResource") + loaderResPath);
         }
         return getImage(url);
     }
@@ -349,14 +349,14 @@ public class StrictDeviceResources {
 
     static void diagResPath(ClassLoader loader, String path) {
         if (diag) {
-            System.err.println(CommonNLS.getString("StrictDeviceResources.badResource") + path); //$NON-NLS-1$
+            System.err.println(CommonNLS.getString("StrictDeviceResources.badResource") + path);
             dumpLoader(loader);
         }
     }
 
     static void diagResPath(Class<?> clazz, String path) {
         if (diag) {
-            System.err.printf(CommonNLS.getString("StrictDeviceResources.badpath_ss"), path, clazz); //$NON-NLS-1$
+            System.err.printf(CommonNLS.getString("StrictDeviceResources.badpath_ss"), path, clazz);
             dumpLoader(clazz.getClassLoader());
         }
     }

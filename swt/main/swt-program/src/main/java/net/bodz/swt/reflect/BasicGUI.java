@@ -115,7 +115,7 @@ public class BasicGUI
     private static Set<String> ignoredThreads;
     static {
         ignoredThreads = new HashSet<String>();
-        ignoredThreads.add("ReaderThread"); // JUnit thread //$NON-NLS-1$
+        ignoredThreads.add("ReaderThread"); // JUnit thread
     }
 
     protected void checkHangOns() {
@@ -266,7 +266,7 @@ public class BasicGUI
             return null;
         final Menu menu = new Menu(shell, SWT.BAR);
 
-        final Menu fileMenu = Menus.newSubMenu(menu, GUINLS.getString("BasicGUI.menu.file")); //$NON-NLS-1$
+        final Menu fileMenu = Menus.newSubMenu(menu, GUINLS.getString("BasicGUI.menu.file"));
         final MenuItem fileExit = new MenuItem(fileMenu, SWT.NONE);
         fileExit.setText(GUINLS.getString("BasicGUI.menu.exit"));
 
@@ -399,7 +399,7 @@ public class BasicGUI
         String author = info.getAuthor();
         String webSite = info.getWebSite();
         if (webSite == null)
-            webSite = "http://www.bodz.net/"; //$NON-NLS-1$
+            webSite = "http://www.bodz.net/";
         String banner = GUINLS.format("BasicGUI.banner", author, webSite, webSite);
         return banner;
     }
