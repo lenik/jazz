@@ -16,7 +16,7 @@ public class SingletonUtil {
         if (clazz.isInterface())
             throw new OutOfDomainException("clazz", clazz, "interface");
 
-        Class<?>[] argTypes = TypeArray.getClasses(args);
+        Class<?>[] argTypes = TypeArray.getClasses(null /* fallback */, args);
         Method method = clazz.getMethod("getInstance", argTypes);
         Object instance = method.invoke(null, args);
         return clazz.cast(instance);

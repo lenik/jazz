@@ -15,7 +15,7 @@ public class TaggedFileTest {
     ResLink ixRes;
 
     public TaggedFileTest() {
-        URL classData = Files.classData(getClass(), "tm"); //$NON-NLS-1$
+        URL classData = Files.classData(getClass(), "tm"); 
         ixRes = new URLResLink(classData);
     }
 
