@@ -35,7 +35,7 @@ public class LogoPage
         IProject project = session.getProject();
         String text = project.getText();
         String version = project.getVersion();
-        return PackNLS.getString("LogoPage.title") + text + " " + version; //$NON-NLS-1$ //$NON-NLS-2$
+        return PackNLS.getString("LogoPage.title") + text + " " + version;
     }
 
     @Override

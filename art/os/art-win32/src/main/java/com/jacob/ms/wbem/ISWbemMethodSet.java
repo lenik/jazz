@@ -7,19 +7,19 @@ package com.jacob.ms.wbem;
 import com.jacob.com.Dispatch;
 import com.jacob.com.Variant;
 
-public class ISWbemMethodSet extends Dispatch {
+public class ISWbemMethodSet
+        extends Dispatch {
 
-    public static final String componentName = "WbemScripting.ISWbemMethodSet"; //$NON-NLS-1$
+    public static final String componentName = "WbemScripting.ISWbemMethodSet";
 
     public ISWbemMethodSet() {
         super(componentName);
     }
 
     /**
-     * This constructor is used instead of a case operation to turn a Dispatch
-     * object into a wider object - it must exist in every wrapper class whose
-     * instances may be returned from method calls wrapped in VT_DISPATCH
-     * Variants.
+     * This constructor is used instead of a case operation to turn a Dispatch object into a wider
+     * object - it must exist in every wrapper class whose instances may be returned from method
+     * calls wrapped in VT_DISPATCH Variants.
      */
     public ISWbemMethodSet(Dispatch d) {
         // take over the IDispatch pointer
@@ -38,7 +38,7 @@ public class ISWbemMethodSet extends Dispatch {
      * @return the result is of type Variant
      */
     public Variant get_NewEnum() {
-        return Dispatch.get(this, "_NewEnum"); //$NON-NLS-1$
+        return Dispatch.get(this, "_NewEnum");
     }
 
     /**
@@ -51,8 +51,7 @@ public class ISWbemMethodSet extends Dispatch {
      * @return the result is of type ISWbemMethod
      */
     public ISWbemMethod item(String strName, int iFlags) {
-        return new ISWbemMethod(Dispatch.call(this, "Item", strName, new Variant(iFlags)) //$NON-NLS-1$
-                .toDispatch());
+        return new ISWbemMethod(Dispatch.call(this, "Item", strName, new Variant(iFlags)).toDispatch());
     }
 
     /**
@@ -63,7 +62,7 @@ public class ISWbemMethodSet extends Dispatch {
      * @return the result is of type ISWbemMethod
      */
     public ISWbemMethod item(String strName) {
-        return new ISWbemMethod(Dispatch.call(this, "Item", strName).toDispatch()); //$NON-NLS-1$
+        return new ISWbemMethod(Dispatch.call(this, "Item", strName).toDispatch());
     }
 
     /**
@@ -72,7 +71,7 @@ public class ISWbemMethodSet extends Dispatch {
      * @return the result is of type int
      */
     public int getCount() {
-        return Dispatch.get(this, "Count").changeType(Variant.VariantInt).getInt(); //$NON-NLS-1$
+        return Dispatch.get(this, "Count").changeType(Variant.VariantInt).getInt();
     }
 
 }

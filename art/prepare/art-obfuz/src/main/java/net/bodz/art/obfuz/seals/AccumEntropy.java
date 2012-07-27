@@ -5,9 +5,10 @@ import net.bodz.art.obfuz.nls.ProtectNLS;
 /**
  * @test AccumEntropyTest
  */
-public class AccumEntropy extends _Entropy {
+public class AccumEntropy
+        extends _Entropy {
 
-    private byte[]    pool;
+    private byte[] pool;
     private final int multiplier;
 
     public AccumEntropy() {
@@ -16,7 +17,7 @@ public class AccumEntropy extends _Entropy {
 
     public AccumEntropy(int poolSize, int multiplier) {
         if (poolSize < 2)
-            throw new IllegalArgumentException(ProtectNLS.getString("AccumEntropy.poolTooSmall")); //$NON-NLS-1$
+            throw new IllegalArgumentException(ProtectNLS.getString("AccumEntropy.poolTooSmall"));
         this.pool = new byte[poolSize];
         this.multiplier = multiplier;
     }

@@ -17,7 +17,7 @@ public class ComponentsTest
             throws Exception {
         IProject project = new TestProject();
         Components components = Components.collect(project);
-        System.out.println("Components Count: " + components.size()); //$NON-NLS-1$
+        System.out.println("Components Count: " + components.size());
 
         System.out.println("Next Map: ");
         checkNextMap(components.getNextMap(), project.getId());

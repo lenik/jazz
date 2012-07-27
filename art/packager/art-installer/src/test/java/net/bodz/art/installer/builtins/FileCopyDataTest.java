@@ -5,11 +5,11 @@ import net.bodz.bas.xml.XMLs;
 
 import org.junit.Test;
 
-
 public class FileCopyDataTest {
 
     @Test
-    public void testXMLEncode() throws Exception {
+    public void testXMLEncode()
+            throws Exception {
         Data data = new Data();
         data.setList(new String[] { "hello", "world" });
         data.setSumSize(1234);

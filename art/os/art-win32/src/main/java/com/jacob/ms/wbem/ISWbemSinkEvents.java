@@ -7,19 +7,19 @@ package com.jacob.ms.wbem;
 import com.jacob.com.Dispatch;
 import com.jacob.com.Variant;
 
-public class ISWbemSinkEvents extends Dispatch {
+public class ISWbemSinkEvents
+        extends Dispatch {
 
-    public static final String componentName = "WbemScripting.ISWbemSinkEvents"; //$NON-NLS-1$
+    public static final String componentName = "WbemScripting.ISWbemSinkEvents";
 
     public ISWbemSinkEvents() {
         super(componentName);
     }
 
     /**
-     * This constructor is used instead of a case operation to turn a Dispatch
-     * object into a wider object - it must exist in every wrapper class whose
-     * instances may be returned from method calls wrapped in VT_DISPATCH
-     * Variants.
+     * This constructor is used instead of a case operation to turn a Dispatch object into a wider
+     * object - it must exist in every wrapper class whose instances may be returned from method
+     * calls wrapped in VT_DISPATCH Variants.
      */
     public ISWbemSinkEvents(Dispatch d) {
         // take over the IDispatch pointer
@@ -41,7 +41,7 @@ public class ISWbemSinkEvents extends Dispatch {
      *            an input-parameter of type ISWbemNamedValueSet
      */
     public void onObjectReady(ISWbemObject objWbemObject, ISWbemNamedValueSet objWbemAsyncContext) {
-        Dispatch.call(this, "OnObjectReady", objWbemObject, objWbemAsyncContext); //$NON-NLS-1$
+        Dispatch.call(this, "OnObjectReady", objWbemObject, objWbemAsyncContext);
     }
 
     /**
@@ -54,10 +54,8 @@ public class ISWbemSinkEvents extends Dispatch {
      * @param objWbemAsyncContext
      *            an input-parameter of type ISWbemNamedValueSet
      */
-    public void onCompleted(int iHResult, ISWbemObject objWbemErrorObject,
-            ISWbemNamedValueSet objWbemAsyncContext) {
-        Dispatch.call(this, "OnCompleted", new Variant(iHResult), objWbemErrorObject, //$NON-NLS-1$
-                objWbemAsyncContext);
+    public void onCompleted(int iHResult, ISWbemObject objWbemErrorObject, ISWbemNamedValueSet objWbemAsyncContext) {
+        Dispatch.call(this, "OnCompleted", new Variant(iHResult), objWbemErrorObject, objWbemAsyncContext);
     }
 
     /**
@@ -72,10 +70,9 @@ public class ISWbemSinkEvents extends Dispatch {
      * @param objWbemAsyncContext
      *            an input-parameter of type ISWbemNamedValueSet
      */
-    public void onProgress(int iUpperBound, int iCurrent, String strMessage,
-            ISWbemNamedValueSet objWbemAsyncContext) {
-        Dispatch.call(this, "OnProgress", new Variant(iUpperBound), new Variant(iCurrent), //$NON-NLS-1$
-                strMessage, objWbemAsyncContext);
+    public void onProgress(int iUpperBound, int iCurrent, String strMessage, ISWbemNamedValueSet objWbemAsyncContext) {
+        Dispatch.call(this, "OnProgress", new Variant(iUpperBound), new Variant(iCurrent), strMessage,
+                objWbemAsyncContext);
     }
 
     /**
@@ -86,9 +83,8 @@ public class ISWbemSinkEvents extends Dispatch {
      * @param objWbemAsyncContext
      *            an input-parameter of type ISWbemNamedValueSet
      */
-    public void onObjectPut(ISWbemObjectPath objWbemObjectPath,
-            ISWbemNamedValueSet objWbemAsyncContext) {
-        Dispatch.call(this, "OnObjectPut", objWbemObjectPath, objWbemAsyncContext); //$NON-NLS-1$
+    public void onObjectPut(ISWbemObjectPath objWbemObjectPath, ISWbemNamedValueSet objWbemAsyncContext) {
+        Dispatch.call(this, "OnObjectPut", objWbemObjectPath, objWbemAsyncContext);
     }
 
 }

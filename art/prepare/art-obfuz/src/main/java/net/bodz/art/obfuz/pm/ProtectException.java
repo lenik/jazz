@@ -1,6 +1,7 @@
 package net.bodz.art.obfuz.pm;
 
-public class ProtectException extends Exception {
+public class ProtectException
+        extends Exception {
 
     private static final long serialVersionUID = -1484121022530572792L;
 

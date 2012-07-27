@@ -45,7 +45,7 @@ public abstract class ExecuteProjectTask
 
     public void setResFolder(IFsTree resFolder) {
         if (this.resFolder != null)
-            throw new BuildException(PackNLS.getString("ExecuteProjectTask.resFolderIsSpecified") + resFolder); //$NON-NLS-1$
+            throw new BuildException(PackNLS.getString("ExecuteProjectTask.resFolderIsSpecified") + resFolder);
         this.resFolder = resFolder;
     }
 
@@ -78,9 +78,9 @@ public abstract class ExecuteProjectTask
     public void execute()
             throws BuildException {
         if (project == null)
-            throw new BuildException(PackNLS.getString("ExecuteProjectTask.projectIsntSpecified")); //$NON-NLS-1$
+            throw new BuildException(PackNLS.getString("ExecuteProjectTask.projectIsntSpecified"));
         if (resFolder == null)
-            throw new BuildException(PackNLS.getString("ExecuteProjectTask.resFolderIsntSpecified")); //$NON-NLS-1$
+            throw new BuildException(PackNLS.getString("ExecuteProjectTask.resFolderIsntSpecified"));
         TaskLogger logger = new TaskLogger(this);
         logger.setLevel(logger.getLevel() + logLevel);
         final List<Exception> exceptions = new ArrayList<Exception>();
@@ -105,7 +105,7 @@ public abstract class ExecuteProjectTask
         for (Map.Entry<String, Object> e : map.entrySet()) {
             String name = e.getKey();
             if (!vardef.containsKey(name))
-                throw new IllegalArgumentException(PackNLS.getString("ExecuteProjectTask.undefinedVariable") + name); //$NON-NLS-1$
+                throw new IllegalArgumentException(PackNLS.getString("ExecuteProjectTask.undefinedVariable") + name);
             Object value = e.getValue();
             session.set(name, value);
         }

@@ -17,7 +17,7 @@ public class Schemes {
 
         public _Scheme(String name, String caption, IComponent... autoComponents) {
             if (name == null)
-                throw new NullPointerException("name"); //$NON-NLS-1$
+                throw new NullPointerException("name");
             this.name = name;
             if (caption == null)
                 caption = Strings.ucfirst(name);
@@ -46,21 +46,21 @@ public class Schemes {
 
     }
 
-    public static final String MINIMUM = "minimum"; //$NON-NLS-1$
-    public static final String DEFAULT = "default"; //$NON-NLS-1$
-    public static final String MAXIMUM = "maximum"; //$NON-NLS-1$
-    public static final String CUSTOM = "custom"; //$NON-NLS-1$
+    public static final String MINIMUM = "minimum";
+    public static final String DEFAULT = "default";
+    public static final String MAXIMUM = "maximum";
+    public static final String CUSTOM = "custom";
 
     public static class Minimum
             extends _Scheme {
 
         public Minimum(IComponent... autoComponents) {
-            super(MINIMUM, PackNLS.getString("Schemes.minimum"), autoComponents); //$NON-NLS-1$
+            super(MINIMUM, PackNLS.getString("Schemes.minimum"), autoComponents);
         }
 
         @Override
         public String getDescription() {
-            return PackNLS.getString("Schemes.min"); //$NON-NLS-1$
+            return PackNLS.getString("Schemes.min");
         }
 
         @Override
@@ -74,12 +74,12 @@ public class Schemes {
             extends _Scheme {
 
         public Default(IComponent... autoComponents) {
-            super(DEFAULT, PackNLS.getString("Schemes.standard"), autoComponents); //$NON-NLS-1$
+            super(DEFAULT, PackNLS.getString("Schemes.standard"), autoComponents);
         }
 
         @Override
         public String getDescription() {
-            return PackNLS.getString("Schemes.std"); //$NON-NLS-1$
+            return PackNLS.getString("Schemes.std");
         }
 
         @Override
@@ -93,12 +93,12 @@ public class Schemes {
             extends _Scheme {
 
         public Maximum(IComponent... autoComponents) {
-            super(MAXIMUM, PackNLS.getString("Schemes.maximum"), autoComponents); //$NON-NLS-1$
+            super(MAXIMUM, PackNLS.getString("Schemes.maximum"), autoComponents);
         }
 
         @Override
         public String getDescription() {
-            return PackNLS.getString("Schemes.full"); //$NON-NLS-1$
+            return PackNLS.getString("Schemes.full");
         }
 
         @Override
@@ -112,12 +112,12 @@ public class Schemes {
             extends _Scheme {
 
         public Custom(IComponent... autoComponents) {
-            super(CUSTOM, PackNLS.getString("Schemes.custom2"), autoComponents); //$NON-NLS-1$
+            super(CUSTOM, PackNLS.getString("Schemes.custom2"), autoComponents);
         }
 
         @Override
         public String getDescription() {
-            return PackNLS.getString("Schemes.custom"); //$NON-NLS-1$
+            return PackNLS.getString("Schemes.custom");
         }
 
         @Override

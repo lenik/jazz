@@ -25,13 +25,13 @@ public class FileLink
     public FileLink(String srcbase, String srcpath, String dstbase, String dstpath, boolean symbolic) {
         super(false, true);
         if (srcbase == null)
-            throw new NullPointerException("srcbase"); //$NON-NLS-1$
+            throw new NullPointerException("srcbase");
         if (srcpath == null)
-            throw new NullPointerException("srcpath"); //$NON-NLS-1$
+            throw new NullPointerException("srcpath");
         if (dstbase == null)
-            throw new NullPointerException("dstbase"); //$NON-NLS-1$
+            throw new NullPointerException("dstbase");
         if (dstpath == null)
-            throw new NullPointerException("dstpath"); //$NON-NLS-1$
+            throw new NullPointerException("dstpath");
         this.srcbase = srcbase;
         this.srcpath = srcpath;
         this.dstbase = dstbase;
@@ -54,9 +54,9 @@ public class FileLink
             Path dstpath = dst.toPath();
             try {
                 if (dst.exists()) {
-                    boolean confirm = UI.confirm(PackNLS.format("FileLink.fileExist_s", dst)); //$NON-NLS-1$
+                    boolean confirm = UI.confirm(PackNLS.format("FileLink.fileExist_s", dst));
                     if (!confirm) {
-                        L.info(PackNLS.getString("FileLink.skipped"), dst); //$NON-NLS-1$
+                        L.info(PackNLS.getString("FileLink.skipped"), dst);
                         return;
                     }
                     dst.delete();
@@ -67,13 +67,13 @@ public class FileLink
                     parentFile.mkdirs();
                 }
                 if (symbolic) {
-                    L.finfo(PackNLS.getString("FileLink.createSymlink_ss"), src, dst); //$NON-NLS-1$
+                    L.finfo(PackNLS.getString("FileLink.createSymlink_ss"), src, dst);
                     try {
                         dstpath.createSymbolicLink(srcpath);
                     } catch (UnsupportedOperationException e) {
                         L.warn(e);
                         if (SystemInfo.isWin32()) {
-                            L.warn(PackNLS.getString("FileLink.symlinkIsntSupported")); //$NON-NLS-1$
+                            L.warn(PackNLS.getString("FileLink.symlinkIsntSupported"));
                             File _src = Files.canoniOf(src);
                             LnkFile lnk = new LnkFile(dst.getParent(), dst.getName());
                             lnk.setPath(_src.getPath());
@@ -83,7 +83,7 @@ public class FileLink
                             throw e;
                     }
                 } else {
-                    L.finfo(PackNLS.getString("FileLink.createLink_ss"), src, dst); //$NON-NLS-1$
+                    L.finfo(PackNLS.getString("FileLink.createLink_ss"), src, dst);
                     String errmesg = null;
                     try {
                         dstpath.createLink(srcpath);
@@ -124,10 +124,10 @@ public class FileLink
             File dst = new File(session.getFile(dstbase), dstpath);
             try {
                 if (dst.exists()) {
-                    L.info(PackNLS.getString("FileLink.remove"), dst); //$NON-NLS-1$
+                    L.info(PackNLS.getString("FileLink.remove"), dst);
                     dst.delete();
-                } else if ((dst = new File(dst.getPath() + ".lnk")).exists()) { //$NON-NLS-1$
-                    L.info(PackNLS.getString("FileLink.removeShortcut"), dst); //$NON-NLS-1$
+                } else if ((dst = new File(dst.getPath() + ".lnk")).exists()) {
+                    L.info(PackNLS.getString("FileLink.removeShortcut"), dst);
                     dst.delete();
                 }
             } catch (Exception e) {

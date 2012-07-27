@@ -47,7 +47,7 @@ public class ChooseSchemePage
 
     @Override
     public String getPageTitle() {
-        return PackNLS.getString("ChooseSchemePage.title"); //$NON-NLS-1$
+        return PackNLS.getString("ChooseSchemePage.title");
     }
 
     @Override
@@ -90,14 +90,14 @@ public class ChooseSchemePage
     public void validate()
             throws ValidateException {
         if (selectedIndex == -1)
-            throw new ValidateException(PackNLS.getString("ChooseSchemePage.notSelected")); //$NON-NLS-1$
+            throw new ValidateException(PackNLS.getString("ChooseSchemePage.notSelected"));
         Scheme scheme = schemes[selectedIndex];
         session.setScheme(scheme);
     }
 
     @Override
     public String toString() {
-        return PackNLS.getString("ChooseSchemePage.selected") + selectedIndex; //$NON-NLS-1$
+        return PackNLS.getString("ChooseSchemePage.selected") + selectedIndex;
     }
 
 }

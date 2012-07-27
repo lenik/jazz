@@ -92,7 +92,7 @@ class ProgressPage
 
     @Override
     public String getPageTitle() {
-        return PackNLS.getString("ProgressPage.installing"); //$NON-NLS-1$
+        return PackNLS.getString("ProgressPage.installing");
     }
 
     @Override
@@ -105,7 +105,7 @@ class ProgressPage
         imageLabel.setLayoutData(new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
 
         statusLabel = new Label(holder, SWT.NONE); // SWT.WRAP);
-        statusLabel.setText("STATUS"); //$NON-NLS-1$
+        statusLabel.setText("STATUS");
         GridData statusData = new GridData(SWT.FILL, SWT.CENTER, true, false);
         // statusData.heightHint = 50;
         statusLabel.setLayoutData(statusData);
@@ -117,7 +117,7 @@ class ProgressPage
         progressText = new Label(holder, SWT.NONE);
         progressText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 2, 1));
         progressText.setAlignment(SWT.CENTER);
-        progressText.setText("0%"); //$NON-NLS-1$
+        progressText.setText("0%");
 
         logDetail = new WindowComposite(holder, SWT.NONE, true, holder) {
 
@@ -140,8 +140,8 @@ class ProgressPage
                 });
 
                 final ToolItem copyItem = addToolItem(SWT.PUSH);
-                copyItem.setImage(SWTResources.getImageRes("/icons/full/etool16/copy_edit.gif")); //$NON-NLS-1$
-                copyItem.setToolTipText(PackNLS.getString("ProgressPage.copyClipboard")); //$NON-NLS-1$
+                copyItem.setImage(SWTResources.getImageRes("/icons/full/etool16/copy_edit.gif"));
+                copyItem.setToolTipText(PackNLS.getString("ProgressPage.copyClipboard"));
                 copyItem.addSelectionListener(new SelectionAdapter() {
                     @Override
                     public void widgetSelected(SelectionEvent e) {
@@ -149,7 +149,7 @@ class ProgressPage
                     }
                 });
                 pauseItem = addToolItem(SWT.CHECK);
-                pauseItem.setImage(SWTResources.getImageRes("/icons/full/etool16/term_restart.gif")); //$NON-NLS-1$
+                pauseItem.setImage(SWTResources.getImageRes("/icons/full/etool16/term_restart.gif"));
                 pauseItem.addSelectionListener(new SelectionAdapter() {
                     @SuppressWarnings("deprecation")
                     @Override
@@ -167,7 +167,7 @@ class ProgressPage
                     }
                 });
                 cancelItem = addToolItem(SWT.CHECK);
-                cancelItem.setImage(SWTResources.getImageRes("/icons/full/elcl16/terminate_co.gif")); //$NON-NLS-1$
+                cancelItem.setImage(SWTResources.getImageRes("/icons/full/elcl16/terminate_co.gif"));
                 cancelItem.addSelectionListener(new SelectionAdapter() {
                     @Override
                     public void widgetSelected(SelectionEvent e) {
@@ -186,7 +186,7 @@ class ProgressPage
         };
         GridData gd_detail = new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1);
         logDetail.setLayoutData(gd_detail);
-        logDetail.setText(PackNLS.getString("ProgressPage.logsLabel")); //$NON-NLS-1$
+        logDetail.setText(PackNLS.getString("ProgressPage.logsLabel"));
         logDetail.addDetailSwitchListener(new DetailSwitchListener() {
             @Override
             public void detailSwitch(DetailSwitchEvent e) {
@@ -215,10 +215,10 @@ class ProgressPage
         timebar.setLayout(gridLayout_2);
 
         final Label _elapsedLabel = new Label(timebar, SWT.NONE);
-        _elapsedLabel.setText(PackNLS.getString("ProgressPage.elapsedTime")); //$NON-NLS-1$
+        _elapsedLabel.setText(PackNLS.getString("ProgressPage.elapsedTime"));
 
         elapsedLabel = new Label(timebar, SWT.NONE);
-        elapsedLabel.setText("-:-:-"); //$NON-NLS-1$
+        elapsedLabel.setText("-:-:-");
 
         final Label sep = new Label(timebar, SWT.SEPARATOR);
         final GridData gd_sep = new GridData(SWT.LEFT, SWT.FILL, false, false);
@@ -226,10 +226,10 @@ class ProgressPage
         sep.setLayoutData(gd_sep);
 
         final Label _remainingLabel = new Label(timebar, SWT.NONE);
-        _remainingLabel.setText(PackNLS.getString("ProgressPage.remainingTime")); //$NON-NLS-1$
+        _remainingLabel.setText(PackNLS.getString("ProgressPage.remainingTime"));
 
         remainingLabel = new Label(timebar, SWT.NONE);
-        remainingLabel.setText("-:-:-"); //$NON-NLS-1$
+        remainingLabel.setText("-:-:-");
     }
 
     @Override
@@ -285,7 +285,7 @@ class ProgressPage
                     if (jobState == IJob.TERMINATED)
                         state = DONE;
                 } catch (Exception e) {
-                    _UI.alert(PackNLS.getString("ProgressPage.installError"), e); //$NON-NLS-1$
+                    _UI.alert(PackNLS.getString("ProgressPage.installError"), e);
                 } finally {
                     rootJob = null;
                     jobThread = null;
@@ -313,7 +313,7 @@ class ProgressPage
 
         public Observer(UserInterface UI) {
             if (UI == null)
-                throw new NullPointerException("UI"); //$NON-NLS-1$
+                throw new NullPointerException("UI");
             this.UI = UI;
         }
 
@@ -321,7 +321,7 @@ class ProgressPage
         public void progressChange(final ProgressChangeEvent e) {
             final double progress = e.getProgress();
             final Object source = e.getSource();
-            System.err.printf("%.3f: %s\n", progress, source); //$NON-NLS-1$
+            System.err.printf("%.3f: %s\n", progress, source);
             pageContainer.getDisplay().asyncExec(new Runnable() {
                 @Override
                 public void run() {
@@ -354,15 +354,16 @@ class ProgressPage
 
         @Override
         public void exceptionThrown(Exception ex) {
-            UI.alert(PackNLS.getString("ProgressPage.failedToInstall") + ex.getMessage(), ex); //$NON-NLS-1$
+            UI.alert(PackNLS.getString("ProgressPage.failedToInstall") + ex.getMessage(), ex);
         }
 
         @Override
         public void recoverException(RecoverableExceptionEvent e) {
             Exception ex = e.getException();
-            int answer = UI
-                    .ask(PackNLS.getString("ProgressPage.errorHappens") + ex.getMessage() + PackNLS.getString("ProgressPage._continue"), e, //$NON-NLS-1$ //$NON-NLS-2$
-                            Proposals.ignore, Proposals.cancel, Proposals.debug);
+            int answer = UI.ask(
+                    PackNLS.getString("ProgressPage.errorHappens") + ex.getMessage()
+                            + PackNLS.getString("ProgressPage._continue"), e, Proposals.ignore, Proposals.cancel,
+                    Proposals.debug);
             switch (answer) {
             case 0:
                 e.setRecovered(true);
@@ -408,7 +409,7 @@ class ProgressPage
     public void setProgress(double progress) {
         int index = (int) (progress * progressSize);
         progressBar.setSelection(index);
-        String s = String.format("%.0f%%", progress * 100); //$NON-NLS-1$
+        String s = String.format("%.0f%%", progress * 100);
         progressText.setText(s);
     }
 
@@ -421,7 +422,7 @@ class ProgressPage
 
         String s = null;
         String[] logs = logList.getItems();
-        s = StringArray.join("\n", logs); //$NON-NLS-1$
+        s = StringArray.join("\n", logs);
 
         if (s == null || s.isEmpty())
             clipboard.clearContents();

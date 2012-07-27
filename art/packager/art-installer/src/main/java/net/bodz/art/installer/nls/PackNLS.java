@@ -2,7 +2,8 @@ package net.bodz.art.installer.nls;
 
 import java.util.ResourceBundle;
 
-public class PackNLS extends NLSAccessor {
+public class PackNLS
+        extends NLSAccessor {
 
     private static final ResourceBundle bundle;
     static {

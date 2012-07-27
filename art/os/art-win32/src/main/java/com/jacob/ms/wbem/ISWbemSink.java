@@ -6,19 +6,19 @@ package com.jacob.ms.wbem;
 
 import com.jacob.com.Dispatch;
 
-public class ISWbemSink extends Dispatch {
+public class ISWbemSink
+        extends Dispatch {
 
-    public static final String componentName = "WbemScripting.ISWbemSink"; //$NON-NLS-1$
+    public static final String componentName = "WbemScripting.ISWbemSink";
 
     public ISWbemSink() {
         super(componentName);
     }
 
     /**
-     * This constructor is used instead of a case operation to turn a Dispatch
-     * object into a wider object - it must exist in every wrapper class whose
-     * instances may be returned from method calls wrapped in VT_DISPATCH
-     * Variants.
+     * This constructor is used instead of a case operation to turn a Dispatch object into a wider
+     * object - it must exist in every wrapper class whose instances may be returned from method
+     * calls wrapped in VT_DISPATCH Variants.
      */
     public ISWbemSink(Dispatch d) {
         // take over the IDispatch pointer
@@ -35,7 +35,7 @@ public class ISWbemSink extends Dispatch {
      * Wrapper for calling the ActiveX-Method with input-parameter(s).
      */
     public void cancel() {
-        Dispatch.call(this, "Cancel"); //$NON-NLS-1$
+        Dispatch.call(this, "Cancel");
     }
 
 }

@@ -6,9 +6,10 @@ package com.jacob.ms.wbem;
 
 import com.jacob.com.Dispatch;
 
-public class SWbemEventSource extends ISWbemEventSource {
+public class SWbemEventSource
+        extends ISWbemEventSource {
 
-    public static final String componentName = "clsid:{04B83D58-21AE-11D2-8B33-00600806D9B6}"; //$NON-NLS-1$
+    public static final String componentName = "clsid:{04B83D58-21AE-11D2-8B33-00600806D9B6}";
 
     public SWbemEventSource() {
         super(componentName);

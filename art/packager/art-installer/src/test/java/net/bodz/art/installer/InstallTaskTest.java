@@ -9,7 +9,8 @@ import org.junit.Test;
 public class InstallTaskTest {
 
     @Test
-    public void test() throws IOException {
+    public void test()
+            throws IOException {
         new TaskTestApp(1).run();
     }
 

@@ -6,11 +6,12 @@ import java.util.List;
 import net.bodz.art.installer.IComponent;
 import net.bodz.bas.collection.tree.TreeCallback;
 
-public class MissingDependancyBuffer implements TreeCallback<IComponent> {
+public class MissingDependancyBuffer
+        implements TreeCallback<IComponent> {
 
     public static class Entry {
 
-        public final int       level;
+        public final int level;
         public final IComponent component;
 
         public Entry(int level, IComponent c) {

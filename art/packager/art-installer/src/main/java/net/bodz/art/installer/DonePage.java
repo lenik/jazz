@@ -34,7 +34,7 @@ class DonePage
 
     @Override
     public String getPageTitle() {
-        return PackNLS.getString("DonePage.done"); //$NON-NLS-1$
+        return PackNLS.getString("DonePage.done");
     }
 
     @Override
@@ -43,10 +43,10 @@ class DonePage
 
         final Label thsInstallationProcessLabel = new Label(holder, SWT.WRAP);
         thsInstallationProcessLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        thsInstallationProcessLabel.setText(PackNLS.getString("DonePage.installCompleted")); //$NON-NLS-1$
+        thsInstallationProcessLabel.setText(PackNLS.getString("DonePage.installCompleted"));
 
         final Button rebootCheck = new Button(holder, SWT.CHECK);
-        rebootCheck.setText(PackNLS.getString("DonePage.reboot")); //$NON-NLS-1$
+        rebootCheck.setText(PackNLS.getString("DonePage.reboot"));
         rebootCheck.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -55,7 +55,7 @@ class DonePage
                     session.getFlags().set(ISession.REBOOT);
                 else
                     session.getFlags().clear(ISession.REBOOT);
-                setMethods(new PageMethod(reboot ? "reboot" : "quit")); //$NON-NLS-1$
+                setMethods(new PageMethod(reboot ? "reboot" : "quit"));
             }
         });
     }
@@ -64,7 +64,7 @@ class DonePage
     public TreePath service(ServiceContext context)
             throws PageException {
         boolean reboot = session.getFlags().isSet(ISession.REBOOT);
-        setMethods(new PageMethod(reboot ? "reboot" : "quit")); //$NON-NLS-1$
+        setMethods(new PageMethod(reboot ? "reboot" : "quit"));
         return null;
     }
 

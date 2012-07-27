@@ -18,9 +18,9 @@ public abstract class SessionJob
 
     public SessionJob(ISession session, IComponent component) {
         if (session == null)
-            throw new NullPointerException("session"); //$NON-NLS-1$
+            throw new NullPointerException("session");
         if (component == null)
-            throw new NullPointerException("component"); //$NON-NLS-1$
+            throw new NullPointerException("component");
         this.session = session;
         this.component = component;
         setUserInterface(session.getUserInterface());
@@ -38,14 +38,14 @@ public abstract class SessionJob
     @Override
     protected void execute(IJob child, double progressIncrement) {
         if (!(child instanceof SessionJob))
-            throw new OutOfDomainException("child", child, SessionJob.class); //$NON-NLS-1$
+            throw new OutOfDomainException("child", child, SessionJob.class);
         super.execute(child, progressIncrement);
     }
 
     @Override
     public void addChildJob(Job job, double progressIncrement) {
         if (!(job instanceof SessionJob))
-            throw new OutOfDomainException("job", job, SessionJob.class); //$NON-NLS-1$
+            throw new OutOfDomainException("job", job, SessionJob.class);
         super.addChildJob(job, progressIncrement);
     }
 
@@ -68,7 +68,7 @@ public abstract class SessionJob
 
     public String getDescription() {
         String jobTypeName = Reflects.getNamedSuperclass(getClass()).getSimpleName();
-        return String.format("%s for %s (%s)", jobTypeName, component.getText(), component.getId()); //$NON-NLS-1$
+        return String.format("%s for %s (%s)", jobTypeName, component.getText(), component.getId());
     }
 
     @Override
@@ -77,18 +77,18 @@ public abstract class SessionJob
     }
 
     public void dump(IPrintOut out) {
-        dump(out, "", this); //$NON-NLS-1$
+        dump(out, "", this);
     }
 
     public static void dump(IPrintOut out, String prefix, SessionJob job) {
         String s = prefix;
-        s += String.format("+%.2f ", job.progressIncrement); //$NON-NLS-1$
+        s += String.format("+%.2f ", job.progressIncrement);
         s += job.toString();
         out.println(s);
         List<? extends SessionJob> children = job.getChildren();
         if (children != null) {
             for (SessionJob child : children)
-                dump(out, prefix + "  ", child); //$NON-NLS-1$
+                dump(out, prefix + "  ", child);
         }
     }
 

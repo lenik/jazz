@@ -32,7 +32,7 @@ public abstract class AbstractProtectionModel
 
     public AbstractProtectionModel(SysIdProvider sysIdProvider, int seed) {
         if (sysIdProvider == null)
-            throw new NullPointerException("sysIdProvider"); //$NON-NLS-1$
+            throw new NullPointerException("sysIdProvider");
         this.sysIdProvider = sysIdProvider;
         this.seed = seed;
         this.machines = new HashTextMap<VirtualMachine>();
@@ -43,7 +43,7 @@ public abstract class AbstractProtectionModel
     public VirtualMachine getVM(String type) {
         VirtualMachine vm = machines.get(type);
         if (vm == null)
-            throw new IllegalUsageException(ProtectNLS.getString("_ProtectionModel.vmIsntExisted") + type); //$NON-NLS-1$
+            throw new IllegalUsageException(ProtectNLS.getString("_ProtectionModel.vmIsntExisted") + type);
         return vm;
     }
 
@@ -74,13 +74,13 @@ public abstract class AbstractProtectionModel
         Section[] sections;
         String[] names = getSectionNames();
         if (names == null)
-            throw new NullPointerException("section-list"); //$NON-NLS-1$
+            throw new NullPointerException("section-list");
         sections = new Section[names.length];
         for (int i = 0; i < names.length; i++) {
             String name = names[i];
             Section section = getSection(name);
             if (section == null)
-                throw new NullPointerException(ProtectNLS.getString("_ProtectionModel.sectionIsntDefined") + name); //$NON-NLS-1$
+                throw new NullPointerException(ProtectNLS.getString("_ProtectionModel.sectionIsntDefined") + name);
             sections[i] = section;
         }
         return sections;
@@ -91,7 +91,7 @@ public abstract class AbstractProtectionModel
         return sections.get(name);
     }
 
-    private static final byte[] salt = "*master-model*".getBytes(); //$NON-NLS-1$
+    private static final byte[] salt = "*master-model*".getBytes();
 
     @Override
     public SecretKey keygen(String passphrase)
@@ -99,8 +99,7 @@ public abstract class AbstractProtectionModel
         // Create the key
         KeySpec keySpec = new PBEKeySpec(passphrase.toCharArray(), salt, 3);
         try {
-            SecretKey key = SecretKeyFactory.getInstance("PBEWithMD5AndDES") //$NON-NLS-1$
-                    .generateSecret(keySpec);
+            SecretKey key = SecretKeyFactory.getInstance("PBEWithMD5AndDES").generateSecret(keySpec);
             return key;
         } catch (GeneralSecurityException e) {
             throw new ProtectException(e);
@@ -121,8 +120,8 @@ public abstract class AbstractProtectionModel
             throws ProtectException {
         try {
             if (random == null)
-                random = SecureRandom.getInstance("SHA1PRNG"); //$NON-NLS-1$
-            KeyPairGenerator kpg = KeyPairGenerator.getInstance("DSA"); //$NON-NLS-1$
+                random = SecureRandom.getInstance("SHA1PRNG");
+            KeyPairGenerator kpg = KeyPairGenerator.getInstance("DSA");
         } catch (Exception e) {
             throw new ProtectException(e);
         }
@@ -137,7 +136,7 @@ public abstract class AbstractProtectionModel
             throws ProtectException {
         try {
             if (ecipher == null) {
-                ecipher = Cipher.getInstance("DES"); //$NON-NLS-1$
+                ecipher = Cipher.getInstance("DES");
                 ecipher.init(Cipher.ENCRYPT_MODE, key);
             }
             byte[] result = ecipher.doFinal(text);
@@ -152,7 +151,7 @@ public abstract class AbstractProtectionModel
             throws ProtectException {
         try {
             if (dcipher == null) {
-                dcipher = Cipher.getInstance("DES"); //$NON-NLS-1$
+                dcipher = Cipher.getInstance("DES");
                 dcipher.init(Cipher.DECRYPT_MODE, KEY);
             }
             byte[] result = dcipher.doFinal(secret);

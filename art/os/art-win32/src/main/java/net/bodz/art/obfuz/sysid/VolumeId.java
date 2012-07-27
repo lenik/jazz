@@ -10,7 +10,7 @@ public class VolumeId
     private final String path;
 
     public VolumeId(String path) {
-        super("-"); //$NON-NLS-1$
+        super("-");
         this.path = path;
     }
 

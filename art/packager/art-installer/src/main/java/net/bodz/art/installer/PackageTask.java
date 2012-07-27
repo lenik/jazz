@@ -34,7 +34,7 @@ public class PackageTask
 
     public void setResFolder(IFsTree resFolder) {
         if (this.output != null)
-            throw new BuildException(PackNLS.getString("PackageTask.outputIsSpecified") + output); //$NON-NLS-1$
+            throw new BuildException(PackNLS.getString("PackageTask.outputIsSpecified") + output);
         this.output = resFolder;
     }
 
@@ -60,9 +60,9 @@ public class PackageTask
     public void execute()
             throws BuildException {
         if (project == null)
-            throw new BuildException(PackNLS.getString("PackageTask.projectIsntSpecified")); //$NON-NLS-1$
+            throw new BuildException(PackNLS.getString("PackageTask.projectIsntSpecified"));
         if (output == null)
-            throw new BuildException(PackNLS.getString("PackageTask.resFolderIsntSpecified")); //$NON-NLS-1$
+            throw new BuildException(PackNLS.getString("PackageTask.resFolderIsntSpecified"));
         TaskLogger logger = new TaskLogger(this);
         logger.setLevel(logger.getLevel() + logLevel);
         final List<Exception> exceptions = new ArrayList<Exception>();

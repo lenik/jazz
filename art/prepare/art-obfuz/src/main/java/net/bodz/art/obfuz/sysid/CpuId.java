@@ -13,7 +13,7 @@ public class CpuId
     private final int cpuIndex;
 
     public CpuId(int cpuIndex) {
-        super("-"); //$NON-NLS-1$
+        super("-");
         this.cpuIndex = cpuIndex;
     }
 

@@ -21,32 +21,32 @@ public class Serial {
      * <code>A2QT1-Verification-Decryption-TrapDoor-Activation</code>
      * </ul>
      */
-    private String          modelName;
+    private String modelName;
     private ProtectionModel model;
-    private String          product;
-    private int             module;
-    private int[]           sections;
+    private String product;
+    private int module;
+    private int[] sections;
 
     public Serial(String text) {
         if (text == null)
-            throw new NullPointerException("text"); //$NON-NLS-1$
-        String[] segs = text.split("-"); //$NON-NLS-1$
+            throw new NullPointerException("text");
+        String[] segs = text.split("-");
         if (segs.length < 1)
-            throw new IllegalArgumentException(ProtectNLS.getString("Serial.noHeader")); //$NON-NLS-1$
+            throw new IllegalArgumentException(ProtectNLS.getString("Serial.noHeader"));
         String head = segs[0];
 
         String modelName = ProtectionModels.floor(head);
         if (modelName == null)
-            throw new IllegalArgumentException(ProtectNLS.getString("Serial.badModel") + head); //$NON-NLS-1$
+            throw new IllegalArgumentException(ProtectNLS.getString("Serial.badModel") + head);
         head = head.substring(modelName.length());
         setModelName(modelName);
 
         if (head.length() == 0)
-            throw new IllegalArgumentException(ProtectNLS.getString("Serial.noProduct")); //$NON-NLS-1$
+            throw new IllegalArgumentException(ProtectNLS.getString("Serial.noProduct"));
         int productLen = Integer.parseInt(head.substring(0, 1));
         head = head.substring(1);
         if (head.length() < productLen)
-            throw new IllegalArgumentException(ProtectNLS.getString("Serial.invalidProductLen")); //$NON-NLS-1$
+            throw new IllegalArgumentException(ProtectNLS.getString("Serial.invalidProductLen"));
 
         product = head.substring(0, productLen);
         head = head.substring(productLen);
@@ -62,7 +62,7 @@ public class Serial {
     public void setModelName(String modelName) {
         ProtectionModel model = ProtectionModels.get(modelName);
         if (model == null)
-            throw new IllegalArgumentException(ProtectNLS.getString("Serial.badModel") + modelName); //$NON-NLS-1$
+            throw new IllegalArgumentException(ProtectNLS.getString("Serial.badModel") + modelName);
         this.modelName = modelName;
         this.model = model;
     }
@@ -97,8 +97,8 @@ public class Serial {
 
     @Override
     public String toString() {
-        String productLen = "" + product.length(); //$NON-NLS-1$
-        String module = "" + this.module; //$NON-NLS-1$
+        String productLen = "" + product.length();
+        String module = "" + this.module;
         String head = modelName + productLen + product + module;
         if (sections == null)
             return head;
@@ -106,7 +106,7 @@ public class Serial {
         buf.append(head);
         for (int i = 0; i < sections.length; i++) {
             if (i != 0)
-                buf.append("-"); //$NON-NLS-1$
+                buf.append("-");
             int sect = sections[i];
             buf.append(sect);
         }

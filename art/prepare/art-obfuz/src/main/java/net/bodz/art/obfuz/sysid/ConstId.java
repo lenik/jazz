@@ -8,7 +8,7 @@ public class ConstId
     final byte[] id;
 
     public ConstId(byte[] id) {
-        super("-"); //$NON-NLS-1$
+        super("-");
         this.id = id;
     }
 

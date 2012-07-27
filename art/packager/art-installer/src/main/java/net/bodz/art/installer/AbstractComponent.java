@@ -249,7 +249,7 @@ public abstract class AbstractComponent
             job = uninstall(session);
             break;
         default:
-            throw new IllegalArgumentException(PackNLS.getString("_Component.invalidType") + type); //$NON-NLS-1$
+            throw new IllegalArgumentException(PackNLS.getString("_Component.invalidType") + type);
         }
 
         List<IComponent> children = getChildren();

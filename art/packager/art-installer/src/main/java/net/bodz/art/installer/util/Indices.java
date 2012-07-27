@@ -25,9 +25,9 @@ public class Indices {
             else {
                 sbegin = indicesOrdered[s];
                 if (sbegin < begin)
-                    throw new OutOfDomainException("sbegin", sbegin, begin); //$NON-NLS-1$
+                    throw new OutOfDomainException("sbegin", sbegin, begin);
                 if (sbegin >= end)
-                    throw new OutOfDomainException("sbegin", sbegin, end); //$NON-NLS-1$
+                    throw new OutOfDomainException("sbegin", sbegin, end);
             }
             for (int i = nstart; i < sbegin; i++)
                 inverse[r++] = i;

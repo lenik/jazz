@@ -7,19 +7,19 @@ package com.jacob.ms.wbem;
 import com.jacob.com.Dispatch;
 import com.jacob.com.Variant;
 
-public class ISWbemQualifierSet extends Dispatch {
+public class ISWbemQualifierSet
+        extends Dispatch {
 
-    public static final String componentName = "WbemScripting.ISWbemQualifierSet"; //$NON-NLS-1$
+    public static final String componentName = "WbemScripting.ISWbemQualifierSet";
 
     public ISWbemQualifierSet() {
         super(componentName);
     }
 
     /**
-     * This constructor is used instead of a case operation to turn a Dispatch
-     * object into a wider object - it must exist in every wrapper class whose
-     * instances may be returned from method calls wrapped in VT_DISPATCH
-     * Variants.
+     * This constructor is used instead of a case operation to turn a Dispatch object into a wider
+     * object - it must exist in every wrapper class whose instances may be returned from method
+     * calls wrapped in VT_DISPATCH Variants.
      */
     public ISWbemQualifierSet(Dispatch d) {
         // take over the IDispatch pointer
@@ -38,7 +38,7 @@ public class ISWbemQualifierSet extends Dispatch {
      * @return the result is of type Variant
      */
     public Variant get_NewEnum() {
-        return Dispatch.get(this, "_NewEnum"); //$NON-NLS-1$
+        return Dispatch.get(this, "_NewEnum");
     }
 
     /**
@@ -51,8 +51,7 @@ public class ISWbemQualifierSet extends Dispatch {
      * @return the result is of type ISWbemQualifier
      */
     public ISWbemQualifier item(String name, int iFlags) {
-        return new ISWbemQualifier(Dispatch.call(this, "Item", name, new Variant(iFlags)) //$NON-NLS-1$
-                .toDispatch());
+        return new ISWbemQualifier(Dispatch.call(this, "Item", name, new Variant(iFlags)).toDispatch());
     }
 
     /**
@@ -63,7 +62,7 @@ public class ISWbemQualifierSet extends Dispatch {
      * @return the result is of type ISWbemQualifier
      */
     public ISWbemQualifier item(String name) {
-        return new ISWbemQualifier(Dispatch.call(this, "Item", name).toDispatch()); //$NON-NLS-1$
+        return new ISWbemQualifier(Dispatch.call(this, "Item", name).toDispatch());
     }
 
     /**
@@ -72,7 +71,7 @@ public class ISWbemQualifierSet extends Dispatch {
      * @return the result is of type int
      */
     public int getCount() {
-        return Dispatch.get(this, "Count").changeType(Variant.VariantInt).getInt(); //$NON-NLS-1$
+        return Dispatch.get(this, "Count").changeType(Variant.VariantInt).getInt();
     }
 
     /**
@@ -94,9 +93,8 @@ public class ISWbemQualifierSet extends Dispatch {
      */
     public ISWbemQualifier add(String strName, Variant varVal, boolean bPropagatesToSubclass,
             boolean bPropagatesToInstance, boolean bIsOverridable, int iFlags) {
-        return new ISWbemQualifier(Dispatch.call(this, "Add", strName, varVal, //$NON-NLS-1$
-                new Variant(bPropagatesToSubclass), new Variant(bPropagatesToInstance),
-                new Variant(bIsOverridable), new Variant(iFlags)).toDispatch());
+        return new ISWbemQualifier(Dispatch.call(this, "Add", strName, varVal, new Variant(bPropagatesToSubclass),
+                new Variant(bPropagatesToInstance), new Variant(bIsOverridable), new Variant(iFlags)).toDispatch());
     }
 
     /**
@@ -116,9 +114,8 @@ public class ISWbemQualifierSet extends Dispatch {
      */
     public ISWbemQualifier add(String strName, Variant varVal, boolean bPropagatesToSubclass,
             boolean bPropagatesToInstance, boolean bIsOverridable) {
-        return new ISWbemQualifier(Dispatch.call(this, "Add", strName, varVal, //$NON-NLS-1$
-                new Variant(bPropagatesToSubclass), new Variant(bPropagatesToInstance),
-                new Variant(bIsOverridable)).toDispatch());
+        return new ISWbemQualifier(Dispatch.call(this, "Add", strName, varVal, new Variant(bPropagatesToSubclass),
+                new Variant(bPropagatesToInstance), new Variant(bIsOverridable)).toDispatch());
     }
 
     /**
@@ -136,9 +133,8 @@ public class ISWbemQualifierSet extends Dispatch {
      */
     public ISWbemQualifier add(String strName, Variant varVal, boolean bPropagatesToSubclass,
             boolean bPropagatesToInstance) {
-        return new ISWbemQualifier(Dispatch.call(this, "Add", strName, varVal, //$NON-NLS-1$
-                new Variant(bPropagatesToSubclass), new Variant(bPropagatesToInstance))
-                .toDispatch());
+        return new ISWbemQualifier(Dispatch.call(this, "Add", strName, varVal, new Variant(bPropagatesToSubclass),
+                new Variant(bPropagatesToInstance)).toDispatch());
     }
 
     /**
@@ -153,8 +149,8 @@ public class ISWbemQualifierSet extends Dispatch {
      * @return the result is of type ISWbemQualifier
      */
     public ISWbemQualifier add(String strName, Variant varVal, boolean bPropagatesToSubclass) {
-        return new ISWbemQualifier(Dispatch.call(this, "Add", strName, varVal, //$NON-NLS-1$
-                new Variant(bPropagatesToSubclass)).toDispatch());
+        return new ISWbemQualifier(Dispatch.call(this, "Add", strName, varVal, new Variant(bPropagatesToSubclass))
+                .toDispatch());
     }
 
     /**
@@ -167,7 +163,7 @@ public class ISWbemQualifierSet extends Dispatch {
      * @return the result is of type ISWbemQualifier
      */
     public ISWbemQualifier add(String strName, Variant varVal) {
-        return new ISWbemQualifier(Dispatch.call(this, "Add", strName, varVal).toDispatch()); //$NON-NLS-1$
+        return new ISWbemQualifier(Dispatch.call(this, "Add", strName, varVal).toDispatch());
     }
 
     /**
@@ -179,7 +175,7 @@ public class ISWbemQualifierSet extends Dispatch {
      *            an input-parameter of type int
      */
     public void remove(String strName, int iFlags) {
-        Dispatch.call(this, "Remove", strName, new Variant(iFlags)); //$NON-NLS-1$
+        Dispatch.call(this, "Remove", strName, new Variant(iFlags));
     }
 
     /**
@@ -189,7 +185,7 @@ public class ISWbemQualifierSet extends Dispatch {
      *            an input-parameter of type String
      */
     public void remove(String strName) {
-        Dispatch.call(this, "Remove", strName); //$NON-NLS-1$
+        Dispatch.call(this, "Remove", strName);
     }
 
 }

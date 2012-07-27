@@ -2,7 +2,8 @@ package net.bodz.art.obfuz.seals;
 
 import java.nio.ByteBuffer;
 
-public abstract class _Entropy implements Entropy {
+public abstract class _Entropy
+        implements Entropy {
 
     public void drop(byte[] buf) {
         drop(buf, 0, buf.length);

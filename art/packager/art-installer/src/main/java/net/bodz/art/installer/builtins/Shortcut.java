@@ -35,9 +35,9 @@ public class Shortcut
             String workingDir, String text, String icon, int iconIndex) {
         super(false, true);
         if (srcbase == null)
-            throw new NullPointerException("srcbase"); //$NON-NLS-1$
+            throw new NullPointerException("srcbase");
         if (dstbase == null)
-            throw new NullPointerException("dstbase"); //$NON-NLS-1$
+            throw new NullPointerException("dstbase");
         this.srcbase = srcbase;
         this.srcpath = srcpath;
         this.dstbase = dstbase;
@@ -66,7 +66,7 @@ public class Shortcut
                 parentFile = Files.canoniOf(parentFile);
                 parentFile.mkdirs();
             }
-            L.info(PackNLS.getString("Shortcut.create"), dst); //$NON-NLS-1$
+            L.info(PackNLS.getString("Shortcut.create"), dst);
             if (SystemInfo.isWin32()) {
                 File _src = Files.canoniOf(src);
                 LnkFile lnk = new LnkFile(dst.getParent(), dst.getName());
@@ -100,7 +100,7 @@ public class Shortcut
             String lnkFilePath = lnk.getLinkFilePath();
             File file = new File(lnkFilePath);
             if (file.exists()) {
-                L.info(PackNLS.getString("Shortcut.remove"), file); //$NON-NLS-1$
+                L.info(PackNLS.getString("Shortcut.remove"), file);
                 file.delete();
             }
         }

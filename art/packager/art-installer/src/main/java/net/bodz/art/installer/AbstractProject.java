@@ -33,7 +33,7 @@ public class AbstractProject
     private String company;
 
     public AbstractProject(Class<?> clazz, IComponent... children) {
-        super("root", PackNLS.getString("_Project.projectRoot"), children); //$NON-NLS-1$ //$NON-NLS-2$
+        super("root", PackNLS.getString("_Project.projectRoot"), children);
         if (clazz != null)
             loadInfo(clazz);
         this.variables = new TreeTextMap<Variable>();
@@ -159,9 +159,9 @@ public class AbstractProject
 
     boolean findDependents(IComponent parent, TreeCallback<IComponent> callback, int level, IdentityHashSet uniq) {
         if (parent == null)
-            throw new NullPointerException("null component in level " + level); //$NON-NLS-1$
+            throw new NullPointerException("null component in level " + level);
         if (uniq.contains(parent))
-            throw new IllegalStateException(PackNLS.getString("_Project.loopDetected") + parent); //$NON-NLS-1$
+            throw new IllegalStateException(PackNLS.getString("_Project.loopDetected") + parent);
         uniq.add(parent);
         Collection<IComponent> children = parent.getDependancy();
         if (children == null)
@@ -191,9 +191,9 @@ public class AbstractProject
 
     boolean findDependentsBy(IComponent child, TreeCallback<IComponent> callback, int level, IdentityHashSet uniq) {
         if (child == null)
-            throw new NullPointerException("null component in rev-level " + level); //$NON-NLS-1$
+            throw new NullPointerException("null component in rev-level " + level);
         if (uniq.contains(child))
-            throw new IllegalStateException(PackNLS.getString("_Project.loopDetected") + child); //$NON-NLS-1$
+            throw new IllegalStateException(PackNLS.getString("_Project.loopDetected") + child);
         uniq.add(child);
         Set<IComponent> parents = bydeps.get(child);
         if (parents == null)
@@ -222,7 +222,7 @@ public class AbstractProject
     boolean analyseDependency(IComponent child, TreeCallback<IComponent> missingCallback, int level,
             IdentityHashSet uniq) {
         if (uniq.contains(child))
-            throw new IllegalStateException(PackNLS.getString("_Project.loopDetected") + child); //$NON-NLS-1$
+            throw new IllegalStateException(PackNLS.getString("_Project.loopDetected") + child);
         uniq.add(child);
         Collection<IComponent> dependancy = child.getDependancy();
         if (dependancy == null)

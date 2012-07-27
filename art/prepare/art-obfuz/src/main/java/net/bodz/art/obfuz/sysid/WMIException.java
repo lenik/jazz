@@ -1,6 +1,7 @@
 package net.bodz.art.obfuz.sysid;
 
-public class WMIException extends Exception {
+public class WMIException
+        extends Exception {
 
     private static final long serialVersionUID = -5230364232243534404L;
 

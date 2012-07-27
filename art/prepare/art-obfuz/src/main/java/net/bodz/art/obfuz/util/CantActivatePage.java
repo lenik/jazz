@@ -32,7 +32,7 @@ public class CantActivatePage
 
     @Override
     public String getPageTitle() {
-        return ProtectNLS.getString("CantActivatePage.title"); //$NON-NLS-1$
+        return ProtectNLS.getString("CantActivatePage.title");
     }
 
     @Override
@@ -40,7 +40,7 @@ public class CantActivatePage
         holder.setLayout(new GridLayout());
 
         final Label thankLabel = new Label(holder, SWT.NONE);
-        thankLabel.setText(ProtectNLS.getString("CantActivatePage.canceled")); //$NON-NLS-1$
+        thankLabel.setText(ProtectNLS.getString("CantActivatePage.canceled"));
     }
 
     @Override

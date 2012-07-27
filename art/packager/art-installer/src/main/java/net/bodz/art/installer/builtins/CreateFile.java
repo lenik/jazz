@@ -25,11 +25,11 @@ public class CreateFile
     public CreateFile(String base, String path, Object data, Object charset, boolean append) {
         super(false, true);
         if (base == null)
-            throw new NullPointerException("base"); //$NON-NLS-1$
+            throw new NullPointerException("base");
         if (path == null)
-            throw new NullPointerException("path"); //$NON-NLS-1$
+            throw new NullPointerException("path");
         if (data == null)
-            throw new NullPointerException("data"); //$NON-NLS-1$
+            throw new NullPointerException("data");
         this.base = base;
         this.path = path;
         this.append = append;
@@ -51,10 +51,10 @@ public class CreateFile
                 boolean append = CreateFile.this.append && dest.exists();
                 String abbr = Strings.ellipse(String.valueOf(data), 40);
                 if (append) {
-                    L.finfo(PackNLS.getString("CreateFile.appendTo_ss"), dest, abbr); //$NON-NLS-1$
+                    L.finfo(PackNLS.getString("CreateFile.appendTo_ss"), dest, abbr);
                     Files.append(dest, data, charset);
                 } else {
-                    L.finfo(PackNLS.getString("CreateFile.createFile_ss"), dest, abbr); //$NON-NLS-1$
+                    L.finfo(PackNLS.getString("CreateFile.createFile_ss"), dest, abbr);
                     Files.createFile(dest, data, charset);
                 }
             } catch (IOException e) {
@@ -74,7 +74,7 @@ public class CreateFile
         @Override
         protected void _run() {
             File dest = new File(session.getFile(base), path);
-            L.info(PackNLS.getString("CreateFile.deleteFile"), dest); //$NON-NLS-1$
+            L.info(PackNLS.getString("CreateFile.deleteFile"), dest);
             dest.delete();
         }
 

@@ -33,7 +33,7 @@ public class BasicPM
             if (id != null)
                 return sip;
         }
-        throw new SystemException(ProtectNLS.getString("BasicPM.cantIdentify")); //$NON-NLS-1$
+        throw new SystemException(ProtectNLS.getString("BasicPM.cantIdentify"));
     }
 
     @Override

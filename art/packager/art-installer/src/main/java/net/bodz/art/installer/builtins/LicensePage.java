@@ -40,7 +40,7 @@ public class LicensePage
 
     @Override
     public String getPageTitle() {
-        return PackNLS.getString("LicensePage.title"); //$NON-NLS-1$
+        return PackNLS.getString("LicensePage.title");
     }
 
     @Override
@@ -62,11 +62,11 @@ public class LicensePage
         };
 
         agreeButton = new Button(composite, SWT.RADIO);
-        agreeButton.setText(PackNLS.getString("LicensePage.agree")); //$NON-NLS-1$
+        agreeButton.setText(PackNLS.getString("LicensePage.agree"));
         agreeButton.addSelectionListener(refreshMethods);
 
         disagreeButton = new Button(composite, SWT.RADIO);
-        disagreeButton.setText(PackNLS.getString("LicensePage.disagree")); //$NON-NLS-1$
+        disagreeButton.setText(PackNLS.getString("LicensePage.disagree"));
         disagreeButton.addSelectionListener(refreshMethods);
 
         if (SystemProperties.isDevelopMode())

@@ -15,7 +15,7 @@ public class TreeItems {
     public static final int FULL = 2;
 
     public static int stateAdd(int a, int b) {
-        assert b != UNKNOWN : "b must be known"; //$NON-NLS-1$
+        assert b != UNKNOWN : "b must be known";
         switch (a) {
         case UNKNOWN:
             return b;
@@ -56,13 +56,13 @@ public class TreeItems {
             item.setGrayed(false);
             break;
         default:
-            throw new OutOfDomainException("state", state); //$NON-NLS-1$
+            throw new OutOfDomainException("state", state);
         }
     }
 
     public static void setState(TreeItem item, int state, boolean chained) {
         if (state != FULL && state != NONE)
-            throw new OutOfDomainException("state", state, "FULL/NONE"); //$NON-NLS-1$ //$NON-NLS-2$
+            throw new OutOfDomainException("state", state, "FULL/NONE");
         // System.out.printf("setState(%s, %d, %s)\n", item, state, chained);
         if (!chained)
             setState(item, state);
@@ -72,7 +72,7 @@ public class TreeItems {
 
     public static void updateParentState(TreeItem item) {
         if (item == null)
-            throw new NullPointerException("item"); //$NON-NLS-1$
+            throw new NullPointerException("item");
         TreeItem parent = item.getParentItem();
         if (parent == null)
             return;

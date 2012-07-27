@@ -2,7 +2,8 @@ package net.bodz.art.obfuz.seals;
 
 import java.nio.ByteBuffer;
 
-public abstract class _Sequence implements Sequence {
+public abstract class _Sequence
+        implements Sequence {
 
     @Override
     public void next(ByteBuffer buffer) {

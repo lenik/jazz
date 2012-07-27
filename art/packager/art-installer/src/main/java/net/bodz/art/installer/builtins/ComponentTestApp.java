@@ -13,15 +13,15 @@ public class ComponentTestApp {
 
     public ComponentTestApp() {
         project = new CTAProject();
-        section = new DefaultSection("test", PackNLS.getString("ComponentTestApp.test.text"), //$NON-NLS-1$ //$NON-NLS-2$
-                PackNLS.getString("ComponentTestApp.test.doc")); //$NON-NLS-1$
+        section = new DefaultSection("test", PackNLS.getString("ComponentTestApp.test.text"),
+                PackNLS.getString("ComponentTestApp.test.doc"));
         project.add(section);
     }
 
     ConsoleExecutor buildExecutor() {
         ConsoleExecutor executor = new ConsoleExecutor(project, LogTerms.console);
         ISession session = executor.getSession();
-        session.addResFolder(0, new JavaioFile(TestConfig.outDir/*, true*/));
+        session.addResFolder(0, new JavaioFile(TestConfig.outDir/* , true */));
         return executor;
     }
 

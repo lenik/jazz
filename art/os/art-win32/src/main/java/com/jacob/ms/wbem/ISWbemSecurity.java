@@ -7,19 +7,19 @@ package com.jacob.ms.wbem;
 import com.jacob.com.Dispatch;
 import com.jacob.com.Variant;
 
-public class ISWbemSecurity extends Dispatch {
+public class ISWbemSecurity
+        extends Dispatch {
 
-    public static final String componentName = "WbemScripting.ISWbemSecurity"; //$NON-NLS-1$
+    public static final String componentName = "WbemScripting.ISWbemSecurity";
 
     public ISWbemSecurity() {
         super(componentName);
     }
 
     /**
-     * This constructor is used instead of a case operation to turn a Dispatch
-     * object into a wider object - it must exist in every wrapper class whose
-     * instances may be returned from method calls wrapped in VT_DISPATCH
-     * Variants.
+     * This constructor is used instead of a case operation to turn a Dispatch object into a wider
+     * object - it must exist in every wrapper class whose instances may be returned from method
+     * calls wrapped in VT_DISPATCH Variants.
      */
     public ISWbemSecurity(Dispatch d) {
         // take over the IDispatch pointer
@@ -38,7 +38,7 @@ public class ISWbemSecurity extends Dispatch {
      * @return the result is of type int
      */
     public int getImpersonationLevel() {
-        return Dispatch.get(this, "ImpersonationLevel").changeType(Variant.VariantInt).getInt(); //$NON-NLS-1$
+        return Dispatch.get(this, "ImpersonationLevel").changeType(Variant.VariantInt).getInt();
     }
 
     /**
@@ -48,7 +48,7 @@ public class ISWbemSecurity extends Dispatch {
      *            an input-parameter of type int
      */
     public void setImpersonationLevel(int impersonationLevel) {
-        Dispatch.put(this, "ImpersonationLevel", new Variant(impersonationLevel)); //$NON-NLS-1$
+        Dispatch.put(this, "ImpersonationLevel", new Variant(impersonationLevel));
     }
 
     /**
@@ -57,7 +57,7 @@ public class ISWbemSecurity extends Dispatch {
      * @return the result is of type int
      */
     public int getAuthenticationLevel() {
-        return Dispatch.get(this, "AuthenticationLevel").changeType(Variant.VariantInt).getInt(); //$NON-NLS-1$
+        return Dispatch.get(this, "AuthenticationLevel").changeType(Variant.VariantInt).getInt();
     }
 
     /**
@@ -67,7 +67,7 @@ public class ISWbemSecurity extends Dispatch {
      *            an input-parameter of type int
      */
     public void setAuthenticationLevel(int authenticationLevel) {
-        Dispatch.put(this, "AuthenticationLevel", new Variant(authenticationLevel)); //$NON-NLS-1$
+        Dispatch.put(this, "AuthenticationLevel", new Variant(authenticationLevel));
     }
 
     /**
@@ -76,7 +76,7 @@ public class ISWbemSecurity extends Dispatch {
      * @return the result is of type ISWbemPrivilegeSet
      */
     public ISWbemPrivilegeSet getPrivileges() {
-        return new ISWbemPrivilegeSet(Dispatch.get(this, "Privileges").toDispatch()); //$NON-NLS-1$
+        return new ISWbemPrivilegeSet(Dispatch.get(this, "Privileges").toDispatch());
     }
 
 }

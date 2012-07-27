@@ -4,11 +4,12 @@ import java.util.Arrays;
 
 import net.bodz.art.obfuz.nls.ProtectNLS;
 
-public class XorMatrix implements Cloneable {
+public class XorMatrix
+        implements Cloneable {
 
     private final int[] m;
-    private final int   rows;
-    private final int   cols;
+    private final int rows;
+    private final int cols;
 
     public XorMatrix(int rows, int cols) {
         this(cols, new int[rows * cols]);
@@ -50,7 +51,7 @@ public class XorMatrix implements Cloneable {
 
     void checkMultiplyWith(XorMatrix m) {
         if (cols != m.rows)
-            throw new IllegalArgumentException(ProtectNLS.getString("XorMatrix.cantMultiply") + m); //$NON-NLS-1$
+            throw new IllegalArgumentException(ProtectNLS.getString("XorMatrix.cantMultiply") + m);
     }
 
     public void add(XorMatrix b) {
