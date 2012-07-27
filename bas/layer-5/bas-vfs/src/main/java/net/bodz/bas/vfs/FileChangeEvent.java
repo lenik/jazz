@@ -2,7 +2,6 @@ package net.bodz.bas.vfs;
 
 import java.util.EventObject;
 
-
 /**
  * @see org.apache.commons.vfs.FileChangeEvent
  */

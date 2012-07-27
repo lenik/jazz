@@ -4,10 +4,12 @@ import net.bodz.bas.mem.AbstractType;
 import net.bodz.bas.mem.AccessException;
 import net.bodz.bas.mem.Memory;
 
-public class Ieee754DoubleBE extends AbstractType {
+public class Ieee754DoubleBE
+        extends AbstractType {
 
     @Override
-    public Double get(Memory memory, int offset) throws AccessException {
+    public Double get(Memory memory, int offset)
+            throws AccessException {
         byte[] mem = new byte[8];
         memory.read(offset, mem);
         long bits = Int64BE.read(mem);
@@ -15,7 +17,8 @@ public class Ieee754DoubleBE extends AbstractType {
     }
 
     @Override
-    public void put(Memory memory, int offset, Object value) throws AccessException {
+    public void put(Memory memory, int offset, Object value)
+            throws AccessException {
         byte[] mem = new byte[8];
         long bits = Double.doubleToRawLongBits((Double) value);
         Int64BE.write(mem, bits);

@@ -6,7 +6,8 @@ import java.util.Map;
 /**
  * State Object
  */
-public interface IState extends Serializable {
+public interface IState
+        extends Serializable {
 
     /**
      * Ordinary state

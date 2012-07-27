@@ -58,16 +58,16 @@ public class EvalContext {
 
     public void leave() {
         int prevend = frames.remove(frameend--);
-        assert prevend <= end : "stack corrupt"; 
+        assert prevend <= end : "stack corrupt";
         while (end > prevend)
             stack.remove(end--);
     }
 
     protected void check(int index) {
-        assert frameend >= 0 : "no frame"; 
+        assert frameend >= 0 : "no frame";
         int fsize = end - frames.get(frameend);
         if (index >= fsize)
-            throw new IndexOutOfBoundsException("frame size: " + fsize); 
+            throw new IndexOutOfBoundsException("frame size: " + fsize);
     }
 
     public Object get(int index) {
@@ -77,7 +77,7 @@ public class EvalContext {
     }
 
     public Object[] get() {
-        assert frameend >= 0 : "no frame"; 
+        assert frameend >= 0 : "no frame";
         int fsize = end - frames.get(frameend);
         Object[] objs = new Object[fsize];
         for (int i = 0; i < fsize; i++)

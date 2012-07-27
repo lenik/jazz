@@ -5,16 +5,19 @@ import java.io.FileOutputStream;
 import java.io.FilterOutputStream;
 import java.io.IOException;
 
-public class TempOutputStream extends FilterOutputStream {
+public class TempOutputStream
+        extends FilterOutputStream {
 
     private File file;
     private boolean cleaned;
 
-    public TempOutputStream(String fileName) throws IOException {
+    public TempOutputStream(String fileName)
+            throws IOException {
         this(new File(fileName));
     }
 
-    public TempOutputStream(File file) throws IOException {
+    public TempOutputStream(File file)
+            throws IOException {
         super(new FileOutputStream(file));
         this.file = file;
     }
@@ -24,12 +27,14 @@ public class TempOutputStream extends FilterOutputStream {
     }
 
     @Override
-    public void close() throws IOException {
+    public void close()
+            throws IOException {
         super.close();
     }
 
     @Override
-    protected void finalize() throws Throwable {
+    protected void finalize()
+            throws Throwable {
         tryClean();
     }
 

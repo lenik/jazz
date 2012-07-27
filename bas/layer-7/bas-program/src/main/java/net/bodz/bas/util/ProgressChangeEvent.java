@@ -2,7 +2,8 @@ package net.bodz.bas.util;
 
 import java.util.EventObject;
 
-public class ProgressChangeEvent extends EventObject {
+public class ProgressChangeEvent
+        extends EventObject {
 
     private static final long serialVersionUID = 2440562208883770724L;
 

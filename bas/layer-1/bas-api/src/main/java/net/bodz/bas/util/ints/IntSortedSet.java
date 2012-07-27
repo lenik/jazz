@@ -5,7 +5,8 @@ import java.util.SortedSet;
 /**
  * @see SortedSet
  */
-public interface IntSortedSet extends IntSet {
+public interface IntSortedSet
+        extends IntSet {
 
     IntComparator comparator();
 

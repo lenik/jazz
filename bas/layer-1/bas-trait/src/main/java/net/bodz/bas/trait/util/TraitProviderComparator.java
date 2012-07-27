@@ -4,7 +4,6 @@ import java.util.Comparator;
 
 import net.bodz.bas.trait.spi.ITraitsProvider;
 
-
 public class TraitProviderComparator
         implements Comparator<ITraitsProvider> {
 

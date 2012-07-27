@@ -1,6 +1,7 @@
 package net.bodz.bas.lang.fn;
 
-public class EvalException extends Exception {
+public class EvalException
+        extends Exception {
 
     private static final long serialVersionUID = -1782002955385232081L;
 

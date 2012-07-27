@@ -2,7 +2,6 @@ package net.bodz.bas.sio.bits;
 
 import java.io.IOException;
 
-
 public abstract class AbstractNibbleOut
         implements INibbleOut {
 

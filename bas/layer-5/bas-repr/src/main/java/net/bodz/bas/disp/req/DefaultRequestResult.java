@@ -1,6 +1,5 @@
 package net.bodz.bas.disp.req;
 
-
 public class DefaultRequestResult
         implements IRequestResult {
 

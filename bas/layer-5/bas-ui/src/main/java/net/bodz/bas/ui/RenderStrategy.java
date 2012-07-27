@@ -3,7 +3,8 @@ package net.bodz.bas.ui;
 import net.bodz.bas.c.type.TypePrMap;
 import net.bodz.bas.util.primitive.Boxing;
 
-public abstract class RenderStrategy extends TypePrMap<Renderer> {
+public abstract class RenderStrategy
+        extends TypePrMap<Renderer> {
 
     private static final long serialVersionUID = 383209437177989123L;
 
@@ -14,11 +15,11 @@ public abstract class RenderStrategy extends TypePrMap<Renderer> {
      * @throws NullPointerException
      *             if obj is <code>null</code>.
      */
-    public Object render(Object context, Var<?> var) throws RenderException {
+    public Object render(Object context, Var<?> var)
+            throws RenderException {
         Renderer renderer = findRenderer(var);
         if (renderer == null)
-            throw new RenderException("Don\'t know how to render " 
-                    + var.getType());
+            throw new RenderException("Don\'t know how to render " + var.getType());
         return renderer.render(context, var);
     }
 

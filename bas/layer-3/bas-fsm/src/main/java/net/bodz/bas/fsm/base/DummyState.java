@@ -1,6 +1,7 @@
 package net.bodz.bas.fsm.base;
 
-public class DummyState extends StateImpl {
+public class DummyState
+        extends StateImpl {
 
     private static final long serialVersionUID = 283780226489973729L;
 

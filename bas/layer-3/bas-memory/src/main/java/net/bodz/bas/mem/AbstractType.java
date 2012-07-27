@@ -1,6 +1,7 @@
 package net.bodz.bas.mem;
 
-public abstract class AbstractType implements Type {
+public abstract class AbstractType
+        implements Type {
 
     protected void load() {
     }
@@ -11,7 +12,8 @@ public abstract class AbstractType implements Type {
     }
 
     @Override
-    public Type specialize(Object param) throws AccessException {
+    public Type specialize(Object param)
+            throws AccessException {
         return this;
     }
 

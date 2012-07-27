@@ -5,47 +5,55 @@ import java.io.OutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-public class ZipEntryOutputStream extends OutputStream {
+public class ZipEntryOutputStream
+        extends OutputStream {
 
     private ZipOutputStream out;
 
     public ZipEntryOutputStream(ZipOutputStream out) {
         if (out == null)
-            throw new NullPointerException("out"); 
+            throw new NullPointerException("out");
         this.out = out;
     }
 
-    public ZipEntryOutputStream(ZipOutputStream out, ZipEntry entry) throws IOException {
+    public ZipEntryOutputStream(ZipOutputStream out, ZipEntry entry)
+            throws IOException {
         this(out);
         out.putNextEntry(entry);
     }
 
-    public ZipEntryOutputStream(ZipOutputStream out, String name) throws IOException {
+    public ZipEntryOutputStream(ZipOutputStream out, String name)
+            throws IOException {
         this(out, new ZipEntry(name));
     }
 
     @Override
-    public void close() throws IOException {
+    public void close()
+            throws IOException {
         out.closeEntry();
     }
 
     @Override
-    public void flush() throws IOException {
+    public void flush()
+            throws IOException {
         out.flush();
     }
 
     @Override
-    public void write(byte[] b, int off, int len) throws IOException {
+    public void write(byte[] b, int off, int len)
+            throws IOException {
         out.write(b, off, len);
     }
 
     @Override
-    public void write(byte[] b) throws IOException {
+    public void write(byte[] b)
+            throws IOException {
         out.write(b);
     }
 
     @Override
-    public void write(int b) throws IOException {
+    public void write(int b)
+            throws IOException {
         out.write(b);
     }
 

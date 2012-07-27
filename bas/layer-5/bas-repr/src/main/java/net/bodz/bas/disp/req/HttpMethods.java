@@ -3,7 +3,6 @@ package net.bodz.bas.disp.req;
 import java.util.HashMap;
 import java.util.Map;
 
-
 class HttpMethods {
 
     static final Map<String, String> map;

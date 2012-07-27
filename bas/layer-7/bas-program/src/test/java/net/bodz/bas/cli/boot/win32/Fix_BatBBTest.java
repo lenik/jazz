@@ -20,18 +20,18 @@ public class Fix_BatBBTest {
         app.blockSize = 10;
         app.fillChar = '*';
 
-        String src = ("" + //  
-                "123456789/" + // 
-                ":l/" + // 
-                ":la/" + // 
-                ":lab/" + // 
-                ":labe/" + // 
-                ":label/" + // 
-                ":label6/" + // 
-                " :label7/" + // 
-                "  :label8/" + // 
-                "   :label9/" + // 
-                "   :label10/" + // 
+        String src = ("" + //
+                "123456789/" + //
+                ":l/" + //
+                ":la/" + //
+                ":lab/" + //
+                ":labe/" + //
+                ":label/" + //
+                ":label6/" + //
+                " :label7/" + //
+                "  :label8/" + //
+                "   :label9/" + //
+                "   :label10/" + //
                 "").replace('/', '\n');
         System.out.println(src);
         System.out.println("------------------------------");

@@ -3,7 +3,6 @@ package net.bodz.bas.sio.bits;
 import java.io.IOException;
 import java.io.OutputStream;
 
-
 public class OutputStreamNibbleOut
         extends AbstractNibbleOut {
 

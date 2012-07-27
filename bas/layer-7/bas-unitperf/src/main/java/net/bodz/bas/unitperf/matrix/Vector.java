@@ -1,7 +1,7 @@
 package net.bodz.bas.unitperf.matrix;
 
 public interface Vector {
-//        extends ArrayMatrix {
+// extends ArrayMatrix {
 
     int get(int index);
 

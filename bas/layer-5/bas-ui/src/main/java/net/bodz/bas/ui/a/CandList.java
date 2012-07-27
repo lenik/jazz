@@ -13,7 +13,7 @@ import net.bodz.bas.ui.CandListProvider;
  * Candidates List
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.FIELD, ElementType.PARAMETER })
+@Target({ ElementType.FIELD, ElementType.PARAMETER })
 public @interface CandList {
 
     Class<? extends CandListProvider> value() default CandListProvider.class;

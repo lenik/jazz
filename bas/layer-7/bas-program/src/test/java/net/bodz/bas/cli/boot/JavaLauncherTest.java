@@ -22,13 +22,14 @@ public class JavaLauncherTest {
     }
 
     @Test
-    public void testMain() throws Exception {
+    public void testMain()
+            throws Exception {
         assertEquals(1, state);
         JavaLauncher.main(new String[] { //
                 Cat.class.getName() });
         assertEquals(100, state);
         JavaLauncher.main(new String[] { //
-                Cat.class.getName(), "200" }); 
+                Cat.class.getName(), "200" });
         assertEquals(200, state);
     }
 

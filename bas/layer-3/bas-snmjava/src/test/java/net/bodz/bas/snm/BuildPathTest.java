@@ -15,7 +15,8 @@ public class BuildPathTest {
     static BuildPath projectBuildPath;
 
     @BeforeClass
-    public static void init() throws Exception {
+    public static void init()
+            throws Exception {
         File projectBase = EclipseProject.findProjectBase(BuildPath.class);
         System.out.println("Project base: " + projectBase);
         EclipseProject project = new EclipseProject(projectBase);
@@ -25,7 +26,8 @@ public class BuildPathTest {
         // buildPath.addLibrary(rt);
     }
 
-    public void testType(BuildPath buildPath, Class<?> type, String classPath, String sourcePath) throws Exception {
+    public void testType(BuildPath buildPath, Class<?> type, String classPath, String sourcePath)
+            throws Exception {
         if (buildPath == null)
             buildPath = new BuildPath(type);
         System.out.println("Class: " + type);
@@ -37,12 +39,14 @@ public class BuildPathTest {
     }
 
     @Test
-    public void testProjectType() throws Exception {
+    public void testProjectType()
+            throws Exception {
         testType(projectBuildPath, BuildPath.class, null, null);
     }
 
     @Test
-    public void testSysLib() throws Exception {
+    public void testSysLib()
+            throws Exception {
         testType(null, Pattern.class, null, null);
         testType(null, Map.Entry.class, null, null);
     }

@@ -15,7 +15,7 @@ package net.bodz.bas.err;
  * <pre>
  * if (${var:localVar} == null)
  *             throw new NullPointerException(&quot;${var}&quot;);
- *</pre>
+ * </pre>
  */
 public class OutOfDomainException
         extends IllegalArgumentException {

@@ -10,11 +10,13 @@ public interface OperationRecord {
     /**
      * Each succeeded execution will be add to the history.
      */
-    void execute() throws OperationException;
+    void execute()
+            throws OperationException;
 
     /**
      * The history manager guarantees rollback only once for each recorded operation.
      */
-    void rollback() throws OperationException;
+    void rollback()
+            throws OperationException;
 
 }

@@ -13,7 +13,7 @@ public class ByteOutTraits
         extends AbstractCommonTraits<IByteOut> {
 
     public ByteOutTraits() {
-        
+
         super(IByteOut.class);
     }
 

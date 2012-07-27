@@ -5,8 +5,6 @@ import java.util.List;
 
 import net.bodz.bas.c.string.StringEscape;
 
-
-
 public class CharRange
         extends AbstractCharSet {
 

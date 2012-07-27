@@ -2,7 +2,6 @@ package net.bodz.bas.util.order;
 
 import java.util.Comparator;
 
-
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class ComparableComparator
         extends AbstractNonNullComparator<Comparable> {

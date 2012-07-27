@@ -1,6 +1,7 @@
 package net.bodz.bas.text.lop;
 
-public abstract class AbstractParser implements Parser {
+public abstract class AbstractParser
+        implements Parser {
 
     protected Lexer lexer;
 

@@ -16,7 +16,7 @@ import net.bodz.bas.lang.ControlReturn;
  * For methods, this annotation defines a rule action.
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target( { ElementType.METHOD, ElementType.FIELD })
+@Target({ ElementType.METHOD, ElementType.FIELD })
 public @interface LexMatch {
 
     /**

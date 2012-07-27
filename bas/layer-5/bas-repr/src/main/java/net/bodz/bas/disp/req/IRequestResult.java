@@ -1,6 +1,5 @@
 package net.bodz.bas.disp.req;
 
-
 public interface IRequestResult {
 
     String ATTRIBUTE_KEY = IRequestResult.class.getCanonicalName();

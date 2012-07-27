@@ -2,8 +2,9 @@ package net.bodz.bas.util.ints;
 
 import net.bodz.bas.err.NotImplementedException;
 
-
-public abstract class _IntSortedSet extends _IntSet implements IntSortedSet {
+public abstract class _IntSortedSet
+        extends _IntSet
+        implements IntSortedSet {
 
     @Override
     public IntComparator comparator() {

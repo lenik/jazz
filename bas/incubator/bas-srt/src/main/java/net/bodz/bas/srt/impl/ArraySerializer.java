@@ -17,7 +17,7 @@ public class ArraySerializer
             throws IOException, SerializeException {
         Class<?> type = o.getClass().getComponentType();
         int len = Array.getLength(o);
-        s.write(type.getName() + ":" + len + ":{");  
+        s.write(type.getName() + ":" + len + ":{");
         for (int i = 0; i < len; i++) {
             Object item = Array.get(o, i);
             SimpleSerializerRegistry.serialize(s, item);

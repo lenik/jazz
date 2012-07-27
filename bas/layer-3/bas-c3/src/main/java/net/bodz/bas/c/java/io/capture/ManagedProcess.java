@@ -22,7 +22,7 @@ public class ManagedProcess {
     private static int _id = 0;
 
     static String getNextId() {
-        return "MP_" + (++_id); 
+        return "MP_" + (++_id);
     }
 
     public ManagedProcess() {
@@ -44,7 +44,7 @@ public class ManagedProcess {
             callback = sysAdapter;
         this.callback = callback;
 
-        sender = new Thread(name + ":sender") { 
+        sender = new Thread(name + ":sender") {
             @Override
             public void run() {
                 try {
@@ -55,7 +55,7 @@ public class ManagedProcess {
                 }
             }
         };
-        inGrabber = new Thread(name + ":inGrabber") { 
+        inGrabber = new Thread(name + ":inGrabber") {
             @Override
             public void run() {
                 try {
@@ -65,7 +65,7 @@ public class ManagedProcess {
                 }
             }
         };
-        errGrabber = new Thread(name + ":errGrabber") { 
+        errGrabber = new Thread(name + ":errGrabber") {
             @Override
             public void run() {
                 try {
@@ -79,10 +79,11 @@ public class ManagedProcess {
 
     @Override
     public String toString() {
-        return "ManagedProcess " + name; 
+        return "ManagedProcess " + name;
     }
 
-    public synchronized int takeOver(Process process) throws InterruptedException {
+    public synchronized int takeOver(Process process)
+            throws InterruptedException {
         this.out = process.getOutputStream();
         this.in = process.getInputStream();
         this.err = process.getErrorStream();
@@ -104,26 +105,30 @@ public class ManagedProcess {
 
     private static final int BLOCK = 4096;
 
-    void sendOut(byte[] buf, int off, int len) throws IOException {
+    void sendOut(byte[] buf, int off, int len)
+            throws IOException {
         out.write(buf, off, len);
         out.flush();
     }
 
-    private void grabIn() throws IOException {
+    private void grabIn()
+            throws IOException {
         byte[] buf = new byte[BLOCK];
         int cb;
         while ((cb = in.read(buf)) != -1)
             callback.recvIn(buf, 0, cb);
     }
 
-    private void grabErr() throws IOException {
+    private void grabErr()
+            throws IOException {
         byte[] buf = new byte[BLOCK];
         int cb;
         while ((cb = err.read(buf)) != -1)
             callback.recvErr(buf, 0, cb);
     }
 
-    static class SysAdapter extends _IOCallback {
+    static class SysAdapter
+            extends _IOCallback {
 
         /**
          * Get data to send and send out by {@link #sendOut(byte[], int, int)}.
@@ -133,7 +138,8 @@ public class ManagedProcess {
          */
 
         @Override
-        public void sendProc(OutputStream out) throws IOException {
+        public void sendProc(OutputStream out)
+                throws IOException {
             sendProc(out, System.in);
         }
 
@@ -144,7 +150,8 @@ public class ManagedProcess {
          * write data to System.out
          */
         @Override
-        public void recvIn(byte[] buf, int off, int len) throws IOException {
+        public void recvIn(byte[] buf, int off, int len)
+                throws IOException {
             System.out.write(buf, off, len);
         }
 
@@ -155,7 +162,8 @@ public class ManagedProcess {
          * write data to System.err
          */
         @Override
-        public void recvErr(byte[] buf, int off, int len) throws IOException {
+        public void recvErr(byte[] buf, int off, int len)
+                throws IOException {
             System.err.write(buf, off, len);
         }
 

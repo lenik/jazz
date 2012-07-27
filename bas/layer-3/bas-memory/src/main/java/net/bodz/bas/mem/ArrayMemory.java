@@ -68,10 +68,10 @@ public class ArrayMemory
             return this;
         int len = end - start;
         if (precheck && off > len)
-            throw new OutOfDomainException("off", off, len); 
+            throw new OutOfDomainException("off", off, len);
         int off32 = (int) off;
         if (precheck && start + off32 < 0)
-            throw new OutOfDomainException("off", off, len); 
+            throw new OutOfDomainException("off", off, len);
         return new ArrayMemory(array, start + off32, len - off32);
     }
 

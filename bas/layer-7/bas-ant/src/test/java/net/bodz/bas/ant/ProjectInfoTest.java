@@ -4,7 +4,8 @@ import java.io.IOException;
 
 public class ProjectInfoTest {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args)
+            throws IOException {
         new TaskTestApp(1).run();
     }
 

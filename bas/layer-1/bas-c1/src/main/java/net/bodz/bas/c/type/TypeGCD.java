@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
-
 public class TypeGCD {
 
     public static Class<?> getCommonSuperclass(Class<?> a, Class<?> b) {

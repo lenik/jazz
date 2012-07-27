@@ -5,6 +5,7 @@ import java.util.Set;
 /**
  * @see Set
  */
-public interface IntSet extends IntCollection {
+public interface IntSet
+        extends IntCollection {
 
 }

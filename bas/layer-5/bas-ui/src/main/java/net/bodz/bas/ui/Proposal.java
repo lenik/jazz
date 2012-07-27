@@ -1,6 +1,7 @@
 package net.bodz.bas.ui;
 
-public class Proposal implements IProposal {
+public class Proposal
+        implements IProposal {
 
     private final int priority;
     private final char mnemonic;
@@ -13,7 +14,7 @@ public class Proposal implements IProposal {
 
     public Proposal(int priority, char mnemonic, String name, String description) {
         if (name == null)
-            throw new NullPointerException("name"); 
+            throw new NullPointerException("name");
         this.priority = priority;
         this.mnemonic = mnemonic;
         this.name = name;
@@ -51,7 +52,7 @@ public class Proposal implements IProposal {
         String s = name;
         String description = getDescription();
         if (description != null)
-            s += ": " + description; 
+            s += ": " + description;
         return s;
     }
 

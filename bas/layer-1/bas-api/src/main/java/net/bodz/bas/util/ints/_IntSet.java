@@ -1,6 +1,7 @@
 package net.bodz.bas.util.ints;
 
-public abstract class _IntSet implements IntSet {
+public abstract class _IntSet
+        implements IntSet {
 
     @Override
     public boolean isEmpty() {

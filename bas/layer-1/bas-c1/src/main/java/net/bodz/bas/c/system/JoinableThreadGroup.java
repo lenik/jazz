@@ -1,6 +1,7 @@
 package net.bodz.bas.c.system;
 
-public class JoinableThreadGroup extends ThreadGroup {
+public class JoinableThreadGroup
+        extends ThreadGroup {
 
     public JoinableThreadGroup(String name) {
         super(name);
@@ -19,7 +20,8 @@ public class JoinableThreadGroup extends ThreadGroup {
             }
     }
 
-    public void join(long ms, boolean recurse) throws InterruptedException {
+    public void join(long ms, boolean recurse)
+            throws InterruptedException {
         synchronized (this) {
             // deprecated:
             // while (activeCount() > 0) wait();
@@ -28,15 +30,18 @@ public class JoinableThreadGroup extends ThreadGroup {
         }
     }
 
-    public void join(long ms) throws InterruptedException {
+    public void join(long ms)
+            throws InterruptedException {
         join(ms, true);
     }
 
-    public void join(boolean recurse) throws InterruptedException {
+    public void join(boolean recurse)
+            throws InterruptedException {
         join(0, recurse);
     }
 
-    public void join() throws InterruptedException {
+    public void join()
+            throws InterruptedException {
         join(0, true);
     }
 

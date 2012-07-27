@@ -1,6 +1,7 @@
 package net.bodz.bas.cli.skel;
 
-public class CLIError extends Error {
+public class CLIError
+        extends Error {
 
     private static final long serialVersionUID = -6157786975268203241L;
 

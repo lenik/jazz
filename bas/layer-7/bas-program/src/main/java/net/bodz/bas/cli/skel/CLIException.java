@@ -1,6 +1,7 @@
 package net.bodz.bas.cli.skel;
 
-public class CLIException extends Exception {
+public class CLIException
+        extends Exception {
 
     private static final long serialVersionUID = -7537357433011384587L;
 

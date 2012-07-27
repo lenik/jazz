@@ -1,6 +1,7 @@
 package net.bodz.bas.util;
 
-public class PluginException extends Exception {
+public class PluginException
+        extends Exception {
 
     private static final long serialVersionUID = -6582892734183870538L;
 

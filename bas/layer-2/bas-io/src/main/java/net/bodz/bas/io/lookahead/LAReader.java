@@ -8,7 +8,9 @@ import java.nio.CharBuffer;
 
 import net.bodz.bas.err.OutOfDomainException;
 
-public class LAReader extends FilterReader implements Lookable {
+public class LAReader
+        extends FilterReader
+        implements Lookable {
 
     // LA(cap)
     protected final int cap;
@@ -64,7 +66,8 @@ public class LAReader extends FilterReader implements Lookable {
     }
 
     @Override
-    public int read() throws IOException {
+    public int read()
+            throws IOException {
         if (isLabFilled()) {
             int c = lab[begin++];
             begin %= cap;
@@ -75,7 +78,8 @@ public class LAReader extends FilterReader implements Lookable {
     }
 
     @Override
-    public int read(char[] cbuf, int off, int len) throws IOException {
+    public int read(char[] cbuf, int off, int len)
+            throws IOException {
         if (isLabFilled()) {
             // TODO - final int ARRAYCOPY_VALVE = 32;
             int las = las();
@@ -93,12 +97,14 @@ public class LAReader extends FilterReader implements Lookable {
     }
 
     @Override
-    public int read(char[] cbuf) throws IOException {
+    public int read(char[] cbuf)
+            throws IOException {
         return read(cbuf, 0, cbuf.length);
     }
 
     @Override
-    public int read(CharBuffer target) throws IOException {
+    public int read(CharBuffer target)
+            throws IOException {
         int len = target.remaining();
         char[] cbuf = new char[len];
         int n = read(cbuf, 0, len);
@@ -108,14 +114,16 @@ public class LAReader extends FilterReader implements Lookable {
     }
 
     @Override
-    public boolean ready() throws IOException {
+    public boolean ready()
+            throws IOException {
         if (isLabFilled())
             return true;
         return super.ready();
     }
 
     @Override
-    public long skip(long n) throws IOException {
+    public long skip(long n)
+            throws IOException {
         if (isLabFilled()) {
             int cc = las();
             if (cc > n)
@@ -133,13 +141,15 @@ public class LAReader extends FilterReader implements Lookable {
     }
 
     @Override
-    public void mark(int readAheadLimit) throws IOException {
-        throw new IOException("Mark isn't supported"); 
+    public void mark(int readAheadLimit)
+            throws IOException {
+        throw new IOException("Mark isn't supported");
     }
 
     @Override
-    public void reset() throws IOException {
-        throw new IOException("Mark isn't supported"); 
+    public void reset()
+            throws IOException {
+        throw new IOException("Mark isn't supported");
     }
 
     @Override
@@ -152,12 +162,13 @@ public class LAReader extends FilterReader implements Lookable {
         if (begin < current)
             return current - begin;
         if (begin == current && !full)
-            return 0; 
+            return 0;
         return cap - begin + current;
     }
 
     @Override
-    public int look() throws IOException {
+    public int look()
+            throws IOException {
         if (isLabFilled()) {
             return lab[current];
         }
@@ -175,9 +186,10 @@ public class LAReader extends FilterReader implements Lookable {
     }
 
     @Override
-    public int look(char[] cbuf, int off, int len) throws IOException {
+    public int look(char[] cbuf, int off, int len)
+            throws IOException {
         if (len > cap)
-            throw new OutOfDomainException("look-len", len, cap); 
+            throw new OutOfDomainException("look-len", len, cap);
         // len = Math.min(cap, len);
         int las = las();
         if (las < len && !isLabFull()) {
@@ -210,12 +222,14 @@ public class LAReader extends FilterReader implements Lookable {
     }
 
     @Override
-    public int look(char[] cbuf) throws IOException {
+    public int look(char[] cbuf)
+            throws IOException {
         return look(cbuf, 0, cbuf.length);
     }
 
     @Override
-    public String look(int length) throws IOException {
+    public String look(int length)
+            throws IOException {
         char[] cbuf = new char[length];
         int cc = look(cbuf, 0, length);
         return new String(cbuf, 0, cc);
@@ -230,14 +244,13 @@ public class LAReader extends FilterReader implements Lookable {
         if (begin < current)
             return new String(lab, begin, current - begin);
         if (begin == current && !full)
-            return ""; 
+            return "";
         return new String(lab, begin, cap - begin) + new String(lab, 0, current);
     }
 
     @Override
     public String toString() {
-        return "look-ahead(" + las() + "/" + cap + "): \"" + lookFilled()   
-                + "\""; 
+        return "look-ahead(" + las() + "/" + cap + "): \"" + lookFilled() + "\"";
     }
 
 }

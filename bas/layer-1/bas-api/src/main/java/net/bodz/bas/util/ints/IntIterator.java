@@ -27,7 +27,8 @@ public interface IntIterator {
 
 }
 
-final class EmptyIntIterator implements IntIterator {
+final class EmptyIntIterator
+        implements IntIterator {
 
     @Override
     public boolean hasNext() {

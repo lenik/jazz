@@ -6,25 +6,30 @@ import net.bodz.bas.mem.Memory;
 import net.bodz.bas.mem.MemoryWrapOffset;
 import net.bodz.bas.mem.Type;
 
-public abstract class _Ptr32 extends AbstractRefType {
+public abstract class _Ptr32
+        extends AbstractRefType {
 
-    public _Ptr32(Type targetType) throws AccessException {
+    public _Ptr32(Type targetType)
+            throws AccessException {
         super(targetType);
     }
 
     /**
      * @return absolute or relative address
      */
-    public abstract int getAddress(Memory memory, int offset) throws AccessException;
+    public abstract int getAddress(Memory memory, int offset)
+            throws AccessException;
 
     /**
      * @param addr
      *            absolute or relative address
      */
-    public abstract void putAddress(Memory memory, int offset, int addr) throws AccessException;
+    public abstract void putAddress(Memory memory, int offset, int addr)
+            throws AccessException;
 
     @Override
-    public MemoryWrapOffset get(Memory memory, int offset) throws AccessException {
+    public MemoryWrapOffset get(Memory memory, int offset)
+            throws AccessException {
         int addr = getAddress(memory, offset);
         return new MemoryWrapOffset(memory, addr);
     }
@@ -34,7 +39,8 @@ public abstract class _Ptr32 extends AbstractRefType {
      *            absolute address
      */
     @Override
-    protected void putLocal(Memory memory, int offset, int targetOffset) throws AccessException {
+    protected void putLocal(Memory memory, int offset, int targetOffset)
+            throws AccessException {
         putAddress(memory, offset, targetOffset);
     }
 
@@ -43,7 +49,8 @@ public abstract class _Ptr32 extends AbstractRefType {
      *            absolute address
      */
     @Override
-    protected void putRemote(Memory memory, int offset, Memory targetMemory, int targetOffset) throws AccessException {
+    protected void putRemote(Memory memory, int offset, Memory targetMemory, int targetOffset)
+            throws AccessException {
         throw new UnsupportedOperationException();
     }
 

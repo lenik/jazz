@@ -1,6 +1,5 @@
 package net.bodz.bas.util.bits;
 
-
 public class BoolBits
         extends AbstractBits {
 

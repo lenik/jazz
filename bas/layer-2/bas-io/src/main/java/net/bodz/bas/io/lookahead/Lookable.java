@@ -8,12 +8,16 @@ public interface Lookable {
 
     int getLookedLength();
 
-    int look() throws IOException;
+    int look()
+            throws IOException;
 
-    int look(char[] buf) throws IOException;
+    int look(char[] buf)
+            throws IOException;
 
-    int look(char[] cbuf, int off, int len) throws IOException;
+    int look(char[] cbuf, int off, int len)
+            throws IOException;
 
-    String look(int len) throws IOException;
+    String look(int len)
+            throws IOException;
 
 }

@@ -14,7 +14,8 @@ public interface IntComparator {
 
 }
 
-class AscendIntComp implements IntComparator {
+class AscendIntComp
+        implements IntComparator {
 
     @Override
     public int compare(int a, int b) {
@@ -23,7 +24,8 @@ class AscendIntComp implements IntComparator {
 
 }
 
-class DescendIntComp implements IntComparator {
+class DescendIntComp
+        implements IntComparator {
 
     @Override
     public int compare(int a, int b) {

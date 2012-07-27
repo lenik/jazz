@@ -16,7 +16,7 @@ public class ClassResource {
      * @return <code>null</code> if no manifest.
      */
     public static Manifest getManifest(Class<?> clazz) {
-        URL url = clazz.getResource("/META-INF/MANIFEST.MF"); //$NON-NLS-1$
+        URL url = clazz.getResource("/META-INF/MANIFEST.MF");
         if (url == null)
             return null;
         InputStream in = null;
@@ -57,7 +57,7 @@ public class ClassResource {
      */
     public static URL classDataURL(Class<?> clazz) {
         String classSimpleName = clazz.getSimpleName();
-        URL url = clazz.getResource(classSimpleName + ".class"); //$NON-NLS-1$
+        URL url = clazz.getResource(classSimpleName + ".class");
         return url;
     }
 
@@ -66,7 +66,7 @@ public class ClassResource {
      *            don't include the dot(.)
      */
     public static URL classDataURL(Class<?> clazz, String extension) {
-        return classDataURLBySuffix(clazz, "." + extension); //$NON-NLS-1$
+        return classDataURLBySuffix(clazz, "." + extension);
     }
 
     /**
@@ -75,23 +75,23 @@ public class ClassResource {
      */
     public static URL classDataURLBySuffix(Class<?> clazz, String suffix) {
         String classSimpleName = clazz.getSimpleName();
-        String resourceName=classSimpleName+suffix;
-        return  clazz.getResource(resourceName); 
-//        String spec = classSimpleName + suffix;
-//        try {
-//            URL url = new URL(context, spec);
-//            return url;
-//        } catch (MalformedURLException e) {
-//            throw new IllegalArgumentException(e);
-//        }
+        String resourceName = classSimpleName + suffix;
+        return clazz.getResource(resourceName);
+// String spec = classSimpleName + suffix;
+// try {
+// URL url = new URL(context, spec);
+// return url;
+// } catch (MalformedURLException e) {
+// throw new IllegalArgumentException(e);
+// }
     }
 
     public static URL getRootResourceURL(Class<?> clazz) {
         ClassLoader classLoader = clazz.getClassLoader();
         if (classLoader == null)
-            throw new NullPointerException("can't getClassLoader"); //$NON-NLS-1$
+            throw new NullPointerException("can't getClassLoader");
         String pkg = clazz.getPackage().getName();
-        String base = clazz.getSimpleName() + ".class"; //$NON-NLS-1$
+        String base = clazz.getSimpleName() + ".class";
         String name = pkg.replace('.', '/') + '/' + base;
         return getRootResourceURL(classLoader, name);
     }

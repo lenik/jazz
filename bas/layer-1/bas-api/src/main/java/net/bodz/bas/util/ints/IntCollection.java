@@ -5,7 +5,8 @@ import java.util.Collection;
 /**
  * @see Collection
  */
-public interface IntCollection extends IntIterable {
+public interface IntCollection
+        extends IntIterable {
 
     /**
      * @see Collection#size()

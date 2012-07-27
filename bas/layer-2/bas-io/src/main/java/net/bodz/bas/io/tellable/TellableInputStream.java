@@ -6,7 +6,9 @@ import java.io.InputStream;
 
 import net.bodz.bas.sio.util.ITellable;
 
-public class TellableInputStream extends FilterInputStream implements ITellable {
+public class TellableInputStream
+        extends FilterInputStream
+        implements ITellable {
 
     private long pos;
     private long markPos;
@@ -22,7 +24,8 @@ public class TellableInputStream extends FilterInputStream implements ITellable 
     }
 
     @Override
-    public void reset() throws IOException {
+    public void reset()
+            throws IOException {
         super.reset();
         pos = markPos;
     }
@@ -33,7 +36,8 @@ public class TellableInputStream extends FilterInputStream implements ITellable 
     }
 
     @Override
-    public int read() throws IOException {
+    public int read()
+            throws IOException {
         int b = in.read();
         if (b != -1)
             pos++;
@@ -41,7 +45,8 @@ public class TellableInputStream extends FilterInputStream implements ITellable 
     }
 
     @Override
-    public int read(byte[] b, int off, int len) throws IOException {
+    public int read(byte[] b, int off, int len)
+            throws IOException {
         int cb = in.read(b, off, len);
         if (cb != -1)
             pos += cb;
@@ -49,7 +54,8 @@ public class TellableInputStream extends FilterInputStream implements ITellable 
     }
 
     @Override
-    public int read(byte[] b) throws IOException {
+    public int read(byte[] b)
+            throws IOException {
         int cb = in.read(b);
         if (cb != -1)
             pos += cb;
@@ -57,7 +63,8 @@ public class TellableInputStream extends FilterInputStream implements ITellable 
     }
 
     @Override
-    public long skip(long n) throws IOException {
+    public long skip(long n)
+            throws IOException {
         long cb = in.skip(n);
         pos += cb;
         return cb;

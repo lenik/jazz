@@ -1,6 +1,7 @@
 package net.bodz.bas.mem;
 
-public class AccessException extends Exception {
+public class AccessException
+        extends Exception {
 
     private static final long serialVersionUID = -4035080963915624612L;
 

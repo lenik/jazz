@@ -77,7 +77,8 @@ public class Plugins {
         category.register(pluginId, staticInstance);
     }
 
-    PluginTypeEx find(Class<?> type, final String pluginId) throws PluginException {
+    PluginTypeEx find(Class<?> type, final String pluginId)
+            throws PluginException {
         PluginTypeEx found = null;
         StringBuilder errmsg = null;
         for (Entry<Class<?>, PluginCategory> e : categories.joinEntries(type)) {
@@ -89,8 +90,8 @@ public class Plugins {
                 } else {
                     if (errmsg == null) {
                         errmsg = new StringBuilder();
-                        errmsg.append("ambiguous plugin id: " + pluginId); 
-                        errmsg.append(", candidates: \n"); 
+                        errmsg.append("ambiguous plugin id: " + pluginId);
+                        errmsg.append(", candidates: \n");
                         errmsg.append(found);
                     }
                     errmsg.append('\n');
@@ -104,11 +105,13 @@ public class Plugins {
     }
 
     // ???
-    public PluginTypeEx getTypeEx(Class<?> type, String pluginId) throws PluginException {
+    public PluginTypeEx getTypeEx(Class<?> type, String pluginId)
+            throws PluginException {
         return find(type, pluginId);
     }
 
-    public IPlugin load(Class<? extends IPlugin> type, String pluginId, Object... args) throws PluginException {
+    public IPlugin load(Class<? extends IPlugin> type, String pluginId, Object... args)
+            throws PluginException {
         PluginTypeEx typeEx = find(type, pluginId);
         if (typeEx == null)
             return null;

@@ -5,7 +5,8 @@ import java.io.InputStream;
 
 import net.bodz.bas.meta.codehint.ThreadUnsafe;
 
-public class MemoryInputStream extends InputStream {
+public class MemoryInputStream
+        extends InputStream {
 
     private final Memory memory;
 
@@ -25,7 +26,8 @@ public class MemoryInputStream extends InputStream {
     }
 
     @Override
-    public int available() throws IOException {
+    public int available()
+            throws IOException {
         if (size == -1)
             return 0;
         return size;
@@ -35,7 +37,8 @@ public class MemoryInputStream extends InputStream {
 
     @ThreadUnsafe
     @Override
-    public int read() throws IOException {
+    public int read()
+            throws IOException {
         if (size == 0)
             return -1;
         try {
@@ -50,7 +53,8 @@ public class MemoryInputStream extends InputStream {
 
     @ThreadUnsafe
     @Override
-    public int read(byte[] b, int off, int len) throws IOException {
+    public int read(byte[] b, int off, int len)
+            throws IOException {
         if (size == 0)
             return -1;
         try {
@@ -71,7 +75,8 @@ public class MemoryInputStream extends InputStream {
 
     @ThreadUnsafe
     @Override
-    public long skip(long n) throws IOException {
+    public long skip(long n)
+            throws IOException {
         if (n <= 0)
             return 0;
         if (size == -1) {
