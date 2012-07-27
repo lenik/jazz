@@ -25,12 +25,12 @@ public class TestProject
         // XXX - TestProject.class annotations?
         File parent = (File) get(BASE_PROGRAMS).getDefaultValue();
         Variable var = new BaseDirVariable(//
-                "Test Files", // //$NON-NLS-1$
-                "A place to put test related files.", // //$NON-NLS-1$
-                new File(parent, "tests")); //$NON-NLS-1$
-        define("BASE_TEST", var); //$NON-NLS-1$
+                "Test Files", //
+                "A place to put test related files.", //
+                new File(parent, "tests"));
+        define("BASE_TEST", var);
 
-        testSection = new OptionalSection("test", "Test source and classes"); //$NON-NLS-1$ //$NON-NLS-2$
+        testSection = new OptionalSection("test", "Test source and classes");
         {
             File testBinDir = SJProject.getOutputBase(TestProject.class);
             File testSrcDir = SJProject.getSrcBase(TestProject.class);

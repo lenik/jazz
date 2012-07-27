@@ -7,19 +7,19 @@ package com.jacob.ms.wbem;
 import com.jacob.com.Dispatch;
 import com.jacob.com.Variant;
 
-public class ISWbemPropertySet extends Dispatch {
+public class ISWbemPropertySet
+        extends Dispatch {
 
-    public static final String componentName = "WbemScripting.ISWbemPropertySet"; //$NON-NLS-1$
+    public static final String componentName = "WbemScripting.ISWbemPropertySet";
 
     public ISWbemPropertySet() {
         super(componentName);
     }
 
     /**
-     * This constructor is used instead of a case operation to turn a Dispatch
-     * object into a wider object - it must exist in every wrapper class whose
-     * instances may be returned from method calls wrapped in VT_DISPATCH
-     * Variants.
+     * This constructor is used instead of a case operation to turn a Dispatch object into a wider
+     * object - it must exist in every wrapper class whose instances may be returned from method
+     * calls wrapped in VT_DISPATCH Variants.
      */
     public ISWbemPropertySet(Dispatch d) {
         // take over the IDispatch pointer
@@ -38,7 +38,7 @@ public class ISWbemPropertySet extends Dispatch {
      * @return the result is of type Variant
      */
     public Variant get_NewEnum() {
-        return Dispatch.get(this, "_NewEnum"); //$NON-NLS-1$
+        return Dispatch.get(this, "_NewEnum");
     }
 
     /**
@@ -51,8 +51,7 @@ public class ISWbemPropertySet extends Dispatch {
      * @return the result is of type ISWbemProperty
      */
     public ISWbemProperty item(String strName, int iFlags) {
-        return new ISWbemProperty(Dispatch.call(this, "Item", strName, new Variant(iFlags)) //$NON-NLS-1$
-                .toDispatch());
+        return new ISWbemProperty(Dispatch.call(this, "Item", strName, new Variant(iFlags)).toDispatch());
     }
 
     /**
@@ -63,7 +62,7 @@ public class ISWbemPropertySet extends Dispatch {
      * @return the result is of type ISWbemProperty
      */
     public ISWbemProperty item(String strName) {
-        return new ISWbemProperty(Dispatch.call(this, "Item", strName).toDispatch()); //$NON-NLS-1$
+        return new ISWbemProperty(Dispatch.call(this, "Item", strName).toDispatch());
     }
 
     /**
@@ -72,7 +71,7 @@ public class ISWbemPropertySet extends Dispatch {
      * @return the result is of type int
      */
     public int getCount() {
-        return Dispatch.get(this, "Count").changeType(Variant.VariantInt).getInt(); //$NON-NLS-1$
+        return Dispatch.get(this, "Count").changeType(Variant.VariantInt).getInt();
     }
 
     /**
@@ -89,8 +88,8 @@ public class ISWbemPropertySet extends Dispatch {
      * @return the result is of type ISWbemProperty
      */
     public ISWbemProperty add(String strName, int iCimType, boolean bIsArray, int iFlags) {
-        return new ISWbemProperty(Dispatch.call(this, "Add", strName, new Variant(iCimType), //$NON-NLS-1$
-                new Variant(bIsArray), new Variant(iFlags)).toDispatch());
+        return new ISWbemProperty(Dispatch.call(this, "Add", strName, new Variant(iCimType), new Variant(bIsArray),
+                new Variant(iFlags)).toDispatch());
     }
 
     /**
@@ -105,8 +104,8 @@ public class ISWbemPropertySet extends Dispatch {
      * @return the result is of type ISWbemProperty
      */
     public ISWbemProperty add(String strName, int iCimType, boolean bIsArray) {
-        return new ISWbemProperty(Dispatch.call(this, "Add", strName, new Variant(iCimType), //$NON-NLS-1$
-                new Variant(bIsArray)).toDispatch());
+        return new ISWbemProperty(Dispatch.call(this, "Add", strName, new Variant(iCimType), new Variant(bIsArray))
+                .toDispatch());
     }
 
     /**
@@ -119,8 +118,7 @@ public class ISWbemPropertySet extends Dispatch {
      * @return the result is of type ISWbemProperty
      */
     public ISWbemProperty add(String strName, int iCimType) {
-        return new ISWbemProperty(Dispatch.call(this, "Add", strName, new Variant(iCimType)) //$NON-NLS-1$
-                .toDispatch());
+        return new ISWbemProperty(Dispatch.call(this, "Add", strName, new Variant(iCimType)).toDispatch());
     }
 
     /**
@@ -132,7 +130,7 @@ public class ISWbemPropertySet extends Dispatch {
      *            an input-parameter of type int
      */
     public void remove(String strName, int iFlags) {
-        Dispatch.call(this, "Remove", strName, new Variant(iFlags)); //$NON-NLS-1$
+        Dispatch.call(this, "Remove", strName, new Variant(iFlags));
     }
 
     /**
@@ -142,7 +140,7 @@ public class ISWbemPropertySet extends Dispatch {
      *            an input-parameter of type String
      */
     public void remove(String strName) {
-        Dispatch.call(this, "Remove", strName); //$NON-NLS-1$
+        Dispatch.call(this, "Remove", strName);
     }
 
 }

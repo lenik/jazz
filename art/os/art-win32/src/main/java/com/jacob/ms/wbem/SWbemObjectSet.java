@@ -6,9 +6,10 @@ package com.jacob.ms.wbem;
 
 import com.jacob.com.Dispatch;
 
-public class SWbemObjectSet extends ISWbemObjectSet {
+public class SWbemObjectSet
+        extends ISWbemObjectSet {
 
-    public static final String componentName = "clsid:{04B83D61-21AE-11D2-8B33-00600806D9B6}"; //$NON-NLS-1$
+    public static final String componentName = "clsid:{04B83D61-21AE-11D2-8B33-00600806D9B6}";
 
     public SWbemObjectSet() {
         super(componentName);

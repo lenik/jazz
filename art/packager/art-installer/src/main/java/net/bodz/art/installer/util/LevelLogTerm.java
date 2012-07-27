@@ -12,7 +12,7 @@ public class LevelLogTerm
             extends AbstractLogSink {
 
         private final ILogSink target;
-        private String tab = "    "; //$NON-NLS-1$
+        private String tab = "    ";
 
         public Term(ILogSink target) {
             this.target = target;

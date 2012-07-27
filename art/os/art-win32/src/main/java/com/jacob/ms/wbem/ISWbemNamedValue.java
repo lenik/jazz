@@ -7,19 +7,19 @@ package com.jacob.ms.wbem;
 import com.jacob.com.Dispatch;
 import com.jacob.com.Variant;
 
-public class ISWbemNamedValue extends Dispatch {
+public class ISWbemNamedValue
+        extends Dispatch {
 
-    public static final String componentName = "WbemScripting.ISWbemNamedValue"; //$NON-NLS-1$
+    public static final String componentName = "WbemScripting.ISWbemNamedValue";
 
     public ISWbemNamedValue() {
         super(componentName);
     }
 
     /**
-     * This constructor is used instead of a case operation to turn a Dispatch
-     * object into a wider object - it must exist in every wrapper class whose
-     * instances may be returned from method calls wrapped in VT_DISPATCH
-     * Variants.
+     * This constructor is used instead of a case operation to turn a Dispatch object into a wider
+     * object - it must exist in every wrapper class whose instances may be returned from method
+     * calls wrapped in VT_DISPATCH Variants.
      */
     public ISWbemNamedValue(Dispatch d) {
         // take over the IDispatch pointer
@@ -38,7 +38,7 @@ public class ISWbemNamedValue extends Dispatch {
      * @return the result is of type Variant
      */
     public Variant getValue() {
-        return Dispatch.get(this, "Value"); //$NON-NLS-1$
+        return Dispatch.get(this, "Value");
     }
 
     /**
@@ -48,7 +48,7 @@ public class ISWbemNamedValue extends Dispatch {
      *            an input-parameter of type Variant
      */
     public void setValue(Variant value) {
-        Dispatch.put(this, "Value", value); //$NON-NLS-1$
+        Dispatch.put(this, "Value", value);
     }
 
     /**
@@ -57,7 +57,7 @@ public class ISWbemNamedValue extends Dispatch {
      * @return the result is of type String
      */
     public String getName() {
-        return Dispatch.get(this, "Name").toString(); //$NON-NLS-1$
+        return Dispatch.get(this, "Name").toString();
     }
 
 }

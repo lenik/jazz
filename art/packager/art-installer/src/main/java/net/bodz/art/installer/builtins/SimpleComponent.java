@@ -3,13 +3,15 @@ package net.bodz.art.installer.builtins;
 import net.bodz.art.installer.AbstractComponent;
 import net.bodz.art.installer.ISession;
 
-public class SimpleComponent extends AbstractComponent {
+public class SimpleComponent
+        extends AbstractComponent {
 
     public SimpleComponent() {
         super(false, true);
     }
 
-    private class CPack extends CJob {
+    private class CPack
+            extends CJob {
 
         public CPack(ISession session) {
             super(session);
@@ -26,7 +28,8 @@ public class SimpleComponent extends AbstractComponent {
 
     }
 
-    private class CInstall extends CJob {
+    private class CInstall
+            extends CJob {
 
         public CInstall(ISession session) {
             super(session);
@@ -43,7 +46,8 @@ public class SimpleComponent extends AbstractComponent {
 
     }
 
-    private class CUninstall extends CJob {
+    private class CUninstall
+            extends CJob {
 
         public CUninstall(ISession session) {
             super(session);
@@ -75,13 +79,16 @@ public class SimpleComponent extends AbstractComponent {
         return new CUninstall(session);
     }
 
-    protected void _pack(ISession session) throws Exception {
+    protected void _pack(ISession session)
+            throws Exception {
     }
 
-    protected void _install(ISession session) throws Exception {
+    protected void _install(ISession session)
+            throws Exception {
     }
 
-    protected void _uninstall(ISession session) throws Exception {
+    protected void _uninstall(ISession session)
+            throws Exception {
     }
 
 }

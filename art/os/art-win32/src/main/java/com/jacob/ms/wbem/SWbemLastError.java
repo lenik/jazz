@@ -6,9 +6,10 @@ package com.jacob.ms.wbem;
 
 import com.jacob.com.Dispatch;
 
-public class SWbemLastError extends ISWbemLastError {
+public class SWbemLastError
+        extends ISWbemLastError {
 
-    public static final String componentName = "clsid:{C2FEEEAC-CFCD-11D1-8B05-00600806D9B6}"; //$NON-NLS-1$
+    public static final String componentName = "clsid:{C2FEEEAC-CFCD-11D1-8B05-00600806D9B6}";
 
     public SWbemLastError() {
         super(componentName);

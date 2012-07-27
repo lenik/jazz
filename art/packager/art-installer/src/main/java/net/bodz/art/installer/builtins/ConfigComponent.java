@@ -4,7 +4,8 @@ import net.bodz.art.installer.AbstractComponent;
 import net.bodz.art.installer.ConfigPage;
 import net.bodz.art.installer.ISession;
 
-public abstract class ConfigComponent extends AbstractComponent {
+public abstract class ConfigComponent
+        extends AbstractComponent {
 
     public ConfigComponent() {
         super(false, true);

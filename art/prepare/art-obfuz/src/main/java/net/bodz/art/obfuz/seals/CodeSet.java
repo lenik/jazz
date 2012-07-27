@@ -6,12 +6,12 @@ public class CodeSet {
     public static final int bits = 5;
     public static final int mask = size - 1;
 
-    static final char[]     chars;
-    static final int[]      ordinals;
+    static final char[] chars;
+    static final int[] ordinals;
 
     static {
-        String zerospec = "EORW"; //$NON-NLS-1$
-        chars = "0123456789ABCDFGHIJKLMNPQSTUVXYZ".toCharArray(); //$NON-NLS-1$
+        String zerospec = "EORW";
+        chars = "0123456789ABCDFGHIJKLMNPQSTUVXYZ".toCharArray();
         assert chars.length == size;
         ordinals = new int[256];
         for (int i = 0; i < 256; i++)
@@ -32,7 +32,7 @@ public class CodeSet {
 
     public static String encode(int n) {
         if (n == 0)
-            return "R"; //$NON-NLS-1$
+            return "R";
         StringBuffer buf = new StringBuffer(8);
         while (n != 0) {
             int r = n & mask;
@@ -44,7 +44,7 @@ public class CodeSet {
 
     public static String encode(long n) {
         if (n == 0)
-            return "R"; //$NON-NLS-1$
+            return "R";
         StringBuffer buf = new StringBuffer(8);
         while (n != 0) {
             int r = (int) n & mask;

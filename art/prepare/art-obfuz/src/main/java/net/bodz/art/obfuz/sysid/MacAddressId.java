@@ -13,7 +13,7 @@ public class MacAddressId
     private int nicIndex;
 
     public MacAddressId(int nicIndex) {
-        super("-"); //$NON-NLS-1$
+        super("-");
         this.nicIndex = nicIndex;
     }
 

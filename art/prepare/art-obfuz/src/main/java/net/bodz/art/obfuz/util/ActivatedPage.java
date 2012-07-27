@@ -13,7 +13,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
-public class ActivatedPage extends AbstractPage {
+public class ActivatedPage
+        extends AbstractPage {
 
     private final ABTSProvider abtsProvider;
 
@@ -31,7 +32,7 @@ public class ActivatedPage extends AbstractPage {
 
     @Override
     public String getPageTitle() {
-        return ProtectNLS.getString("ActivatedPage.title"); //$NON-NLS-1$
+        return ProtectNLS.getString("ActivatedPage.title");
     }
 
     @Override
@@ -39,11 +40,12 @@ public class ActivatedPage extends AbstractPage {
         parent.setLayout(new GridLayout());
 
         final Label thankLabel = new Label(parent, SWT.NONE);
-        thankLabel.setText(ProtectNLS.getString("ActivatedPage.thank")); //$NON-NLS-1$
+        thankLabel.setText(ProtectNLS.getString("ActivatedPage.thank"));
     }
 
     @Override
-    public TreePath service(ServiceContext context) throws PageException {
+    public TreePath service(ServiceContext context)
+            throws PageException {
         ActivationByTargetString abts = abtsProvider.getABTS();
         if (abts != null)
             abts.save();

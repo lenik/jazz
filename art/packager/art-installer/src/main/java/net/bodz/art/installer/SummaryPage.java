@@ -37,14 +37,14 @@ class SummaryPage
 
     @Override
     public String getPageTitle() {
-        return PackNLS.getString("SummaryPage.summary"); //$NON-NLS-1$
+        return PackNLS.getString("SummaryPage.summary");
     }
 
     @Override
     protected void createContents(Composite holder) {
         holder.setLayout(new GridLayout());
         final Label sessionConfigurationLabel = new Label(holder, SWT.NONE);
-        sessionConfigurationLabel.setText(PackNLS.getString("SummaryPage.sessionConfig")); //$NON-NLS-1$
+        sessionConfigurationLabel.setText(PackNLS.getString("SummaryPage.sessionConfig"));
 
         text = new Text(holder, SWT.WRAP | SWT.V_SCROLL | SWT.READ_ONLY | SWT.MULTI | SWT.BORDER);
         text.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));

@@ -13,7 +13,7 @@ public class DiskId
     private final int diskIndex;
 
     public DiskId(int diskIndex) {
-        super("-"); //$NON-NLS-1$
+        super("-");
         this.diskIndex = diskIndex;
     }
 

@@ -13,16 +13,15 @@ public class Flags {
     }
 
     /**
-     * @return <code>true</code> if bits masked by <code>mask</code> are equals
-     *         to the specified <code>bits</code>.
+     * @return <code>true</code> if bits masked by <code>mask</code> are equals to the specified
+     *         <code>bits</code>.
      */
     public boolean isSet(int mask, int bits) {
         return (flags & mask) == bits;
     }
 
     /**
-     * @return <code>true</code> if any bit specified by <code>bits</code> is
-     *         set.
+     * @return <code>true</code> if any bit specified by <code>bits</code> is set.
      */
     public boolean isSet(int bits) {
         return (flags & bits) != 0;

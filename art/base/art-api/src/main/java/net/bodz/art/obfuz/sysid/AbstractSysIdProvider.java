@@ -11,7 +11,7 @@ public abstract class AbstractSysIdProvider
 
     public AbstractSysIdProvider(String separator) {
         if (separator == null)
-            separator = ""; //$NON-NLS-1$
+            separator = "";
         this.separator = separator;
     }
 

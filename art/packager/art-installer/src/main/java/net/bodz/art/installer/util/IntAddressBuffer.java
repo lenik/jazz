@@ -14,7 +14,7 @@ public class IntAddressBuffer {
     }
 
     private int[] array;
-    private int   size;
+    private int size;
 
     IntAddressBuffer(int[] array) {
         this.array = array;
@@ -31,7 +31,7 @@ public class IntAddressBuffer {
 
     public IntAddressBuffer(int initialSize, int initialCapacity) {
         if (initialSize < 0)
-            throw new OutOfDomainException("initialSize", initialSize, 0); //$NON-NLS-1$
+            throw new OutOfDomainException("initialSize", initialSize, 0);
         if (initialSize > initialCapacity)
             initialCapacity = initialSize;
         array = new int[initialCapacity];
@@ -40,9 +40,9 @@ public class IntAddressBuffer {
 
     void checkIndex(int index) {
         if (index < 0)
-            throw new OutOfDomainException("index", index, 0); //$NON-NLS-1$
+            throw new OutOfDomainException("index", index, 0);
         if (index >= size)
-            throw new OutOfDomainException("index", index, size); //$NON-NLS-1$
+            throw new OutOfDomainException("index", index, size);
     }
 
     public int size() {
@@ -51,7 +51,7 @@ public class IntAddressBuffer {
 
     public void resize(int newSize) {
         if (newSize < 0)
-            throw new OutOfDomainException("size", newSize, 0); //$NON-NLS-1$
+            throw new OutOfDomainException("size", newSize, 0);
         if (newSize > array.length) {
             int newCapacity = align(newSize);
             array = Arrays.copyOf(array, newCapacity);
@@ -135,7 +135,7 @@ public class IntAddressBuffer {
     @Override
     public String toString() {
         if (size == 0)
-            return "."; //$NON-NLS-1$
+            return ".";
         StringBuffer buf = new StringBuffer(size * 10);
         for (int i = 0; i < size; i++) {
             if (i != 0)

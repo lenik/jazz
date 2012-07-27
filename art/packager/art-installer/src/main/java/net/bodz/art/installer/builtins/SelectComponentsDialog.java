@@ -33,7 +33,7 @@ public class SelectComponentsDialog
         super(parent, style, title);
         setText(text);
         if (entries == null)
-            throw new NullPointerException("entries"); //$NON-NLS-1$
+            throw new NullPointerException("entries");
         int size = entries.size();
         indents = new String[size];
         components = new IComponent[size];
@@ -49,7 +49,7 @@ public class SelectComponentsDialog
         super(parent, style, title);
         setText(text);
         if (components == null)
-            throw new NullPointerException("components"); //$NON-NLS-1$
+            throw new NullPointerException("components");
         this.components = components;
     }
 
@@ -80,11 +80,11 @@ public class SelectComponentsDialog
             if (indents != null)
                 indent = indents[i];
             IComponent c = components[i];
-            String s = indent == null ? "" : indent; //$NON-NLS-1$
+            String s = indent == null ? "" : indent;
             s += c.getText();
             String doc = c.getDoc();
             if (doc != null)
-                s += " - " + doc; //$NON-NLS-1$
+                s += " - " + doc;
             list.add(s);
         }
     }
@@ -100,7 +100,7 @@ public class SelectComponentsDialog
     protected void createUserButtons(Composite parent)
             throws CreateException {
         Button selectAll = new Button(parent, SWT.NONE);
-        selectAll.setText(PackNLS.getString("SelectComponentsDialog.selectAll")); //$NON-NLS-1$
+        selectAll.setText(PackNLS.getString("SelectComponentsDialog.selectAll"));
         selectAll.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {
@@ -108,7 +108,7 @@ public class SelectComponentsDialog
             }
         });
         Button selectInverse = new Button(parent, SWT.NONE);
-        selectInverse.setText(PackNLS.getString("SelectComponentsDialog.selectInverse")); //$NON-NLS-1$
+        selectInverse.setText(PackNLS.getString("SelectComponentsDialog.selectInverse"));
         selectInverse.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent e) {

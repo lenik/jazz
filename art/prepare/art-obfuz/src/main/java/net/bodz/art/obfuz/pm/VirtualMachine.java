@@ -9,7 +9,8 @@ public abstract class VirtualMachine {
 
     static final int END = 0;
 
-    public void execute(ByteBuffer instructions) throws VMException {
+    public void execute(ByteBuffer instructions)
+            throws VMException {
     }
 
     protected int readInt(ByteBuffer buf) {
@@ -29,6 +30,7 @@ public abstract class VirtualMachine {
         return null;
     }
 
-    protected abstract void execute(int opcode, Object parameter) throws VMException;
+    protected abstract void execute(int opcode, Object parameter)
+            throws VMException;
 
 }

@@ -7,12 +7,13 @@ import java.util.Map;
 import net.bodz.swt.gui.pfl.AbstractPage;
 import net.bodz.swt.gui.pfl.PageMethod;
 
-public abstract class ConfigPage extends AbstractPage {
+public abstract class ConfigPage
+        extends AbstractPage {
 
-    static final String       CPrefix = "C:";
+    static final String CPrefix = "C:";
 
     protected final IComponent owner;
-    protected final ISession  session;
+    protected final ISession session;
 
     public ConfigPage(IComponent owner, ISession session) {
         if (owner == null)

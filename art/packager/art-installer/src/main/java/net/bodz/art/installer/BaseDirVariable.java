@@ -4,7 +4,8 @@ import java.io.File;
 
 import org.eclipse.swt.graphics.Image;
 
-public class BaseDirVariable extends Variable {
+public class BaseDirVariable
+        extends Variable {
 
     public BaseDirVariable(Image image, String text, String doc, Object defaultValue) {
         super(image, text, doc, defaultValue);

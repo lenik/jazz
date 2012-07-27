@@ -1,6 +1,5 @@
 package net.bodz.art.installer;
 
-
 public interface Scheme {
 
     String getName();

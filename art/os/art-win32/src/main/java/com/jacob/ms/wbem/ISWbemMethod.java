@@ -6,19 +6,19 @@ package com.jacob.ms.wbem;
 
 import com.jacob.com.Dispatch;
 
-public class ISWbemMethod extends Dispatch {
+public class ISWbemMethod
+        extends Dispatch {
 
-    public static final String componentName = "WbemScripting.ISWbemMethod"; //$NON-NLS-1$
+    public static final String componentName = "WbemScripting.ISWbemMethod";
 
     public ISWbemMethod() {
         super(componentName);
     }
 
     /**
-     * This constructor is used instead of a case operation to turn a Dispatch
-     * object into a wider object - it must exist in every wrapper class whose
-     * instances may be returned from method calls wrapped in VT_DISPATCH
-     * Variants.
+     * This constructor is used instead of a case operation to turn a Dispatch object into a wider
+     * object - it must exist in every wrapper class whose instances may be returned from method
+     * calls wrapped in VT_DISPATCH Variants.
      */
     public ISWbemMethod(Dispatch d) {
         // take over the IDispatch pointer
@@ -37,7 +37,7 @@ public class ISWbemMethod extends Dispatch {
      * @return the result is of type String
      */
     public String getName() {
-        return Dispatch.get(this, "Name").toString(); //$NON-NLS-1$
+        return Dispatch.get(this, "Name").toString();
     }
 
     /**
@@ -46,7 +46,7 @@ public class ISWbemMethod extends Dispatch {
      * @return the result is of type String
      */
     public String getOrigin() {
-        return Dispatch.get(this, "Origin").toString(); //$NON-NLS-1$
+        return Dispatch.get(this, "Origin").toString();
     }
 
     /**
@@ -55,7 +55,7 @@ public class ISWbemMethod extends Dispatch {
      * @return the result is of type ISWbemObject
      */
     public ISWbemObject getInParameters() {
-        return new ISWbemObject(Dispatch.get(this, "InParameters").toDispatch()); //$NON-NLS-1$
+        return new ISWbemObject(Dispatch.get(this, "InParameters").toDispatch());
     }
 
     /**
@@ -64,7 +64,7 @@ public class ISWbemMethod extends Dispatch {
      * @return the result is of type ISWbemObject
      */
     public ISWbemObject getOutParameters() {
-        return new ISWbemObject(Dispatch.get(this, "OutParameters").toDispatch()); //$NON-NLS-1$
+        return new ISWbemObject(Dispatch.get(this, "OutParameters").toDispatch());
     }
 
     /**
@@ -73,7 +73,7 @@ public class ISWbemMethod extends Dispatch {
      * @return the result is of type ISWbemQualifierSet
      */
     public ISWbemQualifierSet getQualifiers_() {
-        return new ISWbemQualifierSet(Dispatch.get(this, "Qualifiers_").toDispatch()); //$NON-NLS-1$
+        return new ISWbemQualifierSet(Dispatch.get(this, "Qualifiers_").toDispatch());
     }
 
 }

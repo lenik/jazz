@@ -9,7 +9,7 @@ import org.junit.Test;
 public class InstallerTest {
 
     static {
-        Reflects.setStatic(_Job.class, "slowdown", 10); //$NON-NLS-1$
+        Reflects.setStatic(_Job.class, "slowdown", 10);
     }
 
     @Test

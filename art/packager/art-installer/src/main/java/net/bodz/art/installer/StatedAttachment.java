@@ -34,7 +34,7 @@ public class StatedAttachment
 
     public StatedAttachment(IFile link, String encoding) {
         if (link == null)
-            throw new NullPointerException("link"); //$NON-NLS-1$
+            throw new NullPointerException("link");
         this.link = link;
         this.encoding = encoding;
     }
@@ -146,7 +146,7 @@ public class StatedAttachment
     @Override
     public Object load()
             throws IOException {
-        throw new NotImplementedException("don't know how to load."); //$NON-NLS-1$
+        throw new NotImplementedException("don't know how to load.");
     }
 
     @Override
@@ -160,7 +160,7 @@ public class StatedAttachment
 
     @Override
     public String toString() {
-        String s = PackNLS.getString("Attachment.attachment"); //$NON-NLS-1$
+        String s = PackNLS.getString("Attachment.attachment");
         s += link.toString();
         return s;
     }
@@ -173,7 +173,7 @@ public class StatedAttachment
 
         public StateBase(IFile link, String accessType) {
             this.link = link;
-            this.error = PackNLS.getString("Attachment.currentlyAccess") + accessType; //$NON-NLS-1$
+            this.error = PackNLS.getString("Attachment.currentlyAccess") + accessType;
         }
 
         @Override
@@ -267,7 +267,7 @@ public class StatedAttachment
         InputStream in;
 
         public UsingInputStream(IFile link) {
-            super(link, "InputStream"); //$NON-NLS-1$
+            super(link, "InputStream");
         }
 
         @Override
@@ -296,7 +296,7 @@ public class StatedAttachment
         Reader reader;
 
         public UsingReader(IFile link, String encoding) {
-            super(link, "Reader"); //$NON-NLS-1$
+            super(link, "Reader");
             this.encoding = encoding;
         }
 
@@ -325,7 +325,7 @@ public class StatedAttachment
         ObjectInputStream objin;
 
         public UsingObjectInputStream(IFile link) {
-            super(link, "ObjectInputStream"); //$NON-NLS-1$
+            super(link, "ObjectInputStream");
         }
 
         @Override
@@ -355,7 +355,7 @@ public class StatedAttachment
         ZipInputStream zin;
 
         public UsingZipInputStream(IFile link) {
-            super(link, "ZipInputStream"); //$NON-NLS-1$
+            super(link, "ZipInputStream");
         }
 
         @Override
@@ -385,7 +385,7 @@ public class StatedAttachment
         JarInputStream jin;
 
         public UsingJarInputStream(IFile link) {
-            super(link, "JarInputStream"); //$NON-NLS-1$
+            super(link, "JarInputStream");
         }
 
         @Override
@@ -415,7 +415,7 @@ public class StatedAttachment
         OutputStream out;
 
         public UsingOutputStream(IFile link) {
-            super(link, "OutputStream"); //$NON-NLS-1$
+            super(link, "OutputStream");
         }
 
         @Override
@@ -446,7 +446,7 @@ public class StatedAttachment
         PrintStream out;
 
         public UsingPrintStream(IFile link, String encoding) {
-            super(link, "OutputStream"); //$NON-NLS-1$
+            super(link, "OutputStream");
             this.encoding = encoding;
         }
 
@@ -482,7 +482,7 @@ public class StatedAttachment
         Writer writer;
 
         public UsingWriter(IFile link, String encoding) {
-            super(link, "Writer"); //$NON-NLS-1$
+            super(link, "Writer");
             this.encoding = encoding;
         }
 
@@ -511,7 +511,7 @@ public class StatedAttachment
         ObjectOutputStream objout;
 
         public UsingObjectOutputStream(IFile link) {
-            super(link, "ObjectOutputStream"); //$NON-NLS-1$
+            super(link, "ObjectOutputStream");
         }
 
         @Override
@@ -541,7 +541,7 @@ public class StatedAttachment
         ZipOutputStream zout;
 
         public UsingZipOutputStream(IFile link) {
-            super(link, "ZipOutputStream"); //$NON-NLS-1$
+            super(link, "ZipOutputStream");
         }
 
         /**
@@ -574,7 +574,7 @@ public class StatedAttachment
         JarOutputStream jout;
 
         public UsingJarOutputStream(IFile link) {
-            super(link, "JarOutputStream"); //$NON-NLS-1$
+            super(link, "JarOutputStream");
         }
 
         /**
@@ -607,7 +607,7 @@ public class StatedAttachment
         ZipFile zipFile;
 
         public UsingZipFile(IFile link) {
-            super(link, "ZipFile"); //$NON-NLS-1$
+            super(link, "ZipFile");
         }
 
         @Override
@@ -636,7 +636,7 @@ public class StatedAttachment
         JarFile jarFile;
 
         public UsingJarFile(IFile link) {
-            super(link, "JarFile"); //$NON-NLS-1$
+            super(link, "JarFile");
         }
 
         @Override

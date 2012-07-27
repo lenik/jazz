@@ -7,19 +7,19 @@ package com.jacob.ms.wbem;
 import com.jacob.com.Dispatch;
 import com.jacob.com.Variant;
 
-public class ISWbemPrivilege extends Dispatch {
+public class ISWbemPrivilege
+        extends Dispatch {
 
-    public static final String componentName = "WbemScripting.ISWbemPrivilege"; //$NON-NLS-1$
+    public static final String componentName = "WbemScripting.ISWbemPrivilege";
 
     public ISWbemPrivilege() {
         super(componentName);
     }
 
     /**
-     * This constructor is used instead of a case operation to turn a Dispatch
-     * object into a wider object - it must exist in every wrapper class whose
-     * instances may be returned from method calls wrapped in VT_DISPATCH
-     * Variants.
+     * This constructor is used instead of a case operation to turn a Dispatch object into a wider
+     * object - it must exist in every wrapper class whose instances may be returned from method
+     * calls wrapped in VT_DISPATCH Variants.
      */
     public ISWbemPrivilege(Dispatch d) {
         // take over the IDispatch pointer
@@ -38,7 +38,7 @@ public class ISWbemPrivilege extends Dispatch {
      * @return the result is of type boolean
      */
     public boolean getIsEnabled() {
-        return Dispatch.get(this, "IsEnabled").changeType(Variant.VariantBoolean).getBoolean(); //$NON-NLS-1$
+        return Dispatch.get(this, "IsEnabled").changeType(Variant.VariantBoolean).getBoolean();
     }
 
     /**
@@ -48,7 +48,7 @@ public class ISWbemPrivilege extends Dispatch {
      *            an input-parameter of type boolean
      */
     public void setIsEnabled(boolean isEnabled) {
-        Dispatch.put(this, "IsEnabled", new Variant(isEnabled)); //$NON-NLS-1$
+        Dispatch.put(this, "IsEnabled", new Variant(isEnabled));
     }
 
     /**
@@ -57,7 +57,7 @@ public class ISWbemPrivilege extends Dispatch {
      * @return the result is of type String
      */
     public String getName() {
-        return Dispatch.get(this, "Name").toString(); //$NON-NLS-1$
+        return Dispatch.get(this, "Name").toString();
     }
 
     /**
@@ -66,7 +66,7 @@ public class ISWbemPrivilege extends Dispatch {
      * @return the result is of type String
      */
     public String getDisplayName() {
-        return Dispatch.get(this, "DisplayName").toString(); //$NON-NLS-1$
+        return Dispatch.get(this, "DisplayName").toString();
     }
 
     /**
@@ -75,7 +75,7 @@ public class ISWbemPrivilege extends Dispatch {
      * @return the result is of type int
      */
     public int getIdentifier() {
-        return Dispatch.get(this, "Identifier").changeType(Variant.VariantInt).getInt(); //$NON-NLS-1$
+        return Dispatch.get(this, "Identifier").changeType(Variant.VariantInt).getInt();
     }
 
 }

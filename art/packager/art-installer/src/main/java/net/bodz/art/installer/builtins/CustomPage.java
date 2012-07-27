@@ -85,7 +85,7 @@ public class CustomPage
         infobar.setLayout(new FillLayout());
 
         descriptionLabel = new Label(infobar, SWT.WRAP);
-        descriptionLabel.setText("DESCRIPTION"); //$NON-NLS-1$
+        descriptionLabel.setText("DESCRIPTION");
 
         Label vt = new Label(holder, SWT.SEPARATOR | SWT.VERTICAL);
         vt.setLayoutData(new GridData(SWT.FILL, SWT.FILL, false, true));
@@ -135,7 +135,7 @@ public class CustomPage
         Label hr = new Label(holder, SWT.SEPARATOR | SWT.HORIZONTAL);
         hr.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
 
-        final Image dirImage = SWTResources.getImageRes("/com/sun/java/swing/plaf/windows/icons/Directory.gif"); //$NON-NLS-1$
+        final Image dirImage = SWTResources.getImageRes("/com/sun/java/swing/plaf/windows/icons/Directory.gif");
         basedirsComp = new WindowComposite(holder, SWT.NONE, false, holder) {
             @Override
             protected void createContents(Composite parent, int style) {
@@ -157,7 +157,7 @@ public class CustomPage
                     final Label infoLabel = new Label(parent, SWT.NONE);
                     String s = var.getText();
                     if (var.getDoc() != null)
-                        s += ": " + var.getDoc(); //$NON-NLS-1$
+                        s += ": " + var.getDoc();
                     infoLabel.setText(s);
                     GridData gdInfo = new GridData(GridData.BEGINNING, GridData.CENTER, false, false, 2, 1);
                     infoLabel.setLayoutData(gdInfo);
@@ -169,20 +169,18 @@ public class CustomPage
                     dirText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
                     File sessionFileValue = (File) session.get(name);
                     if (sessionFileValue == null)
-                        throw new NullPointerException(PackNLS.getString("CustomPage.varSetToNull") //$NON-NLS-1$
-                                + name);
+                        throw new NullPointerException(PackNLS.getString("CustomPage.varSetToNull") + name);
 
                     dirText.setData(name);
                     dirText.setText(sessionFileValue.getPath());
 
                     final Button browseButton = new Button(parent, SWT.NONE);
-                    browseButton.setText("..."); //$NON-NLS-1$
+                    browseButton.setText("...");
                     browseButton.addSelectionListener(new SelectionAdapter() {
                         @Override
                         public void widgetSelected(SelectionEvent e) {
                             DirectoryDialog dialog = new DirectoryDialog(getShell(), SWT.NONE);
-                            dialog.setText(PackNLS.getString("CustomPage.selectDirFor") //$NON-NLS-1$
-                                    + var.getText());
+                            dialog.setText(PackNLS.getString("CustomPage.selectDirFor") + var.getText());
                             String dir = dialog.open();
                             if (dir != null)
                                 dirText.setText(dir);
@@ -193,7 +191,7 @@ public class CustomPage
 
         };
         basedirsComp.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 3, 1));
-        basedirsComp.setText(PackNLS.getString("CustomPage.installLocations")); //$NON-NLS-1$
+        basedirsComp.setText(PackNLS.getString("CustomPage.installLocations"));
 
         Label hr2 = new Label(holder, SWT.SEPARATOR | SWT.HORIZONTAL);
         hr2.setLayoutData(//
@@ -208,7 +206,7 @@ public class CustomPage
         statusbar.setLayout(gridLayout_statusbar);
 
         final Label installSizeLabel = new Label(statusbar, SWT.NONE);
-        installSizeLabel.setText(PackNLS.getString("CustomPage.installSize")); //$NON-NLS-1$
+        installSizeLabel.setText(PackNLS.getString("CustomPage.installSize"));
 
         sizeLabel = new Label(statusbar, SWT.NONE);
     }
@@ -285,7 +283,7 @@ public class CustomPage
     }
 
     protected void setSizeBytes(long size) {
-        sizeLabel.setText(size + PackNLS.getString("CustomPage.bytes")); //$NON-NLS-1$
+        sizeLabel.setText(size + PackNLS.getString("CustomPage.bytes"));
     }
 
     @Override
@@ -295,7 +293,7 @@ public class CustomPage
 
     @Override
     public String getPageTitle() {
-        return PackNLS.getString("CustomPage.title"); //$NON-NLS-1$
+        return PackNLS.getString("CustomPage.title");
     }
 
     @Override
@@ -307,8 +305,8 @@ public class CustomPage
         List<Entry> missingList = missingBuffer.getList();
         if (!missingList.isEmpty()) {
             SelectComponentsDialog dialog = new SelectComponentsDialog(pageContainer.getShell(), SWT.NONE,
-                    PackNLS.getString("CustomPage.checkMissings"), //$NON-NLS-1$
-                    PackNLS.getString("CustomPage.checkMissings.caption"), missingList); //$NON-NLS-1$
+                    PackNLS.getString("CustomPage.checkMissings"),
+                    PackNLS.getString("CustomPage.checkMissings.caption"), missingList);
             Collection<IComponent> add = dialog.open();
             if (add == null)
                 throw new QuietValidateException(tree);
@@ -324,16 +322,15 @@ public class CustomPage
             String path = dirText.getText();
             File dirFile = new File(path);
             if (dirFile.isFile())
-                throw new ValidateException(dirText, PackNLS.getString("CustomPage.fileExists")); //$NON-NLS-1$
+                throw new ValidateException(dirText, PackNLS.getString("CustomPage.fileExists"));
             else if (!dirFile.exists()) {
                 UserInterface UI = session.getUserInterface();
-                boolean confirmed = UI.confirm(PackNLS.getString("CustomPage.createDirQ"), //$NON-NLS-1$
-                        PackNLS.format("CustomPage.confirmMkdir", dirFile));//$NON-NLS-1$
+                boolean confirmed = UI.confirm(PackNLS.getString("CustomPage.createDirQ"),
+                        PackNLS.format("CustomPage.confirmMkdir", dirFile));
                 if (!confirmed) {
                     throw new QuietValidateException(dirText);
                 } else if (!dirFile.mkdirs())
-                    throw new ValidateException(dirText, PackNLS.getString("CustomPage.cantMkdir") //$NON-NLS-1$
-                            + dirFile);
+                    throw new ValidateException(dirText, PackNLS.getString("CustomPage.cantMkdir") + dirFile);
             }
             session.set(name, dirFile);
         }

@@ -45,7 +45,7 @@ public class ConsoleExecutor
     @Override
     public void progressChange(ProgressChangeEvent e) {
         double progress = 100 * e.getProgress();
-        String mesg = String.format(PackNLS.getString("ConsoleExecutor.progress_f"), progress); //$NON-NLS-1$
+        String mesg = String.format(PackNLS.getString("ConsoleExecutor.progress_f"), progress);
         L.tinfo(mesg);
     }
 
@@ -54,7 +54,7 @@ public class ConsoleExecutor
         // getTimeBegin();
         // long d = job.getDuration()
         // ...
-        String mesg = String.format(PackNLS.getString("ConsoleExecutor.durationChanged_d"), e.getIncrement()); //$NON-NLS-1$
+        String mesg = String.format(PackNLS.getString("ConsoleExecutor.durationChanged_d"), e.getIncrement());
         L.tinfo(mesg);
     }
 

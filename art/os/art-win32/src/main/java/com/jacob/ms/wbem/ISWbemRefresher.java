@@ -7,19 +7,19 @@ package com.jacob.ms.wbem;
 import com.jacob.com.Dispatch;
 import com.jacob.com.Variant;
 
-public class ISWbemRefresher extends Dispatch {
+public class ISWbemRefresher
+        extends Dispatch {
 
-    public static final String componentName = "WbemScripting.ISWbemRefresher"; //$NON-NLS-1$
+    public static final String componentName = "WbemScripting.ISWbemRefresher";
 
     public ISWbemRefresher() {
         super(componentName);
     }
 
     /**
-     * This constructor is used instead of a case operation to turn a Dispatch
-     * object into a wider object - it must exist in every wrapper class whose
-     * instances may be returned from method calls wrapped in VT_DISPATCH
-     * Variants.
+     * This constructor is used instead of a case operation to turn a Dispatch object into a wider
+     * object - it must exist in every wrapper class whose instances may be returned from method
+     * calls wrapped in VT_DISPATCH Variants.
      */
     public ISWbemRefresher(Dispatch d) {
         // take over the IDispatch pointer
@@ -38,7 +38,7 @@ public class ISWbemRefresher extends Dispatch {
      * @return the result is of type Variant
      */
     public Variant get_NewEnum() {
-        return Dispatch.get(this, "_NewEnum"); //$NON-NLS-1$
+        return Dispatch.get(this, "_NewEnum");
     }
 
     /**
@@ -49,8 +49,7 @@ public class ISWbemRefresher extends Dispatch {
      * @return the result is of type ISWbemRefreshableItem
      */
     public ISWbemRefreshableItem item(int iIndex) {
-        return new ISWbemRefreshableItem(Dispatch.call(this, "Item", new Variant(iIndex)) //$NON-NLS-1$
-                .toDispatch());
+        return new ISWbemRefreshableItem(Dispatch.call(this, "Item", new Variant(iIndex)).toDispatch());
     }
 
     /**
@@ -59,7 +58,7 @@ public class ISWbemRefresher extends Dispatch {
      * @return the result is of type int
      */
     public int getCount() {
-        return Dispatch.get(this, "Count").changeType(Variant.VariantInt).getInt(); //$NON-NLS-1$
+        return Dispatch.get(this, "Count").changeType(Variant.VariantInt).getInt();
     }
 
     /**
@@ -75,10 +74,10 @@ public class ISWbemRefresher extends Dispatch {
      *            an input-parameter of type Object
      * @return the result is of type ISWbemRefreshableItem
      */
-    public ISWbemRefreshableItem add(ISWbemServicesEx objWbemServices, String bsInstancePath,
-            int iFlags, Object objWbemNamedValueSet) {
-        return new ISWbemRefreshableItem(Dispatch.call(this, "Add", objWbemServices, //$NON-NLS-1$
-                bsInstancePath, new Variant(iFlags), objWbemNamedValueSet).toDispatch());
+    public ISWbemRefreshableItem add(ISWbemServicesEx objWbemServices, String bsInstancePath, int iFlags,
+            Object objWbemNamedValueSet) {
+        return new ISWbemRefreshableItem(Dispatch.call(this, "Add", objWbemServices, bsInstancePath,
+                new Variant(iFlags), objWbemNamedValueSet).toDispatch());
     }
 
     /**
@@ -92,10 +91,9 @@ public class ISWbemRefresher extends Dispatch {
      *            an input-parameter of type int
      * @return the result is of type ISWbemRefreshableItem
      */
-    public ISWbemRefreshableItem add(ISWbemServicesEx objWbemServices, String bsInstancePath,
-            int iFlags) {
-        return new ISWbemRefreshableItem(Dispatch.call(this, "Add", objWbemServices, //$NON-NLS-1$
-                bsInstancePath, new Variant(iFlags)).toDispatch());
+    public ISWbemRefreshableItem add(ISWbemServicesEx objWbemServices, String bsInstancePath, int iFlags) {
+        return new ISWbemRefreshableItem(Dispatch.call(this, "Add", objWbemServices, bsInstancePath,
+                new Variant(iFlags)).toDispatch());
     }
 
     /**
@@ -108,8 +106,7 @@ public class ISWbemRefresher extends Dispatch {
      * @return the result is of type ISWbemRefreshableItem
      */
     public ISWbemRefreshableItem add(ISWbemServicesEx objWbemServices, String bsInstancePath) {
-        return new ISWbemRefreshableItem(Dispatch
-                .call(this, "Add", objWbemServices, bsInstancePath).toDispatch()); //$NON-NLS-1$
+        return new ISWbemRefreshableItem(Dispatch.call(this, "Add", objWbemServices, bsInstancePath).toDispatch());
     }
 
     /**
@@ -125,10 +122,10 @@ public class ISWbemRefresher extends Dispatch {
      *            an input-parameter of type Object
      * @return the result is of type ISWbemRefreshableItem
      */
-    public ISWbemRefreshableItem addEnum(ISWbemServicesEx objWbemServices, String bsClassName,
-            int iFlags, Object objWbemNamedValueSet) {
-        return new ISWbemRefreshableItem(Dispatch.call(this, "AddEnum", objWbemServices, //$NON-NLS-1$
-                bsClassName, new Variant(iFlags), objWbemNamedValueSet).toDispatch());
+    public ISWbemRefreshableItem addEnum(ISWbemServicesEx objWbemServices, String bsClassName, int iFlags,
+            Object objWbemNamedValueSet) {
+        return new ISWbemRefreshableItem(Dispatch.call(this, "AddEnum", objWbemServices, bsClassName,
+                new Variant(iFlags), objWbemNamedValueSet).toDispatch());
     }
 
     /**
@@ -142,10 +139,9 @@ public class ISWbemRefresher extends Dispatch {
      *            an input-parameter of type int
      * @return the result is of type ISWbemRefreshableItem
      */
-    public ISWbemRefreshableItem addEnum(ISWbemServicesEx objWbemServices, String bsClassName,
-            int iFlags) {
-        return new ISWbemRefreshableItem(Dispatch.call(this, "AddEnum", objWbemServices, //$NON-NLS-1$
-                bsClassName, new Variant(iFlags)).toDispatch());
+    public ISWbemRefreshableItem addEnum(ISWbemServicesEx objWbemServices, String bsClassName, int iFlags) {
+        return new ISWbemRefreshableItem(Dispatch.call(this, "AddEnum", objWbemServices, bsClassName,
+                new Variant(iFlags)).toDispatch());
     }
 
     /**
@@ -158,8 +154,7 @@ public class ISWbemRefresher extends Dispatch {
      * @return the result is of type ISWbemRefreshableItem
      */
     public ISWbemRefreshableItem addEnum(ISWbemServicesEx objWbemServices, String bsClassName) {
-        return new ISWbemRefreshableItem(Dispatch.call(this, "AddEnum", objWbemServices, //$NON-NLS-1$
-                bsClassName).toDispatch());
+        return new ISWbemRefreshableItem(Dispatch.call(this, "AddEnum", objWbemServices, bsClassName).toDispatch());
     }
 
     /**
@@ -171,7 +166,7 @@ public class ISWbemRefresher extends Dispatch {
      *            an input-parameter of type int
      */
     public void remove(int iIndex, int iFlags) {
-        Dispatch.call(this, "Remove", new Variant(iIndex), new Variant(iFlags)); //$NON-NLS-1$
+        Dispatch.call(this, "Remove", new Variant(iIndex), new Variant(iFlags));
     }
 
     /**
@@ -181,7 +176,7 @@ public class ISWbemRefresher extends Dispatch {
      *            an input-parameter of type int
      */
     public void remove(int iIndex) {
-        Dispatch.call(this, "Remove", new Variant(iIndex)); //$NON-NLS-1$
+        Dispatch.call(this, "Remove", new Variant(iIndex));
     }
 
     /**
@@ -191,14 +186,14 @@ public class ISWbemRefresher extends Dispatch {
      *            an input-parameter of type int
      */
     public void refresh(int iFlags) {
-        Dispatch.call(this, "Refresh", new Variant(iFlags)); //$NON-NLS-1$
+        Dispatch.call(this, "Refresh", new Variant(iFlags));
     }
 
     /**
      * Wrapper for calling the ActiveX-Method with input-parameter(s).
      */
     public void refresh() {
-        Dispatch.call(this, "Refresh"); //$NON-NLS-1$
+        Dispatch.call(this, "Refresh");
     }
 
     /**
@@ -207,7 +202,7 @@ public class ISWbemRefresher extends Dispatch {
      * @return the result is of type boolean
      */
     public boolean getAutoReconnect() {
-        return Dispatch.get(this, "AutoReconnect").changeType(Variant.VariantBoolean).getBoolean(); //$NON-NLS-1$
+        return Dispatch.get(this, "AutoReconnect").changeType(Variant.VariantBoolean).getBoolean();
     }
 
     /**
@@ -217,14 +212,14 @@ public class ISWbemRefresher extends Dispatch {
      *            an input-parameter of type boolean
      */
     public void setAutoReconnect(boolean autoReconnect) {
-        Dispatch.put(this, "AutoReconnect", new Variant(autoReconnect)); //$NON-NLS-1$
+        Dispatch.put(this, "AutoReconnect", new Variant(autoReconnect));
     }
 
     /**
      * Wrapper for calling the ActiveX-Method with input-parameter(s).
      */
     public void deleteAll() {
-        Dispatch.call(this, "DeleteAll"); //$NON-NLS-1$
+        Dispatch.call(this, "DeleteAll");
     }
 
 }

@@ -15,10 +15,10 @@ public class License {
             String license = licenseURL.forRead().readTextContents();
             return license;
         } catch (IOException e) {
-            throw new IllegalArgumentException(PackNLS.getString("License.badLicense") + name); //$NON-NLS-1$
+            throw new IllegalArgumentException(PackNLS.getString("License.badLicense") + name);
         }
     }
 
-    public static final String GPLv2 = get("GPLv2"); //$NON-NLS-1$
+    public static final String GPLv2 = get("GPLv2");
 
 }

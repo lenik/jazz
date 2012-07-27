@@ -46,7 +46,7 @@ public class Components
             if (component != null)
                 component.setRegistryData(data);
             else if (strict) {
-                throw new NoSuchElementException(String.format(PackNLS.getString("Components.compNotDefined"), id)); //$NON-NLS-1$
+                throw new NoSuchElementException(String.format(PackNLS.getString("Components.compNotDefined"), id));
             }
         }
     }
@@ -103,11 +103,11 @@ public class Components
             String prefix;
             if (startId == null) {
                 // this must be root Component.
-                prefix = ""; //$NON-NLS-1$
+                prefix = "";
                 startId = "";
                 start.setId(startId);
             } else
-                prefix = startId + DOT; //$NON-NLS-1$
+                prefix = startId + DOT;
 
             String prevId = startId;
 
@@ -117,7 +117,7 @@ public class Components
                 for (IComponent child : children) {
                     index++;
                     if (child == null)
-                        throw new NullPointerException("child[" + index + "]"); //$NON-NLS-1$ //$NON-NLS-2$
+                        throw new NullPointerException("child[" + index + "]");
                     String id = child.getId();
                     if (id == null) {
                         String name = child.getName();
@@ -128,14 +128,13 @@ public class Components
                             id = prefix + name;
                             if (idMap.containsKey(id))
                                 // x_1, x_2, ...
-                                id = searchUnusedKey(idMap, id + "_", 1); //$NON-NLS-1$
+                                id = searchUnusedKey(idMap, id + "_", 1);
                         }
                         assert id != null;
                         child.setId(id);
                     } else if (idMap.containsKey(id)) {
-                        String mesg = String.format(
-                                PackNLS.getString("Components.duplicatedId_sss"), id, idMap.get(id), //$NON-NLS-1$
-                                child);
+                        String mesg = String.format(PackNLS.getString("Components.duplicatedId_sss"), id,
+                                idMap.get(id), child);
                         throw new IllegalStateException(mesg);
                     }
                     idMap.put(id, child);
@@ -152,7 +151,7 @@ public class Components
     static String searchUnusedKey(TextMap<?> map, String s, int startIndex) {
         while (true) {
             if (startIndex >= Integer.MAX_VALUE)
-                throw new RuntimeException(PackNLS.getString("Components.indexUsedOut") + s); //$NON-NLS-1$
+                throw new RuntimeException(PackNLS.getString("Components.indexUsedOut") + s);
             String key = s + startIndex;
             if (!map.containsKey(key))
                 return key;

@@ -6,10 +6,10 @@ public class Variable {
 
     public static final int BASE_DIR = 1;
 
-    private Image           image;
-    private String          text;
-    private String          doc;
-    private Object          defaultValue;
+    private Image image;
+    private String text;
+    private String doc;
+    private Object defaultValue;
 
     public Variable(String text, Object defaultValue) {
         this(text, null, defaultValue);

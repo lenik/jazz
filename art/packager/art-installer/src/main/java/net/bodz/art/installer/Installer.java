@@ -54,7 +54,7 @@ public class Installer
             }
         }
         if (project == null)
-            throw new IllegalUsageError(PackNLS.getString("Installer.noConfig")); //$NON-NLS-1$
+            throw new IllegalUsageError(PackNLS.getString("Installer.noConfig"));
     }
 
     @Override
@@ -67,7 +67,7 @@ public class Installer
             @Override
             public void badPath(BadPathEvent e) {
                 shell.dispose();
-                System.out.println("Exit address: " + e.path); //$NON-NLS-1$
+                System.out.println("Exit address: " + e.path);
             }
         });
     }
@@ -76,7 +76,7 @@ public class Installer
     protected String getTitle() {
         String text = project.getText();
         String version = project.getVersion();
-        return text + PackNLS.getString("Installer.installer") + version; //$NON-NLS-1$
+        return text + PackNLS.getString("Installer.installer") + version;
     }
 
     public ISession getSession() {

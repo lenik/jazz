@@ -1,6 +1,7 @@
 package net.bodz.art.installer;
 
-public class SessionException extends Exception {
+public class SessionException
+        extends Exception {
 
     private static final long serialVersionUID = 1233952946545728221L;
 

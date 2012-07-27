@@ -16,13 +16,13 @@ public abstract class ProjectExecutor
 
     public ProjectExecutor(IProject project, UserInterface userInterface, Logger logger) {
         if (project == null)
-            throw new NullPointerException("project"); //$NON-NLS-1$
+            throw new NullPointerException("project");
         if (userInterface == null)
-            throw new NullPointerException("userInterface"); //$NON-NLS-1$
+            throw new NullPointerException("userInterface");
         if (userInterface == null)
-            throw new NullPointerException("userInterface"); //$NON-NLS-1$
+            throw new NullPointerException("userInterface");
         if (logger == null)
-            throw new NullPointerException("logger"); //$NON-NLS-1$
+            throw new NullPointerException("logger");
         this.project = project;
         this.session = new Session(project, userInterface, logger);
         this.UI = userInterface;
@@ -31,7 +31,7 @@ public abstract class ProjectExecutor
 
     public ProjectExecutor(ISession session, UserInterface userInterface, Logger logger) {
         if (session == null)
-            throw new NullPointerException("session"); //$NON-NLS-1$
+            throw new NullPointerException("session");
         this.project = session.getProject();
         this.session = session;
         this.UI = userInterface;

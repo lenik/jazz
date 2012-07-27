@@ -22,11 +22,11 @@ import net.bodz.bas.meta.build.RcsKeywords;
 public class CTAProject
         extends SimpleProject {
 
-    public static final String BASE_TEST = "BASE_TEST"; //$NON-NLS-1$
+    public static final String BASE_TEST = "BASE_TEST";
 
-    public static final String BASE_A = "BASE_A"; //$NON-NLS-1$
-    public static final String BASE_B = "BASE_B"; //$NON-NLS-1$
-    public static final String BASE_C = "BASE_C"; //$NON-NLS-1$
+    public static final String BASE_A = "BASE_A";
+    public static final String BASE_B = "BASE_B";
+    public static final String BASE_C = "BASE_C";
 
     public Section classesSection;
     public Section sourceSection;
@@ -44,13 +44,19 @@ public class CTAProject
             throws IOException {
         File testHome = TempFile.getTmpDir();
 
-        define("BASE_A", new BaseDirVariable(PackNLS.getString("CTAProject.aa"), new File(testHome, PackNLS.getString("CTAProject.a")))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        define("BASE_B", new BaseDirVariable(PackNLS.getString("CTAProject.bb"), new File(testHome, PackNLS.getString("CTAProject.b")))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-        define("BASE_C", new BaseDirVariable(PackNLS.getString("CTAProject.cc"), new File(testHome, PackNLS.getString("CTAProject.c")))); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        define("BASE_A",
+                new BaseDirVariable(PackNLS.getString("CTAProject.aa"), new File(testHome, PackNLS
+                        .getString("CTAProject.a"))));
+        define("BASE_B",
+                new BaseDirVariable(PackNLS.getString("CTAProject.bb"), new File(testHome, PackNLS
+                        .getString("CTAProject.b"))));
+        define("BASE_C",
+                new BaseDirVariable(PackNLS.getString("CTAProject.cc"), new File(testHome, PackNLS
+                        .getString("CTAProject.c"))));
 
         FileFilter filter = FileCopy.NoSVN;
 
-        classesSection = new RequiredSection("bin", "Core Java Class Files"); //$NON-NLS-1$ //$NON-NLS-2$
+        classesSection = new RequiredSection("bin", "Core Java Class Files");
         {
             File binDir = SJProject.getOutputBase(IComponent.class);
             FileFinder binfiles = new FileFinder(filter, binDir);
@@ -58,7 +64,7 @@ public class CTAProject
             classesSection.add(copyClassFiles);
         }
 
-        sourceSection = new DefaultSection("src", "Core Java Source Files"); //$NON-NLS-1$ //$NON-NLS-2$
+        sourceSection = new DefaultSection("src", "Core Java Source Files");
         {
             File srcDir = SJProject.getSrcBase(IComponent.class);
             FileFinder srcfiles = new FileFinder(filter, srcDir);

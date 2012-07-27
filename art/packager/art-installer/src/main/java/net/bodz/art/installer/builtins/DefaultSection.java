@@ -1,15 +1,13 @@
 package net.bodz.art.installer.builtins;
 
-
 import net.bodz.art.installer.IComponent;
 
 import org.eclipse.swt.graphics.ImageData;
 
+public class DefaultSection
+        extends Section {
 
-public class DefaultSection extends Section {
-
-    public DefaultSection(String name, ImageData image, String text, String doc,
-            IComponent... children) {
+    public DefaultSection(String name, ImageData image, String text, String doc, IComponent... children) {
         super(true, false, true, name, image, text, doc, children);
     }
 

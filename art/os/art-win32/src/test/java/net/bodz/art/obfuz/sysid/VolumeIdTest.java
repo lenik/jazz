@@ -9,9 +9,9 @@ public class VolumeIdTest {
     @Test
     public void test()
             throws SystemException {
-        VolumeId volId = new VolumeId("C:/"); //$NON-NLS-1$
+        VolumeId volId = new VolumeId("C:/");
         String id = volId.getIdString();
-        System.out.println("Volume Id = " + id); //$NON-NLS-1$
+        System.out.println("Volume Id = " + id);
     }
 
 }

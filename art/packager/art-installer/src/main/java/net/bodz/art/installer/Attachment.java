@@ -17,37 +17,52 @@ import java.util.zip.ZipOutputStream;
 
 public interface Attachment {
 
-    Reader getReader() throws IOException;
+    Reader getReader()
+            throws IOException;
 
-    Writer getWriter() throws IOException;
+    Writer getWriter()
+            throws IOException;
 
-    InputStream getIn() throws IOException;
+    InputStream getIn()
+            throws IOException;
 
-    PrintStream getOut() throws IOException;
+    PrintStream getOut()
+            throws IOException;
 
-    OutputStream _getOut() throws IOException;
+    OutputStream _getOut()
+            throws IOException;
 
-    ObjectInputStream getObjectIn() throws IOException;
+    ObjectInputStream getObjectIn()
+            throws IOException;
 
-    ObjectOutputStream getObjectOut() throws IOException;
+    ObjectOutputStream getObjectOut()
+            throws IOException;
 
-    ZipFile getZipFile() throws IOException;
+    ZipFile getZipFile()
+            throws IOException;
 
-    ZipInputStream getZipIn() throws IOException;
+    ZipInputStream getZipIn()
+            throws IOException;
 
-    ZipOutputStream getZipOut() throws IOException;
+    ZipOutputStream getZipOut()
+            throws IOException;
 
-    JarFile getJarFile() throws IOException;
+    JarFile getJarFile()
+            throws IOException;
 
-    JarInputStream getJarIn() throws IOException;
+    JarInputStream getJarIn()
+            throws IOException;
 
-    JarOutputStream getJarOut() throws IOException;
+    JarOutputStream getJarOut()
+            throws IOException;
 
     /**
      * Depend on the content type of attachment.
      */
-    Object load() throws IOException;
+    Object load()
+            throws IOException;
 
-    void close() throws IOException;
+    void close()
+            throws IOException;
 
 }

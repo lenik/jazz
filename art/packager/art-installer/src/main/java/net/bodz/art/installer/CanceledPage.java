@@ -11,8 +11,8 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
-
-class CanceledPage extends AbstractPage {
+class CanceledPage
+        extends AbstractPage {
 
     ISession session;
 
@@ -28,7 +28,7 @@ class CanceledPage extends AbstractPage {
 
     @Override
     public String getPageTitle() {
-        return PackNLS.getString("CanceledPage.canceled"); //$NON-NLS-1$
+        return PackNLS.getString("CanceledPage.canceled");
     }
 
     @Override
@@ -37,7 +37,7 @@ class CanceledPage extends AbstractPage {
         final Label youHaveCanceledLabel = new Label(holder, SWT.WRAP);
         final GridData gd_youHaveCanceledLabel = new GridData(SWT.LEFT, SWT.CENTER, true, false);
         youHaveCanceledLabel.setLayoutData(gd_youHaveCanceledLabel);
-        youHaveCanceledLabel.setText(PackNLS.getString("CanceledPage.youHaveCanceled")); //$NON-NLS-1$
+        youHaveCanceledLabel.setText(PackNLS.getString("CanceledPage.youHaveCanceled"));
     }
 
 }

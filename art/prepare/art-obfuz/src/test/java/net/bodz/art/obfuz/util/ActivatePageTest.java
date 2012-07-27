@@ -7,7 +7,8 @@ import net.bodz.swt.gui.pfl.PageTestApp;
 import org.junit.Test;
 
 @Activation(productId = "net.bodz.dist.pro.util.ActTest", prefix = "APT", segments = 3)
-public class ActivatePageTest implements ABTSProvider {
+public class ActivatePageTest
+        implements ABTSProvider {
 
     @Override
     public ActivationByTargetString getABTS() {
@@ -23,10 +24,11 @@ public class ActivatePageTest implements ABTSProvider {
     }
 
     @Test
-    public void test1() throws Exception {
+    public void test1()
+            throws Exception {
         ActivationByTargetString abts = getABTS();
-        String code = abts.generateFor("next"); //$NON-NLS-1$
-        System.out.println("Activation Code: " + code); //$NON-NLS-1$
+        String code = abts.generateFor("next");
+        System.out.println("Activation Code: " + code);
         PageTestApp app = new PageTestApp(new ActivatePage(this, "a:"));
         app.run();
     }

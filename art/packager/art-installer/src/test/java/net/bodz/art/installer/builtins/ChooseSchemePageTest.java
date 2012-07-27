@@ -8,11 +8,11 @@ import net.bodz.swt.gui.pfl.PageTestApp;
 
 import org.junit.Test;
 
-
 public class ChooseSchemePageTest {
 
     @Test
-    public void test1() throws Exception {
+    public void test1()
+            throws Exception {
         final TestProject project = new TestProject();
         final ISession session = new Session(project, ConsoleUI.stdout, LogTerms.console);
         PageTestApp app = new PageTestApp(new ChooseSchemePage(project, session));

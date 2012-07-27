@@ -7,19 +7,19 @@ package com.jacob.ms.wbem;
 import com.jacob.com.Dispatch;
 import com.jacob.com.Variant;
 
-public class ISWbemObjectSet extends Dispatch {
+public class ISWbemObjectSet
+        extends Dispatch {
 
-    public static final String componentName = "WbemScripting.ISWbemObjectSet"; //$NON-NLS-1$
+    public static final String componentName = "WbemScripting.ISWbemObjectSet";
 
     public ISWbemObjectSet() {
         super(componentName);
     }
 
     /**
-     * This constructor is used instead of a case operation to turn a Dispatch
-     * object into a wider object - it must exist in every wrapper class whose
-     * instances may be returned from method calls wrapped in VT_DISPATCH
-     * Variants.
+     * This constructor is used instead of a case operation to turn a Dispatch object into a wider
+     * object - it must exist in every wrapper class whose instances may be returned from method
+     * calls wrapped in VT_DISPATCH Variants.
      */
     public ISWbemObjectSet(Dispatch d) {
         // take over the IDispatch pointer
@@ -38,7 +38,7 @@ public class ISWbemObjectSet extends Dispatch {
      * @return the result is of type Variant
      */
     public Variant get_NewEnum() {
-        return Dispatch.get(this, "_NewEnum"); //$NON-NLS-1$
+        return Dispatch.get(this, "_NewEnum");
     }
 
     /**
@@ -51,8 +51,7 @@ public class ISWbemObjectSet extends Dispatch {
      * @return the result is of type ISWbemObject
      */
     public ISWbemObject item(String strObjectPath, int iFlags) {
-        return new ISWbemObject(Dispatch.call(this, "Item", strObjectPath, new Variant(iFlags)) //$NON-NLS-1$
-                .toDispatch());
+        return new ISWbemObject(Dispatch.call(this, "Item", strObjectPath, new Variant(iFlags)).toDispatch());
     }
 
     /**
@@ -63,7 +62,7 @@ public class ISWbemObjectSet extends Dispatch {
      * @return the result is of type ISWbemObject
      */
     public ISWbemObject item(String strObjectPath) {
-        return new ISWbemObject(Dispatch.call(this, "Item", strObjectPath).toDispatch()); //$NON-NLS-1$
+        return new ISWbemObject(Dispatch.call(this, "Item", strObjectPath).toDispatch());
     }
 
     /**
@@ -72,7 +71,7 @@ public class ISWbemObjectSet extends Dispatch {
      * @return the result is of type int
      */
     public int getCount() {
-        return Dispatch.get(this, "Count").changeType(Variant.VariantInt).getInt(); //$NON-NLS-1$
+        return Dispatch.get(this, "Count").changeType(Variant.VariantInt).getInt();
     }
 
     /**
@@ -81,7 +80,7 @@ public class ISWbemObjectSet extends Dispatch {
      * @return the result is of type ISWbemSecurity
      */
     public ISWbemSecurity getSecurity_() {
-        return new ISWbemSecurity(Dispatch.get(this, "Security_").toDispatch()); //$NON-NLS-1$
+        return new ISWbemSecurity(Dispatch.get(this, "Security_").toDispatch());
     }
 
 }

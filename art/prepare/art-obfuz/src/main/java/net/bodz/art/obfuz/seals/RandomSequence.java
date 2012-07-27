@@ -2,10 +2,11 @@ package net.bodz.art.obfuz.seals;
 
 import java.util.Random;
 
-public class RandomSequence extends _Sequence {
+public class RandomSequence
+        extends _Sequence {
 
     private final int seed;
-    private Random    rand;
+    private Random rand;
 
     public RandomSequence(int seed) {
         this.seed = seed;

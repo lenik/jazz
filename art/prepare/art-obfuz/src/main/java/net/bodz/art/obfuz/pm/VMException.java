@@ -1,6 +1,7 @@
 package net.bodz.art.obfuz.pm;
 
-public class VMException extends Exception {
+public class VMException
+        extends Exception {
 
     private static final long serialVersionUID = -7716074928284653648L;
 

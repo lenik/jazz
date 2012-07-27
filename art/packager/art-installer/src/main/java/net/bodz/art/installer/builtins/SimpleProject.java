@@ -60,7 +60,7 @@ public class SimpleProject
 
     }
 
-    public static final String BASE_PROGRAMS = "BASE_PROGRAMS"; //$NON-NLS-1$
+    public static final String BASE_PROGRAMS = "BASE_PROGRAMS";
 
     public SimpleProject(Class<?> clazz) {
         super(clazz);
@@ -70,11 +70,10 @@ public class SimpleProject
         add(new ChooseScheme());
         add(new CustomConfig());
 
-        File programsDir = new File(PFILES_ROOT, getName() + "-" + getVersion()); //$NON-NLS-1$
+        File programsDir = new File(PFILES_ROOT, getName() + "-" + getVersion());
         Variable programsVar = new BaseDirVariable(//
-                PackNLS.getString("SimpleProject.programFiles"), // //$NON-NLS-1$
-                PackNLS.getString("SimpleProject.doc.programs"), //$NON-NLS-1$
-                programsDir);
+                PackNLS.getString("SimpleProject.programFiles"), //
+                PackNLS.getString("SimpleProject.doc.programs"), programsDir);
         define(BASE_PROGRAMS, programsVar);
 
         if (SystemInfo.isWin32())
@@ -83,11 +82,11 @@ public class SimpleProject
 
     protected static File PFILES_ROOT;
     static {
-        String parent = "/usr/local"; //$NON-NLS-1$
+        String parent = "/usr/local";
         if (SystemInfo.isWin32()) {
-            parent = System.getenv("ProgramFiles"); //$NON-NLS-1$
+            parent = System.getenv("ProgramFiles");
             if (parent == null)
-                parent = "C:/Program Files"; //$NON-NLS-1$
+                parent = "C:/Program Files";
         }
         PFILES_ROOT = Files.canoniOf(parent);
     }
